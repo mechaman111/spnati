@@ -1577,6 +1577,67 @@
 </div>
 <!-- End of Usage Reporting Modal -->
 
+<!-- Start of Help Modal -->
+<div id="help-modal" class="modal table-modal fade" role="dialog">
+	<div class="modal-table-container">
+	<div class="modal-cell-container">
+	<div class="bordered modal-dialog wide-modal-dialog">
+	<div class="bordered modal-dialog-surface">
+		<!-- Start of Modal Content -->
+		<div class="modal-content">
+			<div class="modal-header">
+              <h3 class="modal-title text-center"><b>Help and FAQ</b></h3>
+            </div>
+			<div class="modal-body" data-current-page="1">
+				<div class="help-page" data-page="1">
+                    <p>Page 1</p>
+                </div>
+                <div class="help-page" data-page="2" style="display:none">
+                    <p>Page 2</p>
+                </div>
+                <div class="help-page" data-page="3" style="display:none">
+                    <p>Page 3</p>
+                </div>
+                <div class="help-page" data-page="4" style="display:none">
+                    <p>Page 4</p>
+                </div>
+                <div class="help-page" data-page="5" style="display:none">
+                    <p>Page 5</p>
+                </div>
+			</div>
+			<div class="modal-footer">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <li class="help-page-select">
+                      <a href="#" aria-label="Previous" data-select-page="prev">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li class="help-page-select" data-page="1"><a href="#" data-select-page="1">1</a></li>
+                    <li class="help-page-select" data-page="2"><a href="#" data-select-page="2">2</a></li>
+                    <li class="help-page-select" data-page="3"><a href="#" data-select-page="3">3</a></li>
+                    <li class="help-page-select" data-page="4"><a href="#" data-select-page="4">4</a></li>
+                    <li class="help-page-select" data-page="5"><a href="#" data-select-page="5">5</a></li>
+                    <li class="help-page-select">
+                      <a href="#" aria-label="Next" data-select-page="next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+                <div>
+                    <button id="credit-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
+                </div>
+			</div>
+		</div>
+		<!-- End of Modal Content -->
+	</div>
+	</div>
+	</div>
+	</div>
+</div>
+<!-- End of Help Modal -->
+
 <!-- Start of Credits Modal -->
 <div id="credit-modal" class="modal table-modal fade" role="dialog">
 	<div class="modal-table-container">
@@ -1825,18 +1886,31 @@
     <button class='bordered table-bug-report-button' onclick="showBugReportModal()">
       <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
     </button>
-    <button id="game-home-button" class="bordered smooth-button smooth-button-red dock-options-button" data-toggle="tooltip" data-placement="right" title="Return to Title" onclick="showRestartModal()"><!-- doEpilogueModal -->
-      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-    </button>
-    <button id="game-settings-button" class="bordered smooth-button smooth-button-red dock-options-button" data-toggle="tooltip" data-placement="right" title="Game Options" onclick="showOptionsModal()">
-      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-    </button>
     <button id="debug-button-0" class="bordered player-debug-button" onclick="selectDebug(0)" hidden>
       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
     </button>
-    <button id="game-log-button" class="bordered smooth-button smooth-button-red dock-options-button" data-toggle="tooltip" data-placement="right" title="Dialogue Log" onclick="showLogModal()">
-      <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-    </button>
+    <div class="btn-group dropup game-menu-dropup" data-toggle="tooltip" data-placement="right" title="Game Menu">
+        <button type="button" class="bordered smooth-button smooth-button-red dropdown-toggle menu-dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span></button>
+        <ul class="dropdown-menu">
+            <button id="game-log-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showHelpModal()">
+              <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+              <span class="game-menu-label">Help and FAQ</span>
+            </button>
+            <button id="game-log-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showLogModal()">
+              <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+              <span class="game-menu-label">Dialogue Log</span>
+            </button>
+            <button id="game-home-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showRestartModal()"><!-- doEpilogueModal -->
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+              <span class="game-menu-label">Return to Title</span>
+            </button>
+            <button id="game-settings-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showOptionsModal()">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              <span class="game-menu-label">Options</span>
+            </button>
+        </ul>
+    </div>
+    
 
 
     <!-- Game Table -->

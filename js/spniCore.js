@@ -85,6 +85,7 @@ var allScreens = [$warningScreen, $titleScreen, $selectScreen, $individualSelect
 $searchModal = $('#search-modal');
 $groupSearchModal = $('#group-search-modal');
 $creditModal = $('#credit-modal');
+$helpModal = $('#help-modal');
 $versionModal = $('#version-modal');
 $gameSettingsModal = $('#game-settings-modal');
 $bugReportModal = $('#bug-report-modal');
@@ -1199,6 +1200,36 @@ function showCreditModal () {
 function showVersionModal () {
     $versionModal.modal('show');
 }
+
+/************************************************************
+ * The player clicked the help / FAQ button. Shows the help modal.
+ ************************************************************/
+function showHelpModal () {
+    $helpModal.modal('show');
+}
+
+$('.help-page-select').click(function (ev) {
+    var toPage = $(ev.target).attr('data-select-page');
+    var curPage = $helpModal.find('.modal-body').attr('data-current-page');
+    curPage = parseInt(curPage, 10);
+    
+    if (toPage === 'prev') {
+        curPage = (curPage > 1) ? curPage-1 : 1;
+    } else if (toPage === 'next') {
+        curPage = (curPage < 5) ? curPage+1 : 5;
+    } else {
+        curPage = toPage;
+    }
+    
+    console.log(toPage);
+    console.log(curPage);
+    
+    $helpModal.find('.modal-body').attr('data-current-page', curPage);
+    $('.help-page').hide();
+    $('.help-page[data-page="'+curPage+'"]').show();
+    $('.help-page-select').removeClass('active');
+    $('.help-page-select[data-page="'+curPage+'"]').addClass('active');
+})
 
 /************************************************************
  * The player clicked the player tags button. Shows the player tags modal.
