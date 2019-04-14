@@ -120,7 +120,14 @@ namespace SPNATI_Character_Editor.EditControls
 				string file = GetBindingValue(property)?.ToString();
 				if (!string.IsNullOrEmpty(file) && character != null)
 				{
-					file = Path.Combine(character.GetDirectory(), file);
+					if (file.StartsWith("/"))
+					{
+						file = Path.Combine(Config.SpnatiDirectory, file.Substring(1));
+					}
+					else
+					{
+						file = Path.Combine(character.GetDirectory(), file);
+					}
 					if (File.Exists(file))
 					{
 						using (Bitmap bmp = new Bitmap(file))

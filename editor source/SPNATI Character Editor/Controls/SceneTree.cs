@@ -780,6 +780,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="node"></param>
 		private void MoveUp(TreeNode node)
 		{
+			if (node == null) { return; }
 			if (node.Index == 0)
 			{
 				return;
@@ -813,6 +814,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="node"></param>
 		private void MoveDown(TreeNode node)
 		{
+			if (node == null) { return; }
 			if ((node.Parent == null && node.Index == treeScenes.Nodes.Count - 1) || (node.Parent != null && node.Index == node.Parent.Nodes.Count - 1))
 			{
 				return;

@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using Desktop;
+﻿using Desktop;
+using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Actions;
-using SPNATI_Character_Editor.Activities;
 using SPNATI_Character_Editor.Controls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
@@ -436,6 +437,34 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			lstPoses.Items.Add(copy);
 			lstPoses.SelectedItem = copy;
 			_character.CustomPoses.Add(copy);
+		}
+	}
+
+	public class LivePoseContext : ICharacterContext, IAutoCompleteList
+	{
+		public LivePose Pose { get; }
+		public ISkin Character { get; }
+		public CharacterContext Context { get; }
+
+		public LivePoseContext(LivePose pose, ISkin character, CharacterContext context)
+		{
+			Pose = pose;
+			Character = character;
+			Context = context;
+		}
+
+		public string[] GetAutoCompleteList(object data)
+		{
+			if (data is PoseDirective)
+			{
+				HashSet<string> items = new HashSet<string>();
+				foreach (LiveSprite sprite in Pose.Sprites)
+				{
+					items.Add(sprite.Id);
+				}
+				return items.ToArray();
+			}
+			return null;
 		}
 	}
 }

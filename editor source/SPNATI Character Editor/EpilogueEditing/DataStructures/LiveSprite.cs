@@ -1454,13 +1454,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <returns></returns>
 		public RectangleF GetUnscaledScreenSpaceBoundingBox(Matrix sceneTransform, float displayHeight, float zoom)
 		{
-			//PointF[] pts = new PointF[] {
-			//	new PointF(0,0),
-			//	new PointF(Width, Height),
-			//};
-			//pts = ToUnscaledScreenPt(sceneTransform, pts);
-			//return new RectangleF(pts[0].X, pts[0].Y, pts[1]
-
 			PointF spriteCenter = ToScreenPt(Width / 2, Height / 2, sceneTransform);
 			float displayScale = displayHeight / Pose.BaseHeight * zoom;
 			PointF scale = new PointF(displayScale, displayScale);

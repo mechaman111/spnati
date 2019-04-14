@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
 	public class SimpleIK
 	{
-		public void Solve(LiveSprite hand, PointF target, Matrix sceneTransform)
+		public void Solve(LiveSprite hand, PointF target)
 		{
 			if (hand.Parent == null) { return; }
 			LiveSprite Joint1 = hand.Parent;
