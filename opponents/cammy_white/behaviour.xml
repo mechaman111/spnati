@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.0.3b at 9:51:43  on abril 08, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.0.3b at 9:51:03  on abril 11, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.0.3b</version>
     <first>Cammy</first>
@@ -308,14 +308,15 @@
             </directive>
             <directive type="animation" id="head">
                 <keyframe time="0" src="cammy_white/6-finishing_head0.png" />
+                <keyframe time="3" src="cammy_white/6-finishing_head0.png" />
                 <keyframe time="3.06" src="cammy_white/6-finishing_head1.png" />
-                <keyframe time="5.06" src="cammy_white/6-finishing_head2.png" />
+                <keyframe time="7" src="cammy_white/6-finishing_head2.png" />
             </directive>
             <directive type="animation" id="head" interpolation="linear">
                 <keyframe time="0" x="-54" y="659" rotation="0" />
                 <keyframe time="3" rotation="5" />
                 <keyframe time="3.06" rotation="4" />
-                <keyframe time="7" rotation="0" />
+                <keyframe time="7" rotation="2" />
             </directive>
             <directive type="animation" id="squirt" delay="3">
                 <keyframe time="0" src="cammy_white/6-finishing_squirt.png" />
@@ -324,14 +325,14 @@
             <directive type="animation" id="squirt" delay="3" interpolation="linear">
                 <keyframe time="0" x="-8" y="1114" scalex="0" scaley="0" alpha="0" />
                 <keyframe time="0.25" x="-8" y="1129" scalex="0.5" scaley="0.5" alpha="100" />
-                <keyframe time="0.5" x="5" y="1204" scalex="1" scaley="1" />
+                <keyframe time="0.5" x="5" y="1204" scalex="1" scaley="1" alpha="100" />
                 <keyframe time="0.75" x="5" y="1247" scalex="1.5" scaley="1.3" alpha="100" />
-                <keyframe time="0.8800001" alpha="0" />
+                <keyframe time="0.8800001" x="5" alpha="0" />
                 <keyframe time="1.5" x="-8" y="1114" scalex="0" scaley="0" alpha="0" />
                 <keyframe time="1.75" x="-8" y="1129" scalex="0.5" scaley="0.5" alpha="100" />
-                <keyframe time="2" x="5" y="1204" scalex="1" scaley="1" />
+                <keyframe time="2" x="5" y="1204" scalex="1" scaley="1" alpha="100" />
                 <keyframe time="2.25" x="5" y="1247" scalex="1.5" scaley="1.3" alpha="100" />
-                <keyframe time="2.38" alpha="0" />
+                <keyframe time="2.38" x="5" alpha="0" />
             </directive>
         </pose>
         <pose id="6-heavy">
@@ -421,6 +422,9 @@
                 <state img="0-calm.png">New cards please. These are just not doing it.</state>
                 <state img="0-calm.png">I'm going to need some better cards.</state>
             </case>
+            <case tag="swap_cards" alsoPlaying="rainbow_mika" alsoPlayingStage="3" alsoPlayingTimeInStage="0">
+                <state img="0-angry.png">Grrr... whatever!</state>
+            </case>
             <case tag="swap_cards" totalAlive="3" totalRounds="0" notSaidMarker="3_players">
                 <state img="0-calm.png" marker="3_players">~cards~ for me. Thank you.</state>
                 <state img="0-calm.png" marker="3_players">~cards~ sounds fine.</state>
@@ -478,12 +482,17 @@
             <case tag="hand" alsoPlaying="florina" alsoPlayingSayingMarker="bee">
                 <state img="0-sad.png">Is that a... bee?</state>
             </case>
+            <case tag="hand" alsoPlaying="juri" alsoPlayingSayingMarker="juri_cheats">
+                <state img="0-angry.png">That's dirty, Juri! How would you feel if we looked at your cards? Hmph, I bet you wouldn't care.</state>
+                <state img="0-angry.png">Juri is looking at Chun-Li's cards! Isn't this enough to kick her out of the game?</state>
+                <state img="0-angry.png">Juri is cheating! Shouldn't she be banned from playing the game?</state>
+            </case>
             <case tag="hand" alsoPlaying="juri" alsoPlayingStage="0-4" totalAlive="2" notSaidMarker="one_on_one">
                 <state img="0-combat.png" marker="one_on_one">Juri!!!</state>
                 <state img="0-combat.png" marker="one_on_one">It's only Juri now. I can do this!</state>
                 <state img="0-combat.png" marker="one_on_one">Now I just have to focus on Juri. Let's go!</state>
             </case>
-            <case tag="hand" alsoPlaying="juri" alsoPlayingStage="3" alsoPlayingTimeInStage="0" notSaidMarker="forfeit">
+            <case tag="hand" alsoPlaying="juri" alsoPlayingStage="3" alsoPlayingTimeInStage="0-" totalRounds="5-" notSaidMarker="forfeit">
                 <state img="0-shocked.png" marker="forfeit">What did you say, Juri?! Touch yourself?! Why would you... Are you kidding me?!</state>
                 <state img="0-shocked.png" marker="forfeit">Juri, what was that?! Why would you touch yourself if you lose? Oh no...</state>
             </case>
@@ -558,6 +567,11 @@
                 <condition count="1" filter="rainbow_mika" />
                 <state img="0-shocked.png">Chun-Li?! Why are you here? Are you working too? But what about Rainbow Mika, then?</state>
                 <state img="0-shocked.png">Chun-Li?! You didn't tell me you were gonna be here! Did you come with Rainbow Mika?</state>
+            </case>
+            <case tag="hand" alsoPlaying="juri" totalRounds="0" priority="210">
+                <condition count="1" filter="rainbow_mika" />
+                <state img="0-shocked.png">Juri... and... Rainbow Mika? Why are you two here? You didn't come together, right?</state>
+                <state img="0-shocked.png">Why are Juri and Rainbow Mika here? Of all the people I wasn't expecting to see...</state>
             </case>
             <case tag="hand" timeInStage="7">
                 <state img="0-happy.png">If I can finish this game without losing once, it would be &lt;i&gt;perfect&lt;/i&gt;.</state>
@@ -1111,7 +1125,7 @@
                 <state img="0-interested.png">It's good that you have your bracelets right now. That's one more use for them.</state>
                 <state img="0-interested.png">Oh, you're gonna take off your bracelets so you don't have to remove your clothes. That's good.</state>
             </case>
-            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri">
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri" priority="500">
                 <state img="0-interested.png">Hey, your bracelets!</state>
             </case>
             <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="rainbow_mika">
@@ -1216,6 +1230,10 @@
                 <condition count="0" filter="juri" />
                 <state img="0-sad.png">(Should I tell her that Chun-Li's cooking is awful?)</state>
                 <state img="0-sad.png">(Good? I'm not so sure about that, Chun-Li. Mika, my condolences.)</state>
+            </case>
+            <case tag="female_removed_accessory" target="chun-li" targetStage="2" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="0-nervous.png">Oh, I wasn't suggesting I wanted to see you undress more, but OK...</state>
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="0-horny.png">Awww, so cute! You look like a little cat!</state>
@@ -1371,6 +1389,11 @@
                 <state img="0-calm.png">Your ~clothing~? Good.</state>
                 <state img="0-calm.png">Your ~clothing~? I see.</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0">
+                <condition count="1" filter="chun-li" />
+                <condition count="1" filter="cammy_white" />
+                <state img="0-combat.png">Me neither!</state>
+            </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="0-shocked.png">Again?!</state>
                 <state img="0-shocked.png">Are you gonna keep doing this?!</state>
@@ -1418,6 +1441,10 @@
                 <state img="0-interested.png">Your partner is gonna help you strip? Nadeshiko, isn't it?</state>
                 <state img="0-interested.png">I see, you're asking your partner for help. Nadeshiko, right?</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0" alsoPlaying="juri">
+                <state img="0-calm.png">I have no problem with it.</state>
+                <state img="0-calm.png">I think it's OK.</state>
+            </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="0-stretching.png">This arrogance won't get you anything. Just do what you have to do.</state>
                 <state img="0-stretching.png">You sure are acting superior considering you have already lost twice.</state>
@@ -1444,6 +1471,11 @@
                 <state img="0-interested.png">That's one less item for ~name~.</state>
                 <state img="0-interested.png">Let's continue with the game.</state>
                 <state img="0-interested.png">No time to lose, let's move on.</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <condition count="1" filter="rainbow_mika" />
+                <condition count="0" filter="juri" />
+                <state img="0-interested.png">That's just superstition, Mika. You shouldn't rely on stuff like that.</state>
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2">
                 <state img="0-sad.png">If I'd known I would have to deal with a crazy shooter too, I would've asked for backup.</state>
@@ -1492,6 +1524,10 @@
                 <state img="0-happy.png">Your cooperation is commendable.</state>
                 <state img="0-happy.png">I admire people who know how to work together.</state>
             </case>
+            <case tag="female_removed_minor" target="rainbow_mika" targetStage="1" alsoPlaying="juri">
+                <state img="0-nervous.png">C-can I protest?</state>
+                <state img="0-nervous.png">What?! No way!</state>
+            </case>
             <case tag="female_removed_minor" target="remilia" targetStage="2">
                 <state img="0-calm.png">We'll see about that.</state>
                 <state img="0-calm.png">That remains to be seen.</state>
@@ -1535,6 +1571,11 @@
                 <state img="0-interested.png">You're taking off your ~clothing~? That's not a minor item.</state>
                 <state img="0-interested.png">Your ~clothing~? Go on.</state>
                 <state img="0-interested.png">I still have all my clothes and you're taking off your ~clothing~?</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="5" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="0-happy.png">They are legendary, though.</state>
+                <state img="0-happy.png">Exposed or not, they sure are legendary.</state>
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="0-shocked.png">HEY, WATCH IT!</state>
@@ -1582,6 +1623,10 @@
             <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="chun-li">
                 <state img="0-stretching.png">What do we do while Juri strips, Chun-Li? Do we just ignore her?</state>
                 <state img="0-stretching.png">Chun-Li, how do you propose we deal with Juri when she's stripping? Should we ignore her?</state>
+            </case>
+            <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="rainbow_mika">
+                <state img="0-stretching.png">Fans? Juri? Yeah, right.</state>
+                <state img="0-stretching.png">Juri has fans? I'm not so sure.</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="0-shocked.png">Oh, she turned back to normal.</state>
@@ -1690,8 +1735,12 @@
                 <state img="0-angry.png">Out of respect to the others, we'll settle our business after the game is over.</state>
                 <state img="0-angry.png">Let's settle things once the game is over. I wouldn't want to disrupt the other players.</state>
             </case>
-            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li">
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li" priority="500">
                 <state img="0-butt.png">...</state>
+            </case>
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="rainbow_mika">
+                <state img="0-calm.png">Yeah, Mika is way better than you, Juri.</state>
+                <state img="0-calm.png">She's right, Mika. You're much better than her.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="0-sad.png">To be honest, I liked the other version more. She was quieter.</state>
@@ -1821,7 +1870,7 @@
                 <state img="0-nervous.png">...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
-                <state img="0-combat.png">Wha- Ah- Chun-Li! Juri's is behind you!</state>
+                <state img="0-combat.png">Wha- Ah- Chun-Li! Juri is behind you!</state>
                 <state img="0-combat.png">Chun-Li! Watch out! It's Juri!</state>
             </case>
             <case tag="female_chest_will_be_visible" target="felicia">
@@ -1926,6 +1975,10 @@
                 <state img="0-nervous.png">Hmph!</state>
                 <state img="0-nervous.png">Some of my friends have big breasts. I honestly don't see the appeal.</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="rainbow_mika" alsoPlaying="juri">
+                <condition count="1" filter="chun-li" />
+                <state img="0-nervous.png">(What about me?)</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="chun-li">
                 <state img="0-nervous.png">(They seem to get bigger every time I see them.)</state>
                 <state img="0-nervous.png">(I always forget how big they are.)</state>
@@ -1933,6 +1986,10 @@
             <case tag="female_large_chest_is_visible" target="chun-li" alsoPlaying="juri">
                 <state img="0-sad.png">What?! No, that's ridiculous! I was just... thinking of something else.</state>
                 <state img="0-sad.png">No, I'm not! I'm happy with my body... even if Chun-Li's is so much more attractive.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
+                <state img="0-shocked.png">Whaaa...</state>
+                <state img="0-shocked.png">Ahhh...</state>
             </case>
             <case tag="female_large_chest_is_visible" target="rainbow_mika">
                 <state img="0-nervous.png">The back too...</state>
@@ -2173,23 +2230,26 @@
                 <state img="0-calm.png">I see, so I have to defeat every player until they're naked. I can do that.</state>
                 <state img="0-stretching.png">Only one player loses each round, right? This will take a while, but now I understand how it works.</state>
             </case>
+            <case tag="opponent_stripping" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed">
+                <state img="0-shocked.png">What...? It's just your mask! You were already naked.</state>
+                <state img="0-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            </case>
             <case tag="opponent_stripping" filter="assisted_strip">
                 <state img="0-shocked.png">You're getting help with that?</state>
                 <state img="0-calm.png">I think you can take off your clothes by yourself, but suit yourself.</state>
                 <state img="0-interested.png">Well, I don't think the rules say anything about getting help with the stripping part.</state>
             </case>
-            <case tag="opponent_stripping" target="rainbow_mika" targetSayingMarker="embarrassed">
-                <state img="0-shocked.png">What...? It's just your mask! You were already naked.</state>
-                <state img="0-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            <case tag="opponent_stripped" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="0-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
+                <state img="0-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
             </case>
             <case tag="opponent_stripped" filter="assisted_strip">
                 <state img="0-nervous.png">I don't think I would be comfortable getting undressed by another person. Unless we were very close...</state>
                 <state img="0-sad.png">To be honest, I'm not sure how getting undressed by someone else is better in this situation.</state>
                 <state img="0-stretching.png">Are you done already? I was hoping this would go faster if someone else is lending you a hand.</state>
             </case>
-            <case tag="opponent_stripped" target="rainbow_mika" targetSayingMarker="putting_mask">
-                <state img="0-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
-                <state img="0-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
+            <case tag="opponent_stripped" target="human" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="0-shocked.png">I didn't see anything... (I've never seen her embarrassed before)</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="0-nervous.png">Going through with this. That's gotta be tough, I offer you my sympathy.</state>
@@ -2197,7 +2257,7 @@
                 <state img="0-nervous.png">I'm feeling nervous just looking at you, ~name~. Good luck.</state>
                 <state img="0-nervous.png">I'm glad I'm not in your position. This is tough to watch.</state>
             </case>
-            <case tag="male_must_masturbate" saidMarker="one_on_one">
+            <case tag="male_must_masturbate" saidMarker="one_on_one" priority="500">
                 <state img="0-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="0-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="0-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -2263,7 +2323,7 @@
                 <state img="0-interested.png">I'm glad that you're out of the game, ~name~. But I can't help but feel sympathy for you.</state>
                 <state img="0-interested.png">At least you went out fighting, ~name~ You should feel proud.</state>
             </case>
-            <case tag="female_must_masturbate" saidMarker="one_on_one">
+            <case tag="female_must_masturbate" saidMarker="one_on_one" priority="250">
                 <state img="0-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="0-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="0-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -2425,7 +2485,7 @@
                 <state img="0-shocked.png">I've always known she was crazy, but this...</state>
                 <state img="0-nervous.png">The sounds she's making...</state>
                 <state img="0-horny.png">(I know I told her I wouldn't look at her, but...)</state>
-                <state img="0-horny.png">(Even if she's insane, she clearly has more technique than me.)</state>
+                <state img="0-horny.png">(Even if she's insane, she clearly has more knowledge than me)</state>
             </case>
             <case tag="female_masturbating" target="kizuna">
                 <state img="0-calm.png">I'm not sure what you're waiting for...</state>
@@ -2452,7 +2512,7 @@
                 <state img="0-shocked.png">Is this what wrestling is? I had no idea.</state>
                 <state img="0-shocked.png">Do you always wrestle like this?</state>
                 <state img="0-nervous.png">This isn't like a normal match. There's so much touching and...</state>
-                <state img="0-horny.png">Neither of you seems to be the least concerned about your bodies touching.</state>
+                <state img="0-horny.png">Neither of you seems to be the least bit concerned about your bodies touching.</state>
                 <state img="0-horny.png">I guess you two are used to wrestling each other, that's why this isn't embarrassing for you.</state>
             </case>
             <case tag="female_finished_masturbating">
@@ -2497,8 +2557,8 @@
                 <state img="0-interested.png">The vines are gone. How are you feeling?</state>
             </case>
             <case tag="female_finished_masturbating" target="rainbow_mika">
-                <state img="0-nervous.png">Maybe I should look into wrestling. F-for research.</state>
-                <state img="0-nervous.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
+                <state img="0-horny.png">Maybe I should look into wrestling. For research...</state>
+                <state img="0-horny.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
             </case>
             <case tag="female_finished_masturbating" target="shimakaze">
                 <state img="0-calm.png">Alright, now play with your robot quietly until the game is over.</state>
@@ -2534,6 +2594,9 @@
                 <state img="1-calm.png">I have to swap these cards to have any chance of winning.</state>
                 <state img="1-calm.png">New cards please. These are just not doing it.</state>
                 <state img="1-calm.png">I'm going to need some better cards.</state>
+            </case>
+            <case tag="swap_cards" alsoPlaying="rainbow_mika" alsoPlayingStage="3" alsoPlayingTimeInStage="0">
+                <state img="1-angry.png">Grrr... whatever!</state>
             </case>
             <case tag="swap_cards" timeInStage="0">
                 <state img="1-stripped2.png">Eh, just give me ~cards~. Please and thank you.</state>
@@ -2578,12 +2641,17 @@
             <case tag="hand" alsoPlaying="florina" alsoPlayingSayingMarker="bee">
                 <state img="1-sad.png">Is that a... bee?</state>
             </case>
+            <case tag="hand" alsoPlaying="juri" alsoPlayingSayingMarker="juri_cheats">
+                <state img="1-angry.png">That's dirty, Juri! How would you feel if we looked at your cards? Hmph, I bet you wouldn't care.</state>
+                <state img="1-angry.png">Juri is looking at Chun-Li's cards! Isn't this enough to kick her out of the game?</state>
+                <state img="1-angry.png">Juri is cheating! Shouldn't she be banned from playing the game?</state>
+            </case>
             <case tag="hand" alsoPlaying="juri" alsoPlayingStage="0-4" totalAlive="2" notSaidMarker="one_on_one">
                 <state img="1-combat.png" marker="one_on_one">Juri!!!</state>
                 <state img="1-combat.png" marker="one_on_one">It's only Juri now. I can do this!</state>
                 <state img="1-combat.png" marker="one_on_one">Now I just have to focus on Juri. Let's go!</state>
             </case>
-            <case tag="hand" alsoPlaying="juri" alsoPlayingStage="3" alsoPlayingTimeInStage="0" notSaidMarker="forfeit">
+            <case tag="hand" alsoPlaying="juri" alsoPlayingStage="3" alsoPlayingTimeInStage="0-" totalRounds="5-" notSaidMarker="forfeit">
                 <state img="1-shocked.png" marker="forfeit">What did you say, Juri?! Touch yourself?! Why would you... Are you kidding me?!</state>
                 <state img="1-shocked.png" marker="forfeit">Juri, what was that?! Why would you touch yourself if you lose? Oh no...</state>
             </case>
@@ -2663,6 +2731,10 @@
                 <state img="1-sad.png">This game has been going for so long that people at HQ must be getting worried about me.</state>
                 <state img="1-sad.png">It's been so long since we started playing, and I'm feeling tired. But I can't lose focus now.</state>
             </case>
+            <case tag="must_strip" alsoPlaying="rainbow_mika">
+                <state img="1-loss.png">Hmph, this won't be enough to bring me down.</state>
+                <state img="1-loss.png">You think this is enough to break me? Just you wait...</state>
+            </case>
             <case tag="must_strip" hasHand="One Pair" priority="0">
                 <state img="1-loss.png">&lt;i&gt;sigh&lt;/i&gt; I guess a pair doesn't always work.</state>
                 <state img="1-loss.png">So a pair doesn't work every time? I'll have to adapt my strategy accordingly.</state>
@@ -2730,10 +2802,20 @@
                 <state img="1-stripped1b.png">Small?! I'm not small! Maybe you're small!</state>
                 <state img="1-stripped1b.png">Small?! Who are you calling small?!</state>
             </case>
-            <case tag="stripped" alsoPlaying="juri">
+            <case tag="stripped" alsoPlaying="juri" priority="130">
                 <condition count="1" filter="chun-li" />
                 <state img="1-stripped1.png">You tell her, Chun-Li.</state>
                 <state img="1-stripped1.png">It's a little embarrassing to hear you talk like that, but you're right, Chun-Li.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="rainbow_mika">
+                <condition count="1" filter="chun-li" />
+                <state img="1-stripped1.png">Too late to back down now, Chun-Li.</state>
+                <state img="1-stripped1.png">Are you backing down, Chun-Li? Didn't you just say you wanted to see me as a wrestler?</state>
+            </case>
+            <case tag="stripped" alsoPlaying="rainbow_mika">
+                <condition count="1" filter="juri" />
+                <state img="1-stripped1b.png">Eh... It's good that you want to promote wrestling, Mika, but it's not a good idea to invite Juri for anything.</state>
+                <state img="1-stripped1b.png">I don't think that's a good idea, Mika. You should be more wary of Juri.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="1-interested.png">I still have my hopes for you.</state>
@@ -3099,7 +3181,7 @@
                 <state img="1-interested.png">It's good that you have your bracelets right now. That's one more use for them.</state>
                 <state img="1-interested.png">Oh, you're gonna take off your bracelets so you don't have to remove your clothes. That's good.</state>
             </case>
-            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri">
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri" priority="500">
                 <state img="1-interested.png">Hey, your bracelets!</state>
             </case>
             <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="rainbow_mika">
@@ -3203,6 +3285,10 @@
                 <condition count="0" filter="juri" />
                 <state img="1-sad.png">(Should I tell her that Chun-Li's cooking is awful?)</state>
                 <state img="1-sad.png">(Good? I'm not so sure about that, Chun-Li. Mika, my condolences.)</state>
+            </case>
+            <case tag="female_removed_accessory" target="chun-li" targetStage="2" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="1-nervous.png">Oh, I wasn't suggesting I wanted to see you undress more, but OK...</state>
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="1-horny.png">Awww, so cute! You look like a little cat!</state>
@@ -3360,6 +3446,11 @@
                 <state img="1-calm.png">I had a feeling you were going to take off your ~clothing~.</state>
                 <state img="1-calm.png">Your ~clothing~? Not surprising.</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0">
+                <condition count="1" filter="chun-li" />
+                <condition count="1" filter="cammy_white" />
+                <state img="1-combat.png">Me neither!</state>
+            </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="1-shocked.png">Again?!</state>
                 <state img="1-shocked.png">Are you gonna keep doing this?!</state>
@@ -3407,6 +3498,10 @@
                 <state img="1-interested.png">Your partner is gonna help you strip? Nadeshiko, isn't it?</state>
                 <state img="1-interested.png">I see, you're asking your partner for help. Nadeshiko, right?</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0" alsoPlaying="juri">
+                <state img="1-calm.png">I have no problem with it.</state>
+                <state img="1-calm.png">I think it's OK.</state>
+            </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="1-stretching.png">This arrogance won't get you anything. Just do what you have to do.</state>
                 <state img="1-stretching.png">You sure are acting superior considering you have already lost twice.</state>
@@ -3434,6 +3529,11 @@
                 <state img="1-interested.png">Still better than an accessory.</state>
                 <state img="1-interested.png">At this point in the game, that's not a bad choice.</state>
                 <state img="1-interested.png">That's more than my hat at least.</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <condition count="1" filter="rainbow_mika" />
+                <condition count="0" filter="juri" />
+                <state img="1-interested.png">That's just superstition, Mika. You shouldn't rely on stuff like that.</state>
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2">
                 <state img="1-sad.png">If I'd known I would have to deal with a crazy shooter too, I would've asked for backup.</state>
@@ -3482,6 +3582,10 @@
                 <state img="1-happy.png">Your cooperation is commendable.</state>
                 <state img="1-happy.png">I admire people who know how to work together.</state>
             </case>
+            <case tag="female_removed_minor" target="rainbow_mika" targetStage="1" alsoPlaying="juri">
+                <state img="1-nervous.png">C-can I protest?</state>
+                <state img="1-nervous.png">What?! No way!</state>
+            </case>
             <case tag="female_removed_minor" target="remilia" targetStage="2">
                 <state img="1-calm.png">We'll see about that.</state>
                 <state img="1-calm.png">That remains to be seen.</state>
@@ -3526,6 +3630,11 @@
                 <state img="1-interested.png">You're surpassing my expectations, ~name~.</state>
                 <state img="1-interested.png">Oh, your ~clothing~.</state>
                 <state img="1-interested.png">Good choice, ~name~.</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="5" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="1-happy.png">They are legendary, though.</state>
+                <state img="1-happy.png">Exposed or not, they sure are legendary.</state>
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="1-shocked.png">HEY, WATCH IT!</state>
@@ -3573,6 +3682,10 @@
             <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="chun-li">
                 <state img="1-stretching.png">What do we do while Juri strips, Chun-Li? Do we just ignore her?</state>
                 <state img="1-stretching.png">Chun-Li, how do you propose we deal with Juri when she's stripping? Should we ignore her?</state>
+            </case>
+            <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="rainbow_mika">
+                <state img="1-stretching.png">Fans? Juri? Yeah, right.</state>
+                <state img="1-stretching.png">Juri has fans? I'm not so sure.</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="1-shocked.png">Oh, she turned back to normal.</state>
@@ -3681,8 +3794,12 @@
                 <state img="1-angry.png">Out of respect to the others, we'll settle our business after the game is over.</state>
                 <state img="1-angry.png">Let's settle things once the game is over. I wouldn't want to disrupt the other players.</state>
             </case>
-            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li">
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li" priority="500">
                 <state img="1-butt.png">...</state>
+            </case>
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="rainbow_mika">
+                <state img="1-calm.png">Yeah, Mika is way better than you, Juri.</state>
+                <state img="1-calm.png">She's right, Mika. You're much better than her.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="1-sad.png">To be honest, I liked the other version more. She was quieter.</state>
@@ -3812,7 +3929,7 @@
                 <state img="1-nervous.png">...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
-                <state img="1-combat.png">Wha- Ah- Chun-Li! Juri's is behind you!</state>
+                <state img="1-combat.png">Wha- Ah- Chun-Li! Juri is behind you!</state>
                 <state img="1-combat.png">Chun-Li! Watch out! It's Juri!</state>
             </case>
             <case tag="female_chest_will_be_visible" target="felicia">
@@ -3917,6 +4034,10 @@
                 <state img="1-nervous.png">Hmph!</state>
                 <state img="1-nervous.png">Some of my friends have big breasts. I honestly don't see the appeal.</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="rainbow_mika" alsoPlaying="juri">
+                <condition count="1" filter="chun-li" />
+                <state img="1-nervous.png">(What about me?)</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="chun-li">
                 <state img="1-nervous.png">(They seem to get bigger every time I see them.)</state>
                 <state img="1-nervous.png">(I always forget how big they are.)</state>
@@ -3924,6 +4045,10 @@
             <case tag="female_large_chest_is_visible" target="chun-li" alsoPlaying="juri">
                 <state img="1-sad.png">What?! No, that's ridiculous! I was just... thinking of something else.</state>
                 <state img="1-sad.png">No, I'm not! I'm happy with my body... even if Chun-Li's is so much more attractive.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
+                <state img="1-shocked.png">Whaaa...</state>
+                <state img="1-shocked.png">Ahhh...</state>
             </case>
             <case tag="female_large_chest_is_visible" target="rainbow_mika">
                 <state img="1-nervous.png">The back too...</state>
@@ -4157,23 +4282,26 @@
                 <state img="1-happy.png">It seems you're not unbeatable after all.</state>
                 <state img="1-interested.png">You're playing this game too, ~name~. Don't forget that just because you haven't lost in a while.</state>
             </case>
+            <case tag="opponent_stripping" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed">
+                <state img="1-shocked.png">What...? It's just your mask! You were already naked.</state>
+                <state img="1-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            </case>
             <case tag="opponent_stripping" filter="assisted_strip">
                 <state img="1-shocked.png">You're getting help with that?</state>
                 <state img="1-calm.png">I think you can take off your clothes by yourself, but suit yourself.</state>
                 <state img="1-interested.png">Well, I don't think the rules say anything about getting help with the stripping part.</state>
             </case>
-            <case tag="opponent_stripping" target="rainbow_mika" targetSayingMarker="embarrassed">
-                <state img="1-shocked.png">What...? It's just your mask! You were already naked.</state>
-                <state img="1-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            <case tag="opponent_stripped" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="1-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
+                <state img="1-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
             </case>
             <case tag="opponent_stripped" filter="assisted_strip">
                 <state img="1-nervous.png">I don't think I would be comfortable getting undressed by another person. Unless we were very close...</state>
                 <state img="1-sad.png">To be honest, I'm not sure how getting undressed by someone else is better in this situation.</state>
                 <state img="1-stretching.png">Are you done already? I was hoping this would go faster if someone else is lending you a hand.</state>
             </case>
-            <case tag="opponent_stripped" target="rainbow_mika" targetSayingMarker="putting_mask">
-                <state img="1-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
-                <state img="1-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
+            <case tag="opponent_stripped" target="human" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="1-shocked.png">I didn't see anything... (I've never seen her embarrassed before)</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="1-nervous.png">Going through with this. That's gotta be tough, I offer you my sympathy.</state>
@@ -4181,7 +4309,7 @@
                 <state img="1-nervous.png">I'm feeling nervous just looking at you, ~name~. Good luck.</state>
                 <state img="1-nervous.png">I'm glad I'm not in your position. This is tough to watch.</state>
             </case>
-            <case tag="male_must_masturbate" saidMarker="one_on_one">
+            <case tag="male_must_masturbate" saidMarker="one_on_one" priority="500">
                 <state img="1-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="1-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="1-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -4247,7 +4375,7 @@
                 <state img="1-interested.png">I'm glad that you're out of the game, ~name~. But I can't help but feel sympathy for you.</state>
                 <state img="1-interested.png">At least you went out fighting, ~name~ You should feel proud.</state>
             </case>
-            <case tag="female_must_masturbate" saidMarker="one_on_one">
+            <case tag="female_must_masturbate" saidMarker="one_on_one" priority="250">
                 <state img="1-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="1-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="1-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -4409,7 +4537,7 @@
                 <state img="1-shocked.png">I've always known she was crazy, but this...</state>
                 <state img="1-nervous.png">The sounds she's making...</state>
                 <state img="1-horny.png">(I know I told her I wouldn't look at her, but...)</state>
-                <state img="1-horny.png">(Even if she's insane, she clearly has more technique than me.)</state>
+                <state img="1-horny.png">(Even if she's insane, she clearly has more knowledge than me)</state>
             </case>
             <case tag="female_masturbating" target="kizuna">
                 <state img="1-calm.png">I'm not sure what you're waiting for...</state>
@@ -4436,7 +4564,7 @@
                 <state img="1-shocked.png">Is this what wrestling is? I had no idea.</state>
                 <state img="1-shocked.png">Do you always wrestle like this?</state>
                 <state img="1-nervous.png">This isn't like a normal match. There's so much touching and...</state>
-                <state img="1-horny.png">Neither of you seems to be the least concerned about your bodies touching.</state>
+                <state img="1-horny.png">Neither of you seems to be the least bit concerned about your bodies touching.</state>
                 <state img="1-horny.png">I guess you two are used to wrestling each other, that's why this isn't embarrassing for you.</state>
             </case>
             <case tag="female_finished_masturbating">
@@ -4481,8 +4609,8 @@
                 <state img="1-interested.png">The vines are gone. How are you feeling?</state>
             </case>
             <case tag="female_finished_masturbating" target="rainbow_mika">
-                <state img="1-nervous.png">Maybe I should look into wrestling. F-for research.</state>
-                <state img="1-nervous.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
+                <state img="1-horny.png">Maybe I should look into wrestling. For research...</state>
+                <state img="1-horny.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
             </case>
             <case tag="female_finished_masturbating" target="shimakaze">
                 <state img="1-calm.png">Alright, now play with your robot quietly until the game is over.</state>
@@ -4518,6 +4646,9 @@
                 <state img="2-calm.png">I have to swap these cards to have any chance of winning.</state>
                 <state img="2-calm.png">New cards please. These are just not doing it.</state>
                 <state img="2-calm.png">I'm going to need some better cards.</state>
+            </case>
+            <case tag="swap_cards" alsoPlaying="rainbow_mika" alsoPlayingStage="3" alsoPlayingTimeInStage="0">
+                <state img="2-angry.png">Grrr... whatever!</state>
             </case>
             <case tag="good_hand">
                 <state img="2-happy.png">Things are going well now.</state>
@@ -4559,12 +4690,17 @@
             <case tag="hand" alsoPlaying="florina" alsoPlayingSayingMarker="bee">
                 <state img="2-sad.png">Is that a... bee?</state>
             </case>
+            <case tag="hand" alsoPlaying="juri" alsoPlayingSayingMarker="juri_cheats">
+                <state img="2-angry.png">That's dirty, Juri! How would you feel if we looked at your cards? Hmph, I bet you wouldn't care.</state>
+                <state img="2-angry.png">Juri is looking at Chun-Li's cards! Isn't this enough to kick her out of the game?</state>
+                <state img="2-angry.png">Juri is cheating! Shouldn't she be banned from playing the game?</state>
+            </case>
             <case tag="hand" alsoPlaying="juri" alsoPlayingStage="0-4" totalAlive="2" notSaidMarker="one_on_one">
                 <state img="2-combat.png" marker="one_on_one">Juri!!!</state>
                 <state img="2-combat.png" marker="one_on_one">It's only Juri now. I can do this!</state>
                 <state img="2-combat.png" marker="one_on_one">Now I just have to focus on Juri. Let's go!</state>
             </case>
-            <case tag="hand" alsoPlaying="juri" alsoPlayingStage="3" alsoPlayingTimeInStage="0" notSaidMarker="forfeit">
+            <case tag="hand" alsoPlaying="juri" alsoPlayingStage="3" alsoPlayingTimeInStage="0-" totalRounds="5-" notSaidMarker="forfeit">
                 <state img="2-shocked.png" marker="forfeit">What did you say, Juri?! Touch yourself?! Why would you... Are you kidding me?!</state>
                 <state img="2-shocked.png" marker="forfeit">Juri, what was that?! Why would you touch yourself if you lose? Oh no...</state>
             </case>
@@ -4687,7 +4823,7 @@
             </case>
             <case tag="stripping" alsoPlaying="rainbow_mika">
                 <state img="2-stripping.png">It's OK, Mika. I don't mind sitting on the floor. Although it is quite cold...</state>
-                <state img="2-stripping.png">Thank you, but sitting down it's not a problem. Even if the floor is very cold...</state>
+                <state img="2-stripping.png">Thank you, but sitting down is not a problem. Even if the floor is very cold...</state>
             </case>
             <case tag="stripping" alsoPlaying="juri">
                 <condition count="1" filter="chun-li" />
@@ -4722,6 +4858,17 @@
                 <condition count="1" filter="chun-li" />
                 <state img="2-stripped.png">What's that supposed to mean, Juri? Stop spouting nonsense.</state>
                 <state img="2-stripped.png">What are you even talking, Juri? Why would I need to use my fingers? Just keep quiet, please.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="rainbow_mika">
+                <condition count="1" filter="chun-li" />
+                <condition count="0" filter="juri" />
+                <state img="2-stripped.png">You probably know more than I do about uncomfortable clothing, Mika. Wearing that leotard...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="juri">
+                <condition count="1" filter="rainbow_mika" />
+                <condition count="0" filter="chun-li" />
+                <state img="2-stripped.png">...</state>
+                <state img="2-stripped.png">Hmm...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="2-win.png">I'll let nothing stand in my way.</state>
@@ -5087,7 +5234,7 @@
                 <state img="2-interested.png">It's good that you have your bracelets right now. That's one more use for them.</state>
                 <state img="2-interested.png">Oh, you're gonna take off your bracelets so you don't have to remove your clothes. That's good.</state>
             </case>
-            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri">
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri" priority="500">
                 <state img="2-interested.png">Hey, your bracelets!</state>
             </case>
             <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="rainbow_mika">
@@ -5191,6 +5338,10 @@
                 <condition count="0" filter="juri" />
                 <state img="2-sad.png">(Should I tell her that Chun-Li's cooking is awful?)</state>
                 <state img="2-sad.png">(Good? I'm not so sure about that, Chun-Li. Mika, my condolences.)</state>
+            </case>
+            <case tag="female_removed_accessory" target="chun-li" targetStage="2" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="2-nervous.png">Oh, I wasn't suggesting I wanted to see you undress more, but OK...</state>
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="2-horny.png">Awww, so cute! You look like a little cat!</state>
@@ -5346,6 +5497,11 @@
                 <state img="2-calm.png">If you want to take off your ~clothing~, no one will stop you.</state>
                 <state img="2-calm.png">I guess it could be worse than your ~clothing~.</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0">
+                <condition count="1" filter="chun-li" />
+                <condition count="1" filter="cammy_white" />
+                <state img="2-combat.png">Me neither!</state>
+            </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="2-shocked.png">Again?!</state>
                 <state img="2-shocked.png">Are you gonna keep doing this?!</state>
@@ -5393,6 +5549,10 @@
                 <state img="2-interested.png">Your partner is gonna help you strip? Nadeshiko, isn't it?</state>
                 <state img="2-interested.png">I see, you're asking your partner for help. Nadeshiko, right?</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0" alsoPlaying="juri">
+                <state img="2-calm.png">I have no problem with it.</state>
+                <state img="2-calm.png">I think it's OK.</state>
+            </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="2-stretching.png">This arrogance won't get you anything. Just do what you have to do.</state>
                 <state img="2-stretching.png">You sure are acting superior considering you have already lost twice.</state>
@@ -5419,6 +5579,11 @@
                 <state img="2-nervous.png">It's good that I still have my boots. But after that...</state>
                 <state img="2-interested.png">I'm not worried. At least for now.</state>
                 <state img="2-interested.png">Hopefully the game will turn in my favor soon.</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <condition count="1" filter="rainbow_mika" />
+                <condition count="0" filter="juri" />
+                <state img="2-interested.png">That's just superstition, Mika. You shouldn't rely on stuff like that.</state>
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2">
                 <state img="2-sad.png">If I'd known I would have to deal with a crazy shooter too, I would've asked for backup.</state>
@@ -5467,6 +5632,10 @@
                 <state img="2-happy.png">Your cooperation is commendable.</state>
                 <state img="2-happy.png">I admire people who know how to work together.</state>
             </case>
+            <case tag="female_removed_minor" target="rainbow_mika" targetStage="1" alsoPlaying="juri">
+                <state img="2-nervous.png">C-can I protest?</state>
+                <state img="2-nervous.png">What?! No way!</state>
+            </case>
             <case tag="female_removed_minor" target="remilia" targetStage="2">
                 <state img="2-calm.png">We'll see about that.</state>
                 <state img="2-calm.png">That remains to be seen.</state>
@@ -5510,6 +5679,11 @@
                 <state img="2-interested.png">Well done, ~name~. You follow through.</state>
                 <state img="2-interested.png">This is good, we're making progress.</state>
                 <state img="2-interested.png">Very good choice, ~name~.</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="5" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="2-happy.png">They are legendary, though.</state>
+                <state img="2-happy.png">Exposed or not, they sure are legendary.</state>
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="2-shocked.png">HEY, WATCH IT!</state>
@@ -5557,6 +5731,10 @@
             <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="chun-li">
                 <state img="2-stretching.png">What do we do while Juri strips, Chun-Li? Do we just ignore her?</state>
                 <state img="2-stretching.png">Chun-Li, how do you propose we deal with Juri when she's stripping? Should we ignore her?</state>
+            </case>
+            <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="rainbow_mika">
+                <state img="2-stretching.png">Fans? Juri? Yeah, right.</state>
+                <state img="2-stretching.png">Juri has fans? I'm not so sure.</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="2-shocked.png">Oh, she turned back to normal.</state>
@@ -5665,8 +5843,12 @@
                 <state img="2-angry.png">Out of respect to the others, we'll settle our business after the game is over.</state>
                 <state img="2-angry.png">Let's settle things once the game is over. I wouldn't want to disrupt the other players.</state>
             </case>
-            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li">
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li" priority="500">
                 <state img="2-butt.png">...</state>
+            </case>
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="rainbow_mika">
+                <state img="2-calm.png">Yeah, Mika is way better than you, Juri.</state>
+                <state img="2-calm.png">She's right, Mika. You're much better than her.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="2-sad.png">To be honest, I liked the other version more. She was quieter.</state>
@@ -5796,7 +5978,7 @@
                 <state img="2-nervous.png">...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
-                <state img="2-combat.png">Wha- Ah- Chun-Li! Juri's is behind you!</state>
+                <state img="2-combat.png">Wha- Ah- Chun-Li! Juri is behind you!</state>
                 <state img="2-combat.png">Chun-Li! Watch out! It's Juri!</state>
             </case>
             <case tag="female_chest_will_be_visible" target="felicia">
@@ -5901,6 +6083,10 @@
                 <state img="2-nervous.png">Hmph!</state>
                 <state img="2-nervous.png">Some of my friends have big breasts. I honestly don't see the appeal.</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="rainbow_mika" alsoPlaying="juri">
+                <condition count="1" filter="chun-li" />
+                <state img="2-nervous.png">(What about me?)</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="chun-li">
                 <state img="2-nervous.png">(They seem to get bigger every time I see them.)</state>
                 <state img="2-nervous.png">(I always forget how big they are.)</state>
@@ -5908,6 +6094,10 @@
             <case tag="female_large_chest_is_visible" target="chun-li" alsoPlaying="juri">
                 <state img="2-sad.png">What?! No, that's ridiculous! I was just... thinking of something else.</state>
                 <state img="2-sad.png">No, I'm not! I'm happy with my body... even if Chun-Li's is so much more attractive.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
+                <state img="2-shocked.png">Whaaa...</state>
+                <state img="2-shocked.png">Ahhh...</state>
             </case>
             <case tag="female_large_chest_is_visible" target="rainbow_mika">
                 <state img="2-nervous.png">The back too...</state>
@@ -6148,23 +6338,26 @@
                 <state img="2-happy.png">It seems you're not unbeatable after all.</state>
                 <state img="2-interested.png">You're playing this game too, ~name~. Don't forget that just because you haven't lost in a while.</state>
             </case>
+            <case tag="opponent_stripping" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed">
+                <state img="2-shocked.png">What...? It's just your mask! You were already naked.</state>
+                <state img="2-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            </case>
             <case tag="opponent_stripping" filter="assisted_strip">
                 <state img="2-shocked.png">You're getting help with that?</state>
                 <state img="2-calm.png">I think you can take off your clothes by yourself, but suit yourself.</state>
                 <state img="2-interested.png">Well, I don't think the rules say anything about getting help with the stripping part.</state>
             </case>
-            <case tag="opponent_stripping" target="rainbow_mika" targetSayingMarker="embarrassed">
-                <state img="2-shocked.png">What...? It's just your mask! You were already naked.</state>
-                <state img="2-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            <case tag="opponent_stripped" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="2-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
+                <state img="2-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
             </case>
             <case tag="opponent_stripped" filter="assisted_strip">
                 <state img="2-nervous.png">I don't think I would be comfortable getting undressed by another person. Unless we were very close...</state>
                 <state img="2-sad.png">To be honest, I'm not sure how getting undressed by someone else is better in this situation.</state>
                 <state img="2-stretching.png">Are you done already? I was hoping this would go faster if someone else is lending you a hand.</state>
             </case>
-            <case tag="opponent_stripped" target="rainbow_mika" targetSayingMarker="putting_mask">
-                <state img="2-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
-                <state img="2-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
+            <case tag="opponent_stripped" target="human" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="2-shocked.png">I didn't see anything... (I've never seen her embarrassed before)</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="2-nervous.png">Going through with this. That's gotta be tough, I offer you my sympathy.</state>
@@ -6172,7 +6365,7 @@
                 <state img="2-nervous.png">I'm feeling nervous just looking at you, ~name~. Good luck.</state>
                 <state img="2-nervous.png">I'm glad I'm not in your position. This is tough to watch.</state>
             </case>
-            <case tag="male_must_masturbate" saidMarker="one_on_one">
+            <case tag="male_must_masturbate" saidMarker="one_on_one" priority="500">
                 <state img="2-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="2-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="2-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -6238,7 +6431,7 @@
                 <state img="2-interested.png">I'm glad that you're out of the game, ~name~. But I can't help but feel sympathy for you.</state>
                 <state img="2-interested.png">At least you went out fighting, ~name~ You should feel proud.</state>
             </case>
-            <case tag="female_must_masturbate" saidMarker="one_on_one">
+            <case tag="female_must_masturbate" saidMarker="one_on_one" priority="250">
                 <state img="2-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="2-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="2-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -6400,7 +6593,7 @@
                 <state img="2-shocked.png">I've always known she was crazy, but this...</state>
                 <state img="2-nervous.png">The sounds she's making...</state>
                 <state img="2-horny.png">(I know I told her I wouldn't look at her, but...)</state>
-                <state img="2-horny.png">(Even if she's insane, she clearly has more technique than me.)</state>
+                <state img="2-horny.png">(Even if she's insane, she clearly has more knowledge than me)</state>
             </case>
             <case tag="female_masturbating" target="kizuna">
                 <state img="2-calm.png">I'm not sure what you're waiting for...</state>
@@ -6427,7 +6620,7 @@
                 <state img="2-shocked.png">Is this what wrestling is? I had no idea.</state>
                 <state img="2-shocked.png">Do you always wrestle like this?</state>
                 <state img="2-nervous.png">This isn't like a normal match. There's so much touching and...</state>
-                <state img="2-horny.png">Neither of you seems to be the least concerned about your bodies touching.</state>
+                <state img="2-horny.png">Neither of you seems to be the least bit concerned about your bodies touching.</state>
                 <state img="2-horny.png">I guess you two are used to wrestling each other, that's why this isn't embarrassing for you.</state>
             </case>
             <case tag="female_finished_masturbating">
@@ -6472,8 +6665,8 @@
                 <state img="2-interested.png">The vines are gone. How are you feeling?</state>
             </case>
             <case tag="female_finished_masturbating" target="rainbow_mika">
-                <state img="2-nervous.png">Maybe I should look into wrestling. F-for research.</state>
-                <state img="2-nervous.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
+                <state img="2-horny.png">Maybe I should look into wrestling. For research...</state>
+                <state img="2-horny.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
             </case>
             <case tag="female_finished_masturbating" target="shimakaze">
                 <state img="2-calm.png">Alright, now play with your robot quietly until the game is over.</state>
@@ -6509,6 +6702,9 @@
                 <state img="3-calm.png">I have to swap these cards to have any chance of winning.</state>
                 <state img="3-calm.png">New cards please. These are just not doing it.</state>
                 <state img="3-calm.png">I'm going to need some better cards.</state>
+            </case>
+            <case tag="swap_cards" alsoPlaying="rainbow_mika" alsoPlayingStage="3" alsoPlayingTimeInStage="0">
+                <state img="3-angry.png">Grrr... whatever!</state>
             </case>
             <case tag="good_hand">
                 <state img="3-happy.png">I think I'm in the clear now.</state>
@@ -6550,12 +6746,17 @@
             <case tag="hand" alsoPlaying="florina" alsoPlayingSayingMarker="bee">
                 <state img="3-sad.png">Is that a... bee?</state>
             </case>
+            <case tag="hand" alsoPlaying="juri" alsoPlayingSayingMarker="juri_cheats">
+                <state img="3-angry.png">That's dirty, Juri! How would you feel if we looked at your cards? Hmph, I bet you wouldn't care.</state>
+                <state img="3-angry.png">Juri is looking at Chun-Li's cards! Isn't this enough to kick her out of the game?</state>
+                <state img="3-angry.png">Juri is cheating! Shouldn't she be banned from playing the game?</state>
+            </case>
             <case tag="hand" alsoPlaying="juri" alsoPlayingStage="0-4" totalAlive="2" notSaidMarker="one_on_one">
                 <state img="3-combat.png" marker="one_on_one">Juri!!!</state>
                 <state img="3-combat.png" marker="one_on_one">It's only Juri now. I can do this!</state>
                 <state img="3-combat.png" marker="one_on_one">Now I just have to focus on Juri. Let's go!</state>
             </case>
-            <case tag="hand" alsoPlaying="juri" alsoPlayingStage="3" alsoPlayingTimeInStage="0" notSaidMarker="forfeit">
+            <case tag="hand" alsoPlaying="juri" alsoPlayingStage="3" alsoPlayingTimeInStage="0-" totalRounds="5-" notSaidMarker="forfeit">
                 <state img="3-shocked.png" marker="forfeit">What did you say, Juri?! Touch yourself?! Why would you... Are you kidding me?!</state>
                 <state img="3-shocked.png" marker="forfeit">Juri, what was that?! Why would you touch yourself if you lose? Oh no...</state>
             </case>
@@ -6643,7 +6844,7 @@
             <case tag="must_strip" alsoPlaying="chun-li" priority="110">
                 <state img="3-loss.png">Oh, I lost... Chun-Li, since you're here, do you mind giving me a hand taking off my leotard?</state>
                 <state img="3-loss.png">Could you help me take off my leotard, Chun-Li? I'm a little nervous and I feel something bad would happen if I do it myself.</state>
-                <state img="3-loss.png">I'm feeling.. a little nervous to take off my leotard by myself. Could you help me, Chun-Li?</state>
+                <state img="3-loss.png">I'm feeling... a little nervous to take off my leotard by myself. Could you help me, Chun-Li?</state>
             </case>
             <case tag="must_strip" alsoPlaying="juri">
                 <state img="3-loss.png">Scared? N-no, I can handle this.</state>
@@ -6835,13 +7036,30 @@
                 <state img="3-stripped.png">Why are you always lying, Juri? (I hope she's lying again...)</state>
             </case>
             <case tag="stripped" alsoPlaying="rainbow_mika">
-                <state img="3-stripped.png">That's... no.</state>
+                <state img="3-stripped.png">That's... no, I don't think so.</state>
                 <state img="3-stripped.png">What? I would never do something like that...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="rainbow_mika">
+                <condition count="1" filter="chun-li" />
+                <condition count="0" filter="juri" />
+                <state img="3-stripped.png">W-well, I can take her of it myself.</state>
             </case>
             <case tag="stripped" alsoPlaying="juri">
                 <condition count="1" filter="chun-li" />
+                <condition count="0" filter="rainbow_mika" />
                 <state img="3-stripped.png">What are you two mumbling about? I can't hear you...</state>
                 <state img="3-stripped.png">Did you two say something? I wasn't listening.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="juri" priority="150">
+                <condition count="1" filter="chun-li" />
+                <condition count="1" filter="rainbow_mika" />
+                <state img="3-stripped.png">What are you three mumbling about? I can't hear you...</state>
+                <state img="3-stripped.png">Did you three say something? I wasn't listening.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="rainbow_mika" priority="110">
+                <condition count="1" filter="juri" />
+                <state img="3-stripped.png">No! Not in a million years, Juri.</state>
+                <state img="3-stripped.png">I'd rather die freezing, Juri.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="3-stretching.png">This is a relief. For me, at least.</state>
@@ -7207,7 +7425,7 @@
                 <state img="3-interested.png">It's good that you have your bracelets right now. That's one more use for them.</state>
                 <state img="3-interested.png">Oh, you're gonna take off your bracelets so you don't have to remove your clothes. That's good.</state>
             </case>
-            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri">
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri" priority="500">
                 <state img="3-interested.png">Hey, your bracelets!</state>
             </case>
             <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="rainbow_mika">
@@ -7311,6 +7529,10 @@
                 <condition count="0" filter="juri" />
                 <state img="3-sad.png">(Should I tell her that Chun-Li's cooking is awful?)</state>
                 <state img="3-sad.png">(Good? I'm not so sure about that, Chun-Li. Mika, my condolences.)</state>
+            </case>
+            <case tag="female_removed_accessory" target="chun-li" targetStage="2" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="3-nervous.png">Oh, I wasn't suggesting I wanted to see you undress more, but OK...</state>
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="3-horny.png">Awww, so cute! You look like a little cat!</state>
@@ -7466,6 +7688,11 @@
                 <state img="3-calm.png">Is there a way to convince you to take off something else?</state>
                 <state img="3-calm.png">Any chance you could take off something bigger, ~name~?</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0">
+                <condition count="1" filter="chun-li" />
+                <condition count="1" filter="cammy_white" />
+                <state img="3-combat.png">Me neither!</state>
+            </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="3-shocked.png">Again?!</state>
                 <state img="3-shocked.png">Are you gonna keep doing this?!</state>
@@ -7513,6 +7740,10 @@
                 <state img="3-interested.png">Your partner is gonna help you strip? Nadeshiko, isn't it?</state>
                 <state img="3-interested.png">I see, you're asking your partner for help. Nadeshiko, right?</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0" alsoPlaying="juri">
+                <state img="3-calm.png">I have no problem with it.</state>
+                <state img="3-calm.png">I think it's OK.</state>
+            </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="3-stretching.png">This arrogance won't get you anything. Just do what you have to do.</state>
                 <state img="3-stretching.png">You sure are acting superior considering you have already lost twice.</state>
@@ -7539,6 +7770,11 @@
                 <state img="3-nervous.png">The game can't keep moving at this pace, or I will...</state>
                 <state img="3-sad.png">It's just not fair.</state>
                 <state img="3-nervous.png">What can I do? It's not looking good for me.</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <condition count="1" filter="rainbow_mika" />
+                <condition count="0" filter="juri" />
+                <state img="3-interested.png">That's just superstition, Mika. You shouldn't rely on stuff like that.</state>
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2">
                 <state img="3-sad.png">If I'd known I would have to deal with a crazy shooter too, I would've asked for backup.</state>
@@ -7587,6 +7823,10 @@
                 <state img="3-happy.png">Your cooperation is commendable.</state>
                 <state img="3-happy.png">I admire people who know how to work together.</state>
             </case>
+            <case tag="female_removed_minor" target="rainbow_mika" targetStage="1" alsoPlaying="juri">
+                <state img="3-nervous.png">C-can I protest?</state>
+                <state img="3-nervous.png">What?! No way!</state>
+            </case>
             <case tag="female_removed_minor" target="remilia" targetStage="2">
                 <state img="3-calm.png">We'll see about that.</state>
                 <state img="3-calm.png">That remains to be seen.</state>
@@ -7630,6 +7870,11 @@
                 <state img="3-interested.png">Your ~clothing~? Just brilliant.</state>
                 <state img="3-interested.png">Good, you're taking off your ~clothing~ just when I need it the most.</state>
                 <state img="3-interested.png">This is huge for me.</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="5" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="3-happy.png">They are legendary, though.</state>
+                <state img="3-happy.png">Exposed or not, they sure are legendary.</state>
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="3-shocked.png">HEY, WATCH IT!</state>
@@ -7677,6 +7922,10 @@
             <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="chun-li">
                 <state img="3-stretching.png">What do we do while Juri strips, Chun-Li? Do we just ignore her?</state>
                 <state img="3-stretching.png">Chun-Li, how do you propose we deal with Juri when she's stripping? Should we ignore her?</state>
+            </case>
+            <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="rainbow_mika">
+                <state img="3-stretching.png">Fans? Juri? Yeah, right.</state>
+                <state img="3-stretching.png">Juri has fans? I'm not so sure.</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="3-shocked.png">Oh, she turned back to normal.</state>
@@ -7785,8 +8034,12 @@
                 <state img="3-angry.png">Out of respect to the others, we'll settle our business after the game is over.</state>
                 <state img="3-angry.png">Let's settle things once the game is over. I wouldn't want to disrupt the other players.</state>
             </case>
-            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li">
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li" priority="500">
                 <state img="3-butt.png">...</state>
+            </case>
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="rainbow_mika">
+                <state img="3-calm.png">Yeah, Mika is way better than you, Juri.</state>
+                <state img="3-calm.png">She's right, Mika. You're much better than her.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="3-sad.png">To be honest, I liked the other version more. She was quieter.</state>
@@ -7916,7 +8169,7 @@
                 <state img="3-nervous.png">...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
-                <state img="3-combat.png">Wha- Ah- Chun-Li! Juri's is behind you!</state>
+                <state img="3-combat.png">Wha- Ah- Chun-Li! Juri is behind you!</state>
                 <state img="3-combat.png">Chun-Li! Watch out! It's Juri!</state>
             </case>
             <case tag="female_chest_will_be_visible" target="felicia">
@@ -8021,6 +8274,10 @@
                 <state img="3-nervous.png">Hmph!</state>
                 <state img="3-nervous.png">Some of my friends have big breasts. I honestly don't see the appeal.</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="rainbow_mika" alsoPlaying="juri">
+                <condition count="1" filter="chun-li" />
+                <state img="3-nervous.png">(What about me?)</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="chun-li">
                 <state img="3-nervous.png">(They seem to get bigger every time I see them.)</state>
                 <state img="3-nervous.png">(I always forget how big they are.)</state>
@@ -8028,6 +8285,10 @@
             <case tag="female_large_chest_is_visible" target="chun-li" alsoPlaying="juri">
                 <state img="3-sad.png">What?! No, that's ridiculous! I was just... thinking of something else.</state>
                 <state img="3-sad.png">No, I'm not! I'm happy with my body... even if Chun-Li's is so much more attractive.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
+                <state img="3-shocked.png">Whaaa...</state>
+                <state img="3-shocked.png">Ahhh...</state>
             </case>
             <case tag="female_large_chest_is_visible" target="rainbow_mika">
                 <state img="3-nervous.png">The back too...</state>
@@ -8268,23 +8529,26 @@
                 <state img="3-happy.png">It seems you're not unbeatable after all.</state>
                 <state img="3-interested.png">You're playing this game too, ~name~. Don't forget that just because you haven't lost in a while.</state>
             </case>
+            <case tag="opponent_stripping" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed">
+                <state img="3-shocked.png">What...? It's just your mask! You were already naked.</state>
+                <state img="3-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            </case>
             <case tag="opponent_stripping" filter="assisted_strip">
                 <state img="3-interested.png">Your friend was waiting for you to lose and then give you a hand with that.</state>
                 <state img="3-interested.png">Was it your friend's choice to take off your ~clothing~ this round?</state>
                 <state img="3-calm.png">Stripping with help from another. Hmmm...</state>
             </case>
-            <case tag="opponent_stripping" target="rainbow_mika" targetSayingMarker="embarrassed">
-                <state img="3-shocked.png">What...? It's just your mask! You were already naked.</state>
-                <state img="3-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            <case tag="opponent_stripped" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="3-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
+                <state img="3-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
             </case>
             <case tag="opponent_stripped" filter="assisted_strip">
                 <state img="3-stretching.png">Your friend must get bored while we're playing, with nothing to do.</state>
                 <state img="3-happy.png">You two are very close, aren't you?</state>
                 <state img="3-butt.png">I'm looking forward to winning this game. The stripping part is not what I'd want help with.</state>
             </case>
-            <case tag="opponent_stripped" target="rainbow_mika" targetSayingMarker="putting_mask">
-                <state img="3-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
-                <state img="3-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
+            <case tag="opponent_stripped" target="human" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="3-shocked.png">I didn't see anything... (I've never seen her embarrassed before)</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="3-nervous.png">Going through with this. That's gotta be tough, I offer you my sympathy.</state>
@@ -8292,7 +8556,7 @@
                 <state img="3-nervous.png">I'm feeling nervous just looking at you, ~name~. Good luck.</state>
                 <state img="3-nervous.png">I'm glad I'm not in your position. This is tough to watch.</state>
             </case>
-            <case tag="male_must_masturbate" saidMarker="one_on_one">
+            <case tag="male_must_masturbate" saidMarker="one_on_one" priority="500">
                 <state img="3-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="3-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="3-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -8358,7 +8622,7 @@
                 <state img="3-interested.png">I'm glad that you're out of the game, ~name~. But I can't help but feel sympathy for you.</state>
                 <state img="3-interested.png">At least you went out fighting, ~name~ You should feel proud.</state>
             </case>
-            <case tag="female_must_masturbate" saidMarker="one_on_one">
+            <case tag="female_must_masturbate" saidMarker="one_on_one" priority="250">
                 <state img="3-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="3-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="3-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -8520,7 +8784,7 @@
                 <state img="3-shocked.png">I've always known she was crazy, but this...</state>
                 <state img="3-nervous.png">The sounds she's making...</state>
                 <state img="3-horny.png">(I know I told her I wouldn't look at her, but...)</state>
-                <state img="3-horny.png">(Even if she's insane, she clearly has more technique than me.)</state>
+                <state img="3-horny.png">(Even if she's insane, she clearly has more knowledge than me)</state>
             </case>
             <case tag="female_masturbating" target="kizuna">
                 <state img="3-calm.png">I'm not sure what you're waiting for...</state>
@@ -8547,7 +8811,7 @@
                 <state img="3-shocked.png">Is this what wrestling is? I had no idea.</state>
                 <state img="3-shocked.png">Do you always wrestle like this?</state>
                 <state img="3-nervous.png">This isn't like a normal match. There's so much touching and...</state>
-                <state img="3-horny.png">Neither of you seems to be the least concerned about your bodies touching.</state>
+                <state img="3-horny.png">Neither of you seems to be the least bit concerned about your bodies touching.</state>
                 <state img="3-horny.png">I guess you two are used to wrestling each other, that's why this isn't embarrassing for you.</state>
             </case>
             <case tag="female_finished_masturbating">
@@ -8592,8 +8856,8 @@
                 <state img="3-interested.png">The vines are gone. How are you feeling?</state>
             </case>
             <case tag="female_finished_masturbating" target="rainbow_mika">
-                <state img="3-nervous.png">Maybe I should look into wrestling. F-for research.</state>
-                <state img="3-nervous.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
+                <state img="3-horny.png">Maybe I should look into wrestling. For research...</state>
+                <state img="3-horny.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
             </case>
             <case tag="female_finished_masturbating" target="shimakaze">
                 <state img="3-calm.png">Alright, now play with your robot quietly until the game is over.</state>
@@ -8629,6 +8893,9 @@
                 <state img="4-calm.png">I have to swap these cards to have any chance of winning.</state>
                 <state img="4-calm.png">New cards please. These are just not doing it.</state>
                 <state img="4-calm.png">I'm going to need some better cards.</state>
+            </case>
+            <case tag="swap_cards" alsoPlaying="rainbow_mika" alsoPlayingStage="3" alsoPlayingTimeInStage="0">
+                <state img="4-angry.png">Grrr... whatever!</state>
             </case>
             <case tag="swap_cards" timeInStage="0">
                 <state img="4-nervous.png">~cards~, or whatever...</state>
@@ -8678,12 +8945,17 @@
             <case tag="hand" alsoPlaying="florina" alsoPlayingSayingMarker="bee">
                 <state img="4-sad.png">Is that a... bee?</state>
             </case>
+            <case tag="hand" alsoPlaying="juri" alsoPlayingSayingMarker="juri_cheats">
+                <state img="4-angry.png">That's dirty, Juri! How would you feel if we looked at your cards? Hmph, I bet you wouldn't care.</state>
+                <state img="4-angry.png">Juri is looking at Chun-Li's cards! Isn't this enough to kick her out of the game?</state>
+                <state img="4-angry.png">Juri is cheating! Shouldn't she be banned from playing the game?</state>
+            </case>
             <case tag="hand" alsoPlaying="juri" alsoPlayingStage="0-4" totalAlive="2" notSaidMarker="one_on_one">
                 <state img="4-combat.png" marker="one_on_one">Juri!!!</state>
                 <state img="4-combat.png" marker="one_on_one">It's only Juri now. I can do this!</state>
                 <state img="4-combat.png" marker="one_on_one">Now I just have to focus on Juri. Let's go!</state>
             </case>
-            <case tag="hand" alsoPlaying="juri" alsoPlayingStage="3" alsoPlayingTimeInStage="0" notSaidMarker="forfeit">
+            <case tag="hand" alsoPlaying="juri" alsoPlayingStage="3" alsoPlayingTimeInStage="0-" totalRounds="5-" notSaidMarker="forfeit">
                 <state img="4-shocked.png" marker="forfeit">What did you say, Juri?! Touch yourself?! Why would you... Are you kidding me?!</state>
                 <state img="4-shocked.png" marker="forfeit">Juri, what was that?! Why would you touch yourself if you lose? Oh no...</state>
             </case>
@@ -8857,6 +9129,12 @@
                 <state img="4-stripping.png">Oh, that's kind of you, Mika. Your leotard is not really my style...</state>
                 <state img="4-stripping.png">Oh, thank you, Mika... I'll have to decline. I would hate to leave you naked just so I have something to wear.</state>
             </case>
+            <case tag="stripping" alsoPlaying="chun-li">
+                <condition count="1" filter="rainbow_mika" />
+                <condition count="0" filter="juri" />
+                <state img="4-stripping.png">It's OK, Chun-Li. Actually, it makes me feel better to be complimented right now.</state>
+                <state img="4-stripped.png">Oh, it's fine, Chun-Li. At this moment, I feel more confident if I get a compliment like that.</state>
+            </case>
             <case tag="stripped">
                 <state img="4-stripped.png">I didn't mean to do that. Is this enough for this round?</state>
                 <state img="4-stripped.png">That was an accident. This counts as stripping for this round, right?</state>
@@ -8943,6 +9221,10 @@
             </case>
             <case tag="stripped" alsoPlaying="pit">
                 <state img="4-stripped.png">Why would I wear underwear under my leotard? Well, I probably should have this time...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="rainbow_mika">
+                <state img="4-stripped.png">Yeah, it was an accident, Mika! What do you think? That I enjoy destroying my own clothes! ...Sorry.</state>
+                <state img="4-stripped.png">Of course it was an accident! You think I would destroy my leotard just to play a little more, Mika? Sorry, I didn't mean to yell.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="4-calm.png">I've to keep my cool and stay focused.</state>
@@ -9311,7 +9593,7 @@
                 <state img="4-interested.png">It's good that you have your bracelets right now. That's one more use for them.</state>
                 <state img="4-interested.png">Oh, you're gonna take off your bracelets so you don't have to remove your clothes. That's good.</state>
             </case>
-            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri">
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri" priority="500">
                 <state img="4-interested.png">Hey, your bracelets!</state>
             </case>
             <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="rainbow_mika">
@@ -9414,6 +9696,10 @@
                 <condition count="0" filter="juri" />
                 <state img="4-sad.png">(Should I tell her that Chun-Li's cooking is awful?)</state>
                 <state img="4-sad.png">(Good? I'm not so sure about that, Chun-Li. Mika, my condolences.)</state>
+            </case>
+            <case tag="female_removed_accessory" target="chun-li" targetStage="2" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="4-nervous.png">Oh, I wasn't suggesting I wanted to see you undress more, but OK...</state>
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="4-horny.png">Awww, so cute! You look like a little cat!</state>
@@ -9568,6 +9854,11 @@
                 <state img="4-sad.png">There's nothing I can do but look at you take off only your ~clothing~.</state>
                 <state img="4-sad.png">Just your ~clothing~? Nothing more?</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0">
+                <condition count="1" filter="chun-li" />
+                <condition count="1" filter="cammy_white" />
+                <state img="4-combat.png">Me neither!</state>
+            </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="4-shocked.png">Again?!</state>
                 <state img="4-shocked.png">Are you gonna keep doing this?!</state>
@@ -9615,6 +9906,10 @@
                 <state img="4-interested.png">Your partner is gonna help you strip? Nadeshiko, isn't it?</state>
                 <state img="4-interested.png">I see, you're asking your partner for help. Nadeshiko, right?</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0" alsoPlaying="juri">
+                <state img="4-calm.png">I have no problem with it.</state>
+                <state img="4-calm.png">I think it's OK.</state>
+            </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="4-stretching.png">This arrogance won't get you anything. Just do what you have to do.</state>
                 <state img="4-stretching.png">You sure are acting superior considering you have already lost twice.</state>
@@ -9640,6 +9935,11 @@
                 <state img="4-sad.png">I won't blame you, ~name~. I got myself into this mess.</state>
                 <state img="4-sad.png">It's my own fault that I'm in this position now. And I have to get myself out of it.</state>
                 <state img="4-calm.png">When your crotch is exposed, you'll understand how I feel now, ~name~.</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <condition count="1" filter="rainbow_mika" />
+                <condition count="0" filter="juri" />
+                <state img="4-interested.png">That's just superstition, Mika. You shouldn't rely on stuff like that.</state>
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2">
                 <state img="4-sad.png">If I'd known I would have to deal with a crazy shooter too, I would've asked for backup.</state>
@@ -9688,6 +9988,10 @@
                 <state img="4-happy.png">Your cooperation is commendable.</state>
                 <state img="4-happy.png">I admire people who know how to work together.</state>
             </case>
+            <case tag="female_removed_minor" target="rainbow_mika" targetStage="1" alsoPlaying="juri">
+                <state img="4-nervous.png">C-can I protest?</state>
+                <state img="4-nervous.png">What?! No way!</state>
+            </case>
             <case tag="female_removed_minor" target="remilia" targetStage="2">
                 <state img="4-calm.png">We'll see about that.</state>
                 <state img="4-calm.png">That remains to be seen.</state>
@@ -9731,6 +10035,11 @@
                 <state img="4-interested.png">There are probably worse choices than your ~clothing~, right? I mean for me.</state>
                 <state img="4-interested.png">In my current situation, I appreciate this.</state>
                 <state img="4-interested.png">Considering I only have half of my leotard left, I'm grateful for this.</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="5" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="4-happy.png">They are legendary, though.</state>
+                <state img="4-happy.png">Exposed or not, they sure are legendary.</state>
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="4-shocked.png">HEY, WATCH IT!</state>
@@ -9778,6 +10087,10 @@
             <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="chun-li">
                 <state img="4-stretching.png">What do we do while Juri strips, Chun-Li? Do we just ignore her?</state>
                 <state img="4-stretching.png">Chun-Li, how do you propose we deal with Juri when she's stripping? Should we ignore her?</state>
+            </case>
+            <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="rainbow_mika">
+                <state img="4-stretching.png">Fans? Juri? Yeah, right.</state>
+                <state img="4-stretching.png">Juri has fans? I'm not so sure.</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="4-shocked.png">Oh, she turned back to normal.</state>
@@ -9860,6 +10173,12 @@
                 <state img="4-nervous.png">I forgot that you bind your chest. I... don't have to do that.</state>
                 <state img="4-nervous.png">Oh, right. You bind your chest. I've never had to do that.</state>
             </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5" alsoPlaying="juri">
+                <state img="4-angry.png">And how exactly do you know that, Juri?</state>
+                <state img="4-angry.png">How do you know that I don't wear anything under my leotard, Juri?</state>
+                <state img="4-nervous.png">T-That's because I don't want to. Got a problem with that?</state>
+                <state img="4-nervous.png">S-so what? It's more comfortable that way.</state>
+            </case>
             <case tag="female_removed_major" target="chun-li" targetStage="6">
                 <state img="4-happy.png">Aren't those the panties you bought last week when you took me shopping?</state>
                 <state img="4-happy.png">Hey, those are the panties you bought last week, when you took me shopping.</state>
@@ -9880,8 +10199,12 @@
                 <state img="4-angry.png">Out of respect to the others, we'll settle our business after the game is over.</state>
                 <state img="4-angry.png">Let's settle things once the game is over. I wouldn't want to disrupt the other players.</state>
             </case>
-            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li">
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li" priority="500">
                 <state img="4-butt.png">...</state>
+            </case>
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="rainbow_mika">
+                <state img="4-calm.png">Yeah, Mika is way better than you, Juri.</state>
+                <state img="4-calm.png">She's right, Mika. You're much better than her.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="4-sad.png">To be honest, I liked the other version more. She was quieter.</state>
@@ -10005,7 +10328,7 @@
                 <state img="4-nervous.png">...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
-                <state img="4-combat.png">Wha- Ah- Chun-Li! Juri's is behind you!</state>
+                <state img="4-combat.png">Wha- Ah- Chun-Li! Juri is behind you!</state>
                 <state img="4-combat.png">Chun-Li! Watch out! It's Juri!</state>
             </case>
             <case tag="female_chest_will_be_visible" target="felicia">
@@ -10110,6 +10433,10 @@
                 <state img="4-shocked.png">Are those natural? I don't believe it.</state>
                 <state img="4-shocked.png">What's your secret? Or is it just your genes?</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="rainbow_mika" alsoPlaying="juri">
+                <condition count="1" filter="chun-li" />
+                <state img="4-nervous.png">(What about me?)</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="chun-li">
                 <state img="4-nervous.png">(They seem to get bigger every time I see them.)</state>
                 <state img="4-nervous.png">(I always forget how big they are.)</state>
@@ -10117,6 +10444,10 @@
             <case tag="female_large_chest_is_visible" target="chun-li" alsoPlaying="juri">
                 <state img="4-sad.png">What?! No, that's ridiculous! I was just... thinking of something else.</state>
                 <state img="4-sad.png">No, I'm not! I'm happy with my body... even if Chun-Li's is so much more attractive.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
+                <state img="4-shocked.png">Whaaa...</state>
+                <state img="4-shocked.png">Ahhh...</state>
             </case>
             <case tag="female_large_chest_is_visible" target="rainbow_mika">
                 <state img="4-nervous.png">The back too...</state>
@@ -10349,30 +10680,33 @@
                 <state img="4-happy.png">It seems you're not unbeatable after all.</state>
                 <state img="4-interested.png">You're playing this game too, ~name~. Don't forget that just because you haven't lost in a while.</state>
             </case>
+            <case tag="opponent_stripping" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed">
+                <state img="4-shocked.png">What...? It's just your mask! You were already naked.</state>
+                <state img="4-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            </case>
             <case tag="opponent_stripping" filter="assisted_strip">
                 <state img="4-interested.png">Your friend was waiting for you to lose and then give you a hand with that.</state>
                 <state img="4-interested.png">Was it your friend's choice to take off your ~clothing~ this round?</state>
                 <state img="4-calm.png">Stripping with help from another. Hmmm...</state>
             </case>
-            <case tag="opponent_stripping" target="rainbow_mika" targetSayingMarker="embarrassed">
-                <state img="4-shocked.png">What...? It's just your mask! You were already naked.</state>
-                <state img="4-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            <case tag="opponent_stripped" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="4-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
+                <state img="4-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
             </case>
             <case tag="opponent_stripped" filter="assisted_strip">
                 <state img="4-stretching.png">Your friend must get bored while we're playing, with nothing to do.</state>
                 <state img="4-happy.png">You two are very close, aren't you?</state>
                 <state img="4-butt.png">I'm looking forward to winning this game. The stripping part is not what I'd want help with.</state>
             </case>
-            <case tag="opponent_stripped" target="rainbow_mika" targetSayingMarker="putting_mask">
-                <state img="4-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
-                <state img="4-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
+            <case tag="opponent_stripped" target="human" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="4-shocked.png">I didn't see anything... (I've never seen her embarrassed before)</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="4-nervous.png">Are you sure you want to go through with this? It's not easy.</state>
                 <state img="4-nervous.png">This is a lot to take in, are you sure you're up for it?</state>
                 <state img="4-nervous.png">Last chance to back down, I guess.</state>
             </case>
-            <case tag="male_must_masturbate" saidMarker="one_on_one">
+            <case tag="male_must_masturbate" saidMarker="one_on_one" priority="500">
                 <state img="4-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="4-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="4-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -10437,7 +10771,7 @@
                 <state img="4-nervous.png">I can't stop thinking about how this could still be me in a few more rounds.</state>
                 <state img="4-nervous.png">I'm so nervous thinking about it being my turn to do that. At least this means there's one less opponent to beat.</state>
             </case>
-            <case tag="female_must_masturbate" saidMarker="one_on_one">
+            <case tag="female_must_masturbate" saidMarker="one_on_one" priority="250">
                 <state img="4-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="4-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="4-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -10599,7 +10933,7 @@
                 <state img="4-shocked.png">I've always known she was crazy, but this...</state>
                 <state img="4-nervous.png">The sounds she's making...</state>
                 <state img="4-horny.png">(I know I told her I wouldn't look at her, but...)</state>
-                <state img="4-horny.png">(Even if she's insane, she clearly has more technique than me.)</state>
+                <state img="4-horny.png">(Even if she's insane, she clearly has more knowledge than me)</state>
             </case>
             <case tag="female_masturbating" target="kizuna">
                 <state img="4-calm.png">I'm not sure what you're waiting for...</state>
@@ -10626,7 +10960,7 @@
                 <state img="4-shocked.png">Is this what wrestling is? I had no idea.</state>
                 <state img="4-shocked.png">Do you always wrestle like this?</state>
                 <state img="4-nervous.png">This isn't like a normal match. There's so much touching and...</state>
-                <state img="4-horny.png">Neither of you seems to be the least concerned about your bodies touching.</state>
+                <state img="4-horny.png">Neither of you seems to be the least bit concerned about your bodies touching.</state>
                 <state img="4-horny.png">I guess you two are used to wrestling each other, that's why this isn't embarrassing for you.</state>
             </case>
             <case tag="female_finished_masturbating">
@@ -10671,8 +11005,8 @@
                 <state img="4-interested.png">The vines are gone. How are you feeling?</state>
             </case>
             <case tag="female_finished_masturbating" target="rainbow_mika">
-                <state img="4-nervous.png">Maybe I should look into wrestling. F-for research.</state>
-                <state img="4-nervous.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
+                <state img="4-horny.png">Maybe I should look into wrestling. For research...</state>
+                <state img="4-horny.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
             </case>
             <case tag="female_finished_masturbating" target="shimakaze">
                 <state img="4-calm.png">Alright, now play with your robot quietly until the game is over.</state>
@@ -10711,6 +11045,9 @@
             <case tag="swap_cards" alsoPlaying="juri" timeInStage="0">
                 <state img="5-combat.png">Damn you, Juri. Huh? ~cards~ cards.</state>
                 <state img="5-combat.png">Bloody Juri... Just give me ~cards~ cards.</state>
+            </case>
+            <case tag="swap_cards" alsoPlaying="rainbow_mika" alsoPlayingStage="3" alsoPlayingTimeInStage="0">
+                <state img="5-angry.png">Grrr... whatever!</state>
             </case>
             <case tag="good_hand">
                 <state img="5-happy.png">Good! I can still make it.</state>
@@ -10760,6 +11097,11 @@
             </case>
             <case tag="hand" alsoPlaying="florina" alsoPlayingSayingMarker="bee">
                 <state img="5-sad.png">Is that a... bee?</state>
+            </case>
+            <case tag="hand" alsoPlaying="juri" alsoPlayingSayingMarker="juri_cheats">
+                <state img="5-angry.png">That's dirty, Juri! How would you feel if we looked at your cards? Hmph, I bet you wouldn't care.</state>
+                <state img="5-angry.png">Juri is looking at Chun-Li's cards! Isn't this enough to kick her out of the game?</state>
+                <state img="5-angry.png">Juri is cheating! Shouldn't she be banned from playing the game?</state>
             </case>
             <case tag="hand" alsoPlaying="juri" alsoPlayingStage="0-4" totalAlive="2" notSaidMarker="one_on_one">
                 <state img="5-combat.png" marker="one_on_one">Juri!!!</state>
@@ -10820,7 +11162,7 @@
             </case>
             <case tag="hand" alsoPlaying="chun-li" timeInStage="0">
                 <condition count="1" filter="juri" />
-                <state img="5-stretching.png">It's okay, Chun-Li. I still had to take it off. You still deserved that punch, Juri.</state>
+                <state img="5-stretching.png">It's okay, Chun-Li. I had to take it off anyway. You still deserved that punch, Juri.</state>
                 <state img="5-stretching.png">We both know that Juri will take any opportunity she can get to use her dirty tactics. It's not your fault, Chun-Li.</state>
             </case>
             <case tag="hand" alsoPlaying="chun-li" timeInStage="0" notSaidMarker="forfeit">
@@ -10936,6 +11278,12 @@
             <case tag="stripped" alsoPlaying="rainbow_mika">
                 <state img="5-stripped.png">N-no... Well, maybe a little. But that's nice of you to say Mika.</state>
                 <state img="5-stripped.png">You think so, Mika? T-thank you.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="chun-li">
+                <condition count="1" filter="rainbow_mika" />
+                <condition count="0" filter="juri" />
+                <state img="5-stripped.png">That's enough. You two have good intentions, but it got way too embarrassing.</state>
+                <state img="5-stripped.png">Stop! That's... enough. (I'm even more embarrassed now)</state>
             </case>
             <case tag="male_must_strip">
                 <state img="5-win.png">E-everything's OK! No reason to worry yet.</state>
@@ -11303,7 +11651,7 @@
                 <state img="5-interested.png">It's good that you have your bracelets right now. That's one more use for them.</state>
                 <state img="5-interested.png">Oh, you're gonna take off your bracelets so you don't have to remove your clothes. That's good.</state>
             </case>
-            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri">
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri" priority="500">
                 <state img="5-interested.png">Hey, your bracelets!</state>
             </case>
             <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="rainbow_mika">
@@ -11407,6 +11755,10 @@
                 <condition count="0" filter="juri" />
                 <state img="5-sad.png">(Should I tell her that Chun-Li's cooking is awful?)</state>
                 <state img="5-sad.png">(Good? I'm not so sure about that, Chun-Li. Mika, my condolences.)</state>
+            </case>
+            <case tag="female_removed_accessory" target="chun-li" targetStage="2" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="5-nervous.png">Oh, I wasn't suggesting I wanted to see you undress more, but OK...</state>
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="5-horny.png">Awww, so cute! You look like a little cat!</state>
@@ -11562,6 +11914,11 @@
                 <state img="5-stretching.png">Predictable.</state>
                 <state img="5-stretching.png">Is anybody surprised by this?</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0">
+                <condition count="1" filter="chun-li" />
+                <condition count="1" filter="cammy_white" />
+                <state img="5-combat.png">Me neither!</state>
+            </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="5-shocked.png">Again?!</state>
                 <state img="5-shocked.png">Are you gonna keep doing this?!</state>
@@ -11609,6 +11966,10 @@
                 <state img="5-interested.png">Your partner is gonna help you strip? Nadeshiko, isn't it?</state>
                 <state img="5-interested.png">I see, you're asking your partner for help. Nadeshiko, right?</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0" alsoPlaying="juri">
+                <state img="5-calm.png">I have no problem with it.</state>
+                <state img="5-calm.png">I think it's OK.</state>
+            </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="5-stretching.png">This arrogance won't get you anything. Just do what you have to do.</state>
                 <state img="5-stretching.png">You sure are acting superior considering you have already lost twice.</state>
@@ -11635,6 +11996,15 @@
                 <state img="5-calm.png">Being completely naked in front of a bunch of strangers truly puts things in perspective.</state>
                 <state img="5-calm.png">Great, I feel even more exposed now.</state>
                 <state img="5-calm.png">Is there still a chance for me to win this game?</state>
+            </case>
+            <case tag="female_removed_minor" target="rainbow_mika" targetStage="1" alsoPlaying="chun-li">
+                <condition count="1" filter="juri" />
+                <state img="5-sad.png">(Does she enjoy getting insulted by Juri?)</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <condition count="1" filter="rainbow_mika" />
+                <condition count="0" filter="juri" />
+                <state img="5-interested.png">That's just superstition, Mika. You shouldn't rely on stuff like that.</state>
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2">
                 <state img="5-sad.png">If I'd known I would have to deal with a crazy shooter too, I would've asked for backup.</state>
@@ -11727,6 +12097,11 @@
                 <state img="5-interested.png">Your ~clothing~? You took a good hit there.</state>
                 <state img="5-interested.png">So , your ~clothing~? Soon you'll understand what I feel like.</state>
             </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="5" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="5-happy.png">They are legendary, though.</state>
+                <state img="5-happy.png">Exposed or not, they sure are legendary.</state>
+            </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="5-shocked.png">HEY, WATCH IT!</state>
                 <state img="5-shocked.png">WHAT ARE YOU DOING?!</state>
@@ -11773,6 +12148,10 @@
             <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="chun-li">
                 <state img="5-stretching.png">What do we do while Juri strips, Chun-Li? Do we just ignore her?</state>
                 <state img="5-stretching.png">Chun-Li, how do you propose we deal with Juri when she's stripping? Should we ignore her?</state>
+            </case>
+            <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="rainbow_mika">
+                <state img="5-stretching.png">Fans? Juri? Yeah, right.</state>
+                <state img="5-stretching.png">Juri has fans? I'm not so sure.</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="5-shocked.png">Oh, she turned back to normal.</state>
@@ -11855,6 +12234,12 @@
                 <state img="5-nervous.png">I forgot that you bind your chest. I... don't have to do that.</state>
                 <state img="5-nervous.png">Oh, right. You bind your chest. I've never had to do that.</state>
             </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5" alsoPlaying="juri">
+                <state img="5-angry.png">And how exactly do you know that, Juri?</state>
+                <state img="5-angry.png">How do you know that I don't wear anything under my leotard, Juri?</state>
+                <state img="5-nervous.png">T-That's because I don't want to. Got a problem with that?</state>
+                <state img="5-nervous.png">S-so what? It's more comfortable that way.</state>
+            </case>
             <case tag="female_removed_major" target="chun-li" targetStage="6">
                 <state img="5-happy.png">Aren't those the panties you bought last week when you took me shopping?</state>
                 <state img="5-happy.png">Hey, those are the panties you bought last week, when you took me shopping.</state>
@@ -11875,8 +12260,12 @@
                 <state img="5-angry.png">Out of respect to the others, we'll settle our business after the game is over.</state>
                 <state img="5-angry.png">Let's settle things once the game is over. I wouldn't want to disrupt the other players.</state>
             </case>
-            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li">
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li" priority="500">
                 <state img="5-butt.png">...</state>
+            </case>
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="rainbow_mika">
+                <state img="5-calm.png">Yeah, Mika is way better than you, Juri.</state>
+                <state img="5-calm.png">She's right, Mika. You're much better than her.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="5-sad.png">To be honest, I liked the other version more. She was quieter.</state>
@@ -12000,7 +12389,7 @@
                 <state img="5-nervous.png">...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
-                <state img="5-combat.png">Wha- Ah- Chun-Li! Juri's is behind you!</state>
+                <state img="5-combat.png">Wha- Ah- Chun-Li! Juri is behind you!</state>
                 <state img="5-combat.png">Chun-Li! Watch out! It's Juri!</state>
             </case>
             <case tag="female_chest_will_be_visible" target="felicia">
@@ -12104,6 +12493,10 @@
             <case tag="female_large_chest_is_visible">
                 <state img="5-shocked.png">Are those natural? I don't believe it.</state>
                 <state img="5-shocked.png">What's your secret? Or is it just your genes?</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="rainbow_mika" alsoPlaying="juri">
+                <condition count="1" filter="chun-li" />
+                <state img="5-nervous.png">(What about me?)</state>
             </case>
             <case tag="female_large_chest_is_visible" target="chun-li">
                 <state img="5-nervous.png">(They seem to get bigger every time I see them.)</state>
@@ -12348,34 +12741,37 @@
                 <state img="5-happy.png">It seems you're not unbeatable after all.</state>
                 <state img="5-interested.png">You're playing this game too, ~name~. Don't forget that just because you haven't lost in a while.</state>
             </case>
+            <case tag="opponent_stripping" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed">
+                <state img="5-shocked.png">What...? It's just your mask! You were already naked.</state>
+                <state img="5-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            </case>
             <case tag="opponent_stripping" filter="assisted_strip">
                 <state img="5-interested.png">Your friend was waiting for you to lose and then give you a hand with that.</state>
                 <state img="5-interested.png">Was it your friend's choice to take off your ~clothing~ this round?</state>
                 <state img="5-calm.png">Stripping with help from another. Hmmm...</state>
             </case>
-            <case tag="opponent_stripping" target="rainbow_mika" targetSayingMarker="embarrassed">
-                <state img="5-shocked.png">What...? It's just your mask! You were already naked.</state>
-                <state img="5-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            <case tag="opponent_stripped" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="5-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
+                <state img="5-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
             </case>
             <case tag="opponent_stripped" filter="assisted_strip">
                 <state img="5-stretching.png">Your friend must get bored while we're playing, with nothing to do.</state>
                 <state img="5-happy.png">You two are very close, aren't you?</state>
                 <state img="5-butt.png">I'm looking forward to winning this game. The stripping part is not what I'd want help with.</state>
             </case>
-            <case tag="opponent_stripped" target="rainbow_mika" targetSayingMarker="putting_mask">
-                <state img="5-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
-                <state img="5-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
+            <case tag="opponent_stripped" target="human" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="5-shocked.png">I didn't see anything... (I've never seen her embarrassed before)</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="5-nervous.png">Are you sure you want to go through with this? It's not easy.</state>
                 <state img="5-nervous.png">This is a lot to take in, are you sure you're up for it?</state>
                 <state img="5-nervous.png">Last chance to back down, I guess.</state>
             </case>
-            <case tag="male_must_masturbate" saidMarker="last_round">
+            <case tag="male_must_masturbate" saidMarker="last_round" priority="500">
                 <state img="5-win.png">What a relief. I don't know what I would've done if I'd lost on the final round of the game.</state>
                 <state img="5-win.png">That was way too close. At this point the winner is determined by luck more than anything. But I'm glad it was me.</state>
             </case>
-            <case tag="male_must_masturbate" saidMarker="one_on_one">
+            <case tag="male_must_masturbate" saidMarker="one_on_one" priority="500">
                 <state img="5-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="5-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="5-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -12440,11 +12836,11 @@
                 <state img="5-nervous.png">I can't stop thinking about how this could still be me in a few more rounds.</state>
                 <state img="5-nervous.png">I'm so nervous thinking about it being my turn to do that. At least this means there's one less opponent to beat.</state>
             </case>
-            <case tag="female_must_masturbate" saidMarker="last_round">
+            <case tag="female_must_masturbate" saidMarker="last_round" priority="250">
                 <state img="5-win.png">What a relief. I don't know what I would've done if I'd lost on the very final round of the game.</state>
                 <state img="5-win.png">That was way too close. At this point the winner is determined by luck more than anything. But I'm glad it was me.</state>
             </case>
-            <case tag="female_must_masturbate" saidMarker="one_on_one">
+            <case tag="female_must_masturbate" saidMarker="one_on_one" priority="250">
                 <state img="5-win.png">I win. At least you fought until the end, ~name~. Be proud of yourself.</state>
                 <state img="5-win.png">Is it over? Good. You put up a good fight, ~name~. You earned my respect.</state>
                 <state img="5-win.png">I won. It's too bad that it came to this, ~name~. You should feel proud that you gave it your best.</state>
@@ -12606,7 +13002,7 @@
                 <state img="5-shocked.png">I've always known she was crazy, but this...</state>
                 <state img="5-nervous.png">The sounds she's making...</state>
                 <state img="5-horny.png">(I know I told her I wouldn't look at her, but...)</state>
-                <state img="5-horny.png">(Even if she's insane, she clearly has more technique than me.)</state>
+                <state img="5-horny.png">(Even if she's insane, she clearly has more knowledge than me)</state>
             </case>
             <case tag="female_masturbating" target="kizuna">
                 <state img="5-calm.png">I'm not sure what you're waiting for...</state>
@@ -12633,7 +13029,7 @@
                 <state img="5-shocked.png">Is this what wrestling is? I had no idea.</state>
                 <state img="5-shocked.png">Do you always wrestle like this?</state>
                 <state img="5-nervous.png">This isn't like a normal match. There's so much touching and...</state>
-                <state img="5-horny.png">Neither of you seems to be the least concerned about your bodies touching.</state>
+                <state img="5-horny.png">Neither of you seems to be the least bit concerned about your bodies touching.</state>
                 <state img="5-horny.png">I guess you two are used to wrestling each other, that's why this isn't embarrassing for you.</state>
             </case>
             <case tag="female_finished_masturbating">
@@ -12678,8 +13074,8 @@
                 <state img="5-interested.png">The vines are gone. How are you feeling?</state>
             </case>
             <case tag="female_finished_masturbating" target="rainbow_mika">
-                <state img="5-nervous.png">Maybe I should look into wrestling. F-for research.</state>
-                <state img="5-nervous.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
+                <state img="5-horny.png">Maybe I should look into wrestling. For research...</state>
+                <state img="5-horny.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
             </case>
             <case tag="female_finished_masturbating" target="shimakaze">
                 <state img="5-calm.png">Alright, now play with your robot quietly until the game is over.</state>
@@ -12733,6 +13129,9 @@
             </case>
             <case tag="start_masturbating" alsoPlaying="misato">
                 <state img="5-starting.png">Thank you, Misato. I... I'll give it a try.</state>
+            </case>
+            <case tag="start_masturbating" alsoPlaying="rainbow_mika">
+                <state img="5-starting.png">I don't need help, Mika. That would only make more uncomfortable. I'll just... do it by myself.</state>
             </case>
             <case tag="start_masturbating" totalMasturbating="0" totalFinished="0">
                 <state img="5-starting.png">O-ok, I'll do it... It's my fault not knowing all the rules. I'll just take it slowly.</state>
@@ -13109,7 +13508,7 @@
                 <state img="6-interested.png">It's good that you have your bracelets right now. That's one more use for them.</state>
                 <state img="6-interested.png">Oh, you're gonna take off your bracelets so you don't have to remove your clothes. That's good.</state>
             </case>
-            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri">
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri" priority="500">
                 <state img="6-interested.png">Hey, your bracelets!</state>
             </case>
             <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="rainbow_mika">
@@ -13212,6 +13611,10 @@
                 <condition count="0" filter="juri" />
                 <state img="6-sad.png">(Should I tell her that Chun-Li's cooking is awful?)</state>
                 <state img="6-sad.png">(Good? I'm not so sure about that, Chun-Li. Mika, my condolences.)</state>
+            </case>
+            <case tag="female_removed_accessory" target="chun-li" targetStage="2" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="6-nervous.png">Oh, I wasn't suggesting I wanted to see you undress more, but OK...</state>
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="6-horny.png">Awww, so cute! You look like a little cat!</state>
@@ -13367,6 +13770,11 @@
                 <state img="6-calm.png">Looks like I wasn't even close to winning the game.</state>
                 <state img="6-interested.png">The game is still going, it seems.</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0">
+                <condition count="1" filter="chun-li" />
+                <condition count="1" filter="cammy_white" />
+                <state img="6-combat.png">Me neither!</state>
+            </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="6-shocked.png">Again?!</state>
                 <state img="6-shocked.png">Are you gonna keep doing this?!</state>
@@ -13414,6 +13822,10 @@
                 <state img="6-interested.png">Your partner is gonna help you strip? Nadeshiko, isn't it?</state>
                 <state img="6-interested.png">I see, you're asking your partner for help. Nadeshiko, right?</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0" alsoPlaying="juri">
+                <state img="6-calm.png">I have no problem with it.</state>
+                <state img="6-calm.png">I think it's OK.</state>
+            </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="6-stretching.png">This arrogance won't get you anything. Just do what you have to do.</state>
                 <state img="6-stretching.png">You sure are acting superior considering you have already lost twice.</state>
@@ -13440,6 +13852,15 @@
                 <state img="6-horny.png">Ahhh! &lt;i&gt;This&lt;/i&gt; is keeping all my attention at this moment.</state>
                 <state img="6-happy.png">While the game keeps going, I'll just focus on what I'm doing.</state>
                 <state img="6-shocked.png">Oh, how much longer until the game is over?</state>
+            </case>
+            <case tag="female_removed_minor" target="rainbow_mika" targetStage="1" alsoPlaying="chun-li">
+                <condition count="1" filter="juri" />
+                <state img="6-sad.png">(Does she enjoy getting insulted by Juri?)</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <condition count="1" filter="rainbow_mika" />
+                <condition count="0" filter="juri" />
+                <state img="6-interested.png">That's just superstition, Mika. You shouldn't rely on stuff like that.</state>
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2">
                 <state img="6-sad.png">If I'd known I would have to deal with a crazy shooter too, I would've asked for backup.</state>
@@ -13532,6 +13953,11 @@
                 <state img="6-interested.png">Oh, right! You still have to take off your ~clothing~.</state>
                 <state img="6-stretching.png">Oh, your ~clothing~. I guess you still had that. Interesting.</state>
             </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="5" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="6-happy.png">They are legendary, though.</state>
+                <state img="6-happy.png">Exposed or not, they sure are legendary.</state>
+            </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="6-shocked.png">HEY, WATCH IT!</state>
                 <state img="6-shocked.png">WHAT ARE YOU DOING?!</state>
@@ -13578,6 +14004,10 @@
             <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="chun-li">
                 <state img="6-stretching.png">What do we do while Juri strips, Chun-Li? Do we just ignore her?</state>
                 <state img="6-stretching.png">Chun-Li, how do you propose we deal with Juri when she's stripping? Should we ignore her?</state>
+            </case>
+            <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="rainbow_mika">
+                <state img="6-stretching.png">Fans? Juri? Yeah, right.</state>
+                <state img="6-stretching.png">Juri has fans? I'm not so sure.</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="6-shocked.png">Oh, she turned back to normal.</state>
@@ -13660,6 +14090,12 @@
                 <state img="6-nervous.png">I forgot that you bind your chest. I... don't have to do that.</state>
                 <state img="6-nervous.png">Oh, right. You bind your chest. I've never had to do that.</state>
             </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5" alsoPlaying="juri">
+                <state img="6-angry.png">And how exactly do you know that, Juri?</state>
+                <state img="6-angry.png">How do you know that I don't wear anything under my leotard, Juri?</state>
+                <state img="6-nervous.png">T-That's because I don't want to. Got a problem with that?</state>
+                <state img="6-nervous.png">S-so what? It's more comfortable that way.</state>
+            </case>
             <case tag="female_removed_major" target="chun-li" targetStage="6">
                 <state img="6-happy.png">Aren't those the panties you bought last week when you took me shopping?</state>
                 <state img="6-happy.png">Hey, those are the panties you bought last week, when you took me shopping.</state>
@@ -13682,6 +14118,10 @@
             </case>
             <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li">
                 <state img="6-stretching.png">...</state>
+            </case>
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="rainbow_mika">
+                <state img="6-calm.png">Yeah, Mika is way better than you, Juri.</state>
+                <state img="6-calm.png">She's right, Mika. You're much better than her.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="6-sad.png">To be honest, I liked the other version more. She was quieter.</state>
@@ -13809,7 +14249,7 @@
                 <state img="6-nervous.png">...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
-                <state img="6-combat.png">Wha- Ah- Chun-Li! Juri's is behind you!</state>
+                <state img="6-combat.png">Wha- Ah- Chun-Li! Juri is behind you!</state>
                 <state img="6-combat.png">Chun-Li! Watch out! It's Juri!</state>
             </case>
             <case tag="female_chest_will_be_visible" target="felicia">
@@ -13914,6 +14354,10 @@
                 <state img="6-angry.png">They look great. I'm sure people won't stop looking at you from now on.</state>
                 <state img="6-angry.png">Are you sure you don't have problems moving around with... &lt;i&gt;those&lt;/i&gt;?</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="rainbow_mika" alsoPlaying="juri">
+                <condition count="1" filter="chun-li" />
+                <state img="6-nervous.png">(What about me?)</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="chun-li">
                 <state img="6-nervous.png">(They seem to get bigger every time I see them.)</state>
                 <state img="6-nervous.png">(I always forget how big they are.)</state>
@@ -13921,6 +14365,10 @@
             <case tag="female_large_chest_is_visible" target="chun-li" alsoPlaying="juri">
                 <state img="6-sad.png">What?! No, that's ridiculous! I was just... thinking of something else.</state>
                 <state img="6-sad.png">No, I'm not! I'm happy with my body... even if Chun-Li's is so much more attractive.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
+                <state img="6-shocked.png">Whaaa...</state>
+                <state img="6-shocked.png">Ahhh...</state>
             </case>
             <case tag="female_large_chest_is_visible" target="rainbow_mika">
                 <state img="6-nervous.png">The back too...</state>
@@ -14115,21 +14563,24 @@
                 <state img="6-calm.png">You knew this was strip poker, right? What did you think was gonna happen?</state>
                 <state img="6-calm.png">You are too shy to be playing this game, maybe you should leave.</state>
             </case>
+            <case tag="opponent_stripping" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed">
+                <state img="6-shocked.png">What...? It's just your mask! You were already naked.</state>
+                <state img="6-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            </case>
             <case tag="opponent_stripping" filter="assisted_strip">
                 <state img="6-interested.png">Helping one another... I think I get it now.</state>
                 <state img="6-calm.png">I respect the bond between you two.</state>
             </case>
-            <case tag="opponent_stripping" target="rainbow_mika" targetSayingMarker="embarrassed">
-                <state img="6-shocked.png">What...? It's just your mask! You were already naked.</state>
-                <state img="6-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            <case tag="opponent_stripped" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="6-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
+                <state img="6-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
             </case>
             <case tag="opponent_stripped" filter="assisted_strip">
                 <state img="6-horny.png">The way you touch each other is...</state>
                 <state img="6-butt.png">Maybe another time I'll let someone take off my clothes. Just maybe.</state>
             </case>
-            <case tag="opponent_stripped" target="rainbow_mika" targetSayingMarker="putting_mask">
-                <state img="6-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
-                <state img="6-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
+            <case tag="opponent_stripped" target="human" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="6-shocked.png">I didn't see anything... (I've never seen her embarrassed before)</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="6-angry.png">You're going to do this too? But I haven't finished yet.</state>
@@ -14314,7 +14765,7 @@
                 <state img="6-shocked.png">I've always known she was crazy, but this...</state>
                 <state img="6-nervous.png">The sounds she's making...</state>
                 <state img="6-horny.png">(I know I told her I wouldn't look at her, but...)</state>
-                <state img="6-horny.png">(Even if she's insane, she clearly has more technique than me.)</state>
+                <state img="6-horny.png">(Even if she's insane, she clearly has more knowledge than me)</state>
             </case>
             <case tag="female_masturbating" target="kizuna">
                 <state img="6-calm.png">I'm not sure what you're waiting for...</state>
@@ -14341,7 +14792,7 @@
                 <state img="6-shocked.png">Is this what wrestling is? I had no idea.</state>
                 <state img="6-shocked.png">Do you always wrestle like this?</state>
                 <state img="6-nervous.png">This isn't like a normal match. There's so much touching and...</state>
-                <state img="6-horny.png">Neither of you seems to be the least concerned about your bodies touching.</state>
+                <state img="6-horny.png">Neither of you seems to be the least bit concerned about your bodies touching.</state>
                 <state img="6-horny.png">I guess you two are used to wrestling each other, that's why this isn't embarrassing for you.</state>
             </case>
             <case tag="female_finished_masturbating">
@@ -14385,8 +14836,8 @@
                 <state img="6-interested.png">The vines are gone. How are you feeling?</state>
             </case>
             <case tag="female_finished_masturbating" target="rainbow_mika">
-                <state img="6-nervous.png">Maybe I should look into wrestling. F-for research.</state>
-                <state img="6-nervous.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
+                <state img="6-horny.png">Maybe I should look into wrestling. For research...</state>
+                <state img="6-horny.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
             </case>
             <case tag="female_finished_masturbating" target="shimakaze">
                 <state img="6-calm.png">Alright, now play with your robot quietly until the game is over.</state>
@@ -14848,7 +15299,7 @@
                 <state img="7-interested.png">It's good that you have your bracelets right now. That's one more use for them.</state>
                 <state img="7-interested.png">Oh, you're gonna take off your bracelets so you don't have to remove your clothes. That's good.</state>
             </case>
-            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri">
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="juri" priority="500">
                 <state img="7-interested.png">Hey, your bracelets!</state>
             </case>
             <case tag="female_removing_accessory" target="chun-li" targetStage="0" alsoPlaying="rainbow_mika">
@@ -14952,6 +15403,10 @@
                 <condition count="0" filter="juri" />
                 <state img="7-sad.png">(Should I tell her that Chun-Li's cooking is awful?)</state>
                 <state img="7-sad.png">(Good? I'm not so sure about that, Chun-Li. Mika, my condolences.)</state>
+            </case>
+            <case tag="female_removed_accessory" target="chun-li" targetStage="2" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="7-nervous.png">Oh, I wasn't suggesting I wanted to see you undress more, but OK...</state>
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="7-horny.png">Awww, so cute! You look like a little cat!</state>
@@ -15107,6 +15562,11 @@
                 <state img="7-calm.png">That isn't covering much skin, huh?</state>
                 <state img="7-calm.png">That seems like a decent choice.</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0">
+                <condition count="1" filter="chun-li" />
+                <condition count="1" filter="cammy_white" />
+                <state img="7-combat.png">Me neither!</state>
+            </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="7-shocked.png">Again?!</state>
                 <state img="7-shocked.png">Are you gonna keep doing this?!</state>
@@ -15154,6 +15614,10 @@
                 <state img="7-interested.png">Your partner is gonna help you strip? Nadeshiko, isn't it?</state>
                 <state img="7-interested.png">I see, you're asking your partner for help. Nadeshiko, right?</state>
             </case>
+            <case tag="female_removing_minor" target="rainbow_mika" targetStage="0" alsoPlaying="juri">
+                <state img="7-calm.png">I have no problem with it.</state>
+                <state img="7-calm.png">I think it's OK.</state>
+            </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="7-stretching.png">This arrogance won't get you anything. Just do what you have to do.</state>
                 <state img="7-stretching.png">You sure are acting superior considering you have already lost twice.</state>
@@ -15180,6 +15644,15 @@
                 <state img="7-interested.png">I didn't expect this game to be so interesting.</state>
                 <state img="7-happy.png">Now that I'm no longer playing, I see this game in a new light.</state>
                 <state img="7-interested.png">Keep playing, please.</state>
+            </case>
+            <case tag="female_removed_minor" target="rainbow_mika" targetStage="1" alsoPlaying="chun-li">
+                <condition count="1" filter="juri" />
+                <state img="7-sad.png">(Does she enjoy getting insulted by Juri?)</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <condition count="1" filter="rainbow_mika" />
+                <condition count="0" filter="juri" />
+                <state img="7-interested.png">That's just superstition, Mika. You shouldn't rely on stuff like that.</state>
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2">
                 <state img="7-sad.png">If I'd known I would have to deal with a crazy shooter too, I would've asked for backup.</state>
@@ -15271,6 +15744,11 @@
                 <state img="7-interested.png">Without your ~clothing~, you'll gather more attention.</state>
                 <state img="7-butt.png">You held on to that ~clothing~ for a long time.</state>
             </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="5" alsoPlaying="rainbow_mika">
+                <condition count="0" filter="juri" />
+                <state img="7-happy.png">They are legendary, though.</state>
+                <state img="7-happy.png">Exposed or not, they sure are legendary.</state>
+            </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="7-shocked.png">HEY, WATCH IT!</state>
                 <state img="7-shocked.png">WHAT ARE YOU DOING?!</state>
@@ -15317,6 +15795,10 @@
             <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="chun-li">
                 <state img="7-stretching.png">What do we do while Juri strips, Chun-Li? Do we just ignore her?</state>
                 <state img="7-stretching.png">Chun-Li, how do you propose we deal with Juri when she's stripping? Should we ignore her?</state>
+            </case>
+            <case tag="female_removing_major" target="juri" targetStage="0" alsoPlaying="rainbow_mika">
+                <state img="7-stretching.png">Fans? Juri? Yeah, right.</state>
+                <state img="7-stretching.png">Juri has fans? I'm not so sure.</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="7-shocked.png">Oh, she turned back to normal.</state>
@@ -15398,6 +15880,12 @@
                 <state img="7-nervous.png">I forgot that you bind your chest. I... don't have to do that.</state>
                 <state img="7-nervous.png">Oh, right. You bind your chest. I've never had to do that.</state>
             </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5" alsoPlaying="juri">
+                <state img="7-angry.png">And how exactly do you know that, Juri?</state>
+                <state img="7-angry.png">How do you know that I don't wear anything under my leotard, Juri?</state>
+                <state img="7-nervous.png">T-That's because I don't want to. Got a problem with that?</state>
+                <state img="7-nervous.png">S-so what? It's more comfortable that way.</state>
+            </case>
             <case tag="female_removed_major" target="chun-li" targetStage="6">
                 <state img="7-happy.png">Aren't those the panties you bought last week when you took me shopping?</state>
                 <state img="7-happy.png">Hey, those are the panties you bought last week, when you took me shopping.</state>
@@ -15418,8 +15906,12 @@
                 <state img="7-angry.png">Out of respect to the others, we'll settle our business after the game is over.</state>
                 <state img="7-angry.png">Let's settle things once the game is over. I wouldn't want to disrupt the other players.</state>
             </case>
-            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li">
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="chun-li" priority="500">
                 <state img="7-butt.png">...</state>
+            </case>
+            <case tag="female_removed_major" target="juri" targetStage="1" alsoPlaying="rainbow_mika">
+                <state img="7-calm.png">Yeah, Mika is way better than you, Juri.</state>
+                <state img="7-calm.png">She's right, Mika. You're much better than her.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="7-sad.png">To be honest, I liked the other version more. She was quieter.</state>
@@ -15547,7 +16039,7 @@
                 <state img="7-nervous.png">...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
-                <state img="7-combat.png">Wha- Ah- Chun-Li! Juri's is behind you!</state>
+                <state img="7-combat.png">Wha- Ah- Chun-Li! Juri is behind you!</state>
                 <state img="7-combat.png">Chun-Li! Watch out! It's Juri!</state>
             </case>
             <case tag="female_chest_will_be_visible" target="felicia">
@@ -15652,6 +16144,10 @@
                 <state img="7-angry.png">They look great. I'm sure people won't stop looking at you from now on.</state>
                 <state img="7-angry.png">Are you sure you don't have problems moving around with... &lt;i&gt;those&lt;/i&gt;?</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="rainbow_mika" alsoPlaying="juri">
+                <condition count="1" filter="chun-li" />
+                <state img="7-nervous.png">(What about me?)</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="chun-li">
                 <state img="7-nervous.png">(They seem to get bigger every time I see them.)</state>
                 <state img="7-nervous.png">(I always forget how big they are.)</state>
@@ -15659,6 +16155,10 @@
             <case tag="female_large_chest_is_visible" target="chun-li" alsoPlaying="juri">
                 <state img="7-sad.png">What?! No, that's ridiculous! I was just... thinking of something else.</state>
                 <state img="7-sad.png">No, I'm not! I'm happy with my body... even if Chun-Li's is so much more attractive.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="chun-li" targetSaidMarker="juri_attack" priority="410">
+                <state img="7-shocked.png">Whaaa...</state>
+                <state img="7-shocked.png">Ahhh...</state>
             </case>
             <case tag="female_large_chest_is_visible" target="rainbow_mika">
                 <state img="7-nervous.png">The back too...</state>
@@ -15853,21 +16353,24 @@
                 <state img="7-calm.png">You knew this was strip poker, right? What did you think was gonna happen?</state>
                 <state img="7-calm.png">You are too shy to be playing this game, maybe you should leave.</state>
             </case>
+            <case tag="opponent_stripping" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed">
+                <state img="7-shocked.png">What...? It's just your mask! You were already naked.</state>
+                <state img="7-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            </case>
             <case tag="opponent_stripping" filter="assisted_strip">
                 <state img="7-interested.png">Helping one another... I think I get it now.</state>
                 <state img="7-calm.png">I respect the bond between you two.</state>
             </case>
-            <case tag="opponent_stripping" target="rainbow_mika" targetSayingMarker="embarrassed">
-                <state img="7-shocked.png">What...? It's just your mask! You were already naked.</state>
-                <state img="7-shocked.png">W-what? Is it such a big deal? You were already fully exposed.</state>
+            <case tag="opponent_stripped" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="7-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
+                <state img="7-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
             </case>
             <case tag="opponent_stripped" filter="assisted_strip">
                 <state img="7-horny.png">The way you touch each other is...</state>
                 <state img="7-butt.png">Maybe another time I'll let someone take off my clothes. Just maybe.</state>
             </case>
-            <case tag="opponent_stripped" target="rainbow_mika" targetSayingMarker="putting_mask">
-                <state img="7-stretching.png">I can't say I get what it's like to keep your wrestling persona, but it seems like it's important to you.</state>
-                <state img="7-stretching.png">I see. Well, you should be more careful about keeping your mask on next time.</state>
+            <case tag="opponent_stripped" target="human" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="putting_mask">
+                <state img="7-shocked.png">I didn't see anything... (I've never seen her embarrassed before)</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="7-interested.png">Oh, is it his turn now?</state>
@@ -16054,7 +16557,7 @@
                 <state img="7-shocked.png">I've always known she was crazy, but this...</state>
                 <state img="7-nervous.png">The sounds she's making...</state>
                 <state img="7-horny.png">(I know I told her I wouldn't look at her, but...)</state>
-                <state img="7-horny.png">(Even if she's insane, she clearly has more technique than me.)</state>
+                <state img="7-horny.png">(Even if she's insane, she clearly has more knowledge than me)</state>
             </case>
             <case tag="female_masturbating" target="kizuna">
                 <state img="7-calm.png">I'm not sure what you're waiting for...</state>
@@ -16081,7 +16584,7 @@
                 <state img="7-shocked.png">Is this what wrestling is? I had no idea.</state>
                 <state img="7-shocked.png">Do you always wrestle like this?</state>
                 <state img="7-nervous.png">This isn't like a normal match. There's so much touching and...</state>
-                <state img="7-horny.png">Neither of you seems to be the least concerned about your bodies touching.</state>
+                <state img="7-horny.png">Neither of you seems to be the least bit concerned about your bodies touching.</state>
                 <state img="7-horny.png">I guess you two are used to wrestling each other, that's why this isn't embarrassing for you.</state>
             </case>
             <case tag="female_finished_masturbating">
@@ -16127,8 +16630,8 @@
                 <state img="7-interested.png">The vines are gone. How are you feeling?</state>
             </case>
             <case tag="female_finished_masturbating" target="rainbow_mika">
-                <state img="7-nervous.png">Maybe I should look into wrestling. F-for research.</state>
-                <state img="7-nervous.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
+                <state img="7-horny.png">Maybe I should look into wrestling. For research...</state>
+                <state img="7-horny.png">Is there somewhere I can learn more about wrestling? I just don't want to be ignorant on the subject.</state>
             </case>
             <case tag="female_finished_masturbating" target="shimakaze">
                 <state img="7-calm.png">Alright, now play with your robot quietly until the game is over.</state>
