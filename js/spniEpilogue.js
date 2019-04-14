@@ -989,13 +989,13 @@ EpiloguePlayer.prototype.load = function () {
   for (var i = 0; i < this.epilogue.scenes.length; i++) {
     var scene = this.epilogue.scenes[i];
     if (scene.background) {
-      scene.background = scene.background.charAt(0) === '/' ? scene.background : this.epilogue.player.base_folder + scene.background;
+      scene.background = scene.background.charAt(0) === '/' ? scene.background.substring(1) : this.epilogue.player.base_folder + scene.background;
       this.fetchImage(scene.background);
     }
     for (var j = 0; j < scene.directives.length; j++) {
       var directive = scene.directives[j];
       if (directive.src) {
-        directive.src = directive.src.charAt(0) === '/' ? directive.src : this.epilogue.player.base_folder + directive.src;
+        directive.src = directive.src.charAt(0) === '/' ? directive.src.substring(1) : this.epilogue.player.base_folder + directive.src;
         this.fetchImage(directive.src);
       }
       
@@ -1003,7 +1003,7 @@ EpiloguePlayer.prototype.load = function () {
           for (var k = 0; k < directive.keyframes.length; k++) {
             var keyframe = directive.keyframes[k];
             if (keyframe.src && keyframe !== directive) {
-              keyframe.src = keyframe.src.charAt(0) === '/' ? keyframe.src : this.epilogue.player.base_folder + keyframe.src;
+              keyframe.src = keyframe.src.charAt(0) === '/' ? keyframe.src.substring(1) : this.epilogue.player.base_folder + keyframe.src;
               this.fetchImage(keyframe.src);
             }
           }
