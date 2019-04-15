@@ -171,23 +171,6 @@ namespace SPNATI_Character_Editor.Controls
 
 			//text box
 			int screenHeight = canvas.Height - ScreenMargin * 2;
-			
-			if (_imagePose != null)
-			{
-				foreach (LiveSprite sprite in _imagePose.DrawingOrder)
-				{
-					sprite.Draw(g, SceneTransform, new List<string>());
-				}
-			}
-			else if (_imageReference != null)
-			{
-				ImageAnimator.UpdateFrames();
-
-				//scale to the height
-				float availableHeight = ShowTextBox ? screenHeight * (1 - TextPercent) : screenHeight * 0.9f;
-				int width = (int)(_imageReference.Width / (float)_imageReference.Height * availableHeight);
-				g.DrawImage(_imageReference, canvas.Width / 2 - width / 2, screenHeight - availableHeight + ScreenMargin, width, availableHeight);
-			}
 
 			if (_showText && !string.IsNullOrEmpty(_text))
 			{
@@ -221,6 +204,22 @@ namespace SPNATI_Character_Editor.Controls
 				g.DrawLine(_textBorder, triangle[1], triangle[2]);
 			}
 
+			if (_imagePose != null)
+			{
+				foreach (LiveSprite sprite in _imagePose.DrawingOrder)
+				{
+					sprite.Draw(g, SceneTransform, new List<string>());
+				}
+			}
+			else if (_imageReference != null)
+			{
+				ImageAnimator.UpdateFrames();
+
+				//scale to the height
+				float availableHeight = ShowTextBox ? screenHeight * (1 - TextPercent) : screenHeight * 0.9f;
+				int width = (int)(_imageReference.Width / (float)_imageReference.Height * availableHeight);
+				g.DrawImage(_imageReference, canvas.Width / 2 - width / 2, screenHeight - availableHeight + ScreenMargin, width, availableHeight);
+			}
 		}
 
 		private void tmrTick_Tick(object sender, EventArgs e)
