@@ -534,6 +534,7 @@ namespace Desktop.CommonControls
 				ctl = Activator.CreateInstance(result.EditControlType) as PropertyEditControl;
 				ctl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 				ctl.SetParameters(result.Attribute);
+				ctl.RequireHeight += PropertyEditControl_RequireHeight;
 
 				ctl.SetData(Data, result.Property, index, Context, UndoManager, _previewData);
 
@@ -560,6 +561,8 @@ namespace Desktop.CommonControls
 				row.Set(ctl, result);
 				_rows.Set(result.Property, index, row);
 
+				ctl.OnAddedToRow(); 
+
 				pnlRecords.Controls.Add(row);
 				pnlRecords.Controls.SetChildIndex(row, 0);
 				if (Sorted)
@@ -582,6 +585,21 @@ namespace Desktop.CommonControls
 			}
 
 			return ctl;
+		}
+
+		/// <summary>
+		/// Raised when a control needs a specific height
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="height"></param>
+		private void PropertyEditControl_RequireHeight(object sender, int height)
+		{
+			PropertyEditControl ctl = sender as PropertyEditControl;
+			PropertyTableRow row = _rows.Get(ctl.Property, ctl.Index);
+			if (row != null)
+			{
+				row.Height = height + row.Padding.Top + row.Padding.Bottom + ctl.Margin.Top + ctl.Margin.Bottom;
+			}
 		}
 
 		private void Row_EditingMacro(object sender, MacroArgs args)
@@ -611,6 +629,7 @@ namespace Desktop.CommonControls
 			row.RemoveRow -= Row_RemoveRow;
 			row.ToggleFavorite -= Row_ToggleFavorite;
 			row.EditingMacro -= Row_EditingMacro;
+			row.EditControl.RequireHeight -= PropertyEditControl_RequireHeight;
 			row.Destroy();
 			row.Dispose();
 		}

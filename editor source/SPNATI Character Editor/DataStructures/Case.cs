@@ -1774,8 +1774,13 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("gender")]
 		public string Gender;
 
+		[Status(DisplayName = "Status", Description = "Status of the characters to match", GroupOrder = 20)]
 		[XmlAttribute("status")]
 		public string Status;
+
+		//[Text(DisplayName = "Variable", Description = "Name of variable to store a target that this condition matches", GroupOrder = 0)]
+		[XmlAttribute("var")]
+		public string Variable;
 
 		public static readonly KeyValuePair<string, string>[] StatusTypes = {
 			new KeyValuePair<string, string>(null, ""),
@@ -1794,53 +1799,6 @@ namespace SPNATI_Character_Editor
 			new KeyValuePair<string, string>("finished", "Finished masturbating")
 		};
 
-		[XmlIgnore]
-		public string StatusType
-		{
-			get
-			{
-				if (!string.IsNullOrEmpty(Status) && Status.StartsWith("not_"))
-				{
-					return Status.Substring(4);
-				}
-				else
-				{
-					return Status;
-				}
-			}
-			set
-			{
-				if (!string.IsNullOrEmpty(Status) && Status.StartsWith("not_"))
-				{
-					Status = "not_" + value;
-				}
-				else
-				{
-					Status = value;
-				}
-			}
-		}
-
-		[XmlIgnore]
-		public bool NegateStatus
-		{
-			get
-			{
-				return (!string.IsNullOrEmpty(Status) && Status.StartsWith("not_"));
-			}
-			set
-			{
-				if (string.IsNullOrEmpty(StatusType))
-				{
-					Status = null;
-				}
-				else
-				{
-					Status = StatusType != null ? (value ? "not_" : "") + StatusType : null;
-				}
-			}
-		}
-
 		public TargetCondition()
 		{
 		}
@@ -1850,15 +1808,6 @@ namespace SPNATI_Character_Editor
 			Filter = tag;
 			Gender = gender;
 			Status = status;
-			Count = count;
-		}
-
-		public TargetCondition(string tag, string gender, string status, bool negateStatus, string count)
-		{
-			Filter = tag;
-			Gender = gender;
-			StatusType = status;
-			NegateStatus = negateStatus;
 			Count = count;
 		}
 
@@ -1874,7 +1823,7 @@ namespace SPNATI_Character_Editor
 
 		public TargetCondition Copy()
 		{
-			TargetCondition copy = new TargetCondition(Filter, Gender, Status, NegateStatus, Count);
+			TargetCondition copy = MemberwiseClone() as TargetCondition;
 			return copy;
 		}
 
@@ -1902,6 +1851,15 @@ namespace SPNATI_Character_Editor
 
 			}
 			return str;
+		}
+
+		public bool HasAdvancedConditions
+		{
+			get
+			{
+				return !string.IsNullOrEmpty(Status) ||
+					!string.IsNullOrEmpty(Variable);
+			}
 		}
 	}
 

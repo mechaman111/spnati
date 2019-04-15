@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace Desktop.CommonControls
 {
 	/// <summary>
-	/// Base class for controls that can be used in a list manager
+	/// Base class for controls that can be used in a property table
 	/// </summary>
 	[ToolboxItem(false)]
 	public partial class PropertyEditControl : UserControl, INotifyPropertyChanged
@@ -33,6 +33,8 @@ namespace Desktop.CommonControls
 		public string Property { get; set; }
 		public int Index { get; set; }
 
+		public event EventHandler<int> RequireHeight;
+
 		public void SetParameters(EditControlAttribute parameters)
 		{
 			if (parameters.BoundProperties != null)
@@ -53,12 +55,21 @@ namespace Desktop.CommonControls
 		{
 		}
 
+		public virtual void OnAddedToRow()
+		{
+		}
+
 		public virtual void ApplyMacro(List<string> values)
 		{
 		}
 
 		public virtual void BuildMacro(List<string> values)
 		{
+		}
+
+		protected virtual void OnRequireHeight(int height)
+		{
+			RequireHeight?.Invoke(this, height);
 		}
 
 		internal void RemoveFromList()

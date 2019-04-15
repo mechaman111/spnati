@@ -54,7 +54,9 @@ namespace SPNATI_Character_Editor
 
 		public override void Clear()
 		{
+			chkNegate.Checked = false;
 			cboStatus.SelectedIndex = 0;
+			Save();
 		}
 
 		public string BuildValue()

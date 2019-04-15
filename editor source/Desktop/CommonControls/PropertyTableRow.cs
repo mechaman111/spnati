@@ -124,6 +124,7 @@ namespace Desktop.CommonControls
 		{
 			EditControl.PropertyChanged -= EditControl_PropertyChanged;
 			EditControl.Destroy();
+			EditControl = null;
 		}
 
 		private void EditControl_PropertyChanged(object sender, PropertyChangedEventArgs e)

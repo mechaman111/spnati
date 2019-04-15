@@ -10,34 +10,36 @@ namespace SPNATI_Character_Editor
 	{
 		private TargetCondition _filter;
 
+		private bool _collapsed;
+
 		public FilterControl()
 		{
 			InitializeComponent();
 
 			recTag.RecordType = typeof(Tag);
-			cboStatus.DataSource = TargetCondition.StatusTypes;
-			cboStatus.ValueMember = "Key";
-			cboStatus.DisplayMember = "Value";
 		}
 
 		public override void ApplyMacro(List<string> values)
 		{
-			if (values.Count >= 5)
+			if (values.Count >= 4)
 			{
 				string count = values[0];
 				string tag = values[1];
 				string gender = values[2];
-				bool inverted = (values[3] == "1");
-				string status = values[4];
-				chkNot.Checked = inverted;
+				string status = values[3];
 				cboGender.SelectedItem = gender;
 				if (cboGender.SelectedItem == null)
 				{
 					cboGender.SelectedIndex = 0;
 				}
 				recTag.RecordKey = tag;
-				cboStatus.SelectedValue = status ?? "";
 				SetCount(count);
+
+				_filter.Status = status;
+
+				RebindTable();
+
+				ToggleCollapsed(!_filter.HasAdvancedConditions);
 			}
 		}
 
@@ -46,29 +48,29 @@ namespace SPNATI_Character_Editor
 			string count = GetCount() ?? "0";
 			string tag = recTag.RecordKey;
 			string gender = cboGender.SelectedItem?.ToString();
-			bool inverted = chkNot.Checked;
-			string status = (string)cboStatus.SelectedValue;
 			values.Add(count);
 			values.Add(tag ?? "");
 			values.Add(gender ?? "");
-			values.Add(inverted ? "1" : "");
-			values.Add(status);
+			values.Add(_filter.Status);
 		}
 
 		protected override void OnBoundData()
 		{
 			_filter = GetValue() as TargetCondition;
-
 			SetCount(_filter.Count);
-			chkNot.Checked = _filter.NegateStatus;
 			cboGender.SelectedItem = _filter.Gender;
 			if (cboGender.SelectedItem == null)
 			{
 				cboGender.SelectedIndex = 0;
 			}
 			recTag.RecordKey = _filter.Filter;
-			chkNot.Checked = _filter.NegateStatus;
-			cboStatus.SelectedValue = _filter.StatusType ?? "";
+
+			tableAdvanced.Data = _filter;
+		}
+
+		public override void OnAddedToRow()
+		{
+			ToggleCollapsed(!_filter.HasAdvancedConditions);
 		}
 
 		private void SetCount(string range)
@@ -113,10 +115,8 @@ namespace SPNATI_Character_Editor
 			valTo.ValueChanged -= ValueChanged;
 			valFrom.TextChanged -= Value_TextChanged;
 			valTo.TextChanged -= Value_TextChanged;
-			cboStatus.SelectedIndexChanged -= ValueChanged;
 			cboGender.SelectedIndexChanged -= ValueChanged;
 			recTag.RecordChanged -= RecordChanged;
-			chkNot.CheckedChanged -= ValueChanged;
 		}
 
 		protected override void AddHandlers()
@@ -125,10 +125,8 @@ namespace SPNATI_Character_Editor
 			valTo.ValueChanged += ValueChanged;
 			valFrom.TextChanged += Value_TextChanged;
 			valTo.TextChanged += Value_TextChanged;
-			cboStatus.SelectedIndexChanged += ValueChanged;
 			cboGender.SelectedIndexChanged += ValueChanged;
 			recTag.RecordChanged += RecordChanged;
-			chkNot.CheckedChanged += ValueChanged;
 		}
 
 		private void RecordChanged(object sender, RecordEventArgs e)
@@ -170,12 +168,21 @@ namespace SPNATI_Character_Editor
 			RemoveHandlers();
 			valFrom.Text = "";
 			valTo.Text = "";
-			cboStatus.SelectedIndex = 0;
 			cboGender.SelectedIndex = 0;
 			recTag.RecordKey = null;
-			chkNot.Checked = false;
+			_filter.Status = null;
+
+			RebindTable();
+
 			Save();
 			AddHandlers();
+		}
+
+		private void RebindTable()
+		{
+			//TODO: Once properties serialize properly with SpnatiXmlSerializer, we can switch TargetCondition to use a BindableObject, make
+			//the fields properties, and get rid of this method
+			tableAdvanced.UpdateProperty("Status");
 		}
 
 		public override void Save()
@@ -183,13 +190,35 @@ namespace SPNATI_Character_Editor
 			string count = GetCount() ?? "0";
 			string tag = recTag.RecordKey;
 			string gender = cboGender.SelectedItem?.ToString();
-			bool inverted = chkNot.Checked;
-			string status = (string)cboStatus.SelectedValue;
 			_filter.Count = count;
 			_filter.Gender = gender;
-			_filter.NegateStatus = inverted;
-			_filter.StatusType = status;
 			_filter.Filter = tag;
+			tableAdvanced.Save();
+		}
+
+		private void cmdExpand_Click(object sender, EventArgs e)
+		{
+			ToggleCollapsed(!_collapsed);
+		}
+
+		/// <summary>
+		/// Displays or hides the advanced property table
+		/// </summary>
+		/// <param name="collapsed"></param>
+		private void ToggleCollapsed(bool collapsed)
+		{
+			_collapsed = collapsed;
+			if (_collapsed)
+			{
+				cmdExpand.Image = Properties.Resources.ChevronDown;
+				OnRequireHeight(22);
+				
+			}
+			else
+			{
+				cmdExpand.Image = Properties.Resources.ChevronUp;
+				OnRequireHeight(63);
+			}
 		}
 	}
 
