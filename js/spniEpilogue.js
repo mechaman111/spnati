@@ -1651,12 +1651,16 @@ SceneView.prototype.removeSceneObject = function (directive) {
 }
 
 SceneView.prototype.hideSceneObject = function (directive, context) {
-  context.object = this.sceneObjects[directive.id];
+  var sceneObject = context.object = this.sceneObjects[directive.id];
   context.anims = {};
   if (context.object) {
     $(context.object.element).hide();
     this.stopAnimation(directive, context.anims);
-    delete this.sceneObjects[directive.id];
+    context.rate = sceneObject.rate;
+    sceneObject.rate = 0;
+    if (!sceneObject instanceof Emitter) {
+        delete this.sceneObjects[directive.id];
+    }
   }
 }
 
@@ -1664,6 +1668,7 @@ SceneView.prototype.showSceneObject = function (directive, context) {
   var obj = context.object;
   if (obj) {
     this.sceneObjects[directive.id] = obj;
+    this.sceneObjects[directive.id].rate = context.rate;
     this.restoreAnimation(directive, context.anims);
     $(obj.element).show();
   }
@@ -2345,6 +2350,7 @@ Particle.prototype.spawn = function (x, y, rotation, args) {
   $(particleElem).css({
     "width": args.width + "px",
     "height": args.height + "px",
+    "background-color": "",
   });
   $(this.element).css({
     "z-index": args.layer || "",
