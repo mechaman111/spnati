@@ -41,7 +41,7 @@
 			this.recField.RecordKey = null;
 			this.recField.Size = new System.Drawing.Size(150, 20);
 			this.recField.TabIndex = 0;
-			this.recField.RecordChanged += new System.EventHandler<Desktop.IRecord>(this.recField_RecordChanged);
+			this.recField.RecordChanged += new System.EventHandler<RecordEventArgs>(this.recField_RecordChanged);
 			// 
 			// RecordControl
 			// 

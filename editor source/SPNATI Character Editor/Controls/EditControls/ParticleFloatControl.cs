@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using Desktop;
 using Desktop.CommonControls;
-using Desktop;
+using System;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls.EditControls
 {
@@ -29,7 +22,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			valTo.DecimalPlaces = valFrom.DecimalPlaces = p.DecimalPlaces;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			valFrom.ValueChanged -= val_ValueChanged;
 			valFrom.TextChanged -= val_TextChanged;
@@ -37,7 +30,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			valTo.TextChanged -= val_TextChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			valFrom.ValueChanged += val_ValueChanged;
 			valFrom.TextChanged += val_TextChanged;
@@ -50,6 +43,8 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			string value = GetValue()?.ToString();
 			if (string.IsNullOrEmpty(value))
 			{
+				valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, 0));
+				valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, 0));
 				valFrom.Text = "";
 				valTo.Text = "";
 			}
@@ -64,6 +59,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 				}
 				else
 				{
+					valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, 0));
 					valFrom.Text = "";
 				}
 				if (pieces.Length > 1)
@@ -76,16 +72,16 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 					}
 					else
 					{
+						valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, 0));
 						valTo.Text = "";
 					}
 				}
 				else
 				{
+					valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, 0));
 					valTo.Text = "";
 				}
 			}
-
-			AddHandlers();
 		}
 
 		private void val_ValueChanged(object sender, EventArgs e)
@@ -105,8 +101,8 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 		public override void Clear()
 		{
 			RemoveHandlers();
-			valFrom.Value = 0;
-			valTo.Value = 0;
+			valFrom.Value = Math.Max(0, valFrom.Minimum);
+			valTo.Value = Math.Max(0, valFrom.Minimum);
 			valFrom.Text = "";
 			valTo.Text = "";
 			Save();

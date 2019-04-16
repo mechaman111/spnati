@@ -4,6 +4,7 @@ using Desktop.CommonControls.PropertyControls;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor
 {
@@ -15,6 +16,20 @@ namespace SPNATI_Character_Editor
 			InitializeComponent();
 		}
 
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				string value = values[0];
+				ApplyValue(value);
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			values.Add(BuildValue() ?? "");
+		}
+
 		protected override void OnSetParameters(EditControlAttribute parameters)
 		{
 			NumericAttribute p = parameters as NumericAttribute;
@@ -24,7 +39,7 @@ namespace SPNATI_Character_Editor
 			valTo.Maximum = p.Maximum;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			valFrom.ValueChanged += ValueChanged;
 			valTo.ValueChanged += ValueChanged;
@@ -33,7 +48,7 @@ namespace SPNATI_Character_Editor
 			chkUpper.CheckedChanged += ValueChanged;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			valFrom.ValueChanged -= ValueChanged;
 			valTo.ValueChanged -= ValueChanged;
@@ -45,7 +60,13 @@ namespace SPNATI_Character_Editor
 		protected override void OnBoundData()
 		{
 			chkUpper.Checked = false;
-			string range = GetValue()?.ToString();
+			string value = GetValue()?.ToString();
+			ApplyValue(value);
+		}
+
+		private void ApplyValue(string value)
+		{
+			string range = value;
 			if (range == null)
 			{
 				valFrom.Text = "";
@@ -82,7 +103,6 @@ namespace SPNATI_Character_Editor
 			{
 				valTo.Text = "";
 			}
-			AddHandlers();
 		}
 
 		public override void Clear()
@@ -94,7 +114,7 @@ namespace SPNATI_Character_Editor
 			Save();
 		}
 
-		public override void Save()
+		private string BuildValue()
 		{
 			int from = (int)valFrom.Value;
 			int to = (int)valTo.Value;
@@ -110,7 +130,14 @@ namespace SPNATI_Character_Editor
 			{
 				to = -1;
 			}
-			SetValue(GUIHelper.ToRange(from, to));
+			string value = GUIHelper.ToRange(from, to);
+			return value;
+		}
+
+		public override void Save()
+		{
+			string value = BuildValue();	
+			SetValue(value);
 		}
 
 		private void ValueChanged(object sender, EventArgs e)

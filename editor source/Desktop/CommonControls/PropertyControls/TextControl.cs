@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -20,13 +21,26 @@ namespace Desktop.CommonControls.PropertyControls
 			_validatorMethodName = attrib.Validator;
 		}
 
-		private void AddHandlers()
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				txtValue.Text = values[0];
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			values.Add(txtValue.Text);
+		}
+
+		protected override void AddHandlers()
 		{
 			txtValue.TextChanged += txtValue_TextChanged;
 			txtValue.Validating += TxtValue_Validating;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			txtValue.TextChanged -= txtValue_TextChanged;
 			txtValue.Validating -= TxtValue_Validating;
@@ -49,7 +63,6 @@ namespace Desktop.CommonControls.PropertyControls
 				}
 			}
 			txtValue.Text = GetValue()?.ToString();
-			AddHandlers();
 		}
 
 		public override void Clear()

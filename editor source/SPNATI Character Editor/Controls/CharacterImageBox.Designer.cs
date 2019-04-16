@@ -54,6 +54,7 @@
 			this.Controls.Add(this.canvas);
 			this.Name = "CharacterImageBox";
 			this.Size = new System.Drawing.Size(197, 493);
+			this.Resize += new System.EventHandler(this.CharacterImageBox_Resize);
 			this.ResumeLayout(false);
 
 		}

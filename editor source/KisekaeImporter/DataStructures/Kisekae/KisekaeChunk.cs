@@ -157,8 +157,7 @@ namespace KisekaeImporter.DataStructures.Kisekae
 		/// <param name="chunk"></param>
 		public void MergeIn(KisekaeChunk chunk, bool applyEmpties)
 		{
-			//If this merging is ever actually needed, it probably won't work well since there's no explicit tie between a resource and what image/text it belongs to
-			Assets.Clear();
+			//TODO: Asset merging is very flawed since there's no way to know what image/speech bubble the asset belongs to
 			Assets.AddRange(chunk.Assets);
 
 			KisekaeChunk copy = new KisekaeChunk(chunk);
@@ -202,7 +201,7 @@ namespace KisekaeImporter.DataStructures.Kisekae
 				string fullpath = System.IO.Path.GetFullPath(System.IO.Path.Combine(newRelativePath, filename));
 				fullpath = fullpath.Replace("\\", "/");
 				fullpath = fullpath.Replace(" ", "%20");
-				Assets[i] = fullpath;
+				Assets[i] = System.IO.Path.Combine(newRelativePath, filename);
 			}
 		}
 

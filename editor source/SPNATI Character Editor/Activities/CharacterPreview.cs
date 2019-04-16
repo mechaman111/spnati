@@ -27,12 +27,15 @@ namespace SPNATI_Character_Editor.Activities
 				_character.Behavior.CaseAdded += WorkingCasesChanged;
 				_character.Behavior.CaseRemoved += WorkingCasesChanged;
 				_character.Behavior.CaseModified += WorkingCasesChanged;
+				chkText.Checked = Config.GetBoolean("PreviewText");
 			}
 			else
 			{
 				lblSkin.Visible = false;
 				cboSkin.Visible = false;
+				chkText.Visible = false;
 			}
+			SubscribeWorkspace<DialogueLine>(WorkspaceMessages.PreviewLine, UpdatePreview);
 			SubscribeWorkspace<CharacterImage>(WorkspaceMessages.UpdatePreviewImage, UpdatePreviewImage);
 			UpdateLineCount();
 		}
@@ -88,6 +91,13 @@ namespace SPNATI_Character_Editor.Activities
 			picPortrait.SetImage(image);
 		}
 
+		private void UpdatePreview(DialogueLine line)
+		{
+			if (Config.GetBoolean(Settings.HideImages))
+				return;
+			picPortrait.SetText(line);
+		}
+
 		private void UpdateLineCount()
 		{
 			if (_character != null)
@@ -110,6 +120,14 @@ namespace SPNATI_Character_Editor.Activities
 			//update images in use to use new skin
 			ImageLibrary library = ImageLibrary.Get(_character);
 			library.UpdateSkin(_character.CurrentSkin);
+			Workspace.SendMessage(WorkspaceMessages.SkinChanged);
+		}
+
+		private void chkText_CheckedChanged(object sender, System.EventArgs e)
+		{
+			bool preview = chkText.Checked;
+			Config.Set("PreviewText", preview);
+			picPortrait.ShowTextBox = preview;
 		}
 	}
 }

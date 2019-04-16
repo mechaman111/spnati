@@ -24,13 +24,13 @@ namespace SPNATI_Character_Editor.Charts.Builders
 
 			foreach (Character c in CharacterDatabase.Characters)
 			{
-				foreach (string tag in c.Tags)
+				foreach (CharacterTag tag in c.Tags)
 				{
 					HashSet<Character> tagSet;
-					if (!tagMap.TryGetValue(tag.ToLower(), out tagSet))
+					if (!tagMap.TryGetValue(tag.Tag.ToLower(), out tagSet))
 					{
 						tagSet = new HashSet<Character>();
-						tagMap[tag.ToLower()] = tagSet;
+						tagMap[tag.Tag.ToLower()] = tagSet;
 					}
 					tagSet.Add(c);
 				}

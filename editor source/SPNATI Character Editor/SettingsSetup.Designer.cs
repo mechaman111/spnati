@@ -52,8 +52,12 @@
 			this.tabGeneral = new System.Windows.Forms.TabPage();
 			this.chkAutoBackup = new System.Windows.Forms.CheckBox();
 			this.tabDialogue = new System.Windows.Forms.TabPage();
+			this.chkInitialAdd = new System.Windows.Forms.CheckBox();
 			this.tabBanter = new System.Windows.Forms.TabPage();
 			this.chkAutoBanter = new System.Windows.Forms.CheckBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.cmdBrowseKisekae = new System.Windows.Forms.Button();
+			this.txtKisekae = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			this.tabsSections.SuspendLayout();
 			this.tabGeneral.SuspendLayout();
@@ -82,7 +86,7 @@
 			// cmdOk
 			// 
 			this.cmdOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdOk.Location = new System.Drawing.Point(457, 118);
+			this.cmdOk.Location = new System.Drawing.Point(457, 178);
 			this.cmdOk.Name = "cmdOk";
 			this.cmdOk.Size = new System.Drawing.Size(75, 23);
 			this.cmdOk.TabIndex = 4;
@@ -105,7 +109,7 @@
 			// 
 			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cmdCancel.Location = new System.Drawing.Point(538, 118);
+			this.cmdCancel.Location = new System.Drawing.Point(538, 178);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(75, 23);
 			this.cmdCancel.TabIndex = 5;
@@ -116,7 +120,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(7, 37);
+			this.label2.Location = new System.Drawing.Point(7, 63);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(58, 13);
 			this.label2.TabIndex = 5;
@@ -126,10 +130,10 @@
 			// 
 			this.txtUserName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtUserName.Location = new System.Drawing.Point(116, 34);
+			this.txtUserName.Location = new System.Drawing.Point(116, 60);
 			this.txtUserName.Name = "txtUserName";
 			this.txtUserName.Size = new System.Drawing.Size(391, 20);
-			this.txtUserName.TabIndex = 2;
+			this.txtUserName.TabIndex = 4;
 			this.toolTip1.SetToolTip(this.txtUserName, "This is used for auto-saving. Only characters written by this user will be auto-s" +
         "aved.");
 			// 
@@ -141,7 +145,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(7, 62);
+			this.label3.Location = new System.Drawing.Point(7, 88);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(103, 13);
 			this.label3.TabIndex = 7;
@@ -149,7 +153,7 @@
 			// 
 			// valAutoSave
 			// 
-			this.valAutoSave.Location = new System.Drawing.Point(116, 60);
+			this.valAutoSave.Location = new System.Drawing.Point(116, 86);
 			this.valAutoSave.Maximum = new decimal(new int[] {
             60,
             0,
@@ -157,7 +161,7 @@
             0});
 			this.valAutoSave.Name = "valAutoSave";
 			this.valAutoSave.Size = new System.Drawing.Size(45, 20);
-			this.valAutoSave.TabIndex = 3;
+			this.valAutoSave.TabIndex = 5;
 			this.toolTip1.SetToolTip(this.valAutoSave, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
         "ave.");
 			// 
@@ -166,9 +170,9 @@
 			this.chkHideImages.AutoSize = true;
 			this.chkHideImages.Location = new System.Drawing.Point(6, 29);
 			this.chkHideImages.Name = "chkHideImages";
-			this.chkHideImages.Size = new System.Drawing.Size(145, 17);
+			this.chkHideImages.Size = new System.Drawing.Size(143, 17);
 			this.chkHideImages.TabIndex = 9;
-			this.chkHideImages.Text = "Include Prefixless Images";
+			this.chkHideImages.Text = "Include prefixless images";
 			this.toolTip1.SetToolTip(this.chkHideImages, "If unchecked, images with no prefix (ex. 0-*.png) will not appear for use in dial" +
         "ogue lines.");
 			this.chkHideImages.UseVisualStyleBackColor = true;
@@ -179,7 +183,7 @@
 			this.helpAutoSave.FlatAppearance.BorderSize = 0;
 			this.helpAutoSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.helpAutoSave.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
-			this.helpAutoSave.Location = new System.Drawing.Point(163, 58);
+			this.helpAutoSave.Location = new System.Drawing.Point(167, 83);
 			this.helpAutoSave.Name = "helpAutoSave";
 			this.helpAutoSave.Size = new System.Drawing.Size(26, 23);
 			this.helpAutoSave.TabIndex = 6;
@@ -217,9 +221,9 @@
 			this.chkIntellisense.AutoSize = true;
 			this.chkIntellisense.Location = new System.Drawing.Point(6, 6);
 			this.chkIntellisense.Name = "chkIntellisense";
-			this.chkIntellisense.Size = new System.Drawing.Size(141, 17);
+			this.chkIntellisense.Size = new System.Drawing.Size(139, 17);
 			this.chkIntellisense.TabIndex = 8;
-			this.chkIntellisense.Text = "Use Variable Intellisense";
+			this.chkIntellisense.Text = "Use variable intellisense";
 			this.chkIntellisense.UseVisualStyleBackColor = true;
 			// 
 			// label4
@@ -253,7 +257,7 @@
 			this.tabsSections.Multiline = true;
 			this.tabsSections.Name = "tabsSections";
 			this.tabsSections.SelectedIndex = 0;
-			this.tabsSections.Size = new System.Drawing.Size(621, 110);
+			this.tabsSections.Size = new System.Drawing.Size(621, 170);
 			this.tabsSections.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabsSections.TabIndex = 12;
 			this.tabsSections.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabsSections_DrawItem);
@@ -261,6 +265,9 @@
 			// tabGeneral
 			// 
 			this.tabGeneral.BackColor = System.Drawing.SystemColors.Control;
+			this.tabGeneral.Controls.Add(this.cmdBrowseKisekae);
+			this.tabGeneral.Controls.Add(this.txtKisekae);
+			this.tabGeneral.Controls.Add(this.label5);
 			this.tabGeneral.Controls.Add(this.chkAutoBackup);
 			this.tabGeneral.Controls.Add(this.helpAutoSave);
 			this.tabGeneral.Controls.Add(this.cmdBrowse);
@@ -273,23 +280,24 @@
 			this.tabGeneral.Location = new System.Drawing.Point(104, 4);
 			this.tabGeneral.Name = "tabGeneral";
 			this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabGeneral.Size = new System.Drawing.Size(513, 102);
+			this.tabGeneral.Size = new System.Drawing.Size(513, 162);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
 			// 
 			// chkAutoBackup
 			// 
 			this.chkAutoBackup.AutoSize = true;
-			this.chkAutoBackup.Location = new System.Drawing.Point(257, 62);
+			this.chkAutoBackup.Location = new System.Drawing.Point(250, 87);
 			this.chkAutoBackup.Name = "chkAutoBackup";
 			this.chkAutoBackup.Size = new System.Drawing.Size(176, 17);
-			this.chkAutoBackup.TabIndex = 8;
+			this.chkAutoBackup.TabIndex = 7;
 			this.chkAutoBackup.Text = "Create data recovery snapshots";
 			this.chkAutoBackup.UseVisualStyleBackColor = true;
 			// 
 			// tabDialogue
 			// 
 			this.tabDialogue.BackColor = System.Drawing.SystemColors.Control;
+			this.tabDialogue.Controls.Add(this.chkInitialAdd);
 			this.tabDialogue.Controls.Add(this.button1);
 			this.tabDialogue.Controls.Add(this.helpIntellisense);
 			this.tabDialogue.Controls.Add(this.chkIntellisense);
@@ -302,6 +310,16 @@
 			this.tabDialogue.Size = new System.Drawing.Size(513, 102);
 			this.tabDialogue.TabIndex = 1;
 			this.tabDialogue.Text = "Dialogue";
+			// 
+			// chkInitialAdd
+			// 
+			this.chkInitialAdd.AutoSize = true;
+			this.chkInitialAdd.Location = new System.Drawing.Point(6, 74);
+			this.chkInitialAdd.Name = "chkInitialAdd";
+			this.chkInitialAdd.Size = new System.Drawing.Size(258, 17);
+			this.chkInitialAdd.TabIndex = 14;
+			this.chkInitialAdd.Text = "Auto-open selection form when adding conditions";
+			this.chkInitialAdd.UseVisualStyleBackColor = true;
 			// 
 			// tabBanter
 			// 
@@ -325,13 +343,42 @@
     "d)";
 			this.chkAutoBanter.UseVisualStyleBackColor = true;
 			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(7, 37);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(90, 13);
+			this.label5.TabIndex = 9;
+			this.label5.Text = "KKL.exe location:";
+			// 
+			// cmdBrowseKisekae
+			// 
+			this.cmdBrowseKisekae.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdBrowseKisekae.Location = new System.Drawing.Point(475, 32);
+			this.cmdBrowseKisekae.Name = "cmdBrowseKisekae";
+			this.cmdBrowseKisekae.Size = new System.Drawing.Size(32, 23);
+			this.cmdBrowseKisekae.TabIndex = 3;
+			this.cmdBrowseKisekae.Text = "...";
+			this.cmdBrowseKisekae.UseVisualStyleBackColor = true;
+			this.cmdBrowseKisekae.Click += new System.EventHandler(this.cmdBrowseKisekae_Click);
+			// 
+			// txtKisekae
+			// 
+			this.txtKisekae.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtKisekae.Location = new System.Drawing.Point(116, 34);
+			this.txtKisekae.Name = "txtKisekae";
+			this.txtKisekae.Size = new System.Drawing.Size(353, 20);
+			this.txtKisekae.TabIndex = 2;
+			// 
 			// SettingsSetup
 			// 
 			this.AcceptButton = this.cmdOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(625, 153);
+			this.ClientSize = new System.Drawing.Size(625, 213);
 			this.Controls.Add(this.tabsSections);
 			this.Controls.Add(this.cmdCancel);
 			this.Controls.Add(this.cmdOk);
@@ -379,5 +426,9 @@
 		private System.Windows.Forms.TabPage tabBanter;
 		private System.Windows.Forms.CheckBox chkAutoBanter;
 		private System.Windows.Forms.CheckBox chkAutoBackup;
+		private System.Windows.Forms.CheckBox chkInitialAdd;
+		private System.Windows.Forms.Button cmdBrowseKisekae;
+		private System.Windows.Forms.TextBox txtKisekae;
+		private System.Windows.Forms.Label label5;
 	}
 }

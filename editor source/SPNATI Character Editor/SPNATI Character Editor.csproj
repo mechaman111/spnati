@@ -52,6 +52,10 @@
     <ApplicationIcon>editor.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -67,6 +71,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\DeleteAnimatedPropertyCommand.cs" />
+    <Compile Include="Actions\DeleteKeyframeCommand.cs" />
+    <Compile Include="Actions\DeletePropertyCommand.cs" />
+    <Compile Include="Actions\DeleteWidgetCommand.cs" />
+    <Compile Include="Actions\MoveSpriteStartCommand.cs" />
+    <Compile Include="Actions\PasteKeyframeCommand.cs" />
+    <Compile Include="Actions\ToggleAnimationBreakCommand.cs" />
+    <Compile Include="Actions\TimelineActions\MoveWidgetTimelineAction.cs" />
+    <Compile Include="Actions\TimelineActions\SelectKeyframeTimelineAction.cs" />
+    <Compile Include="Actions\TimelineActions\WidgetEndTimelineAction.cs" />
+    <Compile Include="Actions\TimelineActions\WidgetStartTimelineAction.cs" />
     <Compile Include="Activities\AdvancedMetadataEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -103,11 +118,17 @@
     <Compile Include="Activities\DialogueEditor.Designer.cs">
       <DependentUpon>DialogueEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Activities\PoseCreator.cs">
+    <Compile Include="Activities\DictionaryEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Activities\PoseCreator.Designer.cs">
-      <DependentUpon>PoseCreator.cs</DependentUpon>
+    <Compile Include="Activities\DictionaryEditor.Designer.cs">
+      <DependentUpon>DictionaryEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\ScreenshotTaker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\ScreenshotTaker.Designer.cs">
+      <DependentUpon>ScreenshotTaker.cs</DependentUpon>
     </Compile>
     <Compile Include="Activities\SkinEditor.cs">
       <SubType>UserControl</SubType>
@@ -120,6 +141,20 @@
     </Compile>
     <Compile Include="Activities\SkinTagEditor.Designer.cs">
       <DependentUpon>SkinTagEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\SpellCheck.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\SpellCheck.Designer.cs">
+      <DependentUpon>SpellCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Charts\Builders\CustomPoseBuilder.cs" />
+    <Compile Include="Charts\Builders\StorageSpaceImagesBuilder.cs" />
+    <Compile Include="Controls\EditControls\AnimDurationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\AnimDurationControl.Designer.cs">
+      <DependentUpon>AnimDurationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditControls\DirectiveMarkerControl.cs">
       <SubType>UserControl</SubType>
@@ -184,15 +219,35 @@
     <Compile Include="Controls\SceneTree.Designer.cs">
       <DependentUpon>SceneTree.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RecordSelectBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RecordSelectBox.Designer.cs">
+      <DependentUpon>RecordSelectBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StageSpecificGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\StageSpecificGrid.Designer.cs">
       <DependentUpon>StageSpecificGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TagGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TagGrid.Designer.cs">
+      <DependentUpon>TagGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TagList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TagList.Designer.cs">
+      <DependentUpon>TagList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TreeViews\IDialogueTreeView.cs" />
     <Compile Include="Controls\TreeViews\CaseView.cs" />
     <Compile Include="Controls\TreeViews\StageView.cs" />
+    <Compile Include="DataStructures\BindableTag.cs" />
+    <Compile Include="DataStructures\BindableTagList.cs" />
     <Compile Include="DataStructures\CaseNote.cs" />
     <Compile Include="DataStructures\DataConversions.cs" />
     <Compile Include="DataStructures\Definition.cs" />
@@ -432,6 +487,8 @@
     <Compile Include="DataStructures\Scene.cs" />
     <Compile Include="DataStructures\Screen.cs" />
     <Compile Include="DataStructures\Skin.cs" />
+    <Compile Include="DataStructures\SpellChecker.cs" />
+    <Compile Include="DataStructures\SpnatiConfig.cs" />
     <Compile Include="DataStructures\Sprite.cs" />
     <Compile Include="DataStructures\Tag.cs" />
     <Compile Include="DataStructures\TagDictionary.cs" />
@@ -440,6 +497,8 @@
     <Compile Include="DesktopMessages.cs" />
     <Compile Include="DialogueDatabase.cs" />
     <Compile Include="DialogueLine.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\AnimatedProperty.cs" />
+    <Compile Include="EpilogueEditing\AnimationHelpers.cs" />
     <Compile Include="EpilogueEditing\DirectiveDefinition.cs" />
     <Compile Include="EpilogueEditing\EpilogueCanvas.cs">
       <SubType>UserControl</SubType>
@@ -447,9 +506,28 @@
     <Compile Include="EpilogueEditing\EpilogueCanvas.Designer.cs">
       <DependentUpon>EpilogueCanvas.cs</DependentUpon>
     </Compile>
-    <Compile Include="EpilogueEditing\PoseAnimation.cs" />
-    <Compile Include="EpilogueEditing\SpritePreview.cs" />
-    <Compile Include="EpilogueEditing\PosePreview.cs" />
+    <Compile Include="EpilogueEditing\Interfaces\ILabel.cs" />
+    <Compile Include="EpilogueEditing\Interfaces\ITimelineAction.cs" />
+    <Compile Include="EpilogueEditing\Interfaces\ITimelineData.cs" />
+    <Compile Include="EpilogueEditing\Interfaces\ITimelineWidget.cs" />
+    <Compile Include="EpilogueEditing\LiveCanvas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EpilogueEditing\LiveCanvas.Designer.cs">
+      <DependentUpon>LiveCanvas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EpilogueEditing\LiveImageCache.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveKeyframe.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LivePose.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveSprite.cs" />
+    <Compile Include="EpilogueEditing\PoseEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EpilogueEditing\PoseEditor.Designer.cs">
+      <DependentUpon>PoseEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EpilogueEditing\PropertyDefinition.cs" />
+    <Compile Include="EpilogueEditing\SimpleIK.cs" />
     <Compile Include="EpilogueEditing\RandomParameter.cs" />
     <Compile Include="EpilogueEditing\SceneAnimation.cs" />
     <Compile Include="EpilogueEditing\SceneObject.cs" />
@@ -457,6 +535,13 @@
     <Compile Include="EpilogueEditing\SceneParticle.cs" />
     <Compile Include="EpilogueEditing\ScenePreview.cs" />
     <Compile Include="EpilogueEditing\SceneTransition.cs" />
+    <Compile Include="EpilogueEditing\Widgets\SpriteWidget.cs" />
+    <Compile Include="EpilogueEditing\Timeline.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EpilogueEditing\Timeline.Designer.cs">
+      <DependentUpon>Timeline.cs</DependentUpon>
+    </Compile>
     <Compile Include="ErrorLog.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FileNameSelect.cs">
@@ -465,11 +550,23 @@
     <Compile Include="FileNameSelect.Designer.cs">
       <DependentUpon>FileNameSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CanvasHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CanvasHelp.Designer.cs">
+      <DependentUpon>CanvasHelp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ChangeLogReview.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ChangeLogReview.Designer.cs">
       <DependentUpon>ChangeLogReview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GameConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GameConfig.Designer.cs">
+      <DependentUpon>GameConfig.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ImageCropper.cs">
       <SubType>Form</SubType>
@@ -482,6 +579,18 @@
     </Compile>
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\KisekaeSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\KisekaeSetup.Designer.cs">
+      <DependentUpon>KisekaeSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MacroManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MacroManager.Designer.cs">
+      <DependentUpon>MacroManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MarkerSetup.cs">
       <SubType>Form</SubType>
@@ -513,6 +622,12 @@
     <Compile Include="Forms\StageSelect.Designer.cs">
       <DependentUpon>StageSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TagStageSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TagStageSelect.Designer.cs">
+      <DependentUpon>TagStageSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\WhatsNew.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -533,6 +648,7 @@
     <Compile Include="IO\SpnatiXmlSerializer.cs" />
     <Compile Include="DataStructures\Listing.cs" />
     <Compile Include="KisekaeConverter.cs" />
+    <Compile Include="MathExtensions.cs" />
     <Compile Include="MathUtil.cs" />
     <Compile Include="Multithreading\BackgroundQueue.cs" />
     <Compile Include="Forms\PropImporter.cs">
@@ -595,6 +711,9 @@
     <EmbeddedResource Include="Activities\DialogueEditor.resx">
       <DependentUpon>DialogueEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Activities\DictionaryEditor.resx">
+      <DependentUpon>DictionaryEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Activities\MarkerEditor.resx">
       <DependentUpon>MarkerEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -607,8 +726,8 @@
     <EmbeddedResource Include="Activities\Loader.resx">
       <DependentUpon>Loader.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Activities\PoseCreator.resx">
-      <DependentUpon>PoseCreator.cs</DependentUpon>
+    <EmbeddedResource Include="Activities\ScreenshotTaker.resx">
+      <DependentUpon>ScreenshotTaker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\SituationEditor.resx">
       <DependentUpon>SituationEditor.cs</DependentUpon>
@@ -621,6 +740,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\SkinTagEditor.resx">
       <DependentUpon>SkinTagEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\SpellCheck.resx">
+      <DependentUpon>SpellCheck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\TagEditor.resx">
       <DependentUpon>TagEditor.cs</DependentUpon>
@@ -721,6 +843,9 @@
     <EmbeddedResource Include="Controls\SceneTree.resx">
       <DependentUpon>SceneTree.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RecordSelectBox.resx">
+      <DependentUpon>RecordSelectBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\StageSpecificGrid.resx">
       <DependentUpon>StageSpecificGrid.cs</DependentUpon>
     </EmbeddedResource>
@@ -733,11 +858,26 @@
     <EmbeddedResource Include="Activities\WardrobeEditor.resx">
       <DependentUpon>WardrobeEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TagGrid.resx">
+      <DependentUpon>TagGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TagList.resx">
+      <DependentUpon>TagList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ValidationControl.resx">
       <DependentUpon>ValidationControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EpilogueEditing\EpilogueCanvas.resx">
       <DependentUpon>EpilogueCanvas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EpilogueEditing\LiveCanvas.resx">
+      <DependentUpon>LiveCanvas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EpilogueEditing\PoseEditor.resx">
+      <DependentUpon>PoseEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EpilogueEditing\Timeline.resx">
+      <DependentUpon>Timeline.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FileNameSelect.resx">
       <DependentUpon>FileNameSelect.cs</DependentUpon>
@@ -745,11 +885,20 @@
     <EmbeddedResource Include="Forms\ChangeLogReview.resx">
       <DependentUpon>ChangeLogReview.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GameConfig.resx">
+      <DependentUpon>GameConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ImageCropper.resx">
       <DependentUpon>ImageCropper.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\KisekaeSetup.resx">
+      <DependentUpon>KisekaeSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MacroManager.resx">
+      <DependentUpon>MacroManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MarkerSetup.resx">
       <DependentUpon>MarkerSetup.cs</DependentUpon>
@@ -765,6 +914,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StageSelect.resx">
       <DependentUpon>StageSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TagStageSelect.resx">
+      <DependentUpon>TagStageSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\WhatsNew.resx">
       <DependentUpon>WhatsNew.cs</DependentUpon>
@@ -794,6 +946,7 @@
     <EmbeddedResource Include="SettingsSetup.resx">
       <DependentUpon>SettingsSetup.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -808,6 +961,161 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Cursors\hand_closed.cur" />
+    <None Include="Cursors\hand_open.cur" />
+    <Content Include="Help\ending_tutorial4.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\ending_tutorial3.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\ending_tutorial2.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ease_menu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ease_preview.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_animation_tree.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_clip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_directive.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_emitter.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_fit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_frames.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_keyframe.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_orb_speech.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_particle_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_text1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_viewport.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_zoom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\interpolation_diagram.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\interpolation_menu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\property_window.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\timeline.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut1_addpose.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut1_addsprite.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut1_ease.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut1_final.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut1_screen1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut2_copy.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut2_final.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut2_loop.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut2_move_time.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut2_screen1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut2_wing.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut3_bounce.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut3_final.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut3_flash.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut3_orb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut3_split.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut3_zoom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut_template_base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut_template_clothing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut_template_filled.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut_template_pose.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut_template_pose2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut_template_ties.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut_template_ties2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\ending_tutorial1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\tutorial_template.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\pose_tutorial2.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\pose_tutorial3.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\pose_tutorial1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\posemaker.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Help\tags.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -844,6 +1152,12 @@
     <None Include="Icons\AddLink.png" />
     <None Include="Icons\CollapseAll.png" />
     <None Include="Icons\ExpandAll.png" />
+    <None Include="Resources\en_US.aff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\en_US.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Help.png" />
     <None Include="Icons\AlignBottom.png" />
     <None Include="Icons\AlignLeft.png" />
@@ -851,6 +1165,55 @@
     <None Include="Icons\AlignStretchHorizontal.png" />
     <None Include="Icons\AlignStretchVertical.png" />
     <None Include="Icons\AlignTop.png" />
+    <None Include="Hunspellx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Icons\CopyKeyFrame.png" />
+    <None Include="Icons\Curve_Bounce.png" />
+    <None Include="Icons\Curve_EaseIn.png" />
+    <None Include="Icons\Curve_EaseInCubic.png" />
+    <None Include="Icons\Curve_EaseInOutCubic.png" />
+    <None Include="Icons\Curve_EaseInSin.png" />
+    <None Include="Icons\Curve_EaseOut.png" />
+    <None Include="Icons\Curve_EaseOutCubic.png" />
+    <None Include="Icons\Curve_EaseOutSin.png" />
+    <None Include="Icons\Curve_Elastic.png" />
+    <None Include="Icons\Curve_Linear.png" />
+    <None Include="Icons\Curve_Smooth.png" />
+    <None Include="Icons\EyeClosed.png" />
+    <None Include="Icons\EyeOpen.png" />
+    <None Include="Icons\FirstFrame.png" />
+    <None Include="Icons\LastFrame.png" />
+    <None Include="Icons\Loop.png" />
+    <None Include="Icons\NextFrame.png" />
+    <None Include="Icons\PreviousFrame.png" />
+    <None Include="Icons\Record.png" />
+    <None Include="Icons\Redo.png" />
+    <None Include="Icons\RemoveKeyframe.png" />
+    <None Include="Icons\Tween_Linear.png" />
+    <None Include="Icons\Tween_None.png" />
+    <None Include="Icons\Tween_Spline.png" />
+    <None Include="Icons\Undo.png" />
+    <None Include="Icons\ZoomIn.png" />
+    <None Include="Icons\ZoomOut.png" />
+    <None Include="Icons\Collapse.png" />
+    <None Include="Icons\Expand.png" />
+    <None Include="Icons\TimelinePause.png" />
+    <None Include="Icons\TimelinePlay.png" />
+    <None Include="Icons\SplitKeyframe.png" />
+    <None Include="Icons\TimelinePlayLoops.png" />
+    <None Include="Icons\TimelinePlayOnce.png" />
+    <None Include="Icons\ApplyCheckbox.png" />
+    <None Include="Icons\Checkmark.png" />
+    <None Include="Icons\CheckmarkDisabled.png" />
+    <None Include="Icons\ChevronDown.png" />
+    <None Include="Icons\ChevronUp.png" />
+    <Content Include="Resources\words.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="tag_dictionary.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -859,9 +1222,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\dialogue.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Help\dialogue_tester.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\empty.html">
@@ -901,27 +1261,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\pose_list.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Help\images\template0.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Help\images\template1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Help\images\template2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Help\images\template3.PNG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Help\images\template_filled.PNG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Help\images\template_preview.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Help\images\tester.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\listing.html">
@@ -964,6 +1303,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v3.1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v4.0.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v3.8.2.html">
@@ -1026,7 +1368,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

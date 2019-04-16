@@ -202,15 +202,26 @@ namespace SPNATI_Character_Editor
 				if (workingCase.HasFilters)
 					continue; //A filtered case can't possibly be a default
 				string tag = workingCase.Tag;
-				HashSet<int> expectedStages;
-				if (!requiredLineIndex.TryGetValue(tag, out expectedStages))
-					continue; //Tag has already been satisfied (or it's an invalid tag)
-				foreach (int stage in workingCase.Stages)
+				Trigger trigger = TriggerDatabase.GetTrigger(tag);
+				List<string> tags = new List<string>();
+				tags.Add(tag);
+				tags.AddRange(trigger.LinkedTriggers);
+				foreach (string usedTag in tags)
 				{
-					expectedStages.Remove(stage);
+					HashSet<int> expectedStages;
+					if (!requiredLineIndex.TryGetValue(usedTag, out expectedStages))
+					{
+						continue; //Tag has already been satisfied (or it's an invalid tag)
+					}
+					foreach (int stage in workingCase.Stages)
+					{
+						expectedStages.Remove(stage);
+					}
+					if (expectedStages.Count == 0)
+					{
+						requiredLineIndex.Remove(usedTag); //Tag's defaults have all been met
+					}
 				}
-				if (expectedStages.Count == 0)
-					requiredLineIndex.Remove(tag); //Tag's defaults have all been met
 			}
 
 			//Finally, add lines for whatever remains in the index
@@ -307,6 +318,8 @@ namespace SPNATI_Character_Editor
 				Stages.Add(new Stage(s));
 			}
 
+			character.Metadata.CrossGender = false;
+
 			//Put each case into the appropriate stage(s)
 			foreach (var workingCase in _workingCases)
 			{
@@ -337,6 +350,11 @@ namespace SPNATI_Character_Editor
 					foreach (var line in workingCase.Lines)
 					{
 						existingCase.Lines.Add(CreateStageSpecificLine(line, s, character));
+
+						if (!string.IsNullOrEmpty(line.Gender))
+						{
+							character.Metadata.CrossGender = true;
+						}
 					}
 				}
 			}
@@ -433,7 +451,7 @@ namespace SPNATI_Character_Editor
 			}
 
 			//Move the legacy Start lines into Selected/Game start cases
-			if (_character.StartingLines.Count > 0)
+			if (_character != null && _character.StartingLines.Count > 0)
 			{
 				Case selected = new Case("selected");
 				selected.Stages.Add(0);
@@ -457,6 +475,8 @@ namespace SPNATI_Character_Editor
 
 				_character.StartingLines.Clear();
 			}
+
+			if (_character == null) { return; }
 
 			SortWorking();
 		}

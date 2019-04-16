@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Desktop.Providers;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -10,6 +12,7 @@ namespace Desktop.CommonControls
 		public event EventHandler RemoveRow;
 		public event EventHandler ToggleFavorite;
 		public event PropertyChangedEventHandler PropertyChanged;
+		public event EventHandler<MacroArgs> EditingMacro;
 
 		public PropertyRecord Record { get; private set; }
 
@@ -120,6 +123,8 @@ namespace Desktop.CommonControls
 		public void Destroy()
 		{
 			EditControl.PropertyChanged -= EditControl_PropertyChanged;
+			EditControl.Destroy();
+			EditControl = null;
 		}
 
 		private void EditControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -146,8 +151,8 @@ namespace Desktop.CommonControls
 
 		private void cmdPin_Click(object sender, EventArgs e)
 		{
-			Favorited = !Favorited;
-			ToggleFavorite?.Invoke(this, e);
+			itemFavorite.Checked = Favorited;
+			menuFavorite.Show(cmdPin, cmdPin.Width, 0);
 		}
 
 		public int CompareTo(PropertyTableRow other)
@@ -158,6 +163,43 @@ namespace Desktop.CommonControls
 		public override string ToString()
 		{
 			return Record.ToString();
+		}
+
+		private void itemFavorite_Click(object sender, EventArgs e)
+		{
+			Favorited = !Favorited;
+			ToggleFavorite?.Invoke(this, e);
+		}
+
+		private void itemMacro_Click(object sender, EventArgs e)
+		{
+			Macro macro = RecordLookup.DoLookup(typeof(Macro), "", true, null, true, Record.DataType) as Macro;
+			if (macro != null)
+			{
+				List<string> values = new List<string>();
+				EditControl.BuildMacro(values);
+				macro.AddProperty(Record.Property, EditControl.Index, values);
+				MacroArgs args = new MacroArgs(macro, RecordLookup.IsNewRecord);
+				EditingMacro?.Invoke(this, args);
+			}
+		}
+	}
+
+	public class MacroArgs : EventArgs
+	{
+		public IMacroEditor Editor { get; private set; }
+		public Macro Macro { get; private set; }
+		public bool IsNew { get; private set; }
+
+		public MacroArgs(Macro macro, bool isNew)
+		{
+			Macro = macro;
+			IsNew = isNew;
+		}
+
+		public void SetEditor(IMacroEditor editor)
+		{
+			Editor = editor;
 		}
 	}
 }

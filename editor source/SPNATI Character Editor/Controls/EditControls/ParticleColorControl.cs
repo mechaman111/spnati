@@ -25,6 +25,8 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			{
 				txtValue.Text = "";
 				txtValue2.Text = "";
+				cmdColor.BackColor = Color.Empty;
+				cmdColor2.BackColor = Color.Empty;
 			}
 			else
 			{
@@ -39,6 +41,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 				catch
 				{
 					txtValue.Text = "";
+					cmdColor.BackColor = Color.Empty;
 				}
 
 				if (pieces.Length > 1)
@@ -53,18 +56,19 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 					catch
 					{
 						txtValue2.Text = "";
+						cmdColor2.BackColor = Color.Empty;
 					}
 				}
 			}
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			txtValue.TextChanged += TxtValue_TextChanged;
 			txtValue2.TextChanged += TxtValue_TextChanged;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			txtValue.TextChanged -= TxtValue_TextChanged;
 			txtValue2.TextChanged -= TxtValue_TextChanged;
@@ -78,7 +82,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			{
 				btn.BackColor = colorPicker.Color;
 				RemoveHandlers();
-				(btn.Tag as TextBox).Text = ToHexValue(btn.BackColor);
+				(btn.Tag as TextField).Text = ToHexValue(btn.BackColor);
 				AddHandlers();
 				Save();
 			}
@@ -86,7 +90,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 
 		private void TxtValue_TextChanged(object sender, EventArgs e)
 		{
-			TextBox txt = sender as TextBox;
+			TextField txt = sender as TextField;
 			if (string.IsNullOrEmpty(txt.Text))
 			{
 				Save();

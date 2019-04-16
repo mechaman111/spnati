@@ -3,6 +3,7 @@ using Desktop.CommonControls;
 using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor
 {
@@ -18,6 +19,7 @@ namespace SPNATI_Character_Editor
 			cboExpression.Items.AddRange(new string[] {
 				"~background~",
 				"~background.location~",
+				"~cards~",
 				"~clothing~",
 				"~clothing.plural~",
 				"~clothing.position~",
@@ -26,13 +28,40 @@ namespace SPNATI_Character_Editor
 				"~self.slot~",
 				"~self.tag~",
 				"~target.costume~",
+				"~target.gender~",
 				"~target.position~",
+				"~target.size~",
 				"~target.slot~",
 				"~target.tag~",
 				"~weekday~",
 			});
 			cboExpression.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			cboExpression.AutoCompleteSource = AutoCompleteSource.ListItems;
+		}
+
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 2)
+			{
+				cboExpression.Text = values[0];
+				cboOperator.SelectedItem = values[1];
+				cboValue.Text = values[2];
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			values.Add(cboExpression.Text);
+			values.Add(cboOperator.Text);
+			values.Add(cboValue.Text);
+		}
+
+		public override void OnInitialAdd()
+		{
+			if (!string.IsNullOrEmpty(cboExpression.Text))
+			{
+				cboValue.Focus();
+			}
 		}
 
 		protected override void OnBoundData()
@@ -65,10 +94,7 @@ namespace SPNATI_Character_Editor
 		{
 			if (property == "AlsoPlaying")
 			{
-				if (cboExpression.Text.StartsWith("~_."))
-				{
-					FillInCharacter();
-				}
+				FillInCharacter();
 			}
 			if (property == "Target" || property == "AlsoPlaying")
 			{
@@ -78,6 +104,10 @@ namespace SPNATI_Character_Editor
 
 		private void FillInCharacter()
 		{
+			if (!cboExpression.Text.StartsWith("~_."))
+			{
+				return;
+			}
 			Case data = Data as Case;
 			if (data != null)
 			{
@@ -136,6 +166,16 @@ namespace SPNATI_Character_Editor
 			cboValue.Items.Clear();
 			switch (_currentVariable)
 			{
+				case "~cards~":
+					cboValue.Items.AddRange(new string[] {
+						"0",
+						"1",
+						"2",
+						"3",
+						"4",
+						"5",
+					});
+					break;
 				case "~clothing.position~":
 					cboValue.Items.AddRange(new string[] {
 						"upper",
@@ -252,11 +292,24 @@ namespace SPNATI_Character_Editor
 						}
 					}
 					break;
+				case "~target.gender~":
+					cboValue.Items.AddRange(new string[] {
+						"female",
+						"male",
+					});
+					break;
 				case "~target.position~":
 					cboValue.Items.AddRange(new string[] {
 						"left",
 						"right",
 						"self",
+					});
+					break;
+				case "~target.size~":
+					cboValue.Items.AddRange(new string[] {
+						"small",
+						"medium",
+						"large",
 					});
 					break;
 				case "~target.slot~":
@@ -280,7 +333,6 @@ namespace SPNATI_Character_Editor
 				switch (func)
 				{
 					case "costume":
-						Case data = Data as Case;
 						cboValue.Items.Add("default");
 						if (characterVar != null)
 						{

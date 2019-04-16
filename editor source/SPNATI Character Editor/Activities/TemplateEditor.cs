@@ -259,21 +259,21 @@ namespace SPNATI_Character_Editor.Activities
 			Enabled = false;
 			Rect cropInfo;
 			KisekaeCode code = GetPreviewCode(out cropInfo);
-			if (code == null)
+			if (code != null)
 			{
-				return;
+				Image img = await CharacterGenerator.GetCroppedImage(code, cropInfo, _character, new Dictionary<string, string>(), false);
+
+				if (img != null)
+				{
+					CharacterImage preview = _imageLibrary.Replace(ImageLibrary.PreviewImage, img);
+					Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, preview);
+				}
+				else
+				{
+					MessageBox.Show("Preview generation failed. Is Kisekae running?");
+				}
 			}
-			Image img = await CharacterGenerator.GetCroppedImage(code, cropInfo, _character, new Dictionary<string, string>());
 			Enabled = true;
-			if (img != null)
-			{
-				CharacterImage preview = _imageLibrary.Replace(ImageLibrary.PreviewImage, img);
-				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, preview);
-			}
-			else
-			{
-				MessageBox.Show("Preview generation failed. Is Kisekae running?");
-			}
 			Cursor.Current = Cursors.Default;
 		}
 

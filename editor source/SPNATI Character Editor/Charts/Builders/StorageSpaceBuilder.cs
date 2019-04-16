@@ -20,6 +20,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			List<Tuple<Character, long>> counts = new List<Tuple<Character, long>>();
 			foreach (Character c in CharacterDatabase.Characters)
 			{
+				if (c.FolderName == "human") { continue; }
 				long count = 0;
 				string folder = Config.GetRootDirectory(c);
 				DirectoryInfo directory = new DirectoryInfo(folder);

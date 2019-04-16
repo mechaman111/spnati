@@ -35,14 +35,31 @@ namespace SPNATI_Character_Editor.Activities
 			List<string> folders = Directory.EnumerateDirectories(Path.Combine(Config.GetString(Settings.GameDirectory), "opponents")).ToList();
 			int count = folders.Count;
 			int i = 0;
+			string loadFilter = Config.GetString(Settings.LoadOnlyLastCharacter);
+			HashSet<string> filter = new HashSet<string>();
+			if (loadFilter.Length > 2)
+			{
+				foreach (string charToLoad in loadFilter.Split(','))
+				{
+					filter.Add(charToLoad);
+				}
+			}
 			int loadCount = Config.GetInt(Settings.LoadOnlyLastCharacter);
+			if (filter.Count > 0)
+			{
+				loadCount = 1;
+			}
+			else if (!string.IsNullOrEmpty(lastCharacter))
+			{
+				filter.Add(lastCharacter);
+			}
 			foreach (string key in folders)
 			{
 				int step = (int)(((float)i / count) * 99) + 1;
 				string path = folders[i++];
 				string folderName = Path.GetFileName(path);
 
-				if (loadCount == 1 && folderName != lastCharacter && folderName != "reskins")
+				if (loadCount == 1 && !filter.Contains(folderName) && folderName != "reskins")
 				{
 					continue; //makes startup times way faster when you just need to check something really quick
 				}
@@ -79,13 +96,15 @@ namespace SPNATI_Character_Editor.Activities
 						if (character != null)
 						{
 							CharacterDatabase.Add(character);
+							SpellChecker.Instance.AddWord(character.Label, false);
 							for (int t = 0; t < character.Tags.Count; t++)
 							{
-								string tag = character.Tags[t].ToLowerInvariant();
+								CharacterTag tag = character.Tags[t];
+								tag.Tag = tag.Tag.ToLowerInvariant();
 								character.Tags[t] = tag;
-								if (!string.IsNullOrEmpty(tag))
+								if (!string.IsNullOrEmpty(tag.Tag))
 								{
-									TagDatabase.AddTag(tag);
+									TagDatabase.AddTag(tag.Tag);
 								}
 							}
 							TagDatabase.AddTag(character.DisplayName, false);

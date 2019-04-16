@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -18,6 +17,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		#region Events
 		public new event EventHandler<KeyEventArgs> KeyDown;
+		public event EventHandler<int> TextUpdated;
 		public event EventHandler<int> HighlightRow;
 		#endregion
 
@@ -408,6 +408,10 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				SelectRow(e.RowIndex);
 			}
+			else if (e.ColumnIndex == ColText.Index)
+			{
+				TextUpdated?.Invoke(this, e.RowIndex);
+			}
 		}
 
 		private void gridDialogue_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -472,6 +476,12 @@ namespace SPNATI_Character_Editor.Controls
 			DataGridViewRow row = gridDialogue.Rows[index];
 			string image = row.Cells["ColImage"].Value?.ToString();
 			return image;
+		}
+
+		public DialogueLine GetLine(int index)
+		{
+			DialogueLine line = ReadLineFromDialogueGrid(index);
+			return line;
 		}
 
 		public List<DialogueLine> CopyLines()

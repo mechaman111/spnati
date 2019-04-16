@@ -36,5 +36,7 @@ namespace SPNATI_Character_Editor
 			byte bb = (byte)(bf * 255.0f);
 			return Color.FromArgb(rb, gb, bb);
 		}
+
+		public const float Rad2Deg = (float)(360.0f / (Math.PI * 2));
 	}
 }

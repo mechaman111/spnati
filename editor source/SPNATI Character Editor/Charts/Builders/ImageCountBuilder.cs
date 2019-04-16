@@ -35,12 +35,21 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			List<Tuple<Character, int>> counts = new List<Tuple<Character, int>>();
 			foreach (Character c in CharacterDatabase.Characters)
 			{
+				HashSet<string> usedNames = new HashSet<string>();
 				int count = 0;
 				string folder = Config.GetRootDirectory(c);
 				foreach (string filename in Directory.EnumerateFiles(folder)
 					.Where(Filter))
 				{
+					usedNames.Add(Path.GetFileNameWithoutExtension(filename));
 					count++;
+				}
+				foreach (Pose pose in c.CustomPoses)
+				{
+					if (!usedNames.Contains(pose.Id))
+					{
+						count++;
+					}
 				}
 				counts.Add(new Tuple<Character, int>(c, count));
 			}

@@ -53,10 +53,19 @@ namespace KisekaeImporter.ImageImport
 
 			//Add in stage blush, etc.
 			KisekaeExpression expression = output.GetOrAddComponent<KisekaeExpression>();
-			expression.Blush.Blush += stage.ExtraBlush;
-			expression.Blush.Anger += stage.ExtraAnger;
-			KisekaeAppearance appearance = output.GetOrAddComponent<KisekaeAppearance>();
-			appearance.Vagina.Juice += stage.ExtraJuice;
+			if (stage.ExtraBlush > 0)
+			{
+				expression.Blush.Blush += stage.ExtraBlush;
+			}
+			if (stage.ExtraAnger > 0)
+			{
+				expression.Blush.Anger += stage.ExtraAnger;
+			}
+			if (stage.ExtraJuice > 0)
+			{
+				KisekaeAppearance appearance = output.GetOrAddComponent<KisekaeAppearance>();
+				appearance.Vagina.Juice += stage.ExtraJuice;
+			}
 
 			return output;
 		}

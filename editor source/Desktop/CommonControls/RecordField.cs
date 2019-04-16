@@ -8,7 +8,7 @@ namespace Desktop.CommonControls
 {
 	public partial class RecordField : UserControl
 	{
-		public event EventHandler<IRecord> RecordChanged;
+		public event EventHandler<RecordEventArgs> RecordChanged;
 
 		private Type _recordType;
 		public Type RecordType
@@ -65,7 +65,7 @@ namespace Desktop.CommonControls
 						txtInput.Text = "";
 					}
 					txtInput.ForeColor = ForeColor;
-					RecordChanged?.Invoke(this, _record);
+					RecordChanged?.Invoke(this, new RecordEventArgs(_record));
 					_populatingRecord = false;
 				}
 			}
@@ -228,6 +228,11 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		public void DoSearch()
+		{
+			DoSearch(true);
+		}
+
 		private void DoSearch(bool forceLookup, string text = null)
 		{
 			if (text == null)
@@ -248,6 +253,16 @@ namespace Desktop.CommonControls
 			{
 				ActiveControl = txtInput;
 			}
+		}
+	}
+
+	public class RecordEventArgs : EventArgs
+	{
+		public IRecord Record { get; private set; }
+
+		public RecordEventArgs(IRecord record)
+		{
+			Record = record;
 		}
 	}
 }

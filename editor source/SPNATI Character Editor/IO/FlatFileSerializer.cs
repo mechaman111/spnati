@@ -36,9 +36,23 @@ namespace SPNATI_Character_Editor
 			lines.Add("timer=" + character.Stamina);
 			lines.Add("");
 			lines.Add("#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.");
-			foreach (string tag in character.Tags)
+			foreach (CharacterTag tag in character.Tags)
 			{
-				lines.Add("tag=" + tag);
+				List<string> attributes = new List<string>();
+				if (!string.IsNullOrEmpty(tag.From))
+				{
+					attributes.Add("from:" + tag.From);
+				}
+				if (!string.IsNullOrEmpty(tag.To))
+				{
+					attributes.Add("to:" + tag.To);
+				}
+				string lineData = tag.Tag;
+				if (attributes.Count > 0)
+				{
+					lineData += "," + string.Join(",", attributes);
+				}
+				lines.Add("tag=" + lineData);
 			}
 			lines.Add("");
 			lines.Add("#required for meta.xml");
@@ -674,6 +688,14 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("notSaidMarker:" + stageCase.NotSaidMarker);
 			}
+			if (!string.IsNullOrEmpty(stageCase.AddCharacterTags))
+			{
+				filters.Add("addCharacterTags:" + stageCase.AddCharacterTags.Replace(',', ':'));
+			}
+			if (!string.IsNullOrEmpty(stageCase.RemoveCharacterTags))
+			{
+				filters.Add("removeCharacterTags:" + stageCase.RemoveCharacterTags.Replace(',', ':'));
+			}
 			if (!string.IsNullOrEmpty(stageCase.Hidden))
 			{
 				filters.Add("hidden:1");
@@ -686,7 +708,7 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (var condition in stageCase.Conditions)
 				{
-					string[] parts = Array.FindAll(new string[]{ condition.Status, condition.Gender, condition.Filter }, e => e != null);
+					string[] parts = Array.FindAll(new string[] { condition.Status, condition.Gender, condition.Filter }, e => e != null);
 					filters.Add(string.Format("count-{1}:{0}", condition.Count, string.Join("&", parts)));
 				}
 			}
@@ -771,7 +793,28 @@ namespace SPNATI_Character_Editor
 							character.Stamina = intValue;
 						break;
 					case "tag":
-						character.Tags.Add(value.ToLower());
+						value = value.ToLower();
+						string[] tagPieces = value.Split(',');
+						CharacterTag tag = new CharacterTag(tagPieces[0]);
+						for (int i = 1; i < tagPieces.Length; i++)
+						{
+							string[] attrData = tagPieces[i].Split(new char[] { ':' }, 2);
+							if (attrData.Length == 2)
+							{
+								string attrKey = attrData[0];
+								string attrValue = attrData[1];
+								switch (attrKey)
+								{
+									case "from":
+										tag.From = attrValue;
+										break;
+									case "to":
+										tag.To = attrValue;
+										break;
+								}
+							}
+						}
+						character.Tags.Add(tag);
 						break;
 					case "pic":
 						character.Metadata.Portrait = value;
@@ -1035,7 +1078,7 @@ namespace SPNATI_Character_Editor
 							int.TryParse(value, out v);
 							objValue = v;
 						}
-						
+
 						field.Info.SetValue(instance, objValue);
 					}
 				}
@@ -1261,6 +1304,12 @@ namespace SPNATI_Character_Editor
 						break;
 					case "marker":
 						line.Marker = value;
+						break;
+					case "addcharactertags":
+						lineCase.AddCharacterTags = value.Replace(':', ',');
+						break;
+					case "removecharactertags":
+						lineCase.RemoveCharacterTags = value.Replace(':', ',');
 						break;
 					case "hidden":
 						lineCase.Hidden = (value == "1" ? "1" : null);

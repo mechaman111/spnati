@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ namespace SPNATI_Character_Editor
 			InitializeComponent();
 			string gameDir = Config.GetString(Settings.GameDirectory);
 			txtApplicationDirectory.Text = gameDir;
+			txtKisekae.Text = Config.KisekaeDirectory;
 			folderBrowserDialog1.SelectedPath = gameDir;
 			txtUserName.Text = Config.UserName;
 			valAutoSave.Value = Config.AutoSaveInterval;
@@ -20,6 +22,7 @@ namespace SPNATI_Character_Editor
 			txtFilter.Text = Config.PrefixFilter;
 			chkAutoBanter.Checked = Config.AutoLoadBanterWizard;
 			chkAutoBackup.Checked = Config.AutoBackupEnabled;
+			chkInitialAdd.Checked = Config.AutoOpenConditions;
 		}
 
 		private void cmdBrowse_Click(object sender, EventArgs e)
@@ -67,8 +70,11 @@ namespace SPNATI_Character_Editor
 			Config.PrefixFilter = txtFilter.Text;
 			Config.AutoLoadBanterWizard = chkAutoBanter.Checked;
 			Config.AutoBackupEnabled = chkAutoBackup.Checked;
+			Config.AutoOpenConditions = chkInitialAdd.Checked;
+			Config.KisekaeDirectory = txtKisekae.Text;
 			DialogResult = DialogResult.OK;
 			Config.Save();
+			Shell.Instance.PostOffice.SendMessage(DesktopMessages.SettingsUpdated);
 			Close();
 		}
 
@@ -88,8 +94,6 @@ namespace SPNATI_Character_Editor
 			Graphics g = e.Graphics;
 			Brush textBrush;
 			Brush backBrush;
-
-			Rectangle rect = tabsSections.ClientRectangle;
 
 			// Get the item from the collection.
 			TabPage tabPage = tabsSections.TabPages[e.Index];
@@ -119,6 +123,16 @@ namespace SPNATI_Character_Editor
 			stringFlags.Alignment = StringAlignment.Center;
 			stringFlags.LineAlignment = StringAlignment.Center;
 			g.DrawString(tabPage.Text, tabFont, textBrush, tabBounds, new StringFormat(stringFlags));
+		}
+
+		private void cmdBrowseKisekae_Click(object sender, EventArgs e)
+		{
+			openFileDialog1.FileName = txtKisekae.Text;
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				string file = openFileDialog1.FileName;
+				txtKisekae.Text = Path.GetFullPath(file);
+			}
 		}
 	}
 }

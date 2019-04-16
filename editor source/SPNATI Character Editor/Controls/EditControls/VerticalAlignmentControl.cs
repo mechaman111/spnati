@@ -26,18 +26,16 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			{
 				chkBottom.Checked = true;
 			}
-
-			AddHandlers();
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			chkTop.CheckedChanged += CheckedChanged;
 			chkMiddle.CheckedChanged += CheckedChanged;
 			chkBottom.CheckedChanged += CheckedChanged;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			chkTop.CheckedChanged -= CheckedChanged;
 			chkMiddle.CheckedChanged -= CheckedChanged;

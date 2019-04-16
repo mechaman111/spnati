@@ -29,10 +29,16 @@ namespace SPNATI_Character_Editor.Forms
 			//Acquire updates from all versions skipped
 			string lastVersion = Config.GetString(Settings.LastVersionRun);
 			StringBuilder updates = new StringBuilder();
+			bool isBeta = Config.Version.EndsWith("a") || Config.Version.EndsWith("b");
 			for (int i = Config.VersionHistory.Length - 1; i >= 0; i--)
 			{
 				string version = Config.VersionHistory[i];
 				if (version == lastVersion) { break; }
+				bool beta = version.EndsWith("a") || version.EndsWith("b");
+				if (!isBeta && beta)
+				{
+					continue; //skip beta versions when not in a beta
+				}
 
 				string file = $"VersionHistory/{version}.html";
 				if (File.Exists(file))

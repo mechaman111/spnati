@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using Desktop.CommonControls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,7 +52,7 @@ namespace SPNATI_Character_Editor.Activities
 			LoadSnapshots();
 		}
 
-		private void recCharacter_RecordChanged(object sender, IRecord e)
+		private void recCharacter_RecordChanged(object sender, RecordEventArgs e)
 		{
 			_character = recCharacter.Record as Character;
 			pnlRecovery.Enabled = _character != null;
@@ -138,6 +139,10 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				string filename = Path.GetFileNameWithoutExtension(file);
 				string extension = Path.GetExtension(file);
+				if (extension != ".bak")
+				{
+					continue;
+				}
 				string timestamp = filename.Substring(root.Length + 1);
 				if (filename.StartsWith(root))
 				{

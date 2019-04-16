@@ -51,7 +51,13 @@ namespace SPNATI_Character_Editor.Providers
 			}
 			else
 			{
-				//making  a placeholder for this session
+				//see if the character actually exists already and use that one instead
+				Character existing = CharacterDatabase.Get(key);
+				if (existing != null)
+				{
+					return existing;
+				}
+				//otherwise, make a placeholder for this session
 				CharacterDatabase.Add(c);
 			}
 			return c;

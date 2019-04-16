@@ -23,6 +23,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public float Height;
 		public float ScaleX = 1;
 		public float ScaleY = 1;
+		public float SkewX = 0;
+		public float SkewY = 0;
 		public float Zoom = 1;
 		public float Rotation = 0;
 		private float _alpha = 100;
@@ -31,7 +33,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			get { return _alpha; }
 			set
 			{
-				_alpha = value;
+				_alpha = Math.Max(0, Math.Min(100, value));
 				Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100.0f * 255), Color.Color);
 			}
 		}
@@ -184,7 +186,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 
 			SortLayer = ++NextLayer;
-			if (directive.Layer > 0)
+			if (directive.Layer != 0)
 			{
 				Layer = directive.Layer;
 			}
@@ -225,6 +227,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			HeightPct = source.HeightPct;
 			ScaleX = source.ScaleX;
 			ScaleY = source.ScaleY;
+			SkewX = source.SkewX;
+			SkewY = source.SkewY;
 			PivotX = source.PivotX;
 			PivotY = source.PivotY;
 			Rotation = source.Rotation;
@@ -274,6 +278,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				HeightPct = Image.Height / scene.Height;
 			}
 
+			Layer = -100;
 			Width = WidthPct * scene.Width;
 			Height = HeightPct * scene.Height;
 		}
@@ -331,6 +336,14 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				float.TryParse(frame.ScaleY, NumberStyles.Float, CultureInfo.InvariantCulture, out ScaleY);
 			}
+			if (!string.IsNullOrEmpty(frame.SkewX))
+			{
+				float.TryParse(frame.SkewX, NumberStyles.Float, CultureInfo.InvariantCulture, out SkewX);
+			}
+			if (!string.IsNullOrEmpty(frame.SkewY))
+			{
+				float.TryParse(frame.SkewY, NumberStyles.Float, CultureInfo.InvariantCulture, out SkewY);
+			}
 			if (!string.IsNullOrEmpty(frame.Rotation))
 			{
 				float.TryParse(frame.Rotation, NumberStyles.Float, CultureInfo.InvariantCulture, out Rotation);
@@ -346,6 +359,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			if (!string.IsNullOrEmpty(frame.Zoom))
 			{
 				float.TryParse(frame.Zoom, NumberStyles.Float, CultureInfo.InvariantCulture, out Zoom);
+				if (Zoom == 0)
+				{
+					Zoom = 0.01f;
+				}
 			}
 			if (!string.IsNullOrEmpty(frame.Src) && frame.Src != Src)
 			{
@@ -396,16 +413,51 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public virtual void Interpolate(SceneObject last, SceneObject frame, float time, SceneObject lastLast, SceneObject nextNext)
 		{
-			X = Interpolate(last.X, frame.X, frame.Tween, time, lastLast.X, nextNext.X);
-			Y = Interpolate(last.Y, frame.Y, frame.Tween, time, lastLast.Y, nextNext.Y);
-			ScaleX = Interpolate(last.ScaleX, frame.ScaleX, frame.Tween, time, lastLast.ScaleX, nextNext.ScaleX);
-			ScaleY = Interpolate(last.ScaleY, frame.ScaleY, frame.Tween, time, lastLast.ScaleY, nextNext.ScaleY);
-			Zoom = Interpolate(last.Zoom, frame.Zoom, frame.Tween, time, lastLast.Zoom, nextNext.Zoom);
-			Rotation = Interpolate(last.Rotation, frame.Rotation, frame.Tween, time, lastLast.Rotation, nextNext.Rotation);
-			Alpha = Interpolate(last.Alpha, frame.Alpha, frame.Tween, time, lastLast.Alpha, nextNext.Alpha);
-			Color.Color = Interpolate(last.Color, frame.Color, frame.Tween, time, lastLast.Color, nextNext.Color);
-			Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100 * 255), Color.Color);
-			Rate = Interpolate(last.Rate, frame.Rate, frame.Tween, time, lastLast.Rate, nextNext.Rate);
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.X)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.X)))
+			{
+				X = Interpolate(last.X, frame.X, frame.Tween, time, lastLast.X, nextNext.X);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Y)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Y)))
+			{
+				Y = Interpolate(last.Y, frame.Y, frame.Tween, time, lastLast.Y, nextNext.Y);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.ScaleX)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.ScaleX)))
+			{
+				ScaleX = Interpolate(last.ScaleX, frame.ScaleX, frame.Tween, time, lastLast.ScaleX, nextNext.ScaleX);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.ScaleY)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.ScaleY)))
+			{
+				ScaleY = Interpolate(last.ScaleY, frame.ScaleY, frame.Tween, time, lastLast.ScaleY, nextNext.ScaleY);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.SkewX)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.SkewX)))
+			{
+				SkewX = Interpolate(last.SkewX, frame.SkewX, frame.Tween, time, lastLast.SkewX, nextNext.SkewX);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.SkewY)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.SkewY)))
+			{
+				SkewY = Interpolate(last.SkewY, frame.SkewY, frame.Tween, time, lastLast.SkewY, nextNext.SkewY);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Zoom)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Zoom)))
+			{
+				Zoom = Interpolate(last.Zoom, frame.Zoom, frame.Tween, time, lastLast.Zoom, nextNext.Zoom);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Rotation)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Rotation)))
+			{
+				Rotation = Interpolate(last.Rotation, frame.Rotation, frame.Tween, time, lastLast.Rotation, nextNext.Rotation);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Opacity)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Opacity)))
+			{
+				Alpha = Interpolate(last.Alpha, frame.Alpha, frame.Tween, time, lastLast.Alpha, nextNext.Alpha);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Color)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Color)))
+			{
+				Color.Color = Interpolate(last.Color, frame.Color, frame.Tween, time, lastLast.Color, nextNext.Color);
+				Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100 * 255), Color.Color);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Rate)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Rate)))
+			{
+				Rate = Interpolate(last.Rate, frame.Rate, frame.Tween, time, lastLast.Rate, nextNext.Rate);
+			}
 			if (!string.IsNullOrEmpty(frame.Src))
 			{
 				string src = "";
@@ -852,6 +904,51 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			ResyncAnimation();
 
 			return true;
+		}
+
+		public bool AdjustSkew(Point worldPoint, Point downPoint, HoverContext context)
+		{
+			float dx = (worldPoint.X - downPoint.X);
+			float dy = (worldPoint.Y - downPoint.Y);
+			switch (context)
+			{
+				case HoverContext.SkewLeft:
+					dy = -dy;
+					break;
+				case HoverContext.SkewRight:
+					break;
+				case HoverContext.SkewTop:
+					dx = -dx;
+					break;
+			}
+
+			bool changed = false;
+
+			//skew formula: shift = size * tan(radians) / 2
+			//solved for angle: angle = atan(2 * shift / size)
+			if (HoverContext.SkewHorizontal.HasFlag(context))
+			{
+				//skewX
+				float skewX = (float)(Math.Atan(2 * dx / Height) * 180 / Math.PI);
+				if (SkewX != skewX)
+				{
+					changed = true;
+					SkewX = skewX;
+					LinkedFrame.SkewX = skewX.ToString(CultureInfo.InvariantCulture);
+				}
+			}
+			else
+			{
+				//skewY
+				float skewY = (float)(Math.Atan(2 * dy / Width) * 180 / Math.PI);
+				if (SkewY != skewY)
+				{
+					changed = true;
+					SkewY = skewY;
+					LinkedFrame.SkewY = skewY.ToString(CultureInfo.InvariantCulture);
+				}
+			}
+			return changed;
 		}
 	}
 

@@ -85,7 +85,7 @@
 			this.recCharacter.Size = new System.Drawing.Size(150, 20);
 			this.recCharacter.TabIndex = 3;
 			this.recCharacter.UseAutoComplete = false;
-			this.recCharacter.RecordChanged += new System.EventHandler<Desktop.IRecord>(this.recCharacter_RecordChanged);
+			this.recCharacter.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recCharacter_RecordChanged);
 			// 
 			// pnlRecovery
 			// 

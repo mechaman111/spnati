@@ -44,7 +44,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("hidden")]
 		public string Hidden;
 
-		[StageSelect(DisplayName = "Target Stage", GroupName = "Target", GroupOrder = 2, Description = "Target is currently within a range of stages", BoundProperties = new string[] { "Target" }, FilterStagesToTarget = true)]
+		[StageSelect(DisplayName = "Target Stage", GroupName = "Target", GroupOrder = 2, Description = "Target is currently within a range of stages", BoundProperties = new string[] { "Target" }, FilterStagesToTarget = true, SkinVariable = "~target.costume~")]
 		[XmlAttribute("targetStage")]
 		public string TargetStage;
 
@@ -64,7 +64,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("alsoPlaying")]
 		public string AlsoPlaying;
 
-		[StageSelect(DisplayName = "Also Playing Stage", GroupName = "Also Playing", GroupOrder = 1, Description = "Character in Also Playing is currently within a range of stages", BoundProperties = new string[] { "AlsoPlaying" }, FilterStagesToTarget = false)]
+		[StageSelect(DisplayName = "Also Playing Stage", GroupName = "Also Playing", GroupOrder = 1, Description = "Character in Also Playing is currently within a range of stages", BoundProperties = new string[] { "AlsoPlaying" }, FilterStagesToTarget = false, SkinVariable = "~_.costume~")]
 		[XmlAttribute("alsoPlayingStage")]
 		public string AlsoPlayingStage;
 
@@ -173,6 +173,12 @@ namespace SPNATI_Character_Editor
 
 		[XmlAttribute("priority")]
 		public string CustomPriority;
+
+		[XmlAttribute("addCharacterTags")]
+		public string AddCharacterTags;
+
+		[XmlAttribute("removeCharacterTags")]
+		public string RemoveCharacterTags;
 
 		[XmlIgnore]
 		public string TargetStatusType
@@ -651,6 +657,8 @@ namespace SPNATI_Character_Editor
 				ConsecutiveLosses == other.ConsecutiveLosses &&
 				TargetSaying == other.TargetSaying &&
 				AlsoPlayingSaying == other.AlsoPlayingSaying &&
+				AddCharacterTags == other.AddCharacterTags &&
+				RemoveCharacterTags == other.RemoveCharacterTags &&
 				Hidden == other.Hidden;
 			if (!sameFilters)
 				return false;
@@ -818,6 +826,8 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (AlsoPlayingSaying ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (CustomPriority ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Hidden ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (AddCharacterTags ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (RemoveCharacterTags ?? string.Empty).GetHashCode();
 			foreach (var condition in Conditions)
 			{
 				hash = (hash * 397) ^ (condition.Filter ?? string.Empty).GetHashCode();
@@ -1030,7 +1040,13 @@ namespace SPNATI_Character_Editor
 			}
 
 			//misc conditions are always the same
-			response.Conditions.AddRange(Conditions);
+			foreach (TargetCondition cond in Conditions)
+			{
+				if (cond.Filter != responder.FolderName)
+				{
+					response.Conditions.Add(cond);
+				}
+			}
 			response.Expressions.AddRange(Expressions);
 			response.ConsecutiveLosses = ConsecutiveLosses;
 			response.TotalFemales = TotalFemales;
@@ -1389,10 +1405,18 @@ namespace SPNATI_Character_Editor
 				string layer = GetLayerType(speaker, stage);
 				if (layer == "major" || layer == "minor" || layer == "accessory")
 				{
+					if (speaker.Metadata.CrossGender)
+					{
+						return "opponent_stripping";
+					}
 					return $"{gender}_removing_{layer}";
 				}
 				else
 				{
+					if (speaker.Metadata.CrossGender)
+					{
+						return $"opponent_{layer}_will_be_visible";
+					}
 					return $"{gender}_{layer}_will_be_visible";
 				}
 			}
@@ -1402,11 +1426,19 @@ namespace SPNATI_Character_Editor
 				string layer = GetLayerType(speaker, stage - 1);
 				if (layer == "major" || layer == "minor" || layer == "accessory")
 				{
+					if (speaker.Metadata.CrossGender)
+					{
+						return "opponent_stripped";
+					}
 					return $"{gender}_removed_{layer}";
 				}
 				else
 				{
-					if (gender == "female" && layer == "chest" || gender == "male" && layer == "crotch")
+					if (speaker.Metadata.CrossGender)
+					{
+						return $"opponent_{layer}_is_visible";
+					}
+					else if (gender == "female" && layer == "chest" || gender == "male" && layer == "crotch")
 					{
 						return $"{gender}_{speaker.Size}_{layer}_is_visible";
 					}
@@ -1418,14 +1450,34 @@ namespace SPNATI_Character_Editor
 			}
 			else if (Tag == "must_masturbate_first")
 			{
+				if (speaker.Metadata.CrossGender)
+				{
+					return "opponent_lost";
+				}
 				return $"{gender}_must_masturbate";
 			}
-			else if (Tag == "must_masturbate" || Tag == "start_masturbating" || Tag == "masturbating" || Tag == "finished_masturbating")
+			else if (Tag == "must_masturbate")
 			{
+				if (speaker.Metadata.CrossGender)
+				{
+					return "opponent_lost";
+				}
+				return $"{gender}_must_masturbate";
+			}
+			else if (Tag == "start_masturbating" || Tag == "masturbating" || Tag == "finished_masturbating" || Tag == "heavy_masturbating")
+			{
+				if (speaker.Metadata.CrossGender)
+				{
+					return $"opponent_{Tag}";
+				}
 				return $"{gender}_{Tag}";
 			}
 			else if (Tag.StartsWith("must_strip"))
 			{
+				if (speaker.Metadata.CrossGender)
+				{
+					return "opponent_lost";
+				}
 				return $"{gender}_must_strip";
 			}
 			else if (Tag == "game_over_victory")
@@ -1441,6 +1493,10 @@ namespace SPNATI_Character_Editor
 			else if (tag.StartsWith("male_"))
 			{
 				tag = tag.Substring(5);
+			}
+			else if (tag.StartsWith("opponent_"))
+			{
+				tag = tag.Substring(9);
 			}
 
 			if (Target == responder.FolderName)
@@ -1638,7 +1694,7 @@ namespace SPNATI_Character_Editor
 				{
 					continue;
 				}
-				if (!string.IsNullOrEmpty(c.Filter) && !speaker.Tags.Contains(c.Filter))
+				if (!string.IsNullOrEmpty(c.Filter) && speaker.Tags.Find(t => t.Tag == c.Filter) == null)
 				{
 					continue;
 				}
@@ -1693,7 +1749,7 @@ namespace SPNATI_Character_Editor
 				return false;
 			}
 
-			if (trigger.Gender == null || trigger.Gender == character.Gender)
+			if (trigger.Gender == null || trigger.Gender == character.Gender || character.Metadata.CrossGender)
 			{
 				return true;
 			}
@@ -1718,8 +1774,13 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("gender")]
 		public string Gender;
 
+		[Status(DisplayName = "Status", Description = "Status of the characters to match", GroupOrder = 20)]
 		[XmlAttribute("status")]
 		public string Status;
+
+		//[Text(DisplayName = "Variable", Description = "Name of variable to store a target that this condition matches", GroupOrder = 0)]
+		[XmlAttribute("var")]
+		public string Variable;
 
 		public static readonly KeyValuePair<string, string>[] StatusTypes = {
 			new KeyValuePair<string, string>(null, ""),
@@ -1738,53 +1799,6 @@ namespace SPNATI_Character_Editor
 			new KeyValuePair<string, string>("finished", "Finished masturbating")
 		};
 
-		[XmlIgnore]
-		public string StatusType
-		{
-			get
-			{
-				if (!string.IsNullOrEmpty(Status) && Status.StartsWith("not_"))
-				{
-					return Status.Substring(4);
-				}
-				else
-				{
-					return Status;
-				}
-			}
-			set
-			{
-				if (!string.IsNullOrEmpty(Status) && Status.StartsWith("not_"))
-				{
-					Status = "not_" + value;
-				}
-				else
-				{
-					Status = value;
-				}
-			}
-		}
-
-		[XmlIgnore]
-		public bool NegateStatus
-		{
-			get
-			{
-				return (!string.IsNullOrEmpty(Status) && Status.StartsWith("not_"));
-			}
-			set
-			{
-				if (string.IsNullOrEmpty(StatusType))
-				{
-					Status = null;
-				}
-				else
-				{
-					Status = StatusType != null ? (value ? "not_" : "") + StatusType : null;
-				}
-			}
-		}
-
 		public TargetCondition()
 		{
 		}
@@ -1794,15 +1808,6 @@ namespace SPNATI_Character_Editor
 			Filter = tag;
 			Gender = gender;
 			Status = status;
-			Count = count;
-		}
-
-		public TargetCondition(string tag, string gender, string status, bool negateStatus, string count)
-		{
-			Filter = tag;
-			Gender = gender;
-			StatusType = status;
-			NegateStatus = negateStatus;
 			Count = count;
 		}
 
@@ -1818,7 +1823,7 @@ namespace SPNATI_Character_Editor
 
 		public TargetCondition Copy()
 		{
-			TargetCondition copy = new TargetCondition(Filter, Gender, Status, NegateStatus, Count);
+			TargetCondition copy = MemberwiseClone() as TargetCondition;
 			return copy;
 		}
 
@@ -1846,6 +1851,15 @@ namespace SPNATI_Character_Editor
 
 			}
 			return str;
+		}
+
+		public bool HasAdvancedConditions
+		{
+			get
+			{
+				return !string.IsNullOrEmpty(Status) ||
+					!string.IsNullOrEmpty(Variable);
+			}
 		}
 	}
 

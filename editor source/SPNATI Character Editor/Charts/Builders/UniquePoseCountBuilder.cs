@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor.Charts.Builders
 {
@@ -26,6 +24,13 @@ namespace SPNATI_Character_Editor.Charts.Builders
 				foreach (string filename in Directory.EnumerateFiles(folder))
 				{
 					string name = Path.GetFileNameWithoutExtension(filename);
+					int hyphen = name.IndexOf("-");
+					name = name.Substring(hyphen + 1);
+					poses.Add(name);
+				}
+				foreach (Pose pose in c.CustomPoses)
+				{
+					string name = pose.Id;
 					int hyphen = name.IndexOf("-");
 					name = name.Substring(hyphen + 1);
 					poses.Add(name);
