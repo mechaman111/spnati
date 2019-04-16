@@ -481,6 +481,10 @@ namespace SPNATI_Character_Editor.Controls
 		public DialogueLine GetLine(int index)
 		{
 			DialogueLine line = ReadLineFromDialogueGrid(index);
+			if (line == null)
+			{
+				return new DialogueLine();
+			}
 			return line;
 		}
 
