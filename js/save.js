@@ -47,6 +47,7 @@ function Save(){
 		'endings' : {},
 		'askedUsageTracking': false,
 		'usageTracking': false,
+        'collectibles': {},
 	};
 	
 	this.saveCookie = function(){
@@ -71,6 +72,7 @@ function Save(){
 		playerTagSelections = this.data[players[HUMAN_PLAYER].gender]['tags'];
 		updateTitleGender();
 	};
+    
 	this.loadOptions = function(){
 		USAGE_TRACKING = this.data['usageTracking'];
 		players[HUMAN_PLAYER].stamina = this.data['masturbationTimer'] || 20;
@@ -103,6 +105,7 @@ function Save(){
 
 		this.saveCookie();
 	};
+    
 	this.saveIngameOptions = function(){
 		this.data['autoFade'] = AUTO_FADE?1:2;
 		this.data['cardSuggest'] = CARD_SUGGEST?1:2;
@@ -167,7 +170,8 @@ function Save(){
 		}
 		return false;
 	}
-	this.addEnding = function(character, title){
+	
+    this.addEnding = function(character, title){
 		if(this.data.endings[character]===undefined){
 			this.data.endings[character] = {};
 		}
@@ -179,6 +183,34 @@ function Save(){
 		maleEndings = [];
 		femaleEndings = [];
 	}
+    
+    this.hasCollectible = function (collectible) {
+        if (!COLLECTIBLES_ENABLED) return false;
+        if (COLLECTIBLES_UNLOCKED) return true;
+        
+        var charID = '__general';
+        if (collectible.player) {
+            charID = collectible.player.id;
+        }
+        
+        if (!this.data.collectibles[charID]) return false;
+        return !!this.data.collectibles[charID][collectible.id];
+    }
+    
+    this.addCollectible = function (collectible) {
+        if (!COLLECTIBLES_ENABLED) return;
+        
+        var charID = '__general';
+        if (collectible.player) {
+            charID = collectible.player.id;
+        }
+        
+        if (!this.data.collectibles[charID]) {
+            this.data.collectibles[charID] = {};
+        }
+        
+        this.data.collectibles[charID][collectible.id] = true;
+    }
 }
 
 var save = new Save();

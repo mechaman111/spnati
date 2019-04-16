@@ -29,7 +29,9 @@ $selectedEndingHint = [$('#selected-ending-hint-container'), $('#selected-ending
 $collectibleListPane = $('#collectibles-list-pane');
 $collectibleImagePane = $('#collectibles-image-pane');
 $collectibleTextPane = $('#collectibles-text-pane');
- 
+
+$collectibleTextContainer = $('.collectible-text-container');
+
 $collectibleTitle = $('#collectible-title');
 $collectibleSubtitle = $('#collectible-subtitle');
 $collectibleCharacter = $('#collectible-character');
@@ -77,6 +79,7 @@ function Collectible(xmlElem, player) {
 	this.subtitle = xmlElem.find('subtitle').text();	
 	this.unlock_hint = xmlElem.find('unlock').text();
 	this.text = xmlElem.find('text').html();
+    this.hidden = xmlElem.find('hidden').text() === 'true';
     
     if (player) {
     	this.source = player.label;
@@ -87,32 +90,64 @@ function Collectible(xmlElem, player) {
     }
 }
 
+Collectible.prototype.isUnlocked = function () {
+    return save.hasCollectible(this);
+}
+
+Collectible.prototype.unlock = function () {
+    return save.addCollectible(this);
+}
+
 Collectible.prototype.display = function () {
-	$collectibleTitle.html(unescapeHTML(this.title));
-	$collectibleSubtitle.html(unescapeHTML(this.subtitle));
-	$collectibleCharacter.text(this.source);
-	$collectibleUnlock.html(unescapeHTML(this.unlock_hint));
-	$collectibleText.html(unescapeHTML(this.text));
+    if (!this.hidden || this.isUnlocked()) {
+        $collectibleTitle.html(unescapeHTML(this.title));
+        $collectibleSubtitle.html(unescapeHTML(this.subtitle));
+    } else {
+        $collectibleTitle.html("[Locked]");
+        $collectibleSubtitle.html("").hide();
+    }
+    
+    $collectibleCharacter.text(this.source);
+    $collectibleUnlock.html(unescapeHTML(this.unlock_hint));
+    
+    if (this.isUnlocked()) {
+    	$collectibleText.html(unescapeHTML(this.text));
+        $collectibleTextContainer.show();
+    	
+    	if (this.image) {
+    		$collectibleImage.attr('src', this.image);
+    		$collectibleImagePane.show();
+    	} else {
+    		$collectibleImagePane.hide();
+    	}
+    } else {
+        $collectibleTextContainer.hide();
+        $collectibleImagePane.hide();
+    }
 	
-	if (this.image) {
-		$collectibleImage.attr('src', this.image);
-		$collectibleImagePane.show();
-	} else {
-		$collectibleImagePane.hide();
-	}
 };
 
 Collectible.prototype.listElement = function () {
 	var baseElem = $('<div class="collectibles-list-item bordered"></div>');
-	var imgElem = $('<img class="collectibles-item-icon">').attr('src', this.thumbnail);
+	var imgElem = $('<img class="collectibles-item-icon">');
 	var titleElem = $('<div class="collectibles-item-title"></div>');
 	var subtitleElem = $('<div class="collectibles-item-subtitle"></div>');
 	
-	titleElem.html(this.title);
-	subtitleElem.html(this.subtitle);
-	
+    if (!this.hidden || this.isUnlocked()) {
+        titleElem.html(unescapeHTML(this.title));
+    	subtitleElem.html(unescapeHTML(this.subtitle));
+    } else {
+        titleElem.html("[Locked]");
+        subtitleElem.html(unescapeHTML(this.unlock_hint));
+    }
+    
+    if (this.isUnlocked()) {
+    	imgElem.attr('src', this.thumbnail);
+    } else {
+        imgElem.attr('src', "img/unknown.svg");
+    }
+    
 	baseElem.append(imgElem, titleElem, subtitleElem).click(this.display.bind(this));
-	
 	return baseElem;
 };
 
@@ -147,11 +182,19 @@ function goToCollectiblesScreen() {
 	$galleryCollectiblesScreen.show();
 	$galleryEndingsScreen.hide();
     loadAllCollectibles();
+    updateCollectiblesScreen();
 }
 
 function loadGalleryScreen(){
 	screenTransition($titleScreen, $galleryScreen);
-    goToCollectiblesScreen();
+    
+    if (COLLECTIBLES_ENABLED) {
+        goToCollectiblesScreen();
+    } else {
+        goToEpiloguesScreen();
+        $('.gallery-switch-button').hide();
+    }
+    
 }
 
 function backGalleryScreen(){

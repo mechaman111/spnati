@@ -197,6 +197,7 @@ function State($xml, addedTags, removedTags) {
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
+    this.collectible = $xml.attr('collectible') || undefined;
     var markerOp = $xml.attr('marker');
     this.rawDialogue = $xml.html();
     

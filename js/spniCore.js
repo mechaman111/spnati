@@ -11,6 +11,8 @@
 var DEBUG = false;
 var EPILOGUES_ENABLED = true;
 var EPILOGUES_UNLOCKED = false;
+var COLLECTIBLES_ENABLED = true;
+var COLLECTIBLES_UNLOCKED = false;
 var EPILOGUE_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
@@ -995,6 +997,27 @@ function loadConfigFile () {
             } else {
                 ALT_COSTUMES_ENABLED = false;
                 console.log("Alternate costumes disabled");
+            }
+            
+            if (DEBUG) {
+                COLLECTIBLES_ENABLED = false;
+                COLLECTIBLES_UNLOCKED = false;
+                
+                if ($(xml).find('collectibles').text() === 'true') {
+                    COLLECTIBLES_ENABLED = true;
+                    console.log("Collectibles enabled");
+                    
+                    if ($(xml).find('collectibles-unlocked').text() === 'true') {
+                        COLLECTIBLES_UNLOCKED = true;
+                        console.log("All collectibles force-unlocked");
+                    }
+                } else {
+                    console.log("Collectibles disabled");
+                }
+            } else {
+                COLLECTIBLES_ENABLED = false;
+                COLLECTIBLES_UNLOCKED = false;
+                console.log("Debug mode disabled - collectibles disabled");
             }
 
 			$(xml).find('include-status').each(function() {
