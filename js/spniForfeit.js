@@ -36,8 +36,7 @@ Player.prototype.setForfeitTimer = function() {
 	// THE STAGE IS HARD SET RIGHT NOW
 	this.stage += 1;
 	this.timeInStage = -1;
-	this.updateLabel();
-	this.updateFolder();
+	this.stageChangeUpdate();
 }
 
 /************************************************************
@@ -201,8 +200,7 @@ function finishMasturbation (player) {
 	players[player].stage += 1;
 	players[player].finished = true;
     players[player].forfeit = [PLAYER_FINISHED_MASTURBATING, CAN_SPEAK];
-	players[player].updateLabel();
-	players[player].updateFolder();
+	players[player].stageChangeUpdate();
     
 	/* update player dialogue */
     updateAllBehaviours(

@@ -223,7 +223,7 @@ function loadListingFile () {
 			if (opp.id in opponentMap) {
 				loadedOpponents[opponentMap[opp.id]] = opp;
                 opp.tags.forEach(function(tag) {
-                    tagSet[tag] = true;
+                    tagSet[canonicalizeTag(tag)] = true;
                 });
                 sourceSet[opp.source] = true;
 			}
@@ -242,7 +242,7 @@ function loadListingFile () {
 		}
         if (outstandingLoads == 0) {
             $tagList.append(Object.keys(tagSet).sort().map(function(tag) {
-                return new Option(tag);
+                return new Option(canonicalizeTag(tag));
             }));
             $sourceList.append(Object.keys(sourceSet).sort().map(function(source) {
                 return new Option(source);
@@ -611,7 +611,7 @@ function updateSuggestions(slot, suggestionsArray, startIndex) {
 function updateSelectableOpponents(autoclear) {
     var name = $searchName.val().toLowerCase();
     var source = $searchSource.val().toLowerCase();
-    var tag = $searchTag.val().toLowerCase();
+    var tag = canonicalizeTag($searchTag.val());
 
     // Array.prototype.filter automatically skips empty slots
     selectableOpponents = loadedOpponents.filter(function(opp) {
@@ -629,12 +629,8 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by tag
-        if (tag) {
-            if (!opp.tags || !opp.tags.some(function(t) {
-                return t.toLowerCase() == tag;
-            })) {
-                return false;
-            }
+        if (tag && !opp.hasTag(tag)) {
+            return false;
         }
 
         // filter by gender
@@ -771,7 +767,7 @@ function updateSelectableGroups(screen) {
     var groupname = $groupSearchGroupName.val().toLowerCase();
     var name = $groupSearchName.val().toLowerCase();
     var source = $groupSearchSource.val().toLowerCase();
-    var tag = $groupSearchTag.val().toLowerCase();
+    var tag = canonicalizeTag($groupSearchTag.val());
 
     // reset filters
     selectableGroups[screen] = loadedGroups[screen].filter(function(group) {
@@ -790,9 +786,7 @@ function updateSelectableGroups(screen) {
         })) return false;
 
         if (tag && !group.opponents.some(function(opp) {
-            return opp.tags.some(function(t) {
-                return t.toLowerCase() == tag;
-            })
+            return opp.hasTag(tag);
         })) return false;
 
         if ((chosenGroupGender == 2 || chosenGroupGender == 3)

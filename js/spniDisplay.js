@@ -24,9 +24,14 @@ function PoseSprite(id, src, onload, pose, args) {
     this.pivoty = args.pivoty;
     this.height = args.height || 0;
     this.width = args.width || 0;
+    this.delay = args.delay || 0;
+    this.elapsed = 0;
+    this.parentId = args.parent;
     
     this.vehicle = document.createElement('div');
     this.vehicle.id = id;
+    this.pivot = document.createElement('div');
+    this.vehicle.appendChild(this.pivot);
     
     this.img = document.createElement('img');
     this.img.onload = this.img.onerror = function() {
@@ -38,7 +43,7 @@ function PoseSprite(id, src, onload, pose, args) {
     }.bind(this);
     this.img.src = this.src;
     
-    this.vehicle.appendChild(this.img);
+    this.pivot.appendChild(this.img);
     
     if (this.alpha === undefined) {
         this.alpha = 100;
@@ -47,34 +52,69 @@ function PoseSprite(id, src, onload, pose, args) {
     if (this.pivotx || this.pivoty) {
         this.pivotx = this.pivotx || "center";
         this.pivoty = this.pivoty || "center";
-        $(this.img).css("transform-origin", this.pivotx + " " + this.pivoty);
+        $(this.pivot).css("transform-origin", this.pivotx + " " + this.pivoty);
     }
     
     $(this.vehicle).css("z-index", this.z);
+}
+
+PoseSprite.prototype.linkParent = function () {
+    if (this.parentId) {
+        this.parent = this.pose.sprites[this.parentId];
+        this.parent.pivot.appendChild(this.vehicle);
+    }
 }
 
 PoseSprite.prototype.scaleToDisplay = function(x) {
     return x * this.pose.getHeightScaleFactor();
 }
 
+PoseSprite.prototype.update = function (dt) {
+    if (this.elapsed < this.delay) {
+        this.elapsed += dt;
+        if (this.elapsed >= this.delay) {
+            this.draw();
+        }
+    }
+}
+
 PoseSprite.prototype.draw = function() {
-    $(this.vehicle).css({
-      "position": "absolute",
-      "left": "50%",
-      "transform":  "translateX(-50%) translateX("+this.scaleToDisplay(this.x)+"px) translateY(" + this.scaleToDisplay(this.y) + "px)",
-      "transform-origin": "top left",
-      "opacity": this.alpha / 100,
-      "height": '100%'
-    });
-    
-    $(this.img).css({
-      "transform": "rotate(" + this.rotation + "deg) scale(" + this.scalex + ", " + this.scaley + ") skew(" + this.skewx + "deg, " + this.skewy + "deg)",
-      'height': this.scaleToDisplay(this.height)+"px",
-      'width': this.scaleToDisplay(this.width)+"px"
-    });
+    var alpha = this.alpha / 100;
+    if (this.elapsed < this.delay) {
+        alpha = 0;
+    }
+    var properties = {
+        "position": "absolute",
+        "left": "50%",
+        "top": "0",
+        "transform": "translateX(-50%) translateX(" + this.scaleToDisplay(this.x) + "px) translateY(" + this.scaleToDisplay(this.y) + "px)",
+        "transform-origin": "top left",
+        "opacity": alpha,
+        "height": '100%',
+    };
+    if (this.parent) {
+        properties.left = 0;
+        properties.transform = "translateX(" + this.scaleToDisplay(this.x) + "px) translateY(" + this.scaleToDisplay(this.y) + "px)";
+    }
+    $(this.vehicle).css(properties);
     
     if (this.prevSrc !== this.src) {
+
         this.img.src = this.prevSrc = this.src;
+
+        this.height = this.img.naturalHeight;
+        this.width = this.img.naturalWidth;  
+    }
+
+
+    $(this.pivot).css({
+      "transform": "rotate(" + this.rotation + "deg) scale(" + this.scalex + ", " + this.scaley + ") skew(" + this.skewx + "deg, " + this.skewy + "deg)",
+    });
+    if (this.img) {
+        $(this.img).css({
+            'height': this.scaleToDisplay(this.height) + "px",
+            'width': this.scaleToDisplay(this.width) + "px"
+        });
     }
 }
 
@@ -143,7 +183,10 @@ PoseAnimation.prototype.interpolate = function (prop, last, next, t, idx) {
 }
 
 PoseAnimation.prototype.updateSprite = function (fromFrame, toFrame, t, idx) {
-    if (fromFrame.src) {
+    if (toFrame.src && t >= 1) {
+        this.target.src = toFrame.src;
+    }
+    else if (fromFrame.src) {
         this.target.src = fromFrame.src;
     }
     
@@ -190,6 +233,12 @@ function Pose(poseDef, display) {
         
         container.appendChild(sprite.vehicle);
     }.bind(this));
+
+    for (var id in this.sprites) {
+        if (this.sprites.hasOwnProperty(id)) {
+            this.sprites[id].linkParent();
+        }
+    }
     
     poseDef.animations.forEach(function (def) {
         if (def.marker && !checkMarker(def.marker, this.player)) {
@@ -219,11 +268,15 @@ Pose.prototype.onSpriteLoaded = function(sprite) {
     }
 }
 
-Pose.prototype.update = function (timestamp) {
-    if (this.animations.length === 0) return;
-    
+Pose.prototype.update = function (timestamp) {    
     if (this.lastUpdateTS === null) { this.lastUpdateTS = timestamp; }
     var dt = timestamp - this.lastUpdateTS;
+
+    for (var id in this.sprites) {
+        if (this.sprites.hasOwnProperty(id)) {
+            this.sprites[id].update(dt);
+        }
+    }
 
     for (var i=0;i<this.animations.length;i++) {
         this.animations[i].update(dt);
@@ -238,6 +291,19 @@ Pose.prototype.draw = function() {
     }
 }
 
+Pose.prototype.needsAnimationLoop = function () {
+    if (this.animations.some(function (a) { return a.looped || !a.isComplete(); })) {
+        return true;
+    }
+
+    for (var id in this.sprites) {
+        if (this.sprites.hasOwnProperty(id) && this.sprites[id].elapsed < this.sprites[id].delay) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 function xmlToObject($xml) {
     var targetObj = {};
@@ -270,6 +336,7 @@ function parseSpriteDefinition ($xml, player) {
     targetObj.skewy = parseFloat(targetObj.skewy, 10);
     targetObj.x = parseFloat(targetObj.x, 10);
     targetObj.y = parseFloat(targetObj.y, 10);
+    targetObj.delay = parseFloat(targetObj.delay) * 1000 || 0;
     
     targetObj.player = player;
     
@@ -497,7 +564,7 @@ OpponentDisplay.prototype.drawPose = function (pose) {
         
         this.imageArea.append(pose.container);
         pose.draw();
-        if (pose.animations.length > 0) {
+        if (pose.needsAnimationLoop()) {
             this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
         }
     }
@@ -565,7 +632,7 @@ OpponentDisplay.prototype.update = function(player) {
 OpponentDisplay.prototype.loop = function (timestamp) {
     if (!this.pose || !(this.pose instanceof Pose)) return;
     this.pose.update(timestamp);
-    if (this.pose.animations.some(function(a) { return a.looped || !a.isComplete(); })) {
+    if (this.pose.needsAnimationLoop()) {
         this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
     } else {
         this.animCallbackID = undefined;

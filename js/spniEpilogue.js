@@ -989,13 +989,13 @@ EpiloguePlayer.prototype.load = function () {
   for (var i = 0; i < this.epilogue.scenes.length; i++) {
     var scene = this.epilogue.scenes[i];
     if (scene.background) {
-      scene.background = scene.background.charAt(0) === '/' ? scene.background : this.epilogue.player.base_folder + scene.background;
+      scene.background = scene.background.charAt(0) === '/' ? scene.background.substring(1) : this.epilogue.player.base_folder + scene.background;
       this.fetchImage(scene.background);
     }
     for (var j = 0; j < scene.directives.length; j++) {
       var directive = scene.directives[j];
       if (directive.src) {
-        directive.src = directive.src.charAt(0) === '/' ? directive.src : this.epilogue.player.base_folder + directive.src;
+        directive.src = directive.src.charAt(0) === '/' ? directive.src.substring(1) : this.epilogue.player.base_folder + directive.src;
         this.fetchImage(directive.src);
       }
       
@@ -1003,7 +1003,7 @@ EpiloguePlayer.prototype.load = function () {
           for (var k = 0; k < directive.keyframes.length; k++) {
             var keyframe = directive.keyframes[k];
             if (keyframe.src && keyframe !== directive) {
-              keyframe.src = keyframe.src.charAt(0) === '/' ? keyframe.src : this.epilogue.player.base_folder + keyframe.src;
+              keyframe.src = keyframe.src.charAt(0) === '/' ? keyframe.src.substring(1) : this.epilogue.player.base_folder + keyframe.src;
               this.fetchImage(keyframe.src);
             }
           }
@@ -1651,12 +1651,16 @@ SceneView.prototype.removeSceneObject = function (directive) {
 }
 
 SceneView.prototype.hideSceneObject = function (directive, context) {
-  context.object = this.sceneObjects[directive.id];
+  var sceneObject = context.object = this.sceneObjects[directive.id];
   context.anims = {};
   if (context.object) {
     $(context.object.element).hide();
     this.stopAnimation(directive, context.anims);
-    delete this.sceneObjects[directive.id];
+    context.rate = sceneObject.rate;
+    sceneObject.rate = 0;
+    if (!sceneObject instanceof Emitter) {
+        delete this.sceneObjects[directive.id];
+    }
   }
 }
 
@@ -1664,6 +1668,7 @@ SceneView.prototype.showSceneObject = function (directive, context) {
   var obj = context.object;
   if (obj) {
     this.sceneObjects[directive.id] = obj;
+    this.sceneObjects[directive.id].rate = context.rate;
     this.restoreAnimation(directive, context.anims);
     $(obj.element).show();
   }
@@ -2345,6 +2350,7 @@ Particle.prototype.spawn = function (x, y, rotation, args) {
   $(particleElem).css({
     "width": args.width + "px",
     "height": args.height + "px",
+    "background-color": "",
   });
   $(this.element).css({
     "z-index": args.layer || "",
