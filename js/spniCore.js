@@ -492,6 +492,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.description = fixupDialogue($metaXml.find('description').html());
     this.endings = $metaXml.find('epilogue');
     this.ending = this.endings.length > 0 || $metaXml.find('has_ending').text() === "true";
+    this.collectibles = $metaXml.find('has_collectibles').text() === "true";
     this.layers = parseInt($metaXml.find('layers').text(), 10);
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;

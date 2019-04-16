@@ -54,6 +54,21 @@ function GEnding(player, ending){
 	this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title); };
 }
 
+var unescapeSubstitutions = {
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&apos;': '\'',
+    '&amp;': '&',
+}
+var unescapeDialogueRE = /(&(?:lt|gt|quot|apos|amp);)/gi
+
+function unescapeHTML(in_text) {
+    return in_text.replace(unescapeDialogueRE, function (match, p1) {
+        return unescapeSubstitutions[p1];
+    });
+}
+
 /* Base class for all collectibles. */
 function Collectible(id, image, thumbnail, source, title, subtitle, unlock_hint, text) {
 	this.id = id;
@@ -67,11 +82,11 @@ function Collectible(id, image, thumbnail, source, title, subtitle, unlock_hint,
 }
 
 Collectible.prototype.display = function () {
-	$collectibleTitle.html(this.title);
-	$collectibleSubtitle.html(this.subtitle);
+	$collectibleTitle.html(unescapeHTML(this.title));
+	$collectibleSubtitle.html(unescapeHTML(this.subtitle));
 	$collectibleCharacter.text(this.source);
-	$collectibleUnlock.html(this.unlock_hint);
-	$collectibleText.html(this.text);
+	$collectibleUnlock.html(unescapeHTML(this.unlock_hint));
+	$collectibleText.html(unescapeHTML(this.text));
 	
 	if (this.image) {
 		$collectibleImage.attr('src', this.image);
@@ -98,7 +113,6 @@ Collectible.prototype.listElement = function () {
 
 /* Class for collectibles attached to a specific player.*/
 function PlayerCollectible(player, xmlElem) {
-	console.log(xmlElem);
 	this.player = player;
 	this.id = xmlElem.attr('id');
 	this.source = player.label;
@@ -152,18 +166,18 @@ function goToEpiloguesScreen() {
 	$galleryEndingsScreen.show();
 	$galleryCollectiblesScreen.hide();
 	loadGalleryEndings();
+	galleryGender(GALLERY_GENDER);
 }
 
 function goToCollectiblesScreen() {
 	$galleryCollectiblesScreen.show();
 	$galleryEndingsScreen.hide();
-	updateCollectiblesScreen();
+    updateLoadedCollectibles();
 }
 
 function loadGalleryScreen(){
 	screenTransition($titleScreen, $galleryScreen);
-    loadGalleryEndings();
-	galleryGender(GALLERY_GENDER);
+    goToCollectiblesScreen();
 }
 
 function backGalleryScreen(){
@@ -189,12 +203,12 @@ function loadPlayerCollectibles(player) {
 			});
 			
 			playerCollectibles[player.id] = collectiblesArray;
+            updateCollectiblesScreen();
 		}
 	});
 }
 
 
-/* called from spniSelect.js */
 function updateLoadedCollectibles() {
 	for (var i=0; i<loadedOpponents.length; i++) {
 		if (!loadedOpponents[i]) continue;
