@@ -72,17 +72,16 @@ function unescapeHTML(in_text) {
 function Collectible(xmlElem, player) {
 	this.id = xmlElem.attr('id');
 	this.thumbnail = xmlElem.attr('thumbnail');
+    this.image = xmlElem.attr('img');
 	this.title = xmlElem.find('title').text();
 	this.subtitle = xmlElem.find('subtitle').text();	
 	this.unlock_hint = xmlElem.find('unlock').text();
 	this.text = xmlElem.find('text').html();
     
     if (player) {
-        this.image = player.folder + xmlElem.attr('img');
     	this.source = player.label;
         this.player = player;
     } else {
-        this.image = xmlElem.attr('img');
     	this.source = 'The Inventory';
         this.player = undefined;
     }
