@@ -772,6 +772,11 @@ namespace SPNATI_Character_Editor
 				string relPath = fullPath.Substring(characterRoot.Length + 1);
 				return relPath;
 			}
+			else if (path.StartsWith("reskins"))
+			{
+				string relPath = Path.GetFileName(path);
+				return relPath;
+			}
 			return path;
 		}
 
@@ -852,6 +857,7 @@ namespace SPNATI_Character_Editor
 
 			foreach (Pose pose in skin.Poses)
 			{
+				ValidatePose(character, pose, unusedImages);
 				missingImages.Remove("custom:" + pose.Id);
 			}
 

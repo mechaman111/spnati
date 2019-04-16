@@ -97,6 +97,20 @@ namespace SPNATI_Character_Editor.Activities
 					if (!_spellchecker.CheckWord(word))
 					{
 						int count = visitedWords.Get(word);
+						if (count == 0)
+						{
+							for (int i = 0; i < words.Length; i++)
+							{
+								if (words[i] == word)
+								{
+									break;
+								}
+								if (words[i].Contains(word))
+								{
+									count++;
+								}
+							}
+						}
 						count++;
 						visitedWords[word] = count;
 						int start = -1;
