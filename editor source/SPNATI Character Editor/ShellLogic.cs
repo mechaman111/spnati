@@ -1,6 +1,8 @@
 ﻿using Desktop;
 using SPNATI_Character_Editor.Activities;
 using SPNATI_Character_Editor.Forms;
+using System;
+using System.IO;
 using System.Windows.Forms;
 using System.Windows.Threading;
 
@@ -27,11 +29,13 @@ namespace SPNATI_Character_Editor
 			Shell.Instance.AutoTick += Instance_AutoTick;
 
 			_backupTimer.Tick += _backupTimer_Tick;
-			_backupTimer.Interval = new System.TimeSpan(0, 5, 0);
+			_backupTimer.Interval = new TimeSpan(0, 5, 0);
 			_backupTimer.Start();
+
+			Config.LoadMacros<Case>("Case");
 		}
 
-		private static void _backupTimer_Tick(object sender, System.EventArgs e)
+		private static void _backupTimer_Tick(object sender, EventArgs e)
 		{
 			if (!Config.AutoBackupEnabled) { return; }
 			Cursor cursor = Cursor.Current;
@@ -66,6 +70,7 @@ namespace SPNATI_Character_Editor
 		private static void BuildDefinitions()
 		{
 			BuildDirectiveTypes();
+			BuildPropertyTypes();
 		}
 
 		private static void BuildDirectiveTypes()
@@ -75,7 +80,7 @@ namespace SPNATI_Character_Editor
 			DirectiveProvider provider = new DirectiveProvider();
 			DirectiveDefinition def = provider.Create("sprite") as DirectiveDefinition;
 			def.Description = "Adds a sprite to the scene.";
-			foreach (string key in new string[] { "id", "src", "layer", "width", "height", "x", "y", "scalex", "scaley", "rotation", "alpha", "pivotx", "pivoty", "marker", "delay" })
+			foreach (string key in new string[] { "id", "src", "layer", "width", "height", "x", "y", "scalex", "scaley", "rotation", "alpha", "pivotx", "pivoty", "marker", "delay", "skewx", "skewy" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -105,7 +110,7 @@ namespace SPNATI_Character_Editor
 			def.IsAnimatable = true;
 			def.Description = "Moves/rotates/scales a sprite or emitter.";
 			def.FilterPropertiesById = true;
-			foreach (string key in new string[] { "id", "src", "x", "y", "scalex", "scaley", "rotation", "alpha", "rate", "time", "delay", "loop", "ease", "tween", "clamp", "iterations", "marker" })
+			foreach (string key in new string[] { "id", "src", "x", "y", "scalex", "scaley", "rotation", "alpha", "rate", "time", "delay", "loop", "ease", "tween", "clamp", "iterations", "marker", "skewx", "skewy" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -169,7 +174,8 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("emitter") as DirectiveDefinition;
 			def.Description = "Adds an object emitter to the scene.";
 			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX", "delay", 
-				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease", "ignoreRotation", "marker"})
+				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease", "ignoreRotation", "marker",
+				"startSkewX", "startSkewY", "endSkewX", "endSkewY" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -180,6 +186,38 @@ namespace SPNATI_Character_Editor
 			{
 				def.AllowedProperties.Add(key);
 			}
+		}
+
+		private static void BuildPropertyTypes()
+		{
+			PropertyDefinition property;
+
+			property = new PropertyDefinition("X", "X", typeof(float), 10);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Y", "Y", typeof(float), 15);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Src", "Source", typeof(string), 0);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Alpha", "Opacity", typeof(float), 30);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("ScaleX", "Scale (X)", typeof(float), 40);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("ScaleY", "Scale (Y)", typeof(float), 45);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Rotation", "Rotation", typeof(float), 50);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("SkewX", "Skew (X)", typeof(float), 60);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("SkewY", "Skew (Y)", typeof(float), 65);
+			Definitions.Instance.Add(property);
 		}
 
 		private static bool DoInitialSetup()
@@ -203,6 +241,11 @@ namespace SPNATI_Character_Editor
 				ErrorLog.LogError("SPNATI directory not specified.");
 				return false;
 			}
+			if (string.IsNullOrEmpty(Config.KisekaeDirectory))
+			{
+				KisekaeSetup setup = new KisekaeSetup();
+				setup.ShowDialog();
+			}
 			return true;
 		}
 
@@ -221,6 +264,7 @@ namespace SPNATI_Character_Editor
 
 			//File
 			ToolStripMenuItem menu = shell.AddToolbarSubmenu("File");
+			shell.AddToolbarItem("New Character...", CreateNewCharacter, menu, Keys.None);
 			shell.AddToolbarItem("Save", Save, menu, Keys.Control | Keys.S);
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Import .txt...", ImportCharacter, menu, Keys.Control | Keys.I);
@@ -248,7 +292,12 @@ namespace SPNATI_Character_Editor
 			menu = shell.AddToolbarSubmenu("Tools");
 			shell.AddToolbarItem("Charts...", typeof(ChartRecord), menu);
 			shell.AddToolbarItem("Marker Report...", typeof(MarkerReportRecord), menu);
+			shell.AddToolbarItem("Configure Game...", ConfigGame, menu, Keys.None);
+			shell.AddToolbarItem("Manage Macros...", ManageCaseMacros, menu, Keys.None);
+			shell.AddToolbarItem("Manage Dictionary...", typeof(DictionaryRecord), menu);
+			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Data Recovery", OpenDataRecovery, menu, Keys.None);
+			shell.AddToolbarItem("Fix Kisekae", ResetKisekae, menu, Keys.None);
 
 			//Help
 			shell.AddToolbarSeparator();
@@ -256,6 +305,17 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarItem("View Help", OpenHelp, menu, Keys.F1);
 			shell.AddToolbarItem("Change Log", OpenChangeLog, menu, Keys.None);
 			shell.AddToolbarItem("About Character Editor...", OpenAbout, menu, Keys.None);
+		}
+
+		private static void CreateNewCharacter()
+		{
+			NewCharacterPrompt prompt = new NewCharacterPrompt();
+			if (prompt.ShowDialog() == DialogResult.OK)
+			{
+				Character character = prompt.Character;
+				MessageBox.Show($"Created {character.FirstName} under folder: opponents/{character.FolderName}");
+				Shell.Instance.LaunchWorkspace(character);
+			}
 		}
 
 		private static void OpenCharacterSelect()
@@ -310,6 +370,31 @@ namespace SPNATI_Character_Editor
 		{
 			About form = new About();
 			form.ShowDialog();
+		}
+
+		/// <summary>
+		/// Cleans the kisekae #airversion folder after a bad import corrupted the importer
+		/// </summary>
+		private static void ResetKisekae()
+		{
+			if (MessageBox.Show("This will attempt fix Kisekae when imports are failing. Close kkl.exe before proceeding.", "Fix Kisekae", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+			{
+				return;
+			}
+			string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "kkl", "#airversion");
+			if (Directory.Exists(folder))
+			{
+				DirectoryInfo di = new DirectoryInfo(folder);
+				foreach (FileInfo file in di.EnumerateFiles())
+				{
+					file.Delete();
+				}
+				foreach (DirectoryInfo dir in di.EnumerateDirectories())
+				{
+					dir.Delete(true);
+				}
+			}
+			MessageBox.Show("Kisekae data cleaned up. You can restart kkl.exe.");
 		}
 
 		private static void OpenDataRecovery()
@@ -395,12 +480,27 @@ namespace SPNATI_Character_Editor
 
 		public static void Teardown()
 		{
+			SpellChecker.Instance.SaveUserDictionary();
 			Config.Save();
 		}
 
 		public static void RecoverCharacter(string name)
 		{
 			OpenDataRecovery(name);
+		}
+
+		private static void ConfigGame()
+		{
+			GameConfig form = new GameConfig();
+			form.ShowDialog();
+		}
+
+		private static void ManageCaseMacros()
+		{
+			MacroManager form = new MacroManager();
+			form.SetType(typeof(Case), "Case");
+			form.ShowDialog();
+			Shell.Instance.PostOffice.SendMessage(DesktopMessages.MacrosUpdated);
 		}
 	}
 }

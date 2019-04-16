@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.cmdImportAll = new System.Windows.Forms.Button();
 			this.cmdImportNew = new System.Windows.Forms.Button();
 			this.cmdClear = new System.Windows.Forms.Button();
@@ -143,6 +143,7 @@
 			this.gridPoses.Size = new System.Drawing.Size(935, 591);
 			this.gridPoses.TabIndex = 20;
 			this.gridPoses.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPoses_CellContentClick);
+			this.gridPoses.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridPoses_ColumnHeaderMouseClick);
 			this.gridPoses.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.gridPoses_RowPrePaint);
 			this.gridPoses.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.gridPoses_RowsAdded);
 			this.gridPoses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.gridPoses_Scroll);
@@ -158,6 +159,7 @@
             this.duplicateToolStripMenuItem});
 			this.contextMenu.Name = "contextMenu";
 			this.contextMenu.Size = new System.Drawing.Size(167, 98);
+			this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
 			// 
 			// cutToolStripMenuItem
 			// 
@@ -238,55 +240,61 @@
 			// 
 			this.ColStage.HeaderText = "Stage";
 			this.ColStage.Name = "ColStage";
+			this.ColStage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
 			this.ColStage.Width = 50;
 			// 
 			// ColPose
 			// 
 			this.ColPose.HeaderText = "Pose";
 			this.ColPose.Name = "ColPose";
+			this.ColPose.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
 			// 
 			// ColL
 			// 
 			this.ColL.HeaderText = "L";
 			this.ColL.Name = "ColL";
+			this.ColL.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ColL.Width = 40;
 			// 
 			// ColT
 			// 
 			this.ColT.HeaderText = "T";
 			this.ColT.Name = "ColT";
+			this.ColT.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ColT.Width = 40;
 			// 
 			// ColR
 			// 
 			this.ColR.HeaderText = "R";
 			this.ColR.Name = "ColR";
+			this.ColR.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ColR.Width = 40;
 			// 
 			// ColB
 			// 
 			this.ColB.HeaderText = "B";
 			this.ColB.Name = "ColB";
+			this.ColB.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ColB.Width = 40;
 			// 
 			// ColData
 			// 
 			this.ColData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.ColData.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColData.DefaultCellStyle = dataGridViewCellStyle3;
 			this.ColData.HeaderText = "Code";
 			this.ColData.Name = "ColData";
+			this.ColData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
 			// ColAdvanced
 			// 
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle2.NullValue = "More...";
-			this.ColAdvanced.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle4.NullValue = "More...";
+			this.ColAdvanced.DefaultCellStyle = dataGridViewCellStyle4;
 			this.ColAdvanced.HeaderText = "";
 			this.ColAdvanced.Name = "ColAdvanced";
 			this.ColAdvanced.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.ColAdvanced.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 			this.ColAdvanced.Width = 70;
 			// 
 			// ColImage

@@ -426,6 +426,54 @@ namespace SPNATI_Character_Editor
 			bool success = ExportXml(skin, Path.Combine(dir, "costume.xml"));
 			return success;
 		}
+
+		public static SpnatiConfig ImportConfig()
+		{
+			string dir = Config.GetString(Settings.GameDirectory);
+			string filename = Path.Combine(dir, "config.xml");
+			TextReader reader = null;
+			try
+			{
+				XmlSerializer serializer = new XmlSerializer(typeof(SpnatiConfig), "");
+				reader = new StreamReader(filename);
+				SpnatiConfig config = serializer.Deserialize(reader) as SpnatiConfig;
+				return config;
+			}
+			finally
+			{
+				if (reader != null)
+					reader.Close();
+			}
+		}
+
+		public static bool ExportConfig()
+		{
+			string dir = Config.GetString(Settings.GameDirectory);
+			string filename = Path.Combine(dir, "config.xml");
+			XmlSerializer serializer = new XmlSerializer(typeof(SpnatiConfig), "");
+			XmlWriter writer = null;
+			try
+			{
+				XmlWriterSettings settings = new XmlWriterSettings();
+				settings.IndentChars = "\t";
+				settings.Indent = true;
+				settings.NamespaceHandling = NamespaceHandling.OmitDuplicates;
+				writer = XmlWriter.Create(filename, settings);
+				serializer.Serialize(writer, SpnatiConfig.Instance);
+				writer.Close();
+			}
+			catch (IOException e)
+			{
+				if (writer != null)
+				{
+					writer.Close();
+				}
+				MessageBox.Show(e.Message);
+				return false;
+			}
+			return true;
+		}
+
 	}
 
 	public interface IHookSerialization

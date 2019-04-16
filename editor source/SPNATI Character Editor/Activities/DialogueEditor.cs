@@ -1,15 +1,16 @@
 ﻿using Desktop;
+using Desktop.CommonControls;
 using SPNATI_Character_Editor.Controls;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 30)]
-	public partial class DialogueEditor : Activity
+	public partial class DialogueEditor : Activity, IMacroEditor
 	{
 		private const string FavoriteConditionsSetting = "FavoritedConditions";
 
@@ -51,8 +52,16 @@ namespace SPNATI_Character_Editor.Activities
 			_editorData = CharacterDatabase.GetEditorData(_character);
 			tableConditions.RecordFilter = FilterTargets;
 			tableConditions.Context = _character;
+			lstAddTags.RecordType = typeof(Tag);
+			lstRemoveTags.RecordType = typeof(Tag);
 			SetupMessageHandlers();
-			grpCase.Enabled = false;
+			panelCase.Enabled = false;
+			gridDialogue.TextUpdated += GridDialogue_TextUpdated;
+		}
+
+		private void GridDialogue_TextUpdated(object sender, int e)
+		{
+			DisplayText(gridDialogue.GetLine(e));
 		}
 
 		/// <summary>
@@ -72,6 +81,8 @@ namespace SPNATI_Character_Editor.Activities
 
 			_character = c;
 			_imageLibrary = ImageLibrary.Get(c);
+
+			OnSettingsUpdated();
 
 			CreateStageCheckboxes();
 
@@ -137,6 +148,19 @@ namespace SPNATI_Character_Editor.Activities
 			SubscribeWorkspace(WorkspaceMessages.Find, OnFind);
 			SubscribeWorkspace(WorkspaceMessages.Replace, OnReplace);
 			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
+			SubscribeWorkspace(WorkspaceMessages.SkinChanged, OnSkinChanged);
+			SubscribeDesktop(DesktopMessages.SettingsUpdated, OnSettingsUpdated);
+			SubscribeDesktop(DesktopMessages.MacrosUpdated, OnMacrosUpdated);
+		}
+
+		private void OnSettingsUpdated()
+		{
+			tableConditions.RunInitialAddEvents = Config.AutoOpenConditions;
+		}
+
+		private void OnMacrosUpdated()
+		{
+			tableConditions.AddMacros();
 		}
 
 		private void OnSaveWorkspace(bool auto)
@@ -165,6 +189,13 @@ namespace SPNATI_Character_Editor.Activities
 		private void OnWardrobeChanged()
 		{
 			_pendingWardrobeChange = true;
+		}
+
+		private void OnSkinChanged()
+		{
+			SaveCase();
+			CreateStageCheckboxes();
+			PopulateStageCheckboxes();
 		}
 		#endregion
 
@@ -414,13 +445,13 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_selectedCase == null)
 			{
-				grpCase.Visible = false;
+				panelCase.Visible = false;
 				return;
 			}
 			else
 			{
-				grpCase.Visible = true;
-				grpCase.Enabled = true;
+				panelCase.Visible = true;
+				panelCase.Enabled = true;
 			}
 
 			_populatingCase = true;
@@ -506,11 +537,11 @@ namespace SPNATI_Character_Editor.Activities
 
 			GUIHelper.SetNumericBox(valPriority, _selectedCase.CustomPriority);
 
-			#region Dialogue
 			var stages = GetSelectedStages();
 			gridDialogue.SetData(_character, _selectedStage, _selectedCase, stages, _imageLibrary);
 			GetSelectedStages();
-			#endregion
+
+			PopulateTagsTab();			
 
 			_populatingCase = false;
 			HighlightRow(0);
@@ -519,20 +550,26 @@ namespace SPNATI_Character_Editor.Activities
 		private void AddSpeedButtons()
 		{
 			if (_selectedCase == null) { return; }
+			Trigger caseTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
 			tableConditions.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
 			tableConditions.AddSpeedButton("Game", "Inside/Outside", (data) => { return AddVariableTest("~background.location~", data); });
+			if (caseTrigger.AvailableVariables.Contains("cards"))
+			{
+				tableConditions.AddSpeedButton("Self", "Cards Exchanged", (data) => { return AddVariableTest("~cards~", data); });
+			}
 			tableConditions.AddSpeedButton("Self", "Costume", (data) => { return AddVariableTest("~self.costume~", data); });
 			tableConditions.AddSpeedButton("Self", "Slot", (data) => { return AddVariableTest("~self.slot~", data); });
-			Trigger caseTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
 			if (caseTrigger.HasTarget)
 			{
 				if (caseTrigger.AvailableVariables.Contains("clothing"))
 				{
 					tableConditions.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
 				}
-				tableConditions.AddSpeedButton("Target", "Target Costume", (data) => { return AddVariableTest("~target.costume~", data); });
-				tableConditions.AddSpeedButton("Target", "Target Position", (data) => { return AddVariableTest("~target.position~", data); });
-				tableConditions.AddSpeedButton("Target", "Target Slot", (data) => { return AddVariableTest("~target.slot~", data); });
+				tableConditions.AddSpeedButton("Target", "Costume", (data) => { return AddVariableTest("~target.costume~", data); });
+				tableConditions.AddSpeedButton("Target", "Gender", (data) => { return AddVariableTest("~target.gender~", data); });
+				tableConditions.AddSpeedButton("Target", "Position", (data) => { return AddVariableTest("~target.position~", data); });
+				tableConditions.AddSpeedButton("Target", "Size", (data) => { return AddVariableTest("~target.size~", data); });
+				tableConditions.AddSpeedButton("Target", "Slot", (data) => { return AddVariableTest("~target.slot~", data); });
 			}
 			tableConditions.AddSpeedButton("Also Playing", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Position", (data) => { return AddVariableTest("~_.position~", data); });
@@ -545,6 +582,16 @@ namespace SPNATI_Character_Editor.Activities
 			Case theCase = data as Case;
 			theCase.Expressions.Add(new ExpressionTest(variable, ""));
 			return "Expressions";
+		}
+
+		private void PopulateTagsTab()
+		{
+			lstAddTags.Clear();
+			lstRemoveTags.Clear();
+			string[] addTags = (_selectedCase.AddCharacterTags ?? "").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+			string[] removeTags = (_selectedCase.RemoveCharacterTags ?? "").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+			lstAddTags.SelectedItems = addTags;
+			lstRemoveTags.SelectedItems = removeTags;
 		}
 
 		private HashSet<int> GetSelectedStages()
@@ -644,6 +691,8 @@ namespace SPNATI_Character_Editor.Activities
 			//Lines
 			gridDialogue.Save();
 
+			SaveTagsTab();
+
 			_character.Behavior.ApplyChanges(_selectedCase);
 
 			return needRegeneration;
@@ -712,6 +761,14 @@ namespace SPNATI_Character_Editor.Activities
 				img = _imageLibrary.Find(image);
 			}
 			DisplayImage(img);
+
+			DialogueLine line = gridDialogue.GetLine(index);
+			DisplayText(line);
+		}
+
+		private void DisplayText(DialogueLine line)
+		{
+			Workspace.SendMessage(WorkspaceMessages.PreviewLine, line);
 		}
 
 		/// <summary>
@@ -721,6 +778,20 @@ namespace SPNATI_Character_Editor.Activities
 		private void DisplayImage(CharacterImage image)
 		{
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, image);
+		}
+
+		private void SaveTagsTab()
+		{
+			string[] addTags = lstAddTags.SelectedItems;
+			string[] removeTags = lstRemoveTags.SelectedItems;
+			if (addTags.Length > 0)
+			{
+				_selectedCase.AddCharacterTags = string.Join(",", addTags);
+			}
+			if (removeTags.Length > 0)
+			{
+				_selectedCase.RemoveCharacterTags = string.Join(",", removeTags);
+			}
 		}
 
 		private void cmdCallOut_Click(object sender, EventArgs e)
@@ -840,6 +911,57 @@ namespace SPNATI_Character_Editor.Activities
 				return;
 			}
 			_editorData.SetNote(_selectedCase, txtNotes.Text);
+		}
+
+		#region Macro editing
+		private void tableConditions_EditingMacro(object sender, MacroArgs args)
+		{
+			args.SetEditor(this);
+		}
+
+		public bool ShowHelp
+		{
+			get
+			{
+				return MacroManager.ShowMacroHelp;
+			}
+		}
+
+		public string GetHelpText()
+		{
+			return MacroManager.HelpText;
+		}
+
+		public object CreateData()
+		{
+			Case tag = new Case(_selectedCase.Tag);
+			tag.Stages.AddRange(_selectedCase.Stages);
+			return tag;
+		}
+
+		public object GetRecordContext()
+		{
+			return _character;
+		}
+
+		public Func<PropertyRecord, bool> GetRecordFilter(object data)
+		{
+			Case tag = data as Case;
+			Trigger trigger = TriggerDatabase.GetTrigger(tag.Tag);
+			if (trigger.HasTarget)
+			{
+				return FilterTargets;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		#endregion
+
+		private void tableConditions_MacroChanged(object sender, MacroArgs e)
+		{
+			Config.SaveMacros("Case");
 		}
 	}
 }

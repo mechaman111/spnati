@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using Desktop.Providers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ namespace SPNATI_Character_Editor
 		/// List of released versions since update tracking was added, used for determining which updates a user skipped and providing info about those
 		/// </summary>
 		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6",
-			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2" };
+			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2", "v4.0b", "v4.0.1b", "v4.0.2b", "v4.0.3b", "v4.0" };
 
 		/// <summary>
 		/// Current Version
@@ -133,7 +134,7 @@ namespace SPNATI_Character_Editor
 				for (int i = 0; i < lines.Length; i++)
 				{
 					string line = lines[i];
-					string[] kvp = line.Split('=');
+					string[] kvp = line.Split(new char[] { '=' }, 2);
 					string key = kvp[0].ToLower();
 					string value = kvp[1];
 					Set(key, value);
@@ -182,7 +183,16 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Gets the programs %appdata% path
+		/// Gets where SPNATI is located
+		/// </summary>
+		public static string KisekaeDirectory
+		{
+			get { return GetString(Settings.KisekaeDirectory); }
+			set { Set(Settings.KisekaeDirectory, value); }
+		}
+
+		/// <summary>
+		/// Gets the program's %appdata% path
 		/// </summary>
 		public static string AppDataDirectory
 		{
@@ -291,11 +301,66 @@ namespace SPNATI_Character_Editor
 			get { return GetBoolean("autoloadbanter"); }
 			set { Set("autoloadbanter", value); }
 		}
+
+		/// <summary>
+		/// Auto-open record select for targets, markers, etc. in dialogue
+		/// </summary>
+		public static bool AutoOpenConditions
+		{
+			get { return !GetBoolean("autocondition"); }
+			set { Set("autocondition", !value); }
+		}
+
+		public static bool SeenMacroHelp
+		{
+			get { return GetBoolean("macrohelp"); }
+			set { Set("macrohelp", value); }
+		}
+
+		public static void SaveMacros(string key)
+		{
+			MacroProvider provider = new MacroProvider();
+			int index = 0;
+			foreach (IRecord record in provider.GetRecords(""))
+			{
+				index++;
+				Macro macro = record as Macro;
+				Set($"Macro{key}{index}", macro.Serialize());
+			}
+			Set($"Macro{key}0", index);
+
+			Save();
+		}
+
+		public static void LoadMacros<T>(string key)
+		{
+			MacroProvider provider = new MacroProvider();
+			int count = GetInt($"Macro{key}0");
+			for (int i = 1; i <= count; i++)
+			{
+				string value = GetString($"Macro{key}{i}");
+				Macro macro = Macro.Deserialize(value);
+				if (macro != null)
+				{
+					provider.Add(typeof(T), macro);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Last ending that was opened
+		/// </summary>
+		public static string LastEnding
+		{
+			get { return GetString("lastending"); }
+			set { Set("lastending", value); }
+		}
 	}
 
 	public static class Settings
 	{
 		public static readonly string GameDirectory = "game";
+		public static readonly string KisekaeDirectory = "kkl";
 		public static readonly string LastCharacter = "last";
 		public static readonly string LastVersionRun = "version";
 		public static readonly string UserName = "username";

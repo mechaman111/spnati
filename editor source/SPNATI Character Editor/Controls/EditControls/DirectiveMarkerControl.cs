@@ -45,7 +45,6 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			if (match.Success)
 			{
 				string name = match.Groups[1].Value;
-				string perTarget = match.Groups[2].Value;
 				string op = match.Groups[4].Value;
 				string value = match.Groups[5].Value;
 				recField.RecordKey = name;
@@ -59,18 +58,16 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 				}
 				txtValue.Text = value;
 			}
-
-			AddHandlers();
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			recField.RecordChanged -= RecordChanged;
 			cboOperator.SelectedIndexChanged -= ValueChanged;
 			txtValue.TextChanged -= ValueChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			recField.RecordChanged += RecordChanged;
 			cboOperator.SelectedIndexChanged += ValueChanged;
@@ -110,7 +107,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			Save();
 		}
 
-		private void RecordChanged(object sender, IRecord record)
+		private void RecordChanged(object sender, RecordEventArgs e)
 		{
 			Save();
 		}

@@ -125,7 +125,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			if (Duration > 0)
 			{
 				t = Math.Min(1, (Elapsed % Duration) / Duration);
-				t = SceneAnimation.Ease(Ease, t);
+				t = AnimationHelpers.Ease(Ease, t);
 			}
 			Effect?.Invoke(t);
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Desktop.CommonControls.PropertyControls
 {
@@ -20,12 +21,26 @@ namespace Desktop.CommonControls.PropertyControls
 			cboItems.Items.AddRange(p.Options);
 		}
 
-		private void RemoveHandlers()
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				cboItems.SelectedItem = values[0];
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			string text = cboItems.SelectedItem?.ToString();
+			values.Add(text);
+		}
+
+		protected override void RemoveHandlers()
 		{
 			cboItems.SelectedIndexChanged -= cboItems_SelectedIndexChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			cboItems.SelectedIndexChanged += cboItems_SelectedIndexChanged;
 		}
@@ -33,13 +48,6 @@ namespace Desktop.CommonControls.PropertyControls
 		protected override void OnBoundData()
 		{
 			cboItems.SelectedItem = GetValue()?.ToString() ?? "";
-			AddHandlers();
-		}
-
-		protected override void OnRebindData()
-		{
-			RemoveHandlers();
-			OnBoundData();
 		}
 
 		public override void Clear()

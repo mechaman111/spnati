@@ -52,6 +52,7 @@ namespace Desktop
 
 		public static IRecord DoLookup(Type type, string text, bool allowCreate, Func<IRecord, bool> filter, bool forceOpen, object recordContext)
 		{
+			IsNewRecord = false;
 			if (_recordProviders == null)
 			{
 				PrepRecordProviders();
@@ -67,7 +68,7 @@ namespace Desktop
 					//No point in bringing up the form if there's only one record
 					List<IRecord> records = provider.GetRecords(text);
 					IRecord exactMatch = records.Find(r => r.Key == text);
-					if (exactMatch != null)
+					if (exactMatch != null && (filter == null || filter(exactMatch)))
 					{
 						return exactMatch;
 					}
@@ -143,6 +144,11 @@ namespace Desktop
 		{
 			InitializeComponent();
 		}
+
+		/// <summary>
+		/// Gets if the last record looked up was newly created
+		/// </summary>
+		public static bool IsNewRecord { get; private set; }
 
 		private bool _loading = false;
 		private Type _recordType;
@@ -341,6 +347,7 @@ namespace Desktop
 			if (txtName.Text.Length == 0)
 				return;
 			Record = _provider.Create(txtName.Text);
+			IsNewRecord = true;
 
 			this.DialogResult = DialogResult.OK;
 			this.Close();

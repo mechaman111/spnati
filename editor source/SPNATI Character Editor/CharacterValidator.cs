@@ -55,53 +55,7 @@ namespace SPNATI_Character_Editor
 			}
 
 			//wardrobe
-			string upper = null;
-			string lower = null;
-			string importantUpper = null;
-			string importantLower = null;
-			bool foundBoth = false;
-			string otherMajor = null;
-			for (int i = 0; i < character.Layers; i++)
-			{
-				Clothing c = character.GetClothing(i);
-				if (c.Position == "upper" && c.Type == "major")
-					upper = c.GenericName;
-				if (c.Position == "lower" && c.Type == "major")
-					lower = c.GenericName;
-				if (c.Position == "both" && c.Type == "major")
-					foundBoth = true;
-				if (c.Position == "upper" && c.Type == "important")
-					importantUpper = c.GenericName;
-				if (c.Position == "lower" && c.Type == "important")
-					importantLower = c.GenericName;
-				if (c.Position == "other" && c.Type == "major")
-					otherMajor = c.GenericName;
-			}
-			if (!foundBoth)
-			{
-				if (string.IsNullOrEmpty(upper))
-				{
-					if (!string.IsNullOrEmpty(importantUpper))
-					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"{importantUpper} has no major article covering it. Either an article{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantUpper} should use type: major instead of important."));
-					}
-					else
-					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
-					}					
-				}
-				if (string.IsNullOrEmpty(lower))
-				{
-					if (!string.IsNullOrEmpty(importantLower))
-					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"{importantLower} has no major article covering it. Either an article{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantLower} should use type: major instead of important."));
-					}
-					else
-					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
-					}
-				}
-			}
+			ValidateWardrobe(character, warnings);
 
 			//dialogue
 			foreach (Case stageCase in character.Behavior.GetWorkingCases())
@@ -163,7 +117,7 @@ namespace SPNATI_Character_Editor
 
 							if (target.FolderName != "human")
 							{
-								if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender)
+								if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender && !target.Metadata.CrossGender)
 								{
 									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender), context));
 								}
@@ -396,7 +350,11 @@ namespace SPNATI_Character_Editor
 									warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img), context));
 								}
 							}
-							stageImages.Add(img);	
+							stageImages.Add(img);
+						}
+						else if (!string.IsNullOrEmpty(line.Text))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no pose assigned. {0}", caseLabel), context));
 						}
 
 						//Validate variables
@@ -461,6 +419,69 @@ namespace SPNATI_Character_Editor
 			return false;
 		}
 
+		private static void ValidateWardrobe(Character character, List<ValidationError> warnings)
+		{
+			bool foundPlural = false;
+			string pluralGuess = null;
+			string upper = null;
+			string lower = null;
+			string importantUpper = null;
+			string importantLower = null;
+			bool foundBoth = false;
+			string otherMajor = null;
+			for (int i = 0; i < character.Layers; i++)
+			{
+				Clothing c = character.GetClothing(i);
+				foundPlural = c.Plural || foundPlural;
+				if (pluralGuess == null && !c.Plural && c.GenericName.EndsWith("s"))
+				{
+					pluralGuess = c.GenericName;
+				}
+				if (c.Position == "upper" && c.Type == "major")
+					upper = c.GenericName;
+				if (c.Position == "lower" && c.Type == "major")
+					lower = c.GenericName;
+				if (c.Position == "both" && c.Type == "major")
+					foundBoth = true;
+				if (c.Position == "upper" && c.Type == "important")
+					importantUpper = c.GenericName;
+				if (c.Position == "lower" && c.Type == "important")
+					importantLower = c.GenericName;
+				if (c.Position == "other" && c.Type == "major")
+					otherMajor = c.GenericName;
+			}
+			if (!foundBoth)
+			{
+				if (string.IsNullOrEmpty(upper))
+				{
+					if (!string.IsNullOrEmpty(importantUpper))
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"{importantUpper} has no major article covering it. Either an article{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantUpper} should use type: major instead of important."));
+					}
+					else
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
+					}
+				}
+				if (string.IsNullOrEmpty(lower))
+				{
+					if (!string.IsNullOrEmpty(importantLower))
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"{importantLower} has no major article covering it. Either an article{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantLower} should use type: major instead of important."));
+					}
+					else
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
+					}
+				}
+			}
+
+			if (!foundPlural && pluralGuess != null)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"No clothing items are marked as plural. Should they be (ex. {pluralGuess})?"));
+			}
+		}
+
 		/// <summary>
 		/// Gets whether a validation level is part of the filters (i.e. should NOT be excluded)
 		/// </summary>
@@ -484,7 +505,8 @@ namespace SPNATI_Character_Editor
 					yield break;
 				}
 				string minStr = pieces[0];
-				if (minStr != "") {
+				if (minStr != "")
+				{
 					if (!int.TryParse(minStr, out lower))
 					{
 						yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Lower bound of {2} \"{1}\" must be numeric or empty. {0}", caseLabel, value, fieldName), context);
@@ -498,7 +520,8 @@ namespace SPNATI_Character_Editor
 				if (pieces.Length > 1)
 				{
 					string maxStr = pieces[1];
-					if (maxStr != "") {
+					if (maxStr != "")
+					{
 						if (!int.TryParse(maxStr, out upper))
 						{
 							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Upper bound of {2} \"{1}\" must be numeric or empty. {0}", caseLabel, value, fieldName), context);
@@ -511,7 +534,7 @@ namespace SPNATI_Character_Editor
 						{
 							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Upper bound of {2} \"{1}\" should be between {3} and {4}. {0}", caseLabel, value, fieldName, min, max), context);
 						}
-						
+
 					}
 				}
 			}
@@ -657,7 +680,9 @@ namespace SPNATI_Character_Editor
 						warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a scene with more than one transition. Only one transition is allowed.", new ValidationContext(ending, scene, null)));
 					}
 					lastTransition = true;
+					continue;
 				}
+				lastTransition = false;
 
 				HashSet<string> usedObjectIds = new HashSet<string>();
 				if (!string.IsNullOrEmpty(scene.Background))
@@ -747,6 +772,11 @@ namespace SPNATI_Character_Editor
 				string relPath = fullPath.Substring(characterRoot.Length + 1);
 				return relPath;
 			}
+			else if (path.StartsWith("reskins"))
+			{
+				string relPath = Path.GetFileName(path);
+				return relPath;
+			}
 			return path;
 		}
 
@@ -818,7 +848,7 @@ namespace SPNATI_Character_Editor
 						}
 						else
 						{
-							missingImages.Add(image);	
+							missingImages.Add(image);
 						}
 					}
 				}
@@ -827,6 +857,7 @@ namespace SPNATI_Character_Editor
 
 			foreach (Pose pose in skin.Poses)
 			{
+				ValidatePose(character, pose, unusedImages);
 				missingImages.Remove("custom:" + pose.Id);
 			}
 

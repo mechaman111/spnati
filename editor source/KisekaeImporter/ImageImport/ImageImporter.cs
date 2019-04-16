@@ -91,9 +91,9 @@ namespace KisekaeImporter.ImageImport
 		/// Reimports the last code
 		/// </summary>
 		/// <returns></returns>
-		public Image Reimport()
+		public Image Reimport(Dictionary<string, string> extraData)
 		{
-			return ImportCode("54**", new Dictionary<string, string>()); //import an empty scene so that nothing changes but we get a file outputted
+			return ImportCode("54**", extraData); //import an empty scene so that nothing changes but we get a file outputted
 		}
 
 		private void SetupForImport()
@@ -117,27 +117,30 @@ namespace KisekaeImporter.ImageImport
 			string data = image.Data;
 			if (!string.IsNullOrEmpty(data))
 			{
-				KisekaeCode importCode = new KisekaeCode(image.Data);
-				string sceneSetup = GetSetupString(data);
-				KisekaeCode code = new KisekaeCode(sceneSetup, true);
-				KisekaeScene scene = code.Scene?.GetComponent<KisekaeScene>();
-				int x = 0;
-				int y = 0;
-				int zoom = 0;
-				if (scene != null)
+				if (!image.SkipPreprocessing)
 				{
-					x = scene.Camera.X;
-					y = scene.Camera.Y;
-					zoom = scene.Camera.Zoom;
+					KisekaeCode importCode = new KisekaeCode(image.Data);
+					string sceneSetup = GetSetupString(data);
+					KisekaeCode code = new KisekaeCode(sceneSetup, true);
+					KisekaeScene scene = code.Scene?.GetComponent<KisekaeScene>();
+					int x = 0;
+					int y = 0;
+					int zoom = 0;
+					if (scene != null)
+					{
+						x = scene.Camera.X;
+						y = scene.Camera.Y;
+						zoom = scene.Camera.Zoom;
+					}
+					code.MergeIn(importCode, false);
+					if (scene != null)
+					{
+						scene.Camera.X = x;
+						scene.Camera.Y = y;
+						scene.Camera.Zoom = zoom;
+					}
+					data = code.ToString();
 				}
-				code.MergeIn(importCode, false);
-				if (scene != null)
-				{
-					scene.Camera.X = x;
-					scene.Camera.Y = y;
-					scene.Camera.Zoom = zoom;
-				}
-				data = code.ToString();
 			}
 
 			if (!image.StartsWithVersion())

@@ -1,15 +1,17 @@
 ﻿using Desktop;
-using SPNATI_Character_Editor.Controls;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 1)]
+	[Activity(typeof(Character), 2)]
 	public partial class TagEditor : Activity
 	{
 		private Character _character;
+		private BindableTagList _bindings;
+		private bool _pendingWardrobeChange;
+		private bool _initialized;
 
 		public TagEditor()
 		{
@@ -24,11 +26,33 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as Character;
+			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
+			SubscribeWorkspace(WorkspaceMessages.SkinChanged, OnSkinChanged);
 		}
 
 		protected override void OnFirstActivate()
 		{
 			LoadTags();
+			_initialized = true;
+			_pendingWardrobeChange = false;
+		}
+
+		protected override void OnActivate()
+		{
+			if (_pendingWardrobeChange)
+			{
+				PopulateData();
+			}
+		}
+
+		private void OnWardrobeChanged()
+		{
+			_pendingWardrobeChange = true;
+		}
+
+		private void OnSkinChanged()
+		{
+			tagGrid.Refresh();
 		}
 
 		/// <summary>
@@ -36,13 +60,13 @@ namespace SPNATI_Character_Editor.Activities
 		/// </summary>
 		private void LoadTags()
 		{
-			//Filter out grouper tags that aren't directly selectable
 			TagDictionary dictionary = TagDatabase.Dictionary;
-			List<string> tags = new List<string>();
-			tags.AddRange(_character.Tags.Where((value) => {
-				Tag tag = dictionary.GetTag(value);
-				return !dictionary.IsPairedTag(value) || tag != null;
-			}));
+			_bindings = new BindableTagList(_character);
+
+			foreach (Tag tag in dictionary.Tags)
+			{
+				_bindings.Add(tag.Value);
+			}
 
 			//Fill the tag group
 			string gender = _character.Gender;
@@ -52,21 +76,27 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					continue;
 				}
+
 				if (string.IsNullOrEmpty(group.Gender) || group.Gender == gender)
 				{
-					TagControl container = new TagControl();
-					container.SetGroup(group, _character);
-					flowPanel.Controls.Add(container);
-					container.CheckTags(tags);
+					TreeNode node = toc.Nodes.Add(group.Label);
+					node.Tag = group;
 				}
 			}
-
-			//Put any ungrouped tags into the misc grid
-			gridTags.Rows.Clear();
-			foreach (string tag in tags)
+			
+			PopulateData();
+			if (toc.Nodes.Count > 0)
 			{
-				gridTags.Rows.Add(tag);
+				toc.SelectedNode = toc.Nodes[0];
 			}
+		}
+
+		private void PopulateData()
+		{
+			tagList.SetData(_bindings, _character);
+
+			tagGrid.SetCharacter(_character, _bindings);
+			tagGrid.Visible = _initialized;
 		}
 
 		public override void Save()
@@ -79,26 +109,15 @@ namespace SPNATI_Character_Editor.Activities
 		/// </summary>
 		private void SaveTags()
 		{
-			HashSet<string> tags = new HashSet<string>();
-			foreach (TagControl ctl in flowPanel.Controls)
-			{
-				foreach (string tag in ctl.GetTags())
-				{
-					tags.Add(tag);
-				}
-			}
-			_character.Tags.Clear();
-			_character.Tags.AddRange(tags);
+			_bindings.SaveIntoCharacter();
+		}
 
-			for (int i = 0; i < gridTags.Rows.Count; i++)
-			{
-				DataGridViewRow row = gridTags.Rows[i];
-				object value = row.Cells[0].Value;
-				if (value == null)
-					continue;
-				string tag = value.ToString();
-				_character.Tags.Add(tag);
-			}
+		private void toc_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			TreeNode node = toc.SelectedNode;
+			TagGroup group = node.Tag as TagGroup;
+			tagGrid.SetGroup(group);
+			tagGrid.Visible = true;
 		}
 	}
 }

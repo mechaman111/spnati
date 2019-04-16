@@ -14,6 +14,7 @@ namespace Desktop
 		private Dictionary<IActivity, TabPage> _sideTabs = new Dictionary<IActivity, TabPage>();
 		private HashSet<TabPage> _spacers = new HashSet<TabPage>();
 		private bool _forceSwitch = false;
+		private bool _activated;
 
 		public WorkspaceControl()
 		{
@@ -145,8 +146,12 @@ namespace Desktop
 			}
 			else if (_sideTabs.TryGetValue(activity, out tab))
 			{
-				tabSidebarActivities.SelectedTab = tab;
-				splitContainer1.SplitterDistance = splitContainer1.Width - Math.Max(100, activity.SidebarWidth);
+				if (!_activated)
+				{
+					tabSidebarActivities.SelectedTab = tab;
+					splitContainer1.SplitterDistance = splitContainer1.Width - Math.Max(100, activity.SidebarWidth);
+					_activated = true;
+				}
 			}
 			_forceSwitch = false;
 		}

@@ -1,0 +1,98 @@
+﻿using System;
+using System.Windows.Forms;
+using Desktop;
+using SPNATI_Character_Editor.EpilogueEditor;
+
+namespace SPNATI_Character_Editor.Actions.TimelineActions
+{
+	/// <summary>
+	/// Moving a widget
+	/// </summary>
+	public class MoveWidgetTimelineAction : ITimelineAction, ICommand
+	{
+		private ITimelineWidget _widget;
+
+		public float Length;
+		private bool _moved;
+		private float _oldStart;
+		private float _startOffset;
+
+		public float Time;
+		private int _oldTrack;
+		public int Track;
+		private ITimelineData _data;
+		private UndoManager _history;
+
+		public Cursor GetHoverCursor()
+		{
+			return Cursors.Default;
+		}
+
+		public Cursor GetCursor()
+		{
+			return Timeline.HandClosed;
+		}
+
+		public void Start(WidgetActionArgs args)
+		{
+			_history = args.History;
+			_oldTrack = args.Track;
+			_data = args.Data;
+			_widget = args.Widget;
+			Track = args.Track;
+			_oldStart = _widget.GetStart();
+			_startOffset = args.SnapTime() - _oldStart;
+			_widget.OnStartMove(args);
+		}
+
+		public void Update(WidgetActionArgs args)
+		{
+			int track = args.Track;
+			float start = Math.Max(0, args.SnapTime() - _startOffset);
+			if (start != _widget.GetStart() || track != Track)
+			{
+				if (_moved)
+				{
+					Undo();
+				}
+				_moved = true;
+				Track = track;
+				Time = start;
+				Do();
+			}
+		}
+
+		public void Finish()
+		{
+			if (_moved)
+			{
+				Undo();
+				_history?.Commit(this);
+			}
+		}
+
+		public void Do()
+		{
+			if (_moved)
+			{
+				_widget.SetStart(Time);
+				if (_oldTrack != Track)
+				{
+					_data.MoveWidget(_widget, Track);
+				}
+			}
+		}
+
+		public void Undo()
+		{
+			if (_moved)
+			{
+				if (_oldTrack != Track)
+				{
+					_data.MoveWidget(_widget, _oldTrack);
+				}
+				_widget.SetStart(_oldStart);
+			}
+		}
+	}
+}

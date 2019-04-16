@@ -4,6 +4,8 @@ namespace Desktop.CommonControls.PropertyControls
 {
 	public partial class NumericControl : PropertyEditControl
 	{
+		private bool _cleared;
+
 		public NumericControl()
 		{
 			InitializeComponent();
@@ -16,29 +18,62 @@ namespace Desktop.CommonControls.PropertyControls
 			valValue.Maximum = p.Maximum;
 		}
 
-		private void AddHandlers()
+		protected override void OnBoundData()
+		{
+			if (PropertyType == typeof(int?))
+			{
+				int? value = (int?)GetValue();
+				if (value.HasValue)
+				{
+					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, value.Value));
+				}
+				else
+				{
+					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, 0));
+					valValue.Text = "";
+					_cleared = true;
+				}
+			}
+			else
+			{
+				int value = (int)GetValue();
+				valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, value));
+			}
+		}
+
+		protected override void AddHandlers()
 		{
 			valValue.ValueChanged += valValue_ValueChanged;
 			valValue.TextChanged += valValue_TextChanged;
 		}
 
-		protected override void OnBoundData()
+		protected override void RemoveHandlers()
 		{
-			valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, (int)GetValue()));
-			AddHandlers();
+			valValue.ValueChanged -= valValue_ValueChanged;
+			valValue.TextChanged -= valValue_TextChanged;
 		}
 
 		public override void Clear()
 		{
 			valValue.Value = 0;
+			valValue.Text = "";
+			_cleared = true;
 			Save();
 		}
 
 		public override void Save()
 		{
-			if (string.IsNullOrEmpty(valValue.Text))
+			if (PropertyType == typeof(int?))
 			{
-				SetValue(0);
+				if (valValue.Text == "")
+				{
+					SetValue(null);
+				}
+				else
+				{
+					int? value = (int)valValue.Value;
+					SetValue(value);
+				}
 			}
 			else
 			{
@@ -53,9 +88,13 @@ namespace Desktop.CommonControls.PropertyControls
 
 		private void valValue_TextChanged(object sender, EventArgs e)
 		{
-			if (valValue.Text == "")
+			string text = valValue.Text;
+			if (!string.IsNullOrEmpty(text) && _cleared)
 			{
+				_cleared = false;
+				RemoveHandlers();
 				Save();
+				AddHandlers();
 			}
 		}
 	}

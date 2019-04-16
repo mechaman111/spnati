@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
 	public partial class SelectBox : UserControl
 	{
+		public event EventHandler<object> ItemAdded;
+		public event EventHandler<object> ItemRemoved;
+
 		public SelectBox()
 		{
 			InitializeComponent();
@@ -74,7 +71,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (!lstSelectedItems.Items.Contains(cboSelectableItems.Text.Trim()))
 			{
-				lstSelectedItems.Items.Add(cboSelectableItems.Text.Trim());
+				AddItem(cboSelectableItems.Text.Trim());
 			}
 			if (cboSelectableItems.SelectedIndex >= 0)
 			{
@@ -83,10 +80,18 @@ namespace SPNATI_Character_Editor.Controls
 			cboSelectableItems.Text = null;
 		}
 
+		public void AddItem(object item)
+		{
+			lstSelectedItems.Items.Add(item);
+			ItemAdded?.Invoke(this, item);
+		}
+
 		private void cmdRemove_Click(object sender, EventArgs e)
 		{
 			cboSelectableItems.Items.Add(lstSelectedItems.Text);
+			object item = lstSelectedItems.Items[lstSelectedItems.SelectedIndex];
 			lstSelectedItems.Items.RemoveAt(lstSelectedItems.SelectedIndex);
+			ItemRemoved?.Invoke(this, item);
 		}
 
 		private void lstSelectedItems_SelectedIndexChanged(object sender, EventArgs e)

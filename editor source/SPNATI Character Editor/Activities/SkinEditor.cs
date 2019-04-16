@@ -47,8 +47,22 @@ namespace SPNATI_Character_Editor.Activities
 			}
 		}
 
+		private void LinkCharacter()
+		{
+			Character character = RecordLookup.DoLookup(typeof(Character), "", false, _costume) as Character;
+			if (character != null)
+			{
+				_costume.LinkCharacter(character);
+			}
+		}
+
 		protected override void OnFirstActivate()
 		{
+			if (_costume.Character == null)
+			{
+				LinkCharacter();
+			}
+
 			SkinLink link = _costume.Link;
 			if (link != null)
 			{

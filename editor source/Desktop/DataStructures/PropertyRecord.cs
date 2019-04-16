@@ -11,7 +11,6 @@ namespace Desktop
 		public string Key { get; set; }
 		public string Name { get; set; }
 		public bool Required { get; set; }
-		public bool Default { get; set; }
 		public string Group { get; set; }
 		public int GroupOrder { get; set; }
 		public string Description { get; set; }
@@ -37,7 +36,6 @@ namespace Desktop
 			Description = attr.Description;
 			Property = member.Name;
 			Required = attr.Required;
-			Default = attr.Default;
 			if (attr.RowHeight > 1)
 			{
 				RowHeight = attr.RowHeight;

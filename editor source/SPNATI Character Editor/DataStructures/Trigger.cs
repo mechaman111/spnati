@@ -1,7 +1,5 @@
-﻿using SPNATI_Character_Editor.Activities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -45,6 +43,17 @@ namespace SPNATI_Character_Editor
 
 		[XmlAttribute("hasTarget")]
 		public bool HasTarget;
+
+		/// <summary>
+		/// Generic trigger that satisfies this as a default
+		/// </summary>
+		[XmlElement("generic")]
+		public string GenericTrigger;
+
+		/// <summary>
+		/// Triggers that are considered having their default met if this trigger has a default
+		/// </summary>
+		public List<string> LinkedTriggers = new List<string>();
 
 		/// <summary>
 		/// This trigger occurs a maximum of one time per stage for a character
@@ -192,6 +201,14 @@ namespace SPNATI_Character_Editor
 				{
 					AddGroup(group);
 				}
+				foreach (Trigger trigger in _triggers.Values)
+				{
+					if (!string.IsNullOrEmpty(trigger.GenericTrigger))
+					{
+						Trigger generic = GetTrigger(trigger.GenericTrigger);
+						generic.LinkedTriggers.Add(trigger.Tag);
+					}
+				}
 			}
 		}
 
@@ -280,13 +297,13 @@ namespace SPNATI_Character_Editor
 		public static int ToStandardStage(Character character, int stage)
 		{
 			int layers = character.Layers;
-			if (stage == 0 || layers == 8)
+			if (stage == 0 || layers == Clothing.MaxLayers)
 				return stage;
 			return ShiftStage(character, stage);
 		}
 
 		/// <summary>
-		/// Upshifts stages so that it's based off of 8 layers
+		/// Upshifts stages so that it's based off of MaxLayers
 		/// </summary>
 		/// <param name="character"></param>
 		/// <param name="stage"></param>
@@ -294,8 +311,8 @@ namespace SPNATI_Character_Editor
 		public static int ShiftStage(Character character, int stage)
 		{
 			int layers = character.Layers;
-			//Shift forwards so 8 is the final stage before losing
-			int shiftAmount = 8 - layers;
+			//Shift forwards so MaxLayers is the final stage before losing
+			int shiftAmount = Clothing.MaxLayers - layers;
 			return stage + shiftAmount;
 		}
 
@@ -367,126 +384,6 @@ namespace SPNATI_Character_Editor
 			if (_groups.TryGetValue(id, out group))
 				return group.AppliesToNextStage;
 			return false;
-		}
-
-		/// <summary>
-		/// Gets the tag opposite another one. Ex. female_removing_minor <-> stripping
-		/// </summary>
-		/// <param name="tag"></param>
-		/// <returns></returns>
-		public static string GetOppositeTag(string tag, Character character, int stage)
-		{
-			//TODO: Move this into dialogue_tags.xml instead of hardcoding?
-			if (tag == "must_strip_winning" || tag == "must_strip_normal" || tag == "must_strip_losing")
-			{
-				return character.Gender + "_must_strip";
-			}
-			else if (tag == "stripping")
-			{
-				Clothing layer = character.Wardrobe[stage];
-				string type = layer.Type;
-				if (type == "extra")
-					type = "accessory";
-				else if (type == "important")
-				{
-					if (layer.Position == "upper")
-					{
-						return character.Gender + "_chest_will_be_visible";
-					}
-					else
-					{
-						return character.Gender + "_crotch_will_be_visible";
-					}
-				}
-				return character.Gender + "_removing_" + type;
-			}
-			else if (tag == "stripped")
-			{
-				Clothing layer = character.Wardrobe[stage - 1];
-				string type = layer.Type;
-				if (type == "extra")
-					type = "accessory";
-				else if (type == "important")
-				{
-					if (layer.Position == "upper")
-					{
-						if (character.Gender == "male")
-						{
-							return "male_chest_is_visible";
-						}
-						else
-						{
-							return "female_" + character.Size + "_chest_is_visible";
-						}
-					}
-					else
-					{
-						if (character.Gender == "male")
-						{
-							return "male_" + character.Size + "_crotch_is_visible";
-						}
-						else
-						{
-							return "female_chest_is_visible";
-						}
-					}
-				}
-				return character.Gender + "_removed_" + type;
-			}
-			else if (tag == "must_masturbate_first" || tag == "must_masturbate")
-			{
-				return character.Gender + "_must_masturbate";
-			}
-			else if (tag == "start_masturbating")
-			{
-				return character.Gender + "_start_masturbating";
-			}
-			else if (tag == "masturbating" || tag == "heavy_masturbating")
-			{
-				return character.Gender + "_masturbating";
-			}
-			else if (tag == "finished_masturbating")
-			{
-				return character.Gender + "_finished_masturbating";
-			}
-			else if (tag.Contains("_must_strip"))
-			{
-				return "must_strip_normal";
-			}
-			else if (tag.Contains("_removing_") || tag.Contains("_will_be_visible"))
-			{
-				return "stripping";
-			}
-			else if (tag.Contains("_removed_") || tag.Contains("_is_visible"))
-			{
-				return "stripped";
-			}
-			else if (tag.EndsWith("male_must_masturbate"))
-			{
-				return "must_masturbate";
-			}
-			else if (tag.EndsWith("male_start_masturbating"))
-			{
-				return "start_masturbating";
-			}
-			else if (tag.EndsWith("male_masturbating"))
-			{
-				return "masturbating";
-			}
-			else if (tag.EndsWith("male_finished_masturbating"))
-			{
-				return "finished_masturbating";
-			}
-			else if (tag == "game_over_defeat")
-			{
-				return "game_over_victory";
-			}
-			else if (tag == "game_over_victory")
-			{
-				return "game_over_defeat";
-			}
-
-			return null; //there is no opposite
 		}
 
 		/// <summary>

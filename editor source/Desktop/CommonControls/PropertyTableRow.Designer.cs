@@ -32,10 +32,14 @@
 			this.table = new System.Windows.Forms.TableLayoutPanel();
 			this.lblName = new System.Windows.Forms.Label();
 			this.cmdPin = new System.Windows.Forms.Button();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.cmdRemove = new System.Windows.Forms.Button();
 			this.lblHelp = new System.Windows.Forms.Label();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.menuFavorite = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.itemFavorite = new System.Windows.Forms.ToolStripMenuItem();
+			this.itemMacro = new System.Windows.Forms.ToolStripMenuItem();
 			this.table.SuspendLayout();
+			this.menuFavorite.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// table
@@ -108,6 +112,29 @@
 			this.lblHelp.Size = new System.Drawing.Size(14, 22);
 			this.lblHelp.TabIndex = 4;
 			// 
+			// menuFavorite
+			// 
+			this.menuFavorite.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.itemFavorite,
+            this.itemMacro});
+			this.menuFavorite.Name = "menuFavorite";
+			this.menuFavorite.Size = new System.Drawing.Size(159, 70);
+			// 
+			// itemFavorite
+			// 
+			this.itemFavorite.CheckOnClick = true;
+			this.itemFavorite.Name = "itemFavorite";
+			this.itemFavorite.Size = new System.Drawing.Size(158, 22);
+			this.itemFavorite.Text = "Add By Default";
+			this.itemFavorite.Click += new System.EventHandler(this.itemFavorite_Click);
+			// 
+			// itemMacro
+			// 
+			this.itemMacro.Name = "itemMacro";
+			this.itemMacro.Size = new System.Drawing.Size(158, 22);
+			this.itemMacro.Text = "Add To Macro...";
+			this.itemMacro.Click += new System.EventHandler(this.itemMacro_Click);
+			// 
 			// PropertyTableRow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -117,6 +144,7 @@
 			this.Size = new System.Drawing.Size(626, 28);
 			this.table.ResumeLayout(false);
 			this.table.PerformLayout();
+			this.menuFavorite.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -129,5 +157,8 @@
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.Button cmdPin;
 		private System.Windows.Forms.Label lblHelp;
+		private System.Windows.Forms.ContextMenuStrip menuFavorite;
+		private System.Windows.Forms.ToolStripMenuItem itemFavorite;
+		private System.Windows.Forms.ToolStripMenuItem itemMacro;
 	}
 }

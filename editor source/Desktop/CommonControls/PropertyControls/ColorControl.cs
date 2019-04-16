@@ -18,6 +18,7 @@ namespace Desktop.CommonControls.PropertyControls
 			string value = GetValue()?.ToString();
 			if (string.IsNullOrEmpty(value))
 			{
+				cmdColor.BackColor = Color.Empty;
 				_cleared = true;
 			}
 			else
@@ -27,22 +28,22 @@ namespace Desktop.CommonControls.PropertyControls
 					Color color = ColorTranslator.FromHtml(value);
 					txtValue.Text = value.Substring(1);
 					cmdColor.BackColor = color;
+					_cleared = false;
 				}
 				catch
 				{
+					cmdColor.BackColor = Color.Empty;
 					_cleared = true;
 				}
 			}
-
-			AddHandlers();
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			txtValue.TextChanged += TxtValue_TextChanged;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			txtValue.TextChanged -= TxtValue_TextChanged;
 		}

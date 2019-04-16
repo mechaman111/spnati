@@ -54,7 +54,8 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public string Label // Compatibility property
 		{
-			get {
+			get
+			{
 				return Labels.Find(l => l.Stage == 0)?.Value;
 			}
 			set
@@ -86,7 +87,7 @@ namespace SPNATI_Character_Editor
 
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
-		public List<string> Tags;
+		public List<CharacterTag> Tags;
 
 		[XmlNewLine]
 		[XmlArray("start")]
@@ -154,7 +155,7 @@ namespace SPNATI_Character_Editor
 			Size = "medium";
 			Intelligence = new List<StageSpecificValue>();
 			Stamina = 15;
-			Tags = new List<string>();
+			Tags = new List<CharacterTag>();
 			Metadata = new Metadata();
 			Markers = new MarkerData();
 			Wardrobe = new List<Clothing>();
@@ -222,12 +223,12 @@ namespace SPNATI_Character_Editor
 		/// <param name="layer"></param>
 		public StageName LayerToStageName(int layer)
 		{
-			return LayerToStageName(layer, false, this);
+			return LayerToStageName(layer, false, CurrentSkin ?? (IWardrobe)this);
 		}
 
 		public StageName LayerToStageName(int layer, bool advancingStage)
 		{
-			return LayerToStageName(layer, advancingStage, this);
+			return LayerToStageName(layer, advancingStage, CurrentSkin ?? (IWardrobe)this);
 		}
 
 		/// <summary>
@@ -463,6 +464,7 @@ namespace SPNATI_Character_Editor
 			{
 				ending.OnAfterDeserialize();
 			}
+			Poses.Sort();
 			foreach (Pose pose in Poses)
 			{
 				pose.OnAfterDeserialize();
@@ -609,7 +611,7 @@ namespace SPNATI_Character_Editor
 				if (size != null && character.Size != size)
 					return false;
 
-				if (stageCase.Filter != null && character.Tags.Contains(stageCase.Filter))
+				if (stageCase.Filter != null && character.Tags.Find(t => t.Tag == stageCase.Filter) != null)
 				{
 					targetedByTag = true;
 				}
@@ -696,7 +698,7 @@ namespace SPNATI_Character_Editor
 		{
 			//For established characters, lock down changing the layer amount and order since it's hugely disruptive
 			OpponentStatus status = Listing.Instance.GetCharacterStatus(FolderName);
-			if (status != OpponentStatus.Testing && status != OpponentStatus.Unlisted)
+			if (status != OpponentStatus.Testing && status != OpponentStatus.Unlisted && status != OpponentStatus.Incomplete)
 			{
 				return WardrobeRestrictions.LayerCount;
 			}
@@ -811,5 +813,23 @@ namespace SPNATI_Character_Editor
 		/// characters that were never completed
 		/// </summary>
 		Incomplete
+	}
+
+	public class CharacterTag
+	{
+		[XmlText]
+		public string Tag;
+
+		[XmlAttribute("from")]
+		public string From;
+
+		[XmlAttribute("to")]
+		public string To;
+
+		public CharacterTag() { }
+		public CharacterTag(string tag)
+		{
+			Tag = tag;
+		}
 	}
 }

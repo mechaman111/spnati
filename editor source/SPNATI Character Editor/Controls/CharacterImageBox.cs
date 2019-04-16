@@ -1,23 +1,41 @@
 ﻿using Desktop;
 using Desktop.Messaging;
-using SPNATI_Character_Editor.EpilogueEditing;
+using SPNATI_Character_Editor.EpilogueEditor;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
 	public partial class CharacterImageBox : UserControl
 	{
+		private const int ScreenMargin = 5;
+		private const float TextPercent = 0.2f;
+		private const int TextMargin = 2;
+		private const int TextBorder = 2;
+		private const int TextPadding = 10;
+		private const float TextBuffer = 0.1f; //90% height of textbox row
+		private const string FontName = "Trebuchet MS";
+		private const int ArrowSize = 15;
+
+		private float _time;
 		private CharacterImage _image;
 		private Mailbox _mailbox;
 		private Image _imageReference;
-		private PosePreview _imagePose;
+		private LivePose _imagePose;
 		private bool _animating;
+		private string _text = null;
+		private float _percent = 0.5f;
 
 		private DateTime _lastTick;
-		
+
+		private Font _textFont;
+		private Pen _textBorder;
+
+		public Matrix SceneTransform;
+
 		public CharacterImageBox()
 		{
 			InitializeComponent();
@@ -27,6 +45,41 @@ namespace SPNATI_Character_Editor.Controls
 				_mailbox = Shell.Instance.PostOffice.GetMailbox();
 				_mailbox.Subscribe<ImageReplacementArgs>(DesktopMessages.ReplaceImage, OnReplaceImage);
 			}
+
+			_textBorder = new Pen(Color.Black, TextBorder);
+			UpdateFont();
+		}
+
+		private bool _showText;
+		public bool ShowTextBox
+		{
+			get { return _showText; }
+			set
+			{
+				_showText = value;
+				UpdateSceneTransform();
+				canvas.Invalidate();
+			}
+		}
+
+		private void UpdateFont()
+		{
+			_textFont?.Dispose();
+
+			int screenWidth = (int)(canvas.Height * 1.33f);
+
+			float size = 14 * (screenWidth / 1000f);
+			_textFont = new Font("Trebuchet MS", size);
+		}
+
+		private void UpdateSceneTransform()
+		{
+			SceneTransform = new Matrix();
+			int screenHeight = canvas.Height - ScreenMargin * 2;
+			int availableHeight = ShowTextBox ? (int)(screenHeight * (1 - TextPercent)) : (int)(screenHeight * 0.9f);
+			float screenScale = availableHeight / (_imagePose == null ? 1400.0f : _imagePose.BaseHeight);
+			SceneTransform.Scale(screenScale, screenScale, MatrixOrder.Append); // scale to display
+			SceneTransform.Translate(canvas.Width * 0.5f, screenHeight - availableHeight, MatrixOrder.Append); // center horizontally
 		}
 
 		public void Destroy()
@@ -46,6 +99,21 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
+		public void SetText(DialogueLine line)
+		{
+			_text = line.Text;
+			_percent = 0.5f;
+			if (!string.IsNullOrEmpty(line.Location) && line.Location.EndsWith("%"))
+			{
+				int percent;
+				if (int.TryParse(line.Location.Substring(0, line.Location.Length - 1), out percent))
+				{
+					_percent = percent / 100.0f;
+				}
+			}
+			canvas.Invalidate();
+		}
+
 		public void SetImage(CharacterImage image)
 		{
 			if (_image == image)
@@ -57,6 +125,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				ImageAnimator.StopAnimate(_imageReference, OnFrameChanged);
 			}
+			UpdateSceneTransform();
 			_image = image;
 			_imagePose = null;
 			tmrTick.Stop();
@@ -68,9 +137,10 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				if (image.GetPose() != null)
 				{
-					_imagePose = new PosePreview(image.Skin, image.GetPose(), null, null, null, null);
+					_imagePose = new LivePose(image.Skin, image.GetPose());
+					_time = 0;
 					_lastTick = DateTime.Now;
-					tmrTick.Enabled = _imagePose.IsAnimated;
+					tmrTick.Enabled = true;
 				}
 				else
 				{
@@ -97,8 +167,8 @@ namespace SPNATI_Character_Editor.Controls
 				canvas.Invalidate();
 				if (_image.GetPose() != null)
 				{
-					_imagePose?.Dispose();
-					_imagePose = new PosePreview(_image.Skin, _image.GetPose(), null, null, null, null);
+					_imagePose = new LivePose(_image.Skin, _image.GetPose());
+					_time = 0;
 				}
 				_imageReference = args.NewImage;
 			}
@@ -107,18 +177,58 @@ namespace SPNATI_Character_Editor.Controls
 		private void canvas_Paint(object sender, PaintEventArgs e)
 		{
 			Graphics g = e.Graphics;
+
+			//text box
+			int screenHeight = canvas.Height - ScreenMargin * 2;
+
+			if (_showText && !string.IsNullOrEmpty(_text))
+			{
+
+				int textboxHeight = (int)(screenHeight * TextPercent);
+				int topPadding = (int)(textboxHeight * TextBuffer);
+				textboxHeight -= topPadding;
+
+				RectangleF bounds = new RectangleF(TextMargin + TextBorder + TextPadding,
+								topPadding + TextBorder + TextPadding,
+								canvas.Width - TextMargin * 2 - TextPadding * 2,
+								textboxHeight - TextBorder * 2 - TextPadding * 2);
+				StringFormat sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+				SizeF size = g.MeasureString(_text, _textFont, (int)bounds.Width, sf);
+				if (size.Height > bounds.Height)
+				{
+					textboxHeight += (int)(size.Height - bounds.Height);
+				}
+				bounds.Height = Math.Max(size.Height, bounds.Height);
+
+				const int TopOffset = 4;
+				g.FillRectangle(Brushes.White, TextMargin, topPadding + TopOffset, canvas.Width - TextMargin * 2, textboxHeight - TopOffset);
+				g.DrawString(_text, _textFont, Brushes.Black, bounds, sf);
+				g.DrawRectangle(_textBorder, TextMargin, topPadding + TopOffset, canvas.Width - TextMargin * 2, textboxHeight - TopOffset);
+				Point[] triangle = new Point[] {
+					new Point((int)(canvas.Width * _percent) - ArrowSize, topPadding  + textboxHeight - 1),
+					new Point((int)(canvas.Width * _percent) + ArrowSize, topPadding  + textboxHeight - 1),
+					new Point((int)(canvas.Width * _percent), topPadding + textboxHeight + ArrowSize - 1),
+				};
+				g.FillPolygon(Brushes.White, triangle);
+				g.DrawLine(_textBorder, triangle[0], triangle[2]);
+				g.DrawLine(_textBorder, triangle[1], triangle[2]);
+			}
+
 			if (_imagePose != null)
 			{
-				_imagePose.Draw(g, canvas.Width, canvas.Height, new Point(0, 0));
+				foreach (LiveSprite sprite in _imagePose.DrawingOrder)
+				{
+					sprite.Draw(g, SceneTransform, new List<string>());
+				}
 			}
 			else if (_imageReference != null)
 			{
 				ImageAnimator.UpdateFrames();
 
 				//scale to the height
-				int height = canvas.Height;
-				int width = (int)(_imageReference.Width / (float)_imageReference.Height * canvas.Height);
-				g.DrawImage(_imageReference, canvas.Width / 2 - width / 2, 0, width, height);
+				float availableHeight = ShowTextBox ? screenHeight * (1 - TextPercent) : screenHeight * 0.9f;
+				int width = (int)(_imageReference.Width / (float)_imageReference.Height * availableHeight);
+				g.DrawImage(_imageReference, canvas.Width / 2 - width / 2, screenHeight - availableHeight + ScreenMargin, width, availableHeight);
 			}
 		}
 
@@ -128,6 +238,7 @@ namespace SPNATI_Character_Editor.Controls
 			TimeSpan elapsed = now - _lastTick;
 			float elapsedSec = (float)elapsed.TotalSeconds;
 			_lastTick = now;
+			_time += elapsedSec;
 
 			if (_imagePose == null)
 			{
@@ -135,8 +246,14 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			}
 
-			_imagePose.Update(elapsedSec);
+			_imagePose.UpdateTime(_time, true);
 			canvas.Invalidate();
+		}
+
+		private void CharacterImageBox_Resize(object sender, EventArgs e)
+		{
+			UpdateFont();
+			UpdateSceneTransform();
 		}
 	}
 }

@@ -12,6 +12,7 @@ namespace SPNATI_Character_Editor
 		private bool _filterStagesToTarget;
 		private string _sourceProperty;
 		private MemberInfo _sourceMember;
+		private string _skinVariable;
 
 		public StageControl()
 		{
@@ -26,6 +27,21 @@ namespace SPNATI_Character_Editor
 			{
 				_sourceProperty = parameters.BoundProperties[0];
 			}
+			_skinVariable = attr.SkinVariable;
+		}
+
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				ApplyValue(values[0]);
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			string value = BuildValue() ?? "";
+			values.Add(value);
 		}
 
 		protected override void OnBoundData()
@@ -37,7 +53,16 @@ namespace SPNATI_Character_Editor
 
 			FillItems();
 
-			string min = GetValue()?.ToString();
+			string value = GetValue()?.ToString();
+			ApplyValue(value);
+
+			cboFrom.SelectedIndexChanged += cboFrom_SelectedIndexChanged;
+			cboTo.SelectedIndexChanged += cboTo_SelectedIndexChanged;
+		}
+
+		private void ApplyValue(string value)
+		{
+			string min = value?.ToString();
 			string max = null;
 			if (!string.IsNullOrEmpty(min))
 			{
@@ -49,9 +74,6 @@ namespace SPNATI_Character_Editor
 
 			SetCombo(cboFrom, min);
 			SetCombo(cboTo, max);
-
-			cboFrom.SelectedIndexChanged += cboFrom_SelectedIndexChanged;
-			cboTo.SelectedIndexChanged += cboTo_SelectedIndexChanged;
 		}
 
 		private void SetCombo(ComboBox box, string stage)
@@ -141,6 +163,7 @@ namespace SPNATI_Character_Editor
 			}
 			else
 			{
+				IWardrobe skin = GetSkin();
 				for (int i = 0; i < character.Layers + Clothing.ExtraStages; i++)
 				{
 					if (filterStages)
@@ -162,7 +185,7 @@ namespace SPNATI_Character_Editor
 							else continue;
 						}
 					}
-					data.Add(character.LayerToStageName(i, lookForward));
+					data.Add(character.LayerToStageName(i, lookForward, skin));
 				}
 				cboFrom.DataSource = data;
 				cboTo.DataSource = data;
@@ -177,6 +200,64 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		private IWardrobe GetSkin()
+		{
+			string key = _sourceMember.GetValue(Data)?.ToString();
+			Character character = CharacterDatabase.Get(key);
+
+			Case theCase = Data as Case;
+			if (theCase == null)
+			{
+				return character;
+			}
+
+			if (_skinVariable == "~target.costume~")
+			{
+				foreach (ExpressionTest expression in theCase.Expressions)
+				{
+					if (expression.Expression == _skinVariable)
+					{
+						key = expression.Value;
+						if (!string.IsNullOrEmpty(key))
+						{
+							Costume costume = CharacterDatabase.GetSkin("opponents/reskins/" + key + "/");
+							if (costume != null)
+							{
+								return costume;
+							}
+						}
+						break;
+					}
+				}
+			}
+			else if (_skinVariable == "~_.costume~")
+			{
+				string other = theCase.AlsoPlaying;
+				if (!string.IsNullOrEmpty(other))
+				{
+					key = CharacterDatabase.GetId(other);
+					string variable = $"~{key}.costume~";
+					foreach (ExpressionTest expression in theCase.Expressions)
+					{
+						if (expression.Expression == variable)
+						{
+							key = expression.Value;
+							if (!string.IsNullOrEmpty(key))
+							{
+								Costume costume = CharacterDatabase.GetSkin("opponents/reskins/" + key + "/");
+								if (costume != null)
+								{
+									return costume;
+								}
+							}
+							break;
+						}
+					}
+				}
+			}
+			return character;
+		}
+
 		public override void Clear()
 		{
 			cboFrom.Text = "";
@@ -184,21 +265,26 @@ namespace SPNATI_Character_Editor
 			Save();
 		}
 
-		public override void Save()
+		private string BuildValue()
 		{
 			string min = ReadStage(cboFrom);
 			string max = ReadStage(cboTo);
 
 			if (string.IsNullOrEmpty(min))
 			{
-				SetValue(null);
-				return;
+				return null;
 			}
 			string value = min;
 			if (!string.IsNullOrEmpty(max) && min != max)
 			{
 				value += "-" + max;
 			}
+			return value;
+		}
+
+		public override void Save()
+		{
+			string value = BuildValue();
 			SetValue(value);
 		}
 
@@ -237,5 +323,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		public bool FilterStagesToTarget { get; set; }
+
+		public string SkinVariable { get; set; }
 	}
 }

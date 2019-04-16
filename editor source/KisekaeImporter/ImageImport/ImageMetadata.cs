@@ -20,6 +20,8 @@ namespace KisekaeImporter.ImageImport
 		/// </summary>
 		public Dictionary<string, string> ExtraData = new Dictionary<string, string>();
 
+		public bool SkipPreprocessing;
+
 		/// <summary>
 		/// Custom cropping information
 		/// </summary>
@@ -45,7 +47,7 @@ namespace KisekaeImporter.ImageImport
 				int keyIndex = (int)key;
 				attributes.Add($"{keyIndex}={kvp.Value}");
 			}
-			return string.Format("{0}={1}|{2}", ImageKey, Data, string.Join(",", attributes));
+			return string.Format("{0}={1}|{2}|{3}", ImageKey, Data, string.Join(",", attributes), SkipPreprocessing ? "1" : "0");
 		}
 	}
 }

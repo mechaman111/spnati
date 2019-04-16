@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Desktop.CommonControls.PropertyControls
 {
@@ -9,6 +10,19 @@ namespace Desktop.CommonControls.PropertyControls
 		public BooleanControl()
 		{
 			InitializeComponent();
+		}
+
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				chkEnabled.Checked = values[0] == "1";
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			values.Add(chkEnabled.Checked ? "1" : "");
 		}
 
 		protected override void OnSetParameters(EditControlAttribute parameters)
@@ -41,7 +55,15 @@ namespace Desktop.CommonControls.PropertyControls
 					}
 				}
 			}
+		}
 
+		protected override void RemoveHandlers()
+		{
+			chkEnabled.CheckedChanged -= ChkEnabled_CheckedChanged;
+		}
+
+		protected override void AddHandlers()
+		{
 			chkEnabled.CheckedChanged += ChkEnabled_CheckedChanged;
 		}
 

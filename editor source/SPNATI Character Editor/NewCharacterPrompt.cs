@@ -1,55 +1,58 @@
-﻿using System;
+﻿using SPNATI_Character_Editor.Providers;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
 	public partial class NewCharacterPrompt : Form
 	{
-		private HashSet<string> _existing = new HashSet<string>();
-
-		public string FolderName;
+		public Character Character { get; private set; }
 
 		public NewCharacterPrompt()
 		{
 			InitializeComponent();
-
-			PopulateBox();
-		}
-
-		private void PopulateBox()
-		{
-			string dir = Path.Combine(Config.GetString(Settings.GameDirectory), "opponents");
-			List<string> folders = new List<string>();
-			foreach (var folder in Directory.EnumerateDirectories(dir))
-			{
-				string shortName = Path.GetFileName(folder);
-				if (!File.Exists(Path.Combine(folder, "behaviour.xml")) && shortName != "human")
-				{
-					folders.Add(shortName);
-				}
-				else
-				{
-					_existing.Add(shortName);
-				}
-			}
-			cboCharacters.DataSource = folders;
 		}
 
 		private void cmdOK_Click(object sender, EventArgs e)
 		{
-			string folder = cboCharacters.Text;
-			if (cboCharacters.SelectedItem != null)
+			string name = txtName.Text;
+			string[] names = name.Split(new char[] { ' ' }, 2);
+			string firstName = names[0];
+			string surNames = "";
+			if (names.Length > 1)
 			{
-				folder = cboCharacters.SelectedItem.ToString();
-				if (_existing.Contains(folder))
-				{
-					MessageBox.Show("A character with this name already exists. Use the Open menu rather than New to edit them.");
-					return;
-				}
+				surNames = names[1];
 			}
-			FolderName = folder.ToLower();
+
+			string folderName = firstName.ToLower();
+
+			Character existing = CharacterDatabase.Get(folderName);
+			if (existing != null && !string.IsNullOrEmpty(surNames))
+			{
+				folderName = $"{folderName}_{surNames.ToLower()}";
+				existing = CharacterDatabase.Get(folderName);
+			}
+			if (existing != null)
+			{
+				int suffix = 1;
+				do
+				{
+					folderName = $"{firstName.ToLower()}{suffix++}";
+					existing = CharacterDatabase.Get(folderName);
+				}
+				while (existing != null);
+			}
+
+			CharacterProvider provider = new CharacterProvider();
+			Character = provider.Create(folderName) as Character;
+			Character.Label = firstName;
+			Character.FirstName = firstName;
+			if (!string.IsNullOrEmpty(surNames))
+			{
+				Character.LastName = surNames;
+			}
+
 			DialogResult = DialogResult.OK;
 			Close();
 		}

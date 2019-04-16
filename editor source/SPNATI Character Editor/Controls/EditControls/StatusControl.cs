@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
 using System;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor
 {
@@ -15,9 +16,29 @@ namespace SPNATI_Character_Editor
 			cboStatus.DisplayMember = "Value";
 		}
 
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				ApplyValue(values[0]);
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			values.Add(BuildValue() ?? "");
+		}
+
 		protected override void OnBoundData()
 		{
 			string value = GetValue()?.ToString();
+			value = ApplyValue(value);
+			chkNegate.CheckedChanged += ChkNegate_CheckedChanged;
+			cboStatus.SelectedIndexChanged += CboStatus_SelectedIndexChanged;
+		}
+
+		private string ApplyValue(string value)
+		{
 			if (!string.IsNullOrEmpty(value))
 			{
 				if (value.StartsWith("not_"))
@@ -27,22 +48,24 @@ namespace SPNATI_Character_Editor
 				}
 				cboStatus.SelectedValue = value;
 			}
-			chkNegate.CheckedChanged += ChkNegate_CheckedChanged;
-			cboStatus.SelectedIndexChanged += CboStatus_SelectedIndexChanged;
+
+			return value;
 		}
 
 		public override void Clear()
 		{
+			chkNegate.Checked = false;
 			cboStatus.SelectedIndex = 0;
+			Save();
 		}
 
-		public override void Save()
+		public string BuildValue()
 		{
 			bool inverted = chkNegate.Checked;
 			string value = (string)cboStatus.SelectedValue;
 			if (string.IsNullOrEmpty(value))
 			{
-				SetValue(null);
+				return null;
 			}
 			else
 			{
@@ -50,8 +73,14 @@ namespace SPNATI_Character_Editor
 				{
 					value = "not_" + value;
 				}
-				SetValue(value);
+				return value;
 			}
+		}
+
+		public override void Save()
+		{
+			string value = BuildValue();
+			SetValue(value);
 		}
 
 		private void CboStatus_SelectedIndexChanged(object sender, EventArgs e)
