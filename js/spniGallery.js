@@ -110,6 +110,7 @@ Collectible.prototype.display = function () {
     
     $collectibleCharacter.text(this.source);
     $collectibleUnlock.html(unescapeHTML(this.unlock_hint));
+    $collectibleTextPane.show();
     
     if (this.isUnlocked()) {
     	$collectibleText.html(unescapeHTML(this.text));
@@ -125,7 +126,6 @@ Collectible.prototype.display = function () {
         $collectibleTextContainer.hide();
         $collectibleImagePane.hide();
     }
-	
 };
 
 Collectible.prototype.listElement = function () {
@@ -188,6 +188,8 @@ function goToCollectiblesScreen() {
 	$galleryEndingsScreen.hide();
     loadAllCollectibles();
     updateCollectiblesScreen();
+    $collectibleTextPane.hide();    
+    $collectibleImagePane.hide();    
 }
 
 function loadGalleryScreen(){

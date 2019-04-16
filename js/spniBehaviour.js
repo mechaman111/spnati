@@ -315,6 +315,18 @@ function expandPlayerVariable(split_fn, args, self, target) {
         return (target.slot < self.slot) ? 'left' : 'right';
     case 'slot':
         return target.slot;
+    case 'collectible':
+        var collectibleID = split_fn[1];
+        if (collectibleID) {
+            var collectibles = target.collectibles.filter(function (c) { return c.id === collectibleID; });
+            if (collectibles.length > 0) {
+                return collectibles[0].isUnlocked();
+            } else {
+                return false;
+            }
+        } else {
+            return "collectible"; // no collectible ID supplied
+        }
     case 'marker':
         var markerName = split_fn[1];
         if (markerName) {
@@ -385,6 +397,19 @@ function expandDialogue (dialogue, self, target) {
                     substitution = expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target);
                 } else if (fn === undefined) {
                     substitution = String(n);
+                }
+                break;
+            case 'collectible':
+                fn = fn_parts[0];
+                if (fn) {
+                    var collectibles = self.collectibles.filter(function (c) { return c.id === fn; });
+                    if (collectibles.length > 0) {
+                        substitution = collectibles[0].isUnlocked();
+                    } else {
+                        substitution = false;
+                    }
+                } else {
+                    substitution = 'collectible'; // no collectible ID supplied
                 }
                 break;
             case 'marker':
@@ -1260,6 +1285,15 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         this.chosenState.removeTags.forEach(this.removeTag.bind(this));
         this.chosenState.addTags.forEach(this.addTag.bind(this));
         this.updateTags();
+    }
+    
+    if (this.chosenState.collectible && this.collectibles) {
+        this.collectibles.some(function (collectible) {
+            if (collectible.id === this.chosenState.collectible) {
+                collectible.unlock();
+                return true;
+            }
+        }.bind(this));
     }
 
     this.stateCommitted = true;
