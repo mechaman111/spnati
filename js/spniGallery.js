@@ -69,16 +69,23 @@ function unescapeHTML(in_text) {
     });
 }
 
-/* Base class for all collectibles. */
-function Collectible(id, image, thumbnail, source, title, subtitle, unlock_hint, text) {
-	this.id = id;
-	this.image = image;
-	this.thumbnail = thumbnail;
-	this.source = source;
-	this.title = title;
-	this.subtitle = subtitle;
-	this.unlock_hint = unlock_hint;
-	this.text = text;
+function Collectible(xmlElem, player) {
+	this.id = xmlElem.attr('id');
+	this.thumbnail = xmlElem.attr('thumbnail');
+	this.title = xmlElem.find('title').text();
+	this.subtitle = xmlElem.find('subtitle').text();	
+	this.unlock_hint = xmlElem.find('unlock').text();
+	this.text = xmlElem.find('text').html();
+    
+    if (player) {
+        this.image = player.folder + xmlElem.attr('img');
+    	this.source = player.label;
+        this.player = player;
+    } else {
+        this.image = xmlElem.attr('img');
+    	this.source = 'The Inventory';
+        this.player = undefined;
+    }
 }
 
 Collectible.prototype.display = function () {
@@ -109,38 +116,6 @@ Collectible.prototype.listElement = function () {
 	
 	return baseElem;
 };
-
-
-/* Class for collectibles attached to a specific player.*/
-function PlayerCollectible(player, xmlElem) {
-	this.player = player;
-	this.id = xmlElem.attr('id');
-	this.source = player.label;
-	this.image = player.folder + xmlElem.attr('img');
-	this.thumbnail = xmlElem.attr('thumbnail');
-	this.title = xmlElem.find('title').text();
-	this.subtitle = xmlElem.find('subtitle').text();	
-	this.unlock_hint = xmlElem.find('unlock').text();
-	this.text = xmlElem.find('text').html();
-}
-PlayerCollectible.prototype = Object.create(Collectible.prototype);
-PlayerCollectible.prototype.constructor = PlayerCollectible;
-
-
-/* Class for collectibles not attached to a specific character.
- * These are marked as coming from The Inventory itself. */
-function InventoryCollectible(xmlElem) {
-	this.id = xmlElem.attr('id');
-	this.source = 'The Inventory';
-	this.image = xmlElem.attr('img');
-	this.thumbnail = xmlElem.attr('thumbnail');
-	this.title = xmlElem.find('title').text();
-	this.subtitle = xmlElem.find('subtitle').text();	
-	this.unlock_hint = xmlElem.find('unlock').text();
-	this.text = xmlElem.find('text').html();
-}
-InventoryCollectible.prototype = Object.create(Collectible.prototype);
-InventoryCollectible.prototype.constructor = InventoryCollectible;
 
 
 /**********************************************************************
@@ -199,7 +174,7 @@ function loadPlayerCollectibles(player) {
 		success: function(xml) {
 			var collectiblesArray = [];
 			$(xml).find('collectible').each(function () {
-				collectiblesArray.push(new PlayerCollectible(player, $(this)));
+				collectiblesArray.push(new Collectible($(this), player));
 			});
 			
 			playerCollectibles[player.id] = collectiblesArray;
