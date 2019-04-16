@@ -33,8 +33,8 @@
 		public const int SkinChanged = 6;
 
 		/// <summary>
-		/// Sent to inform the preview sidebar to update its text [string: text to display]
+		/// Sent to inform the preview sidebar to update its text [DialogueLine: line information to display]
 		/// </summary>
-		public const int UpdatePreviewText = 7;
+		public const int PreviewLine = 7;
 	}
 }

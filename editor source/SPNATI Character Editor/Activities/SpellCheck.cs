@@ -90,7 +90,7 @@ namespace SPNATI_Character_Editor.Activities
 				for (int wordIndex = 0; wordIndex < words.Length; wordIndex++)
 				{
 					string word = words[wordIndex];
-					if (word == "-")
+					if (word == "-" || word.Contains("_"))
 					{
 						continue;
 					}

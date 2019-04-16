@@ -1,6 +1,5 @@
 ﻿using Desktop;
 using Desktop.Messaging;
-using SPNATI_Character_Editor.EpilogueEditing;
 using SPNATI_Character_Editor.EpilogueEditor;
 using System;
 using System.Collections.Generic;
@@ -28,6 +27,7 @@ namespace SPNATI_Character_Editor.Controls
 		private LivePose _imagePose;
 		private bool _animating;
 		private string _text = null;
+		private float _percent = 0.5f;
 
 		private DateTime _lastTick;
 
@@ -99,9 +99,18 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		public void SetText(string text)
+		public void SetText(DialogueLine line)
 		{
-			_text = text;
+			_text = line.Text;
+			_percent = 0.5f;
+			if (!string.IsNullOrEmpty(line.Location) && line.Location.EndsWith("%"))
+			{
+				int percent;
+				if (int.TryParse(line.Location.Substring(0, line.Location.Length - 1), out percent))
+				{
+					_percent = percent / 100.0f;
+				}
+			}
 			canvas.Invalidate();
 		}
 
@@ -191,13 +200,14 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				bounds.Height = Math.Max(size.Height, bounds.Height);
 
-				g.FillRectangle(Brushes.White, TextMargin, topPadding, canvas.Width - TextMargin * 2, textboxHeight);
+				const int TopOffset = 4;
+				g.FillRectangle(Brushes.White, TextMargin, topPadding + TopOffset, canvas.Width - TextMargin * 2, textboxHeight - TopOffset);
 				g.DrawString(_text, _textFont, Brushes.Black, bounds, sf);
-				g.DrawRectangle(_textBorder, TextMargin, topPadding, canvas.Width - TextMargin * 2, textboxHeight);
+				g.DrawRectangle(_textBorder, TextMargin, topPadding + TopOffset, canvas.Width - TextMargin * 2, textboxHeight - TopOffset);
 				Point[] triangle = new Point[] {
-					new Point(canvas.Width / 2 - ArrowSize, topPadding  + textboxHeight - 1),
-					new Point(canvas.Width / 2 + ArrowSize, topPadding  + textboxHeight - 1),
-					new Point(canvas.Width / 2, topPadding + textboxHeight + ArrowSize - 1),
+					new Point((int)(canvas.Width * _percent) - ArrowSize, topPadding  + textboxHeight - 1),
+					new Point((int)(canvas.Width * _percent) + ArrowSize, topPadding  + textboxHeight - 1),
+					new Point((int)(canvas.Width * _percent), topPadding + textboxHeight + ArrowSize - 1),
 				};
 				g.FillPolygon(Brushes.White, triangle);
 				g.DrawLine(_textBorder, triangle[0], triangle[2]);

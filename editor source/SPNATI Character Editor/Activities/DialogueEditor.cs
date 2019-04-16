@@ -762,13 +762,13 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			DisplayImage(img);
 
-			string text = gridDialogue.GetLine(index);
-			DisplayText(text);
+			DialogueLine line = gridDialogue.GetLine(index);
+			DisplayText(line);
 		}
 
-		private void DisplayText(string text)
+		private void DisplayText(DialogueLine line)
 		{
-			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewText, text);
+			Workspace.SendMessage(WorkspaceMessages.PreviewLine, line);
 		}
 
 		/// <summary>

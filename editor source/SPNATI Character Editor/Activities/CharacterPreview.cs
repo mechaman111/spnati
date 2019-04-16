@@ -35,7 +35,7 @@ namespace SPNATI_Character_Editor.Activities
 				cboSkin.Visible = false;
 				chkText.Visible = false;
 			}
-			SubscribeWorkspace<string>(WorkspaceMessages.UpdatePreviewText, UpdatePreviewText);
+			SubscribeWorkspace<DialogueLine>(WorkspaceMessages.PreviewLine, UpdatePreview);
 			SubscribeWorkspace<CharacterImage>(WorkspaceMessages.UpdatePreviewImage, UpdatePreviewImage);
 			UpdateLineCount();
 		}
@@ -91,11 +91,11 @@ namespace SPNATI_Character_Editor.Activities
 			picPortrait.SetImage(image);
 		}
 
-		private void UpdatePreviewText(string text)
+		private void UpdatePreview(DialogueLine line)
 		{
 			if (Config.GetBoolean(Settings.HideImages))
 				return;
-			picPortrait.SetText(text);
+			picPortrait.SetText(line);
 		}
 
 		private void UpdateLineCount()

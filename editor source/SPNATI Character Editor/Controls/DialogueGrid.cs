@@ -478,11 +478,10 @@ namespace SPNATI_Character_Editor.Controls
 			return image;
 		}
 
-		public string GetLine(int index)
+		public DialogueLine GetLine(int index)
 		{
-			DataGridViewRow row = gridDialogue.Rows[index];
-			string text = row.Cells["ColText"].Value?.ToString();
-			return text;
+			DialogueLine line = ReadLineFromDialogueGrid(index);
+			return line;
 		}
 
 		public List<DialogueLine> CopyLines()
