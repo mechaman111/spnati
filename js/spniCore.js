@@ -492,7 +492,8 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.description = fixupDialogue($metaXml.find('description').html());
     this.endings = $metaXml.find('epilogue');
     this.ending = this.endings.length > 0 || $metaXml.find('has_ending').text() === "true";
-    this.collectibles = $metaXml.find('has_collectibles').text() === "true";
+    this.has_collectibles = $metaXml.find('has_collectibles').text() === "true";
+    this.collectibles = null;
     this.layers = parseInt($metaXml.find('layers').text(), 10);
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
@@ -689,6 +690,31 @@ Opponent.prototype.unloadAlternateCostume = function () {
     this.resetState();
 }
 
+Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
+    if (!this.has_collectibles) return;
+    if (this.collectibles !== null) return;
+    
+    $.ajax({
+		type: "GET",
+		url: this.folder + 'collectibles.xml',
+		dataType: "text",
+		success: function(xml) {
+			var collectiblesArray = [];
+			$(xml).find('collectible').each(function (idx, elem) {
+				collectiblesArray.push(new Collectible($(elem), this));
+			}.bind(this));
+			
+			this.collectibles = collectiblesArray;
+            
+            if (onLoaded) onLoaded(this);
+		}.bind(this),
+        error: function (jqXHR, status, err) {
+            console.error("Error loading collectibles for "+this.id+": "+status+" - "+err);
+            if (onError) onError(this, status, err);
+        }.bind(this)
+	});
+}
+
 /************************************************************
  * Loads and parses the start of the behaviour XML file of the
  * given opponent.
@@ -715,6 +741,10 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
          */
 		function(xml) {
             var $xml = $(xml);
+
+            if (this.has_collectibles) {
+                this.loadCollectibles();
+            }
 
             this.xml = $xml;
             this.size = $xml.find('size').text();

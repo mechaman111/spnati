@@ -146,7 +146,7 @@ function goToEpiloguesScreen() {
 function goToCollectiblesScreen() {
 	$galleryCollectiblesScreen.show();
 	$galleryEndingsScreen.hide();
-    updateLoadedCollectibles();
+    loadAllCollectibles();
 }
 
 function loadGalleryScreen(){
@@ -158,54 +158,24 @@ function backGalleryScreen(){
 	screenTransition($galleryScreen, $titleScreen);
 }
 
-
-function loadPlayerCollectibles(player) {
-	if (!player.collectibles || playerCollectibles[player.id] !== undefined) {
-		return;
-	}
-	
-	playerCollectibles[player.id] = null;
-	
-	$.ajax({
-		type: "GET",
-		url: player.folder + 'collectibles.xml',
-		dataType: "text",
-		success: function(xml) {
-			var collectiblesArray = [];
-			$(xml).find('collectible').each(function () {
-				collectiblesArray.push(new Collectible($(this), player));
-			});
-			
-			playerCollectibles[player.id] = collectiblesArray;
-            updateCollectiblesScreen();
-		}
-	});
-}
-
-
-function updateLoadedCollectibles() {
-	for (var i=0; i<loadedOpponents.length; i++) {
-		if (!loadedOpponents[i]) continue;
-		loadPlayerCollectibles(loadedOpponents[i]);	
-	}
-	
-	updateCollectiblesScreen();
+function loadAllCollectibles() {
+    loadedOpponents.forEach(function (opp) {
+        if (opp && opp.has_collectibles) {
+            opp.loadCollectibles(updateCollectiblesScreen);
+        }
+    });
 }
 
 function updateCollectiblesScreen() {	
 	$collectibleListPane.empty();
 	
-	for (var i=0; i<loadedOpponents.length; i++) {
-		var player = loadedOpponents[i];
-		if (!player) continue;
-		
-		var colList = playerCollectibles[player.id];
-		if (!colList) continue;
-		
-		for (var j=0; j<colList.length;j++) {
-			$collectibleListPane.append(colList[j].listElement());
-		}
-	}
+    loadedOpponents.forEach(function (opp) {
+        if (opp && opp.collectibles) {
+            opp.collectibles.forEach(function (item) {
+                $collectibleListPane.append(item.listElement());
+            });
+        }
+    });
 }
 
 
