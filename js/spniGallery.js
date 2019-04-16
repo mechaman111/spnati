@@ -79,6 +79,7 @@ function Collectible(xmlElem, player) {
 	this.subtitle = xmlElem.find('subtitle').text();	
 	this.unlock_hint = xmlElem.find('unlock').text();
 	this.text = xmlElem.find('text').html();
+    this.detailsHidden = xmlElem.find('hide-details').text() === 'true';
     this.hidden = xmlElem.find('hidden').text() === 'true';
     
     if (player) {
@@ -99,7 +100,7 @@ Collectible.prototype.unlock = function () {
 }
 
 Collectible.prototype.display = function () {
-    if (!this.hidden || this.isUnlocked()) {
+    if ((!this.detailsHidden && !this.hidden) || this.isUnlocked()) {
         $collectibleTitle.html(unescapeHTML(this.title));
         $collectibleSubtitle.html(unescapeHTML(this.subtitle));
     } else {
@@ -128,12 +129,16 @@ Collectible.prototype.display = function () {
 };
 
 Collectible.prototype.listElement = function () {
+    if (this.hidden && !this.isUnlocked()) {
+        return null;
+    }
+    
 	var baseElem = $('<div class="collectibles-list-item bordered"></div>');
 	var imgElem = $('<img class="collectibles-item-icon">');
 	var titleElem = $('<div class="collectibles-item-title"></div>');
 	var subtitleElem = $('<div class="collectibles-item-subtitle"></div>');
 	
-    if (!this.hidden || this.isUnlocked()) {
+    if (!this.detailsHidden || this.isUnlocked()) {
         titleElem.html(unescapeHTML(this.title));
     	subtitleElem.html(unescapeHTML(this.subtitle));
     } else {
@@ -215,7 +220,10 @@ function updateCollectiblesScreen() {
     loadedOpponents.forEach(function (opp) {
         if (opp && opp.collectibles) {
             opp.collectibles.forEach(function (item) {
-                $collectibleListPane.append(item.listElement());
+                var elem = item.listElement();
+                if (elem) {
+                    $collectibleListPane.append(elem);    
+                }
             });
         }
     });
