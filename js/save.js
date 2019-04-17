@@ -184,20 +184,7 @@ function Save(){
 		femaleEndings = [];
 	}
     
-    this.hasCollectible = function (collectible) {
-        if (!COLLECTIBLES_ENABLED) return false;
-        if (COLLECTIBLES_UNLOCKED) return true;
-        
-        var charID = '__general';
-        if (collectible.player) {
-            charID = collectible.player.id;
-        }
-        
-        if (!this.data.collectibles[charID]) return false;
-        return !!this.data.collectibles[charID][collectible.id];
-    }
-    
-    this.addCollectible = function (collectible) {
+    this.setCollectibleCounter = function (collectible, counter) {
         if (!COLLECTIBLES_ENABLED) return;
         
         var charID = '__general';
@@ -209,7 +196,20 @@ function Save(){
             this.data.collectibles[charID] = {};
         }
         
-        this.data.collectibles[charID][collectible.id] = true;
+        this.data.collectibles[charID][collectible.id] = counter;
+        this.saveCookie();
+    }
+    
+    this.getCollectibleCounter = function (collectible) {
+        if (!COLLECTIBLES_ENABLED) return 0;
+        
+        var charID = '__general';
+        if (collectible.player) {
+            charID = collectible.player.id;
+        }
+        
+        if (!this.data.collectibles[charID]) return 0;
+        return this.data.collectibles[charID][collectible.id] || 0;
     }
 }
 

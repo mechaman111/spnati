@@ -36,6 +36,9 @@ $collectibleTitle = $('#collectible-title');
 $collectibleSubtitle = $('#collectible-subtitle');
 $collectibleCharacter = $('#collectible-character');
 $collectibleUnlock = $('#collectible-unlock');
+$collectibleProgressContainer = $('#collectible-progress');
+$collectibleProgressBar = $('#collectible-progress-bar');
+$collectibleProgressText = $('#collectible-progress-text');
 $collectibleText = $('#collectible-text');
 $collectibleImage = $('#collectible-image');
 
@@ -81,6 +84,9 @@ function Collectible(xmlElem, player) {
 	this.text = xmlElem.find('text').html();
     this.detailsHidden = xmlElem.find('hide-details').text() === 'true';
     this.hidden = xmlElem.find('hidden').text() === 'true';
+    this.counter = parseInt(xmlElem.find('counter').text(), 10) || undefined;
+    
+    if (this.counter <= 0) this.counter = undefined;
     
     if (player) {
     	this.source = player.label;
@@ -92,11 +98,31 @@ function Collectible(xmlElem, player) {
 }
 
 Collectible.prototype.isUnlocked = function () {
-    return save.hasCollectible(this);
+    if (COLLECTIBLES_UNLOCKED) return true;
+    
+    var curCounter = save.getCollectibleCounter(this);
+    if (this.counter) {
+        return curCounter >= this.counter;
+    } else {
+        return curCounter > 0;
+    }
+}
+
+Collectible.prototype.getCounter = function (inc) {    
+    return save.getCollectibleCounter(this);
 }
 
 Collectible.prototype.unlock = function () {
-    return save.addCollectible(this);
+    save.setCollectibleCounter(this, this.counter || 1);
+}
+
+Collectible.prototype.incrementCounter = function (inc) {
+    var newCounter = save.getCollectibleCounter(this) + inc;
+    save.setCollectibleCounter(this, newCounter); 
+}
+
+Collectible.prototype.setCounter = function (val) {
+    save.setCollectibleCounter(this, val); 
 }
 
 Collectible.prototype.display = function () {
@@ -110,6 +136,22 @@ Collectible.prototype.display = function () {
     
     $collectibleCharacter.text(this.source);
     $collectibleUnlock.html(unescapeHTML(this.unlock_hint));
+    
+    if (this.counter) {
+        var curCounter = this.getCounter();
+        var pct = Math.round((curCounter / this.counter) * 100);
+        
+        $collectibleProgressBar
+            .attr('aria-valuenow', pct)
+            .css('width', pct+'%');
+        $collectibleProgressContainer.show();
+        
+        $collectibleProgressText.text('('+curCounter+' / '+this.counter+')').show();
+    } else {
+        $collectibleProgressContainer.hide();
+        $collectibleProgressText.hide();
+    }
+    
     $collectibleTextPane.show();
     
     if (this.isUnlocked()) {
@@ -144,6 +186,12 @@ Collectible.prototype.listElement = function () {
     } else {
         titleElem.html("[Locked]");
         subtitleElem.html(unescapeHTML(this.unlock_hint));
+    }
+    
+    if (this.counter) {
+        var curCounter = this.getCounter();
+        var curSubtitle = subtitleElem.html();
+        subtitleElem.html(curSubtitle + ' ('+curCounter+' / '+this.counter+')');
     }
     
     if (this.isUnlocked()) {

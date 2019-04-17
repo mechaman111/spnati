@@ -197,13 +197,11 @@ function State($xml, addedTags, removedTags) {
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
-    this.collectible = $xml.attr('collectible') || undefined;
-    var markerOp = $xml.attr('marker');
     this.rawDialogue = $xml.html();
     
     if (this.location && Number(this.location) == this.location) {
-    // It seems that location was specified as a number without "%"
-    this.location = this.location + "%";
+        // It seems that location was specified as a number without "%"
+        this.location = this.location + "%";
     }
     
     this.setIntelligence = $xml.attr('set-intelligence');
@@ -213,6 +211,32 @@ function State($xml, addedTags, removedTags) {
     
     this.addTags = !!addedTags ? addedTags : [];
     this.removeTags = !!removedTags ? removedTags : [];
+
+    var collectibleId = $xml.attr('collectible') || undefined;
+    var collectibleOp = $xml.attr('collectible-value') || undefined;
+    var markerOp = $xml.attr('marker');
+
+    if (collectibleId) {
+        this.collectible = {id: collectibleId, op: 'unlock', val: null};
+        
+        if (collectibleOp) {
+            if (collectibleOp.startsWith('+')) {
+                this.collectible.op = 'inc';
+                this.collectible.val = parseInt(collectibleOp.substring(1), 10);
+            } else if (collectibleOp.startsWith('-')) {
+                this.collectible.op = 'dec';
+                this.collectible.val = parseInt(collectibleOp.substring(1), 10);
+            } else {
+                this.collectible.op = 'set';
+                this.collectible.val = parseInt(collectibleOp, 10);
+            }
+            
+            if (!this.collectible.val || this.collectible.val <= 0) {
+                this.collectible.op = 'unlock';
+                this.collectible.val = null;
+            }
+        }
+    }
 
     if (markerOp) {
         var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
@@ -319,9 +343,13 @@ function expandPlayerVariable(split_fn, args, self, target) {
         var collectibleID = split_fn[1];
         if (collectibleID) {
             var collectibles = target.collectibles.filter(function (c) { return c.id === collectibleID; });
-            if (collectibles.length > 0) {
-                return collectibles[0].isUnlocked();
+            var targetCollectible = collectibles[0];
+            
+            if (split_fn[2] && split_fn[2] === 'counter') {
+                if (targetCollectible) return targetCollectible.getCounter();
+                return 0;
             } else {
+                if (targetCollectible) return targetCollectible.isUnlocked();
                 return false;
             }
         } else {
@@ -403,10 +431,20 @@ function expandDialogue (dialogue, self, target) {
                 fn = fn_parts[0];
                 if (fn) {
                     var collectibles = self.collectibles.filter(function (c) { return c.id === fn; });
-                    if (collectibles.length > 0) {
-                        substitution = collectibles[0].isUnlocked();
+                    var targetCollectible = collectibles[0];
+                    
+                    if (fn_parts[1] && fn_parts[1] === 'counter') {
+                        if (targetCollectible) {
+                            substitution = targetCollectible.getCounter();
+                        } else {
+                            substitution = 0;
+                        }
                     } else {
-                        substitution = false;
+                        if (targetCollectible) {
+                            substitution = targetCollectible.isUnlocked();
+                        } else {
+                            substitution = false;
+                        }
                     }
                 } else {
                     substitution = 'collectible'; // no collectible ID supplied
@@ -1287,10 +1325,32 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         this.updateTags();
     }
     
-    if (this.chosenState.collectible && this.collectibles) {
+    if (this.chosenState.collectible && this.collectibles) {        
         this.collectibles.some(function (collectible) {
-            if (collectible.id === this.chosenState.collectible) {
-                collectible.unlock();
+            if (collectible.id === this.chosenState.collectible.id) {
+                console.log(
+                    "Performing collectible op: "+
+                    this.chosenState.collectible.op.toUpperCase()+
+                    " on ID: "+
+                    this.chosenState.collectible.id
+                );
+                
+                switch(this.chosenState.collectible.op) {
+                default:
+                case 'unlock':
+                    collectible.unlock();
+                    break;
+                case 'inc':
+                    collectible.incrementCounter(this.chosenState.collectible.val);
+                    break;
+                case 'dec':
+                    collectible.incrementCounter(-this.chosenState.collectible.val);
+                    break;
+                case 'set':
+                    collectible.setCounter(this.chosenState.collectible.val);
+                    break;
+                }
+                
                 return true;
             }
         }.bind(this));
