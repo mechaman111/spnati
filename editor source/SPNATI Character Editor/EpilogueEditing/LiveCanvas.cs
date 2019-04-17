@@ -115,6 +115,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void _pose_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
+			if (e.PropertyName == "BaseHeight")
+			{
+				UpdateSceneTransform();
+			}
 			UpdatePose();
 		}
 
@@ -128,7 +132,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void UpdatePose()
 		{
 			if (_pose == null) { return; }
-			_pose.UpdateTime(_playing ? _playbackTime : _time, _playing);
+			_pose.UpdateTime(_playing ? _playbackTime : _time, true);
 			_selectedObject?.Update(_time, false);
 			canvas.Invalidate();
 		}
@@ -473,7 +477,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private HoverContext GetContext(PointF screenPt)
 		{
 			LiveSprite objAtPoint = GetObjectAtPoint((int)screenPt.X, (int)screenPt.Y, _pose.DrawingOrder);
-
+			if (_selectedObject != null)
+			{
+				List<LiveSprite> selection = new List<LiveSprite>();
+				selection.Add(_selectedObject);
+				LiveSprite selected = GetObjectAtPoint((int)screenPt.X, (int)screenPt.Y, selection);
+				if (selected != null)
+				{
+					objAtPoint = selected;
+				}
+			}
 
 			if (_selectedObject != null && !_selectionSource.Hidden)
 			{

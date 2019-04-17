@@ -60,6 +60,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_easeIcons["ease-in-sin"] = Properties.Resources.Curve_EaseInSin;
 			_easeIcons["ease-out-sin"] = Properties.Resources.Curve_EaseOutSin;
 			_easeIcons["ease-in-out-cubic"] = Properties.Resources.Curve_EaseInOutCubic;
+			_easeIcons["ease-out-in"] = Properties.Resources.Curve_EaseOutIn;
+			_easeIcons["ease-out-in-cubic"] = Properties.Resources.Curve_EaseOutInCubic;
 			_easeIcons["elastic"] = Properties.Resources.Curve_Elastic;
 			_easeIcons["bounce"] = Properties.Resources.Curve_Bounce;
 
@@ -69,8 +71,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_tweenIcons["none"] = Properties.Resources.Tween_None;
 		}
 
-		public SpriteWidget(LiveSprite sprite)
+		public SpriteWidget(LiveSprite sprite, Timeline timeline)
 		{
+			_timeline = timeline;
 			Sprite = sprite;
 			Sprite.Widget = this;
 			sprite.PropertyChanged += Sprite_PropertyChanged;
@@ -337,14 +340,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						}
 						break;
 					case 1:
-						string tween = propData.Interpolation ?? "none";
+						string tween = propData.Interpolation.GetValue(_timeline.CurrentTime) ?? "none";
 						if (!_tweenIcons.TryGetValue(tween, out icon))
 						{
 							icon = _tweenIcons["none"];
 						}
 						break;
 					case 2:
-						string ease = propData.Ease ?? "smooth";
+						string ease = propData.Ease.GetValue(_timeline.CurrentTime) ?? "smooth";
 						if (!_easeIcons.TryGetValue(ease, out icon))
 						{
 							icon = _easeIcons["smooth"];
@@ -489,9 +492,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					case 0:
 						return "Toggle looping";
 					case 1:
-						return $"Tweening: {prop.Interpolation ?? "none"}";
+						return $"Tweening: {prop.Interpolation.GetValue(_timeline.CurrentTime) ?? "none"}";
 					case 2:
-						return $"Easing method: {prop.Ease ?? "smooth"}";
+						return $"Easing method: {prop.Ease.GetValue(_timeline.CurrentTime) ?? "smooth"}";
 				}
 			}
 			else
@@ -542,11 +545,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 							}
 						}
 						sprites.Sort();
-						ContextMenuItem[] items = new ContextMenuItem[sprites.Count];
+						ContextMenuItem[] items = new ContextMenuItem[sprites.Count + 1];
+						items[0] = new ContextMenuItem("Unlinked", null, SelectParent, null, Sprite.Parent == null);
 						for (int i = 0; i < sprites.Count; i++)
 						{
 							LiveSprite sprite = sprites[i];
-							items[i] = new ContextMenuItem(sprite.Id, sprite.Image, SelectParent, sprite.Id, Sprite.Parent == sprite);
+							items[i + 1] = new ContextMenuItem(sprite.Id, sprite.Image, SelectParent, sprite.Id, Sprite.Parent == sprite);
 						}
 						args.Timeline.ShowContextMenu(items);
 						break;
@@ -562,7 +566,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						prop.Looped = !prop.Looped;
 						break;
 					case 1:
-						string tween = prop.Interpolation;
+						string tween = prop.Interpolation.GetValue(args.Time);
 						args.Timeline.ShowContextMenu(
 							new ContextMenuItem("Linear", Properties.Resources.Tween_Linear, SelectTween, new Tuple<string, string>(property, "linear"), tween == "linear"),
 							new ContextMenuItem("Spline", Properties.Resources.Tween_Spline, SelectTween, new Tuple<string, string>(property, "spline"), tween == "spline"),
@@ -570,11 +574,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 							);
 						break;
 					case 2:
-						string ease = prop.Ease;
+						string ease = prop.Ease.GetValue(args.Time);
 						args.Timeline.ShowContextMenu(
 							new ContextMenuItem("Linear", Properties.Resources.Curve_Linear, SelectEase, new Tuple<string, string>(property, "linear"), ease == "linear"),
 							new ContextMenuItem("Smooth", Properties.Resources.Curve_Smooth, SelectEase, new Tuple<string, string>(property, "smooth"), ease == "smooth" || string.IsNullOrEmpty(ease)),
 							new ContextMenuItem("Ease-In-Out Cubic", Properties.Resources.Curve_EaseInOutCubic, SelectEase, new Tuple<string, string>(property, "ease-in-out-cubic"), ease == "ease-in-out-cubic"),
+							new ContextMenuItem("Ease-Out-In", Properties.Resources.Curve_EaseOutIn, SelectEase, new Tuple<string, string>(property, "ease-out-in"), ease == "ease-out-in"),
+							new ContextMenuItem("Ease-Out-In Cubic", Properties.Resources.Curve_EaseOutInCubic, SelectEase, new Tuple<string, string>(property, "ease-out-in-cubic"), ease == "ease-out-in-cubic"),
 							new ContextMenuItem("Ease-In", Properties.Resources.Curve_EaseIn, SelectEase, new Tuple<string, string>(property, "ease-in"), ease == "ease-in"),
 							new ContextMenuItem("Ease-In Sine", Properties.Resources.Curve_EaseInSin, SelectEase, new Tuple<string, string>(property, "ease-in-sin"), ease == "ease-in-sin"),
 							new ContextMenuItem("Ease-In Cubic", Properties.Resources.Curve_EaseInCubic, SelectEase, new Tuple<string, string>(property, "ease-in-cubic"), ease == "ease-in-cubic"),
@@ -597,7 +603,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			string property = tag.Item1;
 			string tween = tag.Item2;
 			AnimatedProperty prop = Sprite.GetAnimationProperties(property);
-			prop.Interpolation = tween;
+
+			//get the time of the most recent split
+			for (int i = Sprite.Keyframes.Count - 1; i >= 0; i--)
+			{
+				LiveKeyframe kf = Sprite.Keyframes[i];
+				if (kf.Time <= _timeline.CurrentTime && kf.InterpolationBreaks.ContainsKey(property))
+				{
+					prop.Interpolation.SetValue(kf.Time, tween);
+					return;
+				}
+			}
+			prop.Interpolation.SetValue(0, tween);
 		}
 
 		private void SelectEase(object sender, EventArgs e)
@@ -608,7 +625,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			string property = tag.Item1;
 			string ease = tag.Item2;
 			AnimatedProperty prop = Sprite.GetAnimationProperties(property);
-			prop.Ease = ease;
+
+			//get the time of the most recent split
+			for (int i = Sprite.Keyframes.Count - 1; i >= 0; i--)
+			{
+				LiveKeyframe kf = Sprite.Keyframes[i];
+				if (kf.Time <= _timeline.CurrentTime && kf.InterpolationBreaks.ContainsKey(property))
+				{
+					prop.Ease.SetValue(kf.Time, ease);
+					return;
+				}
+			}
+			prop.Ease.SetValue(0, ease);
 		}
 
 		private void SelectParent(object sender, EventArgs e)
@@ -1015,7 +1043,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				return;
 			}
-			ToggleAnimationBreakCommand command = new ToggleAnimationBreakCommand(_selectedFrame, _selectedProperties);
+			ToggleAnimationBreakCommand command = new ToggleAnimationBreakCommand(Sprite, _selectedFrame, _selectedProperties);
 			_timeline.CommandHistory.Commit(command);
 		}
 	}

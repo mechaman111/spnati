@@ -184,21 +184,21 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public event EventHandler<WidgetCreationArgs> WidgetCreated;
 		public event EventHandler<WidgetCreationArgs> WidgetRemoved;
 
-		public List<ITimelineWidget> CreateWidgets()
+		public List<ITimelineWidget> CreateWidgets(Timeline timeline)
 		{
 			List<ITimelineWidget> list = new List<ITimelineWidget>();
 			for (int i = 0; i < Sprites.Count; i++)
 			{
-				SpriteWidget widget = new SpriteWidget(Sprites[i]);
+				SpriteWidget widget = new SpriteWidget(Sprites[i], timeline);
 				list.Add(widget);
 			}
 			return list;
 		}
 
-		public ITimelineWidget CreateWidget(float time, object context)
+		public ITimelineWidget CreateWidget(Timeline timeline, float time, object context)
 		{
 			LiveSprite sprite = AddSprite(time);
-			SpriteWidget widget = new SpriteWidget(sprite);
+			SpriteWidget widget = new SpriteWidget(sprite, timeline);
 			if (context != null)
 			{
 				string src = context.ToString();
@@ -228,12 +228,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return id;
 		}
 
-		public ITimelineWidget CreateWidget(float time, object data, int index)
+		public ITimelineWidget CreateWidget(Timeline timeline, float time, object data, int index)
 		{
 			LiveSprite sprite = data as LiveSprite;
 			sprite.Id += "(copy)";
 			AddSprite(sprite, index);
-			SpriteWidget widget = new SpriteWidget(sprite);
+			SpriteWidget widget = new SpriteWidget(sprite, timeline);
 			return widget;
 		}
 

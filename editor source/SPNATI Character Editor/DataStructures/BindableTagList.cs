@@ -101,36 +101,36 @@ namespace SPNATI_Character_Editor
 						}
 					}
 
-					//remove any mutually-exclusive tags
-					if (!string.IsNullOrEmpty(tagDefinition.Group))
-					{
-						TagGroup group = TagDatabase.Dictionary.GetGroup(tagDefinition.Group);
-						if (group != null && !group.MultiSelect)
-						{
-							foreach (Tag sibling in group.Tags)
-							{
-								//paired tags can stay
-								if (sibling != tagDefinition && !tagDefinition.PairedTags.Contains(sibling.Value))
-								{
-									Tag siblingDefinition = TagDatabase.GetTag(sibling.Value);
-									if (siblingDefinition != null && siblingDefinition.PairedTags.Contains(tag.Tag))
-									{
-										continue;
-									}
+					////remove any mutually-exclusive tags
+					//if (!string.IsNullOrEmpty(tagDefinition.Group))
+					//{
+					//	TagGroup group = TagDatabase.Dictionary.GetGroup(tagDefinition.Group);
+					//	if (group != null && !group.MultiSelect)
+					//	{
+					//		foreach (Tag sibling in group.Tags)
+					//		{
+					//			//paired tags can stay
+					//			if (sibling != tagDefinition && !tagDefinition.PairedTags.Contains(sibling.Value))
+					//			{
+					//				Tag siblingDefinition = TagDatabase.GetTag(sibling.Value);
+					//				if (siblingDefinition != null && siblingDefinition.PairedTags.Contains(tag.Tag))
+					//				{
+					//					continue;
+					//				}
 
-									BindableTag siblingBindable = _bindings.Get(sibling.Value);
-									if (siblingBindable != null && !_modifyingTags.Contains(siblingBindable))
-									{
-										foreach (int stage in e.NewItems)
-										{
-											siblingBindable.RemoveStage(stage);
-										}
-									}
+					//				BindableTag siblingBindable = _bindings.Get(sibling.Value);
+					//				if (siblingBindable != null && !_modifyingTags.Contains(siblingBindable))
+					//				{
+					//					foreach (int stage in e.NewItems)
+					//					{
+					//						siblingBindable.RemoveStage(stage);
+					//					}
+					//				}
 
-								}
-							}
-						}
-					}
+					//			}
+					//		}
+					//	}
+					//}
 				}
 
 				if (tag.Stages.Count == 1)

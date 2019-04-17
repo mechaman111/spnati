@@ -41,6 +41,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				Set(value);
 				Parent = Pose.Sprites.Find(s => s.Id == value);
+				UpdateLocalTransform();
 			}
 		}
 
@@ -112,7 +113,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		//[AnimDuration(DisplayName = "Duration", GroupOrder = 8, Description = "Total time to display the sprite when not using Full Length.", Minimum = 0.1f, Maximum = 1000, Increment = 0.1f,
-//			BoundProperties = new string[] { "LinkedToEnd", "Keyframes" })]
+		//			BoundProperties = new string[] { "LinkedToEnd", "Keyframes" })]
 		public float Length
 		{
 			get
@@ -647,7 +648,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 
 			HashSet<string> affectedProperties = new HashSet<string>();
-			directive.Keyframes.Sort((k1, k2) => {
+			directive.Keyframes.Sort((k1, k2) =>
+			{
 				string t1 = k1.Time ?? "0";
 				string t2 = k2.Time ?? "0";
 				return t1.CompareTo(t2);
@@ -675,8 +677,23 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			foreach (string prop in affectedProperties)
 			{
 				AnimatedProperty animatedProperty = GetAnimationProperties(prop);
-				animatedProperty.Ease = directive.EasingMethod;
-				animatedProperty.Interpolation = directive.InterpolationMethod;
+				string ease = directive.EasingMethod;
+				string interpolation = directive.InterpolationMethod;
+				string currentEase = animatedProperty.Ease.GetValue(startTime);
+				string currentInterpolate = animatedProperty.Interpolation.GetValue(startTime);
+				if ((string.IsNullOrEmpty(currentEase) || ease != currentEase && ease != null) || (string.IsNullOrEmpty(currentInterpolate) || interpolation != currentInterpolate && interpolation != null))
+				{
+					animatedProperty.Ease.SetValue(startTime, ease);
+					animatedProperty.Interpolation.SetValue(startTime, interpolation);
+					if (startTime > 0)
+					{
+						LiveKeyframe frame = Keyframes.Find(k => k.Time == Start);
+						if (frame != null)
+						{
+							frame.InterpolationBreaks[prop] = true;
+						}
+					}
+				}
 				animatedProperty.Looped = animatedProperty.Looped || directive.Looped;
 			}
 		}
@@ -777,6 +794,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (kf.HasProperty(prop))
 				{
+					if (kf.Time > 0)
+					{
+						AnimatedProperty animatedProp = GetAnimationProperties(prop);
+						animatedProp.Ease.RemoveValue(kf.Time);
+						animatedProp.Interpolation.RemoveValue(kf.Time);
+					}
 					UpdateProperty(prop);
 				}
 			}
@@ -799,6 +822,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			else
 			{
+				if (!frame.HasProperty(e.PropertyName))
+				{
+					AnimatedProperty prop = GetAnimationProperties(e.PropertyName);
+					prop.Ease.RemoveValue(frame.Time);
+					prop.Interpolation.RemoveValue(frame.Time);
+				}
 				UpdateProperty(e.PropertyName);
 
 				//wipe out the frame if it has no properties remaining
@@ -852,8 +881,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				Properties.Add(property);
 			}
 			AnimatedProperty anim = new AnimatedProperty(property);
-			anim.Interpolation = property == "Src" ? null : "linear";
-			anim.Ease = null;
+			anim.Interpolation.SetValue(0, property == "Src" ? null : "linear");
+			anim.Ease.SetValue(0, null);
 			AnimatedProperties[property] = anim;
 		}
 
@@ -936,8 +965,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Type parentType = typeof(LiveKeyframe);
 
 			AnimatedProperty propertyAnimation = GetAnimationProperties(property);
-			string interpolation = interpolationOverride ?? propertyAnimation.Interpolation;
-			if (string.IsNullOrEmpty(propertyAnimation.Interpolation) || propertyAnimation.Interpolation == "none")
+			string frameInterp = propertyAnimation.Interpolation.GetValue(t);
+			string interpolation = interpolationOverride ?? frameInterp;
+			if (string.IsNullOrEmpty(frameInterp) || frameInterp == "none")
 			{
 				interpolation = "none";
 			}
@@ -1034,7 +1064,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			float duration = GetPropertyDuration(property, time, out start, out end);
 
 			AnimatedProperty propertyAnimation = GetAnimationProperties(property);
-			string ease = easeOverride ?? propertyAnimation.Ease;
+			string ease = easeOverride ?? propertyAnimation.Ease.GetValue(time);
 			bool looped = loopOverride.HasValue ? loopOverride.Value : propertyAnimation.Looped;
 
 			if (time < start)
@@ -1373,7 +1403,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			Time = time;
 
-			inPlayback = true;
 			string easeOverride = (inPlayback ? null : "linear");
 			string interpolationOverride = (inPlayback ? null : "linear");
 			bool? looped = (inPlayback ? null : new bool?(false));
