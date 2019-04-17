@@ -58,7 +58,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("loop")]
 		public bool Looped;
 
-		[ComboBox(DisplayName = "Easing Function", Key = "ease", GroupOrder = 40, Description = "Easing function for how fast the animation progresses over time", Options = new string[] { "linear", "smooth", "ease-in", "ease-in-sin", "ease-in-cubic", "ease-out", "ease-out-sin", "ease-out-cubic", "ease-in-out-cubic", "bounce", "elastic" })]
+		[ComboBox(DisplayName = "Easing Function", Key = "ease", GroupOrder = 40, Description = "Easing function for how fast the animation progresses over time", Options = new string[] { "linear", "smooth", "ease-in", "ease-in-sin", "ease-in-cubic", "ease-out", "ease-out-sin", "ease-out-cubic", "ease-in-out-cubic", "ease-out-in", "ease-out-in-cubic", "bounce", "elastic" })]
 		[XmlAttribute("ease")]
 		public string EasingMethod;
 
