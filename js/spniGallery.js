@@ -128,7 +128,7 @@ Collectible.prototype.setCounter = function (val) {
 Collectible.prototype.display = function () {
     if ((!this.detailsHidden && !this.hidden) || this.isUnlocked()) {
         $collectibleTitle.html(unescapeHTML(this.title));
-        $collectibleSubtitle.html(unescapeHTML(this.subtitle));
+        $collectibleSubtitle.html(unescapeHTML(this.subtitle)).show();
     } else {
         $collectibleTitle.html("[Locked]");
         $collectibleSubtitle.html("").hide();
