@@ -83,6 +83,8 @@ Animation.prototype.easingFunctions = {
   "ease-in-sin": function (t) { return 1 + Math.sin(Math.PI / 2 * t - Math.PI / 2); },
   "ease-out-sin": function (t) { return Math.sin(Math.PI / 2 * t); },
   "ease-in-out-cubic": function (t) { return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1; },
+  "ease-out-in": function (t) { return t < .5 ? Animation.prototype.easingFunctions["ease-out"](2 * t) * 0.5 : Animation.prototype.easingFunctions["ease-in"](2 * (t - 0.5)) * 0.5 + 0.5; },
+  "ease-out-in-cubic": function (t) { return t < .5 ? Animation.prototype.easingFunctions["ease-out-cubic"](2 * t) * 0.5 : Animation.prototype.easingFunctions["ease-in-cubic"](2 * (t - 0.5)) * 0.5 + 0.5; },
   "bounce": function (t) {
     if (t < 0.3636) {
       return 7.5625 * t * t;
