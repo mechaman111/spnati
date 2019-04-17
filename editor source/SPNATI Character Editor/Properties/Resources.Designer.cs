@@ -343,6 +343,26 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Curve_EaseOutIn {
+            get {
+                object obj = ResourceManager.GetObject("Curve_EaseOutIn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Curve_EaseOutInCubic {
+            get {
+                object obj = ResourceManager.GetObject("Curve_EaseOutInCubic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Curve_EaseOutSin {
             get {
                 object obj = ResourceManager.GetObject("Curve_EaseOutSin", resourceCulture);

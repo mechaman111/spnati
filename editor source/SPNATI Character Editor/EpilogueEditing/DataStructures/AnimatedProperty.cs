@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Desktop;
 using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
+using System.Collections.ObjectModel;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
@@ -27,17 +28,15 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set { Set(value); }
 		}
 
-		[ComboBox(DisplayName = "Easing Function", Key = "ease", GroupOrder = 20, Description = "Easing function for how fast the animation progresses over time", Options = new string[] { "linear", "smooth", "ease-in", "ease-in-sin", "ease-in-cubic", "ease-out", "ease-out-sin", "ease-out-cubic", "ease-in-out-cubic", "bounce", "elastic" })]
-		public string Ease
+		public AnimatedValue<string> Ease
 		{
-			get { return Get<string>(); }
+			get { return Get<AnimatedValue<string>>(); }
 			set { Set(value); }
 		}
 
-		[ComboBox(DisplayName = "Tweening Function", Key = "tween", GroupOrder = 25, Description = "Tweening function for how positions between keyframes are computed", Options = new string[] { "linear", "spline", "none" })]
-		public string Interpolation
+		public AnimatedValue<string> Interpolation
 		{
-			get { return Get<string>(); }
+			get { return Get<AnimatedValue<string>>(); }
 			set { Set(value); }
 		}
 
@@ -48,7 +47,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public AnimatedProperty(string name)
 		{
 			PropertyName = name;
-			Interpolation = name == "Src" ? "none" : "linear";
+			Ease = new AnimatedValue<string>();
+			Interpolation = new AnimatedValue<string>();
+			Interpolation.SetValue(0, name == "Src" ? "none" : "linear");
 		}
 
 		public override string ToString()
@@ -61,9 +62,106 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return $"Animation Settings: {PropertyName}";
 		}
 
-		public string ToKey()
+		public string ToKey(float time)
 		{
-			return $"{(Looped ? "1" : "")}|{(Ease ?? "")}|{(Interpolation ?? "")}";
+			return $"{(Looped ? "1" : "")}|{(Ease.GetValue(time) ?? "")}|{(Interpolation.GetValue(time) ?? "")}";
+		}
+	}
+
+	public class AnimatedValue<T> : BindableObject
+	{
+		public ObservableCollection<TimedValue<T>> Values
+		{
+			get { return Get<ObservableCollection<TimedValue<T>>>(); }
+			set { Set(value); }
+		}
+
+		public AnimatedValue()
+		{
+			Values = new ObservableCollection<TimedValue<T>>();
+		}
+
+		public T GetValue(float time)
+		{
+			for (int i = Values.Count - 1; i >= 0; i--)
+			{
+				TimedValue<T> timedValue = Values[i];
+				if (i == 0 || timedValue.Time <= time)
+				{
+					return timedValue.Value;
+				}
+			}
+			return default(T);
+		}
+
+		public void SetValue(float time, T value)
+		{
+			for (int i = 0; i < Values.Count; i++)
+			{
+				TimedValue<T> current = Values[i];
+				if (current.Time == time)
+				{
+					current.Value = value;
+					return;
+				}
+				else if (current.Time > time)
+				{
+					Values.Insert(i, new TimedValue<T>(time, value));
+					return;
+				}
+			}
+			Values.Add(new TimedValue<T>(time, value));
+		}
+
+		public void RemoveValue(float time)
+		{
+			for (int i = 0; i < Values.Count; i++)
+			{
+				if (Values[i].Time == time)
+				{
+					Values.RemoveAt(i);
+					break;
+				}
+			}
+		}
+
+		public override string ToString()
+		{
+			if (Values.Count == 0)
+			{
+				return null;
+			}
+			return Values[0].Value?.ToString();
+		}
+	}
+
+	public class TimedValue<T> : BindableObject
+	{
+		public float Time
+		{
+			get { return Get<float>(); }
+			set { Set(value); }
+		}
+
+		public T Value
+		{
+			get { return Get<T>(); }
+			set { Set(value); }
+		}
+
+		public TimedValue()
+		{
+		}
+
+		public TimedValue(float time, T value)
+		{
+			Time = time;
+			Value = value;
+		}
+
+		public override string ToString()
+		{
+			return $"@{Time}s: {Value}";
 		}
 	}
 

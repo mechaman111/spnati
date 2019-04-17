@@ -12,11 +12,13 @@ namespace SPNATI_Character_Editor.Actions
 	{
 		private HashSet<string> _properties = new HashSet<string>();
 		private Dictionary<string, bool> _oldSettings = new Dictionary<string, bool>();
+		private LiveSprite _sprite;
 		private LiveKeyframe _keyframe;
 		private bool _enable;
 
-		public ToggleAnimationBreakCommand(LiveKeyframe frame, HashSet<string> properties)
+		public ToggleAnimationBreakCommand(LiveSprite sprite, LiveKeyframe frame, HashSet<string> properties)
 		{
+			_sprite = sprite;
 			_keyframe = frame;
 			if (properties.Count == 0)
 			{
@@ -60,6 +62,9 @@ namespace SPNATI_Character_Editor.Actions
 				else
 				{
 					_keyframe.InterpolationBreaks.Remove(property);
+					AnimatedProperty prop = _sprite.GetAnimationProperties(property);
+					prop.Ease.RemoveValue(_keyframe.Time);
+					prop.Interpolation.RemoveValue(_keyframe.Time);
 				}
 			}
 		}

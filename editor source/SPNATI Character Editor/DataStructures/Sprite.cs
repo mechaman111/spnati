@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
@@ -7,6 +8,7 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public class Sprite : Directive
 	{
+		[DefaultValue("")]
 		[XmlAttribute("parent")]
 		public string ParentId;
 

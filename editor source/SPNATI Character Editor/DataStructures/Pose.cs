@@ -157,7 +157,7 @@ namespace SPNATI_Character_Editor
 									PoseDirective directive;
 
 									AnimatedProperty settings = item.GetAnimationProperties(property);
-									string settingsKey = settings.ToKey();
+									string settingsKey = settings.ToKey(kf.Time);
 									if (kf.InterpolationBreaks.ContainsKey(property))
 									{
 										//force a new directive
@@ -171,8 +171,8 @@ namespace SPNATI_Character_Editor
 											Id = item.Id,
 											DirectiveType = "animation",
 											Looped = settings.Looped,
-											EasingMethod = settings.Ease,
-											InterpolationMethod = settings.Interpolation,
+											EasingMethod = settings.Ease.GetValue(kf.Time),
+											InterpolationMethod = settings.Interpolation.GetValue(kf.Time),
 											Marker = item.Marker,
 										};
 										if (delay > 0)

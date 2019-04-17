@@ -217,7 +217,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Data.WidgetMoved += Data_WidgetMoved;
 			Data.WidgetCreated += Data_WidgetCreated;
 			Data.WidgetRemoved += Data_WidgetRemoved;
-			foreach (ITimelineWidget widget in data.CreateWidgets())
+			foreach (ITimelineWidget widget in data.CreateWidgets(this))
 			{
 				AddWidget(widget, _widgets.Count);
 			}
@@ -259,7 +259,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			//TODO: This needs to be a command to be undoable
 			if (Data == null) { return null; }
-			ITimelineWidget widget = Data.CreateWidget(_time, context);
+			ITimelineWidget widget = Data.CreateWidget(this, _time, context);
 			AddWidget(widget, _widgets.Count);
 			return widget;
 		}
@@ -268,7 +268,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			//TODO: This needs to be a command to be undoable
 			if (Data == null) { return; }
-			ITimelineWidget widget = Data.CreateWidget(_time, data, index);
+			ITimelineWidget widget = Data.CreateWidget(this, _time, data, index);
 			AddWidget(widget, index);
 		}
 
@@ -1062,7 +1062,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				_currentAction = new TimelineDragAction(this);
 				float time = XToTime(e.X + container.HorizontalScroll.Value);
 				float inverse = 1 / _tickResolution * 2;
-				time = (float)Math.Round(Math.Round(time * inverse) / inverse, 2);
+				time = (float)Math.Round(Math.Round(time * inverse) / inverse, 3);
 				StartAction(time, 0);
 			}
 		}

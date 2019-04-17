@@ -8,9 +8,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		event EventHandler<WidgetCreationArgs> WidgetMoved;
 		event EventHandler<WidgetCreationArgs> WidgetCreated;
 		event EventHandler<WidgetCreationArgs> WidgetRemoved;
-		List<ITimelineWidget> CreateWidgets();
-		ITimelineWidget CreateWidget(float time, object context);
-		ITimelineWidget CreateWidget(float time, object data, int index);
+		List<ITimelineWidget> CreateWidgets(Timeline timeline);
+		ITimelineWidget CreateWidget(Timeline timeline, float time, object context);
+		ITimelineWidget CreateWidget(Timeline timeline, float time, object data, int index);
 		void InsertWidget(ITimelineWidget widget, float time, int index);
 		int RemoveWidget(ITimelineWidget widget);
 		void MoveWidget(ITimelineWidget widget, int newTrack);
