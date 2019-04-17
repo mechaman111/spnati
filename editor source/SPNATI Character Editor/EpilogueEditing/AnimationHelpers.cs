@@ -71,6 +71,10 @@ namespace SPNATI_Character_Editor
 					return (float)Math.Sin(Math.PI / 2 * t);
 				case "ease-in-out-cubic":
 					return t < 0.5f ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+				case "ease-out-in":
+					return t < 0.5f ? Ease("ease-out", 2 * t) * 0.5f : Ease("ease-in", 2 * (t - 0.5f)) * 0.5f + 0.5f;
+				case "ease-out-in-cubic":
+					return t < 0.5f ? Ease("ease-out-cubic", 2 * t) * 0.5f : Ease("ease-in-cubic", 2 * (t - 0.5f)) * 0.5f + 0.5f;
 				case "bounce":
 					if (t < 0.3636f)
 					{
