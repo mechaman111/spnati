@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.0 at 12:54:00 AM on April 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.1 at 1:06:50 AM on April 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v4.0</version>
+    <version>v4.1</version>
     <first>Florina</first>
     <last />
     <label>Florina</label>
@@ -193,6 +193,12 @@
                 <test expr="~self.costume~" value="florina_easter" />
                 <state img="0-awkward.png">L....Lady Catria?! The famous Whitewing? And I'm dressed like this?</state>
                 <state img="0-shocked.png">Pegasus Knight? Wait, is that... &lt;i&gt;Lady Catria&lt;/i&gt;?</state>
+            </case>
+            <case tag="game_start" alsoPlaying="catria">
+                <test expr="~self.costume~" value="florina_easter" />
+                <test expr="~catria.costume~" value="bunny_catria" />
+                <state img="0-happy.png">Oh, Catria! You're a bunny too?</state>
+                <state img="0-interested.png">Catria! You're so &lt;i&gt;cute&lt;/i&gt; in that outfit!</state>
             </case>
             <case tag="game_start" totalMales="1-2">
                 <state img="0-shocked.png">Huh? Nobody told me there'd be a m-m-man here!</state>
@@ -408,6 +414,10 @@
                 <state img="0-calm.png" marker="launch_nice">You know, you're much nicer after sneezing, Launch. I think... we could even be friends?</state>
                 <state img="0-calm.png" marker="launch_nice">So, Launch, do you change whenever you sneeze? If so, I hope you never sneeze again, if that's okay.</state>
             </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingStage="1-7" notSaidMarker="marth_reveal" priority="0">
+                <state img="0-interested.png" marker="marth_reveal">So why were you pretending to be a male, Lucina? Oh, so other men wouldn't try talking to you here, right?</state>
+                <state img="0-calm.png" marker="marth_reveal">Do you think I could borrow you mask sometime, Lucina? M-maybe I could talk to men more easily if they thought I was one.</state>
+            </case>
             <case tag="hand" alsoPlaying="mei" alsoPlayingStage="0-2" notSaidMarker="mei_coat">
                 <state img="0-interested.png" marker="mei_coat">I bet that coat is nice and warm, Mei.</state>
                 <state img="0-calm.png" marker="mei_coat">Isn't that coat a little warm, Mei? N-not suggesting you take it off, of course!</state>
@@ -559,6 +569,14 @@
             <case tag="hand" notSaidMarker="human_reaction" priority="0">
                 <test expr="~player~" value="Mark" />
                 <state img="0-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
+            </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="0-nervous.png">About me? Well, I'm... I'm a bunny!</state>
+            </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingStage="0" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="0-cover.png">&lt;i&gt;(Why is M-Marth talking to me?)&lt;/i&gt; Eep! Maybe if I hide he'll forget I'm here.</state>
             </case>
             <case tag="hand" priority="0">
                 <test expr="~self.costume~" value="florina_easter" />
@@ -887,13 +905,8 @@
             <case tag="female_must_strip" target="blake" targetStage="0-2" alsoPlaying="kali" notSaidMarker="blake_mom">
                 <state img="0-nervous.png" marker="blake_mom">Err, isn't Kali your mom? I-I could never do this in front of my mom.</state>
             </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" alsoPlaying="lyn" notSaidMarker="greet_catria">
-                <state img="0-interested.png" marker="greet_catria">Thanks for insisting that I come today, Lyn. I never thought I'd get to meet the famous Catria - a real Whitewing!</state>
-                <state img="0-embarrassed.png" marker="greet_catria">Maybe this wasn't such a bad idea, Lyn. I get to meet my pegasus hero!</state>
-            </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
-                <state img="0-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
-                <state img="0-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
+            <case tag="female_must_strip" target="catria">
+                <state img="0-sad.png">Sorry, Catria. To have to lose part of your cute outfit...</state>
             </case>
             <case tag="female_must_strip" target="catria" targetStage="1-4" consecutiveLosses="3">
                 <state img="0-shocked.png">I didn't talk with them. Honest!</state>
@@ -953,6 +966,16 @@
                 <state img="0-interested.png">It's only your first time. Y-you'll be fine!</state>
                 <state img="0-calm.png">Well, you aren't in danger yet. I'm sure you'll be fine.</state>
                 <state img="0-nervous.png">S-sorry. You can't win them all!</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" alsoPlaying="lyn" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="0-interested.png" marker="greet_catria">Thanks for insisting that I come today, Lyn. I never thought I'd get to meet the famous Catria - a real Whitewing!</state>
+                <state img="0-embarrassed.png" marker="greet_catria">Maybe this wasn't such a bad idea, Lyn. I get to meet my pegasus hero!</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="0-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
+                <state img="0-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
             </case>
             <case tag="female_must_strip" totalRounds="0">
                 <state img="0-happy.png">W-well... I didn't lose... on the first hand, at least. I hope that's a good sign.</state>
@@ -1117,6 +1140,10 @@
                 <test expr="~self.costume~" value="default" />
                 <state img="0-calm.png" marker="uniform">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
             </case>
+            <case tag="female_removing_accessory" target="catria" targetStage="0">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="0-shocked.png">No! You can't take off those adorable ears!</state>
+            </case>
             <case tag="female_removing_accessory" target="lyn" targetStage="0">
                 <test expr="~target.costume~" value="lynbride" />
                 <state img="0-embarrassed.png">Well, that's one less thing to worry about...</state>
@@ -1240,6 +1267,11 @@
                 <state img="0-calm.png">Is every bunny ready to go again?</state>
                 <state img="0-calm.png">Ready to hop to the next round?</state>
             </case>
+            <case tag="female_removed_accessory" target="catria" targetStage="1">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="0-nervous.png">Phew! How could we be adorable bunnies together if you took those off so soon?</state>
+            </case>
             <case tag="female_removed_accessory" totalRounds="0">
                 <state img="0-happy.png">That's all? I can handle this no problem then.</state>
                 <state img="0-happy.png">I was nervous coming, but if we're just taking off trivial things like that, this won't be bad.</state>
@@ -1333,6 +1365,11 @@
                 <state img="0-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="0-awkward.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_minor" target="catria" targetStage="2">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="0-calm.png">I still can't over that bunny outfit. I wish I'd worn something like it.</state>
+            </case>
             <case tag="female_removing_minor" totalRounds="1-99" notSaidMarker="started">
                 <state img="0-shocked.png">Oh, your ~clothing~? Th-that's something...</state>
                 <state img="0-nervous.png">I thought we were sticking to accessories?</state>
@@ -1423,6 +1460,11 @@
                 <test expr="~clothing~" value="tights" />
                 <test expr="~background.location~" value="indoors" />
                 <state img="0-calm.png" marker="item_socks">Let me know if the floor is cold. I grew up in a cold place but that doesn't mean I like it.</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="4" targetSaying="I already feel naked">
+                <test expr="~self.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="0-embarrassed.png">You too? I'm n-not either.</state>
             </case>
             <case tag="female_removed_minor" totalRounds="0">
                 <state img="0-awkward.png">Erm, okay. I g-guess.</state>
@@ -1535,6 +1577,10 @@
                 <state img="0-nervous.png">These shots are getting a bit dangerous.</state>
                 <state img="0-horny.png">Um, where are these shells coming from exactly?</state>
                 <state img="0-awkward.png">Be careful, Shimakaze. This is getting close.</state>
+            </case>
+            <case tag="female_removing_major" target="catria" targetStage="4">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="0-cover.png">I saw your p-panties earlier, but I won't look this time!</state>
             </case>
             <case tag="female_removing_major" timeInStage="8-20">
                 <state img="0-embarrassed.png">I...I feel bad for you all to keep l-losing while I'm like this...</state>
@@ -2138,6 +2184,17 @@
                 <state img="0-embarrassed.png">Isn't that embarrassing with m-men around?</state>
                 <state img="0-nervous.png">&lt;i&gt;M-maaaaybe&lt;/i&gt; with only girls I could do something like that, but here...?</state>
                 <state img="0-embarrassed.png">To think, he's staring at that... is he imagining &lt;i&gt;me&lt;/i&gt; that way?</state>
+            </case>
+            <case tag="opponent_stripping" target="lucina" targetStage="0">
+                <state img="0-embarrassed.png">Oh no, now I'll be able to see him looking at me...</state>
+                <state img="0-awkward.png">Y-you can keep the mask on. I can't see your gaze with it...</state>
+            </case>
+            <case tag="opponent_stripped" id="0-3" target="lucina" targetStage="1">
+                <state img="0-shocked.png">Wait, you're a &lt;i&gt;woman&lt;/i&gt;? Wh-what a relief.</state>
+                <state img="0-shocked.png">Huh? You're a woman?</state>
+            </case>
+            <case tag="opponent_stripped" target="lucina" targetStage="1" alsoPlaying="catria" alsoPlayingStage="8" alsoPlayingSayingMarker="lostMask">
+                <state img="0-awkward.png">Um, is Prince Marth someone you like by chance, Catria?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="0-sad.png">Th-this is scarier than flying into a group of archers.</state>
@@ -2769,6 +2826,14 @@
                 <test expr="~player~" value="Mark" />
                 <state img="1-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
             </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="1-nervous.png">About me? Well, I'm... I'm a bunny!</state>
+            </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingStage="0" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="1-cover.png">&lt;i&gt;(Why is M-Marth talking to me?)&lt;/i&gt; Eep! Maybe if I hide he'll forget I'm here.</state>
+            </case>
             <case tag="hand" priority="0">
                 <test expr="~self.costume~" value="florina_easter" />
                 <state img="1-nervous.png">Please stop looking at me. This suit shows t-too much cleavage.</state>
@@ -3040,14 +3105,6 @@
             <case tag="female_must_strip" target="blake" targetStage="0-2" alsoPlaying="kali" notSaidMarker="blake_mom">
                 <state img="1-nervous.png" marker="blake_mom">Err, isn't Kali your mom? I-I could never do this in front of my mom.</state>
             </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" alsoPlaying="lyn" notSaidMarker="greet_catria">
-                <state img="1-interested.png" marker="greet_catria">Thanks for insisting that I come today, Lyn. I never thought I'd get to meet the famous Catria - a real Whitewing!</state>
-                <state img="1-embarrassed.png" marker="greet_catria">Maybe this wasn't such a bad idea, Lyn. I get to meet my pegasus hero!</state>
-            </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
-                <state img="1-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
-                <state img="1-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
-            </case>
             <case tag="female_must_strip" target="catria" targetStage="1-4" consecutiveLosses="3">
                 <state img="1-shocked.png">I didn't talk with them. Honest!</state>
                 <state img="1-sad.png">Y-you'll win next time for sure.</state>
@@ -3106,6 +3163,16 @@
                 <state img="1-interested.png">It's only your first time. Y-you'll be fine!</state>
                 <state img="1-calm.png">Well, you aren't in danger yet. I'm sure you'll be fine.</state>
                 <state img="1-nervous.png">S-sorry. You can't win them all!</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" alsoPlaying="lyn" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="1-interested.png" marker="greet_catria">Thanks for insisting that I come today, Lyn. I never thought I'd get to meet the famous Catria - a real Whitewing!</state>
+                <state img="1-embarrassed.png" marker="greet_catria">Maybe this wasn't such a bad idea, Lyn. I get to meet my pegasus hero!</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="1-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
+                <state img="1-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="1-cover.png">I'm not watching!</state>
@@ -3256,6 +3323,10 @@
                 <test expr="~self.costume~" value="default" />
                 <state img="1-calm.png" marker="uniform">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
             </case>
+            <case tag="female_removing_accessory" target="catria" targetStage="0">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="1-shocked.png">No! You can't take off those adorable ears!</state>
+            </case>
             <case tag="female_removing_accessory" target="lyn" targetStage="0">
                 <test expr="~target.costume~" value="lynbride" />
                 <state img="1-embarrassed.png">Well, that's one less thing to worry about...</state>
@@ -3373,6 +3444,11 @@
                 <state img="1-calm.png">Is every bunny ready to go again?</state>
                 <state img="1-calm.png">Ready to hop to the next round?</state>
             </case>
+            <case tag="female_removed_accessory" target="catria" targetStage="1">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="1-nervous.png">Phew! How could we be adorable bunnies together if you took those off so soon?</state>
+            </case>
             <case tag="female_removed_accessory" totalRounds="1">
                 <state img="1-happy.png">See? Little things like your ~clothing~ and my belt aren't scary.</state>
                 <state img="1-interested.png">Oh good. I was worried my belt wasn't good enough, but if that's what you're doing then I can rest easy.</state>
@@ -3465,6 +3541,11 @@
                 <state img="1-awkward.png">Um, what's the point to your ~clothing~ now?</state>
                 <state img="1-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="1-awkward.png">Okay. It's not like that's doing anything for you now...</state>
+            </case>
+            <case tag="female_removing_minor" target="catria" targetStage="2">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="1-calm.png">I still can't over that bunny outfit. I wish I'd worn something like it.</state>
             </case>
             <case tag="female_removing_minor" totalRounds="1-99" notSaidMarker="started">
                 <state img="1-shocked.png">Oh, your ~clothing~? Th-that's something...</state>
@@ -3559,6 +3640,11 @@
                 <test expr="~clothing~" value="tights" />
                 <test expr="~background.location~" value="indoors" />
                 <state img="1-calm.png" marker="item_socks">Let me know if the floor is cold. I grew up in a cold place but that doesn't mean I like it.</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="4" targetSaying="I already feel naked">
+                <test expr="~self.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="1-embarrassed.png">You too? I'm n-not either.</state>
             </case>
             <case tag="female_removed_minor" totalRounds="1-99" notSaidMarker="remark_started">
                 <state img="1-embarrassed.png" marker="remark_started">I know it's just your ~clothing~, but it's starting to sink in now. We're... really s-stripping, aren't we?</state>
@@ -3667,6 +3753,10 @@
                 <state img="1-nervous.png">These shots are getting a bit dangerous.</state>
                 <state img="1-horny.png">Um, where are these shells coming from exactly?</state>
                 <state img="1-awkward.png">Be careful, Shimakaze. This is getting close.</state>
+            </case>
+            <case tag="female_removing_major" target="catria" targetStage="4">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="1-cover.png">I saw your p-panties earlier, but I won't look this time!</state>
             </case>
             <case tag="female_removing_major" timeInStage="8-20">
                 <state img="1-embarrassed.png">I...I feel bad for you all to keep l-losing while I'm like this...</state>
@@ -4270,6 +4360,17 @@
                 <state img="1-embarrassed.png">Isn't that embarrassing with m-men around?</state>
                 <state img="1-nervous.png">&lt;i&gt;M-maaaaybe&lt;/i&gt; with only girls I could do something like that, but here...?</state>
                 <state img="1-embarrassed.png">To think, he's staring at that... is he imagining &lt;i&gt;me&lt;/i&gt; that way?</state>
+            </case>
+            <case tag="opponent_stripping" target="lucina" targetStage="0">
+                <state img="1-embarrassed.png">Oh no, now I'll be able to see him looking at me...</state>
+                <state img="1-awkward.png">Y-you can keep the mask on. I can't see your gaze with it...</state>
+            </case>
+            <case tag="opponent_stripped" id="1-3" target="lucina" targetStage="1">
+                <state img="1-shocked.png">Wait, you're a &lt;i&gt;woman&lt;/i&gt;? Wh-what a relief.</state>
+                <state img="1-shocked.png">Huh? You're a woman?</state>
+            </case>
+            <case tag="opponent_stripped" target="lucina" targetStage="1" alsoPlaying="catria" alsoPlayingStage="8" alsoPlayingSayingMarker="lostMask">
+                <state img="1-awkward.png">Um, is Prince Marth someone you like by chance, Catria?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="1-sad.png">Th-this is scarier than flying into a group of archers.</state>
@@ -4910,6 +5011,14 @@
                 <test expr="~player~" value="Mark" />
                 <state img="2-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
             </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="2-nervous.png">About me? Well, I'm... I'm a bunny!</state>
+            </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingStage="0" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="2-cover.png">&lt;i&gt;(Why is M-Marth talking to me?)&lt;/i&gt; Eep! Maybe if I hide he'll forget I'm here.</state>
+            </case>
             <case tag="hand" priority="0">
                 <test expr="~self.costume~" value="florina_easter" />
                 <state img="2-nervous.png">Please stop looking at me. This suit shows t-too much cleavage.</state>
@@ -5147,14 +5256,6 @@
             <case tag="female_must_strip" target="blake" targetStage="0-2" alsoPlaying="kali" notSaidMarker="blake_mom">
                 <state img="2-nervous.png" marker="blake_mom">Err, isn't Kali your mom? I-I could never do this in front of my mom.</state>
             </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" alsoPlaying="lyn" notSaidMarker="greet_catria">
-                <state img="2-interested.png" marker="greet_catria">Thanks for insisting that I come today, Lyn. I never thought I'd get to meet the famous Catria - a real Whitewing!</state>
-                <state img="2-embarrassed.png" marker="greet_catria">Maybe this wasn't such a bad idea, Lyn. I get to meet my pegasus hero!</state>
-            </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
-                <state img="2-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
-                <state img="2-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
-            </case>
             <case tag="female_must_strip" target="catria" targetStage="1-4" consecutiveLosses="3">
                 <state img="2-shocked.png">I didn't talk with them. Honest!</state>
                 <state img="2-sad.png">Y-you'll win next time for sure.</state>
@@ -5213,6 +5314,16 @@
                 <state img="2-interested.png">It's only your first time. Y-you'll be fine!</state>
                 <state img="2-calm.png">Well, you aren't in danger yet. I'm sure you'll be fine.</state>
                 <state img="2-nervous.png">S-sorry. You can't win them all!</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" alsoPlaying="lyn" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="2-interested.png" marker="greet_catria">Thanks for insisting that I come today, Lyn. I never thought I'd get to meet the famous Catria - a real Whitewing!</state>
+                <state img="2-embarrassed.png" marker="greet_catria">Maybe this wasn't such a bad idea, Lyn. I get to meet my pegasus hero!</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="2-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
+                <state img="2-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="2-cover.png">I'm not watching!</state>
@@ -5363,6 +5474,10 @@
                 <test expr="~self.costume~" value="default" />
                 <state img="2-calm.png" marker="uniform">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
             </case>
+            <case tag="female_removing_accessory" target="catria" targetStage="0">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="2-shocked.png">No! You can't take off those adorable ears!</state>
+            </case>
             <case tag="female_removing_accessory" target="lyn" targetStage="0">
                 <test expr="~target.costume~" value="lynbride" />
                 <state img="2-embarrassed.png">Well, that's one less thing to worry about...</state>
@@ -5480,6 +5595,11 @@
                 <state img="2-calm.png">Is every bunny ready to go again?</state>
                 <state img="2-calm.png">Ready to hop to the next round?</state>
             </case>
+            <case tag="female_removed_accessory" target="catria" targetStage="1">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="2-nervous.png">Phew! How could we be adorable bunnies together if you took those off so soon?</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="2-cover.png">I'm not watching!</state>
                 <state img="2-cover.png">Eep!</state>
@@ -5566,6 +5686,11 @@
                 <state img="2-awkward.png">Um, what's the point to your ~clothing~ now?</state>
                 <state img="2-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="2-awkward.png">Okay. It's not like that's doing anything for you now...</state>
+            </case>
+            <case tag="female_removing_minor" target="catria" targetStage="2">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="2-calm.png">I still can't over that bunny outfit. I wish I'd worn something like it.</state>
             </case>
             <case tag="female_removing_minor" totalRounds="1-99" notSaidMarker="started">
                 <state img="2-shocked.png">Oh, your ~clothing~? Th-that's something...</state>
@@ -5657,6 +5782,11 @@
                 <test expr="~clothing~" value="tights" />
                 <test expr="~background.location~" value="indoors" />
                 <state img="2-calm.png" marker="item_socks">Let me know if the floor is cold. I grew up in a cold place but that doesn't mean I like it.</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="4" targetSaying="I already feel naked">
+                <test expr="~self.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="2-embarrassed.png">You too? I'm n-not either.</state>
             </case>
             <case tag="female_removed_minor" totalRounds="1-99" notSaidMarker="remark_started">
                 <state img="2-embarrassed.png" marker="remark_started">I know it's just your ~clothing~, but it's starting to sink in now. We're... really s-stripping, aren't we?</state>
@@ -5765,6 +5895,10 @@
                 <state img="2-nervous.png">These shots are getting a bit dangerous.</state>
                 <state img="2-horny.png">Um, where are these shells coming from exactly?</state>
                 <state img="2-awkward.png">Be careful, Shimakaze. This is getting close.</state>
+            </case>
+            <case tag="female_removing_major" target="catria" targetStage="4">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="2-cover.png">I saw your p-panties earlier, but I won't look this time!</state>
             </case>
             <case tag="female_removing_major" timeInStage="8-20">
                 <state img="2-embarrassed.png">I...I feel bad for you all to keep l-losing while I'm like this...</state>
@@ -6365,6 +6499,17 @@
                 <state img="2-nervous.png">&lt;i&gt;M-maaaaybe&lt;/i&gt; with only girls I could do something like that, but here...?</state>
                 <state img="2-embarrassed.png">To think, he's staring at that... is he imagining &lt;i&gt;me&lt;/i&gt; that way?</state>
             </case>
+            <case tag="opponent_stripping" target="lucina" targetStage="0">
+                <state img="2-embarrassed.png">Oh no, now I'll be able to see him looking at me...</state>
+                <state img="2-awkward.png">Y-you can keep the mask on. I can't see your gaze with it...</state>
+            </case>
+            <case tag="opponent_stripped" id="2-3" target="lucina" targetStage="1">
+                <state img="2-shocked.png">Wait, you're a &lt;i&gt;woman&lt;/i&gt;? Wh-what a relief.</state>
+                <state img="2-shocked.png">Huh? You're a woman?</state>
+            </case>
+            <case tag="opponent_stripped" target="lucina" targetStage="1" alsoPlaying="catria" alsoPlayingStage="8" alsoPlayingSayingMarker="lostMask">
+                <state img="2-awkward.png">Um, is Prince Marth someone you like by chance, Catria?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="2-sad.png">Th-this is scarier than flying into a group of archers.</state>
                 <state img="2-awkward.png">Do you want me to turn around? Um, I wouldn't mind if you say yes...</state>
@@ -6959,6 +7104,14 @@
                 <test expr="~player~" value="Mark" />
                 <state img="3-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
             </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="3-nervous.png">About me? Well, I'm... I'm a bunny!</state>
+            </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingStage="0" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="3-cover.png">&lt;i&gt;(Why is M-Marth talking to me?)&lt;/i&gt; Eep! Maybe if I hide he'll forget I'm here.</state>
+            </case>
             <case tag="hand" priority="0">
                 <test expr="~self.costume~" value="florina_easter" />
                 <state img="3-nervous.png">Please stop looking at me. This suit shows t-too much cleavage.</state>
@@ -7161,14 +7314,6 @@
             <case tag="female_must_strip" target="blake" targetStage="0-2" alsoPlaying="kali" notSaidMarker="blake_mom">
                 <state img="3-nervous.png" marker="blake_mom">Err, isn't Kali your mom? I-I could never do this in front of my mom.</state>
             </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" alsoPlaying="lyn" notSaidMarker="greet_catria">
-                <state img="3-interested.png" marker="greet_catria">Thanks for insisting that I come today, Lyn. I never thought I'd get to meet the famous Catria - a real Whitewing!</state>
-                <state img="3-embarrassed.png" marker="greet_catria">Maybe this wasn't such a bad idea, Lyn. I get to meet my pegasus hero!</state>
-            </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
-                <state img="3-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
-                <state img="3-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
-            </case>
             <case tag="female_must_strip" target="catria" targetStage="1-4" consecutiveLosses="3">
                 <state img="3-shocked.png">I didn't talk with them. Honest!</state>
                 <state img="3-sad.png">Y-you'll win next time for sure.</state>
@@ -7224,6 +7369,16 @@
                 <state img="3-interested.png">It's only your first time. Y-you'll be fine!</state>
                 <state img="3-calm.png">Well, you aren't in danger yet. I'm sure you'll be fine.</state>
                 <state img="3-nervous.png">S-sorry. You can't win them all!</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" alsoPlaying="lyn" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="3-interested.png" marker="greet_catria">Thanks for insisting that I come today, Lyn. I never thought I'd get to meet the famous Catria - a real Whitewing!</state>
+                <state img="3-embarrassed.png" marker="greet_catria">Maybe this wasn't such a bad idea, Lyn. I get to meet my pegasus hero!</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="3-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
+                <state img="3-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="3-cover.png">I'm not watching!</state>
@@ -7366,6 +7521,10 @@
                 <test expr="~self.costume~" value="default" />
                 <state img="3-calm.png" marker="uniform">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
             </case>
+            <case tag="female_removing_accessory" target="catria" targetStage="0">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="3-shocked.png">No! You can't take off those adorable ears!</state>
+            </case>
             <case tag="female_removing_accessory" target="lyn" targetStage="0">
                 <test expr="~target.costume~" value="lynbride" />
                 <state img="3-embarrassed.png">Well, that's one less thing to worry about...</state>
@@ -7476,6 +7635,11 @@
                 <state img="3-calm.png">Is every bunny ready to go again?</state>
                 <state img="3-calm.png">Ready to hop to the next round?</state>
             </case>
+            <case tag="female_removed_accessory" target="catria" targetStage="1">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="3-nervous.png">Phew! How could we be adorable bunnies together if you took those off so soon?</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="3-cover.png">I'm not watching!</state>
                 <state img="3-cover.png">Eep!</state>
@@ -7563,6 +7727,11 @@
                 <state img="3-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="3-awkward.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_minor" target="catria" targetStage="2">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="3-calm.png">I still can't over that bunny outfit. I wish I'd worn something like it.</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="3-happy.png">Deep breath... Okay, I'm ready to go again.</state>
                 <state img="3-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
@@ -7646,6 +7815,11 @@
                 <test expr="~clothing~" value="tights" />
                 <test expr="~background.location~" value="indoors" />
                 <state img="3-calm.png" marker="item_socks">Let me know if the floor is cold. I grew up in a cold place but that doesn't mean I like it.</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="4" targetSaying="I already feel naked">
+                <test expr="~self.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="3-embarrassed.png">You too? I'm n-not either.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="3-cover.png">Someone tell me when this is over.</state>
@@ -7748,6 +7922,10 @@
                 <state img="3-nervous.png">These shots are getting a bit dangerous.</state>
                 <state img="3-horny.png">Um, where are these shells coming from exactly?</state>
                 <state img="3-awkward.png">Be careful, Shimakaze. This is getting close.</state>
+            </case>
+            <case tag="female_removing_major" target="catria" targetStage="4">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="3-cover.png">I saw your p-panties earlier, but I won't look this time!</state>
             </case>
             <case tag="female_removing_major" timeInStage="8-20">
                 <state img="3-embarrassed.png">I...I feel bad for you all to keep l-losing while I'm like this...</state>
@@ -8347,6 +8525,17 @@
                 <state img="3-embarrassed.png">Isn't that embarrassing with m-men around?</state>
                 <state img="3-nervous.png">&lt;i&gt;M-maaaaybe&lt;/i&gt; with only girls I could do something like that, but here...?</state>
                 <state img="3-embarrassed.png">To think, he's staring at that... is he imagining &lt;i&gt;me&lt;/i&gt; that way?</state>
+            </case>
+            <case tag="opponent_stripping" target="lucina" targetStage="0">
+                <state img="3-embarrassed.png">Oh no, now I'll be able to see him looking at me...</state>
+                <state img="3-awkward.png">Y-you can keep the mask on. I can't see your gaze with it...</state>
+            </case>
+            <case tag="opponent_stripped" id="3-3" target="lucina" targetStage="1">
+                <state img="3-shocked.png">Wait, you're a &lt;i&gt;woman&lt;/i&gt;? Wh-what a relief.</state>
+                <state img="3-shocked.png">Huh? You're a woman?</state>
+            </case>
+            <case tag="opponent_stripped" target="lucina" targetStage="1" alsoPlaying="catria" alsoPlayingStage="8" alsoPlayingSayingMarker="lostMask">
+                <state img="3-awkward.png">Um, is Prince Marth someone you like by chance, Catria?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="3-sad.png">Th-this is scarier than flying into a group of archers.</state>
@@ -8969,6 +9158,14 @@
                 <test expr="~player~" value="Mark" />
                 <state img="4-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
             </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="4-nervous.png">About me? Well, I'm... I'm a bunny!</state>
+            </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingStage="0" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="4-cover.png">&lt;i&gt;(Why is M-Marth talking to me?)&lt;/i&gt; Eep! Maybe if I hide he'll forget I'm here.</state>
+            </case>
             <case tag="hand" priority="0">
                 <test expr="~self.costume~" value="florina_easter" />
                 <state img="4-nervous.png">Please stop looking at me. This suit shows t-too much cleavage.</state>
@@ -9244,14 +9441,6 @@
             <case tag="female_must_strip" target="blake" targetStage="0-2" alsoPlaying="kali" notSaidMarker="blake_mom">
                 <state img="4-nervous.png" marker="blake_mom">Err, isn't Kali your mom? I-I could never do this in front of my mom.</state>
             </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" alsoPlaying="lyn" notSaidMarker="greet_catria">
-                <state img="4-interested.png" marker="greet_catria">Thanks for insisting that I come today, Lyn. I never thought I'd get to meet the famous Catria - a real Whitewing!</state>
-                <state img="4-embarrassed.png" marker="greet_catria">Maybe this wasn't such a bad idea, Lyn. I get to meet my pegasus hero!</state>
-            </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
-                <state img="4-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
-                <state img="4-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
-            </case>
             <case tag="female_must_strip" target="catria" targetStage="1-4" consecutiveLosses="3">
                 <state img="4-shocked.png">I didn't talk with them. Honest!</state>
                 <state img="4-sad.png">Y-you'll win next time for sure.</state>
@@ -9304,6 +9493,16 @@
                 <state img="4-interested.png">It's only your first time. Y-you'll be fine!</state>
                 <state img="4-calm.png">Well, you aren't in danger yet. I'm sure you'll be fine.</state>
                 <state img="4-nervous.png">S-sorry. You can't win them all!</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" alsoPlaying="lyn" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="4-interested.png" marker="greet_catria">Thanks for insisting that I come today, Lyn. I never thought I'd get to meet the famous Catria - a real Whitewing!</state>
+                <state img="4-embarrassed.png" marker="greet_catria">Maybe this wasn't such a bad idea, Lyn. I get to meet my pegasus hero!</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="4-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
+                <state img="4-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="4-cover.png">I'm not watching!</state>
@@ -9441,6 +9640,10 @@
                 <test expr="~self.costume~" value="default" />
                 <state img="4-calm.png" marker="uniform">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
             </case>
+            <case tag="female_removing_accessory" target="catria" targetStage="0">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="4-shocked.png">No! You can't take off those adorable ears!</state>
+            </case>
             <case tag="female_removing_accessory" target="lyn" targetStage="0">
                 <test expr="~target.costume~" value="lynbride" />
                 <state img="4-embarrassed.png">Well, that's one less thing to worry about...</state>
@@ -9546,6 +9749,11 @@
                 <state img="4-awkward.png">Y-yeah, go back to something small.</state>
                 <state img="4-awkward.png">Better late than never, I guess?</state>
             </case>
+            <case tag="female_removed_accessory" target="catria" targetStage="1">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="4-nervous.png">Phew! How could we be adorable bunnies together if you took those off so soon?</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="4-cover.png">I'm not watching!</state>
                 <state img="4-cover.png">Eep!</state>
@@ -9633,6 +9841,11 @@
                 <state img="4-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="4-awkward.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_minor" target="catria" targetStage="2">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="4-calm.png">I still can't over that bunny outfit. I wish I'd worn something like it.</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="4-happy.png">Deep breath... Okay, I'm ready to go again.</state>
                 <state img="4-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
@@ -9669,9 +9882,6 @@
                 <state img="4-embarrassed.png" marker="greet_catria3">You're, well, my &lt;i&gt;idol&lt;/i&gt;, Catria.</state>
                 <state img="4-embarrassed.png" marker="greet_catria3">Can...can I have your autograph, Catria?</state>
             </case>
-            <case tag="female_removed_minor" target="catria" targetStage="3">
-                <state img="4-calm.png">You're right about that. I've got goosebumps down my legs.</state>
-            </case>
             <case tag="female_removed_minor" target="catria" targetStage="4">
                 <state img="4-happy.png">Yes, that makes perfect sense.</state>
                 <state img="4-calm.png">You should feel lucky. I've heard from some more, erm, &lt;i&gt;endowed&lt;/i&gt; knights that fitted breastplates are very uncomfortable.</state>
@@ -9703,6 +9913,15 @@
                 <test expr="~clothing~" value="tights" />
                 <state img="4-calm.png" marker="item_socks">When I get nervous, I sometimes wiggle my toes to distract myself. Maybe you could try it?</state>
                 <state img="4-happy.png" marker="item_socks">You have pretty feet. That's... that's not a weird thing to say, right?</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="3">
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="4-calm.png">You're right about that. I've got goosebumps down my legs.</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="4" targetSaying="I already feel naked">
+                <test expr="~self.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="4-embarrassed.png">You too? I'm n-not either.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="4-cover.png">Someone tell me when this is over.</state>
@@ -9805,6 +10024,10 @@
                 <state img="4-nervous.png">These shots are getting a bit dangerous.</state>
                 <state img="4-horny.png">Um, where are these shells coming from exactly?</state>
                 <state img="4-awkward.png">Be careful, Shimakaze. This is getting close.</state>
+            </case>
+            <case tag="female_removing_major" target="catria" targetStage="4">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="4-cover.png">I saw your p-panties earlier, but I won't look this time!</state>
             </case>
             <case tag="female_removing_major" timeInStage="8-20">
                 <state img="4-embarrassed.png">I...I feel bad for you all to keep l-losing while I'm like this...</state>
@@ -10404,6 +10627,17 @@
                 <state img="4-embarrassed.png">Isn't that embarrassing with m-men around?</state>
                 <state img="4-nervous.png">&lt;i&gt;M-maaaaybe&lt;/i&gt; with only girls I could do something like that, but here...?</state>
                 <state img="4-embarrassed.png">To think, he's staring at that... is he imagining &lt;i&gt;me&lt;/i&gt; that way?</state>
+            </case>
+            <case tag="opponent_stripping" target="lucina" targetStage="0">
+                <state img="4-embarrassed.png">Oh no, now I'll be able to see him looking at me...</state>
+                <state img="4-awkward.png">Y-you can keep the mask on. I can't see your gaze with it...</state>
+            </case>
+            <case tag="opponent_stripped" id="4-3" target="lucina" targetStage="1">
+                <state img="4-shocked.png">Wait, you're a &lt;i&gt;woman&lt;/i&gt;? Wh-what a relief.</state>
+                <state img="4-shocked.png">Huh? You're a woman?</state>
+            </case>
+            <case tag="opponent_stripped" target="lucina" targetStage="1" alsoPlaying="catria" alsoPlayingStage="8" alsoPlayingSayingMarker="lostMask">
+                <state img="4-awkward.png">Um, is Prince Marth someone you like by chance, Catria?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="4-sad.png">Th-this is scarier than flying into a group of archers.</state>
@@ -11217,10 +11451,6 @@
             <case tag="female_must_strip" target="blake" targetStage="0-2" alsoPlaying="kali" notSaidMarker="blake_mom">
                 <state img="5-nervous.png" marker="blake_mom">Err, isn't Kali your mom? I-I could never do this in front of my mom.</state>
             </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
-                <state img="5-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
-                <state img="5-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
-            </case>
             <case tag="female_must_strip" target="catria" targetStage="1-4" consecutiveLosses="3">
                 <state img="5-shocked.png">I didn't talk with them. Honest!</state>
                 <state img="5-sad.png">Y-you'll win next time for sure.</state>
@@ -11266,6 +11496,11 @@
                 <state img="5-interested.png">It's only your first time. Y-you'll be fine!</state>
                 <state img="5-calm.png">Well, you aren't in danger yet. I'm sure you'll be fine.</state>
                 <state img="5-nervous.png">S-sorry. You can't win them all!</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="5-embarrassed.png" marker="greet_catria">Um, Lady Catria, I just want to say I'm a huge fan of yours...</state>
+                <state img="5-horny.png" marker="greet_catria">I can't believe a famous Whitewing is here.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="5-cover.png">I'm not watching!</state>
@@ -11397,6 +11632,10 @@
                 <state img="5-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="5-embarrassed.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_accessory" target="catria" targetStage="0">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="5-shocked.png">No! You can't take off those adorable ears!</state>
+            </case>
             <case tag="female_removing_accessory" target="lyn" targetStage="0">
                 <test expr="~target.costume~" value="lynbride" />
                 <state img="5-embarrassed.png">Well, that's one less thing to worry about...</state>
@@ -11514,6 +11753,11 @@
                 <test expr="~self.costume~" cmp="!=" value="florina_easter" />
                 <state img="5-sad.png">At least you've still got leggings. The floor is pretty cold.</state>
             </case>
+            <case tag="female_removed_accessory" target="catria">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="5-sad.png">I wish my bunny ears were stuck. I was having more fun with them on.</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="5-cover.png">I'm not watching!</state>
                 <state img="5-cover.png">Eep!</state>
@@ -11601,6 +11845,11 @@
                 <state img="5-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="5-awkward.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_minor" target="catria" targetStage="2">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="5-calm.png">I still can't over that bunny outfit. I wish I'd worn something like it.</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="5-happy.png">Deep breath... Okay, I'm ready to go again.</state>
                 <state img="5-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
@@ -11637,9 +11886,6 @@
                 <state img="5-embarrassed.png" marker="greet_catria3">You're, well, my &lt;i&gt;idol&lt;/i&gt;, Catria.</state>
                 <state img="5-embarrassed.png" marker="greet_catria3">Can...can I have your autograph, Catria?</state>
             </case>
-            <case tag="female_removed_minor" target="catria" targetStage="3">
-                <state img="5-calm.png">You're right about that. I've got goosebumps down my legs.</state>
-            </case>
             <case tag="female_removed_minor" target="catria" targetStage="4">
                 <state img="5-happy.png">Yes, that makes perfect sense.</state>
                 <state img="5-calm.png">You should feel lucky. I've heard from some more, erm, &lt;i&gt;endowed&lt;/i&gt; knights that fitted breastplates are very uncomfortable.</state>
@@ -11671,6 +11917,15 @@
                 <test expr="~clothing~" value="tights" />
                 <state img="5-calm.png" marker="item_socks">When I get nervous, I sometimes wiggle my toes to distract myself. Maybe you could try it?</state>
                 <state img="5-happy.png" marker="item_socks">You have pretty feet. That's... that's not a weird thing to say, right?</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="3">
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="5-calm.png">You're right about that. I've got goosebumps down my legs.</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="4" targetSaying="I already feel naked">
+                <test expr="~self.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="5-embarrassed.png">You too? I'm n-not either.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="5-cover.png">Someone tell me when this is over.</state>
@@ -11769,6 +12024,10 @@
                 <state img="5-nervous.png">These shots are getting a bit dangerous.</state>
                 <state img="5-horny.png">Um, where are these shells coming from exactly?</state>
                 <state img="5-awkward.png">Be careful, Shimakaze. This is getting close.</state>
+            </case>
+            <case tag="female_removing_major" target="catria" targetStage="4">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="5-cover.png">I saw your p-panties earlier, but I won't look this time!</state>
             </case>
             <case tag="female_removing_major" timeInStage="8-20">
                 <state img="5-embarrassed.png">I...I feel bad for you all to keep l-losing while I'm like this...</state>
@@ -12376,6 +12635,17 @@
             <case tag="opponent_lost" totalRounds="5-6">
                 <state img="5-angry.png">Finally.</state>
                 <state img="5-calm.png">I'll gladly take this result.</state>
+            </case>
+            <case tag="opponent_stripping" target="lucina" targetStage="0">
+                <state img="5-embarrassed.png">Oh no, now I'll be able to see him looking at me...</state>
+                <state img="5-awkward.png">Y-you can keep the mask on. I can't see your gaze with it...</state>
+            </case>
+            <case tag="opponent_stripped" id="5-3" target="lucina" targetStage="1">
+                <state img="5-shocked.png">Wait, you're a &lt;i&gt;woman&lt;/i&gt;? Wh-what a relief.</state>
+                <state img="5-shocked.png">Huh? You're a woman?</state>
+            </case>
+            <case tag="opponent_stripped" target="lucina" targetStage="1" alsoPlaying="catria" alsoPlayingStage="8" alsoPlayingSayingMarker="lostMask">
+                <state img="5-awkward.png">Um, is Prince Marth someone you like by chance, Catria?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="5-sad.png">Th-this is scarier than flying into a group of archers.</state>
@@ -13150,11 +13420,6 @@
                 <condition count="0" filter="florina_easter" />
                 <state img="6-embarrassed.png">W-what do you know, Ann? We m-match!</state>
             </case>
-            <case tag="stripped" alsoPlaying="catria" alsoPlayingStage="5" priority="200">
-                <condition count="0" filter="florina_easter" />
-                <state img="6-stripped.png" marker="underwear_knights">I guess I'm joining you, Catria. Does that make us... Underwear Knights?</state>
-                <state img="6-stripped.png" marker="underwear_knights">Pegasus Knights fly together, right Catria? So we're, uh...Underwear Knights! &lt;i&gt;...Oh, what am I even saying&lt;/i&gt;?</state>
-            </case>
             <case tag="stripped" alsoPlaying="hermione" alsoPlayingStage="6-7">
                 <condition count="0" filter="florina_easter" />
                 <state img="6-stripped.png">Umm...I didn't plan to wear the same underwear as you, Hermione. Honest!</state>
@@ -13163,6 +13428,12 @@
                 <condition count="0" filter="lyn" />
                 <test expr="~self.costume~" cmp="!=" value="florina_easter" />
                 <state img="6-stripped.png">So um... my friend Lyn said she thinks this type of underwear is cute, so I... well, you can see. Actually, erm, I'd prefer if you don't see...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="catria" alsoPlayingStage="5" priority="200">
+                <test expr="~catria.costume~" value="default" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="6-stripped.png" marker="underwear_knights">I guess I'm joining you, Catria. Does that make us... Underwear Knights?</state>
+                <state img="6-stripped.png" marker="underwear_knights">Pegasus Knights fly together, right Catria? So we're, uh...Underwear Knights! &lt;i&gt;...Oh, what am I even saying&lt;/i&gt;?</state>
             </case>
             <case tag="stripped" alsoPlaying="lyn" priority="0">
                 <test expr="~self.costume~" cmp="!=" value="florina_easter" />
@@ -13258,10 +13529,6 @@
             <case tag="female_must_strip" target="blake" targetStage="0-2" alsoPlaying="kali" notSaidMarker="blake_mom">
                 <state img="6-nervous.png" marker="blake_mom">Err, isn't Kali your mom? I-I could never do this in front of my mom.</state>
             </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
-                <state img="6-embarrassed.png" marker="greet_catria">I finally get to meet Lady C-Catria, and she sees me like this...</state>
-                <state img="6-horny.png" marker="greet_catria">I always wanted to meet you, Catria, b-but not like this...</state>
-            </case>
             <case tag="female_must_strip" target="catria" targetStage="1-4" consecutiveLosses="3">
                 <state img="6-shocked.png">I didn't talk with them. Honest!</state>
                 <state img="6-sad.png">Y-you'll win next time for sure.</state>
@@ -13309,6 +13576,11 @@
             <case tag="female_must_strip" timeInStage="8-15" priority="8">
                 <test expr="~self.costume~" cmp="!=" value="florina_easter" />
                 <state img="6-happy.png">If I'd have known how well I could play in my u-underwear, I would've done it right away.</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="6-embarrassed.png" marker="greet_catria">I finally get to meet Lady C-Catria, and she sees me like this...</state>
+                <state img="6-horny.png" marker="greet_catria">I always wanted to meet you, Catria, b-but not like this...</state>
             </case>
             <case tag="female_must_strip" timeInStage="8-15">
                 <state img="6-victory.png">I win again!</state>
@@ -13437,6 +13709,10 @@
                 <state img="6-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="6-embarrassed.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_accessory" target="catria" targetStage="0">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="6-shocked.png">No! You can't take off those adorable ears!</state>
+            </case>
             <case tag="female_removing_accessory" target="lyn" targetStage="0">
                 <test expr="~target.costume~" value="lynbride" />
                 <state img="6-embarrassed.png">Well, that's one less thing to worry about...</state>
@@ -13546,6 +13822,11 @@
                 <test expr="~self.costume~" cmp="!=" value="florina_easter" />
                 <state img="6-sad.png">At least you've still got leggings. The floor is pretty cold.</state>
             </case>
+            <case tag="female_removed_accessory" target="catria">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="6-sad.png">I wish my bunny ears were stuck. I was having more fun with them on.</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="6-cover.png">I'm not watching!</state>
                 <state img="6-cover.png">Eep!</state>
@@ -13626,6 +13907,11 @@
                 <state img="6-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="6-awkward.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_minor" target="catria" targetStage="2">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="6-calm.png">I still can't over that bunny outfit. I wish I'd worn something like it.</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="6-angry.png">Th-this isn't quite going how I hoped...</state>
                 <state img="6-sad.png">I s-see. So you won't take pity on me. Next time...?</state>
@@ -13689,6 +13975,11 @@
                 <test expr="~clothing~" value="tights" />
                 <state img="6-calm.png" marker="item_socks">When I get nervous, I sometimes wiggle my toes to distract myself. Maybe you could try it?</state>
                 <state img="6-happy.png" marker="item_socks">You have pretty feet. That's... that's not a weird thing to say, right?</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="4" targetSaying="I already feel naked">
+                <test expr="~self.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="6-embarrassed.png">You too? I'm n-not either.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="6-cover.png">Someone tell me when this is over.</state>
@@ -13794,6 +14085,10 @@
                 <state img="6-horny.png">Um, where are these shells coming from exactly?</state>
                 <state img="6-awkward.png">Be careful, Shimakaze. This is getting close.</state>
             </case>
+            <case tag="female_removing_major" target="catria" targetStage="4">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="6-rear.png">I promise I won't look if it embarrasses you.</state>
+            </case>
             <case tag="female_removed_major">
                 <state img="6-happy.png">Um, showing your underwear's n-n-not so bad.</state>
                 <state img="6-happy.png">Er.... welcome to the underwear club?</state>
@@ -13898,14 +14193,15 @@
             <case tag="female_removed_major" target="yang" targetStage="6">
                 <state img="6-awkward.png">You...you're kind of scaring me, Yang.</state>
             </case>
-            <case tag="female_removed_major" target="catria" targetStage="5">
-                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
-                <state img="6-awkward.png" marker="underwear_knights">Um, if it makes you feel better, the Pegasus Knights can be the Underwear Knights now...</state>
-                <state img="6-shocked.png" marker="underwear_knights">M-my favorite Pegasus Knight is standing in her underwear in front of me. W-wait, &lt;i&gt;I'm&lt;/i&gt; in my underwear. The... Underwear Knights?</state>
-            </case>
             <case tag="female_removed_major" target="sayla" targetStage="4">
                 <test expr="~self.costume~" cmp="!=" value="florina_easter" />
                 <state img="6-awkward.png">I'm too shy for a b-bikini, so I like one pieces too. Of course... I think I'd take a bikini over my current situation...</state>
+            </case>
+            <case tag="female_removed_major" target="catria" targetStage="5">
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <test expr="~target.costume~" value="default" />
+                <state img="6-awkward.png" marker="underwear_knights">Um, if it makes you feel better, the Pegasus Knights can be the Underwear Knights now...</state>
+                <state img="6-shocked.png" marker="underwear_knights">M-my favorite Pegasus Knight is standing in her underwear in front of me. W-wait, &lt;i&gt;I'm&lt;/i&gt; in my underwear. The... Underwear Knights?</state>
             </case>
             <case tag="female_removed_major" target="ann" targetStage="4" alsoPlaying="hermione" alsoPlayingStage="6">
                 <test expr="~self.costume~" value="default" />
@@ -14451,6 +14747,17 @@
                 <state img="6-shocked.png">If I have such good luck in my underwear, would it help on the battlefield too?</state>
                 <state img="6-horny.png">Hmm... if I keep winning in my underwear, should... should I propose it to the Pegasus Knights as an official uniform?</state>
             </case>
+            <case tag="opponent_stripping" target="lucina" targetStage="0">
+                <state img="6-embarrassed.png">Oh no, now I'll be able to see him looking at me...</state>
+                <state img="6-awkward.png">Y-you can keep the mask on. I can't see your gaze with it...</state>
+            </case>
+            <case tag="opponent_stripped" id="6-3" target="lucina" targetStage="1">
+                <state img="6-shocked.png">Wait, you're a &lt;i&gt;woman&lt;/i&gt;? Wh-what a relief.</state>
+                <state img="6-shocked.png">Huh? You're a woman?</state>
+            </case>
+            <case tag="opponent_stripped" target="lucina" targetStage="1" alsoPlaying="catria" alsoPlayingStage="8" alsoPlayingSayingMarker="lostMask">
+                <state img="6-awkward.png">Um, is Prince Marth someone you like by chance, Catria?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="6-sad.png">Th-this is scarier than flying into a group of archers.</state>
                 <state img="6-awkward.png">Do you want me to turn around? Um, I wouldn't mind if you say yes...</state>
@@ -14917,6 +15224,9 @@
                 <state img="7-calm.png" marker="launch_nice">You know, you're much nicer after sneezing, Launch. I think... we could even be friends?</state>
                 <state img="7-calm.png" marker="launch_nice">So, Launch, do you change whenever you sneeze? If so, I hope you never sneeze again, if that's okay.</state>
             </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <state img="7-nervous.png">About me? Well, I'm... n-naked? ...Uh, that's not what you meant, is it?</state>
+            </case>
             <case tag="hand" alsoPlaying="mei" alsoPlayingStage="0-2" notSaidMarker="mei_coat">
                 <state img="7-interested.png" marker="mei_coat">I bet that coat is nice and warm, Mei.</state>
                 <state img="7-calm.png" marker="mei_coat">Isn't that coat a little warm, Mei? N-not suggesting you take it off, of course!</state>
@@ -15311,10 +15621,6 @@
             <case tag="female_must_strip" target="blake" targetStage="0-2" alsoPlaying="kali" notSaidMarker="blake_mom">
                 <state img="7-nervous.png" marker="blake_mom">Err, isn't Kali your mom? I-I could never do this in front of my mom.</state>
             </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
-                <state img="7-embarrassed.png" marker="greet_catria">I finally get to meet Lady C-Catria, and she sees me like this...</state>
-                <state img="7-horny.png" marker="greet_catria">I always wanted to meet you, Catria, b-but not like this...</state>
-            </case>
             <case tag="female_must_strip" target="catria" targetStage="1-4" consecutiveLosses="3">
                 <state img="7-shocked.png">I didn't talk with them. Honest!</state>
                 <state img="7-sad.png">Y-you'll win next time for sure.</state>
@@ -15356,6 +15662,11 @@
                 <state img="7-shocked.png">She actually lost? I thought that would n-never happen again.</state>
                 <state img="7-angry.png">F-forgive me for being p-petty, but it's about time.</state>
                 <state img="7-victory.png">Good! ~name~ has had it too easy.</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="7-embarrassed.png" marker="greet_catria">I finally get to meet Lady C-Catria, and she sees me like this...</state>
+                <state img="7-horny.png" marker="greet_catria">I always wanted to meet you, Catria, b-but not like this...</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="7-awkward.png">You're making me so self-conscious.</state>
@@ -15451,6 +15762,10 @@
                 <state img="7-awkward.png">Um, what's the point to your ~clothing~ now?</state>
                 <state img="7-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="7-embarrassed.png">Okay. It's not like that's doing anything for you now...</state>
+            </case>
+            <case tag="female_removing_accessory" target="catria" targetStage="0">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="7-shocked.png">No! You can't take off those adorable ears!</state>
             </case>
             <case tag="female_removing_accessory" target="lyn" targetStage="0">
                 <test expr="~target.costume~" value="lynbride" />
@@ -15556,6 +15871,11 @@
                 <state img="7-awkward.png">Y-yeah, go back to something small.</state>
                 <state img="7-awkward.png">Better late than never, I guess?</state>
             </case>
+            <case tag="female_removed_accessory" target="catria">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="7-sad.png">I wish my bunny ears were stuck. I was having more fun with them on.</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="7-calm.png">I don't feel like running. That's... progress, right?</state>
                 <state img="7-happy.png">I'm doing it! I'm watching a... man... strip... Oh.</state>
@@ -15623,6 +15943,11 @@
                 <state img="7-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="7-awkward.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_minor" target="catria" targetStage="2">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="7-calm.png">I still can't over that bunny outfit. I wish I'd worn something like it.</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="7-angry.png">Th-this isn't quite going how I hoped...</state>
                 <state img="7-sad.png">I s-see. So you won't take pity on me. Next time...?</state>
@@ -15683,6 +16008,11 @@
                 <test expr="~clothing~" value="tights" />
                 <state img="7-calm.png" marker="item_socks">When I get nervous, I sometimes wiggle my toes to distract myself. Maybe you could try it?</state>
                 <state img="7-happy.png" marker="item_socks">You have pretty feet. That's... that's not a weird thing to say, right?</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="4" targetSaying="I already feel naked">
+                <test expr="~self.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="7-embarrassed.png">You too? It's a sh-shame, isn't it?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="7-jump.png" marker="expose_chest">Eep!</state>
@@ -15770,6 +16100,10 @@
                 <state img="7-nervous.png">These shots are getting a bit dangerous.</state>
                 <state img="7-horny.png">Um, where are these shells coming from exactly?</state>
                 <state img="7-awkward.png">Be careful, Shimakaze. This is getting close.</state>
+            </case>
+            <case tag="female_removing_major" target="catria" targetStage="4">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="7-rear.png">I promise I won't look if it embarrasses you.</state>
             </case>
             <case tag="female_removed_major">
                 <state img="7-calm.png">I think the anticipation is the hardest part.</state>
@@ -16302,6 +16636,17 @@
                 <state img="7-shocked.png">How b-bold...</state>
                 <state img="7-embarrassed.png">That's what you chose for your first loss? Could you be feeling sorry for me?</state>
             </case>
+            <case tag="opponent_stripping" target="lucina" targetStage="0">
+                <state img="7-embarrassed.png">Oh no, now I'll be able to see him looking at me...</state>
+                <state img="7-awkward.png">Y-you can keep the mask on. I can't see your gaze with it...</state>
+            </case>
+            <case tag="opponent_stripped" id="7-3" target="lucina" targetStage="1">
+                <state img="7-shocked.png">Wait, you're a &lt;i&gt;woman&lt;/i&gt;? Wh-what a relief.</state>
+                <state img="7-shocked.png">Huh? You're a woman?</state>
+            </case>
+            <case tag="opponent_stripped" target="lucina" targetStage="1" alsoPlaying="catria" alsoPlayingStage="8" alsoPlayingSayingMarker="lostMask">
+                <state img="7-awkward.png">Um, is Prince Marth someone you like by chance, Catria?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="7-sad.png">Th-this is scarier than flying into a group of archers.</state>
                 <state img="7-awkward.png">Do you want me to turn around? Um, I wouldn't mind if you say yes...</state>
@@ -16801,6 +17146,9 @@
                 <state img="8-calm.png" marker="launch_nice">You know, you're much nicer after sneezing, Launch. I think... we could even be friends?</state>
                 <state img="8-calm.png" marker="launch_nice">So, Launch, do you change whenever you sneeze? If so, I hope you never sneeze again, if that's okay.</state>
             </case>
+            <case tag="hand" alsoPlaying="lucina" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
+                <state img="8-nervous.png">About me? Well, I'm... n-naked? ...Uh, that's not what you meant, is it?</state>
+            </case>
             <case tag="hand" alsoPlaying="lyn" timeInStage="0" saidMarker="catria_confess" priority="201">
                 <state img="8-stunned.png" marker="expose_crotch">N-not that I'm confessing to her or anything, Lyn!</state>
             </case>
@@ -17043,10 +17391,6 @@
             <case tag="female_must_strip" target="blake" targetStage="0-2" alsoPlaying="kali" notSaidMarker="blake_mom">
                 <state img="8-nervous.png" marker="blake_mom">Err, isn't Kali your mom? I-I could never do this in front of my mom.</state>
             </case>
-            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
-                <state img="8-embarrassed.png" marker="greet_catria">I finally get to meet Lady C-Catria, and she sees me like this...</state>
-                <state img="8-horny.png" marker="greet_catria">I always wanted to meet you, Catria, b-but not like this...</state>
-            </case>
             <case tag="female_must_strip" target="chihiro" targetStage="5">
                 <state img="8-interested.png">Chihiro! You're back!</state>
             </case>
@@ -17084,6 +17428,11 @@
                 <state img="8-shocked.png">She actually lost? I thought that would n-never happen again.</state>
                 <state img="8-angry.png">F-forgive me for being p-petty, but it's about time.</state>
                 <state img="8-victory.png">Good! ~name~ has had it too easy.</state>
+            </case>
+            <case tag="female_must_strip" target="catria" targetStage="0-2" notSaidMarker="greet_catria">
+                <test expr="~target.costume~" value="default" />
+                <state img="8-embarrassed.png" marker="greet_catria">I finally get to meet Lady C-Catria, and she sees me like this...</state>
+                <state img="8-horny.png" marker="greet_catria">I always wanted to meet you, Catria, b-but not like this...</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="8-awkward.png">You're making me so self-conscious.</state>
@@ -17179,6 +17528,10 @@
                 <state img="8-awkward.png">Um, what's the point to your ~clothing~ now?</state>
                 <state img="8-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="8-embarrassed.png">Okay. It's not like that's doing anything for you now...</state>
+            </case>
+            <case tag="female_removing_accessory" target="catria" targetStage="0">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="8-shocked.png">No! You can't take off those adorable ears!</state>
             </case>
             <case tag="female_removing_accessory" target="lyn" targetStage="0">
                 <test expr="~target.costume~" value="lynbride" />
@@ -17278,6 +17631,11 @@
                 <state img="8-awkward.png">Y-yeah, go back to something small.</state>
                 <state img="8-awkward.png">Better late than never, I guess?</state>
             </case>
+            <case tag="female_removed_accessory" target="catria">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="8-sad.png">I wish my bunny ears were stuck. I was having more fun with them on.</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="8-calm.png">I don't feel like running. That's... progress, right?</state>
                 <state img="8-happy.png">I'm doing it! I'm watching a... man... strip... Oh.</state>
@@ -17345,6 +17703,11 @@
                 <state img="8-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="8-awkward.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_minor" target="catria" targetStage="2">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="8-calm.png">I still can't over that bunny outfit. I wish I'd worn something like it.</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="8-angry.png">Th-this isn't quite going how I hoped...</state>
                 <state img="8-sad.png">I s-see. So you won't take pity on me. Next time...?</state>
@@ -17405,6 +17768,11 @@
                 <test expr="~clothing~" value="tights" />
                 <state img="8-calm.png" marker="item_socks">When I get nervous, I sometimes wiggle my toes to distract myself. Maybe you could try it?</state>
                 <state img="8-happy.png" marker="item_socks">You have pretty feet. That's... that's not a weird thing to say, right?</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="4" targetSaying="I already feel naked">
+                <test expr="~self.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="8-embarrassed.png">You too? It's a sh-shame, isn't it?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="8-sad.png">St-stay calm. You're showing more than that already. &lt;i&gt;That really doesn't help&lt;/i&gt;!</state>
@@ -17493,6 +17861,10 @@
                 <state img="8-nervous.png">These shots are getting a bit dangerous.</state>
                 <state img="8-horny.png">Um, where are these shells coming from exactly?</state>
                 <state img="8-awkward.png">Be careful, Shimakaze. This is getting close.</state>
+            </case>
+            <case tag="female_removing_major" target="catria" targetStage="4">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="8-rear.png">I promise I won't look if it embarrasses you.</state>
             </case>
             <case tag="female_removed_major">
                 <state img="8-calm.png">I think the anticipation is the hardest part.</state>
@@ -17995,6 +18367,17 @@
                 <state img="8-embarrassed.png" marker="butt_over">H-here I am. N-naked as the day I was born. Oh, even that's embarrassing to think about.</state>
                 <state img="8-calm.png" marker="butt_over">Okay, I c-can keep playing... I didn't lose this time, after all.</state>
             </case>
+            <case tag="opponent_stripping" target="lucina" targetStage="0">
+                <state img="8-embarrassed.png">Oh no, now I'll be able to see him looking at me...</state>
+                <state img="8-awkward.png">Y-you can keep the mask on. I can't see your gaze with it...</state>
+            </case>
+            <case tag="opponent_stripped" id="8-3" target="lucina" targetStage="1">
+                <state img="8-shocked.png">Wait, you're a &lt;i&gt;woman&lt;/i&gt;? Wh-what a relief.</state>
+                <state img="8-shocked.png">Huh? You're a woman?</state>
+            </case>
+            <case tag="opponent_stripped" target="lucina" targetStage="1" alsoPlaying="catria" alsoPlayingStage="8" alsoPlayingSayingMarker="lostMask">
+                <state img="8-awkward.png">Um, is Prince Marth someone you like by chance, Catria?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="8-sad.png">Th-this is scarier than flying into a group of archers.</state>
                 <state img="8-awkward.png">Do you want me to turn around? Um, I wouldn't mind if you say yes...</state>
@@ -18464,6 +18847,10 @@
                 <state img="9-shocked.png">Quick! Duck!</state>
                 <state img="9-shocked.png">Watch your head!</state>
             </case>
+            <case tag="female_removing_accessory" target="catria" targetStage="0">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="9-shocked.png">No! You can't take off those adorable ears!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="9-horny.png">I guess I still have a lot to improve, don't I?</state>
             </case>
@@ -18544,6 +18931,11 @@
             <case tag="female_removing_minor" target="shimakaze" targetStage="2">
                 <state img="9-shocked.png">Okay, I'm ready for the fi - are your socks &lt;i&gt;exploding&lt;/i&gt;?</state>
             </case>
+            <case tag="female_removing_minor" target="catria" targetStage="2">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="9-calm.png">I still can't over that bunny outfit. I wish I'd worn something like it.</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="9-nervous.png">Wow... how did you still have that much on?</state>
             </case>
@@ -18566,6 +18958,11 @@
             </case>
             <case tag="female_removed_minor" target="shimakaze" targetStage="3">
                 <state img="9-happy.png">The way you're talking... Are you actually a robot, like the cute little guy you had earlier?</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="4" targetSaying="I already feel naked">
+                <test expr="~self.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="9-embarrassed.png">You too? It's a sh-shame, isn't it?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="9-angry.png">No...I can't let that intimidate me now... I have to...finish what I started.</state>
@@ -18832,6 +19229,17 @@
             </case>
             <case tag="female_crotch_is_visible" target="sola">
                 <state img="9-sad.png">Oh, Sola. I'm sorry for you. But...I...think you're cute.</state>
+            </case>
+            <case tag="opponent_stripping" target="lucina" targetStage="0">
+                <state img="9-embarrassed.png">Oh no, now I'll be able to see him looking at me...</state>
+                <state img="9-awkward.png">Y-you can keep the mask on. I can't see your gaze with it...</state>
+            </case>
+            <case tag="opponent_stripped" id="9-3" target="lucina" targetStage="1">
+                <state img="9-shocked.png">Wait, you're a &lt;i&gt;woman&lt;/i&gt;? Wh-what a relief.</state>
+                <state img="9-shocked.png">Huh? You're a woman?</state>
+            </case>
+            <case tag="opponent_stripped" target="lucina" targetStage="1" alsoPlaying="catria" alsoPlayingStage="8" alsoPlayingSayingMarker="lostMask">
+                <state img="9-awkward.png">Um, is Prince Marth someone you like by chance, Catria?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="9-horny.png">W-wait... What's going on with ~name~? I-I've been too distracted.</state>
@@ -19242,6 +19650,10 @@
                 <state img="10-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="10-embarrassed.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_accessory" target="catria" targetStage="0">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <state img="10-shocked.png">No! You can't take off those adorable ears!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="10-embarrassed.png">Th-that's pretty impressive, considering my state.</state>
                 <state img="10-happy.png">You won't have something small like that to burn next time.</state>
@@ -19365,6 +19777,11 @@
                 <state img="10-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="10-awkward.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_minor" target="catria" targetStage="2">
+                <test expr="~target.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="10-calm.png">I still can't over that bunny outfit. I wish I'd worn something like it.</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="10-happy.png">Still going strong? Do you mind teaching me your strategy? I can give you a ride on my pegasus.</state>
                 <state img="10-nervous.png">Th-that won't help get people's eyes off me.</state>
@@ -19409,6 +19826,11 @@
                 <test expr="~clothing~" value="socks" />
                 <state img="10-awkward.png" marker="clothing_socks">Come to think of it, what happened to &lt;i&gt;my&lt;/i&gt; socks?</state>
                 <state img="10-embarrassed.png" marker="clothing_socks">Y-you know, I don't even remember taking off my own. I g-guess they slid off with the boots.</state>
+            </case>
+            <case tag="female_removed_minor" target="catria" targetStage="4" targetSaying="I already feel naked">
+                <test expr="~self.costume~" value="bunny_catria" />
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="10-embarrassed.png">You too? It's a sh-shame, isn't it?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="10-interested.png">S-still holding strong... No shrieks yet...</state>
@@ -19875,6 +20297,17 @@
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="10-shocked.png">How b-bold...</state>
                 <state img="10-embarrassed.png">That's what you chose for your first loss? Could you be feeling sorry for me?</state>
+            </case>
+            <case tag="opponent_stripping" target="lucina" targetStage="0">
+                <state img="10-embarrassed.png">Oh no, now I'll be able to see him looking at me...</state>
+                <state img="10-awkward.png">Y-you can keep the mask on. I can't see your gaze with it...</state>
+            </case>
+            <case tag="opponent_stripped" id="10-3" target="lucina" targetStage="1">
+                <state img="10-shocked.png">Wait, you're a &lt;i&gt;woman&lt;/i&gt;? Wh-what a relief.</state>
+                <state img="10-shocked.png">Huh? You're a woman?</state>
+            </case>
+            <case tag="opponent_stripped" target="lucina" targetStage="1" alsoPlaying="catria" alsoPlayingStage="8" alsoPlayingSayingMarker="lostMask">
+                <state img="10-awkward.png">Um, is Prince Marth someone you like by chance, Catria?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="10-sad.png">Th-this is scarier than flying into a group of archers.</state>
