@@ -1217,7 +1217,7 @@ $('.help-page-select').click(function (ev) {
     if (toPage === 'prev') {
         curPage = (curPage > 1) ? curPage-1 : 1;
     } else if (toPage === 'next') {
-        curPage = (curPage < 6) ? curPage+1 : 6;
+        curPage = (curPage < 7) ? curPage+1 : 7;
     } else {
         curPage = toPage;
     }
