@@ -1209,14 +1209,15 @@ function showHelpModal () {
 }
 
 $('.help-page-select').click(function (ev) {
+    console.log(ev.target);
     var toPage = $(ev.target).attr('data-select-page');
-    var curPage = $helpModal.find('.modal-body').attr('data-current-page');
-    curPage = parseInt(curPage, 10);
+    var curPage = $helpModal.attr('data-current-page');
+    curPage = parseInt(curPage, 10) || 1;
     
     if (toPage === 'prev') {
         curPage = (curPage > 1) ? curPage-1 : 1;
     } else if (toPage === 'next') {
-        curPage = (curPage < 5) ? curPage+1 : 5;
+        curPage = (curPage < 6) ? curPage+1 : 6;
     } else {
         curPage = toPage;
     }
@@ -1224,7 +1225,7 @@ $('.help-page-select').click(function (ev) {
     console.log(toPage);
     console.log(curPage);
     
-    $helpModal.find('.modal-body').attr('data-current-page', curPage);
+    $helpModal.attr('data-current-page', curPage);
     $('.help-page').hide();
     $('.help-page[data-page="'+curPage+'"]').show();
     $('.help-page-select').removeClass('active');
