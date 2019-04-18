@@ -1,4 +1,5 @@
-﻿using Desktop.CommonControls.PropertyControls;
+﻿using Desktop;
+using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
 using System;
 using System.ComponentModel;
@@ -6,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor.DataStructures
 {
-	public class Collectible : IComparable<Collectible>
+	public class Collectible : IRecord, IComparable<Collectible>
 	{
 		[Text(DisplayName = "Id", Description = "Unique identifier", GroupOrder = 0)]
 		[DefaultValue("")]
@@ -58,6 +59,28 @@ namespace SPNATI_Character_Editor.DataStructures
 		[XmlElement("counter")]
 		public int Counter;
 
+		public string Name
+		{
+			get
+			{
+				return Title;
+			}
+		}
+
+		public string Key
+		{
+			get { return Id; }
+			set { Id = value; }
+		}
+
+		public string Group
+		{
+			get
+			{
+				return "";
+			}
+		}
+
 		public override string ToString()
 		{
 			return Title;
@@ -66,6 +89,16 @@ namespace SPNATI_Character_Editor.DataStructures
 		public int CompareTo(Collectible other)
 		{
 			return Id.CompareTo(other.Id);
+		}
+
+		public string ToLookupString()
+		{
+			return $"{Title} [{Id}]";
+		}
+
+		public int CompareTo(IRecord other)
+		{
+			return Name.CompareTo(other.Name);
 		}
 	}
 }

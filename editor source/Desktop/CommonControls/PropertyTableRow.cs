@@ -111,6 +111,7 @@ namespace Desktop.CommonControls
 			lblName.Text = record.Name;
 			toolTip1.SetToolTip(lblName, record.Description);
 			EditControl = ctl;
+			ctl.ChangeLabel += EditControl_ChangeLabel;
 			EditControl.PropertyChanged += EditControl_PropertyChanged;
 			ctl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 			ctl.Dock = DockStyle.Fill;
@@ -122,9 +123,15 @@ namespace Desktop.CommonControls
 
 		public void Destroy()
 		{
+			EditControl.ChangeLabel -= EditControl_ChangeLabel;
 			EditControl.PropertyChanged -= EditControl_PropertyChanged;
 			EditControl.Destroy();
 			EditControl = null;
+		}
+
+		private void EditControl_ChangeLabel(object sender, string label)
+		{
+			lblName.Text = label;	
 		}
 
 		private void EditControl_PropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -37,6 +37,8 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			}
 			recField.UseAutoComplete = true;
 
+			recField.RecordKey = null;
+			txtValue.Text = "";
 			cboOperator.SelectedIndex = 0;
 
 			string pattern = @"^([-\w\.]+)(\*?)(\s*(\<|\>|\<\=|\>\=|\<\=|\=\=?)\s*([-\w]+|~[-\w]+~))?$";
