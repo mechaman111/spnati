@@ -78,10 +78,10 @@ function Collectible(xmlElem, player) {
 	this.id = xmlElem.attr('id');
 	this.thumbnail = xmlElem.attr('thumbnail');
     this.image = xmlElem.attr('img');
-	this.title = xmlElem.find('title').text();
-	this.subtitle = xmlElem.find('subtitle').text();	
-	this.unlock_hint = xmlElem.find('unlock').text();
-	this.text = xmlElem.find('text').html();
+	this.title = unescapeHTML(xmlElem.find('title').text());
+	this.subtitle = unescapeHTML(xmlElem.find('subtitle').text());	
+	this.unlock_hint = unescapeHTML(xmlElem.find('unlock').text());
+	this.text = unescapeHTML(xmlElem.find('text').html());
     this.detailsHidden = xmlElem.find('hide-details').text() === 'true';
     this.hidden = xmlElem.find('hidden').text() === 'true';
     this.counter = parseInt(xmlElem.find('counter').text(), 10) || undefined;
@@ -127,15 +127,15 @@ Collectible.prototype.setCounter = function (val) {
 
 Collectible.prototype.display = function () {
     if ((!this.detailsHidden && !this.hidden) || this.isUnlocked()) {
-        $collectibleTitle.html(unescapeHTML(this.title));
-        $collectibleSubtitle.html(unescapeHTML(this.subtitle)).show();
+        $collectibleTitle.html(this.title);
+        $collectibleSubtitle.html(this.subtitle).show();
     } else {
         $collectibleTitle.html("[Locked]");
         $collectibleSubtitle.html("").hide();
     }
     
     $collectibleCharacter.text(this.source);
-    $collectibleUnlock.html(unescapeHTML(this.unlock_hint));
+    $collectibleUnlock.html(this.unlock_hint);
     
     if (this.counter) {
         var curCounter = this.getCounter();
@@ -155,7 +155,7 @@ Collectible.prototype.display = function () {
     $collectibleTextPane.show();
     
     if (this.isUnlocked()) {
-    	$collectibleText.html(unescapeHTML(this.text));
+    	$collectibleText.html(this.text);
         $collectibleTextContainer.show();
     	
     	if (this.image) {
@@ -181,11 +181,11 @@ Collectible.prototype.listElement = function () {
 	var subtitleElem = $('<div class="collectibles-item-subtitle"></div>');
 	
     if (!this.detailsHidden || this.isUnlocked()) {
-        titleElem.html(unescapeHTML(this.title));
-    	subtitleElem.html(unescapeHTML(this.subtitle));
+        titleElem.html(this.title);
+    	subtitleElem.html(this.subtitle);
     } else {
         titleElem.html("[Locked]");
-        subtitleElem.html(unescapeHTML(this.unlock_hint));
+        subtitleElem.html(this.unlock_hint);
     }
     
     if (this.counter) {
@@ -203,6 +203,19 @@ Collectible.prototype.listElement = function () {
 	baseElem.append(imgElem, titleElem, subtitleElem).click(this.display.bind(this));
 	return baseElem;
 };
+
+Collectible.prototype.displayInfoModal = function () {
+    $('#collectible-info-thumbnail').attr('src', this.thumbnail);
+    $('#collectible-info-title').html(this.title);
+    $('#collectible-info-subtitle').html(this.subtitle);
+    
+    $collectibleInfoModal.modal('show');
+    
+    /* Hide the modal if the user clicks anywhere outside of it. */
+    $('.modal-backdrop').one('click', function () {
+        $collectibleInfoModal.modal('hide');
+    })
+}
 
 
 /**********************************************************************

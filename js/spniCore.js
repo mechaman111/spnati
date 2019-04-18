@@ -92,6 +92,7 @@ $gameSettingsModal = $('#game-settings-modal');
 $bugReportModal = $('#bug-report-modal');
 $usageTrackingModal = $('#usage-reporting-modal');
 $playerTagsModal = $('#player-tags-modal');
+$collectibleInfoModal = $('#collectibles-info-modal');
 
 /* Screen State */
 $previousScreen = null;
