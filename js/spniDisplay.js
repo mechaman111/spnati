@@ -151,6 +151,16 @@ PoseAnimation.prototype.update = function (dt) {
     if (this.looped && this.isComplete()) { this.elapsed -= this.duration; }
     var t = (this.elapsed - this.delay);
     if (t < 0) return;
+    if (this.duration === 0) {
+        t = 1;
+    }
+    else {
+        var easingFunction = this.ease;
+        t /= this.duration;
+        t = Math.min(1, t);
+        t = Animation.prototype.easingFunctions[easingFunction](t)
+        t *= this.duration;  
+    }
     
     // Find current keyframe pair and update
     for (var i=this.keyframes.length-1;i>=0;i--) {
@@ -160,8 +170,6 @@ PoseAnimation.prototype.update = function (dt) {
         var lastFrame = (i > 0) ? this.keyframes[i-1] : frame;
         var progress = (t - frame.startTime) / (frame.time - frame.startTime);
         progress = (t <= 0) ? 0 : Math.min(1, Math.max(0, progress));
-        
-        progress = Animation.prototype.easingFunctions[this.ease](progress);
         
         this.updateSprite(lastFrame, frame, progress, i);
         return;
