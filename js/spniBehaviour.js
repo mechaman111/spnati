@@ -1351,6 +1351,10 @@ Opponent.prototype.commitBehaviourUpdate = function () {
                     break;
                 }
                 
+                if (collectible.isUnlocked()) {
+                    this.pendingCollectiblePopup = collectible;
+                }
+                
                 return true;
             }
         }.bind(this));

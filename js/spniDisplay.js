@@ -660,12 +660,22 @@ function GameScreenDisplay (slot) {
     );
     
     this.opponentArea = $('#game-opponent-area-'+slot);
+    this.collectibleIndicator = $('#collectible-button-'+slot);
+    
+    this.collectibleIndicator.click(this.onCollectibleIndicatorClick.bind(this));
 }
 GameScreenDisplay.prototype = Object.create(OpponentDisplay.prototype);
 GameScreenDisplay.prototype.constructor = GameScreenDisplay;
 
 GameScreenDisplay.prototype.reset = function (player) {
     clearHand(this.slot);
+    
+    /* Keep a reference to the player
+     * (for handling collectible indicator clicks)
+     */
+    this.player = player;
+    this.collectibleIndicator.hide();
+    
     if (player) {
         this.opponentArea.show();
         this.imageArea.css({
@@ -679,6 +689,26 @@ GameScreenDisplay.prototype.reset = function (player) {
     }
 }
 
+GameScreenDisplay.prototype.update = function (player) {
+    this.player = player;
+    OpponentDisplay.prototype.update.call(this, player);
+    
+    if (player && player.pendingCollectiblePopup) {
+        this.collectibleIndicator.show();
+    } else {
+        this.collectibleIndicator.hide();
+    }
+}
+
+GameScreenDisplay.prototype.onCollectibleIndicatorClick = function (ev) {
+    if (!this.player || !this.player.pendingCollectiblePopup) return;
+    
+    var collectible = this.player.pendingCollectiblePopup;
+    
+    this.player.pendingCollectiblePopup = null;
+    this.collectibleIndicator.hide();
+    collectible.displayInfoModal();
+}
 
 /* Wraps logic for handling the Main Select screen displays. */
 function MainSelectScreenDisplay (slot) {

@@ -505,6 +505,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.default_costume = null;
     this.poses = {};
     this.labelOverridden = false;
+    this.pendingCollectiblePopup = null;
     
     /* baseTags stores tags that will be later used in resetState to build the
      * opponent's true tags list. It does not store implied tags.
