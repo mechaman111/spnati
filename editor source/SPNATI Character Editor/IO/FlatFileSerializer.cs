@@ -339,6 +339,14 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += $",set-size:{defaultLine.Size}";
 					}
+					if (!string.IsNullOrEmpty(defaultLine.CollectibleId))
+					{
+						lineCode += $",collectible:{defaultLine.CollectibleId}";
+					}
+					if (!string.IsNullOrEmpty(defaultLine.CollectibleValue))
+					{
+						lineCode += $",collectible-value:{defaultLine.CollectibleValue}";
+					}
 					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~silent~" : defaultLine.Text;
 					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Image, text));
 				}
@@ -1336,6 +1344,12 @@ namespace SPNATI_Character_Editor
 						break;
 					case "set-size":
 						line.Size = value;
+						break;
+					case "collectible":
+						line.CollectibleId = value;
+						break;
+					case "collectible-value":
+						line.CollectibleValue = value;
 						break;
 					case "id":
 						int id;

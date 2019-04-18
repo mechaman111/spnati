@@ -50,6 +50,14 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public bool IsGenericImage;
 
+		[DefaultValue("")]
+		[XmlAttribute("collectible")]
+		public string CollectibleId;
+
+		[DefaultValue("")]
+		[XmlAttribute("collectible-value")]
+		public string CollectibleValue;
+
 		public DialogueLine()
 		{
 			Image = "";

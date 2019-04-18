@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
@@ -114,6 +115,9 @@ namespace SPNATI_Character_Editor
 
 		[XmlAnyElement]
 		public List<System.Xml.XmlElement> ExtraXml;
+
+		[XmlIgnore]
+		public CollectibleData Collectibles = new CollectibleData();
 
 		private bool _built;
 

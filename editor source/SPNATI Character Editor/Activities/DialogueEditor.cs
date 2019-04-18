@@ -559,6 +559,8 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			tableConditions.AddSpeedButton("Self", "Costume", (data) => { return AddVariableTest("~self.costume~", data); });
 			tableConditions.AddSpeedButton("Self", "Slot", (data) => { return AddVariableTest("~self.slot~", data); });
+			tableConditions.AddSpeedButton("Self", "Collectible (Unlocked)", (data) => { return AddVariableTest("~collectible.*~", data); });
+			tableConditions.AddSpeedButton("Self", "Collectible (Count)", (data) => { return AddVariableTest("~collectible.*.counter~", data); });
 			if (caseTrigger.HasTarget)
 			{
 				if (caseTrigger.AvailableVariables.Contains("clothing"))
@@ -570,11 +572,15 @@ namespace SPNATI_Character_Editor.Activities
 				tableConditions.AddSpeedButton("Target", "Position", (data) => { return AddVariableTest("~target.position~", data); });
 				tableConditions.AddSpeedButton("Target", "Size", (data) => { return AddVariableTest("~target.size~", data); });
 				tableConditions.AddSpeedButton("Target", "Slot", (data) => { return AddVariableTest("~target.slot~", data); });
+				tableConditions.AddSpeedButton("Target", "Collectible (Unlocked)", (data) => { return AddVariableTest("~target.collectible.*~", data); });
+				tableConditions.AddSpeedButton("Target", "Collectible (Count)", (data) => { return AddVariableTest("~target.collectible.*.counter~", data); });
 			}
 			tableConditions.AddSpeedButton("Also Playing", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Position", (data) => { return AddVariableTest("~_.position~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Slot", (data) => { return AddVariableTest("~_.slot~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Tag", (data) => { return AddVariableTest("~_.tag~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Collectible (Unlocked)", (data) => { return AddVariableTest("~_.collectible.*~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Collectible (Count)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
 		}
 
 		private string AddVariableTest(string variable, object data)

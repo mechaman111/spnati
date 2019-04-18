@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
@@ -22,6 +15,7 @@ namespace SPNATI_Character_Editor.Forms
 			SpnatiConfig config = SpnatiConfig.Instance;
 			chkDebug.Checked = config.Debug;
 			chkEpilogues.Checked = config.EpiloguesUnlocked;
+			chkCollectibles.Checked = config.CollectiblesUnlocked;
 		}
 
 		private void cmdOK_Click(object sender, EventArgs e)
@@ -29,6 +23,7 @@ namespace SPNATI_Character_Editor.Forms
 			SpnatiConfig config = SpnatiConfig.Instance;
 			config.Debug = chkDebug.Checked;
 			config.EpiloguesUnlocked = chkEpilogues.Checked;
+			config.CollectiblesUnlocked = chkCollectibles.Checked;
 			DialogResult = DialogResult.OK;
 			if (Serialization.ExportConfig())
 			{

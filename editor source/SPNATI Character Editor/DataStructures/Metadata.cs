@@ -67,6 +67,9 @@ namespace SPNATI_Character_Editor
 		[XmlElement("alternates")]
 		public List<AlternateSkin> AlternateSkins = new List<AlternateSkin>();
 
+		[XmlElement("has_collectibles")]
+		public bool HasCollectibles;
+
 		public Metadata()
 		{
 		}
@@ -106,6 +109,7 @@ namespace SPNATI_Character_Editor
 					|| !string.IsNullOrWhiteSpace(e.AlsoPlayingNotMarkers)
 			});
 			Tags = c.Tags;
+			HasCollectibles = c.Collectibles.Count > 0;
 		}
 
 		public void OnBeforeSerialize()
