@@ -1325,7 +1325,7 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         this.updateTags();
     }
     
-    if (this.chosenState.collectible && this.collectibles) {        
+    if (COLLECTIBLES_ENABLED && this.chosenState.collectible && this.collectibles) {        
         this.collectibles.some(function (collectible) {
             if (collectible.id === this.chosenState.collectible.id) {
                 console.log(
@@ -1351,7 +1351,7 @@ Opponent.prototype.commitBehaviourUpdate = function () {
                     break;
                 }
                 
-                if (collectible.isUnlocked()) {
+                if (collectible.isUnlocked() && !COLLECTIBLES_UNLOCKED) {
                     this.pendingCollectiblePopup = collectible;
                 }
                 
