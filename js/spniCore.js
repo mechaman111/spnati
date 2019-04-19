@@ -23,6 +23,7 @@ var BASE_SCREEN_WIDTH = 100;
 var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
 var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
 
+var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;
 
 /* Game Wide Constants */
@@ -44,6 +45,7 @@ var FEMALE_SYMBOL = IMG + 'female.png';
 var includedOpponentStatuses = {};
 var alternateCostumeSets = {};
 
+var versionInfo = null;
 
 /* game table */
 var tableOpacity = 1;
@@ -890,6 +892,7 @@ function initialSetup () {
     /* load the all content */
     loadTitleScreen();
     selectTitleCandy();
+    loadVersionInfo();
 	/* Make sure that the config file is loaded before processing the
 	   opponent list, so that includedOpponentStatuses is populated. */
     loadConfigFile().always(loadSelectScreen);
@@ -920,6 +923,23 @@ function initialSetup () {
         });
         bubbleArrowOffsetRules.push(pair);
     }
+}
+
+function loadVersionInfo () {
+    $('.substitute-version').text('Unknown Version');
+    
+    return $.ajax({
+        type: "GET",
+		url: "version-info.xml",
+		dataType: "text",
+		success: function(xml) {
+            versionInfo = $(xml);
+            CURRENT_VERSION = versionInfo.find('current').attr('version');
+            
+            $('.substitute-version').text('v'+CURRENT_VERSION);
+            console.log("Running SPNATI version "+CURRENT_VERSION);
+        }
+    });
 }
 
 
@@ -1253,6 +1273,48 @@ function showCreditModal () {
  * The player clicked the version button. Shows the version modal.
  ************************************************************/
 function showVersionModal () {
+    var $changelog = $('#changelog-container');
+    var entries = [];
+    
+    /* Get changelog info: */
+    versionInfo.find('changelog > version').each(function (idx, elem) {
+        entries.push({
+            version: $(elem).attr('number'),
+            timestamp: parseInt($(elem).attr('timestamp'), 10) || undefined,
+            text: $(elem).text()
+        });
+    });
+    
+    /* Construct the version modal DOM: */
+    $changelog.empty().append(entries.sort(function (e1, e2) {
+        // Sort in reverse lexographical order
+        return (e1.version < e2.version) ? 1 : -1;
+    }).map(function (ent) {
+        var row = document.createElement('tr');
+        var versionCell = document.createElement('td');
+        var dateCell = document.createElement('td');
+        var logTextCell = document.createElement('td');
+        
+        versionCell.className = 'changelog-version-label';
+        dateCell.className = 'changelog-date-label';
+        logTextCell.className = 'changelog-entry-text';
+        
+        if (ent.timestamp) {
+            var date = new Date(ent.timestamp);
+            var locale = window.navigator.userLanguage || window.navigator.language
+            dateCell.innerText = date.toLocaleDateString(locale, {month: 'long', day: 'numeric', year: 'numeric'});
+        }
+        
+        versionCell.innerText = ent.version;
+        logTextCell.innerText = ent.text;
+        
+        row.appendChild(versionCell);
+        row.appendChild(dateCell);
+        row.appendChild(logTextCell);
+        
+        return row;
+    }));
+    
     $versionModal.modal('show');
 }
 
