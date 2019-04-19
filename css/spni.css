@@ -854,6 +854,8 @@ body.modal-open {
  * Classes for the title screen.
  ************************************************************/
 
+/* Common title classes and elements: */
+
 .banner-flair {
     text-align: center;
     font-size: 110%;
@@ -917,6 +919,67 @@ body.modal-open {
     left: 25%;
     width: 50%;
     bottom: 0;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-menu-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 100%;
+}
+
+#warning-screen .title-menu-buttons-container {
+    margin-top: 6%;
+}
+
+.title-content-button {
+    background: #F0F0F0;
+    opacity: 0.4;
+}
+
+.title-content-button :hover {
+    background: #FFFFFF;
+}
+
+.title-content-button :active {
+    background: #F0F0F0;
+}
+
+/* Main title screen blocks: */
+
+#title-name-block {
+    height: 16%;
+    width: 80%;
+}
+
+.title-gender-size-container {
+    width: 80%;
+    height: 10.92%;
+    display: flex;
+}
+
+.title-size-block {
+    width: 60%;
+    margin-left: auto;
+    
+    display: flex;
+    justify-content: flex-end;
+}
+
+#title-wardrobe-block {
+    width: 90%;
+    margin-top: 2.5%;
+}
+
+/* Name / Gender / Size block elements: */
+
+.title-gender-button {
+    width: 16.875%;
 }
 
 .title-label {
@@ -933,29 +996,7 @@ body.modal-open {
 		1px 1px 0 #000;
 }
 
-.title-content-button {
-    background: #F0F0F0;
-    opacity: 0.4;
-}
-
-.title-content-button :hover {
-    background: #FFFFFF;
-}
-
-.title-content-button :active {
-    background: #F0F0F0;
-}
-
-#title-name-block {
-   position: absolute;
-    width: 80%;
-    height: 16%;
-    top: 0;
-    margin-left: 10%;
-}
-
 #player-name-field {
-	position: absolute;
     width: 100%;
     height: 60%;
     text-align: center;
@@ -963,29 +1004,12 @@ body.modal-open {
     background: rgba(240, 240, 240, 1);
 }
 
-#title-gender-block {
-    position: absolute;
-    width: 30%;
-    top: 16.5%;
-    margin-left: 10%;
-}
-
-#male-gender-button {
-    position: relative;
-    width: 45%;
-    top: 0;
-    right: 0;
+#female-gender-button {
+    margin-left: 1%;
 }
 
 .main-title-container.male #male-gender-button {
     opacity: 1;
-}
-
-#female-gender-button {
-    position: relative;
-    width: 45%;
-    top: 0;
-    right: 0;
 }
 
 .main-title-container.female #female-gender-button {
@@ -1008,14 +1032,6 @@ body.modal-open {
     display: none;
 }
 
-.title-size-block {
-    position: absolute;
-    width: 45%;
-    top: 16.5%;
-    right: 0;
-    margin-right: 7.25%;
-}
-
 .small > .title-small-button {
     opacity: 1;
 }
@@ -1028,27 +1044,11 @@ body.modal-open {
     opacity: 1;
 }
 
-.title-small-button {
-    position: relative;
+.title-size-button {
     width: 30%;
 }
 
-.title-medium-button {
-    position: relative;
-    width: 30%;
-}
-
-.title-large-button {
-    position: relative;
-    width: 30%;
-}
-
-#title-wardrobe-block {
-    position: absolute;
-    width: 90%;
-    top: 30%;
-    margin-left: 5%;
-}
+/* Title clothing block elements: */
 
 .title-clothing-container {
     margin-top: 1%;
@@ -1083,22 +1083,33 @@ body.modal-open {
     width: 15.7%;
 }
 
-#title-start-edge {
-    position: absolute;
+/* Gallery / Start / Tag button elements: */
+
+.centered-icon-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.centered-icon-image {
+	width: 55%;
+	height: auto;
+}
+
+.centered-icon-glyphicon {
+	width: 2em;
+	height: auto;
+    font-size: 1.25em;
+}
+
+.title-start-edge {
     width: 36%;
-    height: 15%;
-    bottom: 6%;
-    /*right: 6%;*/
-	left: 32%;
     font-size: 200%;
     padding: 0.5%;
     background: linear-gradient(#222222, #111111);
 }
 
-#title-start-button {
-	position: absolute;
-    width: 97%;
-    height: 95%;
+.title-start-button {
     padding-left: 2%;
     padding-right: 3%;
     font-size: 200%;
@@ -1110,25 +1121,20 @@ body.modal-open {
     width: 90%;
 }
 
-#title-gallery-edge {
-    position: absolute;
-	/*
-	width: 11%;
-	height: 8.5%;
-	*/
-	width: 24%;
-	height: 15%;
-	bottom: 6%;
-	left: 6%;
+.title-gallery-edge {
+	width: 20%;
+    height: 80%;
+    
 	font-size: 200%;
 	padding: 0.2%;
     background: linear-gradient(#222222, #111111);
+    
+    margin-right: 6.25%;
 }
 
-#title-gallery-button {
-	position: absolute;
-    width: 97%;
-    height: 95%;
+.title-gallery-button {
+    height: 100%;
+    
 	padding-top: 1%;
 	padding-bottom: 1%;
     padding-left: 2%;
@@ -1136,29 +1142,21 @@ body.modal-open {
     font-size: 200%;
 }
 
-.title-gallery-image {
-	position: absolute;
-	top: 20%;
-	left: 35%;
-	width: 30%;
-	height: auto;
-}
-
-#title-tags-edge {
-    position: absolute;
-	width: 11%;
-	height: 8.5%;
-	bottom: 6%;
-	right: 0%;
+.title-tags-edge {
+    width: 20%;
+    height: 80%;
+    
 	font-size: 200%;
 	padding: 0.2%;
     background: linear-gradient(#222222, #111111);
+    
+    margin-left: 6.25%;
 }
 
-#title-tags-button {
-	position: absolute;
-    width: 97%;
-    height: 95%;
+.title-tags-button {
+    width: 100%;
+    height: 100%;
+    
     padding-left: 3%;
     padding-right: 2%;
     font-size: 100%;
