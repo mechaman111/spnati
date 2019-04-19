@@ -5,7 +5,7 @@ pages:
   # list of files, keeping the directory structure.
   # Include *.js and *.css to accomodate Monika.
   - mkdir -p .public/opponents
-  - cp -r css fonts img js player index.html .public
+  - cp -r css fonts img js player index.html version-info.xml .public
   - sed "s/__CI_COMMIT_SHA/${CI_COMMIT_SHA}/g" prod-config.xml > .public/config.xml
   - cp opponents/listing.xml .public/opponents
   - find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" | tar -cT - | tar -C .public -x
