@@ -1,16 +1,18 @@
 ﻿using SPNATI_Character_Editor.DataStructures;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System;
+using SPNATI_Character_Editor.Providers;
 
 namespace SPNATI_Character_Editor
 {
-	public partial class CollectibleControl : SubVariableControl
+	public partial class CollectibleCountControl : SubVariableControl
 	{
 		private ExpressionTest _expression;
-		private string _wildcardVariable = "~collectible.*~";
+		private string _wildcardVariable = "~collectible.*.counter~";
 		private TargetMode _mode = TargetMode.Self;
 
-		public CollectibleControl()
+		public CollectibleCountControl()
 		{
 			InitializeComponent();
 
@@ -25,17 +27,17 @@ namespace SPNATI_Character_Editor
 			{
 				_mode = TargetMode.Self;
 				recField.RecordContext = Context;
-				_wildcardVariable = "~collectible.*~";
+				_wildcardVariable = "~collectible.*.counter~";
 			}
 			else if (_expression.Expression.StartsWith("~target.collectible."))
 			{
 				_mode = TargetMode.Target;
 				SetTargetContext();
-				_wildcardVariable = "~target.collectible.*~";
+				_wildcardVariable = "~target.collectible.*.counter~";
 			}
 			recField.RecordKey = null;
 
-			string pattern = _wildcardVariable.Replace("*", "([^~]*)");
+			string pattern = _wildcardVariable.Replace("*", "([^.~]*)");
 			Match match = Regex.Match(_expression.Expression, pattern);
 			if (match.Success)
 			{
@@ -43,11 +45,26 @@ namespace SPNATI_Character_Editor
 				if (!string.IsNullOrEmpty(key) && key != "*")
 				{
 					recField.RecordKey = key;
+					if (recField.RecordKey == null)
+					{
+						CollectibleProvider provider = new CollectibleProvider();
+						provider.Create(key);
+						recField.RecordKey = key;
+					}
 				}
 			}
 
-			radLocked.Checked = _expression.Value == "false";
-			radUnlocked.Checked = _expression.Value != "false";
+			try
+			{
+				cboOperator.SelectedItem = _expression.Operator ?? "==";
+			}
+			catch
+			{
+				cboOperator.SelectedItem = "==";
+			}
+			int count;
+			int.TryParse(_expression.Value, out count);
+			valCounter.Value = Math.Max(valCounter.Minimum, Math.Min(valCounter.Maximum, count));
 			OnAddedToRow();
 		}
 
@@ -76,21 +93,21 @@ namespace SPNATI_Character_Editor
 
 		public override void OnAddedToRow()
 		{
-			OnChangeLabel(_mode == TargetMode.Self ? "Collectible" : _mode == TargetMode.Target ? "Target Collectible" : "Also Playing Collectible");
+			OnChangeLabel(_mode == TargetMode.Self ? "Collectible (Counter)" : _mode == TargetMode.Target ? "Target Collectible (Counter)" : "Other Collectible (Counter)");
 		}
 
 		protected override void AddHandlers()
 		{
 			recField.RecordChanged += RecField_RecordChanged;
-			radLocked.CheckedChanged += RadLocked_CheckedChanged;
-			radUnlocked.CheckedChanged += RadLocked_CheckedChanged;
+			cboOperator.SelectedIndexChanged += Field_ValueChanged;
+			valCounter.ValueChanged += Field_ValueChanged;
 		}
 
 		protected override void RemoveHandlers()
 		{
 			recField.RecordChanged -= RecField_RecordChanged;
-			radLocked.CheckedChanged -= RadLocked_CheckedChanged;
-			radUnlocked.CheckedChanged -= RadLocked_CheckedChanged;
+			cboOperator.SelectedIndexChanged -= Field_ValueChanged;
+			valCounter.ValueChanged -= Field_ValueChanged;
 		}
 
 		public override void ApplyMacro(List<string> values)
@@ -110,7 +127,7 @@ namespace SPNATI_Character_Editor
 		{
 			Save();	
 		}
-		private void RadLocked_CheckedChanged(object sender, System.EventArgs e)
+		private void Field_ValueChanged(object sender, System.EventArgs e)
 		{
 			Save();
 		}
@@ -124,17 +141,9 @@ namespace SPNATI_Character_Editor
 			}
 			string expression = _wildcardVariable.Replace("*", key);
 			_expression.Expression = expression;
-			_expression.Operator = "==";
-			if (radLocked.Checked)
-			{
-				_expression.Value = "false";
-			}
-			else
-			{
-				_expression.Value = "true";
-			}
+			_expression.Operator = cboOperator.Text;
+			_expression.Value = valCounter.Value.ToString();
 
-			base.Save();
 		}
 
 		private enum TargetMode

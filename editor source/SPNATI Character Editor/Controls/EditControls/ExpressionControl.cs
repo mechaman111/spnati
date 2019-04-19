@@ -181,6 +181,7 @@ namespace SPNATI_Character_Editor
 					if (variable.EndsWith(".counter~"))
 					{
 						//self collectible counter check
+						_subcontrol = new CollectibleCountControl();
 					}
 					else
 					{
@@ -197,6 +198,7 @@ namespace SPNATI_Character_Editor
 					if (variable.EndsWith(".counter~"))
 					{
 						//target collectible counter check
+						_subcontrol = new CollectibleCountControl();
 					}
 					else
 					{
@@ -209,6 +211,7 @@ namespace SPNATI_Character_Editor
 					if (variable.Contains(".counter~"))
 					{
 						//also playing collectible counter check
+						_subcontrol = new CharacterCollectibleCountControl();
 					}
 					else
 					{

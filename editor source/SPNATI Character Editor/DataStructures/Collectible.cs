@@ -2,6 +2,7 @@
 using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -58,6 +59,12 @@ namespace SPNATI_Character_Editor.DataStructures
 		[DefaultValue(0)]
 		[XmlElement("counter")]
 		public int Counter;
+
+		[XmlIgnore]
+		public Character Character;
+
+		[XmlIgnore]
+		public List<Case> LinkedCases = new List<Case>();
 
 		public string Name
 		{

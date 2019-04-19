@@ -47,12 +47,12 @@ namespace SPNATI_Character_Editor.Activities
 			lstCollectibles.Items.Clear();
 			foreach (Collectible c in _character.Collectibles.Collectibles)
 			{
-				AddCollectible(c);
+				AddCollectible(c, false);
 			}
 			lstCollectibles.Sort();
 		}
 
-		private void AddCollectible(Collectible c)
+		private void AddCollectible(Collectible c, bool select)
 		{
 			ListViewItem item = new ListViewItem(c.Title);
 			item.Tag = c;
@@ -70,9 +70,13 @@ namespace SPNATI_Character_Editor.Activities
 				item.ImageKey = "???";
 			}
 			lstCollectibles.Items.Add(item);
+			if (select)
+			{
+				item.Selected = true;
+			}
 		}
 
-		private static Bitmap GetImage(string src)
+		public static Bitmap GetImage(string src)
 		{
 			if (string.IsNullOrEmpty(src)) { return null; }
 			Bitmap img = null;
@@ -100,7 +104,7 @@ namespace SPNATI_Character_Editor.Activities
 				Title = "New Collectible"
 			};
 			_character.Collectibles.Add(c);
-			AddCollectible(c);
+			AddCollectible(c, true);
 		}
 
 		private void tsRemove_Click(object sender, EventArgs e)

@@ -24,5 +24,10 @@ namespace SPNATI_Character_Editor.DataStructures
 		{
 			Collectibles.Remove(collectible);
 		}
+
+		public Collectible Get(string id)
+		{
+			return Collectibles.Find(c => c.Id == id);
+		}
 	}
 }

@@ -11,6 +11,8 @@ namespace SPNATI_Character_Editor.Providers
 
 		public bool AllowsNew { get { return true; } }
 
+		private static List<Collectible> _genericCollectibles = new List<Collectible>();
+
 		public void SetContext(object context)
 		{
 			_character = context as Character;
@@ -24,6 +26,10 @@ namespace SPNATI_Character_Editor.Providers
 			if (_character != null)
 			{
 				_character.Collectibles.Add(collectible);
+			}
+			else
+			{
+				_genericCollectibles.Add(collectible);
 			}
 			return collectible;
 		}
@@ -55,11 +61,15 @@ namespace SPNATI_Character_Editor.Providers
 		public List<IRecord> GetRecords(string text)
 		{
 			text = text.ToLower();
+			List<Collectible> source = _genericCollectibles;
 			var list = new List<IRecord>();
 
-			if (_character == null) { return list; }
+			if (_character != null)
+			{
+				source = _character.Collectibles.Collectibles;
+			}
 
-			foreach (Collectible record in _character.Collectibles.Collectibles)
+			foreach (Collectible record in source)
 			{
 				if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text))
 				{

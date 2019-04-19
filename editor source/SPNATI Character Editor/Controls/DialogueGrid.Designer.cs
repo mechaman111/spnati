@@ -42,6 +42,7 @@
 			this.ColSize = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColDirection = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColTrophy = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
 			this.SuspendLayout();
@@ -69,6 +70,7 @@
             this.ColSize,
             this.ColDirection,
             this.ColLocation,
+			this.ColTrophy,
             this.ColDelete});
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -192,6 +194,12 @@
 			this.ColLocation.Visible = false;
 			this.ColLocation.Width = 60;
 			// 
+			// ColTrophy
+			// 
+			this.ColTrophy.HeaderText = "";
+			this.ColTrophy.Name = "ColTrophy";
+			this.ColTrophy.Width = 21;
+			// 
 			// ColDelete
 			// 
 			this.ColDelete.HeaderText = "";
@@ -225,6 +233,7 @@
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColSize;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColDirection;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColLocation;
+		private System.Windows.Forms.DataGridViewButtonColumn ColTrophy;
 		private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
 	}
 }

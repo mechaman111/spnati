@@ -31,10 +31,10 @@
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.lstCollectibles = new System.Windows.Forms.ListView();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-			this.table = new Desktop.CommonControls.PropertyTable();
 			this.tsAdd = new System.Windows.Forms.ToolStripButton();
 			this.tsRemove = new System.Windows.Forms.ToolStripButton();
+			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.table = new Desktop.CommonControls.PropertyTable();
 			this.picPreview = new System.Windows.Forms.PictureBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -70,7 +70,9 @@
 			// lstCollectibles
 			// 
 			this.lstCollectibles.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstCollectibles.HideSelection = false;
 			this.lstCollectibles.Location = new System.Drawing.Point(0, 25);
+			this.lstCollectibles.MultiSelect = false;
 			this.lstCollectibles.Name = "lstCollectibles";
 			this.lstCollectibles.Size = new System.Drawing.Size(197, 595);
 			this.lstCollectibles.TabIndex = 1;
@@ -79,6 +81,7 @@
 			// 
 			// toolStrip1
 			// 
+			this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsAdd,
             this.tsRemove});
@@ -87,6 +90,26 @@
 			this.toolStrip1.Size = new System.Drawing.Size(197, 25);
 			this.toolStrip1.TabIndex = 0;
 			this.toolStrip1.Text = "toolStrip1";
+			// 
+			// tsAdd
+			// 
+			this.tsAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAdd.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
+			this.tsAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAdd.Name = "tsAdd";
+			this.tsAdd.Size = new System.Drawing.Size(23, 22);
+			this.tsAdd.Text = "Add Collectible";
+			this.tsAdd.Click += new System.EventHandler(this.tsAdd_Click);
+			// 
+			// tsRemove
+			// 
+			this.tsRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsRemove.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
+			this.tsRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsRemove.Name = "tsRemove";
+			this.tsRemove.Size = new System.Drawing.Size(23, 22);
+			this.tsRemove.Text = "Remove Collectible";
+			this.tsRemove.Click += new System.EventHandler(this.tsRemove_Click);
 			// 
 			// splitContainer2
 			// 
@@ -129,26 +152,6 @@
 			this.table.UndoManager = null;
 			this.table.UseAutoComplete = false;
 			this.table.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.table_PropertyChanged);
-			// 
-			// tsAdd
-			// 
-			this.tsAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsAdd.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
-			this.tsAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsAdd.Name = "tsAdd";
-			this.tsAdd.Size = new System.Drawing.Size(23, 22);
-			this.tsAdd.Text = "Add Collectible";
-			this.tsAdd.Click += new System.EventHandler(this.tsAdd_Click);
-			// 
-			// tsRemove
-			// 
-			this.tsRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsRemove.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
-			this.tsRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsRemove.Name = "tsRemove";
-			this.tsRemove.Size = new System.Drawing.Size(23, 22);
-			this.tsRemove.Text = "Remove Collectible";
-			this.tsRemove.Click += new System.EventHandler(this.tsRemove_Click);
 			// 
 			// picPreview
 			// 
