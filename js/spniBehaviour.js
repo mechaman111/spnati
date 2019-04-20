@@ -322,6 +322,43 @@ State.prototype.expandDialogue = function(self, target) {
     this.dialogue = expandDialogue(this.rawDialogue, self, target);
 }
 
+State.prototype.applyCollectible = function (player) {
+    if (COLLECTIBLES_ENABLED && this.collectible && player.collectibles) {        
+        player.collectibles.some(function (collectible) {
+            if (collectible.id === this.collectible.id) {
+                console.log(
+                    "Performing collectible op: "+
+                    this.collectible.op.toUpperCase()+
+                    " on ID: "+
+                    this.collectible.id
+                );
+                
+                switch(this.collectible.op) {
+                default:
+                case 'unlock':
+                    collectible.unlock();
+                    break;
+                case 'inc':
+                    collectible.incrementCounter(this.collectible.val);
+                    break;
+                case 'dec':
+                    collectible.incrementCounter(-this.collectible.val);
+                    break;
+                case 'set':
+                    collectible.setCounter(this.collectible.val);
+                    break;
+                }
+                
+                if (collectible.isUnlocked() && !COLLECTIBLES_UNLOCKED) {
+                    player.pendingCollectiblePopup = collectible;
+                }
+                
+                return true;
+            }
+        }.bind(this));
+    }
+}
+
 function getTargetMarker(marker, target) {
     if (!target) { return marker; }
     return "__" + target.id + "_" + marker;
@@ -1170,8 +1207,8 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
                 volatileMatches.push(curCase); 
             } else {
                 if (curCase.hidden) {
-                    //if it's hidden, set markers but don't actually count as a match
-                    this.applyMarkers(curCase, opp);
+                    //if it's hidden, set markers and collectibles but don't actually count as a match
+                    this.applyHiddenStates(curCase, opp);
                     continue;
                 }
 
@@ -1325,39 +1362,8 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         this.updateTags();
     }
     
-    if (COLLECTIBLES_ENABLED && this.chosenState.collectible && this.collectibles) {        
-        this.collectibles.some(function (collectible) {
-            if (collectible.id === this.chosenState.collectible.id) {
-                console.log(
-                    "Performing collectible op: "+
-                    this.chosenState.collectible.op.toUpperCase()+
-                    " on ID: "+
-                    this.chosenState.collectible.id
-                );
-                
-                switch(this.chosenState.collectible.op) {
-                default:
-                case 'unlock':
-                    collectible.unlock();
-                    break;
-                case 'inc':
-                    collectible.incrementCounter(this.chosenState.collectible.val);
-                    break;
-                case 'dec':
-                    collectible.incrementCounter(-this.chosenState.collectible.val);
-                    break;
-                case 'set':
-                    collectible.setCounter(this.chosenState.collectible.val);
-                    break;
-                }
-                
-                if (collectible.isUnlocked() && !COLLECTIBLES_UNLOCKED) {
-                    this.pendingCollectiblePopup = collectible;
-                }
-                
-                return true;
-            }
-        }.bind(this));
+    if (this.chosenState.collectible) {
+        this.chosenState.applyCollectible(this);
     }
 
     this.stateCommitted = true;
@@ -1366,9 +1372,12 @@ Opponent.prototype.commitBehaviourUpdate = function () {
 /************************************************************
  * Applies markers from all lines in a case
  ************************************************************/
-Opponent.prototype.applyMarkers = function (chosenCase, opp) {
+Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
     var self = this;
-    chosenCase.states.forEach(function (c) { c.applyMarker(self, opp); });
+    chosenCase.states.forEach(function (c) {
+        c.applyMarker(self, opp);
+        c.applyCollectible(self);
+    });
 }
 
 /************************************************************
