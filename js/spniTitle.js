@@ -423,16 +423,22 @@ function setPlayerTags () {
  ************************************************************/
 function validateTitleScreen () {
     /* determine the player's name */
+    var playerName = '';
+    
 	if ($nameField.val() != "") {
-        players[HUMAN_PLAYER].first = $nameField.val();
-        players[HUMAN_PLAYER].label = $nameField.val();
+        playerName = $nameField.val();
 	} else if (players[HUMAN_PLAYER].gender == "male") {
-		players[HUMAN_PLAYER].first = "Mister";
-		players[HUMAN_PLAYER].label = "Mister";
+        playerName = "Mister";
 	} else if (players[HUMAN_PLAYER].gender == "female") {
-		players[HUMAN_PLAYER].first = "Missy";
-		players[HUMAN_PLAYER].label = "Missy";
+        playerName = 'Missy';
 	}
+    
+    // Nuke all angle-brackets
+    playerName = playerName.replace(/<|>/g, '');
+    
+    players[HUMAN_PLAYER].first = playerName;
+    players[HUMAN_PLAYER].label = playerName;
+    
 	$gameLabels[HUMAN_PLAYER].html(players[HUMAN_PLAYER].label);
 
 	/* count clothing */
