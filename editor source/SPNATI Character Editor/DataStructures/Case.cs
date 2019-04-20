@@ -1755,6 +1755,24 @@ namespace SPNATI_Character_Editor
 			}
 			return false;
 		}
+		
+		/// <summary>
+		/// Gets whether at least one line touches a collectible
+		/// </summary>
+		public bool HasCollectible
+		{
+			get
+			{
+				foreach (DialogueLine line in Lines)
+				{
+					if (!string.IsNullOrEmpty(line.CollectibleId))
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+		}
 	}
 
 	public class TargetCondition
