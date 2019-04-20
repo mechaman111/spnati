@@ -193,9 +193,17 @@ namespace SPNATI_Character_Editor
 				{
 					cboFrom.Text = from;
 				}
+				else
+				{
+					cboFrom.Text = "";
+				}
 				if (!string.IsNullOrEmpty(to))
 				{
 					cboTo.Text = to;
+				}
+				else
+				{
+					cboTo.Text = "";
 				}
 			}
 		}

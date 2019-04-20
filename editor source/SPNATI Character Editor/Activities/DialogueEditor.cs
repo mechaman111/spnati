@@ -645,6 +645,10 @@ namespace SPNATI_Character_Editor.Activities
 
 		private bool FilterTargets(PropertyRecord record)
 		{
+			if (record == null)
+			{
+				return false;
+			}
 			if (record.Group == "Target")
 			{
 				return false;

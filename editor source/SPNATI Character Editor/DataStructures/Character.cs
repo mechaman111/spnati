@@ -671,7 +671,7 @@ namespace SPNATI_Character_Editor
 					bool usesTag = (stageCase.Filter == tag);
 					if (!usesTag)
 					{
-						usesTag = stageCase.Conditions.Find(c => c.Filter == tag) != null;
+						usesTag = stageCase.Conditions.Find(c => c.FilterTag == tag) != null;
 					}
 					if (usesTag)
 					{

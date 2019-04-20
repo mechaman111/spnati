@@ -1216,7 +1216,7 @@ namespace UnitTests
 			c.AlsoPlaying = "other";
 			Case response = c.CreateResponse(_male, _female);
 			Assert.IsTrue(response.Conditions.Count == 1);
-			Assert.AreEqual("other", response.Conditions[0].Filter);
+			Assert.AreEqual("other", response.Conditions[0].FilterTag);
 		}
 
 		[TestMethod]
@@ -1226,7 +1226,7 @@ namespace UnitTests
 			c.AlsoPlaying = "other";
 			Case response = c.CreateResponse(_male, _female);
 			Assert.IsTrue(response.Conditions.Count == 1);
-			Assert.AreEqual("other", response.Conditions[0].Filter);
+			Assert.AreEqual("other", response.Conditions[0].FilterTag);
 		}
 
 		[TestMethod]
@@ -1237,7 +1237,7 @@ namespace UnitTests
 			c.AlsoPlaying = "other";
 			Case response = c.CreateResponse(_male, _female);
 			Assert.IsTrue(response.Conditions.Count == 1);
-			Assert.AreEqual("other", response.Conditions[0].Filter);
+			Assert.AreEqual("other", response.Conditions[0].FilterTag);
 		}
 
 		[TestMethod]
@@ -1248,7 +1248,7 @@ namespace UnitTests
 			c.AlsoPlaying = "other2";
 			Case response = c.CreateResponse(_male, _female);
 			Assert.IsTrue(response.Conditions.Count == 1);
-			Assert.AreEqual("other2", response.Conditions[0].Filter);
+			Assert.AreEqual("other2", response.Conditions[0].FilterTag);
 		}
 
 		[TestMethod]

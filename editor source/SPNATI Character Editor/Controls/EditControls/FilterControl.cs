@@ -63,7 +63,7 @@ namespace SPNATI_Character_Editor
 			{
 				cboGender.SelectedIndex = 0;
 			}
-			recTag.RecordKey = _filter.Filter;
+			recTag.RecordKey = _filter.FilterTag;
 
 			tableAdvanced.Data = _filter;
 		}
@@ -192,7 +192,7 @@ namespace SPNATI_Character_Editor
 			string gender = cboGender.SelectedItem?.ToString();
 			_filter.Count = count;
 			_filter.Gender = gender;
-			_filter.Filter = tag;
+			_filter.FilterTag = tag;
 			tableAdvanced.Save();
 		}
 
@@ -217,7 +217,7 @@ namespace SPNATI_Character_Editor
 			else
 			{
 				cmdExpand.Image = Properties.Resources.ChevronUp;
-				OnRequireHeight(63);
+				OnRequireHeight(175);
 			}
 		}
 	}

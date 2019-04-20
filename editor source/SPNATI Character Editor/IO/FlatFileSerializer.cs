@@ -716,7 +716,7 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (var condition in stageCase.Conditions)
 				{
-					string[] parts = Array.FindAll(new string[] { condition.Status, condition.Gender, condition.Filter }, e => e != null);
+					string[] parts = Array.FindAll(new string[] { condition.Status, condition.Gender, condition.FilterTag }, e => e != null);
 					filters.Add(string.Format("count-{1}:{0}", condition.Count, string.Join("&", parts)));
 				}
 			}

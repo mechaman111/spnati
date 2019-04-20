@@ -266,7 +266,7 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					foreach (TargetCondition c in workingCase.Conditions)
 					{
-						if (c.Filter == key)
+						if (c.FilterTag == key)
 						{
 							return true;
 						}
