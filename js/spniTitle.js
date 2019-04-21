@@ -168,8 +168,8 @@ var CANDY_LIST = [
     "nagisa/3-veryembarrassed.png",
     "revy/0-awkward.png",
     "revy/1-heart.png",
-    "revy/2-laughing.png",
-    "revy/3-smoking.png",
+    "revy/2-smoking.png",
+    "revy/3-laughing.png",
 ];
 
 var clothingChoices = [];
