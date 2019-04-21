@@ -1271,7 +1271,6 @@ function showHelpModal () {
 }
 
 $('.help-page-select').click(function (ev) {
-    console.log(ev.target);
     var toPage = $(ev.target).attr('data-select-page');
     var curPage = $helpModal.attr('data-current-page');
     curPage = parseInt(curPage, 10) || 1;
@@ -1283,9 +1282,6 @@ $('.help-page-select').click(function (ev) {
     } else {
         curPage = toPage;
     }
-    
-    console.log(toPage);
-    console.log(curPage);
     
     $helpModal.attr('data-current-page', curPage);
     $('.help-page').hide();
