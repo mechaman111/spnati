@@ -26,7 +26,9 @@
     <button class="bordered smooth-button smooth-button-red bug-report-button title-bug-report-button" onclick="showBugReportModal()">
       <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
     </button>
-
+    <button id="title-help-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showHelpModal()">
+      Help / FAQ
+    </button>
     <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
       Credits
     </button>
@@ -54,7 +56,11 @@
             <p>The latest version of the game can be played at
             <br><a href="https://spnati.net" target="_blank"><b>spnati.net</b></a></p>
 
-            <br><br><br><br><br><br>
+            <br><br><br>
+            
+            <p>Make sure to check out our list of <a href="#" onclick="showHelpModal()">Frequently-Asked Questions</a>!</p>
+            
+            <br>
 
             <p>By clicking the button below, you are confirming that you are an adult and such material is legal in your region.</p>
 
@@ -93,10 +99,13 @@
     <button class="bordered smooth-button smooth-button-red bug-report-button title-bug-report-button" onclick="showBugReportModal()">
       <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
     </button>
-
+    <button id="title-help-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showHelpModal()">
+      Help / FAQ
+    </button>
     <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
       Credits
     </button>
+    
     <a class="bordered reddit-button smooth-button smooth-button-red" href="https://www.reddit.com/r/spnati/">
       <img class="reddit-logo" src="img/reddit.png"/>
     </a>
@@ -393,8 +402,8 @@
         <button id='select-group-button' class='bordered main-select-button smooth-button smooth-button-green' onclick="clickedSelectGroupButton(0)">
           Preset Tables
         </button>
-        <button id='select-random-group-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="clickedRandomGroupButton()">
-          Random Table
+        <button id='select-help-button' class='bordered main-select-button smooth-button smooth-button-green' onclick="showHelpModal()">
+          Help & FAQ
         </button>
 
         <!-- Advance Button Casing -->
@@ -407,15 +416,24 @@
         </button>
 
         <!-- More Select Buttons -->
-        <button id='select-random-female-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseFemale(player) {return player.gender.toLowerCase() === 'female';})">
-          Random Females
-        </button>
-        <button id='select-random-male-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseMale(player) {return player.gender.toLowerCase() === 'male';})">
-          Random Males
-        </button>
-        <button id='select-random-button' class='bordered main-select-button  smooth-button smooth-button-blue' onclick="clickedRandomFillButton()">
-          Random Fill
-        </button>
+        <div class="select-random-container">
+          <div class="select-random-col">
+            <button id='select-random-female-button' class='bordered select-quadrant-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseFemale(player) {return player.gender.toLowerCase() === 'female';})">
+              Random Females
+            </button>
+            <button id='select-random-group-button' class='bordered select-quadrant-button smooth-button smooth-button-blue' onclick="clickedRandomGroupButton()">
+              Random Table
+            </button>
+          </div>
+          <div class="select-random-col">
+            <button id='select-random-male-button' class='bordered select-quadrant-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseMale(player) {return player.gender.toLowerCase() === 'male';})">
+              Random Males
+            </button>
+            <button id='select-random-button' class='bordered select-quadrant-button  smooth-button smooth-button-blue' onclick="clickedRandomFillButton()">
+              Random Fill
+            </button>
+          </div>
+        </div>
 
         <button id='select-remove-all-button' class='bordered main-select-button  smooth-button smooth-button-red' onclick="clickedRemoveAllButton()" disabled="true">
           Remove All
@@ -701,9 +719,7 @@
         </button>
 
       </div>
-
     </div>
-
   </div>
 </div>
 
@@ -1577,6 +1593,378 @@
 </div>
 <!-- End of Usage Reporting Modal -->
 
+<!-- Start of Help Modal -->
+<div id="help-modal" class="modal table-modal fade" role="dialog">
+	<div class="modal-table-container">
+	<div class="modal-cell-container">
+	<div class="bordered modal-dialog very-wide-modal-dialog">
+	<div class="bordered modal-dialog-surface">
+		<!-- Start of Modal Content -->
+		<div class="modal-content">
+			<div class="modal-header">
+            </div>
+			         <div class="modal-body">
+                <!-- general meta questions -->
+		            <div class="help-page" data-page="1">
+                    <h2>FAQ - General</h2>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Who made this game?</h4>
+                        <div class="faq-answer">
+                          <p>Strip Poker Night at the Inventory (SPNATI) was first developed by Joseph Kantel, who designed a small Javascript mockup game based on a choose-your-own-adventure fanfiction work.  The original version of the project appeared in August 2015 featuring the four video game characters Lilith (Borderlands), Lara Croft (Tomb Raider), Elizabeth (BioShock Infinite), and Zoey (Left 4 Dead), who were the girls featured in the fanfiction story.</p>
+                          <p>The project died out, but it was rediscovered in August 2016 and exploded in popularity, with new characters being added and the community you see today being formed.  To date, over 200 characters (in various states of completion) have been made for SPNATI.</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">What does "At the Inventory" mean?</h4>
+                        <p class="faq-answer">"The Inventory" is the name of a fictional bar that SPNATI takes place in.  The name itself comes from SPNATI's other inspiration, Poker Night at the Inventory--a series of two games by TellTale wherein a nameless player plays Texas Hold 'Em Poker with four video game/webcomic characters and watches them interact.</p>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Did Joseph Kantel make all the characters?</h4>
+                        <div class="faq-answer">
+                          <p>Not at all!  SPNATI is an open-source game, and over 100 different people have contributed to not only the creation of its many characters, but also its codebase, community, moderation, hosting, documentation, background art, etc.  You can see who's credited for a character by clicking the "Credits" button on the character selection screen.</p>
+                          <p>Anyone can make a character and add them to SPNATI, so if you don't see your favorite character, you should try to make them yourself!</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">How often is the game updated?</h4>
+                        <div class="faq-answer">
+                          <p>Because each author is responsible for their own characters, the game receives multiple small and large updates almost every day!  The social Discord server has a channel, #gitlab-updates, that lists the full changelog.</p>
+                          <p>The version number is rarely updated and does not reflect what the most recent version actually is.  Characters on both testing and the main roster frequently receive small dialogue and art updates, such as targeting a new character.</p>
+                          <p>However, not all characters have authors that still actively update them.  Consider adopting one of these orphaned characters!</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Can I donate to the game via a Patreon or something similar?</h4>
+                        <p class="faq-answer">Nope!  SPNATI has remained, and will always remain, separate from any issues of money besides the small amount needed to host the spnati.net domain.  There will never be any advertisements or sponsors, nor the need to support the game financially in any way.  This keeps the game free of copyright concerns.</p>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">If Lilith, Lara, Elizabeth, and Zoey were the first characters made, why aren't they the first on the list?</h4>
+                        <div class="faq-answer">
+                          <p>Every few months, the character roster is reshuffled based on the results of polls held on the SPNATI subreddit.  This gives newer characters the chance to move from the back of the roster and be in the spotlight, and the order is determined by factoring in both how many votes each character received in the poll and how many total lines of dialogue each character has.</p>
+                          <p>One male is always included on page 1 to let players know that male characters exist, and characters that share a franchise are grouped together (except on pages 1 and 2).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- character creation questions -->
+                <div class="help-page container-fluid" data-page="2" style="display:none">
+                    <h2>FAQ - Character Creation</h2>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">How can I make a character for the game?</h4>
+                        <div class="faq-answer">
+                          <p>Making a character for SPNATI requires no prior artistic skills or knowledge of coding.</p>
+                          <p>The art for characters, which includes their model and the poses that make up their sprites, is made in a Japanese paper doll program called Kisekae, which is based on the K-On anime art style and was developed by a user named Pochi.  Kisekae has both an online and offline version; the offline version is the one used with other SPNATI character creation software to make sprites.  Pochi continues to update Kisekae with new features to this day.</p>
+                          <p>Many characters' sprites also utilize image editing and other forms of post-processing, such as Photoshop. Additionally, to save file space, character sprites are compressed using a web tool known as TinyPNG.</p>
+                          <p>A character's dialogue, mechanics, metadata/information, and pose-to-line assignments are found in their "behaviour.xml" files, which are essentially text documents.  Creating a .xml file can be done one of two ways: the old-fashioned way, which involves manually filling out a .txt file template and converting it to .xml with a Python script included in the game files, or by using the SPNATI Character Editor program ("CE") to write dialogue.</p>
+                          <p>The CE also has built-in support for the Python script that helps you convert Kisekae scenes ("codes") into character sprites, which would otherwise also be done manually.</p>
+                          <p>
+                            Information on how to find these programs can be found on Page 5 under "Can I download the game?"  For advice on how to use them, try interacting with other users on the official subreddit and Discord servers:
+                            <ul>
+                              <li><a href="https://old.reddit.com/r/spnati/">https://old.reddit.com/r/spnati/</a></li>
+                              <li><a href="https://old.reddit.com/r/spnati/comments/afad5j/discussion_and_suggestion_thread/">https://old.reddit.com/r/spnati/comments/afad5j/discussion_and_suggestion_thread/</a></li>
+                            </ul>
+                          </p>
+                          <p>The majority of community and development discussion takes place on the Discord servers, while the subreddit is the site of official requests for character entry into the game.</p>
+                          <p>The following is a Google Doc containing documentation on all the contributors, characters, works-in-progress, and other information of SPNATI.  It is community-run/maintained and completely unofficial; none of the moderators for SPNATI have editing privileges, and being listed on it is not a rite-of-passage.</p>
+                          <p><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRejQBHSnenImBLUEX5qlmxdopG0c_O9uWklerYr6v5yJ00_UUcQiOvqC6t6CUeKsRAkd2769YzA67P/pubhtml#">https://docs.google.com/spreadsheets/d/e/2PACX-1vRejQBHSnenImBLUEX5qlmxdopG0c_O9uWklerYr6v5yJ00_UUcQiOvqC6t6CUeKsRAkd2769YzA67P/pubhtml#</a></p>
+                        </div>
+                    </div>                 
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Are there any rules about what characters can be in the game?</h4>
+                        <div class="faq-answer">
+                          <p>Yes, but only a few.  Characters in SPNATI:</p>
+                          <ol>
+                            <li>
+                              <p><em>Must be at or above the age of 18.</em> They also must look like they could plausibly be adults to someone who knows nothing about the character, which means no 500-year-old vampire lolis.</p>
+                              <p>If a character is at least 12 in some version of their canon source material, they can be added in if some effort is made to age them up to 18, such as changing their proportions to be more adultlike and/or referencing the passage of time in their dialogue.</p>
+                            </li>
+                            <li>
+                              <p><em>Must be fictional.</em>  No real people can be added to SPNATI.  This includes fictionalized "personas" that real people put on, such as wrestlers and certain entertainers/show hosts.</p>
+                              <p>However, fictional characters from live-action sources can be added, such as Buffy from Buffy the Vampire Slayer.</p>
+                            </li>
+                            <li>
+                              <p><em>Must be humanoid/have basic human anatomy.</em> A character can't be three Corgis in a trenchcoat, have an insect face, or have a trombone for a penis, for instance.  Some exceptions for "monstergirls" and similar sorts of characters may be allowed, but they should still look mostly recognizably human.</p>
+                              <p>Both male and female characters are allowed in SPNATI, even though the majority of characters are female.  Original characters are also allowed, but please do not submit your self-insert OC in an attempt to circumvent the "no real people" rule.  You will not succeed.</p>
+                            </li>
+                          </ol>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">What happens after I make a character?  How do they get into the game?</h4>
+                        <div class="faq-answer">
+                          <p>Once you think your character is ready, you can submit their files either as a .zip file to the moderation team on the subreddit or, for a more elegant long-term approach, make a merge request on GitLab (ask other users how to do this).</p>
+                          <p>If your character meets basic requirements (obeys the rules; 300 total lines of dialogue, some of which are targeted or have other conditions; and a set of working images for their sprites), then they will enter what's called the "Testing Tables," which you can see via the Testing Tables button on the character select screen.  You can check how many lines a character has via the CE or the "Credits" button ingame.</p>
+                          <p>Once on testing, people can play your character online and download their files as part of the overall game, as well as give feedback through bug reports (the triangle icon ingame), the subreddit, and the Discord servers.  One user cannot have more than two characters on testing at once.</p>
+                          <p>When you feel your character is ready for the main roster (and they have at least 400 lines of dialogue), you can make a post on the subreddit asking for people to "sponsor" them.  If at least five people reply with approval and/or feedback that you then address, a mod will put your character through QA, which is a basic test to make sure they function properly.  Pass that, and you will have made a character for SPNATI's main roster!</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Why did X get moved to the Testing Tables?</h4>
+                        <div class="faq-answer">
+                          <p>
+                            Sometimes main-roster characters are moved back to testing (and must be sponsored again) for certain updates made to them.  These updates usually consist of either:
+                            <ol type="a">
+                              <li>A substantial dialogue/art update by someone other than the original writer(s)/artists(s) of the character.</li>
+                              <li>An art update by their original artist(s) that is substantial enough to change something significant about the character, such as their model's silhouette or the majority of their poses/expressions/mechanics.</li>
+                            </ol>
+                          </p>
+                          <p>(b) is usually more up to moderator discretion as far as whether they go back to testing or not; art updates are often put up for a "quickpass" vote among developers to skip this process if they feel it is unnecessary.</p>
+                          <p>Characters looking for re-sponsorship only need 3 sponsors instead of the normal 5.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gameplay questions -->
+                <div class="help-page container-fluid" data-page="3" style="display:none">
+                    <h2>FAQ - Gameplay</h2>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">How do I play poker?</h4>
+                        <div class="faq-answer">
+                          <p>SPNATI uses a simplified version of Five-Card Draw Poker where there is no betting.  Instead, whoever has the worst hand each round is the loser and must strip.</p>
+                          <p>To learn which poker hands beat which, see the graphic below.  Try using Card Suggest in the options menu for the game to exchange cards for you, but be aware that this is imperfect by design.  The best strategy is usually to aim for pairs: keep the ones you have, or just keep the highest card you have if you have no pairs, and exchange the rest.</p>
+                          <p>Remember, your goal is not to have the best hand--only to not have the worst hand.</p>
+                        </div>
+                    </div>
+                    <div class="faq-poker-hands-container">
+                      <img class="faq-poker-hands-infographic" src="img/poker-hands-help.jpg" alt="Poker hands infographic">
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Is there a way to win every time?</h4>
+                        <div class="faq-answer">
+                          <p>No.  Poker is a game of chance, and your luck can turn around at any moment.  The best way to win is to wear more clothing and pick opponents who wear less clothing.  Otherwise, you are on an even playing field with the computer opponents.  The characters themselves each have different levels of intelligence, but they are at the mercy of luck as much as you are.</p>
+                          <p>However, if you are playing offline, then you can cheat by enabling debug mode in <code>config.xml</code>. Pressing <kbd>Q</kbd> in a game will then allow you to select which character loses the round by clicking the "X" next to their name.</p>
+                          <p>And remember: even if you lose, all but one of your opponents will still end up naked anyway.  In fact, they all might!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Epilogue questions -->
+                <div class="help-page container-fluid" data-page="4" style="display:none">
+                    <h2>FAQ - Endings</h2>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">How do I unlock endings? Who has an ending?</h4>
+                        <div class="faq-answer">
+                          <p>You unlock endings by winning the game against one or more characters with an ending, i.e. being the only one who doesn't have to masturbate.  You can then select which character's ending you'd like to view, and your selection is then unlocked in the gallery.</p>
+                          <p>However, not all characters have endings.  Those that do have a big yellow "SPNATI Epilogue Available" badge near their head on the Character Selection Screen.</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">It says a character has an ending, but they don't.</h4>
+                        <div class="faq-answer">
+                          <p>Check their ending's entry in the gallery (the trophy icon on the main menu) for hints.  Some endings require more conditions than simply winning the game against the character, such as being a certain gender or playing with them and another character present.</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">My endings aren't saving. Why?</h4>
+                        <div class="faq-answer">
+                          <p>This is a known issue that has no consistent fix at the moment.  Try enabling cookies, clearing cache, and avoid using incognito mode while playing the game.</p>
+                          <p>If all else fails, changing certain settings in <code>config.xml</code> can unlock all endings instantly or activate debug mode in the offline version of SPNATI.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Offline version questions -->
+                <div class="help-page container-fluid" data-page="5" style="display:none">
+                    <h2>FAQ - Offline and Rehosted Game Versions</h2>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Where did X go? They used to be in the game.</h4>
+                        <div class="faq-answer">
+                          <p>The consequence of avoiding money is that SPNATI is limited to free hosting space, which on GitLab is 1 GB.  The total data of all the characters submitted to the game exceeds this, so characters are removed from the online version of the game every so often to make room for new ones.</p>
+                          <p>However, you can still play with the removed characters by downloading and playing the offline version of SPNATI.</p>
+                          <p>The criteria for which characters get removed has changed over time.  In the past, whichever character had the fewest unique lines of dialogue was removed whenever more space was necessary.  This ended when all online characters had more than 500 lines of dialogue.  Several popularity polls have also been held on the subreddit, and those characters with the fewest votes were also prioritized when it came time for removal.</p>
+                          <p>At present, the culling order is determined by which character has the fewest targeted lines (lines directed to other specific characters).  However, if a character on testing does not receive an update in over a month, they will be removed first instead (testing characters also take up online space).</p>
+                          <p>New characters cannot be chosen for culling until 3 months after their release to the main roster.</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Why does the game have different numbers of characters on different sites, even with the same version number?</h4>
+                        <div class="faq-answer">
+                          <p>Versions of SPNATI with more characters tend to be rehosted versions on proprietary porn sites.  While <a href="https://spnati.net/">spnati.net</a>  uses free hosting space, many porn sites that rehost it pay for their own server space through advertisements, so they can afford to host all of the characters online.</p>
+                          <p>However, rehosted versions are slow to update, meaning brand-new characters and bugfixes might not be present there.  <a href="https://spnati.net/">spnati.net</a> is the official version of the game and will always be the most up-to-date (including changes to this FAQ), and you can still download the offline version to play with the older and incomplete characters.  The version number rarely updates and usually does not reflect the most recent version of the game.</p>
+                          <p><a href="https://spnati.gitlab.io/">spnati.gitlab.io</a> is a mirror of <a href="https://spnati.net/">spnati.net</a>.</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Can you put X in the game?</h4>
+                        <div class="faq-answer">
+                          <p>You can request that certain characters be made on the Discord servers or the following discussion thread:</p>
+                          <p><a href="https://old.reddit.com/r/spnati/comments/afad5j/discussion_and_suggestion_thread/">https://old.reddit.com/r/spnati/comments/afad5j/discussion_and_suggestion_thread/</a></p>
+                          <p>However, because of the time and effort making a character requires, you are very unlikely to find someone willing to make a character for you.  Instead, you should ask if someone is interested in making a character and offer to do it yourself or to help them.</p>
+                          <p>Remember: you don't need artistic or coding skills to make a character.  Don't be afraid to try and do it yourself!</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Can I download the game?</h4>
+                        <div class="faq-answer">
+                          <p>SPNATI is hosted and updated on a group worksite called GitLab.  The link to the project is here:</p>
+                          <p><a href="https://gitlab.com/spnati/spnati.gitlab.io">https://gitlab.com/spnati/spnati.gitlab.io</a></p>
+                          <p>Once there, find the cloud icon near the top right and select "Download zip" from its dropdown menu.  This will allow you to download the entire game and all its files; note that this is a several-GB download thanks to all the character sprites!</p>
+                          <p>Extract all the files, and you'll have offline SPNATI.  Opening <code>config.xml</code> in the main folder (use Notepad) will allow you to change some settings, such as enabling debug mode and unlocking all endings.  Open <code>index.html</code> in your browser to play the game!</p>
+                          <p>The <kbd>tools</kbd> folder of offline SPNATI is where you can find offline Kisekae and the Character Editor.</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Opening index.html in my browser doesn't work.  Why?</h4>
+                        <div class="faq-answer">
+                          <p>Are you using Google Chrome?  Chrome is too restrictive with its subfolders access, so SPNATI can't retrieve character data.  Try using Firefox instead.</p>
+                          <p>It's also possible you forgot to extract the game files from the .zip you downloaded.</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">How do I keep my offline version updated?</h4>
+                        <div class="faq-answer">
+                          <p>You can do this very easily without redownloading the game every time.  Follow the instructions here:</p>
+                          <p><a href="https://old.reddit.com/r/spnati/comments/824j7p/keep_your_offline_version_up_to_date_with_github/">https://old.reddit.com/r/spnati/comments/824j7p/keep_your_offline_version_up_to_date_with_github/</a></p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Can I play the offline version on mobile?</h4>
+                        <div class="faq-answer">
+                          <p>Unfortunately, no.  There is no way to play the offline version on mobile at this time.  SPNATI is primarily built for computer use, and its mobile version is a straight port.</p>
+                        </div>
+                    </div><div class="faq-question-container">
+                        <h4 class="faq-question">Can you make a mobile app?</h4>
+                        <div class="faq-answer">
+                          <p>There are no plans to make a mobile app for SPNATI at this time, and because of copyright reasons, certainly not one that would appear in any official app stores.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Common issues -->
+                <div class="help-page container-fluid" data-page="6" style="display:none">
+                    <h2>FAQ - Common Issues</h2>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Why isn't X loading?</h4>
+                        <p class="faq-answer">Are you playing on mobile?  Some characters' behavior files are very large, and your phone may be unable to process them.  Try playing on a computer instead.</p>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">Why doesn't the offline version show all the characters?</h4>
+                        <div class="faq-answer">
+                          <p>Characters come in several designations: "online" for characters on the online main roster at spnati.net, "testing" for characters on the online testing tables, "offline" for characters that used to be on the online main roster but were removed for space, and "incomplete."  "Incomplete" is for characters who were submitted to testing but fell off due to lack of updates or author request, and it is used regardless of their quality or actual "completeness."</p>
+                          <p>Incomplete characters are not by default available offline, even though they are included in the offline version download.  To use them, open config.xml and copy/paste the following line of code with the others like it:</p>
+                          <p><code>&lt;include-status&gt;incomplete&lt;/include-status&gt;</code></p>
+                          <p>You can also activate alternate costumes to be selectable offline using config.xml.  These are different skins for characters that are usually holiday-themed.</p>
+                        </div>
+                    </div>
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">My characters/text/game started glitching out. What's going on?</h4>
+                        <p class="faq-answer">Are you playing with Monika from Doki Doki Literature Club?  Monika uses special code in her behavior files to achieve these effects deliberately, much like in her source material.</p>
+                    </div>                    
+                    <div class="faq-question-container">
+                        <h4 class="faq-question">I clicked the triangle icon Monika mentioned and sent a report, but nothing happened.</h4>
+                        <p class="faq-answer">That icon is for the ingame bug report feature, which only has the function of submitting bug reports.  She means the triangle icon that appears in her speech bubble.</p>
+                    </div>
+                </div>
+                
+                <!-- Common feature requests  -->
+                <div class="help-page container-fluid" data-page="7" style="display:none">
+                  <h2>FAQ - Commonly Requested Features</h2>
+                  <div class="faq-question-container">
+                      <h4 class="faq-question">Can I give the player character more details than penis/breast size and clothes?</h4>
+                      <div class="faq-answer">
+                        <p>Yes, you can!  The icon to the right of the "Enter the Inventory" button on the player clothing selection screen will bring up the list of tags that is used for the characters.  You can choose these to apply to the player, as well, and characters will treat you as if you have those attributes.</p>
+                        <p>Keep in mind that this is a more recent feature, so many characters do not have dialogue tailored for it.</p>
+                      </div>
+                  </div>
+                  <div class="faq-question-container">
+                      <h4 class="faq-question">Can I see the player character?</h4>
+                      <div class="faq-answer">
+                        <p>Unfortunately, the many combinations of clothing and stripping orders the player has makes the image space necessary for this unfeasibly large.  There is also no space on the UI to show the player character.</p>
+                        <p>Most developers for SPNATI will encourage you to simply use your imagination, or to strip along in real life.  SPNATI is built around watching crossover characters interact, not detailed role-playing.</p>
+                        <p>You can always make yourself in Kisekae and/or for SPNATI if you really want to--you just can't submit them to the online version of the game.  No real people.</p>
+                      </div>
+                  </div>
+                  <div class="faq-question-container">
+                      <h4 class="faq-question">Can I play as one of the characters?</h4>
+                      <div class="faq-answer">
+                        <p>You can name yourself after them, but the other characters will still treat you as the player.  This is because dialogue is coded to reference character folders, not their names.</p>
+                        <p>Lots of targeted dialogue also assumes the responses of the computer versions of each character will play, so the role-play would not make much sense anyway.</p>
+                      </div>
+                  </div>
+                  <div class="faq-question-container">
+                      <h4 class="faq-question">Can you add voice acting or background music?</h4>
+                      <p class="faq-answer">Unfortunately, the audio files needed for music and voice acting would take up even more of SPNATI's limited space than the sprites do.  Since the game is silent, however, you can always play your own music.</p>
+                  </div>
+                  <div class="faq-question-container">
+                      <h4 class="faq-question">Can you make the models 3D?</h4>
+                      <p class="faq-answer">No.  This would require even more file space and a completely different art program and interface, and likely a steeper learning curve.</p>
+                  </div>
+                  <div class="faq-question-container">
+                      <h4 class="faq-question">Can you add multiplayer?</h4>
+                      <p class="faq-answer">No.  SPNATI is meant to be a single-player experience.</p>
+                  </div>
+                  <div class="faq-question-container">
+                      <h4 class="faq-question">What happened to the Swimsuit Edition?</h4>
+                      <div class="faq-answer">
+                        <p>The Swimsuit Edition was an unofficial offshoot of SPNATI.  The users maintaining it have since left the community and let it become defunct, and there is little interest in reviving it among the current developers.</p>
+                        <p>If you'd like to see the Swimsuit Edition return, consider making it yourself!</p>
+                      </div>
+                  </div>
+                </div>
+			</div>
+			<div class="modal-footer">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <li class="help-page-select">
+                      <a href="#" aria-label="Previous" data-select-page="prev">
+                        <span aria-hidden="true" style="pointer-events:none">&laquo;</span>
+                      </a>
+                    </li>
+                    <li class="help-page-select active" data-page="1"><a href="#" data-select-page="1">1</a></li>
+                    <li class="help-page-select" data-page="2"><a href="#" data-select-page="2">2</a></li>
+                    <li class="help-page-select" data-page="3"><a href="#" data-select-page="3">3</a></li>
+                    <li class="help-page-select" data-page="4"><a href="#" data-select-page="4">4</a></li>
+                    <li class="help-page-select" data-page="5"><a href="#" data-select-page="5">5</a></li>
+                    <li class="help-page-select" data-page="6"><a href="#" data-select-page="6">6</a></li>
+                    <li class="help-page-select" data-page="7"><a href="#" data-select-page="7">7</a></li>
+                    <li class="help-page-select">
+                      <a href="#" aria-label="Next" data-select-page="next">
+                        <span aria-hidden="true" style="pointer-events:none">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+                <div>
+                    <button id="credit-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
+                </div>
+			</div>
+		</div>
+		<!-- End of Modal Content -->
+	</div>
+	</div>
+	</div>
+	</div>
+</div>
+<!-- End of Help Modal -->
+
+<!-- Start of Select Screen Heads-Up modal -->
+<div id="select-headsup-modal" class="modal table-modal fade" role="dialog">
+	<div class="modal-table-container">
+	<div class="modal-cell-container">
+	<div class="bordered modal-dialog -average-modal-dialog">
+	<div class="bordered modal-dialog-surface">
+		<!-- Start of Modal Content -->
+		<div class="modal-content">
+			<div class="modal-header">
+        <h3 class="modal-title text-center"><b>Looking for Someone?</b></h3>
+      </div>
+			<div class="modal-body">
+		      <p>If you're looking for a character who seems to have disappeared, they may have been moved offline or onto the Testing Tables.</p>
+          <p>For more information, check out our <a href="#" data-dismiss="modal" onclick="showHelpModal();">FAQ</a>.</p>
+          <div><input id="select-headsup-hide" type="checkbox"><label style="margin-left:1%" for="select-headsup-hide">Don't show this again.</label></div>
+			</div>
+			<div class="modal-footer">
+				<button id="headsup-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		<!-- End of Modal Content -->
+	</div>
+	</div>
+	</div>
+	</div>
+</div>
+<!-- End of Credits Modal -->
+
 <!-- Start of Credits Modal -->
 <div id="credit-modal" class="modal table-modal fade" role="dialog">
 	<div class="modal-table-container">
@@ -1736,18 +2124,31 @@
     <button class='bordered table-bug-report-button' onclick="showBugReportModal()">
       <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
     </button>
-    <button id="game-home-button" class="bordered smooth-button smooth-button-red dock-options-button" data-toggle="tooltip" data-placement="right" title="Return to Title" onclick="showRestartModal()"><!-- doEpilogueModal -->
-      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-    </button>
-    <button id="game-settings-button" class="bordered smooth-button smooth-button-red dock-options-button" data-toggle="tooltip" data-placement="right" title="Game Options" onclick="showOptionsModal()">
-      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-    </button>
     <button id="debug-button-0" class="bordered player-debug-button" onclick="selectDebug(0)" hidden>
       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
     </button>
-    <button id="game-log-button" class="bordered smooth-button smooth-button-red dock-options-button" data-toggle="tooltip" data-placement="right" title="Dialogue Log" onclick="showLogModal()">
-      <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-    </button>
+    <div class="btn-group dropup game-menu-dropup" data-toggle="tooltip" data-placement="right" title="Game Menu">
+        <button type="button" class="bordered smooth-button smooth-button-red dropdown-toggle menu-dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span></button>
+        <ul class="dropdown-menu">
+            <button id="game-log-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showHelpModal()">
+              <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+              <span class="game-menu-label">Help and FAQ</span>
+            </button>
+            <button id="game-log-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showLogModal()">
+              <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+              <span class="game-menu-label">Dialogue Log</span>
+            </button>
+            <button id="game-home-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showRestartModal()"><!-- doEpilogueModal -->
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+              <span class="game-menu-label">Return to Title</span>
+            </button>
+            <button id="game-settings-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showOptionsModal()">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              <span class="game-menu-label">Options</span>
+            </button>
+        </ul>
+    </div>
+    
 
 
     <!-- Game Table -->
