@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.1 at 4:38:56 AM on April 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.1 at 9:57:47 PM on April 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.1</version>
     <first>Haru</first>
@@ -21,13 +21,14 @@
         <tag>pubic_hair</tag>
         <tag from="0" to="2">small_breasts</tag>
         <tag from="3" to="9">large_breasts</tag>
-        <tag>pantyhose</tag>
+        <tag from="0" to="1">pantyhose</tag>
         <tag>cheerful</tag>
         <tag>fancy</tag>
         <tag>fashionable</tag>
         <tag from="0" to="4">innocent</tag>
         <tag>kind</tag>
         <tag from="0" to="4">moe</tag>
+        <tag from="5" to="9">perverted</tag>
         <tag from="5" to="9">seductive</tag>
         <tag from="5" to="9">dominant</tag>
         <tag>bisexual</tag>
@@ -66,6 +67,26 @@
             <case tag="selected" priority="1001">
                 <condition count="1" filter="dapper_date" />
                 <state img="0-perky.png" marker="dapperdate">Hi ~player~! I'm here, just like you asked! Shall we play?</state>
+            </case>
+            <case tag="selected">
+                <condition count="0" filter="ryuji" />
+                <test expr="~background~" value="arcade" />
+                <state img="0-joyful.png">Is this the arcade? I recall Joker taking me there once!</state>
+            </case>
+            <case tag="selected" alsoPlaying="ryuji">
+                <test expr="~background~" value="arcade" />
+                <state img="0-joyful.png" marker="ryuji_arcade">Oh, we're at an arcade! I heard you love this place, Ryuji!</state>
+            </case>
+            <case tag="selected" priority="100">
+                <test expr="~background~" value="beach" />
+                <state img="0-confused.png">Eh? Why are we playing at the beach? Should I have bought a swimsuit?</state>
+            </case>
+            <case tag="selected">
+                <test expr="~background~" value="classroom" />
+                <state img="0-confused.png">I never been to this place before... so why does it seem so familiar?</state>
+            </case>
+            <case tag="opponent_selected" target="kyu" targetSayingMarker="notcallingyouthat">
+                <state img="0-sad.png">&lt;i&gt;(Oh...)&lt;/i&gt;</state>
             </case>
             <case tag="game_start">
                 <state img="0-joyful.png">Hello everyone!</state>
@@ -122,6 +143,22 @@
             <case tag="game_start" priority="9998">
                 <condition count="4" filter="phantom_thieves" />
                 <state img="0-joyful.png" marker="pt_playing">All my friends are here!</state>
+            </case>
+            <case tag="game_start">
+                <test expr="~background.location~" value="outdoors" />
+                <state img="0-shock.png" marker="wrongpoker_outdoors">Oh! We're playing strip poker... &lt;i&gt;outdoors!?&lt;/i&gt;</state>
+            </case>
+            <case tag="game_start" priority="15">
+                <test expr="~background~" value="bedroom" />
+                <state img="0-confused.png">Hm... Just being in this room makes me feel sleepy...</state>
+            </case>
+            <case tag="game_start" priority="15">
+                <test expr="~background~" value="green screen" />
+                <state img="0-WHAT.png">W... What's going on here?</state>
+            </case>
+            <case tag="game_start">
+                <test expr="~background~" value="mansion" />
+                <state img="0-WHAT.png">&lt;i&gt;(...This isn't my mansion!)&lt;/i&gt;</state>
             </case>
             <case tag="swap_cards">
                 <state img="0-calm.png">I'll exchange ~cards~ cards, please.</state>
@@ -324,7 +361,7 @@
                 <state img="0-annoyed.png" marker="amaliacheating">I understand you might be embarrassed, but that's no excuse!</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
-                <state img="0-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to him?</state>
+                <state img="0-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to her?</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
                 <state img="0-sad.png" marker="chihiroreveal">Was it because you're afraid of being judged? We won't judge you, Chihiro! And what happens in the Inventory stays in the Inventory!</state>
@@ -392,6 +429,9 @@
             <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="futaba_jukebox" priority="115">
                 <condition count="1" filter="ryuji" />
                 <state img="0-confused.png" marker="classical_deathmetal">I personally prefer classical music. Or death metal.</state>
+            </case>
+            <case tag="hand" saidMarker="wrongpoker_outdoors" notSaidMarker="wrongpoker2_outdoors">
+                <state img="0-embarrassed.png" marker="wrongpoker2_outdoors">I... I resumed we're playing regular poker! Why are we even playing outside!?</state>
             </case>
             <case tag="hand" alsoPlaying="ini" alsoPlayingStage="0" alsoPlayingTimeInStage="0">
                 <test expr="~ini.costume~" value="flower_girl_ini" />
@@ -666,6 +706,9 @@
                 <state img="0-pleasant.png">How unfortunate you can't drop everyone's attacks.</state>
                 <state img="0-embarrassed.png">I wouldn't mind...</state>
             </case>
+            <case tag="female_must_strip" target="futaba" targetStage="3">
+                <state img="0-shock.png">Why don't you take off your headphones, Futaba? Are they very important to you?</state>
+            </case>
             <case tag="female_must_strip" target="hanako" targetStage="0" priority="1001">
                 <state img="0-embarrassed.png">Of course, Hanako.</state>
                 <state img="0-joyful.png">Hanako, right? Your hair looks so pretty!</state>
@@ -859,6 +902,9 @@
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="0-perky.png">Interesting choice!</state>
+            </case>
+            <case tag="female_removing_accessory" target="kyu" targetStage="1">
+                <state img="0-pleasant.png" marker="badpun">It seems we're "neck-to-neck" in the strip poker race.</state>
             </case>
             <case tag="female_removing_accessory" target="launch" targetStage="1">
                 <state img="0-shock.png">Eh!?</state>
@@ -1127,6 +1173,9 @@
             <case tag="female_removing_minor" target="futaba" targetStage="0" alsoPlaying="kira">
                 <state img="0-confused.png">Erm, Futaba...?</state>
             </case>
+            <case tag="female_removing_minor" target="futaba" targetStage="3">
+                <state img="0-joyful.png">Socks like yours look so cozy! I should try wearing a pair like that!</state>
+            </case>
             <case tag="female_removing_minor" target="kyoko" targetStage="5">
                 <state img="0-shock.png">Oh no!</state>
             </case>
@@ -1189,6 +1238,9 @@
             </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlayingSaying="It was really comfortable, Haru, but I think in a game like this, aren't we supposed to say stuff like &quot;oh, but not nearly as comfy as your boobs!&quot; R-right?">
                 <state img="0-aroused.png">If you're trying to sound sexy, I don't think that's how you do it...</state>
+            </case>
+            <case tag="female_removed_minor" target="futaba" targetStage="4">
+                <state img="0-confused.png">But Ann-chan would look better than me in corsets. Plus, I like to be comfortable &lt;i&gt;(...and modest.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="human" targetStatus="decent">
                 <state img="0-annoyed.png">&lt;i&gt;Are you kidding me!?&lt;/i&gt;</state>
@@ -1821,6 +1873,9 @@
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="0-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
             </case>
+            <case tag="female_must_masturbate" target="kyu" targetSayingMarker="poem">
+                <state img="0-joyful.png">A poem? I'd like to hear it, Kyu!</state>
+            </case>
             <case tag="female_must_masturbate" target="launch">
                 <state img="0-terrified.png">Please stop shooting! It's not so bad!</state>
             </case>
@@ -1866,6 +1921,12 @@
                 <state img="0-shock.png" marker="null_dirtytalk">Oh, but what about your hands?</state>
                 <state img="0-shock.png" marker="null_dirtytalk">That's right, your burnt hands! Y-You don't have to...</state>
                 <state img="0-sad.png" marker="null_dirtytalk">You don't have to...</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSaidMarker="poem">
+                <state img="0-embarrassed.png">...Oh.</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSayingMarker="whomstdntve">
+                <state img="0-creepy.png">Who would've, Kyu. Or who would have.</state>
             </case>
             <case tag="female_start_masturbating" target="launch" targetSaidMarker="gun">
                 <state img="0-embarrassed.png" marker="null_dirtytalk">I'm sure there's no need. I mean, this isn't the Metaverse.</state>
@@ -1987,6 +2048,9 @@
             </case>
             <case tag="female_finished_masturbating" target="croix" targetSayingMarker="end">
                 <state img="0-ahhhhh.png">&lt;i&gt;I think I'm wet...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_finished_masturbating" target="kyu">
+                <state img="0-creepy.png">&lt;i&gt;(Having an orgasm in mid-air... It must be wonderful.)&lt;/i&gt;</state>
             </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="0-pleasant.png">A lot happened while you were gone.</state>
@@ -2180,7 +2244,7 @@
                 <state img="1-annoyed.png" marker="amaliacheating">I understand you might be embarrassed, but that's no excuse!</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
-                <state img="1-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to him?</state>
+                <state img="1-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to her?</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
                 <state img="1-sad.png" marker="chihiroreveal">Was it because you're afraid of being judged? We won't judge you, Chihiro! And what happens in the Inventory stays in the Inventory!</state>
@@ -2509,6 +2573,9 @@
                 <state img="1-pleasant.png">How unfortunate you can't drop everyone's attacks.</state>
                 <state img="1-embarrassed.png">I wouldn't mind...</state>
             </case>
+            <case tag="female_must_strip" target="futaba" targetStage="3">
+                <state img="1-shock.png">Why don't you take off your headphones, Futaba? Are they very important to you?</state>
+            </case>
             <case tag="female_must_strip" target="hanako" targetStage="0" priority="1001">
                 <state img="1-embarrassed.png">Of course, Hanako.</state>
                 <state img="1-joyful.png">Hanako, right? Your hair looks so pretty!</state>
@@ -2689,6 +2756,9 @@
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="1-perky.png">Interesting choice!</state>
+            </case>
+            <case tag="female_removing_accessory" target="kyu" targetStage="1">
+                <state img="1-pleasant.png" marker="badpun">It seems we're "neck-to-neck" in the strip poker race.</state>
             </case>
             <case tag="female_removing_accessory" target="launch" targetStage="1">
                 <state img="1-shock.png">Eh!?</state>
@@ -2946,6 +3016,9 @@
             <case tag="female_removing_minor" target="futaba" targetStage="0" alsoPlaying="kira">
                 <state img="1-confused.png">Erm, Futaba...?</state>
             </case>
+            <case tag="female_removing_minor" target="futaba" targetStage="3">
+                <state img="1-joyful.png">Socks like yours look so cozy! I should try wearing a pair like that!</state>
+            </case>
             <case tag="female_removing_minor" target="kyoko" targetStage="5">
                 <state img="1-shock.png">Oh no!</state>
             </case>
@@ -3012,6 +3085,9 @@
             </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlayingSaying="It was really comfortable, Haru, but I think in a game like this, aren't we supposed to say stuff like &quot;oh, but not nearly as comfy as your boobs!&quot; R-right?">
                 <state img="1-aroused.png">If you're trying to sound sexy, I don't think that's how you do it...</state>
+            </case>
+            <case tag="female_removed_minor" target="futaba" targetStage="4">
+                <state img="1-confused.png">But Ann-chan would look better than me in corsets. Plus, I like to be comfortable &lt;i&gt;(...and modest.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="kizuna">
                 <state img="1-nudepanic.png">But ~name~, there are other things you could have taken off! Your stockings, for example.</state>
@@ -3622,6 +3698,9 @@
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="1-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
             </case>
+            <case tag="female_must_masturbate" target="kyu" targetSayingMarker="poem">
+                <state img="1-joyful.png">A poem? I'd like to hear it, Kyu!</state>
+            </case>
             <case tag="female_must_masturbate" target="launch">
                 <state img="1-terrified.png">Please stop shooting! It's not so bad!</state>
             </case>
@@ -3664,6 +3743,12 @@
                 <state img="1-shock.png" marker="null_dirtytalk">Oh, but what about your hands?</state>
                 <state img="1-shock.png" marker="null_dirtytalk">That's right, your burnt hands! Y-You don't have to...</state>
                 <state img="1-sad.png" marker="null_dirtytalk">You don't have to...</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSaidMarker="poem">
+                <state img="1-embarrassed.png">...Oh.</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSayingMarker="whomstdntve">
+                <state img="1-creepy.png">Who would've, Kyu. Or who would have.</state>
             </case>
             <case tag="female_start_masturbating" target="launch" targetSaidMarker="gun">
                 <state img="1-embarrassed.png" marker="null_dirtytalk">I'm sure there's no need. I mean, this isn't the Metaverse.</state>
@@ -3782,6 +3867,9 @@
             </case>
             <case tag="female_finished_masturbating" target="croix" targetSayingMarker="end">
                 <state img="1-ahhhhh.png">&lt;i&gt;I think I'm wet...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_finished_masturbating" target="kyu">
+                <state img="1-creepy.png">&lt;i&gt;(Having an orgasm in mid-air... It must be wonderful.)&lt;/i&gt;</state>
             </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="1-pleasant.png">A lot happened while you were gone.</state>
@@ -3977,7 +4065,7 @@
                 <state img="2-annoyed.png" marker="amaliacheating">I understand you might be embarrassed, but that's no excuse!</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
-                <state img="2-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to him?</state>
+                <state img="2-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to her?</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
                 <state img="2-sad.png" marker="chihiroreveal">Was it because you're afraid of being judged? We won't judge you, Chihiro! And what happens in the Inventory stays in the Inventory!</state>
@@ -4313,6 +4401,9 @@
                 <state img="2-pleasant.png">How unfortunate you can't drop everyone's attacks.</state>
                 <state img="2-embarrassed.png">I wouldn't mind...</state>
             </case>
+            <case tag="female_must_strip" target="futaba" targetStage="3">
+                <state img="2-shock.png">Why don't you take off your headphones, Futaba? Are they very important to you?</state>
+            </case>
             <case tag="female_must_strip" target="hanako" targetStage="0" priority="1001">
                 <state img="2-embarrassed.png">Of course, Hanako.</state>
                 <state img="2-joyful.png">Hanako, right? Your hair looks so pretty!</state>
@@ -4493,6 +4584,9 @@
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="2-perky.png">Interesting choice!</state>
+            </case>
+            <case tag="female_removing_accessory" target="kyu" targetStage="1">
+                <state img="2-pleasant.png" marker="badpun">It seems we're "neck-to-neck" in the strip poker race.</state>
             </case>
             <case tag="female_removing_accessory" target="launch" targetStage="1">
                 <state img="2-shock.png">Eh!?</state>
@@ -4750,6 +4844,9 @@
             <case tag="female_removing_minor" target="futaba" targetStage="0" alsoPlaying="kira">
                 <state img="2-confused.png">Erm, Futaba...?</state>
             </case>
+            <case tag="female_removing_minor" target="futaba" targetStage="3">
+                <state img="2-joyful.png">Socks like yours look so cozy! I should try wearing a pair like that!</state>
+            </case>
             <case tag="female_removing_minor" target="kyoko" targetStage="5">
                 <state img="2-shock.png">Oh no!</state>
             </case>
@@ -4816,6 +4913,9 @@
             </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlayingSaying="It was really comfortable, Haru, but I think in a game like this, aren't we supposed to say stuff like &quot;oh, but not nearly as comfy as your boobs!&quot; R-right?">
                 <state img="2-aroused.png">If you're trying to sound sexy, I don't think that's how you do it...</state>
+            </case>
+            <case tag="female_removed_minor" target="futaba" targetStage="4">
+                <state img="2-confused.png">But Ann-chan would look better than me in corsets. Plus, I like to be comfortable &lt;i&gt;(...and modest.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="kizuna">
                 <state img="2-nudepanic.png">But ~name~, there are other things you could have taken off! Your stockings, for example.</state>
@@ -5431,6 +5531,9 @@
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="2-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
             </case>
+            <case tag="female_must_masturbate" target="kyu" targetSayingMarker="poem">
+                <state img="2-joyful.png">A poem? I'd like to hear it, Kyu!</state>
+            </case>
             <case tag="female_must_masturbate" target="launch">
                 <state img="2-terrified.png">Please stop shooting! It's not so bad!</state>
             </case>
@@ -5473,6 +5576,12 @@
                 <state img="2-shock.png" marker="null_dirtytalk">Oh, but what about your hands?</state>
                 <state img="2-shock.png" marker="null_dirtytalk">That's right, your burnt hands! Y-You don't have to...</state>
                 <state img="2-sad.png" marker="null_dirtytalk">You don't have to...</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSaidMarker="poem">
+                <state img="2-embarrassed.png">...Oh.</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSayingMarker="whomstdntve">
+                <state img="2-creepy.png">Who would've, Kyu. Or who would have.</state>
             </case>
             <case tag="female_start_masturbating" target="launch" targetSaidMarker="gun">
                 <state img="2-embarrassed.png" marker="null_dirtytalk">I'm sure there's no need. I mean, this isn't the Metaverse.</state>
@@ -5588,6 +5697,9 @@
             </case>
             <case tag="female_finished_masturbating" target="croix" targetSayingMarker="end">
                 <state img="2-ahhhhh.png">&lt;i&gt;I think I'm wet...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_finished_masturbating" target="kyu">
+                <state img="2-creepy.png">&lt;i&gt;(Having an orgasm in mid-air... It must be wonderful.)&lt;/i&gt;</state>
             </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="2-pleasant.png">A lot happened while you were gone.</state>
@@ -5778,7 +5890,7 @@
                 <state img="3-annoyed.png" marker="amaliacheating">I understand you might be embarrassed, but that's no excuse!</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
-                <state img="3-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to him?</state>
+                <state img="3-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to her?</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
                 <state img="3-sad.png" marker="chihiroreveal">Was it because you're afraid of being judged? We won't judge you, Chihiro! And what happens in the Inventory stays in the Inventory!</state>
@@ -6110,6 +6222,9 @@
                 <state img="3-sad.png">I wish we could work together, but it's every person for themselves unfortunately.</state>
                 <state img="3-pleasant.png">How unfortunate you can't drop everyone's attacks.</state>
                 <state img="3-embarrassed.png">I wouldn't mind...</state>
+            </case>
+            <case tag="female_must_strip" target="futaba" targetStage="3">
+                <state img="3-shock.png">Why don't you take off your headphones, Futaba? Are they very important to you?</state>
             </case>
             <case tag="female_must_strip" target="hanako" targetStage="0" priority="1001">
                 <state img="3-embarrassed.png">Of course, Hanako.</state>
@@ -6522,6 +6637,9 @@
             <case tag="female_removing_minor" target="futaba" targetStage="0" alsoPlaying="kira">
                 <state img="3-confused.png">Erm, Futaba...?</state>
             </case>
+            <case tag="female_removing_minor" target="futaba" targetStage="3">
+                <state img="3-joyful.png">Socks like yours look so cozy! I should try wearing a pair like that!</state>
+            </case>
             <case tag="female_removing_minor" target="kyoko" targetStage="5">
                 <state img="3-shock.png">Oh no!</state>
             </case>
@@ -6581,6 +6699,9 @@
             </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlayingSaying="It was really comfortable, Haru, but I think in a game like this, aren't we supposed to say stuff like &quot;oh, but not nearly as comfy as your boobs!&quot; R-right?">
                 <state img="3-aroused.png">If you're trying to sound sexy, I don't think that's how you do it...</state>
+            </case>
+            <case tag="female_removed_minor" target="futaba" targetStage="4">
+                <state img="3-confused.png">But Ann-chan would look better than me in corsets. Plus, I like to be comfortable &lt;i&gt;(...and modest.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="kizuna">
                 <state img="3-nudepanic.png">But ~name~, there are other things you could have taken off! Your stockings, for example.</state>
@@ -7181,6 +7302,9 @@
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="3-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
             </case>
+            <case tag="female_must_masturbate" target="kyu" targetSayingMarker="poem">
+                <state img="3-joyful.png">A poem? I'd like to hear it, Kyu!</state>
+            </case>
             <case tag="female_must_masturbate" target="launch">
                 <state img="3-terrified.png">Please stop shooting! It's not so bad!</state>
             </case>
@@ -7223,6 +7347,12 @@
                 <state img="3-shock.png" marker="null_dirtytalk">Oh, but what about your hands?</state>
                 <state img="3-shock.png" marker="null_dirtytalk">That's right, your burnt hands! Y-You don't have to...</state>
                 <state img="3-sad.png" marker="null_dirtytalk">You don't have to...</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSaidMarker="poem">
+                <state img="3-embarrassed.png">...Oh.</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSayingMarker="whomstdntve">
+                <state img="3-creepy.png">Who would've, Kyu. Or who would have.</state>
             </case>
             <case tag="female_start_masturbating" target="launch" targetSaidMarker="gun">
                 <state img="3-embarrassed.png" marker="null_dirtytalk">I'm sure there's no need. I mean, this isn't the Metaverse.</state>
@@ -7342,6 +7472,9 @@
             <case tag="female_finished_masturbating" target="croix" targetSayingMarker="end">
                 <state img="3-aroused.png">&lt;i&gt;That was wonderful...&lt;/i&gt;</state>
                 <state img="3-aroused.png">&lt;i&gt;What wouldn't I give to see that again?&lt;/i&gt;</state>
+            </case>
+            <case tag="female_finished_masturbating" target="kyu">
+                <state img="3-creepy.png">&lt;i&gt;(Having an orgasm in mid-air... It must be wonderful.)&lt;/i&gt;</state>
             </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="3-pleasant.png">A lot happened while you were gone.</state>
@@ -7538,7 +7671,7 @@
                 <state img="4-annoyed.png" marker="amaliacheating">I understand you might be embarrassed, but that's no excuse!</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
-                <state img="4-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to him?</state>
+                <state img="4-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to her?</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
                 <state img="4-sad.png" marker="chihiroreveal">Was it because you're afraid of being judged? We won't judge you, Chihiro! And what happens in the Inventory stays in the Inventory!</state>
@@ -7814,6 +7947,9 @@
                 <state img="4-sad.png">I wish we could work together, but it's every person for themselves unfortunately.</state>
                 <state img="4-pleasant.png">How unfortunate you can't drop everyone's attacks.</state>
                 <state img="4-embarrassed.png">I wouldn't mind...</state>
+            </case>
+            <case tag="female_must_strip" target="futaba" targetStage="3">
+                <state img="4-shock.png">Why don't you take off your headphones, Futaba? Are they very important to you?</state>
             </case>
             <case tag="female_must_strip" target="hanako" targetStage="0" priority="1001">
                 <state img="4-embarrassed.png">Of course, Hanako.</state>
@@ -8183,6 +8319,9 @@
             <case tag="female_removing_minor" target="futaba" targetStage="0" alsoPlaying="kira">
                 <state img="4-confused.png">Erm, Futaba...?</state>
             </case>
+            <case tag="female_removing_minor" target="futaba" targetStage="3">
+                <state img="4-joyful.png">Socks like yours look so cozy! I should try wearing a pair like that!</state>
+            </case>
             <case tag="female_removing_minor" target="kyoko" targetStage="5">
                 <state img="4-shock.png">Oh no!</state>
             </case>
@@ -8246,6 +8385,9 @@
             </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlayingSaying="It was really comfortable, Haru, but I think in a game like this, aren't we supposed to say stuff like &quot;oh, but not nearly as comfy as your boobs!&quot; R-right?">
                 <state img="4-aroused.png">If you're trying to sound sexy, I don't think that's how you do it...</state>
+            </case>
+            <case tag="female_removed_minor" target="futaba" targetStage="4">
+                <state img="4-confused.png">But Ann-chan would look better than me in corsets. Plus, I like to be comfortable &lt;i&gt;(...and modest.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
                 <state img="4-sad.png">I'm so, &lt;i&gt;so&lt;/i&gt; sorry. We shouldn't have pressured you.</state>
@@ -8852,6 +8994,9 @@
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="4-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
             </case>
+            <case tag="female_must_masturbate" target="kyu" targetSayingMarker="poem">
+                <state img="4-joyful.png">A poem? I'd like to hear it, Kyu!</state>
+            </case>
             <case tag="female_must_masturbate" target="launch">
                 <state img="4-terrified.png">Please stop shooting! It's not so bad!</state>
             </case>
@@ -8896,6 +9041,12 @@
                 <state img="4-shock.png" marker="null_dirtytalk">Oh, but what about your hands?</state>
                 <state img="4-shock.png" marker="null_dirtytalk">That's right, your burnt hands! Y-You don't have to...</state>
                 <state img="4-sad.png" marker="null_dirtytalk">You don't have to...</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSaidMarker="poem">
+                <state img="4-embarrassed.png">...Oh.</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSayingMarker="whomstdntve">
+                <state img="4-creepy.png">Who would've, Kyu. Or who would have.</state>
             </case>
             <case tag="female_start_masturbating" target="launch" targetSaidMarker="gun">
                 <state img="4-embarrassed.png" marker="null_dirtytalk">I'm sure there's no need. I mean, this isn't the Metaverse.</state>
@@ -8960,6 +9111,12 @@
             <case tag="female_masturbating" target="kyoko" timeInStage="1">
                 <state img="4-confused.png">Does it hurt?</state>
             </case>
+            <case tag="female_masturbating" target="kyu" targetTimeInStage="1" notSaidMarker="kyu_fetishes" targetNotSaidMarker="poem" priority="10000">
+                <state img="4-creepy.png" marker="kyu_fetishes">You're so... flippant about your fetishes, Kyu. Do you want to know about mine?</state>
+            </case>
+            <case tag="female_masturbating" target="kyu" timeInStage="4" targetSaidMarker="poem">
+                <state img="4-joyful.png">I didn't know you liked to sing jazz, Kyu!</state>
+            </case>
             <case tag="female_masturbating" target="launch" targetTimeInStage="0" targetSaidMarker="gun">
                 <state img="4-confused.png">&lt;i&gt;(Is it?)&lt;/i&gt;</state>
             </case>
@@ -8984,6 +9141,9 @@
             <case tag="female_finished_masturbating" target="croix" targetSayingMarker="end">
                 <state img="4-aroused.png">&lt;i&gt;That was wonderful...&lt;/i&gt;</state>
                 <state img="4-aroused.png">&lt;i&gt;What wouldn't I give to see that again?&lt;/i&gt;</state>
+            </case>
+            <case tag="female_finished_masturbating" target="kyu">
+                <state img="4-creepy.png">&lt;i&gt;(Having an orgasm in mid-air... It must be wonderful.)&lt;/i&gt;</state>
             </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="4-pleasant.png">A lot happened while you were gone.</state>
@@ -9126,7 +9286,7 @@
                 <state img="5-murderous.png" marker="amaliacheating2">I could cut through those flowers if I had my axe!</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
-                <state img="5-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to him?</state>
+                <state img="5-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to her?</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
                 <state img="5-sad.png" marker="chihiroreveal">Was it because you're afraid of being judged? We won't judge you, Chihiro! And what happens in the Inventory stays in the Inventory!</state>
@@ -10375,6 +10535,9 @@
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="5-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
             </case>
+            <case tag="female_must_masturbate" target="kyu" targetSayingMarker="poem">
+                <state img="5-joyful.png">A poem? I'd like to hear it, Kyu!</state>
+            </case>
             <case tag="female_must_masturbate" target="launch">
                 <state img="5-terrified.png">Please stop shooting! It's not so bad!</state>
             </case>
@@ -10395,6 +10558,7 @@
             </case>
             <case tag="female_start_masturbating">
                 <state img="5-perky.png">Don't be shy!</state>
+                <state img="5-annoyed.png">&lt;i&gt;(...Somehow, I knew it'd be something like that.)&lt;/i&gt;</state>
             </case>
             <case tag="female_start_masturbating" filter="deity">
                 <state img="5-joyful.png">&lt;i&gt;This might just be the best day of my life!&lt;/i&gt;</state>
@@ -10422,6 +10586,9 @@
                 <state img="5-shock.png" marker="null_dirtytalk">Oh, but what about your hands?</state>
                 <state img="5-shock.png" marker="null_dirtytalk">That's right, your burnt hands! Y-You don't have to...</state>
                 <state img="5-sad.png" marker="null_dirtytalk">You don't have to...</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSayingMarker="whomstdntve">
+                <state img="5-creepy.png">Who would've, Kyu. Or who would have.</state>
             </case>
             <case tag="female_start_masturbating" target="launch" targetSaidMarker="gun">
                 <state img="5-embarrassed.png" marker="null_dirtytalk">I'm sure there's no need. I mean, this isn't the Metaverse.</state>
@@ -10533,6 +10700,9 @@
             <case tag="female_masturbating" target="kyoko" timeInStage="1">
                 <state img="5-confused.png">Does it hurt?</state>
             </case>
+            <case tag="female_masturbating" target="kyu" targetTimeInStage="1" notSaidMarker="kyu_fetishes" targetNotSaidMarker="poem" priority="10000">
+                <state img="5-creepy.png" marker="kyu_fetishes">You're so... flippant about your fetishes, Kyu. Do you want to know about mine?</state>
+            </case>
             <case tag="female_masturbating" target="launch" targetTimeInStage="0" targetSaidMarker="gun">
                 <state img="5-confused.png">&lt;i&gt;(Is it?)&lt;/i&gt;</state>
             </case>
@@ -10614,6 +10784,9 @@
                 <state img="5-joyful.png">Bravo!</state>
                 <state img="5-perky.png">That was a fantastic show! Thank you!</state>
                 <state img="5-creepy.png">What a show! I thoroughly enjoyed it, &lt;i&gt;professor&lt;/i&gt;.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="kyu">
+                <state img="5-creepy.png">&lt;i&gt;(Having an orgasm in mid-air... It must be wonderful.)&lt;/i&gt;</state>
             </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="5-pleasant.png">A lot happened while you were gone.</state>
@@ -10770,7 +10943,7 @@
                 <state img="6-murderous.png" marker="amaliacheating2">I could cut through those flowers if I had my axe!</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
-                <state img="6-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to him?</state>
+                <state img="6-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to her?</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
                 <state img="6-sad.png" marker="chihiroreveal">Was it because you're afraid of being judged? We won't judge you, Chihiro! And what happens in the Inventory stays in the Inventory!</state>
@@ -11991,6 +12164,9 @@
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="6-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
             </case>
+            <case tag="female_must_masturbate" target="kyu" targetSayingMarker="poem">
+                <state img="6-joyful.png">A poem? I'd like to hear it, Kyu!</state>
+            </case>
             <case tag="female_must_masturbate" target="launch">
                 <state img="6-terrified.png">Please stop shooting! It's not so bad!</state>
             </case>
@@ -12011,6 +12187,7 @@
             </case>
             <case tag="female_start_masturbating">
                 <state img="6-perky.png">Don't be shy!</state>
+                <state img="6-annoyed.png">&lt;i&gt;(...Somehow, I knew it'd be something like that.)&lt;/i&gt;</state>
             </case>
             <case tag="female_start_masturbating" filter="deity">
                 <state img="6-joyful.png">&lt;i&gt;This might just be the best day of my life!&lt;/i&gt;</state>
@@ -12038,6 +12215,9 @@
                 <state img="6-shock.png" marker="null_dirtytalk">Oh, but what about your hands?</state>
                 <state img="6-shock.png" marker="null_dirtytalk">That's right, your burnt hands! Y-You don't have to...</state>
                 <state img="6-sad.png" marker="null_dirtytalk">You don't have to...</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSayingMarker="whomstdntve">
+                <state img="6-creepy.png">Who would've, Kyu. Or who would have.</state>
             </case>
             <case tag="female_start_masturbating" target="launch" targetSaidMarker="gun">
                 <state img="6-embarrassed.png" marker="null_dirtytalk">I'm sure there's no need. I mean, this isn't the Metaverse.</state>
@@ -12166,6 +12346,9 @@
             <case tag="female_masturbating" target="kyoko" timeInStage="1">
                 <state img="6-confused.png">Does it hurt?</state>
             </case>
+            <case tag="female_masturbating" target="kyu" targetTimeInStage="1" notSaidMarker="kyu_fetishes" targetNotSaidMarker="poem" priority="10000">
+                <state img="6-creepy.png" marker="kyu_fetishes">You're so... flippant about your fetishes, Kyu. Do you want to know about mine?</state>
+            </case>
             <case tag="female_masturbating" target="launch" targetTimeInStage="0" targetSaidMarker="gun">
                 <state img="6-confused.png">&lt;i&gt;(Is it?)&lt;/i&gt;</state>
             </case>
@@ -12247,6 +12430,9 @@
                 <state img="6-joyful.png">Bravo!</state>
                 <state img="6-perky.png">That was a fantastic show! Thank you!</state>
                 <state img="6-creepy.png">What a show! I thoroughly enjoyed it, &lt;i&gt;professor&lt;/i&gt;.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="kyu">
+                <state img="6-creepy.png">&lt;i&gt;(Having an orgasm in mid-air... It must be wonderful.)&lt;/i&gt;</state>
             </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="6-pleasant.png">A lot happened while you were gone.</state>
@@ -12411,7 +12597,7 @@
                 <state img="7-murderous.png" marker="amaliacheating2">I could cut through those flowers if I had my axe!</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
-                <state img="7-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to him?</state>
+                <state img="7-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to her?</state>
             </case>
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
                 <state img="7-sad.png" marker="chihiroreveal">Was it because you're afraid of being judged? We won't judge you, Chihiro! And what happens in the Inventory stays in the Inventory!</state>
@@ -13647,6 +13833,9 @@
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="7-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
             </case>
+            <case tag="female_must_masturbate" target="kyu" targetSayingMarker="poem">
+                <state img="7-joyful.png">A poem? I'd like to hear it, Kyu!</state>
+            </case>
             <case tag="female_must_masturbate" target="launch">
                 <state img="7-terrified.png">Please stop shooting! It's not so bad!</state>
             </case>
@@ -13667,6 +13856,7 @@
             </case>
             <case tag="female_start_masturbating">
                 <state img="7-perky.png">Don't be shy!</state>
+                <state img="7-annoyed.png">&lt;i&gt;(...Somehow, I knew it'd be something like that.)&lt;/i&gt;</state>
             </case>
             <case tag="female_start_masturbating" alsoPlaying="nayru" saidMarker="nayrupossessed" alsoPlayingSaidMarker="v_forfeit">
                 <state img="7-murderous.png">Oh HELL no!</state>
@@ -13697,6 +13887,9 @@
                 <state img="7-shock.png" marker="null_dirtytalk">Oh, but what about your hands?</state>
                 <state img="7-shock.png" marker="null_dirtytalk">That's right, your burnt hands! Y-You don't have to...</state>
                 <state img="7-sad.png" marker="null_dirtytalk">You don't have to...</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSayingMarker="whomstdntve">
+                <state img="7-creepy.png">Who would've, Kyu. Or who would have.</state>
             </case>
             <case tag="female_start_masturbating" target="launch" targetSaidMarker="gun">
                 <state img="7-embarrassed.png" marker="null_dirtytalk">I'm sure there's no need. I mean, this isn't the Metaverse.</state>
@@ -13825,6 +14018,9 @@
             <case tag="female_masturbating" target="kyoko" timeInStage="1">
                 <state img="7-confused.png">Does it hurt?</state>
             </case>
+            <case tag="female_masturbating" target="kyu" targetTimeInStage="1" notSaidMarker="kyu_fetishes" targetNotSaidMarker="poem" priority="10000">
+                <state img="7-creepy.png" marker="kyu_fetishes">You're so... flippant about your fetishes, Kyu. Do you want to know about mine?</state>
+            </case>
             <case tag="female_masturbating" target="launch" targetTimeInStage="0" targetSaidMarker="gun">
                 <state img="7-confused.png">&lt;i&gt;(Is it?)&lt;/i&gt;</state>
             </case>
@@ -13906,6 +14102,9 @@
                 <state img="7-joyful.png">Bravo!</state>
                 <state img="7-perky.png">That was a fantastic show! Thank you!</state>
                 <state img="7-creepy.png">What a show! I thoroughly enjoyed it, &lt;i&gt;professor&lt;/i&gt;.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="kyu">
+                <state img="7-creepy.png">&lt;i&gt;(Having an orgasm in mid-air... It must be wonderful.)&lt;/i&gt;</state>
             </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="7-pleasant.png">A lot happened while you were gone.</state>
@@ -14914,6 +15113,9 @@
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="8-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
             </case>
+            <case tag="female_must_masturbate" target="kyu" targetSayingMarker="poem">
+                <state img="8-joyful.png">A poem? I'd like to hear it, Kyu!</state>
+            </case>
             <case tag="female_must_masturbate" target="launch">
                 <state img="8-terrified.png">Please stop shooting! It's not so bad!</state>
             </case>
@@ -14934,6 +15136,7 @@
             </case>
             <case tag="female_start_masturbating">
                 <state img="8-aroused.png">Nghh!</state>
+                <state img="8-annoyed.png">&lt;i&gt;(...Somehow, I knew it'd be something like that.)&lt;/i&gt;</state>
             </case>
             <case tag="female_start_masturbating" alsoPlaying="chihiro">
                 <state img="8-kinky_a.png">Mmmm, good boy...</state>
@@ -14962,6 +15165,9 @@
             </case>
             <case tag="female_start_masturbating" target="kyoko">
                 <state img="8-sad.png" marker="null_dirtytalk">You don't have to...</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSayingMarker="whomstdntve">
+                <state img="8-creepy.png">Who would've, Kyu. Or who would have.</state>
             </case>
             <case tag="female_start_masturbating" target="misato">
                 <state img="8-aroused.png">By the way, Misato, I hope you don't mind if I request that you call me 'mommy'.</state>
@@ -15041,6 +15247,9 @@
             </case>
             <case tag="female_masturbating" target="kizuna" targetTimeInStage="0">
                 <state img="8-creepy.png">&lt;i&gt;I'm waiting&lt;/i&gt;, ~name~.</state>
+            </case>
+            <case tag="female_masturbating" target="kyu" targetTimeInStage="1" notSaidMarker="kyu_fetishes" targetNotSaidMarker="poem" priority="10000">
+                <state img="8-creepy.png" marker="kyu_fetishes">You're so... flippant about your fetishes, Kyu. Do you want to know about mine?</state>
             </case>
             <case tag="female_masturbating" target="nayru" saidMarker="nayrupossessed" notSaidMarker="nayrupossessedangry" targetSaidMarker="v_forfeit">
                 <state img="8-sad.png">Nayru...</state>
@@ -15134,6 +15343,9 @@
                 <state img="8-aroused.png">Ohhh gosh, I want that device &lt;i&gt;so badly!&lt;/i&gt;</state>
                 <state img="8-aroused.png">Croix...!</state>
             </case>
+            <case tag="female_finished_masturbating" target="kyu">
+                <state img="8-creepy.png">&lt;i&gt;(Having an orgasm in mid-air... It must be wonderful.)&lt;/i&gt;</state>
+            </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="8-pleasant.png">A lot happened while you were gone.</state>
             </case>
@@ -15178,7 +15390,7 @@
                 <state img="8-sad.png">&lt;i&gt;(I just hope I'm not coming on too strong with my dirty talk...)&lt;/i&gt;</state>
             </case>
             <case tag="masturbating" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="2">
-                <state img="8-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to him?</state>
+                <state img="8-sad.png">Is there any way you could get Chihiro to come back? Maybe one of us should return you to her?</state>
             </case>
             <case tag="masturbating" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="2">
                 <state img="8-embarrassed.png">Oh! Was it because you're afraid of being judged? We won't judge you, Chihiro! And what happens in the Inventory stays in the Inventory!</state>
@@ -16210,6 +16422,9 @@
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="9-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
             </case>
+            <case tag="female_must_masturbate" target="kyu" targetSayingMarker="poem">
+                <state img="9-joyful.png">A poem? I'd like to hear it, Kyu!</state>
+            </case>
             <case tag="female_must_masturbate" target="launch">
                 <state img="9-terrified.png">Please stop shooting! It's not so bad!</state>
             </case>
@@ -16230,6 +16445,7 @@
             </case>
             <case tag="female_start_masturbating">
                 <state img="9-perky.png">Don't be shy!</state>
+                <state img="9-annoyed.png">&lt;i&gt;(...Somehow, I knew it'd be something like that.)&lt;/i&gt;</state>
             </case>
             <case tag="female_start_masturbating" alsoPlaying="nayru" saidMarker="nayrupossessed" alsoPlayingSaidMarker="v_forfeit">
                 <state img="9-murderous.png">Oh HELL no!</state>
@@ -16254,6 +16470,9 @@
             </case>
             <case tag="female_start_masturbating" target="kyoko">
                 <state img="9-sad.png" marker="null_dirtytalk">You don't have to...</state>
+            </case>
+            <case tag="female_start_masturbating" target="kyu" targetSayingMarker="whomstdntve">
+                <state img="9-creepy.png">Who would've, Kyu. Or who would have.</state>
             </case>
             <case tag="female_start_masturbating" target="misato">
                 <state img="9-aroused.png">By the way, Misato, I hope you don't mind if I request that you call me 'mommy'.</state>
@@ -16401,6 +16620,9 @@
             <case tag="female_masturbating" target="kizuna" targetTimeInStage="0">
                 <state img="9-creepy.png">&lt;i&gt;I'm waiting&lt;/i&gt;, ~name~.</state>
             </case>
+            <case tag="female_masturbating" target="kyu" targetTimeInStage="1" notSaidMarker="kyu_fetishes" targetNotSaidMarker="poem" priority="10000">
+                <state img="9-creepy.png" marker="kyu_fetishes">You're so... flippant about your fetishes, Kyu. Do you want to know about mine?</state>
+            </case>
             <case tag="female_masturbating" target="nayru" saidMarker="nayrupossessed" notSaidMarker="nayrupossessedangry" targetSaidMarker="v_forfeit">
                 <state img="9-sad.png">Nayru...</state>
                 <state img="9-sad.png">&lt;i&gt;(Please... Fight back!)&lt;/i&gt;</state>
@@ -16483,6 +16705,9 @@
                 <state img="9-joyful.png">Bravo!</state>
                 <state img="9-perky.png">That was a fantastic show! Thank you!</state>
                 <state img="9-creepy.png">What a show! I thoroughly enjoyed it, &lt;i&gt;professor&lt;/i&gt;.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="kyu">
+                <state img="9-creepy.png">&lt;i&gt;(Having an orgasm in mid-air... It must be wonderful.)&lt;/i&gt;</state>
             </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="9-pleasant.png">A lot happened while you were gone.</state>
