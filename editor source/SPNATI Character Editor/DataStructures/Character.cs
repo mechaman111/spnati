@@ -186,6 +186,7 @@ namespace SPNATI_Character_Editor
 			Wardrobe = new List<Clothing>();
 			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
+			Poses = new List<Pose>();
 			Version = "";
 		}
 

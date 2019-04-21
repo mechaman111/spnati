@@ -1755,7 +1755,7 @@ namespace SPNATI_Character_Editor
 			}
 			return false;
 		}
-		
+
 		/// <summary>
 		/// Gets whether at least one line touches a collectible
 		/// </summary>
@@ -1845,6 +1845,55 @@ namespace SPNATI_Character_Editor
 			Count = count;
 		}
 
+		public TargetCondition(string serializedData, string count)
+		{
+			Count = count;
+
+			string[] parts = serializedData.Split('&');
+			foreach (string part in parts)
+			{
+				if (part.Contains(";"))
+				{
+					string[] pieces = part.Split(new char[] { ';' }, 2);
+					if (pieces.Length == 2)
+					{
+						string key = pieces[0];
+						string value = pieces[1];
+						switch (key)
+						{
+							case "var":
+								Variable = value;
+								break;
+							case "stage":
+								FilterStage = value;
+								break;
+							case "character":
+								FilterId = value;
+								break;
+							case "role":
+								Role = value;
+								break;
+						}
+					}
+				}
+				else
+				{
+					if (part == "male" || part == "female")
+					{
+						Gender = part;
+					}
+					else if (part != "" && Array.Exists(StatusTypes, t => t.Key == part || "not_" + t.Key == part))
+					{
+						Status = part;
+					}
+					else
+					{
+						FilterTag = part;
+					}
+				}
+			}
+		}
+
 		public void ClearEmptyValues()
 		{
 			if (FilterTag == "")
@@ -1859,6 +1908,41 @@ namespace SPNATI_Character_Editor
 		{
 			TargetCondition copy = MemberwiseClone() as TargetCondition;
 			return copy;
+		}
+
+		public string Serialize()
+		{
+			List<string> parts = new List<string>();
+			if (!string.IsNullOrEmpty(Status))
+			{
+				parts.Add(Status);
+			}
+			if (!string.IsNullOrEmpty(Gender))
+			{
+				parts.Add(Gender);
+			}
+			if (!string.IsNullOrEmpty(FilterTag))
+			{
+				parts.Add(FilterTag);
+			}
+			if (!string.IsNullOrEmpty(Role))
+			{
+				parts.Add("role:" + Role);
+			}
+			if (!string.IsNullOrEmpty(FilterId))
+			{
+				parts.Add("character:" + FilterId);
+			}
+			if (!string.IsNullOrEmpty(FilterStage))
+			{
+				parts.Add("stage:" + FilterStage);
+			}
+			if (!string.IsNullOrEmpty(Variable))
+			{
+				parts.Add("var:" + FilterId);
+			}
+			string data = string.Format("count-{1}:{0}", Count, string.Join("&", parts));
+			return data;
 		}
 
 		public override string ToString()
@@ -1907,7 +1991,7 @@ namespace SPNATI_Character_Editor
 				}
 				if (!string.IsNullOrEmpty(Variable))
 				{
-					str += $" => {Variable}"; 
+					str += $" => {Variable}";
 				}
 			}
 			return str;
@@ -1983,13 +2067,39 @@ namespace SPNATI_Character_Editor
 			Value = value;
 		}
 
+		public ExpressionTest(string serializedData)
+		{
+			string[] parts = serializedData.Split(new char[] { ':' });
+			if (parts.Length > 0)
+			{
+				Expression = parts[0];
+			}
+			if (parts.Length > 1)
+			{
+				Value = parts[1];
+			}
+			if (parts.Length > 2 && !string.IsNullOrEmpty(parts[2]))
+			{
+				Operator = parts[2];
+			}
+		}
+
 		public ExpressionTest Copy()
 		{
-			ExpressionTest copy = new ExpressionTest(Expression, Value)
-			{
-				Operator = Operator
-			};
+			ExpressionTest copy = MemberwiseClone() as ExpressionTest;
 			return copy;
+		}
+
+		public string Serialize()
+		{
+			List<string> pieces = new List<string>();
+			pieces.Add(Expression);
+			pieces.Add(Value);
+			if (!string.IsNullOrEmpty(Operator) && Operator != "==")
+			{
+				pieces.Add(Operator);
+			}
+			return string.Join(":", pieces);
 		}
 
 		public override bool Equals(object obj)
