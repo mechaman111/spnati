@@ -98,6 +98,10 @@ namespace SPNATI_Character_Editor
 				}
 				txtValue.Text = value;
 			}
+			else
+			{
+				recField.RecordKey = dataValue;
+			}
 		}
 
 		protected override void RemoveHandlers()
