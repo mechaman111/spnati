@@ -37,6 +37,14 @@ namespace SPNATI_Character_Editor
 
 				_filter.Status = status;
 
+				if (values.Count > 4)
+				{
+					_filter.Role = values[4];
+					_filter.Variable = values[5];
+					_filter.FilterId = values[6];
+					_filter.FilterStage = values[7];
+				}
+
 				RebindTable();
 
 				ToggleCollapsed(!_filter.HasAdvancedConditions);
@@ -52,6 +60,10 @@ namespace SPNATI_Character_Editor
 			values.Add(tag ?? "");
 			values.Add(gender ?? "");
 			values.Add(_filter.Status);
+			values.Add(_filter.Role);
+			values.Add(_filter.Variable);
+			values.Add(_filter.FilterId);
+			values.Add(_filter.FilterStage);
 		}
 
 		protected override void OnBoundData()
@@ -183,6 +195,10 @@ namespace SPNATI_Character_Editor
 			//TODO: Once properties serialize properly with SpnatiXmlSerializer, we can switch TargetCondition to use a BindableObject, make
 			//the fields properties, and get rid of this method
 			tableAdvanced.UpdateProperty("Status");
+			tableAdvanced.UpdateProperty("Role");
+			tableAdvanced.UpdateProperty("Variable");
+			tableAdvanced.UpdateProperty("FilterId");
+			tableAdvanced.UpdateProperty("FilterStage");
 		}
 
 		public override void Save()
