@@ -402,8 +402,8 @@
         <button id='select-group-button' class='bordered main-select-button smooth-button smooth-button-green' onclick="clickedSelectGroupButton(0)">
           Preset Tables
         </button>
-        <button id='select-random-group-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="clickedRandomGroupButton()">
-          Random Table
+        <button id='select-help-button' class='bordered main-select-button smooth-button smooth-button-green' onclick="showHelpModal()">
+          Help & FAQ
         </button>
 
         <!-- Advance Button Casing -->
@@ -416,15 +416,24 @@
         </button>
 
         <!-- More Select Buttons -->
-        <button id='select-random-female-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseFemale(player) {return player.gender.toLowerCase() === 'female';})">
-          Random Females
-        </button>
-        <button id='select-random-male-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseMale(player) {return player.gender.toLowerCase() === 'male';})">
-          Random Males
-        </button>
-        <button id='select-random-button' class='bordered main-select-button  smooth-button smooth-button-blue' onclick="clickedRandomFillButton()">
-          Random Fill
-        </button>
+        <div class="select-random-container">
+          <div class="select-random-col">
+            <button id='select-random-female-button' class='bordered select-quadrant-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseFemale(player) {return player.gender.toLowerCase() === 'female';})">
+              Random Females
+            </button>
+            <button id='select-random-group-button' class='bordered select-quadrant-button smooth-button smooth-button-blue' onclick="clickedRandomGroupButton()">
+              Random Table
+            </button>
+          </div>
+          <div class="select-random-col">
+            <button id='select-random-male-button' class='bordered select-quadrant-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseMale(player) {return player.gender.toLowerCase() === 'male';})">
+              Random Males
+            </button>
+            <button id='select-random-button' class='bordered select-quadrant-button  smooth-button smooth-button-blue' onclick="clickedRandomFillButton()">
+              Random Fill
+            </button>
+          </div>
+        </div>
 
         <button id='select-remove-all-button' class='bordered main-select-button  smooth-button smooth-button-red' onclick="clickedRemoveAllButton()" disabled="true">
           Remove All
