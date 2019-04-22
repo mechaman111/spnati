@@ -25,16 +25,15 @@ namespace SPNATI_Character_Editor
 				"~clothing~",
 				"~clothing.plural~",
 				"~clothing.position~",
+				"~clothing.type~",
 				"~player~",
 				"~self.costume~",
 				"~self.slot~",
-				"~self.tag~",
 				"~target.costume~",
 				"~target.gender~",
 				"~target.position~",
 				"~target.size~",
 				"~target.slot~",
-				"~target.tag~",
 				"~weekday~",
 			});
 			cboExpression.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -219,6 +218,14 @@ namespace SPNATI_Character_Editor
 						_subcontrol = new CharacterCollectibleControl();
 					}
 				}
+				if (variable.StartsWith("~self.tag.") || variable.StartsWith("~target.tag."))
+				{
+					_subcontrol = new TagControl();
+				}
+				else if (variable.Contains(".tag."))
+				{
+					_subcontrol = new CharacterTagControl();
+				}
 
 				if (_subcontrol != null)
 				{
@@ -371,6 +378,14 @@ namespace SPNATI_Character_Editor
 						"other",
 					});
 					break;
+				case "~clothing.type~":
+					cboValue.Items.AddRange(new string[] {
+						"extra",
+						"minor",
+						"major",
+						"important",
+					});
+					break;
 				case "~clothing.plural~":
 					cboValue.Items.AddRange(new string[] {
 						"plural",
@@ -448,7 +463,7 @@ namespace SPNATI_Character_Editor
 						"4",
 					});
 					break;
-				case "~self.tag~":
+				case "~self.tag.*~":
 					cboValue.Items.AddRange(new string[] {
 						"true",
 						"false",
@@ -498,12 +513,6 @@ namespace SPNATI_Character_Editor
 						"2",
 						"3",
 						"4",
-					});
-					break;
-				case "~target.tag~":
-					cboValue.Items.AddRange(new string[] {
-						"true",
-						"false",
 					});
 					break;
 			}

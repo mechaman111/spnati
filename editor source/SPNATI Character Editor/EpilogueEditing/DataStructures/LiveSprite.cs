@@ -482,6 +482,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			Pose = pose;
 			ParentId = sprite.ParentId;
+			Marker = sprite.Marker;
 			Length = 0.5f;
 			Id = sprite.Id;
 			Z = sprite.Z;

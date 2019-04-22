@@ -215,7 +215,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			string stage = row.Cells["ColStage"].Value?.ToString();
 			string pose = row.Cells["ColPose"].Value?.ToString();
-			if (string.IsNullOrEmpty(stage) || string.IsNullOrEmpty(pose))
+			if (string.IsNullOrEmpty(pose))
 				return null;
 			int l = 0;
 			int r = 0;
