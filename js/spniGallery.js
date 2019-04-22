@@ -254,6 +254,7 @@ function createFilterOption (opp) {
     var elem = document.createElement('option');
     elem.value = opp.id;
     elem.text = opp.label;
+    elem.className = 'gallery-character-filter-option'
     
     return elem;
 }
@@ -261,12 +262,16 @@ function createFilterOption (opp) {
 function loadGalleryScreen(){
 	screenTransition($titleScreen, $galleryScreen);
     
-    /* Set up filter lists: */    
-    $('#collectible-character-filter').empty().append(loadedOpponents.filter(function (opp) {
+    /* Set up filter lists: */
+    
+    // Clear all previously populated list items:
+    $('.gallery-character-filter-option').detach();
+    
+    $('#collectible-character-filter').append(loadedOpponents.filter(function (opp) {
         return opp && opp.has_collectibles
     }).map(createFilterOption));
     
-    $('#epilogue-character-filter').empty().append(loadedOpponents.filter(function (opp) {
+    $('#epilogue-character-filter').append(loadedOpponents.filter(function (opp) {
         return opp && opp.ending;
     }).map(createFilterOption))
     
@@ -276,7 +281,6 @@ function loadGalleryScreen(){
         goToEpiloguesScreen();
         $('.gallery-switch-button').hide();
     }
-    
 }
 
 function backGalleryScreen(){
