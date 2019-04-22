@@ -262,11 +262,11 @@ function loadGalleryScreen(){
 	screenTransition($titleScreen, $galleryScreen);
     
     /* Set up filter lists: */    
-    $('#collectible-character-filter').append(loadedOpponents.filter(function (opp) {
+    $('#collectible-character-filter').empty().append(loadedOpponents.filter(function (opp) {
         return opp && opp.has_collectibles
     }).map(createFilterOption));
     
-    $('#epilogue-character-filter').append(loadedOpponents.filter(function (opp) {
+    $('#epilogue-character-filter').empty().append(loadedOpponents.filter(function (opp) {
         return opp && opp.ending;
     }).map(createFilterOption))
     
