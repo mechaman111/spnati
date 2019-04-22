@@ -68,6 +68,7 @@ var table = new Table();
 var jsErrors = [];
 var sessionID = '';
 var gameID = '';
+var generalCollectibles = [];
 
 /**********************************************************************
  * Screens & Modals
@@ -893,6 +894,8 @@ function initialSetup () {
     loadTitleScreen();
     selectTitleCandy();
     loadVersionInfo();
+    loadGeneralCollectibles();
+    
 	/* Make sure that the config file is loaded before processing the
 	   opponent list, so that includedOpponentStatuses is populated. */
     loadConfigFile().always(loadSelectScreen);
@@ -1050,6 +1053,22 @@ function loadConfigFile () {
 	});
 }
 
+function loadGeneralCollectibles () {
+    $.ajax({
+		type: "GET",
+		url: 'opponents/general_collectibles.xml',
+		dataType: "text",
+		success: function(xml) {
+			var collectiblesArray = [];
+			$(xml).find('collectible').each(function (idx, elem) {
+				generalCollectibles.push(new Collectible($(elem), undefined));
+			});
+		},
+        error: function (jqXHR, status, err) {
+            console.error("Error loading general collectibles: "+status+" - "+err);
+        }
+	});
+}
 
 
 function enterTitleScreen() {

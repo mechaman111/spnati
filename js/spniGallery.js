@@ -226,9 +226,6 @@ Collectible.prototype.displayInfoModal = function () {
 /* opponent listing file */
 var galleryEndings = [];
 var allEndings = [];
-var anyEndings = [];
-var maleEndings = [];
-var femaleEndings = [];
 var galleryPage = 0;
 var galleryPages = -1;
 var epp = 20;
@@ -241,7 +238,7 @@ function goToEpiloguesScreen() {
 	$galleryEndingsScreen.show();
 	$galleryCollectiblesScreen.hide();
 	loadGalleryEndings();
-	galleryGender(GALLERY_GENDER);
+	updateGalleryScreen();
 }
 
 function goToCollectiblesScreen() {
@@ -253,8 +250,25 @@ function goToCollectiblesScreen() {
     $collectibleImagePane.hide();    
 }
 
+function createFilterOption (opp) {
+    var elem = document.createElement('option');
+    elem.value = opp.id;
+    elem.text = opp.label;
+    
+    return elem;
+}
+
 function loadGalleryScreen(){
 	screenTransition($titleScreen, $galleryScreen);
+    
+    /* Set up filter lists: */    
+    $('#collectible-character-filter').append(loadedOpponents.filter(function (opp) {
+        return opp && opp.has_collectibles
+    }).map(createFilterOption));
+    
+    $('#epilogue-character-filter').append(loadedOpponents.filter(function (opp) {
+        return opp && opp.ending;
+    }).map(createFilterOption))
     
     if (COLLECTIBLES_ENABLED) {
         goToCollectiblesScreen();
@@ -269,6 +283,14 @@ function backGalleryScreen(){
 	screenTransition($galleryScreen, $titleScreen);
 }
 
+function changeCharacterFilter (collectibleScreen) {
+    if (collectibleScreen) {
+        updateCollectiblesScreen();
+    } else {
+        updateGalleryScreen();
+    }
+}
+
 function loadAllCollectibles() {
     loadedOpponents.forEach(function (opp) {
         if (opp && opp.has_collectibles) {
@@ -280,8 +302,21 @@ function loadAllCollectibles() {
 function updateCollectiblesScreen() {	
 	$collectibleListPane.empty();
 	
+    var filter = $('#collectible-character-filter').val();
+    
+    if (!filter || filter === '__general') {
+        generalCollectibles.forEach(function (item) {
+            var elem = item.listElement();
+            if (elem) {
+                $collectibleListPane.append(elem);    
+            }
+        });
+    }
+    
     loadedOpponents.forEach(function (opp) {
         if (opp && opp.collectibles) {
+            if (filter && opp.id !== filter) return;
+            
             opp.collectibles.forEach(function (item) {
                 var elem = item.listElement();
                 if (elem) {
@@ -292,7 +327,6 @@ function updateCollectiblesScreen() {
     });
 }
 
-
 function loadGalleryEndings(){
 	if(allEndings.length > 0){
 		return;
@@ -302,19 +336,44 @@ function loadGalleryEndings(){
 		if (loadedOpponents[i].ending) {
 			loadedOpponents[i].endings.each(function () {
 				var gending = new GEnding(loadedOpponents[i], this);
-				
-				allEndings.push( gending );
-				switch(gending.gender){
-					case 'male': maleEndings.push(gending);
-					break;
-					case 'female': femaleEndings.push(gending);
-					break;
-					default: anyEndings.push(gending);
-					break;
-				}
+				allEndings.push(gending);
 			});
 		}
 	}
+}
+function updateGalleryScreen () {
+    var charFilter = $('#epilogue-character-filter').val();
+    
+    galleryEndings = allEndings.filter(function (ending) {
+        if (charFilter && ending.player.id !== charFilter) return false;
+        
+        switch (GALLERY_GENDER) {
+        case 'male':
+            if (ending.gender !== 'male') return false;
+            break;
+        case 'female':
+            if (ending.gender !== 'female') return false;
+            break;
+        case 'any':
+            if (ending.gender === 'male' || ending.gender === 'female') return false;
+            break;
+        default:
+            break;
+        }
+        
+        return true;
+    });
+    
+    galleryPages = Math.ceil(galleryEndings.length/parseFloat(epp));
+	galleryPage = 0;
+	$galleryPrevButton.attr('disabled', true);
+	if(galleryPages==1){
+		$galleryNextButton.attr('disabled', true);
+	}
+	else{
+		$galleryNextButton.attr('disabled', false);
+	}
+	loadThumbnails();
 }
 
 function loadEndingThunbnail(element, ending){
@@ -340,37 +399,26 @@ function loadThumbnails(){
 	}
 }
 
+
 function galleryGender(gender){
 	GALLERY_GENDER = gender;
 	$('.gallery-gender-button').css('opacity', 0.4);
 	switch(gender){
 		case 'male':
-			galleryEndings = maleEndings;
 			$('#gallery-gender-male').css('opacity', 1);
 			break;
 		case 'female':
-			galleryEndings = femaleEndings;
 			$('#gallery-gender-female').css('opacity', 1);
 			break;
 		case 'any':
-			galleryEndings = anyEndings;
 			$('#gallery-gender-any').css('opacity', 1);
 			break;
 		default:
-			galleryEndings = allEndings;
 			$('#gallery-gender-all').css('opacity', 1);
 			break;
 	}
-	galleryPages = Math.ceil(galleryEndings.length/parseFloat(epp));
-	galleryPage = 0;
-	$galleryPrevButton.attr('disabled', true);
-	if(galleryPages==1){
-		$galleryNextButton.attr('disabled', true);
-	}
-	else{
-		$galleryNextButton.attr('disabled', false);
-	}
-	loadThumbnails();
+    
+    updateGalleryScreen();
 }
 
 function galleryNextPage(){
