@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.7.1 at 1:52:02  on Februar 27, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.1 at 2:48:39  on April 22, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v3.7.1</version>
+    <version>v4.1</version>
     <first>Sheena</first>
     <last>Fujibayashi</last>
     <label>Sheena</label>
@@ -23,15 +23,18 @@
         <tag>fair-skinned</tag>
         <tag>athletic</tag>
         <tag>trimmed</tag>
+        <tag>pubic_hair</tag>
         <tag>large_breasts</tag>
+        <tag>no_underwear</tag>
         <tag>tomboy</tag>
         <tag>fantasy</tag>
         <tag>video_game</tag>
-        <tag>adventurer</tag>
-        <tag>fighter</tag>
-        <tag>hero</tag>
         <tag>tales_of</tag>
         <tag>tales_of_symphonia</tag>
+        <tag>adventurer</tag>
+        <tag>fighter</tag>
+        <tag from="5" to="8">magic</tag>
+        <tag>hero</tag>
         <tag>ninja</tag>
     </tags>
 
@@ -58,6 +61,9 @@
                 <state img="0-excited.png">I have to warn you; playing cards is one of my specialties. Even if it's &lt;i&gt;this&lt;/i&gt; kind of game.</state>
                 <state img="0-excited.png">Cards aren't that different from the seals I usually use in battle. Prepare to lose!</state>
                 <state img="0-excited.png">Oh, well, it's fun to play poker every now and then. I wouldn't want to get out of practice. Even if it's &lt;i&gt;this&lt;/i&gt; kind of poker.</state>
+            </case>
+            <case tag="game_start" alsoPlaying="akko" priority="101">
+                <state img="0-interested.png">I guess Luna Nova is the name of your school, right? I'm afraid I never been there. But I'm surprised you can tell that I'm a magic user!</state>
             </case>
             <case tag="game_start" alsoPlaying="corrin_f">
                 <state img="0-sad.png">Corrin? Your name reminds me of a late friend of mine... Oh, Corrine...</state>
@@ -181,6 +187,9 @@
             <case tag="bad_hand" totalRounds="0">
                 <state img="0-angry.png">This can't be! The first round and I get a hand like &lt;i&gt;this&lt;/i&gt;!? This game is a fraud!</state>
             </case>
+            <case tag="hand" alsoPlaying="akko" alsoPlayingSayingMarker="hi_sheena">
+                <state img="0-excited.png">Sure! The rules of my clan prohibit me from showing you the &lt;i&gt;really&lt;/i&gt; interesting stuff, but I'm sure I can show you some of my tricks.</state>
+            </case>
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="amaflower">
                 <state img="0-angry.png" marker="amaflower">Flowers? Hey, Amalia! That's cheating!</state>
             </case>
@@ -193,12 +202,21 @@
             <case tag="hand" alsoPlaying="remilia" alsoPlayingStage="3" notSaidMarker="remiWine">
                 <state img="0-ironic.png" marker="remiWine">Hey, little lady! It doesn't matter if you're old enough or not, this is not the time for a glass of wine!</state>
             </case>
+            <case tag="hand" alsoPlaying="zizou" alsoPlayingStage="7" notSaidMarker="zizouHair2">
+                <state img="0-flustered.png" marker="zizouHair2">Even &lt;i&gt;that&lt;/i&gt; hair is multi-colored? I didn't even know that was possible...</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" notSaidMarker="zizouHair">
+                <state img="0-interested.png" marker="zizouHair">You have two hair colors, Zizou? How come? It's not dyed, is it?</state>
+            </case>
             <case tag="hand" notSaidMarker="firstnaked">
                 <condition count="1" status="lost_all" />
                 <state img="0-interested.png" marker="firstnaked">You're allowed to continue, even if you're naked? That's nice of you guys.</state>
             </case>
             <case tag="hand" saidMarker="zelossize" notSaidMarker="zelossize2">
                 <state img="0-ironic.png" marker="zelossize2">Oh, please don't ask how I know about that pervert's size. It's a long story...</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="chun-li">
+                <state img="0-calm.png">No worries, Chun-Li! The times where I worked as an assassin are long-gone. Actually, I never even completed an assassination in the first place...</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="0-calm.png">I lost? Even the best players lose from time to time.</state>
@@ -215,6 +233,9 @@
             <case tag="stripping">
                 <state img="0-strip.png">I guess I'll take off my gloves first. Safe!</state>
                 <state img="0-strip.png">I'm sorry to disappoint all the pervs in here! I'm just gonna take off my gloves.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="akko">
+                <state img="0-strip.png">I know you're interested in my skills, Akko, but I'm afraid I can't tell you where to learn them. The rules of my village are pretty strict...</state>
             </case>
             <case tag="stripping" alsoPlaying="catria">
                 <state img="0-strip.png">Don't worry, Catria! I may have been called an assassin, but I failed the only job I ever was tasked with, and thankfully, I've never had to do it since.</state>
@@ -411,8 +432,14 @@
                 <state img="0-angry.png">Hey, you! Let ~name~ undress on her own!</state>
                 <state img="0-sulky.png">This is ridiculous! I would &lt;i&gt;never&lt;/i&gt; allow someone else to undress me.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" targetStage="0">
+                <state img="0-flustered.png">Huh? You transformed? Is this your way of dealing with embarrassment?</state>
+            </case>
             <case tag="female_removing_accessory" target="catria" targetStage="0">
                 <state img="0-calm.png" marker="unicorn">You're riding a pegasus, Catria? I've never seen one, but I have met an unicorn. Only pure maidens are able to meet a unicorn!</state>
+            </case>
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0">
+                <state img="0-interested.png">Your outfit looks similar to the clothing from where I'm from. I doubt they're related, though...</state>
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="0-angry.png">You talk like you can't get naked fast enough, but now you're just losing your weapon?</state>
@@ -507,6 +534,12 @@
             <case tag="female_removing_accessory" target="uravity" targetStage="1">
                 <state img="0-sulky.png">Special powers or not, don't you think those are a little bit small to strip separately?</state>
             </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="0">
+                <state img="0-excited.png">That sure is a fancy hat you're wearing. I remember when Zelos needed to disguise himself and wore something similar.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="1">
+                <state img="0-interested.png">Will you show us another one of your tricks?</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="0-excited.png">That may have been a good move, ~name~, but small stuff won't save you forever.</state>
                 <state img="0-calm.png">Just let me remind you: You gained nothing but time by taking off your ~clothing~.</state>
@@ -514,6 +547,9 @@
                 <state img="0-calm.png">Let's keep on going!</state>
                 <state img="0-interested.png">~clothing.ifPlural(Were those|Was this)~ a good luck charm of yours?</state>
                 <state img="0-calm.png">You mustn't forget that your ~clothing~ won't help you anymore.</state>
+            </case>
+            <case tag="female_removed_accessory" target="akko" targetStage="1">
+                <state img="0-ironic.png">Well, if it helps, and as long as you follow the rules and strip an item each loss, it's fine by me.</state>
             </case>
             <case tag="female_removed_accessory" target="amalia" targetStage="1">
                 <state img="0-interested.png">So there's a lot of space inside your bag? Is it the same technology as the Wing Packs we use?</state>
@@ -614,6 +650,12 @@
             <case tag="female_removed_accessory" target="uravity" targetStage="2">
                 <state img="0-calm.png">Anyway! Sooner or later, what goes up, must come down. And I can summon Gnome, the Summon Spirit of Earth, just in case you take too long.</state>
             </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="1">
+                <state img="0-interested.png">Wow, that looked just like one of my ninja arts! A fancy way to strip a fancy hat!</state>
+            </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="2">
+                <state img="0-excited.png">And now the scarf turned into butterflies. That's quite cool!</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="0-calm.png">You're already losing your ~clothing~? Too bad! For you of course.</state>
                 <state img="0-excited.png">Too bad, ~name~! You better not underestimate me anymore.</state>
@@ -652,6 +694,9 @@
             <case tag="female_removing_minor" target="catria" targetStage="3">
                 <state img="0-sulky.png">I know you want to help this girl to "reach her behind" but keep your hands by yourself, ~player~! If Catria needs help, &lt;i&gt;I&lt;/i&gt; will help her.</state>
             </case>
+            <case tag="female_removing_minor" target="chun-li" targetStage="3">
+                <state img="0-excited.png">Seems like you'll have to kick your foes with your bare feet now. But I'm sure your strength will more than make up for it!</state>
+            </case>
             <case tag="female_removing_minor" target="launch" targetStage="4">
                 <state img="0-interested.png">Good girl! That's the best choice you could have made.</state>
             </case>
@@ -679,6 +724,15 @@
             <case tag="female_removing_minor" target="uravity" targetStage="2">
                 <state img="0-interested.png">Do you need those "stabilizers" to float straight, or something? I remember how hard it was to float when we were at the higher levels of the Tower of Salvation.</state>
             </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="2">
+                <state img="0-interested.png">Butterflies again, right? I'm sure Colette would love them.</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="3">
+                <state img="0-interested.png">Say, do you always undress like that? It seems pretty convenient...</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="4">
+                <state img="0-flustered.png">...You &lt;i&gt;can&lt;/i&gt; turn those butterflies back into clothes, right..?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="0-calm.png">Try better next round and everything will work out.</state>
                 <state img="0-interested.png">If you want to get better, I can give you a private lesson. But without the stripping, of course.</state>
@@ -693,6 +747,9 @@
             </case>
             <case tag="female_removed_minor" target="catria" targetStage="4">
                 <state img="0-ironic.png">So you're self-conscious about your chest, huh? No wonder you show off your &lt;i&gt;other&lt;/i&gt; assets...</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <state img="0-ironic.png">I know how good it feels to kick bad guys, but there's really only one bad guy I really enjoy kicking. He doesn't deserve any better.</state>
             </case>
             <case tag="female_removed_minor" target="launch" targetStage="5">
                 <state img="0-ironic.png">I guess you'll just have to grin and bear it. It's too late to get, er... cold feet.</state>
@@ -714,6 +771,15 @@
             </case>
             <case tag="female_removed_minor" target="uravity" targetStage="3">
                 <state img="0-ironic.png">That was when Zelos got carried away and hit his head pretty badly. Such an idiot...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="3">
+                <state img="0-calm.png">Come to think of it, those look really similar to her wings...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="4">
+                <state img="0-ironic.png">I hope you get dressed like a normal person, at least...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="5">
+                <state img="0-sulky.png">Imagine how hard it'd be to catch all those butterflies before you could get dressed...</state>
             </case>
             <case tag="male_removing_major">
                 <state img="0-excited.png">You're already gonna lose your ~clothing~? I must be better at this game than I thought!</state>
@@ -738,6 +804,9 @@
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="0-shocked.png">You're shooting at yourself!? Are you nuts?</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="4">
+                <state img="0-ironic.png">Your leotard, huh? Interesting choice. Or maybe your only choice, because I can't see how you'd take off your pantyhose before it...</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="0-shocked.png">You're blonde again? ...And you're vulgar again!?</state>
@@ -785,6 +854,12 @@
             </case>
             <case tag="female_removed_major" target="catria" targetStage="5">
                 <state img="0-flustered.png">Y-you didn't know? I thought you were showing it on purpose. Sorry I didn't tell you, Catria.</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5">
+                <state img="0-flustered.png">Those bindings bring back memories. I never managed to bind my chest properly after puberty, but yours is even bigger...</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="6">
+                <state img="0-interested.png">Oh, that's some cute underwear. I didn't think you had such a sweet side.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="0-flustered.png">Ah... I get it. Everytime you sneeze you change from blue to blonde. ...And from nice to bitchy.</state>
@@ -883,6 +958,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="0-interested.png">So nothing happened this time..? But you have to strip something, Aimee! That's the rules!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="chun-li">
+                <state img="0-ironic.png">I'm still amazed that your bindings could hold out that whole time. You should definitely teach me how to do it later.</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="kyu">
                 <state img="0-angry.png">This really isn't what skills are for! Ever considered using your magic to help others?</state>
             </case>
@@ -919,6 +997,9 @@
             <case tag="female_chest_will_be_visible" target="uravity">
                 <state img="0-ironic.png">I know it's rude of me to say this, but I'm glad you're stripping your bra. That pink was hurting my eyes...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="zizou">
+                <state img="0-flustered.png">You're going to show your breasts using the same trick too? Well, I guess you could use those butterflies to distract people...</state>
+            </case>
             <case tag="female_chest_will_be_visible" totalMales="1-5" priority="0">
                 <state img="0-flustered.png">You have to show these pervs your breasts? I feel bad for you.</state>
             </case>
@@ -941,6 +1022,9 @@
             </case>
             <case tag="female_small_chest_is_visible" target="remilia">
                 <state img="0-flustered.png">But you should seriously stop drinking! I can't even handle &lt;i&gt;one&lt;/i&gt; glass of wine, and you're a lot smaller than I am!</state>
+            </case>
+            <case tag="female_small_chest_is_visible" target="zizou">
+                <state img="0-ironic.png">Oh, seems like I misjudged you. You're trying to draw even more attention to your breasts, aren't you?</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="0-calm.png">That's nothing to be ashamed of, ~name~.</state>
@@ -983,6 +1067,9 @@
             <case tag="female_large_chest_is_visible" filter="slutty">
                 <state img="0-ironic.png">Just in case you're wondering, ~player~; they can get that big even without acting like ~name~. But I gotta admit... man, those are enormous!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="chun-li">
+                <state img="0-sulky.png">I know how it feels to fight with a chest like that... And also how it feels to be stared at like this.</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="launch">
                 <state img="0-ironic.png">Now I'm not feeling guilty at all...</state>
             </case>
@@ -1015,6 +1102,9 @@
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="2">
                 <state img="0-angry.png">Okay, I accept that you don't like underwear, but why are you taking off your skirt &lt;i&gt;now&lt;/i&gt;? It's like you &lt;i&gt;want&lt;/i&gt; us to see your privates...</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="zizou">
+                <state img="0-shocked.png">What? Are you sure you don't want to a least take off your shorts normally..?</state>
+            </case>
             <case tag="female_crotch_will_be_visible" totalMales="1-5" priority="0">
                 <state img="0-sulky.png">Keep cool, guys! I know this is what you're here for, but give ~name~ time to cover herself!</state>
                 <state img="0-flustered.png">I have problems even with shared baths, yet ~name~ is getting naked in front of these perverts...</state>
@@ -1039,6 +1129,9 @@
             <case tag="female_crotch_is_visible" target="aimee">
                 <state img="0-sulky.png">She did it again... Hey, does this turn you on!?</state>
             </case>
+            <case tag="female_crotch_is_visible" target="chun-li">
+                <state img="0-ironic.png">Maybe it's a little too late to ask, but why didn't you take off your hair buns?</state>
+            </case>
             <case tag="female_crotch_is_visible" target="launch">
                 <state img="0-sulky.png">Hey! Don't even think of sneezing now, Launch! You came here of your own free will, so you have to bear it on your own.</state>
             </case>
@@ -1057,10 +1150,16 @@
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="0-sulky.png">The unicorn I met was so holy, that only pure maidens could meet it. &lt;i&gt;That...&lt;/i&gt; that was anything but pure.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="zizou">
+                <state img="0-ironic.png">Why does this remind me of the forest of Ymir, where butterflies showed us what we had to do? So... those butterflies surrounding her butt can only mean...</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="0-ironic.png">Can't you hold it in anymore, ~name~? It's too bad I'm still dressed, isn't it?</state>
                 <state img="0-flustered.png">Oh, you have to do &lt;i&gt;that&lt;/i&gt;, too? Is that really necessary?</state>
                 <state img="0-sulky.png">You'd better be embarrassed, ~name~! Not only for losing so badly, but for having to jerk off in front of a lady too.</state>
+            </case>
+            <case tag="male_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="0-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="male_must_masturbate" target="pit">
                 <state img="0-excited.png">How about some music? Why? Because I "Beat the Angel"!</state>
@@ -1102,6 +1201,9 @@
             <case tag="female_must_masturbate">
                 <state img="0-calm.png">Sorry, ~name~! But if you're out, I'm one step closer to victory.</state>
                 <state img="0-sulky.png">Don't blame me! I don't like this rule myself.</state>
+            </case>
+            <case tag="female_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="0-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="female_must_masturbate" filter="shy">
                 <state img="0-sad.png">Poor girl... But I'm afraid there's nothing I can do to help you.</state>
@@ -1236,6 +1338,9 @@
             <case tag="female_finished_masturbating" target="catria">
                 <state img="0-interested.png">&lt;i&gt;(So Prince Marth is the name of Catria's crush? Well, I should pretend I didn't see or hear anything...)&lt;/i&gt;</state>
             </case>
+            <case tag="female_finished_masturbating" target="chun-li">
+                <state img="0-interested.png">That was a really... acrobatic finish. Now I can totally see why you didn't let your hair down until now.</state>
+            </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="0-angry.png">That was the worst possible time to sneeze, Launch! Now look what you've done to your poor blue side!</state>
             </case>
@@ -1256,6 +1361,9 @@
             </case>
             <case tag="female_finished_masturbating" target="uravity">
                 <state img="0-excited.png">Float straight into the seventh heaven!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="zizou">
+                <state img="0-ironic.png">Thanks, Zizou! Now I'll never be able to look at butterflies the same way again...</state>
             </case>
             <case tag="game_over_victory">
                 <state img="0-flustered.png">No matter how many times I win, I always feel like I'm going to cry...</state>
@@ -1302,6 +1410,9 @@
             <case tag="bad_hand" notSaidMarker="playerOut" priority="0">
                 <state img="1-calm.png">Try to read my poker face, ~player~!</state>
             </case>
+            <case tag="hand" alsoPlaying="akko" alsoPlayingSayingMarker="hi_sheena">
+                <state img="1-excited.png">Sure! The rules of my clan prohibit me from showing you the &lt;i&gt;really&lt;/i&gt; interesting stuff, but I'm sure I can show you some of my tricks.</state>
+            </case>
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="amaflower">
                 <state img="1-angry.png" marker="amaflower">Flowers? Hey, Amalia! That's cheating!</state>
             </case>
@@ -1313,6 +1424,12 @@
             </case>
             <case tag="hand" alsoPlaying="remilia" alsoPlayingStage="3" notSaidMarker="remiWine">
                 <state img="1-ironic.png" marker="remiWine">Hey, little lady! It doesn't matter if you're old enough or not, this is not the time for a glass of wine!</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" alsoPlayingStage="7" notSaidMarker="zizouHair2">
+                <state img="1-flustered.png" marker="zizouHair2">Even &lt;i&gt;that&lt;/i&gt; hair is multi-colored? I didn't even know that was possible...</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" notSaidMarker="zizouHair">
+                <state img="1-interested.png" marker="zizouHair">You have two hair colors, Zizou? How come? It's not dyed, is it?</state>
             </case>
             <case tag="hand" notSaidMarker="firstnaked">
                 <condition count="1" status="lost_all" />
@@ -1345,12 +1462,18 @@
                 <state img="1-strip.png">My shoes seem like the next obvious choice.</state>
                 <state img="1-strip.png">I can't believe you got me out of my shoes.</state>
             </case>
+            <case tag="stripping" alsoPlaying="akko">
+                <state img="1-strip.png">My Summon Spirits can be really useful once in a while, but it's a pain to deal with their personalities. I don't think I have a favorite.</state>
+            </case>
             <case tag="stripping" alsoPlaying="catria">
                 <state img="1-strip.png">Prince Marth? Sorry, Catria. I can only summon those I have formed a pact with...</state>
             </case>
             <case tag="stripped">
                 <state img="1-removed.png">I can only hope this is the most clothing I have to take off.</state>
                 <state img="1-removed.png">One loss was allowed for in my calculations. Nothing to worry about.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="akko">
+                <state img="1-removed.png">I guess I've already said too much... Let's concentrate on the game, okay?</state>
             </case>
             <case tag="stripped" alsoPlaying="catria">
                 <state img="1-removed.png">But if you're curious about what I do, I'm a village chief and a well known summoner in my world.</state>
@@ -1547,8 +1670,14 @@
                 <state img="1-angry.png">Hey, you! Let ~name~ undress on her own!</state>
                 <state img="1-sulky.png">This is ridiculous! I would &lt;i&gt;never&lt;/i&gt; allow someone else to undress me.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" targetStage="0">
+                <state img="1-flustered.png">Huh? You transformed? Is this your way of dealing with embarrassment?</state>
+            </case>
             <case tag="female_removing_accessory" target="catria" targetStage="0">
                 <state img="1-calm.png" marker="unicorn">You're riding a pegasus, Catria? I've never seen one, but I have met an unicorn. Only pure maidens are able to meet a unicorn!</state>
+            </case>
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0">
+                <state img="1-interested.png">Your outfit looks similar to the clothing from where I'm from. I doubt they're related, though...</state>
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="1-angry.png">You talk like you can't get naked fast enough, but now you're just losing your weapon?</state>
@@ -1643,6 +1772,12 @@
             <case tag="female_removing_accessory" target="uravity" targetStage="1">
                 <state img="1-sulky.png">Special powers or not, don't you think those are a little bit small to strip separately?</state>
             </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="0">
+                <state img="1-excited.png">That sure is a fancy hat you're wearing. I remember when Zelos needed to disguise himself and wore something similar.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="1">
+                <state img="1-interested.png">Will you show us another one of your tricks?</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="1-excited.png">That may have been a good move, ~name~, but small stuff won't save you forever.</state>
                 <state img="1-calm.png">Just let me remind you: You gained nothing but time by taking off your ~clothing~.</state>
@@ -1650,6 +1785,9 @@
                 <state img="1-calm.png">Let's keep on going!</state>
                 <state img="1-interested.png">~clothing.ifPlural(Were those|Was this)~ a good luck charm of yours?</state>
                 <state img="1-calm.png">You mustn't forget that your ~clothing~ won't help you anymore.</state>
+            </case>
+            <case tag="female_removed_accessory" target="akko" targetStage="1">
+                <state img="1-ironic.png">Well, if it helps, and as long as you follow the rules and strip an item each loss, it's fine by me.</state>
             </case>
             <case tag="female_removed_accessory" target="amalia" targetStage="1">
                 <state img="1-interested.png">So there's a lot of space inside your bag? Is it the same technology as the Wing Packs we use?</state>
@@ -1750,6 +1888,12 @@
             <case tag="female_removed_accessory" target="uravity" targetStage="2">
                 <state img="1-calm.png">Anyway! Sooner or later, what goes up, must come down. And I can summon Gnome, the Summon Spirit of Earth, just in case you take too long.</state>
             </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="1">
+                <state img="1-interested.png">Wow, that looked just like one of my ninja arts! A fancy way to strip a fancy hat!</state>
+            </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="2">
+                <state img="1-excited.png">And now the scarf turned into butterflies. That's quite cool!</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="1-calm.png">You're already losing your ~clothing~? Too bad! For you of course.</state>
                 <state img="1-excited.png">Too bad, ~name~! You better not underestimate me anymore.</state>
@@ -1815,6 +1959,15 @@
             <case tag="female_removing_minor" target="uravity" targetStage="2">
                 <state img="1-interested.png">Do you need those "stabilizers" to float straight, or something? I remember how hard it was to float when we were at the higher levels of the Tower of Salvation.</state>
             </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="2">
+                <state img="1-interested.png">Butterflies again, right? I'm sure Colette would love them.</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="3">
+                <state img="1-interested.png">Say, do you always undress like that? It seems pretty convenient...</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="4">
+                <state img="1-flustered.png">...You &lt;i&gt;can&lt;/i&gt; turn those butterflies back into clothes, right..?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="1-calm.png">Try better next round and everything will work out.</state>
                 <state img="1-interested.png">If you want to get better, I can give you a private lesson. But without the stripping, of course.</state>
@@ -1829,6 +1982,9 @@
             </case>
             <case tag="female_removed_minor" target="catria" targetStage="4">
                 <state img="1-ironic.png">So you're self-conscious about your chest, huh? No wonder you show off your &lt;i&gt;other&lt;/i&gt; assets...</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <state img="1-ironic.png">I know how good it feels to kick bad guys, but there's really only one bad guy I really enjoy kicking. He doesn't deserve any better.</state>
             </case>
             <case tag="female_removed_minor" target="launch" targetStage="5">
                 <state img="1-ironic.png">I guess you'll just have to grin and bear it. It's too late to get, er... cold feet.</state>
@@ -1850,6 +2006,15 @@
             </case>
             <case tag="female_removed_minor" target="uravity" targetStage="3">
                 <state img="1-ironic.png">That was when Zelos got carried away and hit his head pretty badly. Such an idiot...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="3">
+                <state img="1-calm.png">Come to think of it, those look really similar to her wings...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="4">
+                <state img="1-ironic.png">I hope you get dressed like a normal person, at least...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="5">
+                <state img="1-sulky.png">Imagine how hard it'd be to catch all those butterflies before you could get dressed...</state>
             </case>
             <case tag="male_removing_major">
                 <state img="1-excited.png">You're already gonna lose your ~clothing~? I must be better at this game than I thought!</state>
@@ -1873,6 +2038,9 @@
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="1-shocked.png">You're shooting at yourself!? Are you nuts?</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="4">
+                <state img="1-ironic.png">Your leotard, huh? Interesting choice. Or maybe your only choice, because I can't see how you'd take off your pantyhose before it...</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="1-shocked.png">You're blonde again? ...And you're vulgar again!?</state>
@@ -1920,6 +2088,12 @@
             </case>
             <case tag="female_removed_major" target="catria" targetStage="5">
                 <state img="1-flustered.png">Y-you didn't know? I thought you were showing it on purpose. Sorry I didn't tell you, Catria.</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5">
+                <state img="1-flustered.png">Those bindings bring back memories. I never managed to bind my chest properly after puberty, but yours is even bigger...</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="6">
+                <state img="1-interested.png">Oh, that's some cute underwear. I didn't think you had such a sweet side.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="1-flustered.png">Ah... I get it. Everytime you sneeze you change from blue to blonde. ...And from nice to bitchy.</state>
@@ -2018,6 +2192,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="1-interested.png">So nothing happened this time..? But you have to strip something, Aimee! That's the rules!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="chun-li">
+                <state img="1-ironic.png">I'm still amazed that your bindings could hold out that whole time. You should definitely teach me how to do it later.</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="kyu">
                 <state img="1-angry.png">This really isn't what skills are for! Ever considered using your magic to help others?</state>
             </case>
@@ -2054,6 +2231,9 @@
             <case tag="female_chest_will_be_visible" target="uravity">
                 <state img="1-ironic.png">I know it's rude of me to say this, but I'm glad you're stripping your bra. That pink was hurting my eyes...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="zizou">
+                <state img="1-flustered.png">You're going to show your breasts using the same trick too? Well, I guess you could use those butterflies to distract people...</state>
+            </case>
             <case tag="female_chest_will_be_visible" totalMales="1-5" priority="0">
                 <state img="1-flustered.png">You have to show these pervs your breasts? I feel bad for you.</state>
             </case>
@@ -2076,6 +2256,9 @@
             </case>
             <case tag="female_small_chest_is_visible" target="remilia">
                 <state img="1-flustered.png">But you should seriously stop drinking! I can't even handle &lt;i&gt;one&lt;/i&gt; glass of wine, and you're a lot smaller than I am!</state>
+            </case>
+            <case tag="female_small_chest_is_visible" target="zizou">
+                <state img="1-ironic.png">Oh, seems like I misjudged you. You're trying to draw even more attention to your breasts, aren't you?</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="1-calm.png">That's nothing to be ashamed of, ~name~.</state>
@@ -2118,6 +2301,9 @@
             <case tag="female_large_chest_is_visible" filter="slutty">
                 <state img="1-ironic.png">Just in case you're wondering, ~player~; they can get that big even without acting like ~name~. But I gotta admit... man, those are enormous!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="chun-li">
+                <state img="1-sulky.png">I know how it feels to fight with a chest like that... And also how it feels to be stared at like this.</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="launch">
                 <state img="1-ironic.png">Now I'm not feeling guilty at all...</state>
             </case>
@@ -2150,6 +2336,9 @@
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="2">
                 <state img="1-angry.png">Okay, I accept that you don't like underwear, but why are you taking off your skirt &lt;i&gt;now&lt;/i&gt;? It's like you &lt;i&gt;want&lt;/i&gt; us to see your privates...</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="zizou">
+                <state img="1-shocked.png">What? Are you sure you don't want to a least take off your shorts normally..?</state>
+            </case>
             <case tag="female_crotch_will_be_visible" totalMales="1-5" priority="0">
                 <state img="1-sulky.png">Keep cool, guys! I know this is what you're here for, but give ~name~ time to cover herself!</state>
                 <state img="1-flustered.png">I have problems even with shared baths, yet ~name~ is getting naked in front of these perverts...</state>
@@ -2174,6 +2363,9 @@
             <case tag="female_crotch_is_visible" target="aimee">
                 <state img="1-sulky.png">She did it again... Hey, does this turn you on!?</state>
             </case>
+            <case tag="female_crotch_is_visible" target="chun-li">
+                <state img="1-ironic.png">Maybe it's a little too late to ask, but why didn't you take off your hair buns?</state>
+            </case>
             <case tag="female_crotch_is_visible" target="launch">
                 <state img="1-sulky.png">Hey! Don't even think of sneezing now, Launch! You came here of your own free will, so you have to bear it on your own.</state>
             </case>
@@ -2192,10 +2384,16 @@
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="1-sulky.png">The unicorn I met was so holy, that only pure maidens could meet it. &lt;i&gt;That...&lt;/i&gt; that was anything but pure.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="zizou">
+                <state img="1-ironic.png">Why does this remind me of the forest of Ymir, where butterflies showed us what we had to do? So... those butterflies surrounding her butt can only mean...</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="1-ironic.png">Can't you hold it in anymore, ~name~? It's too bad I'm still dressed, isn't it?</state>
                 <state img="1-flustered.png">Oh, you have to do &lt;i&gt;that&lt;/i&gt;, too? Is that really necessary?</state>
                 <state img="1-sulky.png">You'd better be embarrassed, ~name~! Not only for losing so badly, but for having to jerk off in front of a lady too.</state>
+            </case>
+            <case tag="male_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="1-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="male_must_masturbate" target="pit">
                 <state img="1-excited.png">How about some music? Why? Because I "Beat the Angel"!</state>
@@ -2237,6 +2435,9 @@
             <case tag="female_must_masturbate">
                 <state img="1-calm.png">Sorry, ~name~! But if you're out, I'm one step closer to victory.</state>
                 <state img="1-sulky.png">Don't blame me! I don't like this rule myself.</state>
+            </case>
+            <case tag="female_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="1-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="female_must_masturbate" filter="shy">
                 <state img="1-sad.png">Poor girl... But I'm afraid there's nothing I can do to help you.</state>
@@ -2374,6 +2575,9 @@
             <case tag="female_finished_masturbating" target="catria">
                 <state img="1-interested.png">&lt;i&gt;(So Prince Marth is the name of Catria's crush? Well, I should pretend I didn't see or hear anything...)&lt;/i&gt;</state>
             </case>
+            <case tag="female_finished_masturbating" target="chun-li">
+                <state img="1-interested.png">That was a really... acrobatic finish. Now I can totally see why you didn't let your hair down until now.</state>
+            </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="1-angry.png">That was the worst possible time to sneeze, Launch! Now look what you've done to your poor blue side!</state>
             </case>
@@ -2394,6 +2598,9 @@
             </case>
             <case tag="female_finished_masturbating" target="uravity">
                 <state img="1-excited.png">Float straight into the seventh heaven!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="zizou">
+                <state img="1-ironic.png">Thanks, Zizou! Now I'll never be able to look at butterflies the same way again...</state>
             </case>
             <case tag="game_over_victory">
                 <state img="1-flustered.png">No matter how many times I win, I always feel like I'm going to cry...</state>
@@ -2440,6 +2647,9 @@
             <case tag="bad_hand" notSaidMarker="playerOut" priority="0">
                 <state img="2-calm.png">Try to read my poker face, ~player~!</state>
             </case>
+            <case tag="hand" alsoPlaying="akko" alsoPlayingSayingMarker="hi_sheena">
+                <state img="2-excited.png">Sure! The rules of my clan prohibit me from showing you the &lt;i&gt;really&lt;/i&gt; interesting stuff, but I'm sure I can show you some of my tricks.</state>
+            </case>
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="amaflower">
                 <state img="2-angry.png" marker="amaflower">Flowers? Hey, Amalia! That's cheating!</state>
             </case>
@@ -2451,6 +2661,12 @@
             </case>
             <case tag="hand" alsoPlaying="remilia" alsoPlayingStage="3" notSaidMarker="remiWine">
                 <state img="2-ironic.png" marker="remiWine">Hey, little lady! It doesn't matter if you're old enough or not, this is not the time for a glass of wine!</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" alsoPlayingStage="7" notSaidMarker="zizouHair2">
+                <state img="2-flustered.png" marker="zizouHair2">Even &lt;i&gt;that&lt;/i&gt; hair is multi-colored? I didn't even know that was possible...</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" notSaidMarker="zizouHair">
+                <state img="2-interested.png" marker="zizouHair">You have two hair colors, Zizou? How come? It's not dyed, is it?</state>
             </case>
             <case tag="hand" notSaidMarker="firstnaked">
                 <condition count="1" status="lost_all" />
@@ -2483,9 +2699,15 @@
                 <state img="2-strip.png">My sash is easier to take off than it looks.  I just have to pull here, and...</state>
                 <state img="2-strip.png">Zelos once said I looked like a "gift just waiting to be unwrapped" with my sash... I kicked him for that.</state>
             </case>
+            <case tag="stripping" alsoPlaying="akko">
+                <state img="2-strip.png">Why I wear this sash is a long story, but I can assure you it's not part of a uniform or anything.</state>
+            </case>
             <case tag="stripped">
                 <state img="2-removed.png">I'm far from done.</state>
                 <state img="2-removed.png">How is it? Pretty good, huh?</state>
+            </case>
+            <case tag="stripped" alsoPlaying="akko">
+                <state img="2-removed.png" marker="unicorn">A unicorn? Did I mention that I met a real unicorn once? Only pures maiden are able to meet them!</state>
             </case>
             <case tag="stripped" alsoPlaying="catria">
                 <state img="2-removed.png">I guess summoning in your world is completely different from in mine. I'd love to hear more, but we should be focusing on the game right now...</state>
@@ -2679,8 +2901,14 @@
                 <state img="2-angry.png">Hey, you! Let ~name~ undress on her own!</state>
                 <state img="2-sulky.png">This is ridiculous! I would &lt;i&gt;never&lt;/i&gt; allow someone else to undress me.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" targetStage="0">
+                <state img="2-flustered.png">Huh? You transformed? Is this your way of dealing with embarrassment?</state>
+            </case>
             <case tag="female_removing_accessory" target="catria" targetStage="0">
                 <state img="2-calm.png" marker="unicorn">You're riding a pegasus, Catria? I've never seen one, but I have met an unicorn. Only pure maidens are able to meet a unicorn!</state>
+            </case>
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0">
+                <state img="2-interested.png">Your outfit looks similar to the clothing from where I'm from. I doubt they're related, though...</state>
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="2-angry.png">You talk like you can't get naked fast enough, but now you're just losing your weapon?</state>
@@ -2775,6 +3003,12 @@
             <case tag="female_removing_accessory" target="uravity" targetStage="1">
                 <state img="2-sulky.png">Special powers or not, don't you think those are a little bit small to strip separately?</state>
             </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="0">
+                <state img="2-excited.png">That sure is a fancy hat you're wearing. I remember when Zelos needed to disguise himself and wore something similar.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="1">
+                <state img="2-interested.png">Will you show us another one of your tricks?</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="2-excited.png">That may have been a good move, ~name~, but small stuff won't save you forever.</state>
                 <state img="2-calm.png">Just let me remind you: You gained nothing but time by taking off your ~clothing~.</state>
@@ -2782,6 +3016,9 @@
                 <state img="2-calm.png">Let's keep on going!</state>
                 <state img="2-interested.png">~clothing.ifPlural(Were those|Was this)~ a good luck charm of yours?</state>
                 <state img="2-calm.png">You mustn't forget that your ~clothing~ won't help you anymore.</state>
+            </case>
+            <case tag="female_removed_accessory" target="akko" targetStage="1">
+                <state img="2-ironic.png">Well, if it helps, and as long as you follow the rules and strip an item each loss, it's fine by me.</state>
             </case>
             <case tag="female_removed_accessory" target="amalia" targetStage="1">
                 <state img="2-interested.png">So there's a lot of space inside your bag? Is it the same technology as the Wing Packs we use?</state>
@@ -2882,6 +3119,12 @@
             <case tag="female_removed_accessory" target="uravity" targetStage="2">
                 <state img="2-calm.png">Anyway! Sooner or later, what goes up, must come down. And I can summon Gnome, the Summon Spirit of Earth, just in case you take too long.</state>
             </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="1">
+                <state img="2-interested.png">Wow, that looked just like one of my ninja arts! A fancy way to strip a fancy hat!</state>
+            </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="2">
+                <state img="2-excited.png">And now the scarf turned into butterflies. That's quite cool!</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="2-calm.png">You're already losing your ~clothing~? Too bad! For you of course.</state>
                 <state img="2-excited.png">Too bad, ~name~! You better not underestimate me anymore.</state>
@@ -2947,6 +3190,15 @@
             <case tag="female_removing_minor" target="uravity" targetStage="2">
                 <state img="2-interested.png">Do you need those "stabilizers" to float straight, or something? I remember how hard it was to float when we were at the higher levels of the Tower of Salvation.</state>
             </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="2">
+                <state img="2-interested.png">Butterflies again, right? I'm sure Colette would love them.</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="3">
+                <state img="2-interested.png">Say, do you always undress like that? It seems pretty convenient...</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="4">
+                <state img="2-flustered.png">...You &lt;i&gt;can&lt;/i&gt; turn those butterflies back into clothes, right..?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="2-calm.png">Try better next round and everything will work out.</state>
                 <state img="2-interested.png">If you want to get better, I can give you a private lesson. But without the stripping, of course.</state>
@@ -2961,6 +3213,9 @@
             </case>
             <case tag="female_removed_minor" target="catria" targetStage="4">
                 <state img="2-ironic.png">So you're self-conscious about your chest, huh? No wonder you show off your &lt;i&gt;other&lt;/i&gt; assets...</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <state img="2-ironic.png">I know how good it feels to kick bad guys, but there's really only one bad guy I really enjoy kicking. He doesn't deserve any better.</state>
             </case>
             <case tag="female_removed_minor" target="launch" targetStage="5">
                 <state img="2-ironic.png">I guess you'll just have to grin and bear it. It's too late to get, er... cold feet.</state>
@@ -2982,6 +3237,15 @@
             </case>
             <case tag="female_removed_minor" target="uravity" targetStage="3">
                 <state img="2-ironic.png">That was when Zelos got carried away and hit his head pretty badly. Such an idiot...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="3">
+                <state img="2-calm.png">Come to think of it, those look really similar to her wings...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="4">
+                <state img="2-ironic.png">I hope you get dressed like a normal person, at least...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="5">
+                <state img="2-sulky.png">Imagine how hard it'd be to catch all those butterflies before you could get dressed...</state>
             </case>
             <case tag="male_removing_major">
                 <state img="2-excited.png">You're already gonna lose your ~clothing~? I must be better at this game than I thought!</state>
@@ -3005,6 +3269,9 @@
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="2-shocked.png">You're shooting at yourself!? Are you nuts?</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="4">
+                <state img="2-ironic.png">Your leotard, huh? Interesting choice. Or maybe your only choice, because I can't see how you'd take off your pantyhose before it...</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="2-shocked.png">You're blonde again? ...And you're vulgar again!?</state>
@@ -3052,6 +3319,12 @@
             </case>
             <case tag="female_removed_major" target="catria" targetStage="5">
                 <state img="2-flustered.png">Y-you didn't know? I thought you were showing it on purpose. Sorry I didn't tell you, Catria.</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5">
+                <state img="2-flustered.png">Those bindings bring back memories. I never managed to bind my chest properly after puberty, but yours is even bigger...</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="6">
+                <state img="2-interested.png">Oh, that's some cute underwear. I didn't think you had such a sweet side.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="2-flustered.png">Ah... I get it. Everytime you sneeze you change from blue to blonde. ...And from nice to bitchy.</state>
@@ -3150,6 +3423,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="2-interested.png">So nothing happened this time..? But you have to strip something, Aimee! That's the rules!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="chun-li">
+                <state img="2-ironic.png">I'm still amazed that your bindings could hold out that whole time. You should definitely teach me how to do it later.</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="kyu">
                 <state img="2-angry.png">This really isn't what skills are for! Ever considered using your magic to help others?</state>
             </case>
@@ -3186,6 +3462,9 @@
             <case tag="female_chest_will_be_visible" target="uravity">
                 <state img="2-ironic.png">I know it's rude of me to say this, but I'm glad you're stripping your bra. That pink was hurting my eyes...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="zizou">
+                <state img="2-flustered.png">You're going to show your breasts using the same trick too? Well, I guess you could use those butterflies to distract people...</state>
+            </case>
             <case tag="female_chest_will_be_visible" totalMales="1-5" priority="0">
                 <state img="2-flustered.png">You have to show these pervs your breasts? I feel bad for you.</state>
             </case>
@@ -3208,6 +3487,9 @@
             </case>
             <case tag="female_small_chest_is_visible" target="remilia">
                 <state img="2-flustered.png">But you should seriously stop drinking! I can't even handle &lt;i&gt;one&lt;/i&gt; glass of wine, and you're a lot smaller than I am!</state>
+            </case>
+            <case tag="female_small_chest_is_visible" target="zizou">
+                <state img="2-ironic.png">Oh, seems like I misjudged you. You're trying to draw even more attention to your breasts, aren't you?</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="2-calm.png">That's nothing to be ashamed of, ~name~.</state>
@@ -3250,6 +3532,9 @@
             <case tag="female_large_chest_is_visible" filter="slutty">
                 <state img="2-ironic.png">Just in case you're wondering, ~player~; they can get that big even without acting like ~name~. But I gotta admit... man, those are enormous!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="chun-li">
+                <state img="2-sulky.png">I know how it feels to fight with a chest like that... And also how it feels to be stared at like this.</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="launch">
                 <state img="2-ironic.png">Now I'm not feeling guilty at all...</state>
             </case>
@@ -3282,6 +3567,9 @@
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="2">
                 <state img="2-angry.png">Okay, I accept that you don't like underwear, but why are you taking off your skirt &lt;i&gt;now&lt;/i&gt;? It's like you &lt;i&gt;want&lt;/i&gt; us to see your privates...</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="zizou">
+                <state img="2-shocked.png">What? Are you sure you don't want to a least take off your shorts normally..?</state>
+            </case>
             <case tag="female_crotch_will_be_visible" totalMales="1-5" priority="0">
                 <state img="2-sulky.png">Keep cool, guys! I know this is what you're here for, but give ~name~ time to cover herself!</state>
                 <state img="2-flustered.png">I have problems even with shared baths, yet ~name~ is getting naked in front of these perverts...</state>
@@ -3306,6 +3594,9 @@
             <case tag="female_crotch_is_visible" target="aimee">
                 <state img="2-sulky.png">She did it again... Hey, does this turn you on!?</state>
             </case>
+            <case tag="female_crotch_is_visible" target="chun-li">
+                <state img="2-ironic.png">Maybe it's a little too late to ask, but why didn't you take off your hair buns?</state>
+            </case>
             <case tag="female_crotch_is_visible" target="launch">
                 <state img="2-sulky.png">Hey! Don't even think of sneezing now, Launch! You came here of your own free will, so you have to bear it on your own.</state>
             </case>
@@ -3324,10 +3615,16 @@
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="2-sulky.png">The unicorn I met was so holy, that only pure maidens could meet it. &lt;i&gt;That...&lt;/i&gt; that was anything but pure.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="zizou">
+                <state img="2-ironic.png">Why does this remind me of the forest of Ymir, where butterflies showed us what we had to do? So... those butterflies surrounding her butt can only mean...</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="2-ironic.png">Can't you hold it in anymore, ~name~? It's too bad I'm still dressed, isn't it?</state>
                 <state img="2-flustered.png">Oh, you have to do &lt;i&gt;that&lt;/i&gt;, too? Is that really necessary?</state>
                 <state img="2-sulky.png">You'd better be embarrassed, ~name~! Not only for losing so badly, but for having to jerk off in front of a lady too.</state>
+            </case>
+            <case tag="male_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="2-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="male_must_masturbate" target="pit">
                 <state img="2-excited.png">How about some music? Why? Because I "Beat the Angel"!</state>
@@ -3369,6 +3666,9 @@
             <case tag="female_must_masturbate">
                 <state img="2-calm.png">Sorry, ~name~! But if you're out, I'm one step closer to victory.</state>
                 <state img="2-sulky.png">Don't blame me! I don't like this rule myself.</state>
+            </case>
+            <case tag="female_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="2-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="female_must_masturbate" filter="shy">
                 <state img="2-sad.png">Poor girl... But I'm afraid there's nothing I can do to help you.</state>
@@ -3503,6 +3803,9 @@
             <case tag="female_finished_masturbating" target="catria">
                 <state img="2-interested.png">&lt;i&gt;(So Prince Marth is the name of Catria's crush? Well, I should pretend I didn't see or hear anything...)&lt;/i&gt;</state>
             </case>
+            <case tag="female_finished_masturbating" target="chun-li">
+                <state img="2-interested.png">That was a really... acrobatic finish. Now I can totally see why you didn't let your hair down until now.</state>
+            </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="2-angry.png">That was the worst possible time to sneeze, Launch! Now look what you've done to your poor blue side!</state>
             </case>
@@ -3523,6 +3826,9 @@
             </case>
             <case tag="female_finished_masturbating" target="uravity">
                 <state img="2-excited.png">Float straight into the seventh heaven!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="zizou">
+                <state img="2-ironic.png">Thanks, Zizou! Now I'll never be able to look at butterflies the same way again...</state>
             </case>
             <case tag="game_over_victory">
                 <state img="2-flustered.png">No matter how many times I win, I always feel like I'm going to cry...</state>
@@ -3566,6 +3872,9 @@
                 <state img="3-angry.png">Who shuffled this deck?!</state>
                 <state img="3-sad.png">This can't be good...</state>
             </case>
+            <case tag="hand" alsoPlaying="akko" alsoPlayingSayingMarker="hi_sheena">
+                <state img="3-excited.png">Sure! The rules of my clan prohibit me from showing you the &lt;i&gt;really&lt;/i&gt; interesting stuff, but I'm sure I can show you some of my tricks.</state>
+            </case>
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="amaflower">
                 <state img="3-angry.png" marker="amaflower">Flowers? Hey, Amalia! That's cheating!</state>
             </case>
@@ -3578,9 +3887,18 @@
             <case tag="hand" alsoPlaying="remilia" alsoPlayingStage="3" notSaidMarker="remiWine">
                 <state img="3-ironic.png" marker="remiWine">Hey, little lady! It doesn't matter if you're old enough or not, this is not the time for a glass of wine!</state>
             </case>
+            <case tag="hand" alsoPlaying="zizou" alsoPlayingStage="7" notSaidMarker="zizouHair2">
+                <state img="3-flustered.png" marker="zizouHair2">Even &lt;i&gt;that&lt;/i&gt; hair is multi-colored? I didn't even know that was possible...</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" notSaidMarker="zizouHair">
+                <state img="3-interested.png" marker="zizouHair">You have two hair colors, Zizou? How come? It's not dyed, is it?</state>
+            </case>
             <case tag="hand" notSaidMarker="firstnaked">
                 <condition count="1" status="lost_all" />
                 <state img="3-interested.png" marker="firstnaked">You're allowed to continue, even if you're naked? That's nice of you guys.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="akko">
+                <state img="3-sulky.png">I'm sure there's lots of places where this is called a kimono, Akko. But no matter what you call it, I really don't like losing it...</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="3-sad.png">It was naive to think I could win this game without losing my kimono, huh?</state>
@@ -3607,6 +3925,9 @@
             </case>
             <case tag="stripped">
                 <state img="3-removed.png">What's that look for, ~player~? Thought I'd strip my kimono with it? Keep dreaming!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="akko">
+                <state img="3-removed.png">Great, now I'm imagining my old party members wearing sashes... How do I get that image out of my head!?</state>
             </case>
             <case tag="male_must_strip">
                 <state img="3-victory.gif">That's that!</state>
@@ -3795,8 +4116,14 @@
                 <state img="3-angry.png">Hey, you! Let ~name~ undress on her own!</state>
                 <state img="3-sulky.png">This is ridiculous! I would &lt;i&gt;never&lt;/i&gt; allow someone else to undress me.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" targetStage="0">
+                <state img="3-flustered.png">Huh? You transformed? Is this your way of dealing with embarrassment?</state>
+            </case>
             <case tag="female_removing_accessory" target="catria" targetStage="0">
                 <state img="3-calm.png" marker="unicorn">You're riding a pegasus, Catria? I've never seen one, but I have met an unicorn. Only pure maidens are able to meet a unicorn!</state>
+            </case>
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0">
+                <state img="3-interested.png">Your outfit looks similar to the clothing from where I'm from. I doubt they're related, though...</state>
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="3-angry.png">You talk like you can't get naked fast enough, but now you're just losing your weapon?</state>
@@ -3891,11 +4218,20 @@
             <case tag="female_removing_accessory" target="uravity" targetStage="1">
                 <state img="3-sulky.png">Special powers or not, don't you think those are a little bit small to strip separately?</state>
             </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="0">
+                <state img="3-excited.png">That sure is a fancy hat you're wearing. I remember when Zelos needed to disguise himself and wore something similar.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="1">
+                <state img="3-interested.png">Will you show us another one of your tricks?</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="3-sad.png">I have to do better, or else I'll never catch up to ~name~...</state>
                 <state img="3-interested.png">Any other accessories you want to take off?</state>
                 <state img="3-sulky.png">Man, that was pathetic...</state>
                 <state img="3-ironic.png">Try to strip something bigger next time, okay?</state>
+            </case>
+            <case tag="female_removed_accessory" target="akko" targetStage="1">
+                <state img="3-ironic.png">Well, if it helps, and as long as you follow the rules and strip an item each loss, it's fine by me.</state>
             </case>
             <case tag="female_removed_accessory" target="amalia" targetStage="1">
                 <state img="3-interested.png">So there's a lot of space inside your bag? Is it the same technology as the Wing Packs we use?</state>
@@ -3996,6 +4332,12 @@
             <case tag="female_removed_accessory" target="uravity" targetStage="2">
                 <state img="3-calm.png">Anyway! Sooner or later, what goes up, must come down. And I can summon Gnome, the Summon Spirit of Earth, just in case you take too long.</state>
             </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="1">
+                <state img="3-interested.png">Wow, that looked just like one of my ninja arts! A fancy way to strip a fancy hat!</state>
+            </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="2">
+                <state img="3-excited.png">And now the scarf turned into butterflies. That's quite cool!</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="3-calm.png">It's about time you lost your ~clothing~.</state>
                 <state img="3-interested.png">I was looking forward to this. ...To see you lose. Not to see you losing your ~clothing~, of course.</state>
@@ -4059,6 +4401,15 @@
             <case tag="female_removing_minor" target="uravity" targetStage="2">
                 <state img="3-interested.png">Do you need those "stabilizers" to float straight, or something? I remember how hard it was to float when we were at the higher levels of the Tower of Salvation.</state>
             </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="2">
+                <state img="3-interested.png">Butterflies again, right? I'm sure Colette would love them.</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="3">
+                <state img="3-interested.png">Say, do you always undress like that? It seems pretty convenient...</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="4">
+                <state img="3-flustered.png">...You &lt;i&gt;can&lt;/i&gt; turn those butterflies back into clothes, right..?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="3-ironic.png">I think my sash was more important than your ~clothing~. You should strip another thing. If not now, maybe next round?</state>
                 <state img="3-calm.png">Welcome to my level!</state>
@@ -4072,6 +4423,9 @@
             </case>
             <case tag="female_removed_minor" target="catria" targetStage="4">
                 <state img="3-ironic.png">So you're self-conscious about your chest, huh? No wonder you show off your &lt;i&gt;other&lt;/i&gt; assets...</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <state img="3-ironic.png">I know how good it feels to kick bad guys, but there's really only one bad guy I really enjoy kicking. He doesn't deserve any better.</state>
             </case>
             <case tag="female_removed_minor" target="launch" targetStage="5">
                 <state img="3-ironic.png">I guess you'll just have to grin and bear it. It's too late to get, er... cold feet.</state>
@@ -4093,6 +4447,15 @@
             </case>
             <case tag="female_removed_minor" target="uravity" targetStage="3">
                 <state img="3-ironic.png">That was when Zelos got carried away and hit his head pretty badly. Such an idiot...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="3">
+                <state img="3-calm.png">Come to think of it, those look really similar to her wings...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="4">
+                <state img="3-ironic.png">I hope you get dressed like a normal person, at least...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="5">
+                <state img="3-sulky.png">Imagine how hard it'd be to catch all those butterflies before you could get dressed...</state>
             </case>
             <case tag="male_removing_major">
                 <state img="3-excited.png">Yes! I'm doing good after all.</state>
@@ -4116,6 +4479,9 @@
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="3-shocked.png">You're shooting at yourself!? Are you nuts?</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="4">
+                <state img="3-ironic.png">Your leotard, huh? Interesting choice. Or maybe your only choice, because I can't see how you'd take off your pantyhose before it...</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="3-shocked.png">You're blonde again? ...And you're vulgar again!?</state>
@@ -4162,6 +4528,12 @@
             </case>
             <case tag="female_removed_major" target="catria" targetStage="5">
                 <state img="3-flustered.png">Y-you didn't know? I thought you were showing it on purpose. Sorry I didn't tell you, Catria.</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5">
+                <state img="3-flustered.png">Those bindings bring back memories. I never managed to bind my chest properly after puberty, but yours is even bigger...</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="6">
+                <state img="3-interested.png">Oh, that's some cute underwear. I didn't think you had such a sweet side.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="3-flustered.png">Ah... I get it. Everytime you sneeze you change from blue to blonde. ...And from nice to bitchy.</state>
@@ -4260,6 +4632,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="3-interested.png">So nothing happened this time..? But you have to strip something, Aimee! That's the rules!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="chun-li">
+                <state img="3-ironic.png">I'm still amazed that your bindings could hold out that whole time. You should definitely teach me how to do it later.</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="kyu">
                 <state img="3-angry.png">This really isn't what skills are for! Ever considered using your magic to help others?</state>
             </case>
@@ -4296,6 +4671,9 @@
             <case tag="female_chest_will_be_visible" target="uravity">
                 <state img="3-ironic.png">I know it's rude of me to say this, but I'm glad you're stripping your bra. That pink was hurting my eyes...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="zizou">
+                <state img="3-flustered.png">You're going to show your breasts using the same trick too? Well, I guess you could use those butterflies to distract people...</state>
+            </case>
             <case tag="female_chest_will_be_visible" totalMales="1-5" priority="0">
                 <state img="3-interested.png">You're going to show your breasts? The men in here will love you.</state>
                 <state img="3-sulky.png">It's good that you're losing, but I don't like the fact you're giving these pervs exactly what they came for.</state>
@@ -4319,6 +4697,9 @@
             </case>
             <case tag="female_small_chest_is_visible" target="remilia">
                 <state img="3-flustered.png">But you should seriously stop drinking! I can't even handle &lt;i&gt;one&lt;/i&gt; glass of wine, and you're a lot smaller than I am!</state>
+            </case>
+            <case tag="female_small_chest_is_visible" target="zizou">
+                <state img="3-ironic.png">Oh, seems like I misjudged you. You're trying to draw even more attention to your breasts, aren't you?</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="3-calm.png">That's nothing to be ashamed of, ~name~.</state>
@@ -4361,6 +4742,9 @@
             <case tag="female_large_chest_is_visible" filter="slutty">
                 <state img="3-ironic.png">Just in case you're wondering, ~player~; they can get that big even without acting like ~name~. But I gotta admit... man, those are enormous!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="chun-li">
+                <state img="3-sulky.png">I know how it feels to fight with a chest like that... And also how it feels to be stared at like this.</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="launch">
                 <state img="3-ironic.png">Now I'm not feeling guilty at all...</state>
             </case>
@@ -4392,6 +4776,9 @@
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="2">
                 <state img="3-angry.png">Okay, I accept that you don't like underwear, but why are you taking off your skirt &lt;i&gt;now&lt;/i&gt;? It's like you &lt;i&gt;want&lt;/i&gt; us to see your privates...</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="zizou">
+                <state img="3-shocked.png">What? Are you sure you don't want to a least take off your shorts normally..?</state>
+            </case>
             <case tag="female_crotch_will_be_visible" totalMales="1-5" priority="0">
                 <state img="3-sulky.png">Keep cool, guys! I know this is what you're here for, but give ~name~ time to cover herself!</state>
                 <state img="3-flustered.png">I have problems even with shared baths, yet ~name~ is getting naked in front of these perverts...</state>
@@ -4416,6 +4803,9 @@
             <case tag="female_crotch_is_visible" target="aimee">
                 <state img="3-sulky.png">She did it again... Hey, does this turn you on!?</state>
             </case>
+            <case tag="female_crotch_is_visible" target="chun-li">
+                <state img="3-ironic.png">Maybe it's a little too late to ask, but why didn't you take off your hair buns?</state>
+            </case>
             <case tag="female_crotch_is_visible" target="launch">
                 <state img="3-sulky.png">Hey! Don't even think of sneezing now, Launch! You came here of your own free will, so you have to bear it on your own.</state>
             </case>
@@ -4434,10 +4824,16 @@
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="3-sulky.png">The unicorn I met was so holy, that only pure maidens could meet it. &lt;i&gt;That...&lt;/i&gt; that was anything but pure.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="zizou">
+                <state img="3-ironic.png">Why does this remind me of the forest of Ymir, where butterflies showed us what we had to do? So... those butterflies surrounding her butt can only mean...</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="3-flustered.png">Oh, you have to do &lt;i&gt;that&lt;/i&gt;, too? Is that really necessary?</state>
                 <state img="3-sulky.png">You'd better be embarrassed, ~name~! Not only for losing so badly, but for having to jerk off in front of a lady too.</state>
                 <state img="3-sulky.png">Please tell me you didn't wait until now to do this just so you could gawk at my underwear...</state>
+            </case>
+            <case tag="male_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="3-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="male_must_masturbate" target="pit">
                 <state img="3-excited.png">How about some music? Why? Because I "Beat the Angel"!</state>
@@ -4479,6 +4875,9 @@
             <case tag="female_must_masturbate">
                 <state img="3-shocked.png">Oh, no! Does ~name~ have to do that lewd stuff as well now?</state>
                 <state img="3-sulky.png">You expect ~name~ to masturbate in front of us as if it's the most normal thing in the world? What kind of rotten place is this?</state>
+            </case>
+            <case tag="female_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="3-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="female_must_masturbate" filter="shy">
                 <state img="3-sad.png">Poor girl... But I'm afraid there's nothing I can do to help you.</state>
@@ -4613,6 +5012,9 @@
             <case tag="female_finished_masturbating" target="catria">
                 <state img="3-interested.png">&lt;i&gt;(So Prince Marth is the name of Catria's crush? Well, I should pretend I didn't see or hear anything...)&lt;/i&gt;</state>
             </case>
+            <case tag="female_finished_masturbating" target="chun-li">
+                <state img="3-interested.png">That was a really... acrobatic finish. Now I can totally see why you didn't let your hair down until now.</state>
+            </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="3-angry.png">That was the worst possible time to sneeze, Launch! Now look what you've done to your poor blue side!</state>
             </case>
@@ -4633,6 +5035,9 @@
             </case>
             <case tag="female_finished_masturbating" target="uravity">
                 <state img="3-excited.png">Float straight into the seventh heaven!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="zizou">
+                <state img="3-ironic.png">Thanks, Zizou! Now I'll never be able to look at butterflies the same way again...</state>
             </case>
             <case tag="game_over_victory">
                 <state img="3-excited.png">I won! I certainly have to improve my poker skills, but I wasn't half bad!</state>
@@ -4675,6 +5080,9 @@
                 <state img="4-angry.png">Who shuffled this deck?!</state>
                 <state img="4-sad.png">This can't be good...</state>
             </case>
+            <case tag="hand" alsoPlaying="akko" alsoPlayingSayingMarker="hi_sheena">
+                <state img="4-excited.png">Sure! The rules of my clan prohibit me from showing you the &lt;i&gt;really&lt;/i&gt; interesting stuff, but I'm sure I can show you some of my tricks.</state>
+            </case>
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="amaflower">
                 <state img="4-angry.png" marker="amaflower">Flowers? Hey, Amalia! That's cheating!</state>
             </case>
@@ -4686,6 +5094,12 @@
             </case>
             <case tag="hand" alsoPlaying="remilia" alsoPlayingStage="3" notSaidMarker="remiWine">
                 <state img="4-ironic.png" marker="remiWine">Hey, little lady! It doesn't matter if you're old enough or not, this is not the time for a glass of wine!</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" alsoPlayingStage="7" notSaidMarker="zizouHair2">
+                <state img="4-flustered.png" marker="zizouHair2">Even &lt;i&gt;that&lt;/i&gt; hair is multi-colored? I didn't even know that was possible...</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" notSaidMarker="zizouHair">
+                <state img="4-interested.png" marker="zizouHair">You have two hair colors, Zizou? How come? It's not dyed, is it?</state>
             </case>
             <case tag="hand" notSaidMarker="firstnaked">
                 <condition count="1" status="lost_all" />
@@ -4920,8 +5334,14 @@
                 <state img="4-angry.png">Hey, you! Let ~name~ undress on her own!</state>
                 <state img="4-sulky.png">This is ridiculous! I would &lt;i&gt;never&lt;/i&gt; allow someone else to undress me.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" targetStage="0">
+                <state img="4-flustered.png">Huh? You transformed? Is this your way of dealing with embarrassment?</state>
+            </case>
             <case tag="female_removing_accessory" target="catria" targetStage="0">
                 <state img="4-calm.png" marker="unicorn">You're riding a pegasus, Catria? I've never seen one, but I have met an unicorn. Only pure maidens are able to meet a unicorn!</state>
+            </case>
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0">
+                <state img="4-interested.png">Your outfit looks similar to the clothing from where I'm from. I doubt they're related, though...</state>
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="4-angry.png">You talk like you can't get naked fast enough, but now you're just losing your weapon?</state>
@@ -5016,11 +5436,20 @@
             <case tag="female_removing_accessory" target="uravity" targetStage="1">
                 <state img="4-sulky.png">Special powers or not, don't you think those are a little bit small to strip separately?</state>
             </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="0">
+                <state img="4-excited.png">That sure is a fancy hat you're wearing. I remember when Zelos needed to disguise himself and wore something similar.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="1">
+                <state img="4-interested.png">Will you show us another one of your tricks?</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="4-sad.png">I have to do better, or else I'll never catch up to ~name~...</state>
                 <state img="4-interested.png">Any other accessories you want to take off?</state>
                 <state img="4-sulky.png">Man, that was pathetic...</state>
                 <state img="4-ironic.png">Try to strip something bigger next time, okay?</state>
+            </case>
+            <case tag="female_removed_accessory" target="akko" targetStage="1">
+                <state img="4-ironic.png">Well, if it helps, and as long as you follow the rules and strip an item each loss, it's fine by me.</state>
             </case>
             <case tag="female_removed_accessory" target="amalia" targetStage="1">
                 <state img="4-interested.png">So there's a lot of space inside your bag? Is it the same technology as the Wing Packs we use?</state>
@@ -5121,6 +5550,12 @@
             <case tag="female_removed_accessory" target="uravity" targetStage="2">
                 <state img="4-calm.png">Anyway! Sooner or later, what goes up, must come down. And I can summon Gnome, the Summon Spirit of Earth, just in case you take too long.</state>
             </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="1">
+                <state img="4-interested.png">Wow, that looked just like one of my ninja arts! A fancy way to strip a fancy hat!</state>
+            </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="2">
+                <state img="4-excited.png">And now the scarf turned into butterflies. That's quite cool!</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="4-calm.png">It's about time you lost your ~clothing~.</state>
                 <state img="4-interested.png">I was looking forward to this. ...To see you lose. Not to see you losing your ~clothing~, of course.</state>
@@ -5184,6 +5619,15 @@
             <case tag="female_removing_minor" target="uravity" targetStage="2">
                 <state img="4-interested.png">Do you need those "stabilizers" to float straight, or something? I remember how hard it was to float when we were at the higher levels of the Tower of Salvation.</state>
             </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="2">
+                <state img="4-interested.png">Butterflies again, right? I'm sure Colette would love them.</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="3">
+                <state img="4-interested.png">Say, do you always undress like that? It seems pretty convenient...</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="4">
+                <state img="4-flustered.png">...You &lt;i&gt;can&lt;/i&gt; turn those butterflies back into clothes, right..?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="4-ironic.png">I think my sash was more important than your ~clothing~. You should strip another thing. If not now, maybe next round?</state>
                 <state img="4-calm.png">Welcome to my level!</state>
@@ -5197,6 +5641,9 @@
             </case>
             <case tag="female_removed_minor" target="catria" targetStage="4">
                 <state img="4-ironic.png">So you're self-conscious about your chest, huh? No wonder you show off your &lt;i&gt;other&lt;/i&gt; assets...</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <state img="4-ironic.png">I know how good it feels to kick bad guys, but there's really only one bad guy I really enjoy kicking. He doesn't deserve any better.</state>
             </case>
             <case tag="female_removed_minor" target="launch" targetStage="5">
                 <state img="4-ironic.png">I guess you'll just have to grin and bear it. It's too late to get, er... cold feet.</state>
@@ -5218,6 +5665,15 @@
             </case>
             <case tag="female_removed_minor" target="uravity" targetStage="3">
                 <state img="4-ironic.png">That was when Zelos got carried away and hit his head pretty badly. Such an idiot...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="3">
+                <state img="4-calm.png">Come to think of it, those look really similar to her wings...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="4">
+                <state img="4-ironic.png">I hope you get dressed like a normal person, at least...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="5">
+                <state img="4-sulky.png">Imagine how hard it'd be to catch all those butterflies before you could get dressed...</state>
             </case>
             <case tag="male_removing_major">
                 <state img="4-excited.png">Yes! I'm doing good after all.</state>
@@ -5241,6 +5697,9 @@
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="4-shocked.png">You're shooting at yourself!? Are you nuts?</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="4">
+                <state img="4-ironic.png">Your leotard, huh? Interesting choice. Or maybe your only choice, because I can't see how you'd take off your pantyhose before it...</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="4-shocked.png">You're blonde again? ...And you're vulgar again!?</state>
@@ -5287,6 +5746,12 @@
             </case>
             <case tag="female_removed_major" target="catria" targetStage="5">
                 <state img="4-flustered.png">Y-you didn't know? I thought you were showing it on purpose. Sorry I didn't tell you, Catria.</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5">
+                <state img="4-flustered.png">Those bindings bring back memories. I never managed to bind my chest properly after puberty, but yours is even bigger...</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="6">
+                <state img="4-interested.png">Oh, that's some cute underwear. I didn't think you had such a sweet side.</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="4-flustered.png">Ah... I get it. Everytime you sneeze you change from blue to blonde. ...And from nice to bitchy.</state>
@@ -5385,6 +5850,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="4-interested.png">So nothing happened this time..? But you have to strip something, Aimee! That's the rules!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="chun-li">
+                <state img="4-ironic.png">I'm still amazed that your bindings could hold out that whole time. You should definitely teach me how to do it later.</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="kyu">
                 <state img="4-angry.png">This really isn't what skills are for! Ever considered using your magic to help others?</state>
             </case>
@@ -5421,6 +5889,9 @@
             <case tag="female_chest_will_be_visible" target="uravity">
                 <state img="4-ironic.png">I know it's rude of me to say this, but I'm glad you're stripping your bra. That pink was hurting my eyes...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="zizou">
+                <state img="4-flustered.png">You're going to show your breasts using the same trick too? Well, I guess you could use those butterflies to distract people...</state>
+            </case>
             <case tag="female_chest_will_be_visible" totalMales="1-5" priority="0">
                 <state img="4-interested.png">You're going to show your breasts? The men in here will love you.</state>
                 <state img="4-sulky.png">It's good that you're losing, but I don't like the fact you're giving these pervs exactly what they came for.</state>
@@ -5444,6 +5915,9 @@
             </case>
             <case tag="female_small_chest_is_visible" target="remilia">
                 <state img="4-flustered.png">But you should seriously stop drinking! I can't even handle &lt;i&gt;one&lt;/i&gt; glass of wine, and you're a lot smaller than I am!</state>
+            </case>
+            <case tag="female_small_chest_is_visible" target="zizou">
+                <state img="4-ironic.png">Oh, seems like I misjudged you. You're trying to draw even more attention to your breasts, aren't you?</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="4-calm.png">That's nothing to be ashamed of, ~name~.</state>
@@ -5486,6 +5960,9 @@
             <case tag="female_large_chest_is_visible" filter="slutty">
                 <state img="4-ironic.png">Just in case you're wondering, ~player~; they can get that big even without acting like ~name~. But I gotta admit... man, those are enormous!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="chun-li">
+                <state img="4-sulky.png">I know how it feels to fight with a chest like that... And also how it feels to be stared at like this.</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="launch">
                 <state img="4-ironic.png">Now I'm not feeling guilty at all...</state>
             </case>
@@ -5517,6 +5994,9 @@
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="2">
                 <state img="4-angry.png">Okay, I accept that you don't like underwear, but why are you taking off your skirt &lt;i&gt;now&lt;/i&gt;? It's like you &lt;i&gt;want&lt;/i&gt; us to see your privates...</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="zizou">
+                <state img="4-shocked.png">What? Are you sure you don't want to a least take off your shorts normally..?</state>
+            </case>
             <case tag="female_crotch_will_be_visible" totalMales="1-5" priority="0">
                 <state img="4-sulky.png">Keep cool, guys! I know this is what you're here for, but give ~name~ time to cover herself!</state>
                 <state img="4-flustered.png">I have problems even with shared baths, yet ~name~ is getting naked in front of these perverts...</state>
@@ -5541,6 +6021,9 @@
             <case tag="female_crotch_is_visible" target="aimee">
                 <state img="4-sulky.png">She did it again... Hey, does this turn you on!?</state>
             </case>
+            <case tag="female_crotch_is_visible" target="chun-li">
+                <state img="4-ironic.png">Maybe it's a little too late to ask, but why didn't you take off your hair buns?</state>
+            </case>
             <case tag="female_crotch_is_visible" target="launch">
                 <state img="4-sulky.png">Hey! Don't even think of sneezing now, Launch! You came here of your own free will, so you have to bear it on your own.</state>
             </case>
@@ -5559,10 +6042,16 @@
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="4-sulky.png">The unicorn I met was so holy, that only pure maidens could meet it. &lt;i&gt;That...&lt;/i&gt; that was anything but pure.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="zizou">
+                <state img="4-ironic.png">Why does this remind me of the forest of Ymir, where butterflies showed us what we had to do? So... those butterflies surrounding her butt can only mean...</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="4-flustered.png">Oh, you have to do &lt;i&gt;that&lt;/i&gt;, too? Is that really necessary?</state>
                 <state img="4-sulky.png">You'd better be embarrassed, ~name~! Not only for losing so badly, but for having to jerk off in front of a lady too.</state>
                 <state img="4-sulky.png">Please tell me you didn't wait until now to do this just so you could gawk at my underwear...</state>
+            </case>
+            <case tag="male_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="4-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="male_must_masturbate" target="pit">
                 <state img="4-excited.png">How about some music? Why? Because I "Beat the Angel"!</state>
@@ -5604,6 +6093,9 @@
             <case tag="female_must_masturbate">
                 <state img="4-shocked.png">Oh, no! Does ~name~ have to do that lewd stuff as well now?</state>
                 <state img="4-sulky.png">You expect ~name~ to masturbate in front of us as if it's the most normal thing in the world? What kind of rotten place is this?</state>
+            </case>
+            <case tag="female_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="4-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="female_must_masturbate" filter="shy">
                 <state img="4-sad.png">Poor girl... But I'm afraid there's nothing I can do to help you.</state>
@@ -5738,6 +6230,9 @@
             <case tag="female_finished_masturbating" target="catria">
                 <state img="4-interested.png">&lt;i&gt;(So Prince Marth is the name of Catria's crush? Well, I should pretend I didn't see or hear anything...)&lt;/i&gt;</state>
             </case>
+            <case tag="female_finished_masturbating" target="chun-li">
+                <state img="4-interested.png">That was a really... acrobatic finish. Now I can totally see why you didn't let your hair down until now.</state>
+            </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="4-angry.png">That was the worst possible time to sneeze, Launch! Now look what you've done to your poor blue side!</state>
             </case>
@@ -5758,6 +6253,9 @@
             </case>
             <case tag="female_finished_masturbating" target="uravity">
                 <state img="4-excited.png">Float straight into the seventh heaven!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="zizou">
+                <state img="4-ironic.png">Thanks, Zizou! Now I'll never be able to look at butterflies the same way again...</state>
             </case>
             <case tag="game_over_victory">
                 <state img="4-excited.png">I won! I certainly have to improve my poker skills, but I wasn't half bad!</state>
@@ -5793,6 +6291,9 @@
                 <state img="5-sad.png">It looks like I have a strong affinity for falling down holes... and being dealt bad hands.</state>
                 <state img="5-flustered.png">Oh, no! Was that an ace I just traded?</state>
             </case>
+            <case tag="hand" alsoPlaying="akko" alsoPlayingSayingMarker="hi_sheena">
+                <state img="5-excited.png">Sure! The rules of my clan prohibit me from showing you the &lt;i&gt;really&lt;/i&gt; interesting stuff, but I'm sure I can show you some of my tricks.</state>
+            </case>
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="amaflower">
                 <state img="5-angry.png" marker="amaflower">Flowers? Hey, Amalia! That's cheating!</state>
             </case>
@@ -5804,6 +6305,12 @@
             </case>
             <case tag="hand" alsoPlaying="remilia" alsoPlayingStage="3" notSaidMarker="remiWine">
                 <state img="5-ironic.png" marker="remiWine">Hey, little lady! It doesn't matter if you're old enough or not, this is not the time for a glass of wine!</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" alsoPlayingStage="7" notSaidMarker="zizouHair2">
+                <state img="5-flustered.png" marker="zizouHair2">Even &lt;i&gt;that&lt;/i&gt; hair is multi-colored? I didn't even know that was possible...</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" notSaidMarker="zizouHair">
+                <state img="5-interested.png" marker="zizouHair">You have two hair colors, Zizou? How come? It's not dyed, is it?</state>
             </case>
             <case tag="hand" notSaidMarker="firstnaked">
                 <condition count="1" status="lost_all" />
@@ -5833,11 +6340,17 @@
                 <state img="5-strip.png">The only good thing to come of this is that Zelos isn't here to gawk.</state>
                 <state img="5-strip.png">I know you guys love fancy ways of stripping, but this will prevent you from taking another look at my privates.</state>
             </case>
+            <case tag="stripping" alsoPlaying="chun-li">
+                <state img="5-strip.png">I promise! I won't summon a spirit this time, but let me do one final trick. I can't afford to let this situation get any worse than it is now...</state>
+            </case>
             <case tag="stripping" alsoPlaying="kyu" alsoPlayingStage="5-8">
                 <state img="5-strip.png">I know this will put me on Kyu's level, but this stops you guys from taking another look at my private parts.</state>
             </case>
             <case tag="stripped">
                 <state img="5-removed.png">Sorry for summoning a spirit all of a sudden, ~player~! I kinda overreacted... Anyway! I changed my mind and stripped my bustier. That's okay, isn't it?</state>
+            </case>
+            <case tag="stripped" alsoPlaying="akko" saidMarker="undine">
+                <state img="5-removed.png">You could understand what the fish were saying..? ...Anyway, I changed my mind and stripped my bustier instead. I hope that's okay with you!</state>
             </case>
             <case tag="stripped" alsoPlaying="sayaka" alsoPlayingStage="1-9">
                 <state img="5-removed.png">I warned Sayaka about unpleasant surprises, and now I've had one myself... Sorry I had to summon a spirit, ~player~! ...I guess losing my bustier is fine, isn't it?</state>
@@ -6023,8 +6536,14 @@
                 <state img="5-angry.png">Hey, you! Let ~name~ undress on her own!</state>
                 <state img="5-sulky.png">This is ridiculous! I would &lt;i&gt;never&lt;/i&gt; allow someone else to undress me.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" targetStage="0">
+                <state img="5-flustered.png">Huh? You transformed? Is this your way of dealing with embarrassment?</state>
+            </case>
             <case tag="female_removing_accessory" target="catria" targetStage="0">
                 <state img="5-calm.png" marker="unicorn">You're riding a pegasus, Catria? I've never seen one, but I have met an unicorn. Only pure maidens are able to meet a unicorn!</state>
+            </case>
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0">
+                <state img="5-interested.png">Your outfit looks similar to the clothing from where I'm from. I doubt they're related, though...</state>
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="5-angry.png">You talk like you can't get naked fast enough, but now you're just losing your weapon?</state>
@@ -6119,11 +6638,20 @@
             <case tag="female_removing_accessory" target="uravity" targetStage="1">
                 <state img="5-sulky.png">Special powers or not, don't you think those are a little bit small to strip separately?</state>
             </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="0">
+                <state img="5-excited.png">That sure is a fancy hat you're wearing. I remember when Zelos needed to disguise himself and wore something similar.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="1">
+                <state img="5-interested.png">Will you show us another one of your tricks?</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="5-sad.png">I definitely need more training...</state>
                 <state img="5-flustered.png">Am I really that bad at playing poker?</state>
                 <state img="5-interested.png">You have to be pretty good. Can you give me some advice later?</state>
                 <state img="5-sad.png">Please tell me that your ~clothing~ was something really valuable at least. Something like a Key Crest.</state>
+            </case>
+            <case tag="female_removed_accessory" target="akko" targetStage="1">
+                <state img="5-ironic.png">Well, if it helps, and as long as you follow the rules and strip an item each loss, it's fine by me.</state>
             </case>
             <case tag="female_removed_accessory" target="amalia" targetStage="1">
                 <state img="5-interested.png">So there's a lot of space inside your bag? Is it the same technology as the Wing Packs we use?</state>
@@ -6224,6 +6752,12 @@
             <case tag="female_removed_accessory" target="uravity" targetStage="2">
                 <state img="5-calm.png">Anyway! Sooner or later, what goes up, must come down. And I can summon Gnome, the Summon Spirit of Earth, just in case you take too long.</state>
             </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="1">
+                <state img="5-interested.png">Wow, that looked just like one of my ninja arts! A fancy way to strip a fancy hat!</state>
+            </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="2">
+                <state img="5-excited.png">And now the scarf turned into butterflies. That's quite cool!</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="5-interested.png">Would you strip something good this time, please?</state>
                 <state img="5-interested.png">What'll it be this time, ~name~?</state>
@@ -6294,6 +6828,15 @@
             <case tag="female_removing_minor" target="uravity" targetStage="2">
                 <state img="5-interested.png">Do you need those "stabilizers" to float straight, or something? I remember how hard it was to float when we were at the higher levels of the Tower of Salvation.</state>
             </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="2">
+                <state img="5-interested.png">Butterflies again, right? I'm sure Colette would love them.</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="3">
+                <state img="5-interested.png">Say, do you always undress like that? It seems pretty convenient...</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="4">
+                <state img="5-flustered.png">...You &lt;i&gt;can&lt;/i&gt; turn those butterflies back into clothes, right..?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="5-sulky.png">We must both do better! Me at playing cards, and you at stripping clothes.</state>
                 <state img="5-shocked.png">Wait! Does that mean you still have that much to lose?</state>
@@ -6309,6 +6852,9 @@
             </case>
             <case tag="female_removed_minor" target="catria" targetStage="4">
                 <state img="5-ironic.png">So you're self-conscious about your chest, huh? No wonder you show off your &lt;i&gt;other&lt;/i&gt; assets...</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <state img="5-ironic.png">I know how good it feels to kick bad guys, but there's really only one bad guy I really enjoy kicking. He doesn't deserve any better.</state>
             </case>
             <case tag="female_removed_minor" target="launch" targetStage="5">
                 <state img="5-ironic.png">I guess you'll just have to grin and bear it. It's too late to get, er... cold feet.</state>
@@ -6330,6 +6876,15 @@
             </case>
             <case tag="female_removed_minor" target="uravity" targetStage="3">
                 <state img="5-ironic.png">That was when Zelos got carried away and hit his head pretty badly. Such an idiot...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="3">
+                <state img="5-calm.png">Come to think of it, those look really similar to her wings...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="4">
+                <state img="5-ironic.png">I hope you get dressed like a normal person, at least...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="5">
+                <state img="5-sulky.png">Imagine how hard it'd be to catch all those butterflies before you could get dressed...</state>
             </case>
             <case tag="male_removing_major">
                 <state img="5-excited.png">Excellent! That means I've caught up to ~name~, doesn't it?</state>
@@ -6357,6 +6912,9 @@
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="5-shocked.png">You're shooting at yourself!? Are you nuts?</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="4">
+                <state img="5-ironic.png">Your leotard, huh? Interesting choice. Or maybe your only choice, because I can't see how you'd take off your pantyhose before it...</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="5-shocked.png">You're blonde again? ...And you're vulgar again!?</state>
@@ -6404,6 +6962,12 @@
             </case>
             <case tag="female_removed_major" target="catria" targetStage="5">
                 <state img="5-flustered.png">Y-you didn't know? I thought you were showing it on purpose. Sorry I didn't tell you, Catria.</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5">
+                <state img="5-flustered.png">Those bindings bring back memories. I never managed to bind my chest properly after puberty, but yours is even bigger...</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="6">
+                <state img="5-ironic.png">To be honest, I didn't think you'd wear anything under your pantyhose.But then again, I thought I &lt;i&gt;was&lt;/i&gt; wearing something under my pants, so...</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="5-flustered.png">Ah... I get it. Everytime you sneeze you change from blue to blonde. ...And from nice to bitchy.</state>
@@ -6506,6 +7070,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="5-interested.png">So nothing happened this time..? But you have to strip something, Aimee! That's the rules!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="chun-li">
+                <state img="5-ironic.png">I'm still amazed that your bindings could hold out that whole time. You should definitely teach me how to do it later.</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="kyu">
                 <state img="5-angry.png">This really isn't what skills are for! Ever considered using your magic to help others?</state>
             </case>
@@ -6542,6 +7109,9 @@
             <case tag="female_chest_will_be_visible" target="uravity">
                 <state img="5-ironic.png">I know it's rude of me to say this, but I'm glad you're stripping your bra. That pink was hurting my eyes...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="zizou">
+                <state img="5-flustered.png">You're going to show your breasts using the same trick too? Well, I guess you could use those butterflies to distract people...</state>
+            </case>
             <case tag="female_chest_will_be_visible" totalMales="1-5" priority="0">
                 <state img="5-ironic.png">Thanks, ~name~! That will keep those lecherous eyes away from me. For some time at least...</state>
             </case>
@@ -6563,6 +7133,9 @@
             </case>
             <case tag="female_small_chest_is_visible" target="remilia">
                 <state img="5-flustered.png">But you should seriously stop drinking! I can't even handle &lt;i&gt;one&lt;/i&gt; glass of wine, and you're a lot smaller than I am!</state>
+            </case>
+            <case tag="female_small_chest_is_visible" target="zizou">
+                <state img="5-ironic.png">Oh, seems like I misjudged you. You're trying to draw even more attention to your breasts, aren't you?</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="5-interested.png">Sometimes I wish I had breasts like yours. It'd make fighting so much less complicated.</state>
@@ -6608,6 +7181,9 @@
             <case tag="female_large_chest_is_visible" filter="slutty">
                 <state img="5-ironic.png">Just in case you're wondering, ~player~; they can get that big even without acting like ~name~. But I gotta admit... man, those are enormous!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="chun-li">
+                <state img="5-sulky.png">I know how it feels to fight with a chest like that... And also how it feels to be stared at like this.</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="launch">
                 <state img="5-ironic.png">Now I'm not feeling guilty at all...</state>
             </case>
@@ -6646,6 +7222,9 @@
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="2">
                 <state img="5-angry.png">Okay, I accept that you don't like underwear, but why are you taking off your skirt &lt;i&gt;now&lt;/i&gt;? It's like you &lt;i&gt;want&lt;/i&gt; us to see your privates...</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="zizou">
+                <state img="5-shocked.png">What? Are you sure you don't want to a least take off your shorts normally..?</state>
+            </case>
             <case tag="female_crotch_will_be_visible" totalMales="1-5" priority="0">
                 <state img="5-sulky.png">Keep cool, guys! I know this is what you're here for, but give ~name~ time to cover herself!</state>
                 <state img="5-flustered.png">I have problems even with shared baths, yet ~name~ is getting naked in front of these perverts...</state>
@@ -6671,6 +7250,9 @@
             <case tag="female_crotch_is_visible" target="aimee">
                 <state img="5-sulky.png">She did it again... Hey, does this turn you on!?</state>
             </case>
+            <case tag="female_crotch_is_visible" target="chun-li">
+                <state img="5-ironic.png">Maybe it's a little too late to ask, but why didn't you take off your hair buns?</state>
+            </case>
             <case tag="female_crotch_is_visible" target="launch">
                 <state img="5-sulky.png">Hey! Don't even think of sneezing now, Launch! You came here of your own free will, so you have to bear it on your own.</state>
             </case>
@@ -6689,10 +7271,16 @@
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="5-sulky.png">The unicorn I met was so holy, that only pure maidens could meet it. &lt;i&gt;That...&lt;/i&gt; that was anything but pure.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="zizou">
+                <state img="5-ironic.png">Why does this remind me of the forest of Ymir, where butterflies showed us what we had to do? So... those butterflies surrounding her butt can only mean...</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="5-ironic.png">You actually want to do this, don't you?</state>
                 <state img="5-ironic.png">It's about time you lost. The look on your face told me it must have been torture to resist playing with yourself for so long.</state>
                 <state img="5-shocked.png">S-stay back! Don't move! Don't touch anything!</state>
+            </case>
+            <case tag="male_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="5-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="male_must_masturbate" target="pit">
                 <state img="5-excited.png">How about some music? Why? Because I "Beat the Angel"!</state>
@@ -6730,6 +7318,9 @@
             <case tag="female_must_masturbate">
                 <state img="5-calm.png">One less opponent to care about. Sorry, ~name~!</state>
                 <state img="5-interested.png">Ah, it's your turn now, ~name~?</state>
+            </case>
+            <case tag="female_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="5-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="female_must_masturbate" filter="shy">
                 <state img="5-sad.png">Poor girl... But I'm afraid there's nothing I can do to help you.</state>
@@ -6864,6 +7455,9 @@
             <case tag="female_finished_masturbating" target="catria">
                 <state img="5-interested.png">&lt;i&gt;(So Prince Marth is the name of Catria's crush? Well, I should pretend I didn't see or hear anything...)&lt;/i&gt;</state>
             </case>
+            <case tag="female_finished_masturbating" target="chun-li">
+                <state img="5-interested.png">That was a really... acrobatic finish. Now I can totally see why you didn't let your hair down until now.</state>
+            </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="5-angry.png">That was the worst possible time to sneeze, Launch! Now look what you've done to your poor blue side!</state>
             </case>
@@ -6884,6 +7478,9 @@
             </case>
             <case tag="female_finished_masturbating" target="uravity">
                 <state img="5-excited.png">Float straight into the seventh heaven!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="zizou">
+                <state img="5-ironic.png">Thanks, Zizou! Now I'll never be able to look at butterflies the same way again...</state>
             </case>
             <case tag="game_over_victory">
                 <state img="5-sulky.png">That was a close call... I guess I'll spend the next few weeks in the casino of Altamira to get better than I was today. Then I might even return here.</state>
@@ -6928,6 +7525,9 @@
             <case tag="bad_hand" notSaidMarker="firstnaked" priority="600">
                 <state img="6-interested.png" marker="firstnaked">I'm allowed to continue even though I'm naked? ...Well, I could use some training.</state>
             </case>
+            <case tag="hand" alsoPlaying="akko" alsoPlayingSayingMarker="hi_sheena">
+                <state img="6-excited.png">Sure! The rules of my clan prohibit me from showing you the &lt;i&gt;really&lt;/i&gt; interesting stuff, but I'm sure I can show you some of my tricks.</state>
+            </case>
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="amaflower">
                 <state img="6-angry.png" marker="amaflower">Flowers? Hey, Amalia! That's cheating!</state>
             </case>
@@ -6939,6 +7539,12 @@
             </case>
             <case tag="hand" alsoPlaying="remilia" alsoPlayingStage="3" notSaidMarker="remiWine">
                 <state img="6-ironic.png" marker="remiWine">Hey, little lady! It doesn't matter if you're old enough or not, this is not the time for a glass of wine!</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" alsoPlayingStage="7" notSaidMarker="zizouHair2">
+                <state img="6-flustered.png" marker="zizouHair2">Even &lt;i&gt;that&lt;/i&gt; hair is multi-colored? I didn't even know that was possible...</state>
+            </case>
+            <case tag="hand" alsoPlaying="zizou" notSaidMarker="zizouHair">
+                <state img="6-interested.png" marker="zizouHair">You have two hair colors, Zizou? How come? It's not dyed, is it?</state>
             </case>
             <case tag="hand" notSaidMarker="firstnaked">
                 <condition count="1" status="lost_all" />
@@ -7135,8 +7741,14 @@
                 <state img="6-angry.png">Hey, you! Let ~name~ undress on her own!</state>
                 <state img="6-sulky.png">This is ridiculous! I would &lt;i&gt;never&lt;/i&gt; allow someone else to undress me.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" targetStage="0">
+                <state img="6-flustered.png">Huh? You transformed? Is this your way of dealing with embarrassment?</state>
+            </case>
             <case tag="female_removing_accessory" target="catria" targetStage="0">
                 <state img="6-calm.png" marker="unicorn">You're riding a pegasus, Catria? I've never seen one, but I have met an unicorn. Only pure maidens are able to meet a unicorn!</state>
+            </case>
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0">
+                <state img="6-interested.png">Your outfit looks similar to the clothing from where I'm from. I doubt they're related, though...</state>
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="6-angry.png">You talk like you can't get naked fast enough, but now you're just losing your weapon?</state>
@@ -7231,11 +7843,20 @@
             <case tag="female_removing_accessory" target="uravity" targetStage="1">
                 <state img="6-sulky.png">Special powers or not, don't you think those are a little bit small to strip separately?</state>
             </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="0">
+                <state img="6-excited.png">That sure is a fancy hat you're wearing. I remember when Zelos needed to disguise himself and wore something similar.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="1">
+                <state img="6-interested.png">Will you show us another one of your tricks?</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="6-sad.png">I definitely need more training...</state>
                 <state img="6-flustered.png">Am I really that bad at playing poker?</state>
                 <state img="6-interested.png">You have to be pretty good. Can you give me some advice later?</state>
                 <state img="6-sad.png">Please tell me that your ~clothing~ was something really valuable at least. Something like a Key Crest.</state>
+            </case>
+            <case tag="female_removed_accessory" target="akko" targetStage="1">
+                <state img="6-ironic.png">Well, if it helps, and as long as you follow the rules and strip an item each loss, it's fine by me.</state>
             </case>
             <case tag="female_removed_accessory" target="amalia" targetStage="1">
                 <state img="6-interested.png">So there's a lot of space inside your bag? Is it the same technology as the Wing Packs we use?</state>
@@ -7336,6 +7957,12 @@
             <case tag="female_removed_accessory" target="uravity" targetStage="2">
                 <state img="6-calm.png">Anyway! Sooner or later, what goes up, must come down. And I can summon Gnome, the Summon Spirit of Earth, just in case you take too long.</state>
             </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="1">
+                <state img="6-interested.png">Wow, that looked just like one of my ninja arts! A fancy way to strip a fancy hat!</state>
+            </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="2">
+                <state img="6-excited.png">And now the scarf turned into butterflies. That's quite cool!</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="6-interested.png">Would you strip something good this time, please?</state>
                 <state img="6-interested.png">What'll it be this time, ~name~?</state>
@@ -7406,6 +8033,15 @@
             <case tag="female_removing_minor" target="uravity" targetStage="2">
                 <state img="6-interested.png">Do you need those "stabilizers" to float straight, or something? I remember how hard it was to float when we were at the higher levels of the Tower of Salvation.</state>
             </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="2">
+                <state img="6-interested.png">Butterflies again, right? I'm sure Colette would love them.</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="3">
+                <state img="6-interested.png">Say, do you always undress like that? It seems pretty convenient...</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="4">
+                <state img="6-flustered.png">...You &lt;i&gt;can&lt;/i&gt; turn those butterflies back into clothes, right..?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="6-sulky.png">We must both do better! Me at playing cards, and you at stripping clothes.</state>
                 <state img="6-shocked.png">Wait! Does that mean you still have that much to lose?</state>
@@ -7421,6 +8057,9 @@
             </case>
             <case tag="female_removed_minor" target="catria" targetStage="4">
                 <state img="6-ironic.png">So you're self-conscious about your chest, huh? No wonder you show off your &lt;i&gt;other&lt;/i&gt; assets...</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <state img="6-ironic.png">I know how good it feels to kick bad guys, but there's really only one bad guy I really enjoy kicking. He doesn't deserve any better.</state>
             </case>
             <case tag="female_removed_minor" target="launch" targetStage="5">
                 <state img="6-ironic.png">I guess you'll just have to grin and bear it. It's too late to get, er... cold feet.</state>
@@ -7442,6 +8081,15 @@
             </case>
             <case tag="female_removed_minor" target="uravity" targetStage="3">
                 <state img="6-ironic.png">That was when Zelos got carried away and hit his head pretty badly. Such an idiot...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="3">
+                <state img="6-calm.png">Come to think of it, those look really similar to her wings...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="4">
+                <state img="6-ironic.png">I hope you get dressed like a normal person, at least...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="5">
+                <state img="6-sulky.png">Imagine how hard it'd be to catch all those butterflies before you could get dressed...</state>
             </case>
             <case tag="male_removing_major">
                 <state img="6-excited.png">Excellent! That means I've caught up to ~name~, doesn't it?</state>
@@ -7467,6 +8115,9 @@
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="6-shocked.png">You're shooting at yourself!? Are you nuts?</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="4">
+                <state img="6-ironic.png">Your leotard, huh? Interesting choice. Or maybe your only choice, because I can't see how you'd take off your pantyhose before it...</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="6-shocked.png">You're blonde again? ...And you're vulgar again!?</state>
@@ -7515,6 +8166,12 @@
             </case>
             <case tag="female_removed_major" target="catria" targetStage="5">
                 <state img="6-flustered.png">Y-you didn't know? I thought you were showing it on purpose. Sorry I didn't tell you, Catria.</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5">
+                <state img="6-flustered.png">Those bindings bring back memories. I never managed to bind my chest properly after puberty, but yours is even bigger...</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="6">
+                <state img="6-ironic.png">To be honest, I didn't think you'd wear anything under your pantyhose.But then again, I thought I &lt;i&gt;was&lt;/i&gt; wearing something under my pants, so...</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="6-flustered.png">Ah... I get it. Everytime you sneeze you change from blue to blonde. ...And from nice to bitchy.</state>
@@ -7615,6 +8272,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="6-interested.png">So nothing happened this time..? But you have to strip something, Aimee! That's the rules!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="chun-li">
+                <state img="6-ironic.png">I'm still amazed that your bindings could hold out that whole time. You should definitely teach me how to do it later.</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="kyu">
                 <state img="6-angry.png">This really isn't what skills are for! Ever considered using your magic to help others?</state>
             </case>
@@ -7651,6 +8311,9 @@
             <case tag="female_chest_will_be_visible" target="uravity">
                 <state img="6-ironic.png">I know it's rude of me to say this, but I'm glad you're stripping your bra. That pink was hurting my eyes...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="zizou">
+                <state img="6-flustered.png">You're going to show your breasts using the same trick too? Well, I guess you could use those butterflies to distract people...</state>
+            </case>
             <case tag="female_chest_will_be_visible" totalMales="1-5" priority="0">
                 <state img="6-ironic.png">Thanks, ~name~! That will keep those lecherous eyes away from me. For some time at least...</state>
             </case>
@@ -7672,6 +8335,9 @@
             </case>
             <case tag="female_small_chest_is_visible" target="remilia">
                 <state img="6-flustered.png">But you should seriously stop drinking! I can't even handle &lt;i&gt;one&lt;/i&gt; glass of wine, and you're a lot smaller than I am!</state>
+            </case>
+            <case tag="female_small_chest_is_visible" target="zizou">
+                <state img="6-ironic.png">Oh, seems like I misjudged you. You're trying to draw even more attention to your breasts, aren't you?</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="6-interested.png">Sometimes I wish I had breasts like yours. It'd make fighting so much less complicated.</state>
@@ -7714,6 +8380,9 @@
             <case tag="female_large_chest_is_visible" filter="slutty">
                 <state img="6-ironic.png">Just in case you're wondering, ~player~; they can get that big even without acting like ~name~. But I gotta admit... man, those are enormous!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="chun-li">
+                <state img="6-sulky.png">I know how it feels to fight with a chest like that... And also how it feels to be stared at like this.</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="launch">
                 <state img="6-ironic.png">Now I'm not feeling guilty at all...</state>
             </case>
@@ -7752,6 +8421,9 @@
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="2">
                 <state img="6-angry.png">Okay, I accept that you don't like underwear, but why are you taking off your skirt &lt;i&gt;now&lt;/i&gt;? It's like you &lt;i&gt;want&lt;/i&gt; us to see your privates...</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="zizou">
+                <state img="6-shocked.png">What? Are you sure you don't want to a least take off your shorts normally..?</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="6-ironic.png">Let's just make sure no-one ever tells Zelos about this place...</state>
                 <state img="6-sad.png">I can understand how you feel. I'm in a similar situation right now...</state>
@@ -7773,6 +8445,9 @@
             <case tag="female_crotch_is_visible" target="aimee">
                 <state img="6-sulky.png">She did it again... Hey, does this turn you on!?</state>
             </case>
+            <case tag="female_crotch_is_visible" target="chun-li">
+                <state img="6-ironic.png">Maybe it's a little too late to ask, but why didn't you take off your hair buns?</state>
+            </case>
             <case tag="female_crotch_is_visible" target="launch">
                 <state img="6-sulky.png">Hey! Don't even think of sneezing now, Launch! You came here of your own free will, so you have to bear it on your own.</state>
             </case>
@@ -7791,10 +8466,16 @@
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="6-sulky.png">The unicorn I met was so holy, that only pure maidens could meet it. &lt;i&gt;That...&lt;/i&gt; that was anything but pure.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="zizou">
+                <state img="6-ironic.png">Why does this remind me of the forest of Ymir, where butterflies showed us what we had to do? So... those butterflies surrounding her butt can only mean...</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="6-ironic.png">You actually want to do this, don't you?</state>
                 <state img="6-ironic.png">It's about time you lost. The look on your face told me it must have been torture to resist playing with yourself for so long.</state>
                 <state img="6-shocked.png">S-stay back! Don't move! Don't touch anything!</state>
+            </case>
+            <case tag="male_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="6-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="male_must_masturbate" target="pit">
                 <state img="6-excited.png">How about some music? Why? Because I "Beat the Angel"!</state>
@@ -7833,6 +8514,9 @@
             <case tag="female_must_masturbate">
                 <state img="6-calm.png">One less opponent to care about. Sorry, ~name~!</state>
                 <state img="6-interested.png">Ah, it's your turn now, ~name~?</state>
+            </case>
+            <case tag="female_must_masturbate" alsoPlaying="akko" totalMasturbating="0" totalFinished="0" notSaidMarker="mastfirst" alsoPlayingSaidMarker="sheena_alloss" priority="601">
+                <state img="6-shocked.png" marker="mastfirst">W-wait! I thought ~name~ was already out... so Akko was really right about this? I thought it was a joke!</state>
             </case>
             <case tag="female_must_masturbate" filter="shy">
                 <state img="6-sad.png">Poor girl... But I'm afraid there's nothing I can do to help you.</state>
@@ -7967,6 +8651,9 @@
             <case tag="female_finished_masturbating" target="catria">
                 <state img="6-interested.png">&lt;i&gt;(So Prince Marth is the name of Catria's crush? Well, I should pretend I didn't see or hear anything...)&lt;/i&gt;</state>
             </case>
+            <case tag="female_finished_masturbating" target="chun-li">
+                <state img="6-interested.png">That was a really... acrobatic finish. Now I can totally see why you didn't let your hair down until now.</state>
+            </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="6-angry.png">That was the worst possible time to sneeze, Launch! Now look what you've done to your poor blue side!</state>
             </case>
@@ -7988,8 +8675,14 @@
             <case tag="female_finished_masturbating" target="uravity">
                 <state img="6-excited.png">Float straight into the seventh heaven!</state>
             </case>
+            <case tag="female_finished_masturbating" target="zizou">
+                <state img="6-ironic.png">Thanks, Zizou! Now I'll never be able to look at butterflies the same way again...</state>
+            </case>
             <case tag="must_masturbate_first">
                 <state img="6-shocked.png" marker="mastfirst">Wait, so I was still in the game even though I was naked because... What kind of perv came up with this rule!?</state>
+            </case>
+            <case tag="must_masturbate_first" alsoPlaying="akko" alsoPlayingSaidMarker="sheena_alloss">
+                <state img="6-shocked.png" marker="mastfirst">Wait, so I was still in the game even though I was naked because... So Akko was right!? I thought she was joking!</state>
             </case>
             <case tag="must_masturbate">
                 <state img="6-flustered.png">No! Do I really have to do that!? This is so embarrassing...</state>
@@ -7997,6 +8690,9 @@
             <case tag="start_masturbating">
                 <state img="6-start.png">Okay, here I go! But don't expect anything extraordinary!</state>
                 <state img="6-start.png">S-stop staring at me! It's not all that great, I swear!</state>
+            </case>
+            <case tag="start_masturbating" alsoPlaying="akko">
+                <state img="6-start.png">I think there are times you shouldn't rely on magic, Akko. At least in a situation where you absolutely shouldn't mess around.</state>
             </case>
             <case tag="game_over_victory">
                 <state img="6-sulky.png">That was a close call... I guess I'll spend the next few weeks in the casino of Altamira to get better than I was today. Then I might even return here.</state>
@@ -8012,7 +8708,7 @@
                 <state img="7-angry.png">Hey! If you're going to disappoint me, ~name~, I'll invoke the Mizuho tradition of making you swallow a thousand needles.</state>
             </case>
             <case tag="female_human_must_strip">
-                <state img="7-calm.png">A few minutes ago I wanted see you strip because I wanted to win. Now I want you to strip because I wanna see you &lt;i&gt;lose&lt;/i&gt;.</state>
+                <state img="7-calm.png">A few minutes ago I wanted to see you strip because I wanted to win. Now I want you to strip because I wanna see you &lt;i&gt;lose&lt;/i&gt;.</state>
                 <state img="7-calm.png">I want to be with you, ~player~.</state>
                 <state img="7-interested.png">Oh, is it stripping time? Choose something nice, please!</state>
                 <state img="7-ironic.png">I'm not really into girls, but maybe it'll still help speed things up on my end.</state>
@@ -8098,8 +8794,14 @@
                 <state img="7-angry.png">Hey, you! Let ~name~ undress on her own!</state>
                 <state img="7-sulky.png">This is ridiculous! I would &lt;i&gt;never&lt;/i&gt; allow someone else to undress me.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" targetStage="0">
+                <state img="7-flustered.png">Huh? You transformed? Is this your way of dealing with embarrassment?</state>
+            </case>
             <case tag="female_removing_accessory" target="catria" targetStage="0">
                 <state img="7-calm.png" marker="unicorn">You're riding a pegasus, Catria? I've never seen one, but I have met an unicorn. Only pure maidens are able to meet a unicorn!</state>
+            </case>
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0">
+                <state img="7-interested.png">Your outfit looks similar to the clothing from where I'm from. I doubt they're related, though...</state>
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="7-angry.png">You talk like you can't get naked fast enough, but now you're just losing your weapon?</state>
@@ -8194,10 +8896,19 @@
             <case tag="female_removing_accessory" target="uravity" targetStage="1">
                 <state img="7-sulky.png">Special powers or not, don't you think those are a little bit small to strip separately?</state>
             </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="0">
+                <state img="7-excited.png">That sure is a fancy hat you're wearing. I remember when Zelos needed to disguise himself and wore something similar.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="1">
+                <state img="7-interested.png">Will you show us another one of your tricks?</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="7-angry.png">Hurry up and deal the next round! Maybe ~name~'ll decide to take off something worthy next time.</state>
                 <state img="7-ironic.png">Don't get me wrong! I'm not upset about this. Disappointed, maybe...</state>
                 <state img="7-ironic.png">You could have stripped something more &lt;i&gt;sexy&lt;/i&gt; to help me out of my misery. Talk about selfish.</state>
+            </case>
+            <case tag="female_removed_accessory" target="akko" targetStage="1">
+                <state img="7-ironic.png">Well, if it helps, and as long as you follow the rules and strip an item each loss, it's fine by me.</state>
             </case>
             <case tag="female_removed_accessory" target="amalia" targetStage="1">
                 <state img="7-interested.png">So there's a lot of space inside your bag? Is it the same technology as the Wing Packs we use?</state>
@@ -8295,6 +9006,12 @@
             <case tag="female_removed_accessory" target="uravity" targetStage="2">
                 <state img="7-calm.png">Anyway! Sooner or later, what goes up, must come down. And I can summon Gnome, the Summon Spirit of Earth, just in case you take too long.</state>
             </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="1">
+                <state img="7-interested.png">Wow, that looked just like one of my ninja arts! A fancy way to strip a fancy hat!</state>
+            </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="2">
+                <state img="7-excited.png">And now the scarf turned into butterflies. That's quite cool!</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="7-calm.png">Your ~clothing~? This'll do. For now.</state>
                 <state img="7-excited.png">You're going to show some skin, ~name~?</state>
@@ -8361,6 +9078,15 @@
             <case tag="female_removing_minor" target="uravity" targetStage="2">
                 <state img="7-interested.png">Do you need those "stabilizers" to float straight, or something? I remember how hard it was to float when we were at the higher levels of the Tower of Salvation.</state>
             </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="2">
+                <state img="7-interested.png">Butterflies again, right? I'm sure Colette would love them.</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="3">
+                <state img="7-interested.png">Say, do you always undress like that? It seems pretty convenient...</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="4">
+                <state img="7-flustered.png">...You &lt;i&gt;can&lt;/i&gt; turn those butterflies back into clothes, right..?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="7-calm.png">Keep up this pace, ~name~! You're doing great. Greater than me...</state>
                 <state img="7-interested.png">If I ask nicely, will you take off something else as well?</state>
@@ -8374,6 +9100,9 @@
             </case>
             <case tag="female_removed_minor" target="catria" targetStage="4">
                 <state img="7-ironic.png">So you're self-conscious about your chest, huh? No wonder you show off your &lt;i&gt;other&lt;/i&gt; assets...</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <state img="7-ironic.png">I know how good it feels to kick bad guys, but there's really only one bad guy I really enjoy kicking. He doesn't deserve any better.</state>
             </case>
             <case tag="female_removed_minor" target="launch" targetStage="5">
                 <state img="7-ironic.png">I guess you'll just have to grin and bear it. It's too late to get, er... cold feet.</state>
@@ -8395,6 +9124,15 @@
             </case>
             <case tag="female_removed_minor" target="uravity" targetStage="3">
                 <state img="7-ironic.png">That was when Zelos got carried away and hit his head pretty badly. Such an idiot...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="3">
+                <state img="7-calm.png">Come to think of it, those look really similar to her wings...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="4">
+                <state img="7-ironic.png">I hope you get dressed like a normal person, at least...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="5">
+                <state img="7-sulky.png">Imagine how hard it'd be to catch all those butterflies before you could get dressed...</state>
             </case>
             <case tag="male_removing_major">
                 <state img="7-calm.png">Are you about to show us something good, ~name~? That'll help me get into the mood.</state>
@@ -8418,6 +9156,9 @@
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="7-shocked.png">You're shooting at yourself!? Are you nuts?</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="4">
+                <state img="7-ironic.png">Your leotard, huh? Interesting choice. Or maybe your only choice, because I can't see how you'd take off your pantyhose before it...</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="7-shocked.png">You're blonde again? ...And you're vulgar again!?</state>
@@ -8464,6 +9205,12 @@
             </case>
             <case tag="female_removed_major" target="catria" targetStage="5">
                 <state img="7-flustered.png">Y-you didn't know? I thought you were showing it on purpose. Sorry I didn't tell you, Catria.</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5">
+                <state img="7-flustered.png">Those bindings bring back memories. I never managed to bind my chest properly after puberty, but yours is even bigger...</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="6">
+                <state img="7-ironic.png">To be honest, I didn't think you'd wear anything under your pantyhose.But then again, I thought I &lt;i&gt;was&lt;/i&gt; wearing something under my pants, so...</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="7-flustered.png">Ah... I get it. Everytime you sneeze you change from blue to blonde. ...And from nice to bitchy.</state>
@@ -8559,6 +9306,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="7-interested.png">So nothing happened this time..? But you have to strip something, Aimee! That's the rules!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="chun-li">
+                <state img="7-ironic.png">I'm still amazed that your bindings could hold out that whole time. You should definitely teach me how to do it later.</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="kyu">
                 <state img="7-angry.png">This really isn't what skills are for! Ever considered using your magic to help others?</state>
             </case>
@@ -8595,6 +9345,9 @@
             <case tag="female_chest_will_be_visible" target="uravity">
                 <state img="7-ironic.png">I know it's rude of me to say this, but I'm glad you're stripping your bra. That pink was hurting my eyes...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="zizou">
+                <state img="7-flustered.png">You're going to show your breasts using the same trick too? Well, I guess you could use those butterflies to distract people...</state>
+            </case>
             <case tag="female_chest_will_be_visible" totalMales="1-5" priority="0">
                 <state img="7-ironic.png">Thanks, ~name~! That will keep those lecherous eyes away from me. For some time at least...</state>
             </case>
@@ -8617,6 +9370,9 @@
             </case>
             <case tag="female_small_chest_is_visible" target="remilia">
                 <state img="7-flustered.png">But you should seriously stop drinking! I can't even handle &lt;i&gt;one&lt;/i&gt; glass of wine, and you're a lot smaller than I am!</state>
+            </case>
+            <case tag="female_small_chest_is_visible" target="zizou">
+                <state img="7-ironic.png">Oh, seems like I misjudged you. You're trying to draw even more attention to your breasts, aren't you?</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="7-interested.png">Sometimes I wish I had breasts like yours. It'd make fighting so much less complicated.</state>
@@ -8661,6 +9417,9 @@
             <case tag="female_large_chest_is_visible" filter="slutty">
                 <state img="7-ironic.png">Just in case you're wondering, ~player~; they can get that big even without acting like ~name~. But I gotta admit... man, those are enormous!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="chun-li">
+                <state img="7-sulky.png">I know how it feels to fight with a chest like that... And also how it feels to be stared at like this.</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="launch">
                 <state img="7-ironic.png">Now I'm not feeling guilty at all...</state>
             </case>
@@ -8701,6 +9460,9 @@
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="2">
                 <state img="7-angry.png">Okay, I accept that you don't like underwear, but why are you taking off your skirt &lt;i&gt;now&lt;/i&gt;? It's like you &lt;i&gt;want&lt;/i&gt; us to see your privates...</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="zizou">
+                <state img="7-shocked.png">What? Are you sure you don't want to a least take off your shorts normally..?</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="7-interested.png">Well, the sight was worth the wait though.</state>
                 <state img="7-interested.png">I never thought I'd ever be interested in other womens private parts.</state>
@@ -8722,6 +9484,9 @@
             <case tag="female_crotch_is_visible" target="aimee">
                 <state img="7-sulky.png">She did it again... Hey, does this turn you on!?</state>
             </case>
+            <case tag="female_crotch_is_visible" target="chun-li">
+                <state img="7-ironic.png">Maybe it's a little too late to ask, but why didn't you take off your hair buns?</state>
+            </case>
             <case tag="female_crotch_is_visible" target="launch">
                 <state img="7-sulky.png">Hey! Don't even think of sneezing now, Launch! You came here of your own free will, so you have to bear it on your own.</state>
             </case>
@@ -8739,6 +9504,9 @@
             </case>
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="7-sulky.png">The unicorn I met was so holy, that only pure maidens could meet it. &lt;i&gt;That...&lt;/i&gt; that was anything but pure.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="zizou">
+                <state img="7-ironic.png">Why does this remind me of the forest of Ymir, where butterflies showed us what we had to do? So... those butterflies surrounding her butt can only mean...</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="7-ironic.png">Damn it! I thought I could finish before ~name~ had to do it too...</state>
@@ -8892,6 +9660,9 @@
             <case tag="female_finished_masturbating" target="catria">
                 <state img="7-interested.png">&lt;i&gt;(So Prince Marth is the name of Catria's crush? Well, I should pretend I didn't see or hear anything...)&lt;/i&gt;</state>
             </case>
+            <case tag="female_finished_masturbating" target="chun-li">
+                <state img="7-interested.png">That was a really... acrobatic finish. Now I can totally see why you didn't let your hair down until now.</state>
+            </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="7-angry.png">That was the worst possible time to sneeze, Launch! Now look what you've done to your poor blue side!</state>
             </case>
@@ -8912,6 +9683,9 @@
             </case>
             <case tag="female_finished_masturbating" target="uravity">
                 <state img="7-excited.png">Float straight into the seventh heaven!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="zizou">
+                <state img="7-ironic.png">Thanks, Zizou! Now I'll never be able to look at butterflies the same way again...</state>
             </case>
             <case tag="masturbating">
                 <state img="7-sulky.png">This is a very private moment, you know? Can you stop looking at me like you've never seen a woman before?</state>
@@ -9029,8 +9803,14 @@
                 <state img="8-angry.png">Hey, you! Let ~name~ undress on her own!</state>
                 <state img="8-sulky.png">This is ridiculous! I would &lt;i&gt;never&lt;/i&gt; allow someone else to undress me.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" targetStage="0">
+                <state img="8-flustered.png">Huh? You transformed? Is this your way of dealing with embarrassment?</state>
+            </case>
             <case tag="female_removing_accessory" target="catria" targetStage="0">
                 <state img="8-calm.png" marker="unicorn">You're riding a pegasus, Catria? I've never seen one, but I have met an unicorn. Only pure maidens are able to meet a unicorn!</state>
+            </case>
+            <case tag="female_removing_accessory" target="chun-li" targetStage="0">
+                <state img="8-interested.png">Your outfit looks similar to the clothing from where I'm from. I doubt they're related, though...</state>
             </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="8-angry.png">You talk like you can't get naked fast enough, but now you're just losing your weapon?</state>
@@ -9125,10 +9905,19 @@
             <case tag="female_removing_accessory" target="uravity" targetStage="1">
                 <state img="8-sulky.png">Special powers or not, don't you think those are a little bit small to strip separately?</state>
             </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="0">
+                <state img="8-excited.png">That sure is a fancy hat you're wearing. I remember when Zelos needed to disguise himself and wore something similar.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zizou" targetStage="1">
+                <state img="8-interested.png">Will you show us another one of your tricks?</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="8-sulky.png">I might sound like Presea, but... &lt;i&gt;"I want to go home"&lt;/i&gt;.</state>
                 <state img="8-calm.png">Maybe I should just meditate. That wasn't even worth keeping one eye open for.</state>
                 <state img="8-sulky.png">Do you have to rub it into my face like this? That I suck at playing poker?</state>
+            </case>
+            <case tag="female_removed_accessory" target="akko" targetStage="1">
+                <state img="8-ironic.png">Well, if it helps, and as long as you follow the rules and strip an item each loss, it's fine by me.</state>
             </case>
             <case tag="female_removed_accessory" target="amalia" targetStage="1">
                 <state img="8-interested.png">So there's a lot of space inside your bag? Is it the same technology as the Wing Packs we use?</state>
@@ -9226,6 +10015,12 @@
             <case tag="female_removed_accessory" target="uravity" targetStage="2">
                 <state img="8-calm.png">Anyway! Sooner or later, what goes up, must come down. And I can summon Gnome, the Summon Spirit of Earth, just in case you take too long.</state>
             </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="1">
+                <state img="8-interested.png">Wow, that looked just like one of my ninja arts! A fancy way to strip a fancy hat!</state>
+            </case>
+            <case tag="female_removed_accessory" target="zizou" targetStage="2">
+                <state img="8-excited.png">And now the scarf turned into butterflies. That's quite cool!</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="8-calm.png">I definitely need to spend more time in the casino. I should ask Regal if he'll let me stay at the Inn of Altamira for free.</state>
                 <state img="8-ironic.png">Just your ~clothing~? Are you sure you don't want to rethink your choise?</state>
@@ -9289,6 +10084,15 @@
             <case tag="female_removing_minor" target="uravity" targetStage="2">
                 <state img="8-interested.png">Do you need those "stabilizers" to float straight, or something? I remember how hard it was to float when we were at the higher levels of the Tower of Salvation.</state>
             </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="2">
+                <state img="8-interested.png">Butterflies again, right? I'm sure Colette would love them.</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="3">
+                <state img="8-interested.png">Say, do you always undress like that? It seems pretty convenient...</state>
+            </case>
+            <case tag="female_removing_minor" target="zizou" targetStage="4">
+                <state img="8-flustered.png">...You &lt;i&gt;can&lt;/i&gt; turn those butterflies back into clothes, right..?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="8-interested.png">So that's how you look without your ~clothing~.</state>
                 <state img="8-excited.png">Well, it was a good start at least. Next round, please!</state>
@@ -9302,6 +10106,9 @@
             </case>
             <case tag="female_removed_minor" target="catria" targetStage="4">
                 <state img="8-ironic.png">So you're self-conscious about your chest, huh? No wonder you show off your &lt;i&gt;other&lt;/i&gt; assets...</state>
+            </case>
+            <case tag="female_removed_minor" target="chun-li" targetStage="4">
+                <state img="8-ironic.png">I know how good it feels to kick bad guys, but there's really only one bad guy I really enjoy kicking. He doesn't deserve any better.</state>
             </case>
             <case tag="female_removed_minor" target="launch" targetStage="5">
                 <state img="8-ironic.png">I guess you'll just have to grin and bear it. It's too late to get, er... cold feet.</state>
@@ -9324,6 +10131,15 @@
             <case tag="female_removed_minor" target="uravity" targetStage="3">
                 <state img="8-ironic.png">That was when Zelos got carried away and hit his head pretty badly. Such an idiot...</state>
             </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="3">
+                <state img="8-calm.png">Come to think of it, those look really similar to her wings...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="4">
+                <state img="8-ironic.png">I hope you get dressed like a normal person, at least...</state>
+            </case>
+            <case tag="female_removed_minor" target="zizou" targetStage="5">
+                <state img="8-sulky.png">Imagine how hard it'd be to catch all those butterflies before you could get dressed...</state>
+            </case>
             <case tag="male_removing_major">
                 <state img="8-excited.png">Hey! ~Name~'s about to take off his ~clothing~.</state>
                 <state img="8-interested.png">I was looking forward to this. This means the game's headed to its final stages, doesn't it?</state>
@@ -9345,6 +10161,9 @@
             </case>
             <case tag="female_removing_major" target="aimee" targetStage="0">
                 <state img="8-shocked.png">You're shooting at yourself!? Are you nuts?</state>
+            </case>
+            <case tag="female_removing_major" target="chun-li" targetStage="4">
+                <state img="8-ironic.png">Your leotard, huh? Interesting choice. Or maybe your only choice, because I can't see how you'd take off your pantyhose before it...</state>
             </case>
             <case tag="female_removing_major" target="launch" targetStage="5">
                 <state img="8-shocked.png">You're blonde again? ...And you're vulgar again!?</state>
@@ -9394,6 +10213,12 @@
             </case>
             <case tag="female_removed_major" target="catria" targetStage="5">
                 <state img="8-flustered.png">Y-you didn't know? I thought you were showing it on purpose. Sorry I didn't tell you, Catria.</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="5">
+                <state img="8-flustered.png">Those bindings bring back memories. I never managed to bind my chest properly after puberty, but yours is even bigger...</state>
+            </case>
+            <case tag="female_removed_major" target="chun-li" targetStage="6">
+                <state img="8-ironic.png">To be honest, I didn't think you'd wear anything under your pantyhose.But then again, I thought I &lt;i&gt;was&lt;/i&gt; wearing something under my pants, so...</state>
             </case>
             <case tag="female_removed_major" target="launch" targetStage="6">
                 <state img="8-flustered.png">Ah... I get it. Everytime you sneeze you change from blue to blonde. ...And from nice to bitchy.</state>
@@ -9489,6 +10314,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="8-interested.png">So nothing happened this time..? But you have to strip something, Aimee! That's the rules!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="chun-li">
+                <state img="8-ironic.png">I'm still amazed that your bindings could hold out that whole time. You should definitely teach me how to do it later.</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="kyu">
                 <state img="8-angry.png">This really isn't what skills are for! Ever considered using your magic to help others?</state>
             </case>
@@ -9525,6 +10353,9 @@
             <case tag="female_chest_will_be_visible" target="uravity">
                 <state img="8-ironic.png">I know it's rude of me to say this, but I'm glad you're stripping your bra. That pink was hurting my eyes...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="zizou">
+                <state img="8-flustered.png">You're going to show your breasts using the same trick too? Well, I guess you could use those butterflies to distract people...</state>
+            </case>
             <case tag="female_chest_will_be_visible" totalMales="1-5" priority="0">
                 <state img="8-ironic.png">Thanks, ~name~! That will keep those lecherous eyes away from me. For some time at least...</state>
             </case>
@@ -9547,6 +10378,9 @@
             </case>
             <case tag="female_small_chest_is_visible" target="remilia">
                 <state img="8-flustered.png">But you should seriously stop drinking! I can't even handle &lt;i&gt;one&lt;/i&gt; glass of wine, and you're a lot smaller than I am!</state>
+            </case>
+            <case tag="female_small_chest_is_visible" target="zizou">
+                <state img="8-ironic.png">Oh, seems like I misjudged you. You're trying to draw even more attention to your breasts, aren't you?</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="8-interested.png">Sometimes I wish I had breasts like yours. It'd make fighting so much less complicated.</state>
@@ -9591,6 +10425,9 @@
             <case tag="female_large_chest_is_visible" filter="slutty">
                 <state img="8-ironic.png">Just in case you're wondering, ~player~; they can get that big even without acting like ~name~. But I gotta admit... man, those are enormous!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="chun-li">
+                <state img="8-sulky.png">I know how it feels to fight with a chest like that... And also how it feels to be stared at like this.</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="launch">
                 <state img="8-ironic.png">Now I'm not feeling guilty at all...</state>
             </case>
@@ -9631,6 +10468,9 @@
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="2">
                 <state img="8-angry.png">Okay, I accept that you don't like underwear, but why are you taking off your skirt &lt;i&gt;now&lt;/i&gt;? It's like you &lt;i&gt;want&lt;/i&gt; us to see your privates...</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="zizou">
+                <state img="8-shocked.png">What? Are you sure you don't want to a least take off your shorts normally..?</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="8-ironic.png">Let's just make sure no-one ever tells Zelos about this place...</state>
                 <state img="8-sad.png">I can understand how you feel. I'm in a similar situation right now...</state>
@@ -9654,6 +10494,9 @@
             <case tag="female_crotch_is_visible" target="aimee">
                 <state img="8-sulky.png">She did it again... Hey, does this turn you on!?</state>
             </case>
+            <case tag="female_crotch_is_visible" target="chun-li">
+                <state img="8-ironic.png">Maybe it's a little too late to ask, but why didn't you take off your hair buns?</state>
+            </case>
             <case tag="female_crotch_is_visible" target="launch">
                 <state img="8-sulky.png">Hey! Don't even think of sneezing now, Launch! You came here of your own free will, so you have to bear it on your own.</state>
             </case>
@@ -9671,6 +10514,9 @@
             </case>
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="8-sulky.png">The unicorn I met was so holy, that only pure maidens could meet it. &lt;i&gt;That...&lt;/i&gt; that was anything but pure.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="zizou">
+                <state img="8-ironic.png">Why does this remind me of the forest of Ymir, where butterflies showed us what we had to do? So... those butterflies surrounding her butt can only mean...</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="8-shocked.png">~Name~ has to masturbate too, now?</state>
@@ -9836,6 +10682,9 @@
             <case tag="female_finished_masturbating" target="catria">
                 <state img="8-interested.png">&lt;i&gt;(So Prince Marth is the name of Catria's crush? Well, I should pretend I didn't see or hear anything...)&lt;/i&gt;</state>
             </case>
+            <case tag="female_finished_masturbating" target="chun-li">
+                <state img="8-interested.png">That was a really... acrobatic finish. Now I can totally see why you didn't let your hair down until now.</state>
+            </case>
             <case tag="female_finished_masturbating" target="launch">
                 <state img="8-angry.png">That was the worst possible time to sneeze, Launch! Now look what you've done to your poor blue side!</state>
             </case>
@@ -9857,6 +10706,9 @@
             <case tag="female_finished_masturbating" target="uravity">
                 <state img="8-excited.png">Float straight into the seventh heaven!</state>
             </case>
+            <case tag="female_finished_masturbating" target="zizou">
+                <state img="8-ironic.png">Thanks, Zizou! Now I'll never be able to look at butterflies the same way again...</state>
+            </case>
             <case tag="finished_masturbating">
                 <state img="8-calm.png">I hope no-one here talks about what happened here to others. It'd be a shame for them to be assassinated by my people.</state>
                 <state img="8-calm.png">Please hurry up! I don't want to sit here all day.</state>
@@ -9866,6 +10718,9 @@
             </case>
             <case tag="finished_masturbating" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="amaflower">
                 <state img="8-angry.png" marker="amaflower">Hey, Amalia! That's cheating!</state>
+            </case>
+            <case tag="finished_masturbating" alsoPlaying="zizou" alsoPlayingStage="7" notSaidMarker="zizouHair2">
+                <state img="8-flustered.png" marker="zizouHair2">Even &lt;i&gt;that&lt;/i&gt; hair is multi-colored? I didn't even know that was possible...</state>
             </case>
             <case tag="finished_masturbating" notSaidMarker="finish">
                 <state img="8-finished.png" marker="finish">Sorry, did you say anything? My mind went blank for a moment.</state>
@@ -9890,7 +10745,7 @@
             <case tag="game_over_defeat" saidMarker="toes">
                 <state img="8-ironic.png">It's about time. I can't feel my feet anymore... Anyway! Congratulations, ~name~!</state>
             </case>
-            <case tag="game_over_defeat">
+            <case tag="game_over_defeat" priority="30">
                 <test expr="~background.location~" value="outdoors" />
                 <state img="8-sulky.png">Took you long enough. I hope I didn't catch a cold sitting here. Honestly, who plays strip poker outside?</state>
             </case>
