@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.8.2 at 1:08:17 a. m. on marzo 30, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.1 at 7:11:09 p. m. on abril 18, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v3.8.2</version>
+    <version>v4.1</version>
     <first>Twilight</first>
     <last>Sparkle</last>
     <label>Twilight</label>
@@ -18,6 +18,7 @@
         <tag>violet_eyes</tag>
         <tag>unusual_skin</tag>
         <tag>hairy</tag>
+        <tag>pubic_hair</tag>
         <tag>medium_breasts</tag>
         <tag>cheerful</tag>
         <tag>confident</tag>
@@ -30,11 +31,10 @@
         <tag>my_little_pony</tag>
         <tag>princess</tag>
         <tag>student</tag>
+        <tag>bottomless_first</tag>
         <tag>magic</tag>
         <tag>hero</tag>
         <tag>twilight</tag>
-        <tag>bottomless_first</tag>
-        <tag>pubic_hair</tag>
     </tags>
 
     <start />
@@ -109,21 +109,24 @@
                 <state img="0-smart.png">I'll need ~cards~ for this to work.</state>
                 <state img="0-interested.png">I'll take ~cards~!</state>
             </case>
-            <case tag="swap_cards" hasHand="Four of a Kind">
-                <state img="0-happy.png">Almost perfect... One please!</state>
-                <state img="0-smart.png">I don't think I'll need it, but I'll change one...</state>
-                <state img="0-smug.png">Changing this one won't hurt...</state>
-                <state img="0-smart.png">Pretty good! I'll change one...</state>
-                <state img="0-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
-            </case>
-            <case tag="swap_cards" hasHand="Full House">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="0" />
                 <state img="0-shocked.png">Don't change a thing please!!</state>
                 <state img="0-confident.png">Oh yes! I'm fine like this...</state>
                 <state img="0-happy.png">Perfect, I won't change any cards...</state>
                 <state img="0-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="0-smug.png">Wow! Now this is what I call good luck...</state>
             </case>
-            <case tag="swap_cards" hasHand="High Card" priority="0">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="1" />
+                <state img="0-happy.png">Almost perfect... One please!</state>
+                <state img="0-smart.png">I don't think I'll need it, but I'll change one...</state>
+                <state img="0-smug.png">Changing this one won't hurt...</state>
+                <state img="0-smart.png">Pretty good! I'll change one...</state>
+                <state img="0-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
                 <state img="0-calm.png">4, like the number of hooves I had back home...</state>
                 <state img="0-confident.png">How about ~cards~?</state>
                 <state img="0-smart.png">~cards~ should do the trick!</state>
@@ -134,19 +137,17 @@
                 <state img="0-disappointed.png">I'll take ~cards~ please...</state>
                 <state img="0-calm.png">~cards~ cards, dealer!</state>
             </case>
-            <case tag="swap_cards" hasHand="Royal Flush">
-                <state img="0-shocked.png">Don't change a thing please!!</state>
-                <state img="0-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="0-happy.png">Perfect, I won't change any cards...</state>
-                <state img="0-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="0-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
+                <state img="0-calm.png">I guess I can at least keep this one... Four please!</state>
+                <state img="0-smart.png">I have a feel I should keep this one, I'll change the other four however...</state>
+                <state img="0-what.png">Surely changing four cards will make give me something better... right?</state>
             </case>
-            <case tag="swap_cards" hasHand="Straight Flush">
-                <state img="0-shocked.png">Don't change a thing please!!</state>
-                <state img="0-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="0-happy.png">Perfect, I won't change any cards...</state>
-                <state img="0-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="0-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="5" />
+                <state img="0-disappointed.png">Nothing here will do...</state>
+                <state img="0-what.png">Are you serious?! At least I can just get rid of all this in one go...</state>
+                <state img="0-laughing.png">Good thing I can exchange cards, give me a whole new hand please...</state>
             </case>
             <case tag="good_hand">
                 <state img="0-smug.png" marker="twilight_another_dimension">Are you sure you aren't giving me an advantage just because I'm from another dimension?</state>
@@ -257,7 +258,7 @@
                 <state img="0-calm.png">Thanks for the kind offer, but I already ate before this game.</state>
             </case>
             <case tag="hand" alsoPlaying="derpy_hooves" alsoPlayingStage="0" alsoPlayingTimeInStage="0-1" alsoPlayingSayingMarker="why_swimsuit" priority="992">
-                <state img="0-what.png">Swimsuits? No I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
+                <state img="0-what.png">Swimsuits? No, I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
             </case>
             <case tag="hand" id="0-1" alsoPlaying="derpy_hooves" alsoPlayingStage="1" alsoPlayingSayingMarker="bra_fall_2">
                 <state img="0-awkward.png">Oh no... Does this mean she skips a round or something?</state>
@@ -341,6 +342,10 @@
             <case tag="hand" alsoPlaying="zizou" alsoPlayingTimeInStage="0">
                 <state img="0-happy.png">Wait a second, you also have a multi-colored mane down there, Zizou? Well, I guess it makes sense, it must be the equivalent of tail hair back home...</state>
             </case>
+            <case tag="hand" totalRounds="2-3">
+                <condition count="4" filter="magic" />
+                <state img="0-happy.png">So basically everyone here besides ~player~ can do magic? And I thought it was a rare occurance in this world!</state>
+            </case>
             <case tag="hand" totalRounds="0" priority="991">
                 <condition count="3-4" filter="my_little_pony" />
                 <state img="0-happy.png">Well, I obviously don't need to introduce myself to the people that already know me here, but for ~player~ I will, my name is Twilight Sparkle!</state>
@@ -404,6 +409,9 @@
             </case>
             <case tag="must_strip" alsoPlaying="revy" alsoPlayingStage="0-7" alsoPlayingSaying="You in heat, Horsey?  You will be once I'm down riding your purple ass--maybe I'll even milk you.">
                 <state img="0-what.png" marker="revy_heat1">Isn't that supposed to be after the game, Revy? I appreciate your...candor though!</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="sheena" alsoPlayingSayingMarker="unicorn">
+                <state img="0-smart.png">Well... I don't know where this "Sylverant" is, but yeah back home I am a princess, not really a unicorn anymore since I have wings now, but then again, all princesses back there have both wings and a horn.</state>
             </case>
             <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="twi_bod1">
                 <state img="0-what.png" marker="streaming_bod1">No.... not really, Streaming-chan, why?</state>
@@ -494,6 +502,14 @@
                 <state img="0-stripRD.png" marker="twilight_yellow_panties">I know, right? So many people keep asking me about my hair and skin color, yet the people here in the Inventory seem to have all sorts of color tones just like in Equestria.</state>
                 <state img="0-stripSS.png" marker="twilight_red_panties">I know, right? So many people keep asking me about my hair and skin color, yet the people here in the Inventory seem to have all sorts of color tones just like in Equestria.</state>
                 <state img="0-stripTS.png" marker="twilight_pink_panties">I know, right? So many people keep asking me about my hair and skin color, yet the people here in the Inventory seem to have all sorts of color tones just like in Equestria.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="sheena">
+                <state img="0-stripAJ.png">Huh? What do you mean Sheena? I just want to get more comfortable!</state>
+                <state img="0-stripFS.png">Huh? What do you mean Sheena? I just want to get more comfortable!</state>
+                <state img="0-stripR.png">Huh? What do you mean Sheena? I just want to get more comfortable!</state>
+                <state img="0-stripRD.png">Huh? What do you mean Sheena? I just want to get more comfortable!</state>
+                <state img="0-stripSS.png">Huh? What do you mean Sheena? I just want to get more comfortable!</state>
+                <state img="0-stripTS.png">Huh? What do you mean Sheena? I just want to get more comfortable!</state>
             </case>
             <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="twi_bod2">
                 <state img="0-stripAJ.png" marker="streaming_bod2">Well, I haven't been in this world for more than 2 days straight... and that was the longest one, so maybe I'd say... a week?</state>
@@ -1795,6 +1811,15 @@
             <case tag="female_chest_will_be_visible" target="saki">
                 <state img="0-interested.png">Nonsense! I have been waiting to finally see these all game!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <state img="0-interested.png">Oooh! Summoning magic?! You have to teach me how to do that later, Sheena!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="luna">
+                <state img="0-what.png">Oh! That's Luna? For a second there I thought you meant princess Luna...</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSayingMarker="luna">
+                <state img="0-shocked.png">It seems you are nex...Wait a second... Did you say Luna?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="streaming-chan">
                 <state img="0-what.png" marker="twilight_streaming_november1">I wish I knew about this No-Bra November thing before I came here. I wouldn't have brought my bra either.</state>
             </case>
@@ -2076,6 +2101,9 @@
             <case tag="female_crotch_is_visible" target="saki">
                 <state img="0-smart.png">Nothing is more beautiful than seeing an all-natural bush.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="sheena">
+                <state img="0-guess.png">Ooooh! Evaporating clothes?! Now that's a spell I need to learn for the next time I come to this world...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="streaming-chan">
                 <state img="0-shocked.png">Oh, are those some sort of magic sticks? If so, I think the golden one looks more powerful.</state>
             </case>
@@ -2119,7 +2147,7 @@
             <case tag="opponent_lost" filter="athletic" priority="0">
                 <state img="0-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
                 <state img="0-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
-                <state img="0-smart.png">So how much exersice is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="0-smart.png">So how much exercise is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
                 <state img="0-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
             </case>
             <case tag="opponent_lost" filter="hero" priority="0">
@@ -2148,7 +2176,7 @@
                 <state img="0-smart.png" marker="twilight_princess_summit">This isn't the princess summit that I was expecting to attend today, but this seems like fun too!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
-                <state img="0-interested.png" marker="serious1st">No need to be so serious,~name~. This might be research, but we can losen up a bit I think...</state>
+                <state img="0-interested.png" marker="serious1st">No need to be so serious, ~name~. This might be research, but we can loosen up a bit I think...</state>
             </case>
             <case tag="opponent_lost" filter="shy" priority="0">
                 <state img="0-calm.png">No need to be shy! You were born beautiful! We'll all still want to be your friend, with or without that cloth on you.</state>
@@ -2679,6 +2707,9 @@
             <case tag="female_finished_masturbating" target="shantae">
                 <state img="0-laughing.png">A dancing masturbation, that's a first. For both my world and this world too.</state>
             </case>
+            <case tag="female_finished_masturbating" target="sheena" targetSaidMarker="unicorn" targetSayingMarker="finish">
+                <state img="0-smart.png">Don't worry Sheena, I can invite you to my world anytime, there are lots of unicorns over there!</state>
+            </case>
             <case tag="female_finished_masturbating" target="sola">
                 <state img="0-happy.png">That was great, Sola! I especially liked those magic sparkles when you were touching yourself.</state>
             </case>
@@ -2726,21 +2757,24 @@
                 <state img="1-smart.png">I'll need ~cards~ for this to work.</state>
                 <state img="1-interested.png">I'll take ~cards~!</state>
             </case>
-            <case tag="swap_cards" hasHand="Four of a Kind">
-                <state img="1-happy.png">Almost perfect... One please!</state>
-                <state img="1-smart.png">I don't think I'll need it, but I'll change one...</state>
-                <state img="1-smug.png">Changing this one won't hurt...</state>
-                <state img="1-smart.png">Pretty good! I'll change one...</state>
-                <state img="1-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
-            </case>
-            <case tag="swap_cards" hasHand="Full House">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="0" />
                 <state img="1-shocked.png">Don't change a thing please!!</state>
                 <state img="1-confident.png">Oh yes! I'm fine like this...</state>
                 <state img="1-happy.png">Perfect, I won't change any cards...</state>
                 <state img="1-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="1-smug.png">Wow! Now this is what I call good luck...</state>
             </case>
-            <case tag="swap_cards" hasHand="High Card" priority="0">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="1" />
+                <state img="1-happy.png">Almost perfect... One please!</state>
+                <state img="1-smart.png">I don't think I'll need it, but I'll change one...</state>
+                <state img="1-smug.png">Changing this one won't hurt...</state>
+                <state img="1-smart.png">Pretty good! I'll change one...</state>
+                <state img="1-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
                 <state img="1-calm.png">4, like the number of hooves I had back home...</state>
                 <state img="1-confident.png">How about ~cards~?</state>
                 <state img="1-smart.png">~cards~ should do the trick!</state>
@@ -2751,19 +2785,17 @@
                 <state img="1-disappointed.png">I'll take ~cards~ please...</state>
                 <state img="1-calm.png">~cards~ cards, dealer!</state>
             </case>
-            <case tag="swap_cards" hasHand="Royal Flush">
-                <state img="1-shocked.png">Don't change a thing please!!</state>
-                <state img="1-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="1-happy.png">Perfect, I won't change any cards...</state>
-                <state img="1-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="1-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
+                <state img="1-calm.png">I guess I can at least keep this one... Four please!</state>
+                <state img="1-smart.png">I have a feel I should keep this one, I'll change the other four however...</state>
+                <state img="1-what.png">Surely changing four cards will make give me something better... right?</state>
             </case>
-            <case tag="swap_cards" hasHand="Straight Flush">
-                <state img="1-shocked.png">Don't change a thing please!!</state>
-                <state img="1-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="1-happy.png">Perfect, I won't change any cards...</state>
-                <state img="1-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="1-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="5" />
+                <state img="1-disappointed.png">Nothing here will do...</state>
+                <state img="1-what.png">Are you serious?! At least I can just get rid of all this in one go...</state>
+                <state img="1-laughing.png">Good thing I can exchange cards, give me a whole new hand please...</state>
             </case>
             <case tag="good_hand">
                 <state img="1-smug.png">Keep 'em coming like this and we will be safe.</state>
@@ -2874,7 +2906,7 @@
                 <state img="1-calm.png">Thanks for the kind offer, but I already ate before this game.</state>
             </case>
             <case tag="hand" alsoPlaying="derpy_hooves" alsoPlayingStage="0" alsoPlayingTimeInStage="0-1" alsoPlayingSayingMarker="why_swimsuit" priority="992">
-                <state img="1-what.png">Swimsuits? No I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
+                <state img="1-what.png">Swimsuits? No, I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
             </case>
             <case tag="hand" id="1-1" alsoPlaying="derpy_hooves" alsoPlayingStage="1" alsoPlayingSayingMarker="bra_fall_2">
                 <state img="1-awkward.png">Oh no... Does this mean she skips a round or something?</state>
@@ -2946,6 +2978,10 @@
             <case tag="hand" alsoPlaying="zizou" alsoPlayingTimeInStage="0">
                 <state img="1-happy.png">Wait a second, you also have a multi-colored mane down there, Zizou? Well, I guess it makes sense, it must be the equivalent of tail hair back home...</state>
             </case>
+            <case tag="hand" totalRounds="2-3">
+                <condition count="4" filter="magic" />
+                <state img="1-happy.png">So basically everyone here besides ~player~ can do magic? And I thought it was a rare occurance in this world!</state>
+            </case>
             <case tag="hand" alsoPlaying="revy" alsoPlayingStage="0" totalRounds="1">
                 <condition count="1" filter="princess" />
                 <state img="1-confident.png">I've beaten magic-eating centaurs, shape-shifting emotion-eaters, mad gods and even traveled through time... I don't think you scare me, Revy.</state>
@@ -2990,6 +3026,9 @@
             </case>
             <case tag="must_strip" alsoPlaying="revy" alsoPlayingStage="0-7" alsoPlayingSaying="You in heat, Horsey?  You will be once I'm down riding your purple ass--maybe I'll even milk you.">
                 <state img="1-what.png" marker="revy_heat1">Isn't that supposed to be after the game, Revy? I appreciate your...candor though!</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="sheena">
+                <state img="1-laughing.png">How did you know Sheena?</state>
             </case>
             <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="twi_bod1">
                 <state img="1-what.png" marker="streaming_bod1">No.... not really, Streaming-chan, why?</state>
@@ -4400,6 +4439,15 @@
             <case tag="female_chest_will_be_visible" target="saki">
                 <state img="1-interested.png">Nonsense! I have been waiting to finally see these all game!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <state img="1-interested.png">Oooh! Summoning magic?! You have to teach me how to do that later, Sheena!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="luna">
+                <state img="1-what.png">Oh! That's Luna? For a second there I thought you meant princess Luna...</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSayingMarker="luna">
+                <state img="1-shocked.png">It seems you are nex...Wait a second... Did you say Luna?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="streaming-chan">
                 <state img="1-what.png" marker="twilight_streaming_november1">I wish I knew about this No-Bra November thing before I came here. I wouldn't have brought my bra either.</state>
             </case>
@@ -4531,9 +4579,9 @@
                 <state img="1-horny.png">Finally! I haven't been able to study the human reproductive system yet, so this will be very interesting!</state>
                 <state img="1-interested.png">I haven't even had time to properly look at myself, so this might as well be new information for me.</state>
                 <state img="1-smart.png">So is the area around the vulva darker in these bodies as well?</state>
+                <state img="1-smart.png">Smart choice! Exactly what I would have done in your position!</state>
                 <state img="1-flirty.png">Who knew all I had to do to see another human's vagina was to just take off my panties!</state>
                 <state img="1-interested.png">I can't understand how you humans tolerate having that kind of tight clothing around your crotch anyways.</state>
-                <state img="1-smart.png">Smart choice! Exactly what I would have done in your position!</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
                 <state img="1-smart.png">I wonder if I could do something similar to what you do with magic beams instead. I'll try back in Equestria.</state>
@@ -4685,6 +4733,9 @@
             <case tag="female_crotch_is_visible" target="saki">
                 <state img="1-smart.png">Nothing is more beautiful than seeing an all-natural bush.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="sheena">
+                <state img="1-guess.png">Ooooh! Evaporating clothes?! Now that's a spell I need to learn for the next time I come to this world...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="streaming-chan">
                 <state img="1-shocked.png">Oh, are those some sort of magic sticks? If so, I think the golden one looks more powerful.</state>
             </case>
@@ -4728,7 +4779,7 @@
             <case tag="opponent_lost" filter="athletic" priority="0">
                 <state img="1-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
                 <state img="1-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
-                <state img="1-smart.png">So how much exersice is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="1-smart.png">So how much exercise is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
                 <state img="1-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
             </case>
             <case tag="opponent_lost" filter="hero" priority="0">
@@ -4757,7 +4808,7 @@
                 <state img="1-smart.png" marker="twilight_princess_summit">This isn't the princess summit that I was expecting to attend today, but this seems like fun too!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
-                <state img="1-interested.png" marker="serious1st">No need to be so serious,~name~. This might be research, but we can losen up a bit I think...</state>
+                <state img="1-interested.png" marker="serious1st">No need to be so serious, ~name~. This might be research, but we can loosen up a bit I think...</state>
             </case>
             <case tag="opponent_lost" filter="shy" priority="0">
                 <state img="1-calm.png">No need to be shy! You were born beautiful! We'll all still want to be your friend, with or without that cloth on you.</state>
@@ -5290,6 +5341,9 @@
             <case tag="female_finished_masturbating" target="shantae">
                 <state img="1-laughing.png">A dancing masturbation, that's a first. For both my world and this world too.</state>
             </case>
+            <case tag="female_finished_masturbating" target="sheena" targetSaidMarker="unicorn" targetSayingMarker="finish">
+                <state img="1-smart.png">Don't worry Sheena, I can invite you to my world anytime, there are lots of unicorns over there!</state>
+            </case>
             <case tag="female_finished_masturbating" target="sola">
                 <state img="1-happy.png">That was great, Sola! I especially liked those magic sparkles when you were touching yourself.</state>
             </case>
@@ -5336,21 +5390,24 @@
                 <state img="2-smart.png">I'll need ~cards~ for this to work.</state>
                 <state img="2-interested.png">I'll take ~cards~!</state>
             </case>
-            <case tag="swap_cards" hasHand="Four of a Kind">
-                <state img="2-happy.png">Almost perfect... One please!</state>
-                <state img="2-smart.png">I don't think I'll need it, but I'll change one...</state>
-                <state img="2-smug.png">Changing this one won't hurt...</state>
-                <state img="2-smart.png">Pretty good! I'll change one...</state>
-                <state img="2-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
-            </case>
-            <case tag="swap_cards" hasHand="Full House">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="0" />
                 <state img="2-shocked.png">Don't change a thing please!!</state>
                 <state img="2-confident.png">Oh yes! I'm fine like this...</state>
                 <state img="2-happy.png">Perfect, I won't change any cards...</state>
                 <state img="2-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="2-smug.png">Wow! Now this is what I call good luck...</state>
             </case>
-            <case tag="swap_cards" hasHand="High Card" priority="0">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="1" />
+                <state img="2-happy.png">Almost perfect... One please!</state>
+                <state img="2-smart.png">I don't think I'll need it, but I'll change one...</state>
+                <state img="2-smug.png">Changing this one won't hurt...</state>
+                <state img="2-smart.png">Pretty good! I'll change one...</state>
+                <state img="2-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
                 <state img="2-calm.png">4, like the number of hooves I had back home...</state>
                 <state img="2-confident.png">How about ~cards~?</state>
                 <state img="2-smart.png">~cards~ should do the trick!</state>
@@ -5361,19 +5418,17 @@
                 <state img="2-disappointed.png">I'll take ~cards~ please...</state>
                 <state img="2-calm.png">~cards~ cards, dealer!</state>
             </case>
-            <case tag="swap_cards" hasHand="Royal Flush">
-                <state img="2-shocked.png">Don't change a thing please!!</state>
-                <state img="2-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="2-happy.png">Perfect, I won't change any cards...</state>
-                <state img="2-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="2-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
+                <state img="2-calm.png">I guess I can at least keep this one... Four please!</state>
+                <state img="2-smart.png">I have a feel I should keep this one, I'll change the other four however...</state>
+                <state img="2-what.png">Surely changing four cards will make give me something better... right?</state>
             </case>
-            <case tag="swap_cards" hasHand="Straight Flush">
-                <state img="2-shocked.png">Don't change a thing please!!</state>
-                <state img="2-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="2-happy.png">Perfect, I won't change any cards...</state>
-                <state img="2-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="2-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="5" />
+                <state img="2-disappointed.png">Nothing here will do...</state>
+                <state img="2-what.png">Are you serious?! At least I can just get rid of all this in one go...</state>
+                <state img="2-laughing.png">Good thing I can exchange cards, give me a whole new hand please...</state>
             </case>
             <case tag="good_hand">
                 <state img="2-smug.png">Keep 'em coming like this and we will be safe.</state>
@@ -5484,7 +5539,7 @@
                 <state img="2-calm.png">Thanks for the kind offer, but I already ate before this game.</state>
             </case>
             <case tag="hand" alsoPlaying="derpy_hooves" alsoPlayingStage="0" alsoPlayingTimeInStage="0-1" alsoPlayingSayingMarker="why_swimsuit" priority="992">
-                <state img="2-what.png">Swimsuits? No I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
+                <state img="2-what.png">Swimsuits? No, I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
             </case>
             <case tag="hand" id="2-1" alsoPlaying="derpy_hooves" alsoPlayingStage="1" alsoPlayingSayingMarker="bra_fall_2">
                 <state img="2-awkward.png">Oh no... Does this mean she skips a round or something?</state>
@@ -5552,6 +5607,10 @@
             </case>
             <case tag="hand" alsoPlaying="zizou" alsoPlayingTimeInStage="0">
                 <state img="2-happy.png">Wait a second, you also have a multi-colored mane down there, Zizou? Well, I guess it makes sense, it must be the equivalent of tail hair back home...</state>
+            </case>
+            <case tag="hand" totalRounds="2-3">
+                <condition count="4" filter="magic" />
+                <state img="2-happy.png">So basically everyone here besides ~player~ can do magic? And I thought it was a rare occurance in this world!</state>
             </case>
             <case tag="hand" alsoPlaying="revy" alsoPlayingStage="0" totalRounds="1">
                 <condition count="1" filter="princess" />
@@ -5644,6 +5703,9 @@
             <case tag="stripping" alsoPlaying="natsuki">
                 <state img="2-strip.png">These are just the clothes the portal gives me, Natsuki. I'm not sure how that works, to be honest... I go in naked on the other side...</state>
             </case>
+            <case tag="stripping" alsoPlaying="sheena">
+                <state img="2-strip.png">I don't know, Sheena I am just taking off whatever makes me the most uncomfortable at the moment, and right now, that is my skirt!</state>
+            </case>
             <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="twi_bod2">
                 <state img="2-strip.png" marker="twi_bod2">Well, I haven't been in this world for more than 2 days straight... and that was the longest one, so maybe I'd say... a week?</state>
             </case>
@@ -5702,6 +5764,9 @@
             </case>
             <case tag="stripped" alsoPlaying="sayaka">
                 <state img="2-stripped.png">A witch? Don't be silly. I came through the mirror portal! And while being purple might be unusual, I don't see how colored skin is strange, Sayaka.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="sheena">
+                <state img="2-stripped.png">I... don't think I understand what you are asking, Sheeva... I mean, we stopped living in tribes over a milenia ago in Equestria.</state>
             </case>
             <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="twi_books3">
                 <state img="2-stripped.png" marker="streaming_books3">Sorry to disappoint your viewers Streaming-chan, but my reading preferences don't go over the "naughty" territory, unless you count the "anatomy" section on biology books!</state>
@@ -6890,6 +6955,15 @@
             <case tag="female_chest_will_be_visible" target="saki">
                 <state img="2-interested.png">Nonsense! I have been waiting to finally see these all game!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <state img="2-interested.png">Oooh! Summoning magic?! You have to teach me how to do that later, Sheena!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="luna">
+                <state img="2-what.png">Oh! That's Luna? For a second there I thought you meant princess Luna...</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSayingMarker="luna">
+                <state img="2-shocked.png">It seems you are nex...Wait a second... Did you say Luna?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="streaming-chan">
                 <state img="2-what.png" marker="twilight_streaming_november1">I wish I knew about this No-Bra November thing before I came here. I wouldn't have brought my bra either.</state>
             </case>
@@ -7024,10 +7098,10 @@
                 <state img="2-horny.png">Finally! I haven't been able to study the human reproductive system yet, so this will be very interesting!</state>
                 <state img="2-interested.png">I haven't even had time to properly look at myself, so this might as well be new information for me.</state>
                 <state img="2-smart.png">So is the area around the vulva darker in these bodies as well?</state>
+                <state img="2-smart.png">Smart choice! Exactly what I would have done in your position!</state>
                 <state img="2-flirty.png">Who knew all I had to do to see another human's vagina was to just take off my panties!</state>
                 <state img="2-interested.png">I can't understand how you humans tolerate having that kind of tight clothing around your crotch anyways.</state>
                 <state img="2-stripped.png" marker="twilight_cutie_mark">I can't wait to see your cutie mark, ~name~!</state>
-                <state img="2-smart.png">Smart choice! Exactly what I would have done in your position!</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
                 <state img="2-smart.png">I wonder if I could do something similar to what you do with magic beams instead. I'll try back in Equestria.</state>
@@ -7179,6 +7253,9 @@
             <case tag="female_crotch_is_visible" target="saki">
                 <state img="2-smart.png">Nothing is more beautiful than seeing an all-natural bush.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="sheena">
+                <state img="2-guess.png">Ooooh! Evaporating clothes?! Now that's a spell I need to learn for the next time I come to this world...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="streaming-chan">
                 <state img="2-shocked.png">Oh, are those some sort of magic sticks? If so, I think the golden one looks more powerful.</state>
             </case>
@@ -7223,7 +7300,7 @@
             <case tag="opponent_lost" filter="athletic" priority="0">
                 <state img="2-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
                 <state img="2-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
-                <state img="2-smart.png">So how much exersice is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="2-smart.png">So how much exercise is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
                 <state img="2-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
             </case>
             <case tag="opponent_lost" filter="hero" priority="0">
@@ -7249,7 +7326,7 @@
                 <state img="2-happy.png">And to think Cadance told me that royal meetings would be boring!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
-                <state img="2-interested.png" marker="serious1st">No need to be so serious,~name~. This might be research, but we can losen up a bit I think...</state>
+                <state img="2-interested.png" marker="serious1st">No need to be so serious, ~name~. This might be research, but we can loosen up a bit I think...</state>
             </case>
             <case tag="opponent_lost" filter="shy" priority="0">
                 <state img="2-calm.png">No need to be shy! You were born beautiful! We'll all still want to be your friend, with or without that cloth on you.</state>
@@ -7784,6 +7861,9 @@
             <case tag="female_finished_masturbating" target="shantae">
                 <state img="2-laughing.png">A dancing masturbation, that's a first. For both my world and this world too.</state>
             </case>
+            <case tag="female_finished_masturbating" target="sheena" targetSaidMarker="unicorn" targetSayingMarker="finish">
+                <state img="2-smart.png">Don't worry Sheena, I can invite you to my world anytime, there are lots of unicorns over there!</state>
+            </case>
             <case tag="female_finished_masturbating" target="sola">
                 <state img="2-happy.png">That was great, Sola! I especially liked those magic sparkles when you were touching yourself.</state>
             </case>
@@ -7830,21 +7910,30 @@
                 <state img="3-smart.png">I'll need ~cards~ for this to work.</state>
                 <state img="3-interested.png">I'll take ~cards~!</state>
             </case>
-            <case tag="swap_cards" hasHand="Four of a Kind">
-                <state img="3-happy.png">Almost perfect... One please!</state>
-                <state img="3-smart.png">I don't think I'll need it, but I'll change one...</state>
-                <state img="3-smug.png">Changing this one won't hurt...</state>
-                <state img="3-smart.png">Pretty good! I'll change one...</state>
-                <state img="3-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
-            </case>
-            <case tag="swap_cards" hasHand="Full House">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="0" />
                 <state img="3-shocked.png">Don't change a thing please!!</state>
                 <state img="3-confident.png">Oh yes! I'm fine like this...</state>
                 <state img="3-happy.png">Perfect, I won't change any cards...</state>
                 <state img="3-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="3-smug.png">Wow! Now this is what I call good luck...</state>
             </case>
-            <case tag="swap_cards" hasHand="High Card" priority="0">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="1" />
+                <state img="3-happy.png">Almost perfect... One please!</state>
+                <state img="3-smart.png">I don't think I'll need it, but I'll change one...</state>
+                <state img="3-smug.png">Changing this one won't hurt...</state>
+                <state img="3-smart.png">Pretty good! I'll change one...</state>
+                <state img="3-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
+                <state img="3-calm.png">I guess I can at least keep this one... Four please!</state>
+                <state img="3-smart.png">I have a feel I should keep this one, I'll change the other four however...</state>
+                <state img="3-what.png">Surely changing four cards will make give me something better... right?</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
                 <state img="3-calm.png">4, like the number of hooves I had back home...</state>
                 <state img="3-confident.png">How about ~cards~?</state>
                 <state img="3-smart.png">~cards~ should do the trick!</state>
@@ -7855,19 +7944,11 @@
                 <state img="3-disappointed.png">I'll take ~cards~ please...</state>
                 <state img="3-calm.png">~cards~ cards, dealer!</state>
             </case>
-            <case tag="swap_cards" hasHand="Royal Flush">
-                <state img="3-shocked.png">Don't change a thing please!!</state>
-                <state img="3-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="3-happy.png">Perfect, I won't change any cards...</state>
-                <state img="3-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="3-smug.png">Wow! Now this is what I call good luck...</state>
-            </case>
-            <case tag="swap_cards" hasHand="Straight Flush">
-                <state img="3-shocked.png">Don't change a thing please!!</state>
-                <state img="3-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="3-happy.png">Perfect, I won't change any cards...</state>
-                <state img="3-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="3-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="5" />
+                <state img="3-disappointed.png">Nothing here will do...</state>
+                <state img="3-what.png">Are you serious?! At least I can just get rid of all this in one go...</state>
+                <state img="3-laughing.png">Good thing I can exchange cards, give me a whole new hand please...</state>
             </case>
             <case tag="good_hand">
                 <state img="3-smug.png">Keep 'em coming like this and we will be safe.</state>
@@ -7978,7 +8059,7 @@
                 <state img="3-calm.png">Thanks for the kind offer, but I already ate before this game.</state>
             </case>
             <case tag="hand" alsoPlaying="derpy_hooves" alsoPlayingStage="0" alsoPlayingTimeInStage="0-1" alsoPlayingSayingMarker="why_swimsuit" priority="992">
-                <state img="3-what.png">Swimsuits? No I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
+                <state img="3-what.png">Swimsuits? No, I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
             </case>
             <case tag="hand" id="3-1" alsoPlaying="derpy_hooves" alsoPlayingStage="1" alsoPlayingSayingMarker="bra_fall_2">
                 <state img="3-awkward.png">Oh no... Does this mean she skips a round or something?</state>
@@ -8046,6 +8127,10 @@
             </case>
             <case tag="hand" alsoPlaying="zizou" alsoPlayingTimeInStage="0">
                 <state img="3-happy.png">Wait a second, you also have a multi-colored mane down there, Zizou? Well, I guess it makes sense, it must be the equivalent of tail hair back home...</state>
+            </case>
+            <case tag="hand" totalRounds="2-3">
+                <condition count="4" filter="magic" />
+                <state img="3-happy.png">So basically everyone here besides ~player~ can do magic? And I thought it was a rare occurance in this world!</state>
             </case>
             <case tag="hand" alsoPlaying="revy" alsoPlayingStage="0" totalRounds="1">
                 <condition count="1" filter="princess" />
@@ -9367,6 +9452,15 @@
             <case tag="female_chest_will_be_visible" target="saki">
                 <state img="3-interested.png">Nonsense! I have been waiting to finally see these all game!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <state img="3-interested.png">Oooh! Summoning magic?! You have to teach me how to do that later, Sheena!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="luna">
+                <state img="3-what.png">Oh! That's Luna? For a second there I thought you meant princess Luna...</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSayingMarker="luna">
+                <state img="3-shocked.png">It seems you are nex...Wait a second... Did you say Luna?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="streaming-chan">
                 <state img="3-what.png" marker="twilight_streaming_november1">I wish I knew about this No-Bra November thing before I came here. I wouldn't have brought my bra either.</state>
             </case>
@@ -9501,9 +9595,9 @@
                 <state img="3-horny.png">Finally! I haven't been able to study the human reproductive system yet, so this will be very interesting!</state>
                 <state img="3-interested.png">I haven't even had time to properly look at myself, so this might as well be new information for me.</state>
                 <state img="3-smart.png">So is the area around the vulva darker in these bodies as well?</state>
+                <state img="3-smart.png">Smart choice! Exactly what I would have done in your position!</state>
                 <state img="3-flirty.png">Who knew all I had to do to see another human's vagina was to just take off my panties!</state>
                 <state img="3-interested.png">I can't understand how you humans tolerate having that kind of tight clothing around your crotch anyways.</state>
-                <state img="3-smart.png">Smart choice! Exactly what I would have done in your position!</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
                 <state img="3-smart.png">I wonder if I could do something similar to what you do with magic beams instead. I'll try back in Equestria.</state>
@@ -9650,6 +9744,9 @@
             <case tag="female_crotch_is_visible" target="saki">
                 <state img="3-smart.png">Nothing is more beautiful than seeing an all-natural bush.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="sheena">
+                <state img="3-guess.png">Ooooh! Evaporating clothes?! Now that's a spell I need to learn for the next time I come to this world...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="streaming-chan">
                 <state img="3-shocked.png">Oh, are those some sort of magic sticks? If so, I think the golden one looks more powerful.</state>
             </case>
@@ -9696,7 +9793,7 @@
             <case tag="opponent_lost" filter="athletic" priority="0">
                 <state img="3-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
                 <state img="3-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
-                <state img="3-smart.png">So how much exersice is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="3-smart.png">So how much exercise is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
                 <state img="3-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
             </case>
             <case tag="opponent_lost" filter="hero" priority="0">
@@ -9722,7 +9819,7 @@
                 <state img="3-happy.png">And to think Cadance told me that royal meetings would be boring!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
-                <state img="3-interested.png" marker="serious1st">No need to be so serious,~name~. This might be research, but we can losen up a bit I think...</state>
+                <state img="3-interested.png" marker="serious1st">No need to be so serious, ~name~. This might be research, but we can loosen up a bit I think...</state>
             </case>
             <case tag="opponent_lost" filter="shy" priority="0">
                 <state img="3-calm.png">No need to be shy! You were born beautiful! We'll all still want to be your friend, with or without that cloth on you.</state>
@@ -10254,6 +10351,9 @@
             <case tag="female_finished_masturbating" target="shantae">
                 <state img="3-laughing.png">A dancing masturbation, that's a first. For both my world and this world too.</state>
             </case>
+            <case tag="female_finished_masturbating" target="sheena" targetSaidMarker="unicorn" targetSayingMarker="finish">
+                <state img="3-smart.png">Don't worry Sheena, I can invite you to my world anytime, there are lots of unicorns over there!</state>
+            </case>
             <case tag="female_finished_masturbating" target="sola">
                 <state img="3-happy.png">That was great, Sola! I especially liked those magic sparkles when you were touching yourself.</state>
             </case>
@@ -10300,21 +10400,30 @@
                 <state img="4-smart.png">I'll need ~cards~ for this to work.</state>
                 <state img="4-interested.png">I'll take ~cards~!</state>
             </case>
-            <case tag="swap_cards" hasHand="Four of a Kind">
-                <state img="4-happy.png">Almost perfect... One please!</state>
-                <state img="4-smart.png">I don't think I'll need it, but I'll change one...</state>
-                <state img="4-smug.png">Changing this one won't hurt...</state>
-                <state img="4-smart.png">Pretty good! I'll change one...</state>
-                <state img="4-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
-            </case>
-            <case tag="swap_cards" hasHand="Full House">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="0" />
                 <state img="4-shocked.png">Don't change a thing please!!</state>
                 <state img="4-confident.png">Oh yes! I'm fine like this...</state>
                 <state img="4-happy.png">Perfect, I won't change any cards...</state>
                 <state img="4-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="4-smug.png">Wow! Now this is what I call good luck...</state>
             </case>
-            <case tag="swap_cards" hasHand="High Card" priority="0">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="1" />
+                <state img="4-happy.png">Almost perfect... One please!</state>
+                <state img="4-smart.png">I don't think I'll need it, but I'll change one...</state>
+                <state img="4-smug.png">Changing this one won't hurt...</state>
+                <state img="4-smart.png">Pretty good! I'll change one...</state>
+                <state img="4-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
+                <state img="4-calm.png">I guess I can at least keep this one... Four please!</state>
+                <state img="4-smart.png">I have a feel I should keep this one, I'll change the other four however...</state>
+                <state img="4-what.png">Surely changing four cards will make give me something better... right?</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
                 <state img="4-calm.png">4, like the number of hooves I had back home...</state>
                 <state img="4-confident.png">How about ~cards~?</state>
                 <state img="4-smart.png">~cards~ should do the trick!</state>
@@ -10325,19 +10434,11 @@
                 <state img="4-disappointed.png">I'll take ~cards~ please...</state>
                 <state img="4-calm.png">~cards~ cards, dealer!</state>
             </case>
-            <case tag="swap_cards" hasHand="Royal Flush">
-                <state img="4-shocked.png">Don't change a thing please!!</state>
-                <state img="4-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="4-happy.png">Perfect, I won't change any cards...</state>
-                <state img="4-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="4-smug.png">Wow! Now this is what I call good luck...</state>
-            </case>
-            <case tag="swap_cards" hasHand="Straight Flush">
-                <state img="4-shocked.png">Don't change a thing please!!</state>
-                <state img="4-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="4-happy.png">Perfect, I won't change any cards...</state>
-                <state img="4-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="4-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="5" />
+                <state img="4-disappointed.png">Nothing here will do...</state>
+                <state img="4-what.png">Are you serious?! At least I can just get rid of all this in one go...</state>
+                <state img="4-laughing.png">Good thing I can exchange cards, give me a whole new hand please...</state>
             </case>
             <case tag="good_hand">
                 <state img="4-smug.png">Keep 'em coming like this and we will be safe.</state>
@@ -10451,7 +10552,7 @@
                 <state img="4-calm.png">Thanks for the kind offer, but I already ate before this game.</state>
             </case>
             <case tag="hand" alsoPlaying="derpy_hooves" alsoPlayingStage="0" alsoPlayingTimeInStage="0-1" alsoPlayingSayingMarker="why_swimsuit" priority="992">
-                <state img="4-what.png">Swimsuits? No I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
+                <state img="4-what.png">Swimsuits? No, I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
             </case>
             <case tag="hand" id="4-1" alsoPlaying="derpy_hooves" alsoPlayingStage="1" alsoPlayingSayingMarker="bra_fall_2">
                 <state img="4-awkward.png">Oh no... Does this mean she skips a round or something?</state>
@@ -10519,6 +10620,10 @@
             </case>
             <case tag="hand" alsoPlaying="zizou" alsoPlayingTimeInStage="0">
                 <state img="4-happy.png">Wait a second, you also have a multi-colored mane down there, Zizou? Well, I guess it makes sense, it must be the equivalent of tail hair back home...</state>
+            </case>
+            <case tag="hand" totalRounds="2-3">
+                <condition count="4" filter="magic" />
+                <state img="4-happy.png">So basically everyone here besides ~player~ can do magic? And I thought it was a rare occurance in this world!</state>
             </case>
             <case tag="hand" alsoPlaying="revy" alsoPlayingStage="0" totalRounds="1">
                 <condition count="1" filter="princess" />
@@ -11815,6 +11920,15 @@
             <case tag="female_chest_will_be_visible" target="saki">
                 <state img="4-interested.png">Nonsense! I have been waiting to finally see these all game!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <state img="4-interested.png">Oooh! Summoning magic?! You have to teach me how to do that later, Sheena!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="luna">
+                <state img="4-what.png">Oh! That's Luna? For a second there I thought you meant princess Luna...</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSayingMarker="luna">
+                <state img="4-shocked.png">It seems you are nex...Wait a second... Did you say Luna?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="streaming-chan">
                 <state img="4-what.png" marker="twilight_streaming_november1">I wish I knew about this No-Bra November thing before I came here. I wouldn't have brought my bra either.</state>
             </case>
@@ -11949,9 +12063,9 @@
                 <state img="4-horny.png">Finally! I haven't been able to study the human reproductive system yet, so this will be very interesting!</state>
                 <state img="4-interested.png">I haven't even had time to properly look at myself, so this might as well be new information for me.</state>
                 <state img="4-smart.png">So is the area around the vulva darker in these bodies as well?</state>
+                <state img="4-smart.png">Smart choice! Exactly what I would have done in your position!</state>
                 <state img="4-flirty.png">Who knew all I had to do to see another human's vagina was to just take off my panties!</state>
                 <state img="4-interested.png">I can't understand how you humans tolerate having that kind of tight clothing around your crotch anyways.</state>
-                <state img="4-smart.png">Smart choice! Exactly what I would have done in your position!</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
                 <state img="4-smart.png">I wonder if I could do something similar to what you do with magic beams instead. I'll try back in Equestria.</state>
@@ -12104,6 +12218,9 @@
             <case tag="female_crotch_is_visible" target="saki">
                 <state img="4-smart.png">Nothing is more beautiful than seeing an all-natural bush.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="sheena">
+                <state img="4-guess.png">Ooooh! Evaporating clothes?! Now that's a spell I need to learn for the next time I come to this world...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="streaming-chan">
                 <state img="4-shocked.png">Oh, are those some sort of magic sticks? If so, I think the golden one looks more powerful.</state>
             </case>
@@ -12152,7 +12269,7 @@
             <case tag="opponent_lost" filter="athletic" priority="0">
                 <state img="4-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
                 <state img="4-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
-                <state img="4-smart.png">So how much exersice is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="4-smart.png">So how much exercise is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
                 <state img="4-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
             </case>
             <case tag="opponent_lost" filter="hero" priority="0">
@@ -12178,7 +12295,7 @@
                 <state img="4-happy.png">And to think Cadance told me that royal meetings would be boring!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
-                <state img="4-interested.png" marker="serious1st">No need to be so serious,~name~. This might be research, but we can losen up a bit I think...</state>
+                <state img="4-interested.png" marker="serious1st">No need to be so serious, ~name~. This might be research, but we can loosen up a bit I think...</state>
             </case>
             <case tag="opponent_lost" filter="shy" priority="0">
                 <state img="4-calm.png">No need to be shy! You were born beautiful! We'll all still want to be your friend, with or without that cloth on you.</state>
@@ -12710,6 +12827,9 @@
             <case tag="female_finished_masturbating" target="shantae">
                 <state img="4-laughing.png">A dancing masturbation, that's a first. For both my world and this world too.</state>
             </case>
+            <case tag="female_finished_masturbating" target="sheena" targetSaidMarker="unicorn" targetSayingMarker="finish">
+                <state img="4-smart.png">Don't worry Sheena, I can invite you to my world anytime, there are lots of unicorns over there!</state>
+            </case>
             <case tag="female_finished_masturbating" target="sola">
                 <state img="4-happy.png">That was great, Sola! I especially liked those magic sparkles when you were touching yourself.</state>
             </case>
@@ -12756,21 +12876,30 @@
                 <state img="5-smart.png">I'll need ~cards~ for this to work.</state>
                 <state img="5-interested.png">I'll take ~cards~!</state>
             </case>
-            <case tag="swap_cards" hasHand="Four of a Kind">
-                <state img="5-happy.png">Almost perfect... One please!</state>
-                <state img="5-smart.png">I don't think I'll need it, but I'll change one...</state>
-                <state img="5-smug.png">Changing this one won't hurt...</state>
-                <state img="5-smart.png">Pretty good! I'll change one...</state>
-                <state img="5-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
-            </case>
-            <case tag="swap_cards" hasHand="Full House">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="0" />
                 <state img="5-shocked.png">Don't change a thing please!!</state>
                 <state img="5-confident.png">Oh yes! I'm fine like this...</state>
                 <state img="5-happy.png">Perfect, I won't change any cards...</state>
                 <state img="5-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="5-smug.png">Wow! Now this is what I call good luck...</state>
             </case>
-            <case tag="swap_cards" hasHand="High Card" priority="0">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="1" />
+                <state img="5-happy.png">Almost perfect... One please!</state>
+                <state img="5-smart.png">I don't think I'll need it, but I'll change one...</state>
+                <state img="5-smug.png">Changing this one won't hurt...</state>
+                <state img="5-smart.png">Pretty good! I'll change one...</state>
+                <state img="5-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
+                <state img="5-calm.png">I guess I can at least keep this one... Four please!</state>
+                <state img="5-smart.png">I have a feel I should keep this one, I'll change the other four however...</state>
+                <state img="5-what.png">Surely changing four cards will make give me something better... right?</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
                 <state img="5-calm.png">4, like the number of hooves I had back home...</state>
                 <state img="5-confident.png">How about ~cards~?</state>
                 <state img="5-smart.png">~cards~ should do the trick!</state>
@@ -12781,19 +12910,11 @@
                 <state img="5-disappointed.png">I'll take ~cards~ please...</state>
                 <state img="5-calm.png">~cards~ cards, dealer!</state>
             </case>
-            <case tag="swap_cards" hasHand="Royal Flush">
-                <state img="5-shocked.png">Don't change a thing please!!</state>
-                <state img="5-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="5-happy.png">Perfect, I won't change any cards...</state>
-                <state img="5-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="5-smug.png">Wow! Now this is what I call good luck...</state>
-            </case>
-            <case tag="swap_cards" hasHand="Straight Flush">
-                <state img="5-shocked.png">Don't change a thing please!!</state>
-                <state img="5-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="5-happy.png">Perfect, I won't change any cards...</state>
-                <state img="5-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="5-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="5" />
+                <state img="5-disappointed.png">Nothing here will do...</state>
+                <state img="5-what.png">Are you serious?! At least I can just get rid of all this in one go...</state>
+                <state img="5-laughing.png">Good thing I can exchange cards, give me a whole new hand please...</state>
             </case>
             <case tag="good_hand">
                 <state img="5-smug.png">Keep 'em coming like this and we will be safe.</state>
@@ -12904,7 +13025,7 @@
                 <state img="5-calm.png">Thanks for the kind offer, but I already ate before this game.</state>
             </case>
             <case tag="hand" alsoPlaying="derpy_hooves" alsoPlayingStage="0" alsoPlayingTimeInStage="0-1" alsoPlayingSayingMarker="why_swimsuit" priority="992">
-                <state img="5-what.png">Swimsuits? No I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
+                <state img="5-what.png">Swimsuits? No, I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
             </case>
             <case tag="hand" id="5-1" alsoPlaying="derpy_hooves" alsoPlayingStage="1" alsoPlayingSayingMarker="bra_fall_2">
                 <state img="5-awkward.png">Oh no... Does this mean she skips a round or something?</state>
@@ -12972,6 +13093,10 @@
             </case>
             <case tag="hand" alsoPlaying="zizou" alsoPlayingTimeInStage="0">
                 <state img="5-happy.png">Wait a second, you also have a multi-colored mane down there, Zizou? Well, I guess it makes sense, it must be the equivalent of tail hair back home...</state>
+            </case>
+            <case tag="hand" totalRounds="2-3">
+                <condition count="4" filter="magic" />
+                <state img="5-happy.png">So basically everyone here besides ~player~ can do magic? And I thought it was a rare occurance in this world!</state>
             </case>
             <case tag="hand" alsoPlaying="revy" alsoPlayingStage="0" totalRounds="1">
                 <condition count="1" filter="princess" />
@@ -13094,6 +13219,9 @@
             </case>
             <case tag="stripped" alsoPlaying="jolyne">
                 <state img="5-angry.png">You get angry after I take off my bra and then when I take off my shoes too? Someone came with a bad mood today.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="sheena">
+                <state img="5-stripped.png">Hmmm I'll keep it in mind, Sheeva... I guess I can take those off before the skirt next time.</state>
             </case>
             <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="twi_books3">
                 <state img="5-stripped.png" marker="streaming_books3">Sorry to disappoint your viewers Streaming-chan, but my reading preferences don't go over the "naughty" territory, unless you count the "anatomy" section on biology books!</state>
@@ -14286,6 +14414,15 @@
             <case tag="female_chest_will_be_visible" target="saki">
                 <state img="5-interested.png">Nonsense! I have been waiting to finally see these all game!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <state img="5-interested.png">Oooh! Summoning magic?! You have to teach me how to do that later, Sheena!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="luna">
+                <state img="5-what.png">Oh! That's Luna? For a second there I thought you meant princess Luna...</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSayingMarker="luna">
+                <state img="5-shocked.png">It seems you are nex...Wait a second... Did you say Luna?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="streaming-chan">
                 <state img="5-what.png" marker="twilight_streaming_november1">I wish I knew about this No-Bra November thing before I came here. I wouldn't have brought my bra either.</state>
             </case>
@@ -14420,10 +14557,10 @@
                 <state img="5-horny.png">Finally! I haven't been able to study the human reproductive system yet, so this will be very interesting!</state>
                 <state img="5-interested.png">I haven't even had time to properly look at myself, so this might as well be new information for me.</state>
                 <state img="5-smart.png">So is the area around the vulva darker in these bodies as well?</state>
+                <state img="5-smart.png">Smart choice! Exactly what I would have done in your position!</state>
                 <state img="5-flirty.png">Who knew all I had to do to see another human's vagina was to just take off my panties!</state>
                 <state img="5-interested.png">I can't understand how you humans tolerate having that kind of tight clothing around your crotch anyways.</state>
                 <state img="5-smart.png">I guess that &lt;i&gt;sometimes&lt;/i&gt; taking off something might be less comfortable, like my shoes, but letting your vagina free will not be one of those occasions!</state>
-                <state img="5-smart.png">Smart choice! Exactly what I would have done in your position!</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
                 <state img="5-smart.png">I wonder if I could do something similar to what you do with magic beams instead. I'll try back in Equestria.</state>
@@ -14575,6 +14712,9 @@
             <case tag="female_crotch_is_visible" target="saki">
                 <state img="5-smart.png">Nothing is more beautiful than seeing an all-natural bush.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="sheena">
+                <state img="5-guess.png">Ooooh! Evaporating clothes?! Now that's a spell I need to learn for the next time I come to this world...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="streaming-chan">
                 <state img="5-shocked.png">Oh, are those some sort of magic sticks? If so, I think the golden one looks more powerful.</state>
             </case>
@@ -14621,7 +14761,7 @@
             <case tag="opponent_lost" filter="athletic" priority="0">
                 <state img="5-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
                 <state img="5-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
-                <state img="5-smart.png">So how much exersice is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="5-smart.png">So how much exercise is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
                 <state img="5-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
             </case>
             <case tag="opponent_lost" filter="hero" priority="0">
@@ -14647,7 +14787,7 @@
                 <state img="5-happy.png">And to think Cadance told me that royal meetings would be boring!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
-                <state img="5-interested.png" marker="serious1st">No need to be so serious,~name~. This might be research, but we can losen up a bit I think...</state>
+                <state img="5-interested.png" marker="serious1st">No need to be so serious, ~name~. This might be research, but we can loosen up a bit I think...</state>
             </case>
             <case tag="opponent_lost" filter="shy" priority="0">
                 <state img="5-calm.png">No need to be shy! You were born beautiful! We'll all still want to be your friend, with or without that cloth on you.</state>
@@ -15181,6 +15321,9 @@
             <case tag="female_finished_masturbating" target="shantae">
                 <state img="5-laughing.png">A dancing masturbation, that's a first. For both my world and this world too.</state>
             </case>
+            <case tag="female_finished_masturbating" target="sheena" targetSaidMarker="unicorn" targetSayingMarker="finish">
+                <state img="5-smart.png">Don't worry Sheena, I can invite you to my world anytime, there are lots of unicorns over there!</state>
+            </case>
             <case tag="female_finished_masturbating" target="sola">
                 <state img="5-happy.png">That was great, Sola! I especially liked those magic sparkles when you were touching yourself.</state>
             </case>
@@ -15228,21 +15371,30 @@
                 <state img="6-smart.png">I'll need ~cards~ for this to work.</state>
                 <state img="6-interested.png">I'll take ~cards~!</state>
             </case>
-            <case tag="swap_cards" hasHand="Four of a Kind">
-                <state img="6-happy.png">Almost perfect... One please!</state>
-                <state img="6-smart.png">I don't think I'll need it, but I'll change one...</state>
-                <state img="6-smug.png">Changing this one won't hurt...</state>
-                <state img="6-smart.png">Pretty good! I'll change one...</state>
-                <state img="6-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
-            </case>
-            <case tag="swap_cards" hasHand="Full House">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="0" />
                 <state img="6-shocked.png">Don't change a thing please!!</state>
                 <state img="6-confident.png">Oh yes! I'm fine like this...</state>
                 <state img="6-happy.png">Perfect, I won't change any cards...</state>
                 <state img="6-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="6-smug.png">Wow! Now this is what I call good luck...</state>
             </case>
-            <case tag="swap_cards" hasHand="High Card" priority="0">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="1" />
+                <state img="6-happy.png">Almost perfect... One please!</state>
+                <state img="6-smart.png">I don't think I'll need it, but I'll change one...</state>
+                <state img="6-smug.png">Changing this one won't hurt...</state>
+                <state img="6-smart.png">Pretty good! I'll change one...</state>
+                <state img="6-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
+                <state img="6-calm.png">I guess I can at least keep this one... Four please!</state>
+                <state img="6-smart.png">I have a feel I should keep this one, I'll change the other four however...</state>
+                <state img="6-what.png">Surely changing four cards will make give me something better... right?</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
                 <state img="6-calm.png">4, like the number of hooves I had back home...</state>
                 <state img="6-confident.png">How about ~cards~?</state>
                 <state img="6-smart.png">~cards~ should do the trick!</state>
@@ -15253,19 +15405,11 @@
                 <state img="6-disappointed.png">I'll take ~cards~ please...</state>
                 <state img="6-calm.png">~cards~ cards, dealer!</state>
             </case>
-            <case tag="swap_cards" hasHand="Royal Flush">
-                <state img="6-shocked.png">Don't change a thing please!!</state>
-                <state img="6-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="6-happy.png">Perfect, I won't change any cards...</state>
-                <state img="6-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="6-smug.png">Wow! Now this is what I call good luck...</state>
-            </case>
-            <case tag="swap_cards" hasHand="Straight Flush">
-                <state img="6-shocked.png">Don't change a thing please!!</state>
-                <state img="6-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="6-happy.png">Perfect, I won't change any cards...</state>
-                <state img="6-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="6-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="5" />
+                <state img="6-disappointed.png">Nothing here will do...</state>
+                <state img="6-what.png">Are you serious?! At least I can just get rid of all this in one go...</state>
+                <state img="6-laughing.png">Good thing I can exchange cards, give me a whole new hand please...</state>
             </case>
             <case tag="good_hand">
                 <state img="6-smug.png">Keep 'em coming like this and we will be safe.</state>
@@ -15376,7 +15520,7 @@
                 <state img="6-calm.png">Thanks for the kind offer, but I already ate before this game.</state>
             </case>
             <case tag="hand" alsoPlaying="derpy_hooves" alsoPlayingStage="0" alsoPlayingTimeInStage="0-1" alsoPlayingSayingMarker="why_swimsuit" priority="992">
-                <state img="6-what.png">Swimsuits? No I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
+                <state img="6-what.png">Swimsuits? No, I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
             </case>
             <case tag="hand" id="6-1" alsoPlaying="derpy_hooves" alsoPlayingStage="1" alsoPlayingSayingMarker="bra_fall_2">
                 <state img="6-awkward.png">Oh no... Does this mean she skips a round or something?</state>
@@ -15444,6 +15588,10 @@
             </case>
             <case tag="hand" alsoPlaying="zizou" alsoPlayingTimeInStage="0">
                 <state img="6-happy.png">Wait a second, you also have a multi-colored mane down there, Zizou? Well, I guess it makes sense, it must be the equivalent of tail hair back home...</state>
+            </case>
+            <case tag="hand" totalRounds="2-3">
+                <condition count="4" filter="magic" />
+                <state img="6-happy.png">So basically everyone here besides ~player~ can do magic? And I thought it was a rare occurance in this world!</state>
             </case>
             <case tag="hand" alsoPlaying="revy" alsoPlayingStage="0" totalRounds="1">
                 <condition count="1" filter="princess" />
@@ -16754,6 +16902,15 @@
             <case tag="female_chest_will_be_visible" target="saki">
                 <state img="6-interested.png">Nonsense! I have been waiting to finally see these all game!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <state img="6-interested.png">Oooh! Summoning magic?! You have to teach me how to do that later, Sheena!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="luna">
+                <state img="6-what.png">Oh! That's Luna? For a second there I thought you meant princess Luna...</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSayingMarker="luna">
+                <state img="6-shocked.png">It seems you are nex...Wait a second... Did you say Luna?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="streaming-chan">
                 <state img="6-what.png" marker="twilight_streaming_november1">I wish I knew about this No-Bra November thing before I came here. I wouldn't have brought my bra either.</state>
             </case>
@@ -16888,11 +17045,11 @@
                 <state img="6-horny.png">Finally! I haven't been able to study the human reproductive system yet, so this will be very interesting!</state>
                 <state img="6-interested.png">I haven't even had time to properly look at myself, so this might as well be new information for me.</state>
                 <state img="6-smart.png">So is the area around the vulva darker in these bodies as well?</state>
+                <state img="6-smart.png">Smart choice! Exactly what I would have done in your position!</state>
                 <state img="6-flirty.png">Who knew all I had to do to see another human's vagina was to just take off my panties!</state>
                 <state img="6-interested.png">I can't understand how you humans tolerate having that kind of tight clothing around your crotch anyways.</state>
                 <state img="6-smart.png">I guess that &lt;i&gt;sometimes&lt;/i&gt; taking off something might be less comfortable, like my shoes, but letting your vagina free will not be one of those occasions!</state>
                 <state img="6-smart.png">Taking off certain clothes might be uncomfortable, as I've found after taking off my shoes, but letting your crotch free will not be one of those occasions!</state>
-                <state img="6-smart.png">Smart choice! Exactly what I would have done in your position!</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
                 <state img="6-smart.png">I wonder if I could do something similar to what you do with magic beams instead. I'll try back in Equestria.</state>
@@ -17039,6 +17196,9 @@
             <case tag="female_crotch_is_visible" target="saki">
                 <state img="6-smart.png">Nothing is more beautiful than seeing an all-natural bush.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="sheena">
+                <state img="6-guess.png">Ooooh! Evaporating clothes?! Now that's a spell I need to learn for the next time I come to this world...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="streaming-chan">
                 <state img="6-shocked.png">Oh, are those some sort of magic sticks? If so, I think the golden one looks more powerful.</state>
             </case>
@@ -17085,7 +17245,7 @@
             <case tag="opponent_lost" filter="athletic" priority="0">
                 <state img="6-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
                 <state img="6-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
-                <state img="6-smart.png">So how much exersice is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="6-smart.png">So how much exercise is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
                 <state img="6-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
             </case>
             <case tag="opponent_lost" filter="hero" priority="0">
@@ -17111,7 +17271,7 @@
                 <state img="6-happy.png">And to think Cadance told me that royal meetings would be boring!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
-                <state img="6-interested.png" marker="serious1st">No need to be so serious,~name~. This might be research, but we can losen up a bit I think...</state>
+                <state img="6-interested.png" marker="serious1st">No need to be so serious, ~name~. This might be research, but we can loosen up a bit I think...</state>
             </case>
             <case tag="opponent_lost" filter="shy" priority="0">
                 <state img="6-calm.png">No need to be shy! You were born beautiful! We'll all still want to be your friend, with or without that cloth on you.</state>
@@ -17648,6 +17808,9 @@
             <case tag="female_finished_masturbating" target="shantae">
                 <state img="6-laughing.png">A dancing masturbation, that's a first. For both my world and this world too.</state>
             </case>
+            <case tag="female_finished_masturbating" target="sheena" targetSaidMarker="unicorn" targetSayingMarker="finish">
+                <state img="6-smart.png">Don't worry Sheena, I can invite you to my world anytime, there are lots of unicorns over there!</state>
+            </case>
             <case tag="female_finished_masturbating" target="sola">
                 <state img="6-happy.png">That was great, Sola! I especially liked those magic sparkles when you were touching yourself.</state>
             </case>
@@ -17695,21 +17858,24 @@
                 <state img="7-smart.png">I'll need ~cards~ for this to work.</state>
                 <state img="7-interested.png">I'll take ~cards~!</state>
             </case>
-            <case tag="swap_cards" hasHand="Four of a Kind">
-                <state img="7-happy.png">Almost perfect... One please!</state>
-                <state img="7-smart.png">I don't think I'll need it, but I'll change one...</state>
-                <state img="7-smug.png">Changing this one won't hurt...</state>
-                <state img="7-smart.png">Pretty good! I'll change one...</state>
-                <state img="7-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
-            </case>
-            <case tag="swap_cards" hasHand="Full House">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="0" />
                 <state img="7-shocked.png">Don't change a thing please!!</state>
                 <state img="7-confident.png">Oh yes! I'm fine like this...</state>
                 <state img="7-happy.png">Perfect, I won't change any cards...</state>
                 <state img="7-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="7-smug.png">Wow! Now this is what I call good luck...</state>
             </case>
-            <case tag="swap_cards" hasHand="High Card" priority="0">
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="1" />
+                <state img="7-happy.png">Almost perfect... One please!</state>
+                <state img="7-smart.png">I don't think I'll need it, but I'll change one...</state>
+                <state img="7-smug.png">Changing this one won't hurt...</state>
+                <state img="7-smart.png">Pretty good! I'll change one...</state>
+                <state img="7-smug.png">This hand is ready, I'll still change one just for the sake of it</state>
+            </case>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
                 <state img="7-calm.png">4, like the number of hooves I had back home...</state>
                 <state img="7-confident.png">How about ~cards~?</state>
                 <state img="7-smart.png">~cards~ should do the trick!</state>
@@ -17720,19 +17886,17 @@
                 <state img="7-disappointed.png">I'll take ~cards~ please...</state>
                 <state img="7-calm.png">~cards~ cards, dealer!</state>
             </case>
-            <case tag="swap_cards" hasHand="Royal Flush">
-                <state img="7-shocked.png">Don't change a thing please!!</state>
-                <state img="7-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="7-happy.png">Perfect, I won't change any cards...</state>
-                <state img="7-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="7-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="4" />
+                <state img="7-calm.png">I guess I can at least keep this one... Four please!</state>
+                <state img="7-smart.png">I have a feel I should keep this one, I'll change the other four however...</state>
+                <state img="7-what.png">Surely changing four cards will make give me something better... right?</state>
             </case>
-            <case tag="swap_cards" hasHand="Straight Flush">
-                <state img="7-shocked.png">Don't change a thing please!!</state>
-                <state img="7-confident.png">Oh yes! I'm fine like this...</state>
-                <state img="7-happy.png">Perfect, I won't change any cards...</state>
-                <state img="7-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
-                <state img="7-smug.png">Wow! Now this is what I call good luck...</state>
+            <case tag="swap_cards" priority="0">
+                <test expr="~cards~" value="5" />
+                <state img="7-disappointed.png">Nothing here will do...</state>
+                <state img="7-what.png">Are you serious?! At least I can just get rid of all this in one go...</state>
+                <state img="7-laughing.png">Good thing I can exchange cards, give me a whole new hand please...</state>
             </case>
             <case tag="good_hand">
                 <state img="7-smug.png">Keep 'em coming like this and we will be safe.</state>
@@ -17845,7 +18009,7 @@
                 <state img="7-calm.png">Thanks for the kind offer, but I already ate before this game.</state>
             </case>
             <case tag="hand" alsoPlaying="derpy_hooves" alsoPlayingStage="0" alsoPlayingTimeInStage="0-1" alsoPlayingSayingMarker="why_swimsuit" priority="992">
-                <state img="7-what.png">Swimsuits? No I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
+                <state img="7-what.png">Swimsuits? No, I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
             </case>
             <case tag="hand" id="7-1" alsoPlaying="derpy_hooves" alsoPlayingStage="1" alsoPlayingSayingMarker="bra_fall_2">
                 <state img="7-awkward.png">Oh no... Does this mean she skips a round or something?</state>
@@ -17913,6 +18077,10 @@
             </case>
             <case tag="hand" alsoPlaying="zizou" alsoPlayingTimeInStage="0">
                 <state img="7-happy.png">Wait a second, you also have a multi-colored mane down there, Zizou? Well, I guess it makes sense, it must be the equivalent of tail hair back home...</state>
+            </case>
+            <case tag="hand" totalRounds="2-3">
+                <condition count="4" filter="magic" />
+                <state img="7-happy.png">So basically everyone here besides ~player~ can do magic? And I thought it was a rare occurance in this world!</state>
             </case>
             <case tag="hand" alsoPlaying="revy" alsoPlayingStage="0" totalRounds="1">
                 <condition count="1" filter="princess" />
@@ -19153,6 +19321,15 @@
             <case tag="female_chest_will_be_visible" target="saki">
                 <state img="7-interested.png">Nonsense! I have been waiting to finally see these all game!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <state img="7-interested.png">Oooh! Summoning magic?! You have to teach me how to do that later, Sheena!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="luna">
+                <state img="7-what.png">Oh! That's Luna? For a second there I thought you meant princess Luna...</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSayingMarker="luna">
+                <state img="7-shocked.png">It seems you are nex...Wait a second... Did you say Luna?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="streaming-chan">
                 <state img="7-what.png" marker="twilight_streaming_november1">I wish I knew about this No-Bra November thing before I came here. I wouldn't have brought my bra either.</state>
             </case>
@@ -19284,6 +19461,7 @@
                 <state img="7-smart.png">Yeah! Yang had the right idea. I wish I had left my bra back at Canterlot High and just come here braless too...</state>
             </case>
             <case tag="female_crotch_will_be_visible">
+                <state img="7-smart.png">Smart choice! Exactly what I would have done in your position!</state>
                 <state img="7-flirty.png">Who knew all I had to do to see another human's vagina was to just take off my panties!</state>
                 <state img="7-interested.png">I can't understand how you humans tolerate having that kind of tight clothing around your crotch anyways.</state>
                 <state img="7-smart.png">I guess that &lt;i&gt;sometimes&lt;/i&gt; taking off something might be less comfortable, like my shoes, but letting your vagina free will not be one of those occasions!</state>
@@ -19292,7 +19470,6 @@
                 <state img="7-happy.png">Don't be ashamed... As I said it's totally normal to be naked in Equestria.</state>
                 <state img="7-smart.png" marker="twilight_panties_first">After this you might understand why I chose to remove my panties first!</state>
                 <state img="7-smug.png">Join me and feel the fresh air passing by your body!</state>
-                <state img="7-smart.png">Smart choice! Exactly what I would have done in your position!</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
                 <state img="7-smart.png">I wonder if I could do something similar to what you do with magic beams instead. I'll try back in Equestria.</state>
@@ -19440,6 +19617,9 @@
             <case tag="female_crotch_is_visible" target="saki">
                 <state img="7-smart.png">Nothing is more beautiful than seeing an all-natural bush.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="sheena">
+                <state img="7-guess.png">Ooooh! Evaporating clothes?! Now that's a spell I need to learn for the next time I come to this world...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="streaming-chan">
                 <state img="7-shocked.png">Oh, are those some sort of magic sticks? If so, I think the golden one looks more powerful.</state>
             </case>
@@ -19490,7 +19670,7 @@
             <case tag="opponent_lost" filter="athletic" priority="0">
                 <state img="7-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
                 <state img="7-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
-                <state img="7-smart.png">So how much exersice is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="7-smart.png">So how much exercise is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
                 <state img="7-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
             </case>
             <case tag="opponent_lost" filter="hero" priority="0">
@@ -19516,7 +19696,7 @@
                 <state img="7-happy.png">And to think Cadance told me that royal meetings would be boring!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
-                <state img="7-interested.png" marker="serious1st">No need to be so serious,~name~. This might be research, but we can losen up a bit I think...</state>
+                <state img="7-interested.png" marker="serious1st">No need to be so serious, ~name~. This might be research, but we can loosen up a bit I think...</state>
             </case>
             <case tag="opponent_lost" filter="shy" priority="0">
                 <state img="7-calm.png">No need to be shy! You were born beautiful! We'll all still want to be your friend, with or without that cloth on you.</state>
@@ -20052,6 +20232,9 @@
             </case>
             <case tag="female_finished_masturbating" target="shantae">
                 <state img="7-laughing.png">A dancing masturbation, that's a first. For both my world and this world too.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="sheena" targetSaidMarker="unicorn" targetSayingMarker="finish">
+                <state img="7-smart.png">Don't worry Sheena, I can invite you to my world anytime, there are lots of unicorns over there!</state>
             </case>
             <case tag="female_finished_masturbating" target="sola">
                 <state img="7-happy.png">That was great, Sola! I especially liked those magic sparkles when you were touching yourself.</state>
@@ -21305,6 +21488,15 @@
             <case tag="female_chest_will_be_visible" target="saki">
                 <state img="8-interested.png">Nonsense! I have been waiting to finally see these all game!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <state img="8-interested.png">Oooh! Summoning magic?! You have to teach me how to do that later, Sheena!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="luna">
+                <state img="8-what.png">Oh! That's Luna? For a second there I thought you meant princess Luna...</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSayingMarker="luna">
+                <state img="8-shocked.png">It seems you are nex...Wait a second... Did you say Luna?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="streaming-chan">
                 <state img="8-what.png" marker="twilight_streaming_november1">I wish I knew about this No-Bra November thing before I came here. I wouldn't have brought my bra either.</state>
             </case>
@@ -21438,6 +21630,7 @@
                 <state img="8-smart.png">Yeah! Yang had the right idea. I wish I had left my bra back at Canterlot High and just come here braless too...</state>
             </case>
             <case tag="female_crotch_will_be_visible">
+                <state img="8-smart.png">Smart choice! Exactly what I would have done in your position!</state>
                 <state img="8-flirty.png">Who knew all I had to do to see another human's vagina was to just take off my panties!</state>
                 <state img="8-interested.png">I can't understand how you humans tolerate having that kind of tight clothing around your crotch anyways.</state>
                 <state img="8-smart.png">I guess that &lt;i&gt;sometimes&lt;/i&gt; taking off something might be less comfortable, like my shoes, but letting your vagina free will not be one of those occasions!</state>
@@ -21448,7 +21641,6 @@
                 <state img="8-smug.png">Join me and feel the fresh air passing by your body!</state>
                 <state img="8-calm.png">I wouldn't mind a bit of inspiration here.</state>
                 <state img="8-smug.png">So now I get to see yours too? This is the best way of research!</state>
-                <state img="8-smart.png">Smart choice! Exactly what I would have done in your position!</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
                 <state img="8-smart.png">I wonder if I could do something similar to what you do with magic beams instead. I'll try back in Equestria.</state>
@@ -21597,6 +21789,9 @@
             <case tag="female_crotch_is_visible" target="saki">
                 <state img="8-smart.png">Nothing is more beautiful than seeing an all-natural bush.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="sheena">
+                <state img="8-guess.png">Ooooh! Evaporating clothes?! Now that's a spell I need to learn for the next time I come to this world...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="streaming-chan">
                 <state img="8-shocked.png">Oh, are those some sort of magic sticks? If so, I think the golden one looks more powerful.</state>
             </case>
@@ -21640,7 +21835,7 @@
             <case tag="opponent_lost" filter="athletic" priority="0">
                 <state img="8-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
                 <state img="8-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
-                <state img="8-smart.png">So how much exersice is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="8-smart.png">So how much exercise is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
                 <state img="8-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
             </case>
             <case tag="opponent_lost" filter="hero" priority="0">
@@ -21666,7 +21861,7 @@
                 <state img="8-happy.png">And to think Cadance told me that royal meetings would be boring!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
-                <state img="8-interested.png" marker="serious1st">No need to be so serious,~name~. This might be research, but we can losen up a bit I think...</state>
+                <state img="8-interested.png" marker="serious1st">No need to be so serious, ~name~. This might be research, but we can loosen up a bit I think...</state>
             </case>
             <case tag="opponent_lost" filter="shy" priority="0">
                 <state img="8-calm.png">No need to be shy! You were born beautiful! We'll all still want to be your friend, with or without that cloth on you.</state>
@@ -22210,6 +22405,9 @@
             </case>
             <case tag="female_finished_masturbating" target="shantae">
                 <state img="8-laughing.png">A dancing masturbation, that's a first. For both my world and this world too.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="sheena" targetSaidMarker="unicorn" targetSayingMarker="finish">
+                <state img="8-smart.png">Don't worry Sheena, I can invite you to my world anytime, there are lots of unicorns over there!</state>
             </case>
             <case tag="female_finished_masturbating" target="sola">
                 <state img="8-happy.png">That was great, Sola! I especially liked those magic sparkles when you were touching yourself.</state>
@@ -23480,6 +23678,15 @@
             <case tag="female_chest_will_be_visible" target="saki">
                 <state img="9-interested.png">Nonsense! I have been waiting to finally see these all game!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <state img="9-interested.png">Oooh! Summoning magic?! You have to teach me how to do that later, Sheena!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="luna">
+                <state img="9-what.png">Oh! That's Luna? For a second there I thought you meant princess Luna...</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="sheena" targetSayingMarker="luna">
+                <state img="9-shocked.png">It seems you are nex...Wait a second... Did you say Luna?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="streaming-chan">
                 <state img="9-what.png" marker="twilight_streaming_november1">I wish I knew about this No-Bra November thing before I came here. I wouldn't have brought my bra either.</state>
             </case>
@@ -23613,6 +23820,7 @@
                 <state img="9-smart.png">Yeah! Yang had the right idea. I wish I had left my bra back at Canterlot High and just come here braless too...</state>
             </case>
             <case tag="female_crotch_will_be_visible">
+                <state img="9-smart.png">Smart choice! Exactly what I would have done in your position!</state>
                 <state img="9-flirty.png">Who knew all I had to do to see another human's vagina was to just take off my panties!</state>
                 <state img="9-interested.png">I can't understand how you humans tolerate having that kind of tight clothing around your crotch anyways.</state>
                 <state img="9-smart.png">I guess that &lt;i&gt;sometimes&lt;/i&gt; taking off something might be less comfortable, like my shoes, but letting your vagina free will not be one of those occasions!</state>
@@ -23621,7 +23829,6 @@
                 <state img="9-happy.png">Don't be ashamed... As I said it's totally normal to be naked in Equestria.</state>
                 <state img="9-smart.png" marker="twilight_panties_first">After this you might understand why I chose to remove my panties first!</state>
                 <state img="9-smug.png">Join me and feel the fresh air passing by your body!</state>
-                <state img="9-smart.png">Smart choice! Exactly what I would have done in your position!</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
                 <state img="9-smart.png">I wonder if I could do something similar to what you do with magic beams instead. I'll try back in Equestria.</state>
@@ -23770,6 +23977,9 @@
             <case tag="female_crotch_is_visible" target="saki">
                 <state img="9-smart.png">Nothing is more beautiful than seeing an all-natural bush.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="sheena">
+                <state img="9-guess.png">Ooooh! Evaporating clothes?! Now that's a spell I need to learn for the next time I come to this world...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="streaming-chan">
                 <state img="9-shocked.png">Oh, are those some sort of magic sticks? If so, I think the golden one looks more powerful.</state>
             </case>
@@ -23815,7 +24025,7 @@
             <case tag="opponent_lost" filter="athletic" priority="0">
                 <state img="9-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
                 <state img="9-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
-                <state img="9-smart.png">So how much exersice is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="9-smart.png">So how much exercise is needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
                 <state img="9-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
             </case>
             <case tag="opponent_lost" filter="hero" priority="0">
@@ -23841,7 +24051,7 @@
                 <state img="9-happy.png">And to think Cadance told me that royal meetings would be boring!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
-                <state img="9-interested.png" marker="serious1st">No need to be so serious,~name~. This might be research, but we can losen up a bit I think...</state>
+                <state img="9-interested.png" marker="serious1st">No need to be so serious, ~name~. This might be research, but we can loosen up a bit I think...</state>
             </case>
             <case tag="opponent_lost" filter="shy" priority="0">
                 <state img="9-calm.png">No need to be shy! You were born beautiful! We'll all still want to be your friend, with or without that cloth on you.</state>
@@ -24372,6 +24582,9 @@
             <case tag="female_finished_masturbating" target="shantae">
                 <state img="9-laughing.png">A dancing masturbation, that's a first. For both my world and this world too.</state>
             </case>
+            <case tag="female_finished_masturbating" target="sheena" targetSaidMarker="unicorn" targetSayingMarker="finish">
+                <state img="9-smart.png">Don't worry Sheena, I can invite you to my world anytime, there are lots of unicorns over there!</state>
+            </case>
             <case tag="female_finished_masturbating" target="sola">
                 <state img="9-happy.png">That was great, Sola! I especially liked those magic sparkles when you were touching yourself.</state>
             </case>
@@ -24633,7 +24846,7 @@
             <directive type="text" id="text22" arrow="left" x="38%" y="43%">Hey girls, could you lend me Twilight for a few minutes?</directive>
             <directive type="pause" />
             <directive type="clear" id="text22" />
-            <directive type="text" id="text41" width="20%" arrow="right" x="51%" y="22%">Sure thing princess!..</directive>
+            <directive type="text" id="text41" width="20%" arrow="right" x="51%" y="22%">Sure thing, princess!..</directive>
             <directive type="pause" />
             <directive type="clear" id="text41" />
             <directive type="text" id="text43" width="20%" arrow="right" x="51%" y="15%">By the way Pinkie, what was that thing about an "Inventory you and Rarity were talking about?</directive>
@@ -24843,7 +25056,7 @@
             <directive type="move" id="mainbody" loop="true" clamp="mirror" time="0.2" x="76" y="-269" />
             <directive type="pause" />
             <directive type="clear" id="text4" />
-            <directive type="text" id="text5" arrow="left" x="65%" y="20%">OH YES!!! DON'T STOP I FEEL LIKE I'M GOING TO...</directive>
+            <directive type="text" id="text5" arrow="left" x="65%" y="20%">OH YES!!! DON'T STOP. I FEEL LIKE I'M GOING TO...</directive>
             <directive type="pause" />
             <directive type="stop" id="arm" />
             <directive type="clear" id="text5" />

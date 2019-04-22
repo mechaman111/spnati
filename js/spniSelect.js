@@ -917,14 +917,15 @@ function selectIndividualOpponent (slot) {
  * The player is changing the page on the individual screen.
  ************************************************************/
 function changeIndividualPage (skip, page) {
-    console.log("resigtered");
+    var lastPage = Math.ceil(selectableOpponents.length/4)-1;
+    
     if (skip) {
         if (page == -1) {
             /* go to first page */
             individualPage = 0;
         } else if (page == 1) {
             /* go to last page */
-            individualPage = Math.ceil(selectableOpponents.length/4)-1;
+            individualPage = lastPage;
         } else {
             /* go to selected page */
             individualPage = Number($individualPageIndicator.val()) - 1;
@@ -935,6 +936,16 @@ function changeIndividualPage (skip, page) {
 
     updateIndividualSelectScreen();
     updateIndividualCountStats();
+    
+    if (!skip && individualPage === lastPage) {
+        /* If the player browses to the last page without using the skip buttons,
+         * show the "Looking for Someone?" modal.
+         */
+        
+        if (!$('#select-headsup-hide').prop('checked')) {
+            $('#select-headsup-modal').modal('show');
+        }
+    }
 }
 
 /************************************************************
