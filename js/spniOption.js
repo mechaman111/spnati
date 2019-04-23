@@ -48,7 +48,7 @@ var selectedBackground = defaultBackground;
 function setActiveOption(optionGroupId, selected) {
     var lookFor = (selected == null ? undefined : selected.toString());
     $('#'+optionGroupId).find('a').each(function() {
-        if ($(this).attr('value') === lookFor) {
+        if ($(this).attr('data-value') === lookFor) {
             $(this).parent().addClass('active');
         } else {
             $(this).parent().removeClass('active');
@@ -90,28 +90,28 @@ $("#options-modal").on("hidden.bs.modal", function () {
 });
 
 $('ul#options-auto-fade').on('click', 'a', function() {
-    AUTO_FADE = $(this).attr('value') == "true";
+    AUTO_FADE = $(this).attr('data-value') == "true";
 });
 
 $('ul#options-card-suggest').on('click', 'a', function() {
-    CARD_SUGGEST = $(this).attr('value') == "true";
+    CARD_SUGGEST = $(this).attr('data-value') == "true";
 });
 
 $('ul#options-ai-turn-time').on('click', 'a', function() {
-    GAME_DELAY = Number($(this).attr('value'));
+    GAME_DELAY = Number($(this).attr('data-value'));
 });
 
 $('ul#options-deal-speed').on('click', 'a', function() {
-    ANIM_TIME = Number($(this).attr('value'));
+    ANIM_TIME = Number($(this).attr('data-value'));
     ANIM_DELAY = 0.16 * ANIM_TIME;
 });
 
 $('ul#options-auto-forfeit').on('click', 'a', function() {
-    FORFEIT_DELAY = Number($(this).attr('value')) || null;
+    FORFEIT_DELAY = Number($(this).attr('data-value')) || null;
 });
 
 $('ul#options-auto-ending').on('click', 'a', function() {
-    ENDING_DELAY = Number($(this).attr('value')) || null;
+    ENDING_DELAY = Number($(this).attr('data-value')) || null;
 });
 
 /************************************************************
@@ -124,7 +124,7 @@ function showGameSettingsModal () {
 }
 
 $('ul#settings-background').on('click', 'a', function() {
-    setBackground($(this).attr('value'));
+    setBackground($(this).attr('data-value'));
 });
 
 /************************************************************
