@@ -317,6 +317,12 @@ namespace SPNATI_Character_Editor
 			set { Set("macrohelp", value); }
 		}
 
+		public static bool SuppressDefaults
+		{
+			get { return GetBoolean("suppressdefaultlines"); }
+			set { Set("suppressdefaultlines", value); }
+		}
+
 		public static void SaveMacros(string key)
 		{
 			MacroProvider provider = new MacroProvider();

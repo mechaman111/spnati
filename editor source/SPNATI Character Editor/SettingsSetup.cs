@@ -23,6 +23,7 @@ namespace SPNATI_Character_Editor
 			chkAutoBanter.Checked = Config.AutoLoadBanterWizard;
 			chkAutoBackup.Checked = Config.AutoBackupEnabled;
 			chkInitialAdd.Checked = Config.AutoOpenConditions;
+			chkDefaults.Checked = !Config.SuppressDefaults;
 		}
 
 		private void cmdBrowse_Click(object sender, EventArgs e)
@@ -72,6 +73,7 @@ namespace SPNATI_Character_Editor
 			Config.AutoBackupEnabled = chkAutoBackup.Checked;
 			Config.AutoOpenConditions = chkInitialAdd.Checked;
 			Config.KisekaeDirectory = txtKisekae.Text;
+			Config.SuppressDefaults = !chkDefaults.Checked;
 			DialogResult = DialogResult.OK;
 			Config.Save();
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.SettingsUpdated);

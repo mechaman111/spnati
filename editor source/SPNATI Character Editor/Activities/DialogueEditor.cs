@@ -165,7 +165,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void OnSaveWorkspace(bool auto)
 		{
-			if (!auto && _character.Behavior.EnsureDefaults(_character))
+			if (!auto && !Config.SuppressDefaults && _character.Behavior.EnsureDefaults(_character))
 			{
 				Shell.Instance.SetStatus("Character was missing some required lines, so defaults were automatically pulled in.");
 			}

@@ -50,14 +50,15 @@
 			this.txtFilter = new System.Windows.Forms.TextBox();
 			this.tabsSections = new System.Windows.Forms.TabControl();
 			this.tabGeneral = new System.Windows.Forms.TabPage();
+			this.cmdBrowseKisekae = new System.Windows.Forms.Button();
+			this.txtKisekae = new System.Windows.Forms.TextBox();
+			this.label5 = new System.Windows.Forms.Label();
 			this.chkAutoBackup = new System.Windows.Forms.CheckBox();
 			this.tabDialogue = new System.Windows.Forms.TabPage();
 			this.chkInitialAdd = new System.Windows.Forms.CheckBox();
 			this.tabBanter = new System.Windows.Forms.TabPage();
 			this.chkAutoBanter = new System.Windows.Forms.CheckBox();
-			this.label5 = new System.Windows.Forms.Label();
-			this.cmdBrowseKisekae = new System.Windows.Forms.Button();
-			this.txtKisekae = new System.Windows.Forms.TextBox();
+			this.chkDefaults = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			this.tabsSections.SuspendLayout();
 			this.tabGeneral.SuspendLayout();
@@ -284,6 +285,35 @@
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
 			// 
+			// cmdBrowseKisekae
+			// 
+			this.cmdBrowseKisekae.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdBrowseKisekae.Location = new System.Drawing.Point(475, 32);
+			this.cmdBrowseKisekae.Name = "cmdBrowseKisekae";
+			this.cmdBrowseKisekae.Size = new System.Drawing.Size(32, 23);
+			this.cmdBrowseKisekae.TabIndex = 3;
+			this.cmdBrowseKisekae.Text = "...";
+			this.cmdBrowseKisekae.UseVisualStyleBackColor = true;
+			this.cmdBrowseKisekae.Click += new System.EventHandler(this.cmdBrowseKisekae_Click);
+			// 
+			// txtKisekae
+			// 
+			this.txtKisekae.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtKisekae.Location = new System.Drawing.Point(116, 34);
+			this.txtKisekae.Name = "txtKisekae";
+			this.txtKisekae.Size = new System.Drawing.Size(353, 20);
+			this.txtKisekae.TabIndex = 2;
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(7, 37);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(90, 13);
+			this.label5.TabIndex = 9;
+			this.label5.Text = "KKL.exe location:";
+			// 
 			// chkAutoBackup
 			// 
 			this.chkAutoBackup.AutoSize = true;
@@ -297,6 +327,7 @@
 			// tabDialogue
 			// 
 			this.tabDialogue.BackColor = System.Drawing.SystemColors.Control;
+			this.tabDialogue.Controls.Add(this.chkDefaults);
 			this.tabDialogue.Controls.Add(this.chkInitialAdd);
 			this.tabDialogue.Controls.Add(this.button1);
 			this.tabDialogue.Controls.Add(this.helpIntellisense);
@@ -307,7 +338,7 @@
 			this.tabDialogue.Location = new System.Drawing.Point(104, 4);
 			this.tabDialogue.Name = "tabDialogue";
 			this.tabDialogue.Padding = new System.Windows.Forms.Padding(3);
-			this.tabDialogue.Size = new System.Drawing.Size(513, 102);
+			this.tabDialogue.Size = new System.Drawing.Size(513, 162);
 			this.tabDialogue.TabIndex = 1;
 			this.tabDialogue.Text = "Dialogue";
 			// 
@@ -328,7 +359,7 @@
 			this.tabBanter.Location = new System.Drawing.Point(104, 4);
 			this.tabBanter.Name = "tabBanter";
 			this.tabBanter.Padding = new System.Windows.Forms.Padding(3);
-			this.tabBanter.Size = new System.Drawing.Size(513, 102);
+			this.tabBanter.Size = new System.Drawing.Size(513, 162);
 			this.tabBanter.TabIndex = 2;
 			this.tabBanter.Text = "Banter Wizard";
 			// 
@@ -343,34 +374,17 @@
     "d)";
 			this.chkAutoBanter.UseVisualStyleBackColor = true;
 			// 
-			// label5
+			// chkDefaults
 			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(7, 37);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(90, 13);
-			this.label5.TabIndex = 9;
-			this.label5.Text = "KKL.exe location:";
-			// 
-			// cmdBrowseKisekae
-			// 
-			this.cmdBrowseKisekae.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdBrowseKisekae.Location = new System.Drawing.Point(475, 32);
-			this.cmdBrowseKisekae.Name = "cmdBrowseKisekae";
-			this.cmdBrowseKisekae.Size = new System.Drawing.Size(32, 23);
-			this.cmdBrowseKisekae.TabIndex = 3;
-			this.cmdBrowseKisekae.Text = "...";
-			this.cmdBrowseKisekae.UseVisualStyleBackColor = true;
-			this.cmdBrowseKisekae.Click += new System.EventHandler(this.cmdBrowseKisekae_Click);
-			// 
-			// txtKisekae
-			// 
-			this.txtKisekae.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtKisekae.Location = new System.Drawing.Point(116, 34);
-			this.txtKisekae.Name = "txtKisekae";
-			this.txtKisekae.Size = new System.Drawing.Size(353, 20);
-			this.txtKisekae.TabIndex = 2;
+			this.chkDefaults.AutoSize = true;
+			this.chkDefaults.Location = new System.Drawing.Point(6, 97);
+			this.chkDefaults.Name = "chkDefaults";
+			this.chkDefaults.Size = new System.Drawing.Size(179, 17);
+			this.chkDefaults.TabIndex = 15;
+			this.chkDefaults.Text = "Ensure cases have generic lines";
+			this.toolTip1.SetToolTip(this.chkDefaults, "If unchecked, images with no prefix (ex. 0-*.png) will not appear for use in dial" +
+        "ogue lines.");
+			this.chkDefaults.UseVisualStyleBackColor = true;
 			// 
 			// SettingsSetup
 			// 
@@ -430,5 +444,6 @@
 		private System.Windows.Forms.Button cmdBrowseKisekae;
 		private System.Windows.Forms.TextBox txtKisekae;
 		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.CheckBox chkDefaults;
 	}
 }

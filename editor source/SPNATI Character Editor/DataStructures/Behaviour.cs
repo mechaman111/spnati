@@ -100,7 +100,10 @@ namespace SPNATI_Character_Editor
 
 			EnsureWorkingCases();
 
-			EnsureDefaults(character); //If the input file had any missing dialogue, add it in now
+			if (!Config.SuppressDefaults)
+			{
+				EnsureDefaults(character); //If the input file had any missing dialogue, add it in now
+			}
 		}
 
 		/// <summary>
