@@ -86,6 +86,7 @@ var CARD_SUGGEST = false;
 var AUTO_FORFEIT = false;
 var AUTO_ENDING = false;
 var AUTO_FADE = true;
+var MINIMAL_UI = true;
 var KEYBINDINGS_ENABLED = false;
 var DEBUG = false;
 

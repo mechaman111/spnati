@@ -28,6 +28,7 @@ function Save(){
 		'dealAnimation' : 3,
 		'autoForfeit' : 4,
 		'autoEnding' : 4,
+        'minimalUI': true,
 		'male' : {
 			'name' : '',
 			'clothing' : [false, false, true, false, true, false,
@@ -89,6 +90,7 @@ function Save(){
 		setDealSpeed(this.data['dealAnimation']);
 		setAutoForfeit(this.data['autoForfeit']);
 		setAutoEnding(this.data['autoEnding']);
+		setUIMode(this.data['minimalUI']);
 	};
 
 	this.saveOptions = function(){
@@ -143,6 +145,8 @@ function Save(){
 				case 10000: this.data['autoEnding'] = 3; break;
 			}
 		}
+        
+        this.data['minimalUI'] = MINIMAL_UI;
 
 		this.saveCookie();
 	};

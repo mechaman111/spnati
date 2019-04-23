@@ -14,6 +14,7 @@ $AITurnTimeOptions = [$("#options-ai-turn-time-1"), $("#options-ai-turn-time-2")
 $dealSpeedOptions = [$("#options-deal-speed-1"), $("#options-deal-speed-2"), $("#options-deal-speed-3"), $("#options-deal-speed-4")];
 $autoForfeitOptions = [$("#options-auto-forfeit-1"), $("#options-auto-forfeit-2"), $("#options-auto-forfeit-3"), $("#options-auto-forfeit-4")];
 $autoEndingOptions = [$("#options-auto-ending-1"), $("#options-auto-ending-2"), $("#options-auto-ending-3"), $("#options-auto-ending-4")];
+$uiModeOptions = [$("#options-minimal-ui-1"), $("#options-minimal-ui-2")];
 
 $masturbationTimerBox = $("#player-masturbation-timer-box");
 $masturbationWarningLabel = $("#masturbation-warning-label");
@@ -232,6 +233,18 @@ function setAutoEnding (choice) {
 		default: ENDING_DELAY = 7500;
 				 break;
 	}
+}
+
+function setUIMode(minimal) {
+    MINIMAL_UI = minimal;
+    
+    if (minimal) {
+        $gameScreen.addClass('ui-minimal');
+        setActiveOption($uiModeOptions, 2);
+    } else {
+        $gameScreen.removeClass('ui-minimal');
+        setActiveOption($uiModeOptions, 1);
+    }
 }
 
 $("#options-modal").on("hidden.bs.modal", function () {
