@@ -2174,56 +2174,68 @@ body.modal-open {
 
 #player-game-clothing-area-minimal {
     display: none;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
     flex-basis: 0;
     
     position: absolute;
     
     right: 57%;
-    bottom: 3.5%;
+    bottom: 4%;
     
-    width: 33%;
-    height: 10.5%;
+    /*width: 33%;*/
     transform: none;
     
     transition-property: height, transform;
     transition-duration: 0.5s;
 }
 
-#player-game-clothing-area-minimal:hover, #player-game-clothing-area-minimal:active {
-    height: 15%;
-    transform: translateY(12.5%);
-    
-    transition-property: height, transform;
-    transition-duration: 0.5s;
-}
-
-.minimal-clothing-area-col {
+.minimal-clothing-area-row {
     display: inline-flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content: flex-end;
+    align-items: center;
     
-    height: 100%;
-    margin-left: 0.25em;
-    
-    min-width: 0;
+    width: 100%;
     
     opacity: 0.33;
-    transition-property: opacity;
+    transform: none;
+    
+    transition-property: opacity, transform;
     transition-duration: 0.5s;
 }
 
-#player-game-clothing-area-minimal:hover .minimal-clothing-area-col, #player-game-clothing-area-minimal:active .minimal-clothing-area-col {
+#player-game-clothing-area-minimal:hover .minimal-clothing-area-row, #player-game-clothing-area-minimal:active .minimal-clothing-area-row {
     opacity: 1.0;
-    transition-property: opacity;
+    transform: translateY(30%);
+    transition-property: opacity, transform;
     transition-duration: 0.5s;
 }
 
-.minimal-clothing-area-col .small-clothing-image {
-    height: 49%;
-    width: auto;
+.small-clothing-image-container {
+    width: 8.5%;
+    height: auto;
+    margin-left: 1%;
+    transform: none;
+    
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+
+
+#player-game-clothing-area-minimal:hover .small-clothing-image-container, #player-game-clothing-area-minimal:active .small-clothing-image-container {
+    width: 12.5%;
+    
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+
+.minimal-clothing-area-row .small-clothing-image {
+    height: auto;
+    width: 100%;
+    
     margin-bottom: 0;
+    object-fit: contain;
 }
 .ui-minimal #player-game-clothing-area {
     display: none;
