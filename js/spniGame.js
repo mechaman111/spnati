@@ -24,7 +24,7 @@ $gameImages = [$("#game-image-1"),
                $("#game-image-2"),
                $("#game-image-3"),
                $("#game-image-4")];
-$gameLabels = [$("#game-name-label-0"),
+$gameLabels = [$(".game-name-label-0"),
                $("#game-name-label-1"),
                $("#game-name-label-2"),
                $("#game-name-label-3"),
@@ -39,14 +39,14 @@ $gamePlayerCardArea = $("#player-game-card-area");
 
 /* dock UI elements */
 $gameClothingLabel = $("#game-clothing-label");
-$gameClothingCells = [$("#player-0-clothing-1"),
-                      $("#player-0-clothing-2"),
-                      $("#player-0-clothing-3"),
-                      $("#player-0-clothing-4"),
-                      $("#player-0-clothing-5"),
-                      $("#player-0-clothing-6"),
-                      $("#player-0-clothing-7"),
-                      $("#player-0-clothing-8")];
+$gameClothingCells = [$(".player-0-clothing-1"),
+                      $(".player-0-clothing-2"),
+                      $(".player-0-clothing-3"),
+                      $(".player-0-clothing-4"),
+                      $(".player-0-clothing-5"),
+                      $(".player-0-clothing-6"),
+                      $(".player-0-clothing-7"),
+                      $(".player-0-clothing-8")];
 $mainButton = $("#main-game-button");
 $cardButtons = [$("#player-0-card-1"),
 				$("#player-0-card-2"),
@@ -384,6 +384,10 @@ function startDealPhase () {
         if (players[i]) {
             /* collect the player's hand */
             collectPlayerHand(i);
+            
+            if (i !== 0) {
+                $gameOpponentAreas[i-1].removeClass('opponent-revealed-cards opponent-lost');
+            }
         }
     }
     shuffleDeck();
@@ -516,6 +520,8 @@ function completeRevealPhase () {
         if (players[i] && !players[i].out) {
             determineHand(players[i]);
             showHand(i);
+            
+            if (i > 0) $gameOpponentAreas[i-1].addClass('opponent-revealed-cards');
         }
     }
 
@@ -576,6 +582,8 @@ function completeRevealPhase () {
     for (var i = 0; i < players.length; i++) {
         if (recentLoser == i) {
             $gameLabels[i].addClass("loser");
+            
+            if (i > 0) $gameOpponentAreas[i-1].addClass('opponent-lost');
         }
     }
 

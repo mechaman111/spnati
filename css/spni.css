@@ -1995,7 +1995,7 @@ body.modal-open {
 }
 
 .player-card-area {
-	position: absolute;
+    position: absolute;
     width: 40%;
     height: 15%;
     right: 1.5%;
@@ -2071,6 +2071,209 @@ body.modal-open {
 /* remove the "clear" button that occurs in some MS browsers */
 #player-masturbation-timer-box::-ms-clear {
 	display: none;
+}
+
+/***********************************************************
+ * Classes for the Minimalist UI.
+ ***********************************************************/
+
+.ui-minimal .opponent-area {
+    background: none;
+    text-align: center;
+    
+    height: calc(11.5% * 0.75);
+    width: calc(22% * 0.75);
+    
+    opacity: 0.5;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .opponent-area.left, .ui-minimal .opponent-area.halfLeft {
+    transform: translateX(12.5%);
+}
+
+.ui-minimal .opponent-area.right, .ui-minimal .opponent-area.halfRight {
+    transform: translateX(-12.5%);
+}
+
+.ui-minimal .opponent-revealed-cards {
+    opacity: 0.75;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .opponent-area:hover, .ui-minimal .opponent-area:active, .ui-minimal .opponent-lost {
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-card-area  {    
+    background: none;
+    left: 57%;
+    
+    display: flex;
+    align-items: center;
+    
+    opacity: 0.50;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active {  
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-card-area .large-card-image {
+    width: 10%;
+    height: 50%;
+    
+    transition-property: width, height;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-card-area:hover .large-card-image, .ui-minimal .player-card-area:active .large-card-image {
+    width: 19%;
+    height: 100%;
+    
+    transition-property: width, height;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .opponent-card-area {
+    background: none;
+    display: flex;
+    justify-content: center;
+}
+
+.ui-minimal .small-card-image {
+    margin-right: -17%;
+    transform: translateX(-45%);
+}
+
+.ui-minimal .opponent-revealed-cards .small-card-image {
+    margin-right: 0;
+    transform: none;
+    
+    transition-property: margin-right, transform;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .opponent-name-label {
+    text-align: left;
+    display: inline;
+    padding: 1% 5%;
+}
+
+#player-game-clothing-area-minimal {
+    display: none;
+    justify-content: flex-end;
+    
+    position: absolute;
+    
+    right: 57%;
+    bottom: 3.5%;
+    
+    height: 10.5%;
+    transform: none;
+    
+    transition-property: height, transform;
+    transition-duration: 0.5s;
+}
+
+#player-game-clothing-area-minimal:hover, #player-game-clothing-area-minimal:active {
+    height: 15%;
+    transform: translateY(12.5%);
+    
+    transition-property: height, transform;
+    transition-duration: 0.5s;
+}
+
+.minimal-clothing-area-col {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    height: 100%;
+    margin-left: 0.25em;
+    
+    opacity: 0.33;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+#player-game-clothing-area-minimal:hover .minimal-clothing-area-col, #player-game-clothing-area-minimal:active .minimal-clothing-area-col {
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.minimal-clothing-area-col .small-clothing-image {
+    height: 49%;
+    width: auto;
+    margin-bottom: 0;
+    
+}
+.ui-minimal #player-game-clothing-area {
+    display: none;
+}
+
+.ui-minimal #player-game-clothing-area-minimal {
+    display: flex;
+}
+
+.player-name-label-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 13.5%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    pointer-events: none;
+}
+
+.player-name-label-minimal {
+    display: none;
+    text-align: center;
+    min-width: 12%;
+    background-color: #f5f5f5;
+    padding-top: 0.125em;
+    padding-bottom: 0.125em;
+    
+    opacity: 0.75;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.player-name-label-minimal.loser {
+    background-color: #DD4444;
+    
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-name-label {
+    display: none;
+}
+
+.ui-minimal .player-name-label-minimal {
+    display: inline;
+}
+
+.optional-bordered {
+    border: 2px solid #111111;
+    border-radius: 5px;
+}
+
+.ui-minimal .optional-bordered {
+    border: none;
 }
 
 /************************************************************
