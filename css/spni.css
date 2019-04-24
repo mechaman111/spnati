@@ -2086,6 +2086,9 @@ body.modal-open {
     background: none;
     text-align: center;
     
+    bottom: auto;
+    top: 70%;
+    
     height: calc(11.5% * 0.75);
     width: calc(22% * 0.75);
     opacity: 0.5;
@@ -2105,17 +2108,23 @@ body.modal-open {
 .ui-minimal .opponent-revealed-cards {
     opacity: 0.75;
     transition-property: opacity;
-    transition-duration: 0.5s;
+    transition-duration: 0.25s;
 }
 
-.ui-minimal .opponent-area:hover, .ui-minimal .opponent-area:active, .ui-minimal .opponent-area.opponent-lost {
+.ui-minimal .opponent-area:hover, .ui-minimal .opponent-area:active {
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+.ui-minimal .opponent-area.opponent-revealed-cards:hover, .ui-minimal .opponent-area.opponent-revealed-cards:active, .ui-minimal .opponent-area.opponent-lost {
     transform: none;
     opacity: 1.0;
     height: 11.5%;
     width: 22%;
     
     transition-property: opacity, transform, height, width;
-    transition-duration: 0.5s;
+    transition-duration: 0.25s;
 }
 
 .ui-minimal .player-card-area  {    
@@ -2133,7 +2142,7 @@ body.modal-open {
 .ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active {  
     opacity: 1.0;
     transition-property: opacity;
-    transition-duration: 0.5s;
+    transition-duration: 0.25s;
 }
 
 .ui-minimal .player-card-area .large-card-image {
@@ -2210,7 +2219,7 @@ body.modal-open {
     transition-duration: 0.5s;
 }
 
-#player-game-clothing-area-minimal:hover .minimal-clothing-area-row, #player-game-clothing-area-minimal:active .minimal-clothing-area-row {
+.player-lost .minimal-clothing-area-row {
     opacity: 1.0;
     transform: translateY(30%);
     transition-property: opacity, transform;
@@ -2228,7 +2237,7 @@ body.modal-open {
 }
 
 
-#player-game-clothing-area-minimal:hover .small-clothing-image-container, #player-game-clothing-area-minimal:active .small-clothing-image-container {
+.player-lost .small-clothing-image-container {
     width: 20%;
     
     transition-property: width;
@@ -2273,7 +2282,7 @@ body.modal-open {
     
     opacity: 0.75;
     transition-property: opacity;
-    transition-duration: 0.5s;
+    transition-duration: 0.25s;
 }
 
 .player-name-label-minimal.loser {
@@ -2281,7 +2290,7 @@ body.modal-open {
     
     opacity: 1.0;
     transition-property: opacity;
-    transition-duration: 0.5s;
+    transition-duration: 0.25s;
 }
 
 .ui-minimal .player-name-label {
