@@ -98,7 +98,7 @@ function Save() {
         var gender = players[HUMAN_PLAYER].gender;
         var profile = {};
         try {
-            profile = JSON.parse(localStorage.getItem(prefix + gender));
+            profile = JSON.parse(localStorage.getItem(prefix + gender)) || { };
         } catch (ex) {
             console.error('Failed parsing', gender, 'player profile from localStorage');
         }
@@ -186,7 +186,7 @@ function Save() {
     this.loadEndings = function() {
         if (endings === undefined) {
             try {
-                endings = JSON.parse(localStorage.getItem(prefix + 'endings'));
+                endings = JSON.parse(localStorage.getItem(prefix + 'endings')) || { };
             } catch {
                 console.error('Failed parsing endings from localStorage');
                 endings = {};
