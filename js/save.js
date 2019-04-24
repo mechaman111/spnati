@@ -103,7 +103,7 @@ function Save() {
             console.error('Failed parsing', gender, 'player profile from localStorage');
         }
         $nameField.val(profile.name || '');
-        changePlayerSize(profile.size || eGender.MEDIUM);
+        changePlayerSize(profile.size || eSize.MEDIUM);
         selectedChoices = clothingChoices[gender].map(function(item) {
             return (profile.clothing || defaultWardrobes[gender]).indexOf(item.generic) >= 0;
         });
