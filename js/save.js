@@ -17,176 +17,210 @@ function mergeObjects(a, b){
 	return a;
 }
 
-function Save(){
-	this.data = {
-		'background' : null,
-		'masturbationTimer' : 20,
-		'gender' : "male",
-		'autoFade' : 1,
-		'cardSuggest' : 2,
-		'gameDelay' : 3,
-		'dealAnimation' : 3,
-		'autoForfeit' : 4,
-		'autoEnding' : 4,
-		'male' : {
-			'name' : '',
-			'clothing' : [false, false, true, false, true, false,
-				      false, true, true, false, false, true,
-				      false, false, true, true, false, true],
-			'size' : 'medium',
-			'tags' : {},
-		},
-		'female' : {
-			'name' : '',
-			'clothing' : [false, false, true, false, true, true,
-				      false, true, true, false, false, true,
-				      false, false, false, true, false, true],
-			'size' : 'medium',
-			'tags' : {},
-		},
-		'endings' : {},
-		'askedUsageTracking': false,
-		'usageTracking': false,
-	};
-	
-	this.saveCookie = function(){
-		Cookies.set('save', this.data, {expires: 3652});
-	};
+function Save() {
+    var prefix = 'SPNatI.';
+    var endings;
 
-	this.loadCookie = function(){
-		var cookie = Cookies.get('save');
-		console.log(this.data);
-		if(cookie !== undefined){
-			this.data = mergeObjects(this.data, JSON.parse(cookie));
-		}
-		console.log(this.data);
-		this.loadOptions();
-		this.loadPlayer();
-	};
+    this.convertCookie = function() {
+        var legacyOptionIndices = {
+            autoFade: [ true, false ],
+            cardSuggest: [ true, false ],
+            gameDelay: [ 0, 400, 800, 1200, 1600 ],
+            dealAnimation: [ 0, 200, 500, 1000 ],
+            autoForfeit: [ 4000, 7500, 10000, null ],
+            autoEnding: [ 4000, 7500, 10000, null ],
+        };
+        var legacyBackgroundIndices = [
+            'inventory', 'beach', 'classroom', 'brick', 'night', 'roof',
+            'seasonal', 'library', 'bathhouse', 'poolside', 'hot spring',
+            'mansion', 'purple room', 'showers', 'street', 'green screen',
+            'arcade', 'club', 'bedroom', 'hall', 'locker room',
+            'haunted forest', 'romantic', 'classic'
+        ];
 
-	this.loadPlayer = function() {
-		$nameField.val(this.data[players[HUMAN_PLAYER].gender]['name']);
-		changePlayerSize(this.data[players[HUMAN_PLAYER].gender]['size']);
-		selectedChoices = this.data[players[HUMAN_PLAYER].gender]['clothing'];
-		playerTagSelections = this.data[players[HUMAN_PLAYER].gender]['tags'];
-		updateTitleGender();
-	};
-	this.loadOptions = function(){
-		USAGE_TRACKING = this.data['usageTracking'];
-		players[HUMAN_PLAYER].stamina = this.data['masturbationTimer'] || 20;
-		players[HUMAN_PLAYER].gender = this.data['gender'];
-		
-		if (!this.data['background'] || this.data['background'] == 1) {
-			setBackground(defaultBackground);
-		} else {
-			setBackground(this.data['background']);
-		}
-		
+        var data = Cookies.getJSON('save');
+        if (data && typeof(data) == 'object') {
+            var options = {};
+            for (var key in legacyOptionIndices) {
+                if (key in data) {
+                    try {
+                        var value = legacyOptionIndices[key][data[key] - 1];
+                        options[key] = value;
+                    } catch (ex) { }
+                }
+            }
+            localStorage.setItem(prefix + 'options', JSON.stringify(options));
 
-		setAutoFade(this.data['autoFade']);
-		setCardSuggest(this.data['cardSuggest']);
-		setAITurnTime(this.data['gameDelay']);
-		setDealSpeed(this.data['dealAnimation']);
-		setAutoForfeit(this.data['autoForfeit']);
-		setAutoEnding(this.data['autoEnding']);
-	};
+            var settings = {};
+            if ('masturbationTimer' in data) {
+                settings.stamina = data.masturbationTimer;
+            }
+            if (data.background) {
+                settings.background = legacyBackgroundIndices[data.background - 1];
+            }
+            localStorage.setItem(prefix + 'settings', JSON.stringify(settings));
+            if (data.gender) {
+                localStorage.setItem(prefix + 'gender', data.gender);
+            }
+            ['male', 'female'].forEach(function(gender) {
+                if (gender in data) {
+                    var profile = data[gender];
+                    profile.clothing = clothingChoices[gender].filter(function(item, ix) {
+                        return profile.clothing[ix];
+                    }).map(function(item) { return item.generic; });
+                    localStorage.setItem(prefix + gender, JSON.stringify(profile));
+                }
+            });
+            if (typeof data.endings == 'object') {
+                for (var c in data.endings) {
+                    data.endings[c] = Object.keys(data.endings[c]);
+                }
+                localStorage.setItem(prefix + 'endings', JSON.stringify(data.endings));
+            }
+            if (data.askedUsageTracking) {
+                localStorage.setItem(prefix + 'usageTracking', data.usageTracking ? 'yes' : 'no');
+            }
+            Cookies.remove('save');
+        }
+    };
 
-	this.saveOptions = function(){
-		this.data['usageTracking'] = USAGE_TRACKING;
-		this.data['masturbationTimer'] = players[HUMAN_PLAYER].stamina;
-		
-		if (selectedBackground != defaultBackground-1) {
-			this.data['background'] = selectedBackground+1;
-		} else {
-			this.data['background'] = null;
-		}
+    this.load = function() {
+        this.convertCookie();
+        this.loadOptions();
+        this.loadPlayer();
+    };
 
-		this.saveCookie();
-	};
-	this.saveIngameOptions = function(){
-		this.data['autoFade'] = AUTO_FADE?1:2;
-		this.data['cardSuggest'] = CARD_SUGGEST?1:2;
-		switch(GAME_DELAY){
-			case 0: this.data['gameDelay'] = 1; break;
-			case 400: this.data['gameDelay'] = 2; break;
-			default:
-			case 800: this.data['gameDelay'] = 3; break;
-			case 1200: this.data['gameDelay'] =  4; break;
-			case 1600: this.data['gameDelay'] = 5;
-		}
-		switch(ANIM_TIME){
-			case 0: this.data['dealAnimation'] = 1; break;
-			case 200: this.data['dealAnimation'] = 2; break;
-			default:
-			case 500: this.data['dealAnimation'] = 3; break;
-			case 1000: this.data['dealAnimation'] = 4; break;
-		}
-		if(!AUTO_FORFEIT){
-			this.data['autoForfeit'] = 4;
-		}
-		else{
-			switch(FORFEIT_DELAY){
-				case 4000: this.data['autoForfeit'] = 1; break;
-				default:
-				case 7500: this.data['autoForfeit'] = 2; break;
-				case 10000: this.data['autoForfeit'] = 3; break;
-			}
-		}
-		if(!AUTO_ENDING){
-			this.data['autoEnding'] = 4;
-		}
-		else{
-			switch(ENDING_DELAY){
-				case 4000: this.data['autoEnding'] = 1; break;
-				default:
-				case 7500: this.data['autoEnding'] = 2; break;
-				case 10000: this.data['autoEnding'] = 3; break;
-			}
-		}
-
-		this.saveCookie();
-	};
-	this.savePlayer = function(){
-		this.data['gender'] = players[HUMAN_PLAYER].gender;
-		this.data[this.data['gender']]['name'] = $nameField.val();
-		this.data[this.data['gender']]['size'] = players[HUMAN_PLAYER].size;
-		this.data[this.data['gender']]['clothing'] = selectedChoices.slice();
-		var tags = {};
-		for (var key in playerTagSelections) {
-			tags[key] = playerTagSelections[key];
-		}
-		this.data[this.data['gender']]['tags'] = tags;
-		this.saveCookie();
-	};
-
-	this.hasEnding = function(character, title){
-		if(this.data.endings[character] !== undefined){
-			if(this.data.endings[character][title] !== undefined){
-				return this.data.endings[character][title];
-			}
-		}
-		return false;
-	}
-	this.addEnding = function(character, title){
-		if(this.data.endings[character]===undefined){
-			this.data.endings[character] = {};
-		}
-		this.data.endings[character][title] = true;
-		this.saveCookie();
-		//Clear table of endings, so they are loaded agin when player visits gallery
-		allEndings = [];
-		anyEndings = [];
-		maleEndings = [];
-		femaleEndings = [];
-	}
+    var defaultWardrobes = {
+        'male': [ 'jacket', 't-shirt', 'belt', 'pants', 'boxers', 'gloves', 'socks', 'boots' ],
+        'female': [ 'jacket', 'tank top', 'bra', 'belt', 'pants', 'panties', 'stockings', 'shoes' ],
+    };
+    this.loadPlayer = function() {
+        var gender = players[HUMAN_PLAYER].gender;
+        var profile = {};
+        try {
+            profile = JSON.parse(localStorage.getItem(prefix + gender)) || { };
+        } catch (ex) {
+            console.error('Failed parsing', gender, 'player profile from localStorage');
+        }
+        $nameField.val(profile.name || '');
+        changePlayerSize(profile.size || eSize.MEDIUM);
+        selectedChoices = clothingChoices[gender].map(function(item) {
+            return (profile.clothing || defaultWardrobes[gender]).indexOf(item.generic) >= 0;
+        });
+        playerTagSelections = profile.tags || {};
+    };
+    this.savePlayer = function(){
+        localStorage.setItem(prefix + 'gender', players[HUMAN_PLAYER].gender);
+    /*  var tags = {};
+        for (var key in playerTagSelections) {
+            tags[key] = playerTagSelections[key];
+        }*/
+        var profile = {
+            name: $nameField.val(),
+            size: players[HUMAN_PLAYER].size,
+            tags: playerTagSelections,
+            clothing: clothingChoices[players[HUMAN_PLAYER].gender].filter(function(item, ix) {
+                return selectedChoices[ix];
+            }).map(function(item) { return item.generic; }),
+        };
+        localStorage.setItem(prefix + players[HUMAN_PLAYER].gender, JSON.stringify(profile));
+    };
+    this.loadOptions = function(){
+        try {
+            var options = JSON.parse(localStorage.getItem(prefix + 'options')) || { };
+            if ('autoFade' in options && typeof options.autoFade == 'boolean') AUTO_FADE = options.autoFade;
+            if ('cardSuggest' in options && typeof options.cardSuggest == 'boolean') CARD_SUGGEST = options.cardSuggest;
+            if ('gameDelay' in options && typeof options.gameDelay == 'number') GAME_DELAY = options.gameDelay;
+            if ('dealAnimation' in options && typeof options.dealAnimation == 'number') {
+                ANIM_TIME = options.dealAnimation;
+                ANIM_DELAY = 0.16 * ANIM_TIME;
+            }
+            if ('autoForfeit' in options
+                && (typeof options.autoForfeit == 'number' || options.autoForfeit === null))
+                FORFEIT_DELAY = options.autoForfeit;
+            if ('autoEnding' in options
+                && (typeof options.autoEnding == 'number' || options.autoEnding === null))
+                ENDING_DELAY = options.autoEnding;
+        } catch (ex) {
+            console.error('Failed parsing options from localStorage');
+        }
+        try {
+            var settings = JSON.parse(localStorage.getItem(prefix + 'settings')) || {};
+            if ('stamina' in settings) players[HUMAN_PLAYER].stamina = settings.stamina;
+            if ('background' in settings) setBackground(settings.background);
+        } catch (ex) {
+            console.error('Failed parsing settings from localStorage');
+        }
+        var usageTracking = localStorage.getItem(prefix + 'usageTracking');
+        if (usageTracking) {
+            USAGE_TRACKING = (usageTracking == 'yes');
+        }
+        var gender = localStorage.getItem(prefix + 'gender');
+        if (gender) {
+            players[HUMAN_PLAYER].gender = gender;
+        }
+    };
+    this.saveUsageTracking = function() {
+        if (USAGE_TRACKING !== undefined) {
+            localStorage.setItem(prefix + 'usageTracking', USAGE_TRACKING ? 'yes' : 'no');
+        }
+    };
+    this.saveOptions = function() {
+        var options = {
+            autoFade: AUTO_FADE,
+            cardSuggest: CARD_SUGGEST,
+            gameDelay: GAME_DELAY,
+            dealAnimation: ANIM_TIME,
+            autoForfeit: FORFEIT_DELAY,
+            autoEnding: ENDING_DELAY,
+        };
+        localStorage.setItem(prefix + 'options', JSON.stringify(options));
+    };
+    this.saveSettings = function() {
+        var settings = { stamina: players[HUMAN_PLAYER].stamina };
+        if (selectedBackground != defaultBackground) {
+            settings.background = selectedBackground;
+        }
+        localStorage.setItem(prefix + 'settings', JSON.stringify(settings));
+    };
+    this.loadEndings = function() {
+        if (endings === undefined) {
+            try {
+                endings = JSON.parse(localStorage.getItem(prefix + 'endings')) || { };
+            } catch {
+                console.error('Failed parsing endings from localStorage');
+                endings = {};
+            }
+        }
+    };
+    this.hasEnding = function(character, title) {
+        this.loadEndings();
+        if (character in endings && Array.isArray(endings[character])) {
+            return endings[character].indexOf(title) >= 0;
+        }
+        return false;
+    };
+    this.addEnding = function(character, title){
+        this.loadEndings();
+        if (!(character in endings)) {
+            endings[character] = [];
+        }
+        endings[character].push(title);
+        localStorage.setItem(prefix + 'endings', JSON.stringify(endings));
+        //Clear table of endings, so they are loaded agin when player visits gallery
+        allEndings = [];
+        anyEndings = [];
+        maleEndings = [];
+        femaleEndings = [];
+    }
 }
 
 var save = new Save();
 
-function saveOptions(){
-	save.saveOptions();
+function saveSettings(){
+    save.saveSettings();
 };
 
-function saveIngameOptions(){
-	save.saveIngameOptions();
+function saveOptions(){
+    save.saveOptions();
 }
