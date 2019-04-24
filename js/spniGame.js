@@ -320,8 +320,10 @@ function advanceTurn () {
         for (var i = 0; i < players.length; i++) {
             if (currentTurn == i) {
                 $gameLabels[i].addClass("current");
+                if (i > 0) $gameOpponentAreas[i-1].addClass('current');
             } else {
                 $gameLabels[i].removeClass("current");
+                if (i > 0) $gameOpponentAreas[i-1].removeClass('current');
             }
         }
 
