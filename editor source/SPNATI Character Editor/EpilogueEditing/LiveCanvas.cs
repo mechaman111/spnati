@@ -21,6 +21,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private ISkin _character;
 		private LivePose _pose;
 		private List<string> _markers = new List<string>();
+		private bool _ignoreMarkers = false;
 
 		private Point _lastMouse;
 		private Point _canvasOffset = new Point(0, 0);
@@ -280,12 +281,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			g.DrawLine(_penBoundary, canvas.Width / 2 + _canvasOffset.X, 0, canvas.Width / 2 + _canvasOffset.X, canvas.Height);
 
 			//draw the pose
+			List<string> markers = _ignoreMarkers ? null : _markers;
 			foreach (LiveSprite sprite in _pose.DrawingOrder)
 			{
-				sprite.Draw(g, SceneTransform, _markers);
+				sprite.Draw(g, SceneTransform, markers);
 				if (_selectionSource == sprite && _selectedObject != null && _selectedObject.IsVisible && !_selectionSource.Hidden && (_recording || !_playing))
 				{
-					_selectedObject.Draw(g, SceneTransform, _markers);
+					_selectedObject.Draw(g, SceneTransform, markers);
 				}
 			}
 
@@ -966,6 +968,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void canvas_Resize(object sender, EventArgs e)
 		{
 			UpdateSceneTransform();
+		}
+
+		private void tsFilter_Click(object sender, EventArgs e)
+		{
+			_ignoreMarkers = tsFilter.Checked;
+			canvas.Invalidate();
 		}
 	}
 

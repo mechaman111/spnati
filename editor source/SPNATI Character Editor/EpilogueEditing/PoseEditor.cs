@@ -169,6 +169,26 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void SetPose(Pose pose)
 		{
+			HashSet<string> hiddenSprites = new HashSet<string>();
+			HashSet<string> collapsedSprites = new HashSet<string>();
+			if (_pose != null)
+			{
+				foreach (LiveSprite sprite in _pose.Sprites)
+				{
+					if (!string.IsNullOrEmpty(sprite.Id))
+					{
+						if (sprite.Hidden)
+						{
+							hiddenSprites.Add(sprite.Id);
+						}
+						if (sprite.Widget != null && sprite.Widget.IsCollapsed)
+						{
+							collapsedSprites.Add(sprite.Id);
+						}
+					}
+				}
+			}
+
 			_history.Clear();
 			_sourcePose = pose;
 			if (pose != null)
@@ -180,6 +200,23 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				_pose = null;
 			}
 			timeline.SetData(_pose);
+
+			//restore collapsed and hidden states for sprites that have the same ID as previous pose
+			foreach (LiveSprite sprite in _pose.Sprites)
+			{
+				if (!string.IsNullOrEmpty(sprite.Id))
+				{
+					if (hiddenSprites.Contains(sprite.Id))
+					{
+						sprite.Hidden = true;
+					}
+					if (collapsedSprites.Contains(sprite.Id))
+					{
+						sprite.Widget.IsCollapsed = true;
+					}
+				}
+			}
+
 			table.Context = new LivePoseContext(_pose, _character, CharacterContext.Pose);
 			SetTableData(_pose, null);
 			canvas.SetData(_character, _pose);

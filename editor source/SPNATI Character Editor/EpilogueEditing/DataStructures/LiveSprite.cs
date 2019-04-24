@@ -1433,7 +1433,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public void Draw(Graphics g, Matrix sceneTransform, List<string> markers)
 		{
 			if (!IsVisible || Hidden) { return; }
-			if (!string.IsNullOrEmpty(Marker) && !markers.Contains(Marker)) { return; }
+			if (markers != null && !string.IsNullOrEmpty(Marker) && !markers.Contains(Marker)) { return; }
 
 			float alpha = WorldAlpha;
 			if (Image != null && alpha > 0)
