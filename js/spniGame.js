@@ -284,7 +284,7 @@ function makeAIDecision () {
  ************************************************************/
 function reactToNewAICards () {
 	/* update behaviour */
-	determineHand(players[currentTurn]);
+    players[currentTurn].hand.determine();
 	if (players[currentTurn].hand.strength == HIGH_CARD) {
 		players[currentTurn].updateBehaviour([BAD_HAND, ANY_HAND]);
 	} else if (players[currentTurn].hand.strength == PAIR) {
@@ -512,7 +512,7 @@ function completeRevealPhase () {
     /* reveal everyone's hand */
     for (var i = 0; i < players.length; i++) {
         if (players[i] && !players[i].out) {
-            determineHand(players[i]);
+            players[i].hand.determine();
             showHand(i);
         }
     }
