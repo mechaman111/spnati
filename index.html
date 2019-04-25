@@ -1077,10 +1077,10 @@
                   <td style="width:25%"><h4 class="modal-title modal-left">Sex Filter</h4></td>
                   <td>
                     <nav>
-                      <ul class="pagination">
-                        <li id="search-gender-1" class="active"><a href="#"  onclick="changeSearchGender(1)">All</a></li>
-                        <li id="search-gender-2"><a href="#" onclick="changeSearchGender(2)">Male</a></li>
-                        <li id="search-gender-3"><a href="#" onclick="changeSearchGender(3)">Female</a></li>
+                      <ul class="pagination" id="search-gender">
+                        <li class="active"><a href="#"  data-value="1">All</a></li>
+                        <li><a href="#" data-value="2">Male</a></li>
+                        <li><a href="#" data-value="3">Female</a></li>
                       </ul>
                     </nav>
                   </td>
@@ -1163,11 +1163,11 @@
                   <td style="width:25%"><h4 class="modal-title modal-left">Sex Filter</h4></td>
                   <td>
                     <nav>
-                      <ul class="pagination">
-                        <li id="group-search-gender-1" class="active"><a href="#"  onclick="changeGroupSearchGender(1)">Any</a></li>
-                        <li id="group-search-gender-2"><a href="#" onclick="changeGroupSearchGender(2)">Male only</a></li>
-                        <li id="group-search-gender-3"><a href="#" onclick="changeGroupSearchGender(3)">Female only</a></li>
-                        <li id="group-search-gender-4"><a href="#" onclick="changeGroupSearchGender(4)">Mixed</a></li>
+                      <ul class="pagination" id="group-search-gender">
+                        <li class="active"><a href="#"  data-value="1">Any</a></li>
+                        <li><a href="#" data-value="2">Male only</a></li>
+                        <li><a href="#" data-value="3">Female only</a></li>
+                        <li><a href="#" data-value="4">Mixed</a></li>
                       </ul>
                     </nav>
                   </td>
@@ -1275,21 +1275,21 @@
 							<td style="width:25%"><h4 class="modal-title modal-left">Background</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="settings-background-1" class="active"><a href="#" onclick="setBackground(1)">The Inventory</a></li>
-                    <li id="settings-background-2"><a href="#" onclick="setBackground(2)">Beach</a></li>
-                    <li id="settings-background-3"><a href="#" onclick="setBackground(3)">Classroom</a></li>
-                    <li id="settings-background-6"><a href="#" onclick="setBackground(6)">Roof</a></li>
-                    <li id="settings-background-10"><a href="#" onclick="setBackground(10)">Poolside</a></li>
-                    <li id="settings-background-11"><a href="#" onclick="setBackground(11)">Hot Spring</a></li>
-                    <li id="settings-background-12"><a href="#" onclick="setBackground(12)">Mansion</a></li>
-                    <li id="settings-background-13"><a href="#" onclick="setBackground(13)">Purple Room</a></li>
-                    <li id="settings-background-15"><a href="#" onclick="setBackground(15)">Street</a></li>
-					<li id="settings-background-19"><a href="#" onclick="setBackground(19)">Bedroom</a></li>
-					<li id="settings-background-21"><a href="#" onclick="setBackground(21)">Locker Room</a></li>
-					<li id="settings-background-22"><a href="#" onclick="setBackground(22)">Haunted Forest</a></li>
-					<li id="settings-background-23"><a href="#" onclick="setBackground(23)">Romantic</a></li>
-					<li id="settings-background-24"><a href="#" onclick="setBackground(24)">Classic</a></li>
+									<ul class="pagination" id="settings-background">
+										<li><a href="#" data-value="inventory">The Inventory</a></li>
+										<li><a href="#" data-value="beach">Beach</a></li>
+										<li><a href="#" data-value="classroom">Classroom</a></li>
+										<li><a href="#" data-value="roof">Roof</a></li>
+										<li><a href="#" data-value="poolside">Poolside</a></li>
+										<li><a href="#" data-value="hot spring">Hot Spring</a></li>
+										<li><a href="#" data-value="mansion">Mansion</a></li>
+										<li><a href="#" data-value="purple room">Purple Room</a></li>
+										<li><a href="#" data-value="street">Street</a></li>
+										<li><a href="#" data-value="bedroom">Bedroom</a></li>
+										<li><a href="#" data-value="locker room">Locker Room</a></li>
+										<li><a href="#" data-value="haunted forest">Haunted Forest</a></li>
+										<li><a href="#" data-value="romantic">Romantic</a></li>
+										<li><a href="#" data-value="classic">Classic</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1299,7 +1299,7 @@
 						<tr>
 							<td style="width:25%"><h4 class="modal-title modal-left">How long do you... last?</h4></td>
 							<td>
-								<input type="text" id="player-masturbation-timer-box" onkeyup="changeMasturbationTimer()">&nbsp;Phases
+								<input type="number" min="1" id="player-masturbation-timer-box">&nbsp;Phases
 							</td>
 						</tr>
 
@@ -1314,7 +1314,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="options-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="saveOptions()">Close</button>
+				<button id="options-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="saveSettings()">Close</button>
 			</div>
 		</div>
 		<!-- End of Modal Content -->
@@ -1384,9 +1384,9 @@
 							<td><h4 class="modal-title modal-left">Auto Table Fade</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-auto-fade-1" class="active"><a href="#" onclick="setAutoFade(1)">True</a></li>
-										<li id="options-auto-fade-2"><a href="#" onclick="setAutoFade(2)">False</a></li>
+									<ul class="pagination" id="options-auto-fade">
+										<li><a href="#" data-value="true">Enabled</a></li>
+										<li><a href="#" data-value="false">Disabled</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1397,9 +1397,9 @@
 							<td><h4 class="modal-title modal-left">Card Suggest</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-card-suggest-1"><a href="#" onclick="setCardSuggest(1)">Enabled</a></li>
-										<li id="options-card-suggest-2" class="active"><a href="#" onclick="setCardSuggest(2)">Disabled</a></li>
+									<ul class="pagination" id="options-card-suggest">
+										<li><a href="#" data-value="true">Enabled</a></li>
+										<li><a href="#" data-value="false">Disabled</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1410,12 +1410,12 @@
 							<td><h4 class="modal-title modal-left">AI Turn Time</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-ai-turn-time-1"><a href="#" onclick="setAITurnTime(1)">Very Fast</a></li>
-										<li id="options-ai-turn-time-2"><a href="#" onclick="setAITurnTime(2)">Fast</a></li>
-										<li id="options-ai-turn-time-3" class="active"><a href="#" onclick="setAITurnTime(3)">Normal</a></li>
-										<li id="options-ai-turn-time-4"><a href="#" onclick="setAITurnTime(4)">Slow</a></li>
-										<li id="options-ai-turn-time-5"><a href="#" onclick="setAITurnTime(5)">Very Slow</a></li>
+									<ul class="pagination" id="options-ai-turn-time">
+										<li><a href="#" data-value="0">Very Fast</a></li>
+										<li><a href="#" data-value="400">Fast</a></li>
+										<li><a href="#" data-value="800">Normal</a></li>
+										<li><a href="#" data-value="1200">Slow</a></li>
+										<li><a href="#" data-value="1600">Very Slow</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1426,11 +1426,11 @@
 							<td><h4 class="modal-title modal-left">Deal Animation</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-deal-speed-1"><a href="#" onclick="setDealSpeed(1)">Disabled</a></li>
-										<li id="options-deal-speed-2"><a href="#" onclick="setDealSpeed(2)">Fast</a></li>
-										<li id="options-deal-speed-3" class="active"><a href="#" onclick="setDealSpeed(3)">Normal</a></li>
-										<li id="options-deal-speed-4"><a href="#" onclick="setDealSpeed(4)">Slow</a></li>
+									<ul class="pagination" id="options-deal-speed">
+										<li><a href="#" data-value="0">Disabled</a></li>
+										<li><a href="#" data-value="200">Fast</a></li>
+										<li><a href="#" data-value="500">Normal</a></li>
+										<li><a href="#" data-value="1000">Slow</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1441,11 +1441,11 @@
 							<td><h4 class="modal-title modal-left">Auto-Advance during Forfeit</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-auto-forfeit-1"><a href="#" onclick="setAutoForfeit(1)">Fast</a></li>
-										<li id="options-auto-forfeit-2"><a href="#" onclick="setAutoForfeit(2)">Normal</a></li>
-										<li id="options-auto-forfeit-3"><a href="#" onclick="setAutoForfeit(3)">Slow</a></li>
-										<li id="options-auto-forfeit-4" class="active"><a href="#" onclick="setAutoForfeit(4)">Off</a></li>
+									<ul class="pagination" id="options-auto-forfeit">
+										<li><a href="#" data-value="4000">Fast</a></li>
+										<li><a href="#" data-value="7500">Normal</a></li>
+										<li><a href="#" data-value="10000">Slow</a></li>
+										<li><a href="#">Off</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1454,11 +1454,11 @@
 							<td><h4 class="modal-title modal-left">Auto-Advance at End</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-auto-ending-1"><a href="#" onclick="setAutoEnding(1)">Fast</a></li>
-										<li id="options-auto-ending-2"><a href="#" onclick="setAutoEnding(2)">Normal</a></li>
-										<li id="options-auto-ending-3"><a href="#" onclick="setAutoEnding(3)">Slow</a></li>
-										<li id="options-auto-ending-4" class="active"><a href="#" onclick="setAutoEnding(4)">Off</a></li>
+									<ul class="pagination" id="options-auto-ending">
+										<li><a href="#" data-value="4000">Fast</a></li>
+										<li><a href="#" data-value="7500">Normal</a></li>
+										<li><a href="#" data-value="10000">Slow</a></li>
+										<li><a href="#">Off</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1478,7 +1478,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="options-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="saveIngameOptions()">Close</button>
+				<button id="options-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="saveOptions()">Close</button>
 			</div>
 		</div>
 		<!-- End of Modal Content -->

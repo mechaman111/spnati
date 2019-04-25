@@ -14,7 +14,7 @@ var EPILOGUES_UNLOCKED = false;
 var EPILOGUE_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
-var USAGE_TRACKING = false;
+var USAGE_TRACKING = undefined;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
@@ -862,7 +862,8 @@ function initialSetup () {
 	/* Make sure that the config file is loaded before processing the
 	   opponent list, so that includedOpponentStatuses is populated. */
     loadConfigFile().always(loadSelectScreen);
-	save.loadCookie();
+    save.load();
+    updateTitleGender();
 
 	/* show the title screen */
 	$warningScreen.show();
@@ -1103,7 +1104,6 @@ function restartGame () {
 	$gameScreen.hide();
 	$epilogueScreen.hide();
 	clearEpilogue();
-	loadClothing();
 	$titleScreen.show();
 }
 
@@ -1221,17 +1221,13 @@ function showUsageTrackingModal() {
 }
 
 function enableUsageTracking() {
-    save.data.askedUsageTracking = true;
     USAGE_TRACKING = true;
-
-    save.saveOptions();
+    save.saveUsageTracking();
 }
 
 function disableUsageTracking() {
-    save.data.askedUsageTracking = true;
     USAGE_TRACKING = false;
-
-    save.saveOptions();
+    save.saveUsageTracking();
 }
 
 /************************************************************
