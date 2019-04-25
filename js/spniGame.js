@@ -360,6 +360,7 @@ function advanceTurn () {
         if (players[HUMAN_PLAYER].out) {
 			allowProgression(eGamePhase.REVEAL);
 		} else {
+            $('#player-game-card-area').addClass('prompt-exchange');
 			allowProgression(eGamePhase.EXCHANGE);
 		}
 	} else if (!players[currentTurn]) {
@@ -501,6 +502,8 @@ function continueDealPhase () {
 function completeExchangePhase () {
     /* exchange the player's chosen cards */
     exchangeCards(HUMAN_PLAYER);
+    
+    $('#player-game-card-area').removeClass('prompt-exchange');
 
     /* disable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
