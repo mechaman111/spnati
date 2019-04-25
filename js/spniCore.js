@@ -16,7 +16,7 @@ var COLLECTIBLES_UNLOCKED = false;
 var EPILOGUE_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
-var USAGE_TRACKING = false;
+var USAGE_TRACKING = undefined;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
@@ -900,7 +900,8 @@ function initialSetup () {
 	/* Make sure that the config file is loaded before processing the
 	   opponent list, so that includedOpponentStatuses is populated. */
     loadConfigFile().always(loadSelectScreen);
-	save.loadCookie();
+    save.load();
+    updateTitleGender();
 
 	/* show the title screen */
 	$warningScreen.show();
@@ -942,6 +943,33 @@ function loadVersionInfo () {
             
             $('.substitute-version').text('v'+CURRENT_VERSION);
             console.log("Running SPNATI version "+CURRENT_VERSION);
+            
+            version_ts = versionInfo.find('changelog > version[number=\"'+CURRENT_VERSION+'\"]').attr('timestamp');        
+            
+            version_ts = parseInt(version_ts, 10);
+            now = Date.now();
+            
+            elapsed_time = now - version_ts;
+            
+            /* Format last update time */
+            last_update_string = '';
+            if (elapsed_time < 5 * 60 * 1000) {
+                // <5 minutes ago - display 'just now'
+                last_update_string = 'just now';
+            } else if (elapsed_time < 60 * 60 * 1000) {
+                // < 1 hour ago - display minutes since last update
+                last_update_string = Math.floor(elapsed_time / (60 * 1000))+' minutes ago';
+            } else if (elapsed_time < 24 * 60 * 60 * 1000) {
+                // < 1 day ago - display hours since last update
+                var n_hours = Math.floor(elapsed_time / (60 * 60 * 1000));
+                last_update_string = n_hours + (n_hours === 1 ? ' hour ago' : ' hours ago');
+            } else {
+                // otherwise just display days since last update
+                var n_days = Math.floor(elapsed_time / (24 * 60 * 60 * 1000));
+                last_update_string =  n_days + (n_days === 1 ? ' day ago' : ' days ago');
+            }
+            
+            $('.substitute-version-time').text('(updated '+last_update_string+')')
         }
     });
 }
@@ -1151,7 +1179,6 @@ function restartGame () {
 	$gameScreen.hide();
 	$epilogueScreen.hide();
 	clearEpilogue();
-	loadClothing();
 	$titleScreen.show();
 }
 
@@ -1269,17 +1296,13 @@ function showUsageTrackingModal() {
 }
 
 function enableUsageTracking() {
-    save.data.askedUsageTracking = true;
     USAGE_TRACKING = true;
-
-    save.saveOptions();
+    save.saveUsageTracking();
 }
 
 function disableUsageTracking() {
-    save.data.askedUsageTracking = true;
     USAGE_TRACKING = false;
-
-    save.saveOptions();
+    save.saveUsageTracking();
 }
 
 /************************************************************

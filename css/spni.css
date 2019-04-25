@@ -16,7 +16,7 @@ body {
 	font-size: 14px;
     color: #050505;
 	background-color: #050505;
-    background-image: url("../img/background1.png");
+    background-image: url("../img/backgrounds/inventory.png");
     background-size: contain; /* Sensible initial value */
     background-position: center center;
     background-repeat: repeat-x;
@@ -299,7 +299,7 @@ body.modal-open {
 	width: 100vw;
 	height: 75vw;
 	max-width: 133.33vh;
-	max-height: 100vh;
+	max-height: 90vh;
 	top: 0;
 	bottom: 0;
 	left: 0;
@@ -327,6 +327,11 @@ body.modal-open {
 	height: 100%;
 	display: table-cell;
 	vertical-align: middle;
+}
+
+.modal-flex-container {
+    width: 100%;
+	height: 100%;
 }
 
 .table-modal .modal-dialog {
@@ -370,6 +375,20 @@ body.modal-open {
 	background-color: #777777;
 	box-sizing: border-box;
     font-size: 100%;
+}
+
+.modal-flex-container .modal-dialog-surface, .modal-flex-container .modal-dialog {
+    height: 100%;
+}
+
+.modal-flex-container .modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.modal-flex-container .modal-footer {
+    margin-top: auto;
 }
 
 .table-modal .modal-content {
@@ -667,12 +686,6 @@ body.modal-open {
 
 #help-modal .modal-body {
     overflow-y: auto;
-    max-height: 55vh;
-    padding-top: 0px;
-}
-
-#help-modal .modal-header {
-    padding-bottom: 0px;
 }
 
 .help-page h2 {
@@ -964,11 +977,21 @@ body.modal-open {
 
 #title-version-button {
     position: absolute;
-    width: 12.5%;
-    height: 3.5%;
-    top: 17.25%;
+    width: 16.5%;
+    height: 5%;
+    top: 17%;
     left: 5.5%;
     padding-top: 0.15%;
+}
+
+#title-version-button > .substitute-version {
+    line-height: 85%;
+    margin-top: 0.35em;
+}
+
+#title-version-button > .substitute-version-time {
+    font-size: 80%;
+    white-space: nowrap;
 }
 
 #title-credits-button {
@@ -982,11 +1005,20 @@ body.modal-open {
 
 #title-help-button {
     position: absolute;
-    width: 12.5%;
-    height: 3.5%;
-    top: 17.25%;
+    width: 15.5%;
+    height: 6.5%;
+    top: 17%;
     right: 21%;
     padding-top: 0.15%;
+    font-size: 150%;
+    
+    background: linear-gradient(#f34141, #9F1616);
+    background-color: #f34141;
+}
+
+#title-help-button:hover {
+    background: linear-gradient(#F88888, #BB3333);
+    background-color: #F66666;
 }
 
 .title-banner-container {
@@ -1312,7 +1344,7 @@ body.modal-open {
 	position: absolute;
     width: 3.65%;
     height: 5%;
-    left: 19%;
+    left: 23%;
     top: 17%;
 }
 

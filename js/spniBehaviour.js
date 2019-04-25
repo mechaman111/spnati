@@ -460,6 +460,8 @@ function expandDialogue (dialogue, self, target) {
                 var n = self.hand.tradeIns.countTrue();
                 if (fn == 'ifplural') {
                     substitution = expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target);
+                } else if (fn == 'text' && args === undefined) {
+                    substitution = [ 'zero', 'one', 'two', 'three', 'four', 'five' ][n];
                 } else if (fn === undefined) {
                     substitution = String(n);
                 }
