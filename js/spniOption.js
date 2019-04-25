@@ -126,7 +126,7 @@ $('ul#options-auto-ending').on('click', 'a', function() {
 });
 
 $('ul#options-minimal-ui').on('click', 'a', function() {
-    setUIMode($(this).attr('data-value') || false);
+    setUIMode($(this).attr('data-value') === 'true');
 });
 
 /************************************************************
