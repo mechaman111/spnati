@@ -48,7 +48,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private const int DefaultZoomIndex = 3;
 		private int _zoomIndex = DefaultZoomIndex;
-		private float[] _zoomLevels = new float[] { 0.25f, 0.5f, 0.75f, 1, 1.5f, 2, 2.5f, 3 };
+		private float[] _zoomLevels = new float[] { 0.25f, 0.5f, 0.75f, 1, 1.5f, 2, 2.5f, 3, 3.5f, 4, 4.5f, 5f };
 		private float _zoom = 1;
 
 		private float _time;

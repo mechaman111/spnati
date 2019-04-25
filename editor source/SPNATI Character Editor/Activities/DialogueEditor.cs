@@ -893,7 +893,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				splitDialogue.Panel2.Visible = true;
 				grpConditions.Enabled = true;
-				cmdCallOut.Enabled = true;
+				cmdCallOut.Enabled = cmdMakeResponse.Enabled = _selectedCase.GetResponseTag(_character, _character) != null;
 			}
 			else
 			{

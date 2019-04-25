@@ -957,6 +957,10 @@ namespace SPNATI_Character_Editor
 			Case response = new Case();
 
 			response.Tag = GetResponseTag(speaker, responder);
+			if (response.Tag == null)
+			{
+				return null;
+			}
 
 			bool caseIsTargetable = TriggerDatabase.GetTrigger(Tag).HasTarget;
 			bool responseIsTargetable = TriggerDatabase.GetTrigger(response.Tag).HasTarget;
@@ -1484,6 +1488,10 @@ namespace SPNATI_Character_Editor
 			{
 				return "game_over_defeat";
 			}
+			else if (Tag == "finishing_masturbating")
+			{
+				return null;
+			}
 
 			string tag = Tag;
 			if (tag.StartsWith("female_"))
@@ -1666,6 +1674,11 @@ namespace SPNATI_Character_Editor
 			{
 				//if that failed, the case is too specific to respond to exactly, so create a matching case with the bare minimum of requirements
 				response = new Case(sourceCase.GetResponseTag(speaker, other));
+				if (response == null)
+				{
+					//if that failed, there is no way to respond to this tag
+					return cases;
+				}
 			}
 
 			//now get a list of cases that fit the bare minimum requirements of that response (i.e. the tag and stages)
