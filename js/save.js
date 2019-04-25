@@ -213,6 +213,30 @@ function Save() {
         maleEndings = [];
         femaleEndings = [];
     }
+    
+    this.setCollectibleCounter = function (collectible, counter) {
+        if (!COLLECTIBLES_ENABLED) return;
+        
+        var charID = '__general';
+        if (collectible.player) {
+            charID = collectible.player.id;
+        }
+        
+        localStorage.setItem(prefix+charID+collectible.id, counter.toString());
+    }
+    
+    this.getCollectibleCounter = function (collectible) {
+        if (!COLLECTIBLES_ENABLED) return 0;
+        
+        var charID = '__general';
+        if (collectible.player) {
+            charID = collectible.player.id;
+        }
+        
+        var ctr = localStorage.getItem(prefix+charID+collectible.id);
+        
+        return parseInt(ctr, 10) || 0;
+    }
 }
 
 var save = new Save();

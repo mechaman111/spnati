@@ -11,6 +11,8 @@
 var DEBUG = false;
 var EPILOGUES_ENABLED = true;
 var EPILOGUES_UNLOCKED = false;
+var COLLECTIBLES_ENABLED = true;
+var COLLECTIBLES_UNLOCKED = false;
 var EPILOGUE_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
@@ -66,6 +68,7 @@ var table = new Table();
 var jsErrors = [];
 var sessionID = '';
 var gameID = '';
+var generalCollectibles = [];
 
 /**********************************************************************
  * Screens & Modals
@@ -93,6 +96,7 @@ $gameSettingsModal = $('#game-settings-modal');
 $bugReportModal = $('#bug-report-modal');
 $usageTrackingModal = $('#usage-reporting-modal');
 $playerTagsModal = $('#player-tags-modal');
+$collectibleInfoModal = $('#collectibles-info-modal');
 
 /* Screen State */
 $previousScreen = null;
@@ -495,6 +499,8 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.description = fixupDialogue($metaXml.find('description').html());
     this.endings = $metaXml.find('epilogue');
     this.ending = this.endings.length > 0 || $metaXml.find('has_ending').text() === "true";
+    this.has_collectibles = $metaXml.find('has_collectibles').text() === "true";
+    this.collectibles = null;
     this.layers = parseInt($metaXml.find('layers').text(), 10);
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
@@ -503,6 +509,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.default_costume = null;
     this.poses = {};
     this.labelOverridden = false;
+    this.pendingCollectiblePopup = null;
     
     /* baseTags stores tags that will be later used in resetState to build the
      * opponent's true tags list. It does not store implied tags.
@@ -691,6 +698,31 @@ Opponent.prototype.unloadAlternateCostume = function () {
     this.resetState();
 }
 
+Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
+    if (!this.has_collectibles) return;
+    if (this.collectibles !== null) return;
+    
+    $.ajax({
+		type: "GET",
+		url: this.folder + 'collectibles.xml',
+		dataType: "text",
+		success: function(xml) {
+			var collectiblesArray = [];
+			$(xml).find('collectible').each(function (idx, elem) {
+				collectiblesArray.push(new Collectible($(elem), this));
+			}.bind(this));
+			
+			this.collectibles = collectiblesArray;
+            
+            if (onLoaded) onLoaded(this);
+		}.bind(this),
+        error: function (jqXHR, status, err) {
+            console.error("Error loading collectibles for "+this.id+": "+status+" - "+err);
+            if (onError) onError(this, status, err);
+        }.bind(this)
+	});
+}
+
 /************************************************************
  * Loads and parses the start of the behaviour XML file of the
  * given opponent.
@@ -717,6 +749,10 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
          */
 		function(xml) {
             var $xml = $(xml);
+
+            if (this.has_collectibles) {
+                this.loadCollectibles();
+            }
 
             this.xml = $xml;
             this.size = $xml.find('size').text();
@@ -859,6 +895,8 @@ function initialSetup () {
     loadTitleScreen();
     selectTitleCandy();
     loadVersionInfo();
+    loadGeneralCollectibles();
+    
 	/* Make sure that the config file is loaded before processing the
 	   opponent list, so that includedOpponentStatuses is populated. */
     loadConfigFile().always(loadSelectScreen);
@@ -1014,6 +1052,27 @@ function loadConfigFile () {
                 ALT_COSTUMES_ENABLED = false;
                 console.log("Alternate costumes disabled");
             }
+            
+            if (DEBUG) {
+                COLLECTIBLES_ENABLED = false;
+                COLLECTIBLES_UNLOCKED = false;
+                
+                if ($(xml).find('collectibles').text() === 'true') {
+                    COLLECTIBLES_ENABLED = true;
+                    console.log("Collectibles enabled");
+                    
+                    if ($(xml).find('collectibles-unlocked').text() === 'true') {
+                        COLLECTIBLES_UNLOCKED = true;
+                        console.log("All collectibles force-unlocked");
+                    }
+                } else {
+                    console.log("Collectibles disabled");
+                }
+            } else {
+                COLLECTIBLES_ENABLED = false;
+                COLLECTIBLES_UNLOCKED = false;
+                console.log("Debug mode disabled - collectibles disabled");
+            }
 
 			$(xml).find('include-status').each(function() {
 				includedOpponentStatuses[$(this).text()] = true;
@@ -1023,6 +1082,22 @@ function loadConfigFile () {
 	});
 }
 
+function loadGeneralCollectibles () {
+    $.ajax({
+		type: "GET",
+		url: 'opponents/general_collectibles.xml',
+		dataType: "text",
+		success: function(xml) {
+			var collectiblesArray = [];
+			$(xml).find('collectible').each(function (idx, elem) {
+				generalCollectibles.push(new Collectible($(elem), undefined));
+			});
+		},
+        error: function (jqXHR, status, err) {
+            console.error("Error loading general collectibles: "+status+" - "+err);
+        }
+	});
+}
 
 
 function enterTitleScreen() {

@@ -3,6 +3,45 @@
  the game.
  ********************************************************************************/
 
+ /**********************************************************************
+  *****                   Gallery Screen UI Elements               *****
+  **********************************************************************/
+
+$galleryEndingsScreen = $('#epilogue-gallery-screen');
+$galleryCollectiblesScreen = $('#collectible-gallery-screen');
+
+/**********************************************************************
+ *****          Epilogues Gallery Screen UI Elements              *****
+ **********************************************************************/
+ 
+$genderTypeButtons = [$('#gallery-gender-all'), $('#gallery-gender-any'), $('#gallery-gender-male'), $('#gallery-gender-female')];
+$galleryEndings = $('#gallery-endings-block').children();
+$galleryPrevButton = $('#gallery-prev-page-button');
+$galleryNextButton = $('#gallery-next-page-button');
+$galleryStartButton = $('#gallery-start-ending-button');
+$selectedEndingPreview = $('#selected-ending-previev');
+$selectedEndingLabels = [$('#selected-ending-title'), $('#selected-ending-character'), $('#selected-ending-gender')];
+$selectedEndingHint = [$('#selected-ending-hint-container'), $('#selected-ending-hint')];
+
+/**********************************************************************
+ *****          Collectibles Gallery Screen UI Elements           *****
+ **********************************************************************/
+$collectibleListPane = $('#collectibles-list-pane');
+$collectibleImagePane = $('#collectibles-image-pane');
+$collectibleTextPane = $('#collectibles-text-pane');
+
+$collectibleTextContainer = $('.collectible-text-container');
+
+$collectibleTitle = $('#collectible-title');
+$collectibleSubtitle = $('#collectible-subtitle');
+$collectibleCharacter = $('#collectible-character');
+$collectibleUnlock = $('#collectible-unlock');
+$collectibleProgressContainer = $('#collectible-progress');
+$collectibleProgressBar = $('#collectible-progress-bar');
+$collectibleProgressText = $('#collectible-progress-text');
+$collectibleText = $('#collectible-text');
+$collectibleImage = $('#collectible-image');
+
 function GEnding(player, ending){
 	this.player = player;
 	this.gender = $(ending).attr('gender');
@@ -20,40 +59,277 @@ function GEnding(player, ending){
 	this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title); };
 }
 
- /**********************************************************************
-  *****                   Gallery Screen UI Elements               *****
-  **********************************************************************/
+var unescapeSubstitutions = {
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&apos;': '\'',
+    '&amp;': '&',
+}
+var unescapeDialogueRE = /(&(?:lt|gt|quot|apos|amp);)/gi
 
-$genderTypeButtons = [$('#gallery-gender-all'), $('#gallery-gender-any'), $('#gallery-gender-male'), $('#gallery-gender-female')];
-$galleryEndings = $('#gallery-endings-block').children();
-$galleryPrevButton = $('#gallery-prev-page-button');
-$galleryNextButton = $('#gallery-next-page-button');
-$galleryStartButton = $('#gallery-start-ending-button');
-$selectedEndingPreview = $('#selected-ending-previev');
-$selectedEndingLabels = [$('#selected-ending-title'), $('#selected-ending-character'), $('#selected-ending-gender')];
-$selectedEndingHint = [$('#selected-ending-hint-container'), $('#selected-ending-hint')];
+function unescapeHTML(in_text) {
+    return in_text.replace(unescapeDialogueRE, function (match, p1) {
+        return unescapeSubstitutions[p1];
+    });
+}
+
+function Collectible(xmlElem, player) {
+	this.id = xmlElem.attr('id');
+	this.thumbnail = xmlElem.attr('thumbnail');
+    this.image = xmlElem.attr('img');
+	this.title = unescapeHTML(xmlElem.find('title').text());
+	this.subtitle = unescapeHTML(xmlElem.find('subtitle').text());	
+	this.unlock_hint = unescapeHTML(xmlElem.find('unlock').text());
+	this.text = unescapeHTML(xmlElem.find('text').html());
+    this.detailsHidden = xmlElem.find('hide-details').text() === 'true';
+    this.hidden = xmlElem.find('hidden').text() === 'true';
+    this.counter = parseInt(xmlElem.find('counter').text(), 10) || undefined;
+    
+    if (this.counter <= 0) this.counter = undefined;
+    
+    if (player) {
+    	this.source = player.label;
+        this.player = player;
+    } else {
+    	this.source = 'The Inventory';
+        this.player = undefined;
+    }
+}
+
+Collectible.prototype.isUnlocked = function () {
+    if (COLLECTIBLES_UNLOCKED) return true;
+    
+    var curCounter = save.getCollectibleCounter(this);
+    if (this.counter) {
+        return curCounter >= this.counter;
+    } else {
+        return curCounter > 0;
+    }
+}
+
+Collectible.prototype.getCounter = function (inc) {    
+    return save.getCollectibleCounter(this);
+}
+
+Collectible.prototype.unlock = function () {
+    save.setCollectibleCounter(this, this.counter || 1);
+}
+
+Collectible.prototype.incrementCounter = function (inc) {
+    var newCounter = save.getCollectibleCounter(this) + inc;
+    save.setCollectibleCounter(this, newCounter); 
+}
+
+Collectible.prototype.setCounter = function (val) {
+    save.setCollectibleCounter(this, val); 
+}
+
+Collectible.prototype.display = function () {
+    if ((!this.detailsHidden && !this.hidden) || this.isUnlocked()) {
+        $collectibleTitle.html(this.title);
+        $collectibleSubtitle.html(this.subtitle).show();
+    } else {
+        $collectibleTitle.html("[Locked]");
+        $collectibleSubtitle.html("").hide();
+    }
+    
+    $collectibleCharacter.text(this.source);
+    $collectibleUnlock.html(this.unlock_hint);
+    
+    if (this.counter) {
+        var curCounter = this.getCounter();
+        var pct = Math.round((curCounter / this.counter) * 100);
+        
+        $collectibleProgressBar
+            .attr('aria-valuenow', pct)
+            .css('width', pct+'%');
+        $collectibleProgressContainer.show();
+        
+        $collectibleProgressText.text('('+curCounter+' / '+this.counter+')').show();
+    } else {
+        $collectibleProgressContainer.hide();
+        $collectibleProgressText.hide();
+    }
+    
+    $collectibleTextPane.show();
+    
+    if (this.isUnlocked()) {
+    	$collectibleText.html(this.text);
+        $collectibleTextContainer.show();
+    	
+    	if (this.image) {
+    		$collectibleImage.attr('src', this.image);
+    		$collectibleImagePane.show();
+    	} else {
+    		$collectibleImagePane.hide();
+    	}
+    } else {
+        $collectibleTextContainer.hide();
+        $collectibleImagePane.hide();
+    }
+};
+
+Collectible.prototype.listElement = function () {
+    if (this.hidden && !this.isUnlocked()) {
+        return null;
+    }
+    
+	var baseElem = $('<div class="collectibles-list-item bordered"></div>');
+	var imgElem = $('<img class="collectibles-item-icon">');
+	var titleElem = $('<div class="collectibles-item-title"></div>');
+	var subtitleElem = $('<div class="collectibles-item-subtitle"></div>');
+	
+    if (!this.detailsHidden || this.isUnlocked()) {
+        titleElem.html(this.title);
+    	subtitleElem.html(this.subtitle);
+    } else {
+        titleElem.html("[Locked]");
+        subtitleElem.html(this.unlock_hint);
+    }
+    
+    if (this.counter) {
+        var curCounter = this.getCounter();
+        var curSubtitle = subtitleElem.html();
+        subtitleElem.html(curSubtitle + ' ('+curCounter+' / '+this.counter+')');
+    }
+    
+    if (this.isUnlocked()) {
+    	imgElem.attr('src', this.thumbnail);
+    } else {
+        imgElem.attr('src', "img/unknown.svg");
+    }
+    
+	baseElem.append(imgElem, titleElem, subtitleElem).click(this.display.bind(this));
+	return baseElem;
+};
+
+Collectible.prototype.displayInfoModal = function () {
+    $('#collectible-info-thumbnail').attr('src', this.thumbnail);
+    $('#collectible-info-title').html(this.title);
+    $('#collectible-info-subtitle').html(this.subtitle);
+    
+    $collectibleInfoModal.modal('show');
+    
+    /* Hide the modal if the user clicks anywhere outside of it. */
+    $('.modal-backdrop').one('click', function () {
+        $collectibleInfoModal.modal('hide');
+    })
+}
+
+
+/**********************************************************************
+ *****                   Gallery Screen UI Functions              *****
+ **********************************************************************/
+ 
+ 
+/* opponent listing file */
+var galleryEndings = [];
+var allEndings = [];
+var galleryPage = 0;
+var galleryPages = -1;
+var epp = 20;
+var selectedEnding = -1;
+var GALLERY_GENDER = 'all';
+
+var playerCollectibles = {}; /* Indexed by player ID. */
+
+function goToEpiloguesScreen() {
+	$galleryEndingsScreen.show();
+	$galleryCollectiblesScreen.hide();
+	loadGalleryEndings();
+	updateGalleryScreen();
+}
+
+function goToCollectiblesScreen() {
+	$galleryCollectiblesScreen.show();
+	$galleryEndingsScreen.hide();
+    loadAllCollectibles();
+    updateCollectiblesScreen();
+    $collectibleTextPane.hide();    
+    $collectibleImagePane.hide();    
+}
+
+function createFilterOption (opp) {
+    var elem = document.createElement('option');
+    elem.value = opp.id;
+    elem.text = opp.label;
+    elem.className = 'gallery-character-filter-option'
+    
+    return elem;
+}
 
 function loadGalleryScreen(){
 	screenTransition($titleScreen, $galleryScreen);
-	loadGalleryEndings();
-	galleryGender(GALLERY_GENDER);
+    
+    /* Set up filter lists: */
+    
+    // Clear all previously populated list items:
+    $('.gallery-character-filter-option').detach();
+    
+    $('#collectible-character-filter').append(loadedOpponents.filter(function (opp) {
+        return opp && opp.has_collectibles
+    }).map(createFilterOption));
+    
+    $('#epilogue-character-filter').append(loadedOpponents.filter(function (opp) {
+        return opp && opp.ending;
+    }).map(createFilterOption))
+    
+    if (COLLECTIBLES_ENABLED) {
+        goToCollectiblesScreen();
+    } else {
+        goToEpiloguesScreen();
+        $('.gallery-switch-button').hide();
+    }
 }
 
 function backGalleryScreen(){
 	screenTransition($galleryScreen, $titleScreen);
 }
 
-/* opponent listing file */
-var galleryEndings = [];
-var allEndings = [];
-var anyEndings = [];
-var maleEndings = [];
-var femaleEndings = [];
-var galleryPage = 0;
-var galleryPages = -1;
-var epp = 20;
-var selectedEnding = -1;
-var GALLERY_GENDER = 'all';
+function changeCharacterFilter (collectibleScreen) {
+    if (collectibleScreen) {
+        updateCollectiblesScreen();
+    } else {
+        updateGalleryScreen();
+    }
+}
+
+function loadAllCollectibles() {
+    loadedOpponents.forEach(function (opp) {
+        if (opp && opp.has_collectibles) {
+            opp.loadCollectibles(updateCollectiblesScreen);
+        }
+    });
+}
+
+function updateCollectiblesScreen() {	
+	$collectibleListPane.empty();
+	
+    var filter = $('#collectible-character-filter').val();
+    
+    if (!filter || filter === '__general') {
+        generalCollectibles.forEach(function (item) {
+            var elem = item.listElement();
+            if (elem) {
+                $collectibleListPane.append(elem);    
+            }
+        });
+    }
+    
+    loadedOpponents.forEach(function (opp) {
+        if (opp && opp.collectibles) {
+            if (filter && opp.id !== filter) return;
+            
+            opp.collectibles.forEach(function (item) {
+                var elem = item.listElement();
+                if (elem) {
+                    $collectibleListPane.append(elem);    
+                }
+            });
+        }
+    });
+}
 
 function loadGalleryEndings(){
 	if(allEndings.length > 0){
@@ -64,19 +340,44 @@ function loadGalleryEndings(){
 		if (loadedOpponents[i].ending) {
 			loadedOpponents[i].endings.each(function () {
 				var gending = new GEnding(loadedOpponents[i], this);
-				
-				allEndings.push( gending );
-				switch(gending.gender){
-					case 'male': maleEndings.push(gending);
-					break;
-					case 'female': femaleEndings.push(gending);
-					break;
-					default: anyEndings.push(gending);
-					break;
-				}
+				allEndings.push(gending);
 			});
 		}
 	}
+}
+function updateGalleryScreen () {
+    var charFilter = $('#epilogue-character-filter').val();
+    
+    galleryEndings = allEndings.filter(function (ending) {
+        if (charFilter && ending.player.id !== charFilter) return false;
+        
+        switch (GALLERY_GENDER) {
+        case 'male':
+            if (ending.gender !== 'male') return false;
+            break;
+        case 'female':
+            if (ending.gender !== 'female') return false;
+            break;
+        case 'any':
+            if (ending.gender === 'male' || ending.gender === 'female') return false;
+            break;
+        default:
+            break;
+        }
+        
+        return true;
+    });
+    
+    galleryPages = Math.ceil(galleryEndings.length/parseFloat(epp));
+	galleryPage = 0;
+	$galleryPrevButton.attr('disabled', true);
+	if(galleryPages==1){
+		$galleryNextButton.attr('disabled', true);
+	}
+	else{
+		$galleryNextButton.attr('disabled', false);
+	}
+	loadThumbnails();
 }
 
 function loadEndingThunbnail(element, ending){
@@ -102,37 +403,26 @@ function loadThumbnails(){
 	}
 }
 
+
 function galleryGender(gender){
 	GALLERY_GENDER = gender;
 	$('.gallery-gender-button').css('opacity', 0.4);
 	switch(gender){
 		case 'male':
-			galleryEndings = maleEndings;
 			$('#gallery-gender-male').css('opacity', 1);
 			break;
 		case 'female':
-			galleryEndings = femaleEndings;
 			$('#gallery-gender-female').css('opacity', 1);
 			break;
 		case 'any':
-			galleryEndings = anyEndings;
 			$('#gallery-gender-any').css('opacity', 1);
 			break;
 		default:
-			galleryEndings = allEndings;
 			$('#gallery-gender-all').css('opacity', 1);
 			break;
 	}
-	galleryPages = Math.ceil(galleryEndings.length/parseFloat(epp));
-	galleryPage = 0;
-	$galleryPrevButton.attr('disabled', true);
-	if(galleryPages==1){
-		$galleryNextButton.attr('disabled', true);
-	}
-	else{
-		$galleryNextButton.attr('disabled', false);
-	}
-	loadThumbnails();
+    
+    updateGalleryScreen();
 }
 
 function galleryNextPage(){

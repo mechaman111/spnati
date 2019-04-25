@@ -197,12 +197,11 @@ function State($xml, addedTags, removedTags) {
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
-    var markerOp = $xml.attr('marker');
     this.rawDialogue = $xml.html();
     
     if (this.location && Number(this.location) == this.location) {
-    // It seems that location was specified as a number without "%"
-    this.location = this.location + "%";
+        // It seems that location was specified as a number without "%"
+        this.location = this.location + "%";
     }
     
     this.setIntelligence = $xml.attr('set-intelligence');
@@ -212,6 +211,32 @@ function State($xml, addedTags, removedTags) {
     
     this.addTags = !!addedTags ? addedTags : [];
     this.removeTags = !!removedTags ? removedTags : [];
+
+    var collectibleId = $xml.attr('collectible') || undefined;
+    var collectibleOp = $xml.attr('collectible-value') || undefined;
+    var markerOp = $xml.attr('marker');
+
+    if (collectibleId) {
+        this.collectible = {id: collectibleId, op: 'unlock', val: null};
+        
+        if (collectibleOp) {
+            if (collectibleOp.startsWith('+')) {
+                this.collectible.op = 'inc';
+                this.collectible.val = parseInt(collectibleOp.substring(1), 10);
+            } else if (collectibleOp.startsWith('-')) {
+                this.collectible.op = 'dec';
+                this.collectible.val = parseInt(collectibleOp.substring(1), 10);
+            } else {
+                this.collectible.op = 'set';
+                this.collectible.val = parseInt(collectibleOp, 10);
+            }
+            
+            if (!this.collectible.val || this.collectible.val <= 0) {
+                this.collectible.op = 'unlock';
+                this.collectible.val = null;
+            }
+        }
+    }
 
     if (markerOp) {
         var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
@@ -297,6 +322,43 @@ State.prototype.expandDialogue = function(self, target) {
     this.dialogue = expandDialogue(this.rawDialogue, self, target);
 }
 
+State.prototype.applyCollectible = function (player) {
+    if (COLLECTIBLES_ENABLED && this.collectible && player.collectibles) {        
+        player.collectibles.some(function (collectible) {
+            if (collectible.id === this.collectible.id) {
+                console.log(
+                    "Performing collectible op: "+
+                    this.collectible.op.toUpperCase()+
+                    " on ID: "+
+                    this.collectible.id
+                );
+                
+                switch(this.collectible.op) {
+                default:
+                case 'unlock':
+                    collectible.unlock();
+                    break;
+                case 'inc':
+                    collectible.incrementCounter(this.collectible.val);
+                    break;
+                case 'dec':
+                    collectible.incrementCounter(-this.collectible.val);
+                    break;
+                case 'set':
+                    collectible.setCounter(this.collectible.val);
+                    break;
+                }
+                
+                if (collectible.isUnlocked() && !COLLECTIBLES_UNLOCKED) {
+                    player.pendingCollectiblePopup = collectible;
+                }
+                
+                return true;
+            }
+        }.bind(this));
+    }
+}
+
 function getTargetMarker(marker, target) {
     if (!target) { return marker; }
     return "__" + target.id + "_" + marker;
@@ -314,6 +376,22 @@ function expandPlayerVariable(split_fn, args, self, target) {
         return (target.slot < self.slot) ? 'left' : 'right';
     case 'slot':
         return target.slot;
+    case 'collectible':
+        var collectibleID = split_fn[1];
+        if (collectibleID) {
+            var collectibles = target.collectibles.filter(function (c) { return c.id === collectibleID; });
+            var targetCollectible = collectibles[0];
+            
+            if (split_fn[2] && split_fn[2] === 'counter') {
+                if (targetCollectible) return targetCollectible.getCounter();
+                return 0;
+            } else {
+                if (targetCollectible) return targetCollectible.isUnlocked();
+                return false;
+            }
+        } else {
+            return "collectible"; // no collectible ID supplied
+        }
     case 'marker':
         var markerName = split_fn[1];
         if (markerName) {
@@ -388,6 +466,29 @@ function expandDialogue (dialogue, self, target) {
                     substitution = String(n);
                 }
                 break;
+            case 'collectible':
+                fn = fn_parts[0];
+                if (fn) {
+                    var collectibles = self.collectibles.filter(function (c) { return c.id === fn; });
+                    var targetCollectible = collectibles[0];
+                    
+                    if (fn_parts[1] && fn_parts[1] === 'counter') {
+                        if (targetCollectible) {
+                            substitution = targetCollectible.getCounter();
+                        } else {
+                            substitution = 0;
+                        }
+                    } else {
+                        if (targetCollectible) {
+                            substitution = targetCollectible.isUnlocked();
+                        } else {
+                            substitution = false;
+                        }
+                    }
+                } else {
+                    substitution = 'collectible'; // no collectible ID supplied
+                }
+                break;
             case 'marker':
                 fn = fn_parts[0];  // make sure to keep the original string case intact 
                 if (fn) {
@@ -441,7 +542,7 @@ function expandDialogue (dialogue, self, target) {
     // variable or
     // variable.attribute or
     // variable.function(arguments)
-    return dialogue.replace(/~(\w+)(?:\.([\w\.]+)(?:\(([^)]*)\))?)?~/g, substitute);
+    return dialogue.replace(/~(\w+)(?:\.([^\(]+)(?:\(([^)]*)\))?)?~/g, substitute);
 }
 
 function escapeRegExp(string) {
@@ -1108,8 +1209,8 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
                 volatileMatches.push(curCase); 
             } else {
                 if (curCase.hidden) {
-                    //if it's hidden, set markers but don't actually count as a match
-                    this.applyMarkers(curCase, opp);
+                    //if it's hidden, set markers and collectibles but don't actually count as a match
+                    this.applyHiddenStates(curCase, opp);
                     continue;
                 }
 
@@ -1262,6 +1363,10 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         this.chosenState.addTags.forEach(this.addTag.bind(this));
         this.updateTags();
     }
+    
+    if (this.chosenState.collectible) {
+        this.chosenState.applyCollectible(this);
+    }
 
     this.stateCommitted = true;
 }
@@ -1269,9 +1374,12 @@ Opponent.prototype.commitBehaviourUpdate = function () {
 /************************************************************
  * Applies markers from all lines in a case
  ************************************************************/
-Opponent.prototype.applyMarkers = function (chosenCase, opp) {
+Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
     var self = this;
-    chosenCase.states.forEach(function (c) { c.applyMarker(self, opp); });
+    chosenCase.states.forEach(function (c) {
+        c.applyMarker(self, opp);
+        c.applyCollectible(self);
+    });
 }
 
 /************************************************************

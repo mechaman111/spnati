@@ -70,10 +70,12 @@
 
 
       <!-- Start Button -->
-      <div id='title-start-edge' class='bordered'>
-        <button id='title-start-button' class='bordered smooth-button smooth-button-red' onclick="enterTitleScreen()">
-          <img class='title-entrance-image' src='img/enter.png'/>
-        </button>
+      <div class='title-menu-buttons-container'>
+          <div class='bordered title-start-edge'>
+              <button class='bordered smooth-button smooth-button-red title-start-button' onclick="enterTitleScreen()">
+                  <img class='title-entrance-image' src='img/enter.png'/>
+              </button>
+          </div>
       </div>
 
     </div>
@@ -129,26 +131,26 @@
         <input type="text" class='bordered' id='player-name-field'/>
       </div>
 
-      <!-- Player Gender -->
-      <div id='title-gender-block'>
-        <input type='image' value='' id='male-gender-button' class='bordered title-content-button' src='img/male.png' onclick='changePlayerGender("male")'>
-        <input type='image' value='' id='female-gender-button' class='bordered title-content-button' src='img/female.png' onclick='changePlayerGender("female")'>
+      <div class="title-gender-size-container">
+          <!-- Player Gender -->
+          <input type='image' value='' id='male-gender-button' class='bordered title-content-button title-gender-button' src='img/male.png' onclick='changePlayerGender("male")'>
+          <input type='image' value='' id='female-gender-button' class='bordered title-content-button title-gender-button' src='img/female.png' onclick='changePlayerGender("female")'>
+        
+          <!-- Player Male Size -->
+          <div id='male-size-container' class='title-size-block medium'>
+            <input type='image' value='' id="small-junk-button" class='bordered title-small-button title-content-button title-size-button' src='img/male_small.png' onclick='changePlayerSize("small")'>
+            <input type='image' value='' id="medium-junk-button" class='bordered title-medium-button title-content-button title-size-button' src='img/male_medium.png' onclick='changePlayerSize("medium")'>
+            <input type='image' value='' id="large-junk-button" class='bordered title-large-button title-content-button title-size-button' src='img/male_large.png' onclick='changePlayerSize("large")'>
+          </div>
+    
+          <!-- Player Female Size -->
+          <div id='female-size-container' class='title-size-block medium'>
+            <input type='image' value='' id="small-boobs-button" class='bordered title-small-button title-content-button title-size-button' src='img/female_small.png' onclick='changePlayerSize("small")'>
+            <input type='image' value='' id="medium-boobs-button" class='bordered title-medium-button title-content-button title-size-button' src='img/female_medium.png' onclick='changePlayerSize("medium")'>
+            <input type='image' value='' id="large-boobs-button" class='bordered title-large-button title-content-button title-size-button' src='img/female_large.png' onclick='changePlayerSize("large")'>
+          </div>
       </div>
-
-      <!-- Player Male Size -->
-      <div id='male-size-container' class='title-size-block medium'>
-        <input type='image' value='' id="small-junk-button" class='bordered title-small-button title-content-button' src='img/male_small.png' onclick='changePlayerSize("small")'>
-        <input type='image' value='' id="medium-junk-button" class='bordered title-medium-button title-content-button' src='img/male_medium.png' onclick='changePlayerSize("medium")'>
-        <input type='image' value='' id="large-junk-button" class='bordered title-large-button title-content-button' src='img/male_large.png' onclick='changePlayerSize("large")'>
-      </div>
-
-      <!-- Player Female Size -->
-      <div id='female-size-container' class='title-size-block medium'>
-        <input type='image' value='' id="small-boobs-button" class='bordered title-small-button title-content-button' src='img/female_small.png' onclick='changePlayerSize("small")'>
-        <input type='image' value='' id="medium-boobs-button" class='bordered title-medium-button title-content-button' src='img/female_medium.png' onclick='changePlayerSize("medium")'>
-        <input type='image' value='' id="large-boobs-button" class='bordered title-large-button title-content-button' src='img/female_large.png' onclick='changePlayerSize("large")'>
-      </div>
-
+      
       <!-- Player Wardrobe -->
       <div id='title-wardrobe-block'>
         <div class='title-label'>What are you wearing?</div>
@@ -203,26 +205,25 @@
         </div>
       </div>
 
-      <!-- Start Button -->
-      <div id='title-start-edge' class='bordered'>
-        <button id='title-start-button' class='bordered smooth-button smooth-button-red' onclick="validateTitleScreen()">
-          <img class='title-entrance-image' src='img/enter.png'/>
-        </button>
-	</div>
-	<div id='title-gallery-edge' class='bordered'>
-		<button id='title-gallery-button' class='bordered smooth-button smooth-button-red' onclick="loadGalleryScreen()">
-          <img class='title-gallery-image' src='img/gallery.svg'/>
-        </button>
+    <!-- Start Button -->
+    <div class='title-menu-buttons-container'>
+            <div class='bordered title-gallery-edge'>
+                <button class='bordered smooth-button smooth-button-red centered-icon-button title-menu-button title-gallery-button' onclick="loadGalleryScreen()">
+                    <img class='centered-icon-image' src='img/gallery.svg'/>
+                </button>
+            </div>
+            <div class='bordered title-start-edge'>
+                <button class='bordered smooth-button smooth-button-red centered-icon-button title-start-button' onclick="validateTitleScreen()">
+                    <img class='centered-icon-image title-entrance-image' src='img/enter.png'/>
+                </button>
+            </div>
+            <div class='bordered title-tags-edge'>
+                <button class='bordered smooth-button smooth-button-red centered-icon-button title-menu-button title-tags-button' onclick="showPlayerTagsModal()">
+                    <span class="glyphicon glyphicon-tags centered-icon-glyphicon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
     </div>
-	<div id='title-tags-edge' class='bordered'>
-		<button id='title-tags-button' class='bordered smooth-button smooth-button-red' onclick="showPlayerTagsModal()">
-          <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-        </button>
-    </div>
-
-    </div>
-
-
   </div>
 </div>
 
@@ -1004,49 +1005,96 @@
 
 <!-- Gallery Screen -->
 <div id="gallery-screen" class="screen-container" hidden>
-  <div class="screen">
-	  <div id="gallery-gender-block">
-		  <input type="image" id="gallery-gender-all" class="gallery-gender-button bordered" src='img/all.png' onclick="galleryGender('all')"/>
-		  <input type="image" id="gallery-gender-any" class="gallery-gender-button bordered" src='img/any.png' style="opacity:0.4;" onclick="galleryGender('any')" />
-		  <input type="image" id="gallery-gender-male" class="gallery-gender-button bordered" src='img/male.png' style="opacity:0.4;" onclick="galleryGender('male')" />
-		  <input type="image" id="gallery-gender-female" class="gallery-gender-button bordered" src="img/female.png" style="opacity:0.4;" onclick="galleryGender('female')" />
-	  </div>
-	  <div id="gallery-endings-block">
-		  <div class="gallery-ending" onclick="selectEnding(0)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(1)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(2)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(3)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(4)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(5)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(6)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(7)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(8)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(9)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(10)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(11)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(12)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(13)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(14)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(15)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(16)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(17)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(18)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(19)"></div>
-	  </div>
-	  <div id="gallery-controls-block">
-		  <button id="gallery-main-back-button" class="bordered main-select-button smooth-button smooth-button-red" onclick="backGalleryScreen()">Back</button>
-		  <button id="gallery-prev-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryPrevPage()" disabled="true">prev</button>
-		  <button id="gallery-next-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryNextPage()">next</button>
-		  <button id="gallery-start-ending-button" class="bordered main-select-button smooth-button smooth-button-green" onclick="doEpilogueFromGallery()" disabled="true" >Start</button>
-	  </div>
-	  <div id="gallery-selected-ending-block">
-		  <div id="selected-ending-previev"></div>
-		  <label id="selected-ending-title"></label>
-		  <label>Character: <span id="selected-ending-character"></span></label>
-		  <label>For: <span id="selected-ending-gender"></label>
-		  <label id="selected-ending-hint-container">To Unlock: <span id="selected-ending-hint"></label>
-	  </div>
-  </div>
+    <div id="collectible-gallery-screen" class="screen">
+        <div id="gallery-select-block">
+            <button class="bordered gallery-back-button gallery-select-button smooth-button smooth-button-red" onclick="backGalleryScreen()">Back</button>
+            <button class="bordered gallery-switch-button gallery-select-button smooth-button smooth-button-blue" onclick="goToEpiloguesScreen()">Epilogues</button>
+        </div>
+        <select id="collectible-character-filter" class="gallery-character-filter" onchange="changeCharacterFilter(true)">
+          <option value="" disabled selected>Filter by Character...</option>
+          <option value="">(no filter)</option>
+          <option value="__general">The Inventory</option>
+        </select>
+        <div class="collectibles-pane bordered" id="collectibles-list-pane"></div>
+        <div class="collectibles-pane bordered" id="collectibles-text-pane">
+            <h3 class="collectible-content text-center" id="collectible-title"></h3>
+            <h3 class="collectible-content collectible-subtitle-container text-center"><small id="collectible-subtitle"></small></h3>
+            <hr/>
+            <div class="collectible-content text-center collectible-character-container">
+                From: <i id="collectible-character"></i>
+            </div>
+            <div class="collectible-content collectible-unlock-container">
+                <div class="text-center">To Unlock:</div>
+                <div class="text-center">
+                    <span id="collectible-unlock"></span>
+                    <span id="collectible-progress-text"></span>
+                </div>
+                
+                <div class="progress" id="collectible-progress">
+                  <div id="collectible-progress-bar" class="progress-bar smooth-button-red" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                  </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="collectible-content collectible-text-container">
+                <h4 class="text-center">Description:</h4>
+                <div id="collectible-text"></div>
+            </div>
+        </div>
+        <div class="collectibles-pane bordered" id="collectibles-image-pane">
+            <img id="collectible-image">
+        </div>
+    </div>
+    <div id="epilogue-gallery-screen" class="screen" hidden>
+        <div id="gallery-select-block">
+            <button class="bordered gallery-back-button gallery-select-button smooth-button smooth-button-red" onclick="backGalleryScreen()">Back</button>
+            <button class="bordered gallery-switch-button gallery-select-button smooth-button smooth-button-blue" onclick="goToCollectiblesScreen()">Collectibles</button>
+        </div>
+        <select id="epilogue-character-filter" class="gallery-character-filter" onchange="changeCharacterFilter(false)">
+          <option value="" disabled selected>Filter by Character...</option>
+          <option value="">(no filter)</option>
+        </select>
+        <div id="gallery-gender-block">
+            <input type="image" id="gallery-gender-all" class="gallery-gender-button bordered" src='img/all.png' onclick="galleryGender('all')"/>
+            <input type="image" id="gallery-gender-any" class="gallery-gender-button bordered" src='img/any.png' style="opacity:0.4;" onclick="galleryGender('any')" />
+            <input type="image" id="gallery-gender-male" class="gallery-gender-button bordered" src='img/male.png' style="opacity:0.4;" onclick="galleryGender('male')" />
+            <input type="image" id="gallery-gender-female" class="gallery-gender-button bordered" src="img/female.png" style="opacity:0.4;" onclick="galleryGender('female')" />
+        </div>
+        <div id="gallery-endings-block">
+            <div class="gallery-ending" onclick="selectEnding(0)"></div>
+            <div class="gallery-ending" onclick="selectEnding(1)"></div>
+            <div class="gallery-ending" onclick="selectEnding(2)"></div>
+            <div class="gallery-ending" onclick="selectEnding(3)"></div>
+            <div class="gallery-ending" onclick="selectEnding(4)"></div>
+            <div class="gallery-ending" onclick="selectEnding(5)"></div>
+            <div class="gallery-ending" onclick="selectEnding(6)"></div>
+            <div class="gallery-ending" onclick="selectEnding(7)"></div>
+            <div class="gallery-ending" onclick="selectEnding(8)"></div>
+            <div class="gallery-ending" onclick="selectEnding(9)"></div>
+            <div class="gallery-ending" onclick="selectEnding(10)"></div>
+            <div class="gallery-ending" onclick="selectEnding(11)"></div>
+            <div class="gallery-ending" onclick="selectEnding(12)"></div>
+            <div class="gallery-ending" onclick="selectEnding(13)"></div>
+            <div class="gallery-ending" onclick="selectEnding(14)"></div>
+            <div class="gallery-ending" onclick="selectEnding(15)"></div>
+            <div class="gallery-ending" onclick="selectEnding(16)"></div>
+            <div class="gallery-ending" onclick="selectEnding(17)"></div>
+            <div class="gallery-ending" onclick="selectEnding(18)"></div>
+            <div class="gallery-ending" onclick="selectEnding(19)"></div>
+        </div>
+        <div id="gallery-controls-block">
+            <button id="gallery-prev-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryPrevPage()" disabled="true">prev</button>
+            <button id="gallery-next-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryNextPage()">next</button>
+            <button id="gallery-start-ending-button" class="bordered main-select-button smooth-button smooth-button-green" onclick="doEpilogueFromGallery()" disabled="true" >Start</button>
+        </div>
+        <div id="gallery-selected-ending-block">
+            <div id="selected-ending-previev"></div>
+            <label id="selected-ending-title"></label>
+            <label>Character: <span id="selected-ending-character"></span></label>
+            <label>For: <span id="selected-ending-gender"></label>
+      		<label id="selected-ending-hint-container">To Unlock: <span id="selected-ending-hint"></label>
+        </div>
+    </div>
 </div>
 
 <!-- Tab completion lists shared by individual and group filter modals -->
@@ -1325,6 +1373,36 @@
 </div>
 <!-- End of Title Settings Modal -->
 
+<!-- Start of in-game Collectibles Info modal -->
+<div id="collectibles-info-modal" class="modal table-modal fade" role="dialog">
+	<div class="modal-table-container">
+	<div class="modal-cell-container">
+	<div class="transparent-modal-dialog collectibles-modal-dialog">
+	<div class="bordered modal-dialog-surface">
+        <!-- Start of Modal Content -->
+		<div class="modal-content">
+			<div class="modal-header modal-thin-padding">
+                <h3 class="modal-title text-center"><b>Collectible Obtained!</b></h3>
+			</div>
+			<div class="modal-body modal-thin-padding">
+				<div id="collectible-info-container" class="modal-body-container">
+                    <img id="collectible-info-thumbnail" src="img/unknown.svg">
+                    <div class="collectible-info-text">
+                        <div id="collectible-info-title">Collectible Title</div>
+                        <p id="collectible-info-subtitle">Collectible Subtitle</p>
+                    </div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="options-modal-button" class="bordered smooth-button modal-button modal-thin-padding" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		<!-- End of Modal Content -->
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
 
 <!-- Start of Log Modal -->
 <div id="log-modal" class="modal table-modal fade" role="dialog">
@@ -2089,7 +2167,6 @@
 <!-- Game Screen -->
 <div id="game-screen" class="screen-container" hidden>
   <div class="screen">
-
     <!-- Dialogue Bubbles -->
     <div class="dialogue-bubble-row">
       <div id="game-bubble-1" class="bordered left dialogue-bubble-area">
@@ -2180,6 +2257,9 @@
         <button id="debug-button-1" class="bordered debug-button" onclick="selectDebug(1)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
+        <button id="collectible-button-1" class="bordered collectible-button">
+          <img src="img/gallery.svg" alt="Collectible unlocked! Click to view.">
+        </button>
       </div>
       <div id="game-opponent-area-2" class="bordered halfLeft opponent-area">
         <div id="game-name-label-2" class="bordered opponent-name-label">Opponent 2</div>
@@ -2192,6 +2272,9 @@
         </div>
         <button id="debug-button-2" class="bordered debug-button" onclick="selectDebug(2)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+        <button id="collectible-button-2" class="bordered collectible-button" >
+          <img src="img/gallery.svg" alt="Collectible unlocked! Click to view.">
         </button>
       </div>
       <div id="game-opponent-area-3" class="bordered halfRight opponent-area">
@@ -2206,6 +2289,9 @@
         <button id="debug-button-3" class="bordered debug-button" onclick="selectDebug(3)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
+        <button id="collectible-button-3" class="bordered collectible-button">
+          <img src="img/gallery.svg" alt="Collectible unlocked! Click to view.">
+        </button>
       </div>
       <div id="game-opponent-area-4" class="bordered right opponent-area">
         <div id="game-name-label-4" class="bordered opponent-name-label">Opponent 4</div>
@@ -2218,6 +2304,9 @@
         </div>
         <button id="debug-button-4" class="bordered debug-button" onclick="selectDebug(4)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+        <button id="collectible-button-4" class="bordered collectible-button">
+          <img src="img/gallery.svg" alt="Collectible unlocked! Click to view.">
         </button>
       </div>
 
