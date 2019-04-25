@@ -407,10 +407,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void canvas_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (_playing && !_recording) { return; }
 			_downPoint = new Point(e.X, e.Y);
 			if (e.Button == MouseButtons.Left)
 			{
+				if (_playing && !_recording) { return; }
 				//object selection
 				LiveSprite obj = null;
 				if (_moveContext == HoverContext.None || _moveContext == HoverContext.Select)
@@ -654,7 +654,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void canvas_MouseMove(object sender, MouseEventArgs e)
 		{
-			if (_playing && !_recording) { return; }
 			Point screenPt = new Point(e.X, e.Y);
 
 			switch (_state)
@@ -699,6 +698,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void SetContext(MouseEventArgs e, Point screenPt)
 		{
 			HoverContext context = GetContext(screenPt);
+			if (_playing && !_recording && context != HoverContext.CameraPan)
+			{
+				context = HoverContext.None;
+			}
 			if (_moveContext == HoverContext.Rotate || _moveContext == HoverContext.ArrowRight || _moveContext == HoverContext.ArrowLeft ||
 				_moveContext == HoverContext.ArrowDown || _moveContext == HoverContext.ArrowUp || _moveContext == HoverContext.Pivot)
 			{
