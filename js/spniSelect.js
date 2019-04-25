@@ -1243,8 +1243,12 @@ function clearSearch() {
 
 function changeSearchGender(gender) {
     chosenGender = gender;
-    setActiveOption($searchGenderOptions, gender);
+    setActiveOption("search-gender", gender);
 }
+
+$('ul#search-gender').on('click', 'a', function() {
+    changeSearchGender(parseInt($(this).attr('data-value'), 10));
+});
 
 function openGroupSearchModal() {
     $groupSearchModal.modal('show');
@@ -1269,9 +1273,12 @@ function clearGroupSearch() {
 
 function changeGroupSearchGender(gender) {
     chosenGroupGender = gender;
-    setActiveOption($groupSearchGenderOptions, gender);
+    setActiveOption("group-search-gender", gender);
 }
 
+$('ul#group-search-gender').on('click', 'a', function() {
+    changeGroupSearchGender(parseInt($(this).attr('data-value'), 10));
+});
 
 /************************************************************
  * Sorting Functions
