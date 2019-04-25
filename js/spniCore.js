@@ -89,7 +89,6 @@ var allScreens = [$warningScreen, $titleScreen, $selectScreen, $individualSelect
 /* Modals */
 $searchModal = $('#search-modal');
 $groupSearchModal = $('#group-search-modal');
-$creditModal = $('#credit-modal');
 $helpModal = $('#help-modal');
 $versionModal = $('#version-modal');
 $gameSettingsModal = $('#game-settings-modal');
@@ -1303,13 +1302,6 @@ function enableUsageTracking() {
 function disableUsageTracking() {
     USAGE_TRACKING = false;
     save.saveUsageTracking();
-}
-
-/************************************************************
- * The player clicked the credits button. Shows the credits modal.
- ************************************************************/
-function showCreditModal () {
-    $creditModal.modal('show');
 }
 
 /************************************************************
