@@ -1132,10 +1132,10 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
         return list.concat(caseObject.states);
     }.bind(this), []);
     
-    if (states.length > 0) {
+    var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
+    if (weightSum > 0) {
         console.log("Current NV case priority for player "+this.slot+": "+bestMatchPriority);
 
-        var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
         var rnd = Math.random() * weightSum;
         for (var i = 0, x = 0; x < rnd; x += states[i++].weight);
         
