@@ -141,6 +141,7 @@ function Save() {
             if ('autoEnding' in options
                 && (typeof options.autoEnding == 'number' || options.autoEnding === null))
                 ENDING_DELAY = options.autoEnding;
+            if ('minimalUI' in options && typeof options.minimalUI == 'boolean') setUIMode(options.minimalUI);
         } catch (ex) {
             console.error('Failed parsing options from localStorage');
         }
@@ -173,6 +174,7 @@ function Save() {
             dealAnimation: ANIM_TIME,
             autoForfeit: FORFEIT_DELAY,
             autoEnding: ENDING_DELAY,
+            minimalUI: MINIMAL_UI,
         };
         localStorage.setItem(prefix + 'options', JSON.stringify(options));
     };

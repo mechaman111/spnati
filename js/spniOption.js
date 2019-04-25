@@ -73,7 +73,18 @@ function showOptionsModal () {
     setActiveOption('options-deal-speed', ANIM_TIME);
     setActiveOption('options-auto-forfeit', FORFEIT_DELAY);
     setActiveOption('options-auto-ending', ENDING_DELAY);
+    setActiveOption('options-minimal-ui', MINIMAL_UI);
     $("#options-modal").modal('show');
+}
+
+function setUIMode(minimal) {
+    MINIMAL_UI = minimal;
+    
+    if (minimal) {
+        $gameScreen.addClass('ui-minimal');
+    } else {
+        $gameScreen.removeClass('ui-minimal');
+    }
 }
 
 $("#options-modal").on("hidden.bs.modal", function () {
@@ -112,6 +123,10 @@ $('ul#options-auto-forfeit').on('click', 'a', function() {
 
 $('ul#options-auto-ending').on('click', 'a', function() {
     ENDING_DELAY = Number($(this).attr('data-value')) || null;
+});
+
+$('ul#options-minimal-ui').on('click', 'a', function() {
+    setUIMode($(this).attr('data-value') === 'true');
 });
 
 /************************************************************

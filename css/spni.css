@@ -2011,7 +2011,7 @@ body.modal-open {
 }
 
 .player-card-area {
-	position: absolute;
+    position: absolute;
     width: 40%;
     height: 15%;
     right: 1.5%;
@@ -2070,6 +2070,11 @@ body.modal-open {
     height: 14%;
 }
 
+.ui-minimal .large-dealt-card {
+    width: 3.75%;
+    height: 7%;
+}
+
 .small-dealt-card {
     width: 4%;
     height: 6.5%;
@@ -2087,6 +2092,235 @@ body.modal-open {
 /* remove the "clear" button that occurs in some MS browsers */
 #player-masturbation-timer-box::-ms-clear {
 	display: none;
+}
+
+/***********************************************************
+ * Classes for the Minimalist UI.
+ ***********************************************************/
+
+.ui-minimal .opponent-area {
+    background: none;
+    text-align: center;
+    
+    bottom: auto;
+    top: 70%;
+    
+    height: calc(11.5% * 0.75);
+    width: calc(22% * 0.75);
+    opacity: 0.5;
+    
+    transition-property: opacity, transform, height, width;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .opponent-area.left, .ui-minimal .opponent-area.halfLeft {
+    transform: translateX(12.5%);
+}
+
+.ui-minimal .opponent-area.right, .ui-minimal .opponent-area.halfRight {
+    transform: translateX(-12.5%);
+}
+
+.ui-minimal .opponent-revealed-cards {
+    opacity: 0.75;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+.ui-minimal .opponent-area:hover, .ui-minimal .opponent-area:active {
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+.ui-minimal .opponent-area.current {
+    opacity: 1.0;
+    transition: none;
+}
+
+.ui-minimal .opponent-area.opponent-revealed-cards:hover, .ui-minimal .opponent-area.opponent-revealed-cards:active, .ui-minimal .opponent-area.opponent-lost {
+    transform: none;
+    opacity: 1.0;
+    height: 11.5%;
+    width: 22%;
+    
+    transition-property: opacity, transform, height, width;
+    transition-duration: 0.25s;
+}
+
+.ui-minimal .player-card-area  {    
+    background: none;
+    left: 57%;
+    
+    display: flex;
+    align-items: center;
+    
+    opacity: 0.50;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active, .ui-minimal .player-card-area.prompt-exchange {  
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+.ui-minimal .player-card-area .large-card-image {
+    width: 10%;
+    height: 50%;
+    
+    transition-property: width, height;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-card-area:hover .large-card-image, .ui-minimal .player-card-area:active .large-card-image, .ui-minimal .player-card-area.prompt-exchange .large-card-image {
+    width: 19%;
+    height: 100%;
+    
+    transition-property: width, height;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .opponent-card-area {
+    background: none;
+    display: flex;
+    justify-content: center;
+}
+
+.ui-minimal .small-card-image {
+    margin-right: -17%;
+    transform: translateX(-45%);
+}
+
+.ui-minimal .opponent-revealed-cards .small-card-image {
+    margin-right: 0;
+    transform: none;
+    
+    transition-property: margin-right, transform;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .opponent-name-label {
+    text-align: left;
+    display: inline;
+    padding: 1% 5%;
+}
+
+#player-game-clothing-area-minimal {
+    display: none;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    flex-basis: 0;
+    
+    position: absolute;
+    
+    right: 57%;
+    bottom: 3.5%;
+    
+    width: 33%;
+    transform: none;
+    
+    transition-property: height, transform;
+    transition-duration: 0.5s;
+}
+
+.minimal-clothing-area-row {
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    
+    width: 100%;
+    
+    opacity: 0.33;
+    transform: none;
+    
+    transition-property: opacity, transform;
+    transition-duration: 0.5s;
+}
+
+.player-lost .minimal-clothing-area-row {
+    opacity: 1.0;
+    transform: translateY(30%);
+    transition-property: opacity, transform;
+    transition-duration: 0.5s;
+}
+
+.small-clothing-image-container {
+    width: 12.5%;
+    height: auto;
+    margin-left: 1%;
+    transform: none;
+    
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+
+
+.player-lost .small-clothing-image-container {
+    width: 20%;
+    
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+
+.minimal-clothing-area-row .small-clothing-image {
+    height: auto;
+    width: 100%;
+    
+    margin-bottom: 0;
+    object-fit: contain;
+}
+.ui-minimal #player-game-clothing-area {
+    display: none;
+}
+
+.ui-minimal #player-game-clothing-area-minimal {
+    display: inline-flex;
+}
+
+.player-name-label-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    pointer-events: none;
+}
+
+.player-name-label-minimal {
+    display: none;
+    text-align: center;
+    min-width: 12%;
+    background-color: #f5f5f5;
+    padding-top: 0.125em;
+    padding-bottom: 0.125em;
+}
+
+.player-name-label-minimal.loser {
+    background-color: #DD4444;
+}
+
+.ui-minimal .player-name-label {
+    display: none;
+}
+
+.ui-minimal .player-name-label-minimal {
+    display: inline;
+}
+
+.optional-bordered {
+    border: 2px solid #111111;
+    border-radius: 5px;
+}
+
+.ui-minimal .optional-bordered {
+    border: none;
 }
 
 /************************************************************

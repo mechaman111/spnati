@@ -1278,7 +1278,7 @@
 <div id="stripping-modal" class="modal table-modal fade" role="dialog">
 	<div class="modal-table-container">
 	<div class="modal-cell-container">
-	<div class="bordered modal-dialog average-modal-dialog" style="height: 45%;">
+	<div class="bordered modal-dialog average-modal-dialog">
 	<div class="bordered modal-dialog-surface" style="height: 100%;">
 		<!-- Start of Modal Content -->
 		<div class="modal-content" style="height: 100%;">
@@ -1291,7 +1291,7 @@
               </div>
 			</div>
 			<div class="modal-footer">
-				<button id="stripping-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="closeStrippingModal()">Strip</button>
+				<button id="stripping-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="closeStrippingModal()">Select</button>
 			</div>
 		</div>
 		<!-- End of Modal Content -->
@@ -1537,6 +1537,17 @@
 										<li><a href="#" data-value="7500">Normal</a></li>
 										<li><a href="#" data-value="10000">Slow</a></li>
 										<li><a href="#">Off</a></li>
+									</ul>
+								</nav>
+							</td>
+						</tr>
+						<tr>
+							<td><h4 class="modal-title modal-left">Minimal UI</h4></td>
+							<td>
+								<nav>
+									<ul class="pagination" id="options-minimal-ui">
+										<li class="active"><a href="#" data-value="false">Disabled</a></li>
+										<li><a href="#" data-value="true">Enabled</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -2165,7 +2176,7 @@
 
 
 <!-- Game Screen -->
-<div id="game-screen" class="screen-container" hidden>
+<div id="game-screen" class="screen-container ui-minimal" hidden>
   <div class="screen">
     <!-- Dialogue Bubbles -->
     <div class="dialogue-bubble-row">
@@ -2245,7 +2256,7 @@
     <div id="game-table">
 
       <!-- Opponent Areas -->
-      <div id="game-opponent-area-1" class="bordered left opponent-area">
+      <div id="game-opponent-area-1" class="optional-bordered left opponent-area">
         <div id="game-name-label-1" class="bordered opponent-name-label">Opponent 1</div>
         <div class="opponent-card-area">
           <img id="player-1-card-1" class="bordered small-card-image" src="img/blankcard.jpg">
@@ -2261,7 +2272,7 @@
           <img src="img/gallery.svg" alt="Collectible unlocked! Click to view.">
         </button>
       </div>
-      <div id="game-opponent-area-2" class="bordered halfLeft opponent-area">
+      <div id="game-opponent-area-2" class="optional-bordered halfLeft opponent-area">
         <div id="game-name-label-2" class="bordered opponent-name-label">Opponent 2</div>
         <div class="opponent-card-area">
           <img id="player-2-card-1" class="bordered small-card-image" src="img/blankcard.jpg">
@@ -2277,7 +2288,7 @@
           <img src="img/gallery.svg" alt="Collectible unlocked! Click to view.">
         </button>
       </div>
-      <div id="game-opponent-area-3" class="bordered halfRight opponent-area">
+      <div id="game-opponent-area-3" class="optional-bordered halfRight opponent-area">
         <div id="game-name-label-3" class="bordered opponent-name-label">Opponent 3</div>
         <div class="opponent-card-area">
           <img id="player-3-card-1" class="bordered small-card-image" src="img/blankcard.jpg">
@@ -2293,7 +2304,7 @@
           <img src="img/gallery.svg" alt="Collectible unlocked! Click to view.">
         </button>
       </div>
-      <div id="game-opponent-area-4" class="bordered right opponent-area">
+      <div id="game-opponent-area-4" class="optional-bordered right opponent-area">
         <div id="game-name-label-4" class="bordered opponent-name-label">Opponent 4</div>
         <div class="opponent-card-area">
           <img id="player-4-card-1" class="bordered small-card-image" src="img/blankcard.jpg">
@@ -2313,24 +2324,39 @@
       <!-- Player Clothing and Label -->
       <div id="player-game-clothing-area" class="bordered">
         <div class="left player-clothing-container">
-          <img class="bordered clothing-float-left small-clothing-image" id="player-0-clothing-7" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-left small-clothing-image" id="player-0-clothing-6" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-left small-clothing-image" id="player-0-clothing-5" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-left small-clothing-image" id="player-0-clothing-8" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-left small-clothing-image player-0-clothing-7" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-left small-clothing-image player-0-clothing-6" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-left small-clothing-image player-0-clothing-5" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-left small-clothing-image player-0-clothing-8" src="img/blankcard.jpg">
         </div>
         <div class="right player-clothing-container">
-          <img class="bordered clothing-float-right small-clothing-image" id="player-0-clothing-2" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-right small-clothing-image" id="player-0-clothing-3" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-right small-clothing-image" id="player-0-clothing-4" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-right small-clothing-image" id="player-0-clothing-1" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-right small-clothing-image player-0-clothing-2" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-right small-clothing-image player-0-clothing-3" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-right small-clothing-image player-0-clothing-4" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-right small-clothing-image player-0-clothing-1" src="img/blankcard.jpg">
         </div>
 
-        <div id="game-name-label-0" class="bordered player-name-label">Player</div>
+        <div class="game-name-label-0 bordered player-name-label">Player</div>
         <div id="game-clothing-label" class="bordered">Your Clothing</div>
+      </div>
+      
+      <div id="player-game-clothing-area-minimal" class="">        
+        <div class="minimal-clothing-area-row">
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-8" src="img/blankcard.jpg" data-slot="8"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-7" src="img/blankcard.jpg" data-slot="7"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-6" src="img/blankcard.jpg" data-slot="6"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-5" src="img/blankcard.jpg" data-slot="5"></div>
+        </div>
+        <div class="minimal-clothing-area-row">
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-4" src="img/blankcard.jpg" data-slot="4"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-3" src="img/blankcard.jpg" data-slot="3"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-2" src="img/blankcard.jpg" data-slot="2"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-1" src="img/blankcard.jpg" data-slot="1"></div>
+        </div>
       </div>
 
       <!-- Player Cards -->
-      <div id="player-game-card-area" class="bordered player-card-area">
+      <div id="player-game-card-area" class="optional-bordered player-card-area">
         <input type="image" id="player-0-card-1" class="bordered large-card-image" src="img/blankcard.jpg" onclick="selectCard(0)"/>
         <input type="image" id="player-0-card-2" class="bordered large-card-image" src="img/blankcard.jpg" onclick="selectCard(1)"/>
         <input type="image" id="player-0-card-3" class="bordered large-card-image" src="img/blankcard.jpg" onclick="selectCard(2)"/>
@@ -2347,7 +2373,9 @@
     </div>
     <div id="player-countdown" class="bordered" hidden>1</div>
     <button id="main-game-button" class="bordered smooth-button smooth-button-red" onclick="advanceGame()">Deal</button>
-
+    <div class="player-name-label-container">
+      <div class="game-name-label-0 bordered player-name-label-minimal">Player</div>
+    </div>
   </div>
 </div>
 
