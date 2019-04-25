@@ -77,7 +77,7 @@ namespace SPNATI_Character_Editor
 		private void ApplyValue(string dataValue)
 		{
 			dataValue = dataValue ?? "";
-			string pattern = @"^([-\w\.]+)(\*?)(\s*(\<|\>|\<\=|\>\=|\<\=|\=\=?)\s*([-\w]+|~[-\w]+~))?$";
+			string pattern = @"^([-\w\.]+)(\*?)(\s*(\<|\>|\<\=|\>\=|\<\=|\=\=|!\=?)\s*([-\w]+|~[-\w]+~))?$";
 			Regex regex = new Regex(pattern);
 			Match match = regex.Match(dataValue);
 			if (match.Success)

@@ -41,7 +41,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			txtValue.Text = "";
 			cboOperator.SelectedIndex = 0;
 
-			string pattern = @"^([-\w\.]+)(\*?)(\s*(\<|\>|\<\=|\>\=|\<\=|\=\=?)\s*([-\w]+|~[-\w]+~))?$";
+			string pattern = @"^([-\w\.]+)(\*?)(\s*(\<|\>|\<\=|\>\=|\<\=|\=\=|!\=?)\s*([-\w]+|~[-\w]+~))?$";
 			Regex regex = new Regex(pattern);
 			Match match = regex.Match(GetValue()?.ToString() ?? "");
 			if (match.Success)

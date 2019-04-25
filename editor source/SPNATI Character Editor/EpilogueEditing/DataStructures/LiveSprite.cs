@@ -66,8 +66,21 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public string Marker
 		{
 			get { return Get<string>(); }
-			set { Set(value); }
+			set
+			{
+				bool perTarget;
+				MarkerOperator op;
+				string markerValue;
+				MarkerName = SPNATI_Character_Editor.Marker.ExtractConditionPieces(value, out op, out markerValue, out perTarget);
+				MarkerOp = op;
+				MarkerValue = markerValue;
+				Set(value);
+			}
 		}
+
+		private string MarkerName;
+		private MarkerOperator MarkerOp;
+		private string MarkerValue;
 
 		[Numeric(DisplayName = "Layer", Key = "z", GroupOrder = 15)]
 		public int Z
@@ -1433,7 +1446,26 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public void Draw(Graphics g, Matrix sceneTransform, List<string> markers)
 		{
 			if (!IsVisible || Hidden) { return; }
-			if (markers != null && !string.IsNullOrEmpty(Marker) && !markers.Contains(Marker)) { return; }
+			if (markers != null && !string.IsNullOrEmpty(MarkerName))
+			{
+				switch (MarkerOp)
+				{
+					case MarkerOperator.NotEqual:
+					case MarkerOperator.LessThan:
+					case MarkerOperator.GreaterThan:
+						if (markers.Contains(MarkerName) && MarkerValue != "0" || !markers.Contains(MarkerName) && MarkerValue == "0")
+						{
+							return;
+						}
+						break;
+					default:
+						if (markers.Contains(MarkerName) && MarkerValue == "0" || !markers.Contains(MarkerName) && MarkerValue != "0")
+						{
+							return;
+						}
+						break;
+				}
+			}
 
 			float alpha = WorldAlpha;
 			if (Image != null && alpha > 0)
