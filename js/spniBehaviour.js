@@ -199,6 +199,7 @@ function State($xml, addedTags, removedTags) {
     this.location = $xml.attr('location') || '';
     var markerOp = $xml.attr('marker');
     this.rawDialogue = $xml.html();
+    this.weight = Number($xml.attr('weight')) || 1;
     
     if (this.location && Number(this.location) == this.location) {
     // It seems that location was specified as a number without "%"
@@ -1133,8 +1134,10 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     
     if (states.length > 0) {
         console.log("Current NV case priority for player "+this.slot+": "+bestMatchPriority);
-        
-        var chosenState = states[getRandomNumber(0, states.length)];
+
+        var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
+        var rnd = Math.random() * weightSum;
+        for (var i = 0, x = 0; x < rnd; x += states[i++].weight);
         
         /* Reaction handling state... */
         this.volatileMatches = volatileMatches;
@@ -1145,7 +1148,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
         this.stateCommitted = false;
         
         this.allStates = states;
-        this.chosenState = chosenState;
+        this.chosenState = states[i - 1];
         
         return true;
     }
