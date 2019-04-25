@@ -67,6 +67,7 @@ $('#options-modal .pagination, #game-settings-modal ul.pagination').on('click', 
  * The player clicked the options button. Shows the options modal.
  ************************************************************/
 function showOptionsModal () {
+    loadMasturbationTimer();
     setActiveOption('options-auto-fade', AUTO_FADE);
     setActiveOption('options-card-suggest', CARD_SUGGEST);
     setActiveOption('options-ai-turn-time', GAME_DELAY);
@@ -133,7 +134,6 @@ $('ul#options-minimal-ui').on('click', 'a', function() {
  * The player clicked the options button. Shows the options modal.
  ************************************************************/
 function showGameSettingsModal () {
-    loadMasturbationTimer(); //set data values
     setActiveOption('settings-background', selectedBackground);
     $gameSettingsModal.modal('show');
 }
