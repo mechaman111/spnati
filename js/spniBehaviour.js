@@ -200,6 +200,7 @@ function State($xml, addedTags, removedTags) {
     var markerOp = $xml.attr('marker');
     this.rawDialogue = $xml.html();
     this.weight = Number($xml.attr('weight')) || 1;
+    if (this.weight < 0) this.weight = 0;
     
     if (this.location && Number(this.location) == this.location) {
     // It seems that location was specified as a number without "%"
