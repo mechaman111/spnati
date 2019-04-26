@@ -379,8 +379,7 @@ function getCostumeOption(alt_costume, selected_costume) {
 }
 
 /************************************************************
- * Loads opponents onto the individual select screen based
- * on the currently selected page.
+ * Loads opponents onto the individual select screen.
  ************************************************************/
 function updateIndividualSelectScreen () {
     $('#individual-select-screen .opponent-cards-container')
@@ -585,10 +584,12 @@ function updateSelectableOpponents(autoclear) {
     if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
         selectableOpponents.sort(sortingOptionsMap[sortingMode]);
     }
-
-    /* update max page indicator */
-    $individualMaxPageIndicator.html("of "+Math.ceil(selectableOpponents.length/4));
 }
+
+$('#individual-select-screen .sort-filter-field').change(function () {
+    updateSelectableOpponents(false);
+    updateIndividualSelectScreen();
+});
 
 /************************************************************
  * The player clicked on a suggested character button.
@@ -641,7 +642,6 @@ function selectOpponentSlot (slot) {
 
 		/* reload selection screen */
 		updateIndividualSelectScreen();
-        //updateIndividualCountStats();
 
         /* switch screens */
 		screenTransition($selectScreen, $individualSelectScreen);
@@ -803,74 +803,6 @@ function clickedRemoveAllButton ()
         $selectImages[i-1].off('load');
     }
     updateSelectionVisuals();
-}
-
-/************************************************************
- * The player clicked on a change stats card button on the
- * individual select screen.
- ************************************************************/
-function changeIndividualStats (target) {
-    for (var i = 1; i < 5; i++) {
-        for (var j = 1; j < 4; j++) {
-            if (j != target) {
-                $('#individual-stats-page-'+i+'-'+j).hide();
-            }
-            else {
-                $('#individual-stats-page-'+i+'-'+j).show();
-            }
-        }
-    }
-
-    individualCreditsShown = (target == 2); // true when Credits button is clicked
-}
-
-/************************************************************
- * The player clicked the select opponent button on the
- * individual select screen.
- ************************************************************/
-function selectIndividualOpponent (slot) {
-    /* move the stored player into the selected slot and update visuals */
-	players[selectedSlot] = shownIndividuals[slot-1];
-	updateSelectionVisuals();
-	players[selectedSlot].loadBehaviour(selectedSlot, true);
-
-	/* switch screens */
-	screenTransition($individualSelectScreen, $selectScreen);
-}
-
-/************************************************************
- * The player is changing the page on the individual screen.
- ************************************************************/
-function changeIndividualPage (skip, page) {
-    var lastPage = Math.ceil(selectableOpponents.length/4)-1;
-    
-    if (skip) {
-        if (page == -1) {
-            /* go to first page */
-            individualPage = 0;
-        } else if (page == 1) {
-            /* go to last page */
-            individualPage = lastPage;
-        } else {
-            /* go to selected page */
-            individualPage = Number($individualPageIndicator.val()) - 1;
-        }
-    } else {
-        individualPage += page;
-    }
-
-    updateIndividualSelectScreen();
-    updateIndividualCountStats();
-    
-    if (!skip && individualPage === lastPage) {
-        /* If the player browses to the last page without using the skip buttons,
-         * show the "Looking for Someone?" modal.
-         */
-        
-        if (!$('#select-headsup-hide').prop('checked')) {
-            $('#select-headsup-modal').modal('show');
-        }
-    }
 }
 
 /************************************************************
@@ -1169,6 +1101,8 @@ function clearSearch() {
 function changeSearchGender(gender) {
     chosenGender = gender;
     setActiveOption("search-gender", gender);
+    updateSelectableOpponents(true);
+    updateIndividualSelectScreen();
 }
 
 $('ul#search-gender').on('click', 'a', function() {
@@ -1285,7 +1219,8 @@ function sortOpponentsByMostTargeted() {
 function setSortingMode(mode) {
     sortingMode = mode;
     $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
-    individualPage = 0; // reset the page number
+    updateSelectableOpponents(false);
+    updateIndividualSelectScreen();
 }
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */

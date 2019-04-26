@@ -923,6 +923,7 @@ OpponentSelectionCard.prototype.handleClick = function (ev) {
 }
 
 OpponentDetailsDisplay = function () {
+    this.displayContainer = $("#individual-select-screen .opponent-details-panel");
     this.nameLabel = $("#individual-select-screen .opponent-full-name");
     this.sourceLabel = $("#individual-select-screen .opponent-source");
     this.writerLabel = $("#individual-select-screen .opponent-writer");
@@ -935,15 +936,19 @@ OpponentDetailsDisplay = function () {
     this.imageArea = $("#individual-select-screen .opponent-details-image-area");
     
     this.selectButton = $('#individual-select-screen .select-button');
+    
+    this.selectButton.click(this.handleSelected.bind(this));
 }
 
 OpponentDetailsDisplay.prototype = Object.create(OpponentDisplay.prototype);
 OpponentDetailsDisplay.prototype.constructor = OpponentDetailsDisplay;
 
 OpponentDetailsDisplay.prototype.handleSelected = function (ev) {
+    if (!this.opponent) return;
+    
     players[selectedSlot] = this.opponent;
-    updateSelectionVisuals();
 	players[selectedSlot].loadBehaviour(selectedSlot, true);
+    updateSelectionVisuals();
 	screenTransition($individualSelectScreen, $selectScreen);
     
     this.clear();
@@ -959,11 +964,14 @@ OpponentDetailsDisplay.prototype.clear = function () {
     this.epiloguesLabel.empty();
     
     this.simpleImage.attr('src', null);
-    this.selectButton.prop('disabled', true).unbind('click');    
+    this.selectButton.prop('disabled', true);
+    this.displayContainer.hide();
 }
 
 OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.opponent = opponent;
+    
+    this.displayContainer.show();
     this.nameLabel.html(opponent.first + " " + opponent.last);
     this.sourceLabel.html(opponent.source);
     this.writerLabel.html(opponent.writer);
@@ -972,7 +980,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
 
     this.simpleImage.attr('src', opponent.folder + opponent.image).css('height', opponent.scale + '%').show();
     
-    this.selectButton.prop('disabled', false).click(this.handleSelected.bind(this));
+    this.selectButton.prop('disabled', false);
     
     // for now
     this.collectiblesLabel.hide();
