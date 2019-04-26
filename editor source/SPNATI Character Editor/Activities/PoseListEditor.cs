@@ -781,9 +781,9 @@ namespace SPNATI_Character_Editor.Activities
 					startedDisplay = true;
 					string stage = row.Cells["ColStage"].Value?.ToString();
 					string poseKey = row.Cells["ColPose"].Value?.ToString();
-					if (string.IsNullOrEmpty(poseKey) || string.IsNullOrEmpty(stage)) { continue; }
+					if (string.IsNullOrEmpty(poseKey)) { continue; }
 
-					string imageKey = $"{stage}-{poseKey}";
+					string imageKey = string.IsNullOrEmpty(stage) ? poseKey : $"{stage}-{poseKey}";
 					//Try to link this up with an existing image. Use thumbnails to save on memory since this activity could load hundreds at once
 					UpdateImageCell(imageKey, row);
 
