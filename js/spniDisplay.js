@@ -846,7 +846,9 @@ function createElementWithClass (elemType, className) {
 }
 
 
-function OpponentSelectionCard () {
+function OpponentSelectionCard (opponent) {
+    this.opponent = opponent;
+    
     this.mainElem = createElementWithClass('div', 'opponent-card');
     
     var clipElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-image-clip'));
@@ -867,28 +869,28 @@ function OpponentSelectionCard () {
     var footerElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-footer'));
     this.label = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-name')));
     this.source = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-source')));
+    
+    this.update();
 }
 
 OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
 OpponentSelectionCard.prototype.constructor = OpponentSelectionCard;
 
-OpponentSelectionCard.prototype.update = function (opponent) {
-    this.opponent = opponent;
-    
-    if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
+OpponentSelectionCard.prototype.update = function () {    
+    if (EPILOGUE_BADGES_ENABLED && this.opponent.ending) {
         this.epilogueBadge.show();
     } else {
         this.epilogueBadge.hide();
     }
 
-    if (opponent.status) {
+    if (this.opponent.status) {
         var status_icon_img = 'img/testing-badge.png';
         var status_tooltip = TESTING_STATUS_TOOLTIP;
         
-        if (opponent.status === 'offline') {
+        if (this.opponent.status === 'offline') {
             status_icon_img = 'img/offline-badge.png';
             status_tooltip = OFFLINE_STATUS_TOOLTIP;
-        } else if (opponent.status === 'incomplete') {
+        } else if (this.opponent.status === 'incomplete') {
             status_icon_img = 'img/incomplete-badge.png';
             status_tooltip = INCOMPLETE_STATUS_TOOLTIP;
         }
@@ -904,14 +906,14 @@ OpponentSelectionCard.prototype.update = function (opponent) {
         this.statusIcon.removeAttr('title').removeAttr('data-original-title').hide();
     }
 
-    this.layerIcon.show().attr("src", "img/layers" + opponent.layers + ".png");
-    this.genderIcon.show().attr("src", opponent.gender === 'male' ? 'img/male.png' : 'img/female.png');
-    this.simpleImage.attr('src', opponent.folder + opponent.image).css('height', opponent.scale + '%').show();
+    this.layerIcon.show().attr("src", "img/layers" + this.opponent.layers + ".png");
+    this.genderIcon.show().attr("src", this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png');
+    this.simpleImage.attr('src', this.opponent.folder + this.opponent.image).css('height', this.opponent.scale + '%').show();
     
-    this.label.text(opponent.label);
-    this.source.text(opponent.source);
+    this.label.text(this.opponent.label);
+    this.source.text(this.opponent.source);
     
-    $(this.mainElem).click(this.handleClick.bind(this));
+    this.mainElem.addEventListener('click', this.handleClick.bind(this));
 }
 
 OpponentSelectionCard.prototype.clear = function () {}

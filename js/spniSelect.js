@@ -232,7 +232,7 @@ function loadListingFile () {
                 
                 console.log();
                 
-                var disp = new OpponentSelectionCard();     
+                var disp = new OpponentSelectionCard(opp);
                 opp.selectionCard = disp;
 			}
 			if (opp.id in opponentGroupMap) {
@@ -386,7 +386,6 @@ function updateIndividualSelectScreen () {
     $('#individual-select-screen .opponent-cards-container')
         .empty()
         .append(selectableOpponents.map(function (opp) {
-            opp.selectionCard.update(opp);
             return opp.selectionCard.mainElem;
         }));
 }
