@@ -919,7 +919,6 @@ OpponentSelectionCard.prototype.update = function (opponent) {
 OpponentSelectionCard.prototype.clear = function () {}
 
 OpponentSelectionCard.prototype.handleClick = function (ev) {
-    console.log(ev);
     individualDetailDisplay.update(this.opponent);
 }
 
@@ -946,14 +945,29 @@ OpponentDetailsDisplay.prototype.handleSelected = function (ev) {
     updateSelectionVisuals();
 	players[selectedSlot].loadBehaviour(selectedSlot, true);
 	screenTransition($individualSelectScreen, $selectScreen);
+    
+    this.clear();
+}
+
+OpponentDetailsDisplay.prototype.clear = function () {
+    this.opponent = null;
+    this.nameLabel.empty();
+    this.sourceLabel.empty();
+    this.writerLabel.empty();
+    this.artistLabel.empty();
+    this.descriptionLabel.empty();
+    this.epiloguesLabel.empty();
+    
+    this.simpleImage.attr('src', null);
+    this.selectButton.prop('disabled', true).unbind('click');    
 }
 
 OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.opponent = opponent;
-    this.nameLabel.text(opponent.first + " " + opponent.last);
-    this.sourceLabel.text(opponent.source);
-    this.writerLabel.text(opponent.writer);
-    this.artistLabel.text(opponent.artist);
+    this.nameLabel.html(opponent.first + " " + opponent.last);
+    this.sourceLabel.html(opponent.source);
+    this.writerLabel.html(opponent.writer);
+    this.artistLabel.html(opponent.artist);
     this.descriptionLabel.html(opponent.description);
 
     this.simpleImage.attr('src', opponent.folder + opponent.image).css('height', opponent.scale + '%').show();
