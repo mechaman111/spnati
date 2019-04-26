@@ -931,12 +931,13 @@ OpponentDetailsDisplay = function () {
     this.epiloguesLabel = $("#individual-select-screen .opponent-epilogues");
     this.collectiblesLabel = $("#individual-select-screen .opponent-collectibles");
     this.descriptionLabel = $("#individual-select-screen .opponent-details-description");
-    //this.costumeSelector = $("#"+id_base+"-costume-select-"+slot);
+    this.costumeSelector = $("#individual-select-screen .opponent-costume-select");
     this.simpleImage = $("#individual-select-screen .opponent-details-simple-image");
     this.imageArea = $("#individual-select-screen .opponent-details-image-area");
     
     this.selectButton = $('#individual-select-screen .select-button');
     
+    this.costumeSelector.change(this.handleCostumeChange.bind(this));
     this.selectButton.click(this.handleSelected.bind(this));
 }
 
@@ -965,7 +966,27 @@ OpponentDetailsDisplay.prototype.clear = function () {
     
     this.simpleImage.attr('src', null);
     this.selectButton.prop('disabled', true);
+    this.costumeSelector.hide();
+    
     this.displayContainer.hide();
+}
+
+OpponentDetailsDisplay.prototype.handleCostumeChange = function () {
+    if (!this.opponent) return;
+	var selectedCostume = this.costumeSelector.val();
+	
+	var costumeDesc = undefined;
+	if (selectedCostume.length > 0) {
+		for (let i=0;i<this.opponent.alternate_costumes.length;i++) {
+			if (this.opponent.alternate_costumes[i].folder === selectedCostume) {
+				costumeDesc = this.opponent.alternate_costumes[i];
+				break;
+			}
+		}
+	}
+	
+    this.opponent.selectAlternateCostume(costumeDesc);
+    this.simpleImage.attr('src', this.opponent.selection_image);
 }
 
 OpponentDetailsDisplay.prototype.update = function (opponent) {
@@ -1034,18 +1055,16 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         }
     }
 
-    /*
     if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
         this.costumeSelector.empty().append($('<option>', {val: '', text: 'Default Skin'}));
         opponent.alternate_costumes.forEach(function (alt) {
             this.costumeSelector.append($('<option>', {
-                val: alt_costume.folder,
-                text: 'Alternate Skin: '+alt_costume.label
+                val: alt.folder,
+                text: 'Alternate Skin: '+alt.label
             }));
         }.bind(this));
         this.costumeSelector.show();
     } else {
         this.costumeSelector.hide();
     }
-    */
 }
