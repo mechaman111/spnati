@@ -586,7 +586,7 @@ function updateSelectableOpponents(autoclear) {
     }
 }
 
-$('#individual-select-screen .sort-filter-field').change(function () {
+$('#individual-select-screen .sort-filter-field').on('input', function () {
     updateSelectableOpponents(false);
     updateIndividualSelectScreen();
 });
