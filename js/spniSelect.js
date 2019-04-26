@@ -232,7 +232,7 @@ function loadListingFile () {
                 
                 console.log();
                 
-                var disp = new OpponentSelectionCard(opponentMap[opp.id]);     
+                var disp = new OpponentSelectionCard();     
                 opp.selectionCard = disp;
 			}
 			if (opp.id in opponentGroupMap) {

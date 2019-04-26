@@ -846,7 +846,7 @@ function createElementWithClass (elemType, className) {
 }
 
 
-function OpponentSelectionCard (order) {
+function OpponentSelectionCard () {
     this.mainElem = createElementWithClass('div', 'opponent-card');
     
     var clipElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-image-clip'));
@@ -867,8 +867,6 @@ function OpponentSelectionCard (order) {
     var footerElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-footer'));
     this.label = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-name')));
     this.source = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-source')));
-    
-    $(this.mainElem).css('order', order);
 }
 
 OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
