@@ -846,7 +846,7 @@ function createElementWithClass (elemType, className) {
 }
 
 
-function IndividualSelectDisplay (order) {
+function OpponentSelectionCard (order) {
     this.mainElem = createElementWithClass('div', 'opponent-card');
     
     var clipElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-image-clip'));
@@ -871,10 +871,12 @@ function IndividualSelectDisplay (order) {
     $(this.mainElem).css('order', order);
 }
 
-IndividualSelectDisplay.prototype = Object.create(OpponentDisplay.prototype);
-IndividualSelectDisplay.prototype.constructor = IndividualSelectDisplay;
+OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
+OpponentSelectionCard.prototype.constructor = OpponentSelectionCard;
 
-IndividualSelectDisplay.prototype.update = function (opponent) {
+OpponentSelectionCard.prototype.update = function (opponent) {
+    this.opponent = opponent;
+    
     if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
         this.epilogueBadge.show();
     } else {
@@ -911,6 +913,105 @@ IndividualSelectDisplay.prototype.update = function (opponent) {
     this.label.text(opponent.label);
     this.source.text(opponent.source);
     
+    $(this.mainElem).click(this.handleClick.bind(this));
+}
+
+OpponentSelectionCard.prototype.clear = function () {}
+
+OpponentSelectionCard.prototype.handleClick = function (ev) {
+    console.log(ev);
+    individualDetailDisplay.update(this.opponent);
+}
+
+OpponentDetailsDisplay = function () {
+    this.nameLabel = $("#individual-select-screen .opponent-full-name");
+    this.sourceLabel = $("#individual-select-screen .opponent-source");
+    this.writerLabel = $("#individual-select-screen .opponent-writer");
+    this.artistLabel = $("#individual-select-screen .opponent-artist");
+    this.epiloguesLabel = $("#individual-select-screen .opponent-epilogues");
+    this.collectiblesLabel = $("#individual-select-screen .opponent-collectibles");
+    this.descriptionLabel = $("#individual-select-screen .opponent-details-description");
+    //this.costumeSelector = $("#"+id_base+"-costume-select-"+slot);
+    this.simpleImage = $("#individual-select-screen .opponent-details-simple-image");
+    this.imageArea = $("#individual-select-screen .opponent-details-image-area");
+    
+    this.selectButton = $('#individual-select-screen .select-button');
+}
+
+OpponentDetailsDisplay.prototype = Object.create(OpponentDisplay.prototype);
+OpponentDetailsDisplay.prototype.constructor = OpponentDetailsDisplay;
+
+OpponentDetailsDisplay.prototype.handleSelected = function (ev) {
+    players[selectedSlot] = this.opponent;
+    updateSelectionVisuals();
+	players[selectedSlot].loadBehaviour(selectedSlot, true);
+	screenTransition($individualSelectScreen, $selectScreen);
+}
+
+OpponentDetailsDisplay.prototype.update = function (opponent) {
+    this.opponent = opponent;
+    this.nameLabel.text(opponent.first + " " + opponent.last);
+    this.sourceLabel.text(opponent.source);
+    this.writerLabel.text(opponent.writer);
+    this.artistLabel.text(opponent.artist);
+    this.descriptionLabel.html(opponent.description);
+
+    this.simpleImage.attr('src', opponent.folder + opponent.image).css('height', opponent.scale + '%').show();
+    
+    this.selectButton.prop('disabled', false).click(this.handleSelected.bind(this));
+    
+    // for now
+    this.collectiblesLabel.hide();
+    
+    if (!opponent.ending) {
+        this.epiloguesLabel.text("None");
+    } else {
+        var endingGenders = {
+            male: false,
+            female: false
+        };
+        
+        var hasConditionalEnding = false;
+        
+        opponent.endings.each(function (idx, elem) {
+            var $elem = $(elem);
+            
+            if(EPILOGUE_CONDITIONAL_ATTRIBUTES.some(function (attr) { return !!$elem.attr(attr); })) {
+                hasConditionalEnding = true;
+            }
+            
+            var gender = $elem.attr('gender');
+            
+            if (gender === 'male') {
+                endingGenders.male = true;
+            } else if (gender === 'female') {
+                endingGenders.female = true;
+            } else {
+                endingGenders.male = true;
+                endingGenders.female = true;                
+            }
+        });
+        
+        var epilogueAvailable = false;
+        if (endingGenders.male && endingGenders.female) {
+            epilogueAvailable = true;
+        } else if (endingGenders.male) {
+            epilogueAvailable = (players[HUMAN_PLAYER].gender === 'male');
+        } else if (endingGenders.female) {
+            epilogueAvailable = (players[HUMAN_PLAYER].gender === 'female');
+        }
+        
+        if (epilogueAvailable) {
+            this.epiloguesLabel
+                .text('Available' + (hasConditionalEnding ? ' (Conditional)' : ''))
+                .removeClass('epilogues-unavailable');
+        } else {
+            this.epiloguesLabel
+                .text((endingGenders.male ? 'Males' : 'Females') + ' Only')
+                .addClass('epilogues-unavailable');
+        }
+    }
+
     /*
     if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
         this.costumeSelector.empty().append($('<option>', {val: '', text: 'Default Skin'}));
@@ -925,12 +1026,4 @@ IndividualSelectDisplay.prototype.update = function (opponent) {
         this.costumeSelector.hide();
     }
     */
-}
-
-IndividualSelectDisplay.prototype.clear = function () {}
-
-function testSelectionScreen () {
-    $selectScreen.hide();
-    $individualSelectScreen.show();
-    //screenTransition($selectScreen, $individualSelectScreen);
 }

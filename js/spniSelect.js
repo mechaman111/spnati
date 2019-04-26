@@ -100,6 +100,9 @@ $individualMaxPageIndicator = $("#individual-max-page-indicator");
 
 $individualCreditsButton = $('#individual-credits-button');
 
+var individualDetailDisplay = new OpponentDetailsDisplay();
+
+
 /* group select screen */
 $groupSelectTable = $("#group-select-table");
 $groupSwitchTestingButton = $("#group-switch-testing-button");
@@ -229,9 +232,8 @@ function loadListingFile () {
                 
                 console.log();
                 
-                var disp = new IndividualSelectDisplay(opponentMap[opp.id]);
-                disp.update(opp);
-                $('#individual-select-screen .opponent-cards-container').append(disp.mainElem);
+                var disp = new OpponentSelectionCard(opponentMap[opp.id]);     
+                opp.selectionCard = disp;
 			}
 			if (opp.id in opponentGroupMap) {
 				opponentGroupMap[opp.id].forEach(function(groupPos) {
@@ -381,94 +383,12 @@ function getCostumeOption(alt_costume, selected_costume) {
  * on the currently selected page.
  ************************************************************/
 function updateIndividualSelectScreen () {
-	/* safety wrap around */
-	if (individualPage < 0) {
-		/* wrap to last page */
-		individualPage = Math.ceil(selectableOpponents.length/4)-1;
-	}
-	$individualPageIndicator.val(individualPage+1);
-
-	/* keep track of how many opponents were on this screen */
-	var empty = 0;
-
-    /* create and load all of the individual opponents */
-	for (var i = individualPage*4; i < (individualPage+1)*4; i++) {
-		var index = i - individualPage*4;
-
-		if (i in selectableOpponents) {
-			shownIndividuals[index] = selectableOpponents[i];
-
-			$individualNameLabels[index].html(selectableOpponents[i].first + " " + selectableOpponents[i].last);
-			$individualPrefersLabels[index].html(selectableOpponents[i].label);
-			$individualSexLabels[index].html(selectableOpponents[i].gender);
-			$individualSourceLabels[index].html(selectableOpponents[i].source);
-			$individualWriterLabels[index].html(wordWrapHtml(selectableOpponents[i].writer));
-			$individualArtistLabels[index].html(wordWrapHtml(selectableOpponents[i].artist));
-			$individualDescriptionLabels[index].html(selectableOpponents[i].description);
-
-            if (EPILOGUE_BADGES_ENABLED && selectableOpponents[i].ending) {
-                $individualBadges[index].show();
-            }
-            else {
-                $individualBadges[index].hide();
-            }
-
-            updateStatusIcon($individualStatuses[index], selectableOpponents[i].status);
-
-            $individualLayers[index].show();
-            $individualLayers[index].attr("src", "img/layers" + selectableOpponents[i].layers + ".png");
-			
-			$individualImages[index].attr('src', selectableOpponents[i].selection_image);
-			$individualImages[index].css('height', selectableOpponents[i].scale + '%');
-			$individualImages[index].show();
-			$individualButtons[index].html('Select Opponent');
-			$individualButtons[index].attr('disabled', false);
-			
-			$individualCostumeSelectors[index].hide();
-			if (ALT_COSTUMES_ENABLED) {
-				if (
-					(!FORCE_ALT_COSTUME && selectableOpponents[i].alternate_costumes.length > 0) ||
-					(FORCE_ALT_COSTUME && selectableOpponents[i].alternate_costumes.length > 1)
-				) {
-					if (!FORCE_ALT_COSTUME) {
-						$individualCostumeSelectors[index].empty().append($('<option>', {val: '', text: 'Default Skin'}));
-					}
-					
-					selectableOpponents[i].alternate_costumes.forEach(function (alt) {
-						$individualCostumeSelectors[index].append(getCostumeOption(alt, selectableOpponents[i].selected_costume));
-					});
-					$individualCostumeSelectors[index].show();
-				}
-			}
-		} else {
-			delete shownIndividuals[index];
-
-			$individualNameLabels[index].html("");
-			$individualPrefersLabels[index].html("");
-			$individualSexLabels[index].html("");
-			$individualSourceLabels[index].html("");
-			$individualWriterLabels[index].html("");
-			$individualArtistLabels[index].html("");
-            $individualCountBoxes[index].css("visibility", "hidden");
-			$individualDescriptionLabels[index].html("");
-            $individualBadges[index].hide();
-            $individualStatuses[index].hide();
-            $individualLayers[index].hide();
-
-			$individualImages[index].hide();
-			$individualButtons[index].attr('disabled', true);
-
-			$individualCostumeSelectors[index].hide();
-
-			empty++;
-		}
-    }
-
-	/* reload if the page is empty */
-	if (empty == 4 && individualPage != 0) {
-		individualPage = 0;
-		updateIndividualSelectScreen();
-	}
+    $('#individual-select-screen .opponent-cards-container')
+        .empty()
+        .append(selectableOpponents.map(function (opp) {
+            opp.selectionCard.update(opp);
+            return opp.selectionCard.mainElem;
+        }));
 }
 
 /************************************************************
@@ -717,18 +637,15 @@ function selectOpponentSlot (slot) {
             }
         }
 
-        // REMOVE THIS IN PRODUCTION
-        testSelectionScreen();
-
 		/* update the list of selectable opponents based on those that are already selected, search, and sort options */
-		//updateSelectableOpponents(true);
+		updateSelectableOpponents(true);
 
 		/* reload selection screen */
-		//updateIndividualSelectScreen();
+		updateIndividualSelectScreen();
         //updateIndividualCountStats();
 
         /* switch screens */
-		//screenTransition($selectScreen, $individualSelectScreen);
+		screenTransition($selectScreen, $individualSelectScreen);
     } else {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');
@@ -1498,21 +1415,42 @@ function countLinesImages(xml) {
 	var numUniqueUsedPoses = 0;
     var lines = {};
     var poses = {};
-    $(xml).find('state').each(function(idx, data) {
-		numTotalLines++;
-		// count only unique lines of dialogue
-		if (lines[data.textContent.trim()] === undefined) numUniqueDialogueLines++;
-        lines[data.textContent.trim()] = 1;
-		// count unique number of poses used in dialogue
-		// note that this number may differ from actual image count if some images
-		// are never used, or if images that don't exist are used in the dialogue
-		if (poses[data.getAttribute("img")] === undefined) numUniqueUsedPoses++;
-        poses[data.getAttribute("img")] = 1;
+    
+    var matched = $(xml).find('state').get();
+    
+    return new Promise(function (resolve, reject) {
+        /* Avoid blocking the UI by breaking the work into smaller chunks. */
+        function process () {
+            var startTs = Date.now();
+            
+            if (DEBUG) console.log(matched.length);
+            for (var i=0;i<5000 && matched.length > 0;i++) {
+                data = matched.shift();
+                
+                numTotalLines++;
+                
+        		// count only unique lines of dialogue
+        		if (lines[data.textContent.trim()] === undefined) numUniqueDialogueLines++;
+                lines[data.textContent.trim()] = 1;
+                
+        		// count unique number of poses used in dialogue
+        		// note that this number may differ from actual image count if some images
+        		// are never used, or if images that don't exist are used in the dialogue
+        		if (poses[data.getAttribute("img")] === undefined) numUniqueUsedPoses++;
+                poses[data.getAttribute("img")] = 1;
+            }
+            
+            if (matched.length > 0) {
+                setTimeout(process.bind(null), 25);
+            } else {
+                return resolve({
+                    numTotalLines : numTotalLines,
+                    numUniqueLines : numUniqueDialogueLines,
+                    numPoses : numUniqueUsedPoses
+                });
+            }
+        }
+        
+        process();
     });
-
-    return {
-        numTotalLines : numTotalLines,
-        numUniqueLines : numUniqueDialogueLines,
-        numPoses : numUniqueUsedPoses
-    };
 }
