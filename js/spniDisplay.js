@@ -838,23 +838,99 @@ OpponentPickerDisplay.prototype.update = function (opponent) {
 }
 
 
-
-function IndividualSelectDisplay (slot) {
-    OpponentPickerDisplay.call(slot, "individual");
-    this.button = $('#individual-button-'+slot);
+function createElementWithClass (elemType, className) {
+    var elem = document.createElement(elemType);
+    elem.className = className;
+    
+    return elem;
 }
 
-IndividualSelectDisplay.prototype = Object.create(OpponentPickerDisplay.prototype);
+
+function IndividualSelectDisplay (order) {
+    this.mainElem = createElementWithClass('div', 'opponent-card');
+    
+    var clipElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-image-clip'));
+    this.imageArea = clipElem.appendChild(createElementWithClass('div', 'selection-card-image-area'));
+    this.simpleImage = $(this.imageArea.appendChild(createElementWithClass('img', 'opponent-card-image-simple')));
+    
+    this.imageArea = $(this.imageArea);
+    
+    this.epilogueBadge = $(this.mainElem.appendChild(createElementWithClass('img', 'badge-icon')));
+    
+    var sidebarElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-sidebar'));
+    this.layerIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'layer-icon')));
+    this.genderIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'gender-icon')));
+    this.statusIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'status-icon')));
+    
+    $(this.epilogueBadge).attr('src', "img/epilogue_icon.png");
+    
+    var footerElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-footer'));
+    this.label = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-name')));
+    this.source = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-source')));
+    
+    $(this.mainElem).css('order', order);
+}
+
+IndividualSelectDisplay.prototype = Object.create(OpponentDisplay.prototype);
 IndividualSelectDisplay.prototype.constructor = IndividualSelectDisplay;
 
 IndividualSelectDisplay.prototype.update = function (opponent) {
-    OpponentPickerDisplay.prototype.update.call(this, opponent);
+    if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
+        this.epilogueBadge.show();
+    } else {
+        this.epilogueBadge.hide();
+    }
+
+    if (opponent.status) {
+        var status_icon_img = 'img/testing-badge.png';
+        var status_tooltip = TESTING_STATUS_TOOLTIP;
+        
+        if (opponent.status === 'offline') {
+            status_icon_img = 'img/offline-badge.png';
+            status_tooltip = OFFLINE_STATUS_TOOLTIP;
+        } else if (opponent.status === 'incomplete') {
+            status_icon_img = 'img/incomplete-badge.png';
+            status_tooltip = INCOMPLETE_STATUS_TOOLTIP;
+        }
     
-    this.button.html('Select Opponent');
-    this.button.attr('disabled', false);
+        this.statusIcon.attr({
+            'src': status_icon_img,
+            'title': status_tooltip,
+            'data-original-title': status_tooltip,
+        }).show().tooltip({
+            'placement': 'left'
+        });
+    } else {
+        this.statusIcon.removeAttr('title').removeAttr('data-original-title').hide();
+    }
+
+    this.layerIcon.show().attr("src", "img/layers" + opponent.layers + ".png");
+    this.genderIcon.show().attr("src", opponent.gender === 'male' ? 'img/male.png' : 'img/female.png');
+    this.simpleImage.attr('src', opponent.folder + opponent.image).css('height', opponent.scale + '%').show();
+    
+    this.label.text(opponent.label);
+    this.source.text(opponent.source);
+    
+    /*
+    if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
+        this.costumeSelector.empty().append($('<option>', {val: '', text: 'Default Skin'}));
+        opponent.alternate_costumes.forEach(function (alt) {
+            this.costumeSelector.append($('<option>', {
+                val: alt_costume.folder,
+                text: 'Alternate Skin: '+alt_costume.label
+            }));
+        }.bind(this));
+        this.costumeSelector.show();
+    } else {
+        this.costumeSelector.hide();
+    }
+    */
 }
 
-IndividualSelectDisplay.prototype.clear = function () {
-    OpponentPickerDisplay.prototype.clear.call(this);
-    this.button.attr('disabled', true);
+IndividualSelectDisplay.prototype.clear = function () {}
+
+function testSelectionScreen () {
+    $selectScreen.hide();
+    $individualSelectScreen.show();
+    //screenTransition($selectScreen, $individualSelectScreen);
 }

@@ -226,6 +226,12 @@ function loadListingFile () {
                     tagSet[canonicalizeTag(tag)] = true;
                 });
                 sourceSet[opp.source] = true;
+                
+                console.log();
+                
+                var disp = new IndividualSelectDisplay(opponentMap[opp.id]);
+                disp.update(opp);
+                $('#individual-select-screen .opponent-cards-container').append(disp.mainElem);
 			}
 			if (opp.id in opponentGroupMap) {
 				opponentGroupMap[opp.id].forEach(function(groupPos) {
@@ -711,15 +717,18 @@ function selectOpponentSlot (slot) {
             }
         }
 
+        // REMOVE THIS IN PRODUCTION
+        testSelectionScreen();
+
 		/* update the list of selectable opponents based on those that are already selected, search, and sort options */
-		updateSelectableOpponents(true);
+		//updateSelectableOpponents(true);
 
 		/* reload selection screen */
-		updateIndividualSelectScreen();
-        updateIndividualCountStats();
+		//updateIndividualSelectScreen();
+        //updateIndividualCountStats();
 
         /* switch screens */
-		screenTransition($selectScreen, $individualSelectScreen);
+		//screenTransition($selectScreen, $individualSelectScreen);
     } else {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');

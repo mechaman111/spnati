@@ -85,6 +85,20 @@ body.modal-open {
     margin: auto;
 }
 
+.wide-screen-container {
+	position: absolute;
+	width: 100vw;
+	height: 56.25vw;
+	max-width: 177.78vh;
+	max-height: 100vh;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+    margin: auto;
+}
+
+
 .screen {
 	position: absolute;
     top: 0;
@@ -1567,7 +1581,171 @@ body.modal-open {
 }
 
 /************************************************************
- * Classes for the individual and group select screens.
+ * Classes for the new individual select screen.
+ ************************************************************/
+
+.opponent-cards-container {
+    width: 75%;
+    height: 100%;
+    
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.opponent-card {
+    width: 19.5%;
+    height: 44%;
+    
+    margin: 0.5% 0.25%;
+    background-color: rgba(51, 51, 51, 0.65);
+    
+    border: 2px solid #111111;
+	border-radius: 5px;
+    
+    position: relative;
+}
+
+.selection-card-image-clip {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    overflow: hidden;
+}
+
+.selection-card-image-area {
+    position: absolute;
+    top: -1.5%;
+    left: 0;
+    right: 0;
+    
+    display: inline;
+    height: 135%;
+    width: auto;
+    
+    margin: 0 auto;
+}
+
+.selection-card-image-area > * {
+    width: auto;
+    height: 100%;
+    
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.selection-card-sidebar {
+    position: absolute;
+
+    right: 0;
+    left: 70%;
+    top: 0;
+    bottom: 25%;
+    
+    padding: 2% 2.5%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.badge-icon {
+    opacity: 0.75;
+    
+    height: 18%;
+    width: auto;
+    
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.selection-card-sidebar img {
+    width: 100%;
+    height: auto;
+    position: static;
+}
+
+.selection-card-sidebar .layer-icon {
+    opacity: 0.80;
+}
+
+.selection-card-sidebar .gender-icon {
+    opacity: 0.80;
+    margin-top: 3%;
+}
+
+.selection-card-sidebar .status-icon {
+    opacity: 0.50;
+    margin-top: 3%;    
+}
+
+
+
+.selection-card-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 70%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.selection-card-footer .selection-card-label {
+    border: 2px solid #111111;
+	border-radius: 5px;
+    background-color: #FFFFFF;
+    opacity: 0.80;
+    
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    
+    text-align: center;
+    padding: 2%;
+}
+
+.selection-card-footer .selection-card-name {
+    font-size: 110%;
+}
+
+.selection-card-footer .selection-card-source {
+    margin-top: 1%;
+    font-size: 65%;
+}
+
+.opponent-card:hover, .opponent-card:active {
+    background-color: rgba(221, 221, 221, 0.90);
+    transition: background-color;
+    transition-duration: 0.5s;
+}
+
+.opponent-card:hover .selection-card-footer .selection-card-label, .opponent-card:active .selection-card-footer .selection-card-label {
+    opacity: 1.0;
+    
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+
+/************************************************************
+ * Classes for the old individual and group select screens.
  ************************************************************/
 
 .long-select-advance-top {
