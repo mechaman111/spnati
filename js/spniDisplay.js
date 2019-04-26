@@ -819,7 +819,7 @@ OpponentPickerDisplay.prototype.update = function (opponent) {
     this.layers.show();
     this.layers.attr("src", "img/layers" + opponent.layers + ".png");
 
-    this.image.attr('src', opponent.folder + opponent.image);
+    this.image.attr('src', opponent.selection_image);
     this.image.css('height', opponent.scale + '%');
     this.image.show();
     
@@ -908,7 +908,7 @@ OpponentSelectionCard.prototype.update = function () {
 
     this.layerIcon.show().attr("src", "img/layers" + this.opponent.layers + ".png");
     this.genderIcon.show().attr("src", this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png');
-    this.simpleImage.attr('src', this.opponent.folder + this.opponent.image).css('height', this.opponent.scale + '%').show();
+    this.simpleImage.attr('src', this.opponent.selection_image).css('height', this.opponent.scale + '%').show();
     
     this.label.text(this.opponent.label);
     this.source.text(this.opponent.source);
@@ -999,7 +999,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.artistLabel.html(opponent.artist);
     this.descriptionLabel.html(opponent.description);
 
-    this.simpleImage.attr('src', opponent.folder + opponent.image).css('height', opponent.scale + '%').show();
+    this.simpleImage.attr('src', opponent.selection_image).css('height', opponent.scale + '%').show();
     
     this.selectButton.prop('disabled', false);
     
