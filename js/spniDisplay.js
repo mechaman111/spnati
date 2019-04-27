@@ -1071,13 +1071,23 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     }
 
     if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
-        this.costumeSelector.empty().append($('<option>', {val: '', text: 'Default Skin'}));
+        this.costumeSelector.empty().append($('<option>', {val: '', text: 'Default Skin'})).prop('disabled', false);
+        
         opponent.alternate_costumes.forEach(function (alt) {
             this.costumeSelector.append($('<option>', {
                 val: alt.folder,
                 text: alt.label
             }));
         }.bind(this));
+        
+        /* Force-set and lock the selector if FORCE_ALT_COSTUME is set */
+        opponent.alternate_costumes.some(function (alt) {
+            if (alt.set === FORCE_ALT_COSTUME) {
+                this.costumeSelector.val(alt.folder).prop('disabled', true);
+                return true;
+            }
+        }.bind(this));
+        
         this.costumeSelector.show();
     } else {
         this.costumeSelector.hide();
