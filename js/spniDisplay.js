@@ -842,6 +842,8 @@ OpponentDetailsDisplay = function () {
     this.epiloguesLabel = $("#individual-select-screen .opponent-epilogues");
     this.collectiblesLabel = $("#individual-select-screen .opponent-collectibles");
     this.descriptionLabel = $("#individual-select-screen .opponent-details-description");
+    this.linecountLabel = $("#individual-select-screen .opponent-linecount");
+    this.posecountLabel = $("#individual-select-screen .opponent-posecount");
     this.costumeSelector = $("#individual-select-screen .opponent-costume-select");
     this.simpleImage = $("#individual-select-screen .opponent-details-simple-image");
     this.imageArea = $("#individual-select-screen .opponent-details-image-area");
@@ -1091,6 +1093,45 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         this.costumeSelector.show();
     } else {
         this.costumeSelector.hide();
+    }
+    
+    if (opponent.uniqueLineCount === undefined || opponent.posesImageCount === undefined) {
+        // retrieve line and image counts
+        if (DEBUG) {
+            console.log("[LineImageCount] Fetching counts for " + opponent.label);
+        }
+
+        var countsPromise = new Promise(function (resolve, reject) {
+            fetchCompressedURL(
+                opponent.folder + 'behaviour.xml',
+                resolve, reject
+            );
+        });
+
+        this.linecountLabel.text("Loading...");
+        this.posecountLabel.text("Loading...");
+        countsPromise.then(countLinesImages).then(function(response) {
+            opponent.uniqueLineCount = response.numUniqueLines;
+            opponent.posesImageCount = response.numPoses;
+
+            // show line and image counts
+            if (DEBUG) {
+                console.log("[LineImageCount] Loaded " + opponent.label + " from behaviour: " +
+                  opponent.uniqueLineCount + " lines, " + opponent.posesImageCount + " images");
+            }
+            
+            this.linecountLabel.text(opponent.uniqueLineCount);
+            this.posecountLabel.text(opponent.posesImageCount);
+        }.bind(this));
+    }
+    else {
+        // this character's counts were previously loaded
+        if (DEBUG) {
+            console.log("[LineImageCount] Loaded previous count for " + opponent.label + ": " +
+              opponent.uniqueLineCount + " lines, " + opponent.posesImageCount + " images)");
+        }
+        this.linecountLabel.text(opponent.uniqueLineCount);
+        this.posecountLabel.text(opponent.posesImageCount);
     }
     
     this.epiloguesView.hide();

@@ -1357,7 +1357,7 @@ function countLinesImages(xml) {
         function process () {
             var startTs = Date.now();
             
-            if (DEBUG) console.log(matched.length);
+            if (DEBUG) console.log("Processing: "+matched.length+" states to go");
             for (var i=0;i<5000 && matched.length > 0;i++) {
                 data = matched.shift();
                 
