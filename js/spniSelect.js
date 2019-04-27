@@ -1358,7 +1358,7 @@ function countLinesImages(xml) {
             var startTs = Date.now();
             
             if (DEBUG) console.log("Processing: "+matched.length+" states to go");
-            for (var i=0;i<5000 && matched.length > 0;i++) {
+            do {
                 data = matched.shift();
                 
                 numTotalLines++;
@@ -1372,10 +1372,10 @@ function countLinesImages(xml) {
         		// are never used, or if images that don't exist are used in the dialogue
         		if (poses[data.getAttribute("img")] === undefined) numUniqueUsedPoses++;
                 poses[data.getAttribute("img")] = 1;
-            }
+            } while (Date.now() - startTs < 50 && matched.length > 0);
             
             if (matched.length > 0) {
-                setTimeout(process.bind(null), 25);
+                setTimeout(process.bind(null), 50);
             } else {
                 return resolve({
                     numTotalLines : numTotalLines,
