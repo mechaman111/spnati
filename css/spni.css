@@ -2068,12 +2068,16 @@ body.modal-open {
     flex: 3;
 }
 
-.opponent-collectibles-field {
-    display: none;
-}
-
 .opponent-details-field .opponent-nav-button {
     border-style: none;
+}
+
+.opponent-epilogues-field.has-epilogues, .opponent-collectibles-field.has-collectibles {
+    display: flex;
+}
+
+.opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
+    display: none;
 }
 
 .opponent-options-row {
@@ -2168,6 +2172,70 @@ body.modal-open {
 
 .opponent-epilogue-row > .opponent-epilogue-value {
     flex: 3;
+}
+
+/************************************************************
+ * Classes for constrained screen widths.
+ * In particular, detect devices with an aspect ratio of
+ * less than 4:3.
+ ************************************************************/
+
+@media (min-aspect-ratio: 4/3) {
+    .show-more-button {
+        display: none;
+    }
+}
+
+@media (max-aspect-ratio: 4/3) {
+    .show-more-button {
+        display: block;
+    }
+    
+    .opponent-details-basic .extra-details-row {
+        display: none;
+    }
+    
+    .show-more .extra-details-row {
+        display: flex;
+    }
+    
+    .opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
+        display: none;
+    }
+    
+    .gender-component, .sort-component > .dropdown-menu > li, .sort-component > button {
+        font-size: 1vw;
+    }
+    
+    .option-component > label {
+        font-size: 1.1vw;
+        line-height: calc(1.1vw * 1.2);
+    }
+    
+    .option-component > input {
+        font-size: 1.1vw;
+        line-height: calc(1.1vw * 1.2);
+    }
+    
+    .selection-card-footer .selection-card-name {
+        font-size: 1.75vw;
+    }
+    
+    .selection-card-footer .selection-card-source {
+        font-size: 1.1vw;
+    }
+    
+    .opponent-select-button > button, .select-back-btn {
+        font-size: 2vw;
+    }
+    
+    .opponent-full-name {
+        font-size: 2vw;
+    }
+    
+    .opponent-source {
+        font-size: 1.75vw;
+    }
 }
 
 

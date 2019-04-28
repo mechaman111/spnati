@@ -853,10 +853,15 @@ OpponentDetailsDisplay = function () {
     this.epiloguesNavButton = $('#individual-select-screen .opponent-epilogues');
     this.collectiblesNavButton = $('#individual-select-screen .opponent-collectibles');
     
+    this.showMoreButton = $('#individual-select-screen .show-more-button');
+    
     $('#individual-select-screen .opponent-nav-button').click(this.handlePanelNavigation.bind(this));
     
     this.costumeSelector.change(this.handleCostumeChange.bind(this));
     this.selectButton.click(this.handleSelected.bind(this));
+    this.showMoreButton.click(function () {
+        this.mainView.toggleClass('show-more');
+    }.bind(this));
     
     this.epiloguesView.hide();
     this.collectiblesView.hide();
@@ -919,8 +924,9 @@ OpponentDetailsDisplay.prototype.clear = function () {
     
     this.simpleImage.attr('src', null);
     this.selectButton.prop('disabled', true);
-    this.epiloguesField.hide();
-    this.collectiblesField.hide();
+    this.epiloguesField.removeClass('has-epilogues');
+    this.collectiblesField.removeClass('has-collectibles');
+    this.mainView.removeClass('show-more');
     this.costumeSelector.hide();
     
     this.displayContainer.hide();
@@ -1018,12 +1024,13 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.selectButton.prop('disabled', false);
     
     // for now
-    this.collectiblesField.hide();
+    this.collectiblesField.removeClass('has-collectibles');
+    
     
     if (!opponent.ending) {
-        this.epiloguesField.hide();
+        this.epiloguesField.removeClass('has-epilogues');
     } else {
-        this.epiloguesField.show();
+        this.epiloguesField.addClass('has-epilogues');
         
         var endingGenders = {
             male: false,
