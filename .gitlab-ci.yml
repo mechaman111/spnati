@@ -9,7 +9,9 @@ pages:
   - sed "s/__CI_COMMIT_SHA/${CI_COMMIT_SHA}/g" prod-config.xml > .public/config.xml
   - cp opponents/listing.xml .public/opponents
   - cp opponents/general_collectibles.xml .public/opponents
+  - pip install beautifulsoup4
   - find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" | tar -cT - | tar -C .public -x
+  - python3 opponents/fill_linecount_metadata.py .public/opponents
   - python opponents/gzip_dialogue.py .public/opponents/*/behaviour.xml
   - python opponents/analyze_image_space.py .public/opponents
   - python opponents/copy_event_alts.py .public/ ./ easter
