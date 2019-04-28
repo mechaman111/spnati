@@ -42,12 +42,12 @@ namespace SPNATI_Character_Editor.Analyzers
 		public abstract string PropertyName { get; }
 
 		public override string Key { get { return "PoseDirective" + PropertyName; } }
-		public override string Name	{ get {	return "Animates " + PropertyName; } }
+		public override string Name { get { return "Animates " + PropertyName; } }
 		public override string FullName { get { return "Pose - Animates " + PropertyName; } }
 
 		public override string ParentKey
 		{
-			get	{ return "Custom Pose>Directives";	}
+			get { return "Custom Pose>Directives"; }
 		}
 
 		public override bool GetValue(Character character)
@@ -68,6 +68,50 @@ namespace SPNATI_Character_Editor.Analyzers
 				}
 			}
 			return false;
+		}
+	}
+
+	public class PoseConditionalAnalyzer : NumericAnalyzer
+	{
+		public override string Key
+		{
+			get { return "PoseMarker"; }
+		}
+
+		public override string Name
+		{
+			get { return "Marker Usage"; }
+		}
+
+		public override string FullName
+		{
+			get { return "Pose - Marker Count"; }
+		}
+
+		public override string ParentKey
+		{
+			get { return "Custom Pose"; }
+		}
+
+		public override int GetValue(Character character)
+		{
+			int count = 0;
+			foreach (Pose pose in character.CustomPoses)
+			{
+				foreach (Sprite sprite in pose.Sprites)
+				{
+					if (!string.IsNullOrEmpty(sprite.Marker))
+					{
+						count++;
+					}
+				}
+			}
+			return count;
+		}
+
+		public override string[] GetValues()
+		{
+			return null;
 		}
 	}
 

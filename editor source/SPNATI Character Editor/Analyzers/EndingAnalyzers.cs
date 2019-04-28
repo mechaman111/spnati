@@ -83,7 +83,6 @@ namespace SPNATI_Character_Editor.Analyzers
 		}
 	}
 
-
 	public class EndingAnimatedAnalyzer : BooleanAnalyzer
 	{
 		public override string Key
@@ -126,7 +125,6 @@ namespace SPNATI_Character_Editor.Analyzers
 			return false;
 		}
 	}
-
 
 	public class EndingTransitionTypeAnalyzer : IDataAnalyzer
 	{
@@ -227,6 +225,53 @@ namespace SPNATI_Character_Editor.Analyzers
 				}
 			}
 			return false;
+		}
+	}
+
+	public class EndingConditionalAnalyzer : NumericAnalyzer
+	{
+		public override string Key
+		{
+			get { return "EpilogueMarker"; }
+		}
+
+		public override string Name
+		{
+			get { return "Marker Usage"; }
+		}
+
+		public override string FullName
+		{
+			get { return "Epilogue - Marker Count"; }
+		}
+
+		public override string ParentKey
+		{
+			get { return "Epilogues"; }
+		}
+
+		public override int GetValue(Character character)
+		{
+			int count = 0;
+			foreach (Epilogue ending in character.Endings)
+			{
+				foreach (Scene scene in ending.Scenes)
+				{
+					foreach (Directive directive in scene.Directives)
+					{
+						if (!string.IsNullOrEmpty(directive.Marker))
+						{
+							count++;
+						}
+					}
+				}
+			}
+			return count;
+		}
+
+		public override string[] GetValues()
+		{
+			return null;
 		}
 	}
 }

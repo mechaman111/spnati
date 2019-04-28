@@ -67,4 +67,103 @@
 			return null;
 		}
 	}
+
+	public class TargetedLineCountAnalyzer : NumericAnalyzer
+	{
+		public override string Key
+		{
+			get { return "TargetedLineCount"; }
+		}
+
+		public override string Name
+		{
+			get { return "Targeted Line Count"; }
+		}
+
+		public override string FullName
+		{
+			get { return "Targeted Line Count"; }
+		}
+
+		public override string ParentKey
+		{
+			get { return "Dialogue"; }
+		}
+
+		public override int GetValue(Character character)
+		{
+			return character.GetTargetedLineCount();
+		}
+
+		public override string[] GetValues()
+		{
+			return null;
+		}
+	}
+
+	public class SpecialLineCountAnalyzer : NumericAnalyzer
+	{
+		public override string Key
+		{
+			get { return "SpecialLineCount"; }
+		}
+
+		public override string Name
+		{
+			get { return "Special Line Count"; }
+		}
+
+		public override string FullName
+		{
+			get { return "Special Line Count"; }
+		}
+
+		public override string ParentKey
+		{
+			get { return "Dialogue"; }
+		}
+
+		public override int GetValue(Character character)
+		{
+			return character.GetSpecialLineCount();
+		}
+
+		public override string[] GetValues()
+		{
+			return null;
+		}
+	}
+
+	public class FilterLineCountAnalyzer : NumericAnalyzer
+	{
+		public override string Key
+		{
+			get { return "FilterLineCount"; }
+		}
+
+		public override string Name
+		{
+			get { return "Filtered Line Count"; }
+		}
+
+		public override string FullName
+		{
+			get { return "Filtered Line Count"; }
+		}
+
+		public override string ParentKey
+		{
+			get { return "Dialogue"; }
+		}
+
+		public override int GetValue(Character character)
+		{
+			return character.GetFilterLineCount();
+		}
+
+		public override string[] GetValues()
+		{
+			return null;
+		}
+	}
 }
