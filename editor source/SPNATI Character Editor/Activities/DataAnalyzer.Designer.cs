@@ -37,25 +37,25 @@
 			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.label3 = new System.Windows.Forms.Label();
 			this.pnlEdit = new System.Windows.Forms.Panel();
+			this.label4 = new System.Windows.Forms.Label();
 			this.grpResults = new System.Windows.Forms.GroupBox();
 			this.lstResults = new System.Windows.Forms.ListBox();
 			this.lblError = new System.Windows.Forms.Label();
 			this.cmdAdd = new System.Windows.Forms.Button();
 			this.gridCriteria = new System.Windows.Forms.DataGridView();
+			this.ColIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColOperator = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.ColValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.picHelp = new System.Windows.Forms.PictureBox();
 			this.txtCustomExpression = new System.Windows.Forms.TextBox();
 			this.radCustom = new System.Windows.Forms.RadioButton();
 			this.radOr = new System.Windows.Forms.RadioButton();
 			this.radAnd = new System.Windows.Forms.RadioButton();
 			this.tree = new Desktop.CommonControls.DBTreeView();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.label4 = new System.Windows.Forms.Label();
-			this.ColIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColOperator = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.ColValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.picHelp = new System.Windows.Forms.PictureBox();
 			this.pnlStart.SuspendLayout();
 			this.pnlLoad.SuspendLayout();
 			this.pnlEdit.SuspendLayout();
@@ -158,13 +158,22 @@
 			this.pnlEdit.TabIndex = 5;
 			this.pnlEdit.Visible = false;
 			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(3, 3);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(62, 13);
+			this.label4.TabIndex = 8;
+			this.label4.Text = "Data Points";
+			// 
 			// grpResults
 			// 
 			this.grpResults.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.grpResults.Controls.Add(this.lstResults);
 			this.grpResults.Controls.Add(this.lblError);
-			this.grpResults.Location = new System.Drawing.Point(209, 224);
+			this.grpResults.Location = new System.Drawing.Point(299, 224);
 			this.grpResults.Name = "grpResults";
 			this.grpResults.Size = new System.Drawing.Size(555, 388);
 			this.grpResults.TabIndex = 7;
@@ -198,7 +207,7 @@
 			// 
 			this.cmdAdd.Enabled = false;
 			this.cmdAdd.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
-			this.cmdAdd.Location = new System.Drawing.Point(178, 18);
+			this.cmdAdd.Location = new System.Drawing.Point(268, 18);
 			this.cmdAdd.Name = "cmdAdd";
 			this.cmdAdd.Size = new System.Drawing.Size(25, 23);
 			this.cmdAdd.TabIndex = 3;
@@ -219,7 +228,7 @@
             this.ColValue,
             this.ColDelete});
 			this.gridCriteria.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-			this.gridCriteria.Location = new System.Drawing.Point(209, 60);
+			this.gridCriteria.Location = new System.Drawing.Point(299, 60);
 			this.gridCriteria.MultiSelect = false;
 			this.gridCriteria.Name = "gridCriteria";
 			this.gridCriteria.RowHeadersVisible = false;
@@ -230,6 +239,40 @@
 			this.gridCriteria.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridCriteria_CellValidated);
 			this.gridCriteria.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gridCriteria_EditingControlShowing);
 			// 
+			// ColIndex
+			// 
+			this.ColIndex.HeaderText = "#";
+			this.ColIndex.Name = "ColIndex";
+			this.ColIndex.ReadOnly = true;
+			this.ColIndex.Width = 21;
+			// 
+			// ColData
+			// 
+			this.ColData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ColData.HeaderText = "Property";
+			this.ColData.Name = "ColData";
+			this.ColData.ReadOnly = true;
+			this.ColData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// ColOperator
+			// 
+			this.ColOperator.HeaderText = "Operator";
+			this.ColOperator.Name = "ColOperator";
+			this.ColOperator.Width = 80;
+			// 
+			// ColValue
+			// 
+			this.ColValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ColValue.HeaderText = "Value";
+			this.ColValue.Name = "ColValue";
+			this.ColValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// ColDelete
+			// 
+			this.ColDelete.HeaderText = "";
+			this.ColDelete.Name = "ColDelete";
+			this.ColDelete.Width = 21;
+			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.picHelp);
@@ -237,12 +280,23 @@
 			this.groupBox1.Controls.Add(this.radCustom);
 			this.groupBox1.Controls.Add(this.radOr);
 			this.groupBox1.Controls.Add(this.radAnd);
-			this.groupBox1.Location = new System.Drawing.Point(209, 3);
+			this.groupBox1.Location = new System.Drawing.Point(299, 3);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(555, 51);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Expression";
+			// 
+			// picHelp
+			// 
+			this.picHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.picHelp.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.picHelp.Location = new System.Drawing.Point(532, 20);
+			this.picHelp.Name = "picHelp";
+			this.picHelp.Size = new System.Drawing.Size(16, 16);
+			this.picHelp.TabIndex = 4;
+			this.picHelp.TabStop = false;
+			this.toolTip1.SetToolTip(this.picHelp, "ex. 1 OR (2 AND NOT 3)");
 			// 
 			// txtCustomExpression
 			// 
@@ -296,64 +350,10 @@
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.tree.Location = new System.Drawing.Point(3, 19);
 			this.tree.Name = "tree";
-			this.tree.Size = new System.Drawing.Size(169, 593);
+			this.tree.Size = new System.Drawing.Size(259, 593);
 			this.tree.TabIndex = 0;
 			this.tree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterSelect);
 			this.tree.DoubleClick += new System.EventHandler(this.tree_DoubleClick);
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(3, 3);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(62, 13);
-			this.label4.TabIndex = 8;
-			this.label4.Text = "Data Points";
-			// 
-			// ColIndex
-			// 
-			this.ColIndex.HeaderText = "#";
-			this.ColIndex.Name = "ColIndex";
-			this.ColIndex.ReadOnly = true;
-			this.ColIndex.Width = 21;
-			// 
-			// ColData
-			// 
-			this.ColData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColData.HeaderText = "Property";
-			this.ColData.Name = "ColData";
-			this.ColData.ReadOnly = true;
-			this.ColData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			// 
-			// ColOperator
-			// 
-			this.ColOperator.HeaderText = "Operator";
-			this.ColOperator.Name = "ColOperator";
-			this.ColOperator.Width = 80;
-			// 
-			// ColValue
-			// 
-			this.ColValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColValue.HeaderText = "Value";
-			this.ColValue.Name = "ColValue";
-			this.ColValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			// 
-			// ColDelete
-			// 
-			this.ColDelete.HeaderText = "";
-			this.ColDelete.Name = "ColDelete";
-			this.ColDelete.Width = 21;
-			// 
-			// picHelp
-			// 
-			this.picHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.picHelp.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
-			this.picHelp.Location = new System.Drawing.Point(532, 20);
-			this.picHelp.Name = "picHelp";
-			this.picHelp.Size = new System.Drawing.Size(16, 16);
-			this.picHelp.TabIndex = 4;
-			this.picHelp.TabStop = false;
-			this.toolTip1.SetToolTip(this.picHelp, "ex. 1 OR (2 AND NOT 3)");
 			// 
 			// DataAnalyzer
 			// 

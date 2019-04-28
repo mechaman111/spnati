@@ -14,7 +14,7 @@
 
 		public override string FullName
 		{
-			get { return "Unique Line Count"; }
+			get { return "Line Count - Unique"; }
 		}
 
 		public override string ParentKey
@@ -77,7 +77,7 @@
 
 		public override string Name
 		{
-			get { return "Targeted Line Count"; }
+			get { return "Line Count - Targeted"; }
 		}
 
 		public override string FullName
@@ -110,7 +110,7 @@
 
 		public override string Name
 		{
-			get { return "Special Line Count"; }
+			get { return "Line Count - Special"; }
 		}
 
 		public override string FullName
@@ -143,7 +143,7 @@
 
 		public override string Name
 		{
-			get { return "Filtered Line Count"; }
+			get { return "Line Count - Filtered"; }
 		}
 
 		public override string FullName

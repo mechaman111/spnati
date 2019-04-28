@@ -114,4 +114,49 @@ namespace SPNATI_Character_Editor.Analyzers
 			return character.Metadata.AlternateSkins.Count;
 		}
 	}
+
+	public class IntelligenceAnalyzer : IDataAnalyzer
+	{
+		public string Key
+		{
+			get { return "Intelligence"; }
+		}
+
+		public string Name
+		{
+			get { return "Intelligence"; }
+		}
+
+		public string FullName
+		{
+			get { return "Intelligence"; }
+		}
+
+		public string ParentKey
+		{
+			get { return ""; }
+		}
+
+		public string[] GetValues()
+		{
+			return new string[] { "good", "average", "bad" };
+		}
+
+		public Type GetValueType()
+		{
+			return typeof(string);
+		}
+
+		public bool MeetsCriteria(Character character, string op, string value)
+		{
+			foreach (StageSpecificValue val in character.Intelligence)
+			{
+				if (StringOperations.Matches(val.Value, op, value))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+	}
 }
