@@ -81,4 +81,37 @@ namespace SPNATI_Character_Editor.Analyzers
 			return StringOperations.Matches(character.Size, op, value);
 		}
 	}
+
+	public class SkinAnalyzer : NumericAnalyzer
+	{
+		public override string Key
+		{
+			get { return "AlternateSkins"; }
+		}
+
+		public override string Name
+		{
+			get { return "Alternate Skins"; }
+		}
+
+		public override string FullName
+		{
+			get { return "Alternate Skin Count"; }
+		}
+
+		public override string ParentKey
+		{
+			get { return ""; }
+		}
+
+		public override string[] GetValues()
+		{
+			return null;
+		}
+
+		public override int GetValue(Character character)
+		{
+			return character.Metadata.AlternateSkins.Count;
+		}
+	}
 }
