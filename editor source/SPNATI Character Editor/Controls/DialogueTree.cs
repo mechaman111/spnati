@@ -223,7 +223,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				_view.SetFilter((Case workingCase) =>
 				{
-					return !workingCase.HasFilters;
+					return !workingCase.HasConditions;
 				});
 			}
 			else

@@ -516,6 +516,16 @@ namespace SPNATI_Character_Editor
 		/// Gets a count of the number of unique targeted lines
 		/// </summary>
 		/// <returns></returns>
+		public int GetFilterLineCount()
+		{
+			int poses;
+			return GetLineCount(LineFilter.Filter, out poses);
+		}
+
+		/// <summary>
+		/// Gets a count of the number of unique targeted lines
+		/// </summary>
+		/// <returns></returns>
 		public int GetSpecialLineCount()
 		{
 			int poses;
@@ -550,11 +560,13 @@ namespace SPNATI_Character_Editor
 				{
 					bool targeted = stageCase.HasTargetedConditions;
 					bool special = stageCase.HasStageConditions;
-					bool generic = !stageCase.HasFilters;
+					bool generic = !stageCase.HasConditions;
+					bool filter = stageCase.HasFilters;
 
 					if ((filters & LineFilter.Generic) > 0 && generic ||
 						(filters & LineFilter.Targeted) > 0 && targeted ||
-						(filters & LineFilter.Special) > 0 && special)
+						(filters & LineFilter.Special) > 0 && special ||
+						(filters & LineFilter.Filter) > 0 && filter)
 					{
 						foreach (var line in stageCase.Lines)
 						{
@@ -579,8 +591,22 @@ namespace SPNATI_Character_Editor
 		{
 			None = 0,
 			Generic = 1,
+			/// <summary>
+			/// Target or AlsoPlaying
+			/// </summary>
 			Targeted = 2,
-			Special = 4
+			/// <summary>
+			/// Game state conditions
+			/// </summary>
+			Special = 4,
+			/// <summary>
+			/// Filter
+			/// </summary>
+			Filter = 8,
+			/// <summary>
+			/// Any conditions
+			/// </summary>
+			Conditional = Targeted | Special | Filter
 		}
 
 		public IEnumerable<Case> GetWorkingCasesTargetedAtCharacter(Character character, TargetType targetTypes)

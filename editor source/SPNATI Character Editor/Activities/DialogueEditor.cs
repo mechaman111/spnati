@@ -814,7 +814,7 @@ namespace SPNATI_Character_Editor.Activities
 				if (_editorData.IsCalledOut(_selectedCase)) { return; } //can't call something out twice
 
 				SaveCase();
-				if (!_selectedCase.HasFilters && !TriggerDatabase.GetTrigger(_selectedCase.Tag).OncePerStage)
+				if (!_selectedCase.HasConditions && !TriggerDatabase.GetTrigger(_selectedCase.Tag).OncePerStage)
 				{
 					if (MessageBox.Show("This case's triggering conditions are very broad, making it very likely that other characters will respond to this inaccurately. Are you sure you want to call this out for targeting?",
 						"Call Out Situation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)

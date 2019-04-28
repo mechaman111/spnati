@@ -17,41 +17,16 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			return "Images (Total)";
 		}
 
-		private bool Filter(string filename)
-		{
-			string ext = Path.GetExtension(filename);
-			if (ext != ".png" && ext != ".gif")
-				return false;
-			//exclude epilogue images. Note these might not actually be epilogue images, but it's a best guess
-			string name = Path.GetFileNameWithoutExtension(filename);
-			if (!_regex.IsMatch(name))
-				return false;
-			return true;
-		}
-
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "filename")]
 		public void GenerateData()
 		{
 			List<Tuple<Character, int>> counts = new List<Tuple<Character, int>>();
 			foreach (Character c in CharacterDatabase.Characters)
 			{
-				HashSet<string> usedNames = new HashSet<string>();
-				int count = 0;
-				string folder = Config.GetRootDirectory(c);
-				foreach (string filename in Directory.EnumerateFiles(folder)
-					.Where(Filter))
-				{
-					usedNames.Add(Path.GetFileNameWithoutExtension(filename));
-					count++;
-				}
-				foreach (Pose pose in c.CustomPoses)
-				{
-					if (!usedNames.Contains(pose.Id))
-					{
-						count++;
-					}
-				}
-				counts.Add(new Tuple<Character, int>(c, count));
+				if (c.FolderName == "human") { continue; }
+				int lines, poses;
+				c.GetUniqueLineAndPoseCount(out lines, out poses);
+				counts.Add(new Tuple<Character, int>(c, poses));
 			}
 
 			_data = counts;
@@ -78,7 +53,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 
 		public string GetTitle()
 		{
-			return "Images Per Character (Not Including Epilogues)";
+			return "Images Per Character (Used in Dialogue)";
 		}
 
 		public string[] GetViews()

@@ -268,7 +268,7 @@ namespace SPNATI_Character_Editor
 			{
 				result = "*" + result;
 			}
-			if (HasFilters)
+			if (HasConditions)
 			{
 				if (!string.IsNullOrEmpty(Target))
 				{
@@ -685,7 +685,7 @@ namespace SPNATI_Character_Editor
 			return true;
 		}
 
-		public bool HasFilters
+		public bool HasConditions
 		{
 			get
 			{
@@ -729,34 +729,26 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Gets whether this case has any targeted dialogue towards other players
+		/// Gets whether this case has any Filters
+		/// </summary>
+		public bool HasFilters
+		{
+			get
+			{
+				return !string.IsNullOrEmpty(Filter) ||
+					Conditions.Any(c => !string.IsNullOrEmpty(c.FilterId));
+			}
+		}
+
+		/// <summary>
+		/// Gets whether this case has any direct targeted dialogue towards other players
 		/// </summary>
 		public bool HasTargetedConditions
 		{
 			get
 			{
 				return !string.IsNullOrEmpty(Target) ||
-					 !string.IsNullOrEmpty(TargetHand) ||
-					 !string.IsNullOrEmpty(TargetStage) ||
-					 !string.IsNullOrEmpty(TargetLayers) ||
-					 !string.IsNullOrEmpty(TargetStartingLayers) ||
-					 !string.IsNullOrEmpty(TargetStatus) ||
-					 !string.IsNullOrEmpty(Filter) ||
-					 !string.IsNullOrEmpty(AlsoPlayingStage) ||
-					 !string.IsNullOrEmpty(AlsoPlaying) ||
-					 !string.IsNullOrEmpty(AlsoPlayingHand) ||
-					 !string.IsNullOrEmpty(HasHand) ||
-					 !string.IsNullOrEmpty(ConsecutiveLosses) ||
-					 !string.IsNullOrEmpty(TargetTimeInStage) ||
-					 !string.IsNullOrEmpty(AlsoPlayingTimeInStage) ||
-					 !string.IsNullOrEmpty(TargetSaidMarker) ||
-					 !string.IsNullOrEmpty(TargetNotSaidMarker) ||
-					 !string.IsNullOrEmpty(TargetSayingMarker) ||
-					 !string.IsNullOrEmpty(AlsoPlayingSaidMarker) ||
-					 !string.IsNullOrEmpty(AlsoPlayingNotSaidMarker) ||
-					 !string.IsNullOrEmpty(AlsoPlayingSayingMarker) ||
-					 !string.IsNullOrEmpty(TargetSaying) ||
-					 !string.IsNullOrEmpty(AlsoPlayingSaying);
+					 !string.IsNullOrEmpty(AlsoPlaying);
 			}
 		}
 
@@ -779,6 +771,8 @@ namespace SPNATI_Character_Editor
 					!string.IsNullOrEmpty(TotalRounds) ||
 					!string.IsNullOrEmpty(TotalFemales) ||
 					!string.IsNullOrEmpty(TotalMales) ||
+					!string.IsNullOrEmpty(ConsecutiveLosses) ||
+					!string.IsNullOrEmpty(HasHand) ||
 					Conditions.Count > 0 ||
 					Expressions.Count > 0;
 			}

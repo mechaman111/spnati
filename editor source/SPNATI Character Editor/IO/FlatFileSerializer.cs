@@ -123,7 +123,7 @@ namespace SPNATI_Character_Editor
 			Dictionary<Tuple<string, int>, HashSet<Case>> _stageMap = new Dictionary<Tuple<string, int>, HashSet<Case>>();
 			foreach (Case c in character.Behavior.GetWorkingCases())
 			{
-				if (c.HasFilters)
+				if (c.HasConditions)
 					continue;
 				foreach (int stage in c.Stages)
 				{
@@ -142,7 +142,7 @@ namespace SPNATI_Character_Editor
 			Dictionary<string, Case> defaultCases = new Dictionary<string, Case>();
 			foreach (Case c in character.Behavior.GetWorkingCases())
 			{
-				if (c.Stages.Count <= 1 || c.HasFilters)
+				if (c.Stages.Count <= 1 || c.HasConditions)
 					continue;
 
 				bool candidate = true;
@@ -224,8 +224,8 @@ namespace SPNATI_Character_Editor
 						if (compare == 0)
 						{
 							//4th key: are there conditions?
-							int filters1 = c1.HasFilters ? 1 : 0;
-							int filters2 = c2.HasFilters ? 1 : 0;
+							int filters1 = c1.HasConditions ? 1 : 0;
+							int filters2 = c2.HasConditions ? 1 : 0;
 							compare = filters1.CompareTo(filters2);
 							if (compare == 0)
 							{

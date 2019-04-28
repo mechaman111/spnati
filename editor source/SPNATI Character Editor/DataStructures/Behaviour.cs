@@ -202,7 +202,7 @@ namespace SPNATI_Character_Editor
 			//Loop through the cases and remove any satisfied tags from the index
 			foreach (var workingCase in character.Behavior._workingCases)
 			{
-				if (workingCase.HasFilters)
+				if (workingCase.HasConditions)
 					continue; //A filtered case can't possibly be a default
 				string tag = workingCase.Tag;
 				Trigger trigger = TriggerDatabase.GetTrigger(tag);
@@ -632,7 +632,7 @@ namespace SPNATI_Character_Editor
 			for (int i = _workingCases.Count - 1; i >= 0; i--)
 			{
 				Case workingCase = _workingCases[i];
-				if (!workingCase.HasFilters && destinationTags.Contains(_workingCases[i].Tag))
+				if (!workingCase.HasConditions && destinationTags.Contains(_workingCases[i].Tag))
 				{
 					RemoveWorkingCaseAt(i);
 				}
@@ -643,7 +643,7 @@ namespace SPNATI_Character_Editor
 			for (int i = 0; i < end; i++)
 			{
 				Case sourceCase = _workingCases[i];
-				if (!sourceCase.HasFilters && sourceCase.Tag == sourceTag)
+				if (!sourceCase.HasConditions && sourceCase.Tag == sourceTag)
 				{
 					foreach (string tag in destinationTags)
 					{
