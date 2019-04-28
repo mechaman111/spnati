@@ -85,6 +85,20 @@ body.modal-open {
     margin: auto;
 }
 
+.wide-screen-container {
+	position: absolute;
+	width: 100vw;
+	height: 56.25vw;
+	max-width: 177.78vh;
+	max-height: 100vh;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+    margin: auto;
+}
+
+
 .screen {
 	position: absolute;
     top: 0;
@@ -1613,7 +1627,666 @@ body.modal-open {
 }
 
 /************************************************************
- * Classes for the individual and group select screens.
+ * Classes for the new individual select screen.
+ ************************************************************/
+
+ /************************************************************
+  * Classes for select screen cards.
+  ************************************************************/
+
+.opponent-cards-container {
+    width: 75%;
+    height: 90%;
+    
+    position: absolute;
+    left: 0;
+    top: 10%;
+    bottom: 0;
+    
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.opponent-card {
+    width: 19.5%;
+    height: 44%;
+    
+    margin: 0.5% 0.25%;
+    background-color: rgba(51, 51, 51, 0.65);
+    
+    border: 2px solid #111111;
+	border-radius: 5px;
+    
+    position: relative;
+    cursor: pointer;
+}
+
+.selection-card-image-clip {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    overflow: hidden;
+}
+
+.selection-card-image-area {
+    position: absolute;
+    top: -1.5%;
+    left: 0;
+    right: 0;
+    
+    display: inline;
+    height: 135%;
+    width: auto;
+    
+    margin: 0 auto;
+}
+
+.selection-card-image-area > * {
+    width: auto;
+    height: 100%;
+    
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.selection-card-sidebar {
+    position: absolute;
+
+    right: 0;
+    left: 70%;
+    top: 0;
+    bottom: 25%;
+    
+    padding: 2% 2.5%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.badge-icon {
+    opacity: 0.75;
+    
+    height: 18%;
+    width: auto;
+    
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.selection-card-sidebar img {
+    width: 100%;
+    height: auto;
+    position: static;
+}
+
+.selection-card-sidebar .layer-icon {
+    opacity: 0.80;
+}
+
+.selection-card-sidebar .gender-icon {
+    opacity: 0.80;
+    margin-top: 3%;
+}
+
+.selection-card-sidebar .status-icon {
+    opacity: 0.50;
+    margin-top: 3%;    
+}
+
+.selection-card-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 70%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.selection-card-footer .selection-card-label {
+    border: 2px solid #111111;
+	border-radius: 5px;
+    background-color: #FFFFFF;
+    opacity: 0.80;
+    
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    
+    text-align: center;
+    padding: 2%;
+}
+
+.selection-card-footer .selection-card-name {
+    /*font-size: 110%;*/
+    font-size: 2.5vmin;
+}
+
+.selection-card-footer .selection-card-source {
+    margin-top: 1%;
+    /*font-size: 65%;*/
+    font-size: 1.5vmin;
+}
+
+.opponent-card:hover, .opponent-card:active {
+    background-color: rgba(221, 221, 221, 0.90);
+    transition: background-color;
+    transition-duration: 0.5s;
+}
+
+.opponent-card:hover .selection-card-footer .selection-card-label, .opponent-card:active .selection-card-footer .selection-card-label {
+    opacity: 1.0;
+    
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+/************************************************************
+ * Classes for the sort / filter options row.
+ ************************************************************/
+ 
+.selection-options-row {
+    position: absolute;
+    top: 0;
+    bottom: 90%;
+    left: 0;
+    right: 0;
+    
+    width: 75%;
+    
+    padding: 0.5% 1.5%;
+    
+    background-color: #555555;
+    
+    display: flex;
+    align-items: center;
+    flex-basis: 0;
+}
+
+.selection-options-row > * {
+    margin-left: 1%;
+}
+
+.option-component {
+    white-space: nowrap;
+    margin: 0.5% 0;
+    
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.option-component > label {
+    border: 2px solid #111111;
+    border-radius: 5px;
+    text-align: center;
+    
+    background: linear-gradient(rgb(204, 204, 204), rgb(170, 170, 170)) rgb(204, 204, 204);
+    margin-bottom: 0.5%;
+    flex: 1;
+    
+    font-size: 1.5vmin;
+    line-height: 1.8vmin;
+    margin: 0;
+    
+    padding: 1% 2%;
+}
+
+.option-component > input {
+    font-size: 2vmin;
+    line-height: 2.4vmin;
+    width: auto;
+    height: auto;
+    margin: 0;
+    
+    flex: 2;
+}
+
+.column-component {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.column-component label, .column-component input {
+    display: inline;
+}
+
+.gender-component {
+    font-size: 1.6vmin;
+    line-height: 1.92vmin;
+    
+    margin: 0;
+}
+
+.gender-component > nav > ul {
+    margin: 0;
+    white-space: nowrap;
+    
+    display: inline-flex;
+    justify-content: center;
+}
+
+.gender-component > nav > ul > li {
+    flex: 1;
+    display: inline-flex;
+}
+
+.gender-component > nav > ul a {
+    margin: 0;
+    position: static;
+    float: none;
+    padding: 0.4vmin 0.8vmin;
+}
+
+.sort-component {
+    width: 90%;
+    margin-bottom: 0;
+}
+
+.sort-component > button {
+    margin-bottom: 0;
+    margin-top: 0.5%;
+    width: 100%;
+    font-size: 1.6vmin;
+    
+    padding: 0.5% 0;
+}
+
+.sort-component > .dropdown-menu {
+    width: 95%;
+    margin-top: 5%;
+}
+
+.sort-component > .dropdown-menu > li {
+    text-align: center;
+    font-size: 1.6vmin;
+}
+
+.sort-component > .dropdown-menu > li > a {
+    padding: 3px 0.5%;
+}
+
+.select-back-btn {
+    height: 100%;
+    font-size: 2.5vmin;
+    
+    margin-left: 0;
+    flex: 1;
+}
+
+#gender-sort-column {
+    flex: 3;
+    align-items: center;
+}
+
+#source-tag-column {
+    flex: 5;
+}
+
+#source-tag-column label {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#source-tag-column input {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left: 0px;
+}
+
+.option-component#name-component {
+    flex: 3;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.option-component#name-component > label {
+    width: auto;
+}
+
+.option-component#name-component > input {
+    width: 100%;
+}
+/************************************************************
+ * Classes for the select screen details view.
+ ************************************************************/
+
+.opponent-details-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 75.5%;
+}
+
+.opponent-details-image-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1.5%;
+    bottom: 10%;
+    
+    z-index: -1;
+    
+    display: flex;
+    justify-content: center;
+}
+
+.opponent-details-image-area > * {
+    width: auto;
+    height: 100%;
+    
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.opponent-details-image-area > * {
+    width: auto;
+    height: 100%;
+}
+
+.opponent-select-button {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.5%;
+    top: 92.5%;
+}
+
+.opponent-select-button > button {
+    width: 100%;
+    height: 100%;
+    
+    font-size: 2.75vmin;
+}
+
+.opponent-details-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8%;
+    
+    /*height: 35%;*/
+    height: auto;
+    min-height: 15%;
+    
+    background-color: #555555;
+    padding: 1.5%;
+}
+
+.opponent-details-view {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.opponent-details-field {
+    background-color: #FFFFFF;
+    margin: 0.5% 0;
+    
+    font-size: 1.65vmin;
+    line-height: 1.98vmin;
+    
+    display: flex;
+    align-items: stretch;
+    flex: 1;
+}
+
+.left-cap {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.opponent-details-field > * {
+    display: flex;
+    align-items: center;
+    
+    padding: 0.5% 2%;
+    
+    flex: 1;
+    word-wrap: break-word;
+}
+
+.opponent-details-field > .opponent-details-label {
+    background: linear-gradient(rgb(204, 204, 204), rgb(170, 170, 170)) rgb(204, 204, 204);
+    height: auto;
+    justify-content: center;
+}
+
+.opponent-details-field > .opponent-details-value {
+    flex: 3;
+}
+
+.left-cap.opponent-details-field > .opponent-details-value {
+    border-left: 2px solid #111111;
+}
+
+.opponent-details-name {
+    min-height: 17%;
+    padding: 2% 0;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    flex: 2;
+}
+
+.opponent-source {
+    font-size: 2vmin;
+}
+
+.opponent-full-name {
+    margin-bottom: 0.75vmin;
+    font-size: 2.65vmin;
+}
+
+.opponent-details-name > div {
+    padding: 0;
+}
+
+.opponent-details-description {
+    min-height: 20%;
+    padding: 1%;
+    flex-grow: 1;
+    
+    font-size: 1.65vmin;
+    line-height: 1.98vmin;
+    flex: 3;
+}
+
+.opponent-details-field .opponent-nav-button {
+    border-style: none;
+}
+
+.opponent-epilogues-field.has-epilogues, .opponent-collectibles-field.has-collectibles {
+    display: flex;
+}
+
+.opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
+    display: none;
+}
+
+.opponent-options-row {
+    margin: 0.5% 0;
+    flex: 1;
+    
+    font-size: 1.6vmin;
+    line-height: 1.98vmin;
+    
+    display: flex;
+}
+
+.opponent-options-row > * {
+    margin: 0 0.5%;
+}
+
+.opponent-linecount-field {
+    flex: 2;
+}
+
+.opponent-linecount-field > .opponent-details-label {
+    flex: 2;
+}
+
+.opponent-linecount-field > .opponent-details-value {
+    flex: 2;
+}
+
+.opponent-posecount-field {
+    flex: 1;
+}
+
+#individual-select-screen .opponent-costume-select {
+    flex: 3;
+    padding: 0.5% 2%;
+    height: auto;
+    font-size: 1.6vmin;
+    line-height: 1.98vmin;
+}
+
+.opponent-nav-button {
+    flex: 1;
+}
+
+/************************************************************
+ * Classes for the opponent Epilogues view.
+ ************************************************************/
+
+.opponent-epilogue-card {
+    padding: 1% 2%;
+    margin: 2% 5%;
+    background: #FFFFFF;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.opponent-epilogue-title {
+    flex: 2;
+    
+    text-align: left;
+    font-size: 2.5vmin;
+}
+
+.opponent-epilogue-row {
+    margin: 1% 0;
+    display: flex;
+    
+    font-size: 1.85vmin;
+    
+    flex: 1;
+    word-wrap: break-word;
+}
+
+.opponent-epilogue-row > * {
+    display: flex;
+    align-items: center;
+    
+    padding: 0.5% 2%;
+    
+    flex: 1;
+    word-wrap: break-word;
+}
+
+.opponent-epilogue-row > .opponent-epilogue-label {
+    background: linear-gradient(rgb(204, 204, 204), rgb(170, 170, 170)) rgb(204, 204, 204);
+    border-right: 2px solid #111111;
+    height: auto;
+    justify-content: center;
+    flex: 1;
+}
+
+.opponent-epilogue-row > .opponent-epilogue-value {
+    flex: 3;
+}
+
+/************************************************************
+ * Classes for constrained screen widths.
+ * In particular, detect devices with an aspect ratio of
+ * less than 4:3.
+ ************************************************************/
+
+@media (min-aspect-ratio: 4/3) {
+    .show-more-button {
+        display: none;
+    }
+}
+
+@media (max-aspect-ratio: 4/3) {
+    .show-more-button {
+        display: block;
+    }
+    
+    .opponent-details-basic .extra-details-row {
+        display: none;
+    }
+    
+    .show-more .extra-details-row {
+        display: flex;
+    }
+    
+    .opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
+        display: none;
+    }
+    
+    .gender-component, .sort-component > .dropdown-menu > li, .sort-component > button {
+        font-size: 1vw;
+    }
+    
+    .option-component > label {
+        font-size: 1.1vw;
+        line-height: calc(1.1vw * 1.2);
+    }
+    
+    .option-component > input {
+        font-size: 1.1vw;
+        line-height: calc(1.1vw * 1.2);
+    }
+    
+    .selection-card-footer .selection-card-name {
+        font-size: 1.75vw;
+    }
+    
+    .selection-card-footer .selection-card-source {
+        font-size: 1.1vw;
+    }
+    
+    .opponent-select-button > button, .select-back-btn {
+        font-size: 2vw;
+    }
+    
+    .opponent-full-name {
+        font-size: 2vw;
+    }
+    
+    .opponent-source {
+        font-size: 1.75vw;
+    }
+}
+
+
+/************************************************************
+ * Classes for the old individual and group select screens.
  ************************************************************/
 
 .long-select-advance-top {

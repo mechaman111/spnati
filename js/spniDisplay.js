@@ -770,72 +770,64 @@ MainSelectScreenDisplay.prototype.update = function (player) {
     }
 }
 
-
-
-/* Handles common logic for displaying opponents in the group and individual displays. */
-function OpponentPickerDisplay (slot, id_base) {
-    this.nameLabel = $("#"+id_base+"-name-label-"+slot);
-    this.prefersLabel = $("#"+id_base+"-prefers-label-"+slot);
-    this.sexLabel = $("#"+id_base+"-sex-label-"+slot);
-    this.heightLabel = $("#"+id_base+"-height-label-"+slot);
-    this.sourceLabel = $("#"+id_base+"-source-label-"+slot);
-    this.writerLabel = $("#"+id_base+"-writer-label-"+slot);
-    this.artistLabel = $("#"+id_base+"-artist-label-"+slot);
-    this.countBox = $("#"+id_base+"-counts-"+slot);
-    this.lineCountLabel = $("#"+id_base+"-line-counts-label-"+slot);
-    this.poseCountLabel = $("#"+id_base+"-pose-counts-label-"+slot);
-    this.descriptionLabel = $("#"+id_base+"-description-label-"+slot);
-    this.badge = $("#"+id_base+"-badge-"+slot);
-    this.status = $("#"+id_base+"-status-"+slot);
-    this.layers = $("#"+id_base+"-layer-"+slot);
-    this.costumeSelector = $("#"+id_base+"-costume-select-"+slot);
-    this.image = $("#"+id_base+"-image-"+slot);
+function createElementWithClass (elemType, className) {
+    var elem = document.createElement(elemType);
+    elem.className = className;
+    
+    return elem;
 }
 
-OpponentPickerDisplay.prototype.clear = function() {
-    this.nameLabel.html("");
-    this.prefersLabel.html("");
-    this.sexLabel.html("");
-    this.sourceLabel.html("");
-    this.writerLabel.html("");
-    this.artistLabel.html("");
-    this.countBox.css("visibility", "hidden");
-    this.descriptionLabel.html("");
-    this.badge.hide();
-    this.status.hide();
-    this.layers.hide();
-    this.image.hide();
-    this.costumeSelector.hide();
+
+function OpponentSelectionCard (opponent) {
+    this.opponent = opponent;
+    
+    this.mainElem = createElementWithClass('div', 'opponent-card');
+    
+    var clipElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-image-clip'));
+    this.imageArea = clipElem.appendChild(createElementWithClass('div', 'selection-card-image-area'));
+    this.simpleImage = $(this.imageArea.appendChild(createElementWithClass('img', 'opponent-card-image-simple')));
+    
+    this.imageArea = $(this.imageArea);
+    
+    this.epilogueBadge = $(this.mainElem.appendChild(createElementWithClass('img', 'badge-icon')));
+    
+    var sidebarElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-sidebar'));
+    this.layerIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'layer-icon')));
+    this.genderIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'gender-icon')));
+    this.statusIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'status-icon')));
+    
+    $(this.epilogueBadge).attr('src', "img/epilogue_icon.png");
+    
+    var footerElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-footer'));
+    this.label = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-name')));
+    this.source = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-source')));
+    
+    this.update();
 }
 
-OpponentPickerDisplay.prototype.update = function (opponent) {
-    this.nameLabel.html(opponent.first + " " + opponent.last);
-    this.prefersLabel.html(opponent.label);
-    this.sexLabel.html(opponent.gender);
-    this.sourceLabel.html(opponent.source);
-    this.writerLabel.html(wordWrapHtml(opponent.writer));
-    this.artistLabel.html(wordWrapHtml(opponent.artist));
-    this.descriptionLabel.html(opponent.description);
+OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
+OpponentSelectionCard.prototype.constructor = OpponentSelectionCard;
 
-    if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
-        this.badge.show();
+OpponentSelectionCard.prototype.update = function () {    
+    if (EPILOGUE_BADGES_ENABLED && this.opponent.ending) {
+        this.epilogueBadge.show();
     } else {
-        this.badge.hide();
+        this.epilogueBadge.hide();
     }
 
-    if (opponent.status) {
+    if (this.opponent.status) {
         var status_icon_img = 'img/testing-badge.png';
         var status_tooltip = TESTING_STATUS_TOOLTIP;
         
-        if (opponent.status === 'offline') {
+        if (this.opponent.status === 'offline') {
             status_icon_img = 'img/offline-badge.png';
             status_tooltip = OFFLINE_STATUS_TOOLTIP;
-        } else if (opponent.status === 'incomplete') {
+        } else if (this.opponent.status === 'incomplete') {
             status_icon_img = 'img/incomplete-badge.png';
             status_tooltip = INCOMPLETE_STATUS_TOOLTIP;
         }
     
-        this.status.attr({
+        this.statusIcon.attr({
             'src': status_icon_img,
             'title': status_tooltip,
             'data-original-title': status_tooltip,
@@ -843,48 +835,344 @@ OpponentPickerDisplay.prototype.update = function (opponent) {
             'placement': 'left'
         });
     } else {
-        this.status.removeAttr('title').removeAttr('data-original-title').hide();
+        this.statusIcon.removeAttr('title').removeAttr('data-original-title').hide();
     }
 
-    this.layers.show();
-    this.layers.attr("src", "img/layers" + opponent.layers + ".png");
-
-    this.image.attr('src', opponent.folder + opponent.image);
-    this.image.css('height', opponent.scale + '%');
-    this.image.show();
+    this.layerIcon.show().attr("src", "img/layers" + this.opponent.layers + ".png");
+    this.genderIcon.show().attr("src", this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png');
+    this.simpleImage.attr('src', this.opponent.selection_image).css('height', this.opponent.scale + '%').show();
     
+    this.label.text(this.opponent.label);
+    this.source.text(this.opponent.source);
+    
+    this.mainElem.addEventListener('click', this.handleClick.bind(this));
+}
+
+OpponentSelectionCard.prototype.clear = function () {}
+
+OpponentSelectionCard.prototype.handleClick = function (ev) {
+    individualDetailDisplay.update(this.opponent);
+}
+
+OpponentDetailsDisplay = function () {
+    this.displayContainer = $("#individual-select-screen .opponent-details-panel");
+    
+    this.mainView = $('#individual-select-screen .opponent-details-basic');
+    
+    this.epiloguesView = $('#individual-select-screen .opponent-details-epilogues');
+    this.epiloguesContainer = $('#individual-select-screen .opponent-epilogues-container');
+    
+    this.collectiblesView = $('#individual-select-screen .opponent-details-collectibles');
+    this.collectiblesContainer = $('#individual-select-screen .opponent-collectibles-container');
+    
+    this.epiloguesField = $('#individual-select-screen .opponent-epilogues-field');
+    this.collectiblesField = $('#individual-select-screen .opponent-collectibles-field');
+    
+    this.nameLabel = $("#individual-select-screen .opponent-full-name");
+    this.sourceLabel = $("#individual-select-screen .opponent-source");
+    this.writerLabel = $("#individual-select-screen .opponent-writer");
+    this.artistLabel = $("#individual-select-screen .opponent-artist");
+    this.descriptionLabel = $("#individual-select-screen .opponent-details-description");
+    this.linecountLabel = $("#individual-select-screen .opponent-linecount");
+    this.posecountLabel = $("#individual-select-screen .opponent-posecount");
+    this.costumeSelector = $("#individual-select-screen .opponent-costume-select");
+    this.simpleImage = $("#individual-select-screen .opponent-details-simple-image");
+    this.imageArea = $("#individual-select-screen .opponent-details-image-area");
+    
+    this.selectButton = $('#individual-select-screen .select-button');
+    this.epiloguesNavButton = $('#individual-select-screen .opponent-epilogues');
+    this.collectiblesNavButton = $('#individual-select-screen .opponent-collectibles');
+    
+    this.showMoreButton = $('#individual-select-screen .show-more-button');
+    
+    $('#individual-select-screen .opponent-nav-button').click(this.handlePanelNavigation.bind(this));
+    
+    this.costumeSelector.change(this.handleCostumeChange.bind(this));
+    this.selectButton.click(this.handleSelected.bind(this));
+    this.showMoreButton.click(function () {
+        this.mainView.toggleClass('show-more');
+    }.bind(this));
+    
+    this.epiloguesView.hide();
+    this.collectiblesView.hide();
+}
+
+OpponentDetailsDisplay.prototype = Object.create(OpponentDisplay.prototype);
+OpponentDetailsDisplay.prototype.constructor = OpponentDetailsDisplay;
+
+OpponentDetailsDisplay.prototype.handleSelected = function (ev) {
+    if (!this.opponent) return;
+    
+    players[selectedSlot] = this.opponent;
+	players[selectedSlot].loadBehaviour(selectedSlot, true);
+    updateSelectionVisuals();
+	screenTransition($individualSelectScreen, $selectScreen);
+    
+    this.clear();
+}
+
+OpponentDetailsDisplay.prototype.handlePanelNavigation = function (ev) {
+    var targetPanel = $(ev.target).attr('data-target');
+    
+    $('#individual-select-screen .opponent-details-view').hide();
+    
+    if (targetPanel === 'epilogues') {
+        this.updateEpiloguesView();
+        this.epiloguesView.show();
+    } else if (targetPanel === 'collectibles') {
+        this.collectiblesView.show();
+    } else {
+        this.mainView.show();
+    }
+}
+
+OpponentDetailsDisplay.prototype.handleCostumeChange = function () {
+    if (!this.opponent) return;
+	var selectedCostume = this.costumeSelector.val();
+	
+	var costumeDesc = undefined;
+	if (selectedCostume.length > 0) {
+		for (let i=0;i<this.opponent.alternate_costumes.length;i++) {
+			if (this.opponent.alternate_costumes[i].folder === selectedCostume) {
+				costumeDesc = this.opponent.alternate_costumes[i];
+				break;
+			}
+		}
+	}
+	
+    this.opponent.selectAlternateCostume(costumeDesc);
+    this.simpleImage.attr('src', this.opponent.selection_image);
+}
+
+OpponentDetailsDisplay.prototype.clear = function () {
+    this.opponent = null;
+    this.nameLabel.empty();
+    this.sourceLabel.empty();
+    this.writerLabel.empty();
+    this.artistLabel.empty();
+    this.descriptionLabel.empty();
+    
+    this.simpleImage.attr('src', null);
+    this.selectButton.prop('disabled', true);
+    this.epiloguesField.removeClass('has-epilogues');
+    this.collectiblesField.removeClass('has-collectibles');
+    this.mainView.removeClass('show-more');
+    this.costumeSelector.hide();
+    
+    this.displayContainer.hide();
+}
+
+OpponentDetailsDisplay.prototype.createEpilogueCard = function (title, gender, unlockHint) {
+    var container = createElementWithClass('div', 'bordered opponent-epilogue-card');
+    
+    var titleElem = container.appendChild(createElementWithClass('div', 'opponent-epilogue-title'));
+    $(titleElem).html(title);
+    
+    var genderElem = container.appendChild(createElementWithClass('div', 'bordered left-cap opponent-epilogue-row opponent-epilogue-gender'));
+    var genderLabel = genderElem.appendChild(createElementWithClass('div', 'left-cap opponent-epilogue-label'));
+    var genderValue = genderElem.appendChild(createElementWithClass('div', 'opponent-epilogue-value'));
+    
+    $(genderValue).html(gender);
+    $(genderLabel).text("For");
+    
+    if (unlockHint) {
+        var unlockHintElem = container.appendChild(createElementWithClass('div', 'bordered left-cap opponent-epilogue-row opponent-epilogue-unlock'));
+        var unlockHintLabel = unlockHintElem.appendChild(createElementWithClass('div', 'left-cap opponent-epilogue-label'));
+        var unlockHintValue = unlockHintElem.appendChild(createElementWithClass('div', 'opponent-epilogue-value'));
+        $(unlockHintLabel).text("To Unlock");
+        $(unlockHintValue).html(unlockHint);
+    }
+    
+    return container;
+}
+
+function isEquivalentEpilogue(e1, e2) {
+    if (e1.text() !== e2.text()) return false;
+    
+    return EPILOGUE_CONDITIONAL_ATTRIBUTES.every(function (condAttr) {
+        return e1.attr(condAttr) == e2.attr(condAttr);
+    });
+}
+
+OpponentDetailsDisplay.prototype.updateEpiloguesView = function () {
+    if (!this.opponent.ending) return;
+
+    // Group together any epilogues with a shared name and conditional attributes (but with different gender attributes).
+    var groups = [];
+
+    this.opponent.endings.each(function (idx, elem) {
+        var $elem = $(elem);
+        var title = $elem.text();
+        
+        if(!groups.some(function (group) {
+            if (group.every(isEquivalentEpilogue.bind(null, $elem))) {
+                // This group contains all equivalent epilogues to the current one, add the current epilogue 
+                group.push(elem);
+                return true;
+            }
+            return false;
+        })) {
+            // Add the current element as a new group
+            groups.push([$elem]);
+        }
+    });
+    
+    var cards = groups.map(function (group) {
+        var condGender = group[0].attr('gender');
+        var genderText = '';
+        
+        if (group.length > 1) {
+            genderText = 'All Genders';
+        } else if (condGender === 'male') {
+            genderText = 'Males';
+        } else if (condGender === 'female') {
+            genderText = 'Females';
+        } else {
+            genderText = 'All Genders';
+        }
+        
+        return this.createEpilogueCard(
+            group[0].text(), genderText, group[0].attr('hint')
+        );
+    }.bind(this));
+    
+    this.epiloguesContainer.empty().append(cards);
+};
+
+OpponentDetailsDisplay.prototype.update = function (opponent) {
+    this.opponent = opponent;
+    
+    this.displayContainer.show();
+    this.nameLabel.html(opponent.first + " " + opponent.last);
+    this.sourceLabel.html(opponent.source);
+    this.writerLabel.html(opponent.writer);
+    this.artistLabel.html(opponent.artist);
+    this.descriptionLabel.html(opponent.description);
+
+    this.simpleImage.attr('src', opponent.selection_image).css('height', opponent.scale + '%').show();
+    
+    this.selectButton.prop('disabled', false);
+    
+    // for now
+    this.collectiblesField.removeClass('has-collectibles');
+    
+    
+    if (!opponent.ending) {
+        this.epiloguesField.removeClass('has-epilogues');
+    } else {
+        this.epiloguesField.addClass('has-epilogues');
+        
+        var endingGenders = {
+            male: false,
+            female: false
+        };
+        
+        var hasConditionalEnding = false;
+        
+        opponent.endings.each(function (idx, elem) {
+            var $elem = $(elem);
+            
+            if(EPILOGUE_CONDITIONAL_ATTRIBUTES.some(function (attr) { return !!$elem.attr(attr); })) {
+                hasConditionalEnding = true;
+            }
+            
+            var gender = $elem.attr('gender');
+            
+            if (gender === 'male') {
+                endingGenders.male = true;
+            } else if (gender === 'female') {
+                endingGenders.female = true;
+            } else {
+                endingGenders.male = true;
+                endingGenders.female = true;                
+            }
+        });
+        
+        var epilogueAvailable = false;
+        if (endingGenders.male && endingGenders.female) {
+            epilogueAvailable = true;
+        } else if (endingGenders.male) {
+            epilogueAvailable = (players[HUMAN_PLAYER].gender === 'male');
+        } else if (endingGenders.female) {
+            epilogueAvailable = (players[HUMAN_PLAYER].gender === 'female');
+        }
+        
+        if (epilogueAvailable) {
+            this.epiloguesNavButton
+                .text('Available' + (hasConditionalEnding ? ' (Conditional)' : ''))
+                .removeClass('smooth-button-red')
+                .addClass('smooth-button-blue');
+        } else {
+            this.epiloguesNavButton
+                .text((endingGenders.male ? 'Males' : 'Females') + ' Only')
+                .removeClass('smooth-button-blue')
+                .addClass('smooth-button-red');
+        }
+    }
+
     if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
-        this.costumeSelector.empty().append($('<option>', {val: '', text: 'Default Skin'}));
+        this.costumeSelector.empty().append($('<option>', {val: '', text: 'Default Skin'})).prop('disabled', false);
+        
         opponent.alternate_costumes.forEach(function (alt) {
             this.costumeSelector.append($('<option>', {
-                val: alt_costume.folder,
-                text: 'Alternate Skin: '+alt_costume.label
+                val: alt.folder,
+                text: alt.label
             }));
         }.bind(this));
+        
+        /* Force-set and lock the selector if FORCE_ALT_COSTUME is set */
+        opponent.alternate_costumes.some(function (alt) {
+            if (alt.set === FORCE_ALT_COSTUME) {
+                this.costumeSelector.val(alt.folder).prop('disabled', true);
+                return true;
+            }
+        }.bind(this));
+        
         this.costumeSelector.show();
     } else {
         this.costumeSelector.hide();
     }
-}
-
-
-
-function IndividualSelectDisplay (slot) {
-    OpponentPickerDisplay.call(slot, "individual");
-    this.button = $('#individual-button-'+slot);
-}
-
-IndividualSelectDisplay.prototype = Object.create(OpponentPickerDisplay.prototype);
-IndividualSelectDisplay.prototype.constructor = IndividualSelectDisplay;
-
-IndividualSelectDisplay.prototype.update = function (opponent) {
-    OpponentPickerDisplay.prototype.update.call(this, opponent);
     
-    this.button.html('Select Opponent');
-    this.button.attr('disabled', false);
-}
+    if (opponent.uniqueLineCount === undefined || opponent.posesImageCount === undefined) {
+        // retrieve line and image counts
+        if (DEBUG) {
+            console.log("[LineImageCount] Fetching counts for " + opponent.label);
+        }
 
-IndividualSelectDisplay.prototype.clear = function () {
-    OpponentPickerDisplay.prototype.clear.call(this);
-    this.button.attr('disabled', true);
+        var countsPromise = new Promise(function (resolve, reject) {
+            fetchCompressedURL(
+                opponent.folder + 'behaviour.xml',
+                resolve, reject
+            );
+        });
+
+        this.linecountLabel.text("Loading...");
+        this.posecountLabel.text("Loading...");
+        countsPromise.then(countLinesImages).then(function(response) {
+            opponent.uniqueLineCount = response.numUniqueLines;
+            opponent.posesImageCount = response.numPoses;
+
+            // show line and image counts
+            if (DEBUG) {
+                console.log("[LineImageCount] Loaded " + opponent.label + " from behaviour: " +
+                  opponent.uniqueLineCount + " lines, " + opponent.posesImageCount + " images");
+            }
+            
+            this.linecountLabel.text(opponent.uniqueLineCount);
+            this.posecountLabel.text(opponent.posesImageCount);
+        }.bind(this));
+    }
+    else {
+        // this character's counts were previously loaded
+        if (DEBUG) {
+            console.log("[LineImageCount] Loaded previous count for " + opponent.label + ": " +
+              opponent.uniqueLineCount + " lines, " + opponent.posesImageCount + " images)");
+        }
+        this.linecountLabel.text(opponent.uniqueLineCount);
+        this.posecountLabel.text(opponent.posesImageCount);
+    }
+    
+    this.epiloguesView.hide();
+    this.collectiblesView.hide();
+    this.mainView.show();
 }

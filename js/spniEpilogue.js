@@ -260,6 +260,14 @@ function getCenteredPosition(width) {
 /************************************************************
  * Load the Epilogue data for a character
  ************************************************************/
+ 
+// This is just a list of all possible conditional attribute names.
+var EPILOGUE_CONDITIONAL_ATTRIBUTES = [
+    'alsoPlaying', 'playerStartingLayers', 'markers',
+    'not-markers', 'any-markers', 'alsoplaying-markers',
+    'alsoplaying-not-markers', 'alsoplaying-any-markers'
+]
+ 
 function loadEpilogueData(player) {
   if (!player || !player.xml) { //return an empty list if a character doesn't have an XML variable. (Most likely because they're the player.)
     return [];

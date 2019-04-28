@@ -443,284 +443,138 @@
   </div>
 </div>
 
-
-<!-- Individual Select Screen -->
-<div id="individual-select-screen" class="screen-container" hidden>
+<div id="individual-select-screen" class="wide-screen-container" hidden>
   <div class="screen">
-
-    <!-- Opponent Info -->
-    <div class="dialogue-bubble-row">
-      <div id="individual-stats-page-1-1" class="bordered left dialogue-bubble-area">
-        <div class="stats-section">
-          <div class="bordered stats-label">Name</div>
-          <div id="individual-name-label-1" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Sex</div>
-          <div id="individual-sex-label-1" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section-large">
-          <div class="bordered stats-label">Source</div>
-          <div id="individual-source-label-1" class="bordered stats-content"></div>
-        </div>
-      </div>
-      <div id="individual-stats-page-1-2" class="bordered left dialogue-bubble-area" style="display:none;">
-        <div class="stats-section">
-          <div class="bordered stats-label">Writer</div>
-          <div id="individual-writer-label-1" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Artist</div>
-          <div id="individual-artist-label-1" class="bordered stats-content"></div>
-        </div>
-        <div class="stats-section">
-          <div class="bordered stats-label">Stats</div>
-          <div class="bordered stats-content">
-            <div id="individual-counts-1">
-              <span id="individual-line-count-label-1"></span> unique lines <br />
-              <span id="individual-pose-count-label-1"></span> poses
-            </div>
+    <div class="opponent-cards-container">
+    <!-- 
+    (example opponent card element)
+      <div class="opponent-card">
+        <div class="selection-card-image-clip">
+          <div class="selection-card-image-area">
+            <img class="opponent-card-image-simple" src="opponents/sayori/0-calm.png">
           </div>
         </div>
-      </div>
-      <div id="individual-stats-page-1-3" class="bordered left dialogue-bubble-area" style="display:none;">
-        <div id="individual-description-label-1">
+        
+        <img class="badge-icon" src="img/epilogue_icon.png"/>
+        <div class="selection-card-sidebar">
+          <img class="layer-icon" src="img/testing-badge.png"/>
+          <img class="status-icon" src="img/testing-badge.png"/>
+          <img class="gender-icon" src="img/female.png"/>
+        </div>
+        <div class="selection-card-footer">
+          <div class="selection-card-label selection-card-name">Sayori</div>
+          <div class="selection-card-label selection-card-source">Doki Doki Literature Club!</div>
         </div>
       </div>
-
-
-      <div id="individual-stats-page-2-1" class="bordered halfLeft dialogue-bubble-area">
-        <div class="stats-section">
-          <div class="bordered stats-label">Name</div>
-          <div id="individual-name-label-2" class="bordered stats-content"></div>
+      -->
+    </div>
+    <div class="bordered selection-options-row">
+      <button type="button" class="bordered smooth-button smooth-button-red select-back-btn" onclick="backToSelect()">Back</button>
+      <div id="gender-sort-column" class="column-component">
+        <div class="gender-component">
+          <nav>
+            <ul class="pagination" id="search-gender">
+              <li class="active"><a href="#"  data-value="1">All</a></li>
+              <li><a href="#" data-value="2">Male</a></li>
+              <li><a href="#" data-value="3">Female</a></li>
+            </ul>
+          </nav>
         </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Sex</div>
-          <div id="individual-sex-label-2" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section-large">
-          <div class="bordered stats-label">Source</div>
-          <div id="individual-source-label-2" class="bordered stats-content"></div>
-        </div>
-      </div>
-      <div id="individual-stats-page-2-2" class="bordered halfLeft dialogue-bubble-area" style="display:none;">
-        <div class="stats-section">
-          <div class="bordered stats-label">Writer</div>
-          <div id="individual-writer-label-2" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Artist</div>
-          <div id="individual-artist-label-2" class="bordered stats-content"></div>
-        </div>
-        <div class="stats-section">
-          <div class="bordered stats-label">Stats</div>
-          <div class="bordered stats-content">
-            <div id="individual-counts-2">
-              <span id="individual-line-count-label-2"></span> unique lines <br />
-              <span id="individual-pose-count-label-2"></span> poses
-            </div>
-          </div>
+        <div class="dropdown sort-component">
+          <button id="sort-dropdown" class="bordered btn btn-sm dropdown-toggle wide-dropdown"
+                  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span id="sort-dropdown-selection">Featured</span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu sort-dropdown-options" aria-labelledby="sort-option">
+            <li><a href="#" data-value="roster">Featured</a></li>
+            <li><a href="#" data-value="date">Newest</a></li>
+            <li><a href="#" data-value="date-reverse">Oldest</a></li>
+            <li><a href="#" data-value="layers">Most Layers</a></li>
+            <li><a href="#" data-value="layers-reverse">Fewest Layers</a></li>
+            <li><a href="#" data-value="name">Name (A-Z)</a></li>
+            <li><a href="#" data-value="name-reverse">Name (Z-A)</a></li>
+            <li><a href="#" data-value="target">Targeted most by selected</a></li>
+          </ul>
         </div>
       </div>
-      <div id="individual-stats-page-2-3" class="bordered halfLeft dialogue-bubble-area" style="display:none;">
-        <div id="individual-description-label-2">
-        </div>
+      <div id="name-component" class="option-component">
+        <label for="search-name">Search Name: </label>
+        <input type="text" id="search-name" class='bordered wide-textbox sort-filter-field' placeholder="Name"/>
       </div>
-
-
-      <div id="individual-stats-page-3-1" class="bordered center dialogue-bubble-area">
-        <div class="stats-section">
-          <div class="bordered stats-label">Name</div>
-          <div id="individual-name-label-3" class="bordered stats-content"></div>
+      <div id="source-tag-column" class="column-component">
+        <div class="option-component source-component">
+          <label for="search-source">Search Source: </label>
+          <input list='sourceList' type="text" id="search-source" class='bordered wide-textbox sort-filter-field' placeholder="Search by Source"/>
         </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Sex</div>
-          <div id="individual-sex-label-3" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section-large">
-          <div class="bordered stats-label">Source</div>
-          <div id="individual-source-label-3" class="bordered stats-content"></div>
-        </div>
-      </div>
-      <div id="individual-stats-page-3-2" class="bordered center dialogue-bubble-area" style="display:none;">
-        <div class="stats-section">
-          <div class="bordered stats-label">Writer</div>
-          <div id="individual-writer-label-3" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Artist</div>
-          <div id="individual-artist-label-3" class="bordered stats-content"></div>
-        </div>
-        <div class="stats-section">
-          <div class="bordered stats-label">Stats</div>
-          <div class="bordered stats-content">
-            <div id="individual-counts-3">
-              <span id="individual-line-count-label-3"></span> unique lines <br />
-              <span id="individual-pose-count-label-3"></span> poses
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="individual-stats-page-3-3" class="bordered center dialogue-bubble-area" style="display:none;">
-        <div id="individual-description-label-3">
-        </div>
-      </div>
-
-
-      <div id="individual-stats-page-4-1" class="bordered farHalfLeft dialogue-bubble-area">
-        <div class="stats-section">
-          <div class="bordered stats-label">Name</div>
-          <div id="individual-name-label-4" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Sex</div>
-          <div id="individual-sex-label-4" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section-large">
-          <div class="bordered stats-label">Source</div>
-          <div id="individual-source-label-4" class="bordered stats-content"></div>
-        </div>
-      </div>
-      <div id="individual-stats-page-4-2" class="bordered farHalfLeft dialogue-bubble-area" style="display:none;">
-        <div class="stats-section">
-          <div class="bordered stats-label">Writer</div>
-          <div id="individual-writer-label-4" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Artist</div>
-          <div id="individual-artist-label-4" class="bordered stats-content"></div>
-        </div>
-        <div class="stats-section">
-          <div class="bordered stats-label">Stats</div>
-          <div class="bordered stats-content">
-            <div id="individual-counts-4">
-              <span id="individual-line-count-label-4"></span> unique lines <br />
-              <span id="individual-pose-count-label-4"></span> poses
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="individual-stats-page-4-3" class="bordered farHalfLeft dialogue-bubble-area" style="display:none;">
-        <div id="individual-description-label-4">
+        <div class="option-component tag-component">
+          <label for="search-tag">Search Tag: </label>
+          <input list='tagList' type="text" id="search-tag" class='bordered wide-textbox sort-filter-field' placeholder="Search by Tag"/>
         </div>
       </div>
     </div>
-
-    <!-- Opponent Images -->
-    <div class="image-row">
-      <div class="farLeft selection-image-area">
-        <img id="individual-image-1" class="opponent-image" hidden>
-        <img id="individual-badge-1" class="badge-icon" src="img/epilogue_icon.png" hidden/>
-        <img id="individual-status-1" class="status-icon" src="img/testing-badge.png" hidden/>
-        <img id="individual-layer-1" class="layer-icon" src="img/layers1.png" hidden/>
-        <select id="individual-costume-select-1" class="alt-costume-dropdown" onchange="altCostumeSelected(1, false)"></select>
+    
+    <div class="opponent-details-container">
+      <div class="opponent-details-image-area">
+        <img class="opponent-details-simple-image" />
       </div>
-      <div class="almostLeft selection-image-area">
-        <img id="individual-image-2" class="opponent-image" hidden>
-        <img id="individual-badge-2" class="badge-icon" src="img/epilogue_icon.png" hidden/>
-        <img id="individual-status-2" class="status-icon" src="img/testing-badge.png" hidden/>
-        <img id="individual-layer-2" class="layer-icon" src="img/layers1.png" hidden/>
-        <select id="individual-costume-select-2" class="alt-costume-dropdown" onchange="altCostumeSelected(2, false)"></select>
-      </div>
-      <div class="almostRight selection-image-area">
-        <img id="individual-image-3" class="opponent-image" hidden>
-        <img id="individual-badge-3" class="badge-icon" src="img/epilogue_icon.png" hidden/>
-        <img id="individual-status-3" class="status-icon" src="img/testing-badge.png" hidden/>
-        <img id="individual-layer-3" class="layer-icon" src="img/layers1.png" hidden/>
-        <select id="individual-costume-select-3" class="alt-costume-dropdown" onchange="altCostumeSelected(3, false)"></select>
-      </div>
-      <div class="farRight selection-image-area">
-        <img id="individual-image-4" class="opponent-image" hidden>
-        <img id="individual-badge-4" class="badge-icon" src="img/epilogue_icon.png" hidden/>
-        <img id="individual-status-4" class="status-icon" src="img/testing-badge.png" hidden/>
-        <img id="individual-layer-4" class="layer-icon" src="img/layers1.png" hidden/>
-        <select id="individual-costume-select-4" class="alt-costume-dropdown" onchange="altCostumeSelected(4, false)"></select>
-      </div>
-    </div>
-
-    <!-- Hide Button -->
-    <button class='bordered hide-table-button' onclick="hideSingleSelectionTable()">
-      <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-    </button>
-    <button class='bordered table-bug-report-button' onclick="showBugReportModal()">
-      <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-    </button>
-
-    <!-- Dock Area -->
-    <div id="individual-select-table">
-
-      <!-- Opponent Selections -->
-      <div class="bordered left small-opponent-area">
-        <button id="individual-button-1" class="bordered smooth-button smooth-button-green full-select-slot-button" onclick="selectIndividualOpponent(1)">Select Opponent</button>
-      </div>
-      <div class="bordered halfLeft small-opponent-area">
-        <button id="individual-button-2" class="bordered smooth-button smooth-button-green full-select-slot-button" onclick="selectIndividualOpponent(2)">Select Opponent</button>
-      </div>
-      <div class="bordered halfRight small-opponent-area">
-        <button id="individual-button-3" class="bordered smooth-button smooth-button-green full-select-slot-button" onclick="selectIndividualOpponent(3)">Select Opponent</button>
-      </div>
-      <div class="bordered right small-opponent-area">
-        <button id="individual-button-4" class="bordered smooth-button smooth-button-green full-select-slot-button" onclick="selectIndividualOpponent(4)">Select Opponent</button>
-      </div>
-
-      <!-- Dock Area -->
-      <div id='main-select-area' class='bordered'>
-
-        <!-- Buttons -->
-        <button id='individual-back-button' class='bordered main-select-button select-back-button smooth-button smooth-button-red' onclick="backToSelect()">
-          Back
-        </button>
-
-        <button id='individual-search-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="openSearchModal()">
-          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-          Filter
-        </button>
-
-        <!-- Advance Button Casing -->
-        <div class='bordered long-select-advance-top'> </div>
-        <div class='bordered long-select-advance-bottom'> </div>
-
-        <!-- Page Selection -->
-        <div class="select-page-display">
-          <div class="bordered page-label">Page</div>
-          <input id="individual-page-indicator" type="text" class="bordered page-indicator" value="" />
-          <div id="individual-max-page-indicator" class="bordered of-label">of 1</div>
+      <div class="opponent-details-panel bordered" hidden>
+        <div class="opponent-details-view opponent-details-basic">
+          <div class="opponent-options-row">
+            <button type="button" class="bordered smooth-button smooth-button-blue show-more-button">Show More</button>
+            <select class="form-control opponent-costume-select"></select>
+          </div>
+          <div class="bordered opponent-details-field opponent-details-name">
+            <div class="opponent-details-value opponent-full-name"></div>
+            <div class="opponent-details-value opponent-source"></div>
+          </div>
+          <div class="bordered left-cap extra-details-row opponent-details-field opponent-epilogues-field">
+            <div class="opponent-details-label left-cap">Epilogues</div>
+            <button type="button" class="smooth-button smooth-button-blue opponent-nav-button opponent-details-value opponent-epilogues" data-target="epilogues"></button>
+          </div>
+          <div class="bordered left-cap extra-details-row opponent-details-field opponent-collectibles-field">
+            <div class="opponent-details-label left-cap">Collectibles</div>
+            <button type="button" class="smooth-button smooth-button-blue opponent-nav-button opponent-details-value opponent-collectibles" data-target="collectibles"></button>
+          </div>
+          <div class="bordered left-cap extra-details-row opponent-details-field opponent-writers-field">
+            <div class="opponent-details-label left-cap">Writer(s)</div>
+            <div class="opponent-details-value opponent-writer"></div>
+          </div>
+          <div class="bordered left-cap extra-details-row opponent-details-field opponent-artists-field">
+            <div class="opponent-details-label left-cap">Artist(s)</div>
+            <div class="opponent-details-value opponent-artist"></div>
+          </div>
+          <div class="extra-details-row opponent-options-row">
+            <div class="bordered left-cap opponent-details-field opponent-linecount-field">
+              <div class="opponent-details-label left-cap">Unique Lines</div>
+              <div class="opponent-details-value opponent-linecount"></div>
+            </div>
+            <div class="bordered left-cap opponent-details-field opponent-posecount-field">
+              <div class="opponent-details-label left-cap">Poses</div>
+              <div class="opponent-details-value opponent-posecount"></div>
+            </div>
+          </div>
+          <div class="bordered opponent-details-field extra-details-row opponent-details-description"></div>
         </div>
-
-        <div class="select-page-selection">
-          <button class="bordered smooth-button first-page-button" onclick="changeIndividualPage(true, -1)">
-            <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span>
-          </button>
-          <button class="bordered smooth-button left-page-button" onclick="changeIndividualPage(false, -1)">
-            <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
-          </button>
-          <button class="bordered smooth-button go-page-button" onclick="changeIndividualPage(true, 0)">
-            <div style="margin-top:2px"><b>Go</b></div>
-          </button>
-          <button class="bordered smooth-button right-page-button" onclick="changeIndividualPage(false, 1)">
-            <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-          </button>
-          <button class="bordered smooth-button last-page-button" onclick="changeIndividualPage(true, 1)" style="border-right: 2px solid">
-            <span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span>
-          </button>
+        <div class="opponent-details-view opponent-details-epilogues" hidden>
+          <div class="opponent-options-row">
+            <button type="button" class="bordered smooth-button smooth-button-red opponent-nav-button" data-target="main">Back</button>
+          </div>
+          <div class="opponent-epilogues-container"></div>
         </div>
-
-        <!-- More Buttons -->
-        <button id='individual-basic-info-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeIndividualStats(1)">
-          Basic Info
-        </button>
-        <button id='individual-credits-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeIndividualStats(2)">
-          Credits
-        </button>
-        <button id='individual-more-info-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeIndividualStats(3)">
-          More Info
-        </button>
-
+        <div class="opponent-details-view opponent-details-collectibles" hidden>
+          <div class="opponent-options-row">
+            <button type="button" class="bordered smooth-button smooth-button-red opponent-nav-button" data-target="main">Back</button>
+          </div>
+          <div class="opponent-collectibles-container"></div>
+        </div>
+      </div>
+      <div class="opponent-select-button">
+        <button type="button" class="bordered smooth-button smooth-button-green select-button" disabled>Select Opponent</button>
       </div>
     </div>
   </div>
 </div>
-
 
 <!-- Group Select Screen -->
 <div id="group-select-screen" class="screen-container" hidden>
