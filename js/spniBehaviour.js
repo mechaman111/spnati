@@ -198,6 +198,8 @@ function State($xml, addedTags, removedTags) {
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
     this.rawDialogue = $xml.html();
+    this.weight = Number($xml.attr('weight')) || 1;
+    if (this.weight < 0) this.weight = 0;
     
     if (this.location && Number(this.location) == this.location) {
         // It seems that location was specified as a number without "%"
@@ -1232,10 +1234,12 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
         return list.concat(caseObject.states);
     }.bind(this), []);
     
-    if (states.length > 0) {
+    var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
+    if (weightSum > 0) {
         console.log("Current NV case priority for player "+this.slot+": "+bestMatchPriority);
-        
-        var chosenState = states[getRandomNumber(0, states.length)];
+
+        var rnd = Math.random() * weightSum;
+        for (var i = 0, x = 0; x < rnd; x += states[i++].weight);
         
         /* Reaction handling state... */
         this.volatileMatches = volatileMatches;
@@ -1246,7 +1250,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
         this.stateCommitted = false;
         
         this.allStates = states;
-        this.chosenState = chosenState;
+        this.chosenState = states[i - 1];
         
         return true;
     }
