@@ -189,7 +189,7 @@ function Save() {
         if (endings === undefined) {
             try {
                 endings = JSON.parse(localStorage.getItem(prefix + 'endings')) || { };
-            } catch {
+            } catch (e) {
                 console.error('Failed parsing endings from localStorage');
                 endings = {};
             }
