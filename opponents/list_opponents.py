@@ -1,9 +1,8 @@
 # Lists the released and testing opponents in listing.xml (with path
 # to listing.xml prepended)
+from __future__ import print_function
 
 import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
 import xml.etree.ElementTree as ET
 import os
 
@@ -18,5 +17,4 @@ tree = ET.parse(filename)
 
 for opp in tree.getroot().find('individuals'):
     if 'status' not in opp.attrib or opp.attrib['status'] == "testing":
-        print os.path.join(directory_name, opp.text)
-
+        print(os.path.join(directory_name, opp.text))
