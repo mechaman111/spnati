@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -354,6 +355,10 @@ namespace SPNATI_Character_Editor
 					if (!string.IsNullOrEmpty(defaultLine.CollectibleValue))
 					{
 						lineCode += $",collectible-value:{defaultLine.CollectibleValue}";
+					}
+					if (defaultLine.Weight != 1)
+					{
+						lineCode += $",weight:{defaultLine.Weight.ToString(CultureInfo.InvariantCulture)}";
 					}
 					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~silent~" : defaultLine.Text;
 					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Image, text));
@@ -1370,6 +1375,13 @@ namespace SPNATI_Character_Editor
 						break;
 					case "collectible-value":
 						line.CollectibleValue = value;
+						break;
+					case "weight":
+						float fval;
+						if (float.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out fval))
+						{
+							line.Weight = fval;
+						}
 						break;
 					case "id":
 						int id;

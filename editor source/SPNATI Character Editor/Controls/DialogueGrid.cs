@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -187,6 +188,16 @@ namespace SPNATI_Character_Editor.Controls
 			string size = row.Cells["ColSize"].Value?.ToString();
 			string label = row.Cells["ColLabel"].Value?.ToString();
 			string gender = row.Cells["ColGender"].Value?.ToString();
+			string weight = row.Cells[nameof(ColWeight)].Value?.ToString() ?? "0";
+			float fval;
+			if (float.TryParse(weight, NumberStyles.Number, CultureInfo.InvariantCulture, out fval))
+			{
+				line.Weight = fval;
+			}
+			else
+			{
+				line.Weight = 1;
+			}
 
 			line.Intelligence = ai;
 			line.Size = size;
@@ -489,7 +500,7 @@ namespace SPNATI_Character_Editor.Controls
 			set
 			{
 				gridDialogue.Columns["ColDirection"].Visible = gridDialogue.Columns["ColLocation"].Visible = value;
-				ColGender.Visible = ColSize.Visible = ColIntelligence.Visible = ColLabel.Visible = value;
+				ColGender.Visible = ColSize.Visible = ColIntelligence.Visible = ColLabel.Visible = ColWeight.Visible = value;
 			}
 		}
 
@@ -582,6 +593,7 @@ namespace SPNATI_Character_Editor.Controls
 			row.Cells["ColGender"].Value = line.Gender;
 			row.Cells["ColLabel"].Value = line.Label;
 
+			row.Cells[nameof(ColWeight)].Value = line.Weight;
 			row.Cells[nameof(ColTrophy)].Tag = new Tuple<string, string>(line.CollectibleId, line.CollectibleValue);
 		}
 

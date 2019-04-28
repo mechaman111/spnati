@@ -13,10 +13,8 @@ namespace SPNATI_Character_Editor
 			{
 				Convert3_2(character);
 			}
-			character.Version = Config.Version;
 		}
-
-		
+				
 		private static void Convert3_2(Character character)
 		{
 			//convert old-style epilogues

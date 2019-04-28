@@ -292,7 +292,7 @@ namespace SPNATI_Character_Editor
 			menu = shell.AddToolbarSubmenu("Tools");
 			shell.AddToolbarItem("Charts...", typeof(ChartRecord), menu);
 			shell.AddToolbarItem("Marker Report...", typeof(MarkerReportRecord), menu);
-			//shell.AddToolbarItem("Data Analyzer...", typeof(AnalyzerRecord), menu);
+			shell.AddToolbarItem("Data Analyzer...", typeof(AnalyzerRecord), menu);
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Configure Game...", ConfigGame, menu, Keys.None);
 			shell.AddToolbarItem("Manage Macros...", ManageCaseMacros, menu, Keys.None);

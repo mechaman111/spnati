@@ -45,6 +45,7 @@
 			this.helpAutoSave = new System.Windows.Forms.Button();
 			this.helpIntellisense = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
+			this.chkDefaults = new System.Windows.Forms.CheckBox();
 			this.chkIntellisense = new System.Windows.Forms.CheckBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.txtFilter = new System.Windows.Forms.TextBox();
@@ -58,7 +59,6 @@
 			this.chkInitialAdd = new System.Windows.Forms.CheckBox();
 			this.tabBanter = new System.Windows.Forms.TabPage();
 			this.chkAutoBanter = new System.Windows.Forms.CheckBox();
-			this.chkDefaults = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			this.tabsSections.SuspendLayout();
 			this.tabGeneral.SuspendLayout();
@@ -74,6 +74,7 @@
 			this.txtApplicationDirectory.Name = "txtApplicationDirectory";
 			this.txtApplicationDirectory.Size = new System.Drawing.Size(353, 20);
 			this.txtApplicationDirectory.TabIndex = 0;
+			this.txtApplicationDirectory.Validating += new System.ComponentModel.CancelEventHandler(this.txtApplicationDirectory_Validating);
 			// 
 			// label1
 			// 
@@ -216,6 +217,18 @@
 			this.toolTip1.SetToolTip(this.button1, "When checked, every image in the character\'s folder with no stage prefix (ex. 2-h" +
         "appy.png) will be available for poses in every stage.");
 			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// chkDefaults
+			// 
+			this.chkDefaults.AutoSize = true;
+			this.chkDefaults.Location = new System.Drawing.Point(6, 97);
+			this.chkDefaults.Name = "chkDefaults";
+			this.chkDefaults.Size = new System.Drawing.Size(179, 17);
+			this.chkDefaults.TabIndex = 15;
+			this.chkDefaults.Text = "Ensure cases have generic lines";
+			this.toolTip1.SetToolTip(this.chkDefaults, "If unchecked, images with no prefix (ex. 0-*.png) will not appear for use in dial" +
+        "ogue lines.");
+			this.chkDefaults.UseVisualStyleBackColor = true;
 			// 
 			// chkIntellisense
 			// 
@@ -373,18 +386,6 @@
 			this.chkAutoBanter.Text = "Always filter list to characters who actually target yours (very slow initial loa" +
     "d)";
 			this.chkAutoBanter.UseVisualStyleBackColor = true;
-			// 
-			// chkDefaults
-			// 
-			this.chkDefaults.AutoSize = true;
-			this.chkDefaults.Location = new System.Drawing.Point(6, 97);
-			this.chkDefaults.Name = "chkDefaults";
-			this.chkDefaults.Size = new System.Drawing.Size(179, 17);
-			this.chkDefaults.TabIndex = 15;
-			this.chkDefaults.Text = "Ensure cases have generic lines";
-			this.toolTip1.SetToolTip(this.chkDefaults, "If unchecked, images with no prefix (ex. 0-*.png) will not appear for use in dial" +
-        "ogue lines.");
-			this.chkDefaults.UseVisualStyleBackColor = true;
 			// 
 			// SettingsSetup
 			// 

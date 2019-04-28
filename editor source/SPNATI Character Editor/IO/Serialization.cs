@@ -163,6 +163,48 @@ namespace SPNATI_Character_Editor
 				return null;
 			}
 
+			if (string.IsNullOrEmpty(character.Version))
+			{
+				string contents = File.ReadAllText(filename);
+				int editorIndex = contents.IndexOf("Character Editor");
+				if (editorIndex >= 0)
+				{
+					character.Source = EditorSource.CharacterEditor;
+					int atIndex = contents.IndexOf(" at ", editorIndex);
+					if (atIndex >= 0)
+					{
+						int start = editorIndex + "Character Editor ".Length;
+						int length = atIndex - start;
+						if (length < 10)
+						{
+							string version = contents.Substring(start, length);
+							character.Version = version;
+						}
+						character.Source = EditorSource.CharacterEditor;
+					}
+					else
+					{
+						character.Source = EditorSource.Other;
+					}
+				}
+				else
+				{
+					int makeIndex = contents.IndexOf("make_xml.py version ");
+					if (makeIndex >= 0)
+					{
+						character.Source = EditorSource.MakeXml;
+					}
+					else
+					{
+						character.Source = EditorSource.Other;
+					}
+				}
+			}
+			else
+			{
+				character.Source = EditorSource.CharacterEditor;
+			}
+
 			character.FolderName = Path.GetFileName(folderName);
 
 			Metadata metadata = ImportMetadata(folderName);

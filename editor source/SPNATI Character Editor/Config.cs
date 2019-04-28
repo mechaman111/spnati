@@ -33,19 +33,21 @@ namespace SPNATI_Character_Editor
 			{
 				return true;
 			}
+
+			bool passedTarget = false;
 			for (int i = 0; i < VersionHistory.Length; i++)
 			{
 				string v = VersionHistory[i];
 				if (v == targetVersion)
 				{
-					return false;
+					passedTarget = true;
 				}
 				if (v == version)
 				{
-					return true;
+					return !passedTarget;
 				}
 			}
-			return false; //should never be hit with valid input
+			return true; //version that predates VersionHistory
 		}
 
 		/// <summary>

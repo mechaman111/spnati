@@ -24,6 +24,8 @@ namespace SPNATI_Character_Editor
 		/// What version of the editor this was last saved under. Used for performing one-time data conversions when necessary.
 		/// </summary>
 		public string Version;
+		[XmlIgnore]
+		public EditorSource Source;
 
 		[XmlIgnore]
 		public string Group { get; }
@@ -450,6 +452,7 @@ namespace SPNATI_Character_Editor
 			}
 			Behavior.OnBeforeSerialize(this);
 			Metadata.PopulateFromCharacter(this);
+			Version = Config.Version;
 			foreach (Epilogue ending in Endings)
 			{
 				ending.OnBeforeSerialize();
@@ -495,7 +498,8 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public int GetGenericLineCount()
 		{
-			return GetLineCount(LineFilter.Generic);
+			int poses;
+			return GetLineCount(LineFilter.Generic, out poses);
 		}
 
 		/// <summary>
@@ -504,7 +508,8 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public int GetTargetedLineCount()
 		{
-			return GetLineCount(LineFilter.Targeted);
+			int poses;
+			return GetLineCount(LineFilter.Targeted, out poses);
 		}
 
 		/// <summary>
@@ -513,7 +518,13 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public int GetSpecialLineCount()
 		{
-			return GetLineCount(LineFilter.Special);
+			int poses;
+			return GetLineCount(LineFilter.Special, out poses);
+		}
+
+		public void GetUniqueLineAndPoseCount(out int lines, out int poses)
+		{
+			lines = GetLineCount(LineFilter.Generic | LineFilter.Targeted | LineFilter.Special, out poses);
 		}
 
 		/// <summary>
@@ -522,12 +533,15 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public int GetUniqueLineCount()
 		{
-			return GetLineCount(LineFilter.Generic | LineFilter.Targeted | LineFilter.Special);
+			int poses;
+			return GetLineCount(LineFilter.Generic | LineFilter.Targeted | LineFilter.Special, out poses);
 		}
 
-		private int GetLineCount(LineFilter filters)
+		private int GetLineCount(LineFilter filters, out int poseCount)
 		{
+			poseCount = 0;
 			int count = 0;
+			HashSet<string> poses = new HashSet<string>();
 			HashSet<string> lines = new HashSet<string>();
 			List<Stage> stages = Behavior.Stages;
 			foreach (var stage in stages)
@@ -544,6 +558,11 @@ namespace SPNATI_Character_Editor
 					{
 						foreach (var line in stageCase.Lines)
 						{
+							if (!poses.Contains(line.Image))
+							{
+								poses.Add(line.Image);
+								poseCount++;
+							}
 							if (lines.Contains(line.Text))
 								continue;
 							count++;
@@ -836,5 +855,12 @@ namespace SPNATI_Character_Editor
 		{
 			Tag = tag;
 		}
+	}
+
+	public enum EditorSource
+	{
+		CharacterEditor,
+		MakeXml,
+		Other
 	}
 }

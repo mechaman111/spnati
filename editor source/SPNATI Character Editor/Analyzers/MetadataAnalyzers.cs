@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SPNATI_Character_Editor.Analyzers
+{
+	public class GenderAnalyzer : IDataAnalyzer
+	{
+		public string Key
+		{
+			get { return "Gender"; }
+		}
+
+		public string Name
+		{
+			get { return "Gender"; }
+		}
+
+		public string FullName
+		{
+			get { return "Gender"; }
+		}
+
+		public string ParentKey
+		{
+			get { return ""; }
+		}
+
+		public string[] GetValues()
+		{
+			return new string[] { "female", "male" };
+		}
+
+		public Type GetValueType()
+		{
+			return typeof(string);
+		}
+
+		public bool MeetsCriteria(Character character, string op, string value)
+		{
+			return StringOperations.Matches(character.Gender, op, value);
+		}
+	}
+
+	public class SizeAnalyzer : IDataAnalyzer
+	{
+		public string Key
+		{
+			get { return "Size"; }
+		}
+
+		public string Name
+		{
+			get { return "Size"; }
+		}
+
+		public string FullName
+		{
+			get { return "Size"; }
+		}
+
+		public string ParentKey
+		{
+			get { return ""; }
+		}
+
+		public string[] GetValues()
+		{
+			return new string[] { "large", "medium", "small" };
+		}
+
+		public Type GetValueType()
+		{
+			return typeof(string);
+		}
+
+		public bool MeetsCriteria(Character character, string op, string value)
+		{
+			return StringOperations.Matches(character.Size, op, value);
+		}
+	}
+}

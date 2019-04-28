@@ -70,6 +70,18 @@ namespace SPNATI_Character_Editor
 		[XmlElement("has_collectibles")]
 		public bool HasCollectibles;
 
+		/// <summary>
+		/// Count of unique text across all lines
+		/// </summary>
+		[XmlElement("lines")]
+		public int Lines;
+
+		/// <summary>
+		/// Count of unique poses used across all lines
+		/// </summary>
+		[XmlElement("poses")]
+		public int Poses;
+
 		public Metadata()
 		{
 		}
@@ -110,6 +122,7 @@ namespace SPNATI_Character_Editor
 			});
 			Tags = c.Tags;
 			HasCollectibles = c.Collectibles.Count > 0;
+			c.GetUniqueLineAndPoseCount(out Lines, out Poses);
 		}
 
 		public void OnBeforeSerialize()
