@@ -503,6 +503,8 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.layers = parseInt($metaXml.find('layers').text(), 10);
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
+    this.uniqueLineCount = parseInt($metaXml.find('lines').text(), 10) || undefined;
+    this.posesImageCount = parseInt($metaXml.find('poses').text(), 10) || undefined;
     this.selected_costume = null;
     this.alt_costume = null;
     this.default_costume = null;
