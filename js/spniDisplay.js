@@ -835,12 +835,13 @@ OpponentDetailsDisplay = function () {
     this.collectiblesView = $('#individual-select-screen .opponent-details-collectibles');
     this.collectiblesContainer = $('#individual-select-screen .opponent-collectibles-container');
     
+    this.epiloguesField = $('#individual-select-screen .opponent-epilogues-field');
+    this.collectiblesField = $('#individual-select-screen .opponent-collectibles-field');
+    
     this.nameLabel = $("#individual-select-screen .opponent-full-name");
     this.sourceLabel = $("#individual-select-screen .opponent-source");
     this.writerLabel = $("#individual-select-screen .opponent-writer");
     this.artistLabel = $("#individual-select-screen .opponent-artist");
-    this.epiloguesLabel = $("#individual-select-screen .opponent-epilogues");
-    this.collectiblesLabel = $("#individual-select-screen .opponent-collectibles");
     this.descriptionLabel = $("#individual-select-screen .opponent-details-description");
     this.linecountLabel = $("#individual-select-screen .opponent-linecount");
     this.posecountLabel = $("#individual-select-screen .opponent-posecount");
@@ -849,8 +850,8 @@ OpponentDetailsDisplay = function () {
     this.imageArea = $("#individual-select-screen .opponent-details-image-area");
     
     this.selectButton = $('#individual-select-screen .select-button');
-    this.epiloguesNavButton = $('#individual-select-screen .opponent-epilogues-button');
-    this.collectiblesNavButton = $('#individual-select-screen .opponent-collectibles-button');
+    this.epiloguesNavButton = $('#individual-select-screen .opponent-epilogues');
+    this.collectiblesNavButton = $('#individual-select-screen .opponent-collectibles');
     
     $('#individual-select-screen .opponent-nav-button').click(this.handlePanelNavigation.bind(this));
     
@@ -915,13 +916,12 @@ OpponentDetailsDisplay.prototype.clear = function () {
     this.writerLabel.empty();
     this.artistLabel.empty();
     this.descriptionLabel.empty();
-    this.epiloguesLabel.empty();
     
     this.simpleImage.attr('src', null);
     this.selectButton.prop('disabled', true);
+    this.epiloguesField.hide();
+    this.collectiblesField.hide();
     this.costumeSelector.hide();
-    this.epiloguesNavButton.hide();
-    this.collectiblesNavButton.hide();
     
     this.displayContainer.hide();
 }
@@ -1018,14 +1018,13 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.selectButton.prop('disabled', false);
     
     // for now
-    this.collectiblesLabel.hide();
-    this.collectiblesNavButton.hide();
+    this.collectiblesField.hide();
     
     if (!opponent.ending) {
-        this.epiloguesNavButton.hide();
-        this.epiloguesLabel.text("None");
+        this.epiloguesField.hide();
     } else {
-        this.epiloguesNavButton.show();
+        this.epiloguesField.show();
+        
         var endingGenders = {
             male: false,
             female: false
@@ -1062,13 +1061,15 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         }
         
         if (epilogueAvailable) {
-            this.epiloguesLabel
+            this.epiloguesNavButton
                 .text('Available' + (hasConditionalEnding ? ' (Conditional)' : ''))
-                .removeClass('epilogues-unavailable');
+                .removeClass('smooth-button-red')
+                .addClass('smooth-button-blue');
         } else {
-            this.epiloguesLabel
+            this.epiloguesNavButton
                 .text((endingGenders.male ? 'Males' : 'Females') + ' Only')
-                .addClass('epilogues-unavailable');
+                .removeClass('smooth-button-blue')
+                .addClass('smooth-button-red');
         }
     }
 
