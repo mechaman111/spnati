@@ -71,34 +71,7 @@ mainSelectDisplays = [
 	new MainSelectScreenDisplay(2),
 	new MainSelectScreenDisplay(3),
 	new MainSelectScreenDisplay(4)
-]
-
-
-/* individual select screen */
-$individualSelectTable = $("#individual-select-table");
-$individualNameLabels = [$("#individual-name-label-1"), $("#individual-name-label-2"), $("#individual-name-label-3"), $("#individual-name-label-4")];
-$individualPrefersLabels = [$("#individual-prefers-label-1"), $("#individual-prefers-label-2"), $("#individual-prefers-label-3"), $("#individual-prefers-label-4")];
-$individualSexLabels = [$("#individual-sex-label-1"), $("#individual-sex-label-2"), $("#individual-sex-label-3"), $("#individual-sex-label-4")];
-$individualHeightLabels = [$("#individual-height-label-1"), $("#individual-height-label-2"), $("#individual-height-label-3"), $("#individual-height-label-4")];
-$individualSourceLabels = [$("#individual-source-label-1"), $("#individual-source-label-2"), $("#individual-source-label-3"), $("#individual-source-label-4")];
-$individualWriterLabels = [$("#individual-writer-label-1"), $("#individual-writer-label-2"), $("#individual-writer-label-3"), $("#individual-writer-label-4")];
-$individualArtistLabels = [$("#individual-artist-label-1"), $("#individual-artist-label-2"), $("#individual-artist-label-3"), $("#individual-artist-label-4")];
-$individualCountBoxes = [$("#individual-counts-1"), $("#individual-counts-2"), $("#individual-counts-3"), $("#individual-counts-4")];
-$individualLineCountLabels = [$("#individual-line-count-label-1"), $("#individual-line-count-label-2"), $("#individual-line-count-label-3"), $("#individual-line-count-label-4")];
-$individualPoseCountLabels = [$("#individual-pose-count-label-1"), $("#individual-pose-count-label-2"), $("#individual-pose-count-label-3"), $("#individual-pose-count-label-4")];
-$individualDescriptionLabels = [$("#individual-description-label-1"), $("#individual-description-label-2"), $("#individual-description-label-3"), $("#individual-description-label-4")];
-$individualBadges = [$("#individual-badge-1"), $("#individual-badge-2"), $("#individual-badge-3"), $("#individual-badge-4")];
-$individualStatuses = [$("#individual-status-1"), $("#individual-status-2"), $("#individual-status-3"), $("#individual-status-4")];
-$individualLayers = [$("#individual-layer-1"), $("#individual-layer-2"), $("#individual-layer-3"), $("#individual-layer-4")];
-$individualCostumeSelectors = [$("#individual-costume-select-1"), $("#individual-costume-select-2"), $("#individual-costume-select-3"), $("#individual-costume-select-4")];
-
-$individualImages = [$("#individual-image-1"), $("#individual-image-2"), $("#individual-image-3"), $("#individual-image-4")];
-$individualButtons = [$("#individual-button-1"), $("#individual-button-2"), $("#individual-button-3"), $("#individual-button-4")];
-
-$individualPageIndicator = $("#individual-page-indicator");
-$individualMaxPageIndicator = $("#individual-max-page-indicator");
-
-$individualCreditsButton = $('#individual-credits-button');
+];
 
 var individualDetailDisplay = new OpponentDetailsDisplay();
 
@@ -134,8 +107,11 @@ $groupCreditsButton = $('#group-credits-button');
 $searchName = $("#search-name");
 $searchSource = $("#search-source");
 $searchTag = $("#search-tag");
+$searchCreator = $("#search-creator");
+
 $tagList = $("#tagList");
 $sourceList = $("#sourceList");
+$creatorList = $("#creatorList");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
 
 $sortingOptionsItems = $(".sort-dropdown-options li");
@@ -167,6 +143,7 @@ var loadedGroups = [[], []];
 var selectableGroups = [loadedGroups[0], loadedGroups[1]];
 var tagSet = {};
 var sourceSet = {};
+var creatorSet = {};
 
 /* page variables */
 var groupSelectScreen = 0;
@@ -213,6 +190,17 @@ function loadSelectScreen () {
 	updateSelectionVisuals();
 }
 
+function splitCreatorField (field) {
+    // First, remove any parenthetical info in the field.
+    // Then, split on observed creator separators.
+    return field
+            .replace(/\([^\)]+\)|\[[^\]]+\]/gm, '')
+            .split(/\s*(?:,|&|\:|and|\+|\/|\\|<(?:\/\\)?\s*br\s*(?:\/\\)?>)\s*/gm)
+            .map(function (s) {
+                return s.trim();
+            });
+}
+
 /************************************************************
  * Loads and parses the main opponent listing file.
  ************************************************************/
@@ -229,6 +217,14 @@ function loadListingFile () {
                     tagSet[canonicalizeTag(tag)] = true;
                 });
                 sourceSet[opp.source] = true;
+                
+                splitCreatorField(opp.artist).forEach(function (creator) {
+                    creatorSet[creator] = true;
+                });
+                
+                splitCreatorField(opp.writer).forEach(function (creator) {
+                    creatorSet[creator] = true;
+                });
                 
                 console.log();
                 
@@ -253,6 +249,9 @@ function loadListingFile () {
                 return new Option(canonicalizeTag(tag));
             }));
             $sourceList.append(Object.keys(sourceSet).sort().map(function(source) {
+                return new Option(source);
+            }));
+            $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
                 return new Option(source);
             }));
         }
@@ -535,6 +534,7 @@ function updateSuggestions(slot, suggestionsArray, startIndex) {
 function updateSelectableOpponents(autoclear) {
     var name = $searchName.val().toLowerCase();
     var source = $searchSource.val().toLowerCase();
+    var creator = $searchCreator.val().toLowerCase();
     var tag = canonicalizeTag($searchTag.val());
 
     // Array.prototype.filter automatically skips empty slots
@@ -554,6 +554,11 @@ function updateSelectableOpponents(autoclear) {
 
         // filter by tag
         if (tag && !opp.hasTag(tag)) {
+            return false;
+        }
+        
+        // filter by creator
+        if (creator && opp.artist.toLowerCase().indexOf(creator) < 0 && opp.writer.toLowerCase().indexOf(creator) < 0) {
             return false;
         }
 
@@ -1245,11 +1250,6 @@ function wordWrapHtml(text) {
 /************************************************************
  * Dynamic dialogue and image counting functions
  ************************************************************/
-
-/** Event handler for the individual selection screen credits button. */
-$individualCreditsButton.on('click', function(e) {
-    updateIndividualCountStats()
-});
 
 /** Event handler for the group selection screen credits button. */
 $groupCreditsButton.on('click', function(e) {
