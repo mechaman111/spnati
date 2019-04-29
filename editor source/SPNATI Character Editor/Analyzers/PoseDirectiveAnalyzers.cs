@@ -147,4 +147,31 @@ namespace SPNATI_Character_Editor.Analyzers
 	{
 		public override string PropertyName { get { return "SkewY"; } }
 	}
+
+	public class PoseParentingAnalyzer : BooleanAnalyzer
+	{
+		public override string Key { get { return "ParentPose"; } }
+		public override string Name { get { return "Uses Parenting"; } }
+		public override string FullName { get { return "Pose - Uses Parenting"; } }
+
+		public override string ParentKey
+		{
+			get { return "Custom Pose"; }
+		}
+
+		public override bool GetValue(Character character)
+		{
+			foreach (Pose pose in character.CustomPoses)
+			{
+				foreach (Sprite sprite in pose.Sprites)
+				{
+					if (!string.IsNullOrEmpty(sprite.ParentId))
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+	}
 }
