@@ -48,8 +48,15 @@ namespace KisekaeImporter.SubCodes
 
 		public KisekaeColor OutlineColor
 		{
-			get { return new KisekaeColor(GetString(7)); }
+			get { return new KisekaeColor(GetString(6)); }
+			set { Set(6, value.ToString()); }
+		}
+
+		public int Layer
+		{
+			get { return GetInt(7); }
 			set { Set(7, value.ToString()); }
 		}
+
 	}
 }

@@ -60,6 +60,7 @@ namespace SPNATI_Character_Editor.EditControls
 				{
 					int.TryParse(match.Groups[1].Value, out value);
 					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, value));
+					valValue.Text = valValue.Value.ToString();
 				}
 			}
 			else

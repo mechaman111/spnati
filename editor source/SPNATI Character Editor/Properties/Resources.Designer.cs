@@ -63,6 +63,16 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Achievement {
+            get {
+                object obj = ResourceManager.GetObject("Achievement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Add {
             get {
                 object obj = ResourceManager.GetObject("Add", resourceCulture);
@@ -513,6 +523,16 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Filter {
+            get {
+                object obj = ResourceManager.GetObject("Filter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FirstFrame {
             get {
                 object obj = ResourceManager.GetObject("FirstFrame", resourceCulture);
@@ -826,6 +846,26 @@ namespace SPNATI_Character_Editor.Properties {
         internal static System.Drawing.Bitmap TimelinePlayOnce {
             get {
                 object obj = ResourceManager.GetObject("TimelinePlayOnce", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TrophyFilled {
+            get {
+                object obj = ResourceManager.GetObject("TrophyFilled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TrophyUnfilled {
+            get {
+                object obj = ResourceManager.GetObject("TrophyUnfilled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

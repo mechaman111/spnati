@@ -9,6 +9,7 @@ namespace Desktop
 	public static class PropertyTypeInfo
 	{
 		public static DualKeyDictionary<Type, string, Type> _mapping = new DualKeyDictionary<Type, string, Type>();
+		public static DualKeyDictionary<Type, string, FieldInfo> _fieldMapping = new DualKeyDictionary<Type, string, FieldInfo>();
 
 		public static Type GetType(Type type, string property)
 		{
@@ -24,6 +25,17 @@ namespace Desktop
 				cachedType = pi.PropertyType;
 			}
 			return cachedType;
+		}
+
+		public static FieldInfo GetFieldInfo(Type type, string property)
+		{
+			FieldInfo fi = _fieldMapping.Get(type, property);
+			if (fi == null)
+			{
+				fi = type.GetField(property);
+				_fieldMapping.Set(type, property, fi);
+			}
+			return fi;
 		}
 	}
 }

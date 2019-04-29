@@ -32,6 +32,7 @@
 			this.chkEpilogues = new System.Windows.Forms.CheckBox();
 			this.cmdOK = new System.Windows.Forms.Button();
 			this.cmdCancel = new System.Windows.Forms.Button();
+			this.chkCollectibles = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// chkDebug
@@ -77,6 +78,16 @@
 			this.cmdCancel.UseVisualStyleBackColor = true;
 			this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
 			// 
+			// chkCollectibles
+			// 
+			this.chkCollectibles.AutoSize = true;
+			this.chkCollectibles.Location = new System.Drawing.Point(12, 58);
+			this.chkCollectibles.Name = "chkCollectibles";
+			this.chkCollectibles.Size = new System.Drawing.Size(312, 17);
+			this.chkCollectibles.TabIndex = 4;
+			this.chkCollectibles.Text = "Unlock Collectibles (allows viewing collectibles in the Gallery)";
+			this.chkCollectibles.UseVisualStyleBackColor = true;
+			// 
 			// GameConfig
 			// 
 			this.AcceptButton = this.cmdOK;
@@ -85,6 +96,7 @@
 			this.CancelButton = this.cmdCancel;
 			this.ClientSize = new System.Drawing.Size(428, 193);
 			this.ControlBox = false;
+			this.Controls.Add(this.chkCollectibles);
 			this.Controls.Add(this.cmdCancel);
 			this.Controls.Add(this.cmdOK);
 			this.Controls.Add(this.chkEpilogues);
@@ -104,5 +116,6 @@
 		private System.Windows.Forms.CheckBox chkEpilogues;
 		private System.Windows.Forms.Button cmdOK;
 		private System.Windows.Forms.Button cmdCancel;
+		private System.Windows.Forms.CheckBox chkCollectibles;
 	}
 }

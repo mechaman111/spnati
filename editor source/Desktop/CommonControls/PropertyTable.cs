@@ -1,4 +1,5 @@
-﻿using Desktop.Providers;
+﻿using Desktop.Forms;
+using Desktop.Providers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -289,7 +290,20 @@ namespace Desktop.CommonControls
 			recAdd.Record = null;
 			if (macro != null)
 			{
-				ctl.ApplyMacro(macro.Values);
+				List<string> values = new List<string>();
+				foreach (string v in macro.Values)
+				{
+					string replacedValue = v;
+					if (macro.VariableMap != null)
+					{
+						foreach (KeyValuePair<string, string> kvp in macro.VariableMap)
+						{
+							replacedValue = replacedValue.Replace(kvp.Key, kvp.Value);
+						}
+					}
+					values.Add(replacedValue);
+				}
+				ctl.ApplyMacro(values);
 				newlyAdded = false;
 			}
 			if (newlyAdded && RunInitialAddEvents)
@@ -561,7 +575,7 @@ namespace Desktop.CommonControls
 				row.Set(ctl, result);
 				_rows.Set(result.Property, index, row);
 
-				ctl.OnAddedToRow(); 
+				ctl.OnAddedToRow();
 
 				pnlRecords.Controls.Add(row);
 				pnlRecords.Controls.SetChildIndex(row, 0);
@@ -853,17 +867,29 @@ namespace Desktop.CommonControls
 		{
 			ToolStripMenuItem item = sender as ToolStripMenuItem;
 			Macro macro = item.Tag as Macro;
-			ApplyMacro(macro);
+			HashSet<string> vars = macro.GetVariables();
+			Dictionary<string, string> varMap = new Dictionary<string, string>();
+			if (vars.Count > 0)
+			{
+				VariableMapper mapper = new VariableMapper(vars);
+				if (mapper.ShowDialog() == DialogResult.Cancel)
+				{
+					return;
+				}
+				varMap = mapper.Map;
+			}
+			ApplyMacro(macro, varMap);
 		}
 
 		/// <summary>
 		/// Applies a macro to the data
 		/// </summary>
 		/// <param name="macro"></param>
-		internal void ApplyMacro(Macro macro)
+		internal void ApplyMacro(Macro macro, Dictionary<string, string> varMap)
 		{
 			foreach (PropertyMacro application in macro.Properties)
 			{
+				application.VariableMap = varMap;
 				string property = application.Property;
 				PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property);
 				if (record != null)

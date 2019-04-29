@@ -44,11 +44,23 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("set-label")]
 		public string Label;
 
+		[DefaultValue(1.0f)]
+		[XmlAttribute("weight")]
+		public float Weight = 1;
+
 		[XmlIgnore]
 		public string ImageExtension;
 
 		[XmlIgnore]
 		public bool IsGenericImage;
+
+		[DefaultValue("")]
+		[XmlAttribute("collectible")]
+		public string CollectibleId;
+
+		[DefaultValue("")]
+		[XmlAttribute("collectible-value")]
+		public string CollectibleValue;
 
 		public DialogueLine()
 		{
@@ -83,6 +95,9 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (Intelligence ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Size ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Label ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ Weight.GetHashCode();
+			hash = (hash * 397) ^ (CollectibleId ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (CollectibleValue ?? string.Empty).GetHashCode();
 			return hash;
 		}
 

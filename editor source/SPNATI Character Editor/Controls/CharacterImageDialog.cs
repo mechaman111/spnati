@@ -15,6 +15,10 @@ namespace SPNATI_Character_Editor.Controls
 		/// If true, all paths in both character directory and others will be based on "opponents"
 		/// </summary>
 		public bool UseAbsolutePaths { get; set; }
+		/// <summary>
+		/// If true, when using absolute paths, "opponents" will be included in the file name
+		/// </summary>
+		public bool IncludeOpponents { get; set; }
 
 		private OpenFileDialog openFileDialog1;
 
@@ -44,7 +48,14 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				if (UseAbsolutePaths)
 				{
-					openFileDialog1.InitialDirectory = Path.Combine(root, "opponents", Path.GetDirectoryName(filename));
+					if (IncludeOpponents)
+					{
+						openFileDialog1.InitialDirectory = Path.Combine(root, Path.GetDirectoryName(filename));
+					}
+					else
+					{
+						openFileDialog1.InitialDirectory = Path.Combine(root, "opponents", Path.GetDirectoryName(filename));
+					}
 				}
 				else if (filename.StartsWith("\\"))
 				{
@@ -69,7 +80,15 @@ namespace SPNATI_Character_Editor.Controls
 				filename = openFileDialog1.FileName;
 				if (UseAbsolutePaths)
 				{
-					string opponentRoot = Path.Combine(root, "opponents") + "\\";
+					string opponentRoot = root;
+					if (IncludeOpponents)
+					{
+						opponentRoot = root + "\\";
+					}
+					else
+					{
+						opponentRoot = Path.Combine(root, "opponents") + "\\";
+					}
 					filename = filename.Substring(opponentRoot.Length);
 				}
 				else

@@ -165,7 +165,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void OnSaveWorkspace(bool auto)
 		{
-			if (!auto && _character.Behavior.EnsureDefaults(_character))
+			if (!auto && !Config.SuppressDefaults && _character.Behavior.EnsureDefaults(_character))
 			{
 				Shell.Instance.SetStatus("Character was missing some required lines, so defaults were automatically pulled in.");
 			}
@@ -559,22 +559,31 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			tableConditions.AddSpeedButton("Self", "Costume", (data) => { return AddVariableTest("~self.costume~", data); });
 			tableConditions.AddSpeedButton("Self", "Slot", (data) => { return AddVariableTest("~self.slot~", data); });
+			tableConditions.AddSpeedButton("Self", "Tag", (data) => { return AddVariableTest("~self.tag.*~", data); });
+			tableConditions.AddSpeedButton("Self", "Collectible", (data) => { return AddVariableTest("~collectible.*~", data); });
+			tableConditions.AddSpeedButton("Self", "Collectible (Counter)", (data) => { return AddVariableTest("~collectible.*.counter~", data); });
 			if (caseTrigger.HasTarget)
 			{
 				if (caseTrigger.AvailableVariables.Contains("clothing"))
 				{
 					tableConditions.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
+					tableConditions.AddSpeedButton("Clothing", "Clothing Type", (data) => { return AddVariableTest("~clothing.type~", data); });
 				}
 				tableConditions.AddSpeedButton("Target", "Costume", (data) => { return AddVariableTest("~target.costume~", data); });
 				tableConditions.AddSpeedButton("Target", "Gender", (data) => { return AddVariableTest("~target.gender~", data); });
 				tableConditions.AddSpeedButton("Target", "Position", (data) => { return AddVariableTest("~target.position~", data); });
 				tableConditions.AddSpeedButton("Target", "Size", (data) => { return AddVariableTest("~target.size~", data); });
 				tableConditions.AddSpeedButton("Target", "Slot", (data) => { return AddVariableTest("~target.slot~", data); });
+				tableConditions.AddSpeedButton("Target", "Tag (+)", (data) => { return AddVariableTest("~target.tag.*~", data); });
+				tableConditions.AddSpeedButton("Target", "Collectible (+)", (data) => { return AddVariableTest("~target.collectible.*~", data); });
+				tableConditions.AddSpeedButton("Target", "Collectible (Counter) (+)", (data) => { return AddVariableTest("~target.collectible.*.counter~", data); });
 			}
 			tableConditions.AddSpeedButton("Also Playing", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Position", (data) => { return AddVariableTest("~_.position~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Slot", (data) => { return AddVariableTest("~_.slot~", data); });
-			tableConditions.AddSpeedButton("Also Playing", "Tag", (data) => { return AddVariableTest("~_.tag~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Tag (+)", (data) => { return AddVariableTest("~_.tag.*~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Collectible (+)", (data) => { return AddVariableTest("~_.collectible.*~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Collectible (Counter) (+)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
 		}
 
 		private string AddVariableTest(string variable, object data)
@@ -639,6 +648,10 @@ namespace SPNATI_Character_Editor.Activities
 
 		private bool FilterTargets(PropertyRecord record)
 		{
+			if (record == null)
+			{
+				return false;
+			}
 			if (record.Group == "Target")
 			{
 				return false;
@@ -801,7 +814,7 @@ namespace SPNATI_Character_Editor.Activities
 				if (_editorData.IsCalledOut(_selectedCase)) { return; } //can't call something out twice
 
 				SaveCase();
-				if (!_selectedCase.HasFilters && !TriggerDatabase.GetTrigger(_selectedCase.Tag).OncePerStage)
+				if (!_selectedCase.HasConditions && !TriggerDatabase.GetTrigger(_selectedCase.Tag).OncePerStage)
 				{
 					if (MessageBox.Show("This case's triggering conditions are very broad, making it very likely that other characters will respond to this inaccurately. Are you sure you want to call this out for targeting?",
 						"Call Out Situation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
@@ -880,7 +893,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				splitDialogue.Panel2.Visible = true;
 				grpConditions.Enabled = true;
-				cmdCallOut.Enabled = true;
+				cmdCallOut.Enabled = cmdMakeResponse.Enabled = _selectedCase.GetResponseTag(_character, _character) != null;
 			}
 			else
 			{

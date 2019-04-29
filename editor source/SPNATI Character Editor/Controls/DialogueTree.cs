@@ -223,7 +223,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				_view.SetFilter((Case workingCase) =>
 				{
-					return !workingCase.HasFilters;
+					return !workingCase.HasConditions;
 				});
 			}
 			else
@@ -266,7 +266,7 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					foreach (TargetCondition c in workingCase.Conditions)
 					{
-						if (c.Filter == key)
+						if (c.FilterTag == key)
 						{
 							return true;
 						}

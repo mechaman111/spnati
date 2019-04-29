@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SPNATI_Character_Editor.Forms;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -186,11 +188,28 @@ namespace SPNATI_Character_Editor.Controls
 			string size = row.Cells["ColSize"].Value?.ToString();
 			string label = row.Cells["ColLabel"].Value?.ToString();
 			string gender = row.Cells["ColGender"].Value?.ToString();
+			string weight = row.Cells[nameof(ColWeight)].Value?.ToString() ?? "0";
+			float fval;
+			if (float.TryParse(weight, NumberStyles.Number, CultureInfo.InvariantCulture, out fval))
+			{
+				line.Weight = fval;
+			}
+			else
+			{
+				line.Weight = 1;
+			}
 
 			line.Intelligence = ai;
 			line.Size = size;
 			line.Label = label;
 			line.Gender = gender;
+
+			Tuple<string, string> collectibleData = row.Cells[nameof(ColTrophy)].Tag as Tuple<string, string>;
+			if (collectibleData != null)
+			{
+				line.CollectibleId = collectibleData.Item1;
+				line.CollectibleValue = collectibleData.Item2;
+			}
 
 			return line;
 		}
@@ -335,9 +354,23 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void gridDialogue_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
 		{
-			if (e.ColumnIndex == ColDelete.Index)
+			if (e.ColumnIndex == ColDelete.Index || e.ColumnIndex == ColTrophy.Index)
 			{
 				Image img = Properties.Resources.Delete;
+				if (e.ColumnIndex == ColTrophy.Index)
+				{
+					img = Properties.Resources.TrophyUnfilled;
+					if (e.RowIndex >= 0)
+					{
+						DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
+						DataGridViewCell cell = row.Cells[e.ColumnIndex];
+						Tuple<string, string> data = cell.Tag as Tuple<string, string>;
+						if (data != null && !string.IsNullOrEmpty(data.Item1))
+						{
+							img = Properties.Resources.TrophyFilled;
+						}
+					}
+				}
 				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
 				var w = img.Width;
 				var h = img.Height;
@@ -426,6 +459,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
 			row.Cells["ColDelete"].ToolTipText = "Delete line";
+			row.Cells["ColTrophy"].ToolTipText = "Unlock collectible";
 		}
 
 		private void gridDialogue_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -438,6 +472,10 @@ namespace SPNATI_Character_Editor.Controls
 			if (col == ColDelete)
 			{
 				gridDialogue.Rows.RemoveAt(e.RowIndex);
+			}
+			else if (col == ColTrophy)
+			{
+				ShowTrophyForm(e.RowIndex);
 			}
 		}
 
@@ -462,7 +500,7 @@ namespace SPNATI_Character_Editor.Controls
 			set
 			{
 				gridDialogue.Columns["ColDirection"].Visible = gridDialogue.Columns["ColLocation"].Visible = value;
-				ColGender.Visible = ColSize.Visible = ColIntelligence.Visible = ColLabel.Visible = value;
+				ColGender.Visible = ColSize.Visible = ColIntelligence.Visible = ColLabel.Visible = ColWeight.Visible = value;
 			}
 		}
 
@@ -554,6 +592,9 @@ namespace SPNATI_Character_Editor.Controls
 			row.Cells["ColSize"].Value = line.Size;
 			row.Cells["ColGender"].Value = line.Gender;
 			row.Cells["ColLabel"].Value = line.Label;
+
+			row.Cells[nameof(ColWeight)].Value = line.Weight;
+			row.Cells[nameof(ColTrophy)].Tag = new Tuple<string, string>(line.CollectibleId, line.CollectibleValue);
 		}
 
 		/// <summary>
@@ -765,5 +806,23 @@ namespace SPNATI_Character_Editor.Controls
 			_intellisense.Reset();
 		}
 		#endregion
+
+		private void ShowTrophyForm(int rowIndex)
+		{
+			DataGridViewRow row = gridDialogue.Rows[rowIndex];
+			DataGridViewCell cell = row.Cells[nameof(ColTrophy)];
+			Tuple<string, string> data = cell.Tag as Tuple<string, string>;
+			string text = row.Cells[nameof(ColText)].Value?.ToString();
+			if (data == null)
+			{
+				data = new Tuple<string, string>(null, null);
+			}
+			TrophyForm form = new TrophyForm(_character, text, data.Item1, data.Item2);
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				data = new Tuple<string, string>(form.Id, form.Value);
+				cell.Tag = data;
+			}
+		}
 	}
 }

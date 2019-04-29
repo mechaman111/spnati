@@ -30,6 +30,10 @@ namespace SPNATI_Character_Editor
 		public bool Epilogues;
 		[XmlElement("epilogues-unlocked")]
 		public bool EpiloguesUnlocked;
+		[XmlElement("collectibles")]
+		public bool Collectibles;
+		[XmlElement("collectibles-unlocked")]
+		public bool CollectiblesUnlocked;
 		[XmlElement("epilogue_badges")]
 		public bool EpilogueBadges;
 		[XmlElement("alternate-costumes")]

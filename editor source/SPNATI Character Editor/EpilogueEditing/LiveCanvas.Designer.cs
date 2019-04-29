@@ -33,13 +33,14 @@
 			this.tsZoom = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.cmdMarkers = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsRight = new System.Windows.Forms.ToolStrip();
 			this.tsHelp = new System.Windows.Forms.ToolStripButton();
 			this.cmdFit = new System.Windows.Forms.ToolStripButton();
 			this.tsZoomOut = new System.Windows.Forms.ToolStripButton();
 			this.tsZoomIn = new System.Windows.Forms.ToolStripButton();
 			this.tsRecord = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsFilter = new System.Windows.Forms.ToolStripButton();
 			this.canvasStrip.SuspendLayout();
 			this.tsRight.SuspendLayout();
 			this.SuspendLayout();
@@ -73,11 +74,12 @@
             this.tsZoom,
             this.toolStripSeparator1,
             this.cmdMarkers,
+            this.tsFilter,
             this.toolStripSeparator2,
             this.tsRecord});
 			this.canvasStrip.Location = new System.Drawing.Point(0, 0);
 			this.canvasStrip.Name = "canvasStrip";
-			this.canvasStrip.Size = new System.Drawing.Size(184, 25);
+			this.canvasStrip.Size = new System.Drawing.Size(238, 25);
 			this.canvasStrip.TabIndex = 19;
 			// 
 			// tsZoom
@@ -101,6 +103,11 @@
 			this.cmdMarkers.Size = new System.Drawing.Size(62, 22);
 			this.cmdMarkers.Text = "Markers...";
 			this.cmdMarkers.Click += new System.EventHandler(this.cmdMarkers_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// tsRight
 			// 
@@ -169,10 +176,17 @@
 			this.tsRecord.Text = "Live record in playback mode";
 			this.tsRecord.Click += new System.EventHandler(this.tsRecord_Click);
 			// 
-			// toolStripSeparator2
+			// tsFilter
 			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			this.tsFilter.CheckOnClick = true;
+			this.tsFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsFilter.Image = global::SPNATI_Character_Editor.Properties.Resources.Filter;
+			this.tsFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsFilter.Name = "tsFilter";
+			this.tsFilter.Size = new System.Drawing.Size(23, 22);
+			this.tsFilter.Text = "Toggle marker conditionals";
+			this.tsFilter.ToolTipText = "Toggle marker conditionals";
+			this.tsFilter.Click += new System.EventHandler(this.tsFilter_Click);
 			// 
 			// LiveCanvas
 			// 
@@ -206,5 +220,6 @@
 		private System.Windows.Forms.ToolStripButton tsHelp;
 		private System.Windows.Forms.ToolStripButton tsRecord;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripButton tsFilter;
 	}
 }

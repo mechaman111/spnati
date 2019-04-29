@@ -21,4 +21,15 @@
 			set { Set(0, value.ToString()); }
 		}
 	}
+
+	public class KisekaeEyelash : KisekaeSubCode
+	{
+		public KisekaeEyelash() : base("fk") { }
+
+		public int Shape
+		{
+			get { return GetInt(0); }
+			set { Set(0, value.ToString()); }
+		}
+	}
 }

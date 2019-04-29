@@ -53,6 +53,8 @@
 			this.table = new Desktop.CommonControls.PropertyTable();
 			this.canvas = new SPNATI_Character_Editor.EpilogueEditor.LiveCanvas();
 			this.openFileDialog1 = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsCreateSequence = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -115,7 +117,9 @@
             this.toolStripSeparator2,
             this.tsAddKeyframe,
             this.tsRemoveKeyframe,
-            this.tsAddEndFrame});
+            this.tsAddEndFrame,
+            this.toolStripSeparator3,
+            this.tsCreateSequence});
 			this.tsMainMenu.Location = new System.Drawing.Point(0, 0);
 			this.tsMainMenu.Name = "tsMainMenu";
 			this.tsMainMenu.Size = new System.Drawing.Size(503, 25);
@@ -355,7 +359,23 @@
 			// openFileDialog1
 			// 
 			this.openFileDialog1.Filter = "";
+			this.openFileDialog1.IncludeOpponents = false;
 			this.openFileDialog1.UseAbsolutePaths = false;
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsCreateSequence
+			// 
+			this.tsCreateSequence.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsCreateSequence.Image = global::SPNATI_Character_Editor.Properties.Resources.AddTransition;
+			this.tsCreateSequence.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsCreateSequence.Name = "tsCreateSequence";
+			this.tsCreateSequence.Size = new System.Drawing.Size(23, 22);
+			this.tsCreateSequence.Text = "Create sequence";
+			this.tsCreateSequence.Click += new System.EventHandler(this.tsCreateSequence_Click);
 			// 
 			// PoseEditor
 			// 
@@ -412,5 +432,7 @@
 		private System.Windows.Forms.ToolStripButton tsRemoveKeyframe;
 		private System.Windows.Forms.ToolStripButton tsAddEndFrame;
 		private Controls.CharacterImageDialog openFileDialog1;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripButton tsCreateSequence;
 	}
 }

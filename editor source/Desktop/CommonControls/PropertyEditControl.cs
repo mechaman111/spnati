@@ -34,6 +34,7 @@ namespace Desktop.CommonControls
 		public int Index { get; set; }
 
 		public event EventHandler<int> RequireHeight;
+		public event EventHandler<string> ChangeLabel;
 
 		public void SetParameters(EditControlAttribute parameters)
 		{
@@ -70,6 +71,11 @@ namespace Desktop.CommonControls
 		protected virtual void OnRequireHeight(int height)
 		{
 			RequireHeight?.Invoke(this, height);
+		}
+
+		protected virtual void OnChangeLabel(string label)
+		{
+			ChangeLabel?.Invoke(this, label);
 		}
 
 		internal void RemoveFromList()

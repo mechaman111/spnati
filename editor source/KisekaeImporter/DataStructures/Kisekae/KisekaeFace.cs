@@ -1,5 +1,4 @@
 ﻿using KisekaeImporter.SubCodes;
-using System.Collections.Generic;
 
 namespace KisekaeImporter
 {
@@ -23,6 +22,12 @@ namespace KisekaeImporter
 		{
 			get { return GetSubCode<KisekaeEyelidBottom>("fh"); }
 			set { SetSubCode("fh", value); }
+		}
+		[KisekaeSubCode("fk")]
+		public KisekaeEyelash Eyelashes
+		{
+			get { return GetSubCode<KisekaeEyelash>("fk"); }
+			set { SetSubCode("fk", value); }
 		}
 		[KisekaeSubCode("fc")]
 		public KisekaeIris Iris
