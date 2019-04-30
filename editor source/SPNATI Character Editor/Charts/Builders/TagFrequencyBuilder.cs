@@ -55,7 +55,12 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			}
 			tags.Sort((t1, t2) =>
 			{
-				return t2.Count.CompareTo(t1.Count);
+				int compare = t2.Count.CompareTo(t1.Count);
+				if (compare == 0)
+				{
+					compare = t1.Key.CompareTo(t2.Key);
+				}
+				return compare;
 			});
 
 			List<List<ChartData>> series = new List<List<Builders.ChartData>>();

@@ -109,6 +109,13 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public static string ExtractConditionPieces(string marker, out MarkerOperator op, out string value, out bool perTarget)
 		{
+			if (string.IsNullOrEmpty(marker))
+			{
+				value = "";
+				perTarget = false;
+				op = MarkerOperator.Equals;
+				return marker;
+			}
 			Match match = Regex.Match(marker, @"([\w\-\.]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?");
 			op = ToOperator(match.Groups[4].ToString());
 			value = match.Groups[5]?.ToString();

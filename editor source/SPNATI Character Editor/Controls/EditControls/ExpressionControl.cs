@@ -12,6 +12,8 @@ namespace SPNATI_Character_Editor
 		private ExpressionTest _expression;
 		private string _currentVariable;
 
+		private SubVariableControl _subcontrol;
+
 		public ExpressionControl()
 		{
 			InitializeComponent();
@@ -23,16 +25,15 @@ namespace SPNATI_Character_Editor
 				"~clothing~",
 				"~clothing.plural~",
 				"~clothing.position~",
+				"~clothing.type~",
 				"~player~",
 				"~self.costume~",
 				"~self.slot~",
-				"~self.tag~",
 				"~target.costume~",
 				"~target.gender~",
 				"~target.position~",
 				"~target.size~",
 				"~target.slot~",
-				"~target.tag~",
 				"~weekday~",
 			});
 			cboExpression.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -41,19 +42,36 @@ namespace SPNATI_Character_Editor
 
 		public override void ApplyMacro(List<string> values)
 		{
-			if (values.Count > 2)
+			if (_subcontrol != null)
 			{
-				cboExpression.Text = values[0];
-				cboOperator.SelectedItem = values[1];
-				cboValue.Text = values[2];
+				_subcontrol.ApplyMacro(values);
+			}
+			else
+			{
+				if (values.Count > 2)
+				{
+					cboExpression.Text = values[0];
+					cboOperator.SelectedItem = values[1];
+					cboValue.Text = values[2];
+					ExpressionTest expr = new ExpressionTest();
+					SaveInto(expr);
+					SwitchMode(expr);
+				}
 			}
 		}
 
 		public override void BuildMacro(List<string> values)
 		{
-			values.Add(cboExpression.Text);
-			values.Add(cboOperator.Text);
-			values.Add(cboValue.Text);
+			if (_subcontrol != null)
+			{
+				_subcontrol.BuildMacro(values);
+			}
+			else
+			{
+				values.Add(cboExpression.Text);
+				values.Add(cboOperator.Text);
+				values.Add(cboValue.Text);
+			}
 		}
 
 		public override void OnInitialAdd()
@@ -66,7 +84,14 @@ namespace SPNATI_Character_Editor
 
 		protected override void OnBoundData()
 		{
+			DestroySubControl();
+
 			_expression = GetValue() as ExpressionTest;
+			SwitchMode(_expression);
+			if (_subcontrol != null)
+			{
+				return;
+			}
 			cboExpression.Text = _expression.Expression;
 			try
 			{
@@ -83,22 +108,165 @@ namespace SPNATI_Character_Editor
 				FillInCharacter();
 			}
 
-			UpdateAutoComplete(true);
+			UpdateAutoComplete(true);	
+		}
 
-			cboExpression.TextChanged += TextValueChanged;
-			cboOperator.SelectedValueChanged += TextValueChanged;
-			cboValue.TextChanged += TextValueChanged;
+		public override void OnAddedToRow()
+		{
+			if (_subcontrol != null)
+			{
+				_subcontrol.OnAddedToRow();
+			}
+		}
+
+		protected override void AddHandlers()
+		{
+			if (_subcontrol != null)
+			{
+				_subcontrol.AddEventHandlers();
+			}
+			else
+			{
+				cboExpression.TextChanged += TextValueChanged;
+				cboOperator.SelectedValueChanged += TextValueChanged;
+				cboValue.TextChanged += TextValueChanged;
+			}
+		}
+
+		protected override void RemoveHandlers()
+		{
+			if (_subcontrol != null)
+			{
+				_subcontrol.RemoveEventHandlers();
+			}
+			else
+			{
+				cboExpression.TextChanged -= TextValueChanged;
+				cboOperator.SelectedValueChanged -= TextValueChanged;
+				cboValue.TextChanged -= TextValueChanged;
+			}
+		}
+
+		private void DestroySubControl()
+		{
+			if (_subcontrol != null)
+			{
+				_subcontrol.ChangeLabel -= _subcontrol_ChangeLabel;
+				Controls.Remove(_subcontrol);
+				foreach (Control ctl in Controls)
+				{
+					ctl.Visible = true;
+				}
+				_subcontrol = null;
+			}
+		}
+
+		/// <summary>
+		/// Switches the entry field for a record select depending on what variable was added. Works in conjunction with speed buttons
+		/// </summary>
+		private void SwitchMode(ExpressionTest expression)
+		{
+			DestroySubControl();
+
+			string variable = expression.Expression;
+			if (!string.IsNullOrEmpty(variable))
+			{
+				if (variable.StartsWith("~collectible."))
+				{
+					int start = "~collectible.".Length;
+					int end = variable.IndexOfAny(new char[] { '.', '~' }, start);
+					string name = variable.Substring(start, end - start);
+
+					if (variable.EndsWith(".counter~"))
+					{
+						//self collectible counter check
+						_subcontrol = new CollectibleCountControl();
+					}
+					else
+					{
+						//self collectible unlock check
+						_subcontrol = new CollectibleControl();
+					}
+				}
+				else if (variable.StartsWith("~target.collectible."))
+				{
+					int start = "~target.collectible.".Length;
+					int end = variable.IndexOfAny(new char[] { '.', '~' }, start);
+					string name = variable.Substring(start, end - start);
+
+					if (variable.EndsWith(".counter~"))
+					{
+						//target collectible counter check
+						_subcontrol = new CollectibleCountControl();
+					}
+					else
+					{
+						//target collectible unlock check
+						_subcontrol = new CollectibleControl();
+					}
+				}
+				else if (variable.Contains(".collectible."))
+				{
+					if (variable.Contains(".counter~"))
+					{
+						//also playing collectible counter check
+						_subcontrol = new CharacterCollectibleCountControl();
+					}
+					else
+					{
+						//also playing collectible unlock check
+						_subcontrol = new CharacterCollectibleControl();
+					}
+				}
+				if (variable.StartsWith("~self.tag.") || variable.StartsWith("~target.tag."))
+				{
+					_subcontrol = new TagControl();
+				}
+				else if (variable.Contains(".tag."))
+				{
+					_subcontrol = new CharacterTagControl();
+				}
+
+				if (_subcontrol != null)
+				{
+					foreach (Control ctl in Controls)
+					{
+						ctl.Visible = false;
+					}
+
+					_subcontrol.Margin = new Padding(0);
+					_subcontrol.Left = 0;
+					_subcontrol.Top = 0;
+					_subcontrol.Dock = DockStyle.Fill;
+					_subcontrol.ChangeLabel += _subcontrol_ChangeLabel;
+					_subcontrol.SetData(Data, Property, Index, Context, UndoManager, PreviewData);
+					_subcontrol.RemoveEventHandlers(); //these'll be added back when this controls AddHandlers gets called, so this is a method to prevent double handlers
+					Controls.Add(_subcontrol);
+				}
+			}
+		}
+
+		private void _subcontrol_ChangeLabel(object sender, string label)
+		{
+			OnChangeLabel(label);
 		}
 
 		protected override void OnBindingUpdated(string property)
 		{
-			if (property == "AlsoPlaying")
+			if (_subcontrol != null)
 			{
-				FillInCharacter();
+				_subcontrol.UpdateBinding(property);
 			}
-			if (property == "Target" || property == "AlsoPlaying")
+			else
 			{
-				UpdateAutoComplete(true);
+				if (property == "AlsoPlaying")
+				{
+					FillInCharacter();
+				}
+				if (property == "Target" || property == "AlsoPlaying")
+				{
+					UpdateAutoComplete(true);
+				}
 			}
 		}
 
@@ -130,17 +298,36 @@ namespace SPNATI_Character_Editor
 
 		public override void Clear()
 		{
-			cboExpression.Text = "";
-			cboExpression.SelectedItem = "==";
-			cboValue.Text = "";
+			if (_subcontrol != null)
+			{
+				_subcontrol.Clear();
+			}
+			else
+			{
+				cboExpression.Text = "";
+				cboExpression.SelectedItem = "==";
+				cboValue.Text = "";
+			}
 			Save();
 		}
 
 		public override void Save()
 		{
-			_expression.Expression = cboExpression.Text;
-			_expression.Operator = cboOperator.Text;
-			_expression.Value = cboValue.Text;
+			if (_subcontrol != null)
+			{
+				_subcontrol.Save();
+			}
+			else
+			{
+				SaveInto(_expression);
+			}
+		}
+
+		private void SaveInto(ExpressionTest expression)
+		{
+			expression.Expression = cboExpression.Text;
+			expression.Operator = cboOperator.Text;
+			expression.Value = cboValue.Text;
 		}
 
 		private void UpdateAutoComplete(bool force)
@@ -189,6 +376,14 @@ namespace SPNATI_Character_Editor
 						"legs",
 						"waist",
 						"other",
+					});
+					break;
+				case "~clothing.type~":
+					cboValue.Items.AddRange(new string[] {
+						"extra",
+						"minor",
+						"major",
+						"important",
 					});
 					break;
 				case "~clothing.plural~":
@@ -268,7 +463,7 @@ namespace SPNATI_Character_Editor
 						"4",
 					});
 					break;
-				case "~self.tag~":
+				case "~self.tag.*~":
 					cboValue.Items.AddRange(new string[] {
 						"true",
 						"false",
@@ -318,12 +513,6 @@ namespace SPNATI_Character_Editor
 						"2",
 						"3",
 						"4",
-					});
-					break;
-				case "~target.tag~":
-					cboValue.Items.AddRange(new string[] {
-						"true",
-						"false",
 					});
 					break;
 			}
@@ -378,6 +567,24 @@ namespace SPNATI_Character_Editor
 		public override Type EditControlType
 		{
 			get { return typeof(ExpressionControl); }
+		}
+	}
+
+	public class SubVariableControl : PropertyEditControl
+	{
+		public void UpdateBinding(string property)
+		{
+			OnBindingUpdated(property);
+		}
+
+		public void AddEventHandlers()
+		{
+			AddHandlers();
+		}
+
+		public void RemoveEventHandlers()
+		{
+			RemoveHandlers();
 		}
 	}
 }

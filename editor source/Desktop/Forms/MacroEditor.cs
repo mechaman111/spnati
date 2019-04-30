@@ -1,6 +1,7 @@
 ﻿using Desktop.Forms;
 using Desktop.Providers;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Desktop
@@ -92,7 +93,7 @@ namespace Desktop
 			tableConditions.Data = _editor.CreateData();
 			tableConditions.Context = _editor.GetRecordContext();
 			tableConditions.RecordFilter = _editor.GetRecordFilter(tableConditions.Data);
-			tableConditions.ApplyMacro(_macro);
+			tableConditions.ApplyMacro(_macro, new Dictionary<string, string>());
 		}
 	}
 }

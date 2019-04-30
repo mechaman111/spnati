@@ -106,6 +106,18 @@
     <Compile Include="Activities\ChartHost.Designer.cs">
       <DependentUpon>ChartHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="Activities\CollectibleEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\CollectibleEditor.Designer.cs">
+      <DependentUpon>CollectibleEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\DataAnalyzer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\DataAnalyzer.Designer.cs">
+      <DependentUpon>DataAnalyzer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Activities\DataRecovery.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,13 +160,71 @@
     <Compile Include="Activities\SpellCheck.Designer.cs">
       <DependentUpon>SpellCheck.cs</DependentUpon>
     </Compile>
+    <Compile Include="Analyzers\AnalyzerReportCriteria.cs" />
+    <Compile Include="Analyzers\CollectibleAnalyzers.cs" />
+    <Compile Include="Analyzers\DataCriterion.cs" />
+    <Compile Include="Analyzers\DialogueAnalyzers.cs" />
+    <Compile Include="Analyzers\VersionAnalyzer.cs" />
+    <Compile Include="Analyzers\WardrobeAnalyzers.cs" />
+    <Compile Include="Analyzers\MetadataAnalyzers.cs" />
+    <Compile Include="Analyzers\IDataAnalyzer.cs" />
+    <Compile Include="Analyzers\BooleanAnalyzer.cs" />
+    <Compile Include="Analyzers\NumericAnalyzer.cs" />
+    <Compile Include="Analyzers\EndingAnalyzers.cs" />
+    <Compile Include="Analyzers\LineCountAnalyzer.cs" />
+    <Compile Include="Analyzers\TagAnalyzer.cs" />
+    <Compile Include="Analyzers\PoseDirectiveAnalyzers.cs" />
+    <Compile Include="Analyzers\PoseCountAnalyzer.cs" />
+    <Compile Include="Charts\Builders\CollectibleBuilder.cs" />
     <Compile Include="Charts\Builders\CustomPoseBuilder.cs" />
     <Compile Include="Charts\Builders\StorageSpaceImagesBuilder.cs" />
+    <Compile Include="Controls\CriteriaSelect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CriteriaSelect.Designer.cs">
+      <DependentUpon>CriteriaSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\EditControls\AnimDurationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\EditControls\AnimDurationControl.Designer.cs">
       <DependentUpon>AnimDurationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\CharacterTagControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\CharacterTagControl.Designer.cs">
+      <DependentUpon>CharacterTagControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\CharacterCollectibleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\CharacterCollectibleControl.Designer.cs">
+      <DependentUpon>CharacterCollectibleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\CharacterCollectibleCountControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\CharacterCollectibleCountControl.Designer.cs">
+      <DependentUpon>CharacterCollectibleCountControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\TagControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\TagControl.Designer.cs">
+      <DependentUpon>TagControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\CollectibleCountControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\CollectibleCountControl.Designer.cs">
+      <DependentUpon>CollectibleCountControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\CollectibleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\CollectibleControl.Designer.cs">
+      <DependentUpon>CollectibleControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditControls\DirectiveMarkerControl.cs">
       <SubType>UserControl</SubType>
@@ -249,6 +319,8 @@
     <Compile Include="DataStructures\BindableTag.cs" />
     <Compile Include="DataStructures\BindableTagList.cs" />
     <Compile Include="DataStructures\CaseNote.cs" />
+    <Compile Include="DataStructures\Collectible.cs" />
+    <Compile Include="DataStructures\CollectibleData.cs" />
     <Compile Include="DataStructures\DataConversions.cs" />
     <Compile Include="DataStructures\Definition.cs" />
     <Compile Include="DataStructures\Definitions.cs" />
@@ -562,6 +634,12 @@
     <Compile Include="Forms\ChangeLogReview.Designer.cs">
       <DependentUpon>ChangeLogReview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CreateSequenceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateSequenceForm.Designer.cs">
+      <DependentUpon>CreateSequenceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\GameConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -628,6 +706,12 @@
     <Compile Include="Forms\TagStageSelect.Designer.cs">
       <DependentUpon>TagStageSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TrophyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TrophyForm.Designer.cs">
+      <DependentUpon>TrophyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\WhatsNew.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -658,6 +742,8 @@
       <DependentUpon>PropImporter.cs</DependentUpon>
     </Compile>
     <Compile Include="Providers\DefinitionProvider.cs" />
+    <Compile Include="Providers\CollectibleProvider.cs" />
+    <Compile Include="Providers\RoleProvider.cs" />
     <Compile Include="Providers\SkinProvider.cs" />
     <Compile Include="Providers\MarkerProvider.cs" />
     <Compile Include="Providers\TagProvider.cs" />
@@ -704,6 +790,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\ChartHost.resx">
       <DependentUpon>ChartHost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\CollectibleEditor.resx">
+      <DependentUpon>CollectibleEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\DataAnalyzer.resx">
+      <DependentUpon>DataAnalyzer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\DataRecovery.resx">
       <DependentUpon>DataRecovery.cs</DependentUpon>
@@ -771,11 +863,32 @@
     <EmbeddedResource Include="Controls\CharacterImageBox.resx">
       <DependentUpon>CharacterImageBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CriteriaSelect.resx">
+      <DependentUpon>CriteriaSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\DialogueGrid.resx">
       <DependentUpon>DialogueGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DialogueTree.resx">
       <DependentUpon>DialogueTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\CharacterTagControl.resx">
+      <DependentUpon>CharacterTagControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\CharacterCollectibleControl.resx">
+      <DependentUpon>CharacterCollectibleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\CharacterCollectibleCountControl.resx">
+      <DependentUpon>CharacterCollectibleCountControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\TagControl.resx">
+      <DependentUpon>TagControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\CollectibleCountControl.resx">
+      <DependentUpon>CollectibleCountControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\CollectibleControl.resx">
+      <DependentUpon>CollectibleControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EditControls\DirectiveMarkerControl.resx">
       <DependentUpon>DirectiveMarkerControl.cs</DependentUpon>
@@ -885,6 +998,9 @@
     <EmbeddedResource Include="Forms\ChangeLogReview.resx">
       <DependentUpon>ChangeLogReview.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreateSequenceForm.resx">
+      <DependentUpon>CreateSequenceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\GameConfig.resx">
       <DependentUpon>GameConfig.cs</DependentUpon>
     </EmbeddedResource>
@@ -917,6 +1033,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TagStageSelect.resx">
       <DependentUpon>TagStageSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TrophyForm.resx">
+      <DependentUpon>TrophyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\WhatsNew.resx">
       <DependentUpon>WhatsNew.cs</DependentUpon>
@@ -963,6 +1082,9 @@
   <ItemGroup>
     <None Include="Cursors\hand_closed.cur" />
     <None Include="Cursors\hand_open.cur" />
+    <Content Include="Help\data_analyzer.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Help\ending_tutorial4.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -970,6 +1092,33 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\ending_tutorial2.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\collectible_game.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\collectible_line.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\collectible_screen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\collectible_unlock.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut_macro1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut_macro2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut_macro_use.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\collectibles.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\macros.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\ease_menu.png">
@@ -1219,6 +1368,10 @@
     <None Include="Icons\ChevronUp.png" />
     <None Include="Icons\Curve_EaseOutInCubic.png" />
     <None Include="Icons\Curve_EaseOutIn.png" />
+    <None Include="Icons\Achievement.png" />
+    <None Include="Icons\TrophyFilled.png" />
+    <None Include="Icons\TrophyUnfilled.png" />
+    <None Include="Icons\Filter.png" />
     <Content Include="Resources\words.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1311,6 +1464,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v3.1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v4.2.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v4.1.html">

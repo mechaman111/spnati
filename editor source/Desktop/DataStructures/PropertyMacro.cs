@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Desktop
 {
@@ -92,6 +93,22 @@ namespace Desktop
 			return null;
 		}
 
+		public HashSet<string> GetVariables()
+		{
+			HashSet<string> set = new HashSet<string>();
+			foreach (PropertyMacro prop in Properties)
+			{
+				foreach (string variable in prop.GetVariables())
+				{
+					if (!string.IsNullOrEmpty(variable))
+					{
+						set.Add(variable);
+					}
+				}
+			}
+			return set;
+		}
+
 		public string ToLookupString()
 		{
 			throw new NotImplementedException();
@@ -109,9 +126,31 @@ namespace Desktop
 
 		public List<string> Values = new List<string>();
 
+		public Dictionary<string, string> VariableMap;
+
 		public string Serialize()
 		{
 			return $"{Property}%^{string.Join("|*", Values)}";
+		}
+
+		public IEnumerable<string> GetVariables()
+		{
+			HashSet<string> variables = new HashSet<string>();
+			string pattern = @"(\$\w+)";
+			foreach (string value in Values)
+			{
+				if (value.Contains("$"))
+				{
+					MatchCollection matches = Regex.Matches(value, pattern);
+					foreach (Match match in matches)
+					{
+						if (match.Success)
+						{
+							yield return match.Groups[1].Value;
+						}
+					}
+				}
+			}
 		}
 
 		public static PropertyMacro Deserialize(string data)

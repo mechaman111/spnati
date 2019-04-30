@@ -21,6 +21,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private ISkin _character;
 		private LivePose _pose;
 		private List<string> _markers = new List<string>();
+		private bool _ignoreMarkers = false;
 
 		private Point _lastMouse;
 		private Point _canvasOffset = new Point(0, 0);
@@ -47,7 +48,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private const int DefaultZoomIndex = 3;
 		private int _zoomIndex = DefaultZoomIndex;
-		private float[] _zoomLevels = new float[] { 0.25f, 0.5f, 0.75f, 1, 1.5f, 2, 2.5f, 3 };
+		private float[] _zoomLevels = new float[] { 0.25f, 0.5f, 0.75f, 1, 1.5f, 2, 2.5f, 3, 3.5f, 4, 4.5f, 5f };
 		private float _zoom = 1;
 
 		private float _time;
@@ -280,12 +281,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			g.DrawLine(_penBoundary, canvas.Width / 2 + _canvasOffset.X, 0, canvas.Width / 2 + _canvasOffset.X, canvas.Height);
 
 			//draw the pose
+			List<string> markers = _ignoreMarkers ? null : _markers;
 			foreach (LiveSprite sprite in _pose.DrawingOrder)
 			{
-				sprite.Draw(g, SceneTransform, _markers);
+				sprite.Draw(g, SceneTransform, markers);
 				if (_selectionSource == sprite && _selectedObject != null && _selectedObject.IsVisible && !_selectionSource.Hidden && (_recording || !_playing))
 				{
-					_selectedObject.Draw(g, SceneTransform, _markers);
+					_selectedObject.Draw(g, SceneTransform, markers);
 				}
 			}
 
@@ -405,10 +407,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void canvas_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (_playing && !_recording) { return; }
 			_downPoint = new Point(e.X, e.Y);
 			if (e.Button == MouseButtons.Left)
 			{
+				if (_playing && !_recording) { return; }
 				//object selection
 				LiveSprite obj = null;
 				if (_moveContext == HoverContext.None || _moveContext == HoverContext.Select)
@@ -652,7 +654,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void canvas_MouseMove(object sender, MouseEventArgs e)
 		{
-			if (_playing && !_recording) { return; }
 			Point screenPt = new Point(e.X, e.Y);
 
 			switch (_state)
@@ -697,6 +698,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void SetContext(MouseEventArgs e, Point screenPt)
 		{
 			HoverContext context = GetContext(screenPt);
+			if (_playing && !_recording && context != HoverContext.CameraPan)
+			{
+				context = HoverContext.None;
+			}
 			if (_moveContext == HoverContext.Rotate || _moveContext == HoverContext.ArrowRight || _moveContext == HoverContext.ArrowLeft ||
 				_moveContext == HoverContext.ArrowDown || _moveContext == HoverContext.ArrowUp || _moveContext == HoverContext.Pivot)
 			{
@@ -966,6 +971,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void canvas_Resize(object sender, EventArgs e)
 		{
 			UpdateSceneTransform();
+		}
+
+		private void tsFilter_Click(object sender, EventArgs e)
+		{
+			_ignoreMarkers = tsFilter.Checked;
+			canvas.Invalidate();
 		}
 	}
 

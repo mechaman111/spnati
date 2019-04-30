@@ -1,0 +1,65 @@
+﻿<h3>Collectibles</h3>
+<ul>
+    <li>It's now possible to give your character unlockable collectibles/achievements.</li>
+    <li>Visit the Collectibles tab to create collectibles, and then in the dialogue editor, click a line's trophy button to associate a collectible with that line.</li>
+    <li>Conditions have also been added for checking a collectible's unlock status for conditioning lines based on it.</li>
+    <li>Refer to the Help files for more information.</li>
+</ul>
+
+<h3>Dialogue Editor</h3>
+<ul>
+    <li>The Filter (+) condition has been greatly expanded. Use the double down arrow icon to expand the condition to see more options.</li>
+    <li>Filter (+) conditions can take a variable now. The name of a random match will be stored into that variable for use in that case. For instance, a filter of (1 or more females with role: Opponent, status: Naked, variable: naked) will put the name of any naked female other than your character into the variable ~naked~. </li>
+    <li>Added speed buttons for Clothing Type, target tags, and Also Playing tags.</li>
+    <li>A setting has been added to prevent the editor from automatically filling in default lines for stage+case combinations that have no generic lines. (File > Setup > Dialogue).</li>
+    <li>Lines can now have a weight assigned (Show Advanced must be checked). A line with a weight of two is twice as likely to play as a line with weight: 1 (the default).</li>
+</ul>
+
+<h3>Pose Maker</h3>
+<ul>
+    <li>New "Create Sequence" button for quickly creating a sprite with frame-by-frame animation. Files with a numeric suffix (ex. frame0.png, frame1.png, frame2.png...) will automatically be pulled in as frames at a set interval.</li>
+    <li>Toggle button added to always display sprites that are conditional based on a marker.</li>
+    <li>Switching between poses will now preserve the collapsed and hidden states of any sprites that have the same ID between poses.</li>
+    <li>Maximum canvas zoom has been upped from 3x to 5x.</li>
+</ul>
+
+<h3>Macros</h3>
+<ul>
+    <li>Macros can now be given values in the form $variable, which when used, will bring up a popup to replace variables with values. For instance, you could make a macro that targets the tag $tag and checks "not said marker filter_$tag." Using the macro would then let you replace all instances of $tag with a real value, so "filter tag shy" and "not said marker filter_shy". Then in another case you could use the macro again with a different value.</li>
+</ul>
+
+<h3>Data Analyzer</h3>
+<ul>
+    <li>A reporting tool called the Data Analyzer is now available in the Tools menu. This allows you to create one or more criteria about various character attributes and see which characters fit those criteria.</li>
+    <li>This could be useful if, for instance, you're wondering who has the "princess" tag.</li>
+</ul>
+
+<h3>Other</h3>
+<ul>
+    <li>Setup is more lenient when picking the SPNATI repository location, by automatically updating the path if you chose a folder one level too high or too low.</li>
+    <li><tt>lines</tt> and <tt>poses</tt> elements have been added to meta.xml for tracking unique line and pose counts so the game doesn't need to parse behaviour.xml to get this information.</li>
+    <li>Added a Chart for cases using filters.</li>
+    <li>Modified the Targeted Line chart to only count cases that use "Target" or "Also Playing".</li>
+    <li>Modified the Images chart to count unique images/poses used in dialogue rather than simply counting files.</li>
+    <li>Added a Chart for Collectibles.</li>
+</ul>
+
+<h3>Help</h3>
+<ul>
+    <li>A tutorial about Macros has been added.</li>
+    <li>Documentation about working with Collectibles has been added.</li>
+</ul>
+
+<h3>Bug Fixes</h3>
+<ul>
+    <li>Fixed issue in epilogues where switching to a scene with no camera position and back to a scene that does have a camera position would clear out the position.</li>
+    <li>Fixed issue where adding a marker condition to an epilogue or pose directive would add that marker to every subsequent directive.</li>
+    <li>Fixed various issues with advanced conditions when exporting to .txt</li>
+    <li>The Tags chart now sorts alphabetically for tags with the same count.</li>
+    <li>Fixed a crash with tiny window sizes.</li>
+    <li>The "Respond to This" and "Call Out" buttons are now disabled for cases that can't be responded to (i.e. Finishing (Self)).</li>
+    <li>Fixed issue in Pose Maker where you couldn't pan the camera in playback mode unless recording.</li>
+    <li>Fixed issue with != not saving for said marker conditions</li>
+    <li>Fixed issue in Pose Maker where checking a marker == 0 would hide it even if the marker wasn't set in the preview.</li>
+    <li>Fixed issue where thumbnails wouldn't appear for poses that have no stage prefix.</li>
+</ul>

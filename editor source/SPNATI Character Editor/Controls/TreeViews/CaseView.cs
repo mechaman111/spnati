@@ -149,7 +149,11 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				node.ForeColor = System.Drawing.Color.Gray;
 			}
-			else if (wrapper.Case.HasFilters)
+			else if (wrapper.Case.HasCollectible)
+			{
+				node.ForeColor = System.Drawing.Color.OrangeRed;
+			}
+			else if (wrapper.Case.HasConditions)
 			{
 				//Highlight targeted dialogue
 				node.ForeColor = System.Drawing.Color.Green;

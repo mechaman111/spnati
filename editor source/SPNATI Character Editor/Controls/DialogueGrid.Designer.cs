@@ -36,12 +36,14 @@
 			this.ColMarker = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColMarkerValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColPerTarget = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.ColWeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColGender = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColIntelligence = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColSize = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColDirection = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColTrophy = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
 			this.SuspendLayout();
@@ -63,12 +65,14 @@
             this.ColMarker,
             this.ColMarkerValue,
             this.ColPerTarget,
+            this.ColWeight,
             this.ColGender,
             this.ColLabel,
             this.ColIntelligence,
             this.ColSize,
             this.ColDirection,
             this.ColLocation,
+            this.ColTrophy,
             this.ColDelete});
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -128,6 +132,13 @@
 			this.ColPerTarget.HeaderText = "Per Target";
 			this.ColPerTarget.Name = "ColPerTarget";
 			this.ColPerTarget.Width = 70;
+			// 
+			// ColWeight
+			// 
+			this.ColWeight.HeaderText = "Weight";
+			this.ColWeight.Name = "ColWeight";
+			this.ColWeight.Visible = false;
+			this.ColWeight.Width = 60;
 			// 
 			// ColGender
 			// 
@@ -192,6 +203,12 @@
 			this.ColLocation.Visible = false;
 			this.ColLocation.Width = 60;
 			// 
+			// ColTrophy
+			// 
+			this.ColTrophy.HeaderText = "";
+			this.ColTrophy.Name = "ColTrophy";
+			this.ColTrophy.Width = 21;
+			// 
 			// ColDelete
 			// 
 			this.ColDelete.HeaderText = "";
@@ -219,12 +236,14 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarker;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarkerValue;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn ColPerTarget;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColWeight;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColGender;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColLabel;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColIntelligence;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColSize;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColDirection;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColLocation;
+		private System.Windows.Forms.DataGridViewButtonColumn ColTrophy;
 		private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
 	}
 }

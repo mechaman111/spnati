@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.1 at 1:06:50 AM on April 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.2 at 10:17:42 PM on April 29, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v4.1</version>
+    <version>v4.2</version>
     <first>Florina</first>
     <last />
     <label>Florina</label>
@@ -416,7 +416,7 @@
             </case>
             <case tag="hand" alsoPlaying="lucina" alsoPlayingStage="1-7" notSaidMarker="marth_reveal" priority="0">
                 <state img="0-interested.png" marker="marth_reveal">So why were you pretending to be a male, Lucina? Oh, so other men wouldn't try talking to you here, right?</state>
-                <state img="0-calm.png" marker="marth_reveal">Do you think I could borrow you mask sometime, Lucina? M-maybe I could talk to men more easily if they thought I was one.</state>
+                <state img="0-calm.png" marker="marth_reveal">Do you think I could borrow your mask sometime, Lucina? M-maybe I could talk to men more easily if they thought I was one.</state>
             </case>
             <case tag="hand" alsoPlaying="mei" alsoPlayingStage="0-2" notSaidMarker="mei_coat">
                 <state img="0-interested.png" marker="mei_coat">I bet that coat is nice and warm, Mei.</state>
@@ -4707,19 +4707,11 @@
                 <state img="2-loss.png">G-good. Maybe I finally won't lose.</state>
                 <state img="2-loss.png">Did I finally get a good hand?</state>
             </case>
-            <case tag="good_hand" notSaidMarker="bee" priority="0">
-                <condition count="0" filter="florina_easter" />
-                <state img="custom:2-bee" marker="bee">Umm... did anyone else hear a bee fly by?</state>
-            </case>
             <case tag="good_hand" hasHand="Flush">
                 <state img="2-calm.png">So is it good if all my cards are the same suit but no pair?</state>
             </case>
             <case tag="good_hand" hasHand="Royal Flush">
                 <state img="2-shocked.png">I...I think this is the best hand you can even get! Oh, I'm not supposed to say that, am I?</state>
-            </case>
-            <case tag="good_hand" notSaidMarker="bee" priority="0">
-                <test expr="~self.costume~" value="florina_easter" />
-                <state img="custom:2-bee" marker="bee">Umm... did any bunny hear a bee fly by?</state>
             </case>
             <case tag="good_hand" priority="0">
                 <test expr="~self.costume~" value="florina_easter" />
@@ -5011,6 +5003,10 @@
                 <test expr="~player~" value="Mark" />
                 <state img="2-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
             </case>
+            <case tag="hand" notSaidMarker="bee" priority="0">
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="custom:2-bee" marker="bee" weight="4">Umm... did anyone else hear a bee fly by?</state>
+            </case>
             <case tag="hand" alsoPlaying="lucina" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
                 <test expr="~self.costume~" value="florina_easter" />
                 <state img="2-nervous.png">About me? Well, I'm... I'm a bunny!</state>
@@ -5018,6 +5014,10 @@
             <case tag="hand" alsoPlaying="lucina" alsoPlayingStage="0" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
                 <test expr="~self.costume~" value="florina_easter" />
                 <state img="2-cover.png">&lt;i&gt;(Why is M-Marth talking to me?)&lt;/i&gt; Eep! Maybe if I hide he'll forget I'm here.</state>
+            </case>
+            <case tag="hand" notSaidMarker="bee" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="custom:2-bee" marker="bee" weight="4">Umm... did any bunny hear a bee fly by?</state>
             </case>
             <case tag="hand" priority="0">
                 <test expr="~self.costume~" value="florina_easter" />
@@ -6841,19 +6841,11 @@
                 <state img="3-calm.png">So how do your cards look, everyone?</state>
                 <state img="3-calm.png">This hasn't been nearly as bad as I thought it'd be.</state>
             </case>
-            <case tag="good_hand" notSaidMarker="bee" priority="0">
-                <condition count="0" filter="florina_easter" />
-                <state img="custom:3-bee" marker="bee">Umm... did anyone else hear a bee fly by?</state>
-            </case>
             <case tag="good_hand" hasHand="Flush">
                 <state img="3-calm.png">So is it good if all my cards are the same suit but no pair?</state>
             </case>
             <case tag="good_hand" hasHand="Royal Flush">
                 <state img="3-shocked.png">I...I think this is the best hand you can even get! Oh, I'm not supposed to say that, am I?</state>
-            </case>
-            <case tag="good_hand" notSaidMarker="bee" priority="0">
-                <test expr="~self.costume~" value="florina_easter" />
-                <state img="custom:3-bee" marker="bee">Umm... did any bunny hear a bee fly by?</state>
             </case>
             <case tag="good_hand" priority="0">
                 <test expr="~self.costume~" value="florina_easter" />
@@ -6897,7 +6889,6 @@
                 <state img="3-awkward.png">I'm running out of things to take off, so if you don't mind l-losing...</state>
                 <state img="3-horny.png">I can take my boots off this time, but after that...</state>
                 <state img="3-embarrassed.png">I've still got my boots at least...</state>
-                <state img="custom:3-bee" marker="bee">Umm... did anyone else hear a bee fly by?</state>
             </case>
             <case tag="bad_hand" consecutiveLosses="2">
                 <state img="3-sad.png">I'm not really going to lose again, am I?</state>
@@ -7104,6 +7095,10 @@
                 <test expr="~player~" value="Mark" />
                 <state img="3-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
             </case>
+            <case tag="hand" notSaidMarker="bee" priority="0">
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="custom:3-bee" marker="bee" weight="4">Umm... did anyone else hear a bee fly by?</state>
+            </case>
             <case tag="hand" alsoPlaying="lucina" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
                 <test expr="~self.costume~" value="florina_easter" />
                 <state img="3-nervous.png">About me? Well, I'm... I'm a bunny!</state>
@@ -7111,6 +7106,10 @@
             <case tag="hand" alsoPlaying="lucina" alsoPlayingStage="0" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
                 <test expr="~self.costume~" value="florina_easter" />
                 <state img="3-cover.png">&lt;i&gt;(Why is M-Marth talking to me?)&lt;/i&gt; Eep! Maybe if I hide he'll forget I'm here.</state>
+            </case>
+            <case tag="hand" notSaidMarker="bee" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="custom:3-bee" marker="bee" weight="4">Umm... did any bunny hear a bee fly by?</state>
             </case>
             <case tag="hand" priority="0">
                 <test expr="~self.costume~" value="florina_easter" />
@@ -8868,19 +8867,11 @@
                 <state img="4-calm.png">So how do your cards look, everyone?</state>
                 <state img="4-calm.png">This hasn't been nearly as bad as I thought it'd be.</state>
             </case>
-            <case tag="good_hand" notSaidMarker="bee" priority="0">
-                <condition count="0" filter="florina_easter" />
-                <state img="custom:4-bee" marker="bee">Umm... did anyone else hear a bee fly by?</state>
-            </case>
             <case tag="good_hand" hasHand="Flush">
                 <state img="4-calm.png">So is it good if all my cards are the same suit but no pair?</state>
             </case>
             <case tag="good_hand" hasHand="Royal Flush">
                 <state img="4-shocked.png">I...I think this is the best hand you can even get! Oh, I'm not supposed to say that, am I?</state>
-            </case>
-            <case tag="good_hand" notSaidMarker="bee" priority="0">
-                <test expr="~self.costume~" value="florina_easter" />
-                <state img="custom:4-bee" marker="bee">Umm... did any bunny hear a bee fly by?</state>
             </case>
             <case tag="good_hand" priority="0">
                 <test expr="~self.costume~" value="florina_easter" />
@@ -9158,6 +9149,10 @@
                 <test expr="~player~" value="Mark" />
                 <state img="4-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
             </case>
+            <case tag="hand" notSaidMarker="bee" priority="0">
+                <test expr="~self.costume~" cmp="!=" value="florina_easter" />
+                <state img="custom:4-bee" marker="bee" weight="4">Umm... did anyone else hear a bee fly by?</state>
+            </case>
             <case tag="hand" alsoPlaying="lucina" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
                 <test expr="~self.costume~" value="florina_easter" />
                 <state img="4-nervous.png">About me? Well, I'm... I'm a bunny!</state>
@@ -9165,6 +9160,10 @@
             <case tag="hand" alsoPlaying="lucina" alsoPlayingStage="0" alsoPlayingNotSaidMarker="florina_ask1" alsoPlayingSayingMarker="florina_ask1">
                 <test expr="~self.costume~" value="florina_easter" />
                 <state img="4-cover.png">&lt;i&gt;(Why is M-Marth talking to me?)&lt;/i&gt; Eep! Maybe if I hide he'll forget I'm here.</state>
+            </case>
+            <case tag="hand" notSaidMarker="bee" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="custom:4-bee" marker="bee" weight="4">Umm... did any bunny hear a bee fly by?</state>
             </case>
             <case tag="hand" priority="0">
                 <test expr="~self.costume~" value="florina_easter" />
@@ -9305,8 +9304,8 @@
                 <state img="4-strip.png">Lyn, y-you won't tell H-Hector about this, will you?</state>
             </case>
             <case tag="stripping" saidMarker="bee" notSaidMarker="bee_stop" priority="100">
-                <state img="custom:4-stripping_bee" marker="bee2">S-s-somebody, get it off! &lt;i&gt;Get it off me!&lt;/i&gt;</state>
-                <state img="custom:4-stripping_bee" marker="bee2">H-hurry, get off of me!</state>
+                <state img="custom:4-stripping_bee" marker="bee2" collectible="bee">S-s-somebody, get it off! &lt;i&gt;Get it off me!&lt;/i&gt;</state>
+                <state img="custom:4-stripping_bee" marker="bee2" collectible="bee">H-hurry, get off of me!</state>
             </case>
             <case tag="stripping" alsoPlaying="catria" alsoPlayingStage="9" priority="6">
                 <test expr="~self.costume~" cmp="!=" value="florina_easter" />
@@ -13285,7 +13284,7 @@
             </case>
             <case tag="must_strip" timeInStage="6-99">
                 <test expr="~self.costume~" cmp="!=" value="florina_easter" />
-                <state img="6-loss.png">Ah, but I was just getting used to be in my underwear in front of everyone...</state>
+                <state img="6-loss.png">Ah, but I was just getting used to being in my underwear in front of everyone...</state>
                 <state img="6-horny.png">Me, huh? But I'm still getting used to my underwear...</state>
                 <state img="6-awkward.png">I've been in my underwear a while. Isn't that good enough?</state>
                 <state img="6-awkward.png">And I was just getting comfortable around everyone l-like this too...</state>
@@ -17302,6 +17301,9 @@
             <case tag="stripped" alsoPlaying="nagisa" alsoPlayingStage="9" priority="75">
                 <state img="8-nervous.png" marker="expose_crotch">Well, um, N-Nagisa... I th-think it feels nicer this way.</state>
             </case>
+            <case tag="stripped" hidden="1" alsoPlaying="catria" alsoPlayingStage="7-9" saidMarker="underwear_knights" priority="340">
+                <state img="8-victory.png" collectible="knights">Trophy unlock</state>
+            </case>
             <case tag="stripped" hidden="1" alsoPlaying="lyn" priority="200">
                 <state img="8-calm.png" marker="exposed_crotch"></state>
             </case>
@@ -18298,6 +18300,9 @@
                 <state img="8-interested.png">Hurray! Catria shaves too!</state>
                 <state img="8-interested.png">Oh! It must be a Pegasus Rider thing. It gets itchy if you don't shave.</state>
             </case>
+            <case tag="female_crotch_is_visible" target="catria" hidden="1" saidMarker="underwear_knights">
+                <state img="8-victory.png" collectible="knights">Trophy unlock</state>
+            </case>
             <case tag="female_crotch_is_visible" target="catria" totalNaked="1">
                 <state img="8-shocked.png" marker="expose_crotch">You play this with your sisters? I could never do that with mine!</state>
             </case>
@@ -19192,6 +19197,9 @@
             <case tag="female_crotch_is_visible" target="aimee">
                 <state img="9-shocked.png">It...it didn't just go &lt;i&gt;inside&lt;/i&gt;, I hope...</state>
             </case>
+            <case tag="female_crotch_is_visible" target="catria" hidden="1" saidMarker="underwear_knights">
+                <state img="9-victory.png" collectible="knights">Trophy unlock</state>
+            </case>
             <case tag="female_crotch_is_visible" id="9-1" target="chihiro">
                 <state img="9-shocked.png" marker="chihiro_reveal">R-really?!</state>
                 <state img="9-shocked.png" marker="chihiro_reveal">I-I don't believe this...</state>
@@ -19998,7 +20006,7 @@
             <case tag="male_small_crotch_is_visible">
                 <state img="10-victory.png">I did it! I said something to a man without sounding too weird!</state>
                 <state img="10-jump.png">Wait! I wasn't really ready for that!</state>
-                <state img="10-shocked.png">Wait, ~name~ just took off his ~clothing~ and I d-didn''t freak out? B-but I....I guess I am now...</state>
+                <state img="10-shocked.png">Wait, ~name~ just took off his ~clothing~ and I d-didn't freak out? B-but I....I guess I am now...</state>
                 <state img="10-happy.png">Oh, it's so cute and tiny! Wait, what am I even s-saying?!</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="corrin_m">
@@ -20236,6 +20244,9 @@
             <case tag="female_crotch_is_visible" target="cammy" targetStage="4" alsoPlaying="chun-li" alsoPlayingStage="0">
                 <state img="10-awkward.png">Um, Chun-Li, I th-think that was a little too hard.</state>
                 <state img="10-jump.png">Oh no! It ripped?!</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="catria" hidden="1" saidMarker="underwear_knights">
+                <state img="10-victory.png" collectible="knights">Trophy unlock</state>
             </case>
             <case tag="female_crotch_is_visible" target="catria" totalNaked="1">
                 <state img="10-shocked.png">You play this with your sisters? I could never do that with mine!</state>

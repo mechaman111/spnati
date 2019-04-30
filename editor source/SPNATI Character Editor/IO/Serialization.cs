@@ -1,4 +1,5 @@
-﻿using SPNATI_Character_Editor.IO;
+﻿using SPNATI_Character_Editor.DataStructures;
+using SPNATI_Character_Editor.IO;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -66,7 +67,8 @@ namespace SPNATI_Character_Editor
 			bool success = BackupAndExportXml(character, character, "behaviour", timestamp) &&
 				BackupAndExportXml(character, character.Metadata, "meta", timestamp) &&
 				BackupAndExportXml(character, character.Markers, "markers", timestamp) &&
-				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor", timestamp);
+				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor", timestamp) &&
+				BackupAndExportXml(character, character.Collectibles, "collectibles", timestamp);
 			return success;
 		}
 
@@ -92,7 +94,8 @@ namespace SPNATI_Character_Editor
 			bool success = ExportXml(character, Path.Combine(dir, $"behaviour-{timestamp}.bak")) &&
 				ExportXml(character.Metadata, Path.Combine(dir, $"meta-{timestamp}.bak")) &&
 				ExportXml(character.Markers, Path.Combine(dir, $"markers-{timestamp}.bak")) &&
-				ExportXml(CharacterDatabase.GetEditorData(character), Path.Combine(dir, $"editor-{timestamp}.bak"));
+				ExportXml(CharacterDatabase.GetEditorData(character), Path.Combine(dir, $"editor-{timestamp}.bak")) &&
+				ExportXml(character.Collectibles, Path.Combine(dir, $"collectibles-{timestamp}.bak"));
 			return success;
 		}
 
@@ -160,6 +163,48 @@ namespace SPNATI_Character_Editor
 				return null;
 			}
 
+			if (string.IsNullOrEmpty(character.Version))
+			{
+				string contents = File.ReadAllText(filename);
+				int editorIndex = contents.IndexOf("Character Editor");
+				if (editorIndex >= 0)
+				{
+					character.Source = EditorSource.CharacterEditor;
+					int atIndex = contents.IndexOf(" at ", editorIndex);
+					if (atIndex >= 0)
+					{
+						int start = editorIndex + "Character Editor ".Length;
+						int length = atIndex - start;
+						if (length < 10)
+						{
+							string version = contents.Substring(start, length);
+							character.Version = version;
+						}
+						character.Source = EditorSource.CharacterEditor;
+					}
+					else
+					{
+						character.Source = EditorSource.Other;
+					}
+				}
+				else
+				{
+					int makeIndex = contents.IndexOf("make_xml.py version ");
+					if (makeIndex >= 0)
+					{
+						character.Source = EditorSource.MakeXml;
+					}
+					else
+					{
+						character.Source = EditorSource.Other;
+					}
+				}
+			}
+			else
+			{
+				character.Source = EditorSource.CharacterEditor;
+			}
+
 			character.FolderName = Path.GetFileName(folderName);
 
 			Metadata metadata = ImportMetadata(folderName);
@@ -171,6 +216,12 @@ namespace SPNATI_Character_Editor
 			if (markers != null)
 			{
 				character.Markers.Merge(markers);
+			}
+
+			CollectibleData collectibles = ImportCollectibles(folderName);
+			if (collectibles != null)
+			{
+				character.Collectibles = collectibles;
 			}
 
 			CharacterEditorData editorData = ImportEditorData(folderName);
@@ -370,6 +421,21 @@ namespace SPNATI_Character_Editor
 			}
 
 			return ImportXml<CharacterEditorData>(filename);
+		}
+
+		private static CollectibleData ImportCollectibles(string folderName)
+		{
+			string folder = Config.GetRootDirectory(folderName);
+			if (!Directory.Exists(folder))
+				return null;
+
+			string filename = Path.Combine(folder, "collectibles.xml");
+			if (!File.Exists(filename))
+			{
+				return null;
+			}
+
+			return ImportXml<CollectibleData>(filename);
 		}
 
 		public static TagDictionary ImportTags()

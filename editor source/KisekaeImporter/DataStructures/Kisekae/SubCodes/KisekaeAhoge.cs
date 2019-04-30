@@ -113,5 +113,11 @@
 			get { return GetBool(14); }
 			set { Set(14, value); }
 		}
+
+		public int RotationPreScale
+		{
+			get { return GetInt(15); }
+			set { Set(15, value); }
+		}
 	}
 }

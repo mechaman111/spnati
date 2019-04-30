@@ -2,6 +2,7 @@
 using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Actions;
 using SPNATI_Character_Editor.Controls;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -169,6 +170,26 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void SetPose(Pose pose)
 		{
+			HashSet<string> hiddenSprites = new HashSet<string>();
+			HashSet<string> collapsedSprites = new HashSet<string>();
+			if (_pose != null)
+			{
+				foreach (LiveSprite sprite in _pose.Sprites)
+				{
+					if (!string.IsNullOrEmpty(sprite.Id))
+					{
+						if (sprite.Hidden)
+						{
+							hiddenSprites.Add(sprite.Id);
+						}
+						if (sprite.Widget != null && sprite.Widget.IsCollapsed)
+						{
+							collapsedSprites.Add(sprite.Id);
+						}
+					}
+				}
+			}
+
 			_history.Clear();
 			_sourcePose = pose;
 			if (pose != null)
@@ -180,6 +201,23 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				_pose = null;
 			}
 			timeline.SetData(_pose);
+
+			//restore collapsed and hidden states for sprites that have the same ID as previous pose
+			foreach (LiveSprite sprite in _pose.Sprites)
+			{
+				if (!string.IsNullOrEmpty(sprite.Id))
+				{
+					if (hiddenSprites.Contains(sprite.Id))
+					{
+						sprite.Hidden = true;
+					}
+					if (collapsedSprites.Contains(sprite.Id))
+					{
+						sprite.Widget.IsCollapsed = true;
+					}
+				}
+			}
+
 			table.Context = new LivePoseContext(_pose, _character, CharacterContext.Pose);
 			SetTableData(_pose, null);
 			canvas.SetData(_character, _pose);
@@ -249,6 +287,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			SpriteWidget selectedWidget = timeline.SelectedWidget as SpriteWidget;
 
 			tsRemoveSprite.Enabled = tsAddEndFrame.Enabled = (selectedWidget != null);
+			tsCreateSequence.Enabled = true;
 			tsAddKeyframe.Enabled = false;
 			tsRemoveKeyframe.Enabled = false;
 			if (selectedWidget != null)
@@ -437,6 +476,58 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			lstPoses.Items.Add(copy);
 			lstPoses.SelectedItem = copy;
 			_character.CustomPoses.Add(copy);
+		}
+
+		private void tsCreateSequence_Click(object sender, EventArgs e)
+		{
+			SpriteWidget widget = timeline.SelectedWidget as SpriteWidget;
+			LiveSprite sprite = widget?.Sprite;
+			if (!CanBeSequenced(widget))
+			{
+				sprite = null;
+			}
+			CreateSequenceForm form = new CreateSequenceForm(_character, sprite);
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				List<string> frames = form.Frames;
+				if (frames.Count == 0)
+				{
+					return;
+				}
+				if (form.Sprite == null)
+				{
+					sprite = timeline.CreateWidget(form.Frames[0])?.GetData() as LiveSprite;
+				}
+				AnimatedProperty prop = sprite.GetAnimationProperties("Src");
+				prop.Ease.SetValue(0, "linear");
+				sprite.Keyframes[0].Src = frames[0];
+				for (int i = 1; i < frames.Count; i++)
+				{
+					LiveKeyframe kf = sprite.AddKeyframe(i * form.Duration);
+					kf.Src = frames[i];
+				}
+			}
+		}
+
+		private bool CanBeSequenced(SpriteWidget widget)
+		{
+			if (widget == null)
+			{
+				return false;
+			}
+			LiveSprite sprite = widget.Sprite;
+			if (sprite.Keyframes.Count == 1)
+			{
+				return true;
+			}
+
+			string path = sprite.Keyframes[0].Src;
+			if (!path.EndsWith("0"))
+			{
+				return false;
+			}
+
+			return false;
 		}
 	}
 

@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace SPNATI_Character_Editor
 		/// What version of the editor this was last saved under. Used for performing one-time data conversions when necessary.
 		/// </summary>
 		public string Version;
+		[XmlIgnore]
+		public EditorSource Source;
 
 		[XmlIgnore]
 		public string Group { get; }
@@ -115,6 +118,9 @@ namespace SPNATI_Character_Editor
 		[XmlAnyElement]
 		public List<System.Xml.XmlElement> ExtraXml;
 
+		[XmlIgnore]
+		public CollectibleData Collectibles = new CollectibleData();
+
 		private bool _built;
 
 		[XmlIgnore]
@@ -182,6 +188,7 @@ namespace SPNATI_Character_Editor
 			Wardrobe = new List<Clothing>();
 			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
+			Poses = new List<Pose>();
 			Version = "";
 		}
 
@@ -445,6 +452,7 @@ namespace SPNATI_Character_Editor
 			}
 			Behavior.OnBeforeSerialize(this);
 			Metadata.PopulateFromCharacter(this);
+			Version = Config.Version;
 			foreach (Epilogue ending in Endings)
 			{
 				ending.OnBeforeSerialize();
@@ -490,7 +498,8 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public int GetGenericLineCount()
 		{
-			return GetLineCount(LineFilter.Generic);
+			int poses;
+			return GetLineCount(LineFilter.Generic, out poses);
 		}
 
 		/// <summary>
@@ -499,7 +508,18 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public int GetTargetedLineCount()
 		{
-			return GetLineCount(LineFilter.Targeted);
+			int poses;
+			return GetLineCount(LineFilter.Targeted, out poses);
+		}
+
+		/// <summary>
+		/// Gets a count of the number of unique targeted lines
+		/// </summary>
+		/// <returns></returns>
+		public int GetFilterLineCount()
+		{
+			int poses;
+			return GetLineCount(LineFilter.Filter, out poses);
 		}
 
 		/// <summary>
@@ -508,7 +528,13 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public int GetSpecialLineCount()
 		{
-			return GetLineCount(LineFilter.Special);
+			int poses;
+			return GetLineCount(LineFilter.Special, out poses);
+		}
+
+		public void GetUniqueLineAndPoseCount(out int lines, out int poses)
+		{
+			lines = GetLineCount(LineFilter.Generic | LineFilter.Targeted | LineFilter.Special, out poses);
 		}
 
 		/// <summary>
@@ -517,12 +543,15 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public int GetUniqueLineCount()
 		{
-			return GetLineCount(LineFilter.Generic | LineFilter.Targeted | LineFilter.Special);
+			int poses;
+			return GetLineCount(LineFilter.Generic | LineFilter.Targeted | LineFilter.Special, out poses);
 		}
 
-		private int GetLineCount(LineFilter filters)
+		private int GetLineCount(LineFilter filters, out int poseCount)
 		{
+			poseCount = 0;
 			int count = 0;
+			HashSet<string> poses = new HashSet<string>();
 			HashSet<string> lines = new HashSet<string>();
 			List<Stage> stages = Behavior.Stages;
 			foreach (var stage in stages)
@@ -531,14 +560,21 @@ namespace SPNATI_Character_Editor
 				{
 					bool targeted = stageCase.HasTargetedConditions;
 					bool special = stageCase.HasStageConditions;
-					bool generic = !stageCase.HasFilters;
+					bool generic = !stageCase.HasConditions;
+					bool filter = stageCase.HasFilters;
 
 					if ((filters & LineFilter.Generic) > 0 && generic ||
 						(filters & LineFilter.Targeted) > 0 && targeted ||
-						(filters & LineFilter.Special) > 0 && special)
+						(filters & LineFilter.Special) > 0 && special ||
+						(filters & LineFilter.Filter) > 0 && filter)
 					{
 						foreach (var line in stageCase.Lines)
 						{
+							if (!poses.Contains(line.Image))
+							{
+								poses.Add(line.Image);
+								poseCount++;
+							}
 							if (lines.Contains(line.Text))
 								continue;
 							count++;
@@ -555,8 +591,22 @@ namespace SPNATI_Character_Editor
 		{
 			None = 0,
 			Generic = 1,
+			/// <summary>
+			/// Target or AlsoPlaying
+			/// </summary>
 			Targeted = 2,
-			Special = 4
+			/// <summary>
+			/// Game state conditions
+			/// </summary>
+			Special = 4,
+			/// <summary>
+			/// Filter
+			/// </summary>
+			Filter = 8,
+			/// <summary>
+			/// Any conditions
+			/// </summary>
+			Conditional = Targeted | Special | Filter
 		}
 
 		public IEnumerable<Case> GetWorkingCasesTargetedAtCharacter(Character character, TargetType targetTypes)
@@ -667,7 +717,7 @@ namespace SPNATI_Character_Editor
 					bool usesTag = (stageCase.Filter == tag);
 					if (!usesTag)
 					{
-						usesTag = stageCase.Conditions.Find(c => c.Filter == tag) != null;
+						usesTag = stageCase.Conditions.Find(c => c.FilterTag == tag) != null;
 					}
 					if (usesTag)
 					{
@@ -831,5 +881,12 @@ namespace SPNATI_Character_Editor
 		{
 			Tag = tag;
 		}
+	}
+
+	public enum EditorSource
+	{
+		CharacterEditor,
+		MakeXml,
+		Other
 	}
 }

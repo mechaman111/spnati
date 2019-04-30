@@ -311,10 +311,10 @@ namespace SPNATI_Character_Editor
 					#region Filters
 					foreach (var condition in stageCase.Conditions)
 					{
-						warnings.AddRange(ValidateRangeField(condition.Count, string.Format("\"{0}\" tag count", condition.Filter), caseLabel, 0, 5, context));
-						if (condition.Filter != "human" && condition.Filter != "human_male" && condition.Filter != "human_female" && !string.IsNullOrEmpty(condition.Filter) && !TagDatabase.TagExists(condition.Filter))
+						warnings.AddRange(ValidateRangeField(condition.Count, string.Format("\"{0}\" tag count", condition.FilterTag), caseLabel, 0, 5, context));
+						if (condition.FilterTag != "human" && condition.FilterTag != "human_male" && condition.FilterTag != "human_female" && !string.IsNullOrEmpty(condition.FilterTag) && !TagDatabase.TagExists(condition.FilterTag))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag \"{1}\" which is not used by any characters. {0}", caseLabel, condition.Filter), context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag \"{1}\" which is not used by any characters. {0}", caseLabel, condition.FilterTag), context));
 						}
 					}
 					#endregion
