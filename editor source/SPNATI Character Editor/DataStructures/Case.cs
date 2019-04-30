@@ -403,10 +403,13 @@ namespace SPNATI_Character_Editor
 					result += string.Format(" (other saying \"{0}\")", AlsoPlayingSaying);
 				}
 			}
-			int priority = GetPriority();
-			if (priority > 0)
+			if (string.IsNullOrEmpty(Hidden))
 			{
-				result += string.Format(" (priority={0})", priority);
+				int priority = GetPriority();
+				if (priority > 0)
+				{
+					result += string.Format(" (priority={0})", priority);
+				}
 			}
 			return result;
 		}
@@ -478,7 +481,10 @@ namespace SPNATI_Character_Editor
 		public int GetPriority()
 		{
 			int totalPriority = 0;
-
+			if (!string.IsNullOrEmpty(Hidden))
+			{
+				return int.MaxValue;
+			}
 			if (!string.IsNullOrEmpty(CustomPriority))
 			{
 				int priority;

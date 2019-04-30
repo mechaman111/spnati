@@ -558,6 +558,10 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (var stageCase in stage.Cases)
 				{
+					if (!string.IsNullOrEmpty(stageCase.Hidden))
+					{
+						continue;
+					}
 					bool targeted = stageCase.HasTargetedConditions;
 					bool special = stageCase.HasStageConditions;
 					bool generic = !stageCase.HasConditions;

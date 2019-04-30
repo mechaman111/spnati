@@ -50,12 +50,12 @@ namespace SPNATI_Character_Editor.DataStructures
 		[XmlElement("hidden")]
 		public bool Hidden;
 
-		[Boolean(DisplayName = "Hide Details", GroupOrder = 120, Description = "If checked, collectible will not appear in the collectibles list at all until unlocked")]
+		[Boolean(DisplayName = "Hide Details", GroupOrder = 120, Description = "Counter the collectible must reach before being obtained")]
 		[DefaultValue(false)]
 		[XmlElement("hide-details")]
 		public bool HideDetails;
 
-		[Numeric(DisplayName = "Counter", GroupOrder = 60, Description = "Counter the collectible must reach before being obtained", Minimum = 0, Maximum = 1000)]
+		[Numeric(DisplayName = "Counter", GroupOrder = 60, Description = "If checked, collectible will not appear in the collectibles list at all until unlocked", Minimum = 0, Maximum = 1000)]
 		[DefaultValue(0)]
 		[XmlElement("counter")]
 		public int Counter;
