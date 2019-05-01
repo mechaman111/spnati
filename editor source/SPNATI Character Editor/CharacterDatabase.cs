@@ -89,6 +89,7 @@ namespace SPNATI_Character_Editor
 			data = data ?? new CharacterEditorData();
 			data.LinkOwner(character);
 			_editorData[character] = data;
+			character.Markers.Merge(data.Markers);
 		}
 
 		public static CharacterEditorData GetEditorData(Character character)

@@ -66,10 +66,30 @@ namespace SPNATI_Character_Editor
 			string timestamp = GetTimeStamp();
 			bool success = BackupAndExportXml(character, character, "behaviour", timestamp) &&
 				BackupAndExportXml(character, character.Metadata, "meta", timestamp) &&
-				BackupAndExportXml(character, character.Markers, "markers", timestamp) &&
 				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor", timestamp) &&
 				BackupAndExportXml(character, character.Collectibles, "collectibles", timestamp);
+
+			// clean up old files
+			DeleteFile(character, "markers.xml");
+			DeleteFile(character, "behaviour.edit.bak");
+			DeleteFile(character, "meta.edit.bak");
+			DeleteFile(character, "markers.edit.bak");
+			DeleteFile(character, "editor.edit.bak");
+
 			return success;
+		}
+
+		private static void DeleteFile(Character character, string file)
+		{
+			string filePath = Path.Combine(Config.GetRootDirectory(character), file);
+			if (File.Exists(filePath))
+			{
+				try
+				{
+					File.Delete(filePath);
+				}
+				catch { }
+			}
 		}
 
 		private static string GetTimeStamp()
@@ -93,7 +113,6 @@ namespace SPNATI_Character_Editor
 			string timestamp = GetTimeStamp();
 			bool success = ExportXml(character, Path.Combine(dir, $"behaviour-{timestamp}.bak")) &&
 				ExportXml(character.Metadata, Path.Combine(dir, $"meta-{timestamp}.bak")) &&
-				ExportXml(character.Markers, Path.Combine(dir, $"markers-{timestamp}.bak")) &&
 				ExportXml(CharacterDatabase.GetEditorData(character), Path.Combine(dir, $"editor-{timestamp}.bak")) &&
 				ExportXml(character.Collectibles, Path.Combine(dir, $"collectibles-{timestamp}.bak"));
 			return success;

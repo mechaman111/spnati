@@ -49,6 +49,12 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public int NextId;
 
+		[XmlElement("markers")]
+		/// <summary>
+		/// Cached information about what markers are set in this character's dialog
+		/// </summary>
+		public MarkerData Markers;
+
 		/// <summary>
 		/// Deferred initialization of things that aren't part of serialization and don't need to exist until the character's lines are being worked on
 		/// </summary>
@@ -126,6 +132,9 @@ namespace SPNATI_Character_Editor
 
 		public void OnBeforeSerialize()
 		{
+			Markers = _character.Markers;
+			Markers.OnBeforeSerialize();
+
 			Notes.Clear();
 			foreach (KeyValuePair<int, string> kvp in _notes)
 			{
@@ -145,6 +154,8 @@ namespace SPNATI_Character_Editor
 			{
 				_notes[note.Id] = note.Text;
 			}
+
+			Markers?.OnAfterDeserialize();
 		}
 
 		public bool IsCalledOut(Case c)
