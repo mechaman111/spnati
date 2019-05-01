@@ -920,6 +920,7 @@ OpponentDetailsDisplay.prototype.handlePanelNavigation = function (ev) {
         this.updateEpiloguesView();
         this.epiloguesView.show();
     } else if (targetPanel === 'collectibles') {
+        this.updateCollectiblesView();
         this.collectiblesView.show();
     } else {
         this.mainView.show();
@@ -963,22 +964,24 @@ OpponentDetailsDisplay.prototype.clear = function () {
 }
 
 OpponentDetailsDisplay.prototype.createEpilogueCard = function (title, gender, unlockHint) {
-    var container = createElementWithClass('div', 'bordered opponent-epilogue-card');
+    // Add the opponent-epilogue-* classes for future extensibility and also
+    // to minimize disruptions with caching
+    var container = createElementWithClass('div', 'bordered opponent-subview-card opponent-epilogue-card');
     
-    var titleElem = container.appendChild(createElementWithClass('div', 'opponent-epilogue-title'));
+    var titleElem = container.appendChild(createElementWithClass('div', 'opponent-subview-title opponent-epilogue-title'));
     $(titleElem).html(title);
     
-    var genderElem = container.appendChild(createElementWithClass('div', 'bordered left-cap opponent-epilogue-row opponent-epilogue-gender'));
-    var genderLabel = genderElem.appendChild(createElementWithClass('div', 'left-cap opponent-epilogue-label'));
-    var genderValue = genderElem.appendChild(createElementWithClass('div', 'opponent-epilogue-value'));
+    var genderElem = container.appendChild(createElementWithClass('div', 'bordered left-cap opponent-subview-row opponent-epilogue-row opponent-epilogue-gender'));
+    var genderLabel = genderElem.appendChild(createElementWithClass('div', 'left-cap opponent-subview-label opponent-epilogue-label'));
+    var genderValue = genderElem.appendChild(createElementWithClass('div', 'opponent-subview-value opponent-epilogue-value'));
     
     $(genderValue).html(gender);
     $(genderLabel).text("For");
     
     if (unlockHint) {
-        var unlockHintElem = container.appendChild(createElementWithClass('div', 'bordered left-cap opponent-epilogue-row opponent-epilogue-unlock'));
-        var unlockHintLabel = unlockHintElem.appendChild(createElementWithClass('div', 'left-cap opponent-epilogue-label'));
-        var unlockHintValue = unlockHintElem.appendChild(createElementWithClass('div', 'opponent-epilogue-value'));
+        var unlockHintElem = container.appendChild(createElementWithClass('div', 'bordered left-cap opponent-subview-row opponent-epilogue-row opponent-epilogue-unlock'));
+        var unlockHintLabel = unlockHintElem.appendChild(createElementWithClass('div', 'left-cap opponent-subview-label opponent-epilogue-label'));
+        var unlockHintValue = unlockHintElem.appendChild(createElementWithClass('div', 'opponent-subview-value opponent-epilogue-value'));
         $(unlockHintLabel).text("To Unlock");
         $(unlockHintValue).html(unlockHint);
     }
@@ -1039,6 +1042,55 @@ OpponentDetailsDisplay.prototype.updateEpiloguesView = function () {
     this.epiloguesContainer.empty().append(cards);
 };
 
+OpponentDetailsDisplay.prototype.createCollectibleCard = function (collectible) {
+    var container = createElementWithClass('div', 'bordered opponent-subview-card');
+    
+    var titleElem = container.appendChild(createElementWithClass('div', 'opponent-subview-title'));
+    var subtitleElem = container.appendChild(createElementWithClass('div', 'opponent-subview-subtitle'));
+    
+    if (!collectible.detailsHidden || collectible.isUnlocked()) {
+        $(titleElem).html(collectible.title);
+        $(subtitleElem).html(collectible.subtitle);
+    } else {
+        $(titleElem).html("[Locked]");
+        $(subtitleElem).html("");
+    }
+    
+
+    if (collectible.unlock_hint) {
+        var unlockHintElem = container.appendChild(createElementWithClass('div', 'bordered left-cap opponent-subview-row opponent-collectible-unlock'));
+        var unlockHintLabel = unlockHintElem.appendChild(createElementWithClass('div', 'left-cap opponent-subview-label'));
+        var unlockHintValue = unlockHintElem.appendChild(createElementWithClass('div', 'opponent-subview-value'));
+        $(unlockHintLabel).text("To Unlock");
+        $(unlockHintValue).html(collectible.unlock_hint);
+    }
+    
+    if (collectible.counter) {
+        var counterElem = container.appendChild(createElementWithClass('div', 'bordered left-cap opponent-subview-row opponent-collectible-counter'));
+        var counterLabel = counterElem.appendChild(createElementWithClass('div', 'left-cap opponent-subview-label'));
+        var counterValue = counterElem.appendChild(createElementWithClass('div', 'opponent-subview-value'));
+        
+        var curCounter = collectible.getCounter()
+        $(counterLabel).text("Progress");
+        $(counterValue).html(curCounter + ' / ' + collectible.counter);
+    }
+    
+    return container;
+}
+
+OpponentDetailsDisplay.prototype.updateCollectiblesView = function () {
+    if (!COLLECTIBLES_ENABLED || !this.opponent.has_collectibles || !this.opponent.collectibles) return;
+    
+    var cards = this.opponent.collectibles.map(function (collectible) {
+        if (collectible.hidden && !collectible.isUnlocked()) {
+            return null;
+        } else {
+            return this.createCollectibleCard(collectible);
+        }
+    }.bind(this));
+    this.collectiblesContainer.empty().append(cards);
+}
+
 OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.opponent = opponent;
     
@@ -1053,10 +1105,6 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     
     this.selectButton.prop('disabled', false);
     
-    // for now
-    this.collectiblesField.removeClass('has-collectibles');
-    
-    
     if (!opponent.ending) {
         this.epiloguesField.removeClass('has-epilogues');
     } else {
@@ -1068,9 +1116,16 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         };
         
         var hasConditionalEnding = false;
+        var totalEndings = 0;
+        var unlockedEndings = 0;
         
         opponent.endings.each(function (idx, elem) {
             var $elem = $(elem);
+            
+            totalEndings += 1;
+            if (save.hasEnding(opponent.id, $elem.text())) {
+                unlockedEndings += 1;
+            }
             
             if(EPILOGUE_CONDITIONAL_ATTRIBUTES.some(function (attr) { return !!$elem.attr(attr); })) {
                 hasConditionalEnding = true;
@@ -1099,15 +1154,43 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         
         if (epilogueAvailable) {
             this.epiloguesNavButton
-                .text('Available' + (hasConditionalEnding ? ' (Conditional)' : ''))
+                .text((hasConditionalEnding ? 'Conditionally ' : '') + 'Available' + ' (' + unlockedEndings +'/' + totalEndings + ' seen)')
                 .removeClass('smooth-button-red')
                 .addClass('smooth-button-blue');
         } else {
             this.epiloguesNavButton
-                .text((endingGenders.male ? 'Males' : 'Females') + ' Only')
+                .text((endingGenders.male ? 'Males' : 'Females') + ' Only' + ' (' + unlockedEndings +'/' + totalEndings + ' seen)')
                 .removeClass('smooth-button-blue')
                 .addClass('smooth-button-red');
         }
+    }
+
+    if (COLLECTIBLES_ENABLED && opponent.has_collectibles) {        
+        var updateCollectiblesBtn = function () {
+            var counts = opponent.collectibles.reduce(function (acc, collectible) {
+                acc.total += 1;
+                if (collectible.isUnlocked()) acc.unlocked += 1;
+                
+                return acc;
+            }, {unlocked:0, total:0});
+            
+            this.collectiblesNavButton.text("Available ("+counts.unlocked+"/"+counts.total+" unlocked)");
+        }.bind(this);
+        
+        this.collectiblesField.addClass('has-collectibles');
+        
+        this.collectiblesNavButton
+            .text("Available")
+            .addClass('smooth-button-blue')
+            .prop('disabled', false);
+            
+        if (!opponent.collectibles) {
+            opponent.loadCollectibles(updateCollectiblesBtn);
+        } else {
+            updateCollectiblesBtn();
+        }
+    } else {
+        this.collectiblesField.removeClass('has-collectibles');
     }
 
     if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
