@@ -66,6 +66,21 @@ namespace SPNATI_Character_Editor.Controls
 			Controls.Add(_intellisense);
 		}
 
+		public void SetData(Character character, Case c)
+		{
+			Stage stage = null;
+			HashSet<int> stages = new HashSet<int>();
+			foreach (int s in c.Stages)
+			{
+				if (stage == null)
+				{
+					stage = new Stage(s);
+				}
+				stages.Add(s);
+			}
+			SetData(character, stage, c, stages, ImageLibrary.Get(character));
+		}
+
 		public void SetData(Character character, Stage stage, Case c, HashSet<int> selectedStages, ImageLibrary imageLibrary)
 		{
 			_character = character;
@@ -809,6 +824,11 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void ShowTrophyForm(int rowIndex)
 		{
+			if (_character.Collectibles.Count == 0)
+			{
+				MessageBox.Show("You haven't created any collectibles yet. Go to the Collectibles tab to create a collectible before attaching it to a dialogue line.");
+				return;
+			}
 			DataGridViewRow row = gridDialogue.Rows[rowIndex];
 			DataGridViewCell cell = row.Cells[nameof(ColTrophy)];
 			Tuple<string, string> data = cell.Tag as Tuple<string, string>;
