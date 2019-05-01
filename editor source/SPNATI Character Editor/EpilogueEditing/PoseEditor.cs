@@ -203,21 +203,24 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			timeline.SetData(_pose);
 
 			//restore collapsed and hidden states for sprites that have the same ID as previous pose
-			foreach (LiveSprite sprite in _pose.Sprites)
+			if (_pose != null)
 			{
-				if (!string.IsNullOrEmpty(sprite.Id))
+				foreach (LiveSprite sprite in _pose.Sprites)
 				{
-					if (hiddenSprites.Contains(sprite.Id))
+					if (!string.IsNullOrEmpty(sprite.Id))
 					{
-						sprite.Hidden = true;
-					}
-					if (collapsedSprites.Contains(sprite.Id))
-					{
-						sprite.Widget.IsCollapsed = true;
+						if (hiddenSprites.Contains(sprite.Id))
+						{
+							sprite.Hidden = true;
+						}
+						if (collapsedSprites.Contains(sprite.Id))
+						{
+							sprite.Widget.IsCollapsed = true;
+						}
 					}
 				}
-			}
 
+			}
 			table.Context = new LivePoseContext(_pose, _character, CharacterContext.Pose);
 			SetTableData(_pose, null);
 			canvas.SetData(_character, _pose);

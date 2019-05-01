@@ -18,6 +18,11 @@ namespace SPNATI_Character_Editor.Providers
 			_character = context as Character;
 		}
 
+		public bool TrackRecent
+		{
+			get { return false; }
+		}
+
 		public IRecord Create(string key)
 		{
 			Collectible collectible = new Collectible();

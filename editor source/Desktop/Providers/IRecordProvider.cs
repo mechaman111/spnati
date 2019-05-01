@@ -16,6 +16,7 @@ namespace Desktop
 		void Delete(IRecord record);
 		void Sort(List<IRecord> list);
 		bool AllowsNew { get; }
+		bool TrackRecent { get; }
 	}
 
 	public interface IRecordProvider<T> : IRecordProvider where T : IRecord

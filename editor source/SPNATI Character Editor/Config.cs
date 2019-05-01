@@ -168,12 +168,52 @@ namespace SPNATI_Character_Editor
 				Directory.CreateDirectory(dataDir);
 			}
 
+			SaveRecentRecords();
+
 			List<string> lines = new List<string>();
 			foreach (KeyValuePair<string, string> kvp in _settings)
 			{
 				lines.Add($"{kvp.Key.ToLower()}={kvp.Value}");
 			}
 			File.WriteAllLines(filename, lines);
+		}
+
+		public static void LoadRecentRecords<T>()
+		{
+			string[] keys = GetString("Recent" + typeof(T).Name).Split('|');
+			foreach (string key in keys)
+			{
+				IRecord record = null;
+				if (typeof(T) == typeof(Character))
+				{
+					record = CharacterDatabase.Get(key);
+				}
+				else if (typeof(T) == typeof(Costume))
+				{
+					record = CharacterDatabase.GetSkin(key);
+				}
+				if (record != null)
+				{
+					RecordLookup.AddToRecent(typeof(T), record);
+				}
+			}
+		}
+
+		private static void SaveRecentRecords()
+		{
+			SaveRecords<Character>();
+			SaveRecords<Costume>();
+		}
+
+		private static void SaveRecords<T>()
+		{
+			List<IRecord> list = RecordLookup.GetRecentRecords<T>();
+			List<string> keys = new List<string>();
+			foreach (IRecord record in list)
+			{
+				keys.Add(record.Key);
+			}
+			Set("Recent" + typeof(T).Name, string.Join("|", keys));
 		}
 
 		/// <summary>

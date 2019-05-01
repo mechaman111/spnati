@@ -61,6 +61,11 @@ namespace Desktop
 			get { return false; }
 		}
 
+		public bool TrackRecent
+		{
+			get { return false; }
+		}
+
 		public string[] GetColumns()
 		{
 			return new string[] { "Name" };

@@ -35,6 +35,8 @@
 			this.cmdCancel = new System.Windows.Forms.Button();
 			this.lstItems = new System.Windows.Forms.ListView();
 			this.cmdDelete = new System.Windows.Forms.Button();
+			this.lblRecent = new System.Windows.Forms.Label();
+			this.lstRecent = new System.Windows.Forms.ListView();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -103,7 +105,7 @@
 			this.lstItems.Location = new System.Drawing.Point(12, 36);
 			this.lstItems.MultiSelect = false;
 			this.lstItems.Name = "lstItems";
-			this.lstItems.Size = new System.Drawing.Size(530, 284);
+			this.lstItems.Size = new System.Drawing.Size(530, 199);
 			this.lstItems.TabIndex = 6;
 			this.lstItems.UseCompatibleStateImageBehavior = false;
 			this.lstItems.View = System.Windows.Forms.View.Tile;
@@ -121,6 +123,33 @@
 			this.cmdDelete.Visible = false;
 			this.cmdDelete.Click += new System.EventHandler(this.cmdDelete_Click);
 			// 
+			// lblRecent
+			// 
+			this.lblRecent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblRecent.AutoSize = true;
+			this.lblRecent.Location = new System.Drawing.Point(12, 238);
+			this.lblRecent.Name = "lblRecent";
+			this.lblRecent.Size = new System.Drawing.Size(42, 13);
+			this.lblRecent.TabIndex = 8;
+			this.lblRecent.Text = "Recent";
+			// 
+			// lstRecent
+			// 
+			this.lstRecent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstRecent.FullRowSelect = true;
+			this.lstRecent.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.lstRecent.HideSelection = false;
+			this.lstRecent.Location = new System.Drawing.Point(12, 254);
+			this.lstRecent.MultiSelect = false;
+			this.lstRecent.Name = "lstRecent";
+			this.lstRecent.Size = new System.Drawing.Size(530, 66);
+			this.lstRecent.TabIndex = 9;
+			this.lstRecent.UseCompatibleStateImageBehavior = false;
+			this.lstRecent.View = System.Windows.Forms.View.Tile;
+			this.lstRecent.SelectedIndexChanged += new System.EventHandler(this.lstRecent_SelectedIndexChanged);
+			this.lstRecent.DoubleClick += new System.EventHandler(this.lstRecent_DoubleClick);
+			// 
 			// RecordLookup
 			// 
 			this.AcceptButton = this.cmdAccept;
@@ -129,6 +158,8 @@
 			this.CancelButton = this.cmdCancel;
 			this.ClientSize = new System.Drawing.Size(554, 361);
 			this.ControlBox = false;
+			this.Controls.Add(this.lstRecent);
+			this.Controls.Add(this.lblRecent);
 			this.Controls.Add(this.cmdDelete);
 			this.Controls.Add(this.lstItems);
 			this.Controls.Add(this.cmdCancel);
@@ -154,5 +185,7 @@
 		private System.Windows.Forms.Button cmdCancel;
 		private System.Windows.Forms.ListView lstItems;
 		private System.Windows.Forms.Button cmdDelete;
+		private System.Windows.Forms.Label lblRecent;
+		private System.Windows.Forms.ListView lstRecent;
 	}
 }

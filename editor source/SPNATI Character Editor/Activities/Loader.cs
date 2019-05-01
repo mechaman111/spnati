@@ -174,6 +174,9 @@ namespace SPNATI_Character_Editor.Activities
 					Shell.Instance.LaunchWorkspace(CharacterDatabase.Get(lastCharacter));
 				}
 			}
+
+			Config.LoadRecentRecords<Character>();
+			Config.LoadRecentRecords<Costume>();
 		}
 
 		private Task LoadChunk(string caption, int progress, Action action)
