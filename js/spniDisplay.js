@@ -895,6 +895,13 @@ OpponentDetailsDisplay = function () {
     
     this.epiloguesView.hide();
     this.collectiblesView.hide();
+    
+    var query = window.matchMedia('(min-aspect-ratio: 4/3)');
+    if (query.matches) {
+        this.mainView.addClass('show-more');
+    } else {
+        this.mainView.removeClass('show-more');
+    }
 }
 
 OpponentDetailsDisplay.prototype = Object.create(OpponentDisplay.prototype);
@@ -957,7 +964,6 @@ OpponentDetailsDisplay.prototype.clear = function () {
     this.selectButton.prop('disabled', true);
     this.epiloguesField.removeClass('has-epilogues');
     this.collectiblesField.removeClass('has-collectibles');
-    this.mainView.removeClass('show-more');
     this.costumeSelector.hide();
     
     this.displayContainer.hide();
@@ -1104,6 +1110,13 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.simpleImage.attr('src', opponent.selection_image).css('height', opponent.scale + '%').show();
     
     this.selectButton.prop('disabled', false);
+    
+    var query = window.matchMedia('(min-aspect-ratio: 4/3)');
+    if (query.matches) {
+        this.mainView.addClass('show-more');
+    } else {
+        this.mainView.removeClass('show-more');
+    }
     
     if (!opponent.ending) {
         this.epiloguesField.removeClass('has-epilogues');

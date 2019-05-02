@@ -1953,12 +1953,12 @@ body.modal-open {
     justify-content: center;
 }
 
-#source-tag-column label {
+#source-tag-column label, #name-creator-column label {
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
 }
 
-#source-tag-column input {
+#source-tag-column input, #name-creator-column input {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     border-left: 0px;
@@ -2033,7 +2033,7 @@ body.modal-open {
     
     /*height: 35%;*/
     height: auto;
-    min-height: 15%;
+    /*min-height: 15%;*/
     max-height: 82%;
     overflow-y: auto;
     
@@ -2141,10 +2141,6 @@ body.modal-open {
     display: flex;
 }
 
-.opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
-    display: none;
-}
-
 .opponent-options-row {
     margin: 0.5% 0;
     flex: 1;
@@ -2185,6 +2181,30 @@ body.modal-open {
 
 .opponent-nav-button {
     flex: 1;
+}
+
+.show-more-button {
+    display: block;
+}
+
+.show-more-button::after {
+    content: "More";
+}
+
+.show-more .show-more-button::after {
+    content: "Less";
+}
+
+.opponent-details-basic .extra-details-row {
+    display: none;
+}
+
+.show-more .extra-details-row {
+    display: flex;
+}
+
+.opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
+    display: none;
 }
 
 /************************************************************
@@ -2250,37 +2270,7 @@ body.modal-open {
  * less than 4:3.
  ************************************************************/
 
-@media (min-aspect-ratio: 4/3) {
-    .show-more-button {
-        display: none;
-    }
-}
-
 @media (max-aspect-ratio: 4/3) {
-    .show-more-button {
-        display: block;
-    }
-    
-    .show-more-button::after {
-        content: "More";
-    }
-    
-    .show-more .show-more-button::after {
-        content: "Less";
-    }
-    
-    .opponent-details-basic .extra-details-row {
-        display: none;
-    }
-    
-    .show-more .extra-details-row {
-        display: flex;
-    }
-    
-    .opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
-        display: none;
-    }
-    
     .gender-component, .sort-component > .dropdown-menu > li, .sort-component > button {
         font-size: 1vw;
     }
