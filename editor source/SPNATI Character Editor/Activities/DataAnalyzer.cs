@@ -22,6 +22,24 @@ namespace SPNATI_Character_Editor.Activities
 			ShowMainScreen();
 		}
 
+		protected override void OnFirstActivate()
+		{
+			FillExamples();
+		}
+
+		private void FillExamples()
+		{
+			gridExample1.Rows.Add(new object[] { "1", "Tags", "==", "shy" });
+			gridExample1.Rows.Add(new object[] { "2", "Tags", "==", "shaved" });
+
+			gridExample2.Rows.Add(new object[] { "1", "Gender", "==", "female" });
+			gridExample2.Rows.Add(new object[] { "2", "Epilogue (Count)", ">", "1" });
+
+			gridExample3.Rows.Add(new object[] { "1", "Intelligence", "==", "good" });
+			gridExample3.Rows.Add(new object[] { "2", "Wardrobe - Layer Count", ">=", "6" });
+			gridExample3.Rows.Add(new object[] { "3", "Targeted Line Count", ">=", "50" });
+		}
+
 		private void cmdLoad_Click(object sender, System.EventArgs e)
 		{
 			pnlStart.Visible = false;
