@@ -130,13 +130,13 @@
 			// 
 			this.splitContainer3.Panel1.Controls.Add(this.responseControl);
 			this.splitContainer3.Panel1.Controls.Add(this.cmdJumpToDialogue);
-			this.splitContainer3.Panel1.Controls.Add(this.cmdAccept);
-			this.splitContainer3.Panel1.Controls.Add(this.cmdCancel);
 			this.splitContainer3.Panel1.Controls.Add(this.lblResponse);
 			// 
 			// splitContainer3.Panel2
 			// 
 			this.splitContainer3.Panel2.Controls.Add(this.imgResponse);
+			this.splitContainer3.Panel2.Controls.Add(this.cmdCancel);
+			this.splitContainer3.Panel2.Controls.Add(this.cmdAccept);
 			this.splitContainer3.Size = new System.Drawing.Size(1254, 562);
 			this.splitContainer3.SplitterDistance = 935;
 			this.splitContainer3.TabIndex = 0;
@@ -154,7 +154,7 @@
 			// cmdJumpToDialogue
 			// 
 			this.cmdJumpToDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdJumpToDialogue.Location = new System.Drawing.Point(536, 527);
+			this.cmdJumpToDialogue.Location = new System.Drawing.Point(804, 527);
 			this.cmdJumpToDialogue.Name = "cmdJumpToDialogue";
 			this.cmdJumpToDialogue.Size = new System.Drawing.Size(128, 23);
 			this.cmdJumpToDialogue.TabIndex = 12;
@@ -165,7 +165,7 @@
 			// cmdAccept
 			// 
 			this.cmdAccept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdAccept.Location = new System.Drawing.Point(670, 527);
+			this.cmdAccept.Location = new System.Drawing.Point(41, 527);
 			this.cmdAccept.Name = "cmdAccept";
 			this.cmdAccept.Size = new System.Drawing.Size(128, 23);
 			this.cmdAccept.TabIndex = 11;
@@ -176,7 +176,7 @@
 			// cmdCancel
 			// 
 			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdCancel.Location = new System.Drawing.Point(804, 527);
+			this.cmdCancel.Location = new System.Drawing.Point(175, 527);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(128, 23);
 			this.cmdCancel.TabIndex = 10;
@@ -195,11 +195,13 @@
 			// 
 			// imgResponse
 			// 
-			this.imgResponse.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.imgResponse.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.imgResponse.Location = new System.Drawing.Point(0, 0);
 			this.imgResponse.Name = "imgResponse";
 			this.imgResponse.ShowTextBox = false;
-			this.imgResponse.Size = new System.Drawing.Size(315, 562);
+			this.imgResponse.Size = new System.Drawing.Size(315, 521);
 			this.imgResponse.TabIndex = 0;
 			// 
 			// DialogueResponder
