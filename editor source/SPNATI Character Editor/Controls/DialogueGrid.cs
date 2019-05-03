@@ -190,7 +190,7 @@ namespace SPNATI_Character_Editor.Controls
 			string gender = row.Cells["ColGender"].Value?.ToString();
 			string weight = row.Cells[nameof(ColWeight)].Value?.ToString() ?? "0";
 			float fval;
-			if (float.TryParse(weight, NumberStyles.Number, CultureInfo.InvariantCulture, out fval))
+			if (float.TryParse(weight, NumberStyles.Number, CultureInfo.InvariantCulture, out fval) && fval != 0)
 			{
 				line.Weight = fval;
 			}
