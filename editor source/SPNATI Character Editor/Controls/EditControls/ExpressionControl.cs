@@ -173,10 +173,6 @@ namespace SPNATI_Character_Editor
 			{
 				if (variable.StartsWith("~collectible."))
 				{
-					int start = "~collectible.".Length;
-					int end = variable.IndexOfAny(new char[] { '.', '~' }, start);
-					string name = variable.Substring(start, end - start);
-
 					if (variable.EndsWith(".counter~"))
 					{
 						//self collectible counter check
@@ -190,10 +186,6 @@ namespace SPNATI_Character_Editor
 				}
 				else if (variable.StartsWith("~target.collectible."))
 				{
-					int start = "~target.collectible.".Length;
-					int end = variable.IndexOfAny(new char[] { '.', '~' }, start);
-					string name = variable.Substring(start, end - start);
-
 					if (variable.EndsWith(".counter~"))
 					{
 						//target collectible counter check

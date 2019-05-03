@@ -36,7 +36,7 @@ namespace SPNATI_Character_Editor.Controls
 			gridDialogue.TextUpdated += GridDialogue_TextUpdated;
 		}
 
-		public void Activate(bool first)
+		public void Activate()
 		{
 			CreateStageCheckboxes();
 		}

@@ -22,7 +22,6 @@ namespace SPNATI_Character_Editor.Activities
 		private bool _populatingCase;
 		private bool _pendingWardrobeChange;
 		private bool _exportOnQuit;
-		private List<DialogueLine> _lineClipboard = new List<DialogueLine>();
 
 		private enum TreeFilterMode
 		{
@@ -87,7 +86,7 @@ namespace SPNATI_Character_Editor.Activities
 			_selectedStage = null;
 			_selectedCase = null;
 
-			caseControl.Activate(true);
+			caseControl.Activate();
 			_character = c;
 			_imageLibrary = ImageLibrary.Get(c);
 

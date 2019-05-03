@@ -280,11 +280,6 @@ namespace SPNATI_Character_Editor.Activities
 			}
 		}
 
-		private void gridCriteria_Validated(object sender, EventArgs e)
-		{
-			RunReport();
-		}
-
 		private void txtCustomExpression_Validated(object sender, EventArgs e)
 		{
 			RunReport();

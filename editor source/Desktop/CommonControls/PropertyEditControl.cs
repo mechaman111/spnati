@@ -33,7 +33,9 @@ namespace Desktop.CommonControls
 		public string Property { get; set; }
 		public int Index { get; set; }
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
 		public event EventHandler<int> RequireHeight;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
 		public event EventHandler<string> ChangeLabel;
 
 		public void SetParameters(EditControlAttribute parameters)
