@@ -13,6 +13,20 @@ namespace SPNATI_Character_Editor
 			{
 				Convert3_2(character);
 			}
+			if (version == "v4.2")
+			{
+				//fix weight bug from 4.2
+				foreach (Case workingCase in character.Behavior.GetWorkingCases())
+				{
+					foreach (DialogueLine line in workingCase.Lines)
+					{
+						if (line.Weight == 0)
+						{
+							line.Weight = 1;
+						}
+					}
+				}
+			}
 		}
 				
 		private static void Convert3_2(Character character)
