@@ -122,6 +122,11 @@ namespace SPNATI_Character_Editor.Controls
 
 			if (singleStage)
 			{
+				int offset = currentStage - Clothing.MaxLayers;
+				if (offset >= 0)
+				{
+					currentStage = _character.Layers + offset;
+				}
 				newCase.Stages.Add(currentStage);
 			}
 			else
