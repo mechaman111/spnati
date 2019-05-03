@@ -95,7 +95,7 @@ namespace SPNATI_Character_Editor.Controls
 		}
 
 		/// <summary>
-		/// Rebuilds the tree from scratch. Useful when the stages have changed 
+		/// Rebuilds the tree from scratch. Useful when the stages have changed
 		/// </summary>
 		public void RegenerateTree()
 		{
@@ -127,7 +127,6 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					currentStage = _character.Layers + offset;
 				}
-				int s = TriggerDatabase.ShiftStage(_character, currentStage);
 				newCase.Stages.Add(currentStage);
 			}
 			else
@@ -193,7 +192,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		/// <summary> 
+		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>

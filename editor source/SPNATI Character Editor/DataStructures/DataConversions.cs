@@ -28,7 +28,7 @@ namespace SPNATI_Character_Editor
 				}
 			}
 		}
-				
+
 		private static void Convert3_2(Character character)
 		{
 			//convert old-style epilogues

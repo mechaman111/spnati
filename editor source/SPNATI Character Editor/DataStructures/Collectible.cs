@@ -45,12 +45,12 @@ namespace SPNATI_Character_Editor.DataStructures
 		[XmlElement("unlock")]
 		public string UnlockHint;
 
-		[Boolean(DisplayName = "Secret", GroupOrder = 110, Description = "If checked, title and subtitle will not be displayed when viewing a locked collectible")]
+		[Boolean(DisplayName = "Secret", GroupOrder = 110, Description = "If checked, collectible will not appear in the collectibles list at all until unlocked")]
 		[DefaultValue(false)]
 		[XmlElement("hidden")]
 		public bool Hidden;
 
-		[Boolean(DisplayName = "Hide Details", GroupOrder = 120, Description = "Counter the collectible must reach before being obtained")]
+		[Boolean(DisplayName = "Hide Details", GroupOrder = 120, Description = "If checked, title and subtitle will not be displayed when viewing a locked collectible")]
 		[DefaultValue(false)]
 		[XmlElement("hide-details")]
 		public bool HideDetails;

@@ -398,6 +398,7 @@ body.modal-open {
 .modal-flex-container .modal-content {
     display: flex;
     flex-direction: column;
+    max-height: 100%;
     /*height: 100%;*/
 }
 
@@ -1952,12 +1953,12 @@ body.modal-open {
     justify-content: center;
 }
 
-#source-tag-column label {
+#source-tag-column label, #name-creator-column label {
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
 }
 
-#source-tag-column input {
+#source-tag-column input, #name-creator-column input {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     border-left: 0px;
@@ -2032,7 +2033,9 @@ body.modal-open {
     
     /*height: 35%;*/
     height: auto;
-    min-height: 15%;
+    /*min-height: 15%;*/
+    max-height: 82%;
+    overflow-y: auto;
     
     background-color: #555555;
     padding: 1.5%;
@@ -2120,6 +2123,14 @@ body.modal-open {
     font-size: 1.65vmin;
     line-height: 1.98vmin;
     flex: 3;
+    
+    display: block;
+}
+
+.opponent-details-description > * {
+    display: inline;
+    padding: 0;
+    word-wrap: normal;
 }
 
 .opponent-details-field .opponent-nav-button {
@@ -2128,10 +2139,6 @@ body.modal-open {
 
 .opponent-epilogues-field.has-epilogues, .opponent-collectibles-field.has-collectibles {
     display: flex;
-}
-
-.opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
-    display: none;
 }
 
 .opponent-options-row {
@@ -2176,11 +2183,35 @@ body.modal-open {
     flex: 1;
 }
 
+.show-more-button {
+    display: block;
+}
+
+.show-more-button::after {
+    content: "More";
+}
+
+.show-more .show-more-button::after {
+    content: "Less";
+}
+
+.opponent-details-basic .extra-details-row {
+    display: none;
+}
+
+.show-more .extra-details-row {
+    display: flex;
+}
+
+.opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
+    display: none;
+}
+
 /************************************************************
- * Classes for the opponent Epilogues view.
+ * Classes for the opponent Epilogues and Collectibles views.
  ************************************************************/
 
-.opponent-epilogue-card {
+.opponent-subview-card {
     padding: 1% 2%;
     margin: 2% 5%;
     background: #FFFFFF;
@@ -2189,14 +2220,14 @@ body.modal-open {
     flex-direction: column;
 }
 
-.opponent-epilogue-title {
+.opponent-subview-title {
     flex: 2;
     
     text-align: left;
     font-size: 2.5vmin;
 }
 
-.opponent-epilogue-row {
+.opponent-subview-row {
     margin: 1% 0;
     display: flex;
     
@@ -2206,7 +2237,7 @@ body.modal-open {
     word-wrap: break-word;
 }
 
-.opponent-epilogue-row > * {
+.opponent-subview-row > * {
     display: flex;
     align-items: center;
     
@@ -2216,7 +2247,7 @@ body.modal-open {
     word-wrap: break-word;
 }
 
-.opponent-epilogue-row > .opponent-epilogue-label {
+.opponent-subview-row > .opponent-subview-label{
     background: linear-gradient(rgb(204, 204, 204), rgb(170, 170, 170)) rgb(204, 204, 204);
     border-right: 2px solid #111111;
     height: auto;
@@ -2224,9 +2255,14 @@ body.modal-open {
     flex: 1;
 }
 
-.opponent-epilogue-row > .opponent-epilogue-value {
+.opponent-subview-row > .opponent-subview-value {
     flex: 3;
 }
+
+.opponent-subview-subtitle {
+    font-size: 1.5vmin;
+}
+
 
 /************************************************************
  * Classes for constrained screen widths.
@@ -2234,37 +2270,7 @@ body.modal-open {
  * less than 4:3.
  ************************************************************/
 
-@media (min-aspect-ratio: 4/3) {
-    .show-more-button {
-        display: none;
-    }
-}
-
 @media (max-aspect-ratio: 4/3) {
-    .show-more-button {
-        display: block;
-    }
-    
-    .show-more-button::after {
-        content: "More";
-    }
-    
-    .show-more .show-more-button::after {
-        content: "Less";
-    }
-    
-    .opponent-details-basic .extra-details-row {
-        display: none;
-    }
-    
-    .show-more .extra-details-row {
-        display: flex;
-    }
-    
-    .opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
-        display: none;
-    }
-    
     .gender-component, .sort-component > .dropdown-menu > li, .sort-component > button {
         font-size: 1vw;
     }
