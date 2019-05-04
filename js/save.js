@@ -224,7 +224,7 @@ function Save() {
             charID = collectible.player.id;
         }
         
-        localStorage.setItem(prefix+charID+collectible.id, counter.toString());
+        localStorage.setItem(prefix+'collectibles.'+charID+collectible.id, counter.toString());
     }
     
     this.getCollectibleCounter = function (collectible) {
@@ -235,9 +235,18 @@ function Save() {
             charID = collectible.player.id;
         }
         
-        var ctr = localStorage.getItem(prefix+charID+collectible.id);
+        var ctr = localStorage.getItem(prefix+'collectibles.'+charID+collectible.id);
         
         return parseInt(ctr, 10) || 0;
+    }
+    
+    this.getPersistentMarker = function (player, name) {
+        var ctr = localStorage.getItem(prefix+'markers.'+player.id+'.'+name);
+        return parseInt(ctr, 10) || 0;
+    }
+    
+    this.setPersistentMarker = function (player, name, value) {
+        localStorage.setItem(prefix+'markers.'+player.id+'.'+name, value.toString());
     }
 
     /** Serializes the localStorage into a base64-encoded JSON string */
