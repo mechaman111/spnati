@@ -96,6 +96,7 @@ $bugReportModal = $('#bug-report-modal');
 $usageTrackingModal = $('#usage-reporting-modal');
 $playerTagsModal = $('#player-tags-modal');
 $collectibleInfoModal = $('#collectibles-info-modal');
+$ioModal = $('#io-modal');
 
 /* Screen State */
 $previousScreen = null;
@@ -1573,6 +1574,19 @@ function forceTableVisibility(state) {
 		$gameTable.fadeIn();
 		tableOpacity = 1;
 	}
+}
+
+/************************************************************
+ * The player clicked on a Load/Save button.
+ ************************************************************/
+function showImportModal() {
+    $("#export-code").text(save.serializeLocalStorage());
+    $ioModal.modal('show');
+
+    $('#import-progress').click(function() {
+        var code = $("#export-code").val();
+        save.deserializeLocalStorage(code);
+    });
 }
 
 /**********************************************************************
