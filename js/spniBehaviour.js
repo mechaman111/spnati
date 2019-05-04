@@ -534,8 +534,6 @@ function expandDialogue (dialogue, self, target) {
                         }
                     }
                     
-                    console.log("reading "+variable.toLowerCase());
-                    
                     substitution = marker || "";
                 } else {
                     substitution = variable.toLowerCase(); //didn't supply a marker name
