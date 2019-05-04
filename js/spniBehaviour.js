@@ -1118,7 +1118,7 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
         var filterStatus = ctr.attr('status');
 
         var matches = players.filter(function(p) {
-            return (role === undefined || (role == "target" && p == opp) || (role == "opp" && p != self) || (role == "other" && p != self && p != target))
+            return (role === undefined || (role == "target" && p == opp) || (role == "opp" && p != self) || (role == "other" && p != self && p != opp))
                 && (filterId === undefined || p.id == filterId)
                 && (filterStage === undefined || inInterval(p.stage, filterStage))
                 && (filterTag == undefined || p.hasTag(filterTag))
