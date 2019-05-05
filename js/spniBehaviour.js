@@ -889,6 +889,7 @@ function Case($xml, stage) {
     	if (this.oppHand)                  this.priority += 30;
     	if (this.targetTimeInStage)        this.priority += 25;
     	if (this.hasHand)                  this.priority += 20;
+
     	if (this.alsoPlaying)              this.priority += 100;
     	if (this.alsoPlayingStage)         this.priority += 40;
     	if (this.alsoPlayingTimeInStage)   this.priority += 15;
@@ -897,33 +898,57 @@ function Case($xml, stage) {
     	if (this.alsoPlayingNotSaidMarker) this.priority += 1;
     	if (this.alsoPlayingSayingMarker)  this.priority += 1;
         if (this.alsoPlayingSaying)        this.priority += 1;
+
     	if (this.totalRounds)              this.priority += 10;
     	if (this.timeInStage)              this.priority += 8;
     	if (this.totalMales)               this.priority += 5;
     	if (this.totalFemales)             this.priority += 5;
     	if (this.saidMarker)               this.priority += 1;
     	if (this.notSaidMarker)            this.priority += 1;
+
     	if (this.totalAlive)               this.priority += 2 + this.totalAlive.max;
     	if (this.totalExposed)             this.priority += 4 + this.totalExposed.max;
     	if (this.totalNaked)               this.priority += 5 + this.totalNaked.max;
     	if (this.totalMasturbating)        this.priority += 5 + this.totalMasturbating.max;
     	if (this.totalFinished)            this.priority += 5 + this.totalFinished.max;
     
-    	counters.forEach(function (ctr) {
-            var filterId     = ctr.attr('character');
-            var filterStage  = ctr.attr('stage');
-            var role         = ctr.attr('role');
-            var filterTag    = ctr.attr('filter');
-            var filterGender = ctr.attr('gender');
-            var filterStatus = ctr.attr('status');
+        counters.forEach(function (ctr) {
+            var role   = ctr.attr('role');
+            var id     = ctr.attr('character');
+            var tag    = ctr.attr('filter');
+            var stage  = ctr.attr('stage');
+            var layers = ctr.attr('layers');
+            var startingLayers = ctr.attr('startingLayers');
+            var gender         = ctr.attr('gender');
+            var status         = ctr.attr('status');
+            var timeInStage    = ctr.attr('timeInStage');
+            var hand           = ctr.attr('hasHand');
+            var consecutiveLosses = ctr.attr('consecutiveLosses');
+            var saidMarker     = ctr.attr('saidMarker');
+            var sayingMarker   = ctr.attr('sayingMarker');
+            var notSaidMarker  = ctr.attr('notSaidMarker');
+            var saying         = ctr.attr('saying');
 
-            this.priority += (filterId ? (role == "target" ? 300 : 100) : 0)
-                + (filterStage ? (role == "target" ? 80 : 40) : 0)
-                + (filterTag ? 10 : 0) + (filterGender ? 5 : 0) + (filterStatus ? 5 : 0);
-    	}.bind(this));
-    	
-    	// Expression tests (priority = 50 for each)
-    	this.priority += (tests.length * 50);
+            if (role == "target") {
+                this.priority += (id ? 300 : 0) + (tag ? 150 : 0)
+                    + (stage ? 80 : 0) + (status ? 70 : 0)
+                    + (layers ? 40 : 0) + (startingLayers ? 40 : 0)
+                    + (consecutiveLosses ? 60 : 0) + (timeInStage ? 25 : 0)
+                    + (hand ? 30 : 0) + (gender ? 5 : 0)
+            } else {
+                this.priority += (id ? 100 : 0) + (tag ? 10 : 0)
+                    + (stage ? 40 : 0) + (status ? 5 : 0)
+                    + (layers ? 20 : 0) + (startingLayers ? 20 : 0)
+                    + (consecutiveLosses ? 30 : 0) + (timeInStage ? 15 : 0)
+                    + (hand ? 15 : 0) + (gender ? 5 : 0)
+            }
+            this.priority += (saidMarker ? 1 : 0) + (notSaidMarker ? 1 : 0)
+                + (sayingMarker ? 1 : 0) + (saying ? 1 : 0);
+
+        }.bind(this));
+
+        // Expression tests (priority = 50 for each)
+        this.priority += (tests.length * 50);
     }
 }
 
@@ -1288,21 +1313,39 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     // filter counter targets
     if (!this.counters.every(function (ctr) {
         var desiredCount = parseInterval(ctr.attr('count') || "1-");
-        var role         = ctr.attr('role');
-        var variable     = ctr.attr('var');
-        var filterId     = ctr.attr('character');
-        var filterStage  = parseInterval(ctr.attr('stage'));
-        var filterTag =    ctr.attr('filter');
-        var filterGender = ctr.attr('gender');
-        var filterStatus = ctr.attr('status');
+        var role   = ctr.attr('role');
+		var variable = ctr.attr('var');
+        var id     = ctr.attr('character');
+        var tag    = ctr.attr('filter');
+        var stage  = parseInterval(ctr.attr('stage'));
+        var layers = parseInterval(ctr.attr('layers'));
+        var startingLayers = parseInterval(ctr.attr('startingLayers'));
+        var gender         = ctr.attr('gender');
+        var status         = ctr.attr('status');
+        var timeInStage    = parseInterval(ctr.attr('timeInStage'));
+        var hand           = ctr.attr('hasHand');
+        var saidMarker     = ctr.attr('saidMarker');
+        var sayingMarker     = ctr.attr('sayingMarker');
+        var notSaidMarker  = ctr.attr('notSaidMarker');
+        var saying         = ctr.attr('saying');
+        var consecutiveLosses = parseInterval(ctr.attr('consecutiveLosses'));
 
         var matches = players.filter(function(p) {
             return (role === undefined || (role == "target" && p == opp) || (role == "opp" && p != self) || (role == "other" && p != self && p != opp))
-                && (filterId === undefined || p.id == filterId)
-                && (filterStage === undefined || inInterval(p.stage, filterStage))
-                && (filterTag == undefined || p.hasTag(filterTag))
-                && (filterGender == undefined || (p.gender == filterGender))
-                && (filterStatus == undefined || p.checkStatus(filterStatus));
+                && (id === undefined || p.id == id)
+                && (stage === undefined || inInterval(p.stage, stage))
+                && (tag === undefined || p.hasTag(tag))
+                && (gender === undefined || p.gender == gender)
+                && (status === undefined || p.checkStatus(status))
+                && (layers === undefined || inInterval(p.clothing.length, layers))
+                && (startingLayers === undefined || inInterval(p.startingLayers, startingLayers))
+                && (timeInStage === undefined || inInterval(p.timeInStage, timeInStage))
+                && (hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == hand.toLowerCase()))
+                && (saidMarker === undefined || checkMarker(this.saidMarker, p, role == "other" ? opp : null))
+                && (sayingMarker === undefined || checkMarker(this.sayingMarker, p, role == "other" ? opp : null))
+                && (notSaidMarker === undefined || !p.markers[notSaidMarker])
+                && (saying === undefined || (p.chosenState && p.chosenState.rawDialogue.toLowerCase().indexOf(this.alsoPlayingSaying.toLowerCase()) >= 0))
+                && (consecutiveLosses === undefined || inInterval(p.consecutiveLosses, consecutiveLosses));
         });
 
         if (inInterval(matches.length, desiredCount)) {
