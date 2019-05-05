@@ -241,8 +241,8 @@ function Save() {
     }
     
     this.getPersistentMarker = function (player, name) {
-        var ctr = localStorage.getItem(prefix+'markers.'+player.id+'.'+name);
-        return parseInt(ctr, 10) || 0;
+        var val = localStorage.getItem(prefix+'markers.'+player.id+'.'+name);
+        return val || '';
     }
     
     this.setPersistentMarker = function (player, name, value) {

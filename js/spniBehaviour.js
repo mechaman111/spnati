@@ -281,7 +281,7 @@ State.prototype.evaluateMarker = function (self, opp) {
         }
         
         if (this.marker.persistent) {
-            var curVal = save.getPersistentMarker(self, name);
+            var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
         } else {
             var curVal = parseInt(self.markers[name], 10) || 0;
         }
@@ -293,7 +293,7 @@ State.prototype.evaluateMarker = function (self, opp) {
         }
         
         if (this.marker.persistent) {
-            var curVal = save.getPersistentMarker(self, name);
+            var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
         } else {
             var curVal = parseInt(self.markers[name], 10) || 0;
         }
