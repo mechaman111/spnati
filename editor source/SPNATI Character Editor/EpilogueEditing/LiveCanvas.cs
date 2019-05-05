@@ -454,8 +454,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			for (int i = objects.Count - 1; i >= 0; i--)
 			{
 				LiveSprite obj = objects[i];
-				if (!obj.IsVisible || obj.Hidden || obj.Alpha == 0) { continue; }
-
+				if (!obj.IsVisible || obj.Hidden || obj.Alpha == 0 || obj.HiddenByMarker(_ignoreMarkers ? null : _markers)) { continue; }
+				
 				//transform point to local space
 				PointF localPt = obj.ToLocalPt(x, y, SceneTransform);
 				if (localPt.X >= 0 && localPt.X <= obj.Width &&

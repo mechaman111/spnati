@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using Desktop.CommonControls.PropertyControls;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace SPNATI_Character_Editor.Analyzers
@@ -119,6 +120,138 @@ namespace SPNATI_Character_Editor.Analyzers
 							//Consider any directive that doesn't come from the old-school conversion to be animated
 							return true;
 						}
+					}
+				}
+			}
+			return false;
+		}
+	}
+
+	public class EndingMarkerUnlockAnalyzer : BooleanAnalyzer
+	{
+		public override string Key
+		{
+			get { return "EpiloguesMarkerUnlock"; }
+		}
+
+		public override string Name
+		{
+			get { return "Unlocked by Markers"; }
+		}
+
+		public override string FullName
+		{
+			get { return "Epilogue - (Unlocked by Markers)"; }
+		}
+
+		public override string ParentKey
+		{
+			get { return "Epilogues"; }
+		}
+
+		public override bool GetValue(Character character)
+		{
+			foreach (Epilogue ending in character.Endings)
+			{
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingAllMarkers) ||
+					!string.IsNullOrEmpty(ending.AlsoPlayingAnyMarkers) ||
+					!string.IsNullOrEmpty(ending.AlsoPlayingNotMarkers) ||
+					!string.IsNullOrEmpty(ending.AllMarkers) ||
+					!string.IsNullOrEmpty(ending.AnyMarkers) ||
+					!string.IsNullOrEmpty(ending.NotMarkers))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+
+	public class EndingStartingLayerUnlockAnalyzer : BooleanAnalyzer
+	{
+		public override string Key
+		{
+			get { return "EpiloguesStartingLayersUnlock"; }
+		}
+
+		public override string Name
+		{
+			get { return "Unlocked w/ Starting Layers"; }
+		}
+
+		public override string FullName
+		{
+			get { return "Epilogue - (Unlocked w/ Starting Layers)"; }
+		}
+
+		public override string ParentKey
+		{
+			get { return "Epilogues"; }
+		}
+
+		public override bool GetValue(Character character)
+		{
+			foreach (Epilogue ending in character.Endings)
+			{
+				if (!string.IsNullOrEmpty(ending.PlayerStartingLayers))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+
+	public class EndingAlsoPlayingAnalyzer : IDataAnalyzer
+	{
+		public string Key
+		{
+			get { return "EndingAlsoPlaying"; }
+		}
+
+		public string Name
+		{
+			get { return "Also Playing"; }
+		}
+
+		public string FullName
+		{
+			get { return "Epilogue - Also Playing"; }
+		}
+
+		public string ParentKey
+		{
+			get { return "Epilogues"; }
+		}
+
+		public string[] GetValues()
+		{
+			List<string> options = new List<string>();
+			foreach (Character c in CharacterDatabase.Characters)
+			{
+				if (c.FolderName == "human")
+				{
+					continue;
+				}
+				options.Add(c.FolderName);
+			}
+			return options.ToArray();
+		}
+
+		public Type GetValueType()
+		{
+			return typeof(string);
+		}
+
+		public bool MeetsCriteria(Character character, string op, string value)
+		{
+			foreach (Epilogue ending in character.Endings)
+			{
+				if (!string.IsNullOrEmpty(ending.AlsoPlaying))
+				{
+					if (StringOperations.Matches(ending.AlsoPlaying, op, value))
+					{
+						return true;
 					}
 				}
 			}

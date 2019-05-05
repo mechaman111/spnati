@@ -37,19 +37,11 @@
 			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.label3 = new System.Windows.Forms.Label();
 			this.pnlEdit = new System.Windows.Forms.Panel();
-			this.grpExamples = new System.Windows.Forms.GroupBox();
-			this.label6 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.gridExample1 = new System.Windows.Forms.DataGridView();
-			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.label4 = new System.Windows.Forms.Label();
-			this.grpResults = new System.Windows.Forms.GroupBox();
-			this.lstResults = new System.Windows.Forms.ListBox();
-			this.lblError = new System.Windows.Forms.Label();
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.cmdAdd = new System.Windows.Forms.Button();
+			this.label4 = new System.Windows.Forms.Label();
+			this.tree = new Desktop.CommonControls.DBTreeView();
+			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.gridCriteria = new System.Windows.Forms.DataGridView();
 			this.ColIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColData = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,17 +54,10 @@
 			this.radCustom = new System.Windows.Forms.RadioButton();
 			this.radOr = new System.Windows.Forms.RadioButton();
 			this.radAnd = new System.Windows.Forms.RadioButton();
-			this.tree = new Desktop.CommonControls.DBTreeView();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.gridExample2 = new System.Windows.Forms.DataGridView();
-			this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.label7 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.grpResults = new System.Windows.Forms.GroupBox();
+			this.lstResults = new System.Windows.Forms.ListBox();
+			this.lblError = new System.Windows.Forms.Label();
+			this.grpExamples = new System.Windows.Forms.GroupBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
 			this.gridExample3 = new System.Windows.Forms.DataGridView();
@@ -80,16 +65,31 @@
 			this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.label8 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.gridExample2 = new System.Windows.Forms.DataGridView();
+			this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.gridExample1 = new System.Windows.Forms.DataGridView();
+			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.label11 = new System.Windows.Forms.Label();
+			this.label12 = new System.Windows.Forms.Label();
+			this.gridExample4 = new System.Windows.Forms.DataGridView();
+			this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.pnlStart.SuspendLayout();
 			this.pnlLoad.SuspendLayout();
 			this.pnlEdit.SuspendLayout();
-			this.grpExamples.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.gridExample1)).BeginInit();
-			this.grpResults.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.gridCriteria)).BeginInit();
-			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picHelp)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridExample2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -98,7 +98,15 @@
 			this.splitContainer2.Panel1.SuspendLayout();
 			this.splitContainer2.Panel2.SuspendLayout();
 			this.splitContainer2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.gridCriteria)).BeginInit();
+			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picHelp)).BeginInit();
+			this.grpResults.SuspendLayout();
+			this.grpExamples.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridExample3)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridExample2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridExample1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridExample4)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// cmdLoad
@@ -189,142 +197,24 @@
 			this.pnlEdit.TabIndex = 5;
 			this.pnlEdit.Visible = false;
 			// 
-			// grpExamples
+			// splitContainer1
 			// 
-			this.grpExamples.Controls.Add(this.label9);
-			this.grpExamples.Controls.Add(this.label10);
-			this.grpExamples.Controls.Add(this.gridExample3);
-			this.grpExamples.Controls.Add(this.label8);
-			this.grpExamples.Controls.Add(this.label7);
-			this.grpExamples.Controls.Add(this.gridExample2);
-			this.grpExamples.Controls.Add(this.label6);
-			this.grpExamples.Controls.Add(this.label5);
-			this.grpExamples.Controls.Add(this.gridExample1);
-			this.grpExamples.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.grpExamples.Location = new System.Drawing.Point(0, 0);
-			this.grpExamples.Name = "grpExamples";
-			this.grpExamples.Size = new System.Drawing.Size(345, 615);
-			this.grpExamples.TabIndex = 9;
-			this.grpExamples.TabStop = false;
-			this.grpExamples.Text = "Examples";
+			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer1.Name = "splitContainer1";
 			// 
-			// label6
+			// splitContainer1.Panel1
 			// 
-			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.label6.Location = new System.Drawing.Point(6, 120);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(333, 31);
-			this.label6.TabIndex = 9;
-			this.label6.Text = "Match characters that have the tag \"shy\" and also have the tag \"shaved.\"";
+			this.splitContainer1.Panel1.Controls.Add(this.cmdAdd);
+			this.splitContainer1.Panel1.Controls.Add(this.label4);
+			this.splitContainer1.Panel1.Controls.Add(this.tree);
 			// 
-			// label5
+			// splitContainer1.Panel2
 			// 
-			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(309, 15);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(30, 13);
-			this.label5.TabIndex = 8;
-			this.label5.Text = "AND";
-			// 
-			// gridExample1
-			// 
-			this.gridExample1.AllowUserToAddRows = false;
-			this.gridExample1.AllowUserToDeleteRows = false;
-			this.gridExample1.AllowUserToResizeRows = false;
-			this.gridExample1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridExample1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridExample1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewComboBoxColumn1,
-            this.dataGridViewTextBoxColumn3});
-			this.gridExample1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-			this.gridExample1.Enabled = false;
-			this.gridExample1.Location = new System.Drawing.Point(6, 31);
-			this.gridExample1.MultiSelect = false;
-			this.gridExample1.Name = "gridExample1";
-			this.gridExample1.RowHeadersVisible = false;
-			this.gridExample1.Size = new System.Drawing.Size(333, 86);
-			this.gridExample1.TabIndex = 7;
-			// 
-			// dataGridViewTextBoxColumn1
-			// 
-			this.dataGridViewTextBoxColumn1.HeaderText = "#";
-			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-			this.dataGridViewTextBoxColumn1.ReadOnly = true;
-			this.dataGridViewTextBoxColumn1.Width = 21;
-			// 
-			// dataGridViewTextBoxColumn2
-			// 
-			this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.dataGridViewTextBoxColumn2.HeaderText = "Property";
-			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-			this.dataGridViewTextBoxColumn2.ReadOnly = true;
-			this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			// 
-			// dataGridViewComboBoxColumn1
-			// 
-			this.dataGridViewComboBoxColumn1.HeaderText = "Operator";
-			this.dataGridViewComboBoxColumn1.Name = "dataGridViewComboBoxColumn1";
-			this.dataGridViewComboBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.dataGridViewComboBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.dataGridViewComboBoxColumn1.Width = 80;
-			// 
-			// dataGridViewTextBoxColumn3
-			// 
-			this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.dataGridViewTextBoxColumn3.HeaderText = "Value";
-			this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-			this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(3, 9);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(62, 13);
-			this.label4.TabIndex = 8;
-			this.label4.Text = "Data Points";
-			// 
-			// grpResults
-			// 
-			this.grpResults.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.grpResults.Controls.Add(this.lstResults);
-			this.grpResults.Controls.Add(this.lblError);
-			this.grpResults.Location = new System.Drawing.Point(3, 201);
-			this.grpResults.Name = "grpResults";
-			this.grpResults.Size = new System.Drawing.Size(546, 414);
-			this.grpResults.TabIndex = 7;
-			this.grpResults.TabStop = false;
-			this.grpResults.Text = "Results";
-			// 
-			// lstResults
-			// 
-			this.lstResults.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.lstResults.FormattingEnabled = true;
-			this.lstResults.Location = new System.Drawing.Point(6, 19);
-			this.lstResults.Name = "lstResults";
-			this.lstResults.Size = new System.Drawing.Size(182, 381);
-			this.lstResults.TabIndex = 4;
-			this.lstResults.DoubleClick += new System.EventHandler(this.lstResults_DoubleClick);
-			// 
-			// lblError
-			// 
-			this.lblError.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblError.ForeColor = System.Drawing.Color.DarkRed;
-			this.lblError.Location = new System.Drawing.Point(194, 19);
-			this.lblError.Name = "lblError";
-			this.lblError.Size = new System.Drawing.Size(346, 119);
-			this.lblError.TabIndex = 6;
-			this.lblError.Text = "Error message";
-			this.lblError.Visible = false;
+			this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+			this.splitContainer1.Size = new System.Drawing.Size(1169, 615);
+			this.splitContainer1.SplitterDistance = 264;
+			this.splitContainer1.TabIndex = 7;
 			// 
 			// cmdAdd
 			// 
@@ -338,6 +228,46 @@
 			this.toolTip1.SetToolTip(this.cmdAdd, "Add selected criteria");
 			this.cmdAdd.UseVisualStyleBackColor = true;
 			this.cmdAdd.Click += new System.EventHandler(this.cmdAdd_Click);
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(3, 9);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(62, 13);
+			this.label4.TabIndex = 8;
+			this.label4.Text = "Data Points";
+			// 
+			// tree
+			// 
+			this.tree.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tree.Location = new System.Drawing.Point(6, 27);
+			this.tree.Name = "tree";
+			this.tree.Size = new System.Drawing.Size(224, 585);
+			this.tree.TabIndex = 0;
+			this.tree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterSelect);
+			this.tree.DoubleClick += new System.EventHandler(this.tree_DoubleClick);
+			// 
+			// splitContainer2
+			// 
+			this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer2.Name = "splitContainer2";
+			// 
+			// splitContainer2.Panel1
+			// 
+			this.splitContainer2.Panel1.Controls.Add(this.gridCriteria);
+			this.splitContainer2.Panel1.Controls.Add(this.groupBox1);
+			this.splitContainer2.Panel1.Controls.Add(this.grpResults);
+			// 
+			// splitContainer2.Panel2
+			// 
+			this.splitContainer2.Panel2.Controls.Add(this.grpExamples);
+			this.splitContainer2.Size = new System.Drawing.Size(901, 615);
+			this.splitContainer2.SplitterDistance = 552;
+			this.splitContainer2.TabIndex = 0;
 			// 
 			// gridCriteria
 			// 
@@ -472,127 +402,64 @@
 			this.radAnd.UseVisualStyleBackColor = true;
 			this.radAnd.CheckedChanged += new System.EventHandler(this.radAnd_CheckedChanged);
 			// 
-			// tree
+			// grpResults
 			// 
-			this.tree.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.grpResults.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tree.Location = new System.Drawing.Point(6, 27);
-			this.tree.Name = "tree";
-			this.tree.Size = new System.Drawing.Size(224, 585);
-			this.tree.TabIndex = 0;
-			this.tree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterSelect);
-			this.tree.DoubleClick += new System.EventHandler(this.tree_DoubleClick);
+			this.grpResults.Controls.Add(this.lstResults);
+			this.grpResults.Controls.Add(this.lblError);
+			this.grpResults.Location = new System.Drawing.Point(3, 201);
+			this.grpResults.Name = "grpResults";
+			this.grpResults.Size = new System.Drawing.Size(546, 414);
+			this.grpResults.TabIndex = 7;
+			this.grpResults.TabStop = false;
+			this.grpResults.Text = "Results";
 			// 
-			// gridExample2
+			// lstResults
 			// 
-			this.gridExample2.AllowUserToAddRows = false;
-			this.gridExample2.AllowUserToDeleteRows = false;
-			this.gridExample2.AllowUserToResizeRows = false;
-			this.gridExample2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.lstResults.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.lstResults.FormattingEnabled = true;
+			this.lstResults.Location = new System.Drawing.Point(6, 19);
+			this.lstResults.Name = "lstResults";
+			this.lstResults.Size = new System.Drawing.Size(182, 381);
+			this.lstResults.TabIndex = 4;
+			this.lstResults.DoubleClick += new System.EventHandler(this.lstResults_DoubleClick);
+			// 
+			// lblError
+			// 
+			this.lblError.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridExample2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridExample2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn6,
-            this.dataGridViewTextBoxColumn7});
-			this.gridExample2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-			this.gridExample2.Enabled = false;
-			this.gridExample2.Location = new System.Drawing.Point(6, 172);
-			this.gridExample2.MultiSelect = false;
-			this.gridExample2.Name = "gridExample2";
-			this.gridExample2.RowHeadersVisible = false;
-			this.gridExample2.Size = new System.Drawing.Size(333, 86);
-			this.gridExample2.TabIndex = 10;
+			this.lblError.ForeColor = System.Drawing.Color.DarkRed;
+			this.lblError.Location = new System.Drawing.Point(194, 19);
+			this.lblError.Name = "lblError";
+			this.lblError.Size = new System.Drawing.Size(346, 119);
+			this.lblError.TabIndex = 6;
+			this.lblError.Text = "Error message";
+			this.lblError.Visible = false;
 			// 
-			// dataGridViewTextBoxColumn4
+			// grpExamples
 			// 
-			this.dataGridViewTextBoxColumn4.HeaderText = "#";
-			this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-			this.dataGridViewTextBoxColumn4.ReadOnly = true;
-			this.dataGridViewTextBoxColumn4.Width = 21;
-			// 
-			// dataGridViewTextBoxColumn5
-			// 
-			this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.dataGridViewTextBoxColumn5.HeaderText = "Property";
-			this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-			this.dataGridViewTextBoxColumn5.ReadOnly = true;
-			this.dataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			// 
-			// dataGridViewTextBoxColumn6
-			// 
-			this.dataGridViewTextBoxColumn6.HeaderText = "Operator";
-			this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-			this.dataGridViewTextBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.dataGridViewTextBoxColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.dataGridViewTextBoxColumn6.Width = 80;
-			// 
-			// dataGridViewTextBoxColumn7
-			// 
-			this.dataGridViewTextBoxColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.dataGridViewTextBoxColumn7.HeaderText = "Value";
-			this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-			this.dataGridViewTextBoxColumn7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			// 
-			// label7
-			// 
-			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(309, 156);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(30, 13);
-			this.label7.TabIndex = 11;
-			this.label7.Text = "AND";
-			// 
-			// label8
-			// 
-			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.label8.Location = new System.Drawing.Point(6, 264);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(333, 31);
-			this.label8.TabIndex = 12;
-			this.label8.Text = "Match characters that are female and have more than 1 epilogue.";
-			// 
-			// splitContainer1
-			// 
-			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer1.Name = "splitContainer1";
-			// 
-			// splitContainer1.Panel1
-			// 
-			this.splitContainer1.Panel1.Controls.Add(this.cmdAdd);
-			this.splitContainer1.Panel1.Controls.Add(this.label4);
-			this.splitContainer1.Panel1.Controls.Add(this.tree);
-			// 
-			// splitContainer1.Panel2
-			// 
-			this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-			this.splitContainer1.Size = new System.Drawing.Size(1169, 615);
-			this.splitContainer1.SplitterDistance = 264;
-			this.splitContainer1.TabIndex = 7;
-			// 
-			// splitContainer2
-			// 
-			this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer2.Name = "splitContainer2";
-			// 
-			// splitContainer2.Panel1
-			// 
-			this.splitContainer2.Panel1.Controls.Add(this.gridCriteria);
-			this.splitContainer2.Panel1.Controls.Add(this.groupBox1);
-			this.splitContainer2.Panel1.Controls.Add(this.grpResults);
-			// 
-			// splitContainer2.Panel2
-			// 
-			this.splitContainer2.Panel2.Controls.Add(this.grpExamples);
-			this.splitContainer2.Size = new System.Drawing.Size(901, 615);
-			this.splitContainer2.SplitterDistance = 552;
-			this.splitContainer2.TabIndex = 0;
+			this.grpExamples.Controls.Add(this.label11);
+			this.grpExamples.Controls.Add(this.label12);
+			this.grpExamples.Controls.Add(this.gridExample4);
+			this.grpExamples.Controls.Add(this.label9);
+			this.grpExamples.Controls.Add(this.label10);
+			this.grpExamples.Controls.Add(this.gridExample3);
+			this.grpExamples.Controls.Add(this.label8);
+			this.grpExamples.Controls.Add(this.label7);
+			this.grpExamples.Controls.Add(this.gridExample2);
+			this.grpExamples.Controls.Add(this.label6);
+			this.grpExamples.Controls.Add(this.label5);
+			this.grpExamples.Controls.Add(this.gridExample1);
+			this.grpExamples.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.grpExamples.Location = new System.Drawing.Point(0, 0);
+			this.grpExamples.Name = "grpExamples";
+			this.grpExamples.Size = new System.Drawing.Size(345, 615);
+			this.grpExamples.TabIndex = 9;
+			this.grpExamples.TabStop = false;
+			this.grpExamples.Text = "Examples";
 			// 
 			// label9
 			// 
@@ -667,6 +534,222 @@
 			this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
 			this.dataGridViewTextBoxColumn11.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
+			// label8
+			// 
+			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label8.Location = new System.Drawing.Point(6, 264);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(333, 31);
+			this.label8.TabIndex = 12;
+			this.label8.Text = "Match characters that are female and have more than 1 epilogue.";
+			// 
+			// label7
+			// 
+			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(309, 156);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(30, 13);
+			this.label7.TabIndex = 11;
+			this.label7.Text = "AND";
+			// 
+			// gridExample2
+			// 
+			this.gridExample2.AllowUserToAddRows = false;
+			this.gridExample2.AllowUserToDeleteRows = false;
+			this.gridExample2.AllowUserToResizeRows = false;
+			this.gridExample2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gridExample2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridExample2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn7});
+			this.gridExample2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+			this.gridExample2.Enabled = false;
+			this.gridExample2.Location = new System.Drawing.Point(6, 172);
+			this.gridExample2.MultiSelect = false;
+			this.gridExample2.Name = "gridExample2";
+			this.gridExample2.RowHeadersVisible = false;
+			this.gridExample2.Size = new System.Drawing.Size(333, 86);
+			this.gridExample2.TabIndex = 10;
+			// 
+			// dataGridViewTextBoxColumn4
+			// 
+			this.dataGridViewTextBoxColumn4.HeaderText = "#";
+			this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+			this.dataGridViewTextBoxColumn4.ReadOnly = true;
+			this.dataGridViewTextBoxColumn4.Width = 21;
+			// 
+			// dataGridViewTextBoxColumn5
+			// 
+			this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn5.HeaderText = "Property";
+			this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+			this.dataGridViewTextBoxColumn5.ReadOnly = true;
+			this.dataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// dataGridViewTextBoxColumn6
+			// 
+			this.dataGridViewTextBoxColumn6.HeaderText = "Operator";
+			this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+			this.dataGridViewTextBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.dataGridViewTextBoxColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.dataGridViewTextBoxColumn6.Width = 80;
+			// 
+			// dataGridViewTextBoxColumn7
+			// 
+			this.dataGridViewTextBoxColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn7.HeaderText = "Value";
+			this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+			this.dataGridViewTextBoxColumn7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// label6
+			// 
+			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label6.Location = new System.Drawing.Point(6, 120);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(333, 31);
+			this.label6.TabIndex = 9;
+			this.label6.Text = "Match characters that have the tag \"shy\" and also have the tag \"shaved.\"";
+			// 
+			// label5
+			// 
+			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(309, 15);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(30, 13);
+			this.label5.TabIndex = 8;
+			this.label5.Text = "AND";
+			// 
+			// gridExample1
+			// 
+			this.gridExample1.AllowUserToAddRows = false;
+			this.gridExample1.AllowUserToDeleteRows = false;
+			this.gridExample1.AllowUserToResizeRows = false;
+			this.gridExample1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gridExample1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridExample1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewComboBoxColumn1,
+            this.dataGridViewTextBoxColumn3});
+			this.gridExample1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+			this.gridExample1.Enabled = false;
+			this.gridExample1.Location = new System.Drawing.Point(6, 31);
+			this.gridExample1.MultiSelect = false;
+			this.gridExample1.Name = "gridExample1";
+			this.gridExample1.RowHeadersVisible = false;
+			this.gridExample1.Size = new System.Drawing.Size(333, 86);
+			this.gridExample1.TabIndex = 7;
+			// 
+			// dataGridViewTextBoxColumn1
+			// 
+			this.dataGridViewTextBoxColumn1.HeaderText = "#";
+			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+			this.dataGridViewTextBoxColumn1.ReadOnly = true;
+			this.dataGridViewTextBoxColumn1.Width = 21;
+			// 
+			// dataGridViewTextBoxColumn2
+			// 
+			this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn2.HeaderText = "Property";
+			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+			this.dataGridViewTextBoxColumn2.ReadOnly = true;
+			this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// dataGridViewComboBoxColumn1
+			// 
+			this.dataGridViewComboBoxColumn1.HeaderText = "Operator";
+			this.dataGridViewComboBoxColumn1.Name = "dataGridViewComboBoxColumn1";
+			this.dataGridViewComboBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.dataGridViewComboBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.dataGridViewComboBoxColumn1.Width = 80;
+			// 
+			// dataGridViewTextBoxColumn3
+			// 
+			this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn3.HeaderText = "Value";
+			this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+			this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// label11
+			// 
+			this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label11.Location = new System.Drawing.Point(6, 544);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(333, 31);
+			this.label11.TabIndex = 18;
+			this.label11.Text = "Match characters that do not have the \"shy\" tag.";
+			// 
+			// label12
+			// 
+			this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label12.AutoSize = true;
+			this.label12.Location = new System.Drawing.Point(257, 435);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(39, 13);
+			this.label12.TabIndex = 17;
+			this.label12.Text = "NOT 1";
+			// 
+			// gridExample4
+			// 
+			this.gridExample4.AllowUserToAddRows = false;
+			this.gridExample4.AllowUserToDeleteRows = false;
+			this.gridExample4.AllowUserToResizeRows = false;
+			this.gridExample4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gridExample4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridExample4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn12,
+            this.dataGridViewTextBoxColumn13,
+            this.dataGridViewTextBoxColumn14,
+            this.dataGridViewTextBoxColumn15});
+			this.gridExample4.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+			this.gridExample4.Enabled = false;
+			this.gridExample4.Location = new System.Drawing.Point(6, 449);
+			this.gridExample4.MultiSelect = false;
+			this.gridExample4.Name = "gridExample4";
+			this.gridExample4.RowHeadersVisible = false;
+			this.gridExample4.Size = new System.Drawing.Size(333, 92);
+			this.gridExample4.TabIndex = 16;
+			// 
+			// dataGridViewTextBoxColumn12
+			// 
+			this.dataGridViewTextBoxColumn12.HeaderText = "#";
+			this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+			this.dataGridViewTextBoxColumn12.ReadOnly = true;
+			this.dataGridViewTextBoxColumn12.Width = 21;
+			// 
+			// dataGridViewTextBoxColumn13
+			// 
+			this.dataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn13.HeaderText = "Property";
+			this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+			this.dataGridViewTextBoxColumn13.ReadOnly = true;
+			this.dataGridViewTextBoxColumn13.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// dataGridViewTextBoxColumn14
+			// 
+			this.dataGridViewTextBoxColumn14.HeaderText = "Operator";
+			this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+			this.dataGridViewTextBoxColumn14.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.dataGridViewTextBoxColumn14.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.dataGridViewTextBoxColumn14.Width = 80;
+			// 
+			// dataGridViewTextBoxColumn15
+			// 
+			this.dataGridViewTextBoxColumn15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn15.HeaderText = "Value";
+			this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+			this.dataGridViewTextBoxColumn15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
 			// DataAnalyzer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -681,15 +764,6 @@
 			this.pnlLoad.ResumeLayout(false);
 			this.pnlLoad.PerformLayout();
 			this.pnlEdit.ResumeLayout(false);
-			this.grpExamples.ResumeLayout(false);
-			this.grpExamples.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.gridExample1)).EndInit();
-			this.grpResults.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.gridCriteria)).EndInit();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picHelp)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridExample2)).EndInit();
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel1.PerformLayout();
 			this.splitContainer1.Panel2.ResumeLayout(false);
@@ -699,7 +773,17 @@
 			this.splitContainer2.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
 			this.splitContainer2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.gridCriteria)).EndInit();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picHelp)).EndInit();
+			this.grpResults.ResumeLayout(false);
+			this.grpExamples.ResumeLayout(false);
+			this.grpExamples.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridExample3)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridExample2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridExample1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridExample4)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -757,5 +841,12 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.DataGridView gridExample4;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
 	}
 }

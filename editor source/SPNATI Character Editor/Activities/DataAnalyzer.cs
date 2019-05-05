@@ -38,6 +38,8 @@ namespace SPNATI_Character_Editor.Activities
 			gridExample3.Rows.Add(new object[] { "1", "Intelligence", "==", "good" });
 			gridExample3.Rows.Add(new object[] { "2", "Wardrobe - Layer Count", ">=", "6" });
 			gridExample3.Rows.Add(new object[] { "3", "Targeted Line Count", ">=", "50" });
+
+			gridExample1.Rows.Add(new object[] { "1", "Tags", "==", "shy" });
 		}
 
 		private void cmdLoad_Click(object sender, System.EventArgs e)

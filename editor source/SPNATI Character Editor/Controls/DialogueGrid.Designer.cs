@@ -43,6 +43,7 @@
 			this.ColSize = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColDirection = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColMarkerOptions = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.ColTrophy = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
@@ -72,6 +73,7 @@
             this.ColSize,
             this.ColDirection,
             this.ColLocation,
+			this.ColMarkerOptions,
             this.ColTrophy,
             this.ColDelete});
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -165,7 +167,8 @@
             "",
             "bad",
             "average",
-            "good"});
+            "good",
+            "best"});
 			this.ColIntelligence.Name = "ColIntelligence";
 			this.ColIntelligence.Visible = false;
 			this.ColIntelligence.Width = 80;
@@ -202,6 +205,12 @@
 			this.ColLocation.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ColLocation.Visible = false;
 			this.ColLocation.Width = 60;
+			// 
+			// ColMarkerOptions
+			// 
+			this.ColMarkerOptions.HeaderText = "";
+			this.ColMarkerOptions.Name = "ColMarkerOptions";
+			this.ColMarkerOptions.Width = 21;
 			// 
 			// ColTrophy
 			// 
@@ -243,6 +252,7 @@
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColSize;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColDirection;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColLocation;
+		private System.Windows.Forms.DataGridViewButtonColumn ColMarkerOptions;
 		private System.Windows.Forms.DataGridViewButtonColumn ColTrophy;
 		private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
 	}
