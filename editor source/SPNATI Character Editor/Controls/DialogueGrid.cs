@@ -16,6 +16,8 @@ namespace SPNATI_Character_Editor.Controls
 		private ImageLibrary _imageLibrary;
 		private bool _populatingCase;
 		private int _selectedRow;
+		private MarkerOptions _markerCtl;
+		private ToolStripDropDown _markerDropDown;
 
 		#region Events
 		public new event EventHandler<KeyEventArgs> KeyDown;
@@ -58,7 +60,14 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			InitializeComponent();
 
-			ColPerTarget.FalseValue = false;
+			Control ctl = _markerCtl = new MarkerOptions();
+			_markerDropDown = new ToolStripDropDown();
+			ToolStripControlHost host = new ToolStripControlHost(ctl);
+			host.Margin = new Padding(0);
+			_markerDropDown.Padding = new Padding(0);
+			_markerDropDown.Items.Add(host);
+			_markerDropDown.Closing += _markerDropDown_Closing;
+
 			ColImage.ValueType = typeof(CharacterImage);
 
 			_intellisense = new IntellisenseControl();
@@ -101,7 +110,7 @@ namespace SPNATI_Character_Editor.Controls
 			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger ? _character.StartingLines : _selectedCase.Lines);
 			foreach (DialogueLine line in lines)
 			{
-				AddLineToDialogueGrid(line);
+				AddLineToDialogueGrid(line, null);
 			}
 			if (lines.Count > 0)
 				SelectRow(0);
@@ -141,16 +150,19 @@ namespace SPNATI_Character_Editor.Controls
 		private DialogueLine ReadLineFromDialogueGrid(int rowIndex)
 		{
 			DataGridViewRow row = gridDialogue.Rows[rowIndex];
+			DialogueLine taggedLine = row.Tag as DialogueLine ?? new DialogueLine();
 			CharacterImage pose = row.Cells["ColImage"].Value as CharacterImage;
 			string image = pose?.Name;
 			string text = row.Cells["ColText"].Value?.ToString();
-			string marker = row.Cells["ColMarker"].Value?.ToString();
+			string markerValue;
+			bool perTarget;
+			string marker = Marker.ExtractPieces(taggedLine.Marker, out markerValue, out perTarget);
+			marker = row.Cells["ColMarker"].Value?.ToString();
 			if (string.IsNullOrEmpty(marker))
 			{
 				marker = null;
 			}
-			string markerValue = row.Cells["ColMarkerValue"].Value?.ToString();
-			bool perTarget = (bool)(row.Cells["ColPerTarget"].Value ?? false);
+
 			string direction = row.Cells["ColDirection"].Value?.ToString();
 			string location = row.Cells["ColLocation"].Value?.ToString();
 
@@ -165,6 +177,8 @@ namespace SPNATI_Character_Editor.Controls
 				image = DialogueLine.GetDefaultImage(image);
 			}
 			DialogueLine line = new DialogueLine(image, text);
+
+			line.IsMarkerPersistent = taggedLine.IsMarkerPersistent;
 
 			if (perTarget)
 			{
@@ -392,9 +406,8 @@ namespace SPNATI_Character_Editor.Controls
 					if (e.RowIndex >= 0)
 					{
 						DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
-						DataGridViewCell cell = row.Cells[e.ColumnIndex];
-						Tuple<string, string> data = cell.Tag as Tuple<string, string>;
-						if (data != null && !string.IsNullOrEmpty(data.Item1))
+						DialogueLine line = row.Tag as DialogueLine;
+						if (line != null && line.HasAdvancedMarker)
 						{
 							img = Properties.Resources.BookmarkFilled;
 						}
@@ -487,6 +500,7 @@ namespace SPNATI_Character_Editor.Controls
 		private void gridDialogue_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
 		{
 			DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
+			row.Tag = new DialogueLine();
 			row.Cells["ColDelete"].ToolTipText = "Delete line";
 			row.Cells["ColTrophy"].ToolTipText = "Unlock collectible";
 			row.Cells[nameof(ColMarkerOptions)].ToolTipText = "Advanced marker options";
@@ -507,6 +521,23 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				ShowTrophyForm(e.RowIndex);
 			}
+			else if (col == ColMarkerOptions)
+			{
+				DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
+				DialogueLine line = ReadLineFromDialogueGrid(e.RowIndex);
+				_markerCtl.SetData(e.RowIndex, line);
+
+				Point pt = gridDialogue.PointToScreen(gridDialogue.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false).Location);
+				Point screen = gridDialogue.PointToScreen(new Point(0, 0));
+				_markerDropDown.Show(this, new Point(pt.X - screen.X + ColMarkerOptions.Width, pt.Y - screen.Y + row.Height));
+			}
+		}
+
+		private void _markerDropDown_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+		{
+			DataGridViewRow row = gridDialogue.Rows[_markerCtl.RowIndex];
+			AddLineToDialogueGrid(_markerCtl.GetLine(), row);
+			_markerCtl.GetLine();
 		}
 
 		public bool IsEmpty
@@ -577,7 +608,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			foreach (var line in lines)
 			{
-				AddLineToDialogueGrid(line);
+				AddLineToDialogueGrid(line, null);
 			}
 		}
 
@@ -585,7 +616,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// Adds a row to the dialogue grid
 		/// </summary>
 		/// <param name="line">Line to populate the row with</param>
-		private void AddLineToDialogueGrid(DialogueLine line)
+		private void AddLineToDialogueGrid(DialogueLine line, DataGridViewRow row)
 		{
 			string imageKey = line.Image;
 			if (!line.IsGenericImage && _selectedCase.Stages.Count > 0)
@@ -595,7 +626,10 @@ namespace SPNATI_Character_Editor.Controls
 					stage = _selectedStage.Id;
 				imageKey = DialogueLine.GetStageImage(stage, imageKey);
 			}
-			DataGridViewRow row = gridDialogue.Rows[gridDialogue.Rows.Add()];
+			if (row == null)
+			{
+				row = gridDialogue.Rows[gridDialogue.Rows.Add()];
+			}
 			row.Tag = line;
 			DataGridViewComboBoxCell imageCell = row.Cells["ColImage"] as DataGridViewComboBoxCell;
 			SetImage(imageCell, imageKey);
@@ -603,14 +637,10 @@ namespace SPNATI_Character_Editor.Controls
 			textCell.Value = line.Text;
 
 			DataGridViewCell markerCell = row.Cells["ColMarker"];
-			DataGridViewCell markerValueCell = row.Cells["ColMarkerValue"];
-			DataGridViewCheckBoxCell perTargetCell = row.Cells["ColPerTarget"] as DataGridViewCheckBoxCell;
 			string marker, markerValue;
 			bool perTarget;
 			marker = Marker.ExtractPieces(line.Marker, out markerValue, out perTarget);
 			markerCell.Value = marker;
-			markerValueCell.Value = markerValue;
-			perTargetCell.Value = perTarget;
 
 			DataGridViewCell directionCell = row.Cells["ColDirection"];
 			directionCell.Value = line.Direction;
@@ -625,6 +655,7 @@ namespace SPNATI_Character_Editor.Controls
 
 			row.Cells[nameof(ColWeight)].Value = line.Weight;
 			row.Cells[nameof(ColTrophy)].Tag = new Tuple<string, string>(line.CollectibleId, line.CollectibleValue);
+
 		}
 
 		/// <summary>
@@ -812,7 +843,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (gridDialogue.SelectedCells.Count == 0) { return; }
 
 			DataGridViewColumn column = gridDialogue.SelectedCells[0].OwningColumn;
-			if (column == ColText || column == ColMarkerValue)
+			if (column == ColText)
 			{
 				_editBox = e.Control as TextBox;
 				_intellisense.SetContext(_editBox, _character, _selectedCase);

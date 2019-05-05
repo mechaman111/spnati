@@ -92,6 +92,10 @@ namespace SPNATI_Character_Editor.Activities
 					}
 					else
 					{
+						if (!File.Exists(Path.Combine(path, "behaviour.xml")))
+						{
+							return;
+						}
 						Character character = Serialization.ImportCharacter(path);
 						if (character != null)
 						{
