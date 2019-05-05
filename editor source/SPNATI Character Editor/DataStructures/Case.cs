@@ -2069,6 +2069,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("cmp")]
 		public string Operator;
 
+		[DefaultValue("")]
 		[XmlAttribute("value")]
 		public string Value;
 

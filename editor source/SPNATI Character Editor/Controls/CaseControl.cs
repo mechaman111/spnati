@@ -331,11 +331,12 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				tableConditions.AddSpeedButton("Self", "Cards Exchanged", (data) => { return AddVariableTest("~cards~", data); });
 			}
-			tableConditions.AddSpeedButton("Self", "Costume", (data) => { return AddVariableTest("~self.costume~", data); });
-			tableConditions.AddSpeedButton("Self", "Slot", (data) => { return AddVariableTest("~self.slot~", data); });
-			tableConditions.AddSpeedButton("Self", "Tag", (data) => { return AddVariableTest("~self.tag.*~", data); });
 			tableConditions.AddSpeedButton("Self", "Collectible", (data) => { return AddVariableTest("~collectible.*~", data); });
 			tableConditions.AddSpeedButton("Self", "Collectible (Counter)", (data) => { return AddVariableTest("~collectible.*.counter~", data); });
+			tableConditions.AddSpeedButton("Self", "Costume", (data) => { return AddVariableTest("~self.costume~", data); });
+			tableConditions.AddSpeedButton("Self", "Marker (Persistent) (+)", (data) => { return AddVariableTest("~persistent.*~", data); });
+			tableConditions.AddSpeedButton("Self", "Slot", (data) => { return AddVariableTest("~self.slot~", data); });
+			tableConditions.AddSpeedButton("Self", "Tag", (data) => { return AddVariableTest("~self.tag.*~", data); });
 			if (caseTrigger.HasTarget)
 			{
 				if (caseTrigger.AvailableVariables.Contains("clothing"))
@@ -343,21 +344,23 @@ namespace SPNATI_Character_Editor.Controls
 					tableConditions.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
 					tableConditions.AddSpeedButton("Clothing", "Clothing Type", (data) => { return AddVariableTest("~clothing.type~", data); });
 				}
+				tableConditions.AddSpeedButton("Target", "Collectible (+)", (data) => { return AddVariableTest("~target.collectible.*~", data); });
+				tableConditions.AddSpeedButton("Target", "Collectible (Counter) (+)", (data) => { return AddVariableTest("~target.collectible.*.counter~", data); });
 				tableConditions.AddSpeedButton("Target", "Costume", (data) => { return AddVariableTest("~target.costume~", data); });
 				tableConditions.AddSpeedButton("Target", "Gender", (data) => { return AddVariableTest("~target.gender~", data); });
+				tableConditions.AddSpeedButton("Target", "Marker (Persistent) (+)", (data) => { return AddVariableTest("~target.persistent.*~", data); });
 				tableConditions.AddSpeedButton("Target", "Position", (data) => { return AddVariableTest("~target.position~", data); });
 				tableConditions.AddSpeedButton("Target", "Size", (data) => { return AddVariableTest("~target.size~", data); });
 				tableConditions.AddSpeedButton("Target", "Slot", (data) => { return AddVariableTest("~target.slot~", data); });
 				tableConditions.AddSpeedButton("Target", "Tag (+)", (data) => { return AddVariableTest("~target.tag.*~", data); });
-				tableConditions.AddSpeedButton("Target", "Collectible (+)", (data) => { return AddVariableTest("~target.collectible.*~", data); });
-				tableConditions.AddSpeedButton("Target", "Collectible (Counter) (+)", (data) => { return AddVariableTest("~target.collectible.*.counter~", data); });
 			}
+			tableConditions.AddSpeedButton("Also Playing", "Collectible (+)", (data) => { return AddVariableTest("~_.collectible.*~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Collectible (Counter) (+)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Marker (Persistent) (+)", (data) => { return AddVariableTest("~_.persistent.*~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Position", (data) => { return AddVariableTest("~_.position~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Slot", (data) => { return AddVariableTest("~_.slot~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Tag (+)", (data) => { return AddVariableTest("~_.tag.*~", data); });
-			tableConditions.AddSpeedButton("Also Playing", "Collectible (+)", (data) => { return AddVariableTest("~_.collectible.*~", data); });
-			tableConditions.AddSpeedButton("Also Playing", "Collectible (Counter) (+)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
 		}
 
 		private string AddVariableTest(string variable, object data)

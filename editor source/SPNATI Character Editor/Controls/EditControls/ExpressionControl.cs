@@ -108,7 +108,7 @@ namespace SPNATI_Character_Editor
 				FillInCharacter();
 			}
 
-			UpdateAutoComplete(true);	
+			UpdateAutoComplete(true);
 		}
 
 		public override void OnAddedToRow()
@@ -210,13 +210,25 @@ namespace SPNATI_Character_Editor
 						_subcontrol = new CharacterCollectibleControl();
 					}
 				}
-				if (variable.StartsWith("~self.tag.") || variable.StartsWith("~target.tag."))
+				else if (variable.StartsWith("~self.tag.") || variable.StartsWith("~target.tag."))
 				{
 					_subcontrol = new TagControl();
 				}
 				else if (variable.Contains(".tag."))
 				{
 					_subcontrol = new CharacterTagControl();
+				}
+				else if (variable.StartsWith("~persistent"))
+				{
+					_subcontrol = new PersistentMarkerControl();
+				}
+				else if (variable.StartsWith("~target.persistent."))
+				{
+					_subcontrol = new PersistentMarkerControl();
+				}
+				else if (variable.Contains(".persistent."))
+				{
+					_subcontrol = new CharacterPersistentMarkerControl();
 				}
 
 				if (_subcontrol != null)
