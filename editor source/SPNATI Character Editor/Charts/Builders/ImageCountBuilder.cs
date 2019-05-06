@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor.Charts.Builders
 {
@@ -10,7 +7,6 @@ namespace SPNATI_Character_Editor.Charts.Builders
 	public class ImageCountBuilder : IChartDataBuilder
 	{
 		private List<Tuple<Character, int>> _data;
-		private Regex _regex = new Regex(@"^[0-9]*-");
 
 		public string GetLabel()
 		{

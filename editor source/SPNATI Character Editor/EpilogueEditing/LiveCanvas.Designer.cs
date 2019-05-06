@@ -30,17 +30,19 @@
 		{
 			this.canvas = new Desktop.CommonControls.SelectablePanel();
 			this.canvasStrip = new System.Windows.Forms.ToolStrip();
-			this.tsZoom = new System.Windows.Forms.ToolStripLabel();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.cmdMarkers = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.tsRight = new System.Windows.Forms.ToolStrip();
-			this.tsHelp = new System.Windows.Forms.ToolStripButton();
 			this.cmdFit = new System.Windows.Forms.ToolStripButton();
 			this.tsZoomOut = new System.Windows.Forms.ToolStripButton();
 			this.tsZoomIn = new System.Windows.Forms.ToolStripButton();
-			this.tsRecord = new System.Windows.Forms.ToolStripButton();
+			this.tsZoom = new System.Windows.Forms.ToolStripLabel();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.cmdMarkers = new System.Windows.Forms.ToolStripButton();
 			this.tsFilter = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsRecord = new System.Windows.Forms.ToolStripButton();
+			this.tsRight = new System.Windows.Forms.ToolStrip();
+			this.tsHelp = new System.Windows.Forms.ToolStripButton();
+			this.tsBackColor = new System.Windows.Forms.ToolStripButton();
+			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.canvasStrip.SuspendLayout();
 			this.tsRight.SuspendLayout();
 			this.SuspendLayout();
@@ -79,60 +81,8 @@
             this.tsRecord});
 			this.canvasStrip.Location = new System.Drawing.Point(0, 0);
 			this.canvasStrip.Name = "canvasStrip";
-			this.canvasStrip.Size = new System.Drawing.Size(238, 25);
+			this.canvasStrip.Size = new System.Drawing.Size(207, 25);
 			this.canvasStrip.TabIndex = 19;
-			// 
-			// tsZoom
-			// 
-			this.tsZoom.Font = new System.Drawing.Font("Segoe UI", 7F);
-			this.tsZoom.Name = "tsZoom";
-			this.tsZoom.Size = new System.Drawing.Size(15, 22);
-			this.tsZoom.Text = "1x";
-			this.tsZoom.Click += new System.EventHandler(this.tsZoom_Click);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// cmdMarkers
-			// 
-			this.cmdMarkers.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.cmdMarkers.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.cmdMarkers.Name = "cmdMarkers";
-			this.cmdMarkers.Size = new System.Drawing.Size(62, 22);
-			this.cmdMarkers.Text = "Markers...";
-			this.cmdMarkers.Click += new System.EventHandler(this.cmdMarkers_Click);
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-			// 
-			// tsRight
-			// 
-			this.tsRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.tsRight.Dock = System.Windows.Forms.DockStyle.None;
-			this.tsRight.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.tsRight.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsHelp});
-			this.tsRight.Location = new System.Drawing.Point(825, 0);
-			this.tsRight.Name = "tsRight";
-			this.tsRight.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.tsRight.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.tsRight.Size = new System.Drawing.Size(26, 25);
-			this.tsRight.TabIndex = 20;
-			// 
-			// tsHelp
-			// 
-			this.tsHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsHelp.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
-			this.tsHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsHelp.Name = "tsHelp";
-			this.tsHelp.Size = new System.Drawing.Size(23, 22);
-			this.tsHelp.Text = "Help";
-			this.tsHelp.ToolTipText = "Show Help...";
-			this.tsHelp.Click += new System.EventHandler(this.tsHelp_Click);
 			// 
 			// cmdFit
 			// 
@@ -165,16 +115,27 @@
 			this.tsZoomIn.Text = "Zoom In";
 			this.tsZoomIn.Click += new System.EventHandler(this.tsZoomIn_Click);
 			// 
-			// tsRecord
+			// tsZoom
 			// 
-			this.tsRecord.CheckOnClick = true;
-			this.tsRecord.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsRecord.Image = global::SPNATI_Character_Editor.Properties.Resources.Record;
-			this.tsRecord.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsRecord.Name = "tsRecord";
-			this.tsRecord.Size = new System.Drawing.Size(23, 22);
-			this.tsRecord.Text = "Live record in playback mode";
-			this.tsRecord.Click += new System.EventHandler(this.tsRecord_Click);
+			this.tsZoom.Font = new System.Drawing.Font("Segoe UI", 7F);
+			this.tsZoom.Name = "tsZoom";
+			this.tsZoom.Size = new System.Drawing.Size(15, 22);
+			this.tsZoom.Text = "1x";
+			this.tsZoom.Click += new System.EventHandler(this.tsZoom_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// cmdMarkers
+			// 
+			this.cmdMarkers.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.cmdMarkers.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cmdMarkers.Name = "cmdMarkers";
+			this.cmdMarkers.Size = new System.Drawing.Size(62, 22);
+			this.cmdMarkers.Text = "Markers...";
+			this.cmdMarkers.Click += new System.EventHandler(this.cmdMarkers_Click);
 			// 
 			// tsFilter
 			// 
@@ -187,6 +148,59 @@
 			this.tsFilter.Text = "Toggle marker conditionals";
 			this.tsFilter.ToolTipText = "Toggle marker conditionals";
 			this.tsFilter.Click += new System.EventHandler(this.tsFilter_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsRecord
+			// 
+			this.tsRecord.CheckOnClick = true;
+			this.tsRecord.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsRecord.Image = global::SPNATI_Character_Editor.Properties.Resources.Record;
+			this.tsRecord.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsRecord.Name = "tsRecord";
+			this.tsRecord.Size = new System.Drawing.Size(23, 22);
+			this.tsRecord.Text = "Live record in playback mode";
+			this.tsRecord.Click += new System.EventHandler(this.tsRecord_Click);
+			// 
+			// tsRight
+			// 
+			this.tsRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.tsRight.Dock = System.Windows.Forms.DockStyle.None;
+			this.tsRight.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.tsRight.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsBackColor,
+            this.tsHelp});
+			this.tsRight.Location = new System.Drawing.Point(771, 0);
+			this.tsRight.Name = "tsRight";
+			this.tsRight.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.tsRight.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.tsRight.Size = new System.Drawing.Size(80, 25);
+			this.tsRight.TabIndex = 20;
+			// 
+			// tsHelp
+			// 
+			this.tsHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsHelp.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.tsHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsHelp.Name = "tsHelp";
+			this.tsHelp.Size = new System.Drawing.Size(23, 22);
+			this.tsHelp.Text = "Help";
+			this.tsHelp.ToolTipText = "Show Help...";
+			this.tsHelp.Click += new System.EventHandler(this.tsHelp_Click);
+			// 
+			// tsBackColor
+			// 
+			this.tsBackColor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsBackColor.Image = global::SPNATI_Character_Editor.Properties.Resources.ColorPalette;
+			this.tsBackColor.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsBackColor.Name = "tsBackColor";
+			this.tsBackColor.Size = new System.Drawing.Size(23, 22);
+			this.tsBackColor.Text = "Background Color";
+			this.tsBackColor.ToolTipText = "Set background color";
+			this.tsBackColor.Click += new System.EventHandler(this.tsBackColor_Click);
 			// 
 			// LiveCanvas
 			// 
@@ -221,5 +235,7 @@
 		private System.Windows.Forms.ToolStripButton tsRecord;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton tsFilter;
+		private System.Windows.Forms.ToolStripButton tsBackColor;
+		private System.Windows.Forms.ColorDialog colorDialog1;
 	}
 }

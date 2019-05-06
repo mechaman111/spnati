@@ -36,6 +36,7 @@
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.table = new Desktop.CommonControls.PropertyTable();
 			this.picPreview = new System.Windows.Forms.PictureBox();
+			this.label1 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -123,6 +124,7 @@
 			// 
 			// splitContainer2.Panel2
 			// 
+			this.splitContainer2.Panel2.Controls.Add(this.label1);
 			this.splitContainer2.Panel2.Controls.Add(this.picPreview);
 			this.splitContainer2.Size = new System.Drawing.Size(581, 620);
 			this.splitContainer2.SplitterDistance = 284;
@@ -155,13 +157,28 @@
 			// 
 			// picPreview
 			// 
-			this.picPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.picPreview.Location = new System.Drawing.Point(0, 0);
+			this.picPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.picPreview.Location = new System.Drawing.Point(0, 42);
+			this.picPreview.Margin = new System.Windows.Forms.Padding(0);
 			this.picPreview.Name = "picPreview";
-			this.picPreview.Size = new System.Drawing.Size(293, 620);
+			this.picPreview.Size = new System.Drawing.Size(293, 578);
 			this.picPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picPreview.TabIndex = 0;
 			this.picPreview.TabStop = false;
+			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label1.Location = new System.Drawing.Point(4, 4);
+			this.label1.Margin = new System.Windows.Forms.Padding(0);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(286, 38);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "Note: To unlock a collectible, associate it with dialogue in the Dialogue tab usi" +
+    "ng the trophy button.";
 			// 
 			// CollectibleEditor
 			// 
@@ -196,5 +213,6 @@
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private Desktop.CommonControls.PropertyTable table;
 		private System.Windows.Forms.PictureBox picPreview;
+		private System.Windows.Forms.Label label1;
 	}
 }

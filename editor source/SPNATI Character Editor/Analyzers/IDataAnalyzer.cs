@@ -49,6 +49,10 @@ namespace SPNATI_Character_Editor.Analyzers
 				case "Does not contain":
 					return !actual.Contains(expected);
 				default:
+					if (expected == null)
+					{
+						return !string.IsNullOrEmpty(actual);
+					}
 					return actual == expected;
 			}
 		}

@@ -12,7 +12,7 @@ namespace SPNATI_Character_Editor
 		/// List of released versions since update tracking was added, used for determining which updates a user skipped and providing info about those
 		/// </summary>
 		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6",
-			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2", "v4.0b", "v4.0.1b", "v4.0.2b", "v4.0.3b", "v4.0", "v4.1", "v4.2", "v4.2.1" };
+			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2", "v4.0b", "v4.0.1b", "v4.0.2b", "v4.0.3b", "v4.0", "v4.1", "v4.2", "v4.2.1", "v4.3" };
 
 		/// <summary>
 		/// Current Version
@@ -168,12 +168,52 @@ namespace SPNATI_Character_Editor
 				Directory.CreateDirectory(dataDir);
 			}
 
+			SaveRecentRecords();
+
 			List<string> lines = new List<string>();
 			foreach (KeyValuePair<string, string> kvp in _settings)
 			{
 				lines.Add($"{kvp.Key.ToLower()}={kvp.Value}");
 			}
 			File.WriteAllLines(filename, lines);
+		}
+
+		public static void LoadRecentRecords<T>()
+		{
+			string[] keys = GetString("Recent" + typeof(T).Name).Split('|');
+			foreach (string key in keys)
+			{
+				IRecord record = null;
+				if (typeof(T) == typeof(Character))
+				{
+					record = CharacterDatabase.Get(key);
+				}
+				else if (typeof(T) == typeof(Costume))
+				{
+					record = CharacterDatabase.GetSkin(key);
+				}
+				if (record != null)
+				{
+					RecordLookup.AddToRecent(typeof(T), record);
+				}
+			}
+		}
+
+		private static void SaveRecentRecords()
+		{
+			SaveRecords<Character>();
+			SaveRecords<Costume>();
+		}
+
+		private static void SaveRecords<T>()
+		{
+			List<IRecord> list = RecordLookup.GetRecentRecords<T>();
+			List<string> keys = new List<string>();
+			foreach (IRecord record in list)
+			{
+				keys.Add(record.Key);
+			}
+			Set("Recent" + typeof(T).Name, string.Join("|", keys));
 		}
 
 		/// <summary>

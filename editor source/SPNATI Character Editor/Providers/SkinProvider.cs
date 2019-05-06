@@ -17,6 +17,11 @@ namespace SPNATI_Character_Editor.Providers
 			get { return true; }
 		}
 
+		public bool TrackRecent
+		{
+			get { return true; }
+		}
+
 		public IRecord Create(string key)
 		{
 			Costume skin = new Costume();

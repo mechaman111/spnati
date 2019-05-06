@@ -108,7 +108,7 @@ namespace SPNATI_Character_Editor
 				FillInCharacter();
 			}
 
-			UpdateAutoComplete(true);	
+			UpdateAutoComplete(true);
 		}
 
 		public override void OnAddedToRow()
@@ -173,10 +173,6 @@ namespace SPNATI_Character_Editor
 			{
 				if (variable.StartsWith("~collectible."))
 				{
-					int start = "~collectible.".Length;
-					int end = variable.IndexOfAny(new char[] { '.', '~' }, start);
-					string name = variable.Substring(start, end - start);
-
 					if (variable.EndsWith(".counter~"))
 					{
 						//self collectible counter check
@@ -190,10 +186,6 @@ namespace SPNATI_Character_Editor
 				}
 				else if (variable.StartsWith("~target.collectible."))
 				{
-					int start = "~target.collectible.".Length;
-					int end = variable.IndexOfAny(new char[] { '.', '~' }, start);
-					string name = variable.Substring(start, end - start);
-
 					if (variable.EndsWith(".counter~"))
 					{
 						//target collectible counter check
@@ -218,13 +210,25 @@ namespace SPNATI_Character_Editor
 						_subcontrol = new CharacterCollectibleControl();
 					}
 				}
-				if (variable.StartsWith("~self.tag.") || variable.StartsWith("~target.tag."))
+				else if (variable.StartsWith("~self.tag.") || variable.StartsWith("~target.tag."))
 				{
 					_subcontrol = new TagControl();
 				}
 				else if (variable.Contains(".tag."))
 				{
 					_subcontrol = new CharacterTagControl();
+				}
+				else if (variable.StartsWith("~persistent"))
+				{
+					_subcontrol = new PersistentMarkerControl();
+				}
+				else if (variable.StartsWith("~target.persistent."))
+				{
+					_subcontrol = new PersistentMarkerControl();
+				}
+				else if (variable.Contains(".persistent."))
+				{
+					_subcontrol = new CharacterPersistentMarkerControl();
 				}
 
 				if (_subcontrol != null)

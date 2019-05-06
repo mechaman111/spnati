@@ -62,6 +62,12 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("collectible-value")]
 		public string CollectibleValue;
 
+		[DefaultValue(false)]
+		[XmlAttribute("persist-marker")]
+		public bool IsMarkerPersistent;
+
+		public static readonly string[] ArrowDirections = new string[] { "", "down", "left", "right", "up" };
+
 		public DialogueLine()
 		{
 			Image = "";
@@ -98,6 +104,7 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ Weight.GetHashCode();
 			hash = (hash * 397) ^ (CollectibleId ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (CollectibleValue ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ IsMarkerPersistent.GetHashCode();
 			return hash;
 		}
 
@@ -209,6 +216,14 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			return invalidVars;
+		}
+
+		public bool HasAdvancedMarker
+		{
+			get
+			{
+				return IsMarkerPersistent || (Marker != null && (Marker.Contains("=") || Marker.Contains("+") || Marker.Contains("-") ||  Marker.Contains("*")));
+			}
 		}
 	}
 }

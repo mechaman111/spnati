@@ -262,7 +262,7 @@ namespace UnitTests
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return "";
 			}
 		}
 
@@ -270,7 +270,7 @@ namespace UnitTests
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return "";
 			}
 		}
 
@@ -278,7 +278,7 @@ namespace UnitTests
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return "";
 			}
 		}
 
@@ -286,7 +286,7 @@ namespace UnitTests
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return "";
 			}
 		}
 

@@ -22,6 +22,11 @@ namespace SPNATI_Character_Editor.Providers
 			return "Role Select";
 		}
 
+		public bool TrackRecent
+		{
+			get { return false; }
+		}
+
 		public bool AllowsNew
 		{
 			get { return false; }

@@ -92,6 +92,10 @@ namespace SPNATI_Character_Editor.Activities
 					}
 					else
 					{
+						if (!File.Exists(Path.Combine(path, "behaviour.xml")))
+						{
+							return;
+						}
 						Character character = Serialization.ImportCharacter(path);
 						if (character != null)
 						{
@@ -174,6 +178,9 @@ namespace SPNATI_Character_Editor.Activities
 					Shell.Instance.LaunchWorkspace(CharacterDatabase.Get(lastCharacter));
 				}
 			}
+
+			Config.LoadRecentRecords<Character>();
+			Config.LoadRecentRecords<Costume>();
 		}
 
 		private Task LoadChunk(string caption, int progress, Action action)

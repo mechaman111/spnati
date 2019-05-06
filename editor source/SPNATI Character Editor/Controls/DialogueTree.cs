@@ -95,7 +95,7 @@ namespace SPNATI_Character_Editor.Controls
 		}
 
 		/// <summary>
-		/// Rebuilds the tree from scratch. Useful when the stages have changed 
+		/// Rebuilds the tree from scratch. Useful when the stages have changed
 		/// </summary>
 		public void RegenerateTree()
 		{
@@ -192,7 +192,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		/// <summary> 
+		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>

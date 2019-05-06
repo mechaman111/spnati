@@ -60,6 +60,11 @@ namespace Desktop.Providers
 			return "Select a Macro";
 		}
 
+		public bool TrackRecent
+		{
+			get { return false; }
+		}
+
 		public Macro Get(Type type, string name)
 		{
 			return _macros.Get(type, name);

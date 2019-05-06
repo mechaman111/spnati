@@ -40,7 +40,7 @@ namespace SPNATI_Character_Editor
 
 		public string ToLookupString()
 		{
-			return string.Format("{0} [{1}]", DisplayName ?? Value, Value);
+			return Value;
 		}
 
 		public override string ToString()

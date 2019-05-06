@@ -40,6 +40,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private HoverContext _moveContext;
 		private CanvasState _state = CanvasState.Normal;
 
+		private SolidBrush _backColor = new SolidBrush(Color.LightGray);
 		private Pen _penOuterSelection;
 		private Pen _penInnerSelection;
 		private Pen _penBoundary;
@@ -275,7 +276,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Graphics g = e.Graphics;
 
 			//draw the "screen"
-			g.FillRectangle(Brushes.LightGray, 0, _canvasOffset.Y, canvas.Width, canvas.Height * _zoom);
+			g.FillRectangle(_backColor, 0, _canvasOffset.Y, canvas.Width, canvas.Height * _zoom);
 
 			//center marker
 			g.DrawLine(_penBoundary, canvas.Width / 2 + _canvasOffset.X, 0, canvas.Width / 2 + _canvasOffset.X, canvas.Height);
@@ -454,8 +455,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			for (int i = objects.Count - 1; i >= 0; i--)
 			{
 				LiveSprite obj = objects[i];
-				if (!obj.IsVisible || obj.Hidden || obj.Alpha == 0) { continue; }
-
+				if (!obj.IsVisible || obj.Hidden || obj.Alpha == 0 || obj.HiddenByMarker(_ignoreMarkers ? null : _markers)) { continue; }
+				
 				//transform point to local space
 				PointF localPt = obj.ToLocalPt(x, y, SceneTransform);
 				if (localPt.X >= 0 && localPt.X <= obj.Width &&
@@ -977,6 +978,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			_ignoreMarkers = tsFilter.Checked;
 			canvas.Invalidate();
+		}
+
+		private void tsBackColor_Click(object sender, EventArgs e)
+		{
+			colorDialog1.Color = _backColor.Color;
+			if (colorDialog1.ShowDialog() == DialogResult.OK)
+			{
+				_backColor.Color = colorDialog1.Color;
+				canvas.Invalidate();
+			}
 		}
 	}
 

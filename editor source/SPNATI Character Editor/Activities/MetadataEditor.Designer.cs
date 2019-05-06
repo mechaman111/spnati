@@ -38,8 +38,6 @@
 			this.lblIncomplete = new System.Windows.Forms.Label();
 			this.lblOffline = new System.Windows.Forms.Label();
 			this.gridAI = new System.Windows.Forms.DataGridView();
-			this.ColAIStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColDifficulty = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label22 = new System.Windows.Forms.Label();
 			this.txtDescription = new System.Windows.Forms.TextBox();
@@ -63,6 +61,8 @@
 			this.label10 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
 			this.cboGender = new System.Windows.Forms.ComboBox();
+			this.ColAIStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColDifficulty = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridAI)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valRounds)).BeginInit();
 			this.SuspendLayout();
@@ -161,26 +161,6 @@
 			this.gridAI.RowHeadersVisible = false;
 			this.gridAI.Size = new System.Drawing.Size(212, 101);
 			this.gridAI.TabIndex = 107;
-			// 
-			// ColAIStage
-			// 
-			this.ColAIStage.HeaderText = "Stage";
-			this.ColAIStage.MinimumWidth = 50;
-			this.ColAIStage.Name = "ColAIStage";
-			this.ColAIStage.Width = 50;
-			// 
-			// ColDifficulty
-			// 
-			this.ColDifficulty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColDifficulty.HeaderText = "Intelligence";
-			this.ColDifficulty.Items.AddRange(new object[] {
-            "",
-            "bad",
-            "average",
-            "good"});
-			this.ColDifficulty.Name = "ColDifficulty";
-			this.ColDifficulty.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.ColDifficulty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 			// 
 			// label7
 			// 
@@ -392,6 +372,27 @@
 			this.cboGender.Size = new System.Drawing.Size(100, 21);
 			this.cboGender.TabIndex = 86;
 			// 
+			// ColAIStage
+			// 
+			this.ColAIStage.HeaderText = "Stage";
+			this.ColAIStage.MinimumWidth = 50;
+			this.ColAIStage.Name = "ColAIStage";
+			this.ColAIStage.Width = 50;
+			// 
+			// ColDifficulty
+			// 
+			this.ColDifficulty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ColDifficulty.HeaderText = "Intelligence";
+			this.ColDifficulty.Items.AddRange(new object[] {
+            "",
+            "bad",
+            "average",
+            "good",
+            "best"});
+			this.ColDifficulty.Name = "ColDifficulty";
+			this.ColDifficulty.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColDifficulty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			// 
 			// MetadataEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -444,8 +445,6 @@
 		private System.Windows.Forms.Label lblIncomplete;
 		private System.Windows.Forms.Label lblOffline;
 		private System.Windows.Forms.DataGridView gridAI;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColAIStage;
-		private System.Windows.Forms.DataGridViewComboBoxColumn ColDifficulty;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label22;
 		private System.Windows.Forms.TextBox txtDescription;
@@ -469,5 +468,7 @@
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.ComboBox cboGender;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColAIStage;
+		private System.Windows.Forms.DataGridViewComboBoxColumn ColDifficulty;
 	}
 }

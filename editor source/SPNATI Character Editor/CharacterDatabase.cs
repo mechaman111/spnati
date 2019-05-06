@@ -89,11 +89,20 @@ namespace SPNATI_Character_Editor
 			data = data ?? new CharacterEditorData();
 			data.LinkOwner(character);
 			_editorData[character] = data;
+			character.Markers.Merge(data.Markers);
 		}
 
 		public static CharacterEditorData GetEditorData(Character character)
 		{
-			return _editorData.GetOrAddDefault(character, () => new CharacterEditorData() { Owner = character.FolderName });
+			return _editorData.GetOrAddDefault(character, () =>
+			{
+				CharacterEditorData data = new CharacterEditorData()
+				{
+					Owner = character.FolderName
+				};
+				data.LinkOwner(character);
+				return data;
+			});
 		}
 
 		/// <summary>

@@ -9,6 +9,11 @@ namespace SPNATI_Character_Editor.Providers
 	{
 		public bool AllowsNew { get { return false; } }
 
+		public bool TrackRecent
+		{
+			get { return false; }
+		}
+
 		public IRecord Create(string key)
 		{
 			T definition = Activator.CreateInstance<T>();

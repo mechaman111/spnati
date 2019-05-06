@@ -200,7 +200,13 @@ namespace Desktop.CommonControls
 		{
 			if (_populatingRecord) { return; }
 			_needValidation = !string.IsNullOrEmpty(txtInput.Text);
+			string text = txtInput.Text;
+			int start = txtInput.SelectionStart;
+			int length = txtInput.SelectionLength;
 			Record = null;
+			txtInput.Text = text;
+			txtInput.SelectionStart = start;
+			txtInput.SelectionLength = length;
 		}
 
 		private void cmdSearch_Click(object sender, EventArgs e)

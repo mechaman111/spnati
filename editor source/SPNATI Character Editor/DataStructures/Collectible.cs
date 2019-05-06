@@ -55,7 +55,7 @@ namespace SPNATI_Character_Editor.DataStructures
 		[XmlElement("hide-details")]
 		public bool HideDetails;
 
-		[Numeric(DisplayName = "Counter", GroupOrder = 60, Description = "Counter the collectible must reach before being obtained", Minimum = 0, Maximum = 1000)]
+		[Numeric(DisplayName = "Counter", GroupOrder = 60, Description = "If checked, collectible will not appear in the collectibles list at all until unlocked", Minimum = 0, Maximum = 1000)]
 		[DefaultValue(0)]
 		[XmlElement("counter")]
 		public int Counter;

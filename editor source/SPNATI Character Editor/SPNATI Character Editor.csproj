@@ -178,11 +178,23 @@
     <Compile Include="Charts\Builders\CollectibleBuilder.cs" />
     <Compile Include="Charts\Builders\CustomPoseBuilder.cs" />
     <Compile Include="Charts\Builders\StorageSpaceImagesBuilder.cs" />
+    <Compile Include="Controls\CaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CaseControl.Designer.cs">
+      <DependentUpon>CaseControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CriteriaSelect.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\CriteriaSelect.Designer.cs">
       <DependentUpon>CriteriaSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DialogueAdvancedControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DialogueAdvancedControl.Designer.cs">
+      <DependentUpon>DialogueAdvancedControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditControls\AnimDurationControl.cs">
       <SubType>UserControl</SubType>
@@ -207,6 +219,18 @@
     </Compile>
     <Compile Include="Controls\EditControls\CharacterCollectibleCountControl.Designer.cs">
       <DependentUpon>CharacterCollectibleCountControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\CharacterPersistentMarkerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\CharacterPersistentMarkerControl.Designer.cs">
+      <DependentUpon>CharacterPersistentMarkerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\PersistentMarkerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\PersistentMarkerControl.Designer.cs">
+      <DependentUpon>PersistentMarkerControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditControls\TagControl.cs">
       <SubType>UserControl</SubType>
@@ -276,6 +300,12 @@
     </Compile>
     <Compile Include="Controls\CharacterImageDialog.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MarkerOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MarkerOptions.Designer.cs">
+      <DependentUpon>MarkerOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PartTransparencySlider.cs">
       <SubType>UserControl</SubType>
@@ -640,6 +670,12 @@
     <Compile Include="Forms\CreateSequenceForm.Designer.cs">
       <DependentUpon>CreateSequenceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DialogueResponder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DialogueResponder.Designer.cs">
+      <DependentUpon>DialogueResponder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\GameConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -860,11 +896,17 @@
     <EmbeddedResource Include="Charts\BarChart.resx">
       <DependentUpon>BarChart.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CaseControl.resx">
+      <DependentUpon>CaseControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CharacterImageBox.resx">
       <DependentUpon>CharacterImageBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CriteriaSelect.resx">
       <DependentUpon>CriteriaSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DialogueAdvancedControl.resx">
+      <DependentUpon>DialogueAdvancedControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DialogueGrid.resx">
       <DependentUpon>DialogueGrid.cs</DependentUpon>
@@ -880,6 +922,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EditControls\CharacterCollectibleCountControl.resx">
       <DependentUpon>CharacterCollectibleCountControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\CharacterPersistentMarkerControl.resx">
+      <DependentUpon>CharacterPersistentMarkerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\PersistentMarkerControl.resx">
+      <DependentUpon>PersistentMarkerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EditControls\TagControl.resx">
       <DependentUpon>TagControl.cs</DependentUpon>
@@ -950,6 +998,9 @@
     <EmbeddedResource Include="Controls\CharacterImageDialog.resx">
       <DependentUpon>CharacterImageDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MarkerOptions.resx">
+      <DependentUpon>MarkerOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PartTransparencySlider.resx">
       <DependentUpon>PartTransparencySlider.cs</DependentUpon>
     </EmbeddedResource>
@@ -1000,6 +1051,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateSequenceForm.resx">
       <DependentUpon>CreateSequenceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DialogueResponder.resx">
+      <DependentUpon>DialogueResponder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GameConfig.resx">
       <DependentUpon>GameConfig.cs</DependentUpon>
@@ -1104,6 +1158,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\collectible_unlock.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tut1_sequence.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\tut_macro1.png">
@@ -1372,6 +1429,10 @@
     <None Include="Icons\TrophyFilled.png" />
     <None Include="Icons\TrophyUnfilled.png" />
     <None Include="Icons\Filter.png" />
+    <None Include="Icons\BookmarkFilled.png" />
+    <None Include="Icons\BookmarkUnfilled.png" />
+    <None Include="Icons\ColorPalette.png" />
+    <None Include="Icons\Ellipsis.png" />
     <Content Include="Resources\words.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1470,6 +1531,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v4.2.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v4.3.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v4.1.html">

@@ -11,6 +11,11 @@ namespace SPNATI_Character_Editor.Providers
 
 		public bool AllowsNew { get { return true; } }
 
+		public bool TrackRecent
+		{
+			get { return false; }
+		}
+
 		public void SetContext(object context)
 		{
 			_character = context as Character;

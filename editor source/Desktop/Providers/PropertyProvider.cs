@@ -83,5 +83,10 @@ namespace Desktop.Providers
 		}
 
 		public void SetContext(object context) { }
+
+		public bool TrackRecent
+		{
+			get { return false; }
+		}
 	}
 }

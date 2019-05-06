@@ -356,6 +356,10 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += $",collectible-value:{defaultLine.CollectibleValue}";
 					}
+					if (defaultLine.IsMarkerPersistent)
+					{
+						lineCode += $",persist-marker:1";
+					}
 					if (defaultLine.Weight != 1)
 					{
 						lineCode += $",weight:{defaultLine.Weight.ToString(CultureInfo.InvariantCulture)}";
@@ -1375,6 +1379,9 @@ namespace SPNATI_Character_Editor
 						break;
 					case "collectible-value":
 						line.CollectibleValue = value;
+						break;
+					case "persist-marker":
+						line.IsMarkerPersistent = (value == "1");
 						break;
 					case "weight":
 						float fval;

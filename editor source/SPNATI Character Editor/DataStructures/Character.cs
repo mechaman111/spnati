@@ -534,7 +534,7 @@ namespace SPNATI_Character_Editor
 
 		public void GetUniqueLineAndPoseCount(out int lines, out int poses)
 		{
-			lines = GetLineCount(LineFilter.Generic | LineFilter.Targeted | LineFilter.Special, out poses);
+			lines = GetLineCount(LineFilter.None, out poses);
 		}
 
 		/// <summary>
@@ -544,7 +544,7 @@ namespace SPNATI_Character_Editor
 		public int GetUniqueLineCount()
 		{
 			int poses;
-			return GetLineCount(LineFilter.Generic | LineFilter.Targeted | LineFilter.Special, out poses);
+			return GetLineCount(LineFilter.None, out poses);
 		}
 
 		private int GetLineCount(LineFilter filters, out int poseCount)
@@ -558,12 +558,17 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (var stageCase in stage.Cases)
 				{
+					if (!string.IsNullOrEmpty(stageCase.Hidden))
+					{
+						continue;
+					}
 					bool targeted = stageCase.HasTargetedConditions;
 					bool special = stageCase.HasStageConditions;
 					bool generic = !stageCase.HasConditions;
 					bool filter = stageCase.HasFilters;
 
-					if ((filters & LineFilter.Generic) > 0 && generic ||
+					if ((filters == LineFilter.None) ||
+						(filters & LineFilter.Generic) > 0 && generic ||
 						(filters & LineFilter.Targeted) > 0 && targeted ||
 						(filters & LineFilter.Special) > 0 && special ||
 						(filters & LineFilter.Filter) > 0 && filter)

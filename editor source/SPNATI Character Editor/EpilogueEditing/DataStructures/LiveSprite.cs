@@ -1443,9 +1443,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			SkewY = GetPropertyValue("SkewY", time, 0f, easeOverride, interpolationOverride, looped);
 		}
 
-		public void Draw(Graphics g, Matrix sceneTransform, List<string> markers)
+		public bool HiddenByMarker(List<string> markers)
 		{
-			if (!IsVisible || Hidden) { return; }
 			if (markers != null && !string.IsNullOrEmpty(MarkerName))
 			{
 				switch (MarkerOp)
@@ -1455,16 +1454,26 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					case MarkerOperator.GreaterThan:
 						if (markers.Contains(MarkerName) && MarkerValue != "0" || !markers.Contains(MarkerName) && MarkerValue == "0")
 						{
-							return;
+							return true;
 						}
 						break;
 					default:
 						if (markers.Contains(MarkerName) && MarkerValue == "0" || !markers.Contains(MarkerName) && MarkerValue != "0")
 						{
-							return;
+							return true;
 						}
 						break;
 				}
+			}
+			return false;
+		}
+
+		public void Draw(Graphics g, Matrix sceneTransform, List<string> markers)
+		{
+			if (!IsVisible || Hidden) { return; }
+			if (HiddenByMarker(markers))
+			{
+				return;
 			}
 
 			float alpha = WorldAlpha;
