@@ -16,9 +16,9 @@ namespace SPNATI_Character_Editor.Controls
 		private ImageLibrary _imageLibrary;
 		private bool _populatingCase;
 		private int _selectedRow;
-		private MarkerOptions _markerCtl;
+		private IDialogueDropDownControl _markerCtl;
 		private ToolStripDropDown _markerDropDown;
-		private DialogueAdvancedControl _lineCtl;
+		private IDialogueDropDownControl _lineCtl;
 		private ToolStripDropDown _lineDropDown;
 
 		#region Events
@@ -62,27 +62,30 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			InitializeComponent();
 
-			Control ctl = _markerCtl = new MarkerOptions();
-			_markerDropDown = new ToolStripDropDown();
-			ToolStripControlHost host = new ToolStripControlHost(ctl);
-			host.Margin = new Padding(0);
-			_markerDropDown.Padding = new Padding(0);
-			_markerDropDown.Items.Add(host);
-			_markerDropDown.Closing += _markerDropDown_Closing;
+			_markerCtl = new MarkerOptions();
+			CreateDropdown(_markerCtl, out _markerDropDown);
 
-			ctl = _lineCtl = new DialogueAdvancedControl();
-			_lineDropDown = new ToolStripDropDown();
-			host = new ToolStripControlHost(ctl);
-			host.Margin = new Padding(0);
-			_lineDropDown.Padding = new Padding(0);
-			_lineDropDown.Items.Add(host);
-			_lineDropDown.Closing += _lineDropDown_Closing;
+			_lineCtl = new DialogueAdvancedControl();
+			CreateDropdown(_lineCtl, out _lineDropDown);
 
 			ColImage.ValueType = typeof(CharacterImage);
 
 			_intellisense = new IntellisenseControl();
 			_intellisense.InsertSnippet += _intellisense_InsertSnippet;
 			Controls.Add(_intellisense);
+		}
+
+		private void CreateDropdown(IDialogueDropDownControl ctl, out ToolStripDropDown dropdown)
+		{
+			Control hostCtl = ctl as Control;
+			dropdown = new ToolStripDropDown();
+			dropdown.Tag = ctl;
+			ToolStripControlHost host = new ToolStripControlHost(hostCtl);
+			host.Margin = new Padding(0);
+			dropdown.Padding = new Padding(0);
+			dropdown.Items.Add(host);
+			dropdown.Closing += _markerDropDown_Closing;
+			ctl.DataUpdated += Ctl_DataUpdated;
 		}
 
 		public void SetData(Character character, Case c)
@@ -520,39 +523,40 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else if (col == ColMarkerOptions)
 			{
-				DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
-				DialogueLine line = ReadLineFromDialogueGrid(e.RowIndex);
-				_markerCtl.SetData(e.RowIndex, line);
-
-				Point pt = gridDialogue.PointToScreen(gridDialogue.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false).Location);
-				Point screen = gridDialogue.PointToScreen(new Point(0, 0));
-				_markerDropDown.Show(this, new Point(pt.X - screen.X + ColMarkerOptions.Width, pt.Y - screen.Y + row.Height));
+				ShowDropdown(e.RowIndex, e.ColumnIndex, _markerCtl, _markerDropDown);
 			}
 			else if (col == ColMore)
 			{
-				DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
-				DialogueLine line = ReadLineFromDialogueGrid(e.RowIndex);
-				_lineCtl.SetData(e.RowIndex, line);
-
-				Point pt = gridDialogue.PointToScreen(gridDialogue.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false).Location);
-				Point screen = gridDialogue.PointToScreen(new Point(0, 0));
-				_lineDropDown.Show(this, new Point(pt.X - screen.X + ColMore.Width, pt.Y - screen.Y + row.Height));
+				ShowDropdown(e.RowIndex, e.ColumnIndex, _lineCtl, _lineDropDown);
 			}
 		}
 
+		private void ShowDropdown(int rowIndex, int colIndex, IDialogueDropDownControl ctl, ToolStripDropDown dropdown)
+		{
+			DataGridViewRow row = gridDialogue.Rows[rowIndex];
+			DialogueLine line = ReadLineFromDialogueGrid(rowIndex);
+			ctl.SetData(rowIndex, line);
+
+			Point pt = gridDialogue.PointToScreen(gridDialogue.GetCellDisplayRectangle(colIndex, rowIndex, false).Location);
+			Point screen = gridDialogue.PointToScreen(new Point(0, 0));
+			dropdown.Show(this, new Point(pt.X - screen.X + ColMore.Width, pt.Y - screen.Y + row.Height));
+		}
+		
 		private void _markerDropDown_Closing(object sender, ToolStripDropDownClosingEventArgs e)
 		{
-			DataGridViewRow row = gridDialogue.Rows[_markerCtl.RowIndex];
-			AddLineToDialogueGrid(_markerCtl.GetLine(), row);
+			Control senderCtl = sender as Control;
+			IDialogueDropDownControl ctl = senderCtl.Tag as IDialogueDropDownControl;
+			DataGridViewRow row = gridDialogue.Rows[ctl.RowIndex];
+			AddLineToDialogueGrid(ctl.GetLine(), row);
 		}
 
-
-		private void _lineDropDown_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+		private void Ctl_DataUpdated(object sender, EventArgs e)
 		{
-			DataGridViewRow row = gridDialogue.Rows[_lineCtl.RowIndex];
-			AddLineToDialogueGrid(_lineCtl.GetLine(), row);
+			IDialogueDropDownControl ctl = sender as IDialogueDropDownControl;
+			DataGridViewRow row = gridDialogue.Rows[ctl.RowIndex];
+			AddLineToDialogueGrid(ctl.GetLine(), row);
+			SelectRow(ctl.RowIndex);
 		}
-
 
 		public bool IsEmpty
 		{

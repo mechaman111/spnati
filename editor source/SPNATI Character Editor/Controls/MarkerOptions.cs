@@ -1,11 +1,14 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	public partial class MarkerOptions : UserControl
+	public partial class MarkerOptions : UserControl, IDialogueDropDownControl
 	{
 		public int RowIndex { get; private set; }
 		private DialogueLine _line;
+
+		public event EventHandler DataUpdated;
 
 		public MarkerOptions()
 		{
@@ -41,7 +44,7 @@ namespace SPNATI_Character_Editor.Controls
 			chkPersistent.Checked = line.IsMarkerPersistent;
 		}
 
-		private void radSet_CheckedChanged(object sender, System.EventArgs e)
+		private void radSet_CheckedChanged(object sender, EventArgs e)
 		{
 			if (radIncrement.Checked)
 			{
@@ -56,6 +59,7 @@ namespace SPNATI_Character_Editor.Controls
 				txtValue.Text = "0";
 			}
 			txtValue.Enabled = radSet.Checked;
+			DataUpdated?.Invoke(this, e);
 		}
 
 		public DialogueLine GetLine()

@@ -69,6 +69,7 @@
 			this.valLocation.Name = "valLocation";
 			this.valLocation.Size = new System.Drawing.Size(114, 20);
 			this.valLocation.TabIndex = 3;
+			this.valLocation.ValueChanged += new System.EventHandler(this.valLocation_ValueChanged);
 			// 
 			// label2
 			// 

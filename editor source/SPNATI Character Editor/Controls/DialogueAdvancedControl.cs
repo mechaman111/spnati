@@ -4,10 +4,12 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	public partial class DialogueAdvancedControl : UserControl
+	public partial class DialogueAdvancedControl : UserControl, IDialogueDropDownControl
 	{
 		public int RowIndex { get; private set; }
 		private DialogueLine _line;
+
+		public event EventHandler DataUpdated;
 
 		public DialogueAdvancedControl()
 		{
@@ -20,23 +22,26 @@ namespace SPNATI_Character_Editor.Controls
 			RowIndex = row;
 			_line = line;
 			cboDirection.Text = line.Direction ?? "";
-			float location = 0;
-			if (!string.IsNullOrEmpty(line.Location))
-			{
-				float.TryParse(line.Location, NumberStyles.Number, CultureInfo.InvariantCulture, out location);
-			}
-			else
-			{
-				location = 50;
-			}
-			valLocation.Value = Math.Max(valLocation.Minimum, Math.Min(valLocation.Maximum, (decimal)location));
-
+			
 			cboSize.Text = line.Size ?? "";
 			cboAI.Text = line.Intelligence ?? "";
 			cboGender.Text = line.Gender ?? "";
 			txtLabel.Text = line.Label;
 
 			valWeight.Value = Math.Max(valWeight.Minimum, Math.Min(valWeight.Maximum, (decimal)line.Weight));
+
+			float location = 0;
+			string loc = line.Location;
+			if (loc != null && loc.EndsWith("%"))
+			{
+				loc = loc.Substring(0, loc.Length - 1);
+			}
+			if (!float.TryParse(loc, NumberStyles.Number, CultureInfo.InvariantCulture, out location))
+			{
+				location = 50;
+			}
+			valLocation.Value = Math.Max(valLocation.Minimum, Math.Min(valLocation.Maximum, (decimal)location));
+
 		}
 
 		public DialogueLine GetLine()
@@ -48,7 +53,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
-				_line.Location = location.ToString(CultureInfo.InvariantCulture);
+				_line.Location = location.ToString(CultureInfo.InvariantCulture) + "%";
 			}
 			string direction = cboDirection.Text;
 			if (string.IsNullOrEmpty(direction))
@@ -88,5 +93,18 @@ namespace SPNATI_Character_Editor.Controls
 
 			return _line;
 		}
+
+		private void valLocation_ValueChanged(object sender, EventArgs e)
+		{
+			DataUpdated?.Invoke(this, e);
+		}
+	}
+
+	public interface IDialogueDropDownControl
+	{
+		event EventHandler DataUpdated;
+		int RowIndex { get; }
+		void SetData(int rowIndex, DialogueLine line);
+		DialogueLine GetLine();
 	}
 }
