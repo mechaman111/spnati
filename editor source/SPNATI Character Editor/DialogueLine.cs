@@ -66,6 +66,8 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("persist-marker")]
 		public bool IsMarkerPersistent;
 
+		public static readonly string[] ArrowDirections = new string[] { "", "down", "left", "right", "up" };
+
 		public DialogueLine()
 		{
 			Image = "";

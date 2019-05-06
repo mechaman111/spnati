@@ -48,7 +48,6 @@
 			this.tabDialogue = new System.Windows.Forms.TabPage();
 			this.lblAvailableVars = new System.Windows.Forms.Label();
 			this.cmdCopyAll = new System.Windows.Forms.Button();
-			this.ckbShowAdvanced = new System.Windows.Forms.CheckBox();
 			this.cmdPasteAll = new System.Windows.Forms.Button();
 			this.gridDialogue = new SPNATI_Character_Editor.Controls.DialogueGrid();
 			this.tabNotes = new System.Windows.Forms.TabPage();
@@ -225,7 +224,7 @@
 			this.tabTags.Location = new System.Drawing.Point(4, 22);
 			this.tabTags.Name = "tabTags";
 			this.tabTags.Padding = new System.Windows.Forms.Padding(3);
-			this.tabTags.Size = new System.Drawing.Size(689, 340);
+			this.tabTags.Size = new System.Drawing.Size(662, 347);
 			this.tabTags.TabIndex = 1;
 			this.tabTags.Text = "Tags";
 			// 
@@ -238,7 +237,7 @@
 			this.lstRemoveTags.Name = "lstRemoveTags";
 			this.lstRemoveTags.RecordType = null;
 			this.lstRemoveTags.SelectedItems = new string[0];
-			this.lstRemoveTags.Size = new System.Drawing.Size(335, 315);
+			this.lstRemoveTags.Size = new System.Drawing.Size(308, 322);
 			this.lstRemoveTags.TabIndex = 3;
 			// 
 			// lstAddTags
@@ -249,7 +248,7 @@
 			this.lstAddTags.Name = "lstAddTags";
 			this.lstAddTags.RecordType = null;
 			this.lstAddTags.SelectedItems = new string[0];
-			this.lstAddTags.Size = new System.Drawing.Size(336, 315);
+			this.lstAddTags.Size = new System.Drawing.Size(336, 322);
 			this.lstAddTags.TabIndex = 2;
 			// 
 			// label3
@@ -286,7 +285,6 @@
 			// 
 			this.tabDialogue.Controls.Add(this.lblAvailableVars);
 			this.tabDialogue.Controls.Add(this.cmdCopyAll);
-			this.tabDialogue.Controls.Add(this.ckbShowAdvanced);
 			this.tabDialogue.Controls.Add(this.cmdPasteAll);
 			this.tabDialogue.Controls.Add(this.gridDialogue);
 			this.tabDialogue.Location = new System.Drawing.Point(4, 22);
@@ -316,18 +314,6 @@
 			this.cmdCopyAll.Text = "Copy All";
 			this.cmdCopyAll.UseVisualStyleBackColor = true;
 			this.cmdCopyAll.Click += new System.EventHandler(this.cmdCopyAll_Click);
-			// 
-			// ckbShowAdvanced
-			// 
-			this.ckbShowAdvanced.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ckbShowAdvanced.AutoSize = true;
-			this.ckbShowAdvanced.Location = new System.Drawing.Point(390, 6);
-			this.ckbShowAdvanced.Name = "ckbShowAdvanced";
-			this.ckbShowAdvanced.Size = new System.Drawing.Size(104, 17);
-			this.ckbShowAdvanced.TabIndex = 43;
-			this.ckbShowAdvanced.Text = "Show advanced";
-			this.ckbShowAdvanced.UseVisualStyleBackColor = true;
-			this.ckbShowAdvanced.Click += new System.EventHandler(this.ckbShowAdvanced_CheckedChanged);
 			// 
 			// cmdPasteAll
 			// 
@@ -470,7 +456,6 @@
 		private System.Windows.Forms.TabPage tabDialogue;
 		private System.Windows.Forms.Label lblAvailableVars;
 		private System.Windows.Forms.Button cmdCopyAll;
-		private System.Windows.Forms.CheckBox ckbShowAdvanced;
 		private System.Windows.Forms.Button cmdPasteAll;
 		private DialogueGrid gridDialogue;
 		private System.Windows.Forms.TabPage tabNotes;

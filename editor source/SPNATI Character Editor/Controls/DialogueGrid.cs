@@ -18,6 +18,8 @@ namespace SPNATI_Character_Editor.Controls
 		private int _selectedRow;
 		private MarkerOptions _markerCtl;
 		private ToolStripDropDown _markerDropDown;
+		private DialogueAdvancedControl _lineCtl;
+		private ToolStripDropDown _lineDropDown;
 
 		#region Events
 		public new event EventHandler<KeyEventArgs> KeyDown;
@@ -67,6 +69,14 @@ namespace SPNATI_Character_Editor.Controls
 			_markerDropDown.Padding = new Padding(0);
 			_markerDropDown.Items.Add(host);
 			_markerDropDown.Closing += _markerDropDown_Closing;
+
+			ctl = _lineCtl = new DialogueAdvancedControl();
+			_lineDropDown = new ToolStripDropDown();
+			host = new ToolStripControlHost(ctl);
+			host.Margin = new Padding(0);
+			_lineDropDown.Padding = new Padding(0);
+			_lineDropDown.Items.Add(host);
+			_lineDropDown.Closing += _lineDropDown_Closing;
 
 			ColImage.ValueType = typeof(CharacterImage);
 
@@ -163,9 +173,6 @@ namespace SPNATI_Character_Editor.Controls
 				marker = null;
 			}
 
-			string direction = row.Cells["ColDirection"].Value?.ToString();
-			string location = row.Cells["ColLocation"].Value?.ToString();
-
 			if (text == "~silent~")
 			{
 				text = "";
@@ -179,6 +186,13 @@ namespace SPNATI_Character_Editor.Controls
 			DialogueLine line = new DialogueLine(image, text);
 
 			line.IsMarkerPersistent = taggedLine.IsMarkerPersistent;
+			line.Direction = taggedLine.Direction;
+			line.Location = taggedLine.Location;
+			line.Weight = taggedLine.Weight;
+			line.Size = taggedLine.Size;
+			line.Intelligence = taggedLine.Intelligence;
+			line.Label = taggedLine.Label;
+			line.Gender = taggedLine.Gender;
 
 			if (perTarget)
 			{
@@ -206,32 +220,10 @@ namespace SPNATI_Character_Editor.Controls
 				line.Marker = $"{marker}={markerValue}";
 			}
 
-			line.Direction = direction;
-			line.Location = location;
 			if (pose != null)
 			{
 				line.IsGenericImage = pose.IsGeneric;
 			}
-
-			string ai = row.Cells["ColIntelligence"].Value?.ToString();
-			string size = row.Cells["ColSize"].Value?.ToString();
-			string label = row.Cells["ColLabel"].Value?.ToString();
-			string gender = row.Cells["ColGender"].Value?.ToString();
-			string weight = row.Cells[nameof(ColWeight)].Value?.ToString() ?? "0";
-			float fval;
-			if (float.TryParse(weight, NumberStyles.Number, CultureInfo.InvariantCulture, out fval) && fval != 0)
-			{
-				line.Weight = fval;
-			}
-			else
-			{
-				line.Weight = 1;
-			}
-
-			line.Intelligence = ai;
-			line.Size = size;
-			line.Label = label;
-			line.Gender = gender;
 
 			Tuple<string, string> collectibleData = row.Cells[nameof(ColTrophy)].Tag as Tuple<string, string>;
 			if (collectibleData != null)
@@ -383,7 +375,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void gridDialogue_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
 		{
-			if (e.ColumnIndex == ColDelete.Index || e.ColumnIndex == ColTrophy.Index || e.ColumnIndex == ColMarkerOptions.Index)
+			if (e.ColumnIndex == ColDelete.Index || e.ColumnIndex == ColTrophy.Index || e.ColumnIndex == ColMarkerOptions.Index || e.ColumnIndex == ColMore.Index)
 			{
 				Image img = Properties.Resources.Delete;
 				if (e.ColumnIndex == ColTrophy.Index)
@@ -412,6 +404,10 @@ namespace SPNATI_Character_Editor.Controls
 							img = Properties.Resources.BookmarkFilled;
 						}
 					}
+				}
+				else if (e.ColumnIndex == ColMore.Index)
+				{
+					img = Properties.Resources.Ellipsis;
 				}
 				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
 				var w = img.Width;
@@ -503,6 +499,7 @@ namespace SPNATI_Character_Editor.Controls
 			row.Tag = new DialogueLine();
 			row.Cells["ColDelete"].ToolTipText = "Delete line";
 			row.Cells["ColTrophy"].ToolTipText = "Unlock collectible";
+			row.Cells[nameof(ColMore)].ToolTipText = "More options";
 			row.Cells[nameof(ColMarkerOptions)].ToolTipText = "Advanced marker options";
 		}
 
@@ -531,14 +528,31 @@ namespace SPNATI_Character_Editor.Controls
 				Point screen = gridDialogue.PointToScreen(new Point(0, 0));
 				_markerDropDown.Show(this, new Point(pt.X - screen.X + ColMarkerOptions.Width, pt.Y - screen.Y + row.Height));
 			}
+			else if (col == ColMore)
+			{
+				DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
+				DialogueLine line = ReadLineFromDialogueGrid(e.RowIndex);
+				_lineCtl.SetData(e.RowIndex, line);
+
+				Point pt = gridDialogue.PointToScreen(gridDialogue.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false).Location);
+				Point screen = gridDialogue.PointToScreen(new Point(0, 0));
+				_lineDropDown.Show(this, new Point(pt.X - screen.X + ColMore.Width, pt.Y - screen.Y + row.Height));
+			}
 		}
 
 		private void _markerDropDown_Closing(object sender, ToolStripDropDownClosingEventArgs e)
 		{
 			DataGridViewRow row = gridDialogue.Rows[_markerCtl.RowIndex];
 			AddLineToDialogueGrid(_markerCtl.GetLine(), row);
-			_markerCtl.GetLine();
 		}
+
+
+		private void _lineDropDown_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+		{
+			DataGridViewRow row = gridDialogue.Rows[_lineCtl.RowIndex];
+			AddLineToDialogueGrid(_lineCtl.GetLine(), row);
+		}
+
 
 		public bool IsEmpty
 		{
@@ -554,15 +568,6 @@ namespace SPNATI_Character_Editor.Controls
 				gridDialogue.Select();
 			if (gridDialogue.EditingControl != null && ActiveControl != gridDialogue.EditingControl)
 				gridDialogue.EditingControl.Select();
-		}
-
-		public bool ShowAdvancedColumns
-		{
-			set
-			{
-				gridDialogue.Columns["ColDirection"].Visible = gridDialogue.Columns["ColLocation"].Visible = value;
-				ColGender.Visible = ColSize.Visible = ColIntelligence.Visible = ColLabel.Visible = ColWeight.Visible = value;
-			}
 		}
 
 		/// <summary>
@@ -641,19 +646,7 @@ namespace SPNATI_Character_Editor.Controls
 			bool perTarget;
 			marker = Marker.ExtractPieces(line.Marker, out markerValue, out perTarget);
 			markerCell.Value = marker;
-
-			DataGridViewCell directionCell = row.Cells["ColDirection"];
-			directionCell.Value = line.Direction;
-
-			DataGridViewCell locationCell = row.Cells["ColLocation"];
-			locationCell.Value = line.Location;
-
-			row.Cells["ColIntelligence"].Value = line.Intelligence;
-			row.Cells["ColSize"].Value = line.Size;
-			row.Cells["ColGender"].Value = line.Gender;
-			row.Cells["ColLabel"].Value = line.Label;
-
-			row.Cells[nameof(ColWeight)].Value = line.Weight;
+			
 			row.Cells[nameof(ColTrophy)].Tag = new Tuple<string, string>(line.CollectibleId, line.CollectibleValue);
 
 		}

@@ -183,11 +183,6 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			OnKeyDown(e);
 		}
-
-		private void ckbShowAdvanced_CheckedChanged(object sender, EventArgs e)
-		{
-			this.gridDialogue.ShowAdvancedColumns = ckbShowAdvanced.Checked;
-		}
 		#endregion
 
 		public bool FindReplace(FindArgs args)
