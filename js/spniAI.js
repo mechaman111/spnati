@@ -19,9 +19,34 @@ function determineAIAction (player) {
 	
 	/* collect the ranks and suits of the cards */
 	var hand = player.hand.cards;
-	
+
+	/* Player tries hard to lose */
+	if (player.getIntelligence() == eIntelligence.THROW) {
+		if (player.hand.strength == STRAIGHT || player.hand.strength == FLUSH || player.hand.strength >= STRAIGHT_FLUSH) {
+			var sortedRanks = hand.map(function(c) { return c.rank; }).sort();
+			// Keep the two lowest cards.
+			player.hand.tradeIns = hand.map(function(c) { return c.rank != sortedRanks[0] && c.rank != sortedRanks[1]; })
+			return;
+		}
+		player.hand.tradeIns = [false, false, false, false, false];
+		for (var i = 0; i < hand.length; i++) {
+			if (hand[i].rank >= 12) {
+				player.hand.tradeIns[i] = true;
+			} else if (player.hand.strength >= PAIR) {
+				for (var j = i + 1; j < hand.length; j++) {
+					if (hand[i].rank == hand[j].rank) {
+						// Discard this card if there's another card
+						// of the same rank (keeping the last card of
+						// each rank, as long as it's below queen.
+						player.hand.tradeIns[i] = true;
+						break;
+					}
+				}
+			}
+		}
+
 	/*for low intelligence characters all trades are done at random. Technically this is the same as doing nothing but this way they won't always just do nothing.*/
-	if (player.getIntelligence() == eIntelligence.BAD) {
+	} else if (player.getIntelligence() == eIntelligence.BAD) {
 		player.hand.tradeIns = [false, false, false, false, false];
 
 		/*choose number of cards to trade in*/
