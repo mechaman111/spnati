@@ -14520,8 +14520,12 @@
                 <state img="7-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
             </case>
             <case tag="opponent_stripped" target="human" filter="pale-skinned" targetStatus="topless" priority="500">
-                <state img="7-sad.png" marker="player_pale" set-gender="male">&lt;i&gt;(~player~ looks so pale... Does he get enough sunlight?)&lt;/i&gt;</state>
-                <state img="7-sad.png" marker="player_pale" set-gender="female">&lt;i&gt;(~player~ looks so pale... Does she get enough sunlight?)&lt;/i&gt;</state>
+                <test expr="~target.gender~" cmp="==" value="male" />
+                <state img="7-sad.png" marker="player_pale">&lt;i&gt;(~player~ looks so pale... Does he get enough sunlight?)&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_stripped" target="human" filter="pale-skinned" targetStatus="topless" priority="500">
+                <test expr="~target.gender~" cmp="==" value="female" />
+                <state img="7-sad.png" marker="player_pale">&lt;i&gt;(~player~ looks so pale... Does she get enough sunlight?)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_heavy_masturbating" notSaidMarker="edging">
                 <condition count="0" filter="uses_toy" />
