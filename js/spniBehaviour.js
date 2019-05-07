@@ -240,7 +240,7 @@ function State($xml, parentCase) {
     }
     
     if (markerOp) {
-        var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
+        var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?[^~]+~))$/);
         var name;
         
         this.marker = {name: null, perTarget: false, persistent: persistMarker, op: null, val: null};
