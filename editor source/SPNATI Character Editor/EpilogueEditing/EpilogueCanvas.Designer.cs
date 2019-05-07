@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EpilogueCanvas));
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.treeScenes = new SPNATI_Character_Editor.Controls.SceneTree();
@@ -38,6 +39,7 @@
 			this.cmdFit = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.cmdToggleFade = new System.Windows.Forms.ToolStripButton();
+			this.cmdMarkers = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.cmdPlayDirective = new System.Windows.Forms.ToolStripButton();
 			this.cmdPlay = new System.Windows.Forms.ToolStripButton();
@@ -114,6 +116,7 @@
 			this.propertyTable.AllowDelete = false;
 			this.propertyTable.AllowFavorites = false;
 			this.propertyTable.AllowHelp = true;
+			this.propertyTable.AllowMacros = false;
 			this.propertyTable.Data = null;
 			this.propertyTable.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.propertyTable.HideAddField = true;
@@ -121,11 +124,14 @@
 			this.propertyTable.Location = new System.Drawing.Point(0, 0);
 			this.propertyTable.Name = "propertyTable";
 			this.propertyTable.PlaceholderText = "Add a property";
+			this.propertyTable.PreserveControls = true;
 			this.propertyTable.RemoveCaption = "Remove";
 			this.propertyTable.RowHeaderWidth = 85F;
+			this.propertyTable.RunInitialAddEvents = false;
 			this.propertyTable.Size = new System.Drawing.Size(293, 206);
 			this.propertyTable.Sorted = true;
 			this.propertyTable.TabIndex = 0;
+			this.propertyTable.UndoManager = null;
 			this.propertyTable.UseAutoComplete = false;
 			this.propertyTable.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.propertyTable_PropertyChanged);
 			// 
@@ -138,12 +144,13 @@
             this.cmdFit,
             this.toolStripSeparator1,
             this.cmdToggleFade,
+            this.cmdMarkers,
             this.toolStripSeparator2,
             this.cmdPlayDirective,
             this.cmdPlay});
 			this.canvasStrip.Location = new System.Drawing.Point(184, 0);
 			this.canvasStrip.Name = "canvasStrip";
-			this.canvasStrip.Size = new System.Drawing.Size(130, 25);
+			this.canvasStrip.Size = new System.Drawing.Size(192, 25);
 			this.canvasStrip.TabIndex = 0;
 			// 
 			// cmdLock
@@ -187,6 +194,16 @@
 			this.cmdToggleFade.Text = "Play";
 			this.cmdToggleFade.ToolTipText = "Toggle fade overlay";
 			this.cmdToggleFade.Click += new System.EventHandler(this.cmdToggleFade_Click);
+			// 
+			// cmdMarkers
+			// 
+			this.cmdMarkers.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.cmdMarkers.Image = ((System.Drawing.Image)(resources.GetObject("cmdMarkers.Image")));
+			this.cmdMarkers.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cmdMarkers.Name = "cmdMarkers";
+			this.cmdMarkers.Size = new System.Drawing.Size(62, 22);
+			this.cmdMarkers.Text = "Markers...";
+			this.cmdMarkers.Click += new System.EventHandler(this.cmdMarkers_Click);
 			// 
 			// toolStripSeparator2
 			// 
@@ -323,5 +340,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.Label lblZoom;
 		private System.Windows.Forms.TrackBar sliderZoom;
+		private System.Windows.Forms.ToolStripButton cmdMarkers;
 	}
 }

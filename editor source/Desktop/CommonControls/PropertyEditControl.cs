@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace Desktop.CommonControls
 {
 	/// <summary>
-	/// Base class for controls that can be used in a list manager
+	/// Base class for controls that can be used in a property table
 	/// </summary>
 	[ToolboxItem(false)]
 	public partial class PropertyEditControl : UserControl, INotifyPropertyChanged
@@ -17,16 +17,26 @@ namespace Desktop.CommonControls
 
 		public object Context { get; set; }
 		public object Data { get; set; }
+		public object PreviewData { get; set; }
+		public UndoManager UndoManager { get; set; }
 
 		private MemberInfo _propertyInfo;
 		private IList _list;
 		private HashSet<string> _boundProperties = new HashSet<string>();
 		public List<string> Bindings = new List<string>();
+		private INotifyPropertyChanged _bindableData;
+		private INotifyPropertyChanged _bindablePreviewData;
+		private bool _selfUpdating;
 
 		public Type DataType { get { return _propertyInfo.GetDataType(); } }
 
 		public string Property { get; set; }
 		public int Index { get; set; }
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
+		public event EventHandler<int> RequireHeight;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
+		public event EventHandler<string> ChangeLabel;
 
 		public void SetParameters(EditControlAttribute parameters)
 		{
@@ -42,6 +52,32 @@ namespace Desktop.CommonControls
 		}
 		protected virtual void OnSetParameters(EditControlAttribute parameters)
 		{
+		}
+
+		public virtual void OnInitialAdd()
+		{
+		}
+
+		public virtual void OnAddedToRow()
+		{
+		}
+
+		public virtual void ApplyMacro(List<string> values)
+		{
+		}
+
+		public virtual void BuildMacro(List<string> values)
+		{
+		}
+
+		protected virtual void OnRequireHeight(int height)
+		{
+			RequireHeight?.Invoke(this, height);
+		}
+
+		protected virtual void OnChangeLabel(string label)
+		{
+			ChangeLabel?.Invoke(this, label);
 		}
 
 		internal void RemoveFromList()
@@ -61,17 +97,62 @@ namespace Desktop.CommonControls
 			return _propertyInfo.GetValue(Data);
 		}
 
+		protected object GetPreviewValue()
+		{
+			if (_list != null)
+			{
+				throw new NotImplementedException("Preview data not supported with lists.");
+			}
+			return _propertyInfo.GetValue(PreviewData);
+		}
+
 		protected void SetValue(object value)
+		{
+			object old = null;
+
+			//quit out if the data hasn't changed
+			if (_list != null)
+			{
+				old = _list[Index];
+				if (old == value)
+				{
+					return;
+				}
+			}
+			else
+			{
+				old = GetValue();
+				if (!((old != null || value != null) && ((old != null && !old.Equals(value)) || (value != null && !value.Equals(old)))))
+				{
+					return;
+				}
+			}
+
+			//update the data either directly if no UndoManager is present, or through the UndoManager if one is
+			_selfUpdating = true;
+			if (UndoManager != null)
+			{
+				SetValueCommand command = new SetValueCommand(Data, this, old, value);
+				UndoManager.Commit(command);
+			}
+			else
+			{
+				SetValueDirectly(Data, value);
+			}
+			_selfUpdating = false;
+		}
+		internal void SetValueDirectly(object data, object value)
 		{
 			if (_list != null)
 			{
 				_list[Index] = value;
-				return;
 			}
-			object old = GetValue();
-			if ((old != null || value != null) && ((old != null && !old.Equals(value)) || (value != null && !value.Equals(old))))
+			else
 			{
-				_propertyInfo.SetValue(Data, value);
+				_propertyInfo.SetValue(data, value);
+			}
+			if (data == Data)
+			{
 				NotifyPropertyChanged();
 			}
 		}
@@ -100,7 +181,41 @@ namespace Desktop.CommonControls
 
 		protected Type PropertyType
 		{
-			get	{ return _propertyInfo.GetDataType(); }
+			get { return _propertyInfo.GetDataType(); }
+		}
+
+		protected virtual void OnDestroy()
+		{
+
+		}
+		public void Destroy()
+		{
+			OnDestroy();
+			ClearBindableData();
+		}
+
+		private void ClearBindableData()
+		{
+			if (_bindableData != null)
+			{
+				_bindableData.PropertyChanged -= BindableData_PropertyChanged;
+				_bindableData = null;
+			}
+			if (_bindablePreviewData != null)
+			{
+				_bindablePreviewData.PropertyChanged -= BindableData_PropertyChanged;
+				_bindablePreviewData = null;
+			}
+		}
+
+		private void SetBindableData(object data, ref INotifyPropertyChanged bindableData)
+		{
+			INotifyPropertyChanged bindable = data as INotifyPropertyChanged;
+			if (bindable != null)
+			{
+				bindableData = bindable;
+				bindable.PropertyChanged += BindableData_PropertyChanged;
+			}
 		}
 
 		/// <summary>
@@ -108,8 +223,11 @@ namespace Desktop.CommonControls
 		/// </summary>
 		/// <param name="data"></param>
 		/// <param name="property"></param>
-		public void SetData(object data, string property, int index, object context)
+		public void SetData(object data, string property, int index, object context, UndoManager undoManager, object previewData)
 		{
+			SetBindableData(data, ref _bindableData);
+			SetBindableData(previewData, ref _bindablePreviewData);
+			UndoManager = undoManager;
 			Context = context;
 			Property = property;
 			Index = index;
@@ -124,10 +242,54 @@ namespace Desktop.CommonControls
 				}
 			}
 			Data = data;
-			OnBoundData();
+			PreviewData = previewData;
+			UpdateBinding(false);
 		}
+
+		/// <summary>
+		/// Called when the property behind this control is either first set or updated externally
+		/// </summary>
+		private void UpdateBinding(bool rebind)
+		{
+			if (rebind)
+			{
+				RemoveHandlers();
+			}
+			OnBoundData();
+			AddHandlers();
+		}
+
+		protected virtual void RemoveHandlers()
+		{
+
+		}
+		protected virtual void AddHandlers()
+		{
+
+		}
+
+		private void BindableData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (_selfUpdating || e.PropertyName != Property)
+			{
+				return;
+			}
+			UpdateBinding(true);
+		}
+
 		protected virtual void OnBoundData()
 		{
+		}
+
+		public void Rebind(object data, object previewData, object context)
+		{
+			ClearBindableData();
+			Data = data;
+			PreviewData = previewData;
+			SetBindableData(data, ref _bindableData);
+			SetBindableData(previewData, ref _bindablePreviewData);
+			Context = context;
+			Rebind();
 		}
 
 		/// <summary>
@@ -135,10 +297,7 @@ namespace Desktop.CommonControls
 		/// </summary>
 		public void Rebind()
 		{
-			OnRebindData();
-		}
-		protected virtual void OnRebindData()
-		{
+			UpdateBinding(true);
 		}
 
 		/// <summary>
@@ -150,6 +309,32 @@ namespace Desktop.CommonControls
 		/// Saves the current data
 		/// </summary>
 		public virtual void Save() { }
+
+		private class SetValueCommand : ICommand
+		{
+			private object _data;
+			private object _oldValue;
+			private object _newValue;
+			private PropertyEditControl _ctl;
+
+			public SetValueCommand(object data, PropertyEditControl ctl, object oldValue, object newValue)
+			{
+				_data = data;
+				_ctl = ctl;
+				_oldValue = oldValue;
+				_newValue = newValue;
+			}
+
+			public void Do()
+			{
+				_ctl.SetValueDirectly(_data, _newValue);
+			}
+
+			public void Undo()
+			{
+				_ctl.SetValueDirectly(_data, _oldValue);
+			}
+		}
 	}
 
 	public static class MemberInfoExtensions
@@ -169,6 +354,7 @@ namespace Desktop.CommonControls
 
 		public static object GetValue(this MemberInfo mi, object obj)
 		{
+			if (obj == null) { return null; }
 			switch (mi.MemberType)
 			{
 				case MemberTypes.Field:

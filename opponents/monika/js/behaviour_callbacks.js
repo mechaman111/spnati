@@ -230,13 +230,13 @@ monika.startJointMasturbation = function () {
         players[monika_slot].markers['joint-masturbation'] = 1;
         players[sayori_slot].markers['joint-masturbation'] = 1;
         
-        players[monika_slot].tags.push('tandem');
+        players[monika_slot].addTag('tandem');
         
         /* Hard reset stage and forfeit timers for Monika. */
         players[monika_slot].forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
         
     	players[monika_slot].out = true;
-        timers[monika_slot] = 25;
+        players[monika_slot].timer = 25;
         
     	players[monika_slot].stage = 8;
         
@@ -268,10 +268,7 @@ monika.endJointMasturbation = function () {
         
         monika.active_effects['joint_masturbation'] = false;
         
-        var pos = players[monika_slot].tags.indexOf('tandem');
-        if (pos >= 0) {
-            players[monika_slot].tags.splice(pos, 1);
-        }
+        players[monika_slot].removeTag('tandem');
         
         setTimeout(function () {
             /* Put Sayori back in her slot. */
@@ -284,7 +281,7 @@ monika.endJointMasturbation = function () {
             players[sayori_slot].forfeit = [PLAYER_FINISHED_MASTURBATING, CAN_SPEAK];
         	players[sayori_slot].timeInStage = -1;
         	players[sayori_slot].finished = true;
-            timers[sayori_slot] = 0;
+            players[sayori_slot].timer = 0;
         }, 0);
     } catch (e) {
         monika.reportException("in monika.endJointMasturbation()", e);

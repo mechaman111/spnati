@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using Desktop.Providers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,8 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// List of released versions since update tracking was added, used for determining which updates a user skipped and providing info about those
 		/// </summary>
-		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6", "v3.7" };
+		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6",
+			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2", "v4.0b", "v4.0.1b", "v4.0.2b", "v4.0.3b", "v4.0", "v4.1", "v4.2", "v4.2.1", "v4.3" };
 
 		/// <summary>
 		/// Current Version
@@ -31,19 +33,21 @@ namespace SPNATI_Character_Editor
 			{
 				return true;
 			}
+
+			bool passedTarget = false;
 			for (int i = 0; i < VersionHistory.Length; i++)
 			{
 				string v = VersionHistory[i];
 				if (v == targetVersion)
 				{
-					return false;
+					passedTarget = true;
 				}
 				if (v == version)
 				{
-					return true;
+					return !passedTarget;
 				}
 			}
-			return false; //should never be hit with valid input
+			return true; //version that predates VersionHistory
 		}
 
 		/// <summary>
@@ -132,7 +136,7 @@ namespace SPNATI_Character_Editor
 				for (int i = 0; i < lines.Length; i++)
 				{
 					string line = lines[i];
-					string[] kvp = line.Split('=');
+					string[] kvp = line.Split(new char[] { '=' }, 2);
 					string key = kvp[0].ToLower();
 					string value = kvp[1];
 					Set(key, value);
@@ -164,12 +168,52 @@ namespace SPNATI_Character_Editor
 				Directory.CreateDirectory(dataDir);
 			}
 
+			SaveRecentRecords();
+
 			List<string> lines = new List<string>();
 			foreach (KeyValuePair<string, string> kvp in _settings)
 			{
 				lines.Add($"{kvp.Key.ToLower()}={kvp.Value}");
 			}
 			File.WriteAllLines(filename, lines);
+		}
+
+		public static void LoadRecentRecords<T>()
+		{
+			string[] keys = GetString("Recent" + typeof(T).Name).Split('|');
+			foreach (string key in keys)
+			{
+				IRecord record = null;
+				if (typeof(T) == typeof(Character))
+				{
+					record = CharacterDatabase.Get(key);
+				}
+				else if (typeof(T) == typeof(Costume))
+				{
+					record = CharacterDatabase.GetSkin(key);
+				}
+				if (record != null)
+				{
+					RecordLookup.AddToRecent(typeof(T), record);
+				}
+			}
+		}
+
+		private static void SaveRecentRecords()
+		{
+			SaveRecords<Character>();
+			SaveRecords<Costume>();
+		}
+
+		private static void SaveRecords<T>()
+		{
+			List<IRecord> list = RecordLookup.GetRecentRecords<T>();
+			List<string> keys = new List<string>();
+			foreach (IRecord record in list)
+			{
+				keys.Add(record.Key);
+			}
+			Set("Recent" + typeof(T).Name, string.Join("|", keys));
 		}
 
 		/// <summary>
@@ -181,7 +225,16 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Gets the programs %appdata% path
+		/// Gets where SPNATI is located
+		/// </summary>
+		public static string KisekaeDirectory
+		{
+			get { return GetString(Settings.KisekaeDirectory); }
+			set { Set(Settings.KisekaeDirectory, value); }
+		}
+
+		/// <summary>
+		/// Gets the program's %appdata% path
 		/// </summary>
 		public static string AppDataDirectory
 		{
@@ -196,6 +249,17 @@ namespace SPNATI_Character_Editor
 			if (character == null || string.IsNullOrEmpty(character.FolderName))
 				return "";
 			return GetRootDirectory(character.FolderName);
+		}
+
+
+		/// <summary>
+		/// Retrieves the backup directory for a character
+		/// </summary>
+		public static string GetBackupDirectory(Character character)
+		{
+			if (character == null || string.IsNullOrEmpty(character.FolderName))
+				return "";
+			return Path.Combine(AppDataDirectory, character.FolderName);
 		}
 
 		/// <summary>
@@ -233,6 +297,18 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// How many minutes to auto-backup
+		/// </summary>
+		public static bool AutoBackupEnabled
+		{
+			get { return !GetBoolean("disableautobackup"); }
+			set
+			{
+				Set("disableautobackup", !value);
+			}
+		}
+
+		/// <summary>
 		/// Whether variable intellisense is enabled
 		/// </summary>
 		public static bool UseIntellisense
@@ -258,11 +334,81 @@ namespace SPNATI_Character_Editor
 			get { return GetString(Settings.PrefixFilter); }
 			set { Set(Settings.PrefixFilter, value); }
 		}
+
+		/// <summary>
+		/// Load other character info up front in banter wizard
+		/// </summary>
+		public static bool AutoLoadBanterWizard
+		{
+			get { return GetBoolean("autoloadbanter"); }
+			set { Set("autoloadbanter", value); }
+		}
+
+		/// <summary>
+		/// Auto-open record select for targets, markers, etc. in dialogue
+		/// </summary>
+		public static bool AutoOpenConditions
+		{
+			get { return !GetBoolean("autocondition"); }
+			set { Set("autocondition", !value); }
+		}
+
+		public static bool SeenMacroHelp
+		{
+			get { return GetBoolean("macrohelp"); }
+			set { Set("macrohelp", value); }
+		}
+
+		public static bool SuppressDefaults
+		{
+			get { return GetBoolean("suppressdefaultlines"); }
+			set { Set("suppressdefaultlines", value); }
+		}
+
+		public static void SaveMacros(string key)
+		{
+			MacroProvider provider = new MacroProvider();
+			int index = 0;
+			foreach (IRecord record in provider.GetRecords(""))
+			{
+				index++;
+				Macro macro = record as Macro;
+				Set($"Macro{key}{index}", macro.Serialize());
+			}
+			Set($"Macro{key}0", index);
+
+			Save();
+		}
+
+		public static void LoadMacros<T>(string key)
+		{
+			MacroProvider provider = new MacroProvider();
+			int count = GetInt($"Macro{key}0");
+			for (int i = 1; i <= count; i++)
+			{
+				string value = GetString($"Macro{key}{i}");
+				Macro macro = Macro.Deserialize(value);
+				if (macro != null)
+				{
+					provider.Add(typeof(T), macro);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Last ending that was opened
+		/// </summary>
+		public static string LastEnding
+		{
+			get { return GetString("lastending"); }
+			set { Set("lastending", value); }
+		}
 	}
 
 	public static class Settings
 	{
 		public static readonly string GameDirectory = "game";
+		public static readonly string KisekaeDirectory = "kkl";
 		public static readonly string LastCharacter = "last";
 		public static readonly string LastVersionRun = "version";
 		public static readonly string UserName = "username";

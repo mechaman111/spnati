@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
 
 namespace SPNATI_Character_Editor.EpilogueEditing
 {
@@ -22,7 +20,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public int Iterations;
 
 		public float Elapsed;
-		public float Delay;
 
 		private SceneObject _initialState;
 
@@ -32,10 +29,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			_initialState.Index = 0;
 			AssociatedObject = obj;
 			Looped = directive.Looped;
-			if (!string.IsNullOrEmpty(directive.Delay))
-			{
-				float.TryParse(directive.Delay, NumberStyles.Float, CultureInfo.InvariantCulture, out Delay);
-			}
 			EasingMethod = directive.EasingMethod;
 			TweenMethod = directive.InterpolationMethod;
 			ClampMethod = directive.ClampingMethod;
@@ -62,7 +55,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		{
 			get
 			{
-				float life = Elapsed - Delay;
+				float life = Elapsed;
 				if (Looped)
 				{
 					return Iterations > 0 ? life / Duration >= Iterations : false;
@@ -126,7 +119,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		{
 			Elapsed += elapsedSec;
 
-			float t = Elapsed - Delay;
+			float t = Elapsed;
 			if (t < 0)
 			{
 				return;
@@ -150,7 +143,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				{
 					t = Math.Min(1, t);
 				}
-				t = Ease(EasingMethod, t);
+				t = AnimationHelpers.Ease(EasingMethod, t);
 				t *= Duration;
 			}
 			for (int i = Frames.Count - 1; i >= 0; i--)
@@ -207,53 +200,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		{
 			SceneObject frame = Frames[Frames.Count - 1];
 			UpdateValues(frame, frame, 1);
-		}
-
-		public static float Ease(string method, float t)
-		{
-			switch (method)
-			{
-				case "linear":
-					return t;
-				case "ease-in":
-					return t * t;
-				case "ease-out":
-					return t * (2 - t);
-				case "elastic":
-					return t == 0 ? 0 : (0.04f - 0.04f / t) * (float)Math.Sin(25 * t) + 1;
-				case "ease-in-cubic":
-					return t * t * t;
-				case "ease-out-cubic":
-					t--;
-					return 1 + t * t * t;
-				case "ease-in-sin":
-					return 1 + (float)Math.Sin(Math.PI / 2 * t - Math.PI / 2);
-				case "ease-out-sin":
-					return (float)Math.Sin(Math.PI / 2 * t);
-				case "ease-in-out-cubic":
-					return t < 0.5f ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-				case "bounce":
-					if (t < 0.3636f)
-					{
-						return 7.5625f * t * t;
-					}
-					else if (t < 0.7273f)
-					{
-						t -= 0.5455f;
-						return 7.5625f * t * t + 0.75f;
-					}
-					else if (t < 0.9091f)
-					{
-						t -= 0.8182f;
-						return 7.5625f * t * t + 0.9375f;
-					}
-					else
-					{
-						t -= 0.9545f;
-						return 7.5625f * t * t + 0.984375f;
-					}
-			}
-			return 3 * t * t - 2 * t * t * t;
 		}
 	}
 }

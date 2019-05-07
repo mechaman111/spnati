@@ -14,7 +14,7 @@ body {
 	background-color: #050505;
     font-size: 1.4em;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
-    background-image: url("../img/background1.png");
+    background-image: url("../img/backgrounds/inventory.png");
     background-size: contain; /* Sensible initial value */
     background-position: center center;
     background-repeat: repeat-x;
@@ -82,6 +82,20 @@ body.modal-open {
 	right: 0;
     margin: auto;
 }
+
+.wide-screen-container {
+	position: absolute;
+	width: 100vw;
+	height: 56.25vw;
+	max-width: 177.78vh;
+	max-height: 100vh;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+    margin: auto;
+}
+
 
 .screen {
 	position: absolute;
@@ -249,6 +263,40 @@ body.modal-open {
     font-size: 130%;
 }
 
+.game-menu-dropup {
+    position: absolute;
+    left: 1%;
+    bottom: 5%;
+    
+    width: 7%;
+    height: 8%;
+}
+
+.menu-dropdown-button {
+    width: 100%;
+    height: 100%;
+}
+
+.menu-dropdown-button span {
+    font-size: 2em;
+}
+
+.dropdown-menu {
+    background: none;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    width: 300%;
+}
+
+.dropdown-button-item span {
+    display: inline;
+}
+
+.dropdown-button-item {
+    width: 100%;
+    font-size: 1.5em;
+}
+
 /************************************************************
  * Classes for modals styled like the game table.
  ************************************************************/
@@ -258,7 +306,7 @@ body.modal-open {
 	width: 100vw;
 	height: 75vw;
 	max-width: 133.33vh;
-	max-height: 100vh;
+	max-height: 90vh;
 	top: 0;
 	bottom: 0;
 	left: 0;
@@ -288,6 +336,11 @@ body.modal-open {
 	vertical-align: middle;
 }
 
+.modal-flex-container {
+    width: 100%;
+	height: 100%;
+}
+
 .table-modal .modal-dialog {
 	height: auto;
 	box-sizing: border-box;
@@ -296,6 +349,14 @@ body.modal-open {
 	background: linear-gradient(#333333, #222222);
 	background-color: #333333;
 	color: black;
+}
+
+/* Applies the layout rules, but not the background rules. */
+.transparent-modal-dialog {
+	height: auto;
+	box-sizing: border-box;
+	margin: 0px auto;
+	padding: 5px;    
 }
 
 .thin-modal-dialog {
@@ -321,6 +382,21 @@ body.modal-open {
 	background-color: #777777;
 	box-sizing: border-box;
     font-size: 100%;
+}
+
+.modal-flex-container .modal-dialog-surface, .modal-flex-container .modal-dialog {
+    height: 100%;
+}
+
+.modal-flex-container .modal-content {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    /*height: 100%;*/
+}
+
+.modal-flex-container .modal-footer {
+    margin-top: auto;
 }
 
 .table-modal .modal-content {
@@ -536,13 +612,14 @@ body.modal-open {
 }
 
 .player-tag-select > .colorAndLabel.range input[disabled] {
-  width: 25%;
+  /*width: 25%;*/
   min-width: 7.5rem;
 }
 
 .player-tag-select input[type=range] {
   -webkit-appearance: none;
-  margin: 0.5rem 0;
+  /*margin: 0.5rem 0;*/
+  margin: 2% 0;
   padding: 0;
   max-width: 100%;
 }
@@ -604,6 +681,11 @@ body.modal-open {
 	font-size: 110%;
 }
 
+#bug-report-modal .modal-dialog-surface, #player-tags-modal .modal-dialog-surface {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .modal a {
 	color: hsla(207, 56%, 37%, 1);
 }
@@ -614,6 +696,56 @@ body.modal-open {
 
 #usage-reporting-modal ul {
 	padding-left: 2rem;
+}
+
+#help-modal .modal-body {
+    overflow-y: auto;
+}
+
+.help-page h2 {
+    margin-top: 0px;
+}
+
+.faq-question {
+    margin-top: 10px;
+}
+
+.faq-answer {
+    font-size: 85%;
+}
+
+.faq-answer ul li {
+    text-align: left;
+}
+
+.faq-poker-hands-infographic {
+    width: 100%;
+}
+
+#settings-background {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#settings-background>li {
+    width: 19.5%;
+    margin: 0.25%;
+}
+
+#settings-background>li>a {
+    width: 100%;
+    white-space: nowrap;
+    padding: 0.5em 0;
+}
+
+#settings-background>li:first-child>a, #settings-background>li:last-child>a {
+    margin-left: -1px;
+    border-radius: 0px;
+}
+
+.background-credits-container {
+    text-align: left;
 }
 
 /************************************************************
@@ -659,6 +791,30 @@ body.modal-open {
 .log-entry-message {
 	width: 100%;
 	height: 100%;
+}
+
+/************************************************************
+ * Classes for the changelog / version modal.
+ ************************************************************/
+
+#version-modal .modal-body {
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+
+.changelog-version-label {
+    width: 10%;
+    padding-bottom: 1.5%
+}
+
+.changelog-date-label {
+    width: 15%;
+    padding-bottom: 1.5%
+}
+
+.changelog-entry-text {
+    width: 75%;
+    padding-bottom: 1.5%
 }
 
 /************************************************************
@@ -840,6 +996,8 @@ body.modal-open {
  * Classes for the title screen.
  ************************************************************/
 
+/* Common title classes and elements: */
+
 .banner-flair {
     text-align: center;
     font-size: 110%;
@@ -848,6 +1006,9 @@ body.modal-open {
 }
 
 .warning-text {
+    position: relative;
+    top: 5%;
+    
     text-align: center;
 	font-size: 130%;
 	color: #F0F0F0;
@@ -860,11 +1021,21 @@ body.modal-open {
 
 #title-version-button {
     position: absolute;
-    width: 12.5%;
-    height: 3.5%;
-    top: 17.25%;
-    left: 5.5%;
+    width: 16.5%;
+    height: 5%;
+    top: 17%;
+    right: 17%;
     padding-top: 0.15%;
+}
+
+#title-version-button > .substitute-version {
+    line-height: 85%;
+    margin-top: 0.35em;
+}
+
+#title-version-button > .substitute-version-time {
+    font-size: 80%;
+    white-space: nowrap;
 }
 
 #title-credits-button {
@@ -872,8 +1043,37 @@ body.modal-open {
     width: 12.5%;
     height: 3.5%;
     top: 17.25%;
-    right: 6.5%;
+    right: 34%;
     padding-top: 0.15%;
+}
+
+#title-help-button {
+    position: absolute;
+    width: 15.5%;
+    height: 6.5%;
+    top: 17%;
+    right: 1%;
+    padding-top: 0.15%;
+
+    font-size: 150%;
+
+    background: linear-gradient(#f34141, #9F1616);
+    background-color: #f34141;
+}
+
+#title-help-button:hover {
+    background: linear-gradient(#F88888, #BB3333);
+
+    background-color: #F66666;
+}
+
+#title-load-button {
+    position: absolute;
+    padding-top: 0.15%;
+    width: 3.65%;
+    height: 5%;
+    top: 17%;
+    left: 16%;
 }
 
 .title-banner-container {
@@ -903,6 +1103,67 @@ body.modal-open {
     left: 25%;
     width: 50%;
     bottom: 0;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-menu-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 100%;
+}
+
+#warning-screen .title-menu-buttons-container {
+    margin-top: 6%;
+}
+
+.title-content-button {
+    background: #F0F0F0;
+    opacity: 0.4;
+}
+
+.title-content-button :hover {
+    background: #FFFFFF;
+}
+
+.title-content-button :active {
+    background: #F0F0F0;
+}
+
+/* Main title screen blocks: */
+
+#title-name-block {
+    height: 16%;
+    width: 80%;
+}
+
+.title-gender-size-container {
+    width: 80%;
+    height: 10.92%;
+    display: flex;
+}
+
+.title-size-block {
+    width: 60%;
+    margin-left: auto;
+    
+    display: flex;
+    justify-content: flex-end;
+}
+
+#title-wardrobe-block {
+    width: 90%;
+    margin-top: 2.5%;
+}
+
+/* Name / Gender / Size block elements: */
+
+.title-gender-button {
+    width: 16.875%;
 }
 
 .title-label {
@@ -919,29 +1180,7 @@ body.modal-open {
 		0.1rem 0.1rem 0 #000;
 }
 
-.title-content-button {
-    background: #F0F0F0;
-    opacity: 0.4;
-}
-
-.title-content-button :hover {
-    background: #FFFFFF;
-}
-
-.title-content-button :active {
-    background: #F0F0F0;
-}
-
-#title-name-block {
-   position: absolute;
-    width: 80%;
-    height: 16%;
-    top: 0;
-    margin-left: 10%;
-}
-
 #player-name-field {
-	position: absolute;
     width: 100%;
     height: 60%;
     text-align: center;
@@ -949,29 +1188,12 @@ body.modal-open {
     background: rgba(240, 240, 240, 1);
 }
 
-#title-gender-block {
-    position: absolute;
-    width: 30%;
-    top: 16.5%;
-    margin-left: 10%;
-}
-
-#male-gender-button {
-    position: relative;
-    width: 45%;
-    top: 0;
-    right: 0;
+#female-gender-button {
+    margin-left: 1%;
 }
 
 .main-title-container.male #male-gender-button {
     opacity: 1;
-}
-
-#female-gender-button {
-    position: relative;
-    width: 45%;
-    top: 0;
-    right: 0;
 }
 
 .main-title-container.female #female-gender-button {
@@ -994,14 +1216,6 @@ body.modal-open {
     display: none;
 }
 
-.title-size-block {
-    position: absolute;
-    width: 45%;
-    top: 16.5%;
-    right: 0;
-    margin-right: 7.25%;
-}
-
 .small > .title-small-button {
     opacity: 1;
 }
@@ -1014,27 +1228,11 @@ body.modal-open {
     opacity: 1;
 }
 
-.title-small-button {
-    position: relative;
+.title-size-button {
     width: 30%;
 }
 
-.title-medium-button {
-    position: relative;
-    width: 30%;
-}
-
-.title-large-button {
-    position: relative;
-    width: 30%;
-}
-
-#title-wardrobe-block {
-    position: absolute;
-    width: 90%;
-    top: 30%;
-    margin-left: 5%;
-}
+/* Title clothing block elements: */
 
 .title-clothing-container {
     margin-top: 1%;
@@ -1069,21 +1267,33 @@ body.modal-open {
     width: 15.7%;
 }
 
-#title-start-edge {
-    position: absolute;
+/* Gallery / Start / Tag button elements: */
+
+.centered-icon-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.centered-icon-image {
+	width: 55%;
+	height: auto;
+}
+
+.centered-icon-glyphicon {
+	width: 2em;
+	height: auto;
+    font-size: 1.25em;
+}
+
+.title-start-edge {
     width: 36%;
-    height: 15%;
-    bottom: 6%;
-    left: 32%;
     font-size: 200%;
     padding: 0.5%;
     background: linear-gradient(#222222, #111111);
 }
 
-#title-start-button {
-	position: absolute;
-    width: 97%;
-    height: 95%;
+.title-start-button {
     padding-left: 2%;
     padding-right: 3%;
     font-size: 200%;
@@ -1095,47 +1305,43 @@ body.modal-open {
     width: 90%;
 }
 
-#title-gallery-edge {
-    position: absolute;
-	width: 11%;
-	height: 8.5%;
-	bottom: 6%;
-	left: 0%;
+.title-gallery-edge {
+	width: 20%;
+    height: 80%;
+    
 	font-size: 200%;
 	padding: 0.2%;
     background: linear-gradient(#222222, #111111);
+    
+    margin-right: 6.25%;
 }
 
-#title-gallery-button {
-	position: absolute;
-    width: 97%;
-    height: 95%;
+.title-gallery-button {
+    width: 100%;
+    height: 100%;
+    
+	padding-top: 1%;
+	padding-bottom: 1%;
     padding-left: 2%;
     padding-right: 3%;
     font-size: 200%;
 }
 
-.title-gallery-image {
-	margin-left: 4%;
-    margin-top: 4%;
-    width: 80%;
-}
-
-#title-tags-edge {
-    position: absolute;
-	width: 11%;
-	height: 8.5%;
-	bottom: 6%;
-	right: 0%;
+.title-tags-edge {
+    width: 20%;
+    height: 80%;
+    
 	font-size: 200%;
 	padding: 0.2%;
     background: linear-gradient(#222222, #111111);
+    
+    margin-left: 6.25%;
 }
 
-#title-tags-button {
-	position: absolute;
-    width: 97%;
-    height: 95%;
+.title-tags-button {
+    width: 100%;
+    height: 100%;
+    
     padding-left: 3%;
     padding-right: 2%;
     font-size: 100%;
@@ -1172,7 +1378,7 @@ body.modal-open {
     position: absolute;
     width: 3.65%;
     height: 5%;
-    right: 1%;
+    left: 11.75%;
     top: 17%;
 }
 
@@ -1183,17 +1389,21 @@ body.modal-open {
 
 #title-settings-button {
     position: absolute;
-    width: 3.65%;
-    height: 5%;
+    width: 6%;
+    height: 7%;
     left: 1%;
     top: 17%;
 }
 
+#title-settings-button > span {
+    font-size: 1.75em;
+}
+
 .title-bug-report-button {
-	position: absolute;
+    position: absolute;
     width: 3.65%;
     height: 5%;
-    left: 19%;
+    left: 7.5%;
     top: 17%;
 }
 
@@ -1230,6 +1440,37 @@ body.modal-open {
     height: 94%;
     font-size: 140%;
     bottom: 3%;
+}
+
+.select-random-container {
+    position: absolute;
+    height: 94%;
+    bottom: 3%;
+    right: 11.5%;
+    width: 30%;
+}
+
+.select-random-col {
+    width: 49%;
+    
+    height: 100%;
+    
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.select-random-col:first-child {
+    padding-right: 2%;
+}
+
+.select-quadrant-button {
+    width: 100%;
+    height: 49%;
+    white-space: nowrap;
+}
+
+.select-quadrant-button:first-child {
+    margin-bottom: 2%;
 }
 
 #main-select-button {
@@ -1284,20 +1525,8 @@ body.modal-open {
     left: 12%;
 }
 
-#select-random-group-button {
+#select-help-button {
     left: 32%;
-}
-
-#select-random-female-button {
-    right: 32%;
-}
-
-#select-random-male-button {
-    right: 22%;
-}
-
-#select-random-button {
-    right: 12%;
 }
 
 #select-remove-all-button {
@@ -1413,7 +1642,679 @@ body.modal-open {
 }
 
 /************************************************************
- * Classes for the individual and group select screens.
+ * Classes for the new individual select screen.
+ ************************************************************/
+
+ /************************************************************
+  * Classes for select screen cards.
+  ************************************************************/
+
+.opponent-cards-container {
+    width: 75%;
+    height: 90%;
+    
+    position: absolute;
+    left: 0;
+    top: 10%;
+    bottom: 0;
+    
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.opponent-card {
+    width: 19.5%;
+    height: 44%;
+    
+    margin: 0.5% 0.25%;
+    background-color: rgba(51, 51, 51, 0.65);
+    
+    border: 2px solid #111111;
+	border-radius: 5px;
+    
+    position: relative;
+    cursor: pointer;
+}
+
+.selection-card-image-clip {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    overflow: hidden;
+}
+
+.selection-card-image-area {
+    position: absolute;
+    top: -1.5%;
+    left: 0;
+    right: 0;
+    
+    display: inline;
+    height: 135%;
+    width: auto;
+    
+    margin: 0 auto;
+}
+
+.selection-card-image-area > * {
+    width: auto;
+    height: 100%;
+    
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.selection-card-sidebar {
+    position: absolute;
+
+    right: 0;
+    left: 70%;
+    top: 0;
+    bottom: 25%;
+    
+    padding: 2% 2.5%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.badge-icon {
+    opacity: 0.75;
+    
+    height: 18%;
+    width: auto;
+    
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.selection-card-sidebar img {
+    width: 100%;
+    height: auto;
+    position: static;
+}
+
+.selection-card-sidebar .layer-icon {
+    opacity: 0.80;
+}
+
+.selection-card-sidebar .gender-icon {
+    opacity: 0.80;
+    margin-top: 3%;
+}
+
+.selection-card-sidebar .status-icon {
+    opacity: 0.50;
+    margin-top: 3%;    
+}
+
+.selection-card-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 70%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.selection-card-footer .selection-card-label {
+    border: 2px solid #111111;
+	border-radius: 5px;
+    background-color: #FFFFFF;
+    opacity: 0.80;
+    
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    
+    text-align: center;
+    padding: 2%;
+}
+
+.selection-card-footer .selection-card-name {
+    /*font-size: 110%;*/
+    font-size: 2.5vmin;
+}
+
+.selection-card-footer .selection-card-source {
+    margin-top: 1%;
+    /*font-size: 65%;*/
+    font-size: 1.5vmin;
+}
+
+.opponent-card:hover, .opponent-card:active {
+    background-color: rgba(221, 221, 221, 0.90);
+    transition: background-color;
+    transition-duration: 0.5s;
+}
+
+.opponent-card:hover .selection-card-footer .selection-card-label, .opponent-card:active .selection-card-footer .selection-card-label {
+    opacity: 1.0;
+    
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+/************************************************************
+ * Classes for the sort / filter options row.
+ ************************************************************/
+ 
+.selection-options-row {
+    position: absolute;
+    top: 0;
+    bottom: 90%;
+    left: 0;
+    right: 0;
+    
+    width: 75%;
+    
+    padding: 0.5% 1.5%;
+    
+    background-color: #555555;
+    
+    display: flex;
+    align-items: center;
+    flex-basis: 0;
+}
+
+.selection-options-row > * {
+    margin-left: 1%;
+}
+
+.option-component {
+    white-space: nowrap;
+    margin: 0.5% 0;
+    
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.option-component > label {
+    border: 2px solid #111111;
+    border-radius: 5px;
+    text-align: center;
+    
+    background: linear-gradient(rgb(204, 204, 204), rgb(170, 170, 170)) rgb(204, 204, 204);
+    margin-bottom: 0.5%;
+    flex: 1;
+    
+    font-size: 1.5vmin;
+    line-height: 1.8vmin;
+    margin: 0;
+    
+    padding: 1% 1%;
+}
+
+.option-component > input {
+    font-size: 2vmin;
+    line-height: 2.4vmin;
+    width: auto;
+    height: auto;
+    margin: 0;
+    
+    flex: 2;
+}
+
+.column-component {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.column-component label, .column-component input {
+    display: inline;
+}
+
+.gender-component {
+    font-size: 1.6vmin;
+    line-height: 1.92vmin;
+    
+    margin: 0;
+}
+
+.gender-component > nav > ul {
+    margin: 0;
+    white-space: nowrap;
+    
+    display: inline-flex;
+    justify-content: center;
+}
+
+.gender-component > nav > ul > li {
+    flex: 1;
+    display: inline-flex;
+}
+
+.gender-component > nav > ul a {
+    margin: 0;
+    position: static;
+    float: none;
+    padding: 0.4vmin 0.8vmin;
+}
+
+.sort-component {
+    width: 90%;
+    margin-bottom: 0;
+}
+
+.sort-component > button {
+    margin-bottom: 0;
+    margin-top: 0.5%;
+    width: 100%;
+    font-size: 1.6vmin;
+    
+    padding: 0.5% 0;
+}
+
+.sort-component > .dropdown-menu {
+    width: 95%;
+    margin-top: 5%;
+}
+
+.sort-component > .dropdown-menu > li {
+    text-align: center;
+    font-size: 1.6vmin;
+}
+
+.sort-component > .dropdown-menu > li > a {
+    padding: 3px 0.5%;
+}
+
+.select-back-btn {
+    height: 100%;
+    font-size: 2.5vmin;
+    
+    margin-left: 0;
+    flex: 1;
+}
+
+#gender-sort-column {
+    flex: 3;
+    align-items: center;
+}
+
+#source-tag-column {
+    flex: 4;
+}
+
+#name-creator-column {
+    flex: 4;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#source-tag-column label, #name-creator-column label {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#source-tag-column input, #name-creator-column input {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left: 0px;
+}
+
+.option-component#name-component > label {
+    width: auto;
+}
+
+.option-component#name-component > input {
+    width: 100%;
+}
+/************************************************************
+ * Classes for the select screen details view.
+ ************************************************************/
+
+.opponent-details-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 75.5%;
+}
+
+.opponent-details-image-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1.5%;
+    bottom: 10%;
+    
+    z-index: -1;
+    
+    display: flex;
+    justify-content: center;
+}
+
+.opponent-details-image-area > * {
+    width: auto;
+    height: 100%;
+    
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.opponent-details-image-area > * {
+    width: auto;
+    height: 100%;
+}
+
+.opponent-select-button {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.5%;
+    top: 92.5%;
+}
+
+.opponent-select-button > button {
+    width: 100%;
+    height: 100%;
+    
+    font-size: 2.75vmin;
+}
+
+.opponent-details-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8%;
+    
+    /*height: 35%;*/
+    height: auto;
+    /*min-height: 15%;*/
+    max-height: 82%;
+    overflow-y: auto;
+    
+    background-color: #555555;
+    padding: 1.5%;
+}
+
+.opponent-details-view {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.opponent-details-field {
+    background-color: #FFFFFF;
+    margin: 0.5% 0;
+    
+    font-size: 1.65vmin;
+    line-height: 1.98vmin;
+    
+    display: flex;
+    align-items: stretch;
+    flex: 1;
+}
+
+.left-cap {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.opponent-details-field > * {
+    display: flex;
+    align-items: center;
+    
+    padding: 0.5% 2%;
+    
+    flex: 1;
+    word-wrap: break-word;
+}
+
+.opponent-details-field > .opponent-details-label {
+    background: linear-gradient(rgb(204, 204, 204), rgb(170, 170, 170)) rgb(204, 204, 204);
+    height: auto;
+    justify-content: center;
+}
+
+.opponent-details-field > .opponent-details-value {
+    flex: 3;
+}
+
+.left-cap.opponent-details-field > .opponent-details-value {
+    border-left: 2px solid #111111;
+}
+
+.opponent-details-name {
+    min-height: 17%;
+    padding: 2% 0;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    flex: 2;
+}
+
+.opponent-source {
+    font-size: 2vmin;
+}
+
+.opponent-full-name {
+    margin-bottom: 0.75vmin;
+    font-size: 2.65vmin;
+}
+
+.opponent-details-name > div {
+    padding: 0;
+}
+
+.opponent-details-description {
+    min-height: 20%;
+    padding: 1%;
+    flex-grow: 1;
+    
+    font-size: 1.65vmin;
+    line-height: 1.98vmin;
+    flex: 3;
+    
+    display: block;
+}
+
+.opponent-details-description > * {
+    display: inline;
+    padding: 0;
+    word-wrap: normal;
+}
+
+.opponent-details-field .opponent-nav-button {
+    border-style: none;
+}
+
+.opponent-epilogues-field.has-epilogues, .opponent-collectibles-field.has-collectibles {
+    display: flex;
+}
+
+.opponent-options-row {
+    margin: 0.5% 0;
+    flex: 1;
+    
+    font-size: 1.6vmin;
+    line-height: 1.98vmin;
+    
+    display: flex;
+}
+
+.opponent-options-row > * {
+    margin: 0 0.5%;
+}
+
+.opponent-linecount-field {
+    flex: 2;
+}
+
+.opponent-linecount-field > .opponent-details-label {
+    flex: 2;
+}
+
+.opponent-linecount-field > .opponent-details-value {
+    flex: 2;
+}
+
+.opponent-posecount-field {
+    flex: 1;
+}
+
+#individual-select-screen .opponent-costume-select {
+    flex: 3;
+    padding: 0.5% 2%;
+    height: auto;
+    font-size: 1.6vmin;
+    line-height: 1.98vmin;
+}
+
+.opponent-nav-button {
+    flex: 1;
+}
+
+.show-more-button {
+    display: block;
+}
+
+.show-more-button::after {
+    content: "More";
+}
+
+.show-more .show-more-button::after {
+    content: "Less";
+}
+
+.opponent-details-basic .extra-details-row {
+    display: none;
+}
+
+.show-more .extra-details-row {
+    display: flex;
+}
+
+.opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
+    display: none;
+}
+
+/************************************************************
+ * Classes for the opponent Epilogues and Collectibles views.
+ ************************************************************/
+
+.opponent-subview-card {
+    padding: 1% 2%;
+    margin: 2% 5%;
+    background: #FFFFFF;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.opponent-subview-title {
+    flex: 2;
+    
+    text-align: left;
+    font-size: 2.5vmin;
+}
+
+.opponent-subview-row {
+    margin: 1% 0;
+    display: flex;
+    
+    font-size: 1.85vmin;
+    
+    flex: 1;
+    word-wrap: break-word;
+}
+
+.opponent-subview-row > * {
+    display: flex;
+    align-items: center;
+    
+    padding: 0.5% 2%;
+    
+    flex: 1;
+    word-wrap: break-word;
+}
+
+.opponent-subview-row > .opponent-subview-label{
+    background: linear-gradient(rgb(204, 204, 204), rgb(170, 170, 170)) rgb(204, 204, 204);
+    border-right: 2px solid #111111;
+    height: auto;
+    justify-content: center;
+    flex: 1;
+}
+
+.opponent-subview-row > .opponent-subview-value {
+    flex: 3;
+}
+
+.opponent-subview-subtitle {
+    font-size: 1.5vmin;
+}
+
+
+/************************************************************
+ * Classes for constrained screen widths.
+ * In particular, detect devices with an aspect ratio of
+ * less than 4:3.
+ ************************************************************/
+
+@media (max-aspect-ratio: 4/3) {
+    .gender-component, .sort-component > .dropdown-menu > li, .sort-component > button {
+        font-size: 1vw;
+    }
+    
+    .option-component > label {
+        font-size: 1.1vw;
+        line-height: calc(1.1vw * 1.2);
+    }
+    
+    .option-component > input {
+        font-size: 1.1vw;
+        line-height: calc(1.1vw * 1.2);
+    }
+    
+    .selection-card-footer .selection-card-name {
+        font-size: 1.75vw;
+    }
+    
+    .selection-card-footer .selection-card-source {
+        font-size: 1.1vw;
+    }
+    
+    .opponent-select-button > button, .select-back-btn {
+        font-size: 2vw;
+    }
+    
+    .opponent-full-name {
+        font-size: 2vw;
+    }
+    
+    .opponent-source {
+        font-size: 1.75vw;
+    }
+}
+
+
+/************************************************************
+ * Classes for the old individual and group select screens.
  ************************************************************/
 
 .long-select-advance-top {
@@ -1750,6 +2651,7 @@ body.modal-open {
     border: 0.2rem solid black;
 }
 
+/*
 #game-home-button {
     position: absolute;
     left: 1.5%;
@@ -1767,6 +2669,7 @@ body.modal-open {
     left: 1.5%;
     bottom: 13%;
 }
+*/
 
 .dock-options-button {
 	width: 4%;
@@ -1839,7 +2742,7 @@ body.modal-open {
 }
 
 .player-card-area {
-	position: absolute;
+    position: absolute;
     width: 40%;
     height: 15%;
     right: 1.5%;
@@ -1870,7 +2773,7 @@ body.modal-open {
 }
 
 .large-card-image {
-	float: right;
+	float: left;
     height: 100%;
     width: 19%;
     margin: 0 0.5%;
@@ -1898,6 +2801,11 @@ body.modal-open {
     height: 14%;
 }
 
+.ui-minimal .large-dealt-card {
+    width: 3.75%;
+    height: 7%;
+}
+
 .small-dealt-card {
     width: 4%;
     height: 6.5%;
@@ -1912,9 +2820,266 @@ body.modal-open {
     font-size: 140%;
 }
 
+#player-masturbation-timer-box {
+    width: 10%;
+}
+
 /* remove the "clear" button that occurs in some MS browsers */
 #player-masturbation-timer-box::-ms-clear {
 	display: none;
+}
+
+/***********************************************************
+ * Classes for the Minimalist UI.
+ ***********************************************************/
+
+.ui-minimal .opponent-area {
+    background: none;
+    text-align: center;
+    
+    bottom: auto;
+    top: 70%;
+    
+    height: calc(11.5% * 0.75);
+    width: calc(22% * 0.75);
+    opacity: 0.5;
+    
+    transition-property: opacity, transform, height, width;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .opponent-area.left, .ui-minimal .opponent-area.halfLeft {
+    transform: translateX(12.5%);
+}
+
+.ui-minimal .opponent-area.right, .ui-minimal .opponent-area.halfRight {
+    transform: translateX(-12.5%);
+}
+
+.ui-minimal .opponent-revealed-cards {
+    opacity: 0.75;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+.ui-minimal .opponent-area:hover, .ui-minimal .opponent-area:active {
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+.ui-minimal .opponent-area.current {
+    opacity: 1.0;
+    transition: none;
+}
+
+.ui-minimal .opponent-area.opponent-revealed-cards:hover, .ui-minimal .opponent-area.opponent-revealed-cards:active, .ui-minimal .opponent-area.opponent-lost {
+    transform: none;
+    opacity: 1.0;
+    height: 11.5%;
+    width: 22%;
+    
+    transition-property: opacity, transform, height, width;
+    transition-duration: 0.25s;
+}
+
+.ui-minimal .player-card-area  {    
+    background: none;
+    left: 57%;
+    
+    display: flex;
+    align-items: center;
+    
+    opacity: 0.50;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active, .ui-minimal .player-card-area.prompt-exchange {  
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+.ui-minimal .player-card-area .large-card-image {
+    width: 10%;
+    height: 50%;
+    
+    transition-property: width, height;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-card-area:hover .large-card-image, .ui-minimal .player-card-area:active .large-card-image, .ui-minimal .player-card-area.prompt-exchange .large-card-image {
+    width: 19%;
+    height: 100%;
+    
+    transition-property: width, height;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .opponent-card-area {
+    background: none;
+    display: flex;
+    justify-content: center;
+}
+
+.ui-minimal .small-card-image {
+    margin-right: -17%;
+    transform: translateX(-45%);
+}
+
+.ui-minimal .opponent-revealed-cards .small-card-image {
+    margin-right: 0;
+    transform: none;
+    
+    transition-property: margin-right, transform;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .opponent-name-label {
+    text-align: left;
+    display: inline;
+    padding: 1% 5%;
+}
+
+#player-game-clothing-area-minimal {
+    display: none;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    flex-basis: 0;
+    
+    position: absolute;
+    
+    right: 57%;
+    bottom: 5%;
+    
+    width: 33%;
+    transform: none;
+    
+    transition-property: height, transform;
+    transition-duration: 0.5s;
+}
+
+.minimal-clothing-area-row {
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    
+    width: 100%;
+    
+    opacity: 0.33;
+    transform: none;
+    
+    transition-property: opacity, transform;
+    transition-duration: 0.5s;
+}
+
+.minimal-clothing-area-row:first-child {
+    margin-bottom: 0.5%;
+}
+
+#player-game-clothing-area-minimal:hover .minimal-clothing-area-row, #player-game-clothing-area-minimal:active .minimal-clothing-area-row {
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+
+.player-lost .minimal-clothing-area-row {
+    opacity: 1.0;
+    transform: translateY(30%);
+    transition-property: opacity, transform;
+    transition-duration: 0.5s;
+}
+
+.small-clothing-image-container {
+    width: 12.5%;
+    height: auto;
+    margin-left: 1%;
+    transform: none;
+    
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+
+
+.player-lost .small-clothing-image-container {
+    width: 20%;
+    
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+
+.minimal-clothing-area-row .small-clothing-image {
+    height: auto;
+    width: 100%;
+    
+    margin-bottom: 0;
+    object-fit: contain;
+}
+.ui-minimal #player-game-clothing-area {
+    display: none;
+}
+
+.ui-minimal #player-game-clothing-area-minimal {
+    display: inline-flex;
+}
+
+.player-name-label-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    pointer-events: none;
+}
+
+.player-name-label-minimal {
+    display: none;
+    text-align: center;
+    min-width: 12%;
+    background-color: #f5f5f5;
+    padding-top: 0.125em;
+    padding-bottom: 0.125em;
+}
+
+.player-name-label-minimal.loser {
+    background-color: #DD4444;
+}
+
+.ui-minimal .player-name-label {
+    display: none;
+}
+
+.ui-minimal .player-name-label-minimal {
+    display: inline;
+}
+
+.optional-bordered {
+    border: 2px solid #111111;
+    border-radius: 5px;
+}
+
+.ui-minimal .optional-bordered {
+    border: none;
+}
+
+/************************************************************
+ * Classes for name labels to indicate current player, loser, etc.
+ ************************************************************/
+.player-name-label.loser, .opponent-name-label.loser {
+    background-color: #DD4444;
+}
+.player-name-label.tied, .opponent-name-label.tied {
+    background-color: #CCCC44;
+}
+.player-name-label.current, .opponent-name-label.current {
+    background-color: #63AAE7
 }
 
 /************************************************************
@@ -2045,12 +3210,13 @@ body.modal-open {
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
-	overflow: hidden;
 }
 
 .epilogue-canvas {
 	width: 100%;
 	height: 100%;
+	position: relative;
+	overflow: hidden;
 }
 
 .epilogue-overlay {
@@ -2126,13 +3292,213 @@ body.modal-open {
  * Classes for the Gallery screens.
  ************************************************************/
 
-#gallery-gender-block{
+#gallery-select-block {
 	position: absolute;
 	width: 30%;
+	height: 10%;
 	top: 8%;
 }
 
-.gallery-gender-button{
+.gallery-select-button {
+	height: 100%;
+	font-size: 140%;
+}
+
+.gallery-back-button {
+	width: 25%;
+	margin-right: 1%;
+}
+
+.gallery-switch-button {
+	width: 47%;
+	margin-left: 1%;
+}
+
+.gallery-character-filter {
+    position: absolute;
+    left: 24%;
+    top: 10%;
+    
+    width: 20%;
+    height: 6%;
+    
+    font-size: 110%;
+}
+
+/************************************************************
+ * Classes for the Collectibles Gallery.
+ ************************************************************/
+
+.collectibles-pane {
+	position: absolute;
+	top: 20%;
+	height: 75%;
+	width: 32%;
+}
+
+#collectibles-list-pane {
+	left: 0;
+	background-color: rgba(200, 200, 200, 75%);
+	overflow-y: auto;
+}
+
+#collectibles-text-pane {
+	left: 34%;
+	background-color: rgba(255, 255, 255, 85%);
+	overflow-y: auto;
+}
+
+#collectibles-image-pane {
+	left: 68%;
+	background-color: rgba(60, 60, 60, 75%);
+}
+
+.collectible-content {
+	margin-left: 3%;
+}
+
+.collectible-subtitle-container {
+	margin-top: 10px;
+}
+
+.collectible-unlock-container > div {
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+#collectible-gallery-screen hr {
+	width: 85%;
+}
+
+#collectible-title {
+	margin-bottom: 10px;
+}
+
+#collectible-progress {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#collectible-progress-bar {
+    background: linear-gradient(#0088CC, #0066AA);
+}
+
+#collectible-image {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	-moz-transform: translateX(-50%) translateY(-50%);
+	
+	max-width: 95%;
+	max-height: 95%;
+	width: auto;
+	height: auto;
+	
+}
+
+
+.collectibles-list-item {
+	background-color: rgb(72, 72, 72);
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	margin-top: 2.5%;
+	width: 95%;
+	height: 12.5%;
+}
+
+.collectibles-list-item:hover {
+	background-color: rgb(150, 150, 150);
+}
+
+.collectibles-item-icon {
+	position: relative;
+	float: left;
+	top: 10%;
+	height: 80%;
+	max-width: 25%;
+	margin-right: 5%;
+	margin-left: 1%;
+}
+
+.collectibles-item-title {
+	position: relative;
+	top: 7%;
+	height: 40%;
+	font-size: 105%;
+    
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.collectibles-item-subtitle {
+	font-size: 82%;
+    margin-right: 0.25em;
+}
+
+.collectibles-modal-dialog  {
+    width: 60%;
+}
+
+.collectibles-modal-dialog .modal-dialog-surface {
+    background-color: rgba(255, 255, 255, 85%);
+}
+
+#collectible-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+#collectible-info-thumbnail {
+    height: 6em;
+}
+
+.collectible-info-text {
+    margin-left: 2em;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+#collectible-info-title {
+    margin-top: 0.1em;
+    margin-bottom: 0.2em;
+    font-size: 2em;
+    font-weight: 500;
+    line-height: 1.1;
+    text-align: left;
+}
+
+#collectible-info-subtitle {
+    margin-bottom: 0.1em;
+    text-align: left;
+}
+
+#collectibles-info-modal .modal-thin-padding {
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+}
+
+/************************************************************
+ * Classes for the Epilogues Gallery.
+ ************************************************************/
+
+#gallery-gender-block{
+	position: absolute;
+	width: 30%;
+	right: 25%;
+	top: 8%;
+}
+
+.gallery-gender-button {
 	width: 23%;
 	height: 100%;
     background: #F0F0F0;
@@ -2250,6 +3616,36 @@ body.modal-open {
 .debug-button.active {
 	background: linear-gradient(#BB3333, #9F1616);
 	background-color: #BB3333;
+}
+
+.collectible-button {
+    position: absolute;
+    left: 0%;
+    top: -45%;
+    width: 19%;
+    height: 40%;
+    
+    animation: 2.5s ease-in-out 0s infinite alternate flash-collectible-button;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes flash-collectible-button {
+    from { background-color: #9F1616 }
+    to   { background-color: #F88888 }
+}
+
+.collectible-button:hover {
+	background: linear-gradient(#F88888, #BB3333);
+	background-color: #F66666;
+    animation: none;
+}
+
+.collectible-button img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .player-debug-button {

@@ -39,7 +39,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// Sets the node filter
 		/// </summary>
 		/// <param name="mode"></param>
-		void SetFilter(TreeFilterMode mode, string key);
+		void SetFilter(Func<Case, bool> filter);
 
 		/// <summary>
 		/// Selects a node in the tree

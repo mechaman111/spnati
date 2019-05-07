@@ -8,7 +8,7 @@ namespace Desktop.CommonControls
 {
 	public partial class RecordField : UserControl
 	{
-		public event EventHandler<IRecord> RecordChanged;
+		public event EventHandler<RecordEventArgs> RecordChanged;
 
 		private Type _recordType;
 		public Type RecordType
@@ -65,7 +65,7 @@ namespace Desktop.CommonControls
 						txtInput.Text = "";
 					}
 					txtInput.ForeColor = ForeColor;
-					RecordChanged?.Invoke(this, _record);
+					RecordChanged?.Invoke(this, new RecordEventArgs(_record));
 					_populatingRecord = false;
 				}
 			}
@@ -200,7 +200,13 @@ namespace Desktop.CommonControls
 		{
 			if (_populatingRecord) { return; }
 			_needValidation = !string.IsNullOrEmpty(txtInput.Text);
-			_record = null;
+			string text = txtInput.Text;
+			int start = txtInput.SelectionStart;
+			int length = txtInput.SelectionLength;
+			Record = null;
+			txtInput.Text = text;
+			txtInput.SelectionStart = start;
+			txtInput.SelectionLength = length;
 		}
 
 		private void cmdSearch_Click(object sender, EventArgs e)
@@ -228,6 +234,11 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		public void DoSearch()
+		{
+			DoSearch(true);
+		}
+
 		private void DoSearch(bool forceLookup, string text = null)
 		{
 			if (text == null)
@@ -248,6 +259,16 @@ namespace Desktop.CommonControls
 			{
 				ActiveControl = txtInput;
 			}
+		}
+	}
+
+	public class RecordEventArgs : EventArgs
+	{
+		public IRecord Record { get; private set; }
+
+		public RecordEventArgs(IRecord record)
+		{
+			Record = record;
 		}
 	}
 }

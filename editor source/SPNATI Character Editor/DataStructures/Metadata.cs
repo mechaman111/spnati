@@ -46,6 +46,10 @@ namespace SPNATI_Character_Editor
 		[XmlElement("description")]
 		public string Description;
 
+		[DefaultValue(false)]
+		[XmlElement("crossGender")]
+		public bool CrossGender;
+
 		[XmlElement("scale")]
 		[DefaultValue(100.0f)]
 		public float Scale = 100.0f;
@@ -58,10 +62,25 @@ namespace SPNATI_Character_Editor
 
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
-		public List<string> Tags;
+		public List<CharacterTag> Tags;
 
 		[XmlElement("alternates")]
 		public List<AlternateSkin> AlternateSkins = new List<AlternateSkin>();
+
+		[XmlElement("has_collectibles")]
+		public bool HasCollectibles;
+
+		/// <summary>
+		/// Count of unique text across all lines
+		/// </summary>
+		[XmlElement("lines")]
+		public int Lines;
+
+		/// <summary>
+		/// Count of unique poses used across all lines
+		/// </summary>
+		[XmlElement("poses")]
+		public int Poses;
 
 		public Metadata()
 		{
@@ -102,6 +121,8 @@ namespace SPNATI_Character_Editor
 					|| !string.IsNullOrWhiteSpace(e.AlsoPlayingNotMarkers)
 			});
 			Tags = c.Tags;
+			HasCollectibles = c.Collectibles.Count > 0;
+			c.GetUniqueLineAndPoseCount(out Lines, out Poses);
 		}
 
 		public void OnBeforeSerialize()

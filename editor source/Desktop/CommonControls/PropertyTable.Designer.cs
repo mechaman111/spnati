@@ -46,10 +46,10 @@
 			this.recAdd.RecordContext = null;
 			this.recAdd.RecordKey = null;
 			this.recAdd.RecordType = null;
-			this.recAdd.Size = new System.Drawing.Size(150, 20);
+			this.recAdd.Size = new System.Drawing.Size(138, 20);
 			this.recAdd.TabIndex = 0;
 			this.recAdd.UseAutoComplete = false;
-			this.recAdd.RecordChanged += new System.EventHandler<Desktop.IRecord>(this.recAdd_RecordChanged);
+			this.recAdd.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recAdd_RecordChanged);
 			// 
 			// pnlRecords
 			// 
@@ -86,9 +86,9 @@
 			// 
 			this.menuSpeedButtons.AutoSize = false;
 			this.menuSpeedButtons.Dock = System.Windows.Forms.DockStyle.None;
-			this.menuSpeedButtons.Location = new System.Drawing.Point(156, 0);
+			this.menuSpeedButtons.Location = new System.Drawing.Point(142, 0);
 			this.menuSpeedButtons.Name = "menuSpeedButtons";
-			this.menuSpeedButtons.Size = new System.Drawing.Size(707, 24);
+			this.menuSpeedButtons.Size = new System.Drawing.Size(721, 24);
 			this.menuSpeedButtons.TabIndex = 4;
 			// 
 			// PropertyTable

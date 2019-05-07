@@ -18,21 +18,24 @@
 
     <!-- Banner Flair -->
     <button id="title-settings-button" class="bordered smooth-button smooth-button-red" onclick="showGameSettingsModal()">
-      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
     </button>
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
-      v11.70
+      <div class="substitute-version">Unknown Version</div>
+      <div class="substitute-version-time"></div>
     </button>
     <button class="bordered smooth-button smooth-button-red bug-report-button title-bug-report-button" onclick="showBugReportModal()">
       <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
     </button>
-
-    <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
-      Credits
+    <button id="title-help-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showHelpModal()">
+      Help / FAQ
     </button>
     <a class="bordered reddit-button smooth-button smooth-button-red" href="https://www.reddit.com/r/spnati/">
       <img class="reddit-logo" src="img/reddit.png"/>
     </a>
+    <button id="title-load-button" class="bordered smooth-button smooth-button-red banner-flair toolbar-button" onclick="showImportModal()">
+      <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+    </button>
 
     <!-- Banner -->
     <div class="title-banner-container">
@@ -54,7 +57,11 @@
             <p>The latest version of the game can be played at
             <br><a href="https://spnati.net" target="_blank"><b>spnati.net</b></a></p>
 
-            <br><br><br><br><br><br>
+            <br><br>
+            
+            <p>Make sure to check out our list of <a href="#" onclick="showHelpModal()">Frequently-Asked Questions</a>!</p>
+            
+            <br>
 
             <p>By clicking the button below, you are confirming that you are an adult and such material is legal in your region.</p>
 
@@ -62,10 +69,12 @@
 
 
       <!-- Start Button -->
-      <div id='title-start-edge' class='bordered'>
-        <button id='title-start-button' class='bordered smooth-button smooth-button-red' onclick="enterTitleScreen()">
-          <img class='title-entrance-image' src='img/enter.png'/>
-        </button>
+      <div class='title-menu-buttons-container'>
+          <div class='bordered title-start-edge'>
+              <button class='bordered smooth-button smooth-button-red title-start-button' onclick="enterTitleScreen()">
+                  <img class='title-entrance-image' src='img/enter.png'/>
+              </button>
+          </div>
       </div>
 
     </div>
@@ -85,21 +94,25 @@
 
     <!-- Banner Flair -->
     <button id="title-settings-button" class="bordered smooth-button smooth-button-red" onclick="showGameSettingsModal()">
-      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
     </button>
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
-      v11.70
+      <div class="substitute-version">Unknown Version</div>
+      <div class="substitute-version-time"></div>
     </button>
     <button class="bordered smooth-button smooth-button-red bug-report-button title-bug-report-button" onclick="showBugReportModal()">
       <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
     </button>
-
-    <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
-      Credits
+    <button id="title-help-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showHelpModal()">
+      Help / FAQ
     </button>
+    
     <a class="bordered reddit-button smooth-button smooth-button-red" href="https://www.reddit.com/r/spnati/">
       <img class="reddit-logo" src="img/reddit.png"/>
     </a>
+    <button id="title-load-button" class="bordered smooth-button smooth-button-red banner-flair toolbar-button" onclick="showImportModal()">
+      <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+    </button>
 
     <!-- Banner -->
     <div class="title-banner-container">
@@ -117,26 +130,26 @@
         <input type="text" class='bordered' id='player-name-field'/>
       </div>
 
-      <!-- Player Gender -->
-      <div id='title-gender-block'>
-        <input type='image' value='' id='male-gender-button' class='bordered title-content-button' src='img/male.png' onclick='changePlayerGender("male")'>
-        <input type='image' value='' id='female-gender-button' class='bordered title-content-button' src='img/female.png' onclick='changePlayerGender("female")'>
+      <div class="title-gender-size-container">
+          <!-- Player Gender -->
+          <input type='image' value='' id='male-gender-button' class='bordered title-content-button title-gender-button' src='img/male.png' onclick='changePlayerGender("male")'>
+          <input type='image' value='' id='female-gender-button' class='bordered title-content-button title-gender-button' src='img/female.png' onclick='changePlayerGender("female")'>
+        
+          <!-- Player Male Size -->
+          <div id='male-size-container' class='title-size-block medium'>
+            <input type='image' value='' id="small-junk-button" class='bordered title-small-button title-content-button title-size-button' src='img/male_small.png' onclick='changePlayerSize("small")'>
+            <input type='image' value='' id="medium-junk-button" class='bordered title-medium-button title-content-button title-size-button' src='img/male_medium.png' onclick='changePlayerSize("medium")'>
+            <input type='image' value='' id="large-junk-button" class='bordered title-large-button title-content-button title-size-button' src='img/male_large.png' onclick='changePlayerSize("large")'>
+          </div>
+    
+          <!-- Player Female Size -->
+          <div id='female-size-container' class='title-size-block medium'>
+            <input type='image' value='' id="small-boobs-button" class='bordered title-small-button title-content-button title-size-button' src='img/female_small.png' onclick='changePlayerSize("small")'>
+            <input type='image' value='' id="medium-boobs-button" class='bordered title-medium-button title-content-button title-size-button' src='img/female_medium.png' onclick='changePlayerSize("medium")'>
+            <input type='image' value='' id="large-boobs-button" class='bordered title-large-button title-content-button title-size-button' src='img/female_large.png' onclick='changePlayerSize("large")'>
+          </div>
       </div>
-
-      <!-- Player Male Size -->
-      <div id='male-size-container' class='title-size-block medium'>
-        <input type='image' value='' id="small-junk-button" class='bordered title-small-button title-content-button' src='img/male_small.png' onclick='changePlayerSize("small")'>
-        <input type='image' value='' id="medium-junk-button" class='bordered title-medium-button title-content-button' src='img/male_medium.png' onclick='changePlayerSize("medium")'>
-        <input type='image' value='' id="large-junk-button" class='bordered title-large-button title-content-button' src='img/male_large.png' onclick='changePlayerSize("large")'>
-      </div>
-
-      <!-- Player Female Size -->
-      <div id='female-size-container' class='title-size-block medium'>
-        <input type='image' value='' id="small-boobs-button" class='bordered title-small-button title-content-button' src='img/female_small.png' onclick='changePlayerSize("small")'>
-        <input type='image' value='' id="medium-boobs-button" class='bordered title-medium-button title-content-button' src='img/female_medium.png' onclick='changePlayerSize("medium")'>
-        <input type='image' value='' id="large-boobs-button" class='bordered title-large-button title-content-button' src='img/female_large.png' onclick='changePlayerSize("large")'>
-      </div>
-
+      
       <!-- Player Wardrobe -->
       <div id='title-wardrobe-block'>
         <div class='title-label'>What are you wearing?</div>
@@ -191,26 +204,25 @@
         </div>
       </div>
 
-      <!-- Start Button -->
-      <div id='title-start-edge' class='bordered'>
-        <button id='title-start-button' class='bordered smooth-button smooth-button-red' onclick="validateTitleScreen()">
-          <img class='title-entrance-image' src='img/enter.png'/>
-        </button>
-	</div>
-	<div id='title-gallery-edge' class='bordered'>
-		<button id='title-gallery-button' class='bordered smooth-button smooth-button-red' onclick="loadGalleryScreen()">
-          <img class='title-gallery-image' src='img/gallery.svg'/>
-        </button>
+    <!-- Start Button -->
+    <div class='title-menu-buttons-container'>
+            <div class='bordered title-gallery-edge'>
+                <button class='bordered smooth-button smooth-button-red centered-icon-button title-menu-button title-gallery-button' onclick="loadGalleryScreen()">
+                    <img class='centered-icon-image' src='img/gallery.svg'/>
+                </button>
+            </div>
+            <div class='bordered title-start-edge'>
+                <button class='bordered smooth-button smooth-button-red centered-icon-button title-start-button' onclick="validateTitleScreen()">
+                    <img class='centered-icon-image title-entrance-image' src='img/enter.png'/>
+                </button>
+            </div>
+            <div class='bordered title-tags-edge'>
+                <button class='bordered smooth-button smooth-button-red centered-icon-button title-menu-button title-tags-button' onclick="showPlayerTagsModal()">
+                    <span class="glyphicon glyphicon-tags centered-icon-glyphicon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
     </div>
-	<div id='title-tags-edge' class='bordered'>
-		<button id='title-tags-button' class='bordered smooth-button smooth-button-red' onclick="showPlayerTagsModal()">
-          <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-        </button>
-    </div>
-
-    </div>
-
-
   </div>
 </div>
 
@@ -393,8 +405,8 @@
         <button id='select-group-button' class='bordered main-select-button smooth-button smooth-button-green' onclick="clickedSelectGroupButton(0)">
           Preset Tables
         </button>
-        <button id='select-random-group-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="clickedRandomGroupButton()">
-          Random Table
+        <button id='select-help-button' class='bordered main-select-button smooth-button smooth-button-green' onclick="showHelpModal()">
+          Help & FAQ
         </button>
 
         <!-- Advance Button Casing -->
@@ -407,15 +419,24 @@
         </button>
 
         <!-- More Select Buttons -->
-        <button id='select-random-female-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseFemale(player) {return player.gender.toLowerCase() === 'female';})">
-          Random Females
-        </button>
-        <button id='select-random-male-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseMale(player) {return player.gender.toLowerCase() === 'male';})">
-          Random Males
-        </button>
-        <button id='select-random-button' class='bordered main-select-button  smooth-button smooth-button-blue' onclick="clickedRandomFillButton()">
-          Random Fill
-        </button>
+        <div class="select-random-container">
+          <div class="select-random-col">
+            <button id='select-random-female-button' class='bordered select-quadrant-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseFemale(player) {return player.gender.toLowerCase() === 'female';})">
+              Random Females
+            </button>
+            <button id='select-random-group-button' class='bordered select-quadrant-button smooth-button smooth-button-blue' onclick="clickedRandomGroupButton()">
+              Random Table
+            </button>
+          </div>
+          <div class="select-random-col">
+            <button id='select-random-male-button' class='bordered select-quadrant-button smooth-button smooth-button-blue' onclick="clickedRandomFillButton(function chooseMale(player) {return player.gender.toLowerCase() === 'male';})">
+              Random Males
+            </button>
+            <button id='select-random-button' class='bordered select-quadrant-button  smooth-button smooth-button-blue' onclick="clickedRandomFillButton()">
+              Random Fill
+            </button>
+          </div>
+        </div>
 
         <button id='select-remove-all-button' class='bordered main-select-button  smooth-button smooth-button-red' onclick="clickedRemoveAllButton()" disabled="true">
           Remove All
@@ -427,286 +448,144 @@
   </div>
 </div>
 
-
-<!-- Individual Select Screen -->
-<div id="individual-select-screen" class="screen-container" hidden>
+<div id="individual-select-screen" class="wide-screen-container" hidden>
   <div class="screen">
-
-    <!-- Opponent Info -->
-    <div class="dialogue-bubble-row">
-      <div id="individual-stats-page-1-1" class="bordered left dialogue-bubble-area">
-        <div class="stats-section">
-          <div class="bordered stats-label">Name</div>
-          <div id="individual-name-label-1" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Sex</div>
-          <div id="individual-sex-label-1" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section-large">
-          <div class="bordered stats-label">Source</div>
-          <div id="individual-source-label-1" class="bordered stats-content"></div>
-        </div>
-      </div>
-      <div id="individual-stats-page-1-2" class="bordered left dialogue-bubble-area" style="display:none;">
-        <div class="stats-section">
-          <div class="bordered stats-label">Writer</div>
-          <div id="individual-writer-label-1" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Artist</div>
-          <div id="individual-artist-label-1" class="bordered stats-content"></div>
-        </div>
-        <div class="stats-section">
-          <div class="bordered stats-label">Stats</div>
-          <div class="bordered stats-content">
-            <div id="individual-counts-1">
-              <span id="individual-line-count-label-1"></span> unique lines <br />
-              <span id="individual-pose-count-label-1"></span> poses
-            </div>
+    <div class="opponent-cards-container">
+    <!-- 
+    (example opponent card element)
+      <div class="opponent-card">
+        <div class="selection-card-image-clip">
+          <div class="selection-card-image-area">
+            <img class="opponent-card-image-simple" src="opponents/sayori/0-calm.png">
           </div>
         </div>
-      </div>
-      <div id="individual-stats-page-1-3" class="bordered left dialogue-bubble-area" style="display:none;">
-        <div id="individual-description-label-1">
+        
+        <img class="badge-icon" src="img/epilogue_icon.png"/>
+        <div class="selection-card-sidebar">
+          <img class="layer-icon" src="img/testing-badge.png"/>
+          <img class="status-icon" src="img/testing-badge.png"/>
+          <img class="gender-icon" src="img/female.png"/>
+        </div>
+        <div class="selection-card-footer">
+          <div class="selection-card-label selection-card-name">Sayori</div>
+          <div class="selection-card-label selection-card-source">Doki Doki Literature Club!</div>
         </div>
       </div>
-
-
-      <div id="individual-stats-page-2-1" class="bordered halfLeft dialogue-bubble-area">
-        <div class="stats-section">
-          <div class="bordered stats-label">Name</div>
-          <div id="individual-name-label-2" class="bordered stats-content"></div>
+      -->
+    </div>
+    <div class="bordered selection-options-row">
+      <button type="button" class="bordered smooth-button smooth-button-red select-back-btn" onclick="backToSelect()">Back</button>
+      <div id="gender-sort-column" class="column-component">
+        <div class="gender-component">
+          <nav>
+            <ul class="pagination" id="search-gender">
+              <li class="active"><a href="#"  data-value="1">All</a></li>
+              <li><a href="#" data-value="2">Male</a></li>
+              <li><a href="#" data-value="3">Female</a></li>
+            </ul>
+          </nav>
         </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Sex</div>
-          <div id="individual-sex-label-2" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section-large">
-          <div class="bordered stats-label">Source</div>
-          <div id="individual-source-label-2" class="bordered stats-content"></div>
-        </div>
-      </div>
-      <div id="individual-stats-page-2-2" class="bordered halfLeft dialogue-bubble-area" style="display:none;">
-        <div class="stats-section">
-          <div class="bordered stats-label">Writer</div>
-          <div id="individual-writer-label-2" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Artist</div>
-          <div id="individual-artist-label-2" class="bordered stats-content"></div>
-        </div>
-        <div class="stats-section">
-          <div class="bordered stats-label">Stats</div>
-          <div class="bordered stats-content">
-            <div id="individual-counts-2">
-              <span id="individual-line-count-label-2"></span> unique lines <br />
-              <span id="individual-pose-count-label-2"></span> poses
-            </div>
-          </div>
+        <div class="dropdown sort-component">
+          <button id="sort-dropdown" class="bordered btn btn-sm dropdown-toggle wide-dropdown"
+                  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span id="sort-dropdown-selection">Featured</span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu sort-dropdown-options" aria-labelledby="sort-option">
+            <li><a href="#" data-value="roster">Featured</a></li>
+            <li><a href="#" data-value="date">Newest</a></li>
+            <li><a href="#" data-value="date-reverse">Oldest</a></li>
+            <li><a href="#" data-value="layers">Most Layers</a></li>
+            <li><a href="#" data-value="layers-reverse">Fewest Layers</a></li>
+            <li><a href="#" data-value="name">Name (A-Z)</a></li>
+            <li><a href="#" data-value="name-reverse">Name (Z-A)</a></li>
+            <li><a href="#" data-value="target">Targeted most by selected</a></li>
+          </ul>
         </div>
       </div>
-      <div id="individual-stats-page-2-3" class="bordered halfLeft dialogue-bubble-area" style="display:none;">
-        <div id="individual-description-label-2">
+      <div id="name-creator-column" class="column-component">
+        <div class="option-component creator-component">
+          <label for="search-creator">Search Creator:</label>
+          <input list='creatorList' type="text" id="search-creator" class='bordered wide-textbox sort-filter-field' placeholder="Search by Creator"/>
+        </div>
+        <div class="option-component name-component">
+          <label for="search-name">Search Name: </label>
+          <input type="text" id="search-name" class='bordered wide-textbox sort-filter-field' placeholder="Name"/>
         </div>
       </div>
-
-
-      <div id="individual-stats-page-3-1" class="bordered center dialogue-bubble-area">
-        <div class="stats-section">
-          <div class="bordered stats-label">Name</div>
-          <div id="individual-name-label-3" class="bordered stats-content"></div>
+      <div id="source-tag-column" class="column-component">
+        <div class="option-component source-component">
+          <label for="search-source">Search Source: </label>
+          <input list='sourceList' type="text" id="search-source" class='bordered wide-textbox sort-filter-field' placeholder="Search by Source"/>
         </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Sex</div>
-          <div id="individual-sex-label-3" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section-large">
-          <div class="bordered stats-label">Source</div>
-          <div id="individual-source-label-3" class="bordered stats-content"></div>
-        </div>
-      </div>
-      <div id="individual-stats-page-3-2" class="bordered center dialogue-bubble-area" style="display:none;">
-        <div class="stats-section">
-          <div class="bordered stats-label">Writer</div>
-          <div id="individual-writer-label-3" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Artist</div>
-          <div id="individual-artist-label-3" class="bordered stats-content"></div>
-        </div>
-        <div class="stats-section">
-          <div class="bordered stats-label">Stats</div>
-          <div class="bordered stats-content">
-            <div id="individual-counts-3">
-              <span id="individual-line-count-label-3"></span> unique lines <br />
-              <span id="individual-pose-count-label-3"></span> poses
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="individual-stats-page-3-3" class="bordered center dialogue-bubble-area" style="display:none;">
-        <div id="individual-description-label-3">
-        </div>
-      </div>
-
-
-      <div id="individual-stats-page-4-1" class="bordered farHalfLeft dialogue-bubble-area">
-        <div class="stats-section">
-          <div class="bordered stats-label">Name</div>
-          <div id="individual-name-label-4" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Sex</div>
-          <div id="individual-sex-label-4" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section-large">
-          <div class="bordered stats-label">Source</div>
-          <div id="individual-source-label-4" class="bordered stats-content"></div>
-        </div>
-      </div>
-      <div id="individual-stats-page-4-2" class="bordered farHalfLeft dialogue-bubble-area" style="display:none;">
-        <div class="stats-section">
-          <div class="bordered stats-label">Writer</div>
-          <div id="individual-writer-label-4" class="bordered stats-content"></div>
-        </div>
-        <div class="input-group stats-section">
-          <div class="bordered stats-label">Artist</div>
-          <div id="individual-artist-label-4" class="bordered stats-content"></div>
-        </div>
-        <div class="stats-section">
-          <div class="bordered stats-label">Stats</div>
-          <div class="bordered stats-content">
-            <div id="individual-counts-4">
-              <span id="individual-line-count-label-4"></span> unique lines <br />
-              <span id="individual-pose-count-label-4"></span> poses
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="individual-stats-page-4-3" class="bordered farHalfLeft dialogue-bubble-area" style="display:none;">
-        <div id="individual-description-label-4">
+        <div class="option-component tag-component">
+          <label for="search-tag">Search Tag: </label>
+          <input list='tagList' type="text" id="search-tag" class='bordered wide-textbox sort-filter-field' placeholder="Search by Tag"/>
         </div>
       </div>
     </div>
-
-    <!-- Opponent Images -->
-    <div class="image-row">
-      <div class="farLeft selection-image-area">
-        <img id="individual-image-1" class="opponent-image" hidden>
-        <img id="individual-badge-1" class="badge-icon" src="img/epilogue_icon.png" hidden/>
-        <img id="individual-status-1" class="status-icon" src="img/testing-badge.png" hidden/>
-        <img id="individual-layer-1" class="layer-icon" src="img/layers1.png" hidden/>
-        <select id="individual-costume-select-1" class="alt-costume-dropdown" onchange="altCostumeSelected(1, false)"></select>
+    
+    <div class="opponent-details-container">
+      <div class="opponent-details-image-area">
+        <img class="opponent-details-simple-image" />
       </div>
-      <div class="almostLeft selection-image-area">
-        <img id="individual-image-2" class="opponent-image" hidden>
-        <img id="individual-badge-2" class="badge-icon" src="img/epilogue_icon.png" hidden/>
-        <img id="individual-status-2" class="status-icon" src="img/testing-badge.png" hidden/>
-        <img id="individual-layer-2" class="layer-icon" src="img/layers1.png" hidden/>
-        <select id="individual-costume-select-2" class="alt-costume-dropdown" onchange="altCostumeSelected(2, false)"></select>
+      <div class="opponent-details-panel bordered" hidden>
+        <div class="opponent-details-view opponent-details-basic show-more">
+          <div class="opponent-options-row">
+            <button type="button" class="bordered smooth-button smooth-button-blue show-more-button">Show </button>
+            <select class="form-control opponent-costume-select"></select>
+          </div>
+          <div class="bordered opponent-details-field opponent-details-name">
+            <div class="opponent-details-value opponent-full-name"></div>
+            <div class="opponent-details-value opponent-source"></div>
+          </div>
+          <div class="bordered left-cap extra-details-row opponent-details-field opponent-epilogues-field">
+            <div class="opponent-details-label left-cap">Epilogues</div>
+            <button type="button" class="smooth-button smooth-button-blue opponent-nav-button opponent-details-value opponent-epilogues" data-target="epilogues"></button>
+          </div>
+          <div class="bordered left-cap extra-details-row opponent-details-field opponent-collectibles-field">
+            <div class="opponent-details-label left-cap">Collectibles</div>
+            <button type="button" class="smooth-button smooth-button-blue opponent-nav-button opponent-details-value opponent-collectibles" data-target="collectibles"></button>
+          </div>
+          <div class="bordered left-cap extra-details-row opponent-details-field opponent-writers-field">
+            <div class="opponent-details-label left-cap">Writer(s)</div>
+            <div class="opponent-details-value opponent-writer"></div>
+          </div>
+          <div class="bordered left-cap extra-details-row opponent-details-field opponent-artists-field">
+            <div class="opponent-details-label left-cap">Artist(s)</div>
+            <div class="opponent-details-value opponent-artist"></div>
+          </div>
+          <div class="extra-details-row opponent-options-row">
+            <div class="bordered left-cap opponent-details-field opponent-linecount-field">
+              <div class="opponent-details-label left-cap">Unique Lines</div>
+              <div class="opponent-details-value opponent-linecount"></div>
+            </div>
+            <div class="bordered left-cap opponent-details-field opponent-posecount-field">
+              <div class="opponent-details-label left-cap">Poses</div>
+              <div class="opponent-details-value opponent-posecount"></div>
+            </div>
+          </div>
+          <div class="bordered opponent-details-field extra-details-row opponent-details-description"></div>
+        </div>
+        <div class="opponent-details-view opponent-details-epilogues" hidden>
+          <div class="opponent-options-row">
+            <button type="button" class="bordered smooth-button smooth-button-red opponent-nav-button" data-target="main">Back</button>
+          </div>
+          <div class="opponent-epilogues-container"></div>
+        </div>
+        <div class="opponent-details-view opponent-details-collectibles" hidden>
+          <div class="opponent-options-row">
+            <button type="button" class="bordered smooth-button smooth-button-red opponent-nav-button" data-target="main">Back</button>
+          </div>
+          <div class="opponent-collectibles-container"></div>
+        </div>
       </div>
-      <div class="almostRight selection-image-area">
-        <img id="individual-image-3" class="opponent-image" hidden>
-        <img id="individual-badge-3" class="badge-icon" src="img/epilogue_icon.png" hidden/>
-        <img id="individual-status-3" class="status-icon" src="img/testing-badge.png" hidden/>
-        <img id="individual-layer-3" class="layer-icon" src="img/layers1.png" hidden/>
-        <select id="individual-costume-select-3" class="alt-costume-dropdown" onchange="altCostumeSelected(3, false)"></select>
-      </div>
-      <div class="farRight selection-image-area">
-        <img id="individual-image-4" class="opponent-image" hidden>
-        <img id="individual-badge-4" class="badge-icon" src="img/epilogue_icon.png" hidden/>
-        <img id="individual-status-4" class="status-icon" src="img/testing-badge.png" hidden/>
-        <img id="individual-layer-4" class="layer-icon" src="img/layers1.png" hidden/>
-        <select id="individual-costume-select-4" class="alt-costume-dropdown" onchange="altCostumeSelected(4, false)"></select>
+      <div class="opponent-select-button">
+        <button type="button" class="bordered smooth-button smooth-button-green select-button" disabled>Select Opponent</button>
       </div>
     </div>
-
-    <!-- Hide Button -->
-    <button class='bordered hide-table-button' onclick="hideSingleSelectionTable()">
-      <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-    </button>
-    <button class='bordered table-bug-report-button' onclick="showBugReportModal()">
-      <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-    </button>
-
-    <!-- Dock Area -->
-    <div id="individual-select-table">
-
-      <!-- Opponent Selections -->
-      <div class="bordered left small-opponent-area">
-        <button id="individual-button-1" class="bordered smooth-button smooth-button-green full-select-slot-button" onclick="selectIndividualOpponent(1)">Select Opponent</button>
-      </div>
-      <div class="bordered halfLeft small-opponent-area">
-        <button id="individual-button-2" class="bordered smooth-button smooth-button-green full-select-slot-button" onclick="selectIndividualOpponent(2)">Select Opponent</button>
-      </div>
-      <div class="bordered halfRight small-opponent-area">
-        <button id="individual-button-3" class="bordered smooth-button smooth-button-green full-select-slot-button" onclick="selectIndividualOpponent(3)">Select Opponent</button>
-      </div>
-      <div class="bordered right small-opponent-area">
-        <button id="individual-button-4" class="bordered smooth-button smooth-button-green full-select-slot-button" onclick="selectIndividualOpponent(4)">Select Opponent</button>
-      </div>
-
-      <!-- Dock Area -->
-      <div id='main-select-area' class='bordered'>
-
-        <!-- Buttons -->
-        <button id='individual-back-button' class='bordered main-select-button select-back-button smooth-button smooth-button-red' onclick="backToSelect()">
-          Back
-        </button>
-
-        <button id='individual-search-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="openSearchModal()">
-          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-          Filter
-        </button>
-
-        <!-- Advance Button Casing -->
-        <div class='bordered long-select-advance-top'> </div>
-        <div class='bordered long-select-advance-bottom'> </div>
-
-        <!-- Page Selection -->
-        <div class="select-page-display">
-          <div class="bordered page-label">Page</div>
-          <input id="individual-page-indicator" type="text" class="bordered page-indicator" value="" />
-          <div id="individual-max-page-indicator" class="bordered of-label">of 1</div>
-        </div>
-
-        <div class="select-page-selection">
-          <button class="bordered smooth-button first-page-button" onclick="changeIndividualPage(true, -1)">
-            <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span>
-          </button>
-          <button class="bordered smooth-button left-page-button" onclick="changeIndividualPage(false, -1)">
-            <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
-          </button>
-          <button class="bordered smooth-button go-page-button" onclick="changeIndividualPage(true, 0)">
-            <div style="margin-top:2px"><b>Go</b></div>
-          </button>
-          <button class="bordered smooth-button right-page-button" onclick="changeIndividualPage(false, 1)">
-            <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-          </button>
-          <button class="bordered smooth-button last-page-button" onclick="changeIndividualPage(true, 1)" style="border-right: 2px solid">
-            <span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span>
-          </button>
-        </div>
-
-        <!-- More Buttons -->
-        <button id='individual-basic-info-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeIndividualStats(1)">
-          Basic Info
-        </button>
-        <button id='individual-credits-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeIndividualStats(2)">
-          Credits
-        </button>
-        <button id='individual-more-info-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeIndividualStats(3)">
-          More Info
-        </button>
-
-      </div>
-
-    </div>
-
   </div>
 </div>
-
 
 <!-- Group Select Screen -->
 <div id="group-select-screen" class="screen-container" hidden>
@@ -985,54 +864,102 @@
 
 <!-- Gallery Screen -->
 <div id="gallery-screen" class="screen-container" hidden>
-  <div class="screen">
-	  <div id="gallery-gender-block">
-		  <input type="image" id="gallery-gender-all" class="gallery-gender-button bordered" src='img/all.png' onclick="galleryGender('all')"/>
-		  <input type="image" id="gallery-gender-any" class="gallery-gender-button bordered" src='img/any.png' style="opacity:0.4;" onclick="galleryGender('any')" />
-		  <input type="image" id="gallery-gender-male" class="gallery-gender-button bordered" src='img/male.png' style="opacity:0.4;" onclick="galleryGender('male')" />
-		  <input type="image" id="gallery-gender-female" class="gallery-gender-button bordered" src="img/female.png" style="opacity:0.4;" onclick="galleryGender('female')" />
-	  </div>
-	  <div id="gallery-endings-block">
-		  <div class="gallery-ending" onclick="selectEnding(0)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(1)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(2)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(3)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(4)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(5)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(6)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(7)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(8)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(9)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(10)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(11)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(12)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(13)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(14)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(15)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(16)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(17)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(18)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(19)"></div>
-	  </div>
-	  <div id="gallery-controls-block">
-		  <button id="gallery-main-back-button" class="bordered main-select-button smooth-button smooth-button-red" onclick="backGalleryScreen()">Back</button>
-		  <button id="gallery-prev-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryPrevPage()" disabled="true">prev</button>
-		  <button id="gallery-next-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryNextPage()">next</button>
-		  <button id="gallery-start-ending-button" class="bordered main-select-button smooth-button smooth-button-green" onclick="doEpilogueFromGallery()" disabled="true" >Start</button>
-	  </div>
-	  <div id="gallery-selected-ending-block">
-		  <div id="selected-ending-previev"></div>
-		  <label id="selected-ending-title"></label>
-		  <label>Character: <span id="selected-ending-character"></span></label>
-		  <label>For: <span id="selected-ending-gender"></label>
-		  <label id="selected-ending-hint-container">To Unlock: <span id="selected-ending-hint"></label>
-	  </div>
-  </div>
+    <div id="collectible-gallery-screen" class="screen">
+        <div id="gallery-select-block">
+            <button class="bordered gallery-back-button gallery-select-button smooth-button smooth-button-red" onclick="backGalleryScreen()">Back</button>
+            <button class="bordered gallery-switch-button gallery-select-button smooth-button smooth-button-blue" onclick="goToEpiloguesScreen()">Epilogues</button>
+        </div>
+        <select id="collectible-character-filter" class="gallery-character-filter" onchange="changeCharacterFilter(true)">
+          <option value="" disabled selected>Filter by Character...</option>
+          <option value="">(no filter)</option>
+          <option value="__general">The Inventory</option>
+        </select>
+        <div class="collectibles-pane bordered" id="collectibles-list-pane"></div>
+        <div class="collectibles-pane bordered" id="collectibles-text-pane">
+            <h3 class="collectible-content text-center" id="collectible-title"></h3>
+            <h3 class="collectible-content collectible-subtitle-container text-center"><small id="collectible-subtitle"></small></h3>
+            <hr/>
+            <div class="collectible-content text-center collectible-character-container">
+                From: <i id="collectible-character"></i>
+            </div>
+            <div class="collectible-content collectible-unlock-container">
+                <div class="text-center">To Unlock:</div>
+                <div class="text-center">
+                    <span id="collectible-unlock"></span>
+                    <span id="collectible-progress-text"></span>
+                </div>
+                
+                <div class="progress" id="collectible-progress">
+                  <div id="collectible-progress-bar" class="progress-bar smooth-button-red" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                  </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="collectible-content collectible-text-container">
+                <h4 class="text-center">Description:</h4>
+                <div id="collectible-text"></div>
+            </div>
+        </div>
+        <div class="collectibles-pane bordered" id="collectibles-image-pane">
+            <img id="collectible-image">
+        </div>
+    </div>
+    <div id="epilogue-gallery-screen" class="screen" hidden>
+        <div id="gallery-select-block">
+            <button class="bordered gallery-back-button gallery-select-button smooth-button smooth-button-red" onclick="backGalleryScreen()">Back</button>
+            <button class="bordered gallery-switch-button gallery-select-button smooth-button smooth-button-blue" onclick="goToCollectiblesScreen()">Collectibles</button>
+        </div>
+        <select id="epilogue-character-filter" class="gallery-character-filter" onchange="changeCharacterFilter(false)">
+          <option value="" disabled selected>Filter by Character...</option>
+          <option value="">(no filter)</option>
+        </select>
+        <div id="gallery-gender-block">
+            <input type="image" id="gallery-gender-all" class="gallery-gender-button bordered" src='img/all.png' onclick="galleryGender('all')"/>
+            <input type="image" id="gallery-gender-any" class="gallery-gender-button bordered" src='img/any.png' style="opacity:0.4;" onclick="galleryGender('any')" />
+            <input type="image" id="gallery-gender-male" class="gallery-gender-button bordered" src='img/male.png' style="opacity:0.4;" onclick="galleryGender('male')" />
+            <input type="image" id="gallery-gender-female" class="gallery-gender-button bordered" src="img/female.png" style="opacity:0.4;" onclick="galleryGender('female')" />
+        </div>
+        <div id="gallery-endings-block">
+            <div class="gallery-ending" onclick="selectEnding(0)"></div>
+            <div class="gallery-ending" onclick="selectEnding(1)"></div>
+            <div class="gallery-ending" onclick="selectEnding(2)"></div>
+            <div class="gallery-ending" onclick="selectEnding(3)"></div>
+            <div class="gallery-ending" onclick="selectEnding(4)"></div>
+            <div class="gallery-ending" onclick="selectEnding(5)"></div>
+            <div class="gallery-ending" onclick="selectEnding(6)"></div>
+            <div class="gallery-ending" onclick="selectEnding(7)"></div>
+            <div class="gallery-ending" onclick="selectEnding(8)"></div>
+            <div class="gallery-ending" onclick="selectEnding(9)"></div>
+            <div class="gallery-ending" onclick="selectEnding(10)"></div>
+            <div class="gallery-ending" onclick="selectEnding(11)"></div>
+            <div class="gallery-ending" onclick="selectEnding(12)"></div>
+            <div class="gallery-ending" onclick="selectEnding(13)"></div>
+            <div class="gallery-ending" onclick="selectEnding(14)"></div>
+            <div class="gallery-ending" onclick="selectEnding(15)"></div>
+            <div class="gallery-ending" onclick="selectEnding(16)"></div>
+            <div class="gallery-ending" onclick="selectEnding(17)"></div>
+            <div class="gallery-ending" onclick="selectEnding(18)"></div>
+            <div class="gallery-ending" onclick="selectEnding(19)"></div>
+        </div>
+        <div id="gallery-controls-block">
+            <button id="gallery-prev-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryPrevPage()" disabled="true">prev</button>
+            <button id="gallery-next-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryNextPage()">next</button>
+            <button id="gallery-start-ending-button" class="bordered main-select-button smooth-button smooth-button-green" onclick="doEpilogueFromGallery()" disabled="true" >Start</button>
+        </div>
+        <div id="gallery-selected-ending-block">
+            <div id="selected-ending-previev"></div>
+            <label id="selected-ending-title"></label>
+            <label>Character: <span id="selected-ending-character"></span></label>
+            <label>For: <span id="selected-ending-gender"></label>
+      		<label id="selected-ending-hint-container">To Unlock: <span id="selected-ending-hint"></label>
+        </div>
+    </div>
 </div>
 
 <!-- Tab completion lists shared by individual and group filter modals -->
 <datalist id='sourceList'></datalist>
 <datalist id='tagList'></datalist>
+<datalist id='creatorList'></datalist>
 
 <!-- Start of Search Modal -->
 <div id="search-modal" class="modal table-modal fade">
@@ -1058,10 +985,10 @@
                   <td style="width:25%"><h4 class="modal-title modal-left">Sex Filter</h4></td>
                   <td>
                     <nav>
-                      <ul class="pagination">
-                        <li id="search-gender-1" class="active"><a href="#"  onclick="changeSearchGender(1)">All</a></li>
-                        <li id="search-gender-2"><a href="#" onclick="changeSearchGender(2)">Male</a></li>
-                        <li id="search-gender-3"><a href="#" onclick="changeSearchGender(3)">Female</a></li>
+                      <ul class="pagination" id="search-gender">
+                        <li class="active"><a href="#"  data-value="1">All</a></li>
+                        <li><a href="#" data-value="2">Male</a></li>
+                        <li><a href="#" data-value="3">Female</a></li>
                       </ul>
                     </nav>
                   </td>
@@ -1144,11 +1071,11 @@
                   <td style="width:25%"><h4 class="modal-title modal-left">Sex Filter</h4></td>
                   <td>
                     <nav>
-                      <ul class="pagination">
-                        <li id="group-search-gender-1" class="active"><a href="#"  onclick="changeGroupSearchGender(1)">Any</a></li>
-                        <li id="group-search-gender-2"><a href="#" onclick="changeGroupSearchGender(2)">Male only</a></li>
-                        <li id="group-search-gender-3"><a href="#" onclick="changeGroupSearchGender(3)">Female only</a></li>
-                        <li id="group-search-gender-4"><a href="#" onclick="changeGroupSearchGender(4)">Mixed</a></li>
+                      <ul class="pagination" id="group-search-gender">
+                        <li class="active"><a href="#"  data-value="1">Any</a></li>
+                        <li><a href="#" data-value="2">Male only</a></li>
+                        <li><a href="#" data-value="3">Female only</a></li>
+                        <li><a href="#" data-value="4">Mixed</a></li>
                       </ul>
                     </nav>
                   </td>
@@ -1211,7 +1138,7 @@
 <div id="stripping-modal" class="modal table-modal fade" role="dialog">
 	<div class="modal-table-container">
 	<div class="modal-cell-container">
-	<div class="bordered modal-dialog average-modal-dialog" style="height: 45%;">
+	<div class="bordered modal-dialog average-modal-dialog">
 	<div class="bordered modal-dialog-surface" style="height: 100%;">
 		<!-- Start of Modal Content -->
 		<div class="modal-content" style="height: 100%;">
@@ -1224,7 +1151,7 @@
               </div>
 			</div>
 			<div class="modal-footer">
-				<button id="stripping-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="closeStrippingModal()">Strip</button>
+				<button id="stripping-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="closeStrippingModal()">Select</button>
 			</div>
 		</div>
 		<!-- End of Modal Content -->
@@ -1245,57 +1172,41 @@
 		<!-- Start of Modal Content -->
 		<div class="modal-content">
 			<div class="modal-header">
-                <h3 class="modal-title text-center"><b>Game Wide Settings</b></h3>
+                <h3 class="modal-title text-center"><b>Backgrounds</b></h3>
 			</div>
 			<div class="modal-body">
 				<div class="modal-body-container" style="width:100%">
-					<table style="width:100%">
-
-						<!-- Background Selection -->
-						<tr>
-							<td style="width:25%"><h4 class="modal-title modal-left">Background</h4></td>
-							<td>
-								<nav>
-									<ul class="pagination">
-										<li id="settings-background-1" class="active"><a href="#" onclick="setBackground(1)">The Inventory</a></li>
-                    <li id="settings-background-2"><a href="#" onclick="setBackground(2)">Beach</a></li>
-                    <li id="settings-background-3"><a href="#" onclick="setBackground(3)">Classroom</a></li>
-                    <li id="settings-background-6"><a href="#" onclick="setBackground(6)">Roof</a></li>
-                    <li id="settings-background-10"><a href="#" onclick="setBackground(10)">Poolside</a></li>
-                    <li id="settings-background-11"><a href="#" onclick="setBackground(11)">Hot Spring</a></li>
-                    <li id="settings-background-12"><a href="#" onclick="setBackground(12)">Mansion</a></li>
-                    <li id="settings-background-13"><a href="#" onclick="setBackground(13)">Purple Room</a></li>
-                    <li id="settings-background-15"><a href="#" onclick="setBackground(15)">Street</a></li>
-					<li id="settings-background-19"><a href="#" onclick="setBackground(19)">Bedroom</a></li>
-					<li id="settings-background-21"><a href="#" onclick="setBackground(21)">Locker Room</a></li>
-					<li id="settings-background-22"><a href="#" onclick="setBackground(22)">Haunted Forest</a></li>
-					<li id="settings-background-23"><a href="#" onclick="setBackground(23)">Romantic</a></li>
-					<li id="settings-background-24"><a href="#" onclick="setBackground(24)">Classic</a></li>
-									</ul>
-								</nav>
-							</td>
-						</tr>
-
-						<!-- Player Masturbation Timer -->
-						<tr>
-							<td style="width:25%"><h4 class="modal-title modal-left">How long do you... last?</h4></td>
-							<td>
-								<input type="text" id="player-masturbation-timer-box" onkeyup="changeMasturbationTimer()">&nbsp;Phases
-							</td>
-						</tr>
-
-						<tr id='masturbation-warning-label'>
-							<td><!-- blank table entry --></td>
-							<td>
-							<h4 class="modal-title modal-body" style="color:FireBrick">Please enter a positive number.</h4>
-							</td>
-						</tr>
-
-					</table>
+          <nav id="settings-background-container">
+            <ul class="pagination" id="settings-background">
+              <li><a href="#" data-value="inventory">The Inventory</a></li>
+              <li><a href="#" data-value="beach">Beach</a></li>
+              <li><a href="#" data-value="classroom">Classroom</a></li>
+              <li><a href="#" data-value="roof">Roof</a></li>
+              <li><a href="#" data-value="poolside">Poolside</a></li>
+              <li><a href="#" data-value="hot spring">Hot Spring</a></li>
+              <li><a href="#" data-value="mansion">Mansion</a></li>
+              <li><a href="#" data-value="purple room">Purple Room</a></li>
+              <li><a href="#" data-value="street">Street</a></li>
+              <li><a href="#" data-value="bedroom">Bedroom</a></li>
+              <li><a href="#" data-value="locker room">Locker Room</a></li>
+              <li><a href="#" data-value="haunted forest">Haunted Forest</a></li>
+              <li><a href="#" data-value="romantic">Romantic</a></li>
+              <li><a href="#" data-value="classic">Classic</a></li>
+            </ul>
+          </nav>
+          <h4>Background Credits</h4>
+          <div class="background-credits-container">
+            <ul>
+              <li>"Street", "Green Screen", "Arcade", and "Club": by DrankeyKrang</li>
+              <li>"Bedroom": by XKokone-chanX (bed) & throwaway927263 (room)</li>
+              <li>"Beach", "Classroom", "Brick", "Night", "Roof", "Seasonal", "Library", "Bathhouse", "Poolside", "Hot Spring", "Mansion", "Purple Room", and "Showers": u/SPNATI</li>
+              <li>"The Inventory": by Zeuses-Swan-Song</li>
+            </ul>
+          </div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="options-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="saveOptions()">Close</button>
+				<button id="options-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="saveSettings()">Close</button>
 			</div>
 		</div>
 		<!-- End of Modal Content -->
@@ -1306,6 +1217,36 @@
 </div>
 <!-- End of Title Settings Modal -->
 
+<!-- Start of in-game Collectibles Info modal -->
+<div id="collectibles-info-modal" class="modal table-modal fade" role="dialog">
+	<div class="modal-table-container">
+	<div class="modal-cell-container">
+	<div class="transparent-modal-dialog collectibles-modal-dialog">
+	<div class="bordered modal-dialog-surface">
+        <!-- Start of Modal Content -->
+		<div class="modal-content">
+			<div class="modal-header modal-thin-padding">
+                <h3 class="modal-title text-center"><b>Collectible Obtained!</b></h3>
+			</div>
+			<div class="modal-body modal-thin-padding">
+				<div id="collectible-info-container" class="modal-body-container">
+                    <img id="collectible-info-thumbnail" src="img/unknown.svg">
+                    <div class="collectible-info-text">
+                        <div id="collectible-info-title">Collectible Title</div>
+                        <p id="collectible-info-subtitle">Collectible Subtitle</p>
+                    </div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="options-modal-button" class="bordered smooth-button modal-button modal-thin-padding" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		<!-- End of Modal Content -->
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
 
 <!-- Start of Log Modal -->
 <div id="log-modal" class="modal table-modal fade" role="dialog">
@@ -1365,9 +1306,9 @@
 							<td><h4 class="modal-title modal-left">Auto Table Fade</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-auto-fade-1" class="active"><a href="#" onclick="setAutoFade(1)">True</a></li>
-										<li id="options-auto-fade-2"><a href="#" onclick="setAutoFade(2)">False</a></li>
+									<ul class="pagination" id="options-auto-fade">
+										<li><a href="#" data-value="true">Enabled</a></li>
+										<li><a href="#" data-value="false">Disabled</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1378,9 +1319,9 @@
 							<td><h4 class="modal-title modal-left">Card Suggest</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-card-suggest-1"><a href="#" onclick="setCardSuggest(1)">Enabled</a></li>
-										<li id="options-card-suggest-2" class="active"><a href="#" onclick="setCardSuggest(2)">Disabled</a></li>
+									<ul class="pagination" id="options-card-suggest">
+										<li><a href="#" data-value="true">Enabled</a></li>
+										<li><a href="#" data-value="false">Disabled</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1391,12 +1332,12 @@
 							<td><h4 class="modal-title modal-left">AI Turn Time</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-ai-turn-time-1"><a href="#" onclick="setAITurnTime(1)">Very Fast</a></li>
-										<li id="options-ai-turn-time-2"><a href="#" onclick="setAITurnTime(2)">Fast</a></li>
-										<li id="options-ai-turn-time-3" class="active"><a href="#" onclick="setAITurnTime(3)">Normal</a></li>
-										<li id="options-ai-turn-time-4"><a href="#" onclick="setAITurnTime(4)">Slow</a></li>
-										<li id="options-ai-turn-time-5"><a href="#" onclick="setAITurnTime(5)">Very Slow</a></li>
+									<ul class="pagination" id="options-ai-turn-time">
+										<li><a href="#" data-value="0">Very Fast</a></li>
+										<li><a href="#" data-value="400">Fast</a></li>
+										<li><a href="#" data-value="800">Normal</a></li>
+										<li><a href="#" data-value="1200">Slow</a></li>
+										<li><a href="#" data-value="1600">Very Slow</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1407,11 +1348,11 @@
 							<td><h4 class="modal-title modal-left">Deal Animation</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-deal-speed-1"><a href="#" onclick="setDealSpeed(1)">Disabled</a></li>
-										<li id="options-deal-speed-2"><a href="#" onclick="setDealSpeed(2)">Fast</a></li>
-										<li id="options-deal-speed-3" class="active"><a href="#" onclick="setDealSpeed(3)">Normal</a></li>
-										<li id="options-deal-speed-4"><a href="#" onclick="setDealSpeed(4)">Slow</a></li>
+									<ul class="pagination" id="options-deal-speed">
+										<li><a href="#" data-value="0">Disabled</a></li>
+										<li><a href="#" data-value="200">Fast</a></li>
+										<li><a href="#" data-value="500">Normal</a></li>
+										<li><a href="#" data-value="1000">Slow</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1422,11 +1363,11 @@
 							<td><h4 class="modal-title modal-left">Auto-Advance during Forfeit</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-auto-forfeit-1"><a href="#" onclick="setAutoForfeit(1)">Fast</a></li>
-										<li id="options-auto-forfeit-2"><a href="#" onclick="setAutoForfeit(2)">Normal</a></li>
-										<li id="options-auto-forfeit-3"><a href="#" onclick="setAutoForfeit(3)">Slow</a></li>
-										<li id="options-auto-forfeit-4" class="active"><a href="#" onclick="setAutoForfeit(4)">Off</a></li>
+									<ul class="pagination" id="options-auto-forfeit">
+										<li><a href="#" data-value="4000">Fast</a></li>
+										<li><a href="#" data-value="7500">Normal</a></li>
+										<li><a href="#" data-value="10000">Slow</a></li>
+										<li><a href="#">Off</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1435,20 +1376,47 @@
 							<td><h4 class="modal-title modal-left">Auto-Advance at End</h4></td>
 							<td>
 								<nav>
-									<ul class="pagination">
-										<li id="options-auto-ending-1"><a href="#" onclick="setAutoEnding(1)">Fast</a></li>
-										<li id="options-auto-ending-2"><a href="#" onclick="setAutoEnding(2)">Normal</a></li>
-										<li id="options-auto-ending-3"><a href="#" onclick="setAutoEnding(3)">Slow</a></li>
-										<li id="options-auto-ending-4" class="active"><a href="#" onclick="setAutoEnding(4)">Off</a></li>
+									<ul class="pagination" id="options-auto-ending">
+										<li><a href="#" data-value="4000">Fast</a></li>
+										<li><a href="#" data-value="7500">Normal</a></li>
+										<li><a href="#" data-value="10000">Slow</a></li>
+										<li><a href="#">Off</a></li>
 									</ul>
 								</nav>
+							</td>
+						</tr>
+						<tr>
+							<td><h4 class="modal-title modal-left">Minimal UI</h4></td>
+							<td>
+								<nav>
+									<ul class="pagination" id="options-minimal-ui">
+										<li class="active"><a href="#" data-value="false">Disabled</a></li>
+										<li><a href="#" data-value="true">Enabled</a></li>
+									</ul>
+								</nav>
+							</td>
+						</tr>
+            
+            
+						<!-- Player Masturbation Timer -->
+						<tr>
+							<td style="width:25%"><h4 class="modal-title modal-left">How long do you... last?</h4></td>
+							<td>
+								<input type="number" min="1" id="player-masturbation-timer-box">&nbsp;Phases
+							</td>
+						</tr>
+
+						<tr id='masturbation-warning-label'>
+							<td><!-- blank table entry --></td>
+							<td>
+							<h4 class="modal-title modal-body" style="color:FireBrick;">Please enter a positive number.</h4>
 							</td>
 						</tr>
 					</table>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="options-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="saveIngameOptions()">Close</button>
+				<button id="options-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal" onclick="saveOptions()">Close</button>
 			</div>
 		</div>
 		<!-- End of Modal Content -->
@@ -1461,8 +1429,7 @@
 
 <!-- Start of Bug Report Modal -->
 <div id="bug-report-modal" class="modal table-modal fade" role="dialog">
-	<div class="modal-table-container">
-	<div class="modal-cell-container">
+	<div class="modal-flex-container">
 	<div class="bordered modal-dialog wide-modal-dialog">
 	<div class="bordered modal-dialog-surface">
 		<!-- Start of Modal Content -->
@@ -1470,7 +1437,7 @@
 			<div class="modal-header">
               <h3 class="modal-title text-center"><b>Submit an Issue Report</b></h3>
             </div>
-			<div class="modal-body">
+			         <div class="modal-body">
                 <div class="bug-report-form">
                     <form>
                         <div class="form-group">
@@ -1512,7 +1479,6 @@
 			</div>
 		</div>
 		<!-- End of Modal Content -->
-	</div>
 	</div>
 	</div>
 	</div>
@@ -1577,29 +1543,378 @@
 </div>
 <!-- End of Usage Reporting Modal -->
 
-<!-- Start of Credits Modal -->
-<div id="credit-modal" class="modal table-modal fade" role="dialog">
+<!-- Start of Help Modal -->
+<div id="help-modal" class="modal table-modal fade" role="dialog">
+	<div class="modal-flex-container">
+	<div class="bordered modal-dialog very-wide-modal-dialog">
+	<div class="bordered modal-dialog-surface">
+		<!-- Start of Modal Content -->
+		<div class="modal-content">
+      <div class="modal-body">
+        <!-- general meta questions -->
+        <div class="help-page" data-page="1">
+            <h2>FAQ - General</h2>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Who made this game?</h4>
+                <div class="faq-answer">
+                  <p>Strip Poker Night at the Inventory (SPNATI) was first developed by Joseph Kantel, who designed a small Javascript mockup game based on a choose-your-own-adventure fanfiction work.  The original version of the project appeared in August 2015 featuring the four video game characters Lilith (Borderlands), Lara Croft (Tomb Raider), Elizabeth (BioShock Infinite), and Zoey (Left 4 Dead), who were the girls featured in the fanfiction story.</p>
+                  <p>The project died out, but it was rediscovered in August 2016 and exploded in popularity, with new characters being added and the community you see today being formed.  To date, over 200 characters (in various states of completion) have been made for SPNATI.</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">What does "At the Inventory" mean?</h4>
+                <p class="faq-answer">"The Inventory" is the name of a fictional bar that SPNATI takes place in.  The name itself comes from SPNATI's other inspiration, Poker Night at the Inventory--a series of two games by TellTale wherein a nameless player plays Texas Hold 'Em Poker with four video game/webcomic characters and watches them interact.</p>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Did Joseph Kantel make all the characters?</h4>
+                <div class="faq-answer">
+                  <p>Not at all!  SPNATI is an open-source game, and over 100 different people have contributed to not only the creation of its many characters, but also its codebase, community, moderation, hosting, documentation, background art, etc.  You can see who's credited for a character by clicking the "Credits" button on the character selection screen.</p>
+                  <p>Anyone can make a character and add them to SPNATI, so if you don't see your favorite character, you should try to make them yourself!</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">How often is the game updated?</h4>
+                <div class="faq-answer">
+                  <p>Because each author is responsible for their own characters, the game receives multiple small and large updates almost every day!  The social Discord server has a channel, #gitlab-updates, that lists the full changelog.</p>
+                  <p>However, not all characters have authors that still actively update them.  Consider adopting one of these orphaned characters!</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Can I donate to the game via a Patreon or something similar?</h4>
+                <p class="faq-answer">Nope!  SPNATI has remained, and will always remain, separate from any issues of money besides the small amount needed to host the spnati.net domain.  There will never be any advertisements or sponsors, nor the need to support the game financially in any way.  This keeps the game free of copyright concerns.</p>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">If Lilith, Lara, Elizabeth, and Zoey were the first characters made, why aren't they the first on the list?</h4>
+                <div class="faq-answer">
+                  <p>Every few months, the character roster is reshuffled based on the results of polls held on the SPNATI subreddit.  This gives newer characters the chance to move from the back of the roster and be in the spotlight, and the order is determined by factoring in both how many votes each character received in the poll and how many total lines of dialogue each character has.</p>
+                  <p>One male is always included on page 1 to let players know that male characters exist, and characters that share a franchise are grouped together (except on pages 1 and 2).</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- character creation questions -->
+        <div class="help-page container-fluid" data-page="2" style="display:none">
+            <h2>FAQ - Character Creation</h2>
+            <div class="faq-question-container">
+                <h4 class="faq-question">How can I make a character for the game?</h4>
+                <div class="faq-answer">
+                  <p>Making a character for SPNATI requires no prior artistic skills or knowledge of coding.</p>
+                  <p>The art for characters, which includes their model and the poses that make up their sprites, is made in a Japanese paper doll program called Kisekae, which is based on the K-On anime art style and was developed by a user named Pochi.  Kisekae has both an online and offline version; the offline version is the one used with other SPNATI character creation software to make sprites.  Pochi continues to update Kisekae with new features to this day.</p>
+                  <p>Many characters' sprites also utilize image editing and other forms of post-processing, such as Photoshop. Additionally, to save file space, character sprites are compressed using a web tool known as TinyPNG.</p>
+                  <p>A character's dialogue, mechanics, metadata/information, and pose-to-line assignments are found in their "behaviour.xml" files, which are essentially text documents.  Creating a .xml file can be done one of two ways: the old-fashioned way, which involves manually filling out a .txt file template and converting it to .xml with a Python script included in the game files, or by using the SPNATI Character Editor program ("CE") to write dialogue.</p>
+                  <p>The CE also has built-in support for the Python script that helps you convert Kisekae scenes ("codes") into character sprites, which would otherwise also be done manually.</p>
+                  <p>
+                    Information on how to find these programs can be found on Page 5 under "Can I download the game?"  For advice on how to use them, try interacting with other users on the official subreddit and Discord servers:
+                    <ul>
+                      <li><a href="https://old.reddit.com/r/spnati/">https://old.reddit.com/r/spnati/</a></li>
+                      <li><a href="https://old.reddit.com/r/spnati/comments/afad5j/discussion_and_suggestion_thread/">https://old.reddit.com/r/spnati/comments/afad5j/discussion_and_suggestion_thread/</a></li>
+                    </ul>
+                  </p>
+                  <p>The majority of community and development discussion takes place on the Discord servers, while the subreddit is the site of official requests for character entry into the game.</p>
+                  <p>The following is a Google Doc containing documentation on all the contributors, characters, works-in-progress, and other information of SPNATI.  It is community-run/maintained and completely unofficial; none of the moderators for SPNATI have editing privileges, and being listed on it is not a rite-of-passage.</p>
+                  <p><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRejQBHSnenImBLUEX5qlmxdopG0c_O9uWklerYr6v5yJ00_UUcQiOvqC6t6CUeKsRAkd2769YzA67P/pubhtml#">https://docs.google.com/spreadsheets/d/e/2PACX-1vRejQBHSnenImBLUEX5qlmxdopG0c_O9uWklerYr6v5yJ00_UUcQiOvqC6t6CUeKsRAkd2769YzA67P/pubhtml#</a></p>
+                </div>
+            </div>                 
+            <div class="faq-question-container">
+                <h4 class="faq-question">Are there any rules about what characters can be in the game?</h4>
+                <div class="faq-answer">
+                  <p>Yes, but only a few.  Characters in SPNATI:</p>
+                  <ol>
+                    <li>
+                      <p><em>Must be at or above the age of 18.</em> They also must look like they could plausibly be adults to someone who knows nothing about the character, which means no 500-year-old vampire lolis.</p>
+                      <p>If a character is at least 12 in some version of their canon source material, they can be added in if some effort is made to age them up to 18, such as changing their proportions to be more adultlike and/or referencing the passage of time in their dialogue.</p>
+                    </li>
+                    <li>
+                      <p><em>Must be fictional.</em>  No real people can be added to SPNATI.  This includes fictionalized "personas" that real people put on, such as wrestlers and certain entertainers/show hosts.</p>
+                      <p>However, fictional characters from live-action sources can be added, such as Buffy from Buffy the Vampire Slayer.</p>
+                    </li>
+                    <li>
+                      <p><em>Must be humanoid/have basic human anatomy.</em> A character can't be three Corgis in a trenchcoat, have an insect face, or have a trombone for a penis, for instance.  Some exceptions for "monstergirls" and similar sorts of characters may be allowed, but they should still look mostly recognizably human.</p>
+                      <p>Both male and female characters are allowed in SPNATI, even though the majority of characters are female.  Original characters are also allowed, but please do not submit your self-insert OC in an attempt to circumvent the "no real people" rule.  You will not succeed.</p>
+                    </li>
+                  </ol>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">What happens after I make a character?  How do they get into the game?</h4>
+                <div class="faq-answer">
+                  <p>Once you think your character is ready, you can submit their files either as a .zip file to the moderation team on the subreddit or, for a more elegant long-term approach, make a merge request on GitLab (ask other users how to do this).</p>
+                  <p>If your character meets basic requirements (obeys the rules; 300 total lines of dialogue, some of which are targeted or have other conditions; and a set of working images for their sprites), then they will enter what's called the "Testing Tables," which you can see via the Testing Tables button on the character select screen.  You can check how many lines a character has via the CE or the "Credits" button ingame.</p>
+                  <p>Once on testing, people can play your character online and download their files as part of the overall game, as well as give feedback through bug reports (the triangle icon ingame), the subreddit, and the Discord servers.  One user cannot have more than two characters on testing at once.</p>
+                  <p>When you feel your character is ready for the main roster (and they have at least 400 lines of dialogue), you can make a post on the subreddit asking for people to "sponsor" them.  If at least five people reply with approval and/or feedback that you then address, a mod will put your character through QA, which is a basic test to make sure they function properly.  Pass that, and you will have made a character for SPNATI's main roster!</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Why did X get moved to the Testing Tables?</h4>
+                <div class="faq-answer">
+                  <p>
+                    Sometimes main-roster characters are moved back to testing (and must be sponsored again) for certain updates made to them.  These updates usually consist of either:
+                    <ol type="a">
+                      <li>A substantial dialogue/art update by someone other than the original writer(s)/artist(s) of the character.</li>
+                      <li>An art update by their original artist(s) that is substantial enough to change something significant about the character, such as their model's silhouette or the majority of their poses/expressions/mechanics.</li>
+                    </ol>
+                  </p>
+                  <p>(b) is usually more up to moderator discretion as far as whether they go back to testing or not; art updates are often put up for a "quickpass" vote among developers to skip this process if they feel it is unnecessary.</p>
+                  <p>Characters looking for re-sponsorship only need 3 sponsors instead of the normal 5.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gameplay questions -->
+        <div class="help-page container-fluid" data-page="3" style="display:none">
+            <h2>FAQ - Gameplay</h2>
+            <div class="faq-question-container">
+                <h4 class="faq-question">How do I play poker?</h4>
+                <div class="faq-answer">
+                  <p>SPNATI uses a simplified version of Five-Card Draw Poker where there is no betting.  Instead, whoever has the worst hand each round is the loser and must strip.</p>
+                  <p>To learn which poker hands beat which, see the graphic below.  Try using Card Suggest in the options menu for the game to exchange cards for you, but be aware that this is imperfect by design.  The best strategy is usually to aim for pairs: keep the ones you have, or just keep the highest card you have if you have no pairs, and exchange the rest.</p>
+                  <p>Remember, your goal is not to have the best hand--only to not have the worst hand.</p>
+                </div>
+            </div>
+            <div class="faq-poker-hands-container">
+              <img class="faq-poker-hands-infographic" src="img/poker-hands-help.jpg" alt="Poker hands infographic">
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Is there a way to win every time?</h4>
+                <div class="faq-answer">
+                  <p>No.  Poker is a game of chance, and your luck can turn around at any moment.  The best way to win is to wear more clothing and pick opponents who wear less clothing.  Otherwise, you are on an even playing field with the computer opponents.  The characters themselves each have different levels of intelligence, but they are at the mercy of luck as much as you are.</p>
+                  <p>However, if you are playing offline, then you can cheat by enabling debug mode in <code>config.xml</code>. Pressing <kbd>Q</kbd> in a game will then allow you to select which character loses the round by clicking the "X" next to their name.</p>
+                  <p>And remember: even if you lose, all but one of your opponents will still end up naked anyway.  In fact, they all might!</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">What is the triangle icon with the exclamation point for?</h4>
+                <div class="faq-answer">
+                  <p>Clicking that icon will bring up SPNATI's built-in bug report feature, which allows you to send detailed bug reports directly to the corresponding Discord channel.  Using it on the main menu allows you to report general game issues; using it during a game allows you to do the same, or also note specific character issues (typos, broken images, etc.)  This is especially useful for characters on the testing tables!</p>
+                  <p>Bug reports for characters come with extra information such as the table you're playing on, what layer of clothing everyone is down to, and what's going on in the game.  This includes the current text for the character in question, so you don't need to copy/paste their entire line just to report a typo.</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">I heard that you can input cheat codes using the bug reporter.  Is this true?</h4>
+                <div class="faq-answer">
+                  <p>No.  The bug reporter is only for reporting bugs.  Spamming it will only result in reports from your IP being muted.</p>
+                  <p>If you want to cheat, download and play the offline version of SPNATI and change settings in <code>config.xml</code>, such as debug mode.</p>
+                  <p>Also, please do not use the bug reporter to role-play with the characters.  Again, you will be muted, and the reports are publically readable.  You will be mocked.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Epilogue questions -->
+        <div class="help-page container-fluid" data-page="4" style="display:none">
+            <h2>FAQ - Endings</h2>
+            <div class="faq-question-container">
+                <h4 class="faq-question">How do I unlock endings? Who has an ending?</h4>
+                <div class="faq-answer">
+                  <p>You unlock endings by winning the game against one or more characters with an ending, i.e. being the only one who doesn't have to masturbate.  You can then select which character's ending you'd like to view, and your selection is then unlocked in the gallery.</p>
+                  <p>However, not all characters have endings.  Those that do have a big yellow "SPNATI Epilogue Available" badge near their head on the Character Selection Screen.</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">It says a character has an ending, but they don't.</h4>
+                <div class="faq-answer">
+                  <p>Check their ending's entry in the gallery (the trophy icon on the main menu) for hints.  Some endings require more conditions than simply winning the game against the character, such as being a certain gender or playing with them and another character present.</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">My endings aren't saving. Why?</h4>
+                <div class="faq-answer">
+                  <p>This is a known issue that has no consistent fix at the moment.  Try enabling cookies, clearing cache, and avoid using incognito mode while playing the game.</p>
+                  <p>If all else fails, changing certain settings in <code>config.xml</code> can unlock all endings instantly or activate debug mode in the offline version of SPNATI.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Offline version questions -->
+        <div class="help-page container-fluid" data-page="5" style="display:none">
+            <h2>FAQ - Offline and Rehosted Game Versions</h2>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Where did X go? They used to be in the game.</h4>
+                <div class="faq-answer">
+                  <p>The consequence of avoiding money is that SPNATI is limited to free hosting space, which on GitLab is 1 GB.  The total data of all the characters submitted to the game exceeds this, so characters are removed from the online version of the game every so often to make room for new ones.</p>
+                  <p>However, you can still play with the removed characters by downloading and playing the offline version of SPNATI.</p>
+                  <p>The criteria for which characters get removed has changed over time.  In the past, whichever character had the fewest unique lines of dialogue was removed whenever more space was necessary.  This ended when all online characters had more than 500 lines of dialogue.  Several popularity polls have also been held on the subreddit, and those characters with the fewest votes were also prioritized when it came time for removal.</p>
+                  <p>At present, the culling order is determined by which character has the fewest targeted lines (lines directed to other specific characters).  However, if a character on testing does not receive an update in over a month, they will be removed first instead (testing characters also take up online space).</p>
+                  <p>New characters cannot be chosen for culling until 3 months after their release to the main roster.</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Why does the game have different numbers of characters on different sites, even with the same version number?</h4>
+                <div class="faq-answer">
+                  <p>Versions of SPNATI with more characters tend to be rehosted versions on proprietary porn sites.  While <a href="https://spnati.net/">spnati.net</a>  uses free hosting space, many porn sites that rehost it pay for their own server space through advertisements, so they can afford to host all of the characters online.</p>
+                  <p>However, rehosted versions are slow to update, meaning brand-new characters and bugfixes might not be present there.  <a href="https://spnati.net/">spnati.net</a> is the official version of the game and will always be the most up-to-date (including changes to this FAQ), and you can still download the offline version to play with the older and incomplete characters.  The version number rarely updates and usually does not reflect the most recent version of the game.</p>
+                  <p><a href="https://spnati.gitlab.io/">spnati.gitlab.io</a> is a mirror of <a href="https://spnati.net/">spnati.net</a>.</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Can you put X in the game?</h4>
+                <div class="faq-answer">
+                  <p>You can request that certain characters be made on the Discord servers or the following discussion thread:</p>
+                  <p><a href="https://old.reddit.com/r/spnati/comments/afad5j/discussion_and_suggestion_thread/">https://old.reddit.com/r/spnati/comments/afad5j/discussion_and_suggestion_thread/</a></p>
+                  <p>However, because of the time and effort making a character requires, you are very unlikely to find someone willing to make a character for you.  Instead, you should ask if someone is interested in making a character and offer to do it yourself or to help them.</p>
+                  <p>Remember: you don't need artistic or coding skills to make a character.  Don't be afraid to try and do it yourself!</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Can I download the game?</h4>
+                <div class="faq-answer">
+                  <p>SPNATI is hosted and updated on a group worksite called GitLab.  The link to the project is here:</p>
+                  <p><a href="https://gitlab.com/spnati/spnati.gitlab.io">https://gitlab.com/spnati/spnati.gitlab.io</a></p>
+                  <p>Once there, find the cloud icon near the top right and select "Download zip" from its dropdown menu.  This will allow you to download the entire game and all its files; note that this is a several-GB download thanks to all the character sprites!</p>
+                  <p>Extract all the files, and you'll have offline SPNATI.  Opening <code>config.xml</code> in the main folder (use Notepad) will allow you to change some settings, such as enabling debug mode and unlocking all endings.  Open <code>index.html</code> in your browser to play the game!</p>
+                  <p>The <kbd>tools</kbd> folder of offline SPNATI is where you can find offline Kisekae and the Character Editor.</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Opening index.html in my browser doesn't work.  Why?</h4>
+                <div class="faq-answer">
+                  <p>Are you using Google Chrome?  Chrome is too restrictive with its subfolders access, so SPNATI can't retrieve character data.  Try using Firefox instead.</p>
+                  <p>It's also possible you forgot to extract the game files from the .zip you downloaded.</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">How do I keep my offline version updated?</h4>
+                <div class="faq-answer">
+                  <p>You can do this very easily without redownloading the game every time.  Follow the instructions here:</p>
+                  <p><a href="https://old.reddit.com/r/spnati/comments/824j7p/keep_your_offline_version_up_to_date_with_github/">https://old.reddit.com/r/spnati/comments/824j7p/keep_your_offline_version_up_to_date_with_github/</a></p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Can I play the offline version on mobile?</h4>
+                <div class="faq-answer">
+                  <p>Unfortunately, no.  There is no way to play the offline version on mobile at this time.  SPNATI is primarily built for computer use, and its mobile version is a straight port.</p>
+                </div>
+            </div><div class="faq-question-container">
+                <h4 class="faq-question">Can you make a mobile app?</h4>
+                <div class="faq-answer">
+                  <p>There are no plans to make a mobile app for SPNATI at this time, and because of copyright reasons, certainly not one that would appear in any official app stores.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Common issues -->
+        <div class="help-page container-fluid" data-page="6" style="display:none">
+            <h2>FAQ - Common Issues</h2>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Why isn't X loading?</h4>
+                <p class="faq-answer">Are you playing on mobile?  Some characters' behavior files are very large, and your phone may be unable to process them.  Try playing on a computer instead.</p>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Why doesn't the offline version show all the characters?</h4>
+                <div class="faq-answer">
+                  <p>Characters come in several designations: "online" for characters on the online main roster at spnati.net, "testing" for characters on the online testing tables, "offline" for characters that used to be on the online main roster but were removed for space, and "incomplete."  "Incomplete" is for characters who were submitted to testing but fell off due to lack of updates or author request, and it is used regardless of their quality or actual "completeness."</p>
+                  <p>Incomplete characters are not by default available offline, even though they are included in the offline version download.  To use them, open config.xml and copy/paste the following line of code with the others like it:</p>
+                  <p><code>&lt;include-status&gt;incomplete&lt;/include-status&gt;</code></p>
+                  <p>You can also activate alternate costumes to be selectable offline using config.xml.  These are different skins for characters that are usually holiday-themed.</p>
+                </div>
+            </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">My characters/text/game started glitching out. What's going on?</h4>
+                <p class="faq-answer">Are you playing with Monika from Doki Doki Literature Club?  Monika uses special code in her behavior files to achieve these effects deliberately, much like in her source material.</p>
+            </div>                    
+            <div class="faq-question-container">
+                <h4 class="faq-question">I clicked the triangle icon Monika mentioned and sent a report, but nothing happened.</h4>
+                <p class="faq-answer">That icon is for the ingame bug report feature, which only has the function of submitting bug reports.  She means the triangle icon that appears in her speech bubble.</p>
+            </div>
+        </div>
+        
+        <!-- Common feature requests  -->
+        <div class="help-page container-fluid" data-page="7" style="display:none">
+          <h2>FAQ - Commonly Requested Features</h2>
+          <div class="faq-question-container">
+              <h4 class="faq-question">Can I give the player character more details than penis/breast size and clothes?</h4>
+              <div class="faq-answer">
+                <p>Yes, you can!  The icon to the right of the "Enter the Inventory" button on the player clothing selection screen will bring up the list of tags that is used for the characters.  You can choose these to apply to the player, as well, and characters will treat you as if you have those attributes.</p>
+                <p>Keep in mind that this is a more recent feature, so many characters do not have dialogue tailored for it.</p>
+              </div>
+          </div>
+          <div class="faq-question-container">
+              <h4 class="faq-question">Can I see the player character?</h4>
+              <div class="faq-answer">
+                <p>Unfortunately, the many combinations of clothing and stripping orders the player has makes the image space necessary for this unfeasibly large.  There is also no space on the UI to show the player character.</p>
+                <p>Most developers for SPNATI will encourage you to simply use your imagination, or to strip along in real life.  SPNATI is built around watching crossover characters interact, not detailed role-playing.</p>
+                <p>You can always make yourself in Kisekae and/or for SPNATI if you really want to--you just can't submit them to the online version of the game.  No real people.</p>
+              </div>
+          </div>
+          <div class="faq-question-container">
+              <h4 class="faq-question">Can I play as one of the characters?</h4>
+              <div class="faq-answer">
+                <p>You can name yourself after them, but the other characters will still treat you as the player.  This is because dialogue is coded to reference character folders, not their names.</p>
+                <p>Lots of targeted dialogue also assumes the responses of the computer versions of each character will play, so the role-play would not make much sense anyway.</p>
+              </div>
+          </div>
+          <div class="faq-question-container">
+              <h4 class="faq-question">Can you add voice acting or background music?</h4>
+              <p class="faq-answer">Unfortunately, the audio files needed for music and voice acting would take up even more of SPNATI's limited space than the sprites do.  Since the game is silent, however, you can always play your own music.</p>
+          </div>
+          <div class="faq-question-container">
+              <h4 class="faq-question">Can you make the models 3D?</h4>
+              <p class="faq-answer">No.  This would require even more file space and a completely different art program and interface, and likely a steeper learning curve.</p>
+          </div>
+          <div class="faq-question-container">
+              <h4 class="faq-question">Can you add multiplayer?</h4>
+              <p class="faq-answer">No.  SPNATI is meant to be a single-player experience.</p>
+          </div>
+          <div class="faq-question-container">
+              <h4 class="faq-question">What happened to the Swimsuit Edition?</h4>
+              <div class="faq-answer">
+                <p>The Swimsuit Edition was an unofficial offshoot of SPNATI.  The users maintaining it have since left the community and let it become defunct, and there is little interest in reviving it among the current developers.</p>
+                <p>If you'd like to see the Swimsuit Edition return, consider making it yourself!</p>
+              </div>
+          </div>
+        </div>
+			</div>
+			<div class="modal-footer">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <li class="help-page-select">
+                      <a href="#" aria-label="Previous" data-select-page="prev">
+                        <span aria-hidden="true" style="pointer-events:none">&laquo;</span>
+                      </a>
+                    </li>
+                    <li class="help-page-select active" data-page="1"><a href="#" data-select-page="1">1</a></li>
+                    <li class="help-page-select" data-page="2"><a href="#" data-select-page="2">2</a></li>
+                    <li class="help-page-select" data-page="3"><a href="#" data-select-page="3">3</a></li>
+                    <li class="help-page-select" data-page="4"><a href="#" data-select-page="4">4</a></li>
+                    <li class="help-page-select" data-page="5"><a href="#" data-select-page="5">5</a></li>
+                    <li class="help-page-select" data-page="6"><a href="#" data-select-page="6">6</a></li>
+                    <li class="help-page-select" data-page="7"><a href="#" data-select-page="7">7</a></li>
+                    <li class="help-page-select">
+                      <a href="#" aria-label="Next" data-select-page="next">
+                        <span aria-hidden="true" style="pointer-events:none">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+                <div>
+                    <button id="credit-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
+                </div>
+			</div>
+		</div>
+		<!-- End of Modal Content -->
+	</div>
+	</div>
+	</div>
+</div>
+<!-- End of Help Modal -->
+
+<!-- Start of Select Screen Heads-Up modal -->
+<div id="select-headsup-modal" class="modal table-modal fade" role="dialog">
 	<div class="modal-table-container">
 	<div class="modal-cell-container">
-	<div class="bordered modal-dialog wide-modal-dialog">
+	<div class="bordered modal-dialog -average-modal-dialog">
 	<div class="bordered modal-dialog-surface">
 		<!-- Start of Modal Content -->
 		<div class="modal-content">
 			<div class="modal-header">
-              <h3 class="modal-title text-center"><b>Credits</b></h3>
-            </div>
+        <h3 class="modal-title text-center"><b>Looking for Someone?</b></h3>
+      </div>
 			<div class="modal-body">
-				<strong>Strip Poker Night at the Inventory</strong><br><br>
-
-				<i>Primary designer and coder:</i> Joseph Kantel<br>
-				<i>Characters:</i> click the Credits button on the character screen to see author and artist information<br>
-				<i>Backgrounds ("Street", "Green Screen", "Arcade", and "Club"):</i> by DrankeyKrang<br>
-				<i>Background ("Bedroom"):</i> by XKokone-chanX (bed) & throwaway927263 (room)<br>
-				<i>Backgrounds ("Beach", "Classroom", "Brick", "Night", "Roof", "Seasonal", "Library", "Bathhouse", "Poolside", "Hot Spring", "Mansion", "Purple Room", and "Showers"):</i> by u/SPNATI<br>
-				<i>Background ("The Inventory"):</i> by Zeuses-Swan-Song<br>
+		      <p>If you're looking for a character who seems to have disappeared, they may have been moved offline or onto the Testing Tables.</p>
+          <p>For more information, check out our <a href="#" data-dismiss="modal" onclick="showHelpModal();">FAQ</a>.</p>
+          <div><input id="select-headsup-hide" type="checkbox"><label style="margin-left:1%" for="select-headsup-hide">Don't show this again.</label></div>
 			</div>
 			<div class="modal-footer">
-				<button id="credit-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
+				<button id="headsup-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 		<!-- End of Modal Content -->
@@ -1609,7 +1924,6 @@
 	</div>
 </div>
 <!-- End of Credits Modal -->
-
 
 <!-- Start of Version Modal -->
 <div id="version-modal" class="modal table-modal fade" role="dialog">
@@ -1623,95 +1937,7 @@
               <h3 class="modal-title text-center"><b>Version Details</b></h3>
 			</div>
 			<div class="modal-body">
-				<table class="modal-body-stretch-container" style="margin: 0 auto;">
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-					    v11.70
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Lotte, Kizuna AI, Haru, Jotaro, Cammy, Sayori, Pinkie Pie and Kamina have joined the game! Also re-sorted the character roster.
-                    </td></tr>
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-					    v11.69
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Natsuki, Catria, Mulan, Remilia and Navi have joined the game! Also adds the alternate costume selector to the offline version of the game.
-                    </td></tr>
-
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.68
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Beatrix, Juri, Jolyne, Shimakaze, Ryuji, and Nayru have joined the game!
-                    </td></tr>
-
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.67
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Black Canary has joined the game!
-                    </td></tr>
-
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.66
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Launch, Kira, and Monika have joined the game!
-                    </td></tr>
-
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.65
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Jin has joined the game!
-                    </td></tr>
-
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.64
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Joey has joined the game!
-                    </td></tr>
-
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.63
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Faye has joined the game!
-                    </td></tr>
-
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.62
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Velma and Amalia have returned to the game!
-                    </td></tr>
-
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.61
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Jura has joined the game!
-                    </td></tr>
-
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.60
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Mahiru has joined the game!
-                    </td></tr>
-
-				</table>
+				<table id="changelog-container" class="modal-body-stretch-container" style="margin: 0 auto;"></table>
 			</div>
 			<div class="modal-footer">
 				<button id="credit-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
@@ -1728,6 +1954,7 @@
 
 <!-- Start of Player Tags Modal -->
 <div id="player-tags-modal" class="modal table-modal fade">
+  <div class="modal-flex-container">
   <div class="bordered modal-dialog wide-modal-dialog">
     <div class="bordered modal-dialog-surface">
       <!-- Start of Modal Content -->
@@ -1769,14 +1996,42 @@
       <!-- End of Modal Content -->
     </div>
   </div>
+  </div>
 </div> <!-- End of Player Tags Modal -->
 
+<!-- Import/Export Modal -->
+<div id="io-modal" class="modal table-modal fade" role="dialog">
+    <div class="modal-table-container">
+        <div class="modal-cell-container">
+            <div class="bordered modal-dialog wide-modal-dialog">
+                <div class="bordered modal-dialog-surface">
+                    <!-- Start of Modal Content -->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title text-center">Save or Restore Your Progress</h4>
+                                <h5 class='text-center'>When playing in Incognito Mode, your progress will not be preserved upon closing the browser.<br/>Copy the code below to store off your progress for a later session.<br/>Paste a code into the box and click Import to restore your progress.</h5>
+                            </div>
+                            <div class="modal-body">
+                                <form id='load'>
+                                    <textarea class="form-control" id='export-code' rows="15"></textarea>
+                                </form>
+                                <div class="modal-body-container" style="padding-top:4%;">
+                                    <button class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
+                                    <button id="import-progress" class="bordered smooth-button modal-button" data-dismiss="modal">Import</button>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- End of Modal Content -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End of Import/Export Modal -->
 
 
 <!-- Game Screen -->
-<div id="game-screen" class="screen-container" hidden>
+<div id="game-screen" class="screen-container ui-minimal" hidden>
   <div class="screen">
-
     <!-- Dialogue Bubbles -->
     <div class="dialogue-bubble-row">
       <div id="game-bubble-1" class="bordered left dialogue-bubble-area">
@@ -1824,25 +2079,38 @@
     <button class='bordered table-bug-report-button' onclick="showBugReportModal()">
       <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
     </button>
-    <button id="game-home-button" class="bordered smooth-button smooth-button-red dock-options-button" data-toggle="tooltip" data-placement="right" title="Return to Title" onclick="showRestartModal()"><!-- doEpilogueModal -->
-      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-    </button>
-    <button id="game-settings-button" class="bordered smooth-button smooth-button-red dock-options-button" data-toggle="tooltip" data-placement="right" title="Game Options" onclick="showOptionsModal()">
-      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-    </button>
     <button id="debug-button-0" class="bordered player-debug-button" onclick="selectDebug(0)" hidden>
       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
     </button>
-    <button id="game-log-button" class="bordered smooth-button smooth-button-red dock-options-button" data-toggle="tooltip" data-placement="right" title="Dialogue Log" onclick="showLogModal()">
-      <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-    </button>
+    <div class="btn-group dropup game-menu-dropup" data-toggle="tooltip" data-placement="right" title="Game Menu">
+        <button type="button" class="bordered smooth-button smooth-button-red dropdown-toggle menu-dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span></button>
+        <ul class="dropdown-menu">
+            <button id="game-log-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showHelpModal()">
+              <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+              <span class="game-menu-label">Help and FAQ</span>
+            </button>
+            <button id="game-log-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showLogModal()">
+              <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+              <span class="game-menu-label">Dialogue Log</span>
+            </button>
+            <button id="game-home-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showRestartModal()"><!-- doEpilogueModal -->
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+              <span class="game-menu-label">Return to Title</span>
+            </button>
+            <button id="game-settings-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showOptionsModal()">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              <span class="game-menu-label">Options</span>
+            </button>
+        </ul>
+    </div>
+    
 
 
     <!-- Game Table -->
     <div id="game-table">
 
       <!-- Opponent Areas -->
-      <div id="game-opponent-area-1" class="bordered left opponent-area">
+      <div id="game-opponent-area-1" class="optional-bordered left opponent-area">
         <div id="game-name-label-1" class="bordered opponent-name-label">Opponent 1</div>
         <div class="opponent-card-area">
           <img id="player-1-card-1" class="bordered small-card-image" src="img/blankcard.jpg">
@@ -1854,8 +2122,11 @@
         <button id="debug-button-1" class="bordered debug-button" onclick="selectDebug(1)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
+        <button id="collectible-button-1" class="bordered collectible-button">
+          <img src="img/gallery.svg" alt="Collectible unlocked! Click to view.">
+        </button>
       </div>
-      <div id="game-opponent-area-2" class="bordered halfLeft opponent-area">
+      <div id="game-opponent-area-2" class="optional-bordered halfLeft opponent-area">
         <div id="game-name-label-2" class="bordered opponent-name-label">Opponent 2</div>
         <div class="opponent-card-area">
           <img id="player-2-card-1" class="bordered small-card-image" src="img/blankcard.jpg">
@@ -1867,8 +2138,11 @@
         <button id="debug-button-2" class="bordered debug-button" onclick="selectDebug(2)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
+        <button id="collectible-button-2" class="bordered collectible-button" >
+          <img src="img/gallery.svg" alt="Collectible unlocked! Click to view.">
+        </button>
       </div>
-      <div id="game-opponent-area-3" class="bordered halfRight opponent-area">
+      <div id="game-opponent-area-3" class="optional-bordered halfRight opponent-area">
         <div id="game-name-label-3" class="bordered opponent-name-label">Opponent 3</div>
         <div class="opponent-card-area">
           <img id="player-3-card-1" class="bordered small-card-image" src="img/blankcard.jpg">
@@ -1880,8 +2154,11 @@
         <button id="debug-button-3" class="bordered debug-button" onclick="selectDebug(3)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
+        <button id="collectible-button-3" class="bordered collectible-button">
+          <img src="img/gallery.svg" alt="Collectible unlocked! Click to view.">
+        </button>
       </div>
-      <div id="game-opponent-area-4" class="bordered right opponent-area">
+      <div id="game-opponent-area-4" class="optional-bordered right opponent-area">
         <div id="game-name-label-4" class="bordered opponent-name-label">Opponent 4</div>
         <div class="opponent-card-area">
           <img id="player-4-card-1" class="bordered small-card-image" src="img/blankcard.jpg">
@@ -1893,29 +2170,47 @@
         <button id="debug-button-4" class="bordered debug-button" onclick="selectDebug(4)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
+        <button id="collectible-button-4" class="bordered collectible-button">
+          <img src="img/gallery.svg" alt="Collectible unlocked! Click to view.">
+        </button>
       </div>
 
       <!-- Player Clothing and Label -->
       <div id="player-game-clothing-area" class="bordered">
         <div class="left player-clothing-container">
-          <img class="bordered clothing-float-left small-clothing-image" id="player-0-clothing-7" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-left small-clothing-image" id="player-0-clothing-6" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-left small-clothing-image" id="player-0-clothing-5" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-left small-clothing-image" id="player-0-clothing-8" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-left small-clothing-image player-0-clothing-7" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-left small-clothing-image player-0-clothing-6" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-left small-clothing-image player-0-clothing-5" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-left small-clothing-image player-0-clothing-8" src="img/blankcard.jpg">
         </div>
         <div class="right player-clothing-container">
-          <img class="bordered clothing-float-right small-clothing-image" id="player-0-clothing-2" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-right small-clothing-image" id="player-0-clothing-3" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-right small-clothing-image" id="player-0-clothing-4" src="img/blankcard.jpg">
-          <img class="bordered clothing-float-right small-clothing-image" id="player-0-clothing-1" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-right small-clothing-image player-0-clothing-2" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-right small-clothing-image player-0-clothing-3" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-right small-clothing-image player-0-clothing-4" src="img/blankcard.jpg">
+          <img class="bordered clothing-float-right small-clothing-image player-0-clothing-1" src="img/blankcard.jpg">
         </div>
 
-        <div id="game-name-label-0" class="bordered player-name-label">Player</div>
+        <div class="game-name-label-0 bordered player-name-label">Player</div>
         <div id="game-clothing-label" class="bordered">Your Clothing</div>
+      </div>
+      
+      <div id="player-game-clothing-area-minimal" class="">        
+        <div class="minimal-clothing-area-row">
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-8" src="img/blankcard.jpg" data-slot="8"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-7" src="img/blankcard.jpg" data-slot="7"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-6" src="img/blankcard.jpg" data-slot="6"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-5" src="img/blankcard.jpg" data-slot="5"></div>
+        </div>
+        <div class="minimal-clothing-area-row">
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-4" src="img/blankcard.jpg" data-slot="4"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-3" src="img/blankcard.jpg" data-slot="3"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-2" src="img/blankcard.jpg" data-slot="2"></div>
+          <div class="small-clothing-image-container"><img class="bordered small-clothing-image player-0-clothing-1" src="img/blankcard.jpg" data-slot="1"></div>
+        </div>
       </div>
 
       <!-- Player Cards -->
-      <div id="player-game-card-area" class="bordered player-card-area">
+      <div id="player-game-card-area" class="optional-bordered player-card-area">
         <input type="image" id="player-0-card-1" class="bordered large-card-image" src="img/blankcard.jpg" onclick="selectCard(0)"/>
         <input type="image" id="player-0-card-2" class="bordered large-card-image" src="img/blankcard.jpg" onclick="selectCard(1)"/>
         <input type="image" id="player-0-card-3" class="bordered large-card-image" src="img/blankcard.jpg" onclick="selectCard(2)"/>
@@ -1932,7 +2227,9 @@
     </div>
     <div id="player-countdown" class="bordered" hidden>1</div>
     <button id="main-game-button" class="bordered smooth-button smooth-button-red" onclick="advanceGame()">Deal</button>
-
+    <div class="player-name-label-container">
+      <div class="game-name-label-0 bordered player-name-label-minimal">Player</div>
+    </div>
   </div>
 </div>
 

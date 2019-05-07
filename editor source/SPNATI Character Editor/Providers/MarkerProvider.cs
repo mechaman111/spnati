@@ -7,8 +7,14 @@ namespace SPNATI_Character_Editor.Providers
 	public class MarkerProvider : IRecordProvider<Marker>
 	{
 		private Character _character;
+		private static List<Marker> _placeholders = new List<Marker>();
 
 		public bool AllowsNew { get { return true; } }
+
+		public bool TrackRecent
+		{
+			get { return false; }
+		}
 
 		public void SetContext(object context)
 		{
@@ -19,13 +25,20 @@ namespace SPNATI_Character_Editor.Providers
 		{
 			Marker marker = new Marker();
 			marker.Key = key;
-			if (_character != null)
+			if (key.StartsWith("$"))
 			{
-				if (_character.Markers.Contains(key))
+				_placeholders.Add(marker);
+			}
+			else
+			{
+				if (_character != null)
 				{
-					return _character.Markers.Get(key);	
+					if (_character.Markers.Contains(key))
+					{
+						return _character.Markers.Get(key);
+					}
+					_character.Markers.Add(marker);
 				}
-				_character.Markers.Add(marker);
 			}
 			return marker;
 		}
@@ -51,7 +64,13 @@ namespace SPNATI_Character_Editor.Providers
 		{
 			text = text.ToLower();
 			var list = new List<IRecord>();
-
+			foreach (Marker m in _placeholders)
+			{
+				if (m.Key.ToLower().Contains(text) || m.Name.ToLower().Contains(text))
+				{
+					list.Add(m);
+				}
+			}
 			if (_character == null) { return list; }
 
 			foreach (Marker record in _character.Markers.Values)

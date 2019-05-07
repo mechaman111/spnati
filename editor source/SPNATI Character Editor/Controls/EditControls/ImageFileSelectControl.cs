@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Windows.Forms;
-using Desktop;
+﻿using Desktop;
 using Desktop.CommonControls;
+using System;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
@@ -27,15 +26,23 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				throw new Exception("ImageFileSelectControl requires a Character context!");
 			}
-			openFileDialog1.UseAbsolutePaths = (context.Context == CharacterContext.Pose);
+			openFileDialog1.UseAbsolutePaths = (context.Context == CharacterContext.Pose || context.Context == CharacterContext.Collectible);
+			openFileDialog1.IncludeOpponents = context.Context == CharacterContext.Collectible;
 			_character = context.Character;
 
-			txtValue.Text = GetValue()?.ToString();
+			string value = GetValue()?.ToString();
+
+			txtValue.PlaceholderText = GetPreviewValue()?.ToString();
+			txtValue.Text = value;
 		}
 
 		private void CmdBrowse_Click(object sender, EventArgs e)
 		{
 			string filename = txtValue.Text;
+			if (string.IsNullOrEmpty(filename))
+			{
+				filename = GetPreviewValue()?.ToString() ?? "";
+			}
 			filename = filename.Replace("/", "\\");
 
 			if (openFileDialog1.ShowDialog(_character, filename) == DialogResult.OK)
@@ -81,6 +88,7 @@ namespace SPNATI_Character_Editor.Controls
 	public enum CharacterContext
 	{
 		Epilogue,
-		Pose
+		Pose,
+		Collectible
 	}
 }

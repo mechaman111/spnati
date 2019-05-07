@@ -24,14 +24,14 @@ namespace SPNATI_Character_Editor.EditControls
 			valValue.Maximum = attrib.Maximum;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			radPct.CheckedChanged -= ValueChanged;
 			radPx.CheckedChanged -= ValueChanged;
 			valValue.TextChanged -= ValueChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			radPct.CheckedChanged += ValueChanged;
 			radPx.CheckedChanged += ValueChanged;
@@ -60,6 +60,7 @@ namespace SPNATI_Character_Editor.EditControls
 				{
 					int.TryParse(match.Groups[1].Value, out value);
 					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, value));
+					valValue.Text = valValue.Value.ToString();
 				}
 			}
 			else
@@ -74,6 +75,7 @@ namespace SPNATI_Character_Editor.EditControls
 				radPx.Visible = false;
 				lblPct.Left = valValue.Left + valValue.Width;
 				lblPct.Visible = true;
+				chkCentered.Enabled = true;
 
 				if (Property == "X")
 				{
@@ -93,6 +95,12 @@ namespace SPNATI_Character_Editor.EditControls
 			}
 			else
 			{
+				radPct.Visible = true;
+				radPx.Visible = true;
+				lblPct.Visible = false;
+				chkCentered.Visible = false;
+				chkCentered.Enabled = false;
+				valValue.Enabled = true;
 				if (text != null && text.EndsWith("%"))
 				{
 					radPct.Checked = true;
@@ -102,8 +110,6 @@ namespace SPNATI_Character_Editor.EditControls
 					radPx.Checked = true;
 				}
 			}
-
-			AddHandlers();
 		}
 
 		protected override void OnBindingUpdated(string property)
@@ -115,7 +121,14 @@ namespace SPNATI_Character_Editor.EditControls
 				string file = GetBindingValue(property)?.ToString();
 				if (!string.IsNullOrEmpty(file) && character != null)
 				{
-					file = Path.Combine(character.GetDirectory(), file);
+					if (file.StartsWith("/"))
+					{
+						file = Path.Combine(Config.SpnatiDirectory, file.Substring(1));
+					}
+					else
+					{
+						file = Path.Combine(character.GetDirectory(), file);
+					}
 					if (File.Exists(file))
 					{
 						using (Bitmap bmp = new Bitmap(file))
@@ -142,12 +155,6 @@ namespace SPNATI_Character_Editor.EditControls
 					}
 				}
 			}
-		}
-
-		protected override void OnRebindData()
-		{
-			RemoveHandlers();
-			OnBoundData();
 		}
 
 		private void ValueChanged(object sender, EventArgs e)

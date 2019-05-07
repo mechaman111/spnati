@@ -50,14 +50,32 @@ namespace SPNATI_Character_Editor
 						File.Delete(destFile);
 					}
 
-					File.Copy(sourceFile, destFile);
+					try
+					{
+						File.Copy(sourceFile, destFile);
+					}
+					catch { }
 					Image thumbnail = new Bitmap(destFile);
-					row.Cells[1].Value = thumbnail;
-					row.Tag = thumbnail;
+					UpdateThumbnails(image, thumbnail);
 
 					EnableOK();
 				}
 			}
+		}
+
+		private void UpdateThumbnails(string image, Image thumbnail)
+		{
+			foreach (DataGridViewRow row in gridMissingImages.Rows)
+			{
+				string rowImage = row.Cells[0].Value?.ToString();
+				if (rowImage == image)
+				{
+					row.Cells[1].Value = thumbnail;
+					row.Tag = thumbnail;
+				}
+			}
+
+			EnableOK();
 		}
 
 		private void EnableOK()
@@ -69,6 +87,7 @@ namespace SPNATI_Character_Editor
 				{
 					cmdOK.Enabled = false;
 					lblReady.Visible = false;
+					return;
 				}
 			}
 			lblReady.Visible = true;

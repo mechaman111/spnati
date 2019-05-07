@@ -19,6 +19,10 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("id")]
 		public string Id;
 
+		[DirectiveMarker(DisplayName = "Marker", GroupOrder = 0, Key = "marker", Description = "Run this directive only if the marker's condition is met", ShowPrivate = true)]
+		[XmlAttribute("marker")]
+		public string Marker;
+
 		[Measurement(DisplayName = "Width", Key = "width", GroupOrder = 95, Description = "Custom sprite width relative to the scene width")]
 		[XmlAttribute("width")]
 		public string Width;
@@ -27,9 +31,19 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("height")]
 		public string Height;
 
-		[ComboBox(DisplayName = "Arrow", Key = "arrow", GroupOrder = 30, Description = "Speech bubble arrow direction", Default = true, Options = new string[] { "down", "up", "left", "right" })]
+		#region Textbox properties
+		[ComboBox(DisplayName = "Arrow", Key = "arrow", GroupOrder = 30, Description = "Speech bubble arrow direction", Options = new string[] { "down", "up", "left", "right" })]
 		[XmlAttribute("arrow")]
 		public string Arrow;
+
+		[HorizontalAlignment(DisplayName = "X Alignment", Key = "alignmentx", GroupOrder = 31, Description = "Horizontal alignment")]
+		[XmlAttribute("alignmentx")]
+		public string AlignmentX;
+
+		[VerticalAlignment(DisplayName = "Y Alignment", Key = "alignmenty", GroupOrder = 32, Description = "Vertical alignment")]
+		[XmlAttribute("alignmenty")]
+		public string AlignmentY;
+		#endregion
 
 		//The engine doesn't even use this currently, so not exposing it to the property table
 		[XmlAttribute("css")]
@@ -44,7 +58,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("loop")]
 		public bool Looped;
 
-		[ComboBox(DisplayName = "Easing Function", Key = "ease", GroupOrder = 40, Description = "Easing function for how fast the animation progresses over time", Options = new string[] { "linear", "smooth", "ease-in", "ease-in-sin", "ease-in-cubic", "ease-out", "ease-out-sin", "ease-out-cubic", "ease-in-out-cubic", "bounce", "elastic" })]
+		[ComboBox(DisplayName = "Easing Function", Key = "ease", GroupOrder = 40, Description = "Easing function for how fast the animation progresses over time", Options = new string[] { "linear", "smooth", "ease-in", "ease-in-sin", "ease-in-cubic", "ease-out", "ease-out-sin", "ease-out-cubic", "ease-in-out-cubic", "ease-out-in", "ease-out-in-cubic", "bounce", "elastic" })]
 		[XmlAttribute("ease")]
 		public string EasingMethod;
 
@@ -62,12 +76,12 @@ namespace SPNATI_Character_Editor
 		public int Iterations;
 
 		[DefaultValue(0)]
-		[Numeric(DisplayName = "Layer", Key = "layer", GroupOrder = 6, Description = "Sort order layer", Minimum = 0, Maximum = 100)]
+		[Numeric(DisplayName = "Layer", Key = "layer", GroupOrder = 6, Description = "Sort order layer", Minimum = -100, Maximum = 100)]
 		[XmlAttribute("layer")]
 		public int Layer;
 
 		[DefaultValue(0)]
-		[Numeric(DisplayName = "Layer", Key = "z", GroupOrder = 6, Description = "Sort order layer", Minimum = 0, Maximum = 100)]
+		[Numeric(DisplayName = "Layer", Key = "z", GroupOrder = 6, Description = "Sort order layer", Minimum = -100, Maximum = 100)]
 		[XmlAttribute("z")]
 		public int Z;
 
@@ -139,6 +153,22 @@ namespace SPNATI_Character_Editor
 		[ParticleFloat(DisplayName = "End Spin", Key = "endRotation", GroupOrder = 35, Description = "Ending spin range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
 		[XmlAttribute("endRotation")]
 		public string EndRotation;
+
+		[ParticleFloat(DisplayName = "Start Skew X", Key = "startSkewX", GroupOrder = 36, Description = "Initial horizontal shearing range", Minimum = -89, Maximum = 89, DecimalPlaces = 2)]
+		[XmlAttribute("startSkewX")]
+		public string StartSkewX;
+
+		[ParticleFloat(DisplayName = "Start Skew Y", Key = "startSkewY", GroupOrder = 36, Description = "Initial vertical shearing range", Minimum = -89, Maximum = 89, DecimalPlaces = 2)]
+		[XmlAttribute("startSkewY")]
+		public string StartSkewY;
+
+		[ParticleFloat(DisplayName = "End Skew X", Key = "endSkewX", GroupOrder = 37, Description = "Ending horizontal shearing range", Minimum = -89, Maximum = 89, DecimalPlaces = 2)]
+		[XmlAttribute("endSkewX")]
+		public string EndSkewX;
+
+		[ParticleFloat(DisplayName = "End Skew Y", Key = "endSkewY", GroupOrder = 37, Description = "Ending vertical shearing range", Minimum = -89, Maximum = 89, DecimalPlaces = 2)]
+		[XmlAttribute("endSkewY")]
+		public string EndSkewY;
 
 		[DefaultValue(0)]
 		[Numeric(DisplayName = "Count", Key = "count", GroupOrder = 10, Description = "Number of particles to emit", Minimum = 1, Maximum = 100)]
@@ -351,6 +381,14 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("scaley")]
 		public string ScaleY;
 
+		[Float(DisplayName = "Skew X", Key = "skewx", GroupOrder = 22, Description = "Sprite shearing factor horizontally", DecimalPlaces = 2, Minimum = -89, Maximum = 89, Increment = 1f)]
+		[XmlAttribute("skewx")]
+		public string SkewX;
+
+		[Float(DisplayName = "Skew Y", Key = "skewy", GroupOrder = 23, Description = "Sprite shearing factor vertically", DecimalPlaces = 2, Minimum = -89, Maximum = 89, Increment = 1f)]
+		[XmlAttribute("skewy")]
+		public string SkewY;
+
 		[Measurement(DisplayName = "Pivot X", Key = "pivotx", GroupOrder = 13, Description = "X value of rotation/scale point of origin as a percentage of the sprite's physical size", Minimum = -1000, Maximum = 1000)]
 		[XmlAttribute("pivotx")]
 		public string PivotX;
@@ -385,7 +423,8 @@ namespace SPNATI_Character_Editor
 		public bool HasAnimatableProperties()
 		{
 			return !string.IsNullOrEmpty(X) || !string.IsNullOrEmpty(Y) || !string.IsNullOrEmpty(Scale) || !string.IsNullOrEmpty(ScaleX) || !string.IsNullOrEmpty(ScaleY)
-				 || !string.IsNullOrEmpty(Color) || !string.IsNullOrEmpty(Opacity) || !string.IsNullOrEmpty(Rotation) || !string.IsNullOrEmpty(Zoom) || !string.IsNullOrEmpty(Src);
+				 || !string.IsNullOrEmpty(Color) || !string.IsNullOrEmpty(Opacity) || !string.IsNullOrEmpty(Rotation) || !string.IsNullOrEmpty(Zoom) || !string.IsNullOrEmpty(Src)
+				 || !string.IsNullOrEmpty(SkewX) || !string.IsNullOrEmpty(SkewY);
 		}
 
 		public Keyframe() { }
@@ -402,6 +441,8 @@ namespace SPNATI_Character_Editor
 			Scale = src.Scale;
 			ScaleX = src.ScaleX;
 			ScaleY = src.ScaleY;
+			SkewX = src.SkewX;
+			SkewY = src.SkewY;
 			PivotX = src.PivotX;
 			PivotY = src.PivotY;
 			Color = src.Color;
@@ -420,6 +461,8 @@ namespace SPNATI_Character_Editor
 			src.Zoom = null;
 			src.ScaleX = null;
 			src.ScaleY = null;
+			src.SkewX = null;
+			src.SkewY = null;
 			src.Src = null;
 		}
 
@@ -437,6 +480,10 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(ScaleX) || !string.IsNullOrEmpty(ScaleY))
 			{
 				sb.Append($" Scale:{ScaleX},{ScaleY}");
+			}
+			if (!string.IsNullOrEmpty(SkewX) || !string.IsNullOrEmpty(SkewY))
+			{
+				sb.Append($" Shear:{SkewX},{SkewY}");
 			}
 			if (!string.IsNullOrEmpty(Color))
 			{

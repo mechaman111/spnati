@@ -15,11 +15,20 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public List<SceneObject> Objects = new List<SceneObject>();
 		public List<SceneObject> TextBoxes = new List<SceneObject>();
+		public Dictionary<string, string> Markers = new Dictionary<string, string>();
 
 		public Dictionary<string, Image> Images = new Dictionary<string, Image>();
 
-		public ScenePreview(Scene scene, Character character)
+		public ScenePreview(Scene scene, Character character, List<string> markers)
 		{
+			if (markers != null)
+			{
+				foreach (string marker in markers)
+				{
+					Markers[marker] = "1";
+				}
+			}
+
 			PreviewScene = this;
 			Character = character;
 			LinkedScene = scene;
@@ -48,6 +57,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			if (!string.IsNullOrEmpty(scene.Zoom))
 			{
 				float.TryParse(scene.Zoom, NumberStyles.Float, CultureInfo.InvariantCulture, out Zoom);
+				if (Zoom == 0)
+				{
+					Zoom = 0.01f;
+				}
 			}
 			if (!string.IsNullOrEmpty(scene.FadeColor))
 			{
@@ -73,6 +86,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			AddImage(scene.Background);
 			foreach (Directive directive in scene.Directives)
 			{
+				if (!string.IsNullOrEmpty(directive.Marker) && !Marker.CheckMarker(directive.Marker, Markers))
+				{
+					continue;
+				}
 				AddImage(directive.Src);
 				foreach (Keyframe frame in directive.Keyframes)
 				{

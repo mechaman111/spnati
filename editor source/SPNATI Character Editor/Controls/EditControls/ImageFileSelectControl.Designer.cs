@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.txtValue = new System.Windows.Forms.TextBox();
+			this.txtValue = new Desktop.CommonControls.TextField();
 			this.cmdBrowse = new System.Windows.Forms.Button();
 			this.openFileDialog1 = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
 			this.SuspendLayout();
@@ -72,7 +72,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.TextBox txtValue;
+		private Desktop.CommonControls.TextField txtValue;
 		private System.Windows.Forms.Button cmdBrowse;
 		private CharacterImageDialog openFileDialog1;
 	}

@@ -3,11 +3,10 @@ import csv
 import sys
 
 modifications = {
-    'dh': {
-        0: 1,
-        1: 20,
-        4: 3
-    },
+    'ca': {
+        0: 109,
+        3: 115
+    }
 }
 
 def modify_code(in_code):

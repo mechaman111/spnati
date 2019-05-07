@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.slider = new System.Windows.Forms.TrackBar();
-			this.valValue = new System.Windows.Forms.NumericUpDown();
+			this.valValue = new Desktop.CommonControls.NumericField();
 			((System.ComponentModel.ISupportInitialize)(this.slider)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valValue)).BeginInit();
 			this.SuspendLayout();
@@ -42,7 +42,7 @@
 			this.slider.Location = new System.Drawing.Point(0, 0);
 			this.slider.Maximum = 100;
 			this.slider.Name = "slider";
-			this.slider.Size = new System.Drawing.Size(106, 20);
+			this.slider.Size = new System.Drawing.Size(105, 20);
 			this.slider.TabIndex = 0;
 			this.slider.TickFrequency = 10;
 			// 
@@ -76,6 +76,6 @@
 		#endregion
 
 		private System.Windows.Forms.TrackBar slider;
-		private System.Windows.Forms.NumericUpDown valValue;
+		private Desktop.CommonControls.NumericField valValue;
 	}
 }

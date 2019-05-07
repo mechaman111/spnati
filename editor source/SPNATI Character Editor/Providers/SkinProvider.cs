@@ -17,6 +17,11 @@ namespace SPNATI_Character_Editor.Providers
 			get { return true; }
 		}
 
+		public bool TrackRecent
+		{
+			get { return true; }
+		}
+
 		public IRecord Create(string key)
 		{
 			Costume skin = new Costume();
@@ -36,26 +41,9 @@ namespace SPNATI_Character_Editor.Providers
 
 			//Link up basic information with the source character
 			Character owner = record as Character;
-			SkinLink link = null;
-
-			if (link == null)
-			{
-				if (owner.Metadata.AlternateSkins.Count == 0)
-				{
-					owner.Metadata.AlternateSkins.Add(new AlternateSkin());
-				}
-				link = new SkinLink()
-				{
-					Folder = folder,
-					Name = key, //can be renamed later
-				};
-				owner.Metadata.AlternateSkins[0].Skins.Add(link);
-			}
+			skin.LinkCharacter(owner);
 
 			skin.Labels.Add(new StageSpecificValue(0, owner.Label));
-			skin.Character = owner;
-			link.Costume = skin;
-			skin.Link = link;
 
 			//Duplicate the wardrobe
 			foreach (Clothing item in owner.Wardrobe)

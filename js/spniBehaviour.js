@@ -37,6 +37,17 @@ var OPPONENT_LOST = "opponent_lost";
 var OPPONENT_STRIPPING = "opponent_stripping";
 var OPPONENT_STRIPPED = "opponent_stripped";
 
+var OPPONENT_CHEST_WILL_BE_VISIBLE = "opponent_chest_will_be_visible";
+var OPPONENT_CROTCH_WILL_BE_VISIBLE = "opponent_crotch_will_be_visible";
+var OPPONENT_CHEST_IS_VISIBLE = "opponent_chest_is_visible";
+var OPPONENT_CROTCH_IS_VISIBLE = "opponent_crotch_is_visible";
+var OPPONENT_START_MASTURBATING = "opponent_start_masturbating";
+var OPPONENT_MASTURBATING = "opponent_masturbating";
+var OPPONENT_HEAVY_MASTURBATING = "opponent_heavy_masturbating";
+var OPPONENT_FINISHED_MASTURBATING = "opponent_finished_masturbating";
+
+var PLAYERS_TIED = "tie";
+
 var MALE_HUMAN_MUST_STRIP = "male_human_must_strip";
 var MALE_MUST_STRIP = "male_must_strip";
 
@@ -53,6 +64,7 @@ var MALE_CHEST_IS_VISIBLE = "male_chest_is_visible";
 var MALE_SMALL_CROTCH_IS_VISIBLE = "male_small_crotch_is_visible";
 var MALE_MEDIUM_CROTCH_IS_VISIBLE = "male_medium_crotch_is_visible";
 var MALE_LARGE_CROTCH_IS_VISIBLE = "male_large_crotch_is_visible";
+var MALE_CROTCH_IS_VISIBLE = "male_crotch_is_visible";
 
 var MALE_MUST_MASTURBATE = "male_must_masturbate";
 var MALE_START_MASTURBATING = "male_start_masturbating";
@@ -75,6 +87,7 @@ var FEMALE_REMOVED_MAJOR = "female_removed_major";
 var FEMALE_SMALL_CHEST_IS_VISIBLE = "female_small_chest_is_visible";
 var FEMALE_MEDIUM_CHEST_IS_VISIBLE = "female_medium_chest_is_visible";
 var FEMALE_LARGE_CHEST_IS_VISIBLE = "female_large_chest_is_visible";
+var FEMALE_CHEST_IS_VISIBLE = "female_chest_is_visible";
 var FEMALE_CROTCH_IS_VISIBLE = "female_crotch_is_visible";
 
 var FEMALE_MUST_MASTURBATE = "female_must_masturbate";
@@ -88,20 +101,110 @@ var GAME_OVER_DEFEAT = "game_over_defeat";
 
 var GLOBAL_CASE = "global";
 
+/* Tag alias list, mapping aliases to canonical tag names. */
+var TAG_ALIASES = {
+    // Add new aliases as follows:
+    // 'alias_name': 'tag_name',
+};
+
+/* Tag implications list, mapping tags to lists of implied tags. */
+var TAG_IMPLICATIONS = {
+    // Add tag implications as follows:
+    // 'child_tag': ['implied_tag', ...],
+};
+
+
+function fixupTagFormatting(tag) {
+    return tag.replace(/\s/g, '').toLowerCase();
+}
+
+/**********************************************************************
+ * Convert a tag to its 'canonical' form:
+ * - Remove all whitespace characters
+ * - Lowercase the string
+ * - Handle all alias conversions
+ **********************************************************************/
+function canonicalizeTag(tag) {
+    if (!tag) return undefined;
+    
+    tag = fixupTagFormatting(tag);
+    while (TAG_ALIASES.hasOwnProperty(tag)) {
+        tag = TAG_ALIASES[tag];
+    }
+    
+    return tag;
+}
+
+/* Ensure that the alias and implications mappings are themselves canonical.
+ * This could also be done in-place, but it feels cleaner and better to 
+ * ensure that TAG_ALIASES and TAG_IMPLICATIONS *only* have canonical-form tags.
+ */
+let fixedAliases = {};
+for (alias in TAG_ALIASES) {
+    fixedAliases[fixupTagFormatting(alias)] = fixupTagFormatting(TAG_ALIASES[alias]);
+}
+TAG_ALIASES = fixedAliases;
+
+let fixedImplies = {};
+for (child_tag in TAG_IMPLICATIONS) {    
+    let implied = TAG_IMPLICATIONS[child_tag].map(canonicalizeTag);
+    let canonical_child = canonicalizeTag(child_tag);
+    
+    // If multiple entries in TAG_IMPLICATIONS alias to the same tag,
+    // merge their lists of implications.
+    if (fixedImplies.hasOwnProperty(canonical_child)) {
+        implied.forEach(function (t) {
+            if (fixedImplies[canonical_child].indexOf(t) < 0)
+                fixedImplies[canonical_child].push(t);
+        });
+    } else {
+        fixedImplies[canonical_child] = implied;
+    }
+}
+TAG_IMPLICATIONS = fixedImplies;
+
+/**********************************************************************
+ * Convert a tags list to canonical form:
+ * - Canonicalize each input tag
+ * - Resolve tag implications
+ * This function also filters out duplicated tags.
+ **********************************************************************/
+function expandTagsList(input_tags) {
+    let tmp = input_tags.map(canonicalizeTag);
+    let output_tags = [];
+    
+    while (tmp.length > 0) {
+        let tag = tmp.shift();
+        
+        // Ensure exactly one instance of each tag remains within the output array.
+        if (output_tags.indexOf(tag) >= 0) continue;
+        output_tags.push(tag);
+        
+        // If this tag implies other tags, queue those for processing as well.
+        if (TAG_IMPLICATIONS.hasOwnProperty(tag)) {
+            Array.prototype.push.apply(tmp, TAG_IMPLICATIONS[tag]);
+        }
+    }
+    
+    return output_tags;
+}
+
 /**********************************************************************
  *****                  State Object Specification                *****
  **********************************************************************/
 
-function State($xml) {
+function State($xml, parentCase) {
+    this.parentCase = parentCase;
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
-    var markerOp = $xml.attr('marker');
     this.rawDialogue = $xml.html();
+    this.weight = Number($xml.attr('weight')) || 1;
+    if (this.weight < 0) this.weight = 0;
     
     if (this.location && Number(this.location) == this.location) {
-    // It seems that location was specified as a number without "%"
-    this.location = this.location + "%";
+        // It seems that location was specified as a number without "%"
+        this.location = this.location + "%";
     }
     
     this.setIntelligence = $xml.attr('set-intelligence');
@@ -109,11 +212,38 @@ function State($xml) {
     this.setGender = $xml.attr('set-gender');
     this.setLabel = $xml.attr('set-label');
     
+    var collectibleId = $xml.attr('collectible') || undefined;
+    var collectibleOp = $xml.attr('collectible-value') || undefined;
+    var persistMarker = $xml.attr('persist-marker') === 'true';
+    var markerOp = $xml.attr('marker');
+
+    if (collectibleId) {
+        this.collectible = {id: collectibleId, op: 'unlock', val: null};
+        
+        if (collectibleOp) {
+            if (collectibleOp.startsWith('+')) {
+                this.collectible.op = 'inc';
+                this.collectible.val = parseInt(collectibleOp.substring(1), 10);
+            } else if (collectibleOp.startsWith('-')) {
+                this.collectible.op = 'dec';
+                this.collectible.val = parseInt(collectibleOp.substring(1), 10);
+            } else {
+                this.collectible.op = 'set';
+                this.collectible.val = parseInt(collectibleOp, 10);
+            }
+            
+            if (!this.collectible.val || this.collectible.val <= 0) {
+                this.collectible.op = 'unlock';
+                this.collectible.val = null;
+            }
+        }
+    }
+    
     if (markerOp) {
-        var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
+        var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?[^~]+~))$/);
         var name;
         
-        this.marker = {name: null, perTarget: false, op: null, val: null};
+        this.marker = {name: null, perTarget: false, persistent: persistMarker, op: null, val: null};
         
         if (match) {
             this.marker.perTarget = !!(match[3] || match[5]);
@@ -150,25 +280,29 @@ State.prototype.evaluateMarker = function (self, opp) {
             name = getTargetMarker(name, opp);
         }
         
-        if(!self.markers[name]) {
-            return 1;
+        if (this.marker.persistent) {
+            var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
         } else {
-            return parseInt(self.markers[name], 10) + 1;
+            var curVal = parseInt(self.markers[name], 10) || 0;
         }
+        
+        return !curVal ? 1 : curVal + 1;
     } else if (this.marker.op === '-') {
         if (this.marker.perTarget && opp) {
             name = getTargetMarker(name, opp);
         }
         
-        if(!self.markers[name]) {
-            return 0;
+        if (this.marker.persistent) {
+            var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
         } else {
-            return parseInt(self.markers[name], 10) - 1;
+            var curVal = parseInt(self.markers[name], 10) || 0;
         }
+        
+        return !curVal ? 0 : curVal - 1;
     } else if (this.marker.op === '=') {
         if (typeof(this.marker.val) === 'number') return this.marker.val;
         
-        var val = expandDialogue(this.marker.val, self, opp);
+        var val = expandDialogue(this.marker.val, self, opp, this.parentCase && this.parentCase.variableBindings);
         
         if (!isNaN(parseInt(val, 10))) {
             return parseInt(val, 10);
@@ -186,11 +320,53 @@ State.prototype.applyMarker = function (self, opp) {
         name = getTargetMarker(name, opp);
     }
     
-    self.markers[name] = this.evaluateMarker(self, opp);
+    var newVal = this.evaluateMarker(self, opp);
+    if (this.marker.persistent) {
+        save.setPersistentMarker(self, name, newVal);
+    } else {
+        self.markers[name] = newVal;
+    }
 }
 
 State.prototype.expandDialogue = function(self, target) {
-    this.dialogue = expandDialogue(this.rawDialogue, self, target);
+    this.dialogue = expandDialogue(this.rawDialogue, self, target, this.parentCase && this.parentCase.variableBindings);
+}
+
+State.prototype.applyCollectible = function (player) {
+    if (COLLECTIBLES_ENABLED && this.collectible && player.collectibles) {        
+        player.collectibles.some(function (collectible) {
+            if (collectible.id === this.collectible.id) {
+                console.log(
+                    "Performing collectible op: "+
+                    this.collectible.op.toUpperCase()+
+                    " on ID: "+
+                    this.collectible.id
+                );
+                
+                switch(this.collectible.op) {
+                default:
+                case 'unlock':
+                    collectible.unlock();
+                    break;
+                case 'inc':
+                    collectible.incrementCounter(this.collectible.val);
+                    break;
+                case 'dec':
+                    collectible.incrementCounter(-this.collectible.val);
+                    break;
+                case 'set':
+                    collectible.setCounter(this.collectible.val);
+                    break;
+                }
+                
+                if (collectible.isUnlocked() && !COLLECTIBLES_UNLOCKED) {
+                    player.pendingCollectiblePopup = collectible;
+                }
+                
+                return true;
+            }
+        }.bind(this));
+    }
 }
 
 function getTargetMarker(marker, target) {
@@ -210,25 +386,55 @@ function expandPlayerVariable(split_fn, args, self, target) {
         return (target.slot < self.slot) ? 'left' : 'right';
     case 'slot':
         return target.slot;
+    case 'collectible':
+        var collectibleID = split_fn[1];
+        if (collectibleID) {
+            var collectibles = target.collectibles.filter(function (c) { return c.id === collectibleID; });
+            var targetCollectible = collectibles[0];
+            
+            if (split_fn[2] && split_fn[2] === 'counter') {
+                if (targetCollectible) return targetCollectible.getCounter();
+                return 0;
+            } else {
+                if (targetCollectible) return targetCollectible.isUnlocked();
+                return false;
+            }
+        } else {
+            return "collectible"; // no collectible ID supplied
+        }
     case 'marker':
+    case 'persistent':
         var markerName = split_fn[1];
         if (markerName) {
             var marker;
             if (target) {
-                marker = target.markers[getTargetMarker(markerName, target)];
+                var targetedName = getTargetMarker(markerName, target);
+                if (fn === 'persistent') {
+                    marker = save.getPersistentMarker(target, targetedName);
+                } else {
+                    marker = target.markers[targetedName];
+                }
             }
             if (!marker) {
-                marker = target.markers[markerName] || "";
+                if (fn === 'persistent') {
+                    marker = save.getPersistentMarker(target, markerName);
+                } else {
+                    marker = target.markers[markerName];
+                }
             }
-            return marker;
+            return marker || "";
         } else {
-            return "marker"; //didn't supply a marker name
+            return fn; //didn't supply a marker name
         }
     case 'tag':
-        return target.tags.indexOf(split_fn[1].toLowerCase()) >= 0 ? 'true' : 'false';
+        return target.hasTag(split_fn[1]) ? 'true' : 'false';
     case 'costume':
         if (!target.alt_costume) return 'default';
         return target.alt_costume.id;
+    case 'size':
+        return target.size;
+    case 'gender':
+        return target.gender;
     default:
         return target.label;
     }
@@ -237,7 +443,7 @@ function expandPlayerVariable(split_fn, args, self, target) {
 /************************************************************
  * Expands variables etc. in a line of dialogue.
  ************************************************************/
-function expandDialogue (dialogue, self, target) {
+function expandDialogue (dialogue, self, target, bindings) {
     function substitute(match, variable, fn, args) {
         // If substitution fails, return match unchanged.
         var substitution = match;
@@ -259,7 +465,7 @@ function expandDialogue (dialogue, self, target) {
             case 'clothing':
                 var clothing = (target||self).removedClothing;
                 if (fn == 'ifplural' && args) {
-                    substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target);
+                    substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target, bindings);
                 } else if (fn === 'plural') {
                     substitution = clothing.plural ? 'plural' : 'single';
                 } else if (fn == 'formal' && args === undefined) {
@@ -273,24 +479,62 @@ function expandDialogue (dialogue, self, target) {
             case 'cards': /* determine how many cards are being swapped */
                 var n = self.hand.tradeIns.countTrue();
                 if (fn == 'ifplural') {
-                    substitution = expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target);
+                    substitution = expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target, bindings);
+                } else if (fn == 'text' && args === undefined) {
+                    substitution = [ 'zero', 'one', 'two', 'three', 'four', 'five' ][n];
                 } else if (fn === undefined) {
                     substitution = String(n);
                 }
                 break;
+            case 'collectible':
+                fn = fn_parts[0];
+                if (fn) {
+                    var collectibles = self.collectibles.filter(function (c) { return c.id === fn; });
+                    var targetCollectible = collectibles[0];
+                    
+                    if (fn_parts[1] && fn_parts[1] === 'counter') {
+                        if (targetCollectible) {
+                            substitution = targetCollectible.getCounter();
+                        } else {
+                            substitution = 0;
+                        }
+                    } else {
+                        if (targetCollectible) {
+                            substitution = targetCollectible.isUnlocked();
+                        } else {
+                            substitution = false;
+                        }
+                    }
+                } else {
+                    substitution = 'collectible'; // no collectible ID supplied
+                }
+                break;
             case 'marker':
+            case 'persistent':
                 fn = fn_parts[0];  // make sure to keep the original string case intact 
                 if (fn) {
                     var marker;
+                    
                     if (target) {
-                        marker = self.markers[getTargetMarker(fn, target)];
+                        var targetedName = getTargetMarker(fn, target);
+                        if (variable.toLowerCase() === 'persistent') {
+                            marker = save.getPersistentMarker(self, targetedName);
+                        } else {
+                            marker = self.markers[targetedName];
+                        }
                     }
+                    
                     if (!marker) {
-                        marker = self.markers[fn] || "";
+                        if (variable.toLowerCase() === 'persistent') {
+                            marker = save.getPersistentMarker(self, fn);
+                        } else {
+                            marker = self.markers[fn];
+                        }
                     }
-                    substitution = marker;
+                    
+                    substitution = marker || "";
                 } else {
-                    substitution = "marker"; //didn't supply a marker name
+                    substitution = variable.toLowerCase(); //didn't supply a marker name
                 }
                 break;
             case 'background':
@@ -310,13 +554,17 @@ function expandDialogue (dialogue, self, target) {
                 substitution = expandPlayerVariable(fn_parts, args, self, self);
                 break;
             default:
-                /* Find a specific character at the table by ID. */
-                players.some(function (p) {
-                    if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
-                        substitution = expandPlayerVariable(fn_parts, args, self, p);
-                        return true;
-                    }
-                });
+                if (bindings && variable.toLowerCase() in bindings) {
+                    substitution = expandPlayerVariable(fn_parts, args, self, bindings[variable.toLowerCase()]);
+                } else {
+                    /* Find a specific character at the table by ID. */
+                    players.some(function (p) {
+                        if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
+                            substitution = expandPlayerVariable(fn_parts, args, self, p);
+                            return true;
+                        }
+                    });
+                }
                 break;
             }
             if (variable[0] == variable[0].toUpperCase()) {
@@ -331,7 +579,7 @@ function expandDialogue (dialogue, self, target) {
     // variable or
     // variable.attribute or
     // variable.function(arguments)
-    return dialogue.replace(/~(\w+)(?:\.([\w\.]+)(?:\(([^)]*)\))?)?~/g, substitute);
+    return dialogue.replace(/~(\w+)(?:\.([^\(]+)(?:\(([^)]*)\))?)?~/g, substitute);
 }
 
 function escapeRegExp(string) {
@@ -504,12 +752,25 @@ function Case($xml, stage) {
     this.notSaidMarker =            $xml.attr("notSaidMarker");
     this.customPriority =           parseInt($xml.attr("priority"), 10);
     this.hidden =                   $xml.attr("hidden");
+    this.addTags =                  $xml.attr("addCharacterTags");
+    this.removeTags =               $xml.attr("removeCharacterTags");
     
-    var states = [];
-    $xml.find('state').each(function () {
-        states.push(new State($(this)));
-    });
-    this.states = states;
+    if (this.addTags) {
+        this.addTags = this.addTags.split(',').map(canonicalizeTag);
+    } else {
+        this.addTags = [];
+    }
+
+    if (this.removeTags) {
+        this.removeTags = this.removeTags.split(',').map(canonicalizeTag);
+    } else {
+        this.removeTags = [];
+    }
+    
+    this.states = [];
+    $xml.find('state').each(function (idx, elem) {
+        this.states.push(new State($(elem), this));
+    }.bind(this));
     
     var counters = [];
     $xml.find("condition").each(function () {
@@ -563,11 +824,16 @@ function Case($xml, stage) {
     	if (this.totalFinished)            this.priority += 5 + this.totalFinished.max;
     
     	counters.forEach(function (ctr) {
-    		var filterTag 	 = ctr.attr('filter');
-    		var filterGender = ctr.attr('gender');
-    		var filterStatus = ctr.attr('status');
-    		
-    		this.priority += (filterTag ? 10 : 0) + (filterGender ? 5 : 0) + (filterStatus ? 5 : 0);
+            var filterId     = ctr.attr('character');
+            var filterStage  = ctr.attr('stage');
+            var role         = ctr.attr('role');
+            var filterTag    = ctr.attr('filter');
+            var filterGender = ctr.attr('gender');
+            var filterStatus = ctr.attr('status');
+
+            this.priority += (filterId ? (role == "target" ? 300 : 100) : 0)
+                + (filterStage ? (role == "target" ? 80 : 40) : 0)
+                + (filterTag ? 10 : 0) + (filterGender ? 5 : 0) + (filterStatus ? 5 : 0);
     	}.bind(this));
     	
     	// Expression tests (priority = 50 for each)
@@ -612,7 +878,7 @@ Case.prototype.volatileRequirementsMet = function (self, opp) {
     if (this.targetSaying) {
         if (!opp) return false;
         if (!opp.chosenState) return false;
-        if (!opp.chosenState.rawDialogue.toLowerCase().indexOf(this.targetSaying.toLowerCase()) < 0) return false;
+        if (opp.chosenState.rawDialogue.toLowerCase().indexOf(this.targetSaying.toLowerCase()) < 0) return false;
     }
     
     if (this.alsoPlaying && (this.alsoPlayingSayingMarker || this.alsoPlayingSaying)) {
@@ -645,7 +911,7 @@ Case.prototype.getVolatileDependencies = function (self, opp) {
     return deps;
 }
 
-Case.prototype.basicRequirementsMet = function (self, opp) {
+Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     // stage
     if (this.stage) {
         if (!inInterval(self.stage, this.stage)) {
@@ -662,7 +928,7 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
     
     // filter
     if (opp && this.filter) {
-        if (opp.tags.indexOf(this.filter) < 0) {
+        if (!opp.hasTag(this.filter)) {
             return false; // failed "filter" requirement
         }
     }
@@ -786,55 +1052,6 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
         }
     }
 
-    // filter counter targets
-    if(!this.counters.every(function (ctr) {
-        var desiredCount = parseInterval(ctr.attr('count'));
-        var filterTag =    ctr.attr('filter');
-        var filterGender = ctr.attr('gender');
-        var filterStatus = ctr.attr('status');
-        
-        var count = players.countTrue(function(p) {
-            return p && (filterTag == undefined || (p.tags && p.tags.indexOf(filterTag) >= 0))
-                && (filterGender == undefined || (p.gender == filterGender))
-                && (filterStatus == undefined || checkPlayerStatus(p, filterStatus));
-        });
-        
-        return inInterval(count, desiredCount);
-    })) {
-        return false; // failed filter count
-    }
-
-    if (!this.tests.every(function(test) {
-        var expr = expandDialogue(test.attr('expr'), self, opp);
-        var value = test.attr('value');
-		var cmp = test.attr('cmp') || '==';
-		
-        var interval = parseInterval(value);
-		if (interval) {
-			return (cmp === '!=') ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
-		}
-		
-		if (!isNaN(Number(expr))) expr = Number(expr);
-		if (!isNaN(Number(value))) value = Number(value);
-		
-		switch (cmp) {
-			case '>':
-				return expr > value;
-			case '>=':
-				return expr >= value;
-			case '<':
-				return expr < value;
-			case '<=':
-				return expr <= value;
-			case '!=':
-				return expr != value;
-			default:
-				return expr == value;
-		}
-    })) {
-        return false;
-    }
-
     // totalRounds
     if (this.totalRounds) {
         if (!inInterval(currentRound, this.totalRounds)) {
@@ -919,8 +1136,80 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
             return false;
         }
     }
-    
-    return true;
+
+    var counterMatches = [];
+
+    // filter counter targets
+    if (!this.counters.every(function (ctr) {
+        var desiredCount = parseInterval(ctr.attr('count') || "1-");
+        var role         = ctr.attr('role');
+        var variable     = ctr.attr('var');
+        var filterId     = ctr.attr('character');
+        var filterStage  = parseInterval(ctr.attr('stage'));
+        var filterTag =    ctr.attr('filter');
+        var filterGender = ctr.attr('gender');
+        var filterStatus = ctr.attr('status');
+
+        var matches = players.filter(function(p) {
+            return (role === undefined || (role == "target" && p == opp) || (role == "opp" && p != self) || (role == "other" && p != self && p != opp))
+                && (filterId === undefined || p.id == filterId)
+                && (filterStage === undefined || inInterval(p.stage, filterStage))
+                && (filterTag == undefined || p.hasTag(filterTag))
+                && (filterGender == undefined || (p.gender == filterGender))
+                && (filterStatus == undefined || checkPlayerStatus(p, filterStatus));
+        });
+
+        if (inInterval(matches.length, desiredCount)) {
+            if (matches.length && variable) {
+                counterMatches.push([ variable, matches ]);
+            }
+            return true;
+        }
+        return false;
+    })) {
+        return false; // failed filter count
+    }
+    var bindingCombinations = getAllBindingCombinations(counterMatches);
+    shuffleArray(bindingCombinations);
+    /* In the trivial case with no condition variables, we get a single binding combination of {}.
+       And with no tests, this.tests.every() trivially returns true. */
+    for (var i = 0; i < bindingCombinations.length; i++) {
+        if (this.tests.every(function(test) {
+            var expr = expandDialogue(test.attr('expr'), self, opp, bindingCombinations[i]);
+            var value = test.attr('value');
+            var cmp = test.attr('cmp') || '==';
+
+            var interval = parseInterval(value);
+            if (interval) {
+                return (cmp === '!=') ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
+            }
+
+            if (!isNaN(Number(expr))) expr = Number(expr);
+            if (!isNaN(Number(value))) value = Number(value);
+
+            switch (cmp) {
+            case '>':
+                return expr > value;
+            case '>=':
+                return expr >= value;
+            case '<':
+                return expr < value;
+            case '<=':
+                return expr <= value;
+            case '!=':
+                return expr != value;
+            default:
+                return expr == value;
+            }
+
+            return true;
+        })) {
+            this.variableBindings = bindingCombinations[i];
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**********************************************************************
@@ -989,8 +1278,8 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
                 volatileMatches.push(curCase); 
             } else {
                 if (curCase.hidden) {
-                    //if it's hidden, set markers but don't actually count as a match
-                    this.applyMarkers(curCase, opp);
+                    //if it's hidden, set markers and collectibles but don't actually count as a match
+                    this.applyHiddenStates(curCase, opp);
                     continue;
                 }
 
@@ -1012,10 +1301,12 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
         return list.concat(caseObject.states);
     }.bind(this), []);
     
-    if (states.length > 0) {
+    var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
+    if (weightSum > 0) {
         console.log("Current NV case priority for player "+this.slot+": "+bestMatchPriority);
-        
-        var chosenState = states[getRandomNumber(0, states.length)];
+
+        var rnd = Math.random() * weightSum;
+        for (var i = 0, x = 0; x < rnd; x += states[i++].weight);
         
         /* Reaction handling state... */
         this.volatileMatches = volatileMatches;
@@ -1026,7 +1317,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
         this.stateCommitted = false;
         
         this.allStates = states;
-        this.chosenState = chosenState;
+        this.chosenState = states[i - 1];
         
         return true;
     }
@@ -1138,15 +1429,28 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         this.size = this.chosenState.setSize;
     }
     
+    if (this.chosenState.parentCase && (this.chosenState.parentCase.removeTags.length > 0 || this.chosenState.parentCase.addTags.length > 0)) {
+        this.chosenState.parentCase.removeTags.forEach(this.removeTag.bind(this));
+        this.chosenState.parentCase.addTags.forEach(this.addTag.bind(this));
+        this.updateTags();
+    }
+    
+    if (this.chosenState.collectible) {
+        this.chosenState.applyCollectible(this);
+    }
+
     this.stateCommitted = true;
 }
 
 /************************************************************
  * Applies markers from all lines in a case
  ************************************************************/
-Opponent.prototype.applyMarkers = function (chosenCase, opp) {
+Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
     var self = this;
-    chosenCase.states.forEach(function (c) { c.applyMarker(self, opp); });
+    chosenCase.states.forEach(function (c) {
+        c.applyMarker(self, opp);
+        c.applyCollectible(self);
+    });
 }
 
 /************************************************************
@@ -1214,4 +1518,40 @@ function commitAllBehaviourUpdates () {
             p.commitBehaviourUpdate();
         }
     });
+}
+
+/*
+ * Produces all combinations of variable bindings
+ * Input: an array of pairs of variable name and matching player references
+ * Return value: an array of objects with each variable name bound to a player reference.
+ */
+function getAllBindingCombinations (variableMatches) {
+    if (variableMatches.length > 0) {
+        var ret = [];
+        var cur = variableMatches[0];
+        var variable = cur[0];
+        var matches = cur[1];
+        var rest = getAllBindingCombinations(variableMatches.slice(1));
+
+        for (var i = 0; i < matches.length; i++) {
+            for (var j = 0; j < rest.length; j++) {
+                var bindings = {};
+                for (var key in rest[j]) { // copy properties
+                    bindings[key] = rest[j][key];
+                }
+                bindings[variable] = matches[i];
+                ret.push(bindings);
+            }
+        }
+        return ret;
+    } else return [{}];
+}
+
+function shuffleArray (array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = getRandomNumber(0, i);
+        var tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
 }

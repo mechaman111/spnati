@@ -32,22 +32,33 @@
     <defaultText>I'll exchange ~cards~ cards.</defaultText>
   </trigger>
   <trigger tag="good_hand" start="0" end="8" relatedGroup="1" label="Hand=Good" description="After exchanging, the character has a good hand" group="1" order="1">
-    <vars />
+    <vars>
+      <string>cards</string>
+    </vars>
     <defaultImage>happy</defaultImage>
     <defaultText>I've got a good hand.</defaultText>
+    <generic>hand</generic>
   </trigger>
   <trigger tag="okay_hand" start="0" end="8" relatedGroup="1" label="Hand=Okay" description="After exchanging, the character has an okay hand" group="1" order="2">
-    <vars />
+    <vars>
+      <string>cards</string>
+    </vars>
     <defaultImage>calm</defaultImage>
     <defaultText>I've got an okay hand.</defaultText>
+    <generic>hand</generic>
   </trigger>
   <trigger tag="bad_hand" start="0" end="8" relatedGroup="1" label="Hand=Bad" description="After exchanging, the character has a bad hand" group="1" order="3">
-    <vars />
+    <vars>
+      <string>cards</string>
+    </vars>
     <defaultImage>sad</defaultImage>
     <defaultText>I've got a bad hand.</defaultText>
+    <generic>hand</generic>
   </trigger>
   <trigger tag="hand" optional="true" start="0" end="8" relatedGroup="1" label="Hand=Any" description="Lines are pulled from here alongside the Good/Okay/Bad lines" group="1" order="4">
-    <vars />
+    <vars>
+      <string>cards</string>
+    </vars>
     <defaultImage>happy</defaultImage>
     <defaultText>This line can cover any of the Good/Okay/Bad hand cases if it has a higher priority</defaultText>
   </trigger>
@@ -60,16 +71,19 @@
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>They say this when they're winning - they have more clothing items left than other players.</defaultText>
+    <generic>must_strip</generic>
   </trigger>
   <trigger tag="must_strip_normal" start="0" end="7" relatedGroup="2" label="Must Strip (Self, Normal)" description="The character has lost the hand and must strip" oncePerStage="true" group="2" order="2">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>What the character says when they're in the middle of the group in terms of clothes left.</defaultText>
+    <generic>must_strip</generic>
   </trigger>
   <trigger tag="must_strip_losing" start="0" end="7" relatedGroup="2" label="Must Strip (Self, Losing)" description="The character has lost the hand, and currently has the least clothes among everybody" oncePerStage="true" group="2" order="3">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>The character has lost a round, and also has the fewest pieces of clothing left.</defaultText>
+    <generic>must_strip</generic>
   </trigger>
   <trigger tag="stripping" start="0" end="7" relatedGroup="2" label="Stripping" description="The character is stripping after losing a round" oncePerStage="true" group="2" order="4">
     <vars>
@@ -162,6 +176,7 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What they say to a male NPC who has lost a round</defaultText>
+    <generic>opponent_lost</generic>
   </trigger>
   <trigger tag="female_human_must_strip" optional="true" start="0" end="10" label="Must Strip (Player, Female)" hasTarget="true" description="The human female player has lost a round and must remove something" group="3" order="2">
     <vars>
@@ -186,6 +201,11 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What they say to a female NPC who has lost a round</defaultText>
+    <generic>opponent_lost</generic>
+  </trigger>
+  <trigger tag="tie" start="0" end="10" label="Absolute tie" hasTarget="false" optional="true" description="Two (or more) players are tied for the worst hand" group="3" order="4">
+    <defaultImage>shocked</defaultImage>
+    <defaultText>A tie! That doesn't happen every day!</defaultText>
   </trigger>
   <trigger tag="male_removing_accessory" start="0" end="10" relatedGroup="8" label="Removing Accessory (Male)" hasTarget="true" gender="male" description="A male opponent is removing a small item that doesn't cover any skin" group="4" order="0">
     <vars>
@@ -198,6 +218,7 @@
     </bulk>
     <defaultImage>sad</defaultImage>
     <defaultText>A male character is about to remove a small item, with the type "extra".</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="male_removed_accessory" start="0" end="10" relatedGroup="8" label="Removed Accessory (Male)" hasTarget="true" gender="male" description="A male opponent removed a small item that doesn't cover any skin" group="4" order="1">
     <vars>
@@ -210,6 +231,7 @@
     </bulk>
     <defaultImage>calm</defaultImage>
     <defaultText>A male character has just removed that small item.</defaultText>
+    <generic>opponent_stripped</generic>
   </trigger>
   <trigger tag="female_removing_accessory" start="0" end="10" relatedGroup="8" label="Removing Accessory (Female)" hasTarget="true" gender="female" description="A female opponent is removing a small item that doesn't cover any skin" group="4" order="2">
     <vars>
@@ -222,6 +244,7 @@
     </bulk>
     <defaultImage>sad</defaultImage>
     <defaultText>A female character is about to remove a small item, with the type "extra".</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="female_removed_accessory" start="0" end="10" relatedGroup="8" label="Removed Accessory (Female)" hasTarget="true" gender="female" description="A female opponent removed a small item that doesn't cover any skin" group="4" order="3">
     <vars>
@@ -234,6 +257,7 @@
     </bulk>
     <defaultImage>calm</defaultImage>
     <defaultText>A female character has just removed that small item.</defaultText>
+    <generic>opponent_stripped</generic>
   </trigger>
   <trigger tag="male_removing_minor" start="0" end="10" label="Removing Minor (Male)" relatedGroup="8" hasTarget="true" gender="male" description="A male opponent is removing non-essential clothing (e.g. socks)" group="5" order="0">
     <vars>
@@ -246,6 +270,7 @@
     </bulk>
     <defaultImage>calm</defaultImage>
     <defaultText>A male character is about to remove a clothing item with the type "minor".</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="male_removed_minor" start="0" end="10" label="Removed Minor (Male)" relatedGroup="8" hasTarget="true" gender="male" description="A male opponent has removed non-essential clothing (e.g. socks)" group="5" order="1">
     <vars>
@@ -258,6 +283,7 @@
     </bulk>
     <defaultImage>happy</defaultImage>
     <defaultText>The male character has just removed that minor item.</defaultText>
+    <generic>opponent_stripped</generic>
   </trigger>
   <trigger tag="female_removing_minor" start="0" end="10" label="Removing Minor (Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent is removing non-essential clothing (e.g. socks)" group="5" order="2">
     <vars>
@@ -270,6 +296,7 @@
     </bulk>
     <defaultImage>calm</defaultImage>
     <defaultText>A female character is about to remove a clothing item with the type "minor".</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="female_removed_minor" start="0" end="10" label="Removed Minor (Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent has removed non-essential clothing (e.g. socks)" group="5" order="3">
     <vars>
@@ -282,6 +309,7 @@
     </bulk>
     <defaultImage>happy</defaultImage>
     <defaultText>The female character has just removed that minor item.</defaultText>
+    <generic>opponent_stripped</generic>
   </trigger>
   <trigger tag="male_removing_major" start="0" end="10" label="Removing Major (Male)" relatedGroup="8" hasTarget="true" gender="male" description="A male opponent is likely revealing their underwear (e.g. removing pants)" group="6" order="0">
     <vars>
@@ -294,6 +322,7 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says before a male loses an item with the "major" type.</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="male_removed_major" start="0" end="10" label="Removed Major (Male)" relatedGroup="8" hasTarget="true" gender="male" description="A male opponent has likely revealed their underwear (e.g. removing a shirt)" group="6" order="1">
     <vars>
@@ -306,6 +335,7 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says after the major item has been taken off.</defaultText>
+    <generic>opponent_stripped</generic>
   </trigger>
   <trigger tag="female_removing_major" start="0" end="10" label="Removing Major (Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent is likely revealing their underwear (e.g. removing a shirt)" group="6" order="2">
     <vars>
@@ -318,6 +348,7 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says before a female loses an item with the "major" type.</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="female_removed_major" start="0" end="10" label="Removed Major (Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent has likely revealed their underwear (e.g. removing a shirt)" group="6" order="3">
     <vars>
@@ -330,6 +361,43 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says after the major item has been taken off.</defaultText>
+    <generic>opponent_stripped</generic>
+  </trigger>
+  <trigger tag="opponent_chest_will_be_visible" start="0" end="10" optional="true" label="Will Be Visible (Chest, Opponent)" relatedGroup="8" hasTarget="true" description="An opponent of either gender will reveal their chest" group="8" order="3">
+    <vars>
+      <string>name</string>
+      <string>clothing</string>
+      <string>target</string>
+    </vars>
+    <defaultImage>interested</defaultImage>
+    <defaultText>An opponent is removing the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</defaultText>
+  </trigger>
+  <trigger tag="opponent_chest_is_visible" start="0" end="10" optional="true" label="Visible (Chest, Opponent)" relatedGroup="8" hasTarget="true" description="An opponent of either gender has revealed their chest" group="8" order="4">
+    <vars>
+      <string>name</string>
+      <string>clothing</string>
+      <string>target</string>
+    </vars>
+    <defaultImage>interested</defaultImage>
+    <defaultText>An opponent has removed the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</defaultText>
+  </trigger>
+  <trigger tag="opponent_crotch_will_be_visible" start="0" end="10" optional="true" label="Will Be Visible (Crotch, Opponent)" relatedGroup="8" hasTarget="true" description="An opponent of either gender will reveal their crotch" group="8" order="5">
+    <vars>
+      <string>name</string>
+      <string>clothing</string>
+      <string>target</string>
+    </vars>
+    <defaultImage>interested</defaultImage>
+    <defaultText>An opponent is removing the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</defaultText>
+  </trigger>
+  <trigger tag="opponent_crotch_is_visible" start="0" end="10" optional="true" label="Visible (Crotch, Opponent)" relatedGroup="8" hasTarget="true" description="An opponent of either gender has revealed their chest" group="8" order="6">
+    <vars>
+      <string>name</string>
+      <string>clothing</string>
+      <string>target</string>
+    </vars>
+    <defaultImage>interested</defaultImage>
+    <defaultText>An opponent has removed the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</defaultText>
   </trigger>
   <trigger tag="male_chest_will_be_visible" start="0" end="10" label="Will Be Visible (Chest, Male)" relatedGroup="8" hasTarget="true" gender="male" description="A male opponent is about to reveal his chest" group="7" order="0">
     <vars>
@@ -385,7 +453,16 @@
     <defaultImage>shocked</defaultImage>
     <defaultText>What the character says after the male character's crotch is visible, and has a size value of "large".</defaultText>
   </trigger>
-  <trigger tag="female_chest_will_be_visible" start="0" end="10" label="Will Be Visible (Chest, Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent is about to reveal her breasts" group="7" order="6" spacer="true">
+  <trigger tag="male_crotch_is_visible" optional="true" start="0" end="10" label="Visible (Crotch, Male)" relatedGroup="8" hasTarget="true" gender="male" description="A male has opponent revealed a penis of any size" group="7" order="6">
+    <vars>
+      <string>name</string>
+      <string>clothing</string>
+      <string>target</string>
+    </vars>
+    <defaultImage>horny</defaultImage>
+    <defaultText>What the character says after the male character's crotch is visible.</defaultText>
+  </trigger>
+  <trigger tag="female_chest_will_be_visible" start="0" end="10" label="Will Be Visible (Chest, Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent is about to reveal her breasts" group="7" order="7" spacer="true">
     <vars>
       <string>name</string>
       <string>clothing</string>
@@ -394,7 +471,7 @@
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</defaultText>
   </trigger>
-  <trigger tag="female_small_chest_is_visible" start="0" end="10" label="Visible (Chest, Female, Small)" relatedGroup="8" hasTarget="true" gender="female" size="small" description="A female opponent has revealed small breasts" group="7" order="7">
+  <trigger tag="female_small_chest_is_visible" start="0" end="10" label="Visible (Chest, Female, Small)" relatedGroup="8" hasTarget="true" gender="female" size="small" description="A female opponent has revealed small breasts" group="7" order="8">
     <vars>
       <string>name</string>
       <string>clothing</string>
@@ -402,8 +479,9 @@
     </vars>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says after the female character's chest is visible, and has a size value of "small".</defaultText>
+    <generic>female_chest_is_visible</generic>
   </trigger>
-  <trigger tag="female_medium_chest_is_visible" start="0" end="10" label="Visible (Chest, Female, Medium)" relatedGroup="8" hasTarget="true" gender="female" size="medium" description="A female opponent has revealed medium breasts" group="7" order="8">
+  <trigger tag="female_medium_chest_is_visible" start="0" end="10" label="Visible (Chest, Female, Medium)" relatedGroup="8" hasTarget="true" gender="female" size="medium" description="A female opponent has revealed medium breasts" group="7" order="9">
     <vars>
       <string>name</string>
       <string>clothing</string>
@@ -411,8 +489,9 @@
     </vars>
     <defaultImage>horny</defaultImage>
     <defaultText>What the character says after the female character's chest is visible, and has a size value of "medium".</defaultText>
+    <generic>female_chest_is_visible</generic>
   </trigger>
-  <trigger tag="female_large_chest_is_visible" start="0" end="10" label="Visible (Chest, Female, Large)" relatedGroup="8" hasTarget="true" gender="female" size="large" description="A female opponent has revealed large breasts" group="7" order="9">
+  <trigger tag="female_large_chest_is_visible" start="0" end="10" label="Visible (Chest, Female, Large)" relatedGroup="8" hasTarget="true" gender="female" size="large" description="A female opponent has revealed large breasts" group="7" order="10">
     <vars>
       <string>name</string>
       <string>clothing</string>
@@ -420,8 +499,18 @@
     </vars>
     <defaultImage>shocked</defaultImage>
     <defaultText>What the character says after the female character's chest is visible, and has a size value of "large".</defaultText>
+    <generic>female_chest_is_visible</generic>
   </trigger>
-  <trigger tag="female_crotch_will_be_visible" start="0" end="10" label="Will Be Visible (Crotch, Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent is about to reveal her vagina" group="7" order="10">
+  <trigger tag="female_chest_is_visible" optional="true" start="0" end="10" label="Visible (Chest, Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent has revealed breasts of any size" group="7" order="11">
+    <vars>
+      <string>name</string>
+      <string>clothing</string>
+      <string>target</string>
+    </vars>
+    <defaultImage>horny</defaultImage>
+    <defaultText>What the character says after the female character's chest is visible.</defaultText>
+  </trigger>
+  <trigger tag="female_crotch_will_be_visible" start="0" end="10" label="Will Be Visible (Crotch, Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent is about to reveal her vagina" group="7" order="12">
     <vars>
       <string>name</string>
       <string>clothing</string>
@@ -430,7 +519,7 @@
     <defaultImage>horny</defaultImage>
     <defaultText>What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</defaultText>
   </trigger>
-  <trigger tag="female_crotch_is_visible" start="0" end="10" label="Visible (Crotch, Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent has revealed her vagina" group="7" order="11">
+  <trigger tag="female_crotch_is_visible" start="0" end="10" label="Visible (Crotch, Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent has revealed her vagina" group="7" order="13">
     <vars>
       <string>name</string>
       <string>clothing</string>
@@ -439,6 +528,38 @@
     <defaultImage>shocked</defaultImage>
     <defaultText>What the character says after the female character's crotch has become visible.</defaultText>
   </trigger>
+  <trigger tag="opponent_start_masturbating" start="0" end="10" optional="true" label="Start Masturbating (Opponent)" hasTarget="true" description="An opponent of either gender has started masturbating" group="8" order="7">
+    <vars>
+      <string>name</string>
+      <string>target</string>
+    </vars>
+    <defaultImage>horny</defaultImage>
+    <defaultText>What the character says when an opponent has started masturbating.</defaultText>
+  </trigger>
+  <trigger tag="opponent_masturbating" start="0" end="10" optional="true" label="Masturbating (Opponent)" hasTarget="true" description="An opponent of either gender is masturbating" group="8" order="8">
+    <vars>
+      <string>name</string>
+      <string>target</string>
+    </vars>
+    <defaultImage>horny</defaultImage>
+    <defaultText>What the character says while an opponent is masturbating.</defaultText>
+  </trigger>
+  <trigger tag="opponent_heavy_masturbating" start="0" end="10" optional="true" label="Masturbating (Opponent, Near Climax)" hasTarget="true" description="An opponent of either gender is near climaxing" group="8" order="9">
+    <vars>
+      <string>name</string>
+      <string>target</string>
+    </vars>
+    <defaultImage>horny</defaultImage>
+    <defaultText>What the character says when an opponent is close to climaxing.</defaultText>
+  </trigger>
+  <trigger tag="opponent_finished_masturbating" start="0" end="10" optional="true" label="Finished (Opponent)" hasTarget="true" description="An opponent of either gender has climaxed" group="8" order="10">
+    <vars>
+      <string>name</string>
+      <string>target</string>
+    </vars>
+    <defaultImage>horny</defaultImage>
+    <defaultText>What the character says when an opponent has climaxed.</defaultText>
+  </trigger>
   <trigger tag="male_must_masturbate" start="0" end="10" label="Must Masturbate (Male)" hasTarget="true" gender="male" description="A male opponent must start masturbating" group="9" order="0">
     <vars>
       <string>name</string>
@@ -446,6 +567,7 @@
     </vars>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says when a male character has lost a hand while nude, and must masturbate.</defaultText>
+    <generic>opponent_lost</generic>
   </trigger>
   <trigger tag="male_start_masturbating" start="0" end="10" label="Start Masturbating (Male)" hasTarget="true" gender="male" description="A male opponent has started masturbating" group="9" order="1">
     <vars>
@@ -454,6 +576,7 @@
     </vars>
     <defaultImage>horny</defaultImage>
     <defaultText>What the character says when a male character has started masturbating.</defaultText>
+    <generic>opponent_start_masturbating</generic>
   </trigger>
   <trigger tag="male_masturbating" start="0" end="10" label="Masturbating (Male)" hasTarget="true" gender="male" description="A male opponent is masturbating" group="9" order="2">
     <vars>
@@ -462,6 +585,7 @@
     </vars>
     <defaultImage>horny</defaultImage>
     <defaultText>What the character says while a male character is masturbating.</defaultText>
+    <generic>opponent_masturbating</generic>
   </trigger>
   <trigger tag="male_heavy_masturbating" start="0" end="10" label="Masturbating (Heavy, Male)" optional="true" hasTarget="true" gender="male" description="A male opponent is masturbating heavily" group="9" order="3">
     <vars>
@@ -470,6 +594,7 @@
     </vars>
     <defaultImage>horny</defaultImage>
     <defaultText>What the character says while a male character is close to cumming.</defaultText>
+    <generic>opponent_heavy_masturbating</generic>
   </trigger>
   <trigger tag="male_finished_masturbating" start="0" end="10" label="Finished (Male)" hasTarget="true" gender="male" description="A male opponent has just finished masturbating" group="9" order="4">
     <vars>
@@ -478,6 +603,7 @@
     </vars>
     <defaultImage>shocked</defaultImage>
     <defaultText>What the character says when a male character "finishes" masturbating.</defaultText>
+    <generic>opponent_finished_masturbating</generic>
   </trigger>
   <trigger tag="female_must_masturbate" start="0" end="10" label="Must Masturbate (Female)" hasTarget="true" gender="female" description="A female opponent must start masturbating" group="9" order="5" spacer="true">
     <vars>
@@ -486,6 +612,7 @@
     </vars>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says when a female character has lost a hand while nude, and must masturbate.</defaultText>
+    <generic>opponent_lost</generic>
   </trigger>
   <trigger tag="female_start_masturbating" start="0" end="10" label="Start Masturbating (Female)" hasTarget="true" gender="female" description="A female opponent has started masturbating" group="9" order="6">
     <vars>
@@ -494,6 +621,7 @@
     </vars>
     <defaultImage>horny</defaultImage>
     <defaultText>What the character says when a female character has started masturbating.</defaultText>
+    <generic>opponent_start_masturbating</generic>
   </trigger>
   <trigger tag="female_masturbating" start="0" end="10" label="Masturbating (Female)" hasTarget="true" gender="female" description="A female opponent is masturbating" group="9" order="7">
     <vars>
@@ -502,6 +630,7 @@
     </vars>
     <defaultImage>horny</defaultImage>
     <defaultText>What the character says while a female character is masturbating.</defaultText>
+    <generic>opponent_masturbating</generic>
   </trigger>
   <trigger tag="female_heavy_masturbating" start="0" end="10" label="Masturbating (Heavy, Female)" hasTarget="true" optional="true" gender="female" description="A female opponent is close to cumming" group="9" order="8">
     <vars>
@@ -510,6 +639,7 @@
     </vars>
     <defaultImage>horny</defaultImage>
     <defaultText>What the character says while a female character is masturbating heavily.</defaultText>
+    <generic>opponent_heavy_masturbating</generic>
   </trigger>
   <trigger tag="female_finished_masturbating" start="0" end="10" label="Finished (Female)" hasTarget="true" gender="female" description="A female opponent must just finished masturbating" group="9" order="9">
     <vars>
@@ -518,6 +648,7 @@
     </vars>
     <defaultImage>shocked</defaultImage>
     <defaultText>What the character says when a female character "finishes" masturbating.</defaultText>
+    <generic>opponent_finished_masturbating</generic>
   </trigger>
   <trigger tag="game_over_victory" start="0" end="8" label="Game Over (Victory)" oncePerStage="true" description="The game is over and this character won" group="11" order="0">   <vars />
     <defaultImage>happy</defaultImage>

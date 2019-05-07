@@ -7,6 +7,7 @@ namespace Desktop
 	public partial class RecordLookup : Form
 	{
 		private static Dictionary<Type, IRecordProvider> _recordProviders;
+		private static Dictionary<Type, List<IRecord>> _recentRecords = new Dictionary<Type, List<IRecord>>();
 
 		public static IRecord Get(Type type, string key, bool allowCreate, object recordContext)
 		{
@@ -52,6 +53,7 @@ namespace Desktop
 
 		public static IRecord DoLookup(Type type, string text, bool allowCreate, Func<IRecord, bool> filter, bool forceOpen, object recordContext)
 		{
+			IsNewRecord = false;
 			if (_recordProviders == null)
 			{
 				PrepRecordProviders();
@@ -60,6 +62,7 @@ namespace Desktop
 			IRecordProvider provider;
 			if (_recordProviders.TryGetValue(type, out provider))
 			{
+				bool showRecent = provider.TrackRecent;
 				provider.SetContext(recordContext);
 
 				if (!forceOpen/* && (!allowCreate || !provider.AllowsNew)*/)
@@ -67,12 +70,20 @@ namespace Desktop
 					//No point in bringing up the form if there's only one record
 					List<IRecord> records = provider.GetRecords(text);
 					IRecord exactMatch = records.Find(r => r.Key == text);
-					if (exactMatch != null)
+					if (exactMatch != null && (filter == null || filter(exactMatch)))
 					{
+						if (showRecent)
+						{
+							AddToRecent(type, exactMatch);
+						}
 						return exactMatch;
 					}
 					if (records.Count == 1 && (filter == null || filter(records[0])))
 					{
+						if (showRecent)
+						{
+							AddToRecent(type, records[0]);
+						}
 						return records[0];
 					}
 				}
@@ -90,6 +101,23 @@ namespace Desktop
 			else
 			{
 				return null;
+			}
+		}
+
+		public static void AddToRecent(Type type, IRecord record)
+		{
+			List<IRecord> records;
+			if (!_recentRecords.TryGetValue(type, out records))
+			{
+				records = new List<IRecord>();
+				_recentRecords[type] = records;
+			}
+			records.Remove(record);
+			records.Add(record);
+			const int MaxRecent = 3;
+			while (records.Count > MaxRecent)
+			{
+				records.RemoveAt(0);
 			}
 		}
 
@@ -144,7 +172,13 @@ namespace Desktop
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// Gets if the last record looked up was newly created
+		/// </summary>
+		public static bool IsNewRecord { get; private set; }
+
 		private bool _loading = false;
+		private bool _usingRecent = false;
 		private Type _recordType;
 		private IRecordProvider _provider;
 		private IRecord Record { get; set; }
@@ -186,19 +220,46 @@ namespace Desktop
 				throw new ArgumentException($"Record type {recordType.Name} has no record provider, so record lookup cannot be used.");
 			}
 
+			lstRecent.HeaderStyle = ColumnHeaderStyle.None;
+			lstRecent.Columns.Clear();
 			lstItems.Columns.Clear();
 			foreach (string col in _provider.GetColumns())
 			{
 				int width = (lstItems.Columns.Count == 0 ? 150 : -2);
 				lstItems.Columns.Add(col, width);
+				lstRecent.Columns.Add(col, width);
 			}
 			if (lstItems.Columns.Count == 0)
 			{
 				lstItems.View = View.Tile;
+				lstRecent.View = View.Tile;
 			}
 			else
 			{
 				lstItems.View = View.Details;
+				lstRecent.View = View.Details;
+			}
+
+			if (_provider.TrackRecent)
+			{
+				List<IRecord> records;
+				if (!_recentRecords.TryGetValue(recordType, out records))
+				{
+					records = new List<IRecord>();
+					_recentRecords[recordType] = records;
+				}
+				foreach (IRecord record in records)
+				{
+					ListViewItem item = _provider.FormatItem(record);
+					item.Tag = record;
+					lstRecent.Items.Insert(0, item);
+				}
+			}
+			else
+			{
+				lblRecent.Visible = false;
+				lstRecent.Visible = false;
+				lstItems.Height = lstRecent.Bottom - lstItems.Top;
 			}
 
 			txtName.Text = startText;
@@ -222,6 +283,7 @@ namespace Desktop
 
 		private void UpdateSearch()
 		{
+			_usingRecent = false;
 			if (txtName.Text == "=")
 			{
 				string lastEntry;
@@ -306,17 +368,22 @@ namespace Desktop
 
 		private void cmdAccept_Click(object sender, EventArgs e)
 		{
-			if (txtName.Text.Length == 0 && lstItems.Items.Count == 0)
+			if (txtName.Text.Length == 0 && lstItems.Items.Count == 0 && !_usingRecent)
 			{
 				return;
 			}
 
-			if (lstItems.Items.Count == 0 && _allowCreate)
+			IRecord selectedRecord = null;
+			if (lstItems.Items.Count == 0 && !_usingRecent && _allowCreate)
 			{
 				//If there are no items, enable Create New
 				cmdNew.Enabled = true;
 				AcceptButton = cmdNew;
 				return;
+			}
+			else if (_usingRecent && lstRecent.SelectedIndices.Count > 0)
+			{
+				selectedRecord = lstRecent.SelectedItems[0].Tag as IRecord;
 			}
 			else if (lstItems.SelectedIndices.Count == 0 && lstItems.Items.Count > 0)
 			{
@@ -327,8 +394,17 @@ namespace Desktop
 			else if (lstItems.Items.Count > 0)
 			{
 				//If an item is selected, use it
-				Record = lstItems.SelectedItems[0].Tag as IRecord;
+				selectedRecord = lstItems.SelectedItems[0].Tag as IRecord;
+			}
+
+			if (selectedRecord != null)
+			{
+				Record = selectedRecord;
 				_lastLookups[_recordType] = Record.Key;
+				if (_provider.TrackRecent)
+				{
+					AddToRecent(_recordType, Record);
+				}
 				this.DialogResult = DialogResult.OK;
 				this.Close();
 			}
@@ -341,6 +417,7 @@ namespace Desktop
 			if (txtName.Text.Length == 0)
 				return;
 			Record = _provider.Create(txtName.Text);
+			IsNewRecord = true;
 
 			this.DialogResult = DialogResult.OK;
 			this.Close();
@@ -354,6 +431,7 @@ namespace Desktop
 
 		private void lstItems_DoubleClick(object sender, EventArgs e)
 		{
+			_usingRecent = false;
 			cmdAccept_Click(this, new EventArgs());
 		}
 
@@ -410,6 +488,30 @@ namespace Desktop
 					}
 				}
 			}
+		}
+
+		private void lstRecent_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (lstRecent.SelectedIndices.Count > 0)
+			{
+				_usingRecent = true;
+			}
+		}
+
+		private void lstRecent_DoubleClick(object sender, EventArgs e)
+		{
+			_usingRecent = true;
+			cmdAccept_Click(this, new EventArgs());
+		}
+
+		public static List<IRecord> GetRecentRecords<T>()
+		{
+			List<IRecord> records;
+			if (!_recentRecords.TryGetValue(typeof(T), out records))
+			{
+				records = new List<IRecord>();
+			}
+			return records;
 		}
 	}
 }

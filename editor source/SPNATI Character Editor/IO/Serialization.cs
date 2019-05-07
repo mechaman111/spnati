@@ -1,4 +1,5 @@
-﻿using SPNATI_Character_Editor.IO;
+﻿using SPNATI_Character_Editor.DataStructures;
+using SPNATI_Character_Editor.IO;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -48,7 +49,12 @@ namespace SPNATI_Character_Editor
 			}
 			return true;
 		}
-
+		
+		/// <summary>
+		/// Generates a character's xml files
+		/// </summary>
+		/// <param name="character"></param>
+		/// <returns></returns>
 		public static bool ExportCharacter(Character character)
 		{
 			string dir = Config.GetRootDirectory(character);
@@ -57,28 +63,87 @@ namespace SPNATI_Character_Editor
 				Directory.CreateDirectory(dir);
 			}
 
-			bool success = BackupAndExportXml(character, character, "behaviour") &&
-				BackupAndExportXml(character, character.Metadata, "meta") &&
-				BackupAndExportXml(character, character.Markers, "markers") &&
-				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor");
+			string timestamp = GetTimeStamp();
+			bool success = BackupAndExportXml(character, character, "behaviour", timestamp) &&
+				BackupAndExportXml(character, character.Metadata, "meta", timestamp) &&
+				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor", timestamp) &&
+				BackupAndExportXml(character, character.Collectibles, "collectibles", timestamp);
+
+			// clean up old files
+			DeleteFile(character, "markers.xml");
+			DeleteFile(character, "behaviour.edit.bak");
+			DeleteFile(character, "meta.edit.bak");
+			DeleteFile(character, "markers.edit.bak");
+			DeleteFile(character, "editor.edit.bak");
+
 			return success;
 		}
 
-		private static bool BackupAndExportXml(Character character, object data, string name)
+		private static void DeleteFile(Character character, string file)
+		{
+			string filePath = Path.Combine(Config.GetRootDirectory(character), file);
+			if (File.Exists(filePath))
+			{
+				try
+				{
+					File.Delete(filePath);
+				}
+				catch { }
+			}
+		}
+
+		private static string GetTimeStamp()
+		{
+			return DateTime.Now.ToString("yyyyMMddHHmmss");
+		}
+
+		/// <summary>
+		/// Backs up a character's xml files
+		/// </summary>
+		/// <param name="character"></param>
+		/// <returns></returns>
+		public static bool BackupCharacter(Character character)
+		{
+			string dir = Config.GetBackupDirectory(character);
+			if (!Directory.Exists(dir))
+			{
+				Directory.CreateDirectory(dir);
+			}
+
+			string timestamp = GetTimeStamp();
+			bool success = ExportXml(character, Path.Combine(dir, $"behaviour-{timestamp}.bak")) &&
+				ExportXml(character.Metadata, Path.Combine(dir, $"meta-{timestamp}.bak")) &&
+				ExportXml(CharacterDatabase.GetEditorData(character), Path.Combine(dir, $"editor-{timestamp}.bak")) &&
+				ExportXml(character.Collectibles, Path.Combine(dir, $"collectibles-{timestamp}.bak"));
+			return success;
+		}
+
+		private static bool BackupAndExportXml(Character character, object data, string name, string timestamp)
 		{
 			if (data == null) { return false; }
 			string dir = Config.GetRootDirectory(character);
 			string filename = Path.Combine(dir, name + ".xml");
-			string backup = Path.Combine(dir, name + ".edit.bak");
-
-			//Backup the existing file every 12 hours
-			if (File.Exists(filename) && (!File.Exists(backup) || (DateTime.Now - File.GetLastWriteTime(backup)).TotalHours >= 12))
+			if (ExportXml(data, filename))
 			{
-				File.Delete(backup);
-				File.Copy(filename, backup);
-			}
+				string backup = Config.GetBackupDirectory(character);
+				if (!Directory.Exists(backup))
+				{
+					Directory.CreateDirectory(backup);
+				}
+				string backupFilename = Path.Combine(backup, $"{name}-{timestamp}.bak");
+				try
+				{
+					if (File.Exists(backupFilename))
+					{
+						File.Delete(backupFilename);
+					}
 
-			return ExportXml(data, filename);
+					File.Copy(filename, backupFilename);
+				}
+				catch { }
+				return true;
+			}
+			return false;
 		}
 
 		public static Listing ImportListing()
@@ -117,6 +182,48 @@ namespace SPNATI_Character_Editor
 				return null;
 			}
 
+			if (string.IsNullOrEmpty(character.Version))
+			{
+				string contents = File.ReadAllText(filename);
+				int editorIndex = contents.IndexOf("Character Editor");
+				if (editorIndex >= 0)
+				{
+					character.Source = EditorSource.CharacterEditor;
+					int atIndex = contents.IndexOf(" at ", editorIndex);
+					if (atIndex >= 0)
+					{
+						int start = editorIndex + "Character Editor ".Length;
+						int length = atIndex - start;
+						if (length < 10)
+						{
+							string version = contents.Substring(start, length);
+							character.Version = version;
+						}
+						character.Source = EditorSource.CharacterEditor;
+					}
+					else
+					{
+						character.Source = EditorSource.Other;
+					}
+				}
+				else
+				{
+					int makeIndex = contents.IndexOf("make_xml.py version ");
+					if (makeIndex >= 0)
+					{
+						character.Source = EditorSource.MakeXml;
+					}
+					else
+					{
+						character.Source = EditorSource.Other;
+					}
+				}
+			}
+			else
+			{
+				character.Source = EditorSource.CharacterEditor;
+			}
+
 			character.FolderName = Path.GetFileName(folderName);
 
 			Metadata metadata = ImportMetadata(folderName);
@@ -130,10 +237,62 @@ namespace SPNATI_Character_Editor
 				character.Markers.Merge(markers);
 			}
 
+			CollectibleData collectibles = ImportCollectibles(folderName);
+			if (collectibles != null)
+			{
+				character.Collectibles = collectibles;
+			}
+
 			CharacterEditorData editorData = ImportEditorData(folderName);
 			CharacterDatabase.AddEditorData(character, editorData);
 
 			return character;
+		}
+
+		/// <summary>
+		/// Reverts a character to older versions of its files
+		/// </summary>
+		/// <param name="timestamp"></param>
+		/// <returns></returns>
+		public static Character RecoverCharacter(Character character, string timestamp)
+		{
+			string folder = Config.GetBackupDirectory(character);
+			if (!Directory.Exists(folder))
+			{
+				return character;
+			}
+			Character recoveredCharacter = ImportXml<Character>(Path.Combine(folder, $"behaviour-{timestamp}.bak"));
+			if (recoveredCharacter == null)
+			{
+				return character;
+			}
+			recoveredCharacter.FolderName = character.FolderName;
+
+			Metadata meta = ImportXml<Metadata>(Path.Combine(folder, $"meta-{timestamp}.bak"));
+			recoveredCharacter.Metadata = meta ?? character.Metadata;
+
+			string markerFile = Path.Combine(folder, $"markers-{timestamp}.bak");
+			if (File.Exists(markerFile))
+			{
+				MarkerData markers = ImportXml<MarkerData>(markerFile);
+				if (markers != null)
+				{
+					recoveredCharacter.Markers.Merge(markers);
+				}
+			}
+
+			CharacterDatabase.Set(character.FolderName, recoveredCharacter);
+			string editorFile = Path.Combine(folder, $"editor-{timestamp}.bak");
+			if (File.Exists(editorFile))
+			{
+				CharacterEditorData editorData = ImportXml<CharacterEditorData>(editorFile);
+				if (editorData != null)
+				{
+					CharacterDatabase.AddEditorData(recoveredCharacter, editorData);
+				}
+			}
+
+			return recoveredCharacter;
 		}
 
 		/// <summary>
@@ -142,7 +301,7 @@ namespace SPNATI_Character_Editor
 		/// <typeparam name="T">Type of data to ipmort</typeparam>
 		/// <param name="filename">Filename to import</param>
 		/// <returns>An object of type T or null if it failed</returns>
-		private static T ImportXml<T>(string filename)
+		public static T ImportXml<T>(string filename)
 		{
 			TextReader reader = null;
 			try
@@ -283,6 +442,21 @@ namespace SPNATI_Character_Editor
 			return ImportXml<CharacterEditorData>(filename);
 		}
 
+		private static CollectibleData ImportCollectibles(string folderName)
+		{
+			string folder = Config.GetRootDirectory(folderName);
+			if (!Directory.Exists(folder))
+				return null;
+
+			string filename = Path.Combine(folder, "collectibles.xml");
+			if (!File.Exists(filename))
+			{
+				return null;
+			}
+
+			return ImportXml<CollectibleData>(filename);
+		}
+
 		public static TagDictionary ImportTags()
 		{
 			string filename = "tag_dictionary.xml";
@@ -337,6 +511,54 @@ namespace SPNATI_Character_Editor
 			bool success = ExportXml(skin, Path.Combine(dir, "costume.xml"));
 			return success;
 		}
+
+		public static SpnatiConfig ImportConfig()
+		{
+			string dir = Config.GetString(Settings.GameDirectory);
+			string filename = Path.Combine(dir, "config.xml");
+			TextReader reader = null;
+			try
+			{
+				XmlSerializer serializer = new XmlSerializer(typeof(SpnatiConfig), "");
+				reader = new StreamReader(filename);
+				SpnatiConfig config = serializer.Deserialize(reader) as SpnatiConfig;
+				return config;
+			}
+			finally
+			{
+				if (reader != null)
+					reader.Close();
+			}
+		}
+
+		public static bool ExportConfig()
+		{
+			string dir = Config.GetString(Settings.GameDirectory);
+			string filename = Path.Combine(dir, "config.xml");
+			XmlSerializer serializer = new XmlSerializer(typeof(SpnatiConfig), "");
+			XmlWriter writer = null;
+			try
+			{
+				XmlWriterSettings settings = new XmlWriterSettings();
+				settings.IndentChars = "\t";
+				settings.Indent = true;
+				settings.NamespaceHandling = NamespaceHandling.OmitDuplicates;
+				writer = XmlWriter.Create(filename, settings);
+				serializer.Serialize(writer, SpnatiConfig.Instance);
+				writer.Close();
+			}
+			catch (IOException e)
+			{
+				if (writer != null)
+				{
+					writer.Close();
+				}
+				MessageBox.Show(e.Message);
+				return false;
+			}
+			return true;
+		}
+
 	}
 
 	public interface IHookSerialization

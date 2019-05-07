@@ -36,8 +36,7 @@ Player.prototype.setForfeitTimer = function() {
 	// THE STAGE IS HARD SET RIGHT NOW
 	this.stage += 1;
 	this.timeInStage = -1;
-	this.updateLabel();
-	this.updateFolder();
+	this.stageChangeUpdate();
 }
 
 /************************************************************
@@ -56,7 +55,8 @@ function startMasturbation (player) {
     updateAllBehaviours(
         player, 
         PLAYER_START_MASTURBATING,
-        players[player].gender == eGender.MALE ? MALE_START_MASTURBATING : FEMALE_START_MASTURBATING
+        [[players[player].gender == eGender.MALE ? MALE_START_MASTURBATING : FEMALE_START_MASTURBATING,
+         OPPONENT_START_MASTURBATING]]
     );
     
     saveAllTranscriptEntries();
@@ -112,7 +112,6 @@ function tickForfeitTimers () {
                 for (var j = 1; j < players.length; j++) {
                     if (i != j) {
                         $gameDialogues[j-1].html("");
-                        $gameAdvanceButtons[j-1].css({opacity : 0});
                         $gameBubbles[j-1].hide();
                     }
                 }
@@ -173,9 +172,12 @@ function tickForfeitTimers () {
     if (masturbatingPlayers.length > 0
         && ((gamePhase == eGamePhase.DEAL && players[HUMAN_PLAYER].out) || gamePhase == eGamePhase.EXCHANGE || gamePhase == eGamePhase.END_LOOP)) {
         var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)]
-        var others_tags = [players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING];
+        var others_tags = [[players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING, OPPONENT_MASTURBATING]];
         if (players[playerToShow].forfeit[0] == PLAYER_HEAVY_MASTURBATING) {
-            others_tags.unshift(players[playerToShow].gender == eGender.MALE ? MALE_HEAVY_MASTURBATING : FEMALE_HEAVY_MASTURBATING);
+            others_tags.unshift([
+                players[playerToShow].gender == eGender.MALE ? MALE_HEAVY_MASTURBATING : FEMALE_HEAVY_MASTURBATING,
+                OPPONENT_HEAVY_MASTURBATING
+            ]);
         }
         
         updateAllBehaviours(
@@ -198,14 +200,14 @@ function finishMasturbation (player) {
 	players[player].stage += 1;
 	players[player].finished = true;
     players[player].forfeit = [PLAYER_FINISHED_MASTURBATING, CAN_SPEAK];
-	players[player].updateLabel();
-	players[player].updateFolder();
+	players[player].stageChangeUpdate();
     
 	/* update player dialogue */
     updateAllBehaviours(
         player, 
         PLAYER_FINISHED_MASTURBATING,
-        players[player].gender == eGender.MALE ? MALE_FINISHED_MASTURBATING : FEMALE_FINISHED_MASTURBATING
+        [[players[player].gender == eGender.MALE ? MALE_FINISHED_MASTURBATING : FEMALE_FINISHED_MASTURBATING,
+         OPPONENT_FINISHED_MASTURBATING]]
     );
 	players[player].timeInStage = 0;
     

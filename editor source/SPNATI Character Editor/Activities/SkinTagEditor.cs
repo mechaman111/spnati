@@ -43,9 +43,9 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				tags.Add(tag.Key);
 			}
-			foreach (string tag in _character.Tags)
+			foreach (CharacterTag tag in _character.Tags)
 			{
-				tags.Remove(tag);
+				tags.Remove(tag.Tag);
 			}
 			_availableTags = new AutoCompleteStringCollection();
 			foreach (string tag in tags)
@@ -66,11 +66,11 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_character == null) { return; }
 			gridRemove.Rows.Clear(); //rebuild to account for any changes to the main character
-			foreach (string tag in _character.Tags)
+			foreach (CharacterTag tag in _character.Tags)
 			{
 				DataGridViewRow row = gridRemove.Rows[gridRemove.Rows.Add()];
-				row.Cells[0].Value = tag;
-				row.Cells[1].Value = _skin.Tags.Find(t => t.Name == tag && t.Remove) != null;
+				row.Cells[0].Value = tag.Tag;
+				row.Cells[1].Value = _skin.Tags.Find(t => t.Name == tag.Tag && t.Remove) != null;
 			}
 		}
 

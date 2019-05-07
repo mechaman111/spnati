@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta charset='utf-8' />
+    <link rel="stylesheet" type="text/css" href="topic.css" />
+    <title>Pose Maker Tutorial 4 - Parenting</title>
+</head>
+<body>
+    <header id="header">Pose Maker Tutorial 4 - Parenting</header>
+    <article id="main">
+        <section class="card">
+            This tutorial covers one last powerful feature of the pose maker: creating object hierachies via parenting. We'll use this to have Florina fly in on her pegasus.
+        </section>
+        <section class="card">
+            <h1>Prepare the Pegasus</h1>
+            This tutorial assumes you've gone through the <a href="pose_tutorial2.html">Motion Tween Animation</a> tutorial since it will build off of that pose.
+            <ol>
+                <li>Complete Tutorial 2 so you have Florina's flying pegasus.</li>
+                <li>Select the pegasus pose in the pose list and duplicate it (Ctrl+D or pose list toolbar button).</li>
+                <li>Name the duplicate "fly_in".</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Attach the Wings</h1>
+            Previously we positioned the wings so they looked like they were attached to the horse. Now we're going to truly attach them.
+            <ol>
+                <li>Click the parenting chain on wingR's title. When hovering over it, it will say "Unlinked."
+                <br/>
+                <img src="images/tut4_parent.png" /></li>
+                <li>Select "florina" from the dropdown.</li>
+                <li>The wing moves as soon as you do this. That is because its position (230, 275) is now relative to Florina's upper left corner rather than in relation to the center of the screen.</li>
+                <li>Select the wing's sprite and change its Layer to -1. This ensures that it goes behind its parent.</li>
+                <li>Select the wing's first key frame and move X back into position (around 145).</li>
+                <li>Link wingL to florina in the same manner. Move its X to 65.</li>
+                <li>Change the Layer to -1.</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Fly into the Scene</h1>
+            Time to make her fly into the frame.
+            <ol>
+                <li>Unlike the other pegasus pose, this one shouldn't loop, so toggle the loop for Florina's Y property off. Keep the wing flapping looping though.</li>
+                <li>Delete Florina's key frame at 1.2s.</li>
+                <li>Select Florina's first key frame and set Scale X and Scale Y to 0.20.</li>
+                <li>The wings scaled down with her.</li>
+                <li>Drag her position to around (X: 70, Y: -365).</li>
+                <li>The wings move with her.</li>
+                <li>Rotate her to 15 degrees.</li>
+                <li>The wings rotate with her.</li>
+                <li>Set her opacity to 0.</li>
+                <li>The wings disappear too.</li>
+            </ol>
+            It should be apparent now what the benefits of parenting are. You can move an entire group of sprites together.
+        </section>
+        <section class="card">
+            <h1>Complete the Animation</h1>
+            <ol>
+                <li>Make sure Florina is still selected and jump the time marker to 0.5s.</li>
+                <li>Set her opacity to 100.</li>
+                <li>Jump the time marker to 1.5s.</li>
+                <li>Set her X to 0.</li>
+                <li>Set her Rotation to 0.</li>
+                <li>Set her Scale X and Scale Y to 1.</li>
+                <li>Play the animation and notice that her wings still flap like they did before even though they are children of the florina sprite. Even though when Florina is rotated, it rotates the wings too, the wings still have their own rotation, scale, position, and so on.</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Conclusion</h1>
+            Parenting is very useful for making puppets like this. You can even chain sprites together. For example, you could attach a hand sprite to a forearm sprite, which in turn is attached to an upper arm sprite, which in turn is attached to a body sprite.
+        </section>
+</article>
+</body>
+</html>

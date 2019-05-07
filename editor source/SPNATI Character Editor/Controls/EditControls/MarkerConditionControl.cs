@@ -2,6 +2,7 @@
 using Desktop.CommonControls;
 using System;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor
 {
@@ -12,6 +13,27 @@ namespace SPNATI_Character_Editor
 			InitializeComponent();
 
 			recField.RecordType = typeof(Marker);
+		}
+
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				ApplyValue(values[0]);
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			values.Add(BuildValue() ?? "");
+		}
+
+		public override void OnInitialAdd()
+		{
+			if (recField.RecordContext != null)
+			{
+				recField.DoSearch();
+			}
 		}
 
 		protected override void OnBindingUpdated(string property)
@@ -48,9 +70,16 @@ namespace SPNATI_Character_Editor
 			
 			cboOperator.SelectedIndex = 0;
 
-			string pattern = @"^([-\w\.]+)(\*?)(\s*(\<|\>|\<\=|\>\=|\<\=|\=\=?)\s*([-\w]+|~[-\w]+~))?$";
+			string value = GetValue()?.ToString();
+			ApplyValue(value);
+		}
+
+		private void ApplyValue(string dataValue)
+		{
+			dataValue = dataValue ?? "";
+			string pattern = @"^([-\w\.]+)(\*?)(\s*(\<|\>|\<\=|\>\=|\<\=|\=\=|!\=?)\s*([-\w]+|~[-\w]+~))?$";
 			Regex regex = new Regex(pattern);
-			Match match = regex.Match(GetValue()?.ToString() ?? "");
+			Match match = regex.Match(dataValue);
 			if (match.Success)
 			{
 				string name = match.Groups[1].Value;
@@ -69,11 +98,13 @@ namespace SPNATI_Character_Editor
 				}
 				txtValue.Text = value;
 			}
-
-			AddHandlers();
+			else
+			{
+				recField.RecordKey = dataValue;
+			}
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			recField.RecordChanged -= RecordChanged;
 			cboOperator.SelectedIndexChanged -= ValueChanged;
@@ -81,7 +112,7 @@ namespace SPNATI_Character_Editor
 			chkPerTarget.CheckedChanged -= ValueChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			recField.RecordChanged += RecordChanged;
 			cboOperator.SelectedIndexChanged += ValueChanged;
@@ -100,13 +131,12 @@ namespace SPNATI_Character_Editor
 			Save();
 		}
 
-		public override void Save()
+		private string BuildValue()
 		{
 			string record = recField.RecordKey;
 			if (string.IsNullOrEmpty(record))
 			{
-				SetValue(null);
-				return;
+				return null;
 			}
 			string op = cboOperator.SelectedItem?.ToString();
 			string value = txtValue.Text;
@@ -120,7 +150,13 @@ namespace SPNATI_Character_Editor
 			{
 				record += op + value;
 			}
-			SetValue(record);
+			return record;
+		}
+
+		public override void Save()
+		{
+			string value = BuildValue();
+			SetValue(value);
 		}
 
 		private void ValueChanged(object sender, EventArgs e)
@@ -128,7 +164,7 @@ namespace SPNATI_Character_Editor
 			Save();
 		}
 
-		private void RecordChanged(object sender, IRecord record)
+		private void RecordChanged(object sender, RecordEventArgs record)
 		{
 			Save();
 		}

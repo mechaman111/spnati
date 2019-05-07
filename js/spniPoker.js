@@ -59,8 +59,8 @@ $cardCells = [[$("#player-0-card-1"), $("#player-0-card-2"), $("#player-0-card-3
  **********************************************************************/
 
 /* pseudo constants */
-var ANIM_DELAY = 350;
-var ANIM_TIME = 1000;
+var ANIM_DELAY = 80;
+var ANIM_TIME = 500;
 var CARDS_PER_HAND = 5;
  
 /* image constants */
@@ -73,7 +73,38 @@ var outDeck = [];	/* cards waiting to be shuffled into the deck */
 
 /* deal lock */
 var dealLock = 0;
- 
+
+/************************************************************
+ * Card class
+ * (Ace represented as the number 14 so that the hand value 
+ * array can be used to determine the cards to discard.)
+ ************************************************************/
+function Card(suit, rank) {
+	this.suit = suit;
+	this.rank = rank;
+}
+
+/* This toString() method means that using a card object in a URL
+ * yields the same filename as before */
+Card.prototype.toString = function() {
+	return ["spade", "heart", "clubs", "diamo"][this.suit] + (this.rank == 14 ? 1 : this.rank);
+}
+
+/************************************************************
+ * Hand class
+ ************************************************************/
+function Hand() {
+    this.cards = Array(CARDS_PER_HAND);
+    this.strength = NONE;
+    this.value = [];
+    this.tradeIns = Array(CARDS_PER_HAND);
+}
+
+Hand.prototype.toString = function() {
+	return handStrengthToString(this.strength);
+}
+
+
 /**********************************************************************
  *****                    Start Up Functions                      *****
  **********************************************************************/
@@ -84,7 +115,7 @@ var dealLock = 0;
 function setupPoker () {
     /* set up the player hands */
     players.forEach(function(player) {
-        player.hand = createNewHand([null, null, null, null, null], NONE, 0, [false, false, false, false, false]);
+        player.hand = new Hand()
     });
     
     /* compose a new deck */
@@ -100,15 +131,8 @@ function composeDeck () {
 	var suit = "";
 	
 	for (var i = 0; i < 4; i++) {
-		switch (i) {
-			case 0: suit = SPADES;   break;
-			case 1: suit = HEARTS;   break;
-			case 2: suit = CLUBS;    break;
-			case 3: suit = DIAMONDS; break;
-		}
-		
-		for (j = 1; j < 14; j++) {
-			inDeck.push(suit + j);
+		for (j = 2; j <= 14; j++) {
+			inDeck.push(new Card(i, j));
 		}
 	}
 }
@@ -127,43 +151,6 @@ function preloadCardImages () {
 }
 
 /**********************************************************************
- *****                      Card Functions                        *****
- **********************************************************************/
- 
-/************************************************************
- * Returns the numeric value of the card.
- ************************************************************/
-function getCardValue (card) {
-	return Number(card.substring(5));
-}
-
-/************************************************************
- * Returns the string suit of the card.
- ************************************************************/
-function getCardSuit (card) {
-	return card.substring(0, 5);
-}
-
-/************************************************************
- * Returns the numeric suit of the card.
- ************************************************************/
-function getCardSuitValue (card) {
-	var suit = card.substring(0, 5);
-	
-	if (suit == SPADES) {
-		return 0;
-	} else if (suit == HEARTS) {
-		return 1;
-	} else if (suit == CLUBS) {
-		return 2;
-	} else if (suit == DIAMONDS) {
-		return 3;
-	} else {
-		return 4;
-	}
-}
-
-/**********************************************************************
  *****                       UI Functions                         *****
  **********************************************************************/
  
@@ -171,62 +158,65 @@ function getCardSuitValue (card) {
  * Sets the given card to full opacity.
  ************************************************************/
 function fillCard (player, card) {
-	$cardCells[player][card].css({opacity: 1});
+    $cardCells[player][card].css({opacity: 1});
 }
 
 /************************************************************
  * Sets the given card to a lower opacity.
  ************************************************************/
 function dullCard (player, card) {
-	$cardCells[player][card].css({opacity: 0.4});
+    $cardCells[player][card].css({opacity: 0.4});
+}
+
+/************************************************************
+ * Removes a card from display
+ ************************************************************/
+function clearCard (player, i) {
+    $cardCells[player][i].css('visibility', 'hidden');
+    $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
+}
+
+/************************************************************
+ * Displays a card, face up or face down, or an empty space
+ * if the card is missing.
+ ************************************************************/
+function displayCard (player, i, visible) {
+    if (players[player].hand.cards[i]) {
+        if (visible) {
+            $cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
+        } else {
+            $cardCells[player][i].attr('src', UNKNOWN_CARD_IMAGE);
+        }
+        fillCard(player, i);
+        $cardCells[player][i].css('visibility', '');
+    } else {
+        clearCard(player, i);
+    }
 }
 
 /************************************************************
  * Shows the given player's hand at full opacity.
  ************************************************************/
 function showHand (player) {
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		$cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
-		fillCard(player, i);
-	}
+    displayHand(player, true);
 }
 
 /************************************************************
- * Shows but completely dulls the given player's hand.
+ * Renders the given player's hand
  ************************************************************/
-function dullHand (player) {
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		$cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
-		dullCard(player, i);
-	}
-}
-
-/************************************************************
- * Hides the given player's hand based on their state.
- ************************************************************/
-function hideHand (player) {
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-        if (players[player]) {
-            if (!players[player].out) {
-                $cardCells[player][i].attr('src', UNKNOWN_CARD_IMAGE);
-            } else {
-                $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
-            }
-            fillCard(player, i);
-        }
-	}
+function displayHand (player, visible) {
+    for (var i = 0; i < CARDS_PER_HAND; i++) {
+        displayCard(player, i, visible);
+    }
 }
 
 /************************************************************
  * Clears the given player's hand (in preparation of a new game).
  ************************************************************/
 function clearHand (player) {
-	if (players[player] && players[player].hand) {
-		for (var i = 0; i < CARDS_PER_HAND; i++) {
-			$cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
-			fillCard(player, i);
-		}
-	}
+    for (var i = 0; i < CARDS_PER_HAND; i++) {
+        clearCard(player, i);
+    }
 }
 
 /*************************************************************
@@ -234,15 +224,6 @@ function clearHand (player) {
  *************************************************************/
 function stopCardAnimations () {
     $('.shown-card').stop(true, true);
-    players.forEach(function(player) {
-        if (player.hand) {
-            for (var i = 0; i < CARDS_PER_HAND; i++) {
-                if (player.hand.cards[i]) {
-                    clearTimeout(player.hand.cards[i].timeoutID);
-                }
-            }
-        }
-    });
 }
 
 
@@ -259,9 +240,9 @@ function collectPlayerHand (player) {
 		if (players[player].hand.cards[i]) {
 			outDeck.push(players[player].hand.cards[i]);
 		}
-		players[player].hand.cards[i] = null;
-		$cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
+		delete players[player].hand.cards[i];
 	}
+	clearHand(player);
 }
 
 /************************************************************
@@ -280,7 +261,7 @@ function shuffleDeck () {
 /************************************************************
  * Deals new cards to the given player.
  ************************************************************/
-function dealHand (player) {
+function dealHand (player, numPlayers, playersBefore) {
 	/* collect their old hand */
 	collectPlayerHand (player);
 	
@@ -293,10 +274,11 @@ function dealHand (player) {
 	var drawnCard;
 	for (var i = 0; i < CARDS_PER_HAND; i++) {
 		drawnCard = getRandomNumber(0, inDeck.length);
-        $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
 		players[player].hand.cards[i] = inDeck[drawnCard];
 		inDeck.splice(drawnCard, 1);
-		delayDealtCard(player, i);
+		// Simulate dealing one card to each player, then another to
+		// each player, and so on.
+		animateDealtCard(player, i, numPlayers * i + playersBefore);
 	}
 }
 
@@ -321,20 +303,25 @@ function exchangeCards (player) {
 	for (var i = 0; i < CARDS_PER_HAND; i++) {
 		if (players[player].hand.tradeIns[i] && players[player].hand.cards[i]) {
 			outDeck.push(players[player].hand.cards[i]);
-			players[player].hand.cards[i] = null;
+			delete players[player].hand.cards[i];
+			players[player].hand.tradeIns[i] = false;
 		}
 	}
+
+    /* Move kept cards to the left */
+    players[player].hand.cards = players[player].hand.cards.filter(function(c) { return c; });
+    /* Refresh display. */
+    displayHand(player, player == HUMAN_PLAYER);
 	
-	/* take the new cards */
-	var drawnCard;
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		if (players[player].hand.tradeIns[i]) {
-			drawnCard = getRandomNumber(0, inDeck.length);
-			players[player].hand.cards[i] = inDeck[drawnCard];
-			inDeck.splice(drawnCard, 1);
-            players[player].hand.tradeIns[i] = false;
-		}
-	}
+    /* take the new cards */
+    var n = 0;
+    var drawnCard;
+    for (var i = players[player].hand.cards.length; i < CARDS_PER_HAND; i++) {
+        drawnCard = getRandomNumber(0, inDeck.length);
+        players[player].hand.cards.push(inDeck[drawnCard]);
+        animateDealtCard(player, i, n++);
+        inDeck.splice(drawnCard, 1);
+    }
 }
 
 /**********************************************************************
@@ -342,17 +329,10 @@ function exchangeCards (player) {
  **********************************************************************/
 
 /************************************************************
- * Adds a short delay to the dealt card animation.
+ * Animates a small card into a player's hand.  n is the card's number
+ * in the order dealt, used to calculate the initial delay.
  ************************************************************/
-function delayDealtCard (player, card) {
-	card.timeoutID = window.setTimeout(function(){animateDealtCard(player, card)}, (player*(ANIM_DELAY/5)) + (card*ANIM_DELAY));
-}
-
-/************************************************************
- * Animates a small card into a player's hand.
- ************************************************************/
-function animateDealtCard (player, card) {
-	card.timeoutID = undefined;
+function animateDealtCard (player, card, n) {
 	$clonedCard = $hiddenLargeCard.clone().prependTo($gameHiddenArea);
 	$clonedCard.addClass("shown-card");
 	$clonedCard.attr('id', 'dealt-card-'+player+'-'+card);
@@ -377,9 +357,9 @@ function animateDealtCard (player, card) {
 		var animTime = distance / speed;
 	}
 
-	$clonedCard.animate({top:top, left:left}, animTime, function() {
+	$clonedCard.delay(n * ANIM_DELAY).animate({top: top, left: left}, animTime, function() {
 		$('#dealt-card-'+player+'-'+card).remove();
-		$cardCells[player][card].attr('src', UNKNOWN_CARD_IMAGE);
+		displayCard(player, card, player == HUMAN_PLAYER);
 		dealLock++;
 	});
 }
@@ -481,18 +461,15 @@ function determineLowestHand () {
 	}
 
 	/* unresolvable tie */
-	return -1;
+	return lowestPlayers;
 }
  
 /************************************************************
  * Determine value of a given player's hand.
  * player is a player object, not an index.
  ************************************************************/
-function determineHand (player) {
+Hand.prototype.determine = function() {
 	/* start by getting a shorthand variable and resetting */
-	var hand = player.hand.cards;
-	player.hand.strength = NONE;
-	player.hand.value = 0;
 	
 	/* look for each strength, in composition */
 	var have_pair = [];
@@ -501,59 +478,58 @@ function determineHand (player) {
 	var have_flush = 0;
 
 	/* start by collecting the ranks and suits of the cards */
-	var cardRanks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-	var cardSuits = [0, 0, 0, 0];
-	
-	for (var i = 0; i < hand.length; i++) {
-		cardRanks[getCardValue(hand[i]) - 1]++;
-		if (getCardValue(hand[i]) == 1) {
-			cardRanks[13]++;
-		}
-		cardSuits[getCardSuitValue(hand[i])]++;
-	}
+	this.ranks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    this.suits = [0, 0, 0, 0];
+	this.strength = NONE;
+
+	this.cards.forEach(function(card) {
+		this.ranks[card.rank - 1]++;
+		this.suits[card.suit]++;
+	}, this);
+	this.ranks[0] = this.ranks[13];
 	
 	/* look for four of a kind, three of a kind, and pairs */
-	for (var i = cardRanks.length-1; i > 0; i--) {
-		if (cardRanks[i] == 4) {
-			player.hand.strength = FOUR_OF_A_KIND;
-			player.hand.value = [i+1];
+	for (var i = this.ranks.length-1; i > 0; i--) {
+		if (this.ranks[i] == 4) {
+			this.strength = FOUR_OF_A_KIND;
+			this.value = [i+1];
 			break;
-		} else if (cardRanks[i] == 3) {
+		} else if (this.ranks[i] == 3) {
 			have_three_kind = i+1;
-		} else if (cardRanks[i] == 2) {
+		} else if (this.ranks[i] == 2) {
 			have_pair.push(i+1);
 		}
 	}
 	
 	/* determine full house, three of a kind, two pair, and pair */
-	if (player.hand.strength == NONE) {
+	if (this.strength == NONE) {
 		if (have_three_kind && have_pair.length > 0) {
-			player.hand.strength = FULL_HOUSE;
-			player.hand.value = [have_three_kind];
+			this.strength = FULL_HOUSE;
+			this.value = [have_three_kind];
 		} else if (have_three_kind) {
-			player.hand.strength = THREE_OF_A_KIND;
-			player.hand.value = [have_three_kind];
+			this.strength = THREE_OF_A_KIND;
+			this.value = [have_three_kind];
 		} else if (have_pair.length > 0) {
-			player.hand.strength = have_pair.length == 2 ? TWO_PAIR : PAIR;
-			player.hand.value = have_pair;
+			this.strength = have_pair.length == 2 ? TWO_PAIR : PAIR;
+			this.value = have_pair;
 			
-			for (var i = cardRanks.length-1; i > 0; i--) {
-				if (cardRanks[i] == 1) {
-					player.hand.value.push(i+1);
+			for (var i = this.ranks.length-1; i > 0; i--) {
+				if (this.ranks[i] == 1) {
+					this.value.push(i+1);
 				}
 			}
 		}
 	}
 	
 	/* look for straights and flushes */
-	if (player.hand.strength == NONE) {
+	if (this.strength == NONE) {
 		/* first, straights */
 		var sequence = 0;
 
-		for (var i = 0; i < cardRanks.length; i++) {
-			if (cardRanks[i] == 1) {
+		for (var i = 0; i < this.ranks.length; i++) {
+			if (this.ranks[i] == 1) {
 				sequence++;
-				if (sequence == hand.length) {
+				if (sequence == CARDS_PER_HAND) {
 					/* one card each of five consecutive ranks is a
 					 * straight */
 					have_straight = i+1;
@@ -571,12 +547,12 @@ function determineHand (player) {
 		}
 		
 		/* second, flushes */
-		for (var i = 0; i < cardSuits.length; i++) {
-			if (cardSuits[i] == hand.length) {
+		for (var i = 0; i < this.suits.length; i++) {
+			if (this.suits[i] == CARDS_PER_HAND) {
 				/* this is a flush */
 				have_flush = 1;
 				break;
-			} else if (cardSuits[i] > 0) {
+			} else if (this.suits[i] > 0) {
 				/* can't have a flush */
 				break;
 			}
@@ -584,21 +560,21 @@ function determineHand (player) {
 		
 		/* determine royal flush, straight flush, flush, straight, and high card */
 		if (have_flush && have_straight == 14) {
-			player.hand.strength = ROYAL_FLUSH;
-			player.hand.value = [have_straight];
+			this.strength = ROYAL_FLUSH;
+			this.value = [have_straight];
 		} else if (have_flush && have_straight) {
-			player.hand.strength = STRAIGHT_FLUSH;
-			player.hand.value = [have_straight];
+			this.strength = STRAIGHT_FLUSH;
+			this.value = [have_straight];
 		} else if (have_straight) {
-			player.hand.strength = STRAIGHT;
-			player.hand.value = [have_straight];
+			this.strength = STRAIGHT;
+			this.value = [have_straight];
 		} else {
-			player.hand.strength = (have_flush ? FLUSH : HIGH_CARD);
-			player.hand.value = [];
+			this.strength = (have_flush ? FLUSH : HIGH_CARD);
+			this.value = [];
 			
-			for (var i = cardRanks.length-1; i > 0; i--) {
-				if (cardRanks[i] == 1) {
-					player.hand.value.push(i+1);
+			for (var i = this.ranks.length-1; i > 0; i--) {
+				if (this.ranks[i] == 1) {
+					this.value.push(i+1);
 				}
 			}
 		}
@@ -606,8 +582,7 @@ function determineHand (player) {
 
 	/* stats for the log */
     console.log();
-	console.log("Player "+player.label+" Hand Analysis");
-	console.log("Rank: "+cardRanks);
-	console.log("Suit: "+cardSuits);
-	console.log("Player has " +handStrengthToString(player.hand.strength)+" of value "+player.hand.value);
+	console.log("Rank: "+this.ranks);
+	console.log("Suit: "+this.suits);
+	console.log("Player has " +handStrengthToString(this.strength)+" of value "+this.value);
 }

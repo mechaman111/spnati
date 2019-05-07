@@ -32,6 +32,7 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.lblSkin = new System.Windows.Forms.Label();
 			this.cboSkin = new System.Windows.Forms.ComboBox();
+			this.chkText = new System.Windows.Forms.CheckBox();
 			this.picPortrait = new SPNATI_Character_Editor.Controls.CharacterImageBox();
 			this.SuspendLayout();
 			// 
@@ -74,14 +75,25 @@
 			this.cboSkin.TabIndex = 19;
 			this.cboSkin.SelectedIndexChanged += new System.EventHandler(this.cboSkin_SelectedIndexChanged);
 			// 
+			// chkText
+			// 
+			this.chkText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.chkText.AutoSize = true;
+			this.chkText.Location = new System.Drawing.Point(176, -1);
+			this.chkText.Name = "chkText";
+			this.chkText.Size = new System.Drawing.Size(77, 17);
+			this.chkText.TabIndex = 20;
+			this.chkText.Text = "Show Text";
+			this.chkText.UseVisualStyleBackColor = true;
+			this.chkText.CheckedChanged += new System.EventHandler(this.chkText_CheckedChanged);
+			// 
 			// picPortrait
 			// 
-			this.picPortrait.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.picPortrait.Location = new System.Drawing.Point(3, 74);
+			this.picPortrait.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.picPortrait.Location = new System.Drawing.Point(0, 0);
 			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.Size = new System.Drawing.Size(242, 564);
+			this.picPortrait.ShowTextBox = false;
+			this.picPortrait.Size = new System.Drawing.Size(251, 641);
 			this.picPortrait.TabIndex = 15;
 			this.picPortrait.TabStop = false;
 			// 
@@ -89,6 +101,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.chkText);
 			this.Controls.Add(this.cboSkin);
 			this.Controls.Add(this.lblSkin);
 			this.Controls.Add(this.lblLinesOfDialogue);
@@ -108,5 +121,6 @@
 		private SPNATI_Character_Editor.Controls.CharacterImageBox picPortrait;
 		private System.Windows.Forms.Label lblSkin;
 		private System.Windows.Forms.ComboBox cboSkin;
+		private System.Windows.Forms.CheckBox chkText;
 	}
 }

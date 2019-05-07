@@ -5,6 +5,7 @@ namespace Desktop.CommonControls.PropertyControls
 {
 	public partial class FloatControl : PropertyEditControl
 	{
+		private bool _cleared;
 		private string _defaultValue;
 
 		public FloatControl()
@@ -22,13 +23,13 @@ namespace Desktop.CommonControls.PropertyControls
 			_defaultValue = p.DefaultValue;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			valValue.ValueChanged -= valValue_ValueChanged;
 			valValue.TextChanged -= valValue_TextChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			valValue.ValueChanged += valValue_ValueChanged;
 			valValue.TextChanged += valValue_TextChanged;
@@ -36,18 +37,71 @@ namespace Desktop.CommonControls.PropertyControls
 
 		protected override void OnBoundData()
 		{
-			float value = 0;
+			SetPreview();
+			SetField();
+		}
+
+		private void SetPreview()
+		{
+			object data = GetPreviewValue();
+			if (data != null)
+			{
+				if (DataType == typeof(string))
+				{
+					valValue.PlaceholderText = data?.ToString();
+				}
+				if (DataType == typeof(float?))
+				{
+					float? value = (float?)data;
+					if (value.HasValue)
+					{
+						valValue.PlaceholderText = GetPreviewString(value.Value);
+					}
+					else
+					{
+						valValue.PlaceholderText = "";
+					}
+				}
+				else
+				{
+					float value = (float)data;
+					valValue.PlaceholderText = GetPreviewString(value);
+				}
+			}
+			else
+			{
+				valValue.PlaceholderText = "";
+			}
+		}
+
+		private string GetPreviewString(float value)
+		{
+			string format = "0";
+			if (valValue.DecimalPlaces > 0)
+			{
+				format = $"0.{"".PadLeft(valValue.DecimalPlaces, '0')}";
+			}
+			return value.ToString(format, CultureInfo.InvariantCulture);
+		}
+
+		private bool SetField()
+		{
+			_cleared = false;
+			object data = GetValue();
 			if (DataType == typeof(string))
 			{
-				string valueStr = GetValue()?.ToString();
+				string valueStr = data?.ToString();
 				if (string.IsNullOrEmpty(valueStr))
 				{
 					valueStr = _defaultValue;
 				}
-				
+				float value;
 				if (!float.TryParse(valueStr, NumberStyles.Float, CultureInfo.InvariantCulture, out value))
 				{
+					_cleared = true;
+					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, 0));
 					valValue.Text = "";
+					return false;
 				}
 				else
 				{
@@ -56,25 +110,46 @@ namespace Desktop.CommonControls.PropertyControls
 						value = 0;
 					}
 					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, (decimal)value));
+					return true;
+				}
+			}
+			else if (DataType == typeof(float?))
+			{
+				float? value = (float?)data;
+				if (value.HasValue)
+				{
+					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, (decimal)value));
+					return true;
+				}
+				else
+				{
+					float floatValue;
+					if (!string.IsNullOrEmpty(_defaultValue) && float.TryParse(_defaultValue, NumberStyles.Float, CultureInfo.InvariantCulture, out floatValue))
+					{
+						valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, (decimal)floatValue));
+						return false;
+					}
+					else
+					{
+						_cleared = true;
+						valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, 0));
+						valValue.Text = "";
+						return false;
+					}
 				}
 			}
 			else
 			{
-				value = (float)GetValue();
+				float value = (float)data;
 				valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, (decimal)value));
+				return true;
 			}
-
-			AddHandlers();
-		}
-
-		protected override void OnRebindData()
-		{
-			RemoveHandlers();
-			OnBoundData();
 		}
 
 		public override void Clear()
 		{
+			_cleared = true;
+			valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, 0));
 			valValue.Text = "";
 			Save();
 		}
@@ -82,9 +157,14 @@ namespace Desktop.CommonControls.PropertyControls
 		public override void Save()
 		{
 			float value = (float)valValue.Value;
+			SaveValue(value, valValue.Text);
+		}
+
+		private void SaveValue(float value, string text)
+		{
 			if (DataType == typeof(string))
 			{
-				if (valValue.Text == "")
+				if (text == "")
 				{
 					SetValue(null);
 				}
@@ -93,9 +173,20 @@ namespace Desktop.CommonControls.PropertyControls
 					SetValue(value.ToString(CultureInfo.InvariantCulture));
 				}
 			}
+			else if (DataType == typeof(float?))
+			{
+				if (text == "")
+				{
+					SetValue(null);
+				}
+				else
+				{
+					SetValue((float?)value);
+				}
+			}
 			else
 			{
-				SetValue((float)valValue.Value);
+				SetValue(value);
 			}
 		}
 
@@ -106,9 +197,16 @@ namespace Desktop.CommonControls.PropertyControls
 
 		private void valValue_TextChanged(object sender, EventArgs e)
 		{
-			if (valValue.Text == "")
+			string text = valValue.Text;
+			if (!string.IsNullOrEmpty(text) && _cleared)
 			{
-				Save();
+				_cleared = false;
+
+				//Working around Save() because accessing valValue.Value will cause it to format the decimal places, screwing up the cursor position
+				//since we just barely started typing a number in
+				float value;
+				float.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+				SaveValue(value, text);
 			}
 		}
 	}

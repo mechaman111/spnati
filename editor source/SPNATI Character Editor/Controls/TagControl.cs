@@ -101,9 +101,9 @@ namespace SPNATI_Character_Editor.Controls
 					if (tag != null)
 					{
 						tags.Add(tag.Value);
-						if (!string.IsNullOrEmpty(tag.PairedTag))
+						foreach (string pairedTag in tag.PairedTags)
 						{
-							tags.Add(tag.PairedTag);
+							tags.Add(pairedTag);
 						}
 					}
 				}

@@ -71,34 +71,10 @@ mainSelectDisplays = [
 	new MainSelectScreenDisplay(2),
 	new MainSelectScreenDisplay(3),
 	new MainSelectScreenDisplay(4)
-]
+];
 
+var individualDetailDisplay = new OpponentDetailsDisplay();
 
-/* individual select screen */
-$individualSelectTable = $("#individual-select-table");
-$individualNameLabels = [$("#individual-name-label-1"), $("#individual-name-label-2"), $("#individual-name-label-3"), $("#individual-name-label-4")];
-$individualPrefersLabels = [$("#individual-prefers-label-1"), $("#individual-prefers-label-2"), $("#individual-prefers-label-3"), $("#individual-prefers-label-4")];
-$individualSexLabels = [$("#individual-sex-label-1"), $("#individual-sex-label-2"), $("#individual-sex-label-3"), $("#individual-sex-label-4")];
-$individualHeightLabels = [$("#individual-height-label-1"), $("#individual-height-label-2"), $("#individual-height-label-3"), $("#individual-height-label-4")];
-$individualSourceLabels = [$("#individual-source-label-1"), $("#individual-source-label-2"), $("#individual-source-label-3"), $("#individual-source-label-4")];
-$individualWriterLabels = [$("#individual-writer-label-1"), $("#individual-writer-label-2"), $("#individual-writer-label-3"), $("#individual-writer-label-4")];
-$individualArtistLabels = [$("#individual-artist-label-1"), $("#individual-artist-label-2"), $("#individual-artist-label-3"), $("#individual-artist-label-4")];
-$individualCountBoxes = [$("#individual-counts-1"), $("#individual-counts-2"), $("#individual-counts-3"), $("#individual-counts-4")];
-$individualLineCountLabels = [$("#individual-line-count-label-1"), $("#individual-line-count-label-2"), $("#individual-line-count-label-3"), $("#individual-line-count-label-4")];
-$individualPoseCountLabels = [$("#individual-pose-count-label-1"), $("#individual-pose-count-label-2"), $("#individual-pose-count-label-3"), $("#individual-pose-count-label-4")];
-$individualDescriptionLabels = [$("#individual-description-label-1"), $("#individual-description-label-2"), $("#individual-description-label-3"), $("#individual-description-label-4")];
-$individualBadges = [$("#individual-badge-1"), $("#individual-badge-2"), $("#individual-badge-3"), $("#individual-badge-4")];
-$individualStatuses = [$("#individual-status-1"), $("#individual-status-2"), $("#individual-status-3"), $("#individual-status-4")];
-$individualLayers = [$("#individual-layer-1"), $("#individual-layer-2"), $("#individual-layer-3"), $("#individual-layer-4")];
-$individualCostumeSelectors = [$("#individual-costume-select-1"), $("#individual-costume-select-2"), $("#individual-costume-select-3"), $("#individual-costume-select-4")];
-
-$individualImages = [$("#individual-image-1"), $("#individual-image-2"), $("#individual-image-3"), $("#individual-image-4")];
-$individualButtons = [$("#individual-button-1"), $("#individual-button-2"), $("#individual-button-3"), $("#individual-button-4")];
-
-$individualPageIndicator = $("#individual-page-indicator");
-$individualMaxPageIndicator = $("#individual-max-page-indicator");
-
-$individualCreditsButton = $('#individual-credits-button');
 
 /* group select screen */
 $groupSelectTable = $("#group-select-table");
@@ -131,8 +107,11 @@ $groupCreditsButton = $('#group-credits-button');
 $searchName = $("#search-name");
 $searchSource = $("#search-source");
 $searchTag = $("#search-tag");
+$searchCreator = $("#search-creator");
+
 $tagList = $("#tagList");
 $sourceList = $("#sourceList");
+$creatorList = $("#creatorList");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
 
 $sortingOptionsItems = $(".sort-dropdown-options li");
@@ -164,6 +143,7 @@ var loadedGroups = [[], []];
 var selectableGroups = [loadedGroups[0], loadedGroups[1]];
 var tagSet = {};
 var sourceSet = {};
+var creatorSet = {};
 
 /* page variables */
 var groupSelectScreen = 0;
@@ -210,6 +190,17 @@ function loadSelectScreen () {
 	updateSelectionVisuals();
 }
 
+function splitCreatorField (field) {
+    // First, remove any parenthetical info in the field.
+    // Then, split on observed creator separators.
+    return field
+            .replace(/\([^\)]+\)|\[[^\]]+\]/gm, '')
+            .split(/\s*(?:,|&|\:|and|\+|\/|\\|<(?:\/\\)?\s*br\s*(?:\/\\)?>)\s*/gm)
+            .map(function (s) {
+                return s.trim();
+            });
+}
+
 /************************************************************
  * Loads and parses the main opponent listing file.
  ************************************************************/
@@ -223,9 +214,22 @@ function loadListingFile () {
 			if (opp.id in opponentMap) {
 				loadedOpponents[opponentMap[opp.id]] = opp;
                 opp.tags.forEach(function(tag) {
-                    tagSet[tag] = true;
+                    tagSet[canonicalizeTag(tag)] = true;
                 });
                 sourceSet[opp.source] = true;
+                
+                splitCreatorField(opp.artist).forEach(function (creator) {
+                    creatorSet[creator] = true;
+                });
+                
+                splitCreatorField(opp.writer).forEach(function (creator) {
+                    creatorSet[creator] = true;
+                });
+                
+                console.log();
+                
+                var disp = new OpponentSelectionCard(opp);
+                opp.selectionCard = disp;
 			}
 			if (opp.id in opponentGroupMap) {
 				opponentGroupMap[opp.id].forEach(function(groupPos) {
@@ -242,9 +246,12 @@ function loadListingFile () {
 		}
         if (outstandingLoads == 0) {
             $tagList.append(Object.keys(tagSet).sort().map(function(tag) {
-                return new Option(tag);
+                return new Option(canonicalizeTag(tag));
             }));
             $sourceList.append(Object.keys(sourceSet).sort().map(function(source) {
+                return new Option(source);
+            }));
+            $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
                 return new Option(source);
             }));
         }
@@ -371,98 +378,14 @@ function getCostumeOption(alt_costume, selected_costume) {
 }
 
 /************************************************************
- * Loads opponents onto the individual select screen based
- * on the currently selected page.
+ * Loads opponents onto the individual select screen.
  ************************************************************/
 function updateIndividualSelectScreen () {
-	/* safety wrap around */
-	if (individualPage < 0) {
-		/* wrap to last page */
-		individualPage = Math.ceil(selectableOpponents.length/4)-1;
-	}
-	$individualPageIndicator.val(individualPage+1);
-
-	/* keep track of how many opponents were on this screen */
-	var empty = 0;
-
-    /* create and load all of the individual opponents */
-	for (var i = individualPage*4; i < (individualPage+1)*4; i++) {
-		var index = i - individualPage*4;
-
-		if (i in selectableOpponents) {
-			shownIndividuals[index] = selectableOpponents[i];
-
-			$individualNameLabels[index].html(selectableOpponents[i].first + " " + selectableOpponents[i].last);
-			$individualPrefersLabels[index].html(selectableOpponents[i].label);
-			$individualSexLabels[index].html(selectableOpponents[i].gender);
-			$individualSourceLabels[index].html(selectableOpponents[i].source);
-			$individualWriterLabels[index].html(wordWrapHtml(selectableOpponents[i].writer));
-			$individualArtistLabels[index].html(wordWrapHtml(selectableOpponents[i].artist));
-			$individualDescriptionLabels[index].html(selectableOpponents[i].description);
-
-            if (EPILOGUE_BADGES_ENABLED && selectableOpponents[i].ending) {
-                $individualBadges[index].show();
-            }
-            else {
-                $individualBadges[index].hide();
-            }
-
-            updateStatusIcon($individualStatuses[index], selectableOpponents[i].status);
-
-            $individualLayers[index].show();
-            $individualLayers[index].attr("src", "img/layers" + selectableOpponents[i].layers + ".png");
-			
-			$individualImages[index].attr('src', selectableOpponents[i].selection_image);
-			$individualImages[index].css('height', selectableOpponents[i].scale + '%');
-			$individualImages[index].show();
-			$individualButtons[index].html('Select Opponent');
-			$individualButtons[index].attr('disabled', false);
-			
-			$individualCostumeSelectors[index].hide();
-			if (ALT_COSTUMES_ENABLED) {
-				if (
-					(!FORCE_ALT_COSTUME && selectableOpponents[i].alternate_costumes.length > 0) ||
-					(FORCE_ALT_COSTUME && selectableOpponents[i].alternate_costumes.length > 1)
-				) {
-					if (!FORCE_ALT_COSTUME) {
-						$individualCostumeSelectors[index].empty().append($('<option>', {val: '', text: 'Default Skin'}));
-					}
-					
-					selectableOpponents[i].alternate_costumes.forEach(function (alt) {
-						$individualCostumeSelectors[index].append(getCostumeOption(alt, selectableOpponents[i].selected_costume));
-					});
-					$individualCostumeSelectors[index].show();
-				}
-			}
-		} else {
-			delete shownIndividuals[index];
-
-			$individualNameLabels[index].html("");
-			$individualPrefersLabels[index].html("");
-			$individualSexLabels[index].html("");
-			$individualSourceLabels[index].html("");
-			$individualWriterLabels[index].html("");
-			$individualArtistLabels[index].html("");
-            $individualCountBoxes[index].css("visibility", "hidden");
-			$individualDescriptionLabels[index].html("");
-            $individualBadges[index].hide();
-            $individualStatuses[index].hide();
-            $individualLayers[index].hide();
-
-			$individualImages[index].hide();
-			$individualButtons[index].attr('disabled', true);
-
-			$individualCostumeSelectors[index].hide();
-
-			empty++;
-		}
-    }
-
-	/* reload if the page is empty */
-	if (empty == 4 && individualPage != 0) {
-		individualPage = 0;
-		updateIndividualSelectScreen();
-	}
+    $('#individual-select-screen .opponent-cards-container')
+        .empty()
+        .append(selectableOpponents.map(function (opp) {
+            return opp.selectionCard.mainElem;
+        }));
 }
 
 /************************************************************
@@ -611,7 +534,8 @@ function updateSuggestions(slot, suggestionsArray, startIndex) {
 function updateSelectableOpponents(autoclear) {
     var name = $searchName.val().toLowerCase();
     var source = $searchSource.val().toLowerCase();
-    var tag = $searchTag.val().toLowerCase();
+    var creator = $searchCreator.val().toLowerCase();
+    var tag = canonicalizeTag($searchTag.val());
 
     // Array.prototype.filter automatically skips empty slots
     selectableOpponents = loadedOpponents.filter(function(opp) {
@@ -629,12 +553,13 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by tag
-        if (tag) {
-            if (!opp.tags || !opp.tags.some(function(t) {
-                return t.toLowerCase() == tag;
-            })) {
-                return false;
-            }
+        if (tag && !opp.hasTag(tag)) {
+            return false;
+        }
+        
+        // filter by creator
+        if (creator && opp.artist.toLowerCase().indexOf(creator) < 0 && opp.writer.toLowerCase().indexOf(creator) < 0) {
+            return false;
         }
 
         // filter by gender
@@ -664,10 +589,12 @@ function updateSelectableOpponents(autoclear) {
     if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
         selectableOpponents.sort(sortingOptionsMap[sortingMode]);
     }
-
-    /* update max page indicator */
-    $individualMaxPageIndicator.html("of "+Math.ceil(selectableOpponents.length/4));
 }
+
+$('#individual-select-screen .sort-filter-field').on('input', function () {
+    updateSelectableOpponents(false);
+    updateIndividualSelectScreen();
+});
 
 /************************************************************
  * The player clicked on a suggested character button.
@@ -720,7 +647,6 @@ function selectOpponentSlot (slot) {
 
 		/* reload selection screen */
 		updateIndividualSelectScreen();
-        updateIndividualCountStats();
 
         /* switch screens */
 		screenTransition($selectScreen, $individualSelectScreen);
@@ -771,7 +697,7 @@ function updateSelectableGroups(screen) {
     var groupname = $groupSearchGroupName.val().toLowerCase();
     var name = $groupSearchName.val().toLowerCase();
     var source = $groupSearchSource.val().toLowerCase();
-    var tag = $groupSearchTag.val().toLowerCase();
+    var tag = canonicalizeTag($groupSearchTag.val());
 
     // reset filters
     selectableGroups[screen] = loadedGroups[screen].filter(function(group) {
@@ -790,9 +716,7 @@ function updateSelectableGroups(screen) {
         })) return false;
 
         if (tag && !group.opponents.some(function(opp) {
-            return opp.tags.some(function(t) {
-                return t.toLowerCase() == tag;
-            })
+            return opp.hasTag(tag);
         })) return false;
 
         if ((chosenGroupGender == 2 || chosenGroupGender == 3)
@@ -884,63 +808,6 @@ function clickedRemoveAllButton ()
         $selectImages[i-1].off('load');
     }
     updateSelectionVisuals();
-}
-
-/************************************************************
- * The player clicked on a change stats card button on the
- * individual select screen.
- ************************************************************/
-function changeIndividualStats (target) {
-    for (var i = 1; i < 5; i++) {
-        for (var j = 1; j < 4; j++) {
-            if (j != target) {
-                $('#individual-stats-page-'+i+'-'+j).hide();
-            }
-            else {
-                $('#individual-stats-page-'+i+'-'+j).show();
-            }
-        }
-    }
-
-    individualCreditsShown = (target == 2); // true when Credits button is clicked
-}
-
-/************************************************************
- * The player clicked the select opponent button on the
- * individual select screen.
- ************************************************************/
-function selectIndividualOpponent (slot) {
-    /* move the stored player into the selected slot and update visuals */
-	players[selectedSlot] = shownIndividuals[slot-1];
-	updateSelectionVisuals();
-	players[selectedSlot].loadBehaviour(selectedSlot, true);
-
-	/* switch screens */
-	screenTransition($individualSelectScreen, $selectScreen);
-}
-
-/************************************************************
- * The player is changing the page on the individual screen.
- ************************************************************/
-function changeIndividualPage (skip, page) {
-    console.log("resigtered");
-    if (skip) {
-        if (page == -1) {
-            /* go to first page */
-            individualPage = 0;
-        } else if (page == 1) {
-            /* go to last page */
-            individualPage = Math.ceil(selectableOpponents.length/4)-1;
-        } else {
-            /* go to selected page */
-            individualPage = Number($individualPageIndicator.val()) - 1;
-        }
-    } else {
-        individualPage += page;
-    }
-
-    updateIndividualSelectScreen();
-    updateIndividualCountStats();
 }
 
 /************************************************************
@@ -1238,8 +1105,14 @@ function clearSearch() {
 
 function changeSearchGender(gender) {
     chosenGender = gender;
-    setActiveOption($searchGenderOptions, gender);
+    setActiveOption("search-gender", gender);
+    updateSelectableOpponents(true);
+    updateIndividualSelectScreen();
 }
+
+$('ul#search-gender').on('click', 'a', function() {
+    changeSearchGender(parseInt($(this).attr('data-value'), 10));
+});
 
 function openGroupSearchModal() {
     $groupSearchModal.modal('show');
@@ -1264,9 +1137,12 @@ function clearGroupSearch() {
 
 function changeGroupSearchGender(gender) {
     chosenGroupGender = gender;
-    setActiveOption($groupSearchGenderOptions, gender);
+    setActiveOption("group-search-gender", gender);
 }
 
+$('ul#group-search-gender').on('click', 'a', function() {
+    changeGroupSearchGender(parseInt($(this).attr('data-value'), 10));
+});
 
 /************************************************************
  * Sorting Functions
@@ -1348,7 +1224,8 @@ function sortOpponentsByMostTargeted() {
 function setSortingMode(mode) {
     sortingMode = mode;
     $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
-    individualPage = 0; // reset the page number
+    updateSelectableOpponents(false);
+    updateIndividualSelectScreen();
 }
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
@@ -1373,11 +1250,6 @@ function wordWrapHtml(text) {
 /************************************************************
  * Dynamic dialogue and image counting functions
  ************************************************************/
-
-/** Event handler for the individual selection screen credits button. */
-$individualCreditsButton.on('click', function(e) {
-    updateIndividualCountStats()
-});
 
 /** Event handler for the group selection screen credits button. */
 $groupCreditsButton.on('click', function(e) {
@@ -1477,21 +1349,42 @@ function countLinesImages(xml) {
 	var numUniqueUsedPoses = 0;
     var lines = {};
     var poses = {};
-    $(xml).find('state').each(function(idx, data) {
-		numTotalLines++;
-		// count only unique lines of dialogue
-		if (lines[data.textContent.trim()] === undefined) numUniqueDialogueLines++;
-        lines[data.textContent.trim()] = 1;
-		// count unique number of poses used in dialogue
-		// note that this number may differ from actual image count if some images
-		// are never used, or if images that don't exist are used in the dialogue
-		if (poses[data.getAttribute("img")] === undefined) numUniqueUsedPoses++;
-        poses[data.getAttribute("img")] = 1;
+    
+    var matched = $(xml).find('state').get();
+    
+    return new Promise(function (resolve, reject) {
+        /* Avoid blocking the UI by breaking the work into smaller chunks. */
+        function process () {
+            var startTs = Date.now();
+            
+            if (DEBUG) console.log("Processing: "+matched.length+" states to go");
+            do {
+                data = matched.shift();
+                
+                numTotalLines++;
+                
+        		// count only unique lines of dialogue
+        		if (lines[data.textContent.trim()] === undefined) numUniqueDialogueLines++;
+                lines[data.textContent.trim()] = 1;
+                
+        		// count unique number of poses used in dialogue
+        		// note that this number may differ from actual image count if some images
+        		// are never used, or if images that don't exist are used in the dialogue
+        		if (poses[data.getAttribute("img")] === undefined) numUniqueUsedPoses++;
+                poses[data.getAttribute("img")] = 1;
+            } while (Date.now() - startTs < 50 && matched.length > 0);
+            
+            if (matched.length > 0) {
+                setTimeout(process.bind(null), 50);
+            } else {
+                return resolve({
+                    numTotalLines : numTotalLines,
+                    numUniqueLines : numUniqueDialogueLines,
+                    numPoses : numUniqueUsedPoses
+                });
+            }
+        }
+        
+        process();
     });
-
-    return {
-        numTotalLines : numTotalLines,
-        numUniqueLines : numUniqueDialogueLines,
-        numPoses : numUniqueUsedPoses
-    };
 }

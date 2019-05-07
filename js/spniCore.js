@@ -11,16 +11,19 @@
 var DEBUG = false;
 var EPILOGUES_ENABLED = true;
 var EPILOGUES_UNLOCKED = false;
+var COLLECTIBLES_ENABLED = true;
+var COLLECTIBLES_UNLOCKED = false;
 var EPILOGUE_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
-var USAGE_TRACKING = false;
+var USAGE_TRACKING = undefined;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
 var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
 var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
 
+var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;
 
 /* Game Wide Constants */
@@ -42,6 +45,7 @@ var FEMALE_SYMBOL = IMG + 'female.png';
 var includedOpponentStatuses = {};
 var alternateCostumeSets = {};
 
+var versionInfo = null;
 
 /* game table */
 var tableOpacity = 1;
@@ -64,6 +68,7 @@ var table = new Table();
 var jsErrors = [];
 var sessionID = '';
 var gameID = '';
+var generalCollectibles = [];
 
 /**********************************************************************
  * Screens & Modals
@@ -84,12 +89,14 @@ var allScreens = [$warningScreen, $titleScreen, $selectScreen, $individualSelect
 /* Modals */
 $searchModal = $('#search-modal');
 $groupSearchModal = $('#group-search-modal');
-$creditModal = $('#credit-modal');
+$helpModal = $('#help-modal');
 $versionModal = $('#version-modal');
 $gameSettingsModal = $('#game-settings-modal');
 $bugReportModal = $('#bug-report-modal');
 $usageTrackingModal = $('#usage-reporting-modal');
 $playerTagsModal = $('#player-tags-modal');
+$collectibleInfoModal = $('#collectibles-info-modal');
+$ioModal = $('#io-modal');
 
 /* Screen State */
 $previousScreen = null;
@@ -293,7 +300,7 @@ function Player (id) {
     this.gender = eGender.MALE;
     this.stamina = 20;
     this.scale = undefined;
-    this.tags = [id];
+    this.tags = this.baseTags = [];
     this.xml = null;
     this.metaXml = null;
 
@@ -373,25 +380,8 @@ Player.prototype.resetState = function () {
 
         this.labels = appearance.labels;
         this.folders = appearance.folders;
-
-        if (appearance.tags) {
-            var alt_tags = appearance.tags.find('tag').each(function (idx, elem) {
-                var $elem = $(elem);
-                var tag = $elem.text();
-                var removed = $elem.attr('remove') || '';
-                if (removed.toLowerCase() === 'true') {
-                    if (this.tags.indexOf(tag) >= 0) {
-                        this.tags.splice(this.tags.indexOf(tag), 1);
-                    }
-                } else if (this.tags.indexOf(tag) < 0) {
-                    this.tags.push(tag);
-                }
-            }.bind(this));
-        }
-
-        if (appearance.id && this.tags.indexOf(appearance.id) < 0) {
-            this.tags.push(appearance.id);
-        }
+        this.baseTags = appearance.tags.slice();
+        this.labelOverridden = false;
 
 		/* Load the player's wardrobe. */
 
@@ -418,8 +408,7 @@ Player.prototype.resetState = function () {
 		this.initClothingStatus();
 	}
 
-	this.updateLabel();
-	this.updateFolder();
+	this.stageChangeUpdate();
 }
 
 Player.prototype.getIntelligence = function () {
@@ -431,6 +420,62 @@ Player.prototype.getIntelligence = function () {
 Player.prototype.updateLabel = function () { }
 Player.prototype.updateFolder = function () { }
 Player.prototype.updateBehaviour = function() { }
+
+/* Compute the Player's tags list from their baseTags list. */
+Player.prototype.updateTags = function () {
+    var tags = [this.id];
+    var stage = this.stage || 0;
+    
+    if (this.alt_costume && this.alt_costume.id) {
+        tags.push(this.alt_costume.id);
+    }
+    
+    this.baseTags.forEach(function (tag_desc) {
+        if (typeof(tag_desc) === 'string') {
+            tags.push(tag_desc);
+            return;
+        }
+        
+        if (!tag_desc.tag) return;
+        
+        var tag = tag_desc.tag;
+        var from = parseInt(tag_desc.from, 10);
+        var to = parseInt(tag_desc.to, 10);
+        
+        if (isNaN(to))   to = Number.POSITIVE_INFINITY;
+        if (isNaN(from)) from = 0;
+        
+        if (stage >= from && stage <= to) {
+            tags.push(tag);
+        }
+    });
+    
+    this.tags = expandTagsList(tags);
+}
+
+Player.prototype.stageChangeUpdate = function () {
+    this.updateLabel();
+    this.updateFolder();
+    this.updateTags();
+}
+
+Player.prototype.addTag = function(tag) {
+    this.baseTags.push(canonicalizeTag(tag));
+}
+
+Player.prototype.removeTag = function(tag) {
+    tag = canonicalizeTag(tag);
+    
+    this.baseTags = this.baseTags.filter(function (t) {
+        if (typeof(t) === 'string') { return t !== tag };
+        if (!t.tag) return false;
+        return t.tag !== tag;
+    });
+}
+
+Player.prototype.hasTag = function(tag) {
+    return tag && this.tags && this.tags.indexOf(canonicalizeTag(tag)) >= 0;
+};
 
 /*****************************************************************************
  * Subclass of Player for AI-controlled players.
@@ -454,16 +499,29 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.description = fixupDialogue($metaXml.find('description').html());
     this.endings = $metaXml.find('epilogue');
     this.ending = this.endings.length > 0 || $metaXml.find('has_ending').text() === "true";
+    this.has_collectibles = $metaXml.find('has_collectibles').text() === "true";
+    this.collectibles = null;
     this.layers = parseInt($metaXml.find('layers').text(), 10);
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
-    this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
+    this.uniqueLineCount = parseInt($metaXml.find('lines').text(), 10) || undefined;
+    this.posesImageCount = parseInt($metaXml.find('poses').text(), 10) || undefined;
     this.selected_costume = null;
     this.alt_costume = null;
     this.default_costume = null;
     this.poses = {};
     this.labelOverridden = false;
-
+    this.pendingCollectiblePopup = null;
+    
+    /* baseTags stores tags that will be later used in resetState to build the
+     * opponent's true tags list. It does not store implied tags.
+     *
+     * The tags list stores the fully-expanded list of tags for the opponent,
+     * including implied tags.
+     */
+    this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
+    this.updateTags();
+    
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;
 
@@ -553,7 +611,7 @@ Opponent.prototype.getByStage = function (arr, stage) {
 };
 
 Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
-    if (costumeDesc === undefined) {
+    if (!costumeDesc) {
         this.selected_costume = null;
         this.selection_image = this.base_folder + this.image;
     } else {
@@ -585,7 +643,7 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
             this.alt_costume = {
                 id: $xml.find('id').text(),
                 labels: $xml.find('label'),
-                tags: $xml.find('tags'),
+                tags: [],
                 folder: this.selected_costume,
                 folders: $xml.find('folder'),
                 wardrobe: $xml.find('wardrobe')
@@ -600,6 +658,30 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
             
             this.alt_costume.poses = poseDefs;
 
+            var costumeTags = this.default_costume.tags.slice();
+            var tagMods = $xml.find('tags');
+            if (tagMods) {
+                var newTags = [];
+                tagMods.find('tag').each(function (idx, elem) {
+                    var $elem = $(elem);
+                    var tag = canonicalizeTag(tag);
+                    var removed = $elem.attr('remove') || '';
+                    var fromStage = $elem.attr('from');
+                    var toStage = $elem.attr('to');
+
+                    // Remove previous declarations for this tag
+                    costumeTags = costumeTags.filter(function (t) { return t.tag !== tag; });
+
+                    if (removed.toLowerCase() !== 'true') {
+                        newTags.push({'tag': tag, 'from': fromStage, 'to': toStage});
+                    }
+                });
+                
+                Array.prototype.push.apply(costumeTags, newTags);
+            }
+
+            this.alt_costume.tags = costumeTags;
+
             this.onSelected(individual);
         }.bind(this),
         error: function () {
@@ -612,28 +694,35 @@ Opponent.prototype.unloadAlternateCostume = function () {
     if (!this.alt_costume) {
         return;
     }
-
-    if (this.alt_costume.tags) {
-        this.alt_costume.tags.find('tag').each(function (idx, elem) {
-            var $elem = $(elem);
-            var tag = $elem.text();
-            var removed = $elem.attr('remove') || '';
-            if (removed.toLowerCase() === 'true') {
-                this.tags.push(tag);    // tag was previously removed, readd it
-            } else {
-                if (this.tags.indexOf(tag) > 0) {
-                    // remove added tag
-                    this.tags.splice(this.tags.indexOf(tag), 1);
-                }
-            }
-        }.bind(this));
-    }
-
-    this.tags.splice(this.tags.indexOf(this.alt_costume.id), 1);
-
+    
     this.alt_costume = null;
     this.selectAlternateCostume(null);
     this.resetState();
+}
+
+Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
+    if (!this.has_collectibles) return;
+    if (this.collectibles !== null) return;
+    
+    $.ajax({
+		type: "GET",
+		url: this.folder + 'collectibles.xml',
+		dataType: "text",
+		success: function(xml) {
+			var collectiblesArray = [];
+			$(xml).find('collectible').each(function (idx, elem) {
+				collectiblesArray.push(new Collectible($(elem), this));
+			}.bind(this));
+			
+			this.collectibles = collectiblesArray;
+            
+            if (onLoaded) onLoaded(this);
+		}.bind(this),
+        error: function (jqXHR, status, err) {
+            console.error("Error loading collectibles for "+this.id+": "+status+" - "+err);
+            if (onError) onError(this, status, err);
+        }.bind(this)
+	});
 }
 
 /************************************************************
@@ -662,6 +751,10 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
          */
 		function(xml) {
             var $xml = $(xml);
+
+            if (this.has_collectibles) {
+                this.loadCollectibles();
+            }
 
             this.xml = $xml;
             this.size = $xml.find('size').text();
@@ -696,14 +789,18 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.default_costume.poses = poseDefs;
 
             var tags = $xml.find('tags');
-            var tagsArray = [this.id];
+            var tagsArray = [];
             if (typeof tags !== typeof undefined && tags !== false) {
-                $(tags).find('tag').each(function () {
-                    tagsArray.push($(this).text());
-                });
+                tagsArray = $(tags).find('tag').map(function () {
+                    return {
+                        'tag': canonicalizeTag($(this).text()),
+                        'from': $(this).attr('from'),
+                        'to': $(this).attr('to'),
+                    }
+                }).get();
             }
 
-            this.tags = tagsArray;
+            this.default_costume.tags = tagsArray;
 
             var targetedLines = {};
 
@@ -748,11 +845,11 @@ Player.prototype.getImagesForStage = function (stage) {
                     
     this.xml.find(selector).each(function () {
         var target = $(this).attr('target'), alsoPlaying = $(this).attr('alsoPlaying'),
-            filter = $(this).attr('filter');
+            filter = canonicalizeTag($(this).attr('filter'));
         // Skip cases requiring a character that isn't present
         if ((target === undefined || players.some(function(p) { return p.id === target; }))
             && (alsoPlaying === undefined || players.some(function(p) { return p.id === alsoPlaying; }))
-            && (filter === undefined || players.some(function(p) { return p.tags.indexOf(filter) >= 0; })))
+            && (filter === undefined || players.some(function(p) { return p.hasTag(filter); })))
         {
             $(this).children('state').each(function (i, e) {
                 var poseName = $(e).attr('img');
@@ -799,10 +896,14 @@ function initialSetup () {
     /* load the all content */
     loadTitleScreen();
     selectTitleCandy();
+    loadVersionInfo();
+    loadGeneralCollectibles();
+    
 	/* Make sure that the config file is loaded before processing the
 	   opponent list, so that includedOpponentStatuses is populated. */
     loadConfigFile().always(loadSelectScreen);
-	save.loadCookie();
+    save.load();
+    updateTitleGender();
 
 	/* show the title screen */
 	$warningScreen.show();
@@ -829,6 +930,50 @@ function initialSetup () {
         });
         bubbleArrowOffsetRules.push(pair);
     }
+}
+
+function loadVersionInfo () {
+    $('.substitute-version').text('Unknown Version');
+    
+    return $.ajax({
+        type: "GET",
+		url: "version-info.xml",
+		dataType: "text",
+		success: function(xml) {
+            versionInfo = $(xml);
+            CURRENT_VERSION = versionInfo.find('current').attr('version');
+            
+            $('.substitute-version').text('v'+CURRENT_VERSION);
+            console.log("Running SPNATI version "+CURRENT_VERSION);
+            
+            version_ts = versionInfo.find('changelog > version[number=\"'+CURRENT_VERSION+'\"]').attr('timestamp');        
+            
+            version_ts = parseInt(version_ts, 10);
+            now = Date.now();
+            
+            elapsed_time = now - version_ts;
+            
+            /* Format last update time */
+            last_update_string = '';
+            if (elapsed_time < 5 * 60 * 1000) {
+                // <5 minutes ago - display 'just now'
+                last_update_string = 'just now';
+            } else if (elapsed_time < 60 * 60 * 1000) {
+                // < 1 hour ago - display minutes since last update
+                last_update_string = Math.floor(elapsed_time / (60 * 1000))+' minutes ago';
+            } else if (elapsed_time < 24 * 60 * 60 * 1000) {
+                // < 1 day ago - display hours since last update
+                var n_hours = Math.floor(elapsed_time / (60 * 60 * 1000));
+                last_update_string = n_hours + (n_hours === 1 ? ' hour ago' : ' hours ago');
+            } else {
+                // otherwise just display days since last update
+                var n_days = Math.floor(elapsed_time / (24 * 60 * 60 * 1000));
+                last_update_string =  n_days + (n_days === 1 ? ' day ago' : ' days ago');
+            }
+            
+            $('.substitute-version-time').text('(updated '+last_update_string+')')
+        }
+    });
 }
 
 
@@ -909,6 +1054,27 @@ function loadConfigFile () {
                 ALT_COSTUMES_ENABLED = false;
                 console.log("Alternate costumes disabled");
             }
+            
+            if (DEBUG) {
+                COLLECTIBLES_ENABLED = false;
+                COLLECTIBLES_UNLOCKED = false;
+                
+                if ($(xml).find('collectibles').text() === 'true') {
+                    COLLECTIBLES_ENABLED = true;
+                    console.log("Collectibles enabled");
+                    
+                    if ($(xml).find('collectibles-unlocked').text() === 'true') {
+                        COLLECTIBLES_UNLOCKED = true;
+                        console.log("All collectibles force-unlocked");
+                    }
+                } else {
+                    console.log("Collectibles disabled");
+                }
+            } else {
+                COLLECTIBLES_ENABLED = false;
+                COLLECTIBLES_UNLOCKED = false;
+                console.log("Debug mode disabled - collectibles disabled");
+            }
 
 			$(xml).find('include-status').each(function() {
 				includedOpponentStatuses[$(this).text()] = true;
@@ -918,6 +1084,22 @@ function loadConfigFile () {
 	});
 }
 
+function loadGeneralCollectibles () {
+    $.ajax({
+		type: "GET",
+		url: 'opponents/general_collectibles.xml',
+		dataType: "text",
+		success: function(xml) {
+			var collectiblesArray = [];
+			$(xml).find('collectible').each(function (idx, elem) {
+				generalCollectibles.push(new Collectible($(elem), undefined));
+			});
+		},
+        error: function (jqXHR, status, err) {
+            console.error("Error loading general collectibles: "+status+" - "+err);
+        }
+	});
+}
 
 
 function enterTitleScreen() {
@@ -984,8 +1166,9 @@ function restartGame () {
 	/* enable table opacity */
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
-    $gamePlayerClothingArea.show();
     $gamePlayerCardArea.show();
+    if (!MINIMAL_UI) $gamePlayerClothingArea.show();
+    
 
 	/* trigger screen refreshes */
 	updateSelectionVisuals();
@@ -999,7 +1182,6 @@ function restartGame () {
 	$gameScreen.hide();
 	$epilogueScreen.hide();
 	clearEpilogue();
-	loadClothing();
 	$titleScreen.show();
 }
 
@@ -1117,32 +1299,90 @@ function showUsageTrackingModal() {
 }
 
 function enableUsageTracking() {
-    save.data.askedUsageTracking = true;
     USAGE_TRACKING = true;
-
-    save.saveOptions();
+    save.saveUsageTracking();
 }
 
 function disableUsageTracking() {
-    save.data.askedUsageTracking = true;
     USAGE_TRACKING = false;
-
-    save.saveOptions();
-}
-
-/************************************************************
- * The player clicked the credits button. Shows the credits modal.
- ************************************************************/
-function showCreditModal () {
-    $creditModal.modal('show');
+    save.saveUsageTracking();
 }
 
 /************************************************************
  * The player clicked the version button. Shows the version modal.
  ************************************************************/
 function showVersionModal () {
+    var $changelog = $('#changelog-container');
+    var entries = [];
+    
+    /* Get changelog info: */
+    versionInfo.find('changelog > version').each(function (idx, elem) {
+        entries.push({
+            version: $(elem).attr('number'),
+            timestamp: parseInt($(elem).attr('timestamp'), 10) || undefined,
+            text: $(elem).text()
+        });
+    });
+    
+    /* Construct the version modal DOM: */
+    $changelog.empty().append(entries.sort(function (e1, e2) {
+        // Sort in reverse lexographical order
+        return (e1.version < e2.version) ? 1 : -1;
+    }).map(function (ent) {
+        var row = document.createElement('tr');
+        var versionCell = document.createElement('td');
+        var dateCell = document.createElement('td');
+        var logTextCell = document.createElement('td');
+        
+        versionCell.className = 'changelog-version-label';
+        dateCell.className = 'changelog-date-label';
+        logTextCell.className = 'changelog-entry-text';
+        
+        if (ent.timestamp) {
+            var date = new Date(ent.timestamp);
+            var locale = window.navigator.userLanguage || window.navigator.language
+            dateCell.innerText = date.toLocaleDateString(locale, {month: 'long', day: 'numeric', year: 'numeric'});
+        }
+        
+        versionCell.innerText = ent.version;
+        logTextCell.innerText = ent.text;
+        
+        row.appendChild(versionCell);
+        row.appendChild(dateCell);
+        row.appendChild(logTextCell);
+        
+        return row;
+    }));
+    
     $versionModal.modal('show');
 }
+
+/************************************************************
+ * The player clicked the help / FAQ button. Shows the help modal.
+ ************************************************************/
+function showHelpModal () {
+    $helpModal.modal('show');
+}
+
+$('.help-page-select').click(function (ev) {
+    var toPage = $(ev.target).attr('data-select-page');
+    var curPage = $helpModal.attr('data-current-page');
+    curPage = parseInt(curPage, 10) || 1;
+    
+    if (toPage === 'prev') {
+        curPage = (curPage > 1) ? curPage-1 : 1;
+    } else if (toPage === 'next') {
+        curPage = (curPage < 7) ? curPage+1 : 7;
+    } else {
+        curPage = toPage;
+    }
+    
+    $helpModal.attr('data-current-page', curPage);
+    $('.help-page').hide();
+    $('.help-page[data-page="'+curPage+'"]').show();
+    $('.help-page-select').removeClass('active');
+    $('.help-page-select[data-page="'+curPage+'"]').addClass('active');
+})
 
 /************************************************************
  * The player clicked the player tags button. Shows the player tags modal.
@@ -1334,6 +1574,19 @@ function forceTableVisibility(state) {
 		$gameTable.fadeIn();
 		tableOpacity = 1;
 	}
+}
+
+/************************************************************
+ * The player clicked on a Load/Save button.
+ ************************************************************/
+function showImportModal() {
+    $("#export-code").text(save.serializeLocalStorage());
+    $ioModal.modal('show');
+
+    $('#import-progress').click(function() {
+        var code = $("#export-code").val();
+        save.deserializeLocalStorage(code);
+    });
 }
 
 /**********************************************************************

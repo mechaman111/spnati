@@ -20,6 +20,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="data"></param>
 		public void Merge(MarkerData data)
 		{
+			if (data == null) { return; }
 			foreach (var marker in data.Markers)
 			{
 				Add(marker);

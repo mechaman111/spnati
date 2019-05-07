@@ -3,7 +3,9 @@ using KisekaeImporter;
 using KisekaeImporter.ImageImport;
 using SPNATI_Character_Editor.Forms;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -23,6 +25,8 @@ namespace SPNATI_Character_Editor.Activities
 		private ISkin _character;
 		private PoseList _poseList = new PoseList();
 		private string _lastPoseFile;
+		private DataGridViewColumn _sortedColumn;
+		private bool _sortAscending;
 
 		private ImageMetadata _clipboard;
 
@@ -153,6 +157,11 @@ namespace SPNATI_Character_Editor.Activities
 						}
 					}
 				}
+				if (values.Length > 2)
+				{
+					string skipPreprocessing = values[2];
+					metadata.SkipPreprocessing = (skipPreprocessing == "1");
+				}
 
 				_poseList.Poses.Add(metadata);
 			}
@@ -206,7 +215,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			string stage = row.Cells["ColStage"].Value?.ToString();
 			string pose = row.Cells["ColPose"].Value?.ToString();
-			if (string.IsNullOrEmpty(stage) || string.IsNullOrEmpty(pose))
+			if (string.IsNullOrEmpty(pose))
 				return null;
 			int l = 0;
 			int r = 0;
@@ -229,6 +238,7 @@ namespace SPNATI_Character_Editor.Activities
 			ImageMetadata metadata = new ImageMetadata(key, data);
 			metadata.ExtraData = extraData;
 			metadata.CropInfo = new Rect(l, t, r, b);
+			metadata.SkipPreprocessing = row.Cells["ColData"].Tag?.ToString() == "1";
 			return metadata;
 		}
 
@@ -349,6 +359,8 @@ namespace SPNATI_Character_Editor.Activities
 
 			row.Cells["ColData"].Value = pose.Data;
 			row.Cells["ColAdvanced"].Tag = pose.ExtraData;
+
+			row.Cells["ColData"].Tag = (pose.SkipPreprocessing ? "1" : null);
 		}
 
 		private void UpdateImageCell(string key, DataGridViewRow row)
@@ -400,10 +412,13 @@ namespace SPNATI_Character_Editor.Activities
 			PoseSettingsForm form = new PoseSettingsForm();
 			DataGridViewRow row = gridPoses.Rows[index];
 			Dictionary<string, string> extraData = row.Cells["ColAdvanced"].Tag as Dictionary<string, string>;
+			bool manual = row.Cells["ColData"].Tag?.ToString() == "1";
 			form.SetData(extraData);
+			form.UseManualCode = manual;
 			if (form.ShowDialog() == DialogResult.OK)
 			{
 				row.Cells["ColAdvanced"].Tag = form.GetData();
+				row.Cells["ColData"].Tag = (form.UseManualCode ? "1" : "");
 			}
 		}
 
@@ -444,6 +459,8 @@ namespace SPNATI_Character_Editor.Activities
 			_previewImageMetadata.CropInfo = new Rect(l, t, r, b);
 			_previewImageMetadata.ExtraData = row.Cells["ColAdvanced"].Tag as Dictionary<string, string> ?? new Dictionary<string, string>();
 
+			bool manual = row.Cells["ColData"].Tag?.ToString() == "1";
+			_previewImageMetadata.SkipPreprocessing = manual;
 			ImageCropper cropper = new ImageCropper();
 			cropper.Import(_previewImageMetadata, _character, false);
 			if (cropper.ShowDialog() == DialogResult.OK)
@@ -492,6 +509,7 @@ namespace SPNATI_Character_Editor.Activities
 				row.Cells["ColT"].Value = "0";
 				row.Cells["ColR"].Value = "600";
 				row.Cells["ColB"].Value = "1400";
+				row.Cells["ColAdvanced"].Tag = new Dictionary<string, string>();
 			}
 		}
 
@@ -673,7 +691,7 @@ namespace SPNATI_Character_Editor.Activities
 						progress.Report(current++);
 						try
 						{
-							Image img = await CharacterGenerator.GetCroppedImage(new KisekaeCode(metadata.Data), metadata.CropInfo, _character, metadata.ExtraData);
+							Image img = await CharacterGenerator.GetCroppedImage(new KisekaeCode(metadata.Data), metadata.CropInfo, _character, metadata.ExtraData, metadata.SkipPreprocessing);
 							if (img == null)
 							{
 								//Something went wrong. Stop here.
@@ -730,31 +748,15 @@ namespace SPNATI_Character_Editor.Activities
 			string filename = imageKey + ".png";
 			string fullPath = Path.Combine(_character.GetDirectory(), filename);
 
-			//Back up the existing image if it hasn't been backed up yet
-
-			//commenting out - what's the point when there's git?
-			//if (File.Exists(fullPath))
-			//{
-			//	string backupDir = Path.Combine(Config.AppDataDirectory, _character.FolderName);
-			//	if (!Directory.Exists(backupDir))
-			//	{
-			//		Directory.CreateDirectory(backupDir);
-			//	}
-			//	string backupPath = Path.Combine(backupDir, imageKey + ".png");
-			//	if (!File.Exists(backupPath))
-			//	{
-			//		File.Copy(fullPath, backupPath);
-			//	}
-			//}
-
 			image.Save(fullPath);
 
 			_imageLibrary.Replace(fullPath, image);
 			return fullPath;
 		}
 
-		private void gridPoses_Scroll(object sender, ScrollEventArgs e)
+		private async void gridPoses_Scroll(object sender, ScrollEventArgs e)
 		{
+			await Task.Delay(100);
 			DoIncrementalLoad();
 		}
 
@@ -764,8 +766,10 @@ namespace SPNATI_Character_Editor.Activities
 		private void DoIncrementalLoad()
 		{
 			bool startedDisplay = false;
-			foreach (DataGridViewRow row in gridPoses.Rows)
+			int start = gridPoses.FirstDisplayedScrollingRowIndex;
+			for (int i = start; i < gridPoses.Rows.Count; i++)
 			{
+				DataGridViewRow row = gridPoses.Rows[i];
 				if (row.Displayed || startedDisplay)
 				{
 					Image current = row.Cells["ColImage"].Value as Image;
@@ -777,9 +781,9 @@ namespace SPNATI_Character_Editor.Activities
 					startedDisplay = true;
 					string stage = row.Cells["ColStage"].Value?.ToString();
 					string poseKey = row.Cells["ColPose"].Value?.ToString();
-					if (string.IsNullOrEmpty(poseKey) || string.IsNullOrEmpty(stage)) { continue; }
+					if (string.IsNullOrEmpty(poseKey)) { continue; }
 
-					string imageKey = $"{stage}-{poseKey}";
+					string imageKey = string.IsNullOrEmpty(stage) ? poseKey : $"{stage}-{poseKey}";
 					//Try to link this up with an existing image. Use thumbnails to save on memory since this activity could load hundreds at once
 					UpdateImageCell(imageKey, row);
 
@@ -793,7 +797,6 @@ namespace SPNATI_Character_Editor.Activities
 			if (gridPoses.SelectedRows.Count == 0) { return; }
 			DataGridViewRow row = gridPoses.SelectedRows[0];
 			_clipboard = ReadRow(row);
-			pasteToolStripMenuItem.Enabled = true;
 			Shell.Instance.SetStatus("Pose copied to clipboard.");
 		}
 
@@ -900,7 +903,15 @@ namespace SPNATI_Character_Editor.Activities
 				gridPoses.ClearSelection();
 				if (hit.RowIndex >= 0 && hit.RowIndex < gridPoses.Rows.Count)
 				{
-					gridPoses.Rows[hit.RowIndex].Selected = true;
+					if (hit.ColumnIndex >= 0 && hit.ColumnIndex <= gridPoses.Columns.Count)
+					{
+						gridPoses.Rows[hit.RowIndex].Cells[hit.ColumnIndex].Selected = true;
+						gridPoses.BeginEdit(true);
+					}
+					else
+					{
+						gridPoses.Rows[hit.RowIndex].Selected = true;
+					}
 				}
 			}
 		}
@@ -908,6 +919,128 @@ namespace SPNATI_Character_Editor.Activities
 		private void chkRequired_CheckedChanged(object sender, EventArgs e)
 		{
 			PopulatePoseGrid();
+		}
+
+		private void contextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (gridPoses.SelectedRows.Count == 0)
+			{
+				if (gridPoses.SelectedCells.Count > 0)
+				{
+					duplicateToolStripMenuItem.Visible = false;
+					pasteToolStripMenuItem.Enabled = Clipboard.ContainsText();
+					return;
+				}
+			}
+			duplicateToolStripMenuItem.Visible = true;
+			pasteToolStripMenuItem.Enabled = _clipboard != null;
+		}
+
+		private void gridPoses_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			DataGridViewColumn col = gridPoses.Columns[e.ColumnIndex];
+			if (col.SortMode != DataGridViewColumnSortMode.Programmatic)
+			{
+				return;
+			}
+
+			bool ascending = false;
+			if (_sortedColumn == col)
+			{
+				if (_sortAscending)
+				{
+					ascending = false;
+				}
+				else
+				{
+					ascending = true;
+				}
+			}
+			else
+			{
+				ascending = true;
+			}
+
+			DataGridViewColumn secondaryCol = (col == ColStage ? ColPose : ColStage);
+			_sortedColumn = col;
+			_sortAscending = ascending;
+			gridPoses.Sort(new PoseSorter(col, secondaryCol, ascending, (col == ColStage)));
+		}
+
+		private class PoseSorter : IComparer
+		{
+			private DataGridViewColumn _primary;
+			private DataGridViewColumn _secondary;
+			private bool _primaryNumeric;
+			private bool _ascending;
+
+			public PoseSorter(DataGridViewColumn primary, DataGridViewColumn secondary, bool ascending, bool useNumericPrimary)
+			{
+				_primary = primary;
+				_secondary = secondary;
+				_ascending = ascending;
+				_primaryNumeric = useNumericPrimary;
+			}
+
+			public int Compare(object x, object y)
+			{
+				DataGridViewRow row1 = x as DataGridViewRow;
+				DataGridViewRow row2 = y as DataGridViewRow;
+				string primary1 = row1.Cells[_primary.Name].Value?.ToString() ?? "";
+				string primary2 = row2.Cells[_primary.Name].Value?.ToString() ?? "";
+				string secondary1 = row1.Cells[_secondary.Name].Value?.ToString() ?? "";
+				string secondary2 = row2.Cells[_secondary.Name].Value?.ToString() ?? "";
+
+				int val1;
+				int val2;
+				if (_primaryNumeric)
+				{
+					if (!int.TryParse(primary1, out val1))
+					{
+						val1 = -1;
+					}
+					if (!int.TryParse(primary2, out val2))
+					{
+						val2 = -1;
+					}
+				}
+				else
+				{
+					if (!int.TryParse(secondary1, out val1))
+					{
+						val1 = -1;
+					}
+					if (!int.TryParse(secondary2, out val2))
+					{
+						val2 = -1;
+					}
+				}
+				int compare = 0;
+				if (_primaryNumeric)
+				{
+					compare = val1.CompareTo(val2);
+				}
+				else
+				{
+					compare = primary1.CompareTo(primary2);
+				}
+				if (compare == 0)
+				{
+					if (!_primaryNumeric)
+					{
+						compare = val1.CompareTo(val2);
+					}
+					else
+					{
+						compare = secondary1.CompareTo(secondary2);
+					}
+				}
+				if (!_ascending)
+				{
+					compare *= -1;
+				}
+				return compare;
+			}
 		}
 	}
 

@@ -13,10 +13,22 @@ namespace SPNATI_Character_Editor
 			{
 				Convert3_2(character);
 			}
-			character.Version = Config.Version;
+			if (version == "v4.2")
+			{
+				//fix weight bug from 4.2
+				foreach (Case workingCase in character.Behavior.GetWorkingCases())
+				{
+					foreach (DialogueLine line in workingCase.Lines)
+					{
+						if (line.Weight == 0)
+						{
+							line.Weight = 1;
+						}
+					}
+				}
+			}
 		}
 
-		
 		private static void Convert3_2(Character character)
 		{
 			//convert old-style epilogues
@@ -38,6 +50,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		private static void ConvertScreenBased(Character character, Epilogue ending)
 		{
+			ending.Scenes.Clear();
 			foreach (Screen screen in ending.Screens)
 			{
 				string image = screen.Image;
@@ -46,6 +59,10 @@ namespace SPNATI_Character_Editor
 				string sceneHeight = null;
 				if (!string.IsNullOrEmpty(image))
 				{
+					if (string.IsNullOrEmpty(ending.GalleryImage))
+					{
+						ending.GalleryImage = image;
+					}
 					try
 					{
 						Image img = new Bitmap(Path.Combine(Config.GetRootDirectory(character), image));
@@ -91,6 +108,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		private static void ConvertBackgroundSceneBased(Character character, Epilogue ending)
 		{
+			ending.Scenes.Clear();
 			foreach (Background bg in ending.Backgrounds)
 			{
 				string image = bg.Image;

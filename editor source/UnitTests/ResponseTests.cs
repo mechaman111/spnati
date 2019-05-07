@@ -11,8 +11,8 @@ namespace UnitTests
 	{
 		private static Character _female;
 		private static Character _male;
-		private static Character _female2;
-		private static Character _male2;
+		private static Character _bifemale;
+		private static Character _bimale;
 
 		[ClassInitialize]
 		public static void Init(TestContext context)
@@ -21,9 +21,9 @@ namespace UnitTests
 
 			_female = new Character() { Gender = "female", FolderName = "female" };
 			_male = new Character() { Gender = "male", FolderName = "male" };
-			_female2 = new Character() { Gender = "female", FolderName = "female2" };
-			_male2 = new Character() { Gender = "male", FolderName = "male2" };
-			foreach (Character c in new Character[] { _female, _male, _female2, _male2 })
+			_bifemale = new Character() { Gender = "female", FolderName = "female" };
+			_bimale = new Character() { Gender = "male", FolderName = "male" };
+			foreach (Character c in new Character[] { _female, _male, _bifemale, _bimale })
 			{
 				c.AddLayer(new Clothing() { Type = "extra" });
 				c.AddLayer(new Clothing() { Type = "minor" });
@@ -31,6 +31,8 @@ namespace UnitTests
 				c.AddLayer(new Clothing() { Type = "important", Position = "upper" });
 				c.AddLayer(new Clothing() { Type = "important", Position = "lower" });
 			}
+			_bimale.Metadata.CrossGender = true;
+			_bifemale.Metadata.CrossGender = true;
 		}
 
 		[TestMethod]
@@ -288,6 +290,73 @@ namespace UnitTests
 		}
 
 		[TestMethod]
+		public void Stripped_Extra_Opponent()
+		{
+			Case c = new Case("stripped");
+			c.Stages.Add(1);
+			Assert.AreEqual("opponent_stripped", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Minor_Opponent()
+		{
+			Case c = new Case("stripped");
+			c.Stages.Add(2);
+			Assert.AreEqual("opponent_stripped", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Major_Opponent()
+		{
+			Case c = new Case("stripped");
+			c.Stages.Add(3);
+			Assert.AreEqual("opponent_stripped", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Upper_Opponent()
+		{
+			Case c = new Case("stripped");
+			c.Stages.Add(4);
+			Assert.AreEqual("opponent_chest_is_visible", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Opponent()
+		{
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("opponent_crotch_is_visible", c.GetResponseTag(_bifemale, _male));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Large_Opponent()
+		{
+			_bimale.Size = "large";
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("opponent_crotch_is_visible", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Medium_Opponent()
+		{
+			_bimale.Size = "medium";
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("opponent_crotch_is_visible", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Small_Opponent()
+		{
+			_bimale.Size = "small";
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("opponent_crotch_is_visible", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
 		public void MustMasturbateFirst_Female()
 		{
 			Case c = new Case("must_masturbate_first");
@@ -313,6 +382,13 @@ namespace UnitTests
 		{
 			Case c = new Case("masturbating");
 			Assert.AreEqual("female_masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Heavy_Masturbating_Female()
+		{
+			Case c = new Case("heavy_masturbating");
+			Assert.AreEqual("female_heavy_masturbating", c.GetResponseTag(_female, _male));
 		}
 
 		[TestMethod]
@@ -351,10 +427,59 @@ namespace UnitTests
 		}
 
 		[TestMethod]
+		public void Heavy_Masturbating_Male()
+		{
+			Case c = new Case("heavy_masturbating");
+			Assert.AreEqual("male_heavy_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
 		public void Finished_Masturbating_Male()
 		{
 			Case c = new Case("finished_masturbating");
 			Assert.AreEqual("male_finished_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void MustMasturbateFirst_Opponent()
+		{
+			Case c = new Case("must_masturbate_first");
+			Assert.AreEqual("opponent_lost", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void MustMasturbate_Opponent()
+		{
+			Case c = new Case("must_masturbate");
+			Assert.AreEqual("opponent_lost", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void StartMasturbating_Opponent()
+		{
+			Case c = new Case("start_masturbating");
+			Assert.AreEqual("opponent_start_masturbating", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void Masturbating_Opponent()
+		{
+			Case c = new Case("masturbating");
+			Assert.AreEqual("opponent_masturbating", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void Heavy_Masturbating_Opponent()
+		{
+			Case c = new Case("heavy_masturbating");
+			Assert.AreEqual("opponent_heavy_masturbating", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void Finished_Masturbating_Opponent()
+		{
+			Case c = new Case("finished_masturbating");
+			Assert.AreEqual("opponent_finished_masturbating", c.GetResponseTag(_bimale, _female));
 		}
 
 		[TestMethod]
@@ -606,6 +731,36 @@ namespace UnitTests
 		}
 
 		[TestMethod]
+		public void Female_ChestIsVisible_Other()
+		{
+			Case c = new Case("female_chest_is_visible");
+			Assert.AreEqual("female_chest_is_visible", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Female_ChestIsVisible_Target()
+		{
+			Case c = new Case("female_chest_is_visible");
+			c.Target = _female.FolderName;
+			Assert.AreEqual("stripped", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_ChestIsVisible_Other()
+		{
+			Case c = new Case("opponent_chest_is_visible");
+			Assert.AreEqual("opponent_chest_is_visible", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Opponent_ChestIsVisible_Target()
+		{
+			Case c = new Case("opponent_chest_is_visible");
+			c.Target = _male.FolderName;
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
 		public void Male_CrotchWillBeVisible_Other()
 		{
 			Case c = new Case("male_crotch_will_be_visible");
@@ -631,6 +786,21 @@ namespace UnitTests
 		public void Female_CrotchWillBeVisible_Target()
 		{
 			Case c = new Case("female_crotch_will_be_visible");
+			c.Target = _female.FolderName;
+			Assert.AreEqual("stripping", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_CrotchWillBeVisible_Other()
+		{
+			Case c = new Case("opponent_crotch_will_be_visible");
+			Assert.AreEqual("opponent_crotch_will_be_visible", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Opponent_CrotchWillBeVisible_Target()
+		{
+			Case c = new Case("opponent_crotch_will_be_visible");
 			c.Target = _female.FolderName;
 			Assert.AreEqual("stripping", c.GetResponseTag(_male, _female));
 		}
@@ -699,6 +869,36 @@ namespace UnitTests
 		}
 
 		[TestMethod]
+		public void Male_CrotchIsVisible_Other()
+		{
+			Case c = new Case("male_crotch_is_visible");
+			Assert.AreEqual("male_crotch_is_visible", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Male_CrotchIsVisible_Target()
+		{
+			Case c = new Case("male_crotch_is_visible");
+			c.Target = _male.FolderName;
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Opponent_CrotchIsVisible_Other()
+		{
+			Case c = new Case("opponent_crotch_is_visible");
+			Assert.AreEqual("opponent_crotch_is_visible", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Opponent_CrotchIsVisible_Target()
+		{
+			Case c = new Case("opponent_crotch_is_visible");
+			c.Target = _male.FolderName;
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
 		public void Male_MustMasturbate_Other()
 		{
 			Case c = new Case("male_must_masturbate");
@@ -759,6 +959,21 @@ namespace UnitTests
 		}
 
 		[TestMethod]
+		public void Opponent_StartMasturbating_Other()
+		{
+			Case c = new Case("opponent_start_masturbating");
+			Assert.AreEqual("opponent_start_masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Opponent_StartMasturbating_Target()
+		{
+			Case c = new Case("opponent_start_masturbating");
+			c.Target = _male.FolderName;
+			Assert.AreEqual("start_masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
 		public void Male_Masturbating_Other()
 		{
 			Case c = new Case("male_masturbating");
@@ -789,6 +1004,66 @@ namespace UnitTests
 		}
 
 		[TestMethod]
+		public void Opponent_Masturbating_Other()
+		{
+			Case c = new Case("opponent_masturbating");
+			Assert.AreEqual("opponent_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_Masturbating_Target()
+		{
+			Case c = new Case("opponent_masturbating");
+			c.Target = _female.FolderName;
+			Assert.AreEqual("masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Male_Heavy_Masturbating_Other()
+		{
+			Case c = new Case("male_heavy_masturbating");
+			Assert.AreEqual("male_heavy_masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Male_Heavy_Masturbating_Target()
+		{
+			Case c = new Case("male_heavy_masturbating");
+			c.Target = _male.FolderName;
+			Assert.AreEqual("heavy_masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Female_Heavy_Masturbating_Other()
+		{
+			Case c = new Case("female_heavy_masturbating");
+			Assert.AreEqual("female_heavy_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Female_Heavy_Masturbating_Target()
+		{
+			Case c = new Case("female_heavy_masturbating");
+			c.Target = _female.FolderName;
+			Assert.AreEqual("heavy_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_Heavy_Masturbating_Other()
+		{
+			Case c = new Case("opponent_heavy_masturbating");
+			Assert.AreEqual("opponent_heavy_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_Heavy_Masturbating_Target()
+		{
+			Case c = new Case("opponent_heavy_masturbating");
+			c.Target = _female.FolderName;
+			Assert.AreEqual("heavy_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
 		public void Male_Finished_Masturbating_Other()
 		{
 			Case c = new Case("male_finished_masturbating");
@@ -814,6 +1089,21 @@ namespace UnitTests
 		public void Female_Finished_Masturbating_Target()
 		{
 			Case c = new Case("female_finished_masturbating");
+			c.Target = _female.FolderName;
+			Assert.AreEqual("finished_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_Finished_Masturbating_Other()
+		{
+			Case c = new Case("opponent_finished_masturbating");
+			Assert.AreEqual("opponent_finished_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_Finished_Masturbating_Target()
+		{
+			Case c = new Case("opponent_finished_masturbating");
 			c.Target = _female.FolderName;
 			Assert.AreEqual("finished_masturbating", c.GetResponseTag(_male, _female));
 		}
@@ -926,7 +1216,7 @@ namespace UnitTests
 			c.AlsoPlaying = "other";
 			Case response = c.CreateResponse(_male, _female);
 			Assert.IsTrue(response.Conditions.Count == 1);
-			Assert.AreEqual("other", response.Conditions[0].Filter);
+			Assert.AreEqual("other", response.Conditions[0].FilterTag);
 		}
 
 		[TestMethod]
@@ -936,7 +1226,7 @@ namespace UnitTests
 			c.AlsoPlaying = "other";
 			Case response = c.CreateResponse(_male, _female);
 			Assert.IsTrue(response.Conditions.Count == 1);
-			Assert.AreEqual("other", response.Conditions[0].Filter);
+			Assert.AreEqual("other", response.Conditions[0].FilterTag);
 		}
 
 		[TestMethod]
@@ -947,7 +1237,7 @@ namespace UnitTests
 			c.AlsoPlaying = "other";
 			Case response = c.CreateResponse(_male, _female);
 			Assert.IsTrue(response.Conditions.Count == 1);
-			Assert.AreEqual("other", response.Conditions[0].Filter);
+			Assert.AreEqual("other", response.Conditions[0].FilterTag);
 		}
 
 		[TestMethod]
@@ -958,7 +1248,7 @@ namespace UnitTests
 			c.AlsoPlaying = "other2";
 			Case response = c.CreateResponse(_male, _female);
 			Assert.IsTrue(response.Conditions.Count == 1);
-			Assert.AreEqual("other2", response.Conditions[0].Filter);
+			Assert.AreEqual("other2", response.Conditions[0].FilterTag);
 		}
 
 		[TestMethod]

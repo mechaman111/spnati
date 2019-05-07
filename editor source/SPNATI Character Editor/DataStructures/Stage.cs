@@ -78,9 +78,9 @@ namespace SPNATI_Character_Editor
 				sb.Clear();
 				sb.Append("count-");
 				//note: make_xml's create_case_xml() only addds the filter part, so it's still ambiguous for other conditions.
-				if (!string.IsNullOrEmpty(condition.Filter))
+				if (!string.IsNullOrEmpty(condition.FilterTag))
 				{
-					sb.Append(condition.Filter);
+					sb.Append(condition.FilterTag);
 				}
 				if (!string.IsNullOrEmpty(condition.Gender))
 				{

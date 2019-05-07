@@ -1,10 +1,12 @@
-﻿using Desktop.Providers;
+﻿using Desktop.Forms;
+using Desktop.Providers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Desktop.CommonControls
@@ -17,6 +19,10 @@ namespace Desktop.CommonControls
 		public object Context;
 
 		public event PropertyChangedEventHandler PropertyChanged;
+		public event EventHandler<MacroArgs> EditingMacro;
+		public event EventHandler<MacroArgs> MacroChanged;
+
+		private int _pendingDataChanges = 0;
 
 		private object _data;
 		/// <summary>
@@ -35,8 +41,47 @@ namespace Desktop.CommonControls
 				}
 				recAdd.Text = "";
 				BuildEditControls();
+
+				if (_data != null && !HideSpeedButtons)
+				{
+					AddMacros();
+				}
 			}
 		}
+
+		private object _pendingData;
+		/// <summary>
+		/// Sets the Data object after a brief delay, so that only the last request in that amount of time is honored
+		/// </summary>
+		/// <param name="data"></param>
+		public async void SetDataAsync(object data, object previewData)
+		{
+			_pendingData = data;
+			_pendingDataChanges++;
+			await Task.Delay(1);
+			_pendingDataChanges--;
+			if (_pendingDataChanges == 0)
+			{
+				if (Data != _pendingData)
+				{
+					PreviewData = previewData;
+					Data = _pendingData;
+				}
+			}
+		}
+
+		private object _previewData;
+		/// <summary>
+		/// Secondary data that displays on edit controls that don't have the primary data defined.
+		/// This does not come into effect automatically; Data must be set after setting this.
+		/// </summary>
+		public object PreviewData
+		{
+			get { return _previewData; }
+			set { _previewData = value; }
+		}
+
+		public UndoManager UndoManager { get; set; }
 
 		/// <summary>
 		/// Filter for hiding records from the record select
@@ -75,6 +120,8 @@ namespace Desktop.CommonControls
 				}
 			}
 		}
+
+		public bool RunInitialAddEvents { get; set; }
 
 		private bool _allowHelp = false;
 		public bool AllowHelp { get { return _allowHelp; } set { _allowHelp = value; } }
@@ -125,6 +172,22 @@ namespace Desktop.CommonControls
 				PositionControls();
 			}
 		}
+
+		private ToolStripMenuItem _macroMenu;
+		private bool _allowMacros = false;
+		public bool AllowMacros
+		{
+			get { return _allowMacros; }
+			set
+			{
+				_allowMacros = value;
+			}
+		}
+
+		/// <summary>
+		/// When set, switching Data will keep controls around and simply rebind them instead of building the list from scratch. Useful for contexts where the same controls get used for each Data object
+		/// </summary>
+		public bool PreserveControls { get; set; }
 
 		private void PositionControls()
 		{
@@ -202,13 +265,13 @@ namespace Desktop.CommonControls
 			}
 		}
 
-		private void recAdd_RecordChanged(object sender, IRecord record)
+		private void recAdd_RecordChanged(object sender, RecordEventArgs e)
 		{
 			if (Data == null)
 			{
 				return;
 			}
-			PropertyRecord result = record as PropertyRecord;
+			PropertyRecord result = e.Record as PropertyRecord;
 			if (result != null)
 			{
 				AddControl(result);
@@ -217,9 +280,36 @@ namespace Desktop.CommonControls
 
 		private void AddControl(PropertyRecord result)
 		{
-			PropertyEditControl ctl = EditRecord(result, -1);
+			AddControl(result, null);
+		}
+		private void AddControl(PropertyRecord result, PropertyMacro macro)
+		{
+			bool newlyAdded;
+			PropertyEditControl ctl = EditRecord(result, -1, out newlyAdded);
 			ctl.Focus(); //jump to the control for immediate editing
 			recAdd.Record = null;
+			if (macro != null)
+			{
+				List<string> values = new List<string>();
+				foreach (string v in macro.Values)
+				{
+					string replacedValue = v;
+					if (macro.VariableMap != null)
+					{
+						foreach (KeyValuePair<string, string> kvp in macro.VariableMap)
+						{
+							replacedValue = replacedValue.Replace(kvp.Key, kvp.Value);
+						}
+					}
+					values.Add(replacedValue);
+				}
+				ctl.ApplyMacro(values);
+				newlyAdded = false;
+			}
+			if (newlyAdded && RunInitialAddEvents)
+			{
+				ctl.OnInitialAdd();
+			}
 		}
 
 		private void focusOnAdd_Click(object sender, EventArgs e)
@@ -245,20 +335,30 @@ namespace Desktop.CommonControls
 			this.SuspendDrawing();
 			try
 			{
+				if (!PreserveControls || Data == null)
+				{
+					foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> kvp in _rows)
+					{
+						foreach (PropertyTableRow row in kvp.Value.Values)
+						{
+							DisposeRow(row);
+						}
+					}
+					_rows.Clear();
+				}
 
+				if (Data == null) { return; }
+
+				HashSet<PropertyRecord> controlsToAdd = new HashSet<PropertyRecord>();
+				HashSet<PropertyRecord> controlsToRemove = new HashSet<PropertyRecord>();
+				HashSet<PropertyRecord> controlsToRebind = new HashSet<PropertyRecord>();
 				foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> kvp in _rows)
 				{
 					foreach (PropertyTableRow row in kvp.Value.Values)
 					{
-						DisposeRow(row);
+						controlsToRemove.Add(row.Record);
 					}
 				}
-				_rows.Clear();
-
-				if (Data == null) { return; }
-
-				bool addDefaults = true;
-				List<PropertyEditControl> defaultRows = new List<PropertyEditControl>();
 
 				SortedDictionary<string, List<PropertyRecord>> groups = new SortedDictionary<string, List<PropertyRecord>>();
 				foreach (PropertyRecord editControl in PropertyProvider.GetEditControls(Data.GetType()))
@@ -282,8 +382,6 @@ namespace Desktop.CommonControls
 					{
 						required = RequiredFilter(editControl);
 					}
-					bool isDefault = editControl.Default;
-					bool hasData = true;
 
 					MemberInfo member = editControl.Member;
 					object value = member.GetValue(Data);
@@ -292,15 +390,53 @@ namespace Desktop.CommonControls
 						memberType == typeof(bool) && (bool)value == false ||
 						value == null)
 					{
-						hasData = false;
 						bool favorited = _favoriteRecords.Contains(editControl);
-						if (!favorited && !required && (!addDefaults || !isDefault))
+						if (!favorited && !required)
 						{
-							//skip the field if it has no value and is not favorited, required, or default
+							//skip the field if it has no value and is not favorited or required
 							continue;
 						}
 					}
 
+					if (typeof(IList).IsAssignableFrom(memberType))
+					{
+						//always remove and readd List type controls rather than going down into individual indices
+						controlsToAdd.Add(editControl);
+					}
+					else
+					{
+						if (!controlsToRemove.Contains(editControl))
+						{
+							controlsToAdd.Add(editControl);
+						}
+						else
+						{
+							controlsToRebind.Add(editControl);
+							controlsToRemove.Remove(editControl);
+						}
+					}
+				}
+
+				BuildSpeedMenus(groups);
+
+				//remove any old controls
+				foreach (PropertyRecord record in controlsToRemove)
+				{
+					Dictionary<int, PropertyTableRow> rows = _rows[record.Property];
+					foreach (KeyValuePair<int, PropertyTableRow> kvp in rows)
+					{
+						DisposeRow(kvp.Value);
+					}
+					_rows.Remove(record.Property);
+				}
+
+				bool newlyAdded;
+				//add or rebind the controls
+				foreach (PropertyRecord editControl in controlsToAdd)
+				{
+					MemberInfo member = editControl.Member;
+					object value = member.GetValue(Data);
+					Type memberType = member.GetDataType();
 					if (value != null && typeof(IList).IsAssignableFrom(memberType))
 					{
 						IList list = value as IList;
@@ -310,37 +446,19 @@ namespace Desktop.CommonControls
 						}
 						for (int i = 0; i < list.Count; i++)
 						{
-							EditRecord(editControl, i);
+							EditRecord(editControl, i, out newlyAdded);
 						}
 					}
 					else
 					{
-						if (!required && hasData)
-						{
-							addDefaults = false;
-
-							//found something not required, so get rid of any default fields added
-							foreach (PropertyEditControl defaultCtl in defaultRows)
-							{
-								PropertyTableRow row = _rows.Get(defaultCtl.Property, defaultCtl.Index);
-								RemoveRow(row);
-							}
-
-							if (isDefault && !hasData)
-							{
-								continue;
-							}
-						}
-
-						PropertyEditControl ctl = EditRecord(editControl, -1);
-						if (isDefault && !hasData)
-						{
-							defaultRows.Add(ctl);
-						}
+						EditRecord(editControl, -1, out newlyAdded);
 					}
 				}
-
-				BuildSpeedMenus(groups);
+				foreach (PropertyRecord editControl in controlsToRebind)
+				{
+					PropertyEditControl ctl = EditRecord(editControl, -1, out newlyAdded);
+					ctl.Rebind(Data, PreviewData, Context);
+				}
 			}
 			finally
 			{
@@ -369,8 +487,9 @@ namespace Desktop.CommonControls
 			}
 		}
 
-		private PropertyEditControl EditRecord(PropertyRecord result, int index)
+		private PropertyEditControl EditRecord(PropertyRecord result, int index, out bool newControl)
 		{
+			newControl = false;
 			PropertyEditControl ctl = null;
 			PropertyTableRow row = _rows.Get(result.Property, index);
 			if (row != null)
@@ -425,11 +544,13 @@ namespace Desktop.CommonControls
 					}
 				}
 
+				newControl = true;
 				ctl = Activator.CreateInstance(result.EditControlType) as PropertyEditControl;
 				ctl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 				ctl.SetParameters(result.Attribute);
+				ctl.RequireHeight += PropertyEditControl_RequireHeight;
 
-				ctl.SetData(Data, result.Property, index, Context);
+				ctl.SetData(Data, result.Property, index, Context, UndoManager, _previewData);
 
 				row = new PropertyTableRow();
 				if (result.RowHeight > 0)
@@ -439,6 +560,7 @@ namespace Desktop.CommonControls
 				row.AllowFavorites = AllowFavorites;
 				row.AllowDelete = AllowDelete;
 				row.AllowHelp = AllowHelp;
+				row.EditingMacro += Row_EditingMacro;
 				if (RowHeaderWidth > 0)
 				{
 					row.HeaderWidth = RowHeaderWidth;
@@ -452,6 +574,8 @@ namespace Desktop.CommonControls
 				row.RemoveCaption = RemoveCaption;
 				row.Set(ctl, result);
 				_rows.Set(result.Property, index, row);
+
+				ctl.OnAddedToRow();
 
 				pnlRecords.Controls.Add(row);
 				pnlRecords.Controls.SetChildIndex(row, 0);
@@ -477,12 +601,49 @@ namespace Desktop.CommonControls
 			return ctl;
 		}
 
+		/// <summary>
+		/// Raised when a control needs a specific height
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="height"></param>
+		private void PropertyEditControl_RequireHeight(object sender, int height)
+		{
+			PropertyEditControl ctl = sender as PropertyEditControl;
+			PropertyTableRow row = _rows.Get(ctl.Property, ctl.Index);
+			if (row != null)
+			{
+				row.Height = height + row.Padding.Top + row.Padding.Bottom + ctl.Margin.Top + ctl.Margin.Bottom;
+			}
+		}
+
+		private void Row_EditingMacro(object sender, MacroArgs args)
+		{
+			EditingMacro?.Invoke(this, args);
+			if (args.Editor != null)
+			{
+				MacroEditor form = new MacroEditor();
+				form.SetMacro(args.Macro, args.Editor);
+				if (form.ShowDialog() == DialogResult.OK)
+				{
+					AddMacros();
+					MacroChanged?.Invoke(this, new MacroArgs(args.Macro, false));
+				}
+				else if (args.IsNew)
+				{
+					MacroProvider provider = new MacroProvider();
+					provider.Remove(Data.GetType(), args.Macro);
+				}
+			}
+		}
+
 		private void DisposeRow(PropertyTableRow row)
 		{
 			pnlRecords.Controls.Remove(row);
 			row.PropertyChanged -= Row_PropertyChanged;
 			row.RemoveRow -= Row_RemoveRow;
 			row.ToggleFavorite -= Row_ToggleFavorite;
+			row.EditingMacro -= Row_EditingMacro;
+			row.EditControl.RequireHeight -= PropertyEditControl_RequireHeight;
 			row.Destroy();
 			row.Dispose();
 		}
@@ -617,7 +778,7 @@ namespace Desktop.CommonControls
 			}
 		}
 
-		public void AddSpeedButton(string group, string caption, Func<object, string> propertyCreator)
+		private ToolStripMenuItem GetOrAddGroupMenu(string group)
 		{
 			ToolStripMenuItem groupMenu = null;
 			for (int i = 0; i < menuSpeedButtons.Items.Count; i++)
@@ -634,6 +795,12 @@ namespace Desktop.CommonControls
 				groupMenu = new ToolStripMenuItem(group);
 				menuSpeedButtons.Items.Add(groupMenu);
 			}
+			return groupMenu;
+		}
+
+		public void AddSpeedButton(string group, string caption, Func<object, string> propertyCreator)
+		{
+			ToolStripMenuItem groupMenu = GetOrAddGroupMenu(group);
 
 			ToolStripMenuItem item = new ToolStripMenuItem(caption);
 			item.Tag = propertyCreator;
@@ -651,6 +818,104 @@ namespace Desktop.CommonControls
 			{
 				AddControl(record);
 			}
+		}
+
+		public void AddMacros()
+		{
+			if (Data == null) { return; }
+			if (HideSpeedButtons || !AllowMacros)
+			{
+				return;
+			}
+			if (_macroMenu != null)
+			{
+				_macroMenu.DropDownItems.Clear();
+			}
+
+			MacroProvider provider = new MacroProvider();
+			provider.SetContext(Data.GetType());
+			foreach (Macro macro in provider.GetRecords(""))
+			{
+				AddMacro(macro);
+			}
+		}
+
+		private void AddMacro(Macro macro)
+		{
+			//if any properties are filtered out, filter out the whole macro
+			if (RecordFilter != null)
+			{
+				foreach (PropertyMacro property in macro.Properties)
+				{
+					PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property.Property);
+					if (!RecordFilter(record))
+					{
+						return;
+					}
+				}
+			}
+
+			ToolStripMenuItem groupMenu = GetOrAddGroupMenu("Macros");
+			_macroMenu = groupMenu;
+			ToolStripMenuItem item = new ToolStripMenuItem(macro.Name);
+			item.Tag = macro;
+			item.Click += MacroButtonClick;
+			groupMenu.DropDownItems.Add(item);
+		}
+
+		private void MacroButtonClick(object sender, EventArgs e)
+		{
+			ToolStripMenuItem item = sender as ToolStripMenuItem;
+			Macro macro = item.Tag as Macro;
+			HashSet<string> vars = macro.GetVariables();
+			Dictionary<string, string> varMap = new Dictionary<string, string>();
+			if (vars.Count > 0)
+			{
+				VariableMapper mapper = new VariableMapper(vars);
+				if (mapper.ShowDialog() == DialogResult.Cancel)
+				{
+					return;
+				}
+				varMap = mapper.Map;
+			}
+			ApplyMacro(macro, varMap);
+		}
+
+		/// <summary>
+		/// Applies a macro to the data
+		/// </summary>
+		/// <param name="macro"></param>
+		internal void ApplyMacro(Macro macro, Dictionary<string, string> varMap)
+		{
+			foreach (PropertyMacro application in macro.Properties)
+			{
+				application.VariableMap = varMap;
+				string property = application.Property;
+				PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property);
+				if (record != null)
+				{
+					AddControl(record, application);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Converts the current properties into a macro
+		/// </summary>
+		/// <returns></returns>
+		public Macro CreateMacro()
+		{
+			Macro macro = new Macro();
+			foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> row in _rows)
+			{
+				foreach (KeyValuePair<int, PropertyTableRow> kvp in row.Value)
+				{
+					List<string> values = new List<string>();
+					kvp.Value.EditControl.BuildMacro(values);
+					macro.AddProperty(row.Key, kvp.Key, values);
+				}
+			}
+			return macro;
 		}
 	}
 }

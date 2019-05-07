@@ -96,55 +96,55 @@ function getClothingTrigger (player, clothing, removed) {
 			}))) { // There is another article left covering this part of the body
 			if (gender == eGender.MALE) {
 				if (removed) {
-					return MALE_REMOVED_MAJOR;
+					return [MALE_REMOVED_MAJOR];
 				} else {
-					return MALE_REMOVING_MAJOR;
+					return [MALE_REMOVING_MAJOR];
 				}
 			} else if (gender == eGender.FEMALE) {
 				if (removed) {
-					return FEMALE_REMOVED_MAJOR;
+					return [FEMALE_REMOVED_MAJOR];
 				} else {
-					return FEMALE_REMOVING_MAJOR;
+					return [FEMALE_REMOVING_MAJOR];
 				}
 			}
 		} else if (pos == UPPER_ARTICLE) {
 			if (gender == eGender.MALE) {
 				if (removed) {
-					return MALE_CHEST_IS_VISIBLE;
+					return [MALE_CHEST_IS_VISIBLE, OPPONENT_CHEST_IS_VISIBLE];
 				} else {
-					return MALE_CHEST_WILL_BE_VISIBLE;
+					return [MALE_CHEST_WILL_BE_VISIBLE, OPPONENT_CHEST_WILL_BE_VISIBLE];
 				}
 			} else if (gender == eGender.FEMALE) {
 				if (removed) {
 					if (size == eSize.LARGE) {
-						return FEMALE_LARGE_CHEST_IS_VISIBLE;
+						return [FEMALE_LARGE_CHEST_IS_VISIBLE, FEMALE_CHEST_IS_VISIBLE, OPPONENT_CHEST_IS_VISIBLE];
 					} else if (size == eSize.SMALL) {
-						return FEMALE_SMALL_CHEST_IS_VISIBLE;
+						return [FEMALE_SMALL_CHEST_IS_VISIBLE, FEMALE_CHEST_IS_VISIBLE, OPPONENT_CHEST_IS_VISIBLE];
 					} else {
-						return FEMALE_MEDIUM_CHEST_IS_VISIBLE;
+						return [FEMALE_MEDIUM_CHEST_IS_VISIBLE, FEMALE_CHEST_IS_VISIBLE, OPPONENT_CHEST_IS_VISIBLE];
 					}
 				} else {
-					return FEMALE_CHEST_WILL_BE_VISIBLE;
+					return [FEMALE_CHEST_WILL_BE_VISIBLE, OPPONENT_CHEST_WILL_BE_VISIBLE];
 				}
 			}
 		} else if (pos == LOWER_ARTICLE) {
 			if (gender == eGender.MALE) {
 				if (removed) {
 					if (size == eSize.LARGE) {
-						return MALE_LARGE_CROTCH_IS_VISIBLE;
+						return [MALE_LARGE_CROTCH_IS_VISIBLE, MALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
 					} else if (size == eSize.SMALL) {
-						return MALE_SMALL_CROTCH_IS_VISIBLE;
+						return [MALE_SMALL_CROTCH_IS_VISIBLE, MALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
 					} else {
-						return MALE_MEDIUM_CROTCH_IS_VISIBLE;
+						return [MALE_MEDIUM_CROTCH_IS_VISIBLE, MALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
 					}
 				} else {
-					return MALE_CROTCH_WILL_BE_VISIBLE;
+					return [MALE_CROTCH_WILL_BE_VISIBLE, OPPONENT_CROTCH_WILL_BE_VISIBLE];
 				}
 			} else if (gender == eGender.FEMALE) {
 				if (removed) {
-					return FEMALE_CROTCH_IS_VISIBLE;
+					return [FEMALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
 				} else {
-					return FEMALE_CROTCH_WILL_BE_VISIBLE;
+					return [FEMALE_CROTCH_WILL_BE_VISIBLE, OPPONENT_CROTCH_WILL_BE_VISIBLE];
 				}
 			}
 		}
@@ -153,15 +153,15 @@ function getClothingTrigger (player, clothing, removed) {
 	else if (type == MINOR_ARTICLE) {
 		if (gender == eGender.MALE) {
 			if (removed) {
-				return MALE_REMOVED_MINOR;
+				return [MALE_REMOVED_MINOR];
 			} else {
-				return MALE_REMOVING_MINOR;
+				return [MALE_REMOVING_MINOR];
 			}
 		} else if (gender == eGender.FEMALE) {
 			if (removed) {
-				return FEMALE_REMOVED_MINOR;
+				return [FEMALE_REMOVED_MINOR];
 			} else {
-				return FEMALE_REMOVING_MINOR;
+				return [FEMALE_REMOVING_MINOR];
 			}
 		}
 	}
@@ -169,15 +169,15 @@ function getClothingTrigger (player, clothing, removed) {
 	else {
 		if (gender == eGender.MALE) {
 			if (removed) {
-				return MALE_REMOVED_ACCESSORY;
+				return [MALE_REMOVED_ACCESSORY];
 			} else {
-				return MALE_REMOVING_ACCESSORY;
+				return [MALE_REMOVING_ACCESSORY];
 			}
 		} else if (gender == eGender.FEMALE) {
 			if (removed) {
-				return FEMALE_REMOVED_ACCESSORY;
+				return [FEMALE_REMOVED_ACCESSORY];
 			} else {
-				return FEMALE_REMOVING_ACCESSORY;
+				return [FEMALE_REMOVING_ACCESSORY];
 			}
 		}
 	}
@@ -228,15 +228,15 @@ function playerMustStrip (player) {
 			if (clothing.length == 1 && clothing[0].type == IMPORTANT_ARTICLE) {
 				if (players[HUMAN_PLAYER].gender == eGender.MALE) {
 					if (clothing[0].position == LOWER_ARTICLE) {
-						trigger = MALE_CROTCH_WILL_BE_VISIBLE;
+						trigger = [[MALE_CROTCH_WILL_BE_VISIBLE, OPPONENT_CROTCH_WILL_BE_VISIBLE]];
 					} else {
-						trigger = MALE_CHEST_WILL_BE_VISIBLE;
+						trigger = [[MALE_CHEST_WILL_BE_VISIBLE, OPPONENT_CHEST_WILL_BE_VISIBLE]];
 					}
 				} else {
 					if (clothing[0].position == LOWER_ARTICLE) {
-						trigger = FEMALE_CROTCH_WILL_BE_VISIBLE;
+						trigger = [[FEMALE_CROTCH_WILL_BE_VISIBLE, OPPONENT_CROTCH_WILL_BE_VISIBLE]];
 					} else {
-						trigger = FEMALE_CHEST_WILL_BE_VISIBLE;
+						trigger = [[FEMALE_CHEST_WILL_BE_VISIBLE, OPPONENT_CHEST_WILL_BE_VISIBLE]];
 					}
 				}
 				players[HUMAN_PLAYER].removedClothing = clothing[0];
@@ -293,8 +293,9 @@ function prepareToStripPlayer (player) {
         var toBeRemovedClothing = players[player].clothing[players[player].clothing.length - 1];
         players[player].removedClothing = toBeRemovedClothing;
         var dialogueTrigger = getClothingTrigger(players[player], toBeRemovedClothing, false);
+        dialogueTrigger.push(OPPONENT_STRIPPING);
 
-        updateAllBehaviours(player, PLAYER_STRIPPING, [[dialogueTrigger, OPPONENT_STRIPPING]]);
+        updateAllBehaviours(player, PLAYER_STRIPPING, [dialogueTrigger]);
         players[player].preloadStageImages(players[player].stage + 1);
     }
 	
@@ -393,7 +394,8 @@ function closeStrippingModal (id) {
         players[HUMAN_PLAYER].removedClothing = removedClothing;
 
         /* figure out if it should be important */
-        if ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(removedClothing.position) >= 0) {
+        if ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(removedClothing.position) >= 0
+            && (removedClothing.type == IMPORTANT_ARTICLE || removedClothing.type == MAJOR_ARTICLE)) {
             var otherClothing;
             for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
                 if (players[HUMAN_PLAYER].clothing[i].position === removedClothing.position
@@ -442,7 +444,8 @@ function closeStrippingModal (id) {
         }
             
         /* update behaviour */
-        updateAllBehaviours(HUMAN_PLAYER, null, [[dialogueTrigger, OPPONENT_STRIPPED]]);
+        dialogueTrigger.push(OPPONENT_STRIPPED);
+        updateAllBehaviours(HUMAN_PLAYER, null, [dialogueTrigger]);
 
 		saveAllTranscriptEntries();
 
@@ -486,11 +489,11 @@ function stripAIPlayer (player) {
 
 	players[player].stage++;
 	players[player].timeInStage = -1;
-	players[player].updateLabel();
-	players[player].updateFolder();
+	players[player].stageChangeUpdate();
 
 	/* update behaviour */
-    updateAllBehaviours(player, PLAYER_STRIPPED, [[dialogueTrigger, OPPONENT_STRIPPED]]);
+    dialogueTrigger.push(OPPONENT_STRIPPED);
+    updateAllBehaviours(player, PLAYER_STRIPPED, [dialogueTrigger]);
 	
 	saveAllTranscriptEntries();
 }

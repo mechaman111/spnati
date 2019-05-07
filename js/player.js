@@ -28,9 +28,11 @@ var eSize = {
  * An enumeration for player intelligence.
  **/
 var eIntelligence = {
+    THROW  : "throw",
     BAD  : "bad",
     AVERAGE : "average",
-    GOOD  : "good"
+    GOOD  : "good",
+    BEST  : "best"
 };
 
 

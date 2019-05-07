@@ -109,6 +109,13 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public static string ExtractConditionPieces(string marker, out MarkerOperator op, out string value, out bool perTarget)
 		{
+			if (string.IsNullOrEmpty(marker))
+			{
+				value = "";
+				perTarget = false;
+				op = MarkerOperator.Equals;
+				return marker;
+			}
 			Match match = Regex.Match(marker, @"([\w\-\.]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?");
 			op = ToOperator(match.Groups[4].ToString());
 			value = match.Groups[5]?.ToString();
@@ -225,6 +232,44 @@ namespace SPNATI_Character_Editor
 		public int CompareTo(IRecord other)
 		{
 			return Name.CompareTo(other.Name);
+		}
+
+		public static bool CheckMarker(string condition, Dictionary<string, string> markers)
+		{
+			MarkerOperator op;
+			string value;
+			bool perTarget;
+			string marker = ExtractConditionPieces(condition, out op, out value, out perTarget);
+			int targetIntValue;
+			if (string.IsNullOrEmpty(value))
+			{
+				value = "1";
+			}
+			int.TryParse(value, out targetIntValue);
+
+			string setValue = markers.Get(marker);
+			if (string.IsNullOrEmpty(setValue))
+			{
+				setValue = "0";
+			}
+			int intValue;
+			int.TryParse(setValue, out intValue);
+			switch (op)
+			{
+				case MarkerOperator.Equals:
+					return setValue == value;
+				case MarkerOperator.GreaterThan:
+					return intValue > targetIntValue;
+				case MarkerOperator.GreaterThanOrEqual:
+					return intValue >= targetIntValue;
+				case MarkerOperator.LessThan:
+					return intValue < targetIntValue;
+				case MarkerOperator.LessThanOrEqual:
+					return intValue <= targetIntValue;
+				case MarkerOperator.NotEqual:
+					return setValue != value;
+			}
+			return true;
 		}
 	}
 

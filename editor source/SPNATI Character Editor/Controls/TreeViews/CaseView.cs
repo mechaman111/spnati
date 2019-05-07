@@ -30,8 +30,7 @@ namespace SPNATI_Character_Editor.Controls
 		private ContextMenuStrip splitMenu;
 		private Character _character;
 		private CharacterEditorData _editorData;
-		private TreeFilterMode _filterMode;
-		private string _filterKey;
+		private Func<Case, bool> _filter;
 		private bool _showHidden;
 
 		public void Initialize(TreeView tree, Character character)
@@ -86,21 +85,9 @@ namespace SPNATI_Character_Editor.Controls
 		private void CreateCaseNode(Case workingCase)
 		{
 			//Exclude cases depending on filters. These are just excluded from the UI. This has no bearing on the actual underlying data
-			switch (_filterMode)
+			if (_filter != null && !_filter(workingCase))
 			{
-				case TreeFilterMode.NonTargeted:
-					if (workingCase.HasFilters)
-						return;
-					break;
-				case TreeFilterMode.Targeted:
-					if (!workingCase.HasFilters)
-						return;
-					if (!string.IsNullOrEmpty(_filterKey))
-					{
-						if (workingCase.Target != _filterKey && workingCase.AlsoPlaying != _filterKey)
-							return;
-					}
-					break;
+				return;
 			}
 
 			string tag = workingCase.Tag;
@@ -162,7 +149,11 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				node.ForeColor = System.Drawing.Color.Gray;
 			}
-			else if (wrapper.Case.HasFilters)
+			else if (wrapper.Case.HasCollectible)
+			{
+				node.ForeColor = System.Drawing.Color.OrangeRed;
+			}
+			else if (wrapper.Case.HasConditions)
 			{
 				//Highlight targeted dialogue
 				node.ForeColor = System.Drawing.Color.Green;
@@ -234,18 +225,16 @@ namespace SPNATI_Character_Editor.Controls
 			node.Text = $"{sb.ToString()} - {wrapper.ToString()}";
 		}
 
-		public void SetFilter(TreeFilterMode mode, string filterKey)
+		public void SetFilter(Func<Case, bool> filter)
 		{
-			if (_filterMode == mode && _filterKey == filterKey) { return; }
-			_filterMode = mode;
-			_filterKey = filterKey;
+			_filter = filter;
 			BuildTree(_showHidden);
 		}
 
 		public void SelectNode(int stage, Case stageCase)
 		{
 			TreeNode node = _caseMap.Get(stageCase);
-			if(node != null)
+			if (node != null)
 			{
 				treeDialogue.SelectedNode = node;
 			}
@@ -267,7 +256,7 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 
-			return node.Case.Tag;
+			return node?.Case?.Tag;
 		}
 
 		public void ModifyCase(Case modifiedCase)

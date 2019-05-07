@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Desktop.CommonControls.PropertyControls
@@ -10,6 +11,24 @@ namespace Desktop.CommonControls.PropertyControls
 		public RecordControl()
 		{
 			InitializeComponent();
+		}
+
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				recField.RecordKey = values[0];
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			values.Add(recField.RecordKey ?? "");
+		}
+
+		public override void OnInitialAdd()
+		{
+			recField.DoSearch();
 		}
 
 		protected override void OnSetParameters(EditControlAttribute parameters)
@@ -70,7 +89,7 @@ namespace Desktop.CommonControls.PropertyControls
 			}
 		}
 
-		private void recField_RecordChanged(object sender, IRecord e)
+		private void recField_RecordChanged(object sender, RecordEventArgs e)
 		{
 			Save();
 		}

@@ -82,6 +82,7 @@ namespace SPNATI_Character_Editor.Forms
 
 		public void SetData(Dictionary<string, string> data)
 		{
+			if (data == null) { return; }
 			foreach (KeyValuePair<string, string> kvp in data)
 			{
 				string key = kvp.Key;
@@ -95,6 +96,12 @@ namespace SPNATI_Character_Editor.Forms
 					slider.Value = v;
 				}
 			}
+		}
+
+		public bool UseManualCode
+		{
+			get { return chkManual.Checked; }
+			set { chkManual.Checked = value; }
 		}
 
 		public Dictionary<string, string> GetData()

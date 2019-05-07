@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -36,9 +37,23 @@ namespace SPNATI_Character_Editor
 			lines.Add("timer=" + character.Stamina);
 			lines.Add("");
 			lines.Add("#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.");
-			foreach (string tag in character.Tags)
+			foreach (CharacterTag tag in character.Tags)
 			{
-				lines.Add("tag=" + tag);
+				List<string> attributes = new List<string>();
+				if (!string.IsNullOrEmpty(tag.From))
+				{
+					attributes.Add("from:" + tag.From);
+				}
+				if (!string.IsNullOrEmpty(tag.To))
+				{
+					attributes.Add("to:" + tag.To);
+				}
+				string lineData = tag.Tag;
+				if (attributes.Count > 0)
+				{
+					lineData += "," + string.Join(",", attributes);
+				}
+				lines.Add("tag=" + lineData);
 			}
 			lines.Add("");
 			lines.Add("#required for meta.xml");
@@ -108,7 +123,7 @@ namespace SPNATI_Character_Editor
 			Dictionary<Tuple<string, int>, HashSet<Case>> _stageMap = new Dictionary<Tuple<string, int>, HashSet<Case>>();
 			foreach (Case c in character.Behavior.GetWorkingCases())
 			{
-				if (c.HasFilters)
+				if (c.HasConditions)
 					continue;
 				foreach (int stage in c.Stages)
 				{
@@ -127,7 +142,7 @@ namespace SPNATI_Character_Editor
 			Dictionary<string, Case> defaultCases = new Dictionary<string, Case>();
 			foreach (Case c in character.Behavior.GetWorkingCases())
 			{
-				if (c.Stages.Count <= 1 || c.HasFilters)
+				if (c.Stages.Count <= 1 || c.HasConditions)
 					continue;
 
 				bool candidate = true;
@@ -175,6 +190,7 @@ namespace SPNATI_Character_Editor
 					{
 						Case stageCase = c.CopyConditions();
 						stageCase.Stages.Add(stage);
+						stageCase.Id = c.Id;
 						foreach (var line in c.Lines)
 						{
 							stageCase.Lines.Add(Behaviour.CreateStageSpecificLine(line, stage, character));
@@ -208,8 +224,8 @@ namespace SPNATI_Character_Editor
 						if (compare == 0)
 						{
 							//4th key: are there conditions?
-							int filters1 = c1.HasFilters ? 1 : 0;
-							int filters2 = c2.HasFilters ? 1 : 0;
+							int filters1 = c1.HasConditions ? 1 : 0;
+							int filters2 = c2.HasConditions ? 1 : 0;
 							compare = filters1.CompareTo(filters2);
 							if (compare == 0)
 							{
@@ -294,6 +310,10 @@ namespace SPNATI_Character_Editor
 				List<string> code = new List<string>();
 				code.Add(string.Format("{0}{1}", stagePrefix, outputCase.Tag));
 				code.AddRange(GetFilters(outputCase));
+				if (outputCase.Id > 0)
+				{
+					code.Add($"id:{outputCase.Id}");
+				}
 				string caseCode = string.Join(",", code);
 
 				foreach (var line in outputCase.Lines)
@@ -303,6 +323,14 @@ namespace SPNATI_Character_Editor
 					if (!string.IsNullOrEmpty(defaultLine.Marker))
 					{
 						lineCode += string.Format(",marker:{0}", defaultLine.Marker);
+					}
+					if (!string.IsNullOrEmpty(defaultLine.Direction))
+					{
+						lineCode += $",direction:{defaultLine.Direction}";
+					}
+					if (!string.IsNullOrEmpty(defaultLine.Location))
+					{
+						lineCode += $",location:{defaultLine.Location}";
 					}
 					if (!string.IsNullOrEmpty(defaultLine.Gender))
 					{
@@ -320,6 +348,22 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += $",set-size:{defaultLine.Size}";
 					}
+					if (!string.IsNullOrEmpty(defaultLine.CollectibleId))
+					{
+						lineCode += $",collectible:{defaultLine.CollectibleId}";
+					}
+					if (!string.IsNullOrEmpty(defaultLine.CollectibleValue))
+					{
+						lineCode += $",collectible-value:{defaultLine.CollectibleValue}";
+					}
+					if (defaultLine.IsMarkerPersistent)
+					{
+						lineCode += $",persist-marker:1";
+					}
+					if (defaultLine.Weight != 1)
+					{
+						lineCode += $",weight:{defaultLine.Weight.ToString(CultureInfo.InvariantCulture)}";
+					}
 					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~silent~" : defaultLine.Text;
 					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Image, text));
 				}
@@ -329,128 +373,209 @@ namespace SPNATI_Character_Editor
 			lines.Add("\r\n#EPILOGUE/ENDING");
 			foreach (Epilogue ending in character.Endings)
 			{
-				lines.Add("");
-				lines.Add(string.Format("ending={0}", ending.Title));
-				lines.Add(string.Format("\tending_gender={0}", ending.Gender));
-				if (ending.HasSpecialConditions)
-				{
-					//list.Append("\tending_conditions=");
-					List<string> conditions = new List<string>();
-					if (!string.IsNullOrEmpty(ending.AlsoPlaying))
-					{
-						conditions.Add("alsoPlaying:" + ending.AlsoPlaying);
-					}
-					if (!string.IsNullOrEmpty(ending.PlayerStartingLayers))
-					{
-						conditions.Add("playerStartingLayers:" + ending.PlayerStartingLayers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingAllMarkers))
-					{
-						conditions.Add("markers:" + ending.AllMarkers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingNotMarkers))
-					{
-						conditions.Add("not-markers:" + ending.NotMarkers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingAnyMarkers))
-					{
-						conditions.Add("any-markers:" + ending.AnyMarkers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingAllMarkers))
-					{
-						conditions.Add("alsoplaying-markers:" + ending.AlsoPlayingAllMarkers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingNotMarkers))
-					{
-						conditions.Add("alsoplaying-not-markers:" + ending.AlsoPlayingNotMarkers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingAnyMarkers))
-					{
-						conditions.Add("alsoplaying-any-markers:" + ending.AlsoPlayingAnyMarkers);
-					}
-					lines.Add($"\tending_conditions={string.Join(",", conditions)}");
-				}
-				if (ending.GalleryImage != null)
-				{
-					lines.Add(string.Format("\tgallery_image={0}", ending.GalleryImage));
-				}
-				if (!string.IsNullOrEmpty(ending.Hint))
-				{
-					lines.Add("\thint=" + ending.Hint);
-				}
+				SerializeEpilogue(lines, ending);
+			}
 
-				foreach (Scene scene in ending.Scenes)
-				{
-					lines.Add("");
-					List<string> sceneAttributes = new List<string>();
-					ElementInformation memberInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Scene));
-					foreach (FieldInformation fieldInfo in memberInfo.Fields)
-					{
-						if (fieldInfo.Attribute == null) { continue; }
-						string value = fieldInfo.GetValue(scene)?.ToString();
-						if (fieldInfo.FieldType == typeof(bool))
-						{
-							value = (bool)fieldInfo.GetValue(scene) ? "1" : null;
-						}
-						if (string.IsNullOrEmpty(value))
-						{
-							continue;
-						}
-						sceneAttributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
-					}
-					lines.Add($"\tscene={string.Join(",", sceneAttributes)}");
-
-					foreach (Directive directive in scene.Directives)
-					{
-						List<string> attributes = new List<string>();
-						ElementInformation directiveInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Directive));
-						foreach (FieldInformation fieldInfo in directiveInfo.Fields)
-						{
-							if (fieldInfo.Attribute == null) { continue; }
-							string value = fieldInfo.GetValue(directive)?.ToString();
-							if (fieldInfo.FieldType == typeof(bool))
-							{
-								value = (bool)fieldInfo.GetValue(directive) ? "1" : null;
-							}
-							if (string.IsNullOrEmpty(value))
-							{
-								continue;
-							}
-							attributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
-						}
-						lines.Add($"\t\tdirective={string.Join(",", attributes)}");
-						if (!string.IsNullOrEmpty(directive.Text))
-						{
-							lines.Add($"\t\t\ttext={directive.Text}");
-						}
-
-						foreach (Keyframe keyframe in directive.Keyframes)
-						{
-							List<string> keyAttributes = new List<string>();
-							ElementInformation keyframeInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Keyframe));
-							foreach (FieldInformation info in keyframeInfo.Fields)
-							{
-								if (info.Attribute == null) { continue; }
-								string value = info.GetValue(keyframe)?.ToString();
-								if (info.FieldType == typeof(bool))
-								{
-									value = (bool)info.GetValue(keyframe) ? "1" : null;
-								}
-								if (string.IsNullOrEmpty(value))
-								{
-									continue;
-								}
-								keyAttributes.Add($"{info.Attribute.AttributeName}:{value}");
-							}
-							lines.Add($"\t\t\tkeyframe={string.Join(",", keyAttributes)}");
-						}
-					}
-				}
+			//poses
+			lines.Add("\r\n#CUSTOM POSES");
+			foreach (Pose pose in character.Poses)
+			{
+				SerializePose(lines, pose);
 			}
 
 			string filename = Path.Combine(Config.GetRootDirectory(character), "edit-dialogue.txt");
 			File.WriteAllLines(filename, lines);
 			return true;
+		}
+
+		private static void SerializeEpilogue(List<string> lines, Epilogue ending)
+		{
+			lines.Add("");
+			lines.Add(string.Format("ending={0}", ending.Title));
+			lines.Add(string.Format("\tending_gender={0}", ending.Gender));
+			if (ending.HasSpecialConditions)
+			{
+				List<string> conditions = new List<string>();
+				if (!string.IsNullOrEmpty(ending.AlsoPlaying))
+				{
+					conditions.Add("alsoPlaying:" + ending.AlsoPlaying);
+				}
+				if (!string.IsNullOrEmpty(ending.PlayerStartingLayers))
+				{
+					conditions.Add("playerStartingLayers:" + ending.PlayerStartingLayers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingAllMarkers))
+				{
+					conditions.Add("markers:" + ending.AllMarkers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingNotMarkers))
+				{
+					conditions.Add("not-markers:" + ending.NotMarkers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingAnyMarkers))
+				{
+					conditions.Add("any-markers:" + ending.AnyMarkers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingAllMarkers))
+				{
+					conditions.Add("alsoplaying-markers:" + ending.AlsoPlayingAllMarkers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingNotMarkers))
+				{
+					conditions.Add("alsoplaying-not-markers:" + ending.AlsoPlayingNotMarkers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingAnyMarkers))
+				{
+					conditions.Add("alsoplaying-any-markers:" + ending.AlsoPlayingAnyMarkers);
+				}
+				lines.Add($"\tending_conditions={string.Join(",", conditions)}");
+			}
+			if (ending.GalleryImage != null)
+			{
+				lines.Add(string.Format("\tgallery_image={0}", ending.GalleryImage));
+			}
+			if (!string.IsNullOrEmpty(ending.Hint))
+			{
+				lines.Add("\thint=" + ending.Hint);
+			}
+
+			foreach (Scene scene in ending.Scenes)
+			{
+				lines.Add("");
+				List<string> sceneAttributes = new List<string>();
+				ElementInformation memberInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Scene));
+				foreach (FieldInformation fieldInfo in memberInfo.Fields)
+				{
+					if (fieldInfo.Attribute == null) { continue; }
+					string value = fieldInfo.GetValue(scene)?.ToString();
+					if (fieldInfo.FieldType == typeof(bool))
+					{
+						value = (bool)fieldInfo.GetValue(scene) ? "1" : null;
+					}
+					if (string.IsNullOrEmpty(value))
+					{
+						continue;
+					}
+					sceneAttributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
+				}
+				lines.Add($"\tscene={string.Join(",", sceneAttributes)}");
+
+				foreach (Directive directive in scene.Directives)
+				{
+					List<string> attributes = new List<string>();
+					ElementInformation directiveInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Directive));
+					foreach (FieldInformation fieldInfo in directiveInfo.Fields)
+					{
+						if (fieldInfo.Attribute == null) { continue; }
+						string value = fieldInfo.GetValue(directive)?.ToString();
+						if (fieldInfo.FieldType == typeof(bool))
+						{
+							value = (bool)fieldInfo.GetValue(directive) ? "1" : null;
+						}
+						if (string.IsNullOrEmpty(value))
+						{
+							continue;
+						}
+						attributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
+					}
+					lines.Add($"\t\tdirective={string.Join(",", attributes)}");
+					if (!string.IsNullOrEmpty(directive.Text))
+					{
+						lines.Add($"\t\t\ttext={directive.Text}");
+					}
+
+					foreach (Keyframe keyframe in directive.Keyframes)
+					{
+						List<string> keyAttributes = new List<string>();
+						ElementInformation keyframeInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Keyframe));
+						foreach (FieldInformation info in keyframeInfo.Fields)
+						{
+							if (info.Attribute == null) { continue; }
+							string value = info.GetValue(keyframe)?.ToString();
+							if (info.FieldType == typeof(bool))
+							{
+								value = (bool)info.GetValue(keyframe) ? "1" : null;
+							}
+							if (string.IsNullOrEmpty(value))
+							{
+								continue;
+							}
+							keyAttributes.Add($"{info.Attribute.AttributeName}:{value}");
+						}
+						lines.Add($"\t\t\tkeyframe={string.Join(",", keyAttributes)}");
+					}
+				}
+			}
+		}
+
+		private static void SerializePose(List<string> lines, Pose pose)
+		{
+			lines.Add("");
+			lines.Add($"pose={pose.Id}");
+			if (!string.IsNullOrEmpty(pose.BaseHeight))
+			{
+				lines.Add($"\tbase_height={pose.BaseHeight}");
+			}
+			foreach (Sprite sprite in pose.Sprites)
+			{
+				List<string> attributes = new List<string>();
+				ElementInformation spriteInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Sprite));
+				foreach (FieldInformation fieldInfo in spriteInfo.Fields)
+				{
+					if (fieldInfo.Attribute == null) { continue; }
+					string value = fieldInfo.GetValue(sprite)?.ToString();
+					if (fieldInfo.FieldType == typeof(bool))
+					{
+						value = (bool)fieldInfo.GetValue(sprite) ? "1" : null;
+					}
+					if (string.IsNullOrEmpty(value))
+					{
+						continue;
+					}
+					attributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
+				}
+				lines.Add($"\tsprite={string.Join(",", attributes)}");
+			}
+			foreach (PoseDirective directive in pose.Directives)
+			{
+				List<string> attributes = new List<string>();
+				ElementInformation directiveInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Directive));
+				foreach (FieldInformation fieldInfo in directiveInfo.Fields)
+				{
+					if (fieldInfo.Attribute == null) { continue; }
+					string value = fieldInfo.GetValue(directive)?.ToString();
+					if (fieldInfo.FieldType == typeof(bool))
+					{
+						value = (bool)fieldInfo.GetValue(directive) ? "1" : null;
+					}
+					if (string.IsNullOrEmpty(value))
+					{
+						continue;
+					}
+					attributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
+				}
+				lines.Add($"\tdirective={string.Join(",", attributes)}");
+				foreach (Keyframe keyframe in directive.Keyframes)
+				{
+					List<string> keyAttributes = new List<string>();
+					ElementInformation keyframeInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Keyframe));
+					foreach (FieldInformation info in keyframeInfo.Fields)
+					{
+						if (info.Attribute == null) { continue; }
+						string value = info.GetValue(keyframe)?.ToString();
+						if (info.FieldType == typeof(bool))
+						{
+							value = (bool)info.GetValue(keyframe) ? "1" : null;
+						}
+						if (string.IsNullOrEmpty(value))
+						{
+							continue;
+						}
+						keyAttributes.Add($"{info.Attribute.AttributeName}:{value}");
+					}
+					lines.Add($"\t\tkeyframe={string.Join(",", keyAttributes)}");
+				}
+			}
 		}
 
 		private static List<string> GetFilters(Case stageCase)
@@ -506,7 +631,7 @@ namespace SPNATI_Character_Editor
 			}
 			if (!string.IsNullOrEmpty(stageCase.TargetSaying))
 			{
-				filters.Add("targetSaying:" + stageCase.TargetSaying);
+				filters.Add("targetSaying:" + stageCase.TargetSaying.Replace(",", "&comma;"));
 			}
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
 			{
@@ -538,7 +663,7 @@ namespace SPNATI_Character_Editor
 			}
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSaying))
 			{
-				filters.Add("alsoPlayingSaying:" + stageCase.AlsoPlayingSaying);
+				filters.Add("alsoPlayingSaying:" + stageCase.AlsoPlayingSaying.Replace(",", "&comma;"));
 			}
 			if (!string.IsNullOrEmpty(stageCase.HasHand))
 			{
@@ -588,6 +713,14 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("notSaidMarker:" + stageCase.NotSaidMarker);
 			}
+			if (!string.IsNullOrEmpty(stageCase.AddCharacterTags))
+			{
+				filters.Add("addCharacterTags:" + stageCase.AddCharacterTags.Replace(',', ':'));
+			}
+			if (!string.IsNullOrEmpty(stageCase.RemoveCharacterTags))
+			{
+				filters.Add("removeCharacterTags:" + stageCase.RemoveCharacterTags.Replace(',', ':'));
+			}
 			if (!string.IsNullOrEmpty(stageCase.Hidden))
 			{
 				filters.Add("hidden:1");
@@ -600,15 +733,14 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (var condition in stageCase.Conditions)
 				{
-					string[] parts = Array.FindAll(new string[]{ condition.Status, condition.Gender, condition.Filter }, e => e != null);
-					filters.Add(string.Format("count-{1}:{0}", condition.Count, string.Join("&", parts)));
+					filters.Add(condition.Serialize());
 				}
 			}
 			if (stageCase.Expressions != null)
 			{
 				foreach (ExpressionTest test in stageCase.Expressions)
 				{
-					filters.Add($"test:{test.Expression}:{test.Value}");
+					filters.Add($"test:{test.Serialize()}");
 				}
 			}
 			return filters;
@@ -630,18 +762,20 @@ namespace SPNATI_Character_Editor
 			EndingText currentText = null;
 			Scene currentScene = null;
 			Directive currentDirective = null;
+			Pose currentPose = null;
+			PoseDirective currentPoseDirective = null;
 
 			foreach (string line in lines)
 			{
 				string data = line.Trim();
 				if (data.StartsWith("#") || string.IsNullOrEmpty(data))
 					continue;
-				string[] kvp = data.Split(new char[] { '=' }, 2);
-				if (kvp.Length != 2)
+				int splitIndex = data.LastIndexOf('='); //split on last occurrence of =. This will prevent characters from using = in dialogue, but allow conditional markers to parse properly
+				if (splitIndex < 0)
 					continue;
 
-				string key = kvp[0].ToLower();
-				string value = kvp[1];
+				string key = data.Substring(0, splitIndex);
+				string value = data.Substring(splitIndex + 1);
 				int intValue;
 				switch (key)
 				{
@@ -683,7 +817,28 @@ namespace SPNATI_Character_Editor
 							character.Stamina = intValue;
 						break;
 					case "tag":
-						character.Tags.Add(value.ToLower());
+						value = value.ToLower();
+						string[] tagPieces = value.Split(',');
+						CharacterTag tag = new CharacterTag(tagPieces[0]);
+						for (int i = 1; i < tagPieces.Length; i++)
+						{
+							string[] attrData = tagPieces[i].Split(new char[] { ':' }, 2);
+							if (attrData.Length == 2)
+							{
+								string attrKey = attrData[0];
+								string attrValue = attrData[1];
+								switch (attrKey)
+								{
+									case "from":
+										tag.From = attrValue;
+										break;
+									case "to":
+										tag.To = attrValue;
+										break;
+								}
+							}
+						}
+						character.Tags.Add(tag);
 						break;
 					case "pic":
 						character.Metadata.Portrait = value;
@@ -718,6 +873,8 @@ namespace SPNATI_Character_Editor
 						currentText = null;
 						currentScene = null;
 						currentDirective = null;
+						currentPose = null;
+						currentPoseDirective = null;
 						character.Endings.Add(currentEnding);
 						break;
 					case "ending_gender":
@@ -769,6 +926,12 @@ namespace SPNATI_Character_Editor
 							currentEnding.Hint = value;
 						}
 						break;
+					case "gallery_image":
+						if (currentEnding != null)
+						{
+							currentEnding.GalleryImage = value;
+						}
+						break;
 					case "ending_conditions":
 						if (currentEnding != null)
 						{
@@ -791,6 +954,12 @@ namespace SPNATI_Character_Editor
 							ParseAttributes(currentDirective, value);
 							currentScene.Directives.Add(currentDirective);
 						}
+						else if (currentPose != null)
+						{
+							currentPoseDirective = new PoseDirective();
+							ParseAttributes(currentPoseDirective, value);
+							currentPose.Directives.Add(currentPoseDirective);
+						}
 						break;
 					case "keyframe":
 						if (currentDirective != null)
@@ -799,10 +968,39 @@ namespace SPNATI_Character_Editor
 							ParseAttributes(keyframe, value);
 							currentDirective.Keyframes.Add(keyframe);
 						}
+						else if (currentPoseDirective != null)
+						{
+							Keyframe keyframe = new Keyframe();
+							ParseAttributes(keyframe, value);
+							currentPoseDirective.Keyframes.Add(keyframe);
+						}
+						break;
+					case "pose":
+						currentScene = null;
+						currentDirective = null;
+						currentEnding = null;
+						currentPose = new Pose();
+						currentPose.Id = value;
+						currentPoseDirective = null;
+						character.Poses.Add(currentPose);
+						break;
+					case "base_height":
+						if (currentPose != null)
+						{
+							currentPose.BaseHeight = value;
+						}
+						break;
+					case "sprite":
+						if (currentPose != null)
+						{
+							Sprite sprite = new Sprite();
+							ParseAttributes(sprite, value);
+							currentPose.Sprites.Add(sprite);
+						}
 						break;
 					default:
 						//Dialogue
-						Case newCase = MakeLine(kvp[0], value, character, false);
+						Case newCase = MakeLine(key, value, character, false);
 						if (newCase != null && newCase.Lines.Count > 0)
 						{
 							int stage = newCase.Stages[0];
@@ -915,7 +1113,7 @@ namespace SPNATI_Character_Editor
 							int.TryParse(value, out v);
 							objValue = v;
 						}
-						
+
 						field.Info.SetValue(instance, objValue);
 					}
 				}
@@ -982,6 +1180,10 @@ namespace SPNATI_Character_Editor
 			for (int i = 1; i < targets.Length; i++)
 			{
 				AddTarget(targets[i], lineCase, line);
+			}
+			if (lineCase.Id > 0)
+			{
+				lineCase.StageId = $"{stage}-{lineCase.Id}";
 			}
 
 			//Image and dialogue
@@ -1064,7 +1266,7 @@ namespace SPNATI_Character_Editor
 							lineCase.TargetSayingMarker = value;
 							break;
 						case "targetsaying":
-							lineCase.TargetSaying = value;
+							lineCase.TargetSaying = value.Replace("&comma;", ",");
 							break;
 					}
 				}
@@ -1094,7 +1296,7 @@ namespace SPNATI_Character_Editor
 						lineCase.AlsoPlayingNotSaidMarker = value;
 						break;
 					case "alsoplayingsaying":
-						lineCase.AlsoPlayingSaying = value;
+						lineCase.AlsoPlayingSaying = value.Replace("&comma;", ",");
 						break;
 					case "hashand":
 						lineCase.HasHand = value;
@@ -1138,6 +1340,12 @@ namespace SPNATI_Character_Editor
 					case "marker":
 						line.Marker = value;
 						break;
+					case "addcharactertags":
+						lineCase.AddCharacterTags = value.Replace(':', ',');
+						break;
+					case "removecharactertags":
+						lineCase.RemoveCharacterTags = value.Replace(':', ',');
+						break;
 					case "hidden":
 						lineCase.Hidden = (value == "1" ? "1" : null);
 						break;
@@ -1145,12 +1353,14 @@ namespace SPNATI_Character_Editor
 						lineCase.CustomPriority = value;
 						break;
 					case "test":
-						string[] parts = value.Split(new char[] { ':' }, 2);
-						if (parts.Length == 2)
-						{
-							ExpressionTest test = new ExpressionTest() { Expression = parts[0], Value = parts[1] };
-							lineCase.Expressions.Add(test);
-						}
+						ExpressionTest test = new ExpressionTest(value);
+						lineCase.Expressions.Add(test);
+						break;
+					case "location":
+						line.Location = value;
+						break;
+					case "direction":
+						line.Direction = value;
 						break;
 					case "set-gender":
 						line.Gender = value;
@@ -1164,28 +1374,35 @@ namespace SPNATI_Character_Editor
 					case "set-size":
 						line.Size = value;
 						break;
+					case "collectible":
+						line.CollectibleId = value;
+						break;
+					case "collectible-value":
+						line.CollectibleValue = value;
+						break;
+					case "persist-marker":
+						line.IsMarkerPersistent = (value == "1");
+						break;
+					case "weight":
+						float fval;
+						if (float.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out fval))
+						{
+							line.Weight = fval;
+						}
+						break;
+					case "id":
+						int id;
+						if (int.TryParse(value, out id))
+						{
+							lineCase.Id = id;
+						}
+						break;
 					default:
 						if (key.StartsWith("count-"))
 						{
-							string tag = null, gender = null, status = null;
 							string filter = key.Substring(6);
-							parts = filter.Split('&');
-							foreach (string part in parts)
-							{
-								if (part == "male" || part == "female")
-								{
-									gender = part;
-								}
-								else if (part != "" && Array.Exists(TargetCondition.StatusTypes, t => t.Key == part || "not_" + t.Key == part))
-								{
-									status = part;
-								}
-								else
-								{
-									tag = part;
-								}
-							}
-							lineCase.Conditions.Add(new TargetCondition(tag, gender, status, value));
+							TargetCondition condition = new TargetCondition(filter, value);
+							lineCase.Conditions.Add(condition);
 						}
 						break;
 				}

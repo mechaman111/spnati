@@ -11,6 +11,11 @@ namespace SPNATI_Character_Editor.Providers
 			get { return true; }
 		}
 
+		public bool TrackRecent
+		{
+			get { return false; }
+		}
+
 		public string GetLookupCaption()
 		{
 			return "Select a Tag";

@@ -8,6 +8,7 @@ using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.EpilogueEditing;
 using SPNATI_Character_Editor.Properties;
 using System.Globalization;
+using SPNATI_Character_Editor.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
@@ -21,6 +22,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		public const float MinZoom = 0.25f;
 		public const float MaxZoom = 3;
+		private const int ArrowSize = 16;
 
 		private Epilogue _epilogue;
 		private Character _character;
@@ -28,6 +30,7 @@ namespace SPNATI_Character_Editor.Controls
 		private Directive _selectedDirective;
 		private Keyframe _selectedKeyframe;
 		private SceneAnimation _selectedAnimation;
+		private List<PendedDirective> _pendingDirectives = new List<PendedDirective>();
 
 		private bool _viewportLocked;
 		private Point _prelockOffset;
@@ -43,6 +46,7 @@ namespace SPNATI_Character_Editor.Controls
 		private int _directiveIndex = -1;
 		private bool _waitingForAnims = false;
 		private bool _showOverlay = true;
+		private List<string> _markers = new List<string>();
 
 		private float _zoom = 1;
 		public float ZoomLevel
@@ -118,7 +122,7 @@ namespace SPNATI_Character_Editor.Controls
 			_character = character;
 			Enabled = (_epilogue != null);
 			propertyTable.Data = null;
-			treeScenes.SetData(epilogue);
+			treeScenes.SetData(epilogue, _character);
 			BuildScene(false);
 			FitToScreen();
 		}
@@ -226,7 +230,7 @@ namespace SPNATI_Character_Editor.Controls
 					Point pt = new Point(_lastMouse.X - arrow.Width / 2, _lastMouse.Y - arrow.Height / 2);
 
 					//rotate to face the object's center
-					PointF center = ToScreenCenter(_selectedObject);;
+					PointF center = ToScreenCenter(_selectedObject); ;
 
 					double angle = Math.Atan2(center.Y - pt.Y, center.X - pt.X);
 					angle = angle * (180 / Math.PI) - 90;
@@ -310,27 +314,36 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				else
 				{
-					if (obj.Alpha > 0)
+					if ((obj.SkewX == 0 || obj.SkewX % 90 != 0) && (obj.SkewY == 0 || obj.SkewY % 90 != 0))
 					{
-						if (obj.Alpha < 100)
+						float skewedWidth = bounds.Height * (float)Math.Tan(Math.PI / 180.0f * obj.SkewX);
+						int skewDistanceX = (int)(skewedWidth / 2);
+						float skewedHeight = bounds.Width * (float)Math.Tan(Math.PI / 180.0f * obj.SkewY);
+						int skewDistanceY = (int)(skewedHeight / 2);
+						//TODO: This doesn't properly account for the pivot
+						Point[] destPts = new Point[] { new Point((int)bounds.X - skewDistanceX, (int)bounds.Y - skewDistanceY), new Point((int)bounds.Right - skewDistanceX, (int)bounds.Y + skewDistanceY), new Point((int)bounds.X + skewDistanceX, (int)bounds.Bottom - skewDistanceY) };
+
+						if (obj.Alpha > 0)
 						{
-							float[][] matrixItems = new float[][] {
+							if (obj.Alpha < 100)
+							{
+								float[][] matrixItems = new float[][] {
 							new float[] { 1, 0, 0, 0, 0 },
 							new float[] { 0, 1, 0, 0, 0 },
 							new float[] { 0, 0, 1, 0, 0 },
 							new float[] { 0, 0, 0, obj.Alpha / 100.0f, 0 },
 							new float[] { 0, 0, 0, 0, 1 }
 						};
-							ColorMatrix cm = new ColorMatrix(matrixItems);
-							ImageAttributes ia = new ImageAttributes();
-							ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+								ColorMatrix cm = new ColorMatrix(matrixItems);
+								ImageAttributes ia = new ImageAttributes();
+								ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-							Rectangle rect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
-							g.DrawImage(obj.Image, rect, 0, 0, obj.Image.Width, obj.Image.Height, GraphicsUnit.Pixel, ia);
-						}
-						else
-						{
-							g.DrawImage(obj.Image, bounds, new Rectangle(0, 0, obj.Image.Width, obj.Image.Height), GraphicsUnit.Pixel);
+								g.DrawImage(obj.Image, destPts, new Rectangle(0, 0, obj.Image.Width, obj.Image.Height), GraphicsUnit.Pixel, ia);
+							}
+							else
+							{
+								g.DrawImage(obj.Image, destPts, new Rectangle(0, 0, obj.Image.Width, obj.Image.Height), GraphicsUnit.Pixel);
+							}
 						}
 					}
 				}
@@ -364,7 +377,6 @@ namespace SPNATI_Character_Editor.Controls
 		private void DrawTextBox(Graphics g, SceneObject textbox)
 		{
 			const int Padding = 5;
-			const int ArrowSize = 16;
 
 			RectangleF bounds = ToScreenRegion(textbox);
 			SizeF size = g.MeasureString(textbox.Text, _font, (int)(bounds.Width - Padding * 2), _textFormat);
@@ -378,9 +390,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.X + bounds.Width / 2;
 				float y = bounds.Y + bounds.Height - 1;
-				PointF p1 = new PointF(center - ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
-				PointF p2 = new PointF(center + ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
-				PointF p3 = new PointF(center, y + ArrowSize * ZoomLevel / _scenePreview.Zoom);
+				PointF p1 = new PointF(center - ArrowSize, y);
+				PointF p2 = new PointF(center + ArrowSize, y);
+				PointF p3 = new PointF(center, y + ArrowSize);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "down" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);
@@ -390,9 +402,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.X + bounds.Width / 2;
 				float y = bounds.Y + 1;
-				PointF p1 = new PointF(center + ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
-				PointF p2 = new PointF(center - ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
-				PointF p3 = new PointF(center, y - ArrowSize * ZoomLevel / _scenePreview.Zoom);
+				PointF p1 = new PointF(center + ArrowSize, y);
+				PointF p2 = new PointF(center - ArrowSize, y);
+				PointF p3 = new PointF(center, y - ArrowSize);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "up" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);
@@ -402,9 +414,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.Y + bounds.Height / 2;
 				float x = bounds.X + 1;
-				PointF p1 = new PointF(x, center - ArrowSize * ZoomLevel / _scenePreview.Zoom);
-				PointF p2 = new PointF(x, center + ArrowSize * ZoomLevel / _scenePreview.Zoom);
-				PointF p3 = new PointF(x - ArrowSize * ZoomLevel / _scenePreview.Zoom, center);
+				PointF p1 = new PointF(x, center - ArrowSize);
+				PointF p2 = new PointF(x, center + ArrowSize);
+				PointF p3 = new PointF(x - ArrowSize, center);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "left" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);
@@ -414,9 +426,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.Y + bounds.Height / 2;
 				float x = bounds.X + bounds.Width - 1;
-				PointF p1 = new PointF(x, center + ArrowSize * ZoomLevel / _scenePreview.Zoom);
-				PointF p2 = new PointF(x, center - ArrowSize * ZoomLevel / _scenePreview.Zoom);
-				PointF p3 = new PointF(x + ArrowSize * ZoomLevel / _scenePreview.Zoom, center);
+				PointF p1 = new PointF(x, center + ArrowSize);
+				PointF p2 = new PointF(x, center - ArrowSize);
+				PointF p3 = new PointF(x + ArrowSize, center);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "right" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);
@@ -557,7 +569,30 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				//textboxes are scaled and positioned relative to the viewport size and not the scene
 				Rectangle viewport = GetViewportBounds();
-				return new RectangleF(viewport.X + obj.X / 100.0f * viewport.Width, viewport.Y + obj.Y / 100.0f * viewport.Height, obj.Width / 100.0f * viewport.Width, obj.Height);
+				RectangleF position = new RectangleF(viewport.X + obj.X / 100.0f * viewport.Width, viewport.Y + obj.Y / 100.0f * viewport.Height, obj.Width / 100.0f * viewport.Width, obj.Height);
+				int arrowWidth = (obj.Arrow == "left" || obj.Arrow == "right") ? ArrowSize : 0;
+				int arrowHeight = (obj.Arrow == "up" || obj.Arrow == "down") ? ArrowSize : 0;
+				if (obj.AlignmentX == "right")
+				{
+					int width = (int)(position.Width + arrowWidth);
+					position.X = (position.X - width);
+				}
+				else if (obj.AlignmentX == "center")
+				{
+					int width = (int)(position.Width + arrowWidth);
+					position.X = (position.X - width * 0.5f);
+				}
+				if (obj.AlignmentY == "bottom")
+				{
+					int height = (int)(position.Height + arrowHeight);
+					position.Y = (position.Y - height);
+				}
+				else if (obj.AlignmentY == "center")
+				{
+					int height = (int)(position.Height + arrowHeight);
+					position.Y = (position.Y - height * 0.5f);
+				}
+				return position;
 			}
 			else if (obj.ObjectType == SceneObjectType.Emitter || obj?.SourceObject?.ObjectType == SceneObjectType.Emitter)
 			{
@@ -849,6 +884,7 @@ namespace SPNATI_Character_Editor.Controls
 					bool allowPivot = (_selectedObject.ObjectType == SceneObjectType.Sprite);
 					bool allowRotate = true;
 					bool allowScale = (_selectedObject.ObjectType == SceneObjectType.Sprite);
+					bool allowSkew = (_selectedObject.ObjectType == SceneObjectType.Sprite);
 
 					float dl = Math.Abs(screenPt.X - bounds.X);
 					float dr = Math.Abs(screenPt.X - (bounds.X + bounds.Width));
@@ -886,6 +922,33 @@ namespace SPNATI_Character_Editor.Controls
 							screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dr <= RotationLeeway)
 						{
 							return locked ? HoverContext.Locked : HoverContext.Rotate;
+						}
+					}
+
+					if (allowSkew && ModifierKeys.HasFlag(Keys.Shift))
+					{
+						//skewing - grabbing an edge while Shift is held down
+						if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+						{
+							if (dl <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewLeft;
+							}
+							else if (dr <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewRight;
+							}
+						}
+						if (bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
+						{
+							if (dt <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewTop;
+							}
+							else if (db <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewBottom;
+							}
 						}
 					}
 
@@ -1128,6 +1191,14 @@ namespace SPNATI_Character_Editor.Controls
 								case HoverContext.Pivot:
 									canvas.Cursor = Cursors.Cross;
 									break;
+								case HoverContext.SkewTop:
+								case HoverContext.SkewBottom:
+									canvas.Cursor = Cursors.VSplit;
+									break;
+								case HoverContext.SkewLeft:
+								case HoverContext.SkewRight:
+									canvas.Cursor = Cursors.HSplit;
+									break;
 								case HoverContext.Locked:
 									canvas.Cursor = Cursors.No;
 									break;
@@ -1201,6 +1272,12 @@ namespace SPNATI_Character_Editor.Controls
 											break;
 										case HoverContext.Pivot:
 											_state = CanvasState.MovingPivot;
+											break;
+										case HoverContext.SkewLeft:
+										case HoverContext.SkewRight:
+										case HoverContext.SkewTop:
+										case HoverContext.SkewBottom:
+											_state = CanvasState.Skewing;
 											break;
 									}
 								}
@@ -1370,6 +1447,18 @@ namespace SPNATI_Character_Editor.Controls
 								canvas.Invalidate();
 							}
 							break;
+						case CanvasState.Skewing:
+							if (_selectedObject.AdjustSkew(worldPt, _downPoint, _moveContext))
+							{
+								treeScenes.UpdateNode(_selectedObject.LinkedFrame);
+								if (_selectedObject.LinkedFrame == propertyTable.Data)
+								{
+									propertyTable.UpdateProperty("SkewX");
+									propertyTable.UpdateProperty("SkewY");
+								}
+								canvas.Invalidate();
+							}
+							break;
 						case CanvasState.Panning:
 							if (_viewportLocked)
 							{
@@ -1431,6 +1520,7 @@ namespace SPNATI_Character_Editor.Controls
 				case CanvasState.ResizingCamera:
 				case CanvasState.ZoomingCamera:
 				case CanvasState.MovingPivot:
+				case CanvasState.Skewing:
 					_state = CanvasState.Normal;
 					canvas.Invalidate();
 					break;
@@ -1665,6 +1755,7 @@ namespace SPNATI_Character_Editor.Controls
 			_animations.Clear();
 			_scenePreview?.Dispose();
 			_sceneTransition = null;
+			_pendingDirectives.Clear();
 
 			canvas.Invalidate();
 
@@ -1681,7 +1772,7 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			}
 
-			_scenePreview = new ScenePreview(_selectedScene, _character);
+			_scenePreview = new ScenePreview(_selectedScene, _character, _markers);
 			_overlay = new SceneObject(_scenePreview, _character, null, null, null);
 			_overlay.Id = "fade";
 			_overlay.SetColor(_epilogue, _selectedScene);
@@ -1732,7 +1823,15 @@ namespace SPNATI_Character_Editor.Controls
 			_directiveIndex++;
 			if (_directiveIndex < _selectedScene.Directives.Count)
 			{
-				if (!ApplyDirective(_selectedScene.Directives[_directiveIndex]))
+				Directive directive = _selectedScene.Directives[_directiveIndex];
+				if (!string.IsNullOrEmpty(directive.Delay) && directive.Delay != "0")
+				{
+					float delay;
+					float.TryParse(directive.Delay, NumberStyles.Number, CultureInfo.InvariantCulture, out delay);
+					delay *= 1000;
+					PendDirective(directive, delay);
+				}
+				else if (!ApplyDirective(directive))
 				{
 					return;
 				}
@@ -1888,6 +1987,10 @@ namespace SPNATI_Character_Editor.Controls
 					_scenePreview.Update(directive, _scenePreview);
 					break;
 				case "wait":
+					if (_pendingDirectives.Count > 0)
+					{
+						_waitingForAnims = true;
+					}
 					for (int i = 0; i < _animations.Count; i++)
 					{
 						if (!_animations[i].Looped || _animations[i].Iterations > 0)
@@ -1955,6 +2058,30 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 			return true;
+		}
+
+		private class PendedDirective : IComparable<PendedDirective>
+		{
+			public long TriggerTime;
+			public Directive Directive;
+
+			public PendedDirective(Directive directive, float delay)
+			{
+				TriggerTime = DateTime.Now.AddMilliseconds(delay).Ticks;
+				Directive = directive;
+			}
+
+			public int CompareTo(PendedDirective other)
+			{
+				return TriggerTime.CompareTo(other.TriggerTime);
+			}
+		}
+
+		private void PendDirective(Directive directive, float delay)
+		{
+			PendedDirective info = new PendedDirective(directive, delay);
+			_pendingDirectives.Add(info);
+			_pendingDirectives.Sort();
 		}
 
 		/// <summary>
@@ -2176,6 +2303,18 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
+				long ticks = now.Ticks;
+				for (int i = 0; i < _pendingDirectives.Count; i++)
+				{
+					PendedDirective info = _pendingDirectives[i];
+					if (info.TriggerTime <= ticks)
+					{
+						ApplyDirective(info.Directive);
+						_pendingDirectives.RemoveAt(i);
+						i--;
+					}
+				}
+
 				//updates can add to the object collection and resort it, which will royally screw up this loop, so copy off first, as inefficient as that is
 				List<SceneObject> objects = new List<SceneObject>();
 				objects.AddRange(_scenePreview.Objects);
@@ -2198,8 +2337,8 @@ namespace SPNATI_Character_Editor.Controls
 		}
 
 		private void UpdateAnimations(float elapsedSec)
-		{	
-			int nonLoopingCount = 0;
+		{
+			int nonLoopingCount = _pendingDirectives.Count;
 
 			if (_mode == EditMode.Playback)
 			{
@@ -2244,7 +2383,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				animation.Elapsed = 0;
 			}
-			cmdPlayDirective.ToolTipText = enabled ? "Stop animation" : "Play selection animation";
+			cmdPlayDirective.ToolTipText = enabled ? "Stop animation" : "Play selected animation";
 			cmdPlayDirective.Image = enabled ? Resources.PlaybackPause : Resources.Playback;
 			canvas.Invalidate();
 		}
@@ -2298,6 +2437,11 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void HaltAnimations(bool haltLooping)
 		{
+			foreach (PendedDirective info in _pendingDirectives)
+			{
+				ApplyDirective(info.Directive);
+			}
+			_pendingDirectives.Clear();
 			_waitingForAnims = false;
 			for (int i = 0; i < _animations.Count; i++)
 			{
@@ -2330,6 +2474,17 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			_showOverlay = !_showOverlay;
 			canvas.Invalidate();
+		}
+
+		private void cmdMarkers_Click(object sender, EventArgs e)
+		{
+			MarkerSetup form = new MarkerSetup();
+			form.SetData(_character, _markers);
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				_markers = form.Markers;
+				BuildScene(false);
+			}
 		}
 	}
 
@@ -2453,12 +2608,18 @@ namespace SPNATI_Character_Editor.Controls
 		Select = 1 << 23,
 		Pivot = 1 << 24,
 		Locked = 1 << 25,
+		SkewLeft = 1 << 26,
+		SkewRight = 1 << 27,
+		SkewTop = 1 << 28,
+		SkewBottom = 1 << 29,
 
 		ScaleVertical = ScaleTop | ScaleBottom,
 		ScaleHorizontal = ScaleLeft | ScaleRight,
 		Object = Drag | SizeLeft | SizeRight | SizeTop | SizeBottom | Rotate |
-			ArrowUp | ArrowDown | ArrowLeft | ArrowRight | Pivot | ScaleLeft | ScaleTop | ScaleRight | ScaleBottom,
+			ArrowUp | ArrowDown | ArrowLeft | ArrowRight | Pivot | ScaleLeft | ScaleTop | ScaleRight | ScaleBottom | SkewLeft | SkewRight | SkewTop | SkewBottom,
 		Camera = CameraPan | CameraSizeBottom | CameraSizeLeft | CameraSizeRight | CameraSizeTop | CameraZoomBottomLeft | CameraZoomBottomRight | CameraZoomTopLeft | CameraZoomTopRight,
+		SkewVertical = SkewLeft | SkewRight,
+		SkewHorizontal = SkewTop | SkewBottom,
 	}
 
 	public enum CanvasState
@@ -2469,6 +2630,7 @@ namespace SPNATI_Character_Editor.Controls
 		Scaling,
 		Resizing,
 		Rotating,
+		Skewing,
 		MovingCamera,
 		ResizingCamera,
 		ZoomingCamera,
