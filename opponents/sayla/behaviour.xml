@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.8 at 6:46:22 PM on April 22, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.1 at 7:26:07 PM on May 07, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v3.8</version>
+    <version>v4.1</version>
     <first>Sayla</first>
     <last>Mass</last>
     <label>Sayla</label>
@@ -11,13 +11,15 @@
     <timer>15</timer>
     <intelligence>good</intelligence>
 
+    <intelligence stage="4">average</intelligence>
+
     <tags>
         <tag>blonde</tag>
         <tag>short_hair</tag>
         <tag>blue_eyes</tag>
-        <tag>tan_lines</tag>
-        <tag>hairy</tag>
+        <tag from="6" to="8">hairy</tag>
         <tag>medium_breasts</tag>
+        <tag from="5" to="8">tan_lines</tag>
         <tag>confident</tag>
         <tag>serious</tag>
         <tag>bi-curious</tag>
@@ -65,7 +67,7 @@
                 <state img="0-happy.png">I'm glad there's another doctor here. I'd hate to be the only first responder.</state>
             </case>
             <case tag="opponent_selected" filter="princess">
-                <state img="0-sad.png">(I hope she doesn't recongnize me.)</state>
+                <state img="0-sad.png">(I hope she doesn't recognize me.)</state>
             </case>
             <case tag="opponent_selected" target="misato">
                 <state img="0-happy.png">I know you! You're the operations director at NERV!</state>
@@ -89,16 +91,31 @@
                 <state img="0-calm.png">I want to exchange ~cards~.</state>
                 <state img="0-calm.png">~cards~ for me, please.</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="0" />
+                <state img="0-confident.png">No cards.</state>
+            </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="0-confident.png">Only one card.</state>
+            </case>
             <case tag="good_hand">
                 <state img="0-confident.png">Looks like I'm staying dressed.</state>
                 <state img="0-happy.png">No cold floor for me!</state>
                 <state img="0-calm.png">I have nothing to fear.</state>
                 <state img="0-happy.png">These are perfect.</state>
                 <state img="0-confident.png">Oh, excellent.</state>
+                <state img="0-confident.png">All too easy.</state>
                 <state img="0-happy.png">You can't beat me if I'm wearing pink!</state>
                 <state img="0-confident.png">This is like a Gundam taking on a Zaku.</state>
                 <state img="0-confident.png">Core Booster, preparing to engage.</state>
                 <state img="0-confident.png">I always win during Zeon Game Night!</state>
+            </case>
+            <case tag="good_hand" alsoPlaying="hermione" priority="0">
+                <state img="0-confident.png">Your magic can't help you here, Hermione.</state>
+            </case>
+            <case tag="good_hand" hasHand="Royal Flush" priority="800">
+                <state img="0-confident.png">Hey, it's a handful of Zabis.</state>
             </case>
             <case tag="okay_hand">
                 <state img="0-confident.png">This hand ought to keep my boots on.</state>
@@ -116,7 +133,7 @@
                 <state img="0-sad.png">I'd rather take on a Musai in a GM.</state>
                 <state img="0-sad.png">This is as bad as the time I had a Spanish accent...</state>
                 <state img="0-annoyed.png">Dealer, I am trained in firearms. Just keep that in mind if you keep giving me hands like these.</state>
-                <state img="0-annoyed.png">I thought Newtypes could see the future...</state>
+                <state img="0-annoyed.png">I thought New-types could see the future...</state>
                 <state img="0-annoyed.png">Oh sure, just give me a bunch of terrible cards. I can figure it out.</state>
             </case>
             <case tag="hand">
@@ -124,38 +141,39 @@
                 <state img="0-interested.png">I would use sunglasses to help my poker face, but I don't really want to mimic my brother.</state>
                 <state img="0-interested.png">I wonder if I can convince Mirai to join...</state>
             </case>
-            <case tag="hand" alsoPlaying="aimee" priority="0">
-                <state img="0-happy.png">You're cowboy outfit reminds me of living on a ranch.</state>
-                <state img="0-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
-                <state img="0-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            <case tag="hand" alsoPlaying="aimee" alsoPlayingStage="1-7" priority="0">
                 <state img="0-annoyed.png">Watch where you point that Aimee...</state>
                 <state img="0-annoyed.png">I've already accepted I'm going to get shot.</state>
             </case>
+            <case tag="hand" alsoPlaying="aimee" priority="0">
+                <state img="0-happy.png">Aimee's cowboy outfit reminds me of when I lived on a ranch.</state>
+                <state img="0-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
+                <state img="0-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            </case>
             <case tag="hand" alsoPlaying="cammy_white" priority="0">
                 <state img="0-calm.png">Lighten up Cammy, have fun.</state>
+                <state img="0-confident.png"></state>
             </case>
             <case tag="hand" alsoPlaying="d.va" priority="0">
                 <state img="0-happy.png">So D. Va, what Gundam games have you played?</state>
+                <state img="0-confident.png">I hope you prove a challenge D. Va, and not just talk.</state>
             </case>
             <case tag="hand" alsoPlaying="elaine" priority="0">
-                <state img="0-annoyed.png">Mirai dressed as a pirate for Halloween. That got old fast, just like this.</state>
-                <state img="0-annoyed.png">You better not start digging for buried chests.</state>
+                <state img="0-annoyed.png">You better not start digging for buried chests Elaine.</state>
                 <state img="0-annoyed.png">Ya sabes, tambien hablo español, Elaine.</state>
+                <state img="0-annoyed.png">Don't you think you're overdoing the pirate bit, Elaine?</state>
             </case>
             <case tag="hand" alsoPlaying="gwen" priority="0">
-                <state img="0-interested.png">Are Newtype senses anything like Spidey-Senses?</state>
+                <state img="0-interested.png">Are New-type senses anything likeSpider-Sensess?</state>
                 <state img="0-happy.png">There's a great punk rock band on Side 5 called Munzo Front. I'll get you a copy of their stuff.</state>
                 <state img="0-interested.png">Have you ever tried web-slinging in zero g?</state>
                 <state img="0-calm.png">Let me know if you ever want to go to space, Spidey.</state>
             </case>
             <case tag="hand" alsoPlaying="hanako" priority="0">
                 <state img="0-interested.png">What school did you say you went to again, Hanako?</state>
-                <state img="0-interested.png">Whose's this Lily you keep talking about? You should totally bring her here!</state>
+                <state img="0-interested.png">Who's this Lily you keep talking about? You should totally bring her here!</state>
                 <state img="0-interested.png">Any good books you can recommend Hanako?</state>
-                <state img="0-calm.png">Rin is best girl, but you're a good second.</state>
-            </case>
-            <case tag="hand" alsoPlaying="hermione" priority="0">
-                <state img="0-confident.png">Your magic can't help you here, Hermione.</state>
+                <state img="0-calm.png">Rin is best girl, but you're a good second Hanako.</state>
             </case>
             <case tag="hand" alsoPlaying="mavis" priority="0">
                 <state img="0-calm.png">You should get out more, Mavis.</state>
@@ -167,7 +185,10 @@
                 <state img="0-calm.png">I bet Amuro and Shinji would get along quite well.</state>
                 <state img="0-confident.png">If you ever need a job Misato I'm sure the Federation would hire you in a heart beat.</state>
             </case>
-            <case tag="hand" alsoPlaying="ryuko" priority="0">
+            <case tag="hand" alsoPlaying="ryuko" alsoPlayingStage="0-3" priority="0">
+                <state img="0-interested.png">That's an... odd uniform Ryuko...</state>
+            </case>
+            <case tag="hand" alsoPlaying="ryuko" totalRounds="5" priority="0">
                 <state img="0-annoyed.png">Okay Ryuko, who's this girl that keeps running in here?</state>
             </case>
             <case tag="hand" alsoPlaying="samus" alsoPlayingStage="0-2" priority="0">
@@ -175,7 +196,7 @@
             </case>
             <case tag="hand" alsoPlaying="samus" priority="0">
                 <state img="0-happy.png">Samus Aran; intergalactic bounty hunter and kick ass blonde!</state>
-                <state img="0-confident.png">I''d hire you any day, Samus.</state>
+                <state img="0-confident.png">I'd hire you any day, Samus.</state>
             </case>
             <case tag="hand" alsoPlaying="wiifitfemale" priority="0">
                 <state img="0-horny.png">Do you have any openings in your class, Trainer?</state>
@@ -183,24 +204,45 @@
             </case>
             <case tag="hand" notSaidMarker="sayla_intro">
                 <state img="0-calm.png" marker="sayla_intro">Petty Officer Sayla Mass. Nice to meet you!</state>
-                <state img="0-confident.png">Ensign Sayla Mass. This'll be fun.</state>
+                <state img="0-confident.png" marker="sayla_intro">Petty Officer Sayla Mass. This'll be fun.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="misato" alsoPlayingStage="0-4">
+                <state img="0-confident.png">Ours don't have giant aliens inside hell bent on destroying us.</state>
+            </case>
+            <case tag="must_strip" consecutiveLosses="2">
+                <state img="0-sad.png">Two in a row?</state>
+                <state img="0-confident.png">Two bad hands. That's nothing.</state>
+                <state img="0-confident.png">Don't get cocky, it's only two hands.</state>
+            </case>
+            <case tag="must_strip" consecutiveLosses="3-">
+                <state img="0-annoyed.png">Who's dealing these cards?</state>
+                <state img="0-annoyed.png">Focus Sayla.</state>
+                <state img="0-confident.png">I'm not used to losing like this.</state>
+                <state img="0-confident.png">I just figured you needed a handicap.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="0-calm.png">My turn? I was beginning to feel left out.</state>
                 <state img="0-sad.png">There goes my flawless run.</state>
+                <state img="0-interested.png">No problem. A minor set back!</state>
+            </case>
+            <case tag="must_strip_winning" totalRounds="10">
+                <state img="0-interested.png">It's going to take more than that to end my hot streak.</state>
             </case>
             <case tag="must_strip_normal">
                 <state img="0-confident.png">This is just the beginning.</state>
-                <state img="0-happy.png">Are you a Newtype or something?</state>
+                <state img="0-happy.png">Are you a New-type or something?</state>
             </case>
             <case tag="must_strip_losing">
                 <state img="0-confident.png">A temporary setback.</state>
             </case>
             <case tag="stripping">
-                <state img="0-stripping.png">The boots are my favourite part of the Federation uniform.</state>
+                <state img="0-stripping.png">The boots are my favorite part of the Federation uniform.</state>
                 <state img="0-stripping.png">I love my boots.</state>
                 <state img="0-stripping.png" marker="sayla_boots_back_later">I get my boots back later, right?</state>
                 <state img="0-stripping.png">Federation boots are great for kicking Zeon ass!</state>
+            </case>
+            <case tag="stripping" alsoPlaying="gwen">
+                <state img="0-stripping.png">If you win you can find out.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="0-happy.png">So I don't have to strip yet?</state>
@@ -229,6 +271,15 @@
                 <state img="0-confident.png">The moment of truth.</state>
                 <state img="0-interested.png">Do it slowly!</state>
             </case>
+            <case tag="female_must_strip" target="elaine" targetStage="3">
+                <state img="0-interested.png">Huh, didn't know pirates liked Casablanca.</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="4">
+                <state img="0-confident.png">Oh no, you can't get me with that one.</state>
+            </case>
+            <case tag="female_must_strip" target="gwen" targetStage="2">
+                <state img="0-calm.png">Well whatever will give you the strategic advantage.</state>
+            </case>
             <case tag="female_must_strip" target="misato">
                 <state img="0-interested.png">That's alright ~name~, I won't tell anyone at NERV about this.</state>
                 <state img="0-interested.png">Let's see what the director has for us.</state>
@@ -255,7 +306,7 @@
                 <state img="0-sad.png">That's not very exciting.</state>
                 <state img="0-sad.png">I barely noticed you were wearing that.</state>
                 <state img="0-annoyed.png">I have a wingnut in my pocket; would that count too?</state>
-                <state img="0-annoyed.png">I've got a Canootin Valve in my pocket; does that count too?</state>
+                <state img="0-annoyed.png">I've got a canootin valve in my pocket; does that count too?</state>
                 <state img="0-annoyed.png">You're really showing it all, aren't you.</state>
                 <state img="0-annoyed.png">You filthy coward!</state>
             </case>
@@ -264,7 +315,7 @@
             </case>
             <case tag="male_removing_accessory" priority="0">
                 <test expr="~background~" value="beach" />
-                <state img="0-annoyed.png">I've got a few doubloons in my pokect, does that count?</state>
+                <state img="0-annoyed.png">I've got a few doubloons in my pocket, does that count?</state>
             </case>
             <case tag="male_removing_accessory">
                 <test expr="~clothing.position~" value="head" />
@@ -288,16 +339,25 @@
                 <state img="0-sad.png">That's not very exciting.</state>
                 <state img="0-sad.png">I barely noticed you were wearing that.</state>
                 <state img="0-annoyed.png">I have a wingnut in my pocket; would that count too?</state>
-                <state img="0-annoyed.png">I've got a Canootin Valve in my pocket; does that count too?</state>
+                <state img="0-annoyed.png">I've got a canootin valve in my pocket; does that count too?</state>
                 <state img="0-annoyed.png">You're really showing it all, aren't you.</state>
                 <state img="0-annoyed.png">You filthy coward!</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="0">
+                <state img="0-calm.png">Mirai dressed as a pirate for Halloween.</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="1">
+                <state img="0-calm.png">I might not like pirates, but I do like your boots.</state>
             </case>
             <case tag="female_removing_accessory" target="ryuko" targetStage="0">
                 <state img="0-happy.png">Two girls for the price of one?</state>
             </case>
+            <case tag="female_removing_accessory" target="ryuko" targetStage="3">
+                <state img="0-annoyed.png">If you just toss it carelessly you might give someone a conc-</state>
+            </case>
             <case tag="female_removing_accessory" priority="0">
                 <test expr="~background~" value="beach" />
-                <state img="0-annoyed.png">I've got a few doubloons in my pokect, does that count?</state>
+                <state img="0-annoyed.png">I've got a few doubloons in my pocket, does that count?</state>
             </case>
             <case tag="female_removing_accessory">
                 <test expr="~clothing.position~" value="head" />
@@ -311,6 +371,15 @@
                 <state img="0-annoyed.png">Wow. Look at all that skin.</state>
                 <state img="0-annoyed.png">Try a little harder next time, okay?</state>
             </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="1">
+                <state img="0-annoyed.png">That got old real fast, just like this Elaine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="2">
+                <state img="0-calm.png">They are almost as nice as mine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="0-horny.png">Too be honest, who wouldn't look up them, Misato?</state>
+            </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="0-annoyed.png">Don't worry, nobody is interested in your antique cowboy guns.</state>
             </case>
@@ -318,7 +387,9 @@
                 <state img="0-happy.png">This'll be fun.</state>
             </case>
             <case tag="female_removed_accessory" target="ryuko" targetStage="4">
-                <state img="0-annoyed.png">That had to hurt.</state>
+                <state img="0-sad.png">That had to hurt...</state>
+                <state img="0-sad.png">-ussion...</state>
+                <state img="0-sad.png">Ouch...</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="0-calm.png">Oh yes, that counts.</state>
@@ -341,6 +412,15 @@
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="0-annoyed.png">How have I not been shot yet?</state>
             </case>
+            <case tag="female_removing_minor" target="elaine" targetStage="2">
+                <state img="0-annoyed.png">We couldn't get Mirai to stop talking like a pirate, not matter how many times we told her to stop.</state>
+            </case>
+            <case tag="female_removing_minor" id="0-1" target="sakura" targetStage="2">
+                <state img="0-interested.png">What? That's make up?</state>
+            </case>
+            <case tag="female_removing_minor" id="0-2" target="sakura" targetStage="3" targetSayingMarker="headless">
+                <state img="0-sad.png">Oh my...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="0-happy.png">I'm enjoying this.</state>
                 <state img="0-calm.png">It's okay, take your time.</state>
@@ -349,6 +429,21 @@
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2-3">
                 <state img="0-annoyed.png">Stop it Aimee!</state>
+            </case>
+            <case tag="female_removed_minor" target="elaine" targetStage="3">
+                <state img="0-sad.png">It took weeks for her to stop saying "yarg."</state>
+            </case>
+            <case tag="female_removed_minor" target="misato" targetStage="3">
+                <state img="0-happy.png">I won't say no to that.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="2">
+                <state img="0-calm.png">A bandage? Are you hurt?</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="3">
+                <state img="0-calm.png">A zombie idol. That'll take some getting used to.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="4">
+                <state img="0-calm.png">None of my medical skills can help me with this. Sorry ~target~.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="0-happy.png">You're taking off your ~clothing~ already?</state>
@@ -377,11 +472,17 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="0-calm.png">Don't worry, Hana; you should be safe without a normal suit in here.</state>
             </case>
+            <case tag="female_removing_major" target="elaine" targetStage="3">
+                <state img="0-confident.png">You can always raise the white flag Elaine.</state>
+            </case>
             <case tag="female_removing_major" target="gwen" targetStage="1">
                 <state img="0-annoyed.png">I'm getting tired of all these masks...</state>
             </case>
+            <case tag="female_removing_major" target="misato" targetStage="3">
+                <state img="0-calm.png">Misato, you're being way to hard on yourself. Just relax.</state>
+            </case>
             <case tag="female_removing_major" target="ryuko" targetStage="2">
-                <state img="0-interested.png">What's happing?</state>
+                <state img="0-interested.png">What's happening?</state>
             </case>
             <case tag="female_removing_major" target="ryuko" targetStage="4">
                 <state img="0-interested.png">A living uniform?!?</state>
@@ -400,11 +501,14 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="0-annoyed.png">Please don't do that.</state>
             </case>
+            <case tag="female_removed_major" target="elaine" targetStage="4">
+                <state img="0-confident.png">Game too much for you Elaine?</state>
+            </case>
             <case tag="female_removed_major" target="elizabeth" targetStage="5">
                 <state img="0-interested.png">Your underwear looks perfectly fitting to me, milady.</state>
             </case>
             <case tag="female_removed_major" target="misato" targetStage="4">
-                <state img="0-calm.png">Don't feel bad about that scar. It's okay to have some battle damage.</state>
+                <state img="0-calm.png">Don't feel bad about that scar. It's okay to have battle damage.</state>
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="0-interested.png">Did you enter trans-am mode?</state>
@@ -421,7 +525,7 @@
                 <state img="0-happy.png">You'll show us... it?</state>
                 <state img="0-calm.png">I understand if it's not erect - I haven't taken anything off.</state>
                 <state img="0-happy.png">Boom! Crotch shot!</state>
-                <state img="0-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="0-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="0-happy.png">I can't help looking!</state>
@@ -455,6 +559,9 @@
             <case tag="female_chest_will_be_visible" target="aimee" targetStage="3" alsoPlaying="misato">
                 <state img="0-annoyed.png">I have to agree with Misato on this...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="elaine">
+                <state img="0-annoyed.png">Elaine. Put the man down.</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="0-happy.png">Oh! You're quite beautiful!</state>
                 <state img="0-interested.png">You're in good shape!</state>
@@ -465,6 +572,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="aimee">
                 <state img="0-annoyed.png">That's it. You're insane.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="elaine">
+                <state img="0-confident.png">Well, at least Winslow survived.</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <state img="0-happy.png">Oh! You're quite beautiful!</state>
@@ -480,7 +590,7 @@
                 <state img="0-calm.png">I hope I get to strip soon; it's getting hot in here.</state>
                 <state img="0-interested.png">This far already?</state>
                 <state img="0-happy.png">Boom! Crotch shot!</state>
-                <state img="0-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="0-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
             </case>
             <case tag="female_crotch_will_be_visible" filter="blonde">
                 <state img="0-confident.png">Now to find out if ~name~ is a natural blonde.</state>
@@ -491,6 +601,13 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="alice">
                 <state img="0-horny.png">I guess we get to see your rabbit hole.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="elaine">
+                <state img="0-horny.png">I know how to see if you really are a salty dog.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="misato">
+                <state img="0-calm.png">Misato, your face is red.</state>
+                <state img="0-calm.png">How many beers have you had Misato?</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="0-happy.png">I never expected to see this much without even showing anything myself.</state>
@@ -513,6 +630,10 @@
             </case>
             <case tag="female_crotch_is_visible" target="elaine">
                 <state img="0-horny.png">Yarg.</state>
+                <state img="0-horny.png">Pretty nice Elaine. Maybe you're not as bad as I thought.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="misato">
+                <state img="0-calm.png">Uhhh... Misato, I think you may have had one too many drinks...</state>
             </case>
             <case tag="female_crotch_is_visible" target="velma">
                 <state img="0-interested.png">Mystery Solved.</state>
@@ -572,7 +693,10 @@
                 <state img="0-calm.png">Well your poker skills are pathetic but you seem to make up for it in other areas.</state>
             </case>
             <case tag="female_finished_masturbating" target="aimee">
-                <state img="0-.png">Better you than me, Aimee.</state>
+                <state img="0-annoyed.png">Better you than me, Aimee.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="misato" targetNotSaidMarker="Finished" targetSayingMarker="Finished">
+                <state img="0-annoyed.png">Misato. Stop being hard on yourself dammit.</state>
             </case>
             <case tag="game_over_victory">
                 <state img="0-confident.png">All hostiles neutralized, no suit damage. Piece of cake.</state>
@@ -588,16 +712,31 @@
                 <state img="1-calm.png">I want to exchange ~cards~.</state>
                 <state img="1-calm.png">~cards~ for me, please.</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="0" />
+                <state img="1-confident.png">No cards.</state>
+            </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="1-confident.png">Only one card.</state>
+            </case>
             <case tag="good_hand">
                 <state img="1-calm.png">I have nothing to fear.</state>
                 <state img="1-happy.png">These are perfect.</state>
                 <state img="1-confident.png">Oh, excellent.</state>
+                <state img="1-confident.png">All too easy.</state>
                 <state img="1-happy.png">You can't beat me if I'm wearing pink!</state>
                 <state img="1-confident.png">This is like a Gundam taking on a Zaku.</state>
                 <state img="1-confident.png">Core Booster, preparing to engage.</state>
                 <state img="1-confident.png">I always win during Zeon Game Night!</state>
                 <state img="1-confident.png">How good must my hand be to win my boots back?</state>
                 <state img="1-confident.png">You're not getting my belt yet!</state>
+            </case>
+            <case tag="good_hand" alsoPlaying="hermione" priority="0">
+                <state img="1-confident.png">Your magic can't help you here, Hermione.</state>
+            </case>
+            <case tag="good_hand" hasHand="Royal Flush" priority="800">
+                <state img="1-confident.png">Hey, it's a handful of Zabis.</state>
             </case>
             <case tag="okay_hand">
                 <state img="1-calm.png">I will make do.</state>
@@ -613,7 +752,7 @@
                 <state img="1-sad.png">I'd rather take on a Musai in a GM.</state>
                 <state img="1-sad.png">This is as bad as the time I had a Spanish accent...</state>
                 <state img="1-annoyed.png">Dealer, I am trained in firearms. Just keep that in mind if you keep giving me hands like these.</state>
-                <state img="1-annoyed.png">I thought Newtypes could see the future...</state>
+                <state img="1-annoyed.png">I thought New-types could see the future...</state>
                 <state img="1-annoyed.png">Oh sure, just give me a bunch of terrible cards. I can figure it out.</state>
                 <state img="1-sad.png">A bad hand - and my feet are cold too.</state>
             </case>
@@ -622,38 +761,39 @@
                 <state img="1-interested.png">I would use sunglasses to help my poker face, but I don't really want to mimic my brother.</state>
                 <state img="1-interested.png">I wonder if I can convince Mirai to join...</state>
             </case>
-            <case tag="hand" alsoPlaying="aimee" priority="0">
-                <state img="1-happy.png">You're cowboy outfit reminds me of living on a ranch.</state>
-                <state img="1-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
-                <state img="1-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            <case tag="hand" alsoPlaying="aimee" alsoPlayingStage="1-7" priority="0">
                 <state img="1-annoyed.png">Watch where you point that Aimee...</state>
                 <state img="1-annoyed.png">I've already accepted I'm going to get shot.</state>
             </case>
+            <case tag="hand" alsoPlaying="aimee" priority="0">
+                <state img="1-happy.png">Aimee's cowboy outfit reminds me of when I lived on a ranch.</state>
+                <state img="1-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
+                <state img="1-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            </case>
             <case tag="hand" alsoPlaying="cammy_white" priority="0">
                 <state img="1-calm.png">Lighten up Cammy, have fun.</state>
+                <state img="1-confident.png"></state>
             </case>
             <case tag="hand" alsoPlaying="d.va" priority="0">
                 <state img="1-happy.png">So D. Va, what Gundam games have you played?</state>
+                <state img="1-confident.png">I hope you prove a challenge D. Va, and not just talk.</state>
             </case>
             <case tag="hand" alsoPlaying="elaine" priority="0">
-                <state img="1-annoyed.png">Mirai dressed as a pirate for Halloween. That got old fast, just like this.</state>
-                <state img="1-annoyed.png">You better not start digging for buried chests.</state>
+                <state img="1-annoyed.png">You better not start digging for buried chests Elaine.</state>
                 <state img="1-annoyed.png">Ya sabes, tambien hablo español, Elaine.</state>
+                <state img="1-annoyed.png">Don't you think you're overdoing the pirate bit, Elaine?</state>
             </case>
             <case tag="hand" alsoPlaying="gwen" priority="0">
-                <state img="1-interested.png">Are Newtype senses anything like Spidey-Senses?</state>
+                <state img="1-interested.png">Are New-type senses anything likeSpider-Sensess?</state>
                 <state img="1-happy.png">There's a great punk rock band on Side 5 called Munzo Front. I'll get you a copy of their stuff.</state>
                 <state img="1-interested.png">Have you ever tried web-slinging in zero g?</state>
                 <state img="1-calm.png">Let me know if you ever want to go to space, Spidey.</state>
             </case>
             <case tag="hand" alsoPlaying="hanako" priority="0">
                 <state img="1-interested.png">What school did you say you went to again, Hanako?</state>
-                <state img="1-interested.png">Whose's this Lily you keep talking about? You should totally bring her here!</state>
+                <state img="1-interested.png">Who's this Lily you keep talking about? You should totally bring her here!</state>
                 <state img="1-interested.png">Any good books you can recommend Hanako?</state>
-                <state img="1-calm.png">Rin is best girl, but you're a good second.</state>
-            </case>
-            <case tag="hand" alsoPlaying="hermione" priority="0">
-                <state img="1-confident.png">Your magic can't help you here, Hermione.</state>
+                <state img="1-calm.png">Rin is best girl, but you're a good second Hanako.</state>
             </case>
             <case tag="hand" alsoPlaying="mavis" priority="0">
                 <state img="1-calm.png">You should get out more, Mavis.</state>
@@ -665,7 +805,10 @@
                 <state img="1-calm.png">I bet Amuro and Shinji would get along quite well.</state>
                 <state img="1-confident.png">If you ever need a job Misato I'm sure the Federation would hire you in a heart beat.</state>
             </case>
-            <case tag="hand" alsoPlaying="ryuko" priority="0">
+            <case tag="hand" alsoPlaying="ryuko" alsoPlayingStage="0-3" priority="0">
+                <state img="1-interested.png">That's an... odd uniform Ryuko...</state>
+            </case>
+            <case tag="hand" alsoPlaying="ryuko" totalRounds="5" priority="0">
                 <state img="1-annoyed.png">Okay Ryuko, who's this girl that keeps running in here?</state>
             </case>
             <case tag="hand" alsoPlaying="samus" alsoPlayingStage="0-2" priority="0">
@@ -673,17 +816,31 @@
             </case>
             <case tag="hand" alsoPlaying="samus" priority="0">
                 <state img="1-happy.png">Samus Aran; intergalactic bounty hunter and kick ass blonde!</state>
-                <state img="1-confident.png">I''d hire you any day, Samus.</state>
+                <state img="1-confident.png">I'd hire you any day, Samus.</state>
             </case>
             <case tag="hand" alsoPlaying="wiifitfemale" priority="0">
                 <state img="1-horny.png">Do you have any openings in your class, Trainer?</state>
                 <state img="1-horny.png">You look really pale Trainer. I know a beach nearby if you want to sunbath with me. Swimsuit not required.</state>
             </case>
+            <case tag="must_strip" consecutiveLosses="2">
+                <state img="1-sad.png">Two in a row?</state>
+                <state img="1-confident.png">Two bad hands. That's nothing.</state>
+                <state img="1-confident.png">Don't get cocky, it's only two hands.</state>
+            </case>
+            <case tag="must_strip" consecutiveLosses="3-">
+                <state img="1-annoyed.png">Who's dealing these cards?</state>
+                <state img="1-annoyed.png">Focus Sayla.</state>
+                <state img="1-confident.png">I'm not used to losing like this.</state>
+                <state img="1-confident.png">I just figured you needed a handicap.</state>
+            </case>
             <case tag="must_strip_winning">
                 <state img="1-confident.png">Alright, let's even the odds a little.</state>
+                <state img="1-confident.png">I'm not done yet!</state>
+                <state img="1-annoyed.png">You think I'm out?</state>
+                <state img="1-interested.png">Don't get full of yourself yet.</state>
             </case>
             <case tag="must_strip_normal">
-                <state img="1-happy.png">Are you a Newtype or something?</state>
+                <state img="1-happy.png">Are you a New-type or something?</state>
                 <state img="1-happy.png">This is exciting.</state>
             </case>
             <case tag="must_strip_losing">
@@ -699,6 +856,12 @@
                 <state img="1-stripped.png">Rest assured I can fight without them.</state>
                 <state img="1-stripped.png" marker="sayla_boots_leather">I always wondered if they're made of real leather.</state>
                 <state img="1-stripped.png">Good boots are worth fighting for.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="futaba">
+                <state img="1-stripped.png">Well Futaba, you can get drafted during an attack or you can apply at the closest Federation Base.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="gwen">
+                <state img="1-stripped.png">Sorry Spidey, it's not the coat.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="1-confident.png">Are you a man of your word?</state>
@@ -727,6 +890,15 @@
                 <state img="1-happy.png">Looks like that time I lost was a freak occurrence.</state>
                 <state img="1-interested.png">So, what'll it be?</state>
             </case>
+            <case tag="female_must_strip" target="elaine" targetStage="3">
+                <state img="1-interested.png">Huh, didn't know pirates liked Casablanca.</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="4">
+                <state img="1-confident.png">Oh no, you can't get me with that one.</state>
+            </case>
+            <case tag="female_must_strip" target="gwen" targetStage="2">
+                <state img="1-calm.png">Well whatever will give you the strategic advantage.</state>
+            </case>
             <case tag="tie">
                 <state img="1-interested.png">A tie! That doesn't happen every day!</state>
                 <state img="1-interested.png">Do we both strip now?</state>
@@ -749,7 +921,7 @@
                 <state img="1-sad.png">That's not very exciting.</state>
                 <state img="1-sad.png">I barely noticed you were wearing that.</state>
                 <state img="1-annoyed.png">I have a wingnut in my pocket; would that count too?</state>
-                <state img="1-annoyed.png">I've got a Canootin Valve in my pocket; does that count too?</state>
+                <state img="1-annoyed.png">I've got a canootin valve in my pocket; does that count too?</state>
                 <state img="1-annoyed.png">You're really showing it all, aren't you.</state>
                 <state img="1-annoyed.png">You filthy coward!</state>
             </case>
@@ -758,7 +930,7 @@
             </case>
             <case tag="male_removing_accessory" priority="0">
                 <test expr="~background~" value="beach" />
-                <state img="1-annoyed.png">I've got a few doubloons in my pokect, does that count?</state>
+                <state img="1-annoyed.png">I've got a few doubloons in my pocket, does that count?</state>
             </case>
             <case tag="male_removed_accessory">
                 <state img="1-annoyed.png">Whatever, I'm sure you won't get away with this for long.</state>
@@ -778,16 +950,25 @@
                 <state img="1-sad.png">That's not very exciting.</state>
                 <state img="1-sad.png">I barely noticed you were wearing that.</state>
                 <state img="1-annoyed.png">I have a wingnut in my pocket; would that count too?</state>
-                <state img="1-annoyed.png">I've got a Canootin Valve in my pocket; does that count too?</state>
+                <state img="1-annoyed.png">I've got a canootin valve in my pocket; does that count too?</state>
                 <state img="1-annoyed.png">You're really showing it all, aren't you.</state>
                 <state img="1-annoyed.png">You filthy coward!</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="0">
+                <state img="1-calm.png">Mirai dressed as a pirate for Halloween.</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="1">
+                <state img="1-calm.png">I might not like pirates, but I do like your boots.</state>
             </case>
             <case tag="female_removing_accessory" target="ryuko" targetStage="0">
                 <state img="1-happy.png">Two girls for the price of one?</state>
             </case>
+            <case tag="female_removing_accessory" target="ryuko" targetStage="3">
+                <state img="1-annoyed.png">If you just toss it carelessly you might give someone a conc-</state>
+            </case>
             <case tag="female_removing_accessory" priority="0">
                 <test expr="~background~" value="beach" />
-                <state img="1-annoyed.png">I've got a few doubloons in my pokect, does that count?</state>
+                <state img="1-annoyed.png">I've got a few doubloons in my pocket, does that count?</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="1-annoyed.png">Whatever, I'm sure you won't get away with this for long.</state>
@@ -797,6 +978,15 @@
                 <state img="1-annoyed.png">Try a little harder next time, okay?</state>
                 <state img="1-annoyed.png">I just hope I'll be braver if my turn comes again.</state>
             </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="1">
+                <state img="1-annoyed.png">That got old real fast, just like this Elaine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="2">
+                <state img="1-calm.png">They are almost as nice as mine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="1-horny.png">Too be honest, who wouldn't look up them, Misato?</state>
+            </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="1-annoyed.png">Don't worry, nobody is interested in your antique cowboy guns.</state>
             </case>
@@ -804,7 +994,9 @@
                 <state img="1-happy.png">This'll be fun.</state>
             </case>
             <case tag="female_removed_accessory" target="ryuko" targetStage="4">
-                <state img="1-annoyed.png">That had to hurt.</state>
+                <state img="1-sad.png">That had to hurt...</state>
+                <state img="1-sad.png">-ussion...</state>
+                <state img="1-sad.png">Ouch...</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="1-calm.png">Oh yes, that counts.</state>
@@ -827,6 +1019,15 @@
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="1-annoyed.png">How have I not been shot yet?</state>
             </case>
+            <case tag="female_removing_minor" target="elaine" targetStage="2">
+                <state img="1-annoyed.png">We couldn't get Mirai to stop talking like a pirate, not matter how many times we told her to stop.</state>
+            </case>
+            <case tag="female_removing_minor" id="1-1" target="sakura" targetStage="2">
+                <state img="1-interested.png">What? That's make up?</state>
+            </case>
+            <case tag="female_removing_minor" id="1-2" target="sakura" targetStage="3" targetSayingMarker="headless">
+                <state img="1-sad.png">Oh my...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="1-happy.png">I'm enjoying this.</state>
                 <state img="1-calm.png">It's okay, take your time.</state>
@@ -835,6 +1036,21 @@
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2-3">
                 <state img="1-annoyed.png">Stop it Aimee!</state>
+            </case>
+            <case tag="female_removed_minor" target="elaine" targetStage="3">
+                <state img="1-sad.png">It took weeks for her to stop saying "yarg."</state>
+            </case>
+            <case tag="female_removed_minor" target="misato" targetStage="3">
+                <state img="1-happy.png">I won't say no to that.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="2">
+                <state img="1-calm.png">A bandage? Are you hurt?</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="3">
+                <state img="1-calm.png">A zombie idol. That'll take some getting used to.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="4">
+                <state img="1-calm.png">None of my medical skills can help me with this. Sorry ~target~.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="1-happy.png">You're taking off your ~clothing~ already?</state>
@@ -863,11 +1079,17 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="1-calm.png">Don't worry, Hana; you should be safe without a normal suit in here.</state>
             </case>
+            <case tag="female_removing_major" target="elaine" targetStage="3">
+                <state img="1-confident.png">You can always raise the white flag Elaine.</state>
+            </case>
             <case tag="female_removing_major" target="gwen" targetStage="1">
                 <state img="1-annoyed.png">I'm getting tired of all these masks...</state>
             </case>
+            <case tag="female_removing_major" target="misato" targetStage="3">
+                <state img="1-calm.png">Misato, you're being way to hard on yourself. Just relax.</state>
+            </case>
             <case tag="female_removing_major" target="ryuko" targetStage="2">
-                <state img="1-interested.png">What's happing?</state>
+                <state img="1-interested.png">What's happening?</state>
             </case>
             <case tag="female_removing_major" target="ryuko" targetStage="4">
                 <state img="1-interested.png">A living uniform?!?</state>
@@ -886,11 +1108,14 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="1-annoyed.png">Please don't do that.</state>
             </case>
+            <case tag="female_removed_major" target="elaine" targetStage="4">
+                <state img="1-confident.png">Game too much for you Elaine?</state>
+            </case>
             <case tag="female_removed_major" target="elizabeth" targetStage="5">
                 <state img="1-interested.png">Your underwear looks perfectly fitting to me, milady.</state>
             </case>
             <case tag="female_removed_major" target="misato" targetStage="4">
-                <state img="1-calm.png">Don't feel bad about that scar. It's okay to have some battle damage.</state>
+                <state img="1-calm.png">Don't feel bad about that scar. It's okay to have battle damage.</state>
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="1-interested.png">Did you enter trans-am mode?</state>
@@ -906,7 +1131,7 @@
             <case tag="male_crotch_will_be_visible">
                 <state img="1-happy.png">You'll show us... it?</state>
                 <state img="1-happy.png">Boom! Crotch shot!</state>
-                <state img="1-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="1-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="1-calm.png">I understand if it's not erect - I have barely taken anything off.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
@@ -941,6 +1166,9 @@
             <case tag="female_chest_will_be_visible" target="aimee" targetStage="3" alsoPlaying="misato">
                 <state img="1-annoyed.png">I have to agree with Misato on this...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="elaine">
+                <state img="1-annoyed.png">Elaine. Put the man down.</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="1-happy.png">Oh! You're quite beautiful!</state>
                 <state img="1-interested.png">You're in good shape!</state>
@@ -951,6 +1179,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="aimee">
                 <state img="1-annoyed.png">That's it. You're insane.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="elaine">
+                <state img="1-confident.png">Well, at least Winslow survived.</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <state img="1-happy.png">Oh! You're quite beautiful!</state>
@@ -966,7 +1197,7 @@
                 <state img="1-calm.png">I hope I get to strip soon; it's getting hot in here.</state>
                 <state img="1-interested.png">This far already?</state>
                 <state img="1-happy.png">Boom! Crotch shot!</state>
-                <state img="1-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="1-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
             </case>
             <case tag="female_crotch_will_be_visible" filter="blonde">
                 <state img="1-confident.png">Now to find out if ~name~ is a natural blonde.</state>
@@ -977,6 +1208,13 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="alice">
                 <state img="1-horny.png">I guess we get to see your rabbit hole.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="elaine">
+                <state img="1-horny.png">I know how to see if you really are a salty dog.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="misato">
+                <state img="1-calm.png">Misato, your face is red.</state>
+                <state img="1-calm.png">How many beers have you had Misato?</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="1-happy.png">I never expected to see this much without even showing anything myself.</state>
@@ -999,6 +1237,10 @@
             </case>
             <case tag="female_crotch_is_visible" target="elaine">
                 <state img="1-horny.png">Yarg.</state>
+                <state img="1-horny.png">Pretty nice Elaine. Maybe you're not as bad as I thought.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="misato">
+                <state img="1-calm.png">Uhhh... Misato, I think you may have had one too many drinks...</state>
             </case>
             <case tag="female_crotch_is_visible" target="velma">
                 <state img="1-interested.png">Mystery Solved.</state>
@@ -1057,6 +1299,12 @@
                 <state img="1-interested.png">I may have to try a few of your moves later, ~name~.</state>
                 <state img="1-calm.png">Well your poker skills are pathetic but you seem to make up for it in other areas.</state>
             </case>
+            <case tag="female_finished_masturbating" target="aimee">
+                <state img="1-annoyed.png">Better you than me, Aimee.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="misato" targetNotSaidMarker="Finished" targetSayingMarker="Finished">
+                <state img="1-annoyed.png">Misato. Stop being hard on yourself dammit.</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="1-interested.png">As my brother says, in battle you must stay two or three steps ahead on the enemy.</state>
                 <state img="1-confident.png">My boots have been avenged.</state>
@@ -1071,6 +1319,14 @@
                 <state img="2-calm.png">I want to exchange ~cards~.</state>
                 <state img="2-calm.png">~cards~ for me, please.</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="0" />
+                <state img="2-confident.png">No cards.</state>
+            </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="2-confident.png">Only one card.</state>
+            </case>
             <case tag="good_hand">
                 <state img="2-happy.png">You can't beat me if I'm wearing pink!</state>
                 <state img="2-confident.png">This is like a Gundam taking on a Zaku.</state>
@@ -1080,6 +1336,12 @@
                 <state img="2-happy.png">I feel wonderful about this.</state>
                 <state img="2-happy.png">I did it!</state>
                 <state img="2-confident.png">I like my chances.</state>
+            </case>
+            <case tag="good_hand" alsoPlaying="hermione" priority="0">
+                <state img="2-confident.png">Your magic can't help you here, Hermione.</state>
+            </case>
+            <case tag="good_hand" hasHand="Royal Flush" priority="800">
+                <state img="2-confident.png">Hey, it's a handful of Zabis.</state>
             </case>
             <case tag="okay_hand">
                 <state img="2-interested.png">Wow, this game is more fun when the stakes are high.</state>
@@ -1091,7 +1353,7 @@
                 <state img="2-sad.png">I'd rather take on a Musai in a GM.</state>
                 <state img="2-sad.png">This is as bad as the time I had a Spanish accent...</state>
                 <state img="2-annoyed.png">Dealer, I am trained in firearms. Just keep that in mind if you keep giving me hands like these.</state>
-                <state img="2-annoyed.png">I thought Newtypes could see the future...</state>
+                <state img="2-annoyed.png">I thought New-types could see the future...</state>
                 <state img="2-annoyed.png">Oh sure, just give me a bunch of terrible cards. I can figure it out.</state>
                 <state img="2-annoyed.png">Damn it, I might as well take of my tights right now.</state>
                 <state img="2-annoyed.png">I mustn't give up.</state>
@@ -1103,38 +1365,39 @@
                 <state img="2-interested.png">I would use sunglasses to help my poker face, but I don't really want to mimic my brother.</state>
                 <state img="2-interested.png">I wonder if I can convince Mirai to join...</state>
             </case>
-            <case tag="hand" alsoPlaying="aimee" priority="0">
-                <state img="2-happy.png">You're cowboy outfit reminds me of living on a ranch.</state>
-                <state img="2-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
-                <state img="2-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            <case tag="hand" alsoPlaying="aimee" alsoPlayingStage="1-7" priority="0">
                 <state img="2-annoyed.png">Watch where you point that Aimee...</state>
                 <state img="2-annoyed.png">I've already accepted I'm going to get shot.</state>
             </case>
+            <case tag="hand" alsoPlaying="aimee" priority="0">
+                <state img="2-happy.png">Aimee's cowboy outfit reminds me of when I lived on a ranch.</state>
+                <state img="2-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
+                <state img="2-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            </case>
             <case tag="hand" alsoPlaying="cammy_white" priority="0">
                 <state img="2-calm.png">Lighten up Cammy, have fun.</state>
+                <state img="2-confident.png"></state>
             </case>
             <case tag="hand" alsoPlaying="d.va" priority="0">
                 <state img="2-happy.png">So D. Va, what Gundam games have you played?</state>
+                <state img="2-confident.png">I hope you prove a challenge D. Va, and not just talk.</state>
             </case>
             <case tag="hand" alsoPlaying="elaine" priority="0">
-                <state img="2-annoyed.png">Mirai dressed as a pirate for Halloween. That got old fast, just like this.</state>
-                <state img="2-annoyed.png">You better not start digging for buried chests.</state>
+                <state img="2-annoyed.png">You better not start digging for buried chests Elaine.</state>
                 <state img="2-annoyed.png">Ya sabes, tambien hablo español, Elaine.</state>
+                <state img="2-annoyed.png">Don't you think you're overdoing the pirate bit, Elaine?</state>
             </case>
             <case tag="hand" alsoPlaying="gwen" priority="0">
-                <state img="2-interested.png">Are Newtype senses anything like Spidey-Senses?</state>
+                <state img="2-interested.png">Are New-type senses anything likeSpider-Sensess?</state>
                 <state img="2-happy.png">There's a great punk rock band on Side 5 called Munzo Front. I'll get you a copy of their stuff.</state>
                 <state img="2-interested.png">Have you ever tried web-slinging in zero g?</state>
                 <state img="2-calm.png">Let me know if you ever want to go to space, Spidey.</state>
             </case>
             <case tag="hand" alsoPlaying="hanako" priority="0">
                 <state img="2-interested.png">What school did you say you went to again, Hanako?</state>
-                <state img="2-interested.png">Whose's this Lily you keep talking about? You should totally bring her here!</state>
+                <state img="2-interested.png">Who's this Lily you keep talking about? You should totally bring her here!</state>
                 <state img="2-interested.png">Any good books you can recommend Hanako?</state>
-                <state img="2-calm.png">Rin is best girl, but you're a good second.</state>
-            </case>
-            <case tag="hand" alsoPlaying="hermione" priority="0">
-                <state img="2-confident.png">Your magic can't help you here, Hermione.</state>
+                <state img="2-calm.png">Rin is best girl, but you're a good second Hanako.</state>
             </case>
             <case tag="hand" alsoPlaying="mavis" priority="0">
                 <state img="2-calm.png">You should get out more, Mavis.</state>
@@ -1146,7 +1409,10 @@
                 <state img="2-calm.png">I bet Amuro and Shinji would get along quite well.</state>
                 <state img="2-confident.png">If you ever need a job Misato I'm sure the Federation would hire you in a heart beat.</state>
             </case>
-            <case tag="hand" alsoPlaying="ryuko" priority="0">
+            <case tag="hand" alsoPlaying="ryuko" alsoPlayingStage="0-3" priority="0">
+                <state img="2-interested.png">That's an... odd uniform Ryuko...</state>
+            </case>
+            <case tag="hand" alsoPlaying="ryuko" totalRounds="5" priority="0">
                 <state img="2-annoyed.png">Okay Ryuko, who's this girl that keeps running in here?</state>
             </case>
             <case tag="hand" alsoPlaying="samus" alsoPlayingStage="0-2" priority="0">
@@ -1154,17 +1420,32 @@
             </case>
             <case tag="hand" alsoPlaying="samus" priority="0">
                 <state img="2-happy.png">Samus Aran; intergalactic bounty hunter and kick ass blonde!</state>
-                <state img="2-confident.png">I''d hire you any day, Samus.</state>
+                <state img="2-confident.png">I'd hire you any day, Samus.</state>
             </case>
             <case tag="hand" alsoPlaying="wiifitfemale" priority="0">
                 <state img="2-horny.png">Do you have any openings in your class, Trainer?</state>
                 <state img="2-horny.png">You look really pale Trainer. I know a beach nearby if you want to sunbath with me. Swimsuit not required.</state>
             </case>
+            <case tag="must_strip" consecutiveLosses="2">
+                <state img="2-sad.png">Two in a row?</state>
+                <state img="2-confident.png">Two bad hands. That's nothing.</state>
+                <state img="2-confident.png">Don't get cocky, it's only two hands.</state>
+            </case>
+            <case tag="must_strip" consecutiveLosses="3-">
+                <state img="2-annoyed.png">Who's dealing these cards?</state>
+                <state img="2-annoyed.png">Focus Sayla.</state>
+                <state img="2-confident.png">I'm not used to losing like this.</state>
+                <state img="2-confident.png">I just figured you needed a handicap.</state>
+            </case>
             <case tag="must_strip_winning">
-                <state img="2-confident.png">The tactical situation is still in my favour.</state>
+                <state img="2-confident.png">The tactical situation is still in my favor.</state>
+                <state img="2-interested.png">You may have won the battle, but not the war!</state>
+            </case>
+            <case tag="must_strip_winning" totalExposed="4">
+                <state img="2-annoyed.png">At least I still have my shirt on, ~player~!</state>
             </case>
             <case tag="must_strip_normal">
-                <state img="2-happy.png">Are you a Newtype or something?</state>
+                <state img="2-happy.png">Are you a New-type or something?</state>
                 <state img="2-calm.png">I performed admirably given the circumstances.</state>
             </case>
             <case tag="must_strip_losing">
@@ -1180,6 +1461,9 @@
                 <state img="2-stripped.png">Ah, I should have taken that off sooner.</state>
                 <state img="2-stripped.png">I can breathe now.</state>
                 <state img="2-stripped.png">It's actually pretty heavy.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="gwen">
+                <state img="2-stripped.png">Secret identity? Never! (How did she find out?)</state>
             </case>
             <case tag="male_must_strip">
                 <state img="2-confident.png">The moment of truth.</state>
@@ -1208,6 +1492,15 @@
                 <state img="2-interested.png">Nothing lifts the spirit like a pretty girl.</state>
                 <state img="2-interested.png">No backing out now!</state>
             </case>
+            <case tag="female_must_strip" target="elaine" targetStage="3">
+                <state img="2-interested.png">Huh, didn't know pirates liked Casablanca.</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="4">
+                <state img="2-confident.png">Oh no, you can't get me with that one.</state>
+            </case>
+            <case tag="female_must_strip" target="gwen" targetStage="2">
+                <state img="2-calm.png">Well whatever will give you the strategic advantage.</state>
+            </case>
             <case tag="tie">
                 <state img="2-interested.png">A tie! That doesn't happen every day!</state>
                 <state img="2-interested.png">Do we both strip now?</state>
@@ -1226,7 +1519,7 @@
                 <state img="2-sad.png">That's not very exciting.</state>
                 <state img="2-sad.png">I barely noticed you were wearing that.</state>
                 <state img="2-annoyed.png">I have a wingnut in my pocket; would that count too?</state>
-                <state img="2-annoyed.png">I've got a Canootin Valve in my pocket; does that count too?</state>
+                <state img="2-annoyed.png">I've got a canootin valve in my pocket; does that count too?</state>
                 <state img="2-annoyed.png">You're really showing it all, aren't you.</state>
                 <state img="2-annoyed.png">You filthy coward!</state>
             </case>
@@ -1235,7 +1528,7 @@
             </case>
             <case tag="male_removing_accessory" priority="0">
                 <test expr="~background~" value="beach" />
-                <state img="2-annoyed.png">I've got a few doubloons in my pokect, does that count?</state>
+                <state img="2-annoyed.png">I've got a few doubloons in my pocket, does that count?</state>
             </case>
             <case tag="male_removed_accessory">
                 <state img="2-annoyed.png">Am I going to have to slap some manliness into you?!?</state>
@@ -1250,16 +1543,25 @@
                 <state img="2-sad.png">That's not very exciting.</state>
                 <state img="2-sad.png">I barely noticed you were wearing that.</state>
                 <state img="2-annoyed.png">I have a wingnut in my pocket; would that count too?</state>
-                <state img="2-annoyed.png">I've got a Canootin Valve in my pocket; does that count too?</state>
+                <state img="2-annoyed.png">I've got a canootin valve in my pocket; does that count too?</state>
                 <state img="2-annoyed.png">You're really showing it all, aren't you.</state>
                 <state img="2-annoyed.png">You filthy coward!</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="0">
+                <state img="2-calm.png">Mirai dressed as a pirate for Halloween.</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="1">
+                <state img="2-calm.png">I might not like pirates, but I do like your boots.</state>
             </case>
             <case tag="female_removing_accessory" target="ryuko" targetStage="0">
                 <state img="2-happy.png">Two girls for the price of one?</state>
             </case>
+            <case tag="female_removing_accessory" target="ryuko" targetStage="3">
+                <state img="2-annoyed.png">If you just toss it carelessly you might give someone a conc-</state>
+            </case>
             <case tag="female_removing_accessory" priority="0">
                 <test expr="~background~" value="beach" />
-                <state img="2-annoyed.png">I've got a few doubloons in my pokect, does that count?</state>
+                <state img="2-annoyed.png">I've got a few doubloons in my pocket, does that count?</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="2-annoyed.png">Wow. Look at all that skin.</state>
@@ -1268,6 +1570,15 @@
                 <state img="2-calm.png">I suppose my belt wasn't very exciting either.</state>
                 <state img="2-annoyed.png">When a woman acts cowardly it reflects poorly on all of us.</state>
             </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="1">
+                <state img="2-annoyed.png">That got old real fast, just like this Elaine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="2">
+                <state img="2-calm.png">They are almost as nice as mine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="2-horny.png">Too be honest, who wouldn't look up them, Misato?</state>
+            </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="2-annoyed.png">Don't worry, nobody is interested in your antique cowboy guns.</state>
             </case>
@@ -1275,7 +1586,9 @@
                 <state img="2-happy.png">This'll be fun.</state>
             </case>
             <case tag="female_removed_accessory" target="ryuko" targetStage="4">
-                <state img="2-annoyed.png">That had to hurt.</state>
+                <state img="2-sad.png">That had to hurt...</state>
+                <state img="2-sad.png">-ussion...</state>
+                <state img="2-sad.png">Ouch...</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="2-calm.png">At least it's progress.</state>
@@ -1298,6 +1611,15 @@
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="2-annoyed.png">How have I not been shot yet?</state>
             </case>
+            <case tag="female_removing_minor" target="elaine" targetStage="2">
+                <state img="2-annoyed.png">We couldn't get Mirai to stop talking like a pirate, not matter how many times we told her to stop.</state>
+            </case>
+            <case tag="female_removing_minor" id="2-1" target="sakura" targetStage="2">
+                <state img="2-interested.png">What? That's make up?</state>
+            </case>
+            <case tag="female_removing_minor" id="2-2" target="sakura" targetStage="3" targetSayingMarker="headless">
+                <state img="2-sad.png">Oh my...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="2-happy.png">Next hand! Let's pick up the pace.</state>
                 <state img="2-confident.png">Let's keep playing.</state>
@@ -1306,6 +1628,21 @@
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2-3">
                 <state img="2-annoyed.png">Stop it Aimee!</state>
+            </case>
+            <case tag="female_removed_minor" target="elaine" targetStage="3">
+                <state img="2-sad.png">It took weeks for her to stop saying "yarg."</state>
+            </case>
+            <case tag="female_removed_minor" target="misato" targetStage="3">
+                <state img="2-happy.png">I won't say no to that.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="2">
+                <state img="2-calm.png">A bandage? Are you hurt?</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="3">
+                <state img="2-calm.png">A zombie idol. That'll take some getting used to.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="4">
+                <state img="2-calm.png">None of my medical skills can help me with this. Sorry ~target~.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="2-happy.png">A bold gambit. I'm impressed!</state>
@@ -1333,11 +1670,17 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="2-calm.png">Don't worry, Hana; you should be safe without a normal suit in here.</state>
             </case>
+            <case tag="female_removing_major" target="elaine" targetStage="3">
+                <state img="2-confident.png">You can always raise the white flag Elaine.</state>
+            </case>
             <case tag="female_removing_major" target="gwen" targetStage="1">
                 <state img="2-annoyed.png">I'm getting tired of all these masks...</state>
             </case>
+            <case tag="female_removing_major" target="misato" targetStage="3">
+                <state img="2-calm.png">Misato, you're being way to hard on yourself. Just relax.</state>
+            </case>
             <case tag="female_removing_major" target="ryuko" targetStage="2">
-                <state img="2-interested.png">What's happing?</state>
+                <state img="2-interested.png">What's happening?</state>
             </case>
             <case tag="female_removing_major" target="ryuko" targetStage="4">
                 <state img="2-interested.png">A living uniform?!?</state>
@@ -1356,11 +1699,14 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="2-annoyed.png">Please don't do that.</state>
             </case>
+            <case tag="female_removed_major" target="elaine" targetStage="4">
+                <state img="2-confident.png">Game too much for you Elaine?</state>
+            </case>
             <case tag="female_removed_major" target="elizabeth" targetStage="5">
                 <state img="2-interested.png">Your underwear looks perfectly fitting to me, milady.</state>
             </case>
             <case tag="female_removed_major" target="misato" targetStage="4">
-                <state img="2-calm.png">Don't feel bad about that scar. It's okay to have some battle damage.</state>
+                <state img="2-calm.png">Don't feel bad about that scar. It's okay to have battle damage.</state>
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="2-interested.png">Did you enter trans-am mode?</state>
@@ -1375,7 +1721,7 @@
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="2-happy.png">Boom! Crotch shot!</state>
-                <state img="2-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="2-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="2-interested.png">I have only seen a few before.</state>
                 <state img="2-calm.png">Alright, let's have a look at you.</state>
             </case>
@@ -1411,6 +1757,9 @@
             <case tag="female_chest_will_be_visible" target="aimee" targetStage="3" alsoPlaying="misato">
                 <state img="2-annoyed.png">I have to agree with Misato on this...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="elaine">
+                <state img="2-annoyed.png">Elaine. Put the man down.</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="2-happy.png">Aww, everyone loves perky boobs.</state>
                 <state img="2-interested.png">Would you model for a sculpture?</state>
@@ -1421,6 +1770,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="aimee">
                 <state img="2-annoyed.png">That's it. You're insane.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="elaine">
+                <state img="2-confident.png">Well, at least Winslow survived.</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <state img="2-annoyed.png">Watch where you swing those things.</state>
@@ -1434,7 +1786,7 @@
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="2-happy.png">Boom! Crotch shot!</state>
-                <state img="2-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="2-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="2-interested.png">I wonder if it looks like mine.</state>
                 <state img="2-confident.png">Here comes the pièce de résistance...</state>
             </case>
@@ -1447,6 +1799,13 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="alice">
                 <state img="2-horny.png">I guess we get to see your rabbit hole.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="elaine">
+                <state img="2-horny.png">I know how to see if you really are a salty dog.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="misato">
+                <state img="2-calm.png">Misato, your face is red.</state>
+                <state img="2-calm.png">How many beers have you had Misato?</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="2-horny.png">I bet that butt would look good in a normal suit.</state>
@@ -1467,6 +1826,10 @@
             </case>
             <case tag="female_crotch_is_visible" target="elaine">
                 <state img="2-horny.png">Yarg.</state>
+                <state img="2-horny.png">Pretty nice Elaine. Maybe you're not as bad as I thought.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="misato">
+                <state img="2-calm.png">Uhhh... Misato, I think you may have had one too many drinks...</state>
             </case>
             <case tag="female_crotch_is_visible" target="velma">
                 <state img="2-interested.png">Mystery Solved.</state>
@@ -1525,6 +1888,12 @@
                 <state img="2-interested.png">That was a real masterclass.</state>
                 <state img="2-happy.png">That looked kind of fun actually.</state>
             </case>
+            <case tag="female_finished_masturbating" target="aimee">
+                <state img="2-annoyed.png">Better you than me, Aimee.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="misato" targetNotSaidMarker="Finished" targetSayingMarker="Finished">
+                <state img="2-annoyed.png">Misato. Stop being hard on yourself dammit.</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="2-interested.png">As my brother says, in battle you must stay two or three steps ahead on the enemy.</state>
                 <state img="2-calm.png">I'd like my boots back now. The belt I live without.</state>
@@ -1539,6 +1908,14 @@
                 <state img="3-calm.png">I want to exchange ~cards~.</state>
                 <state img="3-calm.png">~cards~ for me, please.</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="0" />
+                <state img="3-confident.png">No cards.</state>
+            </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="3-confident.png">Only one card.</state>
+            </case>
             <case tag="good_hand">
                 <state img="3-happy.png">You can't beat me if I'm wearing pink!</state>
                 <state img="3-confident.png">This is like a Gundam taking on a Zaku.</state>
@@ -1548,6 +1925,12 @@
                 <state img="3-happy.png">I did it!</state>
                 <state img="3-confident.png">I like my chances.</state>
                 <state img="3-confident.png">I was almost getting worried there.</state>
+            </case>
+            <case tag="good_hand" alsoPlaying="hermione" priority="0">
+                <state img="3-confident.png">Your magic can't help you here, Hermione.</state>
+            </case>
+            <case tag="good_hand" hasHand="Royal Flush" priority="800">
+                <state img="3-confident.png">Hey, it's a handful of Zabis.</state>
             </case>
             <case tag="okay_hand">
                 <state img="3-calm.png">I have seen worse.</state>
@@ -1559,7 +1942,7 @@
                 <state img="3-sad.png">I'd rather take on a Musai in a GM.</state>
                 <state img="3-sad.png">This is as bad as the time I had a Spanish accent...</state>
                 <state img="3-annoyed.png">Dealer, I am trained in firearms. Just keep that in mind if you keep giving me hands like these.</state>
-                <state img="3-annoyed.png">I thought Newtypes could see the future...</state>
+                <state img="3-annoyed.png">I thought New-types could see the future...</state>
                 <state img="3-annoyed.png">Oh sure, just give me a bunch of terrible cards. I can figure it out.</state>
                 <state img="3-annoyed.png">I mustn't give up.</state>
                 <state img="3-sad.png">Why does this keep happening to me?</state>
@@ -1571,38 +1954,39 @@
                 <state img="3-interested.png">I would use sunglasses to help my poker face, but I don't really want to mimic my brother.</state>
                 <state img="3-interested.png">I wonder if I can convince Mirai to join...</state>
             </case>
-            <case tag="hand" alsoPlaying="aimee" priority="0">
-                <state img="3-happy.png">You're cowboy outfit reminds me of living on a ranch.</state>
-                <state img="3-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
-                <state img="3-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            <case tag="hand" alsoPlaying="aimee" alsoPlayingStage="1-7" priority="0">
                 <state img="3-annoyed.png">Watch where you point that Aimee...</state>
                 <state img="3-annoyed.png">I've already accepted I'm going to get shot.</state>
             </case>
+            <case tag="hand" alsoPlaying="aimee" priority="0">
+                <state img="3-happy.png">Aimee's cowboy outfit reminds me of when I lived on a ranch.</state>
+                <state img="3-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
+                <state img="3-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            </case>
             <case tag="hand" alsoPlaying="cammy_white" priority="0">
                 <state img="3-calm.png">Lighten up Cammy, have fun.</state>
+                <state img="3-confident.png"></state>
             </case>
             <case tag="hand" alsoPlaying="d.va" priority="0">
                 <state img="3-happy.png">So D. Va, what Gundam games have you played?</state>
+                <state img="3-confident.png">I hope you prove a challenge D. Va, and not just talk.</state>
             </case>
             <case tag="hand" alsoPlaying="elaine" priority="0">
-                <state img="3-annoyed.png">Mirai dressed as a pirate for Halloween. That got old fast, just like this.</state>
-                <state img="3-annoyed.png">You better not start digging for buried chests.</state>
+                <state img="3-annoyed.png">You better not start digging for buried chests Elaine.</state>
                 <state img="3-annoyed.png">Ya sabes, tambien hablo español, Elaine.</state>
+                <state img="3-annoyed.png">Don't you think you're overdoing the pirate bit, Elaine?</state>
             </case>
             <case tag="hand" alsoPlaying="gwen" priority="0">
-                <state img="3-interested.png">Are Newtype senses anything like Spidey-Senses?</state>
+                <state img="3-interested.png">Are New-type senses anything likeSpider-Sensess?</state>
                 <state img="3-happy.png">There's a great punk rock band on Side 5 called Munzo Front. I'll get you a copy of their stuff.</state>
                 <state img="3-interested.png">Have you ever tried web-slinging in zero g?</state>
                 <state img="3-calm.png">Let me know if you ever want to go to space, Spidey.</state>
             </case>
             <case tag="hand" alsoPlaying="hanako" priority="0">
                 <state img="3-interested.png">What school did you say you went to again, Hanako?</state>
-                <state img="3-interested.png">Whose's this Lily you keep talking about? You should totally bring her here!</state>
+                <state img="3-interested.png">Who's this Lily you keep talking about? You should totally bring her here!</state>
                 <state img="3-interested.png">Any good books you can recommend Hanako?</state>
-                <state img="3-calm.png">Rin is best girl, but you're a good second.</state>
-            </case>
-            <case tag="hand" alsoPlaying="hermione" priority="0">
-                <state img="3-confident.png">Your magic can't help you here, Hermione.</state>
+                <state img="3-calm.png">Rin is best girl, but you're a good second Hanako.</state>
             </case>
             <case tag="hand" alsoPlaying="mavis" priority="0">
                 <state img="3-calm.png">You should get out more, Mavis.</state>
@@ -1614,7 +1998,10 @@
                 <state img="3-calm.png">I bet Amuro and Shinji would get along quite well.</state>
                 <state img="3-confident.png">If you ever need a job Misato I'm sure the Federation would hire you in a heart beat.</state>
             </case>
-            <case tag="hand" alsoPlaying="ryuko" priority="0">
+            <case tag="hand" alsoPlaying="ryuko" alsoPlayingStage="0-3" priority="0">
+                <state img="3-interested.png">That's an... odd uniform Ryuko...</state>
+            </case>
+            <case tag="hand" alsoPlaying="ryuko" totalRounds="5" priority="0">
                 <state img="3-annoyed.png">Okay Ryuko, who's this girl that keeps running in here?</state>
             </case>
             <case tag="hand" alsoPlaying="samus" alsoPlayingStage="0-2" priority="0">
@@ -1622,14 +2009,27 @@
             </case>
             <case tag="hand" alsoPlaying="samus" priority="0">
                 <state img="3-happy.png">Samus Aran; intergalactic bounty hunter and kick ass blonde!</state>
-                <state img="3-confident.png">I''d hire you any day, Samus.</state>
+                <state img="3-confident.png">I'd hire you any day, Samus.</state>
             </case>
             <case tag="hand" alsoPlaying="wiifitfemale" priority="0">
                 <state img="3-horny.png">Do you have any openings in your class, Trainer?</state>
                 <state img="3-horny.png">You look really pale Trainer. I know a beach nearby if you want to sunbath with me. Swimsuit not required.</state>
             </case>
+            <case tag="must_strip" consecutiveLosses="2">
+                <state img="3-sad.png">Two in a row?</state>
+                <state img="3-confident.png">Two bad hands. That's nothing.</state>
+                <state img="3-confident.png">Don't get cocky, it's only two hands.</state>
+            </case>
+            <case tag="must_strip" consecutiveLosses="3-">
+                <state img="3-annoyed.png">Who's dealing these cards?</state>
+                <state img="3-annoyed.png">Focus Sayla.</state>
+                <state img="3-confident.png">I'm not used to losing like this.</state>
+                <state img="3-confident.png">I just figured you needed a handicap.</state>
+            </case>
             <case tag="must_strip_winning">
                 <state img="3-annoyed.png">You may be motivated by revenge, but I'm afraid you're the one making the mistake.</state>
+                <state img="3-confident.png">If I wasn't winning I'd be more annoyed.</state>
+                <state img="3-happy.png">You guys are all lasting a lot longer than the White Base crew!</state>
             </case>
             <case tag="must_strip_normal">
                 <state img="3-sad.png">I guess nobody has all the answers all the time.</state>
@@ -1673,6 +2073,15 @@
                 <state img="3-annoyed.png">I've got to stay on my toes.</state>
                 <state img="3-confident.png">Let's see what you're made of.</state>
             </case>
+            <case tag="female_must_strip" target="elaine" targetStage="3">
+                <state img="3-interested.png">Huh, didn't know pirates liked Casablanca.</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="4">
+                <state img="3-confident.png">Oh no, you can't get me with that one.</state>
+            </case>
+            <case tag="female_must_strip" target="gwen" targetStage="2">
+                <state img="3-calm.png">Well whatever will give you the strategic advantage.</state>
+            </case>
             <case tag="tie">
                 <state img="3-interested.png">A tie! That doesn't happen every day!</state>
                 <state img="3-interested.png">Do we both strip now?</state>
@@ -1691,7 +2100,7 @@
                 <state img="3-sad.png">That's not very exciting.</state>
                 <state img="3-sad.png">I barely noticed you were wearing that.</state>
                 <state img="3-annoyed.png">I have a wingnut in my pocket; would that count too?</state>
-                <state img="3-annoyed.png">I've got a Canootin Valve in my pocket; does that count too?</state>
+                <state img="3-annoyed.png">I've got a canootin valve in my pocket; does that count too?</state>
                 <state img="3-annoyed.png">You're really showing it all, aren't you.</state>
                 <state img="3-annoyed.png">You filthy coward!</state>
             </case>
@@ -1700,7 +2109,7 @@
             </case>
             <case tag="male_removing_accessory" priority="0">
                 <test expr="~background~" value="beach" />
-                <state img="3-annoyed.png">I've got a few doubloons in my pokect, does that count?</state>
+                <state img="3-annoyed.png">I've got a few doubloons in my pocket, does that count?</state>
             </case>
             <case tag="male_removed_accessory">
                 <state img="3-annoyed.png">Am I going to have to slap some manliness into you?!?</state>
@@ -1715,16 +2124,25 @@
                 <state img="3-sad.png">That's not very exciting.</state>
                 <state img="3-sad.png">I barely noticed you were wearing that.</state>
                 <state img="3-annoyed.png">I have a wingnut in my pocket; would that count too?</state>
-                <state img="3-annoyed.png">I've got a Canootin Valve in my pocket; does that count too?</state>
+                <state img="3-annoyed.png">I've got a canootin valve in my pocket; does that count too?</state>
                 <state img="3-annoyed.png">You're really showing it all, aren't you.</state>
                 <state img="3-annoyed.png">You filthy coward!</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="0">
+                <state img="3-calm.png">Mirai dressed as a pirate for Halloween.</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="1">
+                <state img="3-calm.png">I might not like pirates, but I do like your boots.</state>
             </case>
             <case tag="female_removing_accessory" target="ryuko" targetStage="0">
                 <state img="3-happy.png">Two girls for the price of one?</state>
             </case>
+            <case tag="female_removing_accessory" target="ryuko" targetStage="3">
+                <state img="3-annoyed.png">If you just toss it carelessly you might give someone a conc-</state>
+            </case>
             <case tag="female_removing_accessory" priority="0">
                 <test expr="~background~" value="beach" />
-                <state img="3-annoyed.png">I've got a few doubloons in my pokect, does that count?</state>
+                <state img="3-annoyed.png">I've got a few doubloons in my pocket, does that count?</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="3-annoyed.png">Wow. Look at all that skin.</state>
@@ -1733,6 +2151,15 @@
                 <state img="3-calm.png">I suppose my belt wasn't very exciting either.</state>
                 <state img="3-annoyed.png">When a woman acts cowardly it reflects poorly on all of us.</state>
             </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="1">
+                <state img="3-annoyed.png">That got old real fast, just like this Elaine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="2">
+                <state img="3-calm.png">They are almost as nice as mine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="3-horny.png">Too be honest, who wouldn't look up them, Misato?</state>
+            </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="3-annoyed.png">Don't worry, nobody is interested in your antique cowboy guns.</state>
             </case>
@@ -1740,7 +2167,9 @@
                 <state img="3-happy.png">This'll be fun.</state>
             </case>
             <case tag="female_removed_accessory" target="ryuko" targetStage="4">
-                <state img="3-annoyed.png">That had to hurt.</state>
+                <state img="3-sad.png">That had to hurt...</state>
+                <state img="3-sad.png">-ussion...</state>
+                <state img="3-sad.png">Ouch...</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="3-sad.png">That does seem like your best tactical option.</state>
@@ -1763,6 +2192,15 @@
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="3-annoyed.png">How have I not been shot yet?</state>
             </case>
+            <case tag="female_removing_minor" target="elaine" targetStage="2">
+                <state img="3-annoyed.png">We couldn't get Mirai to stop talking like a pirate, not matter how many times we told her to stop.</state>
+            </case>
+            <case tag="female_removing_minor" id="3-1" target="sakura" targetStage="2">
+                <state img="3-interested.png">What? That's make up?</state>
+            </case>
+            <case tag="female_removing_minor" id="3-2" target="sakura" targetStage="3" targetSayingMarker="headless">
+                <state img="3-sad.png">Oh my...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="3-happy.png">Next hand! Let's pick up the pace.</state>
                 <state img="3-confident.png">Let's keep playing.</state>
@@ -1771,6 +2209,21 @@
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2-3">
                 <state img="3-annoyed.png">Stop it Aimee!</state>
+            </case>
+            <case tag="female_removed_minor" target="elaine" targetStage="3">
+                <state img="3-sad.png">It took weeks for her to stop saying "yarg."</state>
+            </case>
+            <case tag="female_removed_minor" target="misato" targetStage="3">
+                <state img="3-happy.png">I won't say no to that.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="2">
+                <state img="3-calm.png">A bandage? Are you hurt?</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="3">
+                <state img="3-calm.png">A zombie idol. That'll take some getting used to.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="4">
+                <state img="3-calm.png">None of my medical skills can help me with this. Sorry ~target~.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="3-happy.png">A bold gambit. I'm impressed!</state>
@@ -1799,11 +2252,17 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="3-calm.png">Don't worry, Hana; you should be safe without a normal suit in here.</state>
             </case>
+            <case tag="female_removing_major" target="elaine" targetStage="3">
+                <state img="3-confident.png">You can always raise the white flag Elaine.</state>
+            </case>
             <case tag="female_removing_major" target="gwen" targetStage="1">
                 <state img="3-annoyed.png">I'm getting tired of all these masks...</state>
             </case>
+            <case tag="female_removing_major" target="misato" targetStage="3">
+                <state img="3-calm.png">Misato, you're being way to hard on yourself. Just relax.</state>
+            </case>
             <case tag="female_removing_major" target="ryuko" targetStage="2">
-                <state img="3-interested.png">What's happing?</state>
+                <state img="3-interested.png">What's happening?</state>
             </case>
             <case tag="female_removing_major" target="ryuko" targetStage="4">
                 <state img="3-interested.png">A living uniform?!?</state>
@@ -1822,11 +2281,14 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="3-annoyed.png">Please don't do that.</state>
             </case>
+            <case tag="female_removed_major" target="elaine" targetStage="4">
+                <state img="3-confident.png">Game too much for you Elaine?</state>
+            </case>
             <case tag="female_removed_major" target="elizabeth" targetStage="5">
                 <state img="3-interested.png">Your underwear looks perfectly fitting to me, milady.</state>
             </case>
             <case tag="female_removed_major" target="misato" targetStage="4">
-                <state img="3-calm.png">Don't feel bad about that scar. It's okay to have some battle damage.</state>
+                <state img="3-calm.png">Don't feel bad about that scar. It's okay to have battle damage.</state>
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="3-interested.png">Did you enter trans-am mode?</state>
@@ -1841,7 +2303,7 @@
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="3-happy.png">Boom! Crotch shot!</state>
-                <state img="3-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="3-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="3-interested.png">I have only seen a few before.</state>
                 <state img="3-calm.png">Alright, let's have a look at you.</state>
             </case>
@@ -1877,6 +2339,9 @@
             <case tag="female_chest_will_be_visible" target="aimee" targetStage="3" alsoPlaying="misato">
                 <state img="3-annoyed.png">I have to agree with Misato on this...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="elaine">
+                <state img="3-annoyed.png">Elaine. Put the man down.</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="3-happy.png">Aww, everyone loves perky boobs.</state>
                 <state img="3-interested.png">Would you model for a sculpture?</state>
@@ -1887,6 +2352,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="aimee">
                 <state img="3-annoyed.png">That's it. You're insane.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="elaine">
+                <state img="3-confident.png">Well, at least Winslow survived.</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <state img="3-annoyed.png">Watch where you swing those things.</state>
@@ -1900,7 +2368,7 @@
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="3-happy.png">Boom! Crotch shot!</state>
-                <state img="3-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="3-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="3-interested.png">I wonder if it looks like mine.</state>
                 <state img="3-confident.png">Here comes the pièce de résistance...</state>
             </case>
@@ -1913,6 +2381,13 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="alice">
                 <state img="3-horny.png">I guess we get to see your rabbit hole.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="elaine">
+                <state img="3-horny.png">I know how to see if you really are a salty dog.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="misato">
+                <state img="3-calm.png">Misato, your face is red.</state>
+                <state img="3-calm.png">How many beers have you had Misato?</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="3-horny.png">I bet that butt would look good in a normal suit.</state>
@@ -1933,6 +2408,10 @@
             </case>
             <case tag="female_crotch_is_visible" target="elaine">
                 <state img="3-horny.png">Yarg.</state>
+                <state img="3-horny.png">Pretty nice Elaine. Maybe you're not as bad as I thought.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="misato">
+                <state img="3-calm.png">Uhhh... Misato, I think you may have had one too many drinks...</state>
             </case>
             <case tag="female_crotch_is_visible" target="velma">
                 <state img="3-interested.png">Mystery Solved.</state>
@@ -1990,6 +2469,12 @@
                 <state img="3-interested.png">That was a real masterclass.</state>
                 <state img="3-happy.png">That looked kind of fun actually.</state>
             </case>
+            <case tag="female_finished_masturbating" target="aimee">
+                <state img="3-annoyed.png">Better you than me, Aimee.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="misato" targetNotSaidMarker="Finished" targetSayingMarker="Finished">
+                <state img="3-annoyed.png">Misato. Stop being hard on yourself dammit.</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="3-interested.png">As my brother says, in battle you must stay two or three steps ahead on the enemy.</state>
                 <state img="3-annoyed.png">I was barely getting started.</state>
@@ -2005,6 +2490,14 @@
                 <state img="4-calm.png">I want to exchange ~cards~.</state>
                 <state img="4-calm.png">~cards~ for me, please.</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="0" />
+                <state img="4-confident.png">No cards.</state>
+            </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="4-confident.png">Only one card.</state>
+            </case>
             <case tag="good_hand">
                 <state img="4-confident.png">This is like a Gundam taking on a Zaku.</state>
                 <state img="4-confident.png">Core Booster, preparing to engage.</state>
@@ -2016,6 +2509,12 @@
                 <state img="4-happy.png">Finally!</state>
                 <state img="4-confident.png">I'm still in this!</state>
             </case>
+            <case tag="good_hand" alsoPlaying="hermione" priority="0">
+                <state img="4-confident.png">Your magic can't help you here, Hermione.</state>
+            </case>
+            <case tag="good_hand" hasHand="Royal Flush" priority="800">
+                <state img="4-confident.png">Hey, it's a handful of Zabis.</state>
+            </case>
             <case tag="okay_hand">
                 <state img="4-annoyed.png">I must not let my guard down now.</state>
                 <state img="4-sad.png">I need better than average at this point.</state>
@@ -2026,7 +2525,7 @@
                 <state img="4-sad.png">I'd rather take on a Musai in a GM.</state>
                 <state img="4-sad.png">This is as bad as the time I had a Spanish accent...</state>
                 <state img="4-annoyed.png">Dealer, I am trained in firearms. Just keep that in mind if you keep giving me hands like these.</state>
-                <state img="4-annoyed.png">I thought Newtypes could see the future...</state>
+                <state img="4-annoyed.png">I thought New-types could see the future...</state>
                 <state img="4-annoyed.png">Oh sure, just give me a bunch of terrible cards. I can figure it out.</state>
                 <state img="4-confident.png">If I can't turn this around at least you are in for a good show.</state>
                 <state img="4-sad.png">Oh, not now.</state>
@@ -2038,38 +2537,39 @@
                 <state img="4-interested.png">I would use sunglasses to help my poker face, but I don't really want to mimic my brother.</state>
                 <state img="4-interested.png">I wonder if I can convince Mirai to join...</state>
             </case>
-            <case tag="hand" alsoPlaying="aimee" priority="0">
-                <state img="4-happy.png">You're cowboy outfit reminds me of living on a ranch.</state>
-                <state img="4-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
-                <state img="4-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            <case tag="hand" alsoPlaying="aimee" alsoPlayingStage="1-7" priority="0">
                 <state img="4-annoyed.png">Watch where you point that Aimee...</state>
                 <state img="4-annoyed.png">I've already accepted I'm going to get shot.</state>
             </case>
+            <case tag="hand" alsoPlaying="aimee" priority="0">
+                <state img="4-happy.png">Aimee's cowboy outfit reminds me of when I lived on a ranch.</state>
+                <state img="4-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
+                <state img="4-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            </case>
             <case tag="hand" alsoPlaying="cammy_white" priority="0">
                 <state img="4-calm.png">Lighten up Cammy, have fun.</state>
+                <state img="4-confident.png"></state>
             </case>
             <case tag="hand" alsoPlaying="d.va" priority="0">
                 <state img="4-happy.png">So D. Va, what Gundam games have you played?</state>
+                <state img="4-confident.png">I hope you prove a challenge D. Va, and not just talk.</state>
             </case>
             <case tag="hand" alsoPlaying="elaine" priority="0">
-                <state img="4-annoyed.png">Mirai dressed as a pirate for Halloween. That got old fast, just like this.</state>
-                <state img="4-annoyed.png">You better not start digging for buried chests.</state>
+                <state img="4-annoyed.png">You better not start digging for buried chests Elaine.</state>
                 <state img="4-annoyed.png">Ya sabes, tambien hablo español, Elaine.</state>
+                <state img="4-annoyed.png">Don't you think you're overdoing the pirate bit, Elaine?</state>
             </case>
             <case tag="hand" alsoPlaying="gwen" priority="0">
-                <state img="4-interested.png">Are Newtype senses anything like Spidey-Senses?</state>
+                <state img="4-interested.png">Are New-type senses anything likeSpider-Sensess?</state>
                 <state img="4-happy.png">There's a great punk rock band on Side 5 called Munzo Front. I'll get you a copy of their stuff.</state>
                 <state img="4-interested.png">Have you ever tried web-slinging in zero g?</state>
                 <state img="4-calm.png">Let me know if you ever want to go to space, Spidey.</state>
             </case>
             <case tag="hand" alsoPlaying="hanako" priority="0">
                 <state img="4-interested.png">What school did you say you went to again, Hanako?</state>
-                <state img="4-interested.png">Whose's this Lily you keep talking about? You should totally bring her here!</state>
+                <state img="4-interested.png">Who's this Lily you keep talking about? You should totally bring her here!</state>
                 <state img="4-interested.png">Any good books you can recommend Hanako?</state>
-                <state img="4-calm.png">Rin is best girl, but you're a good second.</state>
-            </case>
-            <case tag="hand" alsoPlaying="hermione" priority="0">
-                <state img="4-confident.png">Your magic can't help you here, Hermione.</state>
+                <state img="4-calm.png">Rin is best girl, but you're a good second Hanako.</state>
             </case>
             <case tag="hand" alsoPlaying="mavis" priority="0">
                 <state img="4-calm.png">You should get out more, Mavis.</state>
@@ -2081,7 +2581,10 @@
                 <state img="4-calm.png">I bet Amuro and Shinji would get along quite well.</state>
                 <state img="4-confident.png">If you ever need a job Misato I'm sure the Federation would hire you in a heart beat.</state>
             </case>
-            <case tag="hand" alsoPlaying="ryuko" priority="0">
+            <case tag="hand" alsoPlaying="ryuko" alsoPlayingStage="0-3" priority="0">
+                <state img="4-interested.png">That's an... odd uniform Ryuko...</state>
+            </case>
+            <case tag="hand" alsoPlaying="ryuko" totalRounds="5" priority="0">
                 <state img="4-annoyed.png">Okay Ryuko, who's this girl that keeps running in here?</state>
             </case>
             <case tag="hand" alsoPlaying="samus" alsoPlayingStage="0-2" priority="0">
@@ -2089,11 +2592,22 @@
             </case>
             <case tag="hand" alsoPlaying="samus" priority="0">
                 <state img="4-happy.png">Samus Aran; intergalactic bounty hunter and kick ass blonde!</state>
-                <state img="4-confident.png">I''d hire you any day, Samus.</state>
+                <state img="4-confident.png">I'd hire you any day, Samus.</state>
             </case>
             <case tag="hand" alsoPlaying="wiifitfemale" priority="0">
                 <state img="4-horny.png">Do you have any openings in your class, Trainer?</state>
                 <state img="4-horny.png">You look really pale Trainer. I know a beach nearby if you want to sunbath with me. Swimsuit not required.</state>
+            </case>
+            <case tag="must_strip" consecutiveLosses="2">
+                <state img="4-sad.png">Two in a row?</state>
+                <state img="4-confident.png">Two bad hands. That's nothing.</state>
+                <state img="4-confident.png">Don't get cocky, it's only two hands.</state>
+            </case>
+            <case tag="must_strip" consecutiveLosses="3-">
+                <state img="4-annoyed.png">Who's dealing these cards?</state>
+                <state img="4-annoyed.png">Focus Sayla.</state>
+                <state img="4-confident.png">I'm not used to losing like this.</state>
+                <state img="4-confident.png">I just figured you needed a handicap.</state>
             </case>
             <case tag="must_strip">
                 <test expr="~background~" value="beach" />
@@ -2101,6 +2615,7 @@
             </case>
             <case tag="must_strip_winning">
                 <state img="4-confident.png">The battle isn't over yet!</state>
+                <state img="4-annoyed.png">Usually they would be out of chips by now...</state>
             </case>
             <case tag="must_strip_normal">
                 <state img="4-annoyed.png" marker="sayla_two_piece_reminder">Now remember, the swimsuit counts as two pieces!</state>
@@ -2113,10 +2628,27 @@
                 <state img="4-stripping.png" marker="sayla_chest_be_grateful">Okay, I'll show you, but you better be grateful.</state>
                 <state img="4-stripping.png">Alright, you can see them.</state>
             </case>
+            <case tag="stripping" alsoPlaying="spooky">
+                <state img="4-stripping.png">It's in the rules Spooky.</state>
+            </case>
             <case tag="stripped">
                 <state img="4-stripped.png">Though it's a one-piece, it counts as two pieces. End of discussion.</state>
                 <state img="4-stripped.png">It's like a bra and panties in one, so I'll take it off in two stages. Not negotiable.</state>
                 <state img="4-stripped.png">I'm glad they took my amendment to the rules.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="beatrix" alsoPlayingStage="3">
+                <state img="4-annoyed.png">You're going to have to try better than that to scare me, Beatrix.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="kimberly" alsoPlayingStage="0-5">
+                <state img="4-stripped.png">(White, red and black? Does she know my brother?)</state>
+            </case>
+            <case tag="stripped" alsoPlaying="spooky">
+                <state img="4-stripped.png">Sorry Spooky, non-negotiable.</state>
+                <state img="4-confident.png">Just think of it as a challenge, Spooky.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="lucina" alsoPlayingStage="1-6">
+                <condition count="1" filter="florina" />
+                <state img="4-happy.png">You know I know a great beach nearby.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="4-confident.png">I expect you to pay the penalty.</state>
@@ -2144,6 +2676,15 @@
                 <state img="4-confident.png">Let's see what you're made of.</state>
                 <state img="4-happy.png">Make this good, I'm in my underwear here. Essentially.</state>
                 <state img="4-calm.png">Why don't you strip down and join me for a swim?</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="3">
+                <state img="4-interested.png">Huh, didn't know pirates liked Casablanca.</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="4">
+                <state img="4-confident.png">Oh no, you can't get me with that one.</state>
+            </case>
+            <case tag="female_must_strip" target="gwen" targetStage="2">
+                <state img="4-calm.png">Well whatever will give you the strategic advantage.</state>
             </case>
             <case tag="tie">
                 <state img="4-interested.png">A tie! That doesn't happen every day!</state>
@@ -2174,7 +2715,7 @@
                 <state img="4-annoyed.png">Wow. Look at all that skin.</state>
                 <state img="4-annoyed.png">Try a little harder next time, okay?</state>
                 <state img="4-sad.png">I expected more.</state>
-                <state img="4-annoyed.png">If I lose at least I'll lose honourably.</state>
+                <state img="4-annoyed.png">If I lose at least I'll lose honorably.</state>
                 <state img="4-sad.png">I should have known.</state>
                 <state img="4-annoyed.png">Don't join the game if you don't like the rules.</state>
             </case>
@@ -2186,16 +2727,34 @@
                 <state img="4-annoyed.png">A cowardly tactic.</state>
                 <state img="4-sad.png">I hope I've never been such a tease.</state>
             </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="0">
+                <state img="4-calm.png">Mirai dressed as a pirate for Halloween.</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="1">
+                <state img="4-calm.png">I might not like pirates, but I do like your boots.</state>
+            </case>
             <case tag="female_removing_accessory" target="ryuko" targetStage="0">
                 <state img="4-happy.png">Two girls for the price of one?</state>
+            </case>
+            <case tag="female_removing_accessory" target="ryuko" targetStage="3">
+                <state img="4-annoyed.png">If you just toss it carelessly you might give someone a conc-</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="4-annoyed.png">Wow. Look at all that skin.</state>
                 <state img="4-annoyed.png">Try a little harder next time, okay?</state>
                 <state img="4-sad.png">I expected more.</state>
                 <state img="4-annoyed.png">Don't join the game if you don't like the rules.</state>
-                <state img="4-annoyed.png">If I lose at least I'll lose honourably.</state>
+                <state img="4-annoyed.png">If I lose at least I'll lose honorably.</state>
                 <state img="4-sad.png">I should have known.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="1">
+                <state img="4-annoyed.png">That got old real fast, just like this Elaine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="2">
+                <state img="4-calm.png">They are almost as nice as mine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="4-horny.png">Too be honest, who wouldn't look up them, Misato?</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="4-annoyed.png">Don't worry, nobody is interested in your antique cowboy guns.</state>
@@ -2204,7 +2763,9 @@
                 <state img="4-happy.png">This'll be fun.</state>
             </case>
             <case tag="female_removed_accessory" target="ryuko" targetStage="4">
-                <state img="4-annoyed.png">That had to hurt.</state>
+                <state img="4-sad.png">That had to hurt...</state>
+                <state img="4-sad.png">-ussion...</state>
+                <state img="4-sad.png">Ouch...</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="4-confident.png">~Clothing~, you're dismissed.</state>
@@ -2227,6 +2788,15 @@
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="4-annoyed.png">How have I not been shot yet?</state>
             </case>
+            <case tag="female_removing_minor" target="elaine" targetStage="2">
+                <state img="4-annoyed.png">We couldn't get Mirai to stop talking like a pirate, not matter how many times we told her to stop.</state>
+            </case>
+            <case tag="female_removing_minor" id="4-1" target="sakura" targetStage="2">
+                <state img="4-interested.png">What? That's make up?</state>
+            </case>
+            <case tag="female_removing_minor" id="4-2" target="sakura" targetStage="3" targetSayingMarker="headless">
+                <state img="4-sad.png">Oh my...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="4-calm.png">I hope you lose something bigger next time.</state>
                 <state img="4-annoyed.png">Patience is the key to victory.</state>
@@ -2235,6 +2805,21 @@
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2-3">
                 <state img="4-annoyed.png">Stop it Aimee!</state>
+            </case>
+            <case tag="female_removed_minor" target="elaine" targetStage="3">
+                <state img="4-sad.png">It took weeks for her to stop saying "yarg."</state>
+            </case>
+            <case tag="female_removed_minor" target="misato" targetStage="3">
+                <state img="4-happy.png">I won't say no to that.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="2">
+                <state img="4-calm.png">A bandage? Are you hurt?</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="3">
+                <state img="4-calm.png">A zombie idol. That'll take some getting used to.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="4">
+                <state img="4-calm.png">None of my medical skills can help me with this. Sorry ~target~.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="4-happy.png">Finally someone else shows some initiative.</state>
@@ -2263,11 +2848,17 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="4-calm.png">Don't worry, Hana; you should be safe without a normal suit in here.</state>
             </case>
+            <case tag="female_removing_major" target="elaine" targetStage="3">
+                <state img="4-confident.png">You can always raise the white flag Elaine.</state>
+            </case>
             <case tag="female_removing_major" target="gwen" targetStage="1">
                 <state img="4-annoyed.png">I'm getting tired of all these masks...</state>
             </case>
+            <case tag="female_removing_major" target="misato" targetStage="3">
+                <state img="4-calm.png">Misato, you're being way to hard on yourself. Just relax.</state>
+            </case>
             <case tag="female_removing_major" target="ryuko" targetStage="2">
-                <state img="4-interested.png">What's happing?</state>
+                <state img="4-interested.png">What's happening?</state>
             </case>
             <case tag="female_removing_major" target="ryuko" targetStage="4">
                 <state img="4-interested.png">A living uniform?!?</state>
@@ -2286,11 +2877,14 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="4-annoyed.png">Please don't do that.</state>
             </case>
+            <case tag="female_removed_major" target="elaine" targetStage="4">
+                <state img="4-confident.png">Game too much for you Elaine?</state>
+            </case>
             <case tag="female_removed_major" target="elizabeth" targetStage="5">
                 <state img="4-interested.png">Your underwear looks perfectly fitting to me, milady.</state>
             </case>
             <case tag="female_removed_major" target="misato" targetStage="4">
-                <state img="4-calm.png">Don't feel bad about that scar. It's okay to have some battle damage.</state>
+                <state img="4-calm.png">Don't feel bad about that scar. It's okay to have battle damage.</state>
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="4-interested.png">Did you enter trans-am mode?</state>
@@ -2305,7 +2899,7 @@
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="4-happy.png">Boom! Crotch shot!</state>
-                <state img="4-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="4-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="4-horny.png">I don't mind having a look.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
@@ -2340,6 +2934,9 @@
             <case tag="female_chest_will_be_visible" target="aimee" targetStage="3" alsoPlaying="misato">
                 <state img="4-annoyed.png">I have to agree with Misato on this...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="elaine">
+                <state img="4-annoyed.png">Elaine. Put the man down.</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="4-horny.png">Want me to show you how to do a breast exam?</state>
                 <state img="4-confident.png">Look at you, all grown up.</state>
@@ -2350,6 +2947,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="aimee">
                 <state img="4-annoyed.png">That's it. You're insane.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="elaine">
+                <state img="4-confident.png">Well, at least Winslow survived.</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <state img="4-horny.png">Want me to show you how to do a breast exam?</state>
@@ -2363,7 +2963,7 @@
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="4-happy.png">Boom! Crotch shot!</state>
-                <state img="4-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="4-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="4-interested.png">It's going to be tight. The game I mean.</state>
             </case>
             <case tag="female_crotch_will_be_visible" filter="blonde">
@@ -2375,6 +2975,13 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="alice">
                 <state img="4-horny.png">I guess we get to see your rabbit hole.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="elaine">
+                <state img="4-horny.png">I know how to see if you really are a salty dog.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="misato">
+                <state img="4-calm.png">Misato, your face is red.</state>
+                <state img="4-calm.png">How many beers have you had Misato?</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="4-horny.png">What a shame to keep such beauty hidden.</state>
@@ -2396,6 +3003,10 @@
             </case>
             <case tag="female_crotch_is_visible" target="elaine">
                 <state img="4-horny.png">Yarg.</state>
+                <state img="4-horny.png">Pretty nice Elaine. Maybe you're not as bad as I thought.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="misato">
+                <state img="4-calm.png">Uhhh... Misato, I think you may have had one too many drinks...</state>
             </case>
             <case tag="female_crotch_is_visible" target="velma">
                 <state img="4-interested.png">Mystery Solved.</state>
@@ -2454,6 +3065,12 @@
                 <state img="4-confident.png">Some performance, ~name~. I hope this bathing suit is waterproof from the inside.</state>
                 <state img="4-happy.png">Wow, ~name~! You're still trembling.</state>
             </case>
+            <case tag="female_finished_masturbating" target="aimee">
+                <state img="4-annoyed.png">Better you than me, Aimee.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="misato" targetNotSaidMarker="Finished" targetSayingMarker="Finished">
+                <state img="4-annoyed.png">Misato. Stop being hard on yourself dammit.</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="4-calm.png">You'll have to try harder to see me naked.</state>
                 <state img="4-confident.png">Another game won.</state>
@@ -2468,6 +3085,14 @@
                 <state img="5-calm.png">I want to exchange ~cards~.</state>
                 <state img="5-calm.png">~cards~ for me, please.</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="0" />
+                <state img="5-confident.png">No cards.</state>
+            </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="5-confident.png">Only one card.</state>
+            </case>
             <case tag="good_hand">
                 <state img="5-confident.png">This is like a Gundam taking on a Zaku.</state>
                 <state img="5-confident.png">Core Booster, preparing to engage.</state>
@@ -2480,6 +3105,12 @@
                 <state img="5-interested.png">Beginning counter-attack!</state>
                 <state img="5-calm.png">Oh good, the dealer actually decided to give me a good hand!</state>
             </case>
+            <case tag="good_hand" alsoPlaying="hermione" priority="0">
+                <state img="5-confident.png">Your magic can't help you here, Hermione.</state>
+            </case>
+            <case tag="good_hand" hasHand="Royal Flush" priority="800">
+                <state img="5-confident.png">Hey, it's a handful of Zabis.</state>
+            </case>
             <case tag="okay_hand">
                 <state img="5-sad.png">I need better than average at this point.</state>
                 <state img="5-confident.png">I am not afraid.</state>
@@ -2490,7 +3121,7 @@
                 <state img="5-sad.png">I'd rather take on a Musai in a GM.</state>
                 <state img="5-sad.png">This is as bad as the time I had a Spanish accent...</state>
                 <state img="5-annoyed.png">Dealer, I am trained in firearms. Just keep that in mind if you keep giving me hands like these.</state>
-                <state img="5-annoyed.png">I thought Newtypes could see the future...</state>
+                <state img="5-annoyed.png">I thought New-types could see the future...</state>
                 <state img="5-annoyed.png">Oh sure, just give me a bunch of terrible cards. I can figure it out.</state>
                 <state img="5-sad.png">Oh, not now.</state>
                 <state img="5-sad.png">This is a Zabi plot.</state>
@@ -2502,38 +3133,39 @@
                 <state img="5-interested.png">I would use sunglasses to help my poker face, but I don't really want to mimic my brother.</state>
                 <state img="5-interested.png">I wonder if I can convince Mirai to join...</state>
             </case>
-            <case tag="hand" alsoPlaying="aimee" priority="0">
-                <state img="5-happy.png">You're cowboy outfit reminds me of living on a ranch.</state>
-                <state img="5-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
-                <state img="5-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            <case tag="hand" alsoPlaying="aimee" alsoPlayingStage="1-7" priority="0">
                 <state img="5-annoyed.png">Watch where you point that Aimee...</state>
                 <state img="5-annoyed.png">I've already accepted I'm going to get shot.</state>
             </case>
+            <case tag="hand" alsoPlaying="aimee" priority="0">
+                <state img="5-happy.png">Aimee's cowboy outfit reminds me of when I lived on a ranch.</state>
+                <state img="5-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
+                <state img="5-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            </case>
             <case tag="hand" alsoPlaying="cammy_white" priority="0">
                 <state img="5-calm.png">Lighten up Cammy, have fun.</state>
+                <state img="5-confident.png"></state>
             </case>
             <case tag="hand" alsoPlaying="d.va" priority="0">
                 <state img="5-happy.png">So D. Va, what Gundam games have you played?</state>
+                <state img="5-confident.png">I hope you prove a challenge D. Va, and not just talk.</state>
             </case>
             <case tag="hand" alsoPlaying="elaine" priority="0">
-                <state img="5-annoyed.png">Mirai dressed as a pirate for Halloween. That got old fast, just like this.</state>
-                <state img="5-annoyed.png">You better not start digging for buried chests.</state>
+                <state img="5-annoyed.png">You better not start digging for buried chests Elaine.</state>
                 <state img="5-annoyed.png">Ya sabes, tambien hablo español, Elaine.</state>
+                <state img="5-annoyed.png">Don't you think you're overdoing the pirate bit, Elaine?</state>
             </case>
             <case tag="hand" alsoPlaying="gwen" priority="0">
-                <state img="5-interested.png">Are Newtype senses anything like Spidey-Senses?</state>
+                <state img="5-interested.png">Are New-type senses anything likeSpider-Sensess?</state>
                 <state img="5-happy.png">There's a great punk rock band on Side 5 called Munzo Front. I'll get you a copy of their stuff.</state>
                 <state img="5-interested.png">Have you ever tried web-slinging in zero g?</state>
                 <state img="5-calm.png">Let me know if you ever want to go to space, Spidey.</state>
             </case>
             <case tag="hand" alsoPlaying="hanako" priority="0">
                 <state img="5-interested.png">What school did you say you went to again, Hanako?</state>
-                <state img="5-interested.png">Whose's this Lily you keep talking about? You should totally bring her here!</state>
+                <state img="5-interested.png">Who's this Lily you keep talking about? You should totally bring her here!</state>
                 <state img="5-interested.png">Any good books you can recommend Hanako?</state>
-                <state img="5-calm.png">Rin is best girl, but you're a good second.</state>
-            </case>
-            <case tag="hand" alsoPlaying="hermione" priority="0">
-                <state img="5-confident.png">Your magic can't help you here, Hermione.</state>
+                <state img="5-calm.png">Rin is best girl, but you're a good second Hanako.</state>
             </case>
             <case tag="hand" alsoPlaying="mavis" priority="0">
                 <state img="5-calm.png">You should get out more, Mavis.</state>
@@ -2545,7 +3177,10 @@
                 <state img="5-calm.png">I bet Amuro and Shinji would get along quite well.</state>
                 <state img="5-confident.png">If you ever need a job Misato I'm sure the Federation would hire you in a heart beat.</state>
             </case>
-            <case tag="hand" alsoPlaying="ryuko" priority="0">
+            <case tag="hand" alsoPlaying="ryuko" alsoPlayingStage="0-3" priority="0">
+                <state img="5-interested.png">That's an... odd uniform Ryuko...</state>
+            </case>
+            <case tag="hand" alsoPlaying="ryuko" totalRounds="5" priority="0">
                 <state img="5-annoyed.png">Okay Ryuko, who's this girl that keeps running in here?</state>
             </case>
             <case tag="hand" alsoPlaying="samus" alsoPlayingStage="0-2" priority="0">
@@ -2553,14 +3188,29 @@
             </case>
             <case tag="hand" alsoPlaying="samus" priority="0">
                 <state img="5-happy.png">Samus Aran; intergalactic bounty hunter and kick ass blonde!</state>
-                <state img="5-confident.png">I''d hire you any day, Samus.</state>
+                <state img="5-confident.png">I'd hire you any day, Samus.</state>
             </case>
             <case tag="hand" alsoPlaying="wiifitfemale" priority="0">
                 <state img="5-horny.png">Do you have any openings in your class, Trainer?</state>
                 <state img="5-horny.png">You look really pale Trainer. I know a beach nearby if you want to sunbath with me. Swimsuit not required.</state>
             </case>
+            <case tag="must_strip" consecutiveLosses="2">
+                <state img="5-sad.png">Two in a row?</state>
+                <state img="5-confident.png">Two bad hands. That's nothing.</state>
+                <state img="5-confident.png">Don't get cocky, it's only two hands.</state>
+            </case>
+            <case tag="must_strip" consecutiveLosses="3-">
+                <state img="5-annoyed.png">Who's dealing these cards?</state>
+                <state img="5-annoyed.png">Focus Sayla.</state>
+                <state img="5-confident.png">I'm not used to losing like this.</state>
+                <state img="5-confident.png">I just figured you needed a handicap.</state>
+            </case>
             <case tag="must_strip_winning">
-                <state img="5-happy.png">I don't mind joining the rest of you at this point.</state>
+                <state img="5-interested.png">Eh, why not?</state>
+                <state img="5-calm.png">Don't think you've won yet. I've got one round left!</state>
+            </case>
+            <case tag="must_strip_winning" totalNaked="4">
+                <state img="5-horny.png">Everyone else is doing it, so why not?</state>
             </case>
             <case tag="must_strip_normal">
                 <state img="5-calm.png">I'm not ashamed to show myself to you.</state>
@@ -2580,12 +3230,24 @@
                 <state img="5-stripping.png" marker="sayla_naked_so_dramatic">I don't see why this has to be so dramatic.</state>
                 <state img="5-stripping.png">I hope I live up to your expectations.</state>
             </case>
+            <case tag="stripping" alsoPlaying="spooky" consecutiveLosses="1-9">
+                <state img="5-confident.png">No Spooky, but it bought me time.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="spooky" timeInStage="5-99">
+                <state img="5-confident.png">At least it bought me time.</state>
+            </case>
             <case tag="stripped">
                 <state img="5-stripped.png">Here they are.</state>
                 <state img="5-stripped.png" marker="sayla_chest_smaller_lately">I feel like they got smaller lately.</state>
                 <state img="5-stripped.png" marker="sayla_chest_okay_to_look">This once it's okay to look.</state>
                 <state img="5-confident.png">You still haven't beaten me yet!</state>
                 <state img="5-stripped.png">Mobile suit damage, critical.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="elaine">
+                <state img="5-stripping.png">I swear this is just like Halloween.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="spooky">
+                <state img="5-annoyed.png">It's not like you don't apparate clothes on, Spooky.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="5-confident.png">I expect you to pay the penalty.</state>
@@ -2613,6 +3275,15 @@
                 <state img="5-annoyed.png">I showed you my breasts, so you better make this worth it!</state>
                 <state img="5-happy.png">At last, something else for you all to stare at.</state>
                 <state img="5-calm.png">Give them a show. Trust me, it feels good.</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="3">
+                <state img="5-interested.png">Huh, didn't know pirates liked Casablanca.</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="4">
+                <state img="5-confident.png">Oh no, you can't get me with that one.</state>
+            </case>
+            <case tag="female_must_strip" target="gwen" targetStage="2">
+                <state img="5-calm.png">Well whatever will give you the strategic advantage.</state>
             </case>
             <case tag="tie">
                 <state img="5-interested.png">A tie! That doesn't happen every day!</state>
@@ -2643,7 +3314,7 @@
                 <state img="5-annoyed.png">Wow. Look at all that skin.</state>
                 <state img="5-annoyed.png">Try a little harder next time, okay?</state>
                 <state img="5-sad.png">I expected more.</state>
-                <state img="5-annoyed.png">If I lose at least I'll lose honourably.</state>
+                <state img="5-annoyed.png">If I lose at least I'll lose honorably.</state>
                 <state img="5-sad.png">I should have known.</state>
                 <state img="5-annoyed.png">And you call yourself a man.</state>
             </case>
@@ -2655,16 +3326,34 @@
                 <state img="5-sad.png">I get topless for you and this is my reward?</state>
                 <state img="5-sad.png">It seems the sight of my breasts has not inspired you with courage.</state>
             </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="0">
+                <state img="5-calm.png">Mirai dressed as a pirate for Halloween.</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="1">
+                <state img="5-calm.png">I might not like pirates, but I do like your boots.</state>
+            </case>
             <case tag="female_removing_accessory" target="ryuko" targetStage="0">
                 <state img="5-happy.png">Two girls for the price of one?</state>
+            </case>
+            <case tag="female_removing_accessory" target="ryuko" targetStage="3">
+                <state img="5-annoyed.png">If you just toss it carelessly you might give someone a conc-</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="5-annoyed.png">Wow. Look at all that skin.</state>
                 <state img="5-annoyed.png">Try a little harder next time, okay?</state>
                 <state img="5-sad.png">I expected more.</state>
                 <state img="5-annoyed.png">Don't join the game if you don't like the rules.</state>
-                <state img="5-annoyed.png">If I lose at least I'll lose honourably.</state>
+                <state img="5-annoyed.png">If I lose at least I'll lose honorably.</state>
                 <state img="5-sad.png">I should have known.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="1">
+                <state img="5-annoyed.png">That got old real fast, just like this Elaine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="2">
+                <state img="5-calm.png">They are almost as nice as mine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="5-horny.png">Too be honest, who wouldn't look up them, Misato?</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="5-annoyed.png">Don't worry, nobody is interested in your antique cowboy guns.</state>
@@ -2673,7 +3362,9 @@
                 <state img="5-happy.png">This'll be fun.</state>
             </case>
             <case tag="female_removed_accessory" target="ryuko" targetStage="4">
-                <state img="5-annoyed.png">That had to hurt.</state>
+                <state img="5-sad.png">That had to hurt...</state>
+                <state img="5-sad.png">-ussion...</state>
+                <state img="5-sad.png">Ouch...</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="5-confident.png">~Clothing~, you're dismissed.</state>
@@ -2696,6 +3387,15 @@
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="5-annoyed.png">How have I not been shot yet?</state>
             </case>
+            <case tag="female_removing_minor" target="elaine" targetStage="2">
+                <state img="5-annoyed.png">We couldn't get Mirai to stop talking like a pirate, not matter how many times we told her to stop.</state>
+            </case>
+            <case tag="female_removing_minor" id="5-1" target="sakura" targetStage="2">
+                <state img="5-interested.png">What? That's make up?</state>
+            </case>
+            <case tag="female_removing_minor" id="5-2" target="sakura" targetStage="3" targetSayingMarker="headless">
+                <state img="5-sad.png">Oh my...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="5-calm.png">At least that's out of the way now.</state>
                 <state img="5-interested.png">There's something sexy about seeing your ~clothing~ on the floor.</state>
@@ -2704,6 +3404,21 @@
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2-3">
                 <state img="5-annoyed.png">Stop it Aimee!</state>
+            </case>
+            <case tag="female_removed_minor" target="elaine" targetStage="3">
+                <state img="5-sad.png">It took weeks for her to stop saying "yarg."</state>
+            </case>
+            <case tag="female_removed_minor" target="misato" targetStage="3">
+                <state img="5-happy.png">I won't say no to that.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="2">
+                <state img="5-calm.png">A bandage? Are you hurt?</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="3">
+                <state img="5-calm.png">A zombie idol. That'll take some getting used to.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="4">
+                <state img="5-calm.png">None of my medical skills can help me with this. Sorry ~target~.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="5-happy.png">Look, ~name~ is taking off his ~clothing~!</state>
@@ -2726,11 +3441,17 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="5-calm.png">Don't worry, Hana; you should be safe without a normal suit in here.</state>
             </case>
+            <case tag="female_removing_major" target="elaine" targetStage="3">
+                <state img="5-confident.png">You can always raise the white flag Elaine.</state>
+            </case>
             <case tag="female_removing_major" target="gwen" targetStage="1">
                 <state img="5-annoyed.png">I'm getting tired of all these masks...</state>
             </case>
+            <case tag="female_removing_major" target="misato" targetStage="3">
+                <state img="5-calm.png">Misato, you're being way to hard on yourself. Just relax.</state>
+            </case>
             <case tag="female_removing_major" target="ryuko" targetStage="2">
-                <state img="5-interested.png">What's happing?</state>
+                <state img="5-interested.png">What's happening?</state>
             </case>
             <case tag="female_removing_major" target="ryuko" targetStage="4">
                 <state img="5-interested.png">A living uniform?!?</state>
@@ -2747,11 +3468,14 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="5-annoyed.png">Please don't do that.</state>
             </case>
+            <case tag="female_removed_major" target="elaine" targetStage="4">
+                <state img="5-confident.png">Game too much for you Elaine?</state>
+            </case>
             <case tag="female_removed_major" target="elizabeth" targetStage="5">
                 <state img="5-interested.png">Your underwear looks perfectly fitting to me, milady.</state>
             </case>
             <case tag="female_removed_major" target="misato" targetStage="4">
-                <state img="5-calm.png">Don't feel bad about that scar. It's okay to have some battle damage.</state>
+                <state img="5-calm.png">Don't feel bad about that scar. It's okay to have battle damage.</state>
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="5-interested.png">Did you enter trans-am mode?</state>
@@ -2766,7 +3490,7 @@
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="5-happy.png">Boom! Crotch shot!</state>
-                <state img="5-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="5-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="5-calm.png">At least someone is doing worse than me.</state>
                 <state img="5-calm.png">I promise I won't stare more than you stared at my breasts.</state>
             </case>
@@ -2802,6 +3526,9 @@
             <case tag="female_chest_will_be_visible" target="aimee" targetStage="3" alsoPlaying="misato">
                 <state img="5-annoyed.png">I have to agree with Misato on this...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="elaine">
+                <state img="5-annoyed.png">Elaine. Put the man down.</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="5-calm.png">Lots of people like small ones.</state>
                 <state img="5-calm.png">Thank you, I feel less exposed now.</state>
@@ -2812,6 +3539,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="aimee">
                 <state img="5-annoyed.png">That's it. You're insane.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="elaine">
+                <state img="5-confident.png">Well, at least Winslow survived.</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <state img="5-calm.png">Thank you, I feel less exposed now.</state>
@@ -2825,7 +3555,7 @@
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="5-happy.png">Boom! Crotch shot!</state>
-                <state img="5-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="5-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="5-calm.png">That could have been me.</state>
                 <state img="5-calm.png">At least someone is doing worse than me.</state>
             </case>
@@ -2838,6 +3568,13 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="alice">
                 <state img="5-horny.png">I guess we get to see your rabbit hole.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="elaine">
+                <state img="5-horny.png">I know how to see if you really are a salty dog.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="misato">
+                <state img="5-calm.png">Misato, your face is red.</state>
+                <state img="5-calm.png">How many beers have you had Misato?</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="5-horny.png">I wish mine was as neat as yours.</state>
@@ -2859,6 +3596,10 @@
             </case>
             <case tag="female_crotch_is_visible" target="elaine">
                 <state img="5-horny.png">Yarg.</state>
+                <state img="5-horny.png">Pretty nice Elaine. Maybe you're not as bad as I thought.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="misato">
+                <state img="5-calm.png">Uhhh... Misato, I think you may have had one too many drinks...</state>
             </case>
             <case tag="female_crotch_is_visible" target="velma">
                 <state img="5-interested.png">Mystery Solved.</state>
@@ -2917,6 +3658,12 @@
                 <state img="5-confident.png">Some performance, ~name~. I hope this bathing suit is waterproof from the inside.</state>
                 <state img="5-happy.png">Wow, ~name~! You're still trembling.</state>
             </case>
+            <case tag="female_finished_masturbating" target="aimee">
+                <state img="5-annoyed.png">Better you than me, Aimee.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="misato" targetNotSaidMarker="Finished" targetSayingMarker="Finished">
+                <state img="5-annoyed.png">Misato. Stop being hard on yourself dammit.</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="5-calm.png">I won the game; you got to see my breasts. We're all winners.</state>
             </case>
@@ -2930,6 +3677,14 @@
                 <state img="6-calm.png">I want to exchange ~cards~.</state>
                 <state img="6-calm.png">~cards~ for me, please.</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="0" />
+                <state img="6-confident.png">No cards.</state>
+            </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="6-confident.png">Only one card.</state>
+            </case>
             <case tag="good_hand">
                 <state img="6-confident.png">This is like a Gundam taking on a Zaku.</state>
                 <state img="6-confident.png">Core Booster, preparing to engage.</state>
@@ -2941,6 +3696,12 @@
                 <state img="6-annoyed.png">Better late than never I guess.</state>
                 <state img="6-interested.png">I guess the dealer likes my body.</state>
             </case>
+            <case tag="good_hand" alsoPlaying="hermione" priority="0">
+                <state img="6-confident.png">Your magic can't help you here, Hermione.</state>
+            </case>
+            <case tag="good_hand" hasHand="Royal Flush" priority="800">
+                <state img="6-confident.png">Hey, it's a handful of Zabis.</state>
+            </case>
             <case tag="okay_hand">
                 <state img="6-annoyed.png">This better be enough.</state>
                 <state img="6-interested.png">This hand is average but my hands are spectacular, as you'll learn, if you're lucky.</state>
@@ -2951,7 +3712,7 @@
                 <state img="6-sad.png">I'd rather take on a Musai in a GM.</state>
                 <state img="6-sad.png">This is as bad as the time I had a Spanish accent...</state>
                 <state img="6-annoyed.png">Dealer, I am trained in firearms. Just keep that in mind if you keep giving me hands like these.</state>
-                <state img="6-annoyed.png">I thought Newtypes could see the future...</state>
+                <state img="6-annoyed.png">I thought New-types could see the future...</state>
                 <state img="6-annoyed.png">Oh sure, just give me a bunch of terrible cards. I can figure it out.</state>
                 <state img="6-confident.png">Whatever, I'm in the mood for some self-care anyway.</state>
                 <state img="6-sad.png">Oh no.</state>
@@ -2962,38 +3723,39 @@
                 <state img="6-interested.png">I would use sunglasses to help my poker face, but I don't really want to mimic my brother.</state>
                 <state img="6-interested.png">I wonder if I can convince Mirai to join...</state>
             </case>
-            <case tag="hand" alsoPlaying="aimee" priority="0">
-                <state img="6-happy.png">You're cowboy outfit reminds me of living on a ranch.</state>
-                <state img="6-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
-                <state img="6-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            <case tag="hand" alsoPlaying="aimee" alsoPlayingStage="1-7" priority="0">
                 <state img="6-annoyed.png">Watch where you point that Aimee...</state>
                 <state img="6-annoyed.png">I've already accepted I'm going to get shot.</state>
             </case>
+            <case tag="hand" alsoPlaying="aimee" priority="0">
+                <state img="6-happy.png">Aimee's cowboy outfit reminds me of when I lived on a ranch.</state>
+                <state img="6-calm.png">You're more than welcomed to join me for some horseback riding Aimee, or is the costume just for show?</state>
+                <state img="6-calm.png">You'd be right at home on Texas Colony, Aimee.</state>
+            </case>
             <case tag="hand" alsoPlaying="cammy_white" priority="0">
                 <state img="6-calm.png">Lighten up Cammy, have fun.</state>
+                <state img="6-confident.png"></state>
             </case>
             <case tag="hand" alsoPlaying="d.va" priority="0">
                 <state img="6-happy.png">So D. Va, what Gundam games have you played?</state>
+                <state img="6-confident.png">I hope you prove a challenge D. Va, and not just talk.</state>
             </case>
             <case tag="hand" alsoPlaying="elaine" priority="0">
-                <state img="6-annoyed.png">Mirai dressed as a pirate for Halloween. That got old fast, just like this.</state>
-                <state img="6-annoyed.png">You better not start digging for buried chests.</state>
+                <state img="6-annoyed.png">You better not start digging for buried chests Elaine.</state>
                 <state img="6-annoyed.png">Ya sabes, tambien hablo español, Elaine.</state>
+                <state img="6-annoyed.png">Don't you think you're overdoing the pirate bit, Elaine?</state>
             </case>
             <case tag="hand" alsoPlaying="gwen" priority="0">
-                <state img="6-interested.png">Are Newtype senses anything like Spidey-Senses?</state>
+                <state img="6-interested.png">Are New-type senses anything likeSpider-Sensess?</state>
                 <state img="6-happy.png">There's a great punk rock band on Side 5 called Munzo Front. I'll get you a copy of their stuff.</state>
                 <state img="6-interested.png">Have you ever tried web-slinging in zero g?</state>
                 <state img="6-calm.png">Let me know if you ever want to go to space, Spidey.</state>
             </case>
             <case tag="hand" alsoPlaying="hanako" priority="0">
                 <state img="6-interested.png">What school did you say you went to again, Hanako?</state>
-                <state img="6-interested.png">Whose's this Lily you keep talking about? You should totally bring her here!</state>
+                <state img="6-interested.png">Who's this Lily you keep talking about? You should totally bring her here!</state>
                 <state img="6-interested.png">Any good books you can recommend Hanako?</state>
-                <state img="6-calm.png">Rin is best girl, but you're a good second.</state>
-            </case>
-            <case tag="hand" alsoPlaying="hermione" priority="0">
-                <state img="6-confident.png">Your magic can't help you here, Hermione.</state>
+                <state img="6-calm.png">Rin is best girl, but you're a good second Hanako.</state>
             </case>
             <case tag="hand" alsoPlaying="mavis" priority="0">
                 <state img="6-calm.png">You should get out more, Mavis.</state>
@@ -3004,7 +3766,10 @@
                 <state img="6-calm.png">I bet Amuro and Shinji would get along quite well.</state>
                 <state img="6-confident.png">If you ever need a job Misato I'm sure the Federation would hire you in a heart beat.</state>
             </case>
-            <case tag="hand" alsoPlaying="ryuko" priority="0">
+            <case tag="hand" alsoPlaying="ryuko" alsoPlayingStage="0-3" priority="0">
+                <state img="6-interested.png">That's an... odd uniform Ryuko...</state>
+            </case>
+            <case tag="hand" alsoPlaying="ryuko" totalRounds="5" priority="0">
                 <state img="6-annoyed.png">Okay Ryuko, who's this girl that keeps running in here?</state>
             </case>
             <case tag="hand" alsoPlaying="samus" alsoPlayingStage="0-2" priority="0">
@@ -3012,7 +3777,7 @@
             </case>
             <case tag="hand" alsoPlaying="samus" priority="0">
                 <state img="6-happy.png">Samus Aran; intergalactic bounty hunter and kick ass blonde!</state>
-                <state img="6-confident.png">I''d hire you any day, Samus.</state>
+                <state img="6-confident.png">I'd hire you any day, Samus.</state>
             </case>
             <case tag="hand" alsoPlaying="wiifitfemale" priority="0">
                 <state img="6-horny.png">Do you have any openings in your class, Trainer?</state>
@@ -3025,7 +3790,7 @@
                 <state img="6-stripped.png">I hope I impress you ~player~.</state>
             </case>
             <case tag="stripped" alsoPlaying="elaine">
-                <state img="6-annoyed.png">At least you aren't making inappropriate comments about my boo- Nevermind.</state>
+                <state img="6-annoyed.png">At least you aren't making inappropriate comments about my boo- Never mind.</state>
                 <state img="6-annoyed.png">I swear Elaine, you and Kai...</state>
             </case>
             <case tag="male_must_strip">
@@ -3054,6 +3819,15 @@
                 <state img="6-calm.png">Give them a show. Trust me, it feels good.</state>
                 <state img="6-happy.png">Perhaps you'll give me some naked company soon.</state>
                 <state img="6-confident.png">Looks like this naked lady will live to play another hand.</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="3">
+                <state img="6-interested.png">Huh, didn't know pirates liked Casablanca.</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="4">
+                <state img="6-confident.png">Oh no, you can't get me with that one.</state>
+            </case>
+            <case tag="female_must_strip" target="gwen" targetStage="2">
+                <state img="6-calm.png">Well whatever will give you the strategic advantage.</state>
             </case>
             <case tag="tie">
                 <state img="6-interested.png">A tie! That doesn't happen every day!</state>
@@ -3096,8 +3870,17 @@
                 <state img="6-annoyed.png">I'm beginning to realize why I'm naked and you're not.</state>
                 <state img="6-sad.png">I guess the spotlight remains on me.</state>
             </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="0">
+                <state img="6-calm.png">Mirai dressed as a pirate for Halloween.</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="1">
+                <state img="6-calm.png">I might not like pirates, but I do like your boots.</state>
+            </case>
             <case tag="female_removing_accessory" target="ryuko" targetStage="0">
                 <state img="6-happy.png">Two girls for the price of one?</state>
+            </case>
+            <case tag="female_removing_accessory" target="ryuko" targetStage="3">
+                <state img="6-annoyed.png">If you just toss it carelessly you might give someone a conc-</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="6-annoyed.png">Wow. Look at all that skin.</state>
@@ -3107,6 +3890,15 @@
                 <state img="6-sad.png">Don't you have any sympathy?</state>
                 <state img="6-annoyed.png">Pathetic.</state>
             </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="1">
+                <state img="6-annoyed.png">That got old real fast, just like this Elaine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="2">
+                <state img="6-calm.png">They are almost as nice as mine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="6-horny.png">Too be honest, who wouldn't look up them, Misato?</state>
+            </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="6-annoyed.png">Don't worry, nobody is interested in your antique cowboy guns.</state>
             </case>
@@ -3114,7 +3906,9 @@
                 <state img="6-happy.png">This'll be fun.</state>
             </case>
             <case tag="female_removed_accessory" target="ryuko" targetStage="4">
-                <state img="6-annoyed.png">That had to hurt.</state>
+                <state img="6-sad.png">That had to hurt...</state>
+                <state img="6-sad.png">-ussion...</state>
+                <state img="6-sad.png">Ouch...</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="6-sad.png">Oh, just your ~clothing~.</state>
@@ -3137,6 +3931,15 @@
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="6-annoyed.png">How have I not been shot yet?</state>
             </case>
+            <case tag="female_removing_minor" target="elaine" targetStage="2">
+                <state img="6-annoyed.png">We couldn't get Mirai to stop talking like a pirate, not matter how many times we told her to stop.</state>
+            </case>
+            <case tag="female_removing_minor" id="6-1" target="sakura" targetStage="2">
+                <state img="6-interested.png">What? That's make up?</state>
+            </case>
+            <case tag="female_removing_minor" id="6-2" target="sakura" targetStage="3" targetSayingMarker="headless">
+                <state img="6-sad.png">Oh my...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="6-interested.png">There's something sexy about seeing your ~clothing~ on the floor.</state>
                 <state img="6-horny.png">Most strip poker games end with everyone naked anyway.</state>
@@ -3145,6 +3948,21 @@
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2-3">
                 <state img="6-annoyed.png">Stop it Aimee!</state>
+            </case>
+            <case tag="female_removed_minor" target="elaine" targetStage="3">
+                <state img="6-sad.png">It took weeks for her to stop saying "yarg."</state>
+            </case>
+            <case tag="female_removed_minor" target="misato" targetStage="3">
+                <state img="6-happy.png">I won't say no to that.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="2">
+                <state img="6-calm.png">A bandage? Are you hurt?</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="3">
+                <state img="6-calm.png">A zombie idol. That'll take some getting used to.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="4">
+                <state img="6-calm.png">None of my medical skills can help me with this. Sorry ~target~.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="6-happy.png">Time for a peek at your chassis.</state>
@@ -3173,11 +3991,17 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="6-calm.png">Don't worry, Hana; you should be safe without a normal suit in here.</state>
             </case>
+            <case tag="female_removing_major" target="elaine" targetStage="3">
+                <state img="6-confident.png">You can always raise the white flag Elaine.</state>
+            </case>
             <case tag="female_removing_major" target="gwen" targetStage="1">
                 <state img="6-annoyed.png">I'm getting tired of all these masks...</state>
             </case>
+            <case tag="female_removing_major" target="misato" targetStage="3">
+                <state img="6-calm.png">Misato, you're being way to hard on yourself. Just relax.</state>
+            </case>
             <case tag="female_removing_major" target="ryuko" targetStage="2">
-                <state img="6-interested.png">What's happing?</state>
+                <state img="6-interested.png">What's happening?</state>
             </case>
             <case tag="female_removing_major" target="ryuko" targetStage="4">
                 <state img="6-interested.png">A living uniform?!?</state>
@@ -3196,11 +4020,14 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="6-annoyed.png">Please don't do that.</state>
             </case>
+            <case tag="female_removed_major" target="elaine" targetStage="4">
+                <state img="6-confident.png">Game too much for you Elaine?</state>
+            </case>
             <case tag="female_removed_major" target="elizabeth" targetStage="5">
                 <state img="6-interested.png">Your underwear looks perfectly fitting to me, milady.</state>
             </case>
             <case tag="female_removed_major" target="misato" targetStage="4">
-                <state img="6-calm.png">Don't feel bad about that scar. It's okay to have some battle damage.</state>
+                <state img="6-calm.png">Don't feel bad about that scar. It's okay to have battle damage.</state>
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="6-interested.png">Did you enter trans-am mode?</state>
@@ -3215,7 +4042,7 @@
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="6-happy.png">Boom! Crotch shot!</state>
-                <state img="6-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="6-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="6-calm.png">I've showed you mine; now show me yours.</state>
                 <state img="6-interested.png">Come on, you owe me.</state>
             </case>
@@ -3251,6 +4078,9 @@
             <case tag="female_chest_will_be_visible" target="aimee" targetStage="3" alsoPlaying="misato">
                 <state img="6-annoyed.png">I have to agree with Misato on this...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="elaine">
+                <state img="6-annoyed.png">Elaine. Put the man down.</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="6-calm.png">Lots of people like small ones.</state>
                 <state img="6-calm.png">Thank you, I feel less exposed now.</state>
@@ -3261,6 +4091,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="aimee">
                 <state img="6-annoyed.png">That's it. You're insane.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="elaine">
+                <state img="6-confident.png">Well, at least Winslow survived.</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <state img="6-calm.png">Thank you, I feel less exposed now.</state>
@@ -3274,7 +4107,7 @@
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="6-happy.png">Boom! Crotch shot!</state>
-                <state img="6-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="6-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="6-calm.png">Don't worry, they've already seen mine.</state>
                 <state img="6-calm.png">I've showed you mine; now show me yours.</state>
             </case>
@@ -3287,6 +4120,13 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="alice">
                 <state img="6-horny.png">I guess we get to see your rabbit hole.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="elaine">
+                <state img="6-horny.png">I know how to see if you really are a salty dog.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="misato">
+                <state img="6-calm.png">Misato, your face is red.</state>
+                <state img="6-calm.png">How many beers have you had Misato?</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="6-horny.png">I wish mine was as neat as yours.</state>
@@ -3308,6 +4148,10 @@
             </case>
             <case tag="female_crotch_is_visible" target="elaine">
                 <state img="6-horny.png">Yarg.</state>
+                <state img="6-horny.png">Pretty nice Elaine. Maybe you're not as bad as I thought.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="misato">
+                <state img="6-calm.png">Uhhh... Misato, I think you may have had one too many drinks...</state>
             </case>
             <case tag="female_crotch_is_visible" target="velma">
                 <state img="6-interested.png">Mystery Solved.</state>
@@ -3367,6 +4211,12 @@
             <case tag="female_finished_masturbating">
                 <state img="6-horny.png">How soon can you do it again? Just curious.</state>
                 <state img="6-interested.png">Ooh, looks like there's been a violent decompression in the fore hangar bay.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="aimee">
+                <state img="6-annoyed.png">Better you than me, Aimee.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="misato" targetNotSaidMarker="Finished" targetSayingMarker="Finished">
+                <state img="6-annoyed.png">Misato. Stop being hard on yourself dammit.</state>
             </case>
             <case tag="must_masturbate_first">
                 <state img="6-sad.png">I have to deploy first?</state>
@@ -3611,13 +4461,16 @@
             </case>
             <case tag="masturbating" alsoPlaying="misato" priority="0">
                 <state img="7-masturbating2.png">You can join me and find out more Misato.</state>
+                <state img="7-masturbating4.png">S-sure Misato.</state>
+                <state img="7-masturbating4.png">O-okay Misato. Just r-remind me after this.</state>
+                <state img="7-masturbating1.png">B-Type Equipment is the standard Evangelion armor. It is unsuited for use in &lt;i&gt;wet&lt;/i&gt; conditions.</state>
             </case>
             <case tag="heavy_masturbating">
                 <state img="7-masturbating_heavy1.png">The MSM-03 Gogg, designed for -hnhh- amphibious combat and operation in wet biomes that are just dripping and soo soft.</state>
                 <state img="7-masturbating_heavy1.png">And the ... Guncannon, RX-77-2, provides -uhh- fire support for the Gundam with its big ... throbbing 240mm cannons.</state>
                 <state img="7-masturbating_heavy2.png">The MSM-04 Acguy is -ahhhhhh!- an amphibious suit that excels at stealthy insertion- I mean infiltration deep -so deep- behind the lines.</state>
-                <state img="7-masturbating_heavy2.png">Of course the RX-78-2 Gundam, the first mobile suit equipped with a beam weapon, allowing it to gently melt and penetrate any armour -mmm- so easily.</state>
-                <state img="7-masturbating_heavy2.png">FF-X7-Bst Core Booster is armed with a pair of mega -hnhhhhh- particle cannons. The high output allows them to penetrate thick, thick mobile suit armor</state>
+                <state img="7-masturbating_heavy2.png">Of course the RX-78-2 Gundam, the first mobile suit equipped with a beam weapon, allowing it to gently melt and penetrate any armor -mmm- so easily.</state>
+                <state img="7-masturbating_heavy2.png">FF-X7-Bst Core Booster is armed with a pair of mega -hnhhhhh- particle cannons. The high output allows them to penetrate thick, thick mobile suit armor.</state>
                 <state img="7-masturbating_heavy2.png">Real g-forces are more -hhhnhhh- intense than anything in the simulator.</state>
             </case>
             <case tag="finishing_masturbating">
@@ -3637,7 +4490,7 @@
                 <state img="8-annoyed.png">You'll get over it.</state>
                 <state img="8-happy.png">I wonder who will win.</state>
                 <state img="8-happy.png">Not many card games are this fun for the audience!</state>
-                <state img="8-calm.png">The poker seems like a silly pretence at this point.</state>
+                <state img="8-calm.png">The poker seems like a silly pretense at this point.</state>
                 <state img="8-confident.png">Too exciting for you ~name~?</state>
             </case>
             <case tag="female_human_must_strip">
@@ -3649,7 +4502,7 @@
                 <state img="8-annoyed.png">You'll get over it.</state>
                 <state img="8-happy.png">I wonder who will win.</state>
                 <state img="8-happy.png">Not many card games are this fun for the audience!</state>
-                <state img="8-calm.png">The poker seems like a silly pretence at this point.</state>
+                <state img="8-calm.png">The poker seems like a silly pretense at this point.</state>
                 <state img="8-confident.png">Too exciting for you ~name~?</state>
             </case>
             <case tag="female_must_strip">
@@ -3661,8 +4514,17 @@
                 <state img="8-annoyed.png">You'll get over it.</state>
                 <state img="8-happy.png">I wonder who will win.</state>
                 <state img="8-happy.png">Not many card games are this fun for the audience!</state>
-                <state img="8-calm.png">The poker seems like a silly pretence at this point.</state>
+                <state img="8-calm.png">The poker seems like a silly pretense at this point.</state>
                 <state img="8-confident.png">Too exciting for you ~name~?</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="3">
+                <state img="8-interested.png">Huh, didn't know pirates liked Casablanca.</state>
+            </case>
+            <case tag="female_must_strip" target="elaine" targetStage="4">
+                <state img="8-confident.png">Oh no, you can't get me with that one.</state>
+            </case>
+            <case tag="female_must_strip" target="gwen" targetStage="2">
+                <state img="8-calm.png">Well whatever will give you the strategic advantage.</state>
             </case>
             <case tag="tie">
                 <state img="8-interested.png">A tie! That doesn't happen every day!</state>
@@ -3677,7 +4539,7 @@
                 <state img="8-annoyed.png">You'll get over it.</state>
                 <state img="8-calm.png">I wonder who will win.</state>
                 <state img="8-happy.png">Not many card games are this fun for the audience!</state>
-                <state img="8-calm.png">The poker seems like a silly pretence at this point.</state>
+                <state img="8-calm.png">The poker seems like a silly pretense at this point.</state>
                 <state img="8-confident.png">Too exciting for you ~name~?</state>
             </case>
             <case tag="male_removing_accessory">
@@ -3708,8 +4570,17 @@
                 <state img="8-awkward.png">So do I just... stand here now?</state>
                 <state img="8-annoyed.png">I can't believe you still haven't taken all your accessories off.</state>
             </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="0">
+                <state img="8-calm.png">Mirai dressed as a pirate for Halloween.</state>
+            </case>
+            <case tag="female_removing_accessory" target="elaine" targetStage="1">
+                <state img="8-calm.png">I might not like pirates, but I do like your boots.</state>
+            </case>
             <case tag="female_removing_accessory" target="ryuko" targetStage="0">
                 <state img="8-happy.png">Two girls for the price of one?</state>
+            </case>
+            <case tag="female_removing_accessory" target="ryuko" targetStage="3">
+                <state img="8-annoyed.png">If you just toss it carelessly you might give someone a conc-</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="8-annoyed.png">Wow. Look at all that skin.</state>
@@ -3719,6 +4590,15 @@
                 <state img="8-calm.png">Can I have that chair back?</state>
                 <state img="8-calm.png">The game will pick up soon right?</state>
             </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="1">
+                <state img="8-annoyed.png">That got old real fast, just like this Elaine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elaine" targetStage="2">
+                <state img="8-calm.png">They are almost as nice as mine.</state>
+            </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="8-horny.png">Too be honest, who wouldn't look up them, Misato?</state>
+            </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="8-annoyed.png">Don't worry, nobody is interested in your antique cowboy guns.</state>
             </case>
@@ -3726,7 +4606,9 @@
                 <state img="8-happy.png">This'll be fun.</state>
             </case>
             <case tag="female_removed_accessory" target="ryuko" targetStage="4">
-                <state img="8-annoyed.png">That had to hurt.</state>
+                <state img="8-sad.png">That had to hurt...</state>
+                <state img="8-sad.png">-ussion...</state>
+                <state img="8-sad.png">Ouch...</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="8-sad.png">Tactically valid but so boring.</state>
@@ -3749,6 +4631,15 @@
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="8-annoyed.png">How have I not been shot yet?</state>
             </case>
+            <case tag="female_removing_minor" target="elaine" targetStage="2">
+                <state img="8-annoyed.png">We couldn't get Mirai to stop talking like a pirate, not matter how many times we told her to stop.</state>
+            </case>
+            <case tag="female_removing_minor" id="8-1" target="sakura" targetStage="2">
+                <state img="8-interested.png">What? That's make up?</state>
+            </case>
+            <case tag="female_removing_minor" id="8-2" target="sakura" targetStage="3" targetSayingMarker="headless">
+                <state img="8-sad.png">Oh my...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="8-calm.png">Is anyone else hungry?</state>
                 <state img="8-confident.png">At this rate I'll be ready for another sortie by the time you are finished.</state>
@@ -3757,6 +4648,21 @@
             </case>
             <case tag="female_removed_minor" target="aimee" targetStage="2-3">
                 <state img="8-annoyed.png">Stop it Aimee!</state>
+            </case>
+            <case tag="female_removed_minor" target="elaine" targetStage="3">
+                <state img="8-sad.png">It took weeks for her to stop saying "yarg."</state>
+            </case>
+            <case tag="female_removed_minor" target="misato" targetStage="3">
+                <state img="8-happy.png">I won't say no to that.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="2">
+                <state img="8-calm.png">A bandage? Are you hurt?</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="3">
+                <state img="8-calm.png">A zombie idol. That'll take some getting used to.</state>
+            </case>
+            <case tag="female_removed_minor" target="sakura" targetStage="4">
+                <state img="8-calm.png">None of my medical skills can help me with this. Sorry ~target~.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="8-calm.png">Looks like the game is wrapping up.</state>
@@ -3785,11 +4691,17 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="8-calm.png">Don't worry, Hana; you should be safe without a normal suit in here.</state>
             </case>
+            <case tag="female_removing_major" target="elaine" targetStage="3">
+                <state img="8-confident.png">You can always raise the white flag Elaine.</state>
+            </case>
             <case tag="female_removing_major" target="gwen" targetStage="1">
                 <state img="8-annoyed.png">I'm getting tired of all these masks...</state>
             </case>
+            <case tag="female_removing_major" target="misato" targetStage="3">
+                <state img="8-calm.png">Misato, you're being way to hard on yourself. Just relax.</state>
+            </case>
             <case tag="female_removing_major" target="ryuko" targetStage="2">
-                <state img="8-interested.png">What's happing?</state>
+                <state img="8-interested.png">What's happening?</state>
             </case>
             <case tag="female_removing_major" target="ryuko" targetStage="4">
                 <state img="8-interested.png">A living uniform?!?</state>
@@ -3808,11 +4720,14 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="8-annoyed.png">Please don't do that.</state>
             </case>
+            <case tag="female_removed_major" target="elaine" targetStage="4">
+                <state img="8-confident.png">Game too much for you Elaine?</state>
+            </case>
             <case tag="female_removed_major" target="elizabeth" targetStage="5">
                 <state img="8-interested.png">Your underwear looks perfectly fitting to me, milady.</state>
             </case>
             <case tag="female_removed_major" target="misato" targetStage="4">
-                <state img="8-calm.png">Don't feel bad about that scar. It's okay to have some battle damage.</state>
+                <state img="8-calm.png">Don't feel bad about that scar. It's okay to have battle damage.</state>
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="8-interested.png">Did you enter trans-am mode?</state>
@@ -3827,7 +4742,7 @@
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="8-happy.png">Boom! Crotch shot!</state>
-                <state img="8-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="8-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="8-interested.png">I wonder if it's how I imagined it earlier.</state>
                 <state img="8-annoyed.png">You better be hard or I will be offended.</state>
             </case>
@@ -3863,6 +4778,9 @@
             <case tag="female_chest_will_be_visible" target="aimee" targetStage="3" alsoPlaying="misato">
                 <state img="8-annoyed.png">I have to agree with Misato on this...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="elaine">
+                <state img="8-annoyed.png">Elaine. Put the man down.</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="8-horny.png">Where were those beauties when I needed them?</state>
                 <state img="8-calm.png">I like them!</state>
@@ -3873,6 +4791,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="aimee">
                 <state img="8-annoyed.png">That's it. You're insane.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="elaine">
+                <state img="8-confident.png">Well, at least Winslow survived.</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <state img="8-horny.png">Where were those beauties when I needed them?</state>
@@ -3886,7 +4807,7 @@
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="8-happy.png">Boom! Crotch shot!</state>
-                <state img="8-interested.png">As a non-commissioned officer one of my duties is inspecting the privates.</state>
+                <state img="8-interested.png">As a non-commissioned officer, one of my duties is inspecting the privates.</state>
                 <state img="8-awkward.png">I... I hope I made you wet.</state>
                 <state img="8-calm.png">No need to make a drama of it.</state>
             </case>
@@ -3899,6 +4820,13 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="alice">
                 <state img="8-horny.png">I guess we get to see your rabbit hole.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="elaine">
+                <state img="8-horny.png">I know how to see if you really are a salty dog.</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="misato">
+                <state img="8-calm.png">Misato, your face is red.</state>
+                <state img="8-calm.png">How many beers have you had Misato?</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="8-horny.png">I'm multi-orgasmic, you know.</state>
@@ -3920,6 +4848,10 @@
             </case>
             <case tag="female_crotch_is_visible" target="elaine">
                 <state img="8-horny.png">Yarg.</state>
+                <state img="8-horny.png">Pretty nice Elaine. Maybe you're not as bad as I thought.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="misato">
+                <state img="8-calm.png">Uhhh... Misato, I think you may have had one too many drinks...</state>
             </case>
             <case tag="female_crotch_is_visible" target="velma">
                 <state img="8-interested.png">Mystery Solved.</state>
@@ -3980,8 +4912,14 @@
                 <state img="8-interested.png">Ooh, looks like there's been a violent decompression in the fore hangar bay.</state>
                 <state img="8-salute.png">Stand at ease!</state>
             </case>
+            <case tag="female_finished_masturbating" target="aimee">
+                <state img="8-annoyed.png">Better you than me, Aimee.</state>
+            </case>
             <case tag="female_finished_masturbating" target="hanako" targetNotSaidMarker="finished" targetSayingMarker="finished">
                 <state img="8-awkward.png">That was hot... I m-mean you were on fi- Know what, just forget it.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="misato" targetNotSaidMarker="Finished" targetSayingMarker="Finished">
+                <state img="8-annoyed.png">Misato. Stop being hard on yourself dammit.</state>
             </case>
             <case tag="finished_masturbating">
                 <state img="8-awkward.png">Weeell... As you were.</state>
