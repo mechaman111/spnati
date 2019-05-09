@@ -195,6 +195,7 @@ function expandTagsList(input_tags) {
 
 function State($xml, parentCase) {
     this.parentCase = parentCase;
+    this.id = $xml.attr('dev-id') || null;
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';

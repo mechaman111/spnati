@@ -663,6 +663,7 @@ function GameScreenDisplay (slot) {
     this.collectibleIndicator = $('#collectible-button-'+slot);
     
     this.collectibleIndicator.click(this.onCollectibleIndicatorClick.bind(this));
+    this.devModeController = new DevModeDialogueBox(this.bubble);
 }
 GameScreenDisplay.prototype = Object.create(OpponentDisplay.prototype);
 GameScreenDisplay.prototype.constructor = GameScreenDisplay;
@@ -692,6 +693,8 @@ GameScreenDisplay.prototype.reset = function (player) {
 GameScreenDisplay.prototype.update = function (player) {
     this.player = player;
     OpponentDisplay.prototype.update.call(this, player);
+    
+    if (devModeActive) this.devModeController.update(player);
     
     if (player && player.pendingCollectiblePopup) {
         this.collectibleIndicator.show();

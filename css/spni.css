@@ -838,24 +838,33 @@ body.modal-open {
 /* the area around the dialogue bubble */
 .dialogue-bubble-area {
 	position: absolute;
-    display: table;
     width: 24.5%;
     top: 10%;
-    height: 90%;
+    min-height: 90%;
     margin: 0 0.25%;
     padding: 1%;
-    text-align: center;
     font-size: 120%;
     background: #F5F5F5;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
 }
 
 /* the body of the dialogue bubble */
 .dialogue-bubble {
-	display: table-cell;
-    width: 90%;
-    height: 90%;
     margin: 1%;
-    vertical-align: middle;
+    min-height: 100%;
+
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.dialogue {
+    text-align: center;
 }
 
 .arrow-down::before, .arrow-down::after,
@@ -971,6 +980,103 @@ body.modal-open {
 }
 
 /************************************************************
+ * Classes for Developer Mode.
+ ************************************************************/
+
+.edit-options-row {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+
+    display: none;
+    align-items: stretch;
+    justify-content: flex-end;
+}
+
+.edit-options-row button {
+    padding: 2.5% 2%;
+    font-size: 100%;
+
+    margin-left: 1.5%;
+
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+
+    background: linear-gradient(#D9D9D9, #A6A6A6);
+    background-color: #D9D9D9;
+}
+
+.edit-options-row button:first-child {
+    margin-left: 0;
+}
+
+.edit-options-row button:hover {
+    background: linear-gradient(#FFFFFF, #D9D9D9);
+    background-color: #FFFFFF;
+}
+
+.dialogue-edit-entry {
+    flex: 4;
+
+    font-family: monospace;
+    font-size: 1.85vmin;
+    line-height: 2.22vmin;
+    min-height: 11.1vmin;
+}
+
+.dialogue-edit-status {
+    flex: 1;
+
+    font-family: monospace;
+    font-size: 1.75vmin;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.dialogue-bubble-area[data-editing="preview"] .dialogue-edit-status::after {
+    content: " (Preview)";
+}
+
+.edit-preview {
+    margin-right: auto;
+}
+
+.dialogue-edit, .dialogue-edit-button, .dialogue-entry-button {
+    display: none;
+}
+
+.dialogue-bubble-area[data-dev-target="true"] .dialogue-edit-button {
+    display: inline;
+}
+
+.dialogue-bubble-area[data-editing] .dialogue-entry-button {
+    display: inline;
+}
+
+.dialogue-bubble-area[data-editing] .dialogue-edit-button, .dialogue-bubble-area[data-editing] .dialogue-edit-status {
+    display: inline;
+}
+
+.dialogue-bubble-area[data-editing]:not([data-editing="preview"]) .dialogue-bubble .dialogue {
+    display: none;
+}
+
+.dialogue-bubble-area[data-editing="entry"] .dialogue-edit-entry {
+    display: block;
+}
+
+.dev-mode .edit-options-row {
+    display: flex;
+}
+
+/************************************************************
  * Classes for opponent images.
  ************************************************************/
 
@@ -995,6 +1101,10 @@ body.modal-open {
 	bottom: 0;
 	left: 0;
 	right: 0;
+}
+
+#game-screen .image-row {
+    pointer-events: none;
 }
 
 /************************************************************
@@ -1733,6 +1843,17 @@ body.modal-open {
     align-items: center;
 }
 
+.badge-icon {
+    opacity: 0.75;
+
+    height: 18%;
+    width: auto;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
 .selection-card-sidebar img {
     width: 100%;
     height: auto;
@@ -2123,6 +2244,8 @@ body.modal-open {
     font-size: 1.65vmin;
     line-height: 1.98vmin;
     flex: 3;
+
+    display: block;
 }
 
 .opponent-details-description > * {
@@ -3651,7 +3774,7 @@ body.modal-open {
     left: 1.5%;
     bottom: 14%;
     width: 4%;
-    height: 4%;
+    height: 4%;7
 }
 
 .player-debug-button.active {

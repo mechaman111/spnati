@@ -69,6 +69,8 @@ var jsErrors = [];
 var sessionID = '';
 var gameID = '';
 var generalCollectibles = [];
+var devModeActive = true;
+var devModeTarget = 2;
 
 /**********************************************************************
  * Screens & Modals
@@ -819,6 +821,10 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             });
 
             this.targetedLines = targetedLines;
+            
+            if (devModeActive) {
+                this.initDevMode();
+            }
 
             if (this.selected_costume) {
                 return this.loadAlternateCostume();
