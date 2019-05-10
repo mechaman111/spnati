@@ -586,6 +586,28 @@ OpponentDisplay.prototype.onResize = function () {
     }
 }
 
+OpponentDisplay.prototype.updateText = function (player) {
+    this.dialogue.html(fixupDialogue(player.chosenState.dialogue));
+}
+
+OpponentDisplay.prototype.updateImage = function(player) {
+    var chosenState = player.chosenState;
+    
+    if (!chosenState.image) {
+        this.clearPose();
+    } else if (chosenState.image.startsWith('custom:')) {
+        var key = chosenState.image.split(':', 2)[1];
+        var poseDef = player.poses[key];
+        if (poseDef) {
+            this.drawPose(new Pose(poseDef, this));
+        } else {
+            this.clearPose();
+        }
+    } else {
+        this.drawPose(player.folder + chosenState.image);
+    }
+}
+
 OpponentDisplay.prototype.update = function(player) {
     if (!player) {
         this.hideBubble();
@@ -602,22 +624,10 @@ OpponentDisplay.prototype.update = function(player) {
     var chosenState = player.chosenState;
     
     /* update dialogue */
-    this.dialogue.html(fixupDialogue(chosenState.dialogue));
+    this.updateText(player);
     
     /* update image */
-    if (!chosenState.image) {
-        this.clearPose();
-    } else if (chosenState.image.startsWith('custom:')) {
-        var key = chosenState.image.split(':', 2)[1];
-        var poseDef = player.poses[key];
-        if (poseDef) {
-            this.drawPose(new Pose(poseDef, this));
-        } else {
-            this.clearPose();
-        }
-    } else {
-        this.drawPose(player.folder + chosenState.image);
-    }
+    this.updateImage(player);    
     
     /* update label */
     this.label.html(player.label.initCap());

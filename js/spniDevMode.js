@@ -44,15 +44,24 @@ function DevModeDialogueBox(gameBubbleElem) {
     this.confirmButton = gameBubbleElem.find('.edit-confirm');
     this.cancelButton = gameBubbleElem.find('.edit-cancel');
     this.previewButton = gameBubbleElem.find('.edit-preview');
+    this.poseButton = gameBubbleElem.find('.edit-pose');
+    
+    this.poseFieldContainer = gameBubbleElem.find('.edit-pose-row');
+    this.poseList = gameBubbleElem.find('.edit-pose-list');
+    this.poseField = gameBubbleElem.find('.dialogue-pose-entry');
     
     this.editButton.click(this.editCurrentState.bind(this));
     this.newResponseButton.click(this.startNewResponse.bind(this));
     
     this.previewButton.click(this.togglePreview.bind(this));
-    this.cancelButton.click(this.cancelEditMode.bind(this));
+    this.cancelButton.click(this.cancelEdit.bind(this));
     this.confirmButton.click(this.saveEdits.bind(this));
+    this.poseButton.click(function () {
+        this.poseFieldContainer.toggle();
+    }.bind(this));
     
     this.editField.on('change', this.updateEditField.bind(this));
+    this.poseField.on('change', this.updatePoseField.bind(this));
     
     this.player = null;
     this.editingState = false;
@@ -66,7 +75,12 @@ DevModeDialogueBox.prototype.update = function (player) {
     
     if (!player) return;
     
-    this.currentState = player.chosenState;
+    this.currentCase = player.chosenState.parentCase;
+    this.currentState = {'text': player.chosenState.rawDialogue, 'pose': player.chosenState.image};
+    
+    if (this.container.attr('data-editing')) {
+        this.cancelEdit();
+    }
     
     if (devModeActive && devModeTarget === player.slot) {
         this.container.attr('data-dev-target', 'true');
@@ -79,12 +93,36 @@ DevModeDialogueBox.prototype.updateEditField = function () {
     this.currentStateDialogue = this.editField.val();
 }
 
+DevModeDialogueBox.prototype.updatePoseField = function () {
+    this.currentStatePose = this.poseField.val();
+    this.player.chosenState.image = this.currentStatePose;
+    
+    gameDisplays[this.player.slot-1].updateImage(this.player);
+}
+
 DevModeDialogueBox.prototype.startEditMode = function () {
     KEYBINDINGS_ENABLED = false;
     this.editField.val(this.currentStateDialogue).attr('placeholder', this.player.chosenState.rawDialogue);
     this.container.attr('data-editing', 'entry');
     
     this.currentStatePose = this.player.chosenState.image;
+    this.poseField.val(this.currentStatePose);
+    
+    var caseSelector = (this.player.stage == -1 ? 'start, stage[id=1] case[tag=game_start]' : 'stage[id='+this.player.stage+'] case');
+    var poseNames = {};
+    
+    this.player.xml.find(caseSelector).each(function () {
+        $(this).find('state').each(function () {
+            var img = $(this).attr('img');
+            poseNames[img] = true;
+        })
+    });
+    
+    this.poseList.empty().append(Object.keys(poseNames).map(function (img) {
+        var elem = document.createElement('option');
+        $(elem).attr('value', img);
+        return $(elem);
+    }));
     
     this.editButton.hide();
     gameDisplays.forEach(function (disp) {
@@ -92,21 +130,31 @@ DevModeDialogueBox.prototype.startEditMode = function () {
     });
 }
 
-DevModeDialogueBox.prototype.cancelEditMode = function () {
+DevModeDialogueBox.prototype.exitEditMode = function () {
     KEYBINDINGS_ENABLED = true;
     this.editField.val('');
     this.currentStateDialogue = '';
     this.respondingToPlayer = null;
     this.container.attr('data-editing', null);
+    this.poseFieldContainer.hide();
     
     this.player.chosenState.expandDialogue(this.player, this.player.currentTarget);
-    gameDisplays[this.player.slot-1].update(this.player);
+    gameDisplays[this.player.slot-1].updateText(this.player);
+    gameDisplays[this.player.slot-1].updateImage(this.player);
     
     this.editButton.show();
     gameDisplays.forEach(function (disp) {
         disp.devModeController.newResponseButton.show();
     });
 }
+
+DevModeDialogueBox.prototype.cancelEdit = function () {
+    this.player.chosenState.rawDialogue = this.currentState.text;
+    this.player.chosenState.image = this.currentState.pose;
+    
+    this.exitEditMode();
+}
+
 
 DevModeDialogueBox.prototype.saveEdits = function () {
     if (this.editingState) {
@@ -116,13 +164,14 @@ DevModeDialogueBox.prototype.saveEdits = function () {
         this.player.editLog.push({
             'type': 'edit',
             'stage': this.player.stage,
-            'tag': this.currentState.parentCase.tag,
-            'oldState': {'text': this.currentState.rawDialogue, 'pose': this.currentState.image},
+            'tag': this.currentCase.tag,
+            'oldState': this.currentState,
             'state': {'text': this.currentStateDialogue, 'pose': this.currentStatePose}
         });
         
         this.player.xml.find('state[dev-id="'+stateID+'"]').each(function (idx, elem) {
             $(elem).html(this.currentStateDialogue);
+            $(elem).attr('img', this.currentStatePose);
         }.bind(this));
     } else {
         var editEntry = {
@@ -181,7 +230,8 @@ DevModeDialogueBox.prototype.saveEdits = function () {
     
     this.player.chosenState.rawDialogue = this.currentStateDialogue;
     this.player.chosenState.image = this.currentStatePose;
-    this.cancelEditMode();
+    
+    this.exitEditMode();
 }
 
 DevModeDialogueBox.prototype.editCurrentState = function () {
@@ -228,6 +278,7 @@ DevModeDialogueBox.prototype.togglePreview = function () {
     if (this.container.attr('data-editing') !== 'preview') {
         var expanded = expandDialogue(this.currentStateDialogue, this.player, this.player.currentTarget, null);
         this.dialogueArea.html(fixupDialogue(expanded));
+        this.poseFieldContainer.hide();
         
         this.container.attr('data-editing', 'preview');
     } else {
