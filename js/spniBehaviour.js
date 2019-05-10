@@ -1316,6 +1316,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
         this.currentPriority = bestMatchPriority;
         this.stateLockCount = 0;
         this.stateCommitted = false;
+        this.lastUpdateTags = tags;
         
         this.allStates = states;
         this.chosenState = states[i - 1];

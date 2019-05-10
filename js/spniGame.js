@@ -267,6 +267,7 @@ function makeAIDecision () {
 	determineAIAction(players[currentTurn]);
 	
 	/* update a few hardcoded visuals */
+	players[currentTurn].swapping = true;
 	players[currentTurn].updateBehaviour(SWAP_CARDS);
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
@@ -297,6 +298,8 @@ function reactToNewAICards () {
     players[currentTurn].updateVolatileBehaviour();
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
+    
+    players[currentTurn].swapping = false;
     
     saveSingleTranscriptEntry(currentTurn);
 
