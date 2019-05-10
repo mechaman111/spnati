@@ -842,6 +842,43 @@ function Case($xml, stage) {
     }
 }
 
+/* Convert this case's conditions into a plain object, into a format suitable
+ * for e.g. JSON serialization.
+ */
+Case.prototype.serializeConditions = function () {
+    var complexProps = ['states', 'tests', 'counters', 'addTags', 'removeTags', 'variableBindings'];
+    var ser = {};
+    
+    Object.keys(this).forEach(function (prop) {
+        if (complexProps.indexOf(prop) >= 0) return;
+        
+        ser[prop] = this[prop];
+    });
+    
+    ser.tests = this.tests.map(function (test) {
+        return {
+            'expr': test.attr('expr'),
+            'value': test.attr('value'),
+            'cmp': test.attr('cmp'),
+        };
+    });
+    
+    ser.counters = this.counters.map(function (ctr) {
+        return {
+            'count': ctr.attr('count'),
+            'role': ctr.attr('role'),
+            'var': ctr.attr('var'),
+            'character': ctr.attr('character'),
+            'stage': ctr.attr('stage'),
+            'filter': ctr.attr('filter'),
+            'gender': ctr.attr('gender'),
+            'status': ctr.attr('status'),
+        };
+    });
+    
+    return ser;
+}
+
 Case.prototype.getAlsoPlaying = function (opp) {
     if (!this.alsoPlaying) return null;
     

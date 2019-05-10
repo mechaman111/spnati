@@ -146,11 +146,11 @@ DevModeDialogueBox.prototype.saveEdits = function () {
             if (curState) {
                 var curCase = curState.parentCase;
                     
-                info.caseTag = curCase.tag;
+                info.case = curCase.serializeConditions();
                 info.state = {'text': curState.rawDialogue, 'image': curState.image};
                 
                 if (curState.marker) {
-                    info.marker = {
+                    info.state.marker = {
                         'name': curState.marker.name,
                         'perTarget': curState.marker.perTarget,
                     };
@@ -160,7 +160,7 @@ DevModeDialogueBox.prototype.saveEdits = function () {
                         markerName = getTargetMarker(curState.marker.name, player.currentTarget);
                     }
                     
-                    info.marker.value = player.markers[markerName];
+                    info.state.marker.value = player.markers[markerName];
                 }
             }
             
