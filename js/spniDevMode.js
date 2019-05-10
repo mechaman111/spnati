@@ -205,7 +205,7 @@ DevModeDialogueBox.prototype.saveEdits = function () {
                     };
                     
                     var markerName = curState.marker.name;
-                    if (target.chosenState.marker.perTarget) {
+                    if (curState.marker.perTarget) {
                         markerName = getTargetMarker(curState.marker.name, player.currentTarget);
                     }
                     

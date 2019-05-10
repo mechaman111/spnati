@@ -853,7 +853,7 @@ Case.prototype.serializeConditions = function () {
         if (complexProps.indexOf(prop) >= 0) return;
         
         ser[prop] = this[prop];
-    });
+    }.bind(this));
     
     ser.tests = this.tests.map(function (test) {
         return {
@@ -1307,7 +1307,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     var volatileMatches = [];
     
     for (var i = 0; i < cases.length; i++) {
-        var curCase = new Case(cases[i]);
+        var curCase = new Case(cases[i], stageNum);
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             curCase.basicRequirementsMet(this, opp)) 
