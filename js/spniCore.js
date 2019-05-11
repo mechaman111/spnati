@@ -549,6 +549,13 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
     this.uniqueLineCount = parseInt($metaXml.find('lines').text(), 10) || undefined;
     this.posesImageCount = parseInt($metaXml.find('poses').text(), 10) || undefined;
+    this.z_index = parseInt($metaXml.find('z-index').text(), 10) || 0;
+    this.dialogue_layering = $metaXml.find('dialogue-layer').text();
+    
+    if (['over', 'under'].indexOf(this.dialogue_layering) < 0) {
+        this.dialogue_layering = 'over';
+    }
+    
     this.selected_costume = null;
     this.alt_costume = null;
     this.default_costume = null;

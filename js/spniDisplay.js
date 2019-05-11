@@ -239,8 +239,7 @@ function Pose(poseDef, display) {
     
     var container = document.createElement('div');
     $(container).addClass("opponent-image custom-pose").css({
-        "position": "relative",
-        'z-index': -1
+        "position": "relative"
     });
     this.container = container;
     
@@ -664,6 +663,15 @@ OpponentDisplay.prototype.update = function(player) {
         this.bubble.removeClass('arrow-down arrow-left arrow-right arrow-up').addClass('arrow-'+chosenState.direction);
         bubbleArrowOffsetRules[this.slot-1][0].style.left = chosenState.location;
         bubbleArrowOffsetRules[this.slot-1][1].style.top = chosenState.location;
+    }
+    
+    /* Configure z-indices */
+    this.imageArea.css('z-index', player.z_index);
+    
+    if (player.dialogue_layering === 'over') {
+        this.bubble.css('z-index', player.z_index + 1);
+    } else {
+        this.bubble.css('z-index', player.z_index - 1);
     }
     
     if (showDebug && !inRollback()) {
