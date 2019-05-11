@@ -1308,19 +1308,19 @@ function disableUsageTracking() {
     save.saveUsageTracking();
 }
 
-var SEMVER_RE = /[vV]?(?<major>\d+)\.(?<minor>\d+)(?:\.(?<patch>\d+))?(?:\-(?<prerelease>[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-])*))?(?:\+(?<build>[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*))?/;
+var SEMVER_RE = /[vV]?(\d+)\.(\d+)(?:\.(\d+))?(?:\-([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-])*))?(?:\+([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*))?/;
 function parseSemVer (versionString) {
     var m = versionString.match(SEMVER_RE);
     if (!m) return null;
     
     var ver = {
-        'major': parseInt(m.groups.major, 10) || 0,
-        'minor': parseInt(m.groups.minor, 10) || 0,
-        'patch': parseInt(m.groups.patch, 10) || 0,
+        'major': parseInt(m[1], 10) || 0,
+        'minor': parseInt(m[2], 10) || 0,
+        'patch': parseInt(m[3], 10) || 0,
     }
     
-    if (m.groups.prerelease) {
-        ver.prerelease = m.groups.prerelease.split('.');
+    if (m[4]) {
+        ver.prerelease = m[4].split('.');
     }
     
     return ver;
