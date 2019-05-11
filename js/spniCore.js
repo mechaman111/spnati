@@ -1384,7 +1384,7 @@ function showVersionModal () {
     
     /* Construct the version modal DOM: */
     $changelog.empty().append(entries.sort(function (e1, e2) {
-        // Return in reverse-precedence order
+        // Sort in reverse-precedence order
         return compareVersions(e1.version, e2.version) * -1;
     }).map(function (ent) {
         var row = document.createElement('tr');
