@@ -220,9 +220,9 @@ DevModeDialogueBox.prototype.saveEdits = function () {
         this.player.editLog.push({
             'type': 'edit',
             'stage': this.player.stage,
-            'tag': this.currentCase.tag,
+            'case': this.currentCase.serializeConditions(),
             'oldState': this.currentState,
-            'state': {'text': this.currentStateDialogue, 'pose': this.currentStatePose}
+            'state': {'text': this.currentStateDialogue, 'image': this.currentStatePose}
         });
         
         this.player.xml.find('state[dev-id="'+stateID+'"]').each(function (idx, elem) {
