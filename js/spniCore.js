@@ -69,8 +69,6 @@ var jsErrors = [];
 var sessionID = '';
 var gameID = '';
 var generalCollectibles = [];
-var devModeActive = true;
-var devModeTarget = 2;
 
 /**********************************************************************
  * Screens & Modals

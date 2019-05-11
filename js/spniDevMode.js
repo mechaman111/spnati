@@ -1,7 +1,63 @@
+var devExportModal = $('#dev-export-modal');
+var devExportField = $('#export-edit-log');
+
+var devSelectorButtons = [
+    $('#dev-select-button-1'),
+    $('#dev-select-button-2'),
+    $('#dev-select-button-3'),
+    $('#dev-select-button-4'),
+];
+
+var devModeActive = false;
+var devModeTarget = 0;
+
+function showDevExportModal () {
+    if (!devModeActive || !devModeTarget) return;
+    
+    var editLog = players[devModeTarget].editLog || [];
+    var serialized = JSON.stringify(editLog);
+    
+    devExportField.val(serialized);
+    devExportModal.modal('show');
+}
+
+function setDevSelectorVisibility (visible) {
+    if (visible) {
+        $('.dev-select-button').show();
+        if (devModeActive && devModeTarget) devSelectorButtons[devModeTarget-1].addClass('active');
+    } else {
+        $('.dev-select-button').removeClass('active').hide();
+    }
+}
+
+function setDevModeTarget (target) {
+    $('.dev-select-button').removeClass('active');
+    
+    if (!target || (devModeActive && target === devModeTarget)) {
+        devModeActive = false;
+        devModeTarget = 0;
+        $gameScreen.removeClass('dev-mode');
+    } else {
+        devModeActive = true;
+        devModeTarget = target;
+        $gameScreen.addClass('dev-mode');
+        $('#dev-select-button-'+target).addClass('active');
+        
+        players.forEach(function (p) {
+            if (p !== players[HUMAN_PLAYER] && !p.devModeInitialized) p.initDevMode();
+        })
+    }
+    
+    for (var i=1;i<players.length;i++) {
+        gameDisplays[i-1].devModeController.update(players[i]);
+    }
+}
+
 Opponent.prototype.initDevMode = function () {
     /* Assign a unique ID number to each case and state, for later lookup. */
     var curStateID = 0;
     var stateIndex = {};
+    
     
     this.xml.find('case').each(function (caseIdx, elem) {
         $(this).attr('dev-id', caseIdx);
@@ -27,6 +83,7 @@ Opponent.prototype.initDevMode = function () {
         });
     });
     
+    this.devModeInitialized = true;
     this.stateIndex = stateIndex;
     this.originalXml = $(this.xml).clone();
     this.editLog = [];
@@ -84,8 +141,10 @@ DevModeDialogueBox.prototype.update = function (player) {
     
     if (devModeActive && devModeTarget === player.slot) {
         this.container.attr('data-dev-target', 'true');
+        this.editButton.show();
     } else {
         this.container.attr('data-dev-target', null);
+        this.editButton.hide();
     }
 }
 

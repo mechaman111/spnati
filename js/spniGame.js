@@ -1023,6 +1023,7 @@ function game_keyUp(e)
         else if (e.keyCode == 81 && DEBUG) {
             showDebug = !showDebug;
             updateDebugState(showDebug);
+            setDevSelectorVisibility(showDebug);
         }
         else if (e.keyCode == 84) {
             toggleTableVisibility();

@@ -297,11 +297,17 @@ body.modal-open {
 
 .dropdown-button-item span {
     display: inline;
+    margin: 0 3%;
 }
 
 .dropdown-button-item {
     width: 100%;
     font-size: 1.5em;
+    line-height: 1.30em;
+
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 /************************************************************
@@ -983,6 +989,27 @@ body.modal-open {
  * Classes for Developer Mode.
  ************************************************************/
 
+#game-dev-export-button {
+    display: none;
+}
+
+.dev-mode #game-dev-export-button {
+    display: inline-flex;
+}
+
+.dev-select-button {
+    position: absolute;
+    right: 20%;
+    top: -40%;
+    width: 19%;
+    height: 35%;
+}
+
+.dev-select-button.active {
+    background: linear-gradient(#80FF80, #33AA33);
+	background-color: #66FF66;
+}
+
 .edit-options-row {
     position: absolute;
     top: 100%;
@@ -1066,6 +1093,12 @@ body.modal-open {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+#export-edit-log {
+    font-family: monospace;
+    font-size: 1.45vmin;
+    cursor: text;
 }
 
 .dialogue-bubble-area[data-editing="preview"] .dialogue-edit-status::after {

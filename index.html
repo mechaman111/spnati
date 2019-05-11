@@ -2026,11 +2026,42 @@
             </div>
         </div>
     </div>
-</div> <!-- End of Import/Export Modal -->
+</div>
+<!-- End of Import/Export Modal -->
+
+
+<!-- DevMode Export Modal -->
+<div id="dev-export-modal" class="modal table-modal fade" role="dialog">
+    <div class="modal-table-container">
+        <div class="modal-cell-container">
+            <div class="bordered modal-dialog wide-modal-dialog">
+                <div class="bordered modal-dialog-surface">
+                    <!-- Start of Modal Content -->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title text-center">Export Dev Mode Edits</h4>
+                                <h5 class='text-center'>This code will allow you to import any edits you've made to your character's dialogue into the Character Editor.</h5>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <textarea class="form-control" id='export-edit-log' rows="15" readonly></textarea>
+                                </form>
+                                <div class="modal-body-container" style="padding-top:4%;">
+                                    <button class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- End of Modal Content -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of DevMode Export Modal -->
 
 
 <!-- Game Screen -->
-<div id="game-screen" class="screen-container ui-minimal dev-mode" hidden>
+<div id="game-screen" class="screen-container ui-minimal" hidden>
   <div class="screen">
     <!-- Dialogue Bubbles -->
     <div class="dialogue-bubble-row">
@@ -2141,6 +2172,10 @@
     <div class="btn-group dropup game-menu-dropup" data-toggle="tooltip" data-placement="right" title="Game Menu">
         <button type="button" class="bordered smooth-button smooth-button-red dropdown-toggle menu-dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span></button>
         <ul class="dropdown-menu">
+            <button id="game-dev-export-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showDevExportModal()">
+              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+              <span class="game-menu-label">Export Dialogue Edits</span>
+            </button>
             <button id="game-log-button" class="dropdown-button-item bordered smooth-button smooth-button-red" onclick="showHelpModal()">
               <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
               <span class="game-menu-label">Help and FAQ</span>
@@ -2175,6 +2210,9 @@
           <img id="player-1-card-4" class="bordered small-card-image" src="img/blankcard.jpg">
           <img id="player-1-card-5" class="bordered small-card-image" src="img/blankcard.jpg">
         </div>
+        <button id="dev-select-button-1" class="bordered dev-select-button" onclick="setDevModeTarget(1)" hidden>
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+        </button>
         <button id="debug-button-1" class="bordered debug-button" onclick="selectDebug(1)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
@@ -2191,6 +2229,9 @@
           <img id="player-2-card-4" class="bordered small-card-image" src="img/blankcard.jpg">
           <img id="player-2-card-5" class="bordered small-card-image" src="img/blankcard.jpg">
         </div>
+        <button id="dev-select-button-2" class="bordered dev-select-button" onclick="setDevModeTarget(2)" hidden>
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+        </button>
         <button id="debug-button-2" class="bordered debug-button" onclick="selectDebug(2)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
@@ -2207,6 +2248,9 @@
           <img id="player-3-card-4" class="bordered small-card-image" src="img/blankcard.jpg">
           <img id="player-3-card-5" class="bordered small-card-image" src="img/blankcard.jpg">
         </div>
+        <button id="dev-select-button-3" class="bordered dev-select-button" onclick="setDevModeTarget(3)" hidden>
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+        </button>
         <button id="debug-button-3" class="bordered debug-button" onclick="selectDebug(3)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
@@ -2223,6 +2267,9 @@
           <img id="player-4-card-4" class="bordered small-card-image" src="img/blankcard.jpg">
           <img id="player-4-card-5" class="bordered small-card-image" src="img/blankcard.jpg">
         </div>
+        <button id="dev-select-button-4" class="bordered dev-select-button" onclick="setDevModeTarget(4)" hidden>
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+        </button>
         <button id="debug-button-4" class="bordered debug-button" onclick="selectDebug(4)" hidden>
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
