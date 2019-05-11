@@ -820,10 +820,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.targetedLines = targetedLines;
             
-            if (devModeActive) {
-                this.initDevMode();
-            }
-
             if (this.selected_costume) {
                 return this.loadAlternateCostume();
             }

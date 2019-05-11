@@ -54,14 +54,11 @@ function setDevModeTarget (target) {
 }
 
 Opponent.prototype.initDevMode = function () {
-    /* Assign a unique ID number to each case and state, for later lookup. */
+    /* Assign a unique ID number to each state, for later lookup. */
     var curStateID = 0;
     var stateIndex = {};
     
-    
     this.xml.find('case').each(function (caseIdx, elem) {
-        $(this).attr('dev-id', caseIdx);
-        
         $(elem).find('state').each(function () {
             var pose = $(this).attr('img') || '';
             var text = $(this).text() || '';
