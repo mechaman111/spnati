@@ -69,6 +69,7 @@ var jsErrors = [];
 var sessionID = '';
 var gameID = '';
 var generalCollectibles = [];
+var codeImportEnabled = false;
 
 /**********************************************************************
  * Screens & Modals
@@ -1169,6 +1170,7 @@ function restartGame () {
     $gamePlayerCardArea.show();
     if (!MINIMAL_UI) $gamePlayerClothingArea.show();
     
+    inGame = false;
 
 	/* trigger screen refreshes */
 	updateSelectionVisuals();
@@ -1639,6 +1641,15 @@ function forceTableVisibility(state) {
  ************************************************************/
 function showImportModal() {
     $("#export-code").text(save.serializeLocalStorage());
+    
+    if (codeImportEnabled) {
+        $('#import-progress').prop('disabled', false);
+        $('.import-restriction-warning').hide();
+    } else {
+        $('#import-progress').prop('disabled', true);
+        $('.import-restriction-warning').show();
+    }
+    
     $ioModal.modal('show');
 
     $('#import-progress').click(function() {
