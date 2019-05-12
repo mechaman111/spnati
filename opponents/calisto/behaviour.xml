@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.3 at 6:47:06 PM on May 06, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.3 at 12:47:51 PM on May 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.3</version>
     <first>Calisto</first>
@@ -1610,10 +1610,6 @@
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="extra" />
-                <state img="custom:0-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
-            </case>
-            <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="extra" />
                 <state img="0-calm.png">Seems fair in my book... and the rulebook.</state>
                 <state img="0-aloof.png">It's smarter than wearing multiple t-shirts at once.</state>
                 <state img="0-aloof.png">Insignificant evidence.</state>
@@ -1623,8 +1619,8 @@
                 <state img="0-aloof.png" marker="garbage=1">...Don't waste my time with this garbage.</state>
             </case>
             <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="major" />
-                <state img="custom:0-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
+                <test expr="~clothing.type~" value="extra" />
+                <state img="custom:0-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="major" />
@@ -1633,6 +1629,10 @@
                 <state img="0-aloof.png" marker="confidence=1">Stripping in front of a live audience is a sign of pure confidence. You should be proud of that.</state>
                 <state img="0-aloof.png" marker="blame=1">It's just bad luck that brought you to this moment. I hope you don't blame yourself.</state>
                 <state img="0-calm.png" marker="clothed=1">Oh, it's ~name~'s turn to strip. Go ahead... it'll make me look more clothed in comparison.</state>
+            </case>
+            <case tag="opponent_stripping" priority="0">
+                <test expr="~clothing.type~" value="major" />
+                <state img="custom:0-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="minor" />
@@ -1668,6 +1668,21 @@
             <case tag="opponent_stripped" filter="witty" priority="0">
                 <state img="custom:0-laugh">I find your attitude funnier than your... phwwh... "witty" comments. Phwwwh... Ahahahahaha!</state>
             </case>
+            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
+                <state img="custom:0-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
+                <state img="custom:0-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="garbage==1" priority="0">
+                <state img="0-aloof.png" marker="garbage=0">Now go throw it out in the trash can in the hallway!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
+                <state img="custom:0-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
+                <state img="0-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+            </case>
             <case tag="opponent_stripped" target="revy" priority="0">
                 <state img="custom:0-catchbreath">I'm begging you, drop the act right now. I can't win with you acting like a badass. It's hilarious! Ahem.</state>
                 <state img="0-holdbacklaugh.png">Are you going to threaten me now? Please don't, because you'll... phwwwh... Just don't do that... phwwh...</state>
@@ -1682,34 +1697,29 @@
                 <state img="0-aloof.png">I hope that was the last small thing on you. I might investigate you just in case.</state>
                 <state img="custom:0-thinking">...If you are done playing games...!</state>
             </case>
-            <case tag="opponent_stripped" saidMarker="garbage==1" priority="0">
-                <test expr="clothing.type" value="extra" />
-                <state img="0-aloof.png" marker="garbage=0">Now go throw it out in the trash can in the hallway!</state>
-            </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
                 <state img="0-aloof.png">I hope you weren't relying on wearing lots of clothes to win.</state>
-                <state img="0-aloof.png">Present something better next time. I mean it.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:0-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:0-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:0-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="0-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+                <state img="custom:0-thinking">All done presenting your evidence? Good. Let's move on.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="minor" />
-                <state img="custom:0-thinking">All done presenting your evidence? Good. Let's move on.</state>
+                <state img="0-aloof.png">Present something better next time. I mean it.</state>
+            </case>
+            <case tag="opponent_masturbating">
+                <state img="0-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
+                <state img="0-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
+                <state img="custom:0-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
+                <state img="0-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
+                <state img="0-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
+                <state img="0-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
+                <state img="0-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+            </case>
+            <case tag="opponent_finished_masturbating">
+                <state img="0-holdbacklaugh.png">I promise I won't tell anyone about this. ...When you're around, anyway.</state>
+                <state img="0-aloof.png">No more having to hear you pleasuring yourself, ~name~. You were getting on my nerves.</state>
+                <state img="0-aloof.png">Do you feel guilty? I don't care, since I'm not defending you.</state>
+                <state img="0-calm.png">Refrain from distracting me any further, ~name~.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="0-aloof.png">Not as thrilling as seeing a client declared not guilty, but at least I get to see you no longer act innocent.</state>
@@ -1723,17 +1733,11 @@
                 <state img="0-aloof.png">I don't plan to be in ~name~'s position any time soon.</state>
             </case>
             <case tag="male_masturbating">
-                <state img="0-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
-                <state img="0-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
-                <state img="custom:0-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
-                <state img="0-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
-                <state img="0-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
-                <state img="0-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
-                <state img="0-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+                <state img="custom:0-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="0-aloof.png">Do you feel guilt? I don't care since I'm not defending you.</state>
-                <state img="0-aloof.png">Refrain from distracting me any further, ~player~.</state>
+                <state img="custom:0-laugh">I don't want you cumming on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
+                <state img="0-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="0-aloof.png">I now have my proof that I am great at card games.</state>
@@ -1746,17 +1750,10 @@
                 <state img="0-aloof.png">I don't plan to be in ~name~'s position any time soon.</state>
             </case>
             <case tag="female_masturbating">
-                <state img="0-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
-                <state img="0-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
-                <state img="custom:0-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
-                <state img="0-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
-                <state img="0-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
-                <state img="0-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
-                <state img="0-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+                <state img="custom:0-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="female_finished_masturbating">
-                <state img="0-calm.png">I promise I won't tell anyone about this. ...When you're around, anyway.</state>
-                <state img="0-aloof.png">No more having to hear you pleasuring yourself, ~name~. You were getting on my nerves.</state>
+                <state img="0-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_finished_masturbating" target="mia">
                 <state img="0-holdbacklaugh.png">I guess you're more cut out to be a porn star than an attorney, Mia. Phwwh... Really, I encourage you to switch professions, phwwh...</state>
@@ -2340,15 +2337,15 @@
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="major" />
+                <state img="custom:1-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
+            </case>
+            <case tag="opponent_stripping" priority="0">
+                <test expr="~clothing.type~" value="major" />
                 <state img="1-aloof.png">Have you finally learned the consequences of playing this game?</state>
                 <state img="1-calm.png">You seem ready to reveal a lot to us.</state>
                 <state img="1-aloof.png" marker="confidence=1">Stripping in front of a live audience is a sign of pure confidence. You should be proud of that.</state>
                 <state img="1-aloof.png" marker="blame=1">It's just bad luck that brought you to this moment. I hope you don't blame yourself.</state>
                 <state img="1-calm.png" marker="clothed=1">Oh, it's ~name~'s turn to strip. Go ahead... it'll make me look more clothed in comparison.</state>
-            </case>
-            <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="major" />
-                <state img="custom:1-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="minor" />
@@ -2384,6 +2381,21 @@
             <case tag="opponent_stripped" filter="witty" priority="0">
                 <state img="custom:1-laugh">I find your attitude funnier than your... phwwh... "witty" comments. Phwwwh... Ahahahahaha!</state>
             </case>
+            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
+                <state img="custom:1-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
+                <state img="custom:1-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="garbage==1" priority="0">
+                <state img="1-aloof.png" marker="garbage=0">Now go throw it out in the trash can in the hallway!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
+                <state img="custom:1-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
+                <state img="1-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+            </case>
             <case tag="opponent_stripped" target="revy" priority="0">
                 <state img="custom:1-catchbreath">I'm begging you, drop the act right now. I can't win with you acting like a badass. It's hilarious! Ahem.</state>
                 <state img="1-holdbacklaugh.png">Are you going to threaten me now? Please don't, because you'll... phwwwh... Just don't do that... phwwh...</state>
@@ -2398,34 +2410,29 @@
                 <state img="1-aloof.png">I hope that was the last small thing on you. I might investigate you just in case.</state>
                 <state img="custom:1-thinking">...If you are done playing games...!</state>
             </case>
-            <case tag="opponent_stripped" saidMarker="garbage==1" priority="0">
-                <test expr="clothing.type" value="extra" />
-                <state img="1-aloof.png" marker="garbage=0">Now go throw it out in the trash can in the hallway!</state>
-            </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
                 <state img="1-aloof.png">I hope you weren't relying on wearing lots of clothes to win.</state>
-                <state img="1-aloof.png">Present something better next time. I mean it.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:1-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:1-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:1-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="1-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+                <state img="custom:1-thinking">All done presenting your evidence? Good. Let's move on.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="minor" />
-                <state img="custom:1-thinking">All done presenting your evidence? Good. Let's move on.</state>
+                <state img="1-aloof.png">Present something better next time. I mean it.</state>
+            </case>
+            <case tag="opponent_masturbating">
+                <state img="1-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
+                <state img="1-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
+                <state img="custom:1-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
+                <state img="1-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
+                <state img="1-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
+                <state img="1-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
+                <state img="1-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+            </case>
+            <case tag="opponent_finished_masturbating">
+                <state img="1-holdbacklaugh.png">I promise I won't tell anyone about this. ...When you're around, anyway.</state>
+                <state img="1-aloof.png">No more having to hear you pleasuring yourself, ~name~. You were getting on my nerves.</state>
+                <state img="1-aloof.png">Do you feel guilty? I don't care, since I'm not defending you.</state>
+                <state img="1-calm.png">Refrain from distracting me any further, ~name~.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="1-aloof.png">Not as thrilling as seeing a client declared not guilty, but at least I get to see you no longer act innocent.</state>
@@ -2439,17 +2446,11 @@
                 <state img="1-aloof.png">I don't plan to be in ~name~'s position any time soon.</state>
             </case>
             <case tag="male_masturbating">
-                <state img="1-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
-                <state img="1-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
-                <state img="custom:1-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
-                <state img="1-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
-                <state img="1-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
-                <state img="1-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
-                <state img="1-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+                <state img="custom:1-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="1-aloof.png">Do you feel guilt? I don't care since I'm not defending you.</state>
-                <state img="1-aloof.png">Refrain from distracting me any further, ~player~.</state>
+                <state img="custom:1-laugh">I don't want you cumming on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
+                <state img="1-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="1-aloof.png">I now have my proof that I am great at card games.</state>
@@ -2462,17 +2463,10 @@
                 <state img="1-aloof.png">I don't plan to be in ~name~'s position any time soon.</state>
             </case>
             <case tag="female_masturbating">
-                <state img="1-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
-                <state img="1-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
-                <state img="custom:1-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
-                <state img="1-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
-                <state img="1-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
-                <state img="1-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
-                <state img="1-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+                <state img="custom:1-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="female_finished_masturbating">
-                <state img="1-calm.png">I promise I won't tell anyone about this. ...When you're around, anyway.</state>
-                <state img="1-aloof.png">No more having to hear you pleasuring yourself, ~name~. You were getting on my nerves.</state>
+                <state img="1-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_finished_masturbating" target="mia">
                 <state img="1-holdbacklaugh.png">I guess you're more cut out to be a porn star than an attorney, Mia. Phwwh... Really, I encourage you to switch professions, phwwh...</state>
@@ -2602,7 +2596,7 @@
                 <state img="2-stripping.png">Let's see... I suppose my jacket is next.</state>
             </case>
             <case tag="stripped">
-                <state img="2-afterstrip.png">It's all about who's on top when the game'is over. So let's get back to it.</state>
+                <state img="2-afterstrip.png">It's all about who's on top when the game is over. So let's get back to it.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="2-holdbacklaugh.png">Bahaha... be a man and accept your loss!</state>
@@ -3055,15 +3049,15 @@
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="major" />
+                <state img="custom:2-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
+            </case>
+            <case tag="opponent_stripping" priority="0">
+                <test expr="~clothing.type~" value="major" />
                 <state img="2-aloof.png">Have you finally learned the consequences of playing this game?</state>
                 <state img="2-calm.png">You seem ready to reveal a lot to us.</state>
                 <state img="2-aloof.png" marker="confidence=1">Stripping in front of a live audience is a sign of pure confidence. You should be proud of that.</state>
                 <state img="2-aloof.png" marker="blame=1">It's just bad luck that brought you to this moment. I hope you don't blame yourself.</state>
                 <state img="2-calm.png" marker="clothed=1">Oh, it's ~name~'s turn to strip. Go ahead... it'll make me look more clothed in comparison.</state>
-            </case>
-            <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="major" />
-                <state img="custom:2-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="minor" />
@@ -3099,6 +3093,21 @@
             <case tag="opponent_stripped" filter="witty" priority="0">
                 <state img="custom:2-laugh">I find your attitude funnier than your... phwwh... "witty" comments. Phwwwh... Ahahahahaha!</state>
             </case>
+            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
+                <state img="custom:2-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
+                <state img="custom:2-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="garbage==1" priority="0">
+                <state img="2-aloof.png" marker="garbage=0">Now go throw it out in the trash can in the hallway!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
+                <state img="custom:2-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
+                <state img="2-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+            </case>
             <case tag="opponent_stripped" target="revy" priority="0">
                 <state img="custom:2-catchbreath">I'm begging you, drop the act right now. I can't win with you acting like a badass. It's hilarious! Ahem.</state>
                 <state img="2-holdbacklaugh.png">Are you going to threaten me now? Please don't, because you'll... phwwwh... Just don't do that... phwwh...</state>
@@ -3113,34 +3122,29 @@
                 <state img="2-aloof.png">I hope that was the last small thing on you. I might investigate you just in case.</state>
                 <state img="custom:2-thinking">...If you are done playing games...!</state>
             </case>
-            <case tag="opponent_stripped" saidMarker="garbage==1" priority="0">
-                <test expr="clothing.type" value="extra" />
-                <state img="2-aloof.png" marker="garbage=0">Now go throw it out in the trash can in the hallway!</state>
-            </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
                 <state img="2-aloof.png">I hope you weren't relying on wearing lots of clothes to win.</state>
-                <state img="2-aloof.png">Present something better next time. I mean it.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:2-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:2-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:2-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="2-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+                <state img="custom:2-thinking">All done presenting your evidence? Good. Let's move on.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="minor" />
-                <state img="custom:2-thinking">All done presenting your evidence? Good. Let's move on.</state>
+                <state img="2-aloof.png">Present something better next time. I mean it.</state>
+            </case>
+            <case tag="opponent_masturbating">
+                <state img="2-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
+                <state img="2-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
+                <state img="custom:2-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
+                <state img="2-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
+                <state img="2-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
+                <state img="2-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
+                <state img="2-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+            </case>
+            <case tag="opponent_finished_masturbating">
+                <state img="2-holdbacklaugh.png">I promise I won't tell anyone about this. ...When you're around, anyway.</state>
+                <state img="2-aloof.png">No more having to hear you pleasuring yourself, ~name~. You were getting on my nerves.</state>
+                <state img="2-aloof.png">Do you feel guilty? I don't care, since I'm not defending you.</state>
+                <state img="2-calm.png">Refrain from distracting me any further, ~name~.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="2-aloof.png">Not as thrilling as seeing a client declared not guilty, but at least I get to see you no longer act innocent.</state>
@@ -3154,17 +3158,11 @@
                 <state img="2-aloof.png">I don't plan to be in ~name~'s position any time soon.</state>
             </case>
             <case tag="male_masturbating">
-                <state img="2-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
-                <state img="2-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
-                <state img="custom:2-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
-                <state img="2-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
-                <state img="2-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
-                <state img="2-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
-                <state img="2-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+                <state img="custom:2-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="2-aloof.png">Do you feel guilt? I don't care since I'm not defending you.</state>
-                <state img="2-aloof.png">Refrain from distracting me any further, ~player~.</state>
+                <state img="custom:2-laugh">I don't want you cumming on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
+                <state img="2-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="2-aloof.png">I now have my proof that I am great at card games.</state>
@@ -3177,17 +3175,10 @@
                 <state img="2-aloof.png">I don't plan to be in ~name~'s position any time soon.</state>
             </case>
             <case tag="female_masturbating">
-                <state img="2-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
-                <state img="2-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
-                <state img="custom:2-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
-                <state img="2-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
-                <state img="2-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
-                <state img="2-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
-                <state img="2-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+                <state img="custom:2-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="female_finished_masturbating">
-                <state img="2-calm.png">I promise I won't tell anyone about this. ...When you're around, anyway.</state>
-                <state img="2-aloof.png">No more having to hear you pleasuring yourself, ~name~. You were getting on my nerves.</state>
+                <state img="2-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_finished_masturbating" target="mia">
                 <state img="2-holdbacklaugh.png">I guess you're more cut out to be a porn star than an attorney, Mia. Phwwh... Really, I encourage you to switch professions, phwwh...</state>
@@ -3770,15 +3761,15 @@
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="major" />
+                <state img="custom:3-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
+            </case>
+            <case tag="opponent_stripping" priority="0">
+                <test expr="~clothing.type~" value="major" />
                 <state img="3-aloof.png">Have you finally learned the consequences of playing this game?</state>
                 <state img="3-calm.png">You seem ready to reveal a lot to us.</state>
                 <state img="3-aloof.png" marker="confidence=1">Stripping in front of a live audience is a sign of pure confidence. You should be proud of that.</state>
                 <state img="3-aloof.png" marker="blame=1">It's just bad luck that brought you to this moment. I hope you don't blame yourself.</state>
                 <state img="3-calm.png" marker="clothed=1">Oh, it's ~name~'s turn to strip. Go ahead... it'll make me look more clothed in comparison.</state>
-            </case>
-            <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="major" />
-                <state img="custom:3-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="minor" />
@@ -3814,6 +3805,21 @@
             <case tag="opponent_stripped" filter="witty" priority="0">
                 <state img="custom:3-laugh">I find your attitude funnier than your... phwwh... "witty" comments. Phwwwh... Ahahahahaha!</state>
             </case>
+            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
+                <state img="custom:3-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
+                <state img="custom:3-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="garbage==1" priority="0">
+                <state img="3-aloof.png" marker="garbage=0">Now go throw it out in the trash can in the hallway!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
+                <state img="custom:3-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
+                <state img="3-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+            </case>
             <case tag="opponent_stripped" target="revy" priority="0">
                 <state img="custom:3-catchbreath">I'm begging you, drop the act right now. I can't win with you acting like a badass. It's hilarious! Ahem.</state>
                 <state img="3-holdbacklaugh.png">Are you going to threaten me now? Please don't, because you'll... phwwwh... Just don't do that... phwwh...</state>
@@ -3828,34 +3834,29 @@
                 <state img="3-aloof.png">I hope that was the last small thing on you. I might investigate you just in case.</state>
                 <state img="custom:3-thinking">...If you are done playing games...!</state>
             </case>
-            <case tag="opponent_stripped" saidMarker="garbage==1" priority="0">
-                <test expr="clothing.type" value="extra" />
-                <state img="3-aloof.png" marker="garbage=0">Now go throw it out in the trash can in the hallway!</state>
-            </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
                 <state img="3-aloof.png">I hope you weren't relying on wearing lots of clothes to win.</state>
-                <state img="3-aloof.png">Present something better next time. I mean it.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:3-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:3-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:3-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="3-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+                <state img="custom:3-thinking">All done presenting your evidence? Good. Let's move on.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="minor" />
-                <state img="custom:3-thinking">All done presenting your evidence? Good. Let's move on.</state>
+                <state img="3-aloof.png">Present something better next time. I mean it.</state>
+            </case>
+            <case tag="opponent_masturbating">
+                <state img="3-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
+                <state img="3-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
+                <state img="custom:3-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
+                <state img="3-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
+                <state img="3-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
+                <state img="3-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
+                <state img="3-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+            </case>
+            <case tag="opponent_finished_masturbating">
+                <state img="3-holdbacklaugh.png">I promise I won't tell anyone about this. ...When you're around, anyway.</state>
+                <state img="3-aloof.png">No more having to hear you pleasuring yourself, ~name~. You were getting on my nerves.</state>
+                <state img="3-aloof.png">Do you feel guilty? I don't care, since I'm not defending you.</state>
+                <state img="3-calm.png">Refrain from distracting me any further, ~name~.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="3-aloof.png">Not as thrilling as seeing a client declared not guilty, but at least I get to see you no longer act innocent.</state>
@@ -3869,17 +3870,11 @@
                 <state img="3-aloof.png">I don't plan to be in ~name~'s position any time soon.</state>
             </case>
             <case tag="male_masturbating">
-                <state img="3-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
-                <state img="3-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
-                <state img="custom:3-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
-                <state img="3-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
-                <state img="3-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
-                <state img="3-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
-                <state img="3-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+                <state img="custom:3-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="3-aloof.png">Do you feel guilt? I don't care since I'm not defending you.</state>
-                <state img="3-aloof.png">Refrain from distracting me any further, ~player~.</state>
+                <state img="custom:3-laugh">I don't want you cumming on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
+                <state img="3-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="3-aloof.png">I now have my proof that I am great at card games.</state>
@@ -3892,17 +3887,10 @@
                 <state img="3-aloof.png">I don't plan to be in ~name~'s position any time soon.</state>
             </case>
             <case tag="female_masturbating">
-                <state img="3-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
-                <state img="3-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
-                <state img="custom:3-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
-                <state img="3-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
-                <state img="3-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
-                <state img="3-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
-                <state img="3-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+                <state img="custom:3-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="female_finished_masturbating">
-                <state img="3-calm.png">I promise I won't tell anyone about this. ...When you're around, anyway.</state>
-                <state img="3-aloof.png">No more having to hear you pleasuring yourself, ~name~. You were getting on my nerves.</state>
+                <state img="3-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_finished_masturbating" target="mia">
                 <state img="3-holdbacklaugh.png">I guess you're more cut out to be a porn star than an attorney, Mia. Phwwh... Really, I encourage you to switch professions, phwwh...</state>
@@ -4485,15 +4473,15 @@
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="major" />
+                <state img="custom:4-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
+            </case>
+            <case tag="opponent_stripping" priority="0">
+                <test expr="~clothing.type~" value="major" />
                 <state img="4-aloof.png">Have you finally learned the consequences of playing this game?</state>
                 <state img="4-calm.png">You seem ready to reveal a lot to us.</state>
                 <state img="4-aloof.png" marker="confidence=1">Stripping in front of a live audience is a sign of pure confidence. You should be proud of that.</state>
                 <state img="4-aloof.png" marker="blame=1">It's just bad luck that brought you to this moment. I hope you don't blame yourself.</state>
                 <state img="4-calm.png" marker="clothed=1">Oh, it's ~name~'s turn to strip. Go ahead... it'll make me look more clothed in comparison.</state>
-            </case>
-            <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="major" />
-                <state img="custom:4-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="minor" />
@@ -4529,6 +4517,21 @@
             <case tag="opponent_stripped" filter="witty" priority="0">
                 <state img="custom:4-laugh">I find your attitude funnier than your... phwwh... "witty" comments. Phwwwh... Ahahahahaha!</state>
             </case>
+            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
+                <state img="custom:4-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
+                <state img="custom:4-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="garbage==1" priority="0">
+                <state img="4-aloof.png" marker="garbage=0">Now go throw it out in the trash can in the hallway!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
+                <state img="custom:4-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
+                <state img="4-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+            </case>
             <case tag="opponent_stripped" target="revy" priority="0">
                 <state img="custom:4-catchbreath">I'm begging you, drop the act right now. I can't win with you acting like a badass. It's hilarious! Ahem.</state>
                 <state img="4-holdbacklaugh.png">Are you going to threaten me now? Please don't, because you'll... phwwwh... Just don't do that... phwwh...</state>
@@ -4543,34 +4546,29 @@
                 <state img="4-aloof.png">I hope that was the last small thing on you. I might investigate you just in case.</state>
                 <state img="custom:4-thinking">...If you are done playing games...!</state>
             </case>
-            <case tag="opponent_stripped" saidMarker="garbage==1" priority="0">
-                <test expr="clothing.type" value="extra" />
-                <state img="4-aloof.png" marker="garbage=0">Now go throw it out in the trash can in the hallway!</state>
-            </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
                 <state img="4-aloof.png">I hope you weren't relying on wearing lots of clothes to win.</state>
-                <state img="4-aloof.png">Present something better next time. I mean it.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:4-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:4-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:4-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="4-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+                <state img="custom:4-thinking">All done presenting your evidence? Good. Let's move on.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="minor" />
-                <state img="custom:4-thinking">All done presenting your evidence? Good. Let's move on.</state>
+                <state img="4-aloof.png">Present something better next time. I mean it.</state>
+            </case>
+            <case tag="opponent_masturbating">
+                <state img="4-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
+                <state img="4-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
+                <state img="custom:4-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
+                <state img="4-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
+                <state img="4-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
+                <state img="4-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
+                <state img="4-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+            </case>
+            <case tag="opponent_finished_masturbating">
+                <state img="4-holdbacklaugh.png">I promise I won't tell anyone about this. ...When you're around, anyway.</state>
+                <state img="4-aloof.png">No more having to hear you pleasuring yourself, ~name~. You were getting on my nerves.</state>
+                <state img="4-aloof.png">Do you feel guilty? I don't care, since I'm not defending you.</state>
+                <state img="4-calm.png">Refrain from distracting me any further, ~name~.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="4-aloof.png">Not as thrilling as seeing a client declared not guilty, but at least I get to see you no longer act innocent.</state>
@@ -4584,17 +4582,11 @@
                 <state img="4-aloof.png">I don't plan to be in ~name~'s position any time soon.</state>
             </case>
             <case tag="male_masturbating">
-                <state img="4-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
-                <state img="4-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
-                <state img="custom:4-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
-                <state img="4-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
-                <state img="4-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
-                <state img="4-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
-                <state img="4-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+                <state img="custom:4-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="4-aloof.png">Do you feel guilt? I don't care since I'm not defending you.</state>
-                <state img="4-aloof.png">Refrain from distracting me any further, ~player~.</state>
+                <state img="custom:4-laugh">I don't want you cumming on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
+                <state img="4-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="4-aloof.png">I now have my proof that I am great at card games.</state>
@@ -4607,17 +4599,10 @@
                 <state img="4-aloof.png">I don't plan to be in ~name~'s position any time soon.</state>
             </case>
             <case tag="female_masturbating">
-                <state img="4-aloof.png">I don't intend to lose... but if I do somehow, I really hope I don't sound as annoying as you.</state>
-                <state img="4-calm.png">Would laughing or insulting you turn you on? Or are you turned on from being ignored? ...Because either way, I want to avoid that.</state>
-                <state img="custom:4-thinking">If this is what you're like here, I wonder what goes on at home, ~name~.</state>
-                <state img="4-aloof.png">I'm still ignoring you, ~name~. Don't throw off my form.</state>
-                <state img="4-aloof.png">Grab the attention of the others. They all look more interested. It would help me out a lot.</state>
-                <state img="4-aloof.png">You're being more annoying than sexy right now. Are you doing it on purpose?</state>
-                <state img="4-calm.png">What are you so worked up over? There is no reason for you to be this loud.</state>
+                <state img="custom:4-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="female_finished_masturbating">
-                <state img="4-calm.png">I promise I won't tell anyone about this. ...When you're around, anyway.</state>
-                <state img="4-aloof.png">No more having to hear you pleasuring yourself, ~name~. You were getting on my nerves.</state>
+                <state img="4-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_finished_masturbating" target="mia">
                 <state img="4-holdbacklaugh.png">I guess you're more cut out to be a porn star than an attorney, Mia. Phwwh... Really, I encourage you to switch professions, phwwh...</state>
@@ -5170,10 +5155,6 @@
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="extra" />
-                <state img="custom:5-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
-            </case>
-            <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="extra" />
                 <state img="5-holdbacklaugh.png">Phwwh... How do you still have accessories? Your ~clothing~ should've been gone by now. Hahahaha!</state>
                 <state img="5-holdbacklaugh.png">Did you just sneak your ~clothing~ in now? Phwwh... Hahahaha! I didn't even know you still had some.</state>
                 <state img="5-holdbacklaugh.png">Phwwwh... You still have accessories. I brought none, and I'm still standing strong.</state>
@@ -5181,8 +5162,8 @@
                 <state img="custom:5-laugh">You're doing something right! Removing accessories first, phwwh... Ahahahahahaha!</state>
             </case>
             <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="major" />
-                <state img="custom:5-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
+                <test expr="~clothing.type~" value="extra" />
+                <state img="custom:5-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="major" />
@@ -5191,6 +5172,10 @@
                 <state img="5-holdbacklaugh.png">Ahah! How scandalous!</state>
                 <state img="custom:5-laugh">Phwwh... Hahahaha! TAKE THAT off now, ~name~. Ahahhahaha!</state>
                 <state img="custom:5-laugh">I want to see the failure under the clothes. Phwwh... Ahahahahaha!</state>
+            </case>
+            <case tag="opponent_stripping" priority="0">
+                <test expr="~clothing.type~" value="major" />
+                <state img="custom:5-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="minor" />
@@ -5226,6 +5211,18 @@
             <case tag="opponent_stripped" filter="witty" priority="0">
                 <state img="custom:5-laugh">I find your attitude funnier than your... phwwh... "witty" comments. Phwwwh... Ahahahahaha!</state>
             </case>
+            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
+                <state img="custom:5-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
+                <state img="custom:5-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
+                <state img="custom:5-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
+                <state img="5-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+            </case>
             <case tag="opponent_stripped" target="revy" priority="0">
                 <state img="custom:5-catchbreath">I'm begging you, drop the act right now. I can't win with you acting like a badass. It's hilarious! Ahem.</state>
                 <state img="5-holdbacklaugh.png">Are you going to threaten me now? Please don't, because you'll... phwwwh... Just don't do that... phwwh...</state>
@@ -5239,48 +5236,47 @@
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
-                <state img="custom:5-catchbreath">Phwwh... sorry... I need a minute. I'm still mourning ~name~'s lost dignity.</state>
+                <state img="custom:5-catchbreath">Phwwh... all right, let's keep going. I have a game to win.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
-                <state img="custom:5-catchbreath">Phwwh... all right, let's keep going. I have a game to win.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:5-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:5-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:5-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="5-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+                <state img="custom:5-catchbreath">Phwwh... sorry... I need a minute. I'm still mourning ~name~'s lost dignity.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="minor" />
                 <state img="5-aloof.png">I don't expect you to lose easily if you're just now removing your ~clothing~.</state>
             </case>
+            <case tag="opponent_masturbating">
+                <state img="custom:5-laugh">Ahahahaha! You sound ridiculous!</state>
+                <state img="custom:5-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
+                <state img="custom:5-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
+                <state img="custom:5-laugh">Hahahahah! Stop looking at me like that. Phwwwh... Hahaha! I'm dying with laughter here.</state>
+                <state img="custom:5-laugh">Are you looking at me? Phwwh... That look at your face. Ahahahahaha! It was already laughable before you were horny. Phwwh... Hahahahaha!</state>
+                <state img="custom:5-laugh">Phwwh... Are you saying that stuff on purpose? You sound, phwwwh... Ahahahahaha. Is this how you sound in bed? Hahahaha!</state>
+                <state img="custom:5-laugh">Don't look at me like that. Phwwwh... The look on your face makes me, phwwh... ahahahahahaha!</state>
+                <state img="custom:5-laugh">Ahahahaha! Who the hell says that stuff? It sounds so stupid! Phwwwh... Hahahahaha!</state>
+            </case>
+            <case tag="opponent_finished_masturbating">
+                <state img="custom:5-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="5-holdbacklaugh.png">You thought you'd be the one laughing, but... phwwwhf... guess who's laughing now...</state>
+                <state img="custom:5-catchbreath">Ahahaha... I'm glad you're finished... because I'm pretty worn out from laughing at how idiotic you looked.</state>
+                <state img="5-aloof.png">I'm impressed. Not by your body--I mean by how long you lasted.</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="custom:5-laugh">Ahahahaha! Time for a show!</state>
                 <state img="custom:5-laugh">Ahahahaha! Looks like you're at the end of your rope.</state>
+                <state img="5-aloof.png">I don't know how easy it is for a guy to do it in this scenario, so have fun with that.</state>
             </case>
             <case tag="male_start_masturbating">
                 <state img="5-holdbacklaugh.png">Phwwh... stop looking at me! You're making me laugh!</state>
                 <state img="custom:5-laugh">Ahahahahahahahahahahahaha! Look at you with your game face on, ready to go!</state>
             </case>
             <case tag="male_masturbating">
-                <state img="custom:5-laugh">Ahahahaha! You sound ridiculous!</state>
-                <state img="custom:5-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
-                <state img="custom:5-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
                 <state img="custom:5-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="custom:5-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="custom:5-laugh">I don't want you cumming on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
+                <state img="5-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="custom:5-laugh">Ahahahaha! Time for a show!</state>
@@ -5292,13 +5288,10 @@
                 <state img="custom:5-laugh">What a paradox! Take care not to fall into one of those holes before you fill it up. Ahahahahahahahahahahahaha!</state>
             </case>
             <case tag="female_masturbating">
-                <state img="custom:5-laugh">Ahahahaha! You sound ridiculous!</state>
-                <state img="custom:5-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
-                <state img="custom:5-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
                 <state img="custom:5-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="female_finished_masturbating">
-                <state img="custom:5-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="5-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_finished_masturbating" target="mia">
                 <state img="5-holdbacklaugh.png">I guess you're more cut out to be a porn star than an attorney, Mia. Phwwh... Really, I encourage you to switch professions, phwwh...</state>
@@ -5852,10 +5845,6 @@
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="extra" />
-                <state img="custom:6-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
-            </case>
-            <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="extra" />
                 <state img="6-holdbacklaugh.png">Phwwh... How do you still have accessories? Your ~clothing~ should've been gone by now. Hahahaha!</state>
                 <state img="6-holdbacklaugh.png">Did you just sneak your ~clothing~ in now? Phwwh... Hahahaha! I didn't even know you still had some.</state>
                 <state img="6-holdbacklaugh.png">Phwwwh... You still have accessories. I brought none, and I'm still standing strong.</state>
@@ -5863,8 +5852,8 @@
                 <state img="custom:6-laugh">You're doing something right! Removing accessories first, phwwh... Ahahahahahaha!</state>
             </case>
             <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="major" />
-                <state img="custom:6-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
+                <test expr="~clothing.type~" value="extra" />
+                <state img="custom:6-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="major" />
@@ -5873,6 +5862,10 @@
                 <state img="6-holdbacklaugh.png">Ahah! How scandalous!</state>
                 <state img="custom:6-laugh">Phwwh... Hahahaha! TAKE THAT off now, ~name~. Ahahhahaha!</state>
                 <state img="custom:6-laugh">I want to see the failure under the clothes. Phwwh... Ahahahahaha!</state>
+            </case>
+            <case tag="opponent_stripping" priority="0">
+                <test expr="~clothing.type~" value="major" />
+                <state img="custom:6-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="minor" />
@@ -5908,6 +5901,18 @@
             <case tag="opponent_stripped" filter="witty" priority="0">
                 <state img="custom:6-laugh">I find your attitude funnier than your... phwwh... "witty" comments. Phwwwh... Ahahahahaha!</state>
             </case>
+            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
+                <state img="custom:6-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
+                <state img="custom:6-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
+                <state img="custom:6-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
+                <state img="6-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+            </case>
             <case tag="opponent_stripped" target="revy" priority="0">
                 <state img="custom:6-catchbreath">I'm begging you, drop the act right now. I can't win with you acting like a badass. It's hilarious! Ahem.</state>
                 <state img="6-holdbacklaugh.png">Are you going to threaten me now? Please don't, because you'll... phwwwh... Just don't do that... phwwh...</state>
@@ -5921,48 +5926,47 @@
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
-                <state img="custom:6-catchbreath">Phwwh... sorry... I need a minute. I'm still mourning ~name~'s lost dignity.</state>
+                <state img="custom:6-catchbreath">Phwwh... all right, let's keep going. I have a game to win.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
-                <state img="custom:6-catchbreath">Phwwh... all right, let's keep going. I have a game to win.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:6-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:6-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:6-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="6-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+                <state img="custom:6-catchbreath">Phwwh... sorry... I need a minute. I'm still mourning ~name~'s lost dignity.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="minor" />
                 <state img="6-aloof.png">I don't expect you to lose easily if you're just now removing your ~clothing~.</state>
             </case>
+            <case tag="opponent_masturbating">
+                <state img="custom:6-laugh">Ahahahaha! You sound ridiculous!</state>
+                <state img="custom:6-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
+                <state img="custom:6-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
+                <state img="custom:6-laugh">Hahahahah! Stop looking at me like that. Phwwwh... Hahaha! I'm dying with laughter here.</state>
+                <state img="custom:6-laugh">Are you looking at me? Phwwh... That look at your face. Ahahahahaha! It was already laughable before you were horny. Phwwh... Hahahahaha!</state>
+                <state img="custom:6-laugh">Phwwh... Are you saying that stuff on purpose? You sound, phwwwh... Ahahahahaha. Is this how you sound in bed? Hahahaha!</state>
+                <state img="custom:6-laugh">Don't look at me like that. Phwwwh... The look on your face makes me, phwwh... ahahahahahaha!</state>
+                <state img="custom:6-laugh">Ahahahaha! Who the hell says that stuff? It sounds so stupid! Phwwwh... Hahahahaha!</state>
+            </case>
+            <case tag="opponent_finished_masturbating">
+                <state img="custom:6-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="6-holdbacklaugh.png">You thought you'd be the one laughing, but... phwwwhf... guess who's laughing now...</state>
+                <state img="custom:6-catchbreath">Ahahaha... I'm glad you're finished... because I'm pretty worn out from laughing at how idiotic you looked.</state>
+                <state img="6-aloof.png">I'm impressed. Not by your body--I mean by how long you lasted.</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="custom:6-laugh">Ahahahaha! Time for a show!</state>
                 <state img="custom:6-laugh">Ahahahaha! Looks like you're at the end of your rope.</state>
+                <state img="6-aloof.png">I don't know how easy it is for a guy to do it in this scenario, so have fun with that.</state>
             </case>
             <case tag="male_start_masturbating">
                 <state img="6-holdbacklaugh.png">Phwwh... stop looking at me! You're making me laugh!</state>
                 <state img="custom:6-laugh">Ahahahahahahahahahahahaha! Look at you with your game face on, ready to go!</state>
             </case>
             <case tag="male_masturbating">
-                <state img="custom:6-laugh">Ahahahaha! You sound ridiculous!</state>
-                <state img="custom:6-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
-                <state img="custom:6-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
                 <state img="custom:6-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="custom:6-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="custom:6-laugh">I don't want you cumming on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
+                <state img="6-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="custom:6-laugh">Ahahahaha! Time for a show!</state>
@@ -5974,13 +5978,10 @@
                 <state img="custom:6-laugh">What a paradox! Take care not to fall into one of those holes before you fill it up. Ahahahahahahahahahahahaha!</state>
             </case>
             <case tag="female_masturbating">
-                <state img="custom:6-laugh">Ahahahaha! You sound ridiculous!</state>
-                <state img="custom:6-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
-                <state img="custom:6-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
                 <state img="custom:6-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="female_finished_masturbating">
-                <state img="custom:6-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="6-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_finished_masturbating" target="mia">
                 <state img="6-holdbacklaugh.png">I guess you're more cut out to be a porn star than an attorney, Mia. Phwwh... Really, I encourage you to switch professions, phwwh...</state>
@@ -6504,15 +6505,15 @@
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="extra" />
-                <state img="custom:7-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
-            </case>
-            <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="extra" />
                 <state img="7-holdbacklaugh.png">Phwwh... How do you still have accessories? Your ~clothing~ should've been gone by now. Hahahaha!</state>
                 <state img="7-holdbacklaugh.png">Did you just sneak your ~clothing~ in now? Phwwh... Hahahaha! I didn't even know you still had some.</state>
                 <state img="7-holdbacklaugh.png">Phwwwh... You still have accessories. I brought none, and I'm still standing strong.</state>
                 <state img="7-holdbacklaugh.png">Phwwwh... You're still depending on your accessories instead of your skill?</state>
                 <state img="custom:7-laugh">You're doing something right! Removing accessories first, phwwh... Ahahahahahaha!</state>
+            </case>
+            <case tag="opponent_stripping" priority="0">
+                <test expr="~clothing.type~" value="extra" />
+                <state img="custom:7-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="major" />
@@ -6560,6 +6561,18 @@
             <case tag="opponent_stripped" filter="witty" priority="0">
                 <state img="custom:7-laugh">I find your attitude funnier than your... phwwh... "witty" comments. Phwwwh... Ahahahahaha!</state>
             </case>
+            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
+                <state img="custom:7-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
+                <state img="custom:7-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
+                <state img="custom:7-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
+                <state img="7-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+            </case>
             <case tag="opponent_stripped" target="revy" priority="0">
                 <state img="custom:7-catchbreath">I'm begging you, drop the act right now. I can't win with you acting like a badass. It's hilarious! Ahem.</state>
                 <state img="7-holdbacklaugh.png">Are you going to threaten me now? Please don't, because you'll... phwwwh... Just don't do that... phwwh...</state>
@@ -6573,48 +6586,47 @@
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
-                <state img="custom:7-catchbreath">Phwwh... sorry... I need a minute. I'm still mourning ~name~'s lost dignity.</state>
+                <state img="custom:7-catchbreath">Phwwh... all right, let's keep going. I have a game to win.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
-                <state img="custom:7-catchbreath">Phwwh... all right, let's keep going. I have a game to win.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:7-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:7-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:7-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="7-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+                <state img="custom:7-catchbreath">Phwwh... sorry... I need a minute. I'm still mourning ~name~'s lost dignity.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="minor" />
                 <state img="7-aloof.png">I don't expect you to lose easily if you're just now removing your ~clothing~.</state>
             </case>
+            <case tag="opponent_masturbating">
+                <state img="custom:7-laugh">Ahahahaha! You sound ridiculous!</state>
+                <state img="custom:7-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
+                <state img="custom:7-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
+                <state img="custom:7-laugh">Hahahahah! Stop looking at me like that. Phwwwh... Hahaha! I'm dying with laughter here.</state>
+                <state img="custom:7-laugh">Are you looking at me? Phwwh... That look at your face. Ahahahahaha! It was already laughable before you were horny. Phwwh... Hahahahaha!</state>
+                <state img="custom:7-laugh">Phwwh... Are you saying that stuff on purpose? You sound, phwwwh... Ahahahahaha. Is this how you sound in bed? Hahahaha!</state>
+                <state img="custom:7-laugh">Don't look at me like that. Phwwwh... The look on your face makes me, phwwh... ahahahahahaha!</state>
+                <state img="custom:7-laugh">Ahahahaha! Who the hell says that stuff? It sounds so stupid! Phwwwh... Hahahahaha!</state>
+            </case>
+            <case tag="opponent_finished_masturbating">
+                <state img="custom:7-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="7-holdbacklaugh.png">You thought you'd be the one laughing, but... phwwwhf... guess who's laughing now...</state>
+                <state img="custom:7-catchbreath">Ahahaha... I'm glad you're finished... because I'm pretty worn out from laughing at how idiotic you looked.</state>
+                <state img="7-aloof.png">I'm impressed. Not by your body--I mean by how long you lasted.</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="custom:7-laugh">Ahahahaha! Time for a show!</state>
                 <state img="custom:7-laugh">Ahahahaha! Looks like you're at the end of your rope.</state>
+                <state img="7-aloof.png">I don't know how easy it is for a guy to do it in this scenario, so have fun with that.</state>
             </case>
             <case tag="male_start_masturbating">
                 <state img="7-holdbacklaugh.png">Phwwh... stop looking at me! You're making me laugh!</state>
                 <state img="custom:7-laugh">Ahahahahahahahahahahahaha! Look at you with your game face on, ready to go!</state>
             </case>
             <case tag="male_masturbating">
-                <state img="custom:7-laugh">Ahahahaha! You sound ridiculous!</state>
-                <state img="custom:7-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
-                <state img="custom:7-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
                 <state img="custom:7-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="custom:7-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="custom:7-laugh">I don't want you cumming on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
+                <state img="7-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="custom:7-laugh">Ahahahaha! Time for a show!</state>
@@ -6626,13 +6638,10 @@
                 <state img="custom:7-laugh">What a paradox! Take care not to fall into one of those holes before you fill it up. Ahahahahahahahahahahahaha!</state>
             </case>
             <case tag="female_masturbating">
-                <state img="custom:7-laugh">Ahahahaha! You sound ridiculous!</state>
-                <state img="custom:7-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
-                <state img="custom:7-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
                 <state img="custom:7-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="female_finished_masturbating">
-                <state img="custom:7-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="7-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_finished_masturbating" target="mia">
                 <state img="7-holdbacklaugh.png">I guess you're more cut out to be a porn star than an attorney, Mia. Phwwh... Really, I encourage you to switch professions, phwwh...</state>
@@ -7141,15 +7150,15 @@
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="extra" />
-                <state img="custom:8-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
-            </case>
-            <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="extra" />
                 <state img="8-holdbacklaugh.png">Phwwh... How do you still have accessories? Your ~clothing~ should've been gone by now. Hahahaha!</state>
                 <state img="8-holdbacklaugh.png">Did you just sneak your ~clothing~ in now? Phwwh... Hahahaha! I didn't even know you still had some.</state>
                 <state img="8-holdbacklaugh.png">Phwwwh... You still have accessories. I brought none, and I'm still standing strong.</state>
                 <state img="8-holdbacklaugh.png">Phwwwh... You're still depending on your accessories instead of your skill?</state>
                 <state img="custom:8-laugh">You're doing something right! Removing accessories first, phwwh... Ahahahahahaha!</state>
+            </case>
+            <case tag="opponent_stripping" priority="0">
+                <test expr="~clothing.type~" value="extra" />
+                <state img="custom:8-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="major" />
@@ -7197,6 +7206,18 @@
             <case tag="opponent_stripped" filter="witty" priority="0">
                 <state img="custom:8-laugh">I find your attitude funnier than your... phwwh... "witty" comments. Phwwwh... Ahahahahaha!</state>
             </case>
+            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
+                <state img="custom:8-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
+                <state img="custom:8-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
+                <state img="custom:8-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
+                <state img="8-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+            </case>
             <case tag="opponent_stripped" target="revy" priority="0">
                 <state img="custom:8-catchbreath">I'm begging you, drop the act right now. I can't win with you acting like a badass. It's hilarious! Ahem.</state>
                 <state img="8-holdbacklaugh.png">Are you going to threaten me now? Please don't, because you'll... phwwwh... Just don't do that... phwwh...</state>
@@ -7210,48 +7231,47 @@
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
-                <state img="custom:8-catchbreath">Phwwh... all right, let's keep going. I have a game to win.</state>
+                <state img="custom:8-catchbreath">Phwwh... sorry... I need a minute. I'm still mourning ~name~'s lost dignity.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
-                <state img="custom:8-catchbreath">Phwwh... sorry... I need a minute. I'm still mourning ~name~'s lost dignity.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:8-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:8-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:8-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="8-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+                <state img="custom:8-catchbreath">Phwwh... all right, let's keep going. I have a game to win.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="minor" />
                 <state img="8-aloof.png">I don't expect you to lose easily if you're just now removing your ~clothing~.</state>
             </case>
+            <case tag="opponent_masturbating">
+                <state img="custom:8-laugh">Ahahahaha! You sound ridiculous!</state>
+                <state img="custom:8-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
+                <state img="custom:8-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
+                <state img="custom:8-laugh">Hahahahah! Stop looking at me like that. Phwwwh... Hahaha! I'm dying with laughter here.</state>
+                <state img="custom:8-laugh">Are you looking at me? Phwwh... That look at your face. Ahahahahaha! It was already laughable before you were horny. Phwwh... Hahahahaha!</state>
+                <state img="custom:8-laugh">Phwwh... Are you saying that stuff on purpose? You sound, phwwwh... Ahahahahaha. Is this how you sound in bed? Hahahaha!</state>
+                <state img="custom:8-laugh">Don't look at me like that. Phwwwh... The look on your face makes me, phwwh... ahahahahahaha!</state>
+                <state img="custom:8-laugh">Ahahahaha! Who the hell says that stuff? It sounds so stupid! Phwwwh... Hahahahaha!</state>
+            </case>
+            <case tag="opponent_finished_masturbating">
+                <state img="custom:8-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="8-holdbacklaugh.png">You thought you'd be the one laughing, but... phwwwhf... guess who's laughing now...</state>
+                <state img="custom:8-catchbreath">Ahahaha... I'm glad you're finished... because I'm pretty worn out from laughing at how idiotic you looked.</state>
+                <state img="8-aloof.png">I'm impressed. Not by your body--I mean by how long you lasted.</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="custom:8-laugh">Ahahahaha! Time for a show!</state>
                 <state img="custom:8-laugh">Ahahahaha! Looks like you're at the end of your rope.</state>
+                <state img="8-aloof.png">I don't know how easy it is for a guy to do it in this scenario, so have fun with that.</state>
             </case>
             <case tag="male_start_masturbating">
                 <state img="8-holdbacklaugh.png">Phwwh... stop looking at me! You're making me laugh!</state>
                 <state img="custom:8-laugh">Ahahahahahahahahahahahaha! Look at you with your game face on, ready to go!</state>
             </case>
             <case tag="male_masturbating">
-                <state img="custom:8-laugh">Ahahahaha! You sound ridiculous!</state>
-                <state img="custom:8-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
-                <state img="custom:8-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
                 <state img="custom:8-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="custom:8-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="custom:8-laugh">I don't want you cumming on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
+                <state img="8-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="custom:8-laugh">Ahahahaha! Time for a show!</state>
@@ -7263,13 +7283,10 @@
                 <state img="custom:8-laugh">What a paradox! Take care not to fall into one of those holes before you fill it up. Ahahahahahahahahahahahaha!</state>
             </case>
             <case tag="female_masturbating">
-                <state img="custom:8-laugh">Ahahahaha! You sound ridiculous!</state>
-                <state img="custom:8-laugh">Is this how you sound talking dirty? You're a regular Shakespeare!</state>
-                <state img="custom:8-catchbreath">Sorry... it's just that the way you talk dirty is so tactless!</state>
                 <state img="custom:8-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="female_finished_masturbating">
-                <state img="custom:8-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="8-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_finished_masturbating" target="mia">
                 <state img="8-holdbacklaugh.png">I guess you're more cut out to be a porn star than an attorney, Mia. Phwwh... Really, I encourage you to switch professions, phwwh...</state>
@@ -7505,6 +7522,18 @@
                 <state img="custom:9-laugh">What's to be excited about? Phwwh... Probably more about &lt;i&gt;what&lt;/i&gt; ~target~'s losing than the loss itself. Ahahahaha!</state>
                 <state img="custom:9-laugh">You should've chosen something bigger to take off... since you're a big loser. Ahahahahaha!</state>
             </case>
+            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
+                <state img="custom:9-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
+                <state img="custom:9-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
+                <state img="custom:9-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
+                <state img="9-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+            </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="extra" />
                 <state img="custom:9-laugh">I had enough items from the start even with no accessories. Phwwh... Look at me now. Ahahahahaha!</state>
@@ -7516,25 +7545,18 @@
                 <state img="custom:9-laugh">I'm waiting to see you lose again ~name~. Hahahahaha!</state>
                 <state img="custom:9-laugh">Hahahaha! You're close to the end now. Phwwh... You will be humiliating yourself in no time. Hahahahaha!</state>
             </case>
-            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:9-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:9-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:9-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="9-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
-            </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="minor" />
                 <state img="custom:9-laugh">Ignore my advice. Ahahahaha.  I'm the one who lost. Phwwh... Hahahaha!</state>
+            </case>
+            <case tag="opponent_masturbating">
+                <state img="custom:9-laugh">I'm not masturbating to you. You're probably doing it to me. Phwwh... And that's just weird. Ahahahaha!</state>
+                <state img="custom:9-laugh">You sure talk a lot when you masturbate, Phwwwh... Yes I know, I'm being a hypocrite. Ahahahaha!</state>
+                <state img="9-aloof.png">I would hate to be with you in bed, ~name~.</state>
+            </case>
+            <case tag="opponent_finished_masturbating">
+                <state img="custom:9-laugh">I was hoping you would be super sensitive. Ahahahahaha! I was really sure you would be. Phwwh...</state>
+                <state img="custom:9-laugh">Hahahaha. You lose again. To me, that is. Ahahahaha!</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="custom:9-laugh">Well, someone is joining the party. Phwwh... But you're about to crash it. Ahahahaha!</state>
@@ -7545,13 +7567,11 @@
                 <state img="custom:9-laugh">I hope you aren't jerking off to me. Phwwh... I won't be doing the same to you. Phwwwh... For obvious reasons.</state>
             </case>
             <case tag="male_masturbating">
-                <state img="custom:9-laugh">Hahahahah! Stop looking at me like that. Phwwwh... Hahaha! I'm dying with laughter here.</state>
-                <state img="custom:9-laugh">Are you looking at me? Phwwh... That look at your face. Ahahahahaha! It was already laughable before you were horny. Phwwh... Hahahahaha!</state>
-                <state img="custom:9-laugh">Phwwh... Are you saying that stuff on purpose? You sound, phwwwh... Ahahahahaha. Is this how you sound in bed? Hahahaha!</state>
+                <state img="custom:9-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="custom:9-laugh">I don't want you finishing on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
-                <state img="custom:9-laugh">I was hoping you would be super sensitive. Ahahahahaha! I was really sure you would be. Phwwh...</state>
+                <state img="custom:9-laugh">I don't want you cumming on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
+                <state img="9-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="custom:9-laugh">Phwwwh... I guess you have to join in. Phwwh... I'm happy that someone like you lost. Hahahahahahahaha!</state>
@@ -7561,14 +7581,10 @@
                 <state img="custom:9-laugh">Hahahahaha. At least I know you aren't the best poker player either, ~name~. Phwwh... Ahahahaha</state>
             </case>
             <case tag="female_masturbating">
-                <state img="custom:9-laugh">I'm not masturbating to you. You're probably doing it to me. Phwwh... And that's just weird. Ahahahaha!</state>
-                <state img="custom:9-laugh">You sure talk a lot when you masturbate, Phwwwh... Yes I know, I'm being a hypocrite. Ahahahaha!</state>
-                <state img="9-aloof.png">I would hate to be with you in bed, ~name~.</state>
-                <state img="custom:9-laugh">Don't look at me like that. Phwwwh... The look on your face makes me, phwwh... ahahahahahaha!</state>
-                <state img="custom:9-laugh">Ahahahaha! Who the hell says that stuff? It sounds so stupid! Phwwwh... Hahahahaha!</state>
+                <state img="custom:9-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="female_finished_masturbating">
-                <state img="custom:9-laugh">Hahahaha. You lose again. To me, that is. Ahahahaha!</state>
+                <state img="9-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="masturbating">
                 <state img="9-forfeit1.png">Phwwh... hehehe...</state>
@@ -8017,15 +8033,6 @@
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="extra" />
-                <state img="custom:10-catchbreath">I should've brought more accessories too. Ahahahaha... I'm kidding! I lasted long enough without having to bring any.</state>
-                <state img="10-aloof.png">...Really? Something that small? &lt;i&gt;Really&lt;/i&gt;?</state>
-            </case>
-            <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="extra" />
-                <state img="custom:10-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
-            </case>
-            <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="extra" />
                 <state img="10-holdbacklaugh.png">Phwwh... How do you still have accessories? Your ~clothing~ should've been gone by now. Hahahaha!</state>
                 <state img="10-holdbacklaugh.png">Did you just sneak your ~clothing~ in now? Phwwh... Hahahaha! I didn't even know you still had some.</state>
                 <state img="10-holdbacklaugh.png">Phwwwh... You still have accessories. I brought none, and I'm still standing strong.</state>
@@ -8033,8 +8040,13 @@
                 <state img="custom:10-laugh">You're doing something right! Removing accessories first, phwwh... Ahahahahahaha!</state>
             </case>
             <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="major" />
-                <state img="custom:10-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
+                <test expr="~clothing.type~" value="extra" />
+                <state img="custom:10-catchbreath">I should've brought more accessories too. Ahahahaha... I'm kidding! I lasted long enough without having to bring any.</state>
+                <state img="10-aloof.png">...Really? Something that small? &lt;i&gt;Really&lt;/i&gt;?</state>
+            </case>
+            <case tag="opponent_stripping" priority="0">
+                <test expr="~clothing.type~" value="extra" />
+                <state img="custom:10-surprised">Where did that come from? Did you have your ~clothing~ on the whole time?</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="major" />
@@ -8046,12 +8058,12 @@
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="major" />
-                <state img="10-calm.png">I hope you enjoy this. I sure didn't.</state>
-                <state img="10-aloof.png">Oh great, you're finally going to show some skin. You're lucky it's taken this long.</state>
+                <state img="custom:10-laugh" marker="silly=1">Whether you're happy about stripping or not... I think you look silly. Ahahahaha!</state>
             </case>
             <case tag="opponent_stripping" priority="0">
-                <test expr="~clothing.type~" value="minor" />
-                <state img="10-aloof.png">I can't believe you're &lt;i&gt;still&lt;/i&gt; not naked yet...</state>
+                <test expr="~clothing.type~" value="major" />
+                <state img="10-calm.png">I hope you enjoy this. I sure didn't.</state>
+                <state img="10-aloof.png">Oh great, you're finally going to show some skin. You're lucky it's taken this long.</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~clothing.type~" value="minor" />
@@ -8059,6 +8071,10 @@
                 <state img="custom:10-laugh">I suppose you are making the right choice by choosing something small... phwwh... Ahahahahahaha!</state>
                 <state img="10-holdbacklaugh.png">Phwwwwhf... I hope you're not expecting a big reaction from that...</state>
                 <state img="10-holdbacklaugh.png">Phwwhf... oh, wow... your ~clothing~... how &lt;i&gt;brave&lt;/i&gt; you are...</state>
+            </case>
+            <case tag="opponent_stripping" priority="0">
+                <test expr="~clothing.type~" value="minor" />
+                <state img="10-aloof.png">I can't believe you're &lt;i&gt;still&lt;/i&gt; not naked yet...</state>
             </case>
             <case tag="opponent_stripping" priority="0">
                 <test expr="~target.gender~" value="male" />
@@ -8087,6 +8103,18 @@
             <case tag="opponent_stripped" filter="witty" priority="0">
                 <state img="custom:10-laugh">I find your attitude funnier than your... phwwh... "witty" comments. Phwwwh... Ahahahahaha!</state>
             </case>
+            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
+                <state img="custom:10-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
+                <state img="custom:10-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
+                <state img="custom:10-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
+                <state img="10-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+            </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="extra" />
                 <state img="custom:10-catchbreath">Ahaha... ahem. Now that we're done wasting time, can we keep playing?</state>
@@ -8105,27 +8133,11 @@
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
-                <state img="custom:10-catchbreath">Phwwh... sorry... I need a minute. I'm still mourning ~name~'s lost dignity.</state>
+                <state img="10-aloof.png">I await your complete downfall.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="major" />
-                <state img="10-aloof.png">I await your complete downfall.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="clothed==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:10-laugh" marker="clothed=0">That doesn't mean I won't look good naked, hahahahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="confidence==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:10-laugh" marker="confidence=0">No, never mind what I said. Phwwwh... Only an idiot like you would take pride in their failure, phwwh... hahaha!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="showoff==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="custom:10-laugh" marker="showoff=0">Ahahahah! Just kidding. You're going to lose, and I'm going to laugh!</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="silly==1" priority="1">
-                <test expr="clothing.type" value="major" />
-                <state img="10-aloof.png" marker="silly=0">Actually, I should probably compliment your body. That will encourage you to lose more.</state>
+                <state img="custom:10-catchbreath">Phwwh... sorry... I need a minute. I'm still mourning ~name~'s lost dignity.</state>
             </case>
             <case tag="opponent_stripped" priority="0">
                 <test expr="clothing.type" value="minor" />
@@ -8135,7 +8147,19 @@
                 <test expr="clothing.type" value="minor" />
                 <state img="10-aloof.png">I don't expect you to lose easily if you're just now removing your ~clothing~.</state>
             </case>
+            <case tag="opponent_masturbating">
+                <state img="10-aloof.png">You can masturbate to me or not. That's out of my hands now. I don't really care.</state>
+                <state img="10-aloof.png">I really hope I didn't sound as annoying as ~name~ does.</state>
+            </case>
+            <case tag="opponent_finished_masturbating">
+                <state img="custom:10-catchbreath">Ahaha... wow... what a show...</state>
+                <state img="10-holdbacklaugh.png">You thought you'd be the one laughing, but... phwwwhf... guess who's laughing now...</state>
+                <state img="custom:10-catchbreath">Ahahaha... I'm glad you're finished... because I'm pretty worn out from laughing at how idiotic you looked.</state>
+                <state img="10-aloof.png">I'm impressed. Not by your body--I mean by how long you lasted.</state>
+            </case>
             <case tag="male_must_masturbate">
+                <state img="custom:10-laugh">Ahahahaha! Time for a show!</state>
+                <state img="custom:10-laugh">Ahahahaha! Looks like you're at the end of your rope.</state>
                 <state img="10-aloof.png">I don't know how easy it is for a guy to do it in this scenario, so have fun with that.</state>
                 <state img="10-calm.png">I've had my fun. Now, it's your turn to enjoy the ride.</state>
             </case>
@@ -8146,10 +8170,11 @@
                 <state img="custom:10-thinking">Oh, what the hell... fantasize about me if you want. I can't stop you anyway.</state>
             </case>
             <case tag="male_masturbating">
-                <state img="10-aloof.png">You can masturbate to me or not. That's out of my hands now. I don't really care.</state>
+                <state img="custom:10-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="10-aloof.png">I'm impressed. Not by your body--I mean by how long you lasted.</state>
+                <state img="custom:10-laugh">I don't want you cumming on me. Phwwh... I don't want to be associated with someone like you. Ahahahaha!</state>
+                <state img="10-aloof.png">Finally... enough annoying banter out of you.</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="10-holdbacklaugh.png">You haven't even started yet? I have to rethink my strategy. Phwwh... Hahaha.</state>
@@ -8159,7 +8184,7 @@
                 <state img="custom:10-thinking">At least I don't have to masturbate with you.</state>
             </case>
             <case tag="female_masturbating">
-                <state img="10-aloof.png">I really hope I didn't sound as annoying as ~name~ does.</state>
+                <state img="custom:10-laugh">Ahahaha! What is &lt;i&gt;that&lt;/i&gt; supposed to be--your mating call?</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="10-aloof.png">Finally... enough annoying banter out of you.</state>
