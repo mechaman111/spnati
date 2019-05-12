@@ -195,6 +195,7 @@ function expandTagsList(input_tags) {
 
 function State($xml, parentCase) {
     this.parentCase = parentCase;
+    this.id = $xml.attr('dev-id') || null;
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
@@ -841,6 +842,43 @@ function Case($xml, stage) {
     }
 }
 
+/* Convert this case's conditions into a plain object, into a format suitable
+ * for e.g. JSON serialization.
+ */
+Case.prototype.serializeConditions = function () {
+    var complexProps = ['states', 'tests', 'counters', 'addTags', 'removeTags', 'variableBindings'];
+    var ser = {};
+    
+    Object.keys(this).forEach(function (prop) {
+        if (complexProps.indexOf(prop) >= 0) return;
+        
+        ser[prop] = this[prop];
+    }.bind(this));
+    
+    ser.tests = this.tests.map(function (test) {
+        return {
+            'expr': test.attr('expr'),
+            'value': test.attr('value'),
+            'cmp': test.attr('cmp'),
+        };
+    });
+    
+    ser.counters = this.counters.map(function (ctr) {
+        return {
+            'count': ctr.attr('count'),
+            'role': ctr.attr('role'),
+            'var': ctr.attr('var'),
+            'character': ctr.attr('character'),
+            'stage': ctr.attr('stage'),
+            'filter': ctr.attr('filter'),
+            'gender': ctr.attr('gender'),
+            'status': ctr.attr('status'),
+        };
+    });
+    
+    return ser;
+}
+
 Case.prototype.getAlsoPlaying = function (opp) {
     if (!this.alsoPlaying) return null;
     
@@ -1269,7 +1307,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     var volatileMatches = [];
     
     for (var i = 0; i < cases.length; i++) {
-        var curCase = new Case(cases[i]);
+        var curCase = new Case(cases[i], stageNum);
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             curCase.basicRequirementsMet(this, opp)) 
@@ -1315,6 +1353,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
         this.currentPriority = bestMatchPriority;
         this.stateLockCount = 0;
         this.stateCommitted = false;
+        this.lastUpdateTags = tags;
         
         this.allStates = states;
         this.chosenState = states[i - 1];
