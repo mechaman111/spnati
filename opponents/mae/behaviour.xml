@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.1 at 1:19:10 AM on May 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.1 at 12:08:31 AM on May 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.1</version>
     <first>Mae</first>
@@ -27,7 +27,7 @@
         <tag>freckles</tag>
         <tag from="0" to="4">confident</tag>
         <tag>mean</tag>
-        <tag>perverted</tag>
+        <tag from="4" to="8">perverted</tag>
         <tag>sarcastic</tag>
         <tag>tomboy</tag>
         <tag>witty</tag>
@@ -230,6 +230,10 @@
             </case>
             <case tag="hand" saidMarker="akko_exorcism" notSaidMarker="ignored_a" priority="9998">
                 <state img="0-annoyed.png" marker="ignored_a">...Or you can all ignore me like the assholes you are. Cool. I'm fine with it. Not like my opinion is worth listening to anyways.</state>
+            </case>
+            <case tag="hand" alsoPlaying="palutena" alsoPlayingStage="6" notSaidMarker="palutiddie">
+                <test expr="~palutena.position~" value="left" />
+                <state img="0-sweat.png" marker="palutiddie">&lt;i&gt;(...Wow. She's so tall, my head reaches her boobs...)&lt;/i&gt;</state>
             </case>
             <case tag="hand" totalRounds="5">
                 <test expr="~weekday~" value="Friday" />
@@ -492,8 +496,8 @@
             <case tag="female_removing_minor" target="sakura" targetStage="2" priority="545">
                 <state img="0-surprise.png">Seriously!? You're a zombie!</state>
             </case>
-            <case tag="female_removing_minor" target="sakura" targetStage="3" targetSayingMarker="headless" priority="555">
-                <state img="0-fingergun.png">Woah, don't lose your head now! Ahahahahahaha!!</state>
+            <case tag="female_removing_minor" target="sakura" targetStage="3" priority="560">
+                <state img="0-fingergun.png" marker="loseyourhead">Woah, don't lose your head now! Ahahahahahaha!!</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="0-eh.png">Can we, like, move on?</state>
@@ -513,7 +517,7 @@
             <case tag="female_removed_minor" target="sakura" targetStage="3">
                 <state img="0-flustered.png">&lt;i&gt;(Aren't zombies supposed to be living corpses with rotting flesh? What's concerning is that she's STILL cute despite that!)&lt;/i&gt;</state>
             </case>
-            <case tag="female_removed_minor" target="sakura" targetStage="4" targetSaidMarker="headless">
+            <case tag="female_removed_minor" target="sakura" targetStage="4" saidMarker="loseyourhead" targetSaidMarker="headless">
                 <state img="0-smug.png">Hahaha... hah... Man, you're a goldmine for lame puns. I need to work on my comedian routine. Could you help me out?</state>
             </case>
             <case tag="male_removing_major">
@@ -632,9 +636,20 @@
                 <state img="0-woah.png">How many penises am I gonna see tonight!? Geez!</state>
             </case>
             <case tag="female_chest_will_be_visible">
+                <state img="0-flustered.png">Hahaha... This line shouldn't be playing. So, uh, just report it if it plays, I guess?</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="780">
+                <condition count="1-5" status="chest_visible" />
+                <state img="0-woah.png">We are going to unlock more boobs!</state>
+                <state img="0-sweat.png">Oh boy...</state>
+                <state img="0-flustered.png">Looks like I'm seeing more boobs today. Hahaha.... hah...</state>
+                <state img="0-sweat.png">Boobs! Honkers!! Badonkers!!! &lt;i&gt;(I'm in heaven...)&lt;/i&gt;</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="785">
+                <condition count="0" gender="female" status="chest_visible" />
                 <state img="0-surprise.png">BOOBS!</state>
                 <state img="0-woah.png">We are going to unlock ~name~'s boobs!</state>
-                <state img="0-woah.png">Are you gonna show us your boobs? I never actually seen boobs in real life! Unless you count my own boobs!!</state>
+                <state img="0-woah.png">Are you gonna show us your boobs? I've never actually seen boobs in real life! Unless you count my own boobs!!</state>
                 <state img="0-surprise.png">Boobs! Honkers!! Badonkers!!!</state>
                 <state img="0-woah.png">Oh... Oh crap...</state>
             </case>
@@ -647,7 +662,7 @@
             <case tag="female_chest_will_be_visible" target="kyu" targetSaying="This totally isn't some deus-ex-machina cop-out to avoid having to put any effort into another stripping sprite, by the way. In case you were wondering.">
                 <state img="0-stare.png">But... wouldn't that stripping pose take just as much effort, if not &lt;i&gt;more?&lt;/i&gt;</state>
             </case>
-            <case tag="female_chest_will_be_visible" target="moon" priority="776">
+            <case tag="female_chest_will_be_visible" target="moon" priority="10000">
                 <state img="0-why.png">FOR THE LAST TIME, I DON'T WANT TO SEE YOUR CHEST!</state>
             </case>
             <case tag="female_chest_will_be_visible" totalRounds="0-5">
@@ -696,7 +711,6 @@
                 <state img="0-flustered.png">Oh boy...</state>
                 <state img="0-sweat.png">&lt;i&gt;(Is ~name~ one of those people who shaves? Why should that matter; I'm gonna see her crotch! Her naked crotch!!)&lt;/i&gt;</state>
                 <state img="0-sweat.png">Nnnn!! We're gonna see---</state>
-                <state img="0-woah.png">Holy crap, oh god, here it comes, &lt;i&gt;here it comes!!&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible" filter="thong" priority="155">
                 <state img="0-eh.png">If I had to be honest, thongs look like the most uncomfortable things on the planet.</state>
@@ -716,6 +730,7 @@
                 <state img="0-surprise.png">Oh...</state>
                 <state img="0-woah.png">I can't look away! I just can't! It's not everyday you see someone's vagina!</state>
                 <state img="0-sweat.png">I... can't think straight...</state>
+                <state img="0-flustered.png">&lt;i&gt;(I just unlocked someone's ass.)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <condition count="1" gender="female" status="crotch_visible" />
@@ -835,6 +850,9 @@
             <case tag="opponent_lost" notSaidMarker="betteryouthanme">
                 <state img="0-neutral.png" marker="betteryouthanme">Better you than me.</state>
             </case>
+            <case tag="opponent_lost" saidMarker="smooth_criminal_1" notSaidMarker="smooth_criminal_3" priority="10000">
+                <state img="0-cocky.png" marker="smooth_criminal_3">That "smooth criminal" being me. I'm not sure if you know this, but I'm pretty much a bandit queen.</state>
+            </case>
             <case tag="opponent_lost" target="blake" targetStage="0">
                 <state img="0-eh.png">&lt;i&gt;(I can't tell what animal this girl is... Why do I even see people as animals in the first place?)&lt;/i&gt;</state>
             </case>
@@ -865,7 +883,7 @@
             <case tag="opponent_lost" target="ryuji" targetStage="0">
                 <state img="0-woah.png">&lt;i&gt;(Woah, those legs! Why does it feel like he can break my neck with a single kick to the head?)&lt;/i&gt;</state>
             </case>
-            <case tag="opponent_lost" targetStage="0" notSaidMarker="smooth_criminal_1" priority="9999">
+            <case tag="opponent_lost" targetStage="0" notSaidMarker="smooth_criminal_1" priority="9997">
                 <state img="0-smug.png" marker="smooth_criminal_1">You've been hit by! You've been struck by... a smooth criminal!</state>
                 <state img="0-smug.png">~name~, are you okay? Are you okay? Are you okay, ~name~?</state>
             </case>
@@ -997,9 +1015,6 @@
             </case>
             <case tag="opponent_stripped" saidMarker="slow_game_n" notSaidMarker="unusual_strip">
                 <state img="0-flustered.png" marker="unusual_strip">I... I like you, ~name~! Don't see this as a love confession---I-I just think you're cool.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="smooth_criminal_1" notSaidMarker="smooth_criminal_3" priority="9999">
-                <state img="0-cocky.png" marker="smooth_criminal_3">That "smooth criminal" being me. I'm not sure if you know this, but I'm pretty much a bandit queen.</state>
             </case>
             <case tag="opponent_stripped" target="akko" targetStage="1">
                 <state img="0-hype.png">I... I thought you were just dressing up! But holy crap this is so cool!!</state>
@@ -1363,6 +1378,10 @@
             <case tag="hand" saidMarker="akko_exorcism" notSaidMarker="ignored_a" priority="9998">
                 <state img="1-annoyed.png" marker="ignored_a">...Or you can all ignore me like the assholes you are. Cool. I'm fine with it. Not like my opinion is worth listening to anyways.</state>
             </case>
+            <case tag="hand" alsoPlaying="palutena" alsoPlayingStage="6" notSaidMarker="palutiddie">
+                <test expr="~palutena.position~" value="left" />
+                <state img="1-sweat.png" marker="palutiddie">&lt;i&gt;(...Wow. She's so tall, my head reaches her boobs...)&lt;/i&gt;</state>
+            </case>
             <case tag="hand" totalRounds="5">
                 <test expr="~weekday~" value="Friday" />
                 <state img="1-fingergun.png">Alone on a ~weekday~ night, ~player~? Well, so was I. Now we're not alone.</state>
@@ -1649,8 +1668,8 @@
             <case tag="female_removing_minor" target="sakura" targetStage="2" priority="545">
                 <state img="1-surprise.png">Seriously!? You're a zombie!</state>
             </case>
-            <case tag="female_removing_minor" target="sakura" targetStage="3" targetSayingMarker="headless" priority="555">
-                <state img="1-fingergun.png">Woah, don't lose your head now! Ahahahahahaha!!</state>
+            <case tag="female_removing_minor" target="sakura" targetStage="3" priority="560">
+                <state img="1-fingergun.png" marker="loseyourhead">Woah, don't lose your head now! Ahahahahahaha!!</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="1-eh.png">Can we, like, move on?</state>
@@ -1670,7 +1689,7 @@
             <case tag="female_removed_minor" target="sakura" targetStage="3">
                 <state img="1-flustered.png">&lt;i&gt;(Aren't zombies supposed to be living corpses with rotting flesh? What's concerning is that she's STILL cute despite that!)&lt;/i&gt;</state>
             </case>
-            <case tag="female_removed_minor" target="sakura" targetStage="4" targetSaidMarker="headless">
+            <case tag="female_removed_minor" target="sakura" targetStage="4" saidMarker="loseyourhead" targetSaidMarker="headless">
                 <state img="1-smug.png">Hahaha... hah... Man, you're a goldmine for lame puns. I need to work on my comedian routine. Could you help me out?</state>
             </case>
             <case tag="male_removing_major">
@@ -1786,9 +1805,20 @@
                 <state img="1-woah.png">How many penises am I gonna see tonight!? Geez!</state>
             </case>
             <case tag="female_chest_will_be_visible">
+                <state img="1-flustered.png">Hahaha... This line shouldn't be playing. So, uh, just report it if it plays, I guess?</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="780">
+                <condition count="1-5" status="chest_visible" />
+                <state img="1-woah.png">We are going to unlock more boobs!</state>
+                <state img="1-sweat.png">Oh boy...</state>
+                <state img="1-flustered.png">Looks like I'm seeing more boobs today. Hahaha.... hah...</state>
+                <state img="1-sweat.png">Boobs! Honkers!! Badonkers!!! &lt;i&gt;(I'm in heaven...)&lt;/i&gt;</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="785">
+                <condition count="0" gender="female" status="chest_visible" />
                 <state img="1-surprise.png">BOOBS!</state>
                 <state img="1-woah.png">We are going to unlock ~name~'s boobs!</state>
-                <state img="1-woah.png">Are you gonna show us your boobs? I never actually seen boobs in real life! Unless you count my own boobs!!</state>
+                <state img="1-woah.png">Are you gonna show us your boobs? I've never actually seen boobs in real life! Unless you count my own boobs!!</state>
                 <state img="1-surprise.png">Boobs! Honkers!! Badonkers!!!</state>
                 <state img="1-woah.png">Oh... Oh crap...</state>
             </case>
@@ -1801,7 +1831,7 @@
             <case tag="female_chest_will_be_visible" target="kyu" targetSaying="This totally isn't some deus-ex-machina cop-out to avoid having to put any effort into another stripping sprite, by the way. In case you were wondering.">
                 <state img="1-stare.png">But... wouldn't that stripping pose take just as much effort, if not &lt;i&gt;more?&lt;/i&gt;</state>
             </case>
-            <case tag="female_chest_will_be_visible" target="moon" priority="776">
+            <case tag="female_chest_will_be_visible" target="moon" priority="10000">
                 <state img="1-why.png">FOR THE LAST TIME, I DON'T WANT TO SEE YOUR CHEST!</state>
             </case>
             <case tag="female_chest_will_be_visible" totalRounds="0-5">
@@ -1847,7 +1877,6 @@
                 <state img="1-flustered.png">Oh boy...</state>
                 <state img="1-sweat.png">&lt;i&gt;(Is ~name~ one of those people who shaves? Why should that matter; I'm gonna see her crotch! Her naked crotch!!)&lt;/i&gt;</state>
                 <state img="1-sweat.png">Nnnn!! We're gonna see---</state>
-                <state img="1-woah.png">Holy crap, oh god, here it comes, &lt;i&gt;here it comes!!&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible" filter="thong" priority="155">
                 <state img="1-eh.png">If I had to be honest, thongs look like the most uncomfortable things on the planet.</state>
@@ -1867,6 +1896,7 @@
                 <state img="1-surprise.png">Oh...</state>
                 <state img="1-woah.png">I can't look away! I just can't! It's not everyday you see someone's vagina!</state>
                 <state img="1-sweat.png">I... can't think straight...</state>
+                <state img="1-flustered.png">&lt;i&gt;(I just unlocked someone's ass.)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <condition count="1" gender="female" status="crotch_visible" />
@@ -2081,9 +2111,6 @@
             </case>
             <case tag="opponent_stripped" filter="deity" targetStage="1">
                 <state img="1-stare.png">I met two of them, and came out mentally scarred for life. Now here I am playing &lt;i&gt;strip poker&lt;/i&gt; with another deity. Life sure is something.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="smooth_criminal_1" notSaidMarker="smooth_criminal_3" priority="9999">
-                <state img="1-cocky.png" marker="smooth_criminal_3">That "smooth criminal" being me. I'm not sure if you know this, but I'm pretty much a bandit queen.</state>
             </case>
             <case tag="opponent_stripped" target="akko" targetStage="1">
                 <state img="1-hype.png">I... I thought you were just dressing up! But holy crap this is so cool!!</state>
@@ -2437,6 +2464,10 @@
             <case tag="hand" saidMarker="akko_exorcism" notSaidMarker="ignored_a" priority="9998">
                 <state img="2-annoyed.png" marker="ignored_a">...Or you can all ignore me like the assholes you are. Cool. I'm fine with it. Not like my opinion is worth listening to anyways.</state>
             </case>
+            <case tag="hand" alsoPlaying="palutena" alsoPlayingStage="6" notSaidMarker="palutiddie">
+                <test expr="~palutena.position~" value="left" />
+                <state img="2-sweat.png" marker="palutiddie">&lt;i&gt;(...Wow. She's so tall, my head reaches her boobs...)&lt;/i&gt;</state>
+            </case>
             <case tag="hand" totalRounds="5">
                 <test expr="~weekday~" value="Friday" />
                 <state img="2-fingergun.png">Alone on a ~weekday~ night, ~player~? Well, so was I. Now we're not alone.</state>
@@ -2694,8 +2725,8 @@
             <case tag="female_removing_minor" target="sakura" targetStage="2" priority="545">
                 <state img="2-surprise.png">Seriously!? You're a zombie!</state>
             </case>
-            <case tag="female_removing_minor" target="sakura" targetStage="3" targetSayingMarker="headless" priority="555">
-                <state img="2-fingergun.png">Woah, don't lose your head now! Ahahahahahaha!!</state>
+            <case tag="female_removing_minor" target="sakura" targetStage="3" priority="560">
+                <state img="2-fingergun.png" marker="loseyourhead">Woah, don't lose your head now! Ahahahahahaha!!</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="2-eh.png">Can we, like, move on?</state>
@@ -2715,7 +2746,7 @@
             <case tag="female_removed_minor" target="sakura" targetStage="3">
                 <state img="2-flustered.png">&lt;i&gt;(Aren't zombies supposed to be living corpses with rotting flesh? What's concerning is that she's STILL cute despite that!)&lt;/i&gt;</state>
             </case>
-            <case tag="female_removed_minor" target="sakura" targetStage="4" targetSaidMarker="headless">
+            <case tag="female_removed_minor" target="sakura" targetStage="4" saidMarker="loseyourhead" targetSaidMarker="headless">
                 <state img="2-smug.png">Hahaha... hah... Man, you're a goldmine for lame puns. I need to work on my comedian routine. Could you help me out?</state>
             </case>
             <case tag="male_removing_major">
@@ -2832,9 +2863,20 @@
                 <state img="2-woah.png">How many penises am I gonna see tonight!? Geez!</state>
             </case>
             <case tag="female_chest_will_be_visible">
+                <state img="2-flustered.png">Hahaha... This line shouldn't be playing. So, uh, just report it if it plays, I guess?</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="780">
+                <condition count="1-5" status="chest_visible" />
+                <state img="2-woah.png">We are going to unlock more boobs!</state>
+                <state img="2-sweat.png">Oh boy...</state>
+                <state img="2-flustered.png">Looks like I'm seeing more boobs today. Hahaha.... hah...</state>
+                <state img="2-sweat.png">Boobs! Honkers!! Badonkers!!! &lt;i&gt;(I'm in heaven...)&lt;/i&gt;</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="785">
+                <condition count="0" gender="female" status="chest_visible" />
                 <state img="2-surprise.png">BOOBS!</state>
                 <state img="2-woah.png">We are going to unlock ~name~'s boobs!</state>
-                <state img="2-woah.png">Are you gonna show us your boobs? I never actually seen boobs in real life! Unless you count my own boobs!!</state>
+                <state img="2-woah.png">Are you gonna show us your boobs? I've never actually seen boobs in real life! Unless you count my own boobs!!</state>
                 <state img="2-surprise.png">Boobs! Honkers!! Badonkers!!!</state>
                 <state img="2-woah.png">Oh... Oh crap...</state>
             </case>
@@ -2847,7 +2889,7 @@
             <case tag="female_chest_will_be_visible" target="kyu" targetSaying="This totally isn't some deus-ex-machina cop-out to avoid having to put any effort into another stripping sprite, by the way. In case you were wondering.">
                 <state img="2-stare.png">But... wouldn't that stripping pose take just as much effort, if not &lt;i&gt;more?&lt;/i&gt;</state>
             </case>
-            <case tag="female_chest_will_be_visible" target="moon" priority="776">
+            <case tag="female_chest_will_be_visible" target="moon" priority="10000">
                 <state img="2-why.png">FOR THE LAST TIME, I DON'T WANT TO SEE YOUR CHEST!</state>
             </case>
             <case tag="female_chest_will_be_visible" totalRounds="0-5">
@@ -2893,7 +2935,6 @@
                 <state img="2-flustered.png">Oh boy...</state>
                 <state img="2-sweat.png">&lt;i&gt;(Is ~name~ one of those people who shaves? Why should that matter; I'm gonna see her crotch! Her naked crotch!!)&lt;/i&gt;</state>
                 <state img="2-sweat.png">Nnnn!! We're gonna see---</state>
-                <state img="2-woah.png">Holy crap, oh god, here it comes, &lt;i&gt;here it comes!!&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible" filter="thong" priority="155">
                 <state img="2-eh.png">If I had to be honest, thongs look like the most uncomfortable things on the planet.</state>
@@ -2913,6 +2954,7 @@
                 <state img="2-surprise.png">Oh...</state>
                 <state img="2-woah.png">I can't look away! I just can't! It's not everyday you see someone's vagina!</state>
                 <state img="2-sweat.png">I... can't think straight...</state>
+                <state img="2-flustered.png">&lt;i&gt;(I just unlocked someone's ass.)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <condition count="1" gender="female" status="crotch_visible" />
@@ -3127,9 +3169,6 @@
             </case>
             <case tag="opponent_stripped" filter="deity" targetStage="1">
                 <state img="2-stare.png">I met two of them, and came out mentally scarred for life. Now here I am playing &lt;i&gt;strip poker&lt;/i&gt; with another deity. Life sure is something.</state>
-            </case>
-            <case tag="opponent_stripped" saidMarker="smooth_criminal_1" notSaidMarker="smooth_criminal_3" priority="9999">
-                <state img="2-cocky.png" marker="smooth_criminal_3">That "smooth criminal" being me. I'm not sure if you know this, but I'm pretty much a bandit queen.</state>
             </case>
             <case tag="opponent_stripped" target="akko" targetStage="1">
                 <state img="2-hype.png">I... I thought you were just dressing up! But holy crap this is so cool!!</state>
@@ -3475,6 +3514,10 @@
             <case tag="hand" saidMarker="akko_exorcism" notSaidMarker="ignored_a" priority="9998">
                 <state img="3-annoyed.png" marker="ignored_a">...Or you can all ignore me like the assholes you are. Cool. I'm fine with it. Not like my opinion is worth listening to anyways.</state>
             </case>
+            <case tag="hand" alsoPlaying="palutena" alsoPlayingStage="6" notSaidMarker="palutiddie">
+                <test expr="~palutena.position~" value="left" />
+                <state img="3-sweat.png" marker="palutiddie">&lt;i&gt;(...Wow. She's so tall, my head reaches her boobs...)&lt;/i&gt;</state>
+            </case>
             <case tag="hand" totalRounds="5">
                 <test expr="~weekday~" value="Friday" />
                 <state img="3-fingergun.png">Alone on a ~weekday~ night, ~player~? Well, so was I. Now we're not alone.</state>
@@ -3710,8 +3753,8 @@
             <case tag="female_removing_minor" target="sakura" targetStage="2" priority="545">
                 <state img="3-surprise.png">Seriously!? You're a zombie!</state>
             </case>
-            <case tag="female_removing_minor" target="sakura" targetStage="3" targetSayingMarker="headless" priority="555">
-                <state img="3-fingergun.png">Woah, don't lose your head now! Ahahahahahaha!!</state>
+            <case tag="female_removing_minor" target="sakura" targetStage="3" priority="560">
+                <state img="3-fingergun.png" marker="loseyourhead">Woah, don't lose your head now! Ahahahahahaha!!</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="3-neutral.png">And nobody gave a crap. The end.</state>
@@ -3731,7 +3774,7 @@
             <case tag="female_removed_minor" target="sakura" targetStage="3">
                 <state img="3-flustered.png">&lt;i&gt;(Aren't zombies supposed to be living corpses with rotting flesh? What's concerning is that she's STILL cute despite that!)&lt;/i&gt;</state>
             </case>
-            <case tag="female_removed_minor" target="sakura" targetStage="4" targetSaidMarker="headless">
+            <case tag="female_removed_minor" target="sakura" targetStage="4" saidMarker="loseyourhead" targetSaidMarker="headless">
                 <state img="3-smug.png">Hahaha... hah... Man, you're a goldmine for lame puns. I need to work on my comedian routine. Could you help me out?</state>
             </case>
             <case tag="male_removing_major">
@@ -3846,9 +3889,20 @@
                 <state img="3-woah.png">How many penises am I gonna see tonight!? Geez!</state>
             </case>
             <case tag="female_chest_will_be_visible">
+                <state img="3-flustered.png">Hahaha... This line shouldn't be playing. So, uh, just report it if it plays, I guess?</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="780">
+                <condition count="1-5" status="chest_visible" />
+                <state img="3-woah.png">We are going to unlock more boobs!</state>
+                <state img="3-sweat.png">Oh boy...</state>
+                <state img="3-flustered.png">Looks like I'm seeing more boobs today. Hahaha.... hah...</state>
+                <state img="3-sweat.png">Boobs! Honkers!! Badonkers!!! &lt;i&gt;(I'm in heaven...)&lt;/i&gt;</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="785">
+                <condition count="0" gender="female" status="chest_visible" />
                 <state img="3-surprise.png">BOOBS!</state>
                 <state img="3-woah.png">We are going to unlock ~name~'s boobs!</state>
-                <state img="3-woah.png">Are you gonna show us your boobs? I never actually seen boobs in real life! Unless you count my own boobs!!</state>
+                <state img="3-woah.png">Are you gonna show us your boobs? I've never actually seen boobs in real life! Unless you count my own boobs!!</state>
                 <state img="3-surprise.png">Boobs! Honkers!! Badonkers!!!</state>
                 <state img="3-woah.png">Oh... Oh crap...</state>
             </case>
@@ -3861,7 +3915,7 @@
             <case tag="female_chest_will_be_visible" target="kyu" targetSaying="This totally isn't some deus-ex-machina cop-out to avoid having to put any effort into another stripping sprite, by the way. In case you were wondering.">
                 <state img="3-stare.png">But... wouldn't that stripping pose take just as much effort, if not &lt;i&gt;more?&lt;/i&gt;</state>
             </case>
-            <case tag="female_chest_will_be_visible" target="moon" priority="776">
+            <case tag="female_chest_will_be_visible" target="moon" priority="10000">
                 <state img="3-why.png">FOR THE LAST TIME, I DON'T WANT TO SEE YOUR CHEST!</state>
             </case>
             <case tag="female_chest_will_be_visible" totalRounds="0-5">
@@ -3907,7 +3961,6 @@
                 <state img="3-flustered.png">Oh boy...</state>
                 <state img="3-sweat.png">&lt;i&gt;(Is ~name~ one of those people who shaves? Why should that matter; I'm gonna see her crotch! Her naked crotch!!)&lt;/i&gt;</state>
                 <state img="3-sweat.png">Nnnn!! We're gonna see---</state>
-                <state img="3-woah.png">Holy crap, oh god, here it comes, &lt;i&gt;here it comes!!&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible" filter="thong" priority="155">
                 <state img="3-eh.png">If I had to be honest, thongs look like the most uncomfortable things on the planet.</state>
@@ -3927,6 +3980,7 @@
                 <state img="3-surprise.png">Oh...</state>
                 <state img="3-woah.png">I can't look away! I just can't! It's not everyday you see someone's vagina!</state>
                 <state img="3-sweat.png">I... can't think straight...</state>
+                <state img="3-flustered.png">&lt;i&gt;(I just unlocked someone's ass.)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <condition count="1" gender="female" status="crotch_visible" />
@@ -4458,6 +4512,10 @@
             <case tag="hand" saidMarker="akko_exorcism" notSaidMarker="ignored_a" priority="9998">
                 <state img="4-annoyed.png" marker="ignored_a">...Or you can all ignore me like the assholes you are. Cool. I'm fine with it. Not like my opinion is worth listening to anyways.</state>
             </case>
+            <case tag="hand" alsoPlaying="palutena" alsoPlayingStage="6" notSaidMarker="palutiddie">
+                <test expr="~palutena.position~" value="left" />
+                <state img="4-sweat.png" marker="palutiddie">&lt;i&gt;(...Wow. She's so tall, my head reaches her boobs...)&lt;/i&gt;</state>
+            </case>
             <case tag="must_strip">
                 <state img="4-terror.png">Oh god, I have to reveal &lt;i&gt;genitals&lt;/i&gt; now!?</state>
                 <state img="4-terror.png">Crap! Nooo, I wasn't ready!!</state>
@@ -4676,8 +4734,8 @@
             <case tag="female_removing_minor" target="sakura" targetStage="2" priority="545">
                 <state img="4-surprise.png">Seriously!? You're a zombie!</state>
             </case>
-            <case tag="female_removing_minor" target="sakura" targetStage="3" targetSayingMarker="headless" priority="555">
-                <state img="4-fingergun.png">Woah, don't lose your head now! Ahahahahahaha!!</state>
+            <case tag="female_removing_minor" target="sakura" targetStage="3" priority="560">
+                <state img="4-fingergun.png" marker="loseyourhead">Woah, don't lose your head now! Ahahahahahaha!!</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="4-neutral.png">And nobody gave a crap. The end.</state>
@@ -4697,7 +4755,7 @@
             <case tag="female_removed_minor" target="sakura" targetStage="3">
                 <state img="4-flustered.png">&lt;i&gt;(Aren't zombies supposed to be living corpses with rotting flesh? What's concerning is that she's STILL cute despite that!)&lt;/i&gt;</state>
             </case>
-            <case tag="female_removed_minor" target="sakura" targetStage="4" targetSaidMarker="headless">
+            <case tag="female_removed_minor" target="sakura" targetStage="4" saidMarker="loseyourhead" targetSaidMarker="headless">
                 <state img="4-smug.png">Hahaha... hah... Man, you're a goldmine for lame puns. I need to work on my comedian routine. Could you help me out?</state>
             </case>
             <case tag="male_removing_major">
@@ -4809,9 +4867,20 @@
                 <state img="4-woah.png">How many penises am I gonna see tonight!? Geez!</state>
             </case>
             <case tag="female_chest_will_be_visible">
+                <state img="4-flustered.png">Hahaha... This line shouldn't be playing. So, uh, just report it if it plays, I guess?</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="780">
+                <condition count="1-5" status="chest_visible" />
+                <state img="4-woah.png">We are going to unlock more boobs!</state>
+                <state img="4-sweat.png">Oh boy...</state>
+                <state img="4-flustered.png">Looks like I'm seeing more boobs today. Hahaha.... hah...</state>
+                <state img="4-sweat.png">Boobs! Honkers!! Badonkers!!! &lt;i&gt;(I'm in heaven...)&lt;/i&gt;</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="785">
+                <condition count="0" gender="female" status="chest_visible" />
                 <state img="4-surprise.png">BOOBS!</state>
                 <state img="4-woah.png">We are going to unlock ~name~'s boobs!</state>
-                <state img="4-woah.png">Are you gonna show us your boobs? I never actually seen boobs in real life! Unless you count my own boobs!!</state>
+                <state img="4-woah.png">Are you gonna show us your boobs? I've never actually seen boobs in real life! Unless you count my own boobs!!</state>
                 <state img="4-surprise.png">Boobs! Honkers!! Badonkers!!!</state>
                 <state img="4-woah.png">Oh... Oh crap...</state>
             </case>
@@ -4824,7 +4893,7 @@
             <case tag="female_chest_will_be_visible" target="kyu" targetSaying="This totally isn't some deus-ex-machina cop-out to avoid having to put any effort into another stripping sprite, by the way. In case you were wondering.">
                 <state img="4-stare.png">But... wouldn't that stripping pose take just as much effort, if not &lt;i&gt;more?&lt;/i&gt;</state>
             </case>
-            <case tag="female_chest_will_be_visible" target="moon" priority="776">
+            <case tag="female_chest_will_be_visible" target="moon" priority="10000">
                 <state img="4-why.png">FOR THE LAST TIME, I DON'T WANT TO SEE YOUR CHEST!</state>
             </case>
             <case tag="female_chest_will_be_visible" totalRounds="0-5">
@@ -4870,7 +4939,6 @@
                 <state img="4-flustered.png">Oh boy...</state>
                 <state img="4-sweat.png">&lt;i&gt;(Is ~name~ one of those people who shaves? Why should that matter; I'm gonna see her crotch! Her naked crotch!!)&lt;/i&gt;</state>
                 <state img="4-sweat.png">Nnnn!! We're gonna see---</state>
-                <state img="4-woah.png">Holy crap, oh god, here it comes, &lt;i&gt;here it comes!!&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible" filter="thong" priority="155">
                 <state img="4-eh.png">If I had to be honest, thongs look like the most uncomfortable things on the planet.</state>
@@ -4890,6 +4958,7 @@
                 <state img="4-surprise.png">Oh...</state>
                 <state img="4-woah.png">I can't look away! I just can't! It's not everyday you see someone's vagina!</state>
                 <state img="4-sweat.png">I... can't think straight...</state>
+                <state img="4-flustered.png">&lt;i&gt;(I just unlocked someone's ass.)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <condition count="1" gender="female" status="crotch_visible" />
@@ -5406,6 +5475,10 @@
             <case tag="hand" saidMarker="akko_exorcism" notSaidMarker="ignored_a" priority="9998">
                 <state img="5-annoyed.png" marker="ignored_a">...Or you can all ignore me like the assholes you are. Cool. I'm fine with it. Not like my opinion is worth listening to anyways.</state>
             </case>
+            <case tag="hand" alsoPlaying="palutena" alsoPlayingStage="6" notSaidMarker="palutiddie">
+                <test expr="~palutena.position~" value="left" />
+                <state img="5-sweat.png" marker="palutiddie">&lt;i&gt;(...Wow. She's so tall, my head reaches her boobs...)&lt;/i&gt;</state>
+            </case>
             <case tag="must_strip" consecutiveLosses="3" notSaidMarker="consecutivelosses">
                 <state img="5-annoyed.png" marker="consecutivelosses">Oh, &lt;i&gt;veeeery&lt;/i&gt; funny, dealer! Well, maybe you won't find it funny once I break your goddamn nose!</state>
             </case>
@@ -5604,8 +5677,8 @@
             <case tag="female_removing_minor" target="sakura" targetStage="2" priority="545">
                 <state img="5-surprise.png">Seriously!? You're a zombie!</state>
             </case>
-            <case tag="female_removing_minor" target="sakura" targetStage="3" targetSayingMarker="headless" priority="555">
-                <state img="5-fingergun.png">Woah, don't lose your head now! Ahahahahahaha!!</state>
+            <case tag="female_removing_minor" target="sakura" targetStage="3" priority="560">
+                <state img="5-fingergun.png" marker="loseyourhead">Woah, don't lose your head now! Ahahahahahaha!!</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="5-why.png">That's a dick move! You're a dick.</state>
@@ -5624,7 +5697,7 @@
             <case tag="female_removed_minor" target="sakura" targetStage="3">
                 <state img="5-flustered.png">&lt;i&gt;(Aren't zombies supposed to be living corpses with rotting flesh? What's concerning is that she's STILL cute despite that!)&lt;/i&gt;</state>
             </case>
-            <case tag="female_removed_minor" target="sakura" targetStage="4" targetSaidMarker="headless">
+            <case tag="female_removed_minor" target="sakura" targetStage="4" saidMarker="loseyourhead" targetSaidMarker="headless">
                 <state img="5-smug.png">Hahaha... hah... Man, you're a goldmine for lame puns. I need to work on my comedian routine. Could you help me out?</state>
             </case>
             <case tag="male_removing_major">
@@ -5741,9 +5814,20 @@
                 <state img="5-woah.png">How many penises am I gonna see tonight!? Geez!</state>
             </case>
             <case tag="female_chest_will_be_visible">
+                <state img="5-flustered.png">Hahaha... This line shouldn't be playing. So, uh, just report it if it plays, I guess?</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="780">
+                <condition count="1-5" status="chest_visible" />
+                <state img="5-woah.png">We are going to unlock more boobs!</state>
+                <state img="5-sweat.png">Oh boy...</state>
+                <state img="5-flustered.png">Looks like I'm seeing more boobs today. Hahaha.... hah...</state>
+                <state img="5-sweat.png">Boobs! Honkers!! Badonkers!!! &lt;i&gt;(I'm in heaven...)&lt;/i&gt;</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="785">
+                <condition count="0" gender="female" status="chest_visible" />
                 <state img="5-surprise.png">BOOBS!</state>
                 <state img="5-woah.png">We are going to unlock ~name~'s boobs!</state>
-                <state img="5-woah.png">Are you gonna show us your boobs? I never actually seen boobs in real life! Unless you count my own boobs!!</state>
+                <state img="5-woah.png">Are you gonna show us your boobs? I've never actually seen boobs in real life! Unless you count my own boobs!!</state>
                 <state img="5-surprise.png">Boobs! Honkers!! Badonkers!!!</state>
                 <state img="5-woah.png">Oh... Oh crap...</state>
             </case>
@@ -5756,7 +5840,7 @@
             <case tag="female_chest_will_be_visible" target="kyu" targetSaying="This totally isn't some deus-ex-machina cop-out to avoid having to put any effort into another stripping sprite, by the way. In case you were wondering.">
                 <state img="5-stare.png">But... wouldn't that stripping pose take just as much effort, if not &lt;i&gt;more?&lt;/i&gt;</state>
             </case>
-            <case tag="female_chest_will_be_visible" target="moon" priority="776">
+            <case tag="female_chest_will_be_visible" target="moon" priority="10000">
                 <state img="5-why.png">FOR THE LAST TIME, I DON'T WANT TO SEE YOUR CHEST!</state>
             </case>
             <case tag="female_chest_will_be_visible" totalRounds="0-5">
@@ -5804,7 +5888,6 @@
                 <state img="5-flustered.png" marker="witch_nude">I think ~name~ just bewitched me! Hahahahaha... hah...</state>
             </case>
             <case tag="female_crotch_will_be_visible">
-                <state img="5-woah.png">Holy crap, oh god, here it comes, &lt;i&gt;here it comes!!&lt;/i&gt;</state>
                 <state img="5-flustered.png">This is NOT how I expected my day to go. Showing my vagina and seeing another girl's!</state>
                 <state img="5-flustered.png">Oh boy... Umm... You guys might as well shift your attention to ~name~, y'know?</state>
                 <state img="5-embarrassed.png">Well I already showed you mine, so...!! Now it's your turn! Show us the goods!</state>
@@ -6362,6 +6445,10 @@
                 <test expr="~background.location~" value="outdoors" />
                 <state img="6-annoyed.png">It's suddenly really cold... Can we just play indoors like normal people? I mean, I know I'm far from normal, but this is a bad time to be weird.</state>
             </case>
+            <case tag="hand" alsoPlaying="palutena" alsoPlayingStage="6" notSaidMarker="palutiddie">
+                <test expr="~palutena.position~" value="left" />
+                <state img="6-sweat.png" marker="palutiddie">&lt;i&gt;(...Wow. She's so tall, my head reaches her boobs...)&lt;/i&gt;</state>
+            </case>
             <case tag="hand" totalNaked="1" totalRounds="0" notSaidMarker="selfnaked_playing">
                 <state img="6-eh.png" marker="selfnaked_playing">...Why am I still getting cards? I'm already naked!</state>
             </case>
@@ -6557,7 +6644,7 @@
             <case tag="female_removed_minor" target="sakura" targetStage="3">
                 <state img="6-flustered.png">&lt;i&gt;(Aren't zombies supposed to be living corpses with rotting flesh? What's concerning is that she's STILL cute despite that!)&lt;/i&gt;</state>
             </case>
-            <case tag="female_removed_minor" target="sakura" targetStage="4" targetSaidMarker="headless">
+            <case tag="female_removed_minor" target="sakura" targetStage="4" saidMarker="loseyourhead" targetSaidMarker="headless">
                 <state img="6-smug.png">Hahaha... hah... Man, you're a goldmine for lame puns. I need to work on my comedian routine. Could you help me out?</state>
             </case>
             <case tag="male_removing_major">
@@ -6673,14 +6760,25 @@
                 <state img="6-woah.png">How many penises am I gonna see tonight!? Geez!</state>
             </case>
             <case tag="female_chest_will_be_visible">
-                <state img="6-surprise.png">BOOBS!</state>
-                <state img="6-woah.png">We are going to unlock ~name~'s boobs!</state>
-                <state img="6-woah.png">Are you gonna show us your boobs? I never actually seen boobs in real life! Unless you count my own boobs!!</state>
-                <state img="6-surprise.png">Boobs! Honkers!! Badonkers!!!</state>
-                <state img="6-woah.png">Oh... Oh crap...</state>
                 <state img="6-surprise.png">Yeah, look at ~name~'s tits instead! Mine are nothing special!</state>
                 <state img="6-woah.png">&lt;i&gt;(How do I feel about this? Happy? Terrified? Happified? Someone get a dictionary!)&lt;/i&gt;</state>
                 <state img="6-flustered.png">Heh... Probably better than mine.</state>
+                <state img="6-flustered.png">Hahaha... This line shouldn't be playing. So, uh, just report it if it plays, I guess?</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="780">
+                <condition count="2-5" status="chest_visible" />
+                <state img="6-woah.png">We are going to unlock more boobs!</state>
+                <state img="6-sweat.png">Oh boy...</state>
+                <state img="6-flustered.png">Looks like I'm seeing more boobs today. Hahaha.... hah...</state>
+                <state img="6-sweat.png">Boobs! Honkers!! Badonkers!!! &lt;i&gt;(I'm in heaven...)&lt;/i&gt;</state>
+            </case>
+            <case tag="female_chest_will_be_visible" priority="785">
+                <condition count="0" gender="female" status="chest_visible" />
+                <state img="6-surprise.png">BOOBS!</state>
+                <state img="6-woah.png">We are going to unlock ~name~'s boobs!</state>
+                <state img="6-woah.png">Are you gonna show us your boobs? I've never actually seen boobs in real life! Unless you count my own boobs!!</state>
+                <state img="6-surprise.png">Boobs! Honkers!! Badonkers!!!</state>
+                <state img="6-woah.png">Oh... Oh crap...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="florina" targetSayingMarker="bee3">
                 <state img="6-terror.png">Ohhhh crap, what do I do!?</state>
@@ -6691,7 +6789,7 @@
             <case tag="female_chest_will_be_visible" target="kyu" targetSaying="This totally isn't some deus-ex-machina cop-out to avoid having to put any effort into another stripping sprite, by the way. In case you were wondering.">
                 <state img="6-stare.png">But... wouldn't that stripping pose take just as much effort, if not &lt;i&gt;more?&lt;/i&gt;</state>
             </case>
-            <case tag="female_chest_will_be_visible" target="moon" priority="776">
+            <case tag="female_chest_will_be_visible" target="moon" priority="10000">
                 <state img="6-why.png">FOR THE LAST TIME, I DON'T WANT TO SEE YOUR CHEST!</state>
             </case>
             <case tag="female_chest_will_be_visible" totalRounds="0-5">
@@ -7291,7 +7389,7 @@
             </case>
             <case tag="female_must_strip">
                 <state img="7-neutral.png">Err... If me masturbating makes you uncomfortable, take off something big. I'll probably finish faster that way.</state>
-                <state img="7-welp.png">Is this the part where you mock me by taking off someting small?</state>
+                <state img="7-welp.png">Is this the part where you mock me by taking off something small?</state>
                 <state img="7-welp.png">Whoppee, the game is still going on.</state>
                 <state img="7-stare.png">What now?</state>
                 <state img="7-eh.png">~name~ now? Well, at least ~name~ is attractive.</state>
@@ -7452,7 +7550,7 @@
             <case tag="female_removed_minor" target="sakura" targetStage="3">
                 <state img="7-flustered.png">&lt;i&gt;(Aren't zombies supposed to be living corpses with rotting flesh? What's concerning is that she's STILL cute despite that!)&lt;/i&gt;</state>
             </case>
-            <case tag="female_removed_minor" target="sakura" targetStage="4" targetSaidMarker="headless">
+            <case tag="female_removed_minor" target="sakura" targetStage="4" saidMarker="loseyourhead" targetSaidMarker="headless">
                 <state img="7-smug.png">Hahaha... hah... Man, you're a goldmine for lame puns. I need to work on my comedian routine. Could you help me out?</state>
             </case>
             <case tag="male_removing_major">
@@ -7561,7 +7659,7 @@
             <case tag="female_chest_will_be_visible" target="kyu" targetSaying="This totally isn't some deus-ex-machina cop-out to avoid having to put any effort into another stripping sprite, by the way. In case you were wondering.">
                 <state img="7-stare.png">But... wouldn't that stripping pose take just as much effort, if not &lt;i&gt;more?&lt;/i&gt;</state>
             </case>
-            <case tag="female_chest_will_be_visible" target="moon" priority="776">
+            <case tag="female_chest_will_be_visible" target="moon" priority="10000">
                 <state img="7-why.png">FOR THE LAST TIME, I DON'T WANT TO SEE YOUR CHEST!</state>
             </case>
             <case tag="female_chest_will_be_visible" totalRounds="0-5">
@@ -8170,8 +8268,8 @@
             <case tag="female_removing_minor" target="sakura" targetStage="2" priority="545">
                 <state img="8-surprise.png">Seriously!? You're a zombie!</state>
             </case>
-            <case tag="female_removing_minor" target="sakura" targetStage="3" targetSayingMarker="headless" priority="555">
-                <state img="8-fingergun.png">Woah, don't lose your head now! Ahahahahahaha!!</state>
+            <case tag="female_removing_minor" target="sakura" targetStage="3" priority="560">
+                <state img="8-fingergun.png" marker="loseyourhead">Woah, don't lose your head now! Ahahahahahaha!!</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="8-annoyed.png">Well at least it's &lt;i&gt;something&lt;/i&gt;?</state>
@@ -8189,7 +8287,7 @@
             <case tag="female_removed_minor" target="sakura" targetStage="3">
                 <state img="8-flustered.png">&lt;i&gt;(Aren't zombies supposed to be living corpses with rotting flesh? What's concerning is that she's STILL cute despite that!)&lt;/i&gt;</state>
             </case>
-            <case tag="female_removed_minor" target="sakura" targetStage="4" targetSaidMarker="headless">
+            <case tag="female_removed_minor" target="sakura" targetStage="4" saidMarker="loseyourhead" targetSaidMarker="headless">
                 <state img="8-smug.png">Hahaha... hah... Man, you're a goldmine for lame puns. I need to work on my comedian routine. Could you help me out?</state>
             </case>
             <case tag="male_removing_major">
@@ -8310,7 +8408,7 @@
             <case tag="female_chest_will_be_visible" target="kyu" targetSaying="This totally isn't some deus-ex-machina cop-out to avoid having to put any effort into another stripping sprite, by the way. In case you were wondering.">
                 <state img="8-stare.png">But... wouldn't that stripping pose take just as much effort, if not &lt;i&gt;more?&lt;/i&gt;</state>
             </case>
-            <case tag="female_chest_will_be_visible" target="moon" priority="776">
+            <case tag="female_chest_will_be_visible" target="moon" priority="10000">
                 <state img="8-why.png">FOR THE LAST TIME, I DON'T WANT TO SEE YOUR CHEST!</state>
             </case>
             <case tag="female_chest_will_be_visible" totalRounds="0-5">
