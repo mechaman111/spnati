@@ -89,9 +89,13 @@ Opponent.prototype.initDevMode = function () {
 
 function DevModeDialogueBox(gameBubbleElem) {
     this.container = gameBubbleElem;
-    this.editField = gameBubbleElem.find('.dialogue-edit-entry');
+    this.poseFieldContainer = gameBubbleElem.find('.edit-pose-row');
+    
     this.dialogueArea = gameBubbleElem.find('.dialogue');
+    this.editField = gameBubbleElem.find('.dialogue-edit-entry');
+    this.poseField = gameBubbleElem.find('.dialogue-pose-entry');
     this.statusLine = gameBubbleElem.find('.dialogue-edit-status');
+    this.poseList = gameBubbleElem.find('.edit-pose-list');
     
     this.editButton = gameBubbleElem.find('.dialogue-edit-button');
     this.newResponseButton = gameBubbleElem.find('.dialogue-respond-button');
@@ -99,10 +103,6 @@ function DevModeDialogueBox(gameBubbleElem) {
     this.cancelButton = gameBubbleElem.find('.edit-cancel');
     this.previewButton = gameBubbleElem.find('.edit-preview');
     this.poseButton = gameBubbleElem.find('.edit-pose');
-    
-    this.poseFieldContainer = gameBubbleElem.find('.edit-pose-row');
-    this.poseList = gameBubbleElem.find('.edit-pose-list');
-    this.poseField = gameBubbleElem.find('.dialogue-pose-entry');
     
     this.editButton.click(this.editCurrentState.bind(this));
     this.newResponseButton.click(this.startNewResponse.bind(this));
@@ -117,25 +117,54 @@ function DevModeDialogueBox(gameBubbleElem) {
     this.editField.on('change', this.updateEditField.bind(this));
     this.poseField.on('change', this.updatePoseField.bind(this));
     
+    /* The player this object concerns itself with. */
     this.player = null;
-    this.editingState = false;
+    
+    /* The player currently targeted for a new response line, if any.
+     * (If null, indicates that a new generic line is being written.)
+     */
     this.respondingToPlayer = null;
-    this.currentStateDialogue = null;
-    this.currentStatePose = null;
+    
+    /* If true, then a preexisting State is being edited. 
+     * Affects handling in :saveEdits().
+     */
+    this.editingState = false;
+    
+    /* An object with 'text' and 'image' fields for storing state data
+     * during editing.
+     * (editData.text = current entered dialogue text)
+     * (editData.image = current selected character pose)
+     */
+    this.editData = null;
+    
+    /* Contains the 'initial' dialogue/pose for the character prior to editing.
+     * _Usually_ the same as player.chosenState, but not always!
+     */
+    this.currentState = null;
+    
+    /* If true, currentState contains 'new' data that isn't reflected in the original XML.
+     * This indicates to :saveEdits() to modify edit log entries instead of XML data.
+     */
+    this.currentStateModified = false;
+    
+    /* The parentCase of the last played State for this player. */
+    this.currentCase = null;
 }
 
 DevModeDialogueBox.prototype.update = function (player) {
     this.player = player;
-    
     if (!player) return;
     
     this.currentCase = player.chosenState.parentCase;
-    this.currentState = {'text': player.chosenState.rawDialogue, 'pose': player.chosenState.image};
+    this.currentState = {'text': player.chosenState.rawDialogue, 'image': player.chosenState.image};
+    this.currentStateModified = false;
     
+    /* Reset all editing state... */
     if (this.container.attr('data-editing')) {
         this.cancelEdit();
     }
     
+    /* Show the 'edit' button as appropriate. */
     if (devModeActive && devModeTarget === player.slot) {
         this.container.attr('data-dev-target', 'true');
         this.editButton.show();
@@ -146,24 +175,31 @@ DevModeDialogueBox.prototype.update = function (player) {
 }
 
 DevModeDialogueBox.prototype.updateEditField = function () {
-    this.currentStateDialogue = this.editField.val();
+    this.editData.text = this.editField.val();
 }
 
 DevModeDialogueBox.prototype.updatePoseField = function () {
-    this.currentStatePose = this.poseField.val();
-    this.player.chosenState.image = this.currentStatePose;
+    this.editData.image = this.poseField.val();
+    this.player.chosenState.image = this.editData.image;
     
     gameDisplays[this.player.slot-1].updateImage(this.player);
 }
 
-DevModeDialogueBox.prototype.startEditMode = function () {
+DevModeDialogueBox.prototype.startEditMode = function (start_text, status_line) {
     KEYBINDINGS_ENABLED = false;
-    this.editField.val(this.currentStateDialogue).attr('placeholder', this.player.chosenState.rawDialogue);
+    
+    this.editData = {
+        'text': start_text,
+        'image': this.currentState.image,
+    }
+    
+    /* Set up the text and pose entry elements: */
     this.container.attr('data-editing', 'entry');
+    this.editField.val(this.editData.text).attr('placeholder', this.currentState.text);
+    this.poseField.val(this.editData.image);
+    this.statusLine.text(status_line);
     
-    this.currentStatePose = this.player.chosenState.image;
-    this.poseField.val(this.currentStatePose);
-    
+    /* Populate the pose entry autocomplete list: */
     var caseSelector = (this.player.stage == -1 ? 'start, stage[id=1] case[tag=game_start]' : 'stage[id='+this.player.stage+'] case');
     var poseNames = {};
     
@@ -180,6 +216,7 @@ DevModeDialogueBox.prototype.startEditMode = function () {
         return $(elem);
     }));
     
+    /* Hide the 'edit' and 'response' buttons: */
     this.editButton.hide();
     gameDisplays.forEach(function (disp) {
         disp.devModeController.newResponseButton.hide();
@@ -188,16 +225,23 @@ DevModeDialogueBox.prototype.startEditMode = function () {
 
 DevModeDialogueBox.prototype.exitEditMode = function () {
     KEYBINDINGS_ENABLED = true;
-    this.editField.val('');
-    this.currentStateDialogue = '';
+    this.editData = null;
     this.respondingToPlayer = null;
+    
+    /* Hide the data entry elements: */
     this.container.attr('data-editing', null);
     this.poseFieldContainer.hide();
+    this.editField.val('');
+    
+    /* Reset the character's shown dialogue text and image: */
+    this.player.chosenState.rawDialogue = this.currentState.text;
+    this.player.chosenState.image = this.currentState.image;
     
     this.player.chosenState.expandDialogue(this.player, this.player.currentTarget);
     gameDisplays[this.player.slot-1].updateText(this.player);
     gameDisplays[this.player.slot-1].updateImage(this.player);
     
+    /* Show the 'edit' and 'response' buttons: */
     this.editButton.show();
     gameDisplays.forEach(function (disp) {
         disp.devModeController.newResponseButton.show();
@@ -205,54 +249,64 @@ DevModeDialogueBox.prototype.exitEditMode = function () {
 }
 
 DevModeDialogueBox.prototype.cancelEdit = function () {
-    this.player.chosenState.rawDialogue = this.currentState.text;
-    this.player.chosenState.image = this.currentState.pose;
-    
     this.exitEditMode();
 }
 
-
 DevModeDialogueBox.prototype.saveEdits = function () {
     if (this.editingState) {
-        // Log an edited state.
-        var stateID = this.player.chosenState.id;
-        
-        this.player.editLog.push({
-            'type': 'edit',
-            'stage': this.player.stage,
-            'case': this.currentCase.serializeConditions(),
-            'oldState': this.currentState,
-            'state': {'text': this.currentStateDialogue, 'image': this.currentStatePose}
-        });
-        
-        this.player.xml.find('state[dev-id="'+stateID+'"]').each(function (idx, elem) {
-            $(elem).html(this.currentStateDialogue);
-            $(elem).attr('img', this.currentStatePose);
-        }.bind(this));
+        /* Handle edited states: */
+                
+        if (this.currentStateModified) {
+            /* Update the last edit log entry to effect this change: */
+            var idx = this.player.editLog.length - 1;
+            if (idx < 0) return;
+            
+            this.player.editLog[idx].state = {'text': this.editData.text, 'image': this.editData.image};
+        } else {
+            /* Push a new edit log entry... */
+            this.player.editLog.push({
+                'type': 'edit',
+                'stage': this.player.stage,
+                'case': this.currentCase.serializeConditions(),
+                'oldState': this.currentState,
+                'state': {'text': this.editData.text, 'image': this.editData.image}
+            });
+            
+            var stateID = this.player.chosenState.id;
+            
+            /* Go directly to the XML to update all similar states: */
+            this.player.xml.find('state[dev-id="'+stateID+'"]').each(function (idx, elem) {
+                $(elem).html(this.editData.text);
+                $(elem).attr('img', this.editData.image);
+            }.bind(this));
+        }
     } else {
         var editEntry = {
-            'type': 'new',
-            'intent': 'generic',
-            'phaseTarget': null,
-            'responseTarget': null,
-            'stage': this.player.stage,
-            'state': {'text': this.currentStateDialogue, 'image': this.currentStatePose},
-            'suggestedTag': this.player.lastUpdateTags[0],
+            'type': 'new',                                                          // either 'new' or 'edit'
+            'intent': 'generic',                                                    // either 'generic' or 'response'
+            'phaseTarget': null,                                                    // info on the current game phase target
+            'responseTarget': null,                                                 // info on the selected response target
+            'stage': this.player.stage,                                             // current character stage
+            'state': {'text': this.editData.text, 'image': this.editData.image},    // edited state data
+            'suggestedTag': this.player.lastUpdateTags[0],                          // a suggested tag for generic lines
         };
         
+        /* Dumps relevant edit log data for a given player into a serializable object. */
         function playerStateInfo (player) {
             var curState = player.chosenState;
             
             var info = {
                 'id': player.id,
                 'stage': player.stage,
+                'case': null,
+                'state': null,
             }
             
             if (curState) {
                 var curCase = curState.parentCase;
                     
                 info.case = curCase.serializeConditions();
-                info.state = {'text': curState.rawDialogue, 'image': curState.image};
+                info.state = {'text': curState.rawDialogue, 'image': curState.image, 'marker': null};
                 
                 if (curState.marker) {
                     info.state.marker = {
@@ -284,38 +338,33 @@ DevModeDialogueBox.prototype.saveEdits = function () {
         this.player.editLog.push(editEntry);
     }
     
-    this.player.chosenState.rawDialogue = this.currentStateDialogue;
-    this.player.chosenState.image = this.currentStatePose;
+    /* Save editData to currentState, which will then get flushed to
+     * player.chosenState.
+     */
+    this.currentState.text = this.editData.text;
+    this.currentState.image = this.editData.image;
+    this.currentStateModified = true;
     
     this.exitEditMode();
 }
 
 DevModeDialogueBox.prototype.editCurrentState = function () {
-    if (!this.player || !this.player.chosenState) return;
+    if (!this.currentState) return;
     
-    this.currentStateDialogue = this.player.chosenState.rawDialogue;
-    this.statusLine.text("Editing");
     this.editingState = true;
-    
-    this.startEditMode();
+    this.startEditMode(this.currentState.text, "Editing");
 }
 
 DevModeDialogueBox.prototype.newResponseState = function (respondTo) {
     if (!this.player) return;
     
-    this.currentStateDialogue = "";
     this.respondingToPlayer = respondTo;
     this.editingState = false;
-    
-    if (!respondTo) {
-        this.statusLine.text("New Generic");
-        // this.statusLine.text("Generic: "+this.genericResponseTag);
-    } else {
-        this.statusLine.text("Response: "+this.respondingToPlayer.label);
-        // this.statusLine.text("Targeted: "+this.targetedResponseTag);
-    }
-    
-    this.startEditMode();
+
+    this.startEditMode(
+        "",
+        !respondTo ? "New Generic" : "Response: "+this.respondingToPlayer.label
+    );
 }
 
 DevModeDialogueBox.prototype.startNewResponse = function () {
@@ -332,10 +381,15 @@ DevModeDialogueBox.prototype.startNewResponse = function () {
 
 DevModeDialogueBox.prototype.togglePreview = function () {
     if (this.container.attr('data-editing') !== 'preview') {
-        var expanded = expandDialogue(this.currentStateDialogue, this.player, this.player.currentTarget, null);
-        this.dialogueArea.html(fixupDialogue(expanded));
-        this.poseFieldContainer.hide();
+        /* Update the displayed dialogue text and image for this player: */
+        this.player.chosenState.rawDialogue = this.editData.text;
+        this.player.chosenState.image = this.editData.image;
         
+        this.player.chosenState.expandDialogue(this.player, this.player.currentTarget);
+        gameDisplays[this.player.slot-1].updateText(this.player);
+        gameDisplays[this.player.slot-1].updateImage(this.player);
+        
+        this.poseFieldContainer.hide();
         this.container.attr('data-editing', 'preview');
     } else {
         this.container.attr('data-editing', 'entry');
