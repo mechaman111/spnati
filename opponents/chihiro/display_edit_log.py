@@ -8,7 +8,7 @@ def display_case_conditions(case_obj):
             for counter in v:
                 print(
                     "        Counter: "
-                    + ", ".join("{}={}".format(k, v) for k, v in o.items())
+                    + ", ".join("{}={}".format(k, v) for k, v in counter.items())
                 )
         elif k == "tests":
             for test in v:
