@@ -915,6 +915,7 @@ function advanceSelectScreen () {
     });
 
 	transcriptHistory = [];
+    inGame = true;
 
     advanceToNextScreen($selectScreen);
 }

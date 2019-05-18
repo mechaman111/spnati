@@ -69,6 +69,7 @@ var jsErrors = [];
 var sessionID = '';
 var gameID = '';
 var generalCollectibles = [];
+var codeImportEnabled = false;
 
 /**********************************************************************
  * Screens & Modals
@@ -1169,6 +1170,7 @@ function restartGame () {
     $gamePlayerCardArea.show();
     if (!MINIMAL_UI) $gamePlayerClothingArea.show();
     
+    inGame = false;
 
 	/* trigger screen refreshes */
 	updateSelectionVisuals();
@@ -1308,6 +1310,64 @@ function disableUsageTracking() {
     save.saveUsageTracking();
 }
 
+var SEMVER_RE = /[vV]?(\d+)\.(\d+)(?:\.(\d+))?(?:\-([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-])*))?(?:\+([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*))?/;
+function parseSemVer (versionString) {
+    var m = versionString.match(SEMVER_RE);
+    if (!m) return null;
+    
+    var ver = {
+        'major': parseInt(m[1], 10) || 0,
+        'minor': parseInt(m[2], 10) || 0,
+        'patch': parseInt(m[3], 10) || 0,
+    }
+    
+    if (m[4]) {
+        ver.prerelease = m[4].split('.');
+    }
+    
+    return ver;
+}
+
+/* Implements semver precedence rules, as specified in the Semantic Versioning 2.0.0 spec. */
+function compareVersions (v1, v2) {
+    var m1 = parseSemVer(v1);
+    var m2 = parseSemVer(v2);
+    
+    // compare major - minor - patch first, in that order
+    if (m1.major !== m2.major) return (m1.major > m2.major) ? 1 : -1;
+    if (m1.minor !== m2.minor) return (m1.minor > m2.minor) ? 1 : -1;
+    if (m1.patch !== m2.patch) return (m1.patch > m2.patch) ? 1 : -1;
+    
+    // prerelease versions always have less precedence than release versions
+    if (!m1.prerelease && m2.prerelease) return 1;
+    if (!m2.prerelease && m1.prerelease) return -1;
+    
+    // Compare pre-release identifiers from left to right
+    for (var i=0;i<Math.min(m1.prerelease.length, m2.prerelease.length);i++) {
+        var pr1 = parseInt(m1.prerelease[i], 10);
+        var pr2 = parseInt(m2.prerelease[i], 10);
+        
+        if (m1.prerelease[i] !== m2.prerelease[i]) {
+            // if both are numerical or both are non-numeric
+            if (isNaN(pr1) === isNaN(pr2)) return (pr1 > pr2) ? 1 : -1;
+            
+            // otherwise, if we're comparing numeric to non-numeric,
+            // numeric PR identifiers always have less precedence than non-numeric
+            return isNaN(pr1) ? 1 : -1;
+        }
+    }
+    
+    // All pre-release identifiers to now compared equal
+    // in this case, the version with a larger set of pre-release fields has
+    // higher precedence
+    if (m1.prerelease.length !== m2.prerelease.length) {
+        return (m1.prerelease.length > m2.prerelease.length) ? 1 : -1;
+    }
+    
+    // If all else fails, both versions compare equal
+    return 0;
+}
+
 /************************************************************
  * The player clicked the version button. Shows the version modal.
  ************************************************************/
@@ -1326,8 +1386,8 @@ function showVersionModal () {
     
     /* Construct the version modal DOM: */
     $changelog.empty().append(entries.sort(function (e1, e2) {
-        // Sort in reverse lexographical order
-        return (e1.version < e2.version) ? 1 : -1;
+        // Sort in reverse-precedence order
+        return compareVersions(e1.version, e2.version) * -1;
     }).map(function (ent) {
         var row = document.createElement('tr');
         var versionCell = document.createElement('td');
@@ -1581,6 +1641,15 @@ function forceTableVisibility(state) {
  ************************************************************/
 function showImportModal() {
     $("#export-code").text(save.serializeLocalStorage());
+    
+    if (codeImportEnabled) {
+        $('#import-progress').prop('disabled', false);
+        $('.import-restriction-warning').hide();
+    } else {
+        $('#import-progress').prop('disabled', true);
+        $('.import-restriction-warning').show();
+    }
+    
     $ioModal.modal('show');
 
     $('#import-progress').click(function() {

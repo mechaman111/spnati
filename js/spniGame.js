@@ -107,6 +107,7 @@ var eGamePhase = {
 var gamePhase = eGamePhase.DEAL;
 var globalSavedTableVisibility;
 
+var inGame = false;
 var currentTurn = 0;
 var currentRound = -1;
 var previousLoser = -1;
@@ -686,6 +687,7 @@ function endRound () {
 		console.log("The game has ended!");
 		$gameBanner.html("Game Over! "+players[lastPlayer].label+" won Strip Poker Night at the Inventory!");
 		gameOver = true;
+        codeImportEnabled = true;
 
         for (var i = 0; i < players.length; i++) {
             if (HUMAN_PLAYER == i) {

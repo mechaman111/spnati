@@ -1111,6 +1111,12 @@ OpponentDetailsDisplay.prototype.updateCollectiblesView = function () {
 }
 
 OpponentDetailsDisplay.prototype.update = function (opponent) {
+    if (this.opponent === opponent) {
+        // Interpret double-clicks as selection events.
+        return this.handleSelected();
+    }
+    
+    
     this.opponent = opponent;
     
     this.displayContainer.show();
