@@ -268,7 +268,7 @@ DevModeDialogueBox.prototype.saveEdits = function () {
                 'type': 'edit',
                 'stage': this.player.stage,
                 'case': this.currentCase.serializeConditions(),
-                'oldState': this.currentState,
+                'oldState': {'text': this.currentState.text, 'image': this.currentState.image},
                 'state': {'text': this.editData.text, 'image': this.editData.image}
             });
             
