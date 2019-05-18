@@ -846,13 +846,26 @@ function Case($xml, stage) {
  * for e.g. JSON serialization.
  */
 Case.prototype.serializeConditions = function () {
-    var complexProps = ['states', 'tests', 'counters', 'addTags', 'removeTags', 'variableBindings'];
+    var complexProps = ['states', 'tests', 'counters', 'addTags', 'removeTags', 'variableBindings', 'priority'];
     var ser = {};
     
     Object.keys(this).forEach(function (prop) {
         if (complexProps.indexOf(prop) >= 0) return;
+        var val = this[prop];
         
-        ser[prop] = this[prop];
+        if (val && typeof val === "object" && (val.min !== undefined || val.max !== undefined)) {
+            // convert interval objects back into strings
+            var min = (val.min !== null) ? val.min : "";
+            var max = (val.max !== null) ? val.max : "";
+            
+            if (min === max) {
+                ser[prop] = (min !== "") ? min.toString() : null;
+            } else {
+                ser[prop] = min+"-"+max;
+            }
+        } else {
+            ser[prop] = val;
+        }
     }.bind(this));
     
     ser.tests = this.tests.map(function (test) {

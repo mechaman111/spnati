@@ -284,7 +284,6 @@ DevModeDialogueBox.prototype.saveEdits = function () {
         var editEntry = {
             'type': 'new',                                                          // either 'new' or 'edit'
             'intent': 'generic',                                                    // either 'generic' or 'response'
-            'phaseTarget': null,                                                    // info on the current game phase target
             'responseTarget': null,                                                 // info on the selected response target
             'stage': this.player.stage,                                             // current character stage
             'state': {'text': this.editData.text, 'image': this.editData.image},    // edited state data
@@ -329,10 +328,6 @@ DevModeDialogueBox.prototype.saveEdits = function () {
         if (this.respondingToPlayer) {
             editEntry.intent = 'response';
             editEntry.responseTarget = playerStateInfo(this.respondingToPlayer);
-            
-            if (this.player.currentTarget) {
-                editEntry.phaseTarget = playerStateInfo(this.player.currentTarget);
-            }
         }
         
         this.player.editLog.push(editEntry);
