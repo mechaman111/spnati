@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.1 at 12:48:13 AM on May 18, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.1 at 6:58:54 PM on May 19, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.1</version>
     <first>Mae</first>
@@ -430,8 +430,8 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="0-eh.png">I'd call you a coward, but I'd probably do the same.</state>
-                <state img="0-stare.png">The time being wasted here could be spent doing something productive. Or fun. Watching you stirp is neither fun or productive.</state>
-                <state img="0-stare.png">Lame.</state>
+                <state img="0-stare.png">The time being wasted here could be spent doing something productive. Or fun. Watching you strip is neither fun nor productive.</state>
+                <state img="0-thinking.png">Meh. I'd do the same in your shoes. Ironically, my own shoes would be the first to go here.</state>
             </case>
             <case tag="female_removing_accessory" filter="aggressive">
                 <state img="0-neutral.png" marker="aggressive_marker">I feel like one of you can kill anyone in this room. How do you guys get away with murder?</state>
@@ -1042,13 +1042,13 @@
             <case tag="opponent_stripping" target="twilight" targetStage="1">
                 <state img="0-stare.png">Annnnd when I mention hating bras, she takes hers off. Go figure, I guess.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="3">
+            <case tag="opponent_stripping" target="twilight" targetStage="3" priority="325">
                 <state img="0-flustered.png">Seriously, you have a bunch of other stuff! &lt;i&gt;(Not that I don't mind or anything, but... This girl is really confusing me right now!)&lt;/i&gt;</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="4">
+            <case tag="opponent_stripping" target="twilight" targetStage="4" priority="329">
                 <state img="0-annoyed.png">Whatever.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="5">
+            <case tag="opponent_stripping" target="twilight" targetStage="5" priority="328">
                 <state img="0-stare.png">Those look comfy. I can almost understand why you chose to save them for... second-to-last?</state>
             </case>
             <case tag="opponent_stripping" target="twilight" targetStage="6" priority="9993">
@@ -1083,6 +1083,11 @@
                 <test expr="~clothing~" value="dress" />
                 <test expr="~target.gender~" value="male" />
                 <state img="0-stare.png">Wearing a dress is the same as wearing a very large single pant leg. Sorry to ruin your day, sir.</state>
+            </case>
+            <case tag="opponent_stripping" notSaidMarker="skirtsvspants" priority="50">
+                <test expr="~clothing~" value="skirt" />
+                <test expr="~name~" cmp="!=" value="Pinkie" />
+                <state img="0-cocky.png" marker="skirtsvspants">Skirts may be fashionable, but pants are practical. When the zombie apocalyse is finally upon us, I bet the people who wear pants instead of skirts have a better chance of survival.</state>
             </case>
             <case tag="opponent_stripping">
                 <test expr="~clothing~" value="socks" />
@@ -1152,26 +1157,26 @@
                 <state img="0-terror.png">Someone just... call the cops or something!</state>
                 <state img="0-woah.png">Seriously, who ARE you? What happened to Pinkie?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetSayingMarker="twilight_not_human">
+            <case tag="opponent_stripped" target="twilight" targetSayingMarker="twilight_not_human" priority="301">
                 <state img="0-surprise.png">You are rea---wait, &lt;i&gt;humans?&lt;/i&gt; You're not... You're not human?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="1">
+            <case tag="opponent_stripped" target="twilight" targetStage="1" priority="333">
                 <state img="0-thinking.png">Hmm. Well I can understand finding panties uncomfortable. Up until recently, I never wore a bra for the same reason.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="2">
+            <case tag="opponent_stripped" target="twilight" targetStage="2" priority="332">
                 <state img="0-thinking.png">You know, there's sports bras. They're pretty comfy. I remember Bea going out to buy me one. She kind of freaked out when I told her I never wear bras. Dunno why; my shirt's all I need.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="3">
+            <case tag="opponent_stripped" target="twilight" targetStage="3" priority="331">
                 <state img="0-terror.png">I can understand finding underwear comfortable, but what's wrong with your skirt!?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="4">
+            <case tag="opponent_stripped" target="twilight" targetStage="4" priority="330">
                 <state img="0-stare.png">...Oh, &lt;i&gt;now&lt;/i&gt; you take off something small?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9997">
+            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9995">
                 <state img="0-flustered.png">Back to big stuff again afte---Oh right! You only have your shirt left! Juuuust a shirt.</state>
                 <state img="0-thinking.png">What is grammar?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="7">
+            <case tag="opponent_stripped" target="twilight" targetStage="7" priority="310">
                 <state img="0-smug.png">Alright, Twilight! Time to kick your ass!</state>
             </case>
             <case tag="opponent_stripped" targetStatus="lost_all">
@@ -1199,6 +1204,14 @@
             <case tag="opponent_stripped">
                 <test expr="~clothing~" value="dress" />
                 <state img="0-eh.png">...Yeah, you definetly look good without the dress.</state>
+            </case>
+            <case tag="opponent_stripped" filter="smart" saidMarker="skirtsvspants" notSaidMarker="skirtsvspants2" priority="2">
+                <test expr="~clothing~" value="skirt" />
+                <state img="0-smug.png" marker="skirtsvspants2">This isn't me having a thing against people who wear skirts, y'know! I'm being pragmatic here. A bet a smart person like you would know what that word means.</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="skirtsvspants" notSaidMarker="skirtsvspants2" priority="1">
+                <test expr="~clothing~" value="skirt" />
+                <state img="0-eyes.png" marker="skirtsvspants2">This isn't me having a thing against people who wear skirts, y'know! I'm being pragmatic here. &lt;i&gt;(Hehehe... I bet they don't know what that word means!)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_stripped" target="human" filter="gay" saidMarker="player_queer2">
                 <test expr="~target.gender~" value="female" />
@@ -1571,9 +1584,10 @@
                 <state img="1-stare.png" marker="possumsprings_a">Hmm? Where am &lt;i&gt;I&lt;/i&gt; from? Yeah, no. You don't want to hear about the rustbucket of disappointment that is Possum Springs.</state>
             </case>
             <case tag="must_strip_winning">
-                <state img="1-fingergun.png">You think I'm getting naked? How cute. I still have &lt;i&gt;some&lt;/i&gt; dignity!</state>
-                <state img="1-smug.png">I bet you want me to take off my shirt, huh? Well too bad, losers, because I still have socks!</state>
+                <state img="1-cocky.png">You think I'm getting naked? How cute. I still have &lt;i&gt;some&lt;/i&gt; dignity! I may have embarrassed myself hundreds of times, but only &lt;i&gt;I&lt;/i&gt; have seen myself naked, as it should be.</state>
+                <state img="1-smug.png">I bet you want me to take off my shirt, huh? Well too bad, losers, because I still have socks. Socks that will keep you from seeing my naked body!</state>
                 <state img="1-fingergun.png">Sorry to disappoint, but you will see no tits from this player!</state>
+                <state img="1-eyes.png">Before I indulge you all, let me give you a fun fact; you probably won't see me naked. As the queen of Possum Springs, I &lt;i&gt;will&lt;/i&gt; destroy you at this game.</state>
             </case>
             <case tag="must_strip_winning">
                 <condition count="1" status="decent" />
@@ -1603,9 +1617,9 @@
                 <state img="1-strip.png" marker="possumsprings_a2">Hmm? Where am &lt;i&gt;I&lt;/i&gt; from? Yeah, no. You don't want to hear about the rustbucket of disappointment that is Possum Springs.</state>
                 <state img="1-strip.png">Hey look, no hands.</state>
                 <state img="1-strip.png">If you don't know how to take off your socks with only your feet, I feel bad for you.</state>
-                <state img="1-strip.png">Wanna see a neat trick?</state>
-                <state img="1-strip.png">"Socks" to be me.</state>
-                <state img="1-strip.png">This is the only true method of stripping socks. Any other way sucks.</state>
+                <state img="1-strip.png">Wanna see a neat trick? There you go. If only taking off my boots was that easy.</state>
+                <state img="1-strip.png">"Socks" to be me. &lt;i&gt;(I didn't make that joke before, right?)&lt;/i&gt;</state>
+                <state img="1-strip.png">This is the only true method of stripping socks. We call it "life hacks".</state>
             </case>
             <case tag="stripping" saidMarker="nightmarefeet">
                 <state img="1-strip.png" marker="nightmarefeet2">Hey guys, wanna see my nightmare feet?</state>
@@ -2290,13 +2304,13 @@
             <case tag="opponent_stripping" target="twilight" targetStage="1">
                 <state img="1-stare.png">Annnnd when I mention hating bras, she takes hers off. Go figure, I guess.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="3">
+            <case tag="opponent_stripping" target="twilight" targetStage="3" priority="325">
                 <state img="1-flustered.png">Seriously, you have a bunch of other stuff! &lt;i&gt;(Not that I don't mind or anything, but... This girl is really confusing me right now!)&lt;/i&gt;</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="4">
+            <case tag="opponent_stripping" target="twilight" targetStage="4" priority="329">
                 <state img="1-annoyed.png">Whatever.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="5">
+            <case tag="opponent_stripping" target="twilight" targetStage="5" priority="328">
                 <state img="1-stare.png">Those look comfy. I can almost understand why you chose to save them for... second-to-last?</state>
             </case>
             <case tag="opponent_stripping" target="twilight" targetStage="6" priority="9993">
@@ -2331,6 +2345,11 @@
                 <test expr="~clothing~" value="dress" />
                 <test expr="~target.gender~" value="male" />
                 <state img="1-stare.png">Wearing a dress is the same as wearing a very large single pant leg. Sorry to ruin your day, sir.</state>
+            </case>
+            <case tag="opponent_stripping" notSaidMarker="skirtsvspants" priority="50">
+                <test expr="~clothing~" value="skirt" />
+                <test expr="~name~" cmp="!=" value="Pinkie" />
+                <state img="1-cocky.png" marker="skirtsvspants">Skirts may be fashionable, but pants are practical. When the zombie apocalyse is finally upon us, I bet the people who wear pants instead of skirts have a better chance of survival.</state>
             </case>
             <case tag="opponent_stripping">
                 <test expr="~clothing~" value="socks" />
@@ -2379,23 +2398,23 @@
                 <state img="1-terror.png">Someone just... call the cops or something!</state>
                 <state img="1-woah.png">Seriously, who ARE you? What happened to Pinkie?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="1">
+            <case tag="opponent_stripped" target="twilight" targetStage="1" priority="333">
                 <state img="1-thinking.png">Hmm. Well I can understand finding panties uncomfortable. Up until recently, I never wore a bra for the same reason.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="2">
+            <case tag="opponent_stripped" target="twilight" targetStage="2" priority="332">
                 <state img="1-thinking.png">You know, there's sports bras. They're pretty comfy. I remember Bea going out to buy me one. She kind of freaked out when I told her I never wear bras. Dunno why; my shirt's all I need.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="3">
+            <case tag="opponent_stripped" target="twilight" targetStage="3" priority="331">
                 <state img="1-terror.png">I can understand finding underwear comfortable, but what's wrong with your skirt!?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="4">
+            <case tag="opponent_stripped" target="twilight" targetStage="4" priority="330">
                 <state img="1-stare.png">...Oh, &lt;i&gt;now&lt;/i&gt; you take off something small?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9997">
+            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9995">
                 <state img="1-flustered.png">Back to big stuff again afte---Oh right! You only have your shirt left! Juuuust a shirt.</state>
                 <state img="1-thinking.png">What is grammar?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="7">
+            <case tag="opponent_stripped" target="twilight" targetStage="7" priority="310">
                 <state img="1-smug.png">Alright, Twilight! Time to kick your ass!</state>
             </case>
             <case tag="opponent_stripped" targetStatus="lost_all">
@@ -2423,6 +2442,14 @@
             <case tag="opponent_stripped">
                 <test expr="~clothing~" value="dress" />
                 <state img="1-eh.png">...Yeah, you definetly look good without the dress.</state>
+            </case>
+            <case tag="opponent_stripped" filter="smart" saidMarker="skirtsvspants" notSaidMarker="skirtsvspants2" priority="2">
+                <test expr="~clothing~" value="skirt" />
+                <state img="1-smug.png" marker="skirtsvspants2">This isn't me having a thing against people who wear skirts, y'know! I'm being pragmatic here. A bet a smart person like you would know what that word means.</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="skirtsvspants" notSaidMarker="skirtsvspants2" priority="1">
+                <test expr="~clothing~" value="skirt" />
+                <state img="1-eyes.png" marker="skirtsvspants2">This isn't me having a thing against people who wear skirts, y'know! I'm being pragmatic here. &lt;i&gt;(Hehehe... I bet they don't know what that word means!)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_stripped" target="human" filter="gay" saidMarker="player_queer2">
                 <test expr="~target.gender~" value="female" />
@@ -3499,13 +3526,13 @@
             <case tag="opponent_stripping" target="twilight" targetStage="1">
                 <state img="2-stare.png">Annnnd when I mention hating bras, she takes hers off. Go figure, I guess.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="3">
+            <case tag="opponent_stripping" target="twilight" targetStage="3" priority="325">
                 <state img="2-flustered.png">Seriously, you have a bunch of other stuff! &lt;i&gt;(Not that I don't mind or anything, but... This girl is really confusing me right now!)&lt;/i&gt;</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="4">
+            <case tag="opponent_stripping" target="twilight" targetStage="4" priority="329">
                 <state img="2-annoyed.png">Whatever.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="5">
+            <case tag="opponent_stripping" target="twilight" targetStage="5" priority="328">
                 <state img="2-stare.png">Those look comfy. I can almost understand why you chose to save them for... second-to-last?</state>
             </case>
             <case tag="opponent_stripping" target="twilight" targetStage="6" priority="9993">
@@ -3540,6 +3567,11 @@
                 <test expr="~clothing~" value="dress" />
                 <test expr="~target.gender~" value="male" />
                 <state img="2-stare.png">Wearing a dress is the same as wearing a very large single pant leg. Sorry to ruin your day, sir.</state>
+            </case>
+            <case tag="opponent_stripping" notSaidMarker="skirtsvspants" priority="50">
+                <test expr="~clothing~" value="skirt" />
+                <test expr="~name~" cmp="!=" value="Pinkie" />
+                <state img="2-cocky.png" marker="skirtsvspants">Skirts may be fashionable, but pants are practical. When the zombie apocalyse is finally upon us, I bet the people who wear pants instead of skirts have a better chance of survival.</state>
             </case>
             <case tag="opponent_stripping">
                 <test expr="~clothing~" value="socks" />
@@ -3588,23 +3620,23 @@
                 <state img="2-terror.png">Someone just... call the cops or something!</state>
                 <state img="2-woah.png">Seriously, who ARE you? What happened to Pinkie?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="1">
+            <case tag="opponent_stripped" target="twilight" targetStage="1" priority="333">
                 <state img="2-thinking.png">Hmm. Well I can understand finding panties uncomfortable. Up until recently, I never wore a bra for the same reason.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="2">
+            <case tag="opponent_stripped" target="twilight" targetStage="2" priority="332">
                 <state img="2-thinking.png">You know, there's sports bras. They're pretty comfy. I remember Bea going out to buy me one. She kind of freaked out when I told her I never wear bras. Dunno why; my shirt's all I need.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="3">
+            <case tag="opponent_stripped" target="twilight" targetStage="3" priority="331">
                 <state img="2-terror.png">I can understand finding underwear comfortable, but what's wrong with your skirt!?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="4">
+            <case tag="opponent_stripped" target="twilight" targetStage="4" priority="330">
                 <state img="2-stare.png">...Oh, &lt;i&gt;now&lt;/i&gt; you take off something small?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9997">
+            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9995">
                 <state img="2-flustered.png">Back to big stuff again afte---Oh right! You only have your shirt left! Juuuust a shirt.</state>
                 <state img="2-thinking.png">What is grammar?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="7">
+            <case tag="opponent_stripped" target="twilight" targetStage="7" priority="310">
                 <state img="2-smug.png">Alright, Twilight! Time to kick your ass!</state>
             </case>
             <case tag="opponent_stripped" targetStatus="lost_all">
@@ -3632,6 +3664,14 @@
             <case tag="opponent_stripped">
                 <test expr="~clothing~" value="dress" />
                 <state img="2-eh.png">...Yeah, you definetly look good without the dress.</state>
+            </case>
+            <case tag="opponent_stripped" filter="smart" saidMarker="skirtsvspants" notSaidMarker="skirtsvspants2" priority="2">
+                <test expr="~clothing~" value="skirt" />
+                <state img="2-smug.png" marker="skirtsvspants2">This isn't me having a thing against people who wear skirts, y'know! I'm being pragmatic here. A bet a smart person like you would know what that word means.</state>
+            </case>
+            <case tag="opponent_stripped" saidMarker="skirtsvspants" notSaidMarker="skirtsvspants2" priority="1">
+                <test expr="~clothing~" value="skirt" />
+                <state img="2-eyes.png" marker="skirtsvspants2">This isn't me having a thing against people who wear skirts, y'know! I'm being pragmatic here. &lt;i&gt;(Hehehe... I bet they don't know what that word means!)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_stripped" target="human" filter="gay" saidMarker="player_queer2">
                 <test expr="~target.gender~" value="female" />
@@ -4112,8 +4152,8 @@
                 <state img="3-neutral.png">I should've brought my phone. At least the games would've kept me entertained while I finish waiting for you to strip.</state>
                 <state img="3-neutral.png">♫ I can't, I can't, I can't stand losing~ ♫</state>
                 <state img="3-thinking.png">I should've bought my bass. Pass the time with a little background music. I've been practicing for a while.</state>
-                <state img="3-stare.png">Booooo.</state>
-                <state img="3-smug.png">~clothing.ifPlural(Goodbye, ~clothing~|Another ~clothing~ bites the dust.)~</state>
+                <state img="3-stare.png">What if &lt;i&gt;every&lt;/i&gt; clothing were in pairs. Two for the price of one, right?</state>
+                <state img="3-smug.png">~clothing.ifPlural(Goodbye, ~clothing~. You won't be missed by anyone else but ~name~.|Another ~clothing~ bites the dust.)~</state>
                 <state img="3-stare.png">I'd rather be doing crimes. Crimes tend to be more fun than watching you take off ~clothing.ifPlural(some stupid ~clothing~|a stupid ~clothing~)~.</state>
             </case>
             <case tag="female_removing_accessory" filter="aggressive">
@@ -4642,13 +4682,13 @@
             <case tag="opponent_stripping" target="twilight" targetStage="1">
                 <state img="3-stare.png">Annnnd when I mention hating bras, she takes hers off. Go figure, I guess.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="3">
+            <case tag="opponent_stripping" target="twilight" targetStage="3" priority="325">
                 <state img="3-flustered.png">Seriously, you have a bunch of other stuff! &lt;i&gt;(Not that I don't mind or anything, but... This girl is really confusing me right now!)&lt;/i&gt;</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="4">
+            <case tag="opponent_stripping" target="twilight" targetStage="4" priority="329">
                 <state img="3-annoyed.png">Whatever.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="5">
+            <case tag="opponent_stripping" target="twilight" targetStage="5" priority="328">
                 <state img="3-stare.png">Those look comfy. I can almost understand why you chose to save them for... second-to-last?</state>
             </case>
             <case tag="opponent_stripping" target="twilight" targetStage="6" priority="9993">
@@ -4685,6 +4725,11 @@
                 <test expr="~clothing~" value="dress" />
                 <test expr="~target.gender~" value="male" />
                 <state img="3-stare.png">Wearing a dress is the same as wearing a very large single pant leg. Sorry to ruin your day, sir.</state>
+            </case>
+            <case tag="opponent_stripping">
+                <test expr="~clothing~" value="skirt" />
+                <test expr="~name~" cmp="!=" value="Pinkie" />
+                <state img="3-thinking.png">I think the way someone dresses says a lot about them. Like, skirts are pretty and fashionable. Pants are boring, but practical.</state>
             </case>
             <case tag="opponent_stripping">
                 <test expr="~clothing~" value="socks" />
@@ -4733,23 +4778,23 @@
                 <state img="3-terror.png">Someone just... call the cops or something!</state>
                 <state img="3-woah.png">Seriously, who ARE you? What happened to Pinkie?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="1">
+            <case tag="opponent_stripped" target="twilight" targetStage="1" priority="333">
                 <state img="3-thinking.png">Hmm. Well I can understand finding panties uncomfortable. Up until recently, I never wore a bra for the same reason.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="2">
+            <case tag="opponent_stripped" target="twilight" targetStage="2" priority="332">
                 <state img="3-thinking.png">You know, there's sports bras. They're pretty comfy. I remember Bea going out to buy me one. She kind of freaked out when I told her I never wear bras. Dunno why; my shirt's all I need.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="3">
+            <case tag="opponent_stripped" target="twilight" targetStage="3" priority="331">
                 <state img="3-terror.png">I can understand finding underwear comfortable, but what's wrong with your skirt!?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="4">
+            <case tag="opponent_stripped" target="twilight" targetStage="4" priority="330">
                 <state img="3-stare.png">...Oh, &lt;i&gt;now&lt;/i&gt; you take off something small?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9997">
+            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9995">
                 <state img="3-flustered.png">Back to big stuff again afte---Oh right! You only have your shirt left! Juuuust a shirt.</state>
                 <state img="3-thinking.png">What is grammar?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="7">
+            <case tag="opponent_stripped" target="twilight" targetStage="7" priority="310">
                 <state img="3-smug.png">Alright, Twilight! Time to kick your ass!</state>
             </case>
             <case tag="opponent_stripped" targetStatus="lost_all">
@@ -5094,6 +5139,9 @@
                 <test expr="~weekday~" value="Wednesday" />
                 <state img="4-fingergun.png">It's Wednesday, my dudes!</state>
             </case>
+            <case tag="hand" timeInStage="0" saidMarker="possumsprings_a">
+                <state img="4-neutral.png" marker="possum_springsqq">If you haven't gotten the memo by now, ~player~... Possum Springs is a pretty conservative town. Most people there wouldn't be caught dead playing this game.</state>
+            </case>
             <case tag="hand" totalRounds="4" priority="9999">
                 <state img="4-stare.png" marker="spookyeyes">I'm very aware of how creepy my eyes are, ~player~. Can you believe I'm the only person in my spooky old town with eyes like these?</state>
             </case>
@@ -5223,8 +5271,8 @@
                 <state img="4-neutral.png">I should've brought my phone. At least the games would've kept me entertained while I finish waiting for you to strip.</state>
                 <state img="4-neutral.png">♫ I can't, I can't, I can't stand losing~ ♫</state>
                 <state img="4-thinking.png">I should've bought my bass. Pass the time with a little background music. I've been practicing for a while.</state>
-                <state img="4-stare.png">Booooo.</state>
-                <state img="4-smug.png">~clothing.ifPlural(Goodbye, ~clothing~|Another ~clothing~ bites the dust.)~</state>
+                <state img="4-stare.png">What if &lt;i&gt;every&lt;/i&gt; clothing were in pairs. Two for the price of one, right?</state>
+                <state img="4-smug.png">~clothing.ifPlural(Goodbye, ~clothing~. You won't be missed by anyone else but ~name~.|Another ~clothing~ bites the dust.)~</state>
                 <state img="4-stare.png">I'd rather be doing crimes. Crimes tend to be more fun than watching you take off ~clothing.ifPlural(some stupid ~clothing~|a stupid ~clothing~)~.</state>
             </case>
             <case tag="female_removing_accessory" filter="aggressive">
@@ -5653,6 +5701,9 @@
             <case tag="opponent_lost" notSaidMarker="betteryouthanme">
                 <state img="4-neutral.png" marker="betteryouthanme">Better you than me.</state>
             </case>
+            <case tag="opponent_lost" saidMarker="possum_springsqq" notSaidMarker="possum_springsaa">
+                <state img="4-eh.png" marker="possum_springsaa">If you haven't noticed, I am not "most people". I am the definition of... weird. Y'know? Sometimes it's a good thing, and something knowing this just makes me miserable.</state>
+            </case>
             <case tag="opponent_lost" target="blake" targetStage="0">
                 <state img="4-eh.png">&lt;i&gt;(I can't tell what animal this girl is... Why do I even see people as animals in the first place?)&lt;/i&gt;</state>
             </case>
@@ -5750,13 +5801,13 @@
             <case tag="opponent_stripping" target="twilight" targetStage="1">
                 <state img="4-stare.png">Annnnd when I mention hating bras, she takes hers off. Go figure, I guess.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="3">
+            <case tag="opponent_stripping" target="twilight" targetStage="3" priority="325">
                 <state img="4-flustered.png">Seriously, you have a bunch of other stuff! &lt;i&gt;(Not that I don't mind or anything, but... This girl is really confusing me right now!)&lt;/i&gt;</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="4">
+            <case tag="opponent_stripping" target="twilight" targetStage="4" priority="329">
                 <state img="4-annoyed.png">Whatever.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="5">
+            <case tag="opponent_stripping" target="twilight" targetStage="5" priority="328">
                 <state img="4-stare.png">Those look comfy. I can almost understand why you chose to save them for... second-to-last?</state>
             </case>
             <case tag="opponent_stripping" target="twilight" targetStage="6" priority="9993">
@@ -5793,6 +5844,11 @@
                 <test expr="~clothing~" value="dress" />
                 <test expr="~target.gender~" value="male" />
                 <state img="4-stare.png">Wearing a dress is the same as wearing a very large single pant leg. Sorry to ruin your day, sir.</state>
+            </case>
+            <case tag="opponent_stripping">
+                <test expr="~clothing~" value="skirt" />
+                <test expr="~name~" cmp="!=" value="Pinkie" />
+                <state img="4-thinking.png">I think the way someone dresses says a lot about them. Like, skirts are pretty and fashionable. Pants are boring, but practical.</state>
             </case>
             <case tag="opponent_stripping">
                 <test expr="~clothing~" value="socks" />
@@ -5841,23 +5897,23 @@
                 <state img="4-terror.png">Someone just... call the cops or something!</state>
                 <state img="4-woah.png">Seriously, who ARE you? What happened to Pinkie?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="1">
+            <case tag="opponent_stripped" target="twilight" targetStage="1" priority="333">
                 <state img="4-thinking.png">Hmm. Well I can understand finding panties uncomfortable. Up until recently, I never wore a bra for the same reason.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="2">
+            <case tag="opponent_stripped" target="twilight" targetStage="2" priority="332">
                 <state img="4-thinking.png">You know, there's sports bras. They're pretty comfy. I remember Bea going out to buy me one. She kind of freaked out when I told her I never wear bras. Dunno why; my shirt's all I need.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="3">
+            <case tag="opponent_stripped" target="twilight" targetStage="3" priority="331">
                 <state img="4-terror.png">I can understand finding underwear comfortable, but what's wrong with your skirt!?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="4">
+            <case tag="opponent_stripped" target="twilight" targetStage="4" priority="330">
                 <state img="4-stare.png">...Oh, &lt;i&gt;now&lt;/i&gt; you take off something small?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9997">
+            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9995">
                 <state img="4-flustered.png">Back to big stuff again afte---Oh right! You only have your shirt left! Juuuust a shirt.</state>
                 <state img="4-thinking.png">What is grammar?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="7">
+            <case tag="opponent_stripped" target="twilight" targetStage="7" priority="310">
                 <state img="4-smug.png">Alright, Twilight! Time to kick your ass!</state>
             </case>
             <case tag="opponent_stripped" targetStatus="lost_all">
@@ -6285,9 +6341,9 @@
                 <state img="5-stare.png">What's the point of that sash? Is this just for uniform or something? A show of dominance.</state>
             </case>
             <case tag="male_removed_accessory">
-                <state img="5-why.png">Screw you!</state>
-                <state img="5-surprise.png">&lt;i&gt;(I am SO screwed.)&lt;/i&gt;</state>
-                <state img="5-eyes.png">Will you go faster if I threatened to kill you in your sleep?</state>
+                <state img="5-why.png">Oh, screw you!</state>
+                <state img="5-woah.png">&lt;i&gt;(He still had that!? Oh jeez, I am SO screwed.)&lt;/i&gt;</state>
+                <state img="5-eyes.png">Will you go faster if I threaten to kill you in your sleep?</state>
                 <state img="5-why.png">Choke on my ass!!</state>
             </case>
             <case tag="male_removed_accessory" target="kamina" targetStage="3">
@@ -6322,9 +6378,9 @@
                 <state img="5-eh.png">&lt;i&gt;(Aw man, but the stockings-only look was hot...)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory">
-                <state img="5-why.png">Screw you!</state>
-                <state img="5-woah.png">&lt;i&gt;(I am SO screwed.)&lt;/i&gt;</state>
-                <state img="5-eyes.png">Will you go faster if I threathened to kill you in your sleep?</state>
+                <state img="5-why.png">Oh, screw you!</state>
+                <state img="5-woah.png">&lt;i&gt;(She still had that!? Oh jeez, I am SO screwed.)&lt;/i&gt;</state>
+                <state img="5-eyes.png">Will you go faster if I threaten to kill you in your sleep?</state>
                 <state img="5-why.png">Choke on my ass!!</state>
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
@@ -6826,13 +6882,13 @@
             <case tag="opponent_stripping" target="twilight" targetStage="1">
                 <state img="5-stare.png">Annnnd when I mention hating bras, she takes hers off. Go figure, I guess.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="3">
+            <case tag="opponent_stripping" target="twilight" targetStage="3" priority="325">
                 <state img="5-flustered.png">Seriously, you have a bunch of other stuff! &lt;i&gt;(Not that I don't mind or anything, but... This girl is really confusing me right now!)&lt;/i&gt;</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="4">
+            <case tag="opponent_stripping" target="twilight" targetStage="4" priority="329">
                 <state img="5-annoyed.png">Whatever.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="5">
+            <case tag="opponent_stripping" target="twilight" targetStage="5" priority="328">
                 <state img="5-stare.png">Those look comfy. I can almost understand why you chose to save them for... second-to-last?</state>
             </case>
             <case tag="opponent_stripping" target="twilight" targetStage="6" priority="9993">
@@ -6876,6 +6932,11 @@
                 <test expr="~clothing~" value="dress" />
                 <test expr="~target.gender~" value="male" />
                 <state img="5-stare.png">Wearing a dress is the same as wearing a very large single pant leg. Sorry to ruin your day, sir.</state>
+            </case>
+            <case tag="opponent_stripping">
+                <test expr="~clothing~" value="skirt" />
+                <test expr="~name~" cmp="!=" value="Pinkie" />
+                <state img="5-thinking.png">I think the way someone dresses says a lot about them. Like, skirts are pretty and fashionable. Pants are boring, but practical.</state>
             </case>
             <case tag="opponent_stripping">
                 <test expr="~clothing~" value="socks" />
@@ -6927,23 +6988,23 @@
                 <state img="5-stare.png">Try hurting me and I'll take that knife and jam it down your throat!</state>
                 <state img="5-stare.png">Don't you even try anything.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="1">
+            <case tag="opponent_stripped" target="twilight" targetStage="1" priority="333">
                 <state img="5-thinking.png">Hmm. Well I can understand finding panties uncomfortable. Up until recently, I never wore a bra for the same reason.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="2">
+            <case tag="opponent_stripped" target="twilight" targetStage="2" priority="332">
                 <state img="5-thinking.png">You know, there's sports bras. They're pretty comfy. I remember Bea going out to buy me one. She kind of freaked out when I told her I never wear bras. Dunno why; my shirt's all I need.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="3">
+            <case tag="opponent_stripped" target="twilight" targetStage="3" priority="331">
                 <state img="5-terror.png">I can understand finding underwear comfortable, but what's wrong with your skirt!?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="4">
+            <case tag="opponent_stripped" target="twilight" targetStage="4" priority="330">
                 <state img="5-stare.png">...Oh, &lt;i&gt;now&lt;/i&gt; you take off something small?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9997">
+            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9995">
                 <state img="5-flustered.png">Back to big stuff again afte---Oh right! You only have your shirt left! Juuuust a shirt.</state>
                 <state img="5-thinking.png">What is grammar?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="7">
+            <case tag="opponent_stripped" target="twilight" targetStage="7" priority="310">
                 <state img="5-smug.png">Alright, Twilight! Time to kick your ass!</state>
             </case>
             <case tag="opponent_stripped" targetStatus="lost_all">
@@ -7370,9 +7431,9 @@
                 <state img="6-stare.png">What's the point of that sash? Is this just for uniform or something? A show of dominance.</state>
             </case>
             <case tag="male_removed_accessory">
-                <state img="6-why.png">Screw you!</state>
-                <state img="6-surprise.png">&lt;i&gt;(I am SO screwed.)&lt;/i&gt;</state>
-                <state img="6-eyes.png">Will you go faster if I threatened to kill you in your sleep?</state>
+                <state img="6-why.png">Oh, screw you!</state>
+                <state img="6-woah.png">&lt;i&gt;(He still had that!? Oh jeez, I am SO screwed.)&lt;/i&gt;</state>
+                <state img="6-eyes.png">Will you go faster if I threaten to kill you in your sleep?</state>
                 <state img="6-why.png">Choke on my ass!!</state>
             </case>
             <case tag="male_removed_accessory" target="kamina" targetStage="3">
@@ -7410,9 +7471,9 @@
                 <state img="6-eh.png">&lt;i&gt;(Aw man, but the stockings-only look was hot...)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory">
-                <state img="6-why.png">Screw you!</state>
-                <state img="6-woah.png">&lt;i&gt;(I am SO screwed.)&lt;/i&gt;</state>
-                <state img="6-eyes.png">Will you go faster if I threathened to kill you in your sleep?</state>
+                <state img="6-why.png">Oh, screw you!</state>
+                <state img="6-woah.png">&lt;i&gt;(She still had that!? Oh jeez, I am SO screwed.)&lt;/i&gt;</state>
+                <state img="6-eyes.png">Will you go faster if I threaten to kill you in your sleep?</state>
                 <state img="6-why.png">Choke on my ass!!</state>
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
@@ -7914,13 +7975,13 @@
             <case tag="opponent_stripping" target="twilight" targetStage="1">
                 <state img="6-stare.png">Annnnd when I mention hating bras, she takes hers off. Go figure, I guess.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="3">
+            <case tag="opponent_stripping" target="twilight" targetStage="3" priority="325">
                 <state img="6-flustered.png">Seriously, you have a bunch of other stuff! &lt;i&gt;(Not that I don't mind or anything, but... This girl is really confusing me right now!)&lt;/i&gt;</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="4">
+            <case tag="opponent_stripping" target="twilight" targetStage="4" priority="329">
                 <state img="6-annoyed.png">Whatever.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="5">
+            <case tag="opponent_stripping" target="twilight" targetStage="5" priority="328">
                 <state img="6-stare.png">Those look comfy. I can almost understand why you chose to save them for... second-to-last?</state>
             </case>
             <case tag="opponent_stripping" target="twilight" targetStage="6" priority="9993">
@@ -7964,6 +8025,11 @@
                 <test expr="~clothing~" value="dress" />
                 <test expr="~target.gender~" value="male" />
                 <state img="6-stare.png">Wearing a dress is the same as wearing a very large single pant leg. Sorry to ruin your day, sir.</state>
+            </case>
+            <case tag="opponent_stripping">
+                <test expr="~clothing~" value="skirt" />
+                <test expr="~name~" cmp="!=" value="Pinkie" />
+                <state img="6-thinking.png">I think the way someone dresses says a lot about them. Like, skirts are pretty and fashionable. Pants are boring, but practical.</state>
             </case>
             <case tag="opponent_stripping">
                 <test expr="~clothing~" value="socks" />
@@ -8012,23 +8078,23 @@
                 <state img="6-stare.png">Try hurting me and I'll take that knife and jam it down your throat!</state>
                 <state img="6-stare.png">Don't you even try anything.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="1">
+            <case tag="opponent_stripped" target="twilight" targetStage="1" priority="333">
                 <state img="6-thinking.png">Hmm. Well I can understand finding panties uncomfortable. Up until recently, I never wore a bra for the same reason.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="2">
+            <case tag="opponent_stripped" target="twilight" targetStage="2" priority="332">
                 <state img="6-thinking.png">You know, there's sports bras. They're pretty comfy. I remember Bea going out to buy me one. She kind of freaked out when I told her I never wear bras. Dunno why; my shirt's all I need.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="3">
+            <case tag="opponent_stripped" target="twilight" targetStage="3" priority="331">
                 <state img="6-terror.png">I can understand finding underwear comfortable, but what's wrong with your skirt!?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="4">
+            <case tag="opponent_stripped" target="twilight" targetStage="4" priority="330">
                 <state img="6-stare.png">...Oh, &lt;i&gt;now&lt;/i&gt; you take off something small?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9997">
+            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9995">
                 <state img="6-flustered.png">Back to big stuff again afte---Oh right! You only have your shirt left! Juuuust a shirt.</state>
                 <state img="6-thinking.png">What is grammar?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="7">
+            <case tag="opponent_stripped" target="twilight" targetStage="7" priority="310">
                 <state img="6-smug.png">Alright, Twilight! Time to kick your ass!</state>
             </case>
             <case tag="opponent_stripped" targetStatus="lost_all">
@@ -8859,13 +8925,13 @@
             <case tag="opponent_stripping" target="twilight" targetStage="1">
                 <state img="7-stare.png">Annnnd when I mention hating bras, she takes hers off. Go figure, I guess.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="3">
+            <case tag="opponent_stripping" target="twilight" targetStage="3" priority="325">
                 <state img="7-flustered.png">Seriously, you have a bunch of other stuff! &lt;i&gt;(Not that I don't mind or anything, but... This girl is really confusing me right now!)&lt;/i&gt;</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="4">
+            <case tag="opponent_stripping" target="twilight" targetStage="4" priority="329">
                 <state img="7-annoyed.png">Whatever.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="5">
+            <case tag="opponent_stripping" target="twilight" targetStage="5" priority="328">
                 <state img="7-stare.png">Those look comfy. I can almost understand why you chose to save them for... second-to-last?</state>
             </case>
             <case tag="opponent_stripping" target="twilight" targetStage="6" priority="9993">
@@ -8902,6 +8968,11 @@
                 <test expr="~clothing~" value="dress" />
                 <test expr="~target.gender~" value="male" />
                 <state img="7-stare.png">Wearing a dress is the same as wearing a very large single pant leg. Sorry to ruin your day, sir.</state>
+            </case>
+            <case tag="opponent_stripping">
+                <test expr="~clothing~" value="skirt" />
+                <test expr="~name~" cmp="!=" value="Pinkie" />
+                <state img="7-thinking.png">I think the way someone dresses says a lot about them. Like, skirts are pretty and fashionable. Pants are boring, but practical.</state>
             </case>
             <case tag="opponent_stripping">
                 <test expr="~clothing~" value="socks" />
@@ -8945,19 +9016,19 @@
             <case tag="opponent_stripped" target="twilight" notSaidMarker="twilight_losing">
                 <state img="7-stare.png" marker="twilight_losing">You may still be in the game, unlike me, but something tells me you'd be joining me very soon.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="1">
+            <case tag="opponent_stripped" target="twilight" targetStage="1" priority="333">
                 <state img="7-thinking.png">Hmm. Well I can understand finding panties uncomfortable. Up until recently, I never wore a bra for the same reason.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="2">
+            <case tag="opponent_stripped" target="twilight" targetStage="2" priority="332">
                 <state img="7-thinking.png">You know, there's sports bras. They're pretty comfy. I remember Bea going out to buy me one. She kind of freaked out when I told her I never wear bras. Dunno why; my shirt's all I need.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="3">
+            <case tag="opponent_stripped" target="twilight" targetStage="3" priority="331">
                 <state img="7-terror.png">I can understand finding underwear comfortable, but what's wrong with your skirt!?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="4">
+            <case tag="opponent_stripped" target="twilight" targetStage="4" priority="330">
                 <state img="7-stare.png">...Oh, &lt;i&gt;now&lt;/i&gt; you take off something small?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9997">
+            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9995">
                 <state img="7-flustered.png">Back to big stuff again afte---Oh right! You only have your shirt left! Juuuust a shirt.</state>
                 <state img="7-thinking.png">What is grammar?</state>
             </case>
@@ -9721,13 +9792,13 @@
             <case tag="opponent_stripping" target="twilight" targetStage="1">
                 <state img="8-stare.png">Annnnd when I mention hating bras, she takes hers off. Go figure, I guess.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="3">
+            <case tag="opponent_stripping" target="twilight" targetStage="3" priority="325">
                 <state img="8-flustered.png">Seriously, you have a bunch of other stuff! &lt;i&gt;(Not that I don't mind or anything, but... This girl is really confusing me right now!)&lt;/i&gt;</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="4">
+            <case tag="opponent_stripping" target="twilight" targetStage="4" priority="329">
                 <state img="8-annoyed.png">Whatever.</state>
             </case>
-            <case tag="opponent_stripping" target="twilight" targetStage="5">
+            <case tag="opponent_stripping" target="twilight" targetStage="5" priority="328">
                 <state img="8-stare.png">Those look comfy. I can almost understand why you chose to save them for... second-to-last?</state>
             </case>
             <case tag="opponent_stripping" target="twilight" targetStage="6" priority="9993">
@@ -9764,6 +9835,11 @@
                 <test expr="~clothing~" value="dress" />
                 <test expr="~target.gender~" value="male" />
                 <state img="8-stare.png">Wearing a dress is the same as wearing a very large single pant leg. Sorry to ruin your day, sir.</state>
+            </case>
+            <case tag="opponent_stripping">
+                <test expr="~clothing~" value="skirt" />
+                <test expr="~name~" cmp="!=" value="Pinkie" />
+                <state img="8-thinking.png">I think the way someone dresses says a lot about them. Like, skirts are pretty and fashionable. Pants are boring, but practical.</state>
             </case>
             <case tag="opponent_stripping">
                 <test expr="~clothing~" value="socks" />
@@ -9815,19 +9891,19 @@
             <case tag="opponent_stripped" target="twilight" notSaidMarker="twilight_losing">
                 <state img="8-stare.png" marker="twilight_losing">You may still be in the game, unlike me, but something tells me you'd be joining me very soon.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="1">
+            <case tag="opponent_stripped" target="twilight" targetStage="1" priority="333">
                 <state img="8-thinking.png">Hmm. Well I can understand finding panties uncomfortable. Up until recently, I never wore a bra for the same reason.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="2">
+            <case tag="opponent_stripped" target="twilight" targetStage="2" priority="332">
                 <state img="8-thinking.png">You know, there's sports bras. They're pretty comfy. I remember Bea going out to buy me one. She kind of freaked out when I told her I never wear bras. Dunno why; my shirt's all I need.</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="3">
+            <case tag="opponent_stripped" target="twilight" targetStage="3" priority="331">
                 <state img="8-terror.png">I can understand finding underwear comfortable, but what's wrong with your skirt!?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="4">
+            <case tag="opponent_stripped" target="twilight" targetStage="4" priority="330">
                 <state img="8-stare.png">...Oh, &lt;i&gt;now&lt;/i&gt; you take off something small?</state>
             </case>
-            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9997">
+            <case tag="opponent_stripped" target="twilight" targetStage="6" priority="9995">
                 <state img="8-flustered.png">Back to big stuff again afte---Oh right! You only have your shirt left! Juuuust a shirt.</state>
                 <state img="8-thinking.png">What is grammar?</state>
             </case>
