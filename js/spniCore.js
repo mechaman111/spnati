@@ -820,7 +820,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             });
 
             this.targetedLines = targetedLines;
-
+            
             if (this.selected_costume) {
                 return this.loadAlternateCostume();
             }

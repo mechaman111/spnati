@@ -268,6 +268,7 @@ function makeAIDecision () {
 	determineAIAction(players[currentTurn]);
 	
 	/* update a few hardcoded visuals */
+	players[currentTurn].swapping = true;
 	players[currentTurn].updateBehaviour(SWAP_CARDS);
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
@@ -298,6 +299,8 @@ function reactToNewAICards () {
     players[currentTurn].updateVolatileBehaviour();
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
+    
+    players[currentTurn].swapping = false;
     
     saveSingleTranscriptEntry(currentTurn);
 
@@ -1022,6 +1025,7 @@ function game_keyUp(e)
         else if (e.keyCode == 81 && DEBUG) {
             showDebug = !showDebug;
             updateDebugState(showDebug);
+            setDevSelectorVisibility(showDebug);
         }
         else if (e.keyCode == 84) {
             toggleTableVisibility();
