@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.8.2 at 4:07:01 p. m. on marzo 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.3 at 5:59:56 p. m. on mayo 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v3.8.2</version>
+    <version>v4.3</version>
     <first>Mavis</first>
     <last>Dracula</last>
     <label>Mavis</label>
@@ -16,13 +16,17 @@
     <tags>
         <tag>black_hair</tag>
         <tag>medium_hair</tag>
+        <tag>ahoge</tag>
         <tag>blue_eyes</tag>
         <tag>pale-skinned</tag>
+        <tag>big_butt</tag>
         <tag>shaved</tag>
         <tag>large_breasts</tag>
         <tag>monster</tag>
         <tag>non-human</tag>
         <tag>supernatural</tag>
+        <tag>vampire</tag>
+        <tag from="3" to="3">thigh_highs</tag>
         <tag>cheerful</tag>
         <tag>ditzy</tag>
         <tag>innocent</tag>
@@ -32,13 +36,11 @@
         <tag>bi-curious</tag>
         <tag>cartoon</tag>
         <tag>movie</tag>
-        <tag>goth</tag>
         <tag>hotel_transylvania</tag>
-        <tag>vampire</tag>
         <tag>bottomless_first</tag>
-        <tag>ahoge</tag>
-        <tag>big_butt</tag>
-        <tag>thigh_highs</tag>
+        <tag from="0" to="2">flies</tag>
+        <tag from="7" to="7">flies</tag>
+        <tag>goth</tag>
     </tags>
 
     <start />
@@ -67,6 +69,7 @@
                 <state img="0-Start.png">Strip poker? Is that something humans play for fun?</state>
                 <state img="0-Start.png">Strip poker? Is this how humans have fun?</state>
                 <state img="0-Start.png">Strip poker? Is this what humans play to have fun?</state>
+                <state img="0-Start.png">Is this something humans do for fun?</state>
             </case>
             <case tag="selected">
                 <condition count="3-4" filter="monster" />
@@ -96,6 +99,10 @@
                 <state img="0-Calm.png">Oh, nevermind. I think ~player~'s the only human here!</state>
             </case>
             <case tag="game_start">
+                <test expr="~background~" value="beach" />
+                <state img="0-Thinking.png">For some reason I thought the sun was gonna &lt;i&gt;burn me&lt;/i&gt;...</state>
+            </case>
+            <case tag="game_start">
                 <test expr="~background~" value="haunted forest" />
                 <state img="0-Calm.png">Hey, look! This place isn't much different from the hotel!</state>
                 <state img="0-Happy.png">This place isn't much different from the hotel! I like it!</state>
@@ -120,6 +127,14 @@
                 <state img="0-Calm.png">~cards~ cards, please! Thanks!</state>
                 <state img="0-Calm.png">~cards~, please! Thank you!</state>
                 <state img="0-Calm.png">~cards~. Thanks!</state>
+            </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="0-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="0-Calm.png">One will do!</state>
+                <state img="0-Thinking.png">Hmm... one...</state>
+                <state img="0-Thinking.png">I'll take... one!</state>
+                <state img="0-Thinking.png">One... yeah! One!</state>
             </case>
             <case tag="good_hand">
                 <state img="0-Giggling.png">This is good, right?</state>
@@ -196,6 +211,9 @@
             <case tag="hand" totalRounds="0">
                 <state img="0-Calm.png">Hi there! I'm Mavis, Dracula's daughter. Yeah, I know, everyone freaks out at first.</state>
             </case>
+            <case tag="must_strip" alsoPlaying="misato">
+                <state img="0-Interested.png">What's that, Misato? Oh, I just turned 118 years old!</state>
+            </case>
             <case tag="must_strip_winning">
                 <state img="0-Calm.png">No problem! I'm winning, after all...</state>
                 <state img="0-Calm.png">I'm okay with losing once...</state>
@@ -233,6 +251,9 @@
                 <state img="0-Strip.png">I'll go for my ~clothing~. It can't be too hard!</state>
                 <state img="0-Strip.png">My ~clothing~.  That's okay for my first loss, right?</state>
                 <state img="0-Strip.png">~Clothing~! Got it.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="misato">
+                <state img="0-Strip.png">Yes, and now that I'm older I'll try to go outside more!</state>
             </case>
             <case tag="male_must_strip">
                 <state img="0-Happy.png">This'll be fun!</state>
@@ -361,6 +382,7 @@
             </case>
             <case tag="tie">
                 <state img="0-Thinking.png">Huh? What do we do now?</state>
+                <state img="0-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_human_must_strip" consecutiveLosses="3">
                 <state img="0-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
@@ -443,6 +465,9 @@
                 <state img="0-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="0-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
             </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="0-Embarrassed.png">(I'm so glad she's taking that off!)</state>
+            </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="0-Sad.png">Aww... she seemed nice.</state>
                 <state img="0-Sad.png">Aww. She was nice...</state>
@@ -502,6 +527,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="0-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="0-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="0-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -1159,6 +1187,14 @@
                 <state img="1-Calm.png">~cards~, please! Thank you!</state>
                 <state img="1-Calm.png">~cards~. Thanks!</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="1-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="1-Calm.png">One will do!</state>
+                <state img="1-Thinking.png">Hmm... one...</state>
+                <state img="1-Thinking.png">I'll take... one!</state>
+                <state img="1-Thinking.png">One... yeah! One!</state>
+            </case>
             <case tag="good_hand">
                 <state img="1-Happy.png">I love them!</state>
                 <state img="1-Happy.png">Yes! Just what I wanted!</state>
@@ -1233,6 +1269,9 @@
                 <state img="1-Stripped.png">They were right, this &lt;i&gt;is&lt;/i&gt; fun!</state>
                 <state img="1-Stripped.png">This isn't so bad! I'm having &lt;i&gt;fun!&lt;/i&gt;</state>
                 <state img="1-Stripped.png">This ain't so bad! It's even &lt;i&gt;fun!&lt;/i&gt;</state>
+            </case>
+            <case tag="stripped" alsoPlaying="misato">
+                <state img="1-Interested.png">Like coming here! Do you think this is a good idea, Misato?</state>
             </case>
             <case tag="male_must_strip">
                 <state img="1-Calm.png">You'll do better next time!</state>
@@ -1360,6 +1399,7 @@
             </case>
             <case tag="tie">
                 <state img="1-Thinking.png">Huh? What do we do now?</state>
+                <state img="1-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_human_must_strip" consecutiveLosses="3">
                 <state img="1-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
@@ -1442,6 +1482,9 @@
                 <state img="1-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="1-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
             </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="1-Embarrassed.png">(I'm so glad she's taking that off!)</state>
+            </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="1-Sad.png">Aww... she seemed nice.</state>
                 <state img="1-Sad.png">Aww. She was nice...</state>
@@ -1501,6 +1544,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="1-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="1-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="1-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -2157,6 +2203,14 @@
                 <state img="2-Calm.png">~cards~, please! Thank you!</state>
                 <state img="2-Calm.png">~cards~. Thanks!</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="2-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="2-Calm.png">One will do!</state>
+                <state img="2-Thinking.png">Hmm... one...</state>
+                <state img="2-Thinking.png">I'll take... one!</state>
+                <state img="2-Thinking.png">One... yeah! One!</state>
+            </case>
             <case tag="good_hand">
                 <state img="2-Happy.png">What a great hand!</state>
                 <state img="2-Happy.png">Very good!</state>
@@ -2343,6 +2397,7 @@
             </case>
             <case tag="tie">
                 <state img="2-Thinking.png">Huh? What do we do now?</state>
+                <state img="2-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_human_must_strip" consecutiveLosses="3">
                 <state img="2-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
@@ -2425,6 +2480,9 @@
                 <state img="2-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="2-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
             </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="2-Embarrassed.png">(I'm so glad she's taking that off!)</state>
+            </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="2-Sad.png">Aww... she seemed nice.</state>
                 <state img="2-Sad.png">Aww. She was nice...</state>
@@ -2484,6 +2542,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="2-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="2-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="2-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -3144,6 +3205,14 @@
                 <state img="3-Calm.png">~cards~, please! Thank you!</state>
                 <state img="3-Calm.png">~cards~. Thanks!</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="3-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="3-Calm.png">One will do!</state>
+                <state img="3-Thinking.png">Hmm... one...</state>
+                <state img="3-Thinking.png">I'll take... one!</state>
+                <state img="3-Thinking.png">One... yeah! One!</state>
+            </case>
             <case tag="good_hand">
                 <state img="3-Happy.png">This... is &lt;i&gt;great!&lt;/i&gt;</state>
                 <state img="3-Happy.png">&lt;i&gt;Ooh!&lt;/i&gt; Lucky me!</state>
@@ -3330,6 +3399,7 @@
             </case>
             <case tag="tie">
                 <state img="3-Thinking.png">Huh? What do we do now?</state>
+                <state img="3-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_human_must_strip" consecutiveLosses="3">
                 <state img="3-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
@@ -3414,6 +3484,9 @@
                 <state img="3-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="3-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
             </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="3-Embarrassed.png">(I'm so glad she's taking that off!)</state>
+            </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="3-Sad.png">Aww... she seemed nice.</state>
                 <state img="3-Sad.png">Aww. She was nice...</state>
@@ -3472,6 +3545,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="3-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="3-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="3-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -4124,6 +4200,14 @@
                 <state img="4-Calm.png">~cards~, please! Thank you!</state>
                 <state img="4-Calm.png">~cards~. Thanks!</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="4-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="4-Calm.png">One will do!</state>
+                <state img="4-Thinking.png">Hmm... one...</state>
+                <state img="4-Thinking.png">I'll take... one!</state>
+                <state img="4-Thinking.png">One... yeah! One!</state>
+            </case>
             <case tag="good_hand">
                 <state img="4-Embarrassed.png">&lt;i&gt;Great!&lt;/i&gt; Oh... &lt;i&gt;(I shouldn't say it out loud...)&lt;/i&gt;</state>
                 <state img="4-Thinking.png">&lt;i&gt;(Should I say how good this hand is out loud...?)&lt;/i&gt;</state>
@@ -4307,6 +4391,7 @@
             </case>
             <case tag="tie">
                 <state img="4-Thinking.png">Huh? What do we do now?</state>
+                <state img="4-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_human_must_strip" consecutiveLosses="3">
                 <state img="4-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
@@ -4391,6 +4476,9 @@
                 <state img="4-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="4-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
             </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="4-Embarrassed.png">(I'm so glad she's taking that off!)</state>
+            </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="4-Sad.png">Aww... she seemed nice.</state>
                 <state img="4-Sad.png">Aww. She was nice...</state>
@@ -4449,6 +4537,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="4-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="4-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="4-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -5089,6 +5180,14 @@
                 <state img="5-Calm.png">~cards~, please! Thank you!</state>
                 <state img="5-Calm.png">~cards~. Thanks!</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="5-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="5-Calm.png">One will do!</state>
+                <state img="5-Thinking.png">Hmm... one...</state>
+                <state img="5-Thinking.png">I'll take... one!</state>
+                <state img="5-Thinking.png">One... yeah! One!</state>
+            </case>
             <case tag="good_hand">
                 <state img="5-Happy.png">Yes! I love these cards!</state>
                 <state img="5-Embarrassed.png">Good! But... I'm almost naked anyway...</state>
@@ -5279,6 +5378,7 @@
             </case>
             <case tag="tie">
                 <state img="5-Thinking.png">Huh? What do we do now?</state>
+                <state img="5-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_human_must_strip" consecutiveLosses="3">
                 <state img="5-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
@@ -5364,6 +5464,9 @@
                 <state img="5-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="5-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
             </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="5-Embarrassed.png">(I'm so glad she's taking that off!)</state>
+            </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="5-Sad.png">Aww... she seemed nice.</state>
                 <state img="5-Sad.png">Aww. She was nice...</state>
@@ -5422,6 +5525,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="5-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="5-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="5-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -6079,6 +6185,10 @@
                 <state img="6-Thinking.png">But wait, what are you gonna shave &lt;i&gt;now&lt;/i&gt;, Felicia?</state>
                 <state img="6-Thinking.png">But... what are you gonna shave &lt;i&gt;now&lt;/i&gt;, Felicia?</state>
             </case>
+            <case tag="hand" alsoPlaying="jolyne" timeInStage="0">
+                <state img="6-Butt.png">Moon? I don't see anything, Jolyne...</state>
+                <state img="6-Butt.png">Huh? I don't see no moon, Jolyne!</state>
+            </case>
             <case tag="hand" timeInStage="0">
                 <test expr="~background~" value="bedroom" />
                 <state img="6-Butt.png">Look at the window! A full moon! So big!</state>
@@ -6232,6 +6342,7 @@
             </case>
             <case tag="tie">
                 <state img="6-Thinking.png">Huh? What do we do now?</state>
+                <state img="6-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_human_must_strip" consecutiveLosses="3">
                 <state img="6-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
@@ -6321,6 +6432,9 @@
                 <state img="6-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="6-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
             </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="6-Embarrassed.png">(I'm so glad she's taking that off!)</state>
+            </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="6-Sad.png">Aww... she seemed nice.</state>
                 <state img="6-Sad.png">Aww. She was nice...</state>
@@ -6381,6 +6495,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="6-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="6-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="6-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -7128,6 +7245,7 @@
             </case>
             <case tag="tie">
                 <state img="7-Thinking.png">Huh? What do we do now?</state>
+                <state img="7-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_human_must_strip" consecutiveLosses="3">
                 <state img="7-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
@@ -7217,6 +7335,9 @@
                 <state img="7-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="7-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
             </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="7-Embarrassed.png">(I'm so glad she's taking that off!)</state>
+            </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="7-Sad.png">Aww... she seemed nice.</state>
                 <state img="7-Sad.png">Aww. She was nice...</state>
@@ -7277,6 +7398,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="7-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="7-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="7-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -7711,7 +7835,7 @@
                 <state img="7-Horny.png">Y-You won't mind if I watch, right?</state>
             </case>
             <case tag="male_masturbating">
-                <state img="7-Horny.png">T-Thanks, ~name~. It's much more easier now...</state>
+                <state img="7-Horny.png">T-Thanks, ~name~. It's much easier now...</state>
                 <state img="7-MasturbA.png">Aah~ ~name~!</state>
                 <state img="7-MasturbB.png">~name~... Ahh~</state>
                 <state img="7-HeavyA.png">C-Crap... ~name~!</state>
@@ -8003,6 +8127,7 @@
             </case>
             <case tag="tie">
                 <state img="8-Thinking.png">Huh? What do we do now?</state>
+                <state img="8-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_human_must_strip" consecutiveLosses="3">
                 <state img="8-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
@@ -8092,6 +8217,9 @@
                 <state img="8-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="8-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
             </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="8-Embarrassed.png">(I'm so glad she's taking that off!)</state>
+            </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="8-Sad.png">Aww... she seemed nice.</state>
                 <state img="8-Sad.png">Aww. She was nice...</state>
@@ -8152,6 +8280,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="8-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="8-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="8-Calm.png">Oh well. It's not like I leave home often.</state>
