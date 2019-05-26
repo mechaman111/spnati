@@ -18,7 +18,7 @@ intelligence=good,8
 timer=12
 
 #Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
-tag=brunette
+tag=blonde
 tag=long_hair
 tag=twintails
 tag=green_eyes
@@ -26,8 +26,9 @@ tag=fair-skinned
 tag=athletic
 tag=short
 tag=trimmed
+tag=pubic_hair
 tag=small_breasts
-tag=school_uniform,from:0,to:4
+tag=school_uniform
 tag=thigh_highs,from:0,to:6
 tag=cheerful
 tag=confident
@@ -104,7 +105,7 @@ clothes=legs,legs,major,legs,plural
 #fully clothed
 0-selected,direction:down=interested,Fancy running into you here, ~player~!
 0-selected,direction:down=happy,Hi there! I'm Emi Ibarazaki, fastest thing on no legs!
-0-selected,alsoPlaying:hanako,direction:down=happy,Hi Hanako! Is Lilly coming along as well?
+0-selected,alsoPlaying:hanako,direction:down=happy,Hi Han! Is Lilly coming along as well?
 0-selected,alsoPlaying:hanako,direction:down=happy,Oh hi, Hanako! I almost didn't see you there!
 0-game_start,direction:down=calm,I would just like to warn everybody that I will probably take this game more seriously than I should.
 0-game_start,direction:down=interested,I could win this game in my sleep. I don't think I'll try to do that though, because then I'd miss out on all the fun.
@@ -170,7 +171,7 @@ bad_hand,direction:down=sad,I exchanged everything and it still didn't make a di
 bad_hand,direction:down=frustrated,Unbelievable.
 bad_hand,direction:down=annoyed,This is irritating.
 bad_hand,direction:down=annoyed,If I could get some better cards, that would be great!
-bad_hand,direction:down=pout,This is not what I needed...
+bad_hand,direction:down=pout,This is <i>not</i> what I needed...
 bad_hand,direction:down=laughing,I must have pissed off the poker gods or something!
 bad_hand,direction:down=confused,I need to remember not to race to the finish for a change...
 bad_hand,direction:down=content,Maybe I should just stick to running.
@@ -190,7 +191,7 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 0-good_hand,direction:down=happy,This round is mine!
 0-good_hand,direction:down=laughing,None of you have a chance.
 0-good_hand,direction:down=laughing,Even<i>Lilly</i> could see how good this hand is.
-0-good_hand,direction:down=excited,Wow! Just look at how good my hand is! Wait...don't actually look
+0-good_hand,direction:down=excited,Wow! Just look at how good my hand is! Wait...don't actually look!
 0-good_hand,direction:down=excited,Running clears my head like nothing else. I don't have to worry about anything while I'm running. You should try it sometime.
 0-good_hand,direction:down=calm,Life is easier when you can concentrate on the rhythm of things.
 0-good_hand,direction:down=excited,Gotta keep on moving forward. Nothing can stop me!
@@ -228,6 +229,10 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 0-bad_hand,direction:down=content,There’s always a point where you get knocked down. If you want to persevere you have to get up <i>every time.</i>
 0-hand,alsoPlaying:uravity,notSaidMarker:ochakobest,marker:ochakobest,direction:down=interested,If anyone knows the importance of being the best, it's a hero! Keep chasing your dream, Ochako!
 0-hand,alsoPlaying:uravity,notSaidMarker:ochakorunquirk,marker:ochakorunquirk,direction:down=interested,Hey Ochako, do you have any classmates with running related quirks? I'd love to meet one!
+0-hand,notSaidMarker:lonely,count-lonely&stage:4:1-4,marker:lonely,direction:down=excited,What's better than a game of strip poker to help you feel accompanied? Well, okay, maybe a lot of things, but that's not the point!
+0-hand,notSaidMarker:thigh-high,count-female&thigh-highs:2-5,marker:thigh-high,direction:down=happy,I think we're all making it very clear that thigh-highs are the best!
+0-hand,totalFemales:5,notSaidMarker:jagno,marker:jagno,direction:down=calm,Is this just a regular girls night out for all of you?
+0-hand,totalMales:4,notSaidMarker:sausage-fest,marker:sausage-fest,direction:down=confused,I'll be honest, I'm not super comfortable playing this with <i>four</i> guys...I feel like all eyes are on me!
 
 
 #lost shoes
@@ -241,7 +246,7 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 1-good_hand,direction:down=happy,This round is mine!
 1-good_hand,direction:down=laughing,None of you have a chance.
 1-good_hand,direction:down=laughing,Even<i>Lilly</i> could see how good this hand is.
-1-good_hand,direction:down=excited,Wow! Just look at how good my hand is! Wait...don't actually look
+1-good_hand,direction:down=excited,Wow! Just look at how good my hand is! Wait...don't actually look!
 1-good_hand,direction:down=excited,Running clears my head like nothing else. I don't have to worry about anything while I'm running. You should try it sometime.
 1-good_hand,direction:down=calm,Life is easier when you can concentrate on the rhythm of things.
 1-good_hand,direction:down=excited,Gotta keep on moving forward. Nothing can stop me!
@@ -277,9 +282,13 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 1-bad_hand,direction:down=laughing,Maybe I <i>shouldn't</i> have exchanged those cards...
 1-bad_hand,direction:down=confused,That can't be right.
 1-bad_hand,direction:down=content,There’s always a point where you get knocked down. If you want to persevere you have to get up <i>every time.</i>
-1-hand,alsoPlaying:akko,saidMarker:lemon,notSaidMarker:lemon2,priority:1000,marker:lemon2,direction:down,collectible:lemon=special,Thanks, Atsuko! This outfit is <i>witchin'!</i> I love it.
+1-hand,alsoPlaying:akko,saidMarker:lemon,notSaidMarker:lemon2,priority:1000,id:3,marker:lemon2,direction:down,collectible:lemon=special,Thanks, Atsuko! This outfit is <i>witchin'!</i> I love it.
 1-hand,alsoPlaying:uravity,notSaidMarker:ochakobest,marker:ochakobest,direction:down=interested,If anyone knows the importance of being the best, it's a hero! Keep chasing your dream, Ochako!
 1-hand,alsoPlaying:uravity,notSaidMarker:ochakorunquirk,marker:ochakorunquirk,direction:down=interested,Hey Ochako, do you have any classmates with running related quirks? I'd love to meet one!
+1-hand,notSaidMarker:lonely,count-lonely&stage:4:1-4,marker:lonely,direction:down=excited,What's better than a game of strip poker to help you feel accompanied? Well, okay, maybe a lot of things, but that's not the point!
+1-hand,notSaidMarker:thigh-high,count-female&thigh-highs:2-5,marker:thigh-high,direction:down=happy,I think we're all making it very clear that thigh-highs are the best!
+1-hand,totalFemales:5,notSaidMarker:jagno,marker:jagno,direction:down=calm,Is this just a regular girls night out for all of you?
+1-hand,totalMales:4,notSaidMarker:sausage-fest,marker:sausage-fest,direction:down=confused,I'll be honest, I'm not super comfortable playing this with <i>four</i> guys...I feel like all eyes are on me!
 
 
 #lost bow
@@ -326,6 +335,9 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 2-bad_hand,direction:down=laughing,This is great! Really! I'm sure someone <i>else</i> has an even <i>worse</i> hand!
 2-hand,alsoPlaying:uravity,notSaidMarker:ochakobest,marker:ochakobest,direction:down=interested,If anyone knows the importance of being the best, it's a hero! Keep chasing your dream, Ochako!
 2-hand,alsoPlaying:uravity,notSaidMarker:ochakorunquirk,marker:ochakorunquirk,direction:down=interested,Hey Ochako, do you have any classmates with running related quirks? I'd love to meet one!
+2-hand,notSaidMarker:lonely,count-lonely&stage:4:1-4,marker:lonely,direction:down=excited,What's better than a game of strip poker to help you feel accompanied? Well, okay, maybe a lot of things, but that's not the point!
+2-hand,notSaidMarker:thigh-high,count-female&thigh-highs:2-5,marker:thigh-high,direction:down=happy,I think we're all making it very clear that thigh-highs are the best!
+2-hand,totalFemales:5,notSaidMarker:jagno,marker:jagno,direction:down=calm,Is this just a regular girls night out for all of you?
 
 
 #lost skirt
@@ -460,6 +472,7 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 -3-bad_hand,saidMarker:pirate,direction:down=content,Maybe I should jus' stick t' plunderin'.
 -3-bad_hand,saidMarker:pirate,direction:down=content,We all 'ave dreams. In order t' make dreams come into reality, it loots an ghastly lot o' determination, dedication, self-discipline, 'n effort.
 -3-hand,notSaidMarker:placeholder,priority:800,marker:placeholder,direction:down=content,These poses are placeholders. Pretend the black parts on my lower legs aren't there!
+-3-hand,saidMarker:pirate,notSaidMarker:captain,priority:800,marker:captain,direction:down,set-label:Captain Ibarazaki=annoyed,Yarr, me hearties, give 'em a broadside wit' th' long guns! Ahoy! Me name be cap'n Ibarazaki t' ye!
 
 
 
@@ -515,8 +528,8 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 2-stripped,direction:down=stripped,That's your one. Err...your two. No more.
 2-stripped,direction:down=stripped,That loss was a total fluke, by the way.
 2-stripped,alsoPlaying:hanako,alsoPlayingTimeInStage:1,direction:down=stripped,Our bows are off, Hanako. Now things can get serious!
-2-stripped,timeInStage:100,saidMarker:wave,priority:420,direction:down=special,Woooooo!
-2-stripped,timeInStage:100,saidMarker:wave,priority:420,direction:down=special,This line is a placeholder for when I figure out how to photoshop the bow just right.
+2-stripped,timeInStage:100,saidMarker:wave,priority:420,id:4,direction:down=special,Woooooo!
+2-stripped,timeInStage:100,saidMarker:wave,priority:420,id:4,direction:down=special,This line is a placeholder for when I figure out how to photoshop the bow just right.
 2-must_strip_winning,direction:down=content,As much as I like winning, I have been feeling a little over-dressed.
 2-must_strip_winning,direction:down=bored,Oh, I lost again? That's weird...
 2-must_strip_winning,direction:down=laughing,If I don"t lose any hands I don't get to have any fun.
@@ -546,7 +559,7 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 3-must_strip_losing,direction:down=pout,Ugh. Fine.
 3-stripping,direction:down=stripping,Ready to see me pop my top?
 3-stripping,direction:down=stripping,Who said I need a shirt? I don't need a shirt.
-3-stripping,direction:down=stripping,These uniforms are more comfortable than they look. They're even <i>more</i> comfortable when they're coming off, though.
+3-stripping,direction:down=stripping,These uniforms are more comfortable than they look, but they're still <i>more</i> comfortable when they're coming off!
 
 
 #losing bra
@@ -554,9 +567,9 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 4-stripped,direction:down=stripped,I was getting sweaty in that anyway.
 4-stripped,direction:down=stripped,This honestly isn't much more revealing than my track uniform.
 4-stripped,test:~background~:roof,direction:down,weight:5=stripped,I'll be honest, this isn't the first time I've taken my shirt off up here.
-4-must_strip_winning,direction:down=interested,Is everyone ready for this?
-4-must_strip_winning,direction:down=excited,Don't worry, this isn't the first time I've played this game.
-4-must_strip_winning,direction:down=laughing,You just can't get enough of me, can you?
+4-must_strip_winning,marker:finalbra,direction:down=interested,Is everyone ready for this?
+4-must_strip_winning,marker:finalbra,direction:down=excited,Don't worry, this isn't the first time I've played this game.
+4-must_strip_winning,marker:finalbra,direction:down=laughing,You just can't get enough of me, can you?
 4-must_strip_normal,direction:down=annoyed,That can't be right...
 4-must_strip_normal,direction:down=content,It wasn't supposed to be this easy to get me naked.
 4-must_strip_normal,direction:down=annoyed,That's so annoying.
@@ -566,10 +579,14 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 4-stripping,direction:down=stripping,I know you've been waiting to see these, ~player~.
 4-stripping,direction:down=stripping,Well, time for the main event. Unless you're an ass person, I suppose. Maybe I'll change your mind.
 4-stripping,direction:down=stripping,Consider yourselves lucky. Seeing these is a privilege not many people get.
+4-stripping,saidMarker:finalbra,direction:down=stripping,I know you've been waiting to see these, ~player~.
+4-stripping,saidMarker:finalbra,direction:down=stripping,Well, time for the main event. Unless you're an ass person, I suppose. Maybe I'll change your mind.
+4-stripping,saidMarker:finalbra,direction:down=stripping,Consider yourselves lucky. Seeing these is a privilege not many people get.
+4-stripping,saidMarker:finalbra,direction:down=stripping,Ladies and gentlemen, this is the final <i>bra.</i>
 
 
 #losing panties
-5-stripped,direction:down=stripped,I don't run just to have a great body, but it is a nice benefit.
+5-stripped,direction:down=stripped,I don't run just to have a great body, but it <i>is</i> a nice benefit.
 5-stripped,direction:down=stripped,That's right, I don't need huge tits to impress.
 5-stripped,direction:down=stripped,If guys can walk around topless, why can't we?
 5-stripped,direction:down=stripped,It's not polite to stare, ~player~.
@@ -583,7 +600,7 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 5-must_strip_losing,direction:down=frustrated,This is too much. I don't care about taking my clothes off, I just don't want to lose!
 5-must_strip_losing,direction:down=pout,I'm going to be the first one naked, aren't I?
 5-stripping,direction:down=stripping,Okay, I'm taking off my underwear, but don't expect to see me play with myself anytime soon. I won't lose again.
-5-stripping,direction:down=stripping,If I take off my underwear, nobody will be able to focus on their game. I've got this in the bag.
+5-stripping,direction:down=stripping,Once my underwear is off, none of you will be able to focus on your game. I've got this in the bag.
 5-stripping,direction:down=stripping,I'm not sure if this is more a reward for all of you or a punishment for me.
 
 
@@ -606,9 +623,9 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 
 
 #losing legs
-7-stripped,direction:down=stripped,These prosthetic legs aren't very good for running with. I have a different pair for that.
-7-stripped,direction:down=stripped,It took me two months to relearn how to walk with these. Faster than most, or so I was told.
-7-stripped,direction:down=stripped,It's been eight years since I had to learn to walk with these. Time flies!
+7-stripped,id:5,direction:down=stripped,These prosthetic legs aren't very good for running with. I have a different pair for that.
+7-stripped,id:5,direction:down=stripped,It took me two months to relearn how to walk with these. Faster than most, or so I was told.
+7-stripped,id:5,direction:down=stripped,It's been eight years since I had to learn to walk with these. Time flies!
 7-must_strip_winning,direction:down=laughing,You think I'm about to paddle the pink canoe? Fat chance.
 7-must_strip_winning,direction:down=content,Yeah...I don't think I'm doing THAT yet...
 7-must_strip_winning,direction:down=frustrated,You know what? I'm going for the win.
@@ -618,16 +635,16 @@ bad_hand,direction:down=content,We all have dreams. In order to make dreams come
 7-must_strip_losing,direction:down=laughing,There's no way I'm playing clitar hero first.
 7-must_strip_losing,direction:down=annoyed,You can't succeed if you're not willing to make sacrifices.
 7-must_strip_losing,direction:down=shocked,I have to WHAT? Already? Hold on a minute...
-7-stripping,direction:down=stripping,I'll take off my legs before I accept defeat!
-7-stripping,direction:down=stripping,Don't forget that I can  take off my legs. I'm winning this game, whatever it takes.
-7-stripping,direction:down=stripping,I'm taking off my legs. If it means I'll last one more round, it's worth it.
+7-stripping,id:2,direction:down=stripping,I'll take off my legs before I accept defeat!
+7-stripping,id:2,direction:down=stripping,Don't forget that I can  take off my legs. I'm winning this game, whatever it takes.
+7-stripping,id:2,direction:down=stripping,I'm taking off my legs. If it means I'll last one more round, it's worth it.
 
 
 #naked
--3-stripped,direction:down=stripped,Did you really think I would accept defeat that easily? That's not how you win championships.
--3-stripped,direction:down=stripped,Sometimes you have to take drastic actions if you want to be the best.
--3-stripped,direction:down=stripped,If you want to win in life, you have to have a winner's mentality.
--3-stripped,marker:pirate,direction:down,weight:2=stripped,At this point I ought to just double down and become a pirate. I've already got the legs for it.
+-3-stripped,id:1,direction:down=stripped,Did you really think I would accept defeat that easily? That's not how you win championships.
+-3-stripped,id:1,direction:down=stripped,Sometimes you have to take drastic actions if you want to be the best.
+-3-stripped,id:1,direction:down=stripped,If you want to win in life, you have to have a winner's mentality.
+-3-stripped,id:1,marker:pirate,direction:down,location:46%,weight:2=stripped,At this point I ought to just double down and become a pirate. I've already got the legs for it.
 
 
 
@@ -856,6 +873,9 @@ female_removed_accessory,direction:down=calm,Can you handle another round, ~name
 0-female_removed_accessory,direction:down=content,I need to remember to stop by Rin's room to pick up my notebook for class tomorrow.
 0-female_removed_accessory,direction:down=laughing,You just don't look the same without the ~clothing~, ~name~. Only kidding, of course.
 0-female_removed_accessory,direction:down=laughing,Please do something more exciting next time!
+0-female_removed_accessory,notSaidMarker:coach,count-athletic:4-5,test:~background~:locker room,marker:coach,direction:down=confused,I keep waiting for our coach to walk in on us. If I hear a door open I am <i>out of here</i> as soon as possible!
+0-female_removed_accessory,notSaidMarker:coach,count-athletic:4-5,test:~background~:showers,marker:coach,direction:down=confused,I keep waiting for our coach to walk in on us. If I hear a door open I am <i>out of here</i> as soon as possible!
+0-female_removed_accessory,notSaidMarker:breakfast-club,count-student:4-5,marker:breakfast-club,direction:down=laughing,I feel like it's inevitable that we end up forming a strip poker club...like the movie Breakfast Club, but <i>much</i> weirder!
 0-female_removed_accessory,filter:athletic,direction:down=happy,Hey, ~name~, we should go on a run some time!
 0-female_removed_accessory,filter:athletic,direction:down=calm,Do you workout, ~name~?
 0-female_removed_accessory,filter:athletic,direction:down=calm,Hey ~name~, how fast can you run?
@@ -864,7 +884,6 @@ female_removed_accessory,direction:down=calm,Can you handle another round, ~name
 0-female_removed_accessory,filter:brave,direction:down=calm,That's not very brave of you, ~name~.
 0-female_removed_accessory,filter:brave,direction:down=bored,I didn't take you for the cautious type, ~name~.
 0-female_removed_accessory,target:gwen,notSaidMarker:gwenswing,marker:gwenswing,direction:down=calm,It must be nice to be able to swing from building to building! I bet it makes a great workout, too!
-0-female_removed_accessory,target:hanako,alsoPlaying:hanako,notSaidMarker:hanako,priority:150,marker:hanako,direction:down=excited,Hey Hanako, I have a book suggestion for you! It's called Born to Run! It's about a guy who travels to Mexico to meet a tribe of Tarahumara Indians, hoping they'll reveal to him the secrets of their superhuman distance running talents!
 0-female_removed_accessory,target:monika,notSaidMarker:monikauneasy,marker:monikauneasy,direction:down=sad,Something's making me feel...uneasy. Watch yourself, ~player~. Don't delete any game files.
 0-female_removed_accessory,notSaidMarker:hairtie,priority:10,test:~clothing.position~:head,marker:hairtie,direction:down=content,Technically I <i>could</i> use my hair ties as an item but that's not any fun.
 
@@ -895,6 +914,10 @@ female_removed_accessory,direction:down=calm,Can you handle another round, ~name
 1-female_removed_accessory,direction:down=content,I need to remember to stop by Rin's room to pick up my notebook for class tomorrow.
 1-female_removed_accessory,direction:down=laughing,You just don't look the same without the ~clothing~, ~name~. Only kidding, of course.
 1-female_removed_accessory,direction:down=laughing,Please do something more exciting next time!
+1-female_removed_accessory,notSaidMarker:coach,count-athletic:4-5,test:~background~:locker room,marker:coach,direction:down=confused,I keep waiting for our coach to walk in on us. If I hear a door open I am <i>out of here</i> as soon as possible!
+1-female_removed_accessory,notSaidMarker:coach,count-athletic:4-5,test:~background~:showers,marker:coach,direction:down=confused,I keep waiting for our coach to walk in on us. If I hear a door open I am <i>out of here</i> as soon as possible!
+1-female_removed_accessory,notSaidMarker:gun,count-gun:2-5,marker:gun,direction:down=confused,Was I supposed to bring a gun or something? You all are making me feel strangely naked without one.
+1-female_removed_accessory,notSaidMarker:breakfast-club,count-student:4-5,marker:breakfast-club,direction:down=laughing,I feel like it's inevitable that we end up forming a strip poker club...like the movie Breakfast Club, but <i>much</i> weirder!
 1-female_removed_accessory,filter:athletic,direction:down=happy,Hey, ~name~, we should go on a run some time!
 1-female_removed_accessory,filter:athletic,direction:down=calm,Do you workout, ~name~?
 1-female_removed_accessory,filter:athletic,direction:down=calm,Hey ~name~, how fast can you run?
@@ -904,7 +927,6 @@ female_removed_accessory,direction:down=calm,Can you handle another round, ~name
 1-female_removed_accessory,filter:brave,direction:down=bored,I didn't take you for the cautious type, ~name~.
 1-female_removed_accessory,target:akko,notSaidMarker:lemon,priority:999,marker:lemon,direction:down=interested,So...Atsuko, whaddaya say you do me a good bewitchin?
 1-female_removed_accessory,target:gwen,notSaidMarker:gwenswing,marker:gwenswing,direction:down=calm,It must be nice to be able to swing from building to building! I bet it makes a great workout, too!
-1-female_removed_accessory,target:hanako,alsoPlaying:hanako,notSaidMarker:hanako,priority:150,marker:hanako,direction:down=excited,Hey Hanako, I have a book suggestion for you! It's called Born to Run! It's about a guy who travels to Mexico to meet a tribe of Tarahumara Indians, hoping they'll reveal to him the secrets of their superhuman distance running talents!
 1-female_removed_accessory,target:monika,notSaidMarker:monikauneasy,marker:monikauneasy,direction:down=sad,Something's making me feel...uneasy. Watch yourself, ~player~. Don't delete any game files.
 1-female_removed_accessory,notSaidMarker:hairtie,priority:10,test:~clothing.position~:head,marker:hairtie,direction:down=content,Technically I <i>could</i> use my hair ties as an item but that's not any fun.
 
@@ -927,6 +949,14 @@ female_removed_accessory,direction:down=calm,Can you handle another round, ~name
 2-female_removed_accessory,direction:down=content,Hopefully that's the last of the accessories.
 2-female_removed_accessory,direction:down=bored,I sure hope the next round has a better conclusion!
 2-female_removed_accessory,direction:down=happy,You're walking when you should be running!
+2-female_removed_accessory,notSaidMarker:coach,count-athletic:4-5,test:~background~:locker room,marker:coach,direction:down=confused,I keep waiting for our coach to walk in on us. If I hear a door open I am <i>out of here</i> as soon as possible!
+2-female_removed_accessory,notSaidMarker:coach,count-athletic:4-5,test:~background~:showers,marker:coach,direction:down=confused,I keep waiting for our coach to walk in on us. If I hear a door open I am <i>out of here</i> as soon as possible!
+2-female_removed_accessory,notSaidMarker:gun,count-gun:2-5,marker:gun,direction:down=confused,Was I supposed to bring a gun or something? You all are making me feel strangely naked without one.
+2-female_removed_accessory,notSaidMarker:breakfast-club,count-student:4-5,marker:breakfast-club,direction:down=laughing,I feel like it's inevitable that we end up forming a strip poker club...like the movie Breakfast Club, but <i>much</i> weirder!
+2-female_removed_accessory,filter:athletic,direction:down=happy,Hey, ~name~, we should go on a run some time!
+2-female_removed_accessory,filter:athletic,direction:down=calm,Do you workout, ~name~?
+2-female_removed_accessory,filter:athletic,direction:down=calm,Hey ~name~, how fast can you run?
+2-female_removed_accessory,filter:athletic,direction:down=calm,Do you run, ~name~?
 2-female_removed_accessory,target:gwen,notSaidMarker:gwenswing,marker:gwenswing,direction:down=calm,It must be nice to be able to swing from building to building! I bet it makes a great workout, too!
 2-female_removed_accessory,target:monika,notSaidMarker:monikauneasy,marker:monikauneasy,direction:down=sad,Something's making me feel...uneasy. Watch yourself, ~player~. Don't delete any game files.
 
@@ -949,10 +979,6 @@ female_removed_accessory,direction:down=calm,Can you handle another round, ~name
 3-female_removed_accessory,direction:down=content,Hopefully that's the last of the accessories.
 3-female_removed_accessory,direction:down=bored,I sure hope the next round has a better conclusion!
 3-female_removed_accessory,direction:down=happy,You're walking when you should be running!
-3-female_removed_accessory,filter:athletic,direction:down=happy,Hey, ~name~, we should go on a run some time!
-3-female_removed_accessory,filter:athletic,direction:down=calm,Do you workout, ~name~?
-3-female_removed_accessory,filter:athletic,direction:down=calm,Hey ~name~, how fast can you run?
-3-female_removed_accessory,filter:athletic,direction:down=calm,Do you run, ~name~?
 
 
 #lost shirt
@@ -973,6 +999,19 @@ female_removed_accessory,direction:down=calm,Can you handle another round, ~name
 4-female_removed_accessory,direction:down=content,Hopefully that's the last of the accessories.
 4-female_removed_accessory,direction:down=bored,I sure hope the next round has a better conclusion!
 4-female_removed_accessory,direction:down=happy,You're walking when you should be running!
+4-female_removed_accessory,notSaidMarker:straight,count-straight:0-1,marker:straight,direction:down=sad,Am I the only straight person here? Sorry if that's less fun, I can't change who I'm into...
+
+
+#lost bra
+5-female_removed_accessory,notSaidMarker:straight,count-straight:0-1,marker:straight,direction:down=sad,Am I the only straight person here? Sorry if that's less fun, I can't change who I'm into...
+
+
+#lost panties
+6-female_removed_accessory,notSaidMarker:straight,count-straight:0-1,marker:straight,direction:down=sad,Am I the only straight person here? Sorry if that's less fun, I can't change who I'm into...
+
+
+#lost socks
+7-female_removed_accessory,notSaidMarker:straight,count-straight:0-1,marker:straight,direction:down=sad,Am I the only straight person here? Sorry if that's less fun, I can't change who I'm into...
 
 
 #naked
@@ -1060,12 +1099,12 @@ female_removed_minor,direction:down=confused,Well that wasn't what I was expecti
 0-male_removed_minor,direction:down=interested,I hope that's not the best you'll do, ~name~.
 0-male_removed_minor,direction:down=content,Good. Good.
 0-female_removing_minor,direction:down=calm,Your ~clothing~ looks nice, ~name~, but I think it'll look better on the floor.
-0-female_removing_minor,direction:down=happy,Ok ~name~, that's the way to go.
+0-female_removing_minor,direction:down=happy,Okay ~name~, that's the way to go.
 0-female_removing_minor,direction:down=excited,You got this, ~name~!
 0-female_removing_minor,direction:down=content,I kind of like ~name~'s ~clothing~ though...
 0-female_removing_minor,direction:down=excited,Take off your ~clothing~! Let's go!
 0-female_removed_minor,direction:down=calm,I like where this game is going.
-0-female_removed_minor,direction:down=happy,Ok ~name~, I like it.
+0-female_removed_minor,direction:down=happy,Okay ~name~, I like it.
 0-female_removed_minor,direction:down=excited,That's much better, ~name~!
 0-female_removed_minor,direction:down=bored,You're headed in the right direction, ~name~.
 0-female_removed_minor,direction:down=laughing,Hopefully I won't be catching up with you any time soon.
@@ -1080,12 +1119,12 @@ female_removed_minor,direction:down=confused,Well that wasn't what I was expecti
 1-male_removed_minor,direction:down=interested,I hope that's not the best you'll do, ~name~.
 1-male_removed_minor,direction:down=content,Good. Good.
 1-female_removing_minor,direction:down=calm,Your ~clothing~ looks nice, ~name~, but I think it'll look better on the floor.
-1-female_removing_minor,direction:down=happy,Ok ~name~, that's the way to go.
+1-female_removing_minor,direction:down=happy,Okay ~name~, that's the way to go.
 1-female_removing_minor,direction:down=excited,You got this, ~name~!
 1-female_removing_minor,direction:down=content,I kind of like ~name~'s ~clothing~ though...
 1-female_removing_minor,direction:down=excited,Take off your ~clothing~! Let's go!
 1-female_removed_minor,direction:down=calm,I like where this game is going.
-1-female_removed_minor,direction:down=happy,Ok ~name~, I like it.
+1-female_removed_minor,direction:down=happy,Okay ~name~, I like it.
 1-female_removed_minor,direction:down=excited,That's much better, ~name~!
 1-female_removed_minor,direction:down=bored,You're headed in the right direction, ~name~.
 1-female_removed_minor,direction:down=laughing,Hopefully I won't be catching up with you any time soon.
@@ -1219,7 +1258,7 @@ female_removed_major,direction:down=excited,Looking good, ~name~!
 female_removed_major,direction:down=calm,I was wondering when you were going to catch up to me!
 female_removed_major,direction:down=laughing,Well it sure took you long enough!
 female_removed_major,direction:down=calm,You're rocking it, ~name~!
-female_removed_major,direction:down=confused,If someone had told me I would be in this situation a couple days ago I wouldn't have believed them...
+female_removed_major,direction:down=confused,If someone had told me I would be in this situation a couple days ago, I wouldn't have believed them...
 
 
 #stage-specific lines that override the stage-generic ones
@@ -1237,14 +1276,14 @@ female_removed_major,direction:down=confused,If someone had told me I would be i
 0-male_removed_major,direction:down=interested,Don't slow down, ~name~. This is getting fun.
 0-female_removing_major,direction:down=content,I wonder what ~name~ has in store for us under her ~clothing~.
 0-female_removing_major,direction:down=calm,What are you hiding under your ~clothing~, ~name~?
-0-female_removing_major,direction:down=laughing,Maybe if you were better at the game you wouldn't be taking off your ~name~ already!
+0-female_removing_major,direction:down=laughing,Maybe if you were better at the game you wouldn't be taking off your ~clothing~ already!
 0-female_removing_major,direction:down=laughing,I haven't even gotten started and you've already reached your ~clothing~!
 0-female_removing_major,direction:down=excited,Take off your ~clothing~, ~name~! You can do it! Don't wimp out!
 0-female_removing_major,direction:down=laughing,You're not having much luck, are you ~name~? Take off your ~clothing~!
 0-female_removed_major,direction:down=laughing,Maybe if I lose a hand I can lend you my shirt. That is, if you're lame and want to cover up.
 0-female_removed_major,direction:down=laughing,Be careful, ~name~, you're reaching dangerous territory.
 0-female_removed_major,direction:down=excited,You don't need your ~clothing~, ~name~, don't you know what game we're playing?
-0-female_removed_major,direction:down=happy,I like your ~clothing~, ~name~! Too bad we won't be seeing any more of it.
+0-female_removed_major,direction:down=happy,I like your ~clothing~, ~name~! Too bad we won't be seeing any more of ~clothing.ifPlural(them|it)~.
 0-female_removed_major,target:sayori,notSaidMarker:sayoripoetry,marker:sayoripoetry,direction:down=confused,Hey, Sayori, do you think you could teach me a thing or two about poetry? I've been struggling with an assignment...I'm not honestly sure where to start.
 0-female_removed_major,target:uravity,notSaidMarker:ochako,marker:ochako,direction:down=interested,I admire your can-do attitude, Ochako. This world needs heroes like you!
 0-female_removed_major,target:wiifitfemale,notSaidMarker:wii,marker:wii,direction:down=interested,It's always a pleasure to meet another woman who appreciates a good workout!
@@ -1263,14 +1302,14 @@ female_removed_major,direction:down=confused,If someone had told me I would be i
 1-male_removed_major,direction:down=interested,Don't slow down, ~name~. This is getting fun.
 1-female_removing_major,direction:down=content,I wonder what ~name~ has in store for us under her ~clothing~.
 1-female_removing_major,direction:down=calm,What are you hiding under your ~clothing~, ~name~?
-1-female_removing_major,direction:down=laughing,Maybe if you were better at the game you wouldn't be taking off your ~name~ already!
+1-female_removing_major,direction:down=laughing,Maybe if you were better at the game you wouldn't be taking off your ~clothing~ already!
 1-female_removing_major,direction:down=laughing,I haven't even gotten started and you've already reached your ~clothing~!
 1-female_removing_major,direction:down=excited,Take off your ~clothing~, ~name~! You can do it! Don't wimp out!
 1-female_removing_major,direction:down=laughing,You're not having much luck, are you ~name~? Take off your ~clothing~!
 1-female_removed_major,direction:down=laughing,Maybe if I lose a hand I can lend you my shirt. That is, if you're lame and want to cover up.
 1-female_removed_major,direction:down=laughing,Be careful, ~name~, you're reaching dangerous territory.
 1-female_removed_major,direction:down=excited,You don't need your ~clothing~, ~name~, don't you know what game we're playing?
-1-female_removed_major,direction:down=happy,I like your ~clothing~, ~name~! Too bad we won't be seeing any more of it.
+1-female_removed_major,direction:down=happy,I like your ~clothing~, ~name~! Too bad we won't be seeing any more of ~clothing.ifPlural(them|it)~.
 1-female_removed_major,target:sayori,notSaidMarker:sayoripoetry,marker:sayoripoetry,direction:down=confused,Hey, Sayori, do you think you could teach me a thing or two about poetry? I've been struggling with an assignment...I'm not honestly sure where to start.
 1-female_removed_major,target:uravity,notSaidMarker:ochako,marker:ochako,direction:down=interested,I admire your can-do attitude, Ochako. This world needs heroes like you!
 1-female_removed_major,target:wiifitfemale,notSaidMarker:wii,marker:wii,direction:down=interested,It's always a pleasure to meet another woman who appreciates a good workout!
@@ -1280,7 +1319,7 @@ female_removed_major,direction:down=confused,If someone had told me I would be i
 2-male_removing_major,direction:down=interested,Going with the ~clothing~, ~name~? I like it!
 2-male_removing_major,direction:down=happy,It's about time you started catching up, ~name~!
 2-male_removing_major,direction:down=interested,Trust me, ~name~, you don't need that ~clothing~.
-2-male_removed_major,direction:down=confused,Ok, how can we get ~name~ to keep losing?
+2-male_removed_major,direction:down=confused,Okay, how can we get ~name~ to keep losing?
 2-male_removed_major,direction:down=happy,This is a step in the right direction, ~name~.
 2-male_removed_major,direction:down=interested,Don't worry, ~name~, you'll be taking off much more than your ~clothing~ soon.
 2-female_removing_major,direction:down=content,So what's under that ~clothing~ of yours, ~name~?
@@ -1303,7 +1342,7 @@ female_removed_major,direction:down=confused,If someone had told me I would be i
 3-male_removing_major,direction:down=interested,Going with the ~clothing~, ~name~? I like it!
 3-male_removing_major,direction:down=happy,It's about time you started catching up, ~name~!
 3-male_removing_major,direction:down=interested,Trust me, ~name~, you don't need that ~clothing~.
-3-male_removed_major,direction:down=confused,Ok, how can we get ~name~ to keep losing?
+3-male_removed_major,direction:down=confused,Okay, how can we get ~name~ to keep losing?
 3-male_removed_major,direction:down=happy,This is a step in the right direction, ~name~.
 3-male_removed_major,direction:down=interested,Don't worry, ~name~, you'll be taking off much more than your ~clothing~ soon.
 3-female_removing_major,direction:down=content,So what's under that ~clothing~ of yours, ~name~?
@@ -1324,7 +1363,7 @@ female_removed_major,direction:down=confused,If someone had told me I would be i
 4-male_removing_major,direction:down=interested,Going with the ~clothing~, ~name~? I like it!
 4-male_removing_major,direction:down=happy,It's about time you started catching up, ~name~!
 4-male_removing_major,direction:down=interested,Trust me, ~name~, you don't need that ~clothing~.
-4-male_removed_major,direction:down=confused,Ok, how can we get ~name~ to keep losing?
+4-male_removed_major,direction:down=confused,Okay, how can we get ~name~ to keep losing?
 4-male_removed_major,direction:down=happy,This is a step in the right direction, ~name~.
 4-male_removed_major,direction:down=interested,Don't worry, ~name~, you'll be taking off much more than your ~clothing~ soon.
 4-female_removing_major,direction:down=content,So what's under that ~clothing~ of yours, ~name~?
@@ -1364,7 +1403,7 @@ female_removed_major,direction:down=confused,If someone had told me I would be i
 -3-female_removed_major,saidMarker:pirate,direction:down=calm,I was wonderin' when ye were goin' t' catch up t' me!
 -3-female_removed_major,saidMarker:pirate,direction:down=laughing,Well it sure loot ye long enough, lass!
 -3-female_removed_major,saidMarker:pirate,direction:down=calm,Ye're rockin' th' boat, ~name~!
--3-female_removed_major,saidMarker:pirate,direction:down=confused,If someone had told me I would be in this situation a couple o' days ago I wouldna 'ave believed 'em...
+-3-female_removed_major,saidMarker:pirate,direction:down=confused,If someone had told me I would be in this situation a couple o' days ago, I wouldna 'ave believed 'em...
 
 
 #masturbating
@@ -1482,6 +1521,7 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 0-male_small_crotch_is_visible,direction:down=confused,Is that it?
 0-male_small_crotch_is_visible,direction:down=laughing,You can't be serious with that...
 0-male_small_crotch_is_visible,direction:down=laughing,Did you just take a cold shower or something?
+0-male_small_crotch_is_visible,filter:hairy,priority:0,direction:down,weight:2=laughing,Here's <i>another</i> tip for you: a forest tends to hide the snake that lives in it!
 0-male_medium_crotch_is_visible,direction:down=laughing,Don't point that thing at me so soon, ~name~.
 0-male_medium_crotch_is_visible,direction:down=interested,Now that's what I came to see.
 0-male_medium_crotch_is_visible,direction:down=laughing,Maybe if you were better at this game your dick wouldn't already be out.
@@ -1489,6 +1529,8 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 0-male_large_crotch_is_visible,direction:down=shocked,How do you walk around with that thing?!
 0-male_large_crotch_is_visible,direction:down=shocked,I didn't even know they got that big...
 0-male_large_crotch_is_visible,direction:down=confused,I didn't expect such a <i>big</i> surprise so soon, but I'm not complaining.
+0-male_crotch_is_visible,filter:hairy,priority:0,direction:down=confused,Umm...don't you think you should shave if you're going to play strip poker, ~name~?
+0-male_crotch_is_visible,filter:hairy,priority:0,direction:down=laughing,I would have expected some manscaping or something but maybe you weren't planning on playing this game with us!
 0-female_chest_will_be_visible,direction:down=laughing,Come on, ~name~! Pop that top!
 0-female_chest_will_be_visible,direction:down=laughing,Maybe next time you should get good at the game, ~name~!
 0-female_chest_will_be_visible,direction:down=interested,Show us those melons, ~name~!
@@ -1506,7 +1548,8 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 0-female_large_chest_is_visible,direction:down=interested,Excellent. Distract the others while I win the game.
 0-female_chest_is_visible,target:akko,direction:down=laughing,I'm glad I'm not the only one trying way too hard to win!
 0-female_chest_is_visible,target:gwen,direction:down=confused,So...question...do those stick to walls too...?
-0-female_chest_is_visible,target:hanako,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+0-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+0-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=sad,Seriously though, <i>wear your seat belts,</i> boys and girls. They can save your life!
 0-female_chest_is_visible,target:kyu,direction:down=interested,Okay that <i>was</i> actually pretty cool.
 0-female_chest_is_visible,target:monika,direction:down=confused,I think she's forgetting there are 3 other players in the room...
 0-female_chest_is_visible,target:natsuki,direction:down=interested,Big boobs are overrated, Natsuki. You just need to have some confidence in yourself!
@@ -1518,7 +1561,7 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 0-female_crotch_is_visible,direction:down=confused,I don't know what to say...
 0-female_crotch_is_visible,direction:down=confused,Hopefully I won't be joining ~name~ very soon...
 0-female_crotch_is_visible,direction:down=happy,You're killing it, ~name~!
-0-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, fifty shades of gray? I'm admittedly not familiar with much erotica.
+0-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, Fifty Shades of Grey? I'm admittedly not familiar with much erotica.
 0-female_crotch_is_visible,target:jasmine,direction:down=shocked,The...diamond...in...the...rough...
 0-female_crotch_is_visible,target:kyu,direction:down=shocked,I'm all for the enthusiasm but this is a little much.
 0-female_crotch_is_visible,target:monika,direction:down=confused,I literally have chills going down my spine...and not the good kind...
@@ -1554,6 +1597,7 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 1-male_small_crotch_is_visible,direction:down=confused,Is that it?
 1-male_small_crotch_is_visible,direction:down=laughing,You can't be serious with that...
 1-male_small_crotch_is_visible,direction:down=laughing,Did you just take a cold shower or something?
+1-male_small_crotch_is_visible,filter:hairy,priority:0,direction:down,weight:2=laughing,Here's <i>another</i> tip for you: a forest tends to hide the snake that lives in it!
 1-male_medium_crotch_is_visible,direction:down=laughing,Don't point that thing at me so soon, ~name~.
 1-male_medium_crotch_is_visible,direction:down=interested,Now that's what I came to see.
 1-male_medium_crotch_is_visible,direction:down=laughing,Maybe if you were better at this game your dick wouldn't already be out.
@@ -1561,6 +1605,8 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 1-male_large_crotch_is_visible,direction:down=shocked,How do you walk around with that thing?!
 1-male_large_crotch_is_visible,direction:down=shocked,I didn't even know they got that big...
 1-male_large_crotch_is_visible,direction:down=confused,I didn't expect such a <i>big</i> surprise so soon, but I'm not complaining.
+1-male_crotch_is_visible,filter:hairy,priority:0,direction:down=confused,Umm...don't you think you should shave if you're going to play strip poker, ~name~?
+1-male_crotch_is_visible,filter:hairy,priority:0,direction:down=laughing,I would have expected some manscaping or something but maybe you weren't planning on playing this game with us!
 1-female_chest_will_be_visible,direction:down=laughing,Come on, ~name~! Pop that top!
 1-female_chest_will_be_visible,direction:down=laughing,Maybe next time you should get good at the game, ~name~!
 1-female_chest_will_be_visible,direction:down=interested,Show us those melons, ~name~!
@@ -1578,7 +1624,8 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 1-female_large_chest_is_visible,direction:down=interested,Excellent. Distract the others while I win the game.
 1-female_chest_is_visible,target:akko,direction:down=laughing,I'm glad I'm not the only one trying way too hard to win!
 1-female_chest_is_visible,target:gwen,direction:down=confused,So...question...do those stick to walls too...?
-1-female_chest_is_visible,target:hanako,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+1-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+1-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=sad,Seriously though, <i>wear your seat belts,</i> boys and girls. They can save your life!
 1-female_chest_is_visible,target:kyu,direction:down=interested,Okay that <i>was</i> actually pretty cool.
 1-female_chest_is_visible,target:monika,direction:down=confused,I think she's forgetting there are 3 other players in the room...
 1-female_chest_is_visible,target:natsuki,direction:down=interested,Big boobs are overrated, Natsuki. You just need to have some confidence in yourself!
@@ -1590,7 +1637,7 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 1-female_crotch_is_visible,direction:down=confused,I don't know what to say...
 1-female_crotch_is_visible,direction:down=confused,Hopefully I won't be joining ~name~ very soon...
 1-female_crotch_is_visible,direction:down=happy,You're killing it, ~name~!
-1-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, fifty shades of gray? I'm admittedly not familiar with much erotica.
+1-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, Fifty Shades of Grey? I'm admittedly not familiar with much erotica.
 1-female_crotch_is_visible,target:jasmine,direction:down=shocked,The...diamond...in...the...rough...
 1-female_crotch_is_visible,target:kyu,direction:down=shocked,I'm all for the enthusiasm but this is a little much.
 1-female_crotch_is_visible,target:monika,direction:down=confused,I literally have chills going down my spine...and not the good kind...
@@ -1620,12 +1667,15 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 2-male_crotch_will_be_visible,totalRounds:0-12,direction:down=laughing,Ha! You already have to show us your dick.
 2-male_small_crotch_is_visible,direction:down=content,Well that wasn't what I was expecting.
 2-male_small_crotch_is_visible,direction:down=sad,Well that's pretty disappointing.
+2-male_small_crotch_is_visible,filter:hairy,priority:0,direction:down,weight:2=laughing,Here's <i>another</i> tip for you: a forest tends to hide the snake that lives in it!
 2-male_medium_crotch_is_visible,direction:down=confused,Is this a stick up, or are you just happy to see me?
 2-male_medium_crotch_is_visible,direction:down=interested,Now <i>that</i> is what makes this game worthwhile!
 2-male_medium_crotch_is_visible,direction:down=interested,You sure didn't disappoint, ~name~.
 2-male_large_crotch_is_visible,direction:down=interested,You have so much room to work with.
 2-male_large_crotch_is_visible,direction:down=happy,I didn't realize you were so well prepared, ~name~.
 2-male_large_crotch_is_visible,direction:down=confused,~name~, how can I put this...you have a big penis.
+2-male_crotch_is_visible,filter:hairy,priority:0,direction:down=confused,Umm...don't you think you should shave if you're going to play strip poker, ~name~?
+2-male_crotch_is_visible,filter:hairy,priority:0,direction:down=laughing,I would have expected some manscaping or something but maybe you weren't planning on playing this game with us!
 2-female_chest_will_be_visible,direction:down=excited,Sun's out, guns out!
 2-female_chest_will_be_visible,direction:down=happy,Woo! ~name~! Show off those cans!
 2-female_chest_will_be_visible,direction:down=calm,It's not like I don't see this every day in the track locker room.
@@ -1648,7 +1698,8 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 2-female_large_chest_is_visible,direction:down=laughing,Can we have a girl's night soon? Those would make excellent pillows!
 2-female_chest_is_visible,target:akko,direction:down=laughing,I'm glad I'm not the only one trying way too hard to win!
 2-female_chest_is_visible,target:gwen,direction:down=confused,So...question...do those stick to walls too...?
-2-female_chest_is_visible,target:hanako,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+2-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+2-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=sad,Seriously though, <i>wear your seat belts,</i> boys and girls. They can save your life!
 2-female_chest_is_visible,target:kyu,direction:down=interested,Okay that <i>was</i> actually pretty cool.
 2-female_chest_is_visible,target:monika,direction:down=confused,I think she's forgetting there are 3 other players in the room...
 2-female_chest_is_visible,target:natsuki,direction:down=interested,Big boobs are overrated, Natsuki. You just need to have some confidence in yourself!
@@ -1658,7 +1709,7 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 2-female_crotch_will_be_visible,direction:down=confused,I don't really swing that way, but it's not like I'm not going to look...
 2-female_crotch_will_be_visible,direction:down=excited,What are you hiding down there, ~name~?
 2-female_crotch_will_be_visible,target:jasmine,direction:down=happy,I'm just excited to see the REAL cave of wonders...
-2-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, fifty shades of gray? I'm admittedly not familiar with much erotica.
+2-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, Fifty Shades of Grey? I'm admittedly not familiar with much erotica.
 2-female_crotch_is_visible,target:jasmine,direction:down=shocked,The...diamond...in...the...rough...
 2-female_crotch_is_visible,target:kyu,direction:down=shocked,I'm all for the enthusiasm but this is a little much.
 2-female_crotch_is_visible,target:monika,direction:down=confused,I literally have chills going down my spine...and not the good kind...
@@ -1688,12 +1739,15 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 3-male_crotch_will_be_visible,totalRounds:0-12,direction:down=laughing,Ha! You already have to show us your dick.
 3-male_small_crotch_is_visible,direction:down=content,Well that wasn't what I was expecting.
 3-male_small_crotch_is_visible,direction:down=sad,Well that's pretty disappointing.
+3-male_small_crotch_is_visible,filter:hairy,priority:0,direction:down,weight:2=laughing,Here's <i>another</i> tip for you: a forest tends to hide the snake that lives in it!
 3-male_medium_crotch_is_visible,direction:down=confused,Is this a stick up, or are you just happy to see me?
 3-male_medium_crotch_is_visible,direction:down=interested,Now <i>that</i> is what makes this game worthwhile!
 3-male_medium_crotch_is_visible,direction:down=interested,You sure didn't disappoint, ~name~.
 3-male_large_crotch_is_visible,direction:down=interested,You have so much room to work with.
 3-male_large_crotch_is_visible,direction:down=happy,I didn't realize you were so well prepared, ~name~.
 3-male_large_crotch_is_visible,direction:down=confused,~name~, how can I put this...you have a big penis.
+3-male_crotch_is_visible,filter:hairy,priority:0,direction:down=confused,Umm...don't you think you should shave if you're going to play strip poker, ~name~?
+3-male_crotch_is_visible,filter:hairy,priority:0,direction:down=laughing,I would have expected some manscaping or something but maybe you weren't planning on playing this game with us!
 3-female_chest_will_be_visible,direction:down=excited,Sun's out, guns out!
 3-female_chest_will_be_visible,direction:down=happy,Woo! ~name~! Show off those cans!
 3-female_chest_will_be_visible,direction:down=calm,It's not like I don't see this every day in the track locker room.
@@ -1716,7 +1770,8 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 3-female_large_chest_is_visible,direction:down=laughing,Can we have a girl's night soon? Those would make excellent pillows!
 3-female_chest_is_visible,target:akko,direction:down=laughing,I'm glad I'm not the only one trying way too hard to win!
 3-female_chest_is_visible,target:gwen,direction:down=confused,So...question...do those stick to walls too...?
-3-female_chest_is_visible,target:hanako,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+3-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+3-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=sad,Seriously though, <i>wear your seat belts,</i> boys and girls. They can save your life!
 3-female_chest_is_visible,target:kyu,direction:down=interested,Okay that <i>was</i> actually pretty cool.
 3-female_chest_is_visible,target:monika,direction:down=confused,I think she's forgetting there are 3 other players in the room...
 3-female_chest_is_visible,target:natsuki,direction:down=interested,Big boobs are overrated, Natsuki. You just need to have some confidence in yourself!
@@ -1726,7 +1781,7 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 3-female_crotch_will_be_visible,direction:down=confused,I don't really swing that way, but it's not like I'm not going to look...
 3-female_crotch_will_be_visible,direction:down=excited,What are you hiding down there, ~name~?
 3-female_crotch_will_be_visible,target:jasmine,direction:down=happy,I'm just excited to see the REAL cave of wonders...
-3-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, fifty shades of gray? I'm admittedly not familiar with much erotica.
+3-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, Fifty Shades of Grey? I'm admittedly not familiar with much erotica.
 3-female_crotch_is_visible,target:jasmine,direction:down=shocked,The...diamond...in...the...rough...
 3-female_crotch_is_visible,target:kyu,direction:down=shocked,I'm all for the enthusiasm but this is a little much.
 3-female_crotch_is_visible,target:monika,direction:down=confused,I literally have chills going down my spine...and not the good kind...
@@ -1756,12 +1811,15 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 4-male_crotch_will_be_visible,totalRounds:0-12,direction:down=laughing,Ha! You already have to show us your dick.
 4-male_small_crotch_is_visible,direction:down=content,Well that wasn't what I was expecting.
 4-male_small_crotch_is_visible,direction:down=sad,Well that's pretty disappointing.
+4-male_small_crotch_is_visible,filter:hairy,priority:0,direction:down,weight:2=laughing,Here's <i>another</i> tip for you: a forest tends to hide the snake that lives in it!
 4-male_medium_crotch_is_visible,direction:down=confused,Is this a stick up, or are you just happy to see me?
 4-male_medium_crotch_is_visible,direction:down=interested,Now <i>that</i> is what makes this game worthwhile!
 4-male_medium_crotch_is_visible,direction:down=interested,You sure didn't disappoint, ~name~.
 4-male_large_crotch_is_visible,direction:down=interested,You have so much room to work with.
 4-male_large_crotch_is_visible,direction:down=happy,I didn't realize you were so well prepared, ~name~.
 4-male_large_crotch_is_visible,direction:down=confused,~name~, how can I put this...you have a big penis.
+4-male_crotch_is_visible,filter:hairy,priority:0,direction:down=confused,Umm...don't you think you should shave if you're going to play strip poker, ~name~?
+4-male_crotch_is_visible,filter:hairy,priority:0,direction:down=laughing,I would have expected some manscaping or something but maybe you weren't planning on playing this game with us!
 4-female_chest_will_be_visible,direction:down=excited,Sun's out, guns out!
 4-female_chest_will_be_visible,direction:down=happy,Woo! ~name~! Show off those cans!
 4-female_chest_will_be_visible,direction:down=calm,It's not like I don't see this every day in the track locker room.
@@ -1784,7 +1842,8 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 4-female_large_chest_is_visible,direction:down=laughing,Can we have a girl's night soon? Those would make excellent pillows!
 4-female_chest_is_visible,target:akko,direction:down=laughing,I'm glad I'm not the only one trying way too hard to win!
 4-female_chest_is_visible,target:gwen,direction:down=confused,So...question...do those stick to walls too...?
-4-female_chest_is_visible,target:hanako,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+4-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+4-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=sad,Seriously though, <i>wear your seat belts,</i> boys and girls. They can save your life!
 4-female_chest_is_visible,target:kyu,direction:down=interested,Okay that <i>was</i> actually pretty cool.
 4-female_chest_is_visible,target:monika,direction:down=confused,I think she's forgetting there are 3 other players in the room...
 4-female_chest_is_visible,target:natsuki,direction:down=interested,Big boobs are overrated, Natsuki. You just need to have some confidence in yourself!
@@ -1794,7 +1853,7 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 4-female_crotch_will_be_visible,direction:down=confused,I don't really swing that way, but it's not like I'm not going to look...
 4-female_crotch_will_be_visible,direction:down=excited,What are you hiding down there, ~name~?
 4-female_crotch_will_be_visible,target:jasmine,direction:down=happy,I'm just excited to see the REAL cave of wonders...
-4-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, fifty shades of gray? I'm admittedly not familiar with much erotica.
+4-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, Fifty Shades of Grey? I'm admittedly not familiar with much erotica.
 4-female_crotch_is_visible,target:jasmine,direction:down=shocked,The...diamond...in...the...rough...
 4-female_crotch_is_visible,target:kyu,direction:down=shocked,I'm all for the enthusiasm but this is a little much.
 4-female_crotch_is_visible,target:monika,direction:down=confused,I literally have chills going down my spine...and not the good kind...
@@ -1812,13 +1871,14 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 5-male_crotch_will_be_visible,totalRounds:0-12,direction:down=laughing,Ha! You already have to show us your dick.
 5-female_chest_is_visible,target:akko,direction:down=laughing,I'm glad I'm not the only one trying way too hard to win!
 5-female_chest_is_visible,target:gwen,direction:down=confused,So...question...do those stick to walls too...?
-5-female_chest_is_visible,target:hanako,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+5-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+5-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=sad,Seriously though, <i>wear your seat belts,</i> boys and girls. They can save your life!
 5-female_chest_is_visible,target:kyu,direction:down=interested,Okay that <i>was</i> actually pretty cool.
 5-female_chest_is_visible,target:monika,direction:down=confused,I think she's forgetting there are 3 other players in the room...
 5-female_chest_is_visible,target:natsuki,direction:down=interested,Big boobs are overrated, Natsuki. You just need to have some confidence in yourself!
 5-female_chest_is_visible,target:sayori,direction:down=confused,I almost feel bad...but we're all paying by the same rules, Sayori.
 5-female_crotch_will_be_visible,target:jasmine,direction:down=happy,I'm just excited to see the REAL cave of wonders...
-5-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, fifty shades of gray? I'm admittedly not familiar with much erotica.
+5-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, Fifty Shades of Grey? I'm admittedly not familiar with much erotica.
 5-female_crotch_is_visible,target:jasmine,direction:down=shocked,The...diamond...in...the...rough...
 5-female_crotch_is_visible,target:kyu,direction:down=shocked,I'm all for the enthusiasm but this is a little much.
 5-female_crotch_is_visible,target:monika,direction:down=confused,I literally have chills going down my spine...and not the good kind...
@@ -1833,7 +1893,8 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 #lost panties
 6-female_chest_is_visible,target:akko,direction:down=laughing,I'm glad I'm not the only one trying way too hard to win!
 6-female_chest_is_visible,target:gwen,direction:down=confused,So...question...do those stick to walls too...?
-6-female_chest_is_visible,target:hanako,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+6-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+6-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=sad,Seriously though, <i>wear your seat belts,</i> boys and girls. They can save your life!
 6-female_chest_is_visible,target:kyu,direction:down=interested,Okay that <i>was</i> actually pretty cool.
 6-female_chest_is_visible,target:monika,direction:down=confused,I think she's forgetting there are 3 other players in the room...
 6-female_chest_is_visible,target:natsuki,direction:down=interested,Big boobs are overrated, Natsuki. You just need to have some confidence in yourself!
@@ -1845,7 +1906,7 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 6-female_crotch_is_visible,direction:down=happy,Look who's finally caught up!
 6-female_crotch_is_visible,direction:down=laughing,There's no need to be embarrassed. We're all getting naked, here.
 6-female_crotch_is_visible,direction:down=calm,Free the beaver!
-6-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, fifty shades of gray? I'm admittedly not familiar with much erotica.
+6-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, Fifty Shades of Grey? I'm admittedly not familiar with much erotica.
 6-female_crotch_is_visible,target:jasmine,direction:down=shocked,The...diamond...in...the...rough...
 6-female_crotch_is_visible,target:kyu,direction:down=shocked,I'm all for the enthusiasm but this is a little much.
 6-female_crotch_is_visible,target:monika,direction:down=confused,I literally have chills going down my spine...and not the good kind...
@@ -1860,7 +1921,8 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 #lost socks
 7-female_chest_is_visible,target:akko,direction:down=laughing,I'm glad I'm not the only one trying way too hard to win!
 7-female_chest_is_visible,target:gwen,direction:down=confused,So...question...do those stick to walls too...?
-7-female_chest_is_visible,target:hanako,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+7-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=calm,Sure thing! Here's hoping we both get a nice hand this time, Hanako!
+7-female_chest_is_visible,target:hanako,targetSaying:...C-can we move on now?,direction:down=sad,Seriously though, <i>wear your seat belts,</i> boys and girls. They can save your life!
 7-female_chest_is_visible,target:kyu,direction:down=interested,Okay that <i>was</i> actually pretty cool.
 7-female_chest_is_visible,target:monika,direction:down=confused,I think she's forgetting there are 3 other players in the room...
 7-female_chest_is_visible,target:natsuki,direction:down=interested,Big boobs are overrated, Natsuki. You just need to have some confidence in yourself!
@@ -1872,7 +1934,7 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 7-female_crotch_is_visible,direction:down=happy,Look who's finally caught up!
 7-female_crotch_is_visible,direction:down=laughing,There's no need to be embarrassed. We're all getting naked, here.
 7-female_crotch_is_visible,direction:down=calm,Free the beaver!
-7-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, fifty shades of gray? I'm admittedly not familiar with much erotica.
+7-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, Fifty Shades of Grey? I'm admittedly not familiar with much erotica.
 7-female_crotch_is_visible,target:jasmine,direction:down=shocked,The...diamond...in...the...rough...
 7-female_crotch_is_visible,target:kyu,direction:down=shocked,I'm all for the enthusiasm but this is a little much.
 7-female_crotch_is_visible,target:monika,direction:down=confused,I literally have chills going down my spine...and not the good kind...
@@ -1950,8 +2012,8 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 -3-female_crotch_is_visible,saidMarker:pirate,direction:down=happy,What took ye, lass?
 -3-female_crotch_is_visible,saidMarker:pirate,direction:down=laughing,Thar's no needs t' be embarrassed. We be all gettin' our booty out, here.
 -3-female_crotch_is_visible,saidMarker:pirate,direction:down=calm,Free th' beaver!
--3-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, fifty shades of gray? I'm admittedly not familiar with much erotica.
--3-female_crotch_is_visible,target:hanako,saidMarker:pirate,priority:301,direction:down=calm,Jus' pretend ye're in a romantic novel, like, uh, fifty shades o' gray? I be admittedly nah familiar wit' much erotica.
+-3-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, Fifty Shades of Grey? I'm admittedly not familiar with much erotica.
+-3-female_crotch_is_visible,target:hanako,saidMarker:pirate,priority:301,direction:down=calm,Jus' pretend ye're in a romantic novel, like, uh, Fifty Shades o' Grey? I be admittedly nah familiar wit' much erotica.
 -3-female_crotch_is_visible,target:monika,direction:down=confused,I literally have chills going down my spine...and not the good kind...
 -3-female_crotch_is_visible,target:monika,direction:down=confused,Right now I'm thinking that crazy anti-feminist rants might not be the weirdest thing for someone to vocalize...
 -3-female_crotch_is_visible,target:monika,direction:down=confused,Something just isn't right with this woman...
@@ -2039,7 +2101,7 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 -1-female_crotch_is_visible,direction:down=happy,Look who's finally caught up!
 -1-female_crotch_is_visible,direction:down=laughing,There's no need to be embarrassed. We're all getting naked, here.
 -1-female_crotch_is_visible,direction:down=calm,Free the beaver!
--1-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, fifty shades of gray? I'm admittedly not familiar with much erotica.
+-1-female_crotch_is_visible,target:hanako,direction:down=calm,Just pretend you're in a romantic novel, like, uh, Fifty Shades of Grey? I'm admittedly not familiar with much erotica.
 -1-female_crotch_is_visible,target:jasmine,direction:down=shocked,The...diamond...in...the...rough...
 -1-female_crotch_is_visible,target:kyu,direction:down=shocked,I'm all for the enthusiasm but this is a little much.
 -1-female_crotch_is_visible,target:monika,direction:down=confused,I literally have chills going down my spine...and not the good kind...
@@ -2049,6 +2111,296 @@ female_crotch_is_visible,direction:down=confused,Why am I suddenly thinking of s
 -1-female_crotch_is_visible,target:monika,saidMarker:pirate,priority:301,direction:down=confused,Right now I be thinkin' that crazy anti-lassie rants might nah be th' weirdest thin' fer someone t' vocalize...
 -1-female_crotch_is_visible,target:monika,saidMarker:pirate,priority:301,direction:down=confused,Somethin' jus' ain't right wit' this strumpet...
 -1-female_crotch_is_visible,target:natsuki,direction:down=laughing,There's no shame in shaving, Natsuki. Pretty much everyone does it!
+
+
+
+
+#OPPONENT STRIPPING IN GENERAL
+#Lines that trigger when a player is strips regardless of gender or what they are removing.
+#It's useful to put all lines targeting a specific character and stage here, so they won't be affected if the
+#type of clothing should have to be changed.
+    
+
+#fully clothed
+0-opponent_lost,filter:blue_eyes,notSaidMarker:bluegrass,priority:0,marker:bluegrass,direction:down=interested,As my grandmother would say: ~name~, your eyes are as blue as grass. Yeah...she's not the brightest...
+0-opponent_lost,filter:drill_hair,notSaidMarker:drills,marker:drills,direction:down=interested,You remind of that bubbly pink-haired girl in Mutou's homeroom class.
+0-opponent_lost,filter:formal_attire,notSaidMarker:formal,marker:formal,direction:down=laughing,You realize this is a game of strip poker, not a wedding, right, ~name~? Why are you so dressed up?
+0-opponent_lost,filter:heterochromia,notSaidMarker:heteye,marker:heteye,direction:down=interested,Your eyes are <i>very</i> interesting, ~name~. There's a student at Yamaku who also has heterochromia, but unfortunately, her name escapes me.
+0-opponent_lost,filter:insane,notSaidMarker:insane,marker:insane,direction:down=confused,I have <i>no</i> idea what to expect. ~Name~ sure is a rowdy one!
+0-opponent_lost,filter:mean,totalRounds:7-,notSaidMarker:mean,marker:mean,direction:down=happy,It's always <i>so</i> satisfying when an asshole loses. You deserve this, ~name~!
+0-opponent_lost,filter:red_eyes,notSaidMarker:redeyes,marker:redeyes,direction:down=interested,Are your eyes red from the fury of losing, or do they always look like that?
+0-opponent_lost,filter:sarcastic,totalRounds:5-,notSaidMarker:sarcasm,marker:sarcasm,direction:down=laughing,Did you go to sarcasm school, ~name~? What a coincidence! I totally <i>didn't.</i>
+0-opponent_lost,targetLayers:0-2,filter:smart,notSaidMarker:smart,marker:smart,direction:down=interested,If you're so smart, how come you're losing?
+0-opponent_lost,filter:twintails,notSaidMarker:twintails,marker:twintails,direction:down=happy,Who do you all think rocks the twin-tails better? ~Name~? Or Me?
+0-opponent_lost,filter:visual_novel,notSaidMarker:VN,marker:VN,direction:down=confused,Do you ever get the feeling that not all of your choices are like...<i>yours</i>, ~name~?
+0-opponent_lost,oppHand:Full House,direction:down=laughing,You must have some unworldly kind of bad luck to lose with a <i>full house</i>, ~name~!
+0-opponent_lost,target:hanako,targetStage:0,direction:down=calm,I'm not sure I've ever seen you <i>without</i> Lilly by your side, Hanako!
+0-opponent_lost,target:hanako,targetStage:0,targetSayingMarker:hat,direction:down=calm,I didn't even know you <i>wore</i> a hat, Hanako! Bring it with you next time!
+0-opponent_lost,target:hanako,targetStage:2,direction:down=happy,Oh, hush, Hanako! We all enjoy having you here!
+0-opponent_lost,target:hanako,targetStage:3,targetSaying:I don't plan on losing&comma; so you better not go easy on me!,direction:down=happy,That's the kind of determination I <i>love</i> to see, Hanako!
+0-opponent_lost,target:hanako,targetStage:3,targetSaying:You know... if you go easy on me&comma; I don't think you'll win.,direction:down=happy,That's the kind of confidence I <i>love</i> to see, Hanako!
+0-opponent_stripping,saidMarker:insane,notSaidMarker:insane2,marker:insane2,direction:down=content,So what is ~name~ going to do this time? Perform a seance?
+0-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at school... I had a habit of only stepping on the d-darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+0-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at Yamaku Academy... I p-played a game where I'd try to only walk on darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+0-opponent_stripping,target:hanako,targetStage:2,targetSaying:I think I'm getting more comfortable with this...,direction:down=calm,That's good to hear! I'm glad you're getting the hang of the game.
+0-opponent_stripping,target:hanako,targetStage:3,direction:down=confused,Do you have trouble getting the sweat stains out of these shirts too? It's such a pain!
+0-opponent_stripping,target:hanako,targetStage:3,direction:down=sad,Aww, Hanako, we're not going to match anymore!
+0-opponent_stripping,target:hanako,targetStage:5,direction:down=interested,Fasten your seat belts, we're having Ikezawa style breasts tonight!
+0-opponent_stripped,target:hanako,alsoPlaying:hanako,notSaidMarker:hanako,priority:50,marker:hanako,direction:down=excited,Hey Hanako, I have a book suggestion for you! It's called Born to Run! It's about a guy who searches for a tribe of Tarahumara Indians, hoping they'll reveal the secrets of their superhuman distance running talents!
+0-opponent_stripped,target:hanako,targetStage:3,targetSaying:So please don't treat me any differently than you would anyone else.,direction:down=happy,I'm afraid I can't oblige. I think you're sweeter <i>and</i> kinder than "anyone else." You deserve the respect that you've earned with your heart.
+0-opponent_stripped,target:hanako,targetStage:4,direction:down=sad,Goodness, Hanako. I never realized your burns covered so much of your body.
+0-opponent_stripped,target:hanako,targetStage:4,direction:down=happy,Hanako, I just want you to know that I think you're a <i>very</i> brave woman.
+0-opponent_stripped,target:hanako,targetStage:5,targetSaidMarker:yesterday,direction:down=laughing,Alright then, <i>Paul McCartney!</i>
+0-opponent_stripped,target:hanako,targetStage:5,targetSaying:I'd... prefer it if you guys don't treat me any differently...,direction:down=annoyed,I know how you feel, Hanako. I hate being talked down to like I'm damaged and need to be <i>"saved."</i>
+0-opponent_stripped,target:hanako,targetStage:5,targetSaying:You uh... don't have to pretend like everything is normal...,direction:down=calm,Why would I do that? You aren't normal, you're <i>remarkable!</i>
+0-opponent_stripped,saidMarker:insane2,notSaidMarker:insane3,test:~clothing.type~:extra:!=,marker:insane3,direction:down=calm,Okay, I don't see any ghostly monsters arriving to kill us all or anything, but I'm <i>definitely</i> not disappointed.
+
+
+#lost shoes
+1-opponent_lost,filter:blue_eyes,notSaidMarker:bluegrass,priority:0,marker:bluegrass,direction:down=interested,As my grandmother would say: ~name~, your eyes are as blue as grass. Yeah...she's not the brightest...
+1-opponent_lost,filter:drill_hair,notSaidMarker:drills,marker:drills,direction:down=interested,You remind of that bubbly pink-haired girl in Mutou's homeroom class.
+1-opponent_lost,filter:formal_attire,notSaidMarker:formal,marker:formal,direction:down=laughing,You realize this is a game of strip poker, not a wedding, right, ~name~? Why are you so dressed up?
+1-opponent_lost,filter:heterochromia,notSaidMarker:heteye,marker:heteye,direction:down=interested,Your eyes are <i>very</i> interesting, ~name~. There's a student at Yamaku who also has heterochromia, but unfortunately, her name escapes me.
+1-opponent_lost,filter:insane,notSaidMarker:insane,marker:insane,direction:down=confused,I have <i>no</i> idea what to expect. ~Name~ sure is a rowdy one!
+1-opponent_lost,filter:mean,totalRounds:7-,notSaidMarker:mean,marker:mean,direction:down=happy,It's always <i>so</i> satisfying when an asshole loses. You deserve this, ~name~!
+1-opponent_lost,filter:red_eyes,notSaidMarker:redeyes,marker:redeyes,direction:down=interested,Are your eyes red from the fury of losing, or do they always look like that?
+1-opponent_lost,filter:sarcastic,totalRounds:5-,notSaidMarker:sarcasm,marker:sarcasm,direction:down=laughing,Did you go to sarcasm school, ~name~? What a coincidence! I totally <i>didn't.</i>
+1-opponent_lost,targetLayers:0-2,filter:smart,notSaidMarker:smart,marker:smart,direction:down=interested,If you're so smart, how come you're losing?
+1-opponent_lost,filter:twintails,notSaidMarker:twintails,marker:twintails,direction:down=happy,Who do you all think rocks the twin-tails better? ~Name~? Or Me?
+1-opponent_lost,filter:visual_novel,notSaidMarker:VN,marker:VN,direction:down=confused,Do you ever get the feeling that not all of your choices are like...<i>yours</i>, ~name~?
+1-opponent_lost,oppHand:Full House,direction:down=laughing,You must have some unworldly kind of bad luck to lose with a <i>full house</i>, ~name~!
+1-opponent_lost,target:hanako,targetStage:0,direction:down=calm,I'm not sure I've ever seen you <i>without</i> Lilly by your side, Hanako!
+1-opponent_lost,target:hanako,targetStage:0,targetSayingMarker:hat,direction:down=calm,I didn't even know you <i>wore</i> a hat, Hanako! Bring it with you next time!
+1-opponent_lost,target:hanako,targetStage:2,direction:down=happy,Oh, hush, Hanako! We all enjoy having you here!
+1-opponent_lost,target:hanako,targetStage:3,targetSaying:I don't plan on losing&comma; so you better not go easy on me!,direction:down=happy,That's the kind of determination I <i>love</i> to see, Hanako!
+1-opponent_lost,target:hanako,targetStage:3,targetSaying:You know... if you go easy on me&comma; I don't think you'll win.,direction:down=happy,That's the kind of confidence I <i>love</i> to see, Hanako!
+1-opponent_stripping,saidMarker:insane,notSaidMarker:insane2,marker:insane2,direction:down=content,So what is ~name~ going to do this time? Perform a seance?
+1-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at school... I had a habit of only stepping on the d-darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+1-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at Yamaku Academy... I p-played a game where I'd try to only walk on darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+1-opponent_stripping,target:hanako,targetStage:2,targetSaying:I think I'm getting more comfortable with this...,direction:down=calm,That's good to hear! I'm glad you're getting the hang of the game.
+1-opponent_stripping,target:hanako,targetStage:3,direction:down=confused,Do you have trouble getting the sweat stains out of these shirts too? It's such a pain!
+1-opponent_stripping,target:hanako,targetStage:3,direction:down=sad,Aww, Hanako, we're not going to match anymore!
+1-opponent_stripping,target:hanako,targetStage:5,direction:down=interested,Fasten your seat belts, we're having Ikezawa style breasts tonight!
+1-opponent_stripped,target:hanako,alsoPlaying:hanako,notSaidMarker:hanako,priority:50,marker:hanako,direction:down=excited,Hey Hanako, I have a book suggestion for you! It's called Born to Run! It's about a guy who searches for a tribe of Tarahumara Indians, hoping they'll reveal the secrets of their superhuman distance running talents!
+1-opponent_stripped,target:hanako,targetStage:3,targetSaying:So please don't treat me any differently than you would anyone else.,direction:down=happy,I'm afraid I can't oblige. I think you're sweeter <i>and</i> kinder than "anyone else." You deserve the respect that you've earned with your heart.
+1-opponent_stripped,target:hanako,targetStage:4,direction:down=sad,Goodness, Hanako. I never realized your burns covered so much of your body.
+1-opponent_stripped,target:hanako,targetStage:4,direction:down=happy,Hanako, I just want you to know that I think you're a <i>very</i> brave woman.
+1-opponent_stripped,target:hanako,targetStage:5,targetSaidMarker:yesterday,direction:down=laughing,Alright then, <i>Paul McCartney!</i>
+1-opponent_stripped,target:hanako,targetStage:5,targetSaying:I'd... prefer it if you guys don't treat me any differently...,direction:down=annoyed,I know how you feel, Hanako. I hate being talked down to like I'm damaged and need to be <i>"saved."</i>
+1-opponent_stripped,target:hanako,targetStage:5,targetSaying:You uh... don't have to pretend like everything is normal...,direction:down=calm,Why would I do that? You aren't normal, you're <i>remarkable!</i>
+1-opponent_stripped,saidMarker:insane2,notSaidMarker:insane3,test:~clothing.type~:extra:!=,marker:insane3,direction:down=calm,Okay, I don't see any ghostly monsters arriving to kill us all or anything, but I'm <i>definitely</i> not disappointed.
+
+
+#lost bow
+2-opponent_lost,filter:blue_eyes,notSaidMarker:bluegrass,priority:0,marker:bluegrass,direction:down=interested,As my grandmother would say: ~name~, your eyes are as blue as grass. Yeah...she's not the brightest...
+2-opponent_lost,filter:drill_hair,notSaidMarker:drills,marker:drills,direction:down=interested,You remind of that bubbly pink-haired girl in Mutou's homeroom class.
+2-opponent_lost,filter:heterochromia,notSaidMarker:heteye,marker:heteye,direction:down=interested,Your eyes are <i>very</i> interesting, ~name~. There's a student at Yamaku who also has heterochromia, but unfortunately, her name escapes me.
+2-opponent_lost,filter:insane,notSaidMarker:insane,marker:insane,direction:down=confused,I have <i>no</i> idea what to expect. ~Name~ sure is a rowdy one!
+2-opponent_lost,filter:mean,totalRounds:7-,notSaidMarker:mean,marker:mean,direction:down=happy,It's always <i>so</i> satisfying when an asshole loses. You deserve this, ~name~!
+2-opponent_lost,filter:sarcastic,totalRounds:5-,notSaidMarker:sarcasm,marker:sarcasm,direction:down=laughing,Did you go to sarcasm school, ~name~? What a coincidence! I totally <i>didn't.</i>
+2-opponent_lost,targetLayers:0-2,filter:smart,notSaidMarker:smart,marker:smart,direction:down=interested,If you're so smart, how come you're losing?
+2-opponent_lost,filter:twintails,notSaidMarker:twintails,marker:twintails,direction:down=happy,Who do you all think rocks the twin-tails better? ~Name~? Or Me?
+2-opponent_lost,filter:visual_novel,notSaidMarker:VN,marker:VN,direction:down=confused,Do you ever get the feeling that not all of your choices are like...<i>yours</i>, ~name~?
+2-opponent_lost,oppHand:Full House,direction:down=laughing,You must have some unworldly kind of bad luck to lose with a <i>full house</i>, ~name~!
+2-opponent_lost,target:hanako,targetStage:0,direction:down=calm,I'm not sure I've ever seen you <i>without</i> Lilly by your side, Hanako!
+2-opponent_lost,target:hanako,targetStage:0,targetSayingMarker:hat,direction:down=calm,I didn't even know you <i>wore</i> a hat, Hanako! Bring it with you next time!
+2-opponent_lost,target:hanako,targetStage:2,direction:down=happy,Oh, hush, Hanako! We all enjoy having you here!
+2-opponent_lost,target:hanako,targetStage:3,targetSaying:I don't plan on losing&comma; so you better not go easy on me!,direction:down=happy,That's the kind of determination I <i>love</i> to see, Hanako!
+2-opponent_lost,target:hanako,targetStage:3,targetSaying:You know... if you go easy on me&comma; I don't think you'll win.,direction:down=happy,That's the kind of confidence I <i>love</i> to see, Hanako!
+2-opponent_stripping,saidMarker:insane,notSaidMarker:insane2,marker:insane2,direction:down=content,So what is ~name~ going to do this time? Perform a seance?
+2-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at school... I had a habit of only stepping on the d-darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+2-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at Yamaku Academy... I p-played a game where I'd try to only walk on darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+2-opponent_stripping,target:hanako,targetStage:2,targetSaying:I think I'm getting more comfortable with this...,direction:down=calm,That's good to hear! I'm glad you're getting the hang of the game.
+2-opponent_stripping,target:hanako,targetStage:3,direction:down=confused,Do you have trouble getting the sweat stains out of these shirts too? It's such a pain!
+2-opponent_stripping,target:hanako,targetStage:3,direction:down=sad,Aww, Hanako, we're not going to match anymore!
+2-opponent_stripping,target:hanako,targetStage:5,direction:down=interested,Fasten your seat belts, we're having Ikezawa style breasts tonight!
+2-opponent_stripped,target:hanako,alsoPlaying:hanako,notSaidMarker:hanako,priority:50,marker:hanako,direction:down=excited,Hey Hanako, I have a book suggestion for you! It's called Born to Run! It's about a guy who searches for a tribe of Tarahumara Indians, hoping they'll reveal the secrets of their superhuman distance running talents!
+2-opponent_stripped,target:hanako,targetStage:3,targetSaying:So please don't treat me any differently than you would anyone else.,direction:down=happy,I'm afraid I can't oblige. I think you're sweeter <i>and</i> kinder than "anyone else." You deserve the respect that you've earned with your heart.
+2-opponent_stripped,target:hanako,targetStage:4,direction:down=sad,Goodness, Hanako. I never realized your burns covered so much of your body.
+2-opponent_stripped,target:hanako,targetStage:4,direction:down=happy,Hanako, I just want you to know that I think you're a <i>very</i> brave woman.
+2-opponent_stripped,target:hanako,targetStage:5,targetSaidMarker:yesterday,direction:down=laughing,Alright then, <i>Paul McCartney!</i>
+2-opponent_stripped,target:hanako,targetStage:5,targetSaying:I'd... prefer it if you guys don't treat me any differently...,direction:down=annoyed,I know how you feel, Hanako. I hate being talked down to like I'm damaged and need to be <i>"saved."</i>
+2-opponent_stripped,target:hanako,targetStage:5,targetSaying:You uh... don't have to pretend like everything is normal...,direction:down=calm,Why would I do that? You aren't normal, you're <i>remarkable!</i>
+2-opponent_stripped,saidMarker:insane2,notSaidMarker:insane3,test:~clothing.type~:extra:!=,marker:insane3,direction:down=calm,Okay, I don't see any ghostly monsters arriving to kill us all or anything, but I'm <i>definitely</i> not disappointed.
+
+
+#lost skirt
+3-opponent_lost,filter:gloomy,notSaidMarker:gloomy,marker:gloomy,direction:down=sad,Is there something I can do to cheer you up, ~name~? You don't seem to be having that much fun.
+3-opponent_lost,filter:insane,notSaidMarker:insane,marker:insane,direction:down=confused,I have <i>no</i> idea what to expect. ~Name~ sure is a rowdy one!
+3-opponent_lost,filter:mean,totalRounds:7-,notSaidMarker:mean,marker:mean,direction:down=happy,It's always <i>so</i> satisfying when an asshole loses. You deserve this, ~name~!
+3-opponent_lost,filter:sarcastic,totalRounds:5-,notSaidMarker:sarcasm,marker:sarcasm,direction:down=laughing,Did you go to sarcasm school, ~name~? What a coincidence! I totally <i>didn't.</i>
+3-opponent_lost,targetLayers:0-2,filter:smart,notSaidMarker:smart,marker:smart,direction:down=interested,If you're so smart, how come you're losing?
+3-opponent_lost,oppHand:Full House,direction:down=laughing,You must have some unworldly kind of bad luck to lose with a <i>full house</i>, ~name~!
+3-opponent_lost,target:hanako,targetStage:0,direction:down=calm,I'm not sure I've ever seen you <i>without</i> Lilly by your side, Hanako!
+3-opponent_lost,target:hanako,targetStage:0,targetSayingMarker:hat,direction:down=calm,I didn't even know you <i>wore</i> a hat, Hanako! Bring it with you next time!
+3-opponent_lost,target:hanako,targetStage:2,direction:down=happy,Oh, hush, Hanako! We all enjoy having you here!
+3-opponent_lost,target:hanako,targetStage:3,targetSaying:I don't plan on losing&comma; so you better not go easy on me!,direction:down=happy,That's the kind of determination I <i>love</i> to see, Hanako!
+3-opponent_lost,target:hanako,targetStage:3,targetSaying:You know... if you go easy on me&comma; I don't think you'll win.,direction:down=happy,That's the kind of confidence I <i>love</i> to see, Hanako!
+3-opponent_stripping,saidMarker:insane,notSaidMarker:insane2,marker:insane2,direction:down=content,So what is ~name~ going to do this time? Perform a seance?
+3-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at school... I had a habit of only stepping on the d-darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+3-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at Yamaku Academy... I p-played a game where I'd try to only walk on darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+3-opponent_stripping,target:hanako,targetStage:2,targetSaying:I think I'm getting more comfortable with this...,direction:down=calm,That's good to hear! I'm glad you're getting the hang of the game.
+3-opponent_stripping,target:hanako,targetStage:3,direction:down=confused,Do you have trouble getting the sweat stains out of these shirts too? It's such a pain!
+3-opponent_stripping,target:hanako,targetStage:3,direction:down=sad,Aww, Hanako, we're not going to match anymore!
+3-opponent_stripping,target:hanako,targetStage:5,direction:down=interested,Fasten your seat belts, we're having Ikezawa style breasts tonight!
+3-opponent_stripped,target:hanako,targetStage:3,targetSaying:So please don't treat me any differently than you would anyone else.,direction:down=happy,I'm afraid I can't oblige. I think you're sweeter <i>and</i> kinder than "anyone else." You deserve the respect that you've earned with your heart.
+3-opponent_stripped,target:hanako,targetStage:4,direction:down=sad,Goodness, Hanako. I never realized your burns covered so much of your body.
+3-opponent_stripped,target:hanako,targetStage:4,direction:down=happy,Hanako, I just want you to know that I think you're a <i>very</i> brave woman.
+3-opponent_stripped,target:hanako,targetStage:5,targetSaidMarker:yesterday,direction:down=laughing,Alright then, <i>Paul McCartney!</i>
+3-opponent_stripped,target:hanako,targetStage:5,targetSaying:I'd... prefer it if you guys don't treat me any differently...,direction:down=annoyed,I know how you feel, Hanako. I hate being talked down to like I'm damaged and need to be <i>"saved."</i>
+3-opponent_stripped,target:hanako,targetStage:5,targetSaying:You uh... don't have to pretend like everything is normal...,direction:down=calm,Why would I do that? You aren't normal, you're <i>remarkable!</i>
+3-opponent_stripped,saidMarker:insane2,notSaidMarker:insane3,test:~clothing.type~:extra:!=,marker:insane3,direction:down=calm,Okay, I don't see any ghostly monsters arriving to kill us all or anything, but I'm <i>definitely</i> not disappointed.
+
+
+#lost shirt
+4-opponent_lost,filter:gloomy,notSaidMarker:gloomy,marker:gloomy,direction:down=sad,Is there something I can do to cheer you up, ~name~? You don't seem to be having that much fun.
+4-opponent_lost,filter:insane,notSaidMarker:insane,marker:insane,direction:down=confused,I have <i>no</i> idea what to expect. ~Name~ sure is a rowdy one!
+4-opponent_lost,filter:mean,totalRounds:7-,notSaidMarker:mean,marker:mean,direction:down=happy,It's always <i>so</i> satisfying when an asshole loses. You deserve this, ~name~!
+4-opponent_lost,targetLayers:0-3,filter:perverted,notSaidMarker:pervert,marker:pervert,direction:down=confused,~Name~, it's pretty obvious that you're just <i>itching</i> to lose the game and...well...satisfy yourself. Take it easy, buddy.
+4-opponent_lost,filter:sarcastic,totalRounds:5-,notSaidMarker:sarcasm,marker:sarcasm,direction:down=laughing,Did you go to sarcasm school, ~name~? What a coincidence! I totally <i>didn't.</i>
+4-opponent_lost,targetLayers:0-2,filter:smart,notSaidMarker:smart,marker:smart,direction:down=interested,If you're so smart, how come you're losing?
+4-opponent_lost,oppHand:Full House,direction:down=laughing,You must have some unworldly kind of bad luck to lose with a <i>full house</i>, ~name~!
+4-opponent_lost,target:hanako,targetStage:0,direction:down=calm,I'm not sure I've ever seen you <i>without</i> Lilly by your side, Hanako!
+4-opponent_lost,target:hanako,targetStage:0,targetSayingMarker:hat,direction:down=calm,I didn't even know you <i>wore</i> a hat, Hanako! Bring it with you next time!
+4-opponent_lost,target:hanako,targetStage:2,direction:down=happy,Oh, hush, Hanako! We all enjoy having you here!
+4-opponent_lost,target:hanako,targetStage:3,targetSaying:I don't plan on losing&comma; so you better not go easy on me!,direction:down=happy,That's the kind of determination I <i>love</i> to see, Hanako!
+4-opponent_lost,target:hanako,targetStage:3,targetSaying:You know... if you go easy on me&comma; I don't think you'll win.,direction:down=happy,That's the kind of confidence I <i>love</i> to see, Hanako!
+4-opponent_lost,filter:exhibitionist,notSaidMarker:exhibitionist,test:~target.gender~:female,marker:exhibitionist,direction:down=laughing,I wouldn't be surprised if ~name~ lost that hand on purpose. She seems to like stripping a little <i>too</i> much.
+4-opponent_lost,filter:exhibitionist,notSaidMarker:exhibitionist,test:~target.gender~:male,marker:exhibitionist,direction:down=laughing,I wouldn't be surprised if ~name~ lost that hand on purpose. He seems to like stripping a little <i>too</i> much.
+4-opponent_stripping,saidMarker:insane,notSaidMarker:insane2,marker:insane2,direction:down=content,So what is ~name~ going to do this time? Perform a seance?
+4-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at school... I had a habit of only stepping on the d-darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+4-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at Yamaku Academy... I p-played a game where I'd try to only walk on darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+4-opponent_stripping,target:hanako,targetStage:2,targetSaying:I think I'm getting more comfortable with this...,direction:down=calm,That's good to hear! I'm glad you're getting the hang of the game.
+4-opponent_stripping,target:hanako,targetStage:3,direction:down=laughing,You'll hardly be able to tell we're both Yamaku students anymore!
+4-opponent_stripping,target:hanako,targetStage:3,direction:down=frustrated,Let's be honest, Yamaku's uniforms are more comfortable when they're taken <i>off.</i>
+4-opponent_stripping,target:hanako,targetStage:5,direction:down=interested,Fasten your seat belts, we're having Ikezawa style breasts tonight!
+4-opponent_stripped,target:hanako,targetStage:3,targetSaying:So please don't treat me any differently than you would anyone else.,direction:down=happy,I'm afraid I can't oblige. I think you're sweeter <i>and</i> kinder than "anyone else." You deserve the respect that you've earned with your heart.
+4-opponent_stripped,target:hanako,targetStage:4,direction:down=sad,Goodness, Hanako. I never realized your burns covered so much of your body.
+4-opponent_stripped,target:hanako,targetStage:4,direction:down=happy,Hanako, I just want you to know that I think you're a <i>very</i> brave woman.
+4-opponent_stripped,target:hanako,targetStage:5,targetSaidMarker:yesterday,direction:down=laughing,Alright then, <i>Paul McCartney!</i>
+4-opponent_stripped,target:hanako,targetStage:5,targetSaying:I'd... prefer it if you guys don't treat me any differently...,direction:down=annoyed,I know how you feel, Hanako. I hate being talked down to like I'm damaged and need to be <i>"saved."</i>
+4-opponent_stripped,target:hanako,targetStage:5,targetSaying:You uh... don't have to pretend like everything is normal...,direction:down=calm,Why would I do that? You aren't normal, you're <i>remarkable!</i>
+4-opponent_stripped,saidMarker:insane2,notSaidMarker:insane3,test:~clothing.type~:extra:!=,marker:insane3,direction:down=calm,Okay, I don't see any ghostly monsters arriving to kill us all or anything, but I'm <i>definitely</i> not disappointed.
+
+
+#lost bra
+5-opponent_lost,filter:gloomy,notSaidMarker:gloomy,marker:gloomy,direction:down=sad,Is there something I can do to cheer you up, ~name~? You don't seem to be having that much fun.
+5-opponent_lost,filter:insane,notSaidMarker:insane,marker:insane,direction:down=confused,I have <i>no</i> idea what to expect. ~Name~ sure is a rowdy one!
+5-opponent_lost,filter:mean,totalRounds:7-,notSaidMarker:mean,marker:mean,direction:down=happy,It's always <i>so</i> satisfying when an asshole loses. You deserve this, ~name~!
+5-opponent_lost,targetLayers:0-3,filter:perverted,notSaidMarker:pervert,marker:pervert,direction:down=confused,~Name~, it's pretty obvious that you're just <i>itching</i> to lose the game and...well...satisfy yourself. Take it easy, buddy.
+5-opponent_lost,filter:sarcastic,totalRounds:5-,notSaidMarker:sarcasm,marker:sarcasm,direction:down=laughing,Did you go to sarcasm school, ~name~? What a coincidence! I totally <i>didn't.</i>
+5-opponent_lost,oppHand:Full House,direction:down=laughing,You must have some unworldly kind of bad luck to lose with a <i>full house</i>, ~name~!
+5-opponent_lost,target:hanako,targetStage:0,direction:down=calm,I'm not sure I've ever seen you <i>without</i> Lilly by your side, Hanako!
+5-opponent_lost,target:hanako,targetStage:0,targetSayingMarker:hat,direction:down=calm,I didn't even know you <i>wore</i> a hat, Hanako! Bring it with you next time!
+5-opponent_lost,target:hanako,targetStage:2,direction:down=happy,Oh, hush, Hanako! We all enjoy having you here!
+5-opponent_lost,target:hanako,targetStage:3,targetSaying:I don't plan on losing&comma; so you better not go easy on me!,direction:down=happy,That's the kind of determination I <i>love</i> to see, Hanako!
+5-opponent_lost,target:hanako,targetStage:3,targetSaying:You know... if you go easy on me&comma; I don't think you'll win.,direction:down=happy,That's the kind of confidence I <i>love</i> to see, Hanako!
+5-opponent_lost,filter:exhibitionist,notSaidMarker:exhibitionist,test:~target.gender~:female,marker:exhibitionist,direction:down=laughing,I wouldn't be surprised if ~name~ lost that hand on purpose. She seems to like stripping a little <i>too</i> much.
+5-opponent_lost,filter:exhibitionist,notSaidMarker:exhibitionist,test:~target.gender~:male,marker:exhibitionist,direction:down=laughing,I wouldn't be surprised if ~name~ lost that hand on purpose. He seems to like stripping a little <i>too</i> much.
+5-opponent_stripping,saidMarker:insane,notSaidMarker:insane2,marker:insane2,direction:down=content,So what is ~name~ going to do this time? Perform a seance?
+5-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at school... I had a habit of only stepping on the d-darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+5-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at Yamaku Academy... I p-played a game where I'd try to only walk on darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+5-opponent_stripping,target:hanako,targetStage:2,targetSaying:I think I'm getting more comfortable with this...,direction:down=calm,That's good to hear! I'm glad you're getting the hang of the game.
+5-opponent_stripping,target:hanako,targetStage:3,direction:down=laughing,You'll hardly be able to tell we're both Yamaku students anymore!
+5-opponent_stripping,target:hanako,targetStage:3,direction:down=frustrated,Let's be honest, Yamaku's uniforms are more comfortable when they're taken <i>off.</i>
+5-opponent_stripping,target:hanako,targetStage:5,direction:down=interested,Fasten your seat belts, we're having Ikezawa style breasts tonight!
+5-opponent_stripped,target:hanako,targetStage:3,targetSaying:So please don't treat me any differently than you would anyone else.,direction:down=happy,I'm afraid I can't oblige. I think you're sweeter <i>and</i> kinder than "anyone else." You deserve the respect that you've earned with your heart.
+5-opponent_stripped,target:hanako,targetStage:4,direction:down=sad,Goodness, Hanako. I never realized your burns covered so much of your body.
+5-opponent_stripped,target:hanako,targetStage:4,direction:down=happy,Hanako, I just want you to know that I think you're a <i>very</i> brave woman.
+5-opponent_stripped,target:hanako,targetStage:5,targetSaidMarker:yesterday,direction:down=laughing,Alright then, <i>Paul McCartney!</i>
+5-opponent_stripped,target:hanako,targetStage:5,targetSaying:I'd... prefer it if you guys don't treat me any differently...,direction:down=annoyed,I know how you feel, Hanako. I hate being talked down to like I'm damaged and need to be <i>"saved."</i>
+5-opponent_stripped,target:hanako,targetStage:5,targetSaying:You uh... don't have to pretend like everything is normal...,direction:down=calm,Why would I do that? You aren't normal, you're <i>remarkable!</i>
+5-opponent_stripped,saidMarker:insane2,notSaidMarker:insane3,test:~clothing.type~:extra:!=,marker:insane3,direction:down=calm,Okay, I don't see any ghostly monsters arriving to kill us all or anything, but I'm <i>definitely</i> not disappointed.
+
+
+#lost panties
+6-opponent_lost,filter:gloomy,notSaidMarker:gloomy,marker:gloomy,direction:down=sad,Is there something I can do to cheer you up, ~name~? You don't seem to be having that much fun.
+6-opponent_lost,filter:insane,notSaidMarker:insane,marker:insane,direction:down=confused,I have <i>no</i> idea what to expect. ~Name~ sure is a rowdy one!
+6-opponent_lost,filter:mean,totalRounds:7-,notSaidMarker:mean,marker:mean,direction:down=happy,It's always <i>so</i> satisfying when an asshole loses. You deserve this, ~name~!
+6-opponent_lost,targetLayers:0-3,filter:perverted,notSaidMarker:pervert,marker:pervert,direction:down=confused,~Name~, it's pretty obvious that you're just <i>itching</i> to lose the game and...well...satisfy yourself. Take it easy, buddy.
+6-opponent_lost,filter:sarcastic,totalRounds:5-,notSaidMarker:sarcasm,marker:sarcasm,direction:down=laughing,Did you go to sarcasm school, ~name~? What a coincidence! I totally <i>didn't.</i>
+6-opponent_lost,oppHand:Full House,direction:down=laughing,You must have some unworldly kind of bad luck to lose with a <i>full house</i>, ~name~!
+6-opponent_lost,target:hanako,targetStage:0,direction:down=calm,I'm not sure I've ever seen you <i>without</i> Lilly by your side, Hanako!
+6-opponent_lost,target:hanako,targetStage:0,targetSayingMarker:hat,direction:down=calm,I didn't even know you <i>wore</i> a hat, Hanako! Bring it with you next time!
+6-opponent_lost,target:hanako,targetStage:2,direction:down=happy,Oh, hush, Hanako! We all enjoy having you here!
+6-opponent_lost,target:hanako,targetStage:3,targetSaying:I don't plan on losing&comma; so you better not go easy on me!,direction:down=happy,That's the kind of determination I <i>love</i> to see, Hanako!
+6-opponent_lost,target:hanako,targetStage:3,targetSaying:You know... if you go easy on me&comma; I don't think you'll win.,direction:down=happy,That's the kind of confidence I <i>love</i> to see, Hanako!
+6-opponent_lost,filter:exhibitionist,notSaidMarker:exhibitionist,test:~target.gender~:female,marker:exhibitionist,direction:down=laughing,I wouldn't be surprised if ~name~ lost that hand on purpose. She seems to like stripping a little <i>too</i> much.
+6-opponent_lost,filter:exhibitionist,notSaidMarker:exhibitionist,test:~target.gender~:male,marker:exhibitionist,direction:down=laughing,I wouldn't be surprised if ~name~ lost that hand on purpose. He seems to like stripping a little <i>too</i> much.
+6-opponent_stripping,saidMarker:insane,notSaidMarker:insane2,marker:insane2,direction:down=content,So what is ~name~ going to do this time? Perform a seance?
+6-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at school... I had a habit of only stepping on the d-darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+6-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at Yamaku Academy... I p-played a game where I'd try to only walk on darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+6-opponent_stripping,target:hanako,targetStage:2,targetSaying:I think I'm getting more comfortable with this...,direction:down=calm,That's good to hear! I'm glad you're getting the hang of the game.
+6-opponent_stripping,target:hanako,targetStage:3,direction:down=laughing,You'll hardly be able to tell we're both Yamaku students anymore!
+6-opponent_stripping,target:hanako,targetStage:3,direction:down=frustrated,Let's be honest, Yamaku's uniforms are more comfortable when they're taken <i>off.</i>
+6-opponent_stripping,target:hanako,targetStage:5,direction:down=interested,Fasten your seat belts, we're having Ikezawa style breasts tonight!
+6-opponent_stripped,target:hanako,targetStage:3,targetSaying:So please don't treat me any differently than you would anyone else.,direction:down=happy,I'm afraid I can't oblige. I think you're sweeter <i>and</i> kinder than "anyone else." You deserve the respect that you've earned with your heart.
+6-opponent_stripped,target:hanako,targetStage:4,direction:down=sad,Goodness, Hanako. I never realized your burns covered so much of your body.
+6-opponent_stripped,target:hanako,targetStage:4,direction:down=happy,Hanako, I just want you to know that I think you're a <i>very</i> brave woman.
+6-opponent_stripped,target:hanako,targetStage:5,targetSaidMarker:yesterday,direction:down=laughing,Alright then, <i>Paul McCartney!</i>
+6-opponent_stripped,target:hanako,targetStage:5,targetSaying:I'd... prefer it if you guys don't treat me any differently...,direction:down=annoyed,I know how you feel, Hanako. I hate being talked down to like I'm damaged and need to be <i>"saved."</i>
+6-opponent_stripped,target:hanako,targetStage:5,targetSaying:You uh... don't have to pretend like everything is normal...,direction:down=calm,Why would I do that? You aren't normal, you're <i>remarkable!</i>
+6-opponent_stripped,saidMarker:insane2,notSaidMarker:insane3,test:~clothing.type~:extra:!=,marker:insane3,direction:down=calm,Okay, I don't see any ghostly monsters arriving to kill us all or anything, but I'm <i>definitely</i> not disappointed.
+
+
+#lost socks
+7-opponent_lost,filter:insane,notSaidMarker:insane,marker:insane,direction:down=confused,I have <i>no</i> idea what to expect. ~Name~ sure is a rowdy one!
+7-opponent_lost,filter:mean,totalRounds:7-,notSaidMarker:mean,marker:mean,direction:down=happy,It's always <i>so</i> satisfying when an asshole loses. You deserve this, ~name~!
+7-opponent_lost,targetLayers:0-3,filter:perverted,notSaidMarker:pervert,marker:pervert,direction:down=confused,~Name~, it's pretty obvious that you're just <i>itching</i> to lose the game and...well...satisfy yourself. Take it easy, buddy.
+7-opponent_lost,filter:sarcastic,totalRounds:5-,notSaidMarker:sarcasm,marker:sarcasm,direction:down=laughing,Did you go to sarcasm school, ~name~? What a coincidence! I totally <i>didn't.</i>
+7-opponent_lost,oppHand:Full House,direction:down=laughing,You must have some unworldly kind of bad luck to lose with a <i>full house</i>, ~name~!
+7-opponent_lost,target:hanako,targetStage:0,direction:down=calm,I'm not sure I've ever seen you <i>without</i> Lilly by your side, Hanako!
+7-opponent_lost,target:hanako,targetStage:0,targetSayingMarker:hat,direction:down=calm,I didn't even know you <i>wore</i> a hat, Hanako! Bring it with you next time!
+7-opponent_lost,target:hanako,targetStage:2,direction:down=happy,Oh, hush, Hanako! We all enjoy having you here!
+7-opponent_lost,target:hanako,targetStage:3,targetSaying:I don't plan on losing&comma; so you better not go easy on me!,direction:down=happy,That's the kind of determination I <i>love</i> to see, Hanako!
+7-opponent_lost,target:hanako,targetStage:3,targetSaying:You know... if you go easy on me&comma; I don't think you'll win.,direction:down=happy,That's the kind of confidence I <i>love</i> to see, Hanako!
+7-opponent_lost,filter:exhibitionist,notSaidMarker:exhibitionist,test:~target.gender~:female,marker:exhibitionist,direction:down=laughing,I wouldn't be surprised if ~name~ lost that hand on purpose. She seems to like stripping a little <i>too</i> much.
+7-opponent_lost,filter:exhibitionist,notSaidMarker:exhibitionist,test:~target.gender~:male,marker:exhibitionist,direction:down=laughing,I wouldn't be surprised if ~name~ lost that hand on purpose. He seems to like stripping a little <i>too</i> much.
+7-opponent_stripping,saidMarker:insane,notSaidMarker:insane2,marker:insane2,direction:down=content,So what is ~name~ going to do this time? Perform a seance?
+7-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at school... I had a habit of only stepping on the d-darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+7-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at Yamaku Academy... I p-played a game where I'd try to only walk on darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+7-opponent_stripping,target:hanako,targetStage:2,targetSaying:I think I'm getting more comfortable with this...,direction:down=calm,That's good to hear! I'm glad you're getting the hang of the game.
+7-opponent_stripping,target:hanako,targetStage:3,direction:down=laughing,You'll hardly be able to tell we're both Yamaku students anymore!
+7-opponent_stripping,target:hanako,targetStage:3,direction:down=frustrated,Let's be honest, Yamaku's uniforms are more comfortable when they're taken <i>off.</i>
+7-opponent_stripping,target:hanako,targetStage:5,direction:down=interested,Fasten your seat belts, we're having Ikezawa style breasts tonight!
+7-opponent_stripped,target:hanako,targetStage:3,targetSaying:So please don't treat me any differently than you would anyone else.,direction:down=happy,I'm afraid I can't oblige. I think you're sweeter <i>and</i> kinder than "anyone else." You deserve the respect that you've earned with your heart.
+7-opponent_stripped,target:hanako,targetStage:4,direction:down=sad,Goodness, Hanako. I never realized your burns covered so much of your body.
+7-opponent_stripped,target:hanako,targetStage:4,direction:down=happy,Hanako, I just want you to know that I think you're a <i>very</i> brave woman.
+7-opponent_stripped,target:hanako,targetStage:5,targetSaidMarker:yesterday,direction:down=laughing,Alright then, <i>Paul McCartney!</i>
+7-opponent_stripped,target:hanako,targetStage:5,targetSaying:I'd... prefer it if you guys don't treat me any differently...,direction:down=annoyed,I know how you feel, Hanako. I hate being talked down to like I'm damaged and need to be <i>"saved."</i>
+7-opponent_stripped,target:hanako,targetStage:5,targetSaying:You uh... don't have to pretend like everything is normal...,direction:down=calm,Why would I do that? You aren't normal, you're <i>remarkable!</i>
+7-opponent_stripped,saidMarker:insane2,notSaidMarker:insane3,test:~clothing.type~:extra:!=,marker:insane3,direction:down=calm,Okay, I don't see any ghostly monsters arriving to kill us all or anything, but I'm <i>definitely</i> not disappointed.
+
+
+#naked
+-3-opponent_stripping,target:hanako,targetStage:3,direction:down=laughing,You'll hardly be able to tell we're both Yamaku students anymore!
+-3-opponent_stripping,target:hanako,targetStage:3,direction:down=frustrated,Let's be honest, Yamaku's uniforms are more comfortable when they're taken <i>off.</i>
+
+
+#finished
+-1-opponent_lost,filter:insane,notSaidMarker:insane,marker:insane,direction:down=confused,I have <i>no</i> idea what to expect. ~Name~ sure is a rowdy one!
+-1-opponent_lost,filter:mean,totalRounds:7-,notSaidMarker:mean,marker:mean,direction:down=happy,It's always <i>so</i> satisfying when an asshole loses. You deserve this, ~name~!
+-1-opponent_lost,filter:sarcastic,totalRounds:5-,notSaidMarker:sarcasm,marker:sarcasm,direction:down=laughing,Did you go to sarcasm school, ~name~? What a coincidence! I totally <i>didn't.</i>
+-1-opponent_lost,oppHand:Full House,direction:down=laughing,You must have some unworldly kind of bad luck to lose with a <i>full house</i>, ~name~!
+-1-opponent_lost,target:hanako,targetStage:0,direction:down=calm,I'm not sure I've ever seen you <i>without</i> Lilly by your side, Hanako!
+-1-opponent_lost,target:hanako,targetStage:0,targetSayingMarker:hat,direction:down=calm,I didn't even know you <i>wore</i> a hat, Hanako! Bring it with you next time!
+-1-opponent_lost,target:hanako,targetStage:2,direction:down=happy,Oh, hush, Hanako! We all enjoy having you here!
+-1-opponent_lost,target:hanako,targetStage:3,targetSaying:I don't plan on losing&comma; so you better not go easy on me!,direction:down=happy,That's the kind of determination I <i>love</i> to see, Hanako!
+-1-opponent_lost,target:hanako,targetStage:3,targetSaying:You know... if you go easy on me&comma; I don't think you'll win.,direction:down=happy,That's the kind of confidence I <i>love</i> to see, Hanako!
+-1-opponent_stripping,saidMarker:insane,notSaidMarker:insane2,marker:insane2,direction:down=content,So what is ~name~ going to do this time? Perform a seance?
+-1-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at school... I had a habit of only stepping on the d-darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+-1-opponent_stripping,target:hanako,targetStage:1,targetSaying:B-back at Yamaku Academy... I p-played a game where I'd try to only walk on darker tiles...,direction:down=laughing,I <i>already</i> have a habit of running into people in the hallways, so I probably shouldn't try that out!
+-1-opponent_stripping,target:hanako,targetStage:2,targetSaying:I think I'm getting more comfortable with this...,direction:down=calm,That's good to hear! I'm glad you're getting the hang of the game.
+-1-opponent_stripping,target:hanako,targetStage:3,direction:down=laughing,You'll hardly be able to tell we're both Yamaku students anymore!
+-1-opponent_stripping,target:hanako,targetStage:3,direction:down=frustrated,Let's be honest, Yamaku's uniforms are more comfortable when they're taken <i>off.</i>
+-1-opponent_stripping,target:hanako,targetStage:5,direction:down=interested,Fasten your seat belts, we're having Ikezawa style breasts tonight!
+-1-opponent_stripped,target:hanako,targetStage:3,targetSaying:So please don't treat me any differently than you would anyone else.,direction:down=happy,I'm afraid I can't oblige. I think you're sweeter <i>and</i> kinder than "anyone else." You deserve the respect that you've earned with your heart.
+-1-opponent_stripped,target:hanako,targetStage:4,direction:down=sad,Goodness, Hanako. I never realized your burns covered so much of your body.
+-1-opponent_stripped,target:hanako,targetStage:4,direction:down=happy,Hanako, I just want you to know that I think you're a <i>very</i> brave woman.
+-1-opponent_stripped,target:hanako,targetStage:5,targetSaidMarker:yesterday,direction:down=laughing,Alright then, <i>Paul McCartney!</i>
+-1-opponent_stripped,target:hanako,targetStage:5,targetSaying:I'd... prefer it if you guys don't treat me any differently...,direction:down=annoyed,I know how you feel, Hanako. I hate being talked down to like I'm damaged and need to be <i>"saved."</i>
+-1-opponent_stripped,target:hanako,targetStage:5,targetSaying:You uh... don't have to pretend like everything is normal...,direction:down=calm,Why would I do that? You aren't normal, you're <i>remarkable!</i>
+-1-opponent_stripped,saidMarker:insane2,notSaidMarker:insane3,test:~clothing.type~:extra:!=,marker:insane3,direction:down=calm,Okay, I don't see any ghostly monsters arriving to kill us all or anything, but I'm <i>definitely</i> not disappointed.
 
 
 
@@ -2071,7 +2423,7 @@ male_start_masturbating,direction:down=calm,What better company to do this with?
 male_start_masturbating,direction:down=confused,This is honestly surreal. I can't say I've ever experienced something like this!
 male_masturbating,direction:down=interested,I see you glancing at me, ~name~. It's alright, I'm fine with it.
 male_masturbating,direction:down=confused,You're really racing for the finish, aren't you ~name~?
-male_masturbating,direction:down=confused,Ok, maybe losing wouldn't be so bad. I...can't believe I just said that!
+male_masturbating,direction:down=confused,Okay, maybe losing wouldn't be so bad. I...can't believe I just said that!
 male_masturbating,direction:down=interested,Hang in there, ~name~. If you're lucky, I might join you soon.
 male_finished_masturbating,direction:down=interested,Wow ~name~, I didn't know you were <i>that</i> into me...
 male_finished_masturbating,direction:down=confused,That...got...everywhere...
@@ -2172,7 +2524,7 @@ female_finished_masturbating,direction:down=confused,I don't know what I expecte
 2-female_must_masturbate,direction:down=confused,I sure hope I don't end up having to do that!
 2-female_must_masturbate,direction:down=calm,Well, you may as well, ~name~! Life's too short to let embarrassment get in the way!
 2-female_start_masturbating,direction:down=laughing,Well I guess you better get started!
-2-female_start_masturbating,direction:down=confused,~name~ I'm not going to tell you to stop but..really?
+2-female_start_masturbating,direction:down=confused,~Name~, I'm not going to tell you to stop but...really?
 2-female_start_masturbating,direction:down=confused,Oh, okay, well, props for being a good sport!
 2-female_start_masturbating,direction:down=calm,Oh wow! She's really going at it!
 2-female_start_masturbating,target:twilight,direction:down=laughing,Yeah ~name~! Smack that pony!
@@ -2180,7 +2532,7 @@ female_finished_masturbating,direction:down=confused,I don't know what I expecte
 2-female_masturbating,direction:down=calm,Are you enjoying yourself, ~name~?
 2-female_masturbating,direction:down=interested,You're really going at it, ~name~.
 2-female_masturbating,direction:down=calm,You sure aren't one to hold back, are you, ~name~?
-2-female_masturbating,direction:down=confused,Did ~name~ just say what I thought she said?
+2-female_masturbating,direction:down=confused,Does anyone think ~name~ might be enjoying themselves a little <i>too</i> much?
 2-female_finished_masturbating,direction:down=laughing,This is just too much...
 2-female_finished_masturbating,direction:down=laughing,Did you enjoy yourself, ~name~?
 2-female_finished_masturbating,direction:down=confused,Should I cheer her on? I'm not sure how to react.
@@ -2205,7 +2557,7 @@ female_finished_masturbating,direction:down=confused,I don't know what I expecte
 3-female_must_masturbate,direction:down=confused,I sure hope I don't end up having to do that!
 3-female_must_masturbate,direction:down=calm,Well, you may as well, ~name~! Life's too short to let embarrassment get in the way!
 3-female_start_masturbating,direction:down=laughing,Well I guess you better get started!
-3-female_start_masturbating,direction:down=confused,~name~ I'm not going to tell you to stop but..really?
+3-female_start_masturbating,direction:down=confused,~Name~, I'm not going to tell you to stop but...really?
 3-female_start_masturbating,direction:down=confused,Oh, okay, well, props for being a good sport!
 3-female_start_masturbating,direction:down=calm,Oh wow! She's really going at it!
 3-female_start_masturbating,target:twilight,direction:down=laughing,Yeah ~name~! Smack that pony!
@@ -2213,7 +2565,7 @@ female_finished_masturbating,direction:down=confused,I don't know what I expecte
 3-female_masturbating,direction:down=calm,Are you enjoying yourself, ~name~?
 3-female_masturbating,direction:down=interested,You're really going at it, ~name~.
 3-female_masturbating,direction:down=calm,You sure aren't one to hold back, are you, ~name~?
-3-female_masturbating,direction:down=confused,Did ~name~ just say what I thought she said?
+3-female_masturbating,direction:down=confused,Does anyone think ~name~ might be enjoying themselves a little <i>too</i> much?
 3-female_finished_masturbating,direction:down=laughing,This is just too much...
 3-female_finished_masturbating,direction:down=laughing,Did you enjoy yourself, ~name~?
 3-female_finished_masturbating,direction:down=confused,Should I cheer her on? I'm not sure how to react.
@@ -2238,7 +2590,7 @@ female_finished_masturbating,direction:down=confused,I don't know what I expecte
 4-female_must_masturbate,direction:down=confused,I sure hope I don't end up having to do that!
 4-female_must_masturbate,direction:down=calm,Well, you may as well, ~name~! Life's too short to let embarrassment get in the way!
 4-female_start_masturbating,direction:down=laughing,Well I guess you better get started!
-4-female_start_masturbating,direction:down=confused,~name~ I'm not going to tell you to stop but..really?
+4-female_start_masturbating,direction:down=confused,~Name~, I'm not going to tell you to stop but...really?
 4-female_start_masturbating,direction:down=confused,Oh, okay, well, props for being a good sport!
 4-female_start_masturbating,direction:down=calm,Oh wow! She's really going at it!
 4-female_start_masturbating,target:twilight,direction:down=laughing,Yeah ~name~! Smack that pony!
@@ -2246,7 +2598,7 @@ female_finished_masturbating,direction:down=confused,I don't know what I expecte
 4-female_masturbating,direction:down=calm,Are you enjoying yourself, ~name~?
 4-female_masturbating,direction:down=interested,You're really going at it, ~name~.
 4-female_masturbating,direction:down=calm,You sure aren't one to hold back, are you, ~name~?
-4-female_masturbating,direction:down=confused,Did ~name~ just say what I thought she said?
+4-female_masturbating,direction:down=confused,Does anyone think ~name~ might be enjoying themselves a little <i>too</i> much?
 4-female_finished_masturbating,direction:down=laughing,This is just too much...
 4-female_finished_masturbating,direction:down=laughing,Did you enjoy yourself, ~name~?
 4-female_finished_masturbating,direction:down=confused,Should I cheer her on? I'm not sure how to react.
@@ -2277,7 +2629,7 @@ female_finished_masturbating,direction:down=confused,I don't know what I expecte
 -3-male_start_masturbating,saidMarker:pirate,direction:down=confused,'tis honestly surreal. I can nah say I've ever experienced somethin' like this!
 -3-male_masturbating,saidMarker:pirate,direction:down=interested,I see ye glancin' at me, ~name~. 'tis alright, I be fine wit' it.
 -3-male_masturbating,saidMarker:pirate,direction:down=confused,Ye're really racin' fer th' finish, aren't ye ~name~?
--3-male_masturbating,saidMarker:pirate,direction:down=confused,Ok, maybe losin' wouldna be so bad. I...can nah believe I jus' said that!
+-3-male_masturbating,saidMarker:pirate,direction:down=confused,Okay, maybe losin' wouldna be so bad. I...can nah believe I jus' said that!
 -3-male_masturbating,saidMarker:pirate,direction:down=interested,Hang in thar, ~name~. If ye're lucky, I might join ye soon.
 -3-male_finished_masturbating,saidMarker:pirate,direction:down=interested,Wow ~name~, I didn' know ye were <i>that</i> into me...
 -3-male_finished_masturbating,saidMarker:pirate,direction:down=confused,That...got...everywhere...
@@ -2344,7 +2696,7 @@ female_finished_masturbating,direction:down=confused,I don't know what I expecte
 -1-male_start_masturbating,direction:down=interested,Now that's a sight to behold!
 -1-male_masturbating,direction:down=laughing,Don't go too quickly, ~name~!
 -1-male_masturbating,direction:down=interested,I bet you're disappointed I'm not participating with you right now. Maybe next time.
--1-male_masturbating,direction:down=calm,I'm not happy with how I played but at least I get to watch ~name~ do this...
+-1-male_masturbating,direction:down=calm,I'm not happy with how I played, but at least I get to watch ~name~ do this!
 -1-male_masturbating,direction:down=interested,Maybe I could go for another round...
 -1-male_finished_masturbating,direction:down=interested,Did you have fun over there, ~name~?
 -1-male_finished_masturbating,direction:down=confused,Well...when in Rome...
@@ -2388,9 +2740,7 @@ female_finished_masturbating,direction:down=confused,I don't know what I expecte
 -3-start_masturbating,direction:down=canoes,This might be hard to believe, but I'm going to take this slow.
 -3-start_masturbating,direction:down=canoes,This is one instance in which finishing first is NOT ideal.
 -3-start_masturbating,direction:down=canoes,Well I guess I'll start jacking Jill up the hill.
--3-start_masturbating,saidMarker:pirate,priority:10,direction:down=calm,This might be hard t' believe, but I be goin' t' loot this slow.
--3-start_masturbating,saidMarker:pirate,priority:10,direction:down=calm,'tis one instance in which finishin' first be NOT ideal.
--3-start_masturbating,saidMarker:pirate,priority:10,direction:down=laughing,Shall I start jackin' Jill up th' hill?
+-3-start_masturbating,saidMarker:pirate,priority:10,direction:down=laughing,Okay, I'm not going to talk like a pirate for this. That would be weird.
 
 
 #masturbating
@@ -2412,7 +2762,7 @@ female_finished_masturbating,direction:down=confused,I don't know what I expecte
 -1-finished_masturbating,direction:down=confused,Ahaha...it looks like I got a little carried away there...
 -1-finished_masturbating,direction:down=content,Alright, when are we playing again? I want to redeem myself.
 -1-finished_masturbating,direction:down=annoyed,Don't look at me like that. I have a healthy adolescent sex drive.
--1-finished_masturbating,direction:down=content,I hope you enjoyed the show because you won't get the luxury of beating me again.
+-1-finished_masturbating,direction:down=content,I hope you enjoyed the show, because you <i>won't</i> get the luxury of beating me again!
 -1-finished_masturbating,direction:down=laughing,And that's how the fastest runner on no legs does it!
 -1-finished_masturbating,direction:down=annoyed,You better not tell your friends about this! I <i>WILL</i> find out!
 
