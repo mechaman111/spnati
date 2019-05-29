@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.0b at 7:11:56 AM on April 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.3 at 6:24:20 AM on May 13, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v4.0b</version>
+    <version>v4.3</version>
     <first>Nagisa</first>
     <last>Furukawa</last>
     <label>Nagisa</label>
@@ -79,6 +79,10 @@
             <case tag="game_start">
                 <condition count="1" filter="nagisa_valentine" />
                 <state img="0-winkthumbsup.png">&lt;i&gt;Just kidding!&lt;/i&gt; It's me, Nagisa! I'm just wearing my waitress uniform from the cafe I work at. Today is a special day, after all...</state>
+            </case>
+            <case tag="game_start">
+                <test expr="~background~" value="street" />
+                <state img="0-embarrassed.png" marker="nagisa_road">We... we aren't really going to play in the middle of the road, are we?!</state>
             </case>
             <case tag="swap_cards">
                 <state img="0-thinking.png">Could I please have ~cards~?</state>
@@ -201,6 +205,10 @@
                 <condition count="1" filter="princess" />
                 <state img="0-worried.png">I think I might have come to the wrong room. I'm not good enough to play against a princess...</state>
             </case>
+            <case tag="hand" alsoPlaying="xander" hasHand="High Card" notSaidMarker="nagisa_xander_high_card" alsoPlayingSaying="pretty good at poker">
+                <test expr="~xander.position~" value="left" />
+                <state img="0-happy.png" marker="nagisa_xander_high_card">Could you check my hand for me, Xander? I'm not sure I have anything.</state>
+            </case>
             <case tag="hand" totalFemales="1" totalRounds="0">
                 <state img="0-veryembarrassed.png" marker="nagisa_playing_with_boys">Um, I didn't realize that I was going to be the only girl here...</state>
             </case>
@@ -210,6 +218,10 @@
             <case tag="hand" totalMales="2-3" totalRounds="0">
                 <state img="0-veryembarrassed.png" marker="nagisa_playing_with_boys">Um, I didn't know that there were going to be boys playing with us too.</state>
             </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_awk1">
+                <test expr="~streamingchan.position~" value="left" />
+                <state img="0-worried.png" marker="nagisa_streaming-chan_awk1">You don't think I seem old enough, Streaming-chan?</state>
+            </case>
             <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_drama1">
                 <test expr="~streamingchan.position~" value="left" />
                 <state img="0-shy.png" marker="nagisa_streaming-chan_drama1">The drama club is actually closed down right now, but I'd like to restart it if I can.</state>
@@ -217,10 +229,6 @@
             <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_gog1">
                 <test expr="~streamingchan.position~" value="left" />
                 <state img="0-thinking.png" marker="nagisa_streaming-chan_gog1">"Girl on girl"? I'm not sure what that is.</state>
-            </case>
-            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_awk1">
-                <test expr="~streamingchan.position~" value="left" />
-                <state img="0-worried.png" marker="nagisa_streaming-chan_awk1">You don't think I seem old enough, Streaming-chan?</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="0-happy.png">The least I could do is take off something small for losing.</state>
@@ -262,13 +270,6 @@
             <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_gog2">
                 <test expr="~streamingchan.position~" value="left" />
                 <state img="0-veryembarrassed.png" marker="nagisa_streaming-chan_gog2">W-wait, you mean... &lt;i&gt;that&lt;/i&gt;... with a girl? Oh, I... I...</state>
-            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_awk2">
-                <test expr="~streamingchan.position~" value="left" />
-                <state img="0-strip.png" marker="nagisa_streaming-chan_awk2">Oh, that's what you meant. I'm sorry if I'm being weird about this. It's just... I've never played this game before...</state>
-            </case>
-            <case tag="stripping" alsoPlaying="streaming-chan"  notSaidMarker="nagisa_streaming-chan_awk1" alsoPlayingSaidMarker="nagisa_awk1">
-                <state img="0-strip.png" marker="nagisa_streaming-chan_awk1">I hope I'm doing this right...</state>
-            </case>
             </case>
             <case tag="stripping" totalRounds="0">
                 <state img="0-strip.png">I was hoping I could copy somebody else. Is it okay if I take my shoes off first?</state>
@@ -470,6 +471,10 @@
             <case tag="male_removing_minor">
                 <state img="0-shy.png">If it were me, I think I might be kinda sad.</state>
             </case>
+            <case tag="male_removing_minor" target="xander" targetStage="0" alsoPlayingSaying="I’m going to start big">
+                <test expr="~xander.position~" value="left" />
+                <state img="0-embarrassed.png">Oh no! Don't feel that you have to start big on my account!</state>
+            </case>
             <case tag="male_removed_minor">
                 <state img="0-shy.png">That's what I hoped you were going to pick.</state>
                 <state img="0-embarrassed.png">I'm worried. I've never been to a place like this.</state>
@@ -495,6 +500,9 @@
             </case>
             <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
                 <state img="0-happy.png">Your stockings are really cute, Nugi-chan! After I finish senior year, I'd like to get a job as a waitress that gets to wear an outfit like yours.</state>
+            </case>
+            <case tag="female_removing_minor" target="sakura" targetStage="1">
+                <state img="0-calm.png">~Player~ and I won't look, will we, ~player~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="0-supportive.png">From now on, I'll try my best to support you.</state>
@@ -734,6 +742,18 @@
             <case tag="game_over_victory" alsoPlaying="sanako">
                 <state img="0-maximumembarrassed.png">I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.</state>
             </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_dango1">
+                <test expr="~streamingchan.position~" value="left" />
+                <state img="0-embarrassed.png" marker="nagisa_streaming-chan_dango1">Um, you're not going to put me in TV are you, Streaming-chan?</state>
+            </case>
+
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_dango2">
+                <test expr="~streamingchan.position~" value="left" />
+                <state img="0-dango.png" marker="nagisa_streaming-chan_dango2">Oh, the Big Dango Family? They're the best! I'd love to sing the song for you all.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_dango1" alsoPlayingSaidMarker="nagisa_dango1">
+                <state img="0-dango.png" marker="nagisa_streaming-chan_dango1">I love the Big Dango Family because they'll always support each other no matter what!</state>
+            </case>
         </stage>
 
         <stage id="1">
@@ -809,6 +829,10 @@
                 <condition count="1" filter="nagisa_valentine" />
                 <state img="1-sad.png">~Player~, I know you've done so much for me, so I hope I can make today special for you.</state>
             </case>
+            <case tag="hand" alsoPlaying="xander" hasHand="High Card" notSaidMarker="nagisa_xander_high_card" alsoPlayingSaying="pretty good at poker">
+                <test expr="~xander.position~" value="left" />
+                <state img="1-raisedhand.png" marker="nagisa_xander_high_card">Could you check my hand for me, Xander? I'm not sure I have anything.</state>
+            </case>
             <case tag="must_strip_winning">
                 <state img="1-shy.png">Thank you guys for playing with me. I know I'm not worth much, but...</state>
                 <state img="1-shy.png">Everybody was so far ahead of me, I was beginning to feel like I was Tarou Urashima.</state>
@@ -828,11 +852,18 @@
             <case tag="stripped">
                 <state img="1-stripped.png">I don't know why I was wearing shoes in here anyway!</state>
             </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_awk2" alsoPlayingSaidMarker="nagisa_awk2">
+                <state img="1-embarrassed.png" marker="nagisa_streaming-chan_awk2">I'm sorry if I'm being weird, Streaming-chan... I'm trying my best.</state>
+            </case>
             <case tag="stripped" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_drama2" alsoPlayingSaidMarker="nagisa_drama2">
                 <state img="1-singing.png" marker="nagisa_streaming-chan_drama2">Maybe I'll sing you a song when it's my turn again.</state>
             </case>
             <case tag="stripped" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_gog2" alsoPlayingSaidMarker="nagisa_gog2">
                 <state img="1-shy.png" marker="nagisa_streaming-chan_gog2">I'll have to try it later. I have to focus on my cards right now.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_awk3">
+                <test expr="~streamingchan.position~" value="left" />
+                <state img="1-sad.png" marker="nagisa_streaming-chan_awk3">M-Me?! Cute... Really?</state>
             </case>
             <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_drama3">
                 <test expr="~streamingchan.position~" value="left" />
@@ -841,13 +872,6 @@
             <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_gog3">
                 <test expr="~streamingchan.position~" value="left" />
                 <state img="1-embarrassed.png" marker="nagisa_streaming-chan_gog3">I don't want to disappoint you, Streaming-chan, but I just couldn't do that!</state>
-            </case>
-            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_awk3">
-                <test expr="~streamingchan.position~" value="left" />
-                <state img="1-sad.png" marker="nagisa_streaming-chan_awk3">M-Me?! Cute... Really?</state>
-            </case>
-            <case tag="stripped" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_awk2" alsoPlayingSaidMarker="nagisa_awk2">
-                <state img="1-embarrassed.png" marker="nagisa_streaming-chan_awk2">I'm sorry if I'm being weird, Streaming-chan... I'm trying my best.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="1-shy.png">I'm sorry...</state>
@@ -1035,6 +1059,10 @@
             <case tag="male_removing_minor">
                 <state img="1-sad.png">I'm sorry, ~name~. I hate to trouble you with all this stuff.</state>
             </case>
+            <case tag="male_removing_minor" target="xander" targetStage="0" alsoPlayingSaying="I’m going to start big">
+                <test expr="~xander.position~" value="left" />
+                <state img="1-embarrassed.png">Oh no! Don't feel that you have to start big on my account!</state>
+            </case>
             <case tag="male_removed_minor">
                 <state img="1-happy.png">That's a good idea.</state>
             </case>
@@ -1058,6 +1086,9 @@
             </case>
             <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
                 <state img="1-strip.png">Your stockings are really cute, Nugi-chan! After I finish senior year, I'd like to get a job as a waitress that gets to wear an outfit like yours.</state>
+            </case>
+            <case tag="female_removing_minor" target="sakura" targetStage="1">
+                <state img="1-calm.png">~Player~ and I won't look, will we, ~player~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="1-calm.png">Oh, I love your ~clothing~.</state>
@@ -1305,6 +1336,13 @@
             <case tag="game_over_victory" alsoPlaying="sanako">
                 <state img="1-maximumembarrassed.png">I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.</state>
             </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_dango3">
+                <test expr="~streamingchan.position~" value="left" />
+                <state img="1-strip.png" marker="nagisa_streaming-chan_dango3">I'd be happy to help anytime, Streaming-chan!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_dango2" alsoPlayingSaidMarker="nagisa_dango2">
+                <state img="1-strip.png" marker="nagisa_streaming-chan_dango2">Does anybody want to sing the Big Dango Family song with me?</state>
+            </case>
         </stage>
 
         <stage id="2">
@@ -1315,8 +1353,8 @@
                 <state img="2-handsbehindback.png">Could I try ~cards~?</state>
             </case>
             <case tag="good_hand">
-                <state img="2-interested.png">This is better than my last hand!</state>
                 <state img="2-happy.png">I think this is a good one.</state>
+                <state img="2-interested.png">This is better than my last hand!</state>
             </case>
             <case tag="good_hand" alsoPlaying="buffy" priority="0">
                 <state img="2-happy.png" marker="nagisa_asks_buffy_about_school">I love my school very, very much! How about you, Buffy? Did you love your high school too?</state>
@@ -1347,6 +1385,10 @@
             </case>
             <case tag="hand" alsoPlaying="kyu" totalRounds="4">
                 <state img="2-shy.png">I'm sure your complete outfit looks very beautiful, Kyu. I wish we could've seen it.</state>
+            </case>
+            <case tag="hand" alsoPlaying="xander" hasHand="High Card" notSaidMarker="nagisa_xander_high_card" alsoPlayingSaying="pretty good at poker">
+                <test expr="~xander.position~" value="left" />
+                <state img="2-shy.png" marker="nagisa_xander_high_card">Could you check my hand for me, Xander? I'm not sure I have anything.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="2-crossedarms.png">No cameras are allowed to be on anymore, right?</state>
@@ -1573,6 +1615,10 @@
                 <state img="2-shy.png">I'm getting mixed feelings about this whole thing.</state>
                 <state img="2-sad.png">I know it's not much, but it still makes me a little nervous.</state>
             </case>
+            <case tag="male_removing_minor" target="xander" targetStage="0" alsoPlayingSaying="I’m going to start big">
+                <test expr="~xander.position~" value="left" />
+                <state img="2-embarrassed.png">Oh no! Don't feel that you have to start big on my account!</state>
+            </case>
             <case tag="male_removed_minor">
                 <state img="2-happy.png">I'm always shy around strangers. I'm not very good at making friends, either.</state>
                 <state img="2-shy.png">I'm sorry for getting shy over something so little.</state>
@@ -1594,6 +1640,9 @@
             </case>
             <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
                 <state img="2-happy.png">Your stockings are really cute, Nugi-chan! After I finish senior year, I'd like to get a job as a waitress that gets to wear an outfit like yours.</state>
+            </case>
+            <case tag="female_removing_minor" target="sakura" targetStage="1">
+                <state img="2-calm.png">~Player~ and I won't look, will we, ~player~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="2-happy.png">Wasn't that nice of her? I thought it was.</state>
@@ -2104,6 +2153,9 @@
             <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
                 <state img="3-excited.png">Your stockings are really cute, Nugi-chan! After I finish senior year, I'd like to get a job as a waitress that gets to wear an outfit like yours.</state>
             </case>
+            <case tag="female_removing_minor" target="sakura" targetStage="1">
+                <state img="3-calm.png">~Player~ and I won't look, will we, ~player~?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="3-wink.png">You look so cute without the ~clothing~, ~name~!</state>
             </case>
@@ -2564,6 +2616,9 @@
             </case>
             <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
                 <state img="4-happy.png">Your stockings are really cute, Nugi-chan! After I finish senior year, I'd like to get a job as a waitress that gets to wear an outfit like yours.</state>
+            </case>
+            <case tag="female_removing_minor" target="sakura" targetStage="1">
+                <state img="4-calm.png">~Player~ and I won't look, will we, ~player~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="4-happy.png">Your hair is so shiny. I'm kinda jealous of you.</state>
@@ -3874,6 +3929,9 @@
             <case tag="female_removing_minor" target="mei" targetStage="2">
                 <state img="7-nervous.png">A big coat like that could really keep me warm right now.</state>
             </case>
+            <case tag="female_removing_minor" target="sakura" targetStage="1">
+                <state img="7-calm.png">~Player~ and I won't look, will we, ~player~?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="7-determined.png">I think ~name~ is doing the best she can!</state>
             </case>
@@ -4181,6 +4239,9 @@
             </case>
             <case tag="female_removing_minor">
                 <state img="8-calm.png">&lt;i&gt;Even in a world like this, winter still comes.&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removing_minor" target="sakura" targetStage="1">
+                <state img="8-calm.png">~Player~ and I won't look, will we, ~player~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="8-eyesopenlookingtoside.png">&lt;i&gt;We can't let that special gift of hers go to waste.&lt;/i&gt;</state>
@@ -4667,66 +4728,66 @@
                 <state img="9-closedeyes.png">When I close my eyes, it's almost like I'm not in a room full of people with no clothes on.</state>
             </case>
             <case tag="game_over_defeat">
-                <state collectible="nagisa_panties" img="9-victorystanding.png">Congratulations! I hope I'll be the winner next time... if I ever play again.</state>
-                <state collectible="nagisa_panties" img="seven-rear.png" marker="nagisa_rear">Congratulations, ~name~. Um, if the game's over, I can face this way, right?</state>
+                <state img="9-victorystanding.png" collectible="nagisa_panties">Congratulations! I hope I'll be the winner next time... if I ever play again.</state>
+                <state img="seven-rear.png" marker="nagisa_rear" collectible="nagisa_panties">Congratulations, ~name~. Um, if the game's over, I can face this way, right?</state>
             </case>
             <case tag="game_over_defeat" target="human" priority="1000">
                 <condition count="1" filter="nagisa_valentine" />
-                <state collectible="nagisa_panties" img="9-embarrassed.png">Was this a good enough Valentine's present, ~name~? Let me know if it wasn't enough...</state>
+                <state img="9-embarrassed.png" collectible="nagisa_panties">Was this a good enough Valentine's present, ~name~? Let me know if it wasn't enough...</state>
             </case>
             <case tag="game_over_defeat" filter="princess">
-                <state collectible="nagisa_panties" img="9-victorystanding.png">Congratulations, your highness! Um, would you be able to command everyone to close their eyes while I get dressed?</state>
+                <state img="9-victorystanding.png" collectible="nagisa_panties">Congratulations, your highness! Um, would you be able to command everyone to close their eyes while I get dressed?</state>
             </case>
             <case tag="game_over_defeat" target="alice">
-                <state collectible="nagisa_panties" img="9-closedeyes.png">Even though this was embarrassing, thanks for making the game fun with your weird sayings, Alice.</state>
+                <state img="9-closedeyes.png" collectible="nagisa_panties">Even though this was embarrassing, thanks for making the game fun with your weird sayings, Alice.</state>
             </case>
             <case tag="game_over_defeat" target="buffy" alsoPlaying="xander">
-                <state collectible="nagisa_panties" img="9-determined.png">I can't believe I let a boy see me like this. No offence to your friend, Buffy, but I caught him looking at me at least three times...</state>
+                <state img="9-determined.png" collectible="nagisa_panties">I can't believe I let a boy see me like this. No offence to your friend, Buffy, but I caught him looking at me at least three times...</state>
             </case>
             <case tag="game_over_defeat" target="dawn" totalMales="0">
-                <state collectible="nagisa_panties" img="9-closedeyes.png">No hard feelings, Dawn. Good luck with your poke-monsters game!</state>
+                <state img="9-closedeyes.png" collectible="nagisa_panties">No hard feelings, Dawn. Good luck with your poke-monsters game!</state>
             </case>
             <case tag="game_over_defeat" target="elaine">
-                <state collectible="nagisa_panties" img="9-embarrassed.png">I know you're a pirate, Elaine, but please don't plunder my booty!</state>
+                <state img="9-embarrassed.png" collectible="nagisa_panties">I know you're a pirate, Elaine, but please don't plunder my booty!</state>
             </case>
             <case tag="game_over_defeat" target="kira">
-                <state collectible="nagisa_panties" img="9-determined.png">Th-this doesn't mean you can have my hand in marriage! Does it?</state>
+                <state img="9-determined.png" collectible="nagisa_panties">Th-this doesn't mean you can have my hand in marriage! Does it?</state>
             </case>
             <case tag="game_over_defeat" target="kyu">
-                <state collectible="nagisa_panties" img="9-embarrassed.png">How did Kyu win? She... she didn't even start with all of her clothes on.</state>
+                <state img="9-embarrassed.png" collectible="nagisa_panties">How did Kyu win? She... she didn't even start with all of her clothes on.</state>
             </case>
             <case tag="game_over_defeat" target="meia">
-                <state collectible="nagisa_panties" img="9-embarrassed.png">Congratulations on winning, Meia. Just so you know, this planet has lot of less embarrassing games to play too...</state>
+                <state img="9-embarrassed.png" collectible="nagisa_panties">Congratulations on winning, Meia. Just so you know, this planet has lot of less embarrassing games to play too...</state>
             </case>
             <case tag="game_over_defeat" target="mercy">
-                <state collectible="nagisa_panties" img="9-victorystanding.png">I wish my doctor was as nice as you, Doctor Ziegler.</state>
+                <state img="9-victorystanding.png" collectible="nagisa_panties">I wish my doctor was as nice as you, Doctor Ziegler.</state>
             </case>
             <case tag="game_over_defeat" target="nugi-chan">
-                <state collectible="nagisa_panties" img="9-embarrassed.png">Does anyone see my panties anywhere? I don't want to have to ride the train home without them...</state>
+                <state img="9-embarrassed.png" collectible="nagisa_panties">Does anyone see my panties anywhere? I don't want to have to ride the train home without them...</state>
             </case>
             <case tag="game_over_defeat" target="revy">
-                <state collectible="nagisa_panties" img="9-embarrassed.png">Congratulations, Revy. This means you're going to let us live, right?</state>
+                <state img="9-embarrassed.png" collectible="nagisa_panties">Congratulations, Revy. This means you're going to let us live, right?</state>
             </case>
             <case tag="game_over_defeat" target="sanako">
-                <state collectible="nagisa_panties" img="9-embarrassed.png">Congratulations, Sanako. Um, please don't tell my mom and dad that you saw me here.</state>
+                <state img="9-embarrassed.png" collectible="nagisa_panties">Congratulations, Sanako. Um, please don't tell my mom and dad that you saw me here.</state>
             </case>
             <case tag="game_over_defeat" target="tifa" saidMarker="nagisa_tifa_win">
-                <state collectible="nagisa_panties" img="9-closedeyes.png">See? I told you you'd win, Tifa!</state>
+                <state img="9-closedeyes.png" collectible="nagisa_panties">See? I told you you'd win, Tifa!</state>
             </case>
             <case tag="game_over_defeat" target="tina">
-                <state collectible="nagisa_panties" img="9-embarrassed.png">I'm sorry, Tina. You were very encouraging, but I don't like girls in that way...</state>
+                <state img="9-embarrassed.png" collectible="nagisa_panties">I'm sorry, Tina. You were very encouraging, but I don't like girls in that way...</state>
             </case>
             <case tag="game_over_defeat" target="uravity">
-                <state collectible="nagisa_panties" img="9-victorystanding.png">If I had to lose to somebody, I'm glad it was you, Miss Ochako. You were shy too, but you were so brave!</state>
+                <state img="9-victorystanding.png" collectible="nagisa_panties">If I had to lose to somebody, I'm glad it was you, Miss Ochako. You were shy too, but you were so brave!</state>
             </case>
             <case tag="game_over_defeat" target="zoey">
-                <state collectible="nagisa_panties" img="9-embarrassed.png">Can you teach me to play cards like you, Zoey?</state>
+                <state img="9-embarrassed.png" collectible="nagisa_panties">Can you teach me to play cards like you, Zoey?</state>
             </case>
             <case tag="game_over_defeat" target="zone-tan" alsoPlaying="mei" targetSaidMarker="zone-tan_deciding">
-                <state collectible="nagisa_panties" img="9-embarrassed.png">Miss Zone-tan, I'm sorry to bother you, but I agree with Mei. I don't think I'm ready to be in a video.</state>
+                <state img="9-embarrassed.png" collectible="nagisa_panties">Miss Zone-tan, I'm sorry to bother you, but I agree with Mei. I don't think I'm ready to be in a video.</state>
             </case>
             <case tag="game_over_defeat" target="zone-tan" targetSaidMarker="zone-tan_deciding">
-                <state collectible="nagisa_panties" img="9-embarrassed.png">Miss Zone-tan... Please don't put me in any videos...</state>
+                <state img="9-embarrassed.png" collectible="nagisa_panties">Miss Zone-tan... Please don't put me in any videos...</state>
             </case>
         </stage>
 
@@ -4818,31 +4879,6 @@
     </epilogue>
 
     <epilogue gender="male">
-        <title>Night Out</title>
-        <scene background="epilogue-gno-2.png" width="1270" height="930">
-            <directive type="text" arrow="" x="" y="" />
-            <directive type="pause" />
-        </scene>
-        <scene background="epilogue-gno-3.png" width="1270" height="930">
-            <directive type="text" arrow="" x="" y="" />
-            <directive type="pause" />
-        </scene>
-        <scene background="epilogue-gno-5.png" width="1270" height="930">
-            <directive type="text" arrow="" x="" y="" />
-            <directive type="pause" />
-        </scene>
-        <scene background="epilogue-gno-6.png" width="1270" height="930">
-            <directive type="text" arrow="" x="" y="" />
-            <directive type="pause" />
-        </scene>
-        <scene background="epilogue-gno-7.png" width="1270" height="930">
-            <directive type="text" arrow="" x="" y="" />
-            <directive type="pause" />
-        </scene>
-
-    </epilogue>
-
-    <epilogue gender="any">
         <title>Starting Out</title>
         <scene name="" background="epilogue-as-8.png" width="2000" height="1500">
             <directive type="sprite" id="sprite1" src="epilogue-as-1.png" x="26%" y="2%" pivotx="50%" pivoty="50%" />
