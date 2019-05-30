@@ -375,10 +375,27 @@ function getTargetMarker(marker, target) {
     return "__" + target.id + "_" + marker;
 }
 
+function findVariablePlayer(variable, self, target, bindings) {
+    var player;
+    if (!variable) return null;
+    if (variable == 'self') return self;
+    if (variable == 'target') return target;
+    if (bindings && variable.toLowerCase() in bindings) return bindings[variable.toLowerCase()];
+    if (players.some(function (p) {
+        if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
+            player = p;
+            return true;
+        }
+    })) {
+        return player;
+    }
+    return null;
+}
+
 /************************************************************
  * Expands ~target.*~ and ~[player].*~ variables.
  ************************************************************/
-function expandPlayerVariable(split_fn, args, self, target) {
+function expandPlayerVariable(split_fn, args, self, target, bindings) {
     if (split_fn.length > 0) var fn = split_fn[0].toLowerCase();
     
     switch (fn) {
@@ -436,6 +453,30 @@ function expandPlayerVariable(split_fn, args, self, target) {
         return target.size;
     case 'gender':
         return target.gender;
+    case 'place':
+        if (target.out) return players.countTrue() + 1 - target.outOrder;
+        return 1 + players.countTrue(function(p) { return p.countLayers() > target.countLayers(); });
+    case 'revplace':
+        if (target.out) return target.outOrder;
+        return 1 + players.countTrue(function(p) { return p.out || p.countLayers() < target.countLayers(); });
+    case 'lead':
+        return target.countLayers() - players.reduce(function(max, p) {
+            if (p != target) {
+                return Math.max(max, p.countLayers());
+            } else return max;
+        }, 0);
+    case 'trail':
+        return players.reduce(function(min, p) {
+            if (p != target && !p.out) {
+                return Math.min(min, p.countLayers());
+            } else return min;
+        }, 10) - target.countLayers();
+    case 'diff':
+        var other = (!args ? self : findVariablePlayer(args, self, target, bindings));
+        if (other) {
+            return target.countLayers() - other.countLayers();
+        }
+        return undefined;
     default:
         return target.label;
     }
@@ -549,22 +590,11 @@ function expandDialogue (dialogue, self, target, bindings) {
                 substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
                 break;
             case 'target':
-                substitution = expandPlayerVariable(fn_parts, args, self, target);
-                break;
             case 'self':
-                substitution = expandPlayerVariable(fn_parts, args, self, self);
-                break;
             default:
-                if (bindings && variable.toLowerCase() in bindings) {
-                    substitution = expandPlayerVariable(fn_parts, args, self, bindings[variable.toLowerCase()]);
-                } else {
-                    /* Find a specific character at the table by ID. */
-                    players.some(function (p) {
-                        if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
-                            substitution = expandPlayerVariable(fn_parts, args, self, p);
-                            return true;
-                        }
-                    });
+                var variablePlayer = findVariablePlayer(variable, self, target, bindings);
+                if (variablePlayer) {
+                    substitution = expandPlayerVariable(fn_parts, args, self, variablePlayer, bindings);
                 }
                 break;
             }

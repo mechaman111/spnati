@@ -335,6 +335,7 @@ Player.prototype.initClothingStatus = function () {
  *******************************************************************/
 Player.prototype.resetState = function () {
     this.out = this.finished = false;
+    this.outOrder = undefined;
 	this.forfeit = "";
 	this.stage = this.current = this.consecutiveLosses = 0;
 	this.timeInStage = -1;
