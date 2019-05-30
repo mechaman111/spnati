@@ -627,8 +627,9 @@ function parseInterval (str) {
 }
 
 function inInterval (value, interval) {
-    return (interval.min === null || interval.min <= value)
-    && (interval.max === null || value <= interval.max);
+    return interval
+        && (interval.min === null || interval.min <= value)
+        && (interval.max === null || value <= interval.max);
 }
 
 
@@ -1228,11 +1229,17 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
         if (this.tests.every(function(test) {
             var expr = expandDialogue(test.attr('expr'), self, opp, bindingCombinations[i]);
             var value = test.attr('value');
-            var cmp = test.attr('cmp') || '==';
+            var cmp = test.attr('cmp');
 
-            var interval = parseInterval(value);
-            if (interval) {
-                return (cmp === '!=') ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
+            /* For backwards compatibility, if cmp is unspecified, try
+             * parsing value as an interval, and if it's not, fall
+             * back to equality. If cmp is @ or !@, fail if value is
+             * not an interval. */
+            if (!cmp || cmp == '@' || cmp == '!@') {
+                var interval = parseInterval(value);
+                if (interval || cmp) {
+                    return cmp === '!@' ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
+                }
             }
 
             if (!isNaN(Number(expr))) expr = Number(expr);
