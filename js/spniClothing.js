@@ -537,3 +537,15 @@ function getNumPlayersInStage(stage) {
 		return player.checkStatus(stage)
 	});
 }
+
+/************************************************************
+ * Updates .biggestLead of the leader
+ ************************************************************/
+function updateBiggestLead() {
+    var sortedPlayers = players.slice().sort(function(a, b) {
+        return b.countLayers() - a.countLayers();
+    });
+    if (sortedPlayers[0].countLayers() - sortedPlayers[1].countLayers() > sortedPlayers[0].biggestLead) {
+        sortedPlayers[0].biggestLead = sortedPlayers[0].countLayers() - sortedPlayers[1].countLayers();
+    }
+}

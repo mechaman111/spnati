@@ -459,6 +459,8 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
     case 'revplace':
         if (target.out) return target.outOrder;
         return 1 + players.countTrue(function(p) { return p.out || p.countLayers() < target.countLayers(); });
+    case 'biggestlead':
+        return target.biggestLead;
     case 'lead':
         return target.countLayers() - players.reduce(function(max, p) {
             if (p != target) {
