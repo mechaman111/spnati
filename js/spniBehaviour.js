@@ -788,6 +788,43 @@ function checkMarker(predicate, self, target, currentOnly) {
     }
 }
 
+function Condition($xml) {
+    this.count  = parseInterval($xml.attr('count') || "1-");
+    this.role   = $xml.attr('role');
+    this.variable = $xml.attr('var');
+    this.id     = $xml.attr('character');
+    this.tag    = $xml.attr('filter');
+    this.stage  = parseInterval($xml.attr('stage'));
+    this.layers = parseInterval($xml.attr('layers'));
+    this.startingLayers = parseInterval($xml.attr('startingLayers'));
+    this.gender         = $xml.attr('gender');
+    this.status         = $xml.attr('status');
+    this.timeInStage    = parseInterval($xml.attr('timeInStage'));
+    this.hand           = $xml.attr('hasHand');
+    this.consecutiveLosses = parseInterval($xml.attr('consecutiveLosses'));
+    this.saidMarker     = $xml.attr('saidMarker');
+    this.sayingMarker   = $xml.attr('sayingMarker');
+    this.notSaidMarker  = $xml.attr('notSaidMarker');
+    this.saying         = $xml.attr('saying');
+    this.priority = 0;
+
+    if (this.role == "target") {
+        this.priority += (this.id ? 300 : 0) + (this.tag ? 150 : 0)
+            + (this.stage ? 80 : 0) + (this.status ? 70 : 0)
+            + (this.layers ? 40 : 0) + (this.startingLayers ? 40 : 0)
+            + (this.consecutiveLosses ? 60 : 0) + (this.timeInStage ? 25 : 0)
+            + (this.hand ? 30 : 0) + (this.gender ? 5 : 0)
+    } else {
+        this.priority += (this.id ? 100 : 0) + (this.tag ? 10 : 0)
+            + (this.stage ? 40 : 0) + (this.status ? 5 : 0)
+            + (this.layers ? 20 : 0) + (this.startingLayers ? 20 : 0)
+            + (this.consecutiveLosses ? 30 : 0) + (this.timeInStage ? 15 : 0)
+            + (this.hand ? 15 : 0) + (this.gender ? 5 : 0)
+    }
+    this.priority += (this.saidMarker ? 1 : 0) + (this.notSaidMarker ? 1 : 0)
+        + (this.sayingMarker ? 1 : 0) + (this.saying ? 1 : 0);
+}
+
 /**********************************************************************
  *****                  Case Object Specification                 *****
  **********************************************************************/
@@ -858,11 +895,10 @@ function Case($xml, stage) {
         this.states.push(new State($(elem), this));
     }.bind(this));
     
-    var counters = [];
-    $xml.find("condition").each(function () {
-        counters.push($(this));
-    });
-    this.counters = counters;
+    this.counters = [];
+    $xml.find("condition").each(function (idx, elem) {
+        this.counters.push(new Condition($(elem)));
+    }.bind(this));
     
     var tests = [];
     $xml.find("test").each(function () {
@@ -911,41 +947,8 @@ function Case($xml, stage) {
     	if (this.totalNaked)               this.priority += 5 + this.totalNaked.max;
     	if (this.totalMasturbating)        this.priority += 5 + this.totalMasturbating.max;
     	if (this.totalFinished)            this.priority += 5 + this.totalFinished.max;
-    
-        counters.forEach(function (ctr) {
-            var role   = ctr.attr('role');
-            var id     = ctr.attr('character');
-            var tag    = ctr.attr('filter');
-            var stage  = ctr.attr('stage');
-            var layers = ctr.attr('layers');
-            var startingLayers = ctr.attr('startingLayers');
-            var gender         = ctr.attr('gender');
-            var status         = ctr.attr('status');
-            var timeInStage    = ctr.attr('timeInStage');
-            var hand           = ctr.attr('hasHand');
-            var consecutiveLosses = ctr.attr('consecutiveLosses');
-            var saidMarker     = ctr.attr('saidMarker');
-            var sayingMarker   = ctr.attr('sayingMarker');
-            var notSaidMarker  = ctr.attr('notSaidMarker');
-            var saying         = ctr.attr('saying');
 
-            if (role == "target") {
-                this.priority += (id ? 300 : 0) + (tag ? 150 : 0)
-                    + (stage ? 80 : 0) + (status ? 70 : 0)
-                    + (layers ? 40 : 0) + (startingLayers ? 40 : 0)
-                    + (consecutiveLosses ? 60 : 0) + (timeInStage ? 25 : 0)
-                    + (hand ? 30 : 0) + (gender ? 5 : 0)
-            } else {
-                this.priority += (id ? 100 : 0) + (tag ? 10 : 0)
-                    + (stage ? 40 : 0) + (status ? 5 : 0)
-                    + (layers ? 20 : 0) + (startingLayers ? 20 : 0)
-                    + (consecutiveLosses ? 30 : 0) + (timeInStage ? 15 : 0)
-                    + (hand ? 15 : 0) + (gender ? 5 : 0)
-            }
-            this.priority += (saidMarker ? 1 : 0) + (notSaidMarker ? 1 : 0)
-                + (sayingMarker ? 1 : 0) + (saying ? 1 : 0);
-
-        }.bind(this));
+        this.counters.forEach(function (c) { this.priority += c.priority; });
 
         // Expression tests (priority = 50 for each)
         this.priority += (tests.length * 50);
@@ -1312,45 +1315,30 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
 
     // filter counter targets
     if (!this.counters.every(function (ctr) {
-        var desiredCount = parseInterval(ctr.attr('count') || "1-");
-        var role   = ctr.attr('role');
-		var variable = ctr.attr('var');
-        var id     = ctr.attr('character');
-        var tag    = ctr.attr('filter');
-        var stage  = parseInterval(ctr.attr('stage'));
-        var layers = parseInterval(ctr.attr('layers'));
-        var startingLayers = parseInterval(ctr.attr('startingLayers'));
-        var gender         = ctr.attr('gender');
-        var status         = ctr.attr('status');
-        var timeInStage    = parseInterval(ctr.attr('timeInStage'));
-        var hand           = ctr.attr('hasHand');
-        var saidMarker     = ctr.attr('saidMarker');
-        var sayingMarker     = ctr.attr('sayingMarker');
-        var notSaidMarker  = ctr.attr('notSaidMarker');
-        var saying         = ctr.attr('saying');
-        var consecutiveLosses = parseInterval(ctr.attr('consecutiveLosses'));
-
         var matches = players.filter(function(p) {
-            return (role === undefined || (role == "target" && p == opp) || (role == "opp" && p != self) || (role == "other" && p != self && p != opp))
-                && (id === undefined || p.id == id)
-                && (stage === undefined || inInterval(p.stage, stage))
-                && (tag === undefined || p.hasTag(tag))
-                && (gender === undefined || p.gender == gender)
-                && (status === undefined || p.checkStatus(status))
-                && (layers === undefined || inInterval(p.clothing.length, layers))
-                && (startingLayers === undefined || inInterval(p.startingLayers, startingLayers))
-                && (timeInStage === undefined || inInterval(p.timeInStage, timeInStage))
-                && (hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == hand.toLowerCase()))
-                && (saidMarker === undefined || checkMarker(this.saidMarker, p, role == "other" ? opp : null))
-                && (sayingMarker === undefined || checkMarker(this.sayingMarker, p, role == "other" ? opp : null))
-                && (notSaidMarker === undefined || !p.markers[notSaidMarker])
-                && (saying === undefined || (p.chosenState && p.chosenState.rawDialogue.toLowerCase().indexOf(this.alsoPlayingSaying.toLowerCase()) >= 0))
-                && (consecutiveLosses === undefined || inInterval(p.consecutiveLosses, consecutiveLosses));
+            return (ctr.role === undefined
+                    || (ctr.role == "target" && p == opp)
+                    || (ctr.role == "opp" && p != self)
+                    || (ctr.role == "other" && p != self && p != opp))
+                && (ctr.id === undefined || p.id == ctr.id)
+                && (ctr.stage === undefined || inInterval(p.stage, ctr.stage))
+                && (ctr.tag === undefined || p.hasTag(ctr.tag))
+                && (ctr.gender === undefined || p.gender == ctr.gender)
+                && (ctr.status === undefined || p.checkStatus(ctr.status))
+                && (ctr.layers === undefined || inInterval(p.clothing.length, ctr.layers))
+                && (ctr.startingLayers === undefined || inInterval(p.startingLayers, ctr.startingLayers))
+                && (ctr.timeInStage === undefined || inInterval(p.timeInStage, ctr.timeInStage))
+                && (ctr.hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
+                && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null))
+                && (ctr.sayingMarker === undefined || checkMarker(ctr.sayingMarker, p, ctr.role == "other" ? opp : null), true)
+                && (ctr.notSaidMarker === undefined || !p.markers[ctr.notSaidMarker])
+                && (ctr.saying === undefined || (p.chosenState && p.chosenState.rawDialogue.toLowerCase().indexOf(ctr.saying.toLowerCase()) >= 0))
+                && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, consecutiveLosses));
         });
 
-        if (inInterval(matches.length, desiredCount)) {
-            if (matches.length && variable) {
-                counterMatches.push([ variable, matches ]);
+        if (inInterval(matches.length, ctr.count)) {
+            if (matches.length && ctr.variable) {
+                counterMatches.push([ ctr.variable, matches ]);
             }
             return true;
         }
