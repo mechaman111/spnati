@@ -716,13 +716,31 @@ function inInterval (value, interval) {
 }
 
 
+function evalOperator (val, op, cmpVal) {
+    switch (op) {
+    case '>': return val > cmpVal;
+    case '>=': return val >= cmpVal;
+    case '<': return val < cmpVal;
+    case '<=': return val <= cmpVal;
+    case '!=': return val != cmpVal;
+    case '!!': return !!val;
+    default:
+    case '=':
+    case '==':
+        return val == cmpVal;
+    }
+}
+
 /************************************************************
  * Check to see if a given marker predicate string is fulfilled
- * w.r.t. a given character.
- * If currentOnly = true, then the predicate will be tested against the
- * current state marker only. This is used for volatile conditions.
+ * w.r.t. a given character.  If currentOnly = true, then the
+ * predicate will be tested against the current state marker
+ * only. This is used for volatile conditions.  If committedOnly =
+ * true, then the predicate will be tested against the committed
+ * markers only. If neither is true, the committed state combined with
+ * the current state marker.
  ************************************************************/
-function checkMarker(predicate, self, target, currentOnly) {
+function checkMarker(predicate, self, target, currentOnly, committedOnly) {
     var match = predicate.match(/^([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(.+))?\s*$/);
     
     var name;
@@ -752,40 +770,25 @@ function checkMarker(predicate, self, target, currentOnly) {
         }
     }
     
-    if (currentOnly) {
-        if (!self.chosenState) return false;
-        if (!self.chosenState.marker) return false;
-        if (self.chosenState.marker.name !== name) return false;
-        
-        if (!perTarget || !target) {
-            if (self.chosenState.marker.perTarget) return false;
-        }
-        
-        val = self.chosenState.evaluateMarker(self, target);
-    } else {
-        if (perTarget && target) {
-    	    val = self.markers[getTargetMarker(name, target)];
-    	}
-    	if (!val) {
-    	    val = self.markers[name];
-    	}
-    	if (!val) {
-    		val = 0;
-    	}
+    if (!committedOnly
+        && !self.updatePending
+        && self.chosenState
+        && self.chosenState.marker
+        && self.chosenState.marker.name === name
+        && ((perTarget && target) || !self.chosenState.marker.perTarget)) {
+        return evalOperator(self.chosenState.evaluateMarker(self, target), op, cmpVal);
     }
-    
-    switch (op) {
-        case '>': return val > cmpVal;
-        case '>=': return val >= cmpVal;
-        case '<': return val < cmpVal;
-        case '<=': return val <= cmpVal;
-        case '!=': return val != cmpVal;
-        case '!!': return !!val;
-        default:
-        case '=':
-        case '==':
-            return val == cmpVal;
+    if (currentOnly) return false;
+    if (perTarget && target) {
+        val = self.markers[getTargetMarker(name, target)];
     }
+    if (!val) {
+        val = self.markers[name];
+    }
+    if (!val) {
+        val = 0;
+    }
+    return evalOperator(val, op, cmpVal);
 }
 
 function Condition($xml) {
@@ -1019,63 +1022,9 @@ Case.prototype.getAlsoPlaying = function (opp) {
     return ap;
 }
 
-/* Is this case dependent on marker values in the same phase? */
-Case.prototype.isVolatile = function () {
-    if (this.targetSayingMarker || this.targetSaying) {
-        return true;
-    }
+Case.prototype.checkConditions = function (self, opp) {
+    var volatileDependencies = new Set();
     
-    if (this.alsoPlaying && (this.alsoPlayingSayingMarker || this.alsoPlayingSaying)) {
-        return true;
-    }
-    
-    return false;
-}
-
-Case.prototype.volatileRequirementsMet = function (self, opp) {
-    if (this.targetSayingMarker) {
-        if (!opp) return false;
-        if (!checkMarker(this.targetSayingMarker, opp, null, true)) {
-            return false;
-        }
-    }
-    if (this.targetSaying) {
-        if (!opp) return false;
-        if (!opp.chosenState) return false;
-        if (opp.chosenState.rawDialogue.toLowerCase().indexOf(this.targetSaying.toLowerCase()) < 0) return false;
-    }
-    
-    if (this.alsoPlaying && (this.alsoPlayingSayingMarker || this.alsoPlayingSaying)) {
-        var ap = this.getAlsoPlaying(opp);
-        if (!ap) return false;
-        
-        if (this.alsoPlayingSayingMarker && !checkMarker(this.alsoPlayingSayingMarker, ap, opp, true)) {
-            return false;
-        }
-        if (this.alsoPlayingSaying
-            && (!ap.chosenState || ap.chosenState.rawDialogue.toLowerCase().indexOf(this.alsoPlayingSaying.toLowerCase()) < 0))
-            return false;
-    }
-    
-    return true;
-}
-
-/* Get all players that this case targets with saying-marker conditions. */
-Case.prototype.getVolatileDependencies = function (self, opp) {
-    var deps = [];
-    
-    if (opp && this.target && (this.targetSayingMarker || this.targetSaying)) {
-        deps.push(opp);
-    }
-    
-    if (this.alsoPlaying && (this.alsoPlayingSayingMarker || this.alsoPlayingSaying)) {
-        deps.push(this.getAlsoPlaying(opp));
-    }
-    
-    return deps;
-}
-
-Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     // one-time use
     if (this.oneShotId && self.oneShotCases[this.oneShotId]) {
         return false;
@@ -1137,18 +1086,42 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
 
     // targetSaidMarker
     if (opp && this.targetSaidMarker) {
-        if (!checkMarker(this.targetSaidMarker, opp, null)) {
+        if (checkMarker(this.targetSaidMarker, opp, null)) {
+            if (!checkMarker(this.targetSaidMarker, opp, null, false, true)) {
+                // Only matches pending marker changes; treat as volatile.
+                volatileDependencies.add(opp);
+            }
+        } else {
             return false;
         }
     }
     
     // targetNotSaidMarker
     if (opp && this.targetNotSaidMarker) {
-        if (opp.markers[this.targetNotSaidMarker]) {
+        // Negated marker - false if true
+        if (!checkMarker(this.targetNotSaidMarker, opp, null)) {
+            if (checkMarker(this.targetNotSaidMarker, opp, null, false, true)) {
+                // Only matches pending marker changes; treat as volatile
+                volatileDependencies.add(opp);
+            }
+        } else {
             return false;
         }
     }
+
+    if (opp && this.targetSayingMarker) {
+        if (!checkMarker(this.targetSayingMarker, opp, null, true)) {
+            return false;
+        }
+        volatileDependencies.add(opp);
+    }
+    if (opp && this.targetSaying) {
+        if (!opp.chosenState || opp.updatePending) return false;
+        if (opp.chosenState.rawDialogue.toLowerCase().indexOf(this.targetSaying.toLowerCase()) < 0) return false;
+        volatileDependencies.add(opp);
+    }
     
+
     // consecutiveLosses
     if (this.consecutiveLosses) {
         if (opp) { // if there's a target, look at their losses
@@ -1213,15 +1186,39 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
                     
             // marker checks have very low priority as they're mainly intended to be used with other target types
             if (this.alsoPlayingSaidMarker) {
-                if (!checkMarker(this.alsoPlayingSaidMarker, ap, opp)) {
+                if (checkMarker(this.alsoPlayingSaidMarker, ap, opp)) {
+                    if (!checkMarker(this.alsoPlayingSaidMarker, ap, opp, false, true)) {
+                        // Matches pending marker changes; treat as volatile
+                        volatileDependencies.add(ap);
+                    }
+                } else {
                     return false;
                 }
             }
                     
             if (this.alsoPlayingNotSaidMarker) {
-                if (ap.markers[this.alsoPlayingNotSaidMarker]) {
+                // Negated marker condition - false if it matches
+                if (checkMarker(this.alsoPlayingNotSaidMarker, ap, opp)) {
+                    if (!checkMarker(this.alsoPlayingNotSaidMarker, ap, opp, false, true)) {
+                        // Matches pending marker changes; treat as volatile
+                        volatileDependencies.add(ap);
+                    } else {
+                        return false;
+                    }
+                }
+            }
+
+            if (this.alsoPlayingSayingMarker) {
+                if (!checkMarker(this.alsoPlayingSayingMarker, ap, opp, true)) {
                     return false;
                 }
+                volatileDependencies.add(ap);
+            }
+            if (this.alsoPlayingSaying) {
+                if (ap.updatePending || !ap.chosenState || ap.chosenState.rawDialogue.toLowerCase().indexOf(this.alsoPlayingSaying.toLowerCase()) < 0) {
+                    return false;
+                }
+                volatileDependencies.add(ap);
             }
         }
     }
@@ -1300,19 +1297,18 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
 
     // self marker checks
     if (this.saidMarker) {
-        if (!checkMarker(this.saidMarker, self, opp)) {
+        if (!checkMarker(this.saidMarker, self, opp, false, true)) {
             return false;
         }
     }
     
     if (this.notSaidMarker) {
-        if (self.markers[this.notSaidMarker]) {
+        if (checkMarker(this.notSaidMarker, self, opp, false, true)) {
             return false;
         }
     }
 
     var counterMatches = [];
-
     // filter counter targets
     if (!this.counters.every(function (ctr) {
         var matches = players.filter(function(p) {
@@ -1329,13 +1325,69 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
                 && (ctr.startingLayers === undefined || inInterval(p.startingLayers, ctr.startingLayers))
                 && (ctr.timeInStage === undefined || inInterval(p.timeInStage, ctr.timeInStage))
                 && (ctr.hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
-                && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null))
-                && (ctr.sayingMarker === undefined || checkMarker(ctr.sayingMarker, p, ctr.role == "other" ? opp : null), true)
-                && (ctr.notSaidMarker === undefined || !p.markers[ctr.notSaidMarker])
-                && (ctr.saying === undefined || (p.chosenState && p.chosenState.rawDialogue.toLowerCase().indexOf(ctr.saying.toLowerCase()) >= 0))
                 && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, consecutiveLosses));
         });
-
+        var hasUpperBound = (ctr.count.max !== null && ctr.count.max <= countLoadedOpponents());
+        matches = matches.filter(function(p) {
+            if (ctr.sayingMarker !== undefined) {
+                if (checkMarker(ctr.sayingMarker, p, ctr.role == "other" ? opp : null, true)) {
+                    volatileDependencies.add(p);
+                } else {
+                    /* If there's an upper bound to the count, we have
+                     * to depend on the non-matching character lest it
+                     * *might* say the marker and invalidate the
+                     * condition. */
+                    if (hasUpperBound) {
+                        volatileDependencies.add(p);
+                    }
+                    return false;
+                }
+            }
+            if (ctr.saying !== undefined) {
+                if (!p.updatePending && p.chosenState && p.chosenState.rawDialogue.toLowerCase().indexOf(ctr.saying.toLowerCase()) >= 0) {
+                    volatileDependencies.add(p);
+                } else {
+                    if (hasUpperBound) {
+                        antiMatches.push(p);
+                    }
+                    return false;
+                }
+            }
+            if (ctr.saidMarker !== undefined) {
+                /* after is the truth value with volatile marker applications, which is what we test. 
+                   before is the truth value without volatile marker applications. If the condition is 
+                   true only with volatile marker applications, we treat the saidMarker as a sayingMarker. 
+                   If the marker was said, but is being unsaid, we have to depend on the character not 
+                   changing their state if there's an upper limit to the count. */
+                var before = checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null, false, true),
+                    after = checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null);
+                if (after) {
+                    if (!before) {
+                        volatileDependencies.add(p);
+                    }
+                } else {
+                    if (before && hasUpperBound) {
+                        volatileDependencies.add(p);
+                    }
+                    return false;
+                }
+            }
+            if (ctr.notSaidMarker !== undefined) {
+                var before = !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null, false, true),
+                    after = !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null);
+                if (after) {
+                    if (!before) {
+                        volatileDependencies.add(p);
+                    }
+                } else {
+                    if (before && hasUpperBound) {
+                        volatileDependencies.add(p);
+                    }
+                    return false;
+                }
+            }
+            return true;
+        });
         if (inInterval(matches.length, ctr.count)) {
             if (matches.length && ctr.variable) {
                 counterMatches.push([ ctr.variable, matches ]);
@@ -1388,6 +1440,7 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
             return true;
         })) {
             this.variableBindings = bindingCombinations[i];
+            this.volatileDependencies = volatileDependencies;
             return true;
         }
     }
@@ -1405,22 +1458,7 @@ Case.prototype.applyOneShot = function (player) {
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
 
-/************************************************************
- * Updates the behaviour of the given player based on the 
- * provided tag.
- ************************************************************/
-Opponent.prototype.updateBehaviour = function(tags, opp) {
-    /* determine if the AI is dialogue locked */
-    if (this.out && this.forfeit[1] == CANNOT_SPEAK) {
-        /* their is restricted to this only */
-        tags = [this.forfeit[0]];
-    }
-    
-    if (!Array.isArray(tags)) {
-        tags = [tags];
-    }
-    tags.push(GLOBAL_CASE);
-    
+Opponent.prototype.findBehaviour = function(tags, opp, bestMatchPriority) {
     /* get the AI stage */
     var stageNum = this.stage;
 
@@ -1454,71 +1492,76 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     
     /* Find the best match, as well as potential volatile matches. */
     var bestMatch = [];
-    var bestMatchPriority = -1;
-    var volatileMatches = [];
     
     for (var i = 0; i < cases.length; i++) {
         var curCase = new Case(cases[i], stageNum);
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
-            curCase.basicRequirementsMet(this, opp)) 
+            curCase.checkConditions(this, opp))
         {
-            if (curCase.isVolatile()) {
-                volatileMatches.push(curCase); 
-            } else {
-                if (curCase.hidden) {
-                    //if it's hidden, set markers and collectibles but don't actually count as a match
-                    this.applyHiddenStates(curCase, opp);
-                    continue;
-                }
+            if (curCase.hidden) {
+                //if it's hidden, set markers and collectibles but don't actually count as a match
+                this.applyHiddenStates(curCase, opp);
+                continue;
+            }
 
-                if (curCase.priority > bestMatchPriority) {
-                    bestMatch = [curCase];
-                    bestMatchPriority = curCase.priority;
-                } else {
-                    bestMatch.push(curCase);
-                }
+            if (curCase.priority > bestMatchPriority) {
+                bestMatch = [curCase];
+                bestMatchPriority = curCase.priority;
+            } else {
+                bestMatch.push(curCase);
             }
         }
     }
-    
-    /* Re-filter volatileMatches to ensure that all matched cases have
-     * priority >= bestMatchPriority. */
-    volatileMatches = volatileMatches.filter(function (c) { return c.priority >= bestMatchPriority; });
-    
-    var self = this;
-    var states = bestMatch.reduce(function (list, caseObject) {
-        for (var i = 0; i < caseObject.states.length; i++) {
-            if (!caseObject.states[i].oneShotId || !self.oneShotStates[caseObject.states[i].oneShotId]) {
-                list.push(caseObject.states[i]);
-            }
-        }
-        return list;
-    }.bind(this), []);
+    var states = bestMatch.reduce(function(list, caseObject) {
+        return list.concat(caseObject.states);
+    }.bind(this), []).filter(function(state) {
+        return !state.oneShotId || !this.oneShotStates[state.oneShotId];
+    }.bind(this));
     
     var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
     if (weightSum > 0) {
-        console.log("Current NV case priority for player "+this.slot+": "+bestMatchPriority);
+        console.log("Current case priority for player "+this.slot+": "+bestMatchPriority);
 
         var rnd = Math.random() * weightSum;
         for (var i = 0, x = 0; x < rnd; x += states[i++].weight);
         
+        return states[i - 1];
+    }
+
+    console.log("-------------------------------------");
+    return null;
+}
+
+/************************************************************
+ * Updates the behaviour of the given player based on the 
+ * provided tag.
+ ************************************************************/
+Opponent.prototype.updateBehaviour = function(tags, opp) {
+    /* determine if the AI is dialogue locked */
+    if (this.out && this.forfeit[1] == CANNOT_SPEAK) {
+        /* their is restricted to this only */
+        tags = [this.forfeit[0]];
+    }
+
+    if (!Array.isArray(tags)) {
+        tags = [tags];
+    }
+    tags.push(GLOBAL_CASE);
+    this.currentTarget = opp;
+    this.currentTags = tags;
+
+    var state = this.findBehaviour(tags, opp, -1);
+
+    if (state) {
         /* Reaction handling state... */
-        this.volatileMatches = volatileMatches;
-        this.bestVolatileMatch = null;
-        this.currentTarget = opp;
-        this.currentPriority = bestMatchPriority;
-        this.stateLockCount = 0;
+        this.chosenState = state;
+        this.currentPriority = state.parentCase.priority;
         this.stateCommitted = false;
         this.lastUpdateTags = tags;
         
-        this.allStates = states;
-        this.chosenState = states[i - 1];
-        
         return true;
     }
-    
-    console.log("-------------------------------------");
     return false;
 }
 
@@ -1529,68 +1572,29 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
  * dependencies will be locked, unlocking prior volatile state locks if necessary.
  ************************************************************/
 Opponent.prototype.updateVolatileBehaviour = function () {
-    if (this.stateLockCount > 0) {
+    if (players.some(function(p) {
+        if (p !== players[HUMAN_PLAYER]
+            && !p.pendingUpdate && p.chosenState) {
+            var dependencies = p.chosenState.parentCase.volatileDependencies;
+            return dependencies && dependencies.has(this);
+        } else return false;
+    })) {
         console.log("Player "+this.slot+" state is locked.");
         return;
     }
     
-    console.log("Player "+this.slot+": Current priority "+this.currentPriority+" with "+this.volatileMatches.length+" possible volatile cases");
+    console.log("Player "+this.slot+": Current priority "+this.chosenState.parentCase.priority);
     
-    var bestMatches = [];
-    var bestPriority = this.currentPriority;
-    
-    /* Find best-matching volatile case if any. */
-    this.volatileMatches.forEach(function (c) {
-        if (c !== this.bestVolatileMatch &&
-            c.states.length > 0 &&
-            c.priority >= bestPriority &&
-            c.volatileRequirementsMet(this, this.currentTarget))
-        {
-            if (c.priority > bestPriority) {
-                bestMatches = [c];
-                bestPriority = c.priority;
-            } else {
-                bestMatches.push(c);
-            }
-        }
-    }.bind(this));
-    
-    if (bestMatches.length > 0) {
-        console.log("Found new volatile matches for player "+this.slot+" with priority "+bestPriority);
-        
-        /* Remove lock from previous best-match if necessary. */
-        if (this.bestVolatileMatch) {
-            var oldDeps = this.bestVolatileMatch.getVolatileDependencies(this, this.currentTarget);
-            oldDeps.forEach(function (p) { p.stateLockCount -= 1; });
-        }
-        
-        var bestMatch = bestMatches[getRandomNumber(0, bestMatches.length)];
-        var prevPriority = this.currentPriority;
-        
+    var newState = this.findBehaviour(this.currentTags, this.currentTarget, this.currentPriority + 1);
+
+    if (newState) {
+        console.log("Found new volatile state for player "+this.slot+" with priority "+newState.parentCase.priority);
         /* Assign new best-match case and state. */
-        this.bestVolatileMatch = bestMatch;
-        this.currentPriority = bestPriority;
-        this.allStates = bestMatch.states.filter(function(state) {
-            return !state.oneShotId || !this.oneShotStates[state.oneShotId];
-        }.bind(this));
-        this.chosenState = bestMatch.states[getRandomNumber(0, bestMatch.states.length)];
+        this.chosenState = newState;
+        this.currentPriority = newState.parentCase.priority;
         this.stateCommitted = false;
         
-        /* Add locks for dependencies. */
-        var deps = bestMatch.getVolatileDependencies(this, this.currentTarget);
-        deps.forEach(function (p) { p.stateLockCount += 1; });
-        
-        /* Filter out lower-priority volatile cases. */
-        this.volatileMatches = this.volatileMatches.filter(function (c) {
-            return c.priority >= bestPriority;
-        });
-        
-        /* Only indicate an update if we have found a strictly higher-priority
-         * volatile case.
-         * This keeps the overall reaction phase logic from repeatedly switching
-         * between two equal-priority cases.
-         */
-        return bestPriority > prevPriority;
+        return true;
     } else {
         console.log("Found no volatile matches for player "+this.slot);
         return false;
@@ -1664,20 +1668,27 @@ Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
  * based on the provided tag.
  ************************************************************/
 function updateAllBehaviours (target, target_tags, other_tags) {
+    for (var i = 2; i < players.length; i++) {
+        if (!players[i]) continue;
+        /* Indicate that current state will be overwritten and can't
+         * be used with *SayingMarker and *Saying checks. */
+        players[i].updatePending = true;
+    }
+
     for (var i = 1; i < players.length; i++) {
-        if (players[i] && (target === null || i != target)) {
+        if (!players[i]) continue;
+        if (target === null || i != target) {
             if (typeof other_tags === 'object') {
                 other_tags.some(function(t) {
                     return players[i].updateBehaviour(t, players[target]);
                 });
             } else {
-                    players[i].updateBehaviour(other_tags, players[target]);
+                players[i].updateBehaviour(other_tags, players[target]);
             }
+        } else if (i == target && target_tags !== null) {
+            players[i].updateBehaviour(target_tags, null);
         }
-    }
-    
-    if (target !== null && target_tags !== null) {
-        players[target].updateBehaviour(target_tags, null);
+        players[i].updatePending = false;
     }
     
     updateAllVolatileBehaviours();
@@ -1690,7 +1701,7 @@ function updateAllBehaviours (target, target_tags, other_tags) {
  * 'Promotes' players who have available volatile cases to using those cases.
  ************************************************************/
 function updateAllVolatileBehaviours () {
-    for (var pass=0;pass<3;pass++) {
+    for (var pass = 0; pass < 2; pass++) {
         console.log("Reaction pass "+(pass+1));
         var anyUpdated = false;
         

@@ -350,22 +350,19 @@ Player.prototype.resetState = function () {
          * This may be overridden by later updateBehaviour calls if
          * the player has (new-style) selected or game start case lines.
          */
-		var allStates = [];
+		this.startStates = [];
 
         /* Initialize reaction handling state. */
-        this.volatileMatches = [];
-        this.bestVolatileMatch = null;
         this.currentTarget = null;
+        this.currentTags = [];
         this.currentPriority = -1;
-        this.stateLockCount = 0;
         this.stateCommitted = false;
 
         this.xml.children('start').children('state').each(function () {
-            allStates.push(new State($(this)));
+            this.startStates.push(new State($(this)));
         });
 
-        this.allStates = allStates;
-		this.chosenState = this.allStates[0];
+		this.chosenState = this.startStates[0];
 
         if (!this.chosenState) {
             /* If the opponent does not have legacy start lines then select
