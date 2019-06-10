@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.0 at 2:46:37 PM on May 31, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.0 at 12:50:53 AM on June 10, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.0</version>
     <first>Syrenne</first>
@@ -29,7 +29,9 @@
         <tag>bisexual</tag>
         <tag>fantasy</tag>
         <tag>video_game</tag>
+        <tag>adventurer</tag>
         <tag>bounty_hunter</tag>
+        <tag>fighter</tag>
         <tag>bottomless_first</tag>
         <tag>drunk</tag>
         <tag>the_last_story</tag>
@@ -52,7 +54,11 @@
     <behaviour>
         <stage id="0">
             <case tag="selected">
-                <state img="0-cheers.png" marker="drinks=1">Never noticed there was poker here. Don't think I've ever made it past the bar.</state>
+                <state img="0-cheers.png" marker="drinks=0">I wouldn't mind spendin' a little time to win a game of strip poker!</state>
+            </case>
+            <case tag="selected">
+                <test expr="~background~" value="inventory" />
+                <state img="0-cheers.png" marker="drinks=0">Never noticed there was poker here. Don't think I've ever made it past the bar.</state>
             </case>
             <case tag="opponent_selected" filter="tall">
                 <state img="0-cheers.png">By the looks of things, it's gonna take you a few more drinks than myself, but leave that all up to me!</state>
@@ -108,11 +114,11 @@
                 <state img="0-annoyed.png">All men? Fine, fine, fine... But I ain't thrilled.</state>
             </case>
             <case tag="swap_cards">
-                <state img="0-excited.png">Hit me up with ~cards~ cards!</state>
-                <state img="0-cheers.png">That'll be ~cards~ cards  for me!</state>
-                <state img="0-cheers.png">~cards~ cards and another pint.</state>
-                <state img="0-awkward.png">I dunno... ~cards~ cards?</state>
-                <state img="0-yell.png">~cards~ cards. Give 'em 'ere.</state>
+                <state img="0-excited.png">Hit me up with ~cards.text~ cards!</state>
+                <state img="0-cheers.png">That'll be ~cards.text~ cards  for me!</state>
+                <state img="0-cheers.png">~cards.text~ cards and another pint.</state>
+                <state img="0-awkward.png">I dunno... ~cards.text~ cards?</state>
+                <state img="0-yell.png">~cards.text~ cards. Give 'em 'ere.</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -203,6 +209,33 @@
             <case tag="must_strip" alsoPlaying="rinkah">
                 <state img="0-cheers.png">That I am. Me an' my mates are all mercenaries.</state>
             </case>
+            <case tag="must_strip" alsoPlaying="sei">
+                <state img="0-horny.png">It's Syrenne, and I've been waitin' right at the bar. Always will be.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_army1" alsoPlayingSayingMarker="syr_army1">
+                <state img="0-shocked.png">Wha... nobody's asked me about the army in ages... thought I'd downed enough drinks to pass away those thoughts...</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_lowell1" alsoPlayingSayingMarker="syr_lowell1">
+                <state img="0-miffed.png">Hmph. Little personal there, but no. There ain't anybody like that for me.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_skin1" alsoPlayingSayingMarker="syr_skin1">
+                <state img="0-confident.png">It's about time one of you gawkers noticed. It ain't easy keepin' it like this, for starters.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_merc1" alsoPlayingSayingMarker="syr_merc1">
+                <state img="0-stretch.png">Well, we did track down this vampire a few days ago that was abductin' people. Found out one of my mates screams like a school girl. Pretty good time, all in all.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_royal1" alsoPlayingSayingMarker="syr_royal1">
+                <state img="0-confident.png">Well, it was mostly that contract mumbo-jumbo until we got a gig working as security in a castle, under a count.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_snob1" alsoPlayingSayingMarker="syr_snob1">
+                <state img="0-awkward.png">The fuck...? ...Uh, well, no. An' I've seen enough guys tryna make me bed 'em by doin' that, you'd think I'd 'ave an idea.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_sticky1" alsoPlayingSayingMarker="syr_sticky1">
+                <state img="0-awkward.png">Ugh. I hate those places. I dunno, guess ...the sewers beneath the prison was an absolute rank mess. Felt my nose was about to leg it.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_tricks1" alsoPlayingSayingMarker="syr_tricks1">
+                <state img="0-cheers.png">Well, I don't think we have enough people for me to show off my latest trick! No spoliers, but it involves three knives, a fire mage, and another ten mugs of the good stuff!</state>
+            </case>
             <case tag="must_strip" hasHand="One Pair" priority="0">
                 <state img="0-stretch.png">A pair can't save ya forever, I s'pose.</state>
                 <state img="0-annoyed.png">This is what I get for playing it safe...</state>
@@ -226,7 +259,34 @@
                 <state img="0-strip.png">Might as well start with this! I don't wear it too often, anyways.</state>
             </case>
             <case tag="stripping" alsoPlaying="rinkah">
-                <state img="0-strip.png">Yeah? Bet they just lack my charmin' personality and rougish good looks.</state>
+                <state img="0-strip.png">Yeah? Bet they just lack my charmin' personality and roguish good looks.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="sei">
+                <state img="0-strip.png">Can't start out bein' a coward. Now, can ya?</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army1" alsoPlayingNotSaidMarker="syr_army2" alsoPlayingSayingMarker="syr_army2">
+                <state img="0-awkward.png">I mean... well yes... I was in the army, but I haven't been part since... well since all the men turned tail and left the rest of us to... to...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell1" alsoPlayingNotSaidMarker="syr_lowell2" alsoPlayingSayingMarker="syr_lowell2">
+                <state img="0-angry.png">&lt;i&gt;HEY! Listen you orange gremlin,&lt;/i&gt; who the bloody hell is tellin' you about Lowe- ...About my personal life.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc1" alsoPlayingNotSaidMarker="syr_merc2" alsoPlayingSayingMarker="syr_merc2">
+                <state img="0-strip.png">Sure. Meet other mercs all the time. They just don't got what my mates an' I got, is all.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal1" alsoPlayingNotSaidMarker="syr_royal2" alsoPlayingSayingMarker="syr_royal2">
+                <state img="0-strip.png">Well, turns out that one of the Lords there was a closet perv and was peerin' in on the princess.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin1" alsoPlayingNotSaidMarker="syr_skin2" alsoPlayingSayingMarker="syr_skin2">
+                <state img="0-strip.png">I wish I could spend that much, but that'd cut into my boozin' money an' I won't be havin' that. ...Hmmm. Yeah, I don't see the harm if you wanna come in for a touch.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_snob1" alsoPlayingNotSaidMarker="syr_snob2" alsoPlayingSayingMarker="syr_snob2">
+                <state img="0-annoyed.png">Ugh... these fuckin' pricks. Like this one chap with the fuckin' balls to try to whip it out durin' a rescue! I woulda had him out cold if I was a tad more drunk at the time.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky1" alsoPlayingNotSaidMarker="syr_sticky2" alsoPlayingSayingMarker="syr_sticky2">
+                <state img="0-stretch.png">'SPose I'm constantly goin' from one grimy place to another, so I get the feelin'.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks1" alsoPlayingNotSaidMarker="syr_tricks2" alsoPlayingSayingMarker="syr_tricks2">
+                <state img="0-strip.png">I mean, it's really all in the hips. Good enough rotation and you'll send even the toughest of lads cryin' back to their mums!</state>
             </case>
             <case tag="male_must_strip">
                 <state img="0-excited.png">Line 'em up and knock 'em down.</state>
@@ -491,6 +551,11 @@
             <case tag="male_removed_accessory" target="ryuji" targetStage="4">
                 <state img="0-cheers.png">Even if ya lost your belt just now, good to see it's faring better!</state>
             </case>
+            <case tag="male_removed_accessory" targetStatus="exposed">
+                <state img="0-angry.png">Scared? C'mon you're alreayd mostly there...</state>
+                <state img="0-miffed.png">Ugh. You've stripped this far, but can't finish the job. That it?</state>
+                <state img="0-annoyed.png">&lt;i&gt;Now&lt;/i&gt; we're gettin' cold feet?</state>
+            </case>
             <case tag="female_removing_accessory">
                 <state img="0-yell.png">We aren't getting cheeky all of a sudden, are we?</state>
                 <state img="0-cheers.png">Nothing wrong with some hors d’oeuvres while you're waitin' on the main course.</state>
@@ -587,10 +652,10 @@
                 <state img="0-confident.png">Just don't meet too many people in my own line of work these days, is all.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="0">
-                <state img="0-calm.png">I grew up in a family of women warriors, actually.</state>
+                <state img="0-calm.png">I grew up in a family of warrior women, actually.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="1">
-                <state img="0-excited.png">I'm privy to swords myself. Usually like to keep two lasses with me on contracts and such.</state>
+                <state img="0-excited.png">I'm partial to swords, myself. Usually like to keep two lasses with me on contracts and such.</state>
             </case>
             <case tag="female_removing_accessory" target="sei" targetStage="0">
                 <state img="0-cheers.png">Though we'll see how fully stocked it is after we're done with it.</state>
@@ -638,7 +703,7 @@
                 <state img="0-cheers.png">I think we're gonna get along just fine, you and I.</state>
             </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
-                <state img="0-excited.png">Come from a mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
+                <state img="0-excited.png">Come from a group of mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
             </case>
             <case tag="female_removed_accessory" target="monika" targetStage="1">
                 <state img="0-flustered.png">&lt;i&gt;(What... why am I getting this weird feeling about this chick?)&lt;/i&gt;</state>
@@ -671,7 +736,7 @@
                 <state img="0-annoyed.png">Well, maybe I shouldn't focus on &lt;i&gt;just&lt;/i&gt; the money. Probably get recognition an' shit, too.</state>
             </case>
             <case tag="male_removing_minor">
-                <state img="0-stretch.png">~clothing~? Alright. I suppose that's what you'd expect.</state>
+                <state img="0-stretch.png">~Clothing~? Alright. I suppose that's what you'd expect.</state>
                 <state img="0-horny.png">I knew I should've gotten pals before I showed up.</state>
                 <state img="0-yell.png">You're already startin' to look better, ~name~!</state>
                 <state img="0-cheers.png">Do you think I'm doing well? I think I'm doin' alright so far.</state>
@@ -887,7 +952,7 @@
                 <state img="0-flustered.png" marker="+drinks">Y'know, come to think of it... I don't think I've worked with anyone with that small of breasts...</state>
             </case>
             <case tag="female_medium_chest_is_visible">
-                <state img="0-confident.png" marker="+drinks">Your ~clothing~ wasn't doin' your ladies justice!</state>
+                <state img="0-confident.png" marker="+drinks">Your ~clothing.ifPlural(weren't|wasn't)~ doin' your ladies justice!</state>
                 <state img="0-cheers.png" marker="+drinks">Nice and supple. You out did yourself.</state>
             </case>
             <case tag="female_large_chest_is_visible">
@@ -1057,11 +1122,11 @@
 
         <stage id="1">
             <case tag="swap_cards">
-                <state img="1-excited.png">Hit me up with ~cards~ cards!</state>
-                <state img="1-cheers.png">That'll be ~cards~ cards  for me!</state>
-                <state img="1-cheers.png">~cards~ cards and another pint.</state>
-                <state img="1-awkward.png">I dunno... ~cards~ cards?</state>
-                <state img="1-yell.png">~cards~ cards. Give 'em 'ere.</state>
+                <state img="1-excited.png">Hit me up with ~cards.text~ cards!</state>
+                <state img="1-cheers.png">That'll be ~cards.text~ cards  for me!</state>
+                <state img="1-cheers.png">~cards.text~ cards and another pint.</state>
+                <state img="1-awkward.png">I dunno... ~cards.text~ cards?</state>
+                <state img="1-yell.png">~cards.text~ cards. Give 'em 'ere.</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -1152,6 +1217,33 @@
             <case tag="must_strip" alsoPlaying="rinkah">
                 <state img="1-confident.png">Ooh. &lt;i&gt;Flame Tribe&lt;/i&gt;. Quite like the sound of that.</state>
             </case>
+            <case tag="must_strip" alsoPlaying="sei">
+                <state img="1-cheers.png">I'll be honest, I kinda stopped with the whole countin' business after number four!</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_army1" alsoPlayingSayingMarker="syr_army1">
+                <state img="1-shocked.png">Wha... nobody's asked me about the army in ages... thought I'd downed enough drinks to pass away those thoughts...</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_lowell1" alsoPlayingSayingMarker="syr_lowell1">
+                <state img="1-miffed.png">Hmph. Little personal there, but no. There ain't anybody like that for me.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_skin1" alsoPlayingSayingMarker="syr_skin1">
+                <state img="1-confident.png">It's about time one of you gawkers noticed. It ain't easy keepin' it like this, for starters.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_merc1" alsoPlayingSayingMarker="syr_merc1">
+                <state img="1-stretch.png">Well, we did track down this vampire a few days ago that was abductin' people. Found out one of my mates screams like a school girl. Pretty good time, all in all.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_royal1" alsoPlayingSayingMarker="syr_royal1">
+                <state img="1-confident.png">Well, it was mostly that contract mumbo-jumbo until we got a gig working as security in a castle, under a count.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_snob1" alsoPlayingSayingMarker="syr_snob1">
+                <state img="1-awkward.png">The fuck...? ...Uh, well, no. An' I've seen enough guys tryna make me bed 'em by doin' that, you'd think I'd 'ave an idea.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_sticky1" alsoPlayingSayingMarker="syr_sticky1">
+                <state img="1-awkward.png">Ugh. I hate those places. I dunno, guess ...the sewers beneath the prison was an absolute rank mess. Felt my nose was about to leg it.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_tricks1" alsoPlayingSayingMarker="syr_tricks1">
+                <state img="1-cheers.png">Well, I don't think we have enough people for me to show off my latest trick! No spoliers, but it involves three knives, a fire mage, and another ten mugs of the good stuff!</state>
+            </case>
             <case tag="must_strip" consecutiveLosses="2">
                 <state img="1-angry.png">Twice in a row? You &lt;i&gt;bastards...&lt;/i&gt;</state>
                 <state img="1-stretch.png">Me again? Thought I'd do better than that.</state>
@@ -1183,7 +1275,34 @@
                 <state img="1-strip.png">I'm gettin' too it. Can't believe I'm sayin' this, but slow down for a sec.</state>
             </case>
             <case tag="stripping" alsoPlaying="rinkah">
-                <state img="1-strip.png">Well, I hope that yours are a lot less annoying to take off that these bloody things...</state>
+                <state img="1-strip.png">Well, I hope that yours are a lot less annoying to take off than these bloody things...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="sei">
+                <state img="1-strip.png">Simple, really. 'Sides the sex appeal, they hold up bits of armor if I needed it. But I 'spose that's not needed 'ere.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army1" alsoPlayingNotSaidMarker="syr_army2" alsoPlayingSayingMarker="syr_army2">
+                <state img="1-awkward.png">I mean... well yes... I was in the army, but I haven't been part since... well since all the men turned tail and left the rest of us to... to...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell1" alsoPlayingNotSaidMarker="syr_lowell2" alsoPlayingSayingMarker="syr_lowell2">
+                <state img="1-angry.png">&lt;i&gt;HEY! Listen you orange gremlin,&lt;/i&gt; who the bloody hell is tellin' you about Lowe- ...About my personal life.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc1" alsoPlayingNotSaidMarker="syr_merc2" alsoPlayingSayingMarker="syr_merc2">
+                <state img="1-strip.png">Sure. Meet other mercs all the time. They just don't got what my mates an' I got, is all.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal1" alsoPlayingNotSaidMarker="syr_royal2" alsoPlayingSayingMarker="syr_royal2">
+                <state img="1-strip.png">Well, turns out that one of the Lords there was a closet perv and was peerin' in on the princess.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin1" alsoPlayingNotSaidMarker="syr_skin2" alsoPlayingSayingMarker="syr_skin2">
+                <state img="1-strip.png">I wish I could spend that much, but that'd cut into my boozin' money an' I won't be havin' that. ...Hmmm. Yeah, I don't see the harm if you wanna come in for a touch.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_snob1" alsoPlayingNotSaidMarker="syr_snob2" alsoPlayingSayingMarker="syr_snob2">
+                <state img="1-annoyed.png">Ugh... these fuckin' pricks. Like this one chap with the fuckin' balls to try to whip it out durin' a rescue! I woulda had him out cold if I was a tad more drunk at the time.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky1" alsoPlayingNotSaidMarker="syr_sticky2" alsoPlayingSayingMarker="syr_sticky2">
+                <state img="1-stretch.png">'SPose I'm constantly goin' from one grimy place to another, so I get the feelin'.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks1" alsoPlayingNotSaidMarker="syr_tricks2" alsoPlayingSayingMarker="syr_tricks2">
+                <state img="1-strip.png">I mean, it's really all in the hips. Good enough rotation and you'll send even the toughest of lads cryin' back to their mums!</state>
             </case>
             <case tag="stripped">
                 <state img="1-stripped.png">Unfortunately, I'll be keepin' my headband. It's barely keepin' hair outta my eyes as is.</state>
@@ -1191,6 +1310,30 @@
             </case>
             <case tag="stripped" alsoPlaying="rinkah">
                 <state img="1-awkward.png">Thanks... &lt;i&gt;(Was that a compliment or a straight dig at her own world?)&lt;/i&gt;</state>
+            </case>
+            <case tag="stripped" alsoPlaying="sei">
+                <state img="1-cheers.png">I've never been one to turn down the chance to 'ave a drink, but lemme down a few more 'a these 'fore we get into it!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army2" alsoPlayingNotSaidMarker="syr_army3" alsoPlayingSayingMarker="syr_army3">
+                <state img="1-miffed.png">You gotta lotta nerve tryn' to dredge up those memories...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell2" alsoPlayingNotSaidMarker="syr_lowell3" alsoPlayingSayingMarker="syr_lowell3">
+                <state img="1-flustered.png">Mmmm... &lt;i&gt;(Great. Now I'm all flustered about him. Dammit, Lowell. If you were here, stripping...)&lt;i&gt;</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc2" alsoPlayingNotSaidMarker="syr_merc3" alsoPlayingSayingMarker="syr_merc3">
+                <state img="1-horny.png">Heh. I'm always down for a natter. Long as booze is involved, that is.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal2" alsoPlayingNotSaidMarker="syr_royal3" alsoPlayingSayingMarker="syr_royal3">
+                <state img="1-horny.png">That's nothin'. Turns out that maid's are huge gossips... if you can push all the right buttons.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin2" alsoPlayingNotSaidMarker="syr_skin3" alsoPlayingSayingMarker="syr_skin3">
+                <state img="1-cheers.png">Too bad Mirania can't be here to hear that! All those baths together 'ave been worth it!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky2" alsoPlayingNotSaidMarker="syr_sticky3" alsoPlayingSayingMarker="syr_sticky3">
+                <state img="1-flustered.png">I &lt;i&gt;suppose&lt;/i&gt; you might be onto something...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks2" alsoPlayingNotSaidMarker="syr_tricks3" alsoPlayingSayingMarker="syr_tricks3">
+                <state img="1-awkward.png">Ain't no idea who you're talkin' to, but ...what's this talk about your feet...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="1-excited.png">Line 'em up and knock 'em down.</state>
@@ -1455,6 +1598,11 @@
             <case tag="male_removed_accessory" target="ryuji" targetStage="4">
                 <state img="1-cheers.png">Even if ya lost your belt just now, good to see it's faring better!</state>
             </case>
+            <case tag="male_removed_accessory" targetStatus="exposed">
+                <state img="1-angry.png">Scared? C'mon you're alreayd mostly there...</state>
+                <state img="1-miffed.png">Ugh. You've stripped this far, but can't finish the job. That it?</state>
+                <state img="1-annoyed.png">&lt;i&gt;Now&lt;/i&gt; we're gettin' cold feet?</state>
+            </case>
             <case tag="female_removing_accessory">
                 <state img="1-yell.png">We aren't getting cheeky all of a sudden, are we?</state>
                 <state img="1-cheers.png">Nothing wrong with some hors d’oeuvres while you're waitin' on the main course.</state>
@@ -1551,10 +1699,10 @@
                 <state img="1-confident.png">Just don't meet too many people in my own line of work these days, is all.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="0">
-                <state img="1-calm.png">I grew up in a family of women warriors, actually.</state>
+                <state img="1-calm.png">I grew up in a family of warrior women, actually.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="1">
-                <state img="1-excited.png">I'm privy to swords myself. Usually like to keep two lasses with me on contracts and such.</state>
+                <state img="1-excited.png">I'm partial to swords, myself. Usually like to keep two lasses with me on contracts and such.</state>
             </case>
             <case tag="female_removing_accessory" target="sei" targetStage="0">
                 <state img="1-cheers.png">Though we'll see how fully stocked it is after we're done with it.</state>
@@ -1602,7 +1750,7 @@
                 <state img="1-cheers.png">I think we're gonna get along just fine, you and I.</state>
             </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
-                <state img="1-excited.png">Come from a mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
+                <state img="1-excited.png">Come from a group of mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
             </case>
             <case tag="female_removed_accessory" target="monika" targetStage="1">
                 <state img="1-flustered.png">&lt;i&gt;(What... why am I getting this weird feeling about this chick?)&lt;/i&gt;</state>
@@ -1635,7 +1783,7 @@
                 <state img="1-annoyed.png">Well, maybe I shouldn't focus on &lt;i&gt;just&lt;/i&gt; the money. Probably get recognition an' shit, too.</state>
             </case>
             <case tag="male_removing_minor">
-                <state img="1-stretch.png">~clothing~? Alright. I suppose that's what you'd expect.</state>
+                <state img="1-stretch.png">~Clothing~? Alright. I suppose that's what you'd expect.</state>
                 <state img="1-horny.png">I knew I should've gotten pals before I showed up.</state>
                 <state img="1-yell.png">You're already startin' to look better, ~name~!</state>
                 <state img="1-cheers.png">Do you think I'm doing well? I think I'm doin' alright so far.</state>
@@ -1851,7 +1999,7 @@
                 <state img="1-flustered.png" marker="+drinks">Y'know, come to think of it... I don't think I've worked with anyone with that small of breasts...</state>
             </case>
             <case tag="female_medium_chest_is_visible">
-                <state img="1-confident.png" marker="+drinks">Your ~clothing~ wasn't doin' your ladies justice!</state>
+                <state img="1-confident.png" marker="+drinks">Your ~clothing.ifPlural(weren't|wasn't)~ doin' your ladies justice!</state>
                 <state img="1-cheers.png" marker="+drinks">Nice and supple. You out did yourself.</state>
             </case>
             <case tag="female_large_chest_is_visible">
@@ -2020,11 +2168,11 @@
 
         <stage id="2">
             <case tag="swap_cards">
-                <state img="2-excited.png">Hit me up with ~cards~ cards!</state>
-                <state img="2-cheers.png">That'll be ~cards~ cards  for me!</state>
-                <state img="2-cheers.png">~cards~ cards and another pint.</state>
-                <state img="2-awkward.png">I dunno... ~cards~ cards?</state>
-                <state img="2-yell.png">~cards~ cards. Give 'em 'ere.</state>
+                <state img="2-excited.png">Hit me up with ~cards.text~ cards!</state>
+                <state img="2-cheers.png">That'll be ~cards.text~ cards  for me!</state>
+                <state img="2-cheers.png">~cards.text~ cards and another pint.</state>
+                <state img="2-awkward.png">I dunno... ~cards.text~ cards?</state>
+                <state img="2-yell.png">~cards.text~ cards. Give 'em 'ere.</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -2112,6 +2260,30 @@
             <case tag="must_strip" alsoPlaying="kamina">
                 <state img="2-miffed.png">You &lt;i&gt;daft?&lt;/i&gt; That's why I wear these damn belts in the first place, to keep these shits from falling. Why else would I wear them, eh?</state>
             </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_army1" alsoPlayingSayingMarker="syr_army1">
+                <state img="2-shocked.png">Wha... nobody's asked me about the army in ages... thought I'd downed enough drinks to pass away those thoughts...</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_lowell1" alsoPlayingSayingMarker="syr_lowell1">
+                <state img="2-miffed.png">Hmph. Little personal there, but no. There ain't anybody like that for me.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_skin1" alsoPlayingSayingMarker="syr_skin1">
+                <state img="2-confident.png">It's about time one of you gawkers noticed. It ain't easy keepin' it like this, for starters.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_merc1" alsoPlayingSayingMarker="syr_merc1">
+                <state img="2-stretch.png">Well, we did track down this vampire a few days ago that was abductin' people. Found out one of my mates screams like a school girl. Pretty good time, all in all.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_royal1" alsoPlayingSayingMarker="syr_royal1">
+                <state img="2-confident.png">Well, it was mostly that contract mumbo-jumbo until we got a gig working as security in a castle, under a count.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_snob1" alsoPlayingSayingMarker="syr_snob1">
+                <state img="2-awkward.png">The fuck...? ...Uh, well, no. An' I've seen enough guys tryna make me bed 'em by doin' that, you'd think I'd 'ave an idea.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_sticky1" alsoPlayingSayingMarker="syr_sticky1">
+                <state img="2-awkward.png">Ugh. I hate those places. I dunno, guess ...the sewers beneath the prison was an absolute rank mess. Felt my nose was about to leg it.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_tricks1" alsoPlayingSayingMarker="syr_tricks1">
+                <state img="2-cheers.png">Well, I don't think we have enough people for me to show off my latest trick! No spoliers, but it involves three knives, a fire mage, and another ten mugs of the good stuff!</state>
+            </case>
             <case tag="must_strip" consecutiveLosses="2">
                 <state img="2-angry.png">Twice in a row? You &lt;i&gt;bastards...&lt;/i&gt;</state>
                 <state img="2-stretch.png">Me again? Thought I'd do better than that.</state>
@@ -2138,14 +2310,38 @@
             </case>
             <case tag="must_strip_losing">
                 <state img="2-awkward.png">Guess I botched that one...</state>
-                <state img="2-shocked.png">Shit! Thought I could've made it through this round.</state>
+                <state img="2-shocked.png">Shit! Thought I could've slipped through this round.</state>
             </case>
             <case tag="stripping">
-                <state img="2-strip.png">Hope I didn't track mud or nothin' gettin' in here.</state>
+                <state img="2-strip.png">Hope I didn't track mud or nothin' gettin' in here. Few hoity-toity places've gotten me for that.</state>
                 <state img="2-strip.png">Can't get these things off fast enough!</state>
             </case>
             <case tag="stripping" alsoPlaying="kamina">
                 <state img="2-strip.png">You... and everyone else I've had the pleasure of giving a sharp kick to.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army1" alsoPlayingNotSaidMarker="syr_army2" alsoPlayingSayingMarker="syr_army2">
+                <state img="2-awkward.png">I mean... well yes... I was in the army, but I haven't been part since... well since all the men turned tail and left the rest of us to... to...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell1" alsoPlayingNotSaidMarker="syr_lowell2" alsoPlayingSayingMarker="syr_lowell2">
+                <state img="2-angry.png">&lt;i&gt;HEY! Listen you orange gremlin,&lt;/i&gt; who the bloody hell is tellin' you about Lowe- ...About my personal life.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc1" alsoPlayingNotSaidMarker="syr_merc2" alsoPlayingSayingMarker="syr_merc2">
+                <state img="2-strip.png">Sure. Meet other mercs all the time. They just don't got what my mates an' I got, is all.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal1" alsoPlayingNotSaidMarker="syr_royal2" alsoPlayingSayingMarker="syr_royal2">
+                <state img="2-strip.png">Well, turns out that one of the Lords there was a closet perv and was peerin' in on the princess.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin1" alsoPlayingNotSaidMarker="syr_skin2" alsoPlayingSayingMarker="syr_skin2">
+                <state img="2-strip.png">I wish I could spend that much, but that'd cut into my boozin' money an' I won't be havin' that. ...Hmmm. Yeah, I don't see the harm if you wanna come in for a touch.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_snob1" alsoPlayingNotSaidMarker="syr_snob2" alsoPlayingSayingMarker="syr_snob2">
+                <state img="2-annoyed.png">Ugh... these fuckin' pricks. Like this one chap with the fuckin' balls to try to whip it out durin' a rescue! I woulda had him out cold if I was a tad more drunk at the time.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky1" alsoPlayingNotSaidMarker="syr_sticky2" alsoPlayingSayingMarker="syr_sticky2">
+                <state img="2-stretch.png">'SPose I'm constantly goin' from one grimy place to another, so I get the feelin'.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks1" alsoPlayingNotSaidMarker="syr_tricks2" alsoPlayingSayingMarker="syr_tricks2">
+                <state img="2-strip.png">I mean, it's really all in the hips. Good enough rotation and you'll send even the toughest of lads cryin' back to their mums!</state>
             </case>
             <case tag="stripped">
                 <state img="2-stripped.png">...And I’m back in it! Let’s tangle!</state>
@@ -2156,6 +2352,30 @@
             </case>
             <case tag="stripped" alsoPlaying="rinkah">
                 <state img="2-stripped.png">Fuck yeah! Sounds like a hell of a good time!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="sei">
+                <state img="2-horny.png">Thanks. Now, let's see what I can do now that I ain't so... &lt;i&gt;restricted.&lt;/i&gt;</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army2" alsoPlayingNotSaidMarker="syr_army3" alsoPlayingSayingMarker="syr_army3">
+                <state img="2-miffed.png">You gotta lotta nerve tryn' to dredge up those memories...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell2" alsoPlayingNotSaidMarker="syr_lowell3" alsoPlayingSayingMarker="syr_lowell3">
+                <state img="2-flustered.png">Mmmm... &lt;i&gt;(Great. Now I'm all flustered about him. Dammit, Lowell. If you were here, stripping...)&lt;i&gt;</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc2" alsoPlayingNotSaidMarker="syr_merc3" alsoPlayingSayingMarker="syr_merc3">
+                <state img="2-horny.png">Heh. I'm always down for a natter. Long as booze is involved, that is.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal2" alsoPlayingNotSaidMarker="syr_royal3" alsoPlayingSayingMarker="syr_royal3">
+                <state img="2-horny.png">That's nothin'. Turns out that maid's are huge gossips... if you can push all the right buttons.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin2" alsoPlayingNotSaidMarker="syr_skin3" alsoPlayingSayingMarker="syr_skin3">
+                <state img="2-cheers.png">Too bad Mirania can't be here to hear that! All those baths together 'ave been worth it!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky2" alsoPlayingNotSaidMarker="syr_sticky3" alsoPlayingSayingMarker="syr_sticky3">
+                <state img="2-flustered.png">I &lt;i&gt;suppose&lt;/i&gt; you might be onto something...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks2" alsoPlayingNotSaidMarker="syr_tricks3" alsoPlayingSayingMarker="syr_tricks3">
+                <state img="2-awkward.png">Ain't no idea who you're talkin' to, but ...what's this talk about your feet...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="2-excited.png">Line 'em up and knock 'em down.</state>
@@ -2420,6 +2640,11 @@
             <case tag="male_removed_accessory" target="ryuji" targetStage="4">
                 <state img="2-cheers.png">Even if ya lost your belt just now, good to see it's faring better!</state>
             </case>
+            <case tag="male_removed_accessory" targetStatus="exposed">
+                <state img="2-angry.png">Scared? C'mon you're alreayd mostly there...</state>
+                <state img="2-miffed.png">Ugh. You've stripped this far, but can't finish the job. That it?</state>
+                <state img="2-annoyed.png">&lt;i&gt;Now&lt;/i&gt; we're gettin' cold feet?</state>
+            </case>
             <case tag="female_removing_accessory">
                 <state img="2-yell.png">We aren't getting cheeky all of a sudden, are we?</state>
                 <state img="2-cheers.png">Nothing wrong with some hors d’oeuvres while you're waitin' on the main course.</state>
@@ -2516,10 +2741,10 @@
                 <state img="2-confident.png">Just don't meet too many people in my own line of work these days, is all.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="0">
-                <state img="2-calm.png">I grew up in a family of women warriors, actually.</state>
+                <state img="2-calm.png">I grew up in a family of warrior women, actually.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="1">
-                <state img="2-excited.png">I'm privy to swords myself. Usually like to keep two lasses with me on contracts and such.</state>
+                <state img="2-excited.png">I'm partial to swords, myself. Usually like to keep two lasses with me on contracts and such.</state>
             </case>
             <case tag="female_removing_accessory" target="sei" targetStage="0">
                 <state img="2-cheers.png">Though we'll see how fully stocked it is after we're done with it.</state>
@@ -2567,7 +2792,7 @@
                 <state img="2-cheers.png">I think we're gonna get along just fine, you and I.</state>
             </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
-                <state img="2-excited.png">Come from a mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
+                <state img="2-excited.png">Come from a group of mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
             </case>
             <case tag="female_removed_accessory" target="monika" targetStage="1">
                 <state img="2-flustered.png">&lt;i&gt;(What... why am I getting this weird feeling about this chick?)&lt;/i&gt;</state>
@@ -2600,7 +2825,7 @@
                 <state img="2-annoyed.png">Well, maybe I shouldn't focus on &lt;i&gt;just&lt;/i&gt; the money. Probably get recognition an' shit, too.</state>
             </case>
             <case tag="male_removing_minor">
-                <state img="2-stretch.png">~clothing~? Alright. I suppose that's what you'd expect.</state>
+                <state img="2-stretch.png">~Clothing~? Alright. I suppose that's what you'd expect.</state>
                 <state img="2-horny.png">I knew I should've gotten pals before I showed up.</state>
                 <state img="2-yell.png">You're already startin' to look better, ~name~!</state>
                 <state img="2-cheers.png">Do you think I'm doing well? I think I'm doin' alright so far.</state>
@@ -2816,7 +3041,7 @@
                 <state img="2-flustered.png" marker="+drinks">Y'know, come to think of it... I don't think I've worked with anyone with that small of breasts...</state>
             </case>
             <case tag="female_medium_chest_is_visible">
-                <state img="2-confident.png" marker="+drinks">Your ~clothing~ wasn't doin' your ladies justice!</state>
+                <state img="2-confident.png" marker="+drinks">Your ~clothing.ifPlural(weren't|wasn't)~ doin' your ladies justice!</state>
                 <state img="2-cheers.png" marker="+drinks">Nice and supple. You out did yourself.</state>
             </case>
             <case tag="female_large_chest_is_visible">
@@ -2985,11 +3210,11 @@
 
         <stage id="3">
             <case tag="swap_cards">
-                <state img="3-excited.png">Hit me up with ~cards~ cards!</state>
-                <state img="3-cheers.png">That'll be ~cards~ cards  for me!</state>
-                <state img="3-cheers.png">~cards~ cards and another pint.</state>
-                <state img="3-awkward.png">I dunno... ~cards~ cards?</state>
-                <state img="3-yell.png">~cards~ cards. Give 'em 'ere.</state>
+                <state img="3-excited.png">Hit me up with ~cards.text~ cards!</state>
+                <state img="3-cheers.png">That'll be ~cards.text~ cards  for me!</state>
+                <state img="3-cheers.png">~cards.text~ cards and another pint.</state>
+                <state img="3-awkward.png">I dunno... ~cards.text~ cards?</state>
+                <state img="3-yell.png">~cards.text~ cards. Give 'em 'ere.</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -3077,6 +3302,33 @@
             <case tag="must_strip" alsoPlaying="kamina">
                 <state img="3-miffed.png">The shorts? Fat chance.</state>
             </case>
+            <case tag="must_strip" alsoPlaying="sei">
+                <state img="3-confident.png">Ask away. They ain't goin' any place fast.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_army1" alsoPlayingSayingMarker="syr_army1">
+                <state img="3-shocked.png">Wha... nobody's asked me about the army in ages... thought I'd downed enough drinks to pass away those thoughts...</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_lowell1" alsoPlayingSayingMarker="syr_lowell1">
+                <state img="3-miffed.png">Hmph. Little personal there, but no. There ain't anybody like that for me.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_skin1" alsoPlayingSayingMarker="syr_skin1">
+                <state img="3-confident.png">It's about time one of you gawkers noticed. It ain't easy keepin' it like this, for starters.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_merc1" alsoPlayingSayingMarker="syr_merc1">
+                <state img="3-stretch.png">Well, we did track down this vampire a few days ago that was abductin' people. Found out one of my mates screams like a school girl. Pretty good time, all in all.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_royal1" alsoPlayingSayingMarker="syr_royal1">
+                <state img="3-confident.png">Well, it was mostly that contract mumbo-jumbo until we got a gig working as security in a castle, under a count.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_snob1" alsoPlayingSayingMarker="syr_snob1">
+                <state img="3-awkward.png">The fuck...? ...Uh, well, no. An' I've seen enough guys tryna make me bed 'em by doin' that, you'd think I'd 'ave an idea.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_sticky1" alsoPlayingSayingMarker="syr_sticky1">
+                <state img="3-awkward.png">Ugh. I hate those places. I dunno, guess ...the sewers beneath the prison was an absolute rank mess. Felt my nose was about to leg it.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_tricks1" alsoPlayingSayingMarker="syr_tricks1">
+                <state img="3-cheers.png">Well, I don't think we have enough people for me to show off my latest trick! No spoliers, but it involves three knives, a fire mage, and another ten mugs of the good stuff!</state>
+            </case>
             <case tag="must_strip" consecutiveLosses="2">
                 <state img="3-angry.png">Twice in a row? You &lt;i&gt;bastards...&lt;/i&gt;</state>
                 <state img="3-stretch.png">Me again? Thought I'd do better than that.</state>
@@ -3112,12 +3364,60 @@
             <case tag="stripping" alsoPlaying="kamina">
                 <state img="3-strip.png">Yeah, well... I &lt;i&gt;was&lt;/i&gt; thinking I might as well take my socks off as well... &lt;i&gt;just for the hell of it&lt;/i&gt;.</state>
             </case>
+            <case tag="stripping" alsoPlaying="sei">
+                <state img="3-strip.png">Got 'em for joinin' the mercenaries. We've all got 'em. ...Never did ask Dagran what they stood for.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army1" alsoPlayingNotSaidMarker="syr_army2" alsoPlayingSayingMarker="syr_army2">
+                <state img="3-awkward.png">I mean... well yes... I was in the army, but I haven't been part since... well since all the men turned tail and left the rest of us to... to...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell1" alsoPlayingNotSaidMarker="syr_lowell2" alsoPlayingSayingMarker="syr_lowell2">
+                <state img="3-angry.png">&lt;i&gt;HEY! Listen you orange gremlin,&lt;/i&gt; who the bloody hell is tellin' you about Lowe- ...About my personal life.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc1" alsoPlayingNotSaidMarker="syr_merc2" alsoPlayingSayingMarker="syr_merc2">
+                <state img="3-strip.png">Sure. Meet other mercs all the time. They just don't got what my mates an' I got, is all.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal1" alsoPlayingNotSaidMarker="syr_royal2" alsoPlayingSayingMarker="syr_royal2">
+                <state img="3-strip.png">Well, turns out that one of the Lords there was a closet perv and was peerin' in on the princess.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin1" alsoPlayingNotSaidMarker="syr_skin2" alsoPlayingSayingMarker="syr_skin2">
+                <state img="3-strip.png">I wish I could spend that much, but that'd cut into my boozin' money an' I won't be havin' that. ...Hmmm. Yeah, I don't see the harm if you wanna come in for a touch.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_snob1" alsoPlayingNotSaidMarker="syr_snob2" alsoPlayingSayingMarker="syr_snob2">
+                <state img="3-annoyed.png">Ugh... these fuckin' pricks. Like this one chap with the fuckin' balls to try to whip it out durin' a rescue! I woulda had him out cold if I was a tad more drunk at the time.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky1" alsoPlayingNotSaidMarker="syr_sticky2" alsoPlayingSayingMarker="syr_sticky2">
+                <state img="3-stretch.png">'SPose I'm constantly goin' from one grimy place to another, so I get the feelin'.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks1" alsoPlayingNotSaidMarker="syr_tricks2" alsoPlayingSayingMarker="syr_tricks2">
+                <state img="3-strip.png">I mean, it's really all in the hips. Good enough rotation and you'll send even the toughest of lads cryin' back to their mums!</state>
+            </case>
             <case tag="stripped">
                 <state img="3-stripped.png">Ah! That feels a lot better! Right. Who's next?</state>
                 <state img="3-stripped.png">Look at that! Still have the scuff from that time Lowell was bein' a twat who needed a solid knock in &lt;i&gt;just the right place.&lt;/i&gt;</state>
             </case>
             <case tag="stripped" alsoPlaying="kamina">
                 <state img="3-miffed.png">The hell? Drills work through spinnin' an' shit. What's nudity even got to... Aw hell. Just whatever.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army2" alsoPlayingNotSaidMarker="syr_army3" alsoPlayingSayingMarker="syr_army3">
+                <state img="3-miffed.png">You gotta lotta nerve tryn' to dredge up those memories...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell2" alsoPlayingNotSaidMarker="syr_lowell3" alsoPlayingSayingMarker="syr_lowell3">
+                <state img="3-flustered.png">Mmmm... &lt;i&gt;(Great. Now I'm all flustered about him. Dammit, Lowell. If you were here, stripping...)&lt;i&gt;</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc2" alsoPlayingNotSaidMarker="syr_merc3" alsoPlayingSayingMarker="syr_merc3">
+                <state img="3-horny.png">Heh. I'm always down for a natter. Long as booze is involved, that is.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal2" alsoPlayingNotSaidMarker="syr_royal3" alsoPlayingSayingMarker="syr_royal3">
+                <state img="3-horny.png">That's nothin'. Turns out that maid's are huge gossips... if you can push all the right buttons.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin2" alsoPlayingNotSaidMarker="syr_skin3" alsoPlayingSayingMarker="syr_skin3">
+                <state img="3-cheers.png">Too bad Mirania can't be here to hear that! All those baths together 'ave been worth it!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky2" alsoPlayingNotSaidMarker="syr_sticky3" alsoPlayingSayingMarker="syr_sticky3">
+                <state img="3-flustered.png">I &lt;i&gt;suppose&lt;/i&gt; you might be onto something...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks2" alsoPlayingNotSaidMarker="syr_tricks3" alsoPlayingSayingMarker="syr_tricks3">
+                <state img="3-awkward.png">Ain't no idea who you're talkin' to, but ...what's this talk about your feet...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="3-excited.png">Line 'em up and knock 'em down.</state>
@@ -3382,6 +3682,11 @@
             <case tag="male_removed_accessory" target="ryuji" targetStage="4">
                 <state img="3-cheers.png">Even if ya lost your belt just now, good to see it's faring better!</state>
             </case>
+            <case tag="male_removed_accessory" targetStatus="exposed">
+                <state img="3-angry.png">Scared? C'mon you're alreayd mostly there...</state>
+                <state img="3-miffed.png">Ugh. You've stripped this far, but can't finish the job. That it?</state>
+                <state img="3-annoyed.png">&lt;i&gt;Now&lt;/i&gt; we're gettin' cold feet?</state>
+            </case>
             <case tag="female_removing_accessory">
                 <state img="3-yell.png">We aren't getting cheeky all of a sudden, are we?</state>
                 <state img="3-cheers.png">Nothing wrong with some hors d’oeuvres while you're waitin' on the main course.</state>
@@ -3478,10 +3783,10 @@
                 <state img="3-confident.png">Just don't meet too many people in my own line of work these days, is all.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="0">
-                <state img="3-calm.png">I grew up in a family of women warriors, actually.</state>
+                <state img="3-calm.png">I grew up in a family of warrior women, actually.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="1">
-                <state img="3-excited.png">I'm privy to swords myself. Usually like to keep two lasses with me on contracts and such.</state>
+                <state img="3-excited.png">I'm partial to swords, myself. Usually like to keep two lasses with me on contracts and such.</state>
             </case>
             <case tag="female_removing_accessory" target="sei" targetStage="0">
                 <state img="3-cheers.png">Though we'll see how fully stocked it is after we're done with it.</state>
@@ -3529,7 +3834,7 @@
                 <state img="3-cheers.png">I think we're gonna get along just fine, you and I.</state>
             </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
-                <state img="3-excited.png">Come from a mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
+                <state img="3-excited.png">Come from a group of mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
             </case>
             <case tag="female_removed_accessory" target="monika" targetStage="1">
                 <state img="3-flustered.png">&lt;i&gt;(What... why am I getting this weird feeling about this chick?)&lt;/i&gt;</state>
@@ -3562,7 +3867,7 @@
                 <state img="3-annoyed.png">Well, maybe I shouldn't focus on &lt;i&gt;just&lt;/i&gt; the money. Probably get recognition an' shit, too.</state>
             </case>
             <case tag="male_removing_minor">
-                <state img="3-stretch.png">~clothing~? Alright. I suppose that's what you'd expect.</state>
+                <state img="3-stretch.png">~Clothing~? Alright. I suppose that's what you'd expect.</state>
                 <state img="3-horny.png">I knew I should've gotten pals before I showed up.</state>
                 <state img="3-yell.png">You're already startin' to look better, ~name~!</state>
                 <state img="3-cheers.png">Do you think I'm doing well? I think I'm doin' alright so far.</state>
@@ -3778,7 +4083,7 @@
                 <state img="3-flustered.png" marker="+drinks">Y'know, come to think of it... I don't think I've worked with anyone with that small of breasts...</state>
             </case>
             <case tag="female_medium_chest_is_visible">
-                <state img="3-confident.png" marker="+drinks">Your ~clothing~ wasn't doin' your ladies justice!</state>
+                <state img="3-confident.png" marker="+drinks">Your ~clothing.ifPlural(weren't|wasn't)~ doin' your ladies justice!</state>
                 <state img="3-cheers.png" marker="+drinks">Nice and supple. You out did yourself.</state>
             </case>
             <case tag="female_large_chest_is_visible">
@@ -3947,11 +4252,11 @@
 
         <stage id="4">
             <case tag="swap_cards">
-                <state img="4-excited.png">Hit me up with ~cards~ cards!</state>
-                <state img="4-cheers.png">That'll be ~cards~ cards  for me!</state>
-                <state img="4-cheers.png">~cards~ cards and another pint.</state>
-                <state img="4-awkward.png">I dunno... ~cards~ cards?</state>
-                <state img="4-yell.png">~cards~ cards. Give 'em 'ere.</state>
+                <state img="4-excited.png">Hit me up with ~cards.text~ cards!</state>
+                <state img="4-cheers.png">That'll be ~cards.text~ cards  for me!</state>
+                <state img="4-cheers.png">~cards.text~ cards and another pint.</state>
+                <state img="4-awkward.png">I dunno... ~cards.text~ cards?</state>
+                <state img="4-yell.png">~cards.text~ cards. Give 'em 'ere.</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -3980,7 +4285,7 @@
                 <state img="4-cheers.png">Just make sure to write out my tab to Zael. I'm sure he'd love to cover for me.</state>
             </case>
             <case tag="okay_hand">
-                <state img="4-awkward.png">Well that card draw didn't help all that much...</state>
+                <state img="4-awkward.png">Well, that card draw didn't help all that much...</state>
                 <state img="4-flustered.png">Guess I've got a glass half full here... and some so-so cards, too.</state>
                 <state img="4-stretch.png">Maybe these can buy me some time?</state>
                 <state img="4-cheers.png">I'll blow this round if anyone wants to pick up my tab!</state>
@@ -4020,6 +4325,33 @@
             <case tag="must_strip" alsoPlaying="kamina">
                 <state img="4-confident.png">Well, then. Suppose I can't just be some kinda copycat, then, can I?</state>
             </case>
+            <case tag="must_strip" alsoPlaying="sei">
+                <state img="4-cheers.png">Afraid the bants'll have ta be picked up after a lark of me removin' my trousers. Then us barmy, alcie lasses can get back to wafflin' on about how bang-tidy we both are.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_army1" alsoPlayingSayingMarker="syr_army1">
+                <state img="4-shocked.png">Wha... nobody's asked me about the army in ages... thought I'd downed enough drinks to pass away those thoughts...</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_lowell1" alsoPlayingSayingMarker="syr_lowell1">
+                <state img="4-miffed.png">Hmph. Little personal there, but no. There ain't anybody like that for me.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_skin1" alsoPlayingSayingMarker="syr_skin1">
+                <state img="4-confident.png">It's about time one of you gawkers noticed. It ain't easy keepin' it like this, for starters.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_merc1" alsoPlayingSayingMarker="syr_merc1">
+                <state img="4-stretch.png">Well, we did track down this vampire a few days ago that was abductin' people. Found out one of my mates screams like a school girl. Pretty good time, all in all.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_royal1" alsoPlayingSayingMarker="syr_royal1">
+                <state img="4-confident.png">Well, it was mostly that contract mumbo-jumbo until we got a gig working as security in a castle, under a count.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_snob1" alsoPlayingSayingMarker="syr_snob1">
+                <state img="4-awkward.png">The fuck...? ...Uh, well, no. An' I've seen enough guys tryna make me bed 'em by doin' that, you'd think I'd 'ave an idea.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_sticky1" alsoPlayingSayingMarker="syr_sticky1">
+                <state img="4-awkward.png">Ugh. I hate those places. I dunno, guess ...the sewers beneath the prison was an absolute rank mess. Felt my nose was about to leg it.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_tricks1" alsoPlayingSayingMarker="syr_tricks1">
+                <state img="4-cheers.png">Well, I don't think we have enough people for me to show off my latest trick! No spoliers, but it involves three knives, a fire mage, and another ten mugs of the good stuff!</state>
+            </case>
             <case tag="must_strip" consecutiveLosses="2">
                 <state img="4-angry.png">Twice in a row? You &lt;i&gt;bastards...&lt;/i&gt;</state>
                 <state img="4-stretch.png">Me again? Thought I'd do better than that.</state>
@@ -4050,12 +4382,66 @@
             <case tag="stripping" alsoPlaying="kamina">
                 <state img="4-strip.png">Oh... you'll see, Kamina.</state>
             </case>
+            <case tag="stripping" alsoPlaying="sei">
+                <state img="4-strip.png">I'm goin! I'm goin'! Just a fan of the cheers, is all.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army1" alsoPlayingNotSaidMarker="syr_army2" alsoPlayingSayingMarker="syr_army2">
+                <state img="4-awkward.png">I mean... well yes... I was in the army, but I haven't been part since... well since all the men turned tail and left the rest of us to... to...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell1" alsoPlayingNotSaidMarker="syr_lowell2" alsoPlayingSayingMarker="syr_lowell2">
+                <state img="4-angry.png">&lt;i&gt;HEY! Listen you orange gremlin,&lt;/i&gt; who the bloody hell is tellin' you about Lowe- ...About my personal life.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc1" alsoPlayingNotSaidMarker="syr_merc2" alsoPlayingSayingMarker="syr_merc2">
+                <state img="4-strip.png">Sure. Meet other mercs all the time. They just don't got what my mates an' I got, is all.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal1" alsoPlayingNotSaidMarker="syr_royal2" alsoPlayingSayingMarker="syr_royal2">
+                <state img="4-strip.png">Well, turns out that one of the Lords there was a closet perv and was peerin' in on the princess.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin1" alsoPlayingNotSaidMarker="syr_skin2" alsoPlayingSayingMarker="syr_skin2">
+                <state img="4-strip.png">I wish I could spend that much, but that'd cut into my boozin' money an' I won't be havin' that. ...Hmmm. Yeah, I don't see the harm if you wanna come in for a touch.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_snob1" alsoPlayingNotSaidMarker="syr_snob2" alsoPlayingSayingMarker="syr_snob2">
+                <state img="4-annoyed.png">Ugh... these fuckin' pricks. Like this one chap with the fuckin' balls to try to whip it out durin' a rescue! I woulda had him out cold if I was a tad more drunk at the time.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky1" alsoPlayingNotSaidMarker="syr_sticky2" alsoPlayingSayingMarker="syr_sticky2">
+                <state img="4-stretch.png">'SPose I'm constantly goin' from one grimy place to another, so I get the feelin'.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks1" alsoPlayingNotSaidMarker="syr_tricks2" alsoPlayingSayingMarker="syr_tricks2">
+                <state img="4-strip.png">I mean, it's really all in the hips. Good enough rotation and you'll send even the toughest of lads cryin' back to their mums!</state>
+            </case>
             <case tag="stripped">
                 <state img="4-stripped.png">Been getting a few tips from Mirania on keepin' my skin smooth. I think it's workin'.</state>
                 <state img="4-stripped.png">Ah, nice and smooth. Mirania's tips 'ave been workin'.</state>
             </case>
             <case tag="stripped" alsoPlaying="kamina">
                 <state img="4-horny.png">Well I doubt she could pull it off as well as &lt;i&gt;I&lt;/i&gt; can.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="sei" alsoPlayingStage="0-8">
+                <state img="4-horny.png">I suppose you'll have to beat me and find that out for yourself.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="sei" alsoPlayingStage="9-10">
+                <state img="4-horny.png">I suppose you'll have to hope someone beats me so you can find out for yourself.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army2" alsoPlayingNotSaidMarker="syr_army3" alsoPlayingSayingMarker="syr_army3">
+                <state img="4-miffed.png">You gotta lotta nerve tryn' to dredge up those memories...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell2" alsoPlayingNotSaidMarker="syr_lowell3" alsoPlayingSayingMarker="syr_lowell3">
+                <state img="4-flustered.png">Mmmm... &lt;i&gt;(Great. Now I'm all flustered about him. Dammit, Lowell. If you were here, stripping...)&lt;i&gt;</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc2" alsoPlayingNotSaidMarker="syr_merc3" alsoPlayingSayingMarker="syr_merc3">
+                <state img="4-horny.png">Heh. I'm always down for a natter. Long as booze is involved, that is.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal2" alsoPlayingNotSaidMarker="syr_royal3" alsoPlayingSayingMarker="syr_royal3">
+                <state img="4-horny.png">That's nothin'. Turns out that maid's are huge gossips... if you can push all the right buttons.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin2" alsoPlayingNotSaidMarker="syr_skin3" alsoPlayingSayingMarker="syr_skin3">
+                <state img="4-cheers.png">Too bad Mirania can't be here to hear that! All those baths together 'ave been worth it!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky2" alsoPlayingNotSaidMarker="syr_sticky3" alsoPlayingSayingMarker="syr_sticky3">
+                <state img="4-flustered.png">I &lt;i&gt;suppose&lt;/i&gt; you might be onto something...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks2" alsoPlayingNotSaidMarker="syr_tricks3" alsoPlayingSayingMarker="syr_tricks3">
+                <state img="4-awkward.png">Ain't no idea who you're talkin' to, but ...what's this talk about your feet...</state>
             </case>
             <case tag="stripped">
                 <test expr="~background~" value="beach" />
@@ -4116,7 +4502,7 @@
             </case>
             <case tag="female_must_strip">
                 <state img="4-annoyed.png">Sorry, but I doubt the dealer'll bat an eyelash if ya start battin' ya eyelashes.</state>
-                <state img="4-horny.png">Maybe we should get in bath together after this. Not that ~player~ would want to join that sort of thing.</state>
+                <state img="4-horny.png">Maybe we should get in a bath together after this. Not that ~player~ would want to join that sort of thing.</state>
                 <state img="4-confident.png">Hate to say it, but your clothing's coverin' up your beauty. Best remove it now.</state>
                 <state img="4-confident.png">Nice.</state>
                 <state img="4-horny.png">&lt;i&gt;Scandalous&lt;/i&gt;. How does it feel?</state>
@@ -4293,7 +4679,7 @@
             <case tag="male_removed_accessory">
                 <state img="4-cheers.png">Alright! Another round!</state>
                 <state img="4-annoyed.png">Always the nitty-gritty with you.</state>
-                <state img="4-angry.png">Oh? Someone really wants their arse kicked than? Bring it!</state>
+                <state img="4-angry.png">Oh? Someone really wants their arse kicked then? Bring it!</state>
                 <state img="4-stretch.png">No… no. I’m fine… Don’t wanna go back to jail for something I &lt;i&gt;actually&lt;/i&gt; did this time.</state>
                 <state img="4-annoyed.png">This shit again? &lt;i&gt;Real funny&lt;/i&gt;.</state>
             </case>
@@ -4315,6 +4701,11 @@
             </case>
             <case tag="male_removed_accessory" target="ryuji" targetStage="4">
                 <state img="4-cheers.png">Even if ya lost your belt just now, good to see it's faring better!</state>
+            </case>
+            <case tag="male_removed_accessory" targetStatus="exposed">
+                <state img="4-angry.png">Scared? C'mon you're alreayd mostly there...</state>
+                <state img="4-miffed.png">Ugh. You've stripped this far, but can't finish the job. That it?</state>
+                <state img="4-annoyed.png">&lt;i&gt;Now&lt;/i&gt; we're gettin' cold feet?</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="4-angry.png">Oh bloody hell, what is it now?</state>
@@ -4408,10 +4799,10 @@
                 <state img="4-confident.png">Just don't meet too many people in my own line of work these days, is all.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="0">
-                <state img="4-calm.png">I grew up in a family of women warriors, actually.</state>
+                <state img="4-calm.png">I grew up in a family of warrior women, actually.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="1">
-                <state img="4-excited.png">I'm privy to swords myself. Usually like to keep two lasses with me on contracts and such.</state>
+                <state img="4-excited.png">I'm partial to swords, myself. Usually like to keep two lasses with me on contracts and such.</state>
             </case>
             <case tag="female_removing_accessory" target="sei" targetStage="0">
                 <state img="4-cheers.png">Though we'll see how fully stocked it is after we're done with it.</state>
@@ -4422,7 +4813,7 @@
             <case tag="female_removed_accessory">
                 <state img="4-calm.png">Now, back to business as usual.</state>
                 <state img="4-yell.png">I hope you've gotta back-up plan when this stuff runs out.</state>
-                <state img="4-stretch.png">Well it’s a very… acrobatic way of going about this &lt;i&gt;stripping&lt;/i&gt; business.</state>
+                <state img="4-stretch.png">Well, I suppose that's one way to do this stripping business. Tits first, then crotch woulda been better, but... y'know.</state>
                 <state img="4-stretch.png">Are we just goin’ round in circles at this point?</state>
                 <state img="4-calm.png">Ah don’t fret, love. That was well enough.</state>
                 <state img="4-shocked.png">That all? Seems like chump change, is all.</state>
@@ -4458,7 +4849,7 @@
                 <state img="4-cheers.png">I think we're gonna get along just fine, you and I.</state>
             </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
-                <state img="4-excited.png">Come from a mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
+                <state img="4-excited.png">Come from a group of mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
             </case>
             <case tag="female_removed_accessory" target="monika" targetStage="1">
                 <state img="4-flustered.png">&lt;i&gt;(What... why am I getting this weird feeling about this chick?)&lt;/i&gt;</state>
@@ -4560,7 +4951,7 @@
                 <state img="4-yell.png">This feels like a celebration that could go all night!</state>
                 <state img="4-flustered.png">Man. Stripping is like an aggro spell. All the attention goes straight to you.</state>
                 <state img="4-awkward.png">Ugh. It’s no use counting how many layers you’re wearing. My brain’s fried.</state>
-                <state img="4-awkward.png">I’m so hungry, I could scoff down a seven course meal if I wanted to.</state>
+                <state img="4-awkward.png">I’m so hungry, I could scoff down a seven course meal. Can't even think about ~name~...</state>
             </case>
             <case tag="female_removed_minor" id="4-3" target="emi" targetStage="7">
                 <state img="4-calm.png">Ooh. Be nice to have a pair of them. Then my feet wouldn't get so tired...</state>
@@ -4700,7 +5091,7 @@
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="4-stretch.png" marker="+drinks">Y'know there's something to having a reasonably sized weapon.</state>
-                <state img="4-stretch.png" marker="+drinks">I’m sure that marriage material for some girls.</state>
+                <state img="4-stretch.png" marker="+drinks">I’m sure that's marriage material for some girls.</state>
                 <state img="4-shocked.png" marker="+drinks">&lt;i&gt;Whooooaaaaahhh&lt;/i&gt;,</state>
                 <state img="4-angry.png" marker="+drinks">You tryin' to poke someone's eye out?</state>
             </case>
@@ -4805,7 +5196,7 @@
             <case tag="male_must_masturbate">
                 <state img="4-horny.png">I know how it is... men getting these... &lt;i&gt;urges&lt;/i&gt; from time to time...</state>
                 <state img="4-horny.png">You’re still a guy, right? &lt;i&gt;I know how it is.&lt;/i&gt;</state>
-                <state img="4-horny.png">Hmm... I don't know any healing magic, so I guess I'll have to fine a &lt;i&gt;substitute.&lt;/i&gt;</state>
+                <state img="4-horny.png">Hmm... I don't know any healing magic, so I guess I'll have to find a &lt;i&gt;substitute.&lt;/i&gt;</state>
             </case>
             <case tag="male_start_masturbating">
                 <state img="4-yell.png">You'll never get any better if you don't practice, eh?</state>
@@ -4838,7 +5229,7 @@
             </case>
             <case tag="female_must_masturbate">
                 <state img="4-excited.png">You don't know how many turns I've spent waitin' for this!</state>
-                <state img="4-cheers.png">This is almost worth it's price in gold!</state>
+                <state img="4-cheers.png">This is almost worth it's weight in gold!</state>
                 <state img="4-flustered.png">*hic* Looks *hic* like you're gonna *hic* have to surprise me here *hic*, ~name~.</state>
             </case>
             <case tag="female_must_masturbate" target="remilia">
@@ -4874,8 +5265,8 @@
             </case>
             <case tag="female_heavy_masturbating">
                 <state img="4-shocked.png">Am I helping out &lt;i&gt;that&lt;/i&gt; much?</state>
-                <state img="4-stretch.png">It's the tattoos innit? People love the tattoos.</state>
-                <state img="4-flustered.png">I gettin' shivers, ~name~.</state>
+                <state img="4-confident.png">It's the tattoos, innit? People love the tattoos.</state>
+                <state img="4-flustered.png">I'm gettin' shivers, ~name~.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="4-horny.png">A thing of beauty, that was.</state>
@@ -4890,11 +5281,11 @@
 
         <stage id="5">
             <case tag="swap_cards">
-                <state img="5-excited.png">Hit me up with ~cards~ cards!</state>
-                <state img="5-cheers.png">That'll be ~cards~ cards  for me!</state>
-                <state img="5-cheers.png">~cards~ cards and another pint.</state>
-                <state img="5-awkward.png">I dunno... ~cards~ cards?</state>
-                <state img="5-yell.png">~cards~ cards. Give 'em 'ere.</state>
+                <state img="5-excited.png">Hit me up with ~cards.text~ cards!</state>
+                <state img="5-cheers.png">That'll be ~cards.text~ cards  for me!</state>
+                <state img="5-cheers.png">~cards.text~ cards and another pint.</state>
+                <state img="5-awkward.png">I dunno... ~cards.text~ cards?</state>
+                <state img="5-yell.png">~cards.text~ cards. Give 'em 'ere.</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -4918,7 +5309,7 @@
                 <state img="5-annoyed.png">Ugh. I'm bored... I thought this place was supposed to pose as a challenge?</state>
             </case>
             <case tag="okay_hand">
-                <state img="5-awkward.png">Well that card draw didn't help all that much...</state>
+                <state img="5-awkward.png">Well, that card draw didn't help all that much...</state>
                 <state img="5-flustered.png">Guess I've got a glass half full here... and some so-so cards, too.</state>
                 <state img="5-stretch.png">Maybe these can buy me some time?</state>
                 <state img="5-cheers.png">I'll blow this round if anyone wants to pick up my tab!</state>
@@ -4950,6 +5341,33 @@
             <case tag="hand" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" notSaidMarker="sei_drinks_syrenne" alsoPlayingNotSaidMarker="sei_anal" alsoPlayingSayingMarker="sei_anal">
                 <state img="5-cheers.png" marker="sei_drinks_syrenne">It'll take more than say... ~marker.drinks~ of these, before I'm stepping near that!</state>
             </case>
+            <case tag="must_strip" alsoPlaying="sei">
+                <state img="5-must_strip.png">&lt;i&gt;OH SHIT! MY BEER!&lt;/i&gt;</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_army1" alsoPlayingSayingMarker="syr_army1">
+                <state img="5-shocked.png">Wha... nobody's asked me about the army in ages... thought I'd downed enough drinks to pass away those thoughts...</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_lowell1" alsoPlayingSayingMarker="syr_lowell1">
+                <state img="5-miffed.png">Hmph. Little personal there, but no. There ain't anybody like that for me.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_skin1" alsoPlayingSayingMarker="syr_skin1">
+                <state img="5-confident.png">It's about time one of you gawkers noticed. It ain't easy keepin' it like this, for starters.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_merc1" alsoPlayingSayingMarker="syr_merc1">
+                <state img="5-stretch.png">Well, we did track down this vampire a few days ago that was abductin' people. Found out one of my mates screams like a school girl. Pretty good time, all in all.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_royal1" alsoPlayingSayingMarker="syr_royal1">
+                <state img="5-confident.png">Well, it was mostly that contract mumbo-jumbo until we got a gig working as security in a castle, under a count.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_snob1" alsoPlayingSayingMarker="syr_snob1">
+                <state img="5-awkward.png">The fuck...? ...Uh, well, no. An' I've seen enough guys tryna make me bed 'em by doin' that, you'd think I'd 'ave an idea.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_sticky1" alsoPlayingSayingMarker="syr_sticky1">
+                <state img="5-awkward.png">Ugh. I hate those places. I dunno, guess ...the sewers beneath the prison was an absolute rank mess. Felt my nose was about to leg it.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_tricks1" alsoPlayingSayingMarker="syr_tricks1">
+                <state img="5-cheers.png">Well, I don't think we have enough people for me to show off my latest trick! No spoliers, but it involves three knives, a fire mage, and another ten mugs of the good stuff!</state>
+            </case>
             <case tag="must_strip" consecutiveLosses="2">
                 <state img="5-must_strip.png">&lt;i&gt;TWICE! IN A ROW!&lt;/i&gt;</state>
             </case>
@@ -4978,12 +5396,63 @@
             <case tag="stripping" alsoPlaying="rinkah">
                 <state img="5-strip.png">Bloody hell! Thought I was just gettin' the swing of things...</state>
             </case>
+            <case tag="stripping" alsoPlaying="sei">
+                <state img="5-strip.png">Eugh... yeah... maybe not the best time for jokes, Sei.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army1" alsoPlayingNotSaidMarker="syr_army2" alsoPlayingSayingMarker="syr_army2">
+                <state img="5-awkward.png">I mean... well yes... I was in the army, but I haven't been part since... well since all the men turned tail and left the rest of us to... to...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell1" alsoPlayingNotSaidMarker="syr_lowell2" alsoPlayingSayingMarker="syr_lowell2">
+                <state img="5-angry.png">&lt;i&gt;HEY! Listen you orange gremlin,&lt;/i&gt; who the bloody hell is tellin' you about Lowe- ...About my personal life.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc1" alsoPlayingNotSaidMarker="syr_merc2" alsoPlayingSayingMarker="syr_merc2">
+                <state img="5-strip.png">Sure. Meet other mercs all the time. They just don't got what my mates an' I got, is all.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal1" alsoPlayingNotSaidMarker="syr_royal2" alsoPlayingSayingMarker="syr_royal2">
+                <state img="5-strip.png">Well, turns out that one of the Lords there was a closet perv and was peerin' in on the princess.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin1" alsoPlayingNotSaidMarker="syr_skin2" alsoPlayingSayingMarker="syr_skin2">
+                <state img="5-strip.png">I wish I could spend that much, but that'd cut into my boozin' money an' I won't be havin' that. ...Hmmm. Yeah, I don't see the harm if you wanna come in for a touch.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_snob1" alsoPlayingNotSaidMarker="syr_snob2" alsoPlayingSayingMarker="syr_snob2">
+                <state img="5-annoyed.png">Ugh... these fuckin' pricks. Like this one chap with the fuckin' balls to try to whip it out durin' a rescue! I woulda had him out cold if I was a tad more drunk at the time.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky1" alsoPlayingNotSaidMarker="syr_sticky2" alsoPlayingSayingMarker="syr_sticky2">
+                <state img="5-stretch.png">'SPose I'm constantly goin' from one grimy place to another, so I get the feelin'.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks1" alsoPlayingNotSaidMarker="syr_tricks2" alsoPlayingSayingMarker="syr_tricks2">
+                <state img="5-strip.png">I mean, it's really all in the hips. Good enough rotation and you'll send even the toughest of lads cryin' back to their mums!</state>
+            </case>
             <case tag="stripped">
                 <state img="5-stripped.png">It's no different than when you're swimmin', innit?</state>
                 <state img="5-stripped.png">I'm sure the folks back at the bar have seen me in &lt;i&gt;much&lt;/i&gt; less.</state>
             </case>
             <case tag="stripped" alsoPlaying="kamina">
                 <state img="5-stripped.png">Ha ha, yeah, I was just fuckin' with ya. It's basically a clean slate.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="sei">
+                <state img="5-stripped.png">Why don't you come over here and &lt;i&gt;make me&lt;/i&gt;?</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army2" alsoPlayingNotSaidMarker="syr_army3" alsoPlayingSayingMarker="syr_army3">
+                <state img="5-miffed.png">You gotta lotta nerve tryn' to dredge up those memories...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell2" alsoPlayingNotSaidMarker="syr_lowell3" alsoPlayingSayingMarker="syr_lowell3">
+                <state img="5-flustered.png">Mmmm... &lt;i&gt;(Great. Now I'm all flustered about him. Dammit, Lowell. If you were here, stripping...)&lt;i&gt;</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc2" alsoPlayingNotSaidMarker="syr_merc3" alsoPlayingSayingMarker="syr_merc3">
+                <state img="5-horny.png">Heh. I'm always down for a natter. Long as booze is involved, that is.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal2" alsoPlayingNotSaidMarker="syr_royal3" alsoPlayingSayingMarker="syr_royal3">
+                <state img="5-horny.png">That's nothin'. Turns out that maid's are huge gossips... if you can push all the right buttons.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin2" alsoPlayingNotSaidMarker="syr_skin3" alsoPlayingSayingMarker="syr_skin3">
+                <state img="5-cheers.png">Too bad Mirania can't be here to hear that! All those baths together 'ave been worth it!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky2" alsoPlayingNotSaidMarker="syr_sticky3" alsoPlayingSayingMarker="syr_sticky3">
+                <state img="5-flustered.png">I &lt;i&gt;suppose&lt;/i&gt; you might be onto something...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks2" alsoPlayingNotSaidMarker="syr_tricks3" alsoPlayingSayingMarker="syr_tricks3">
+                <state img="5-awkward.png">Ain't no idea who you're talkin' to, but ...what's this talk about your feet...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="5-cheers.png">It'd be just grand if we were gettin' paid for all this.</state>
@@ -5040,7 +5509,7 @@
             </case>
             <case tag="female_must_strip">
                 <state img="5-annoyed.png">Sorry, but I doubt the dealer'll bat an eyelash if ya start battin' ya eyelashes.</state>
-                <state img="5-horny.png">Maybe we should get in bath together after this. Not that ~player~ would want to join that sort of thing.</state>
+                <state img="5-horny.png">Maybe we should get in a bath together after this. Not that ~player~ would want to join that sort of thing.</state>
                 <state img="5-confident.png">Hate to say it, but your clothing's coverin' up your beauty. Best remove it now.</state>
                 <state img="5-confident.png">Nice.</state>
                 <state img="5-horny.png">&lt;i&gt;Scandalous&lt;/i&gt;. How does it feel?</state>
@@ -5217,7 +5686,7 @@
             <case tag="male_removed_accessory">
                 <state img="5-cheers.png">Alright! Another round!</state>
                 <state img="5-annoyed.png">Always the nitty-gritty with you.</state>
-                <state img="5-angry.png">Oh? Someone really wants their arse kicked than? Bring it!</state>
+                <state img="5-angry.png">Oh? Someone really wants their arse kicked then? Bring it!</state>
                 <state img="5-stretch.png">No… no. I’m fine… Don’t wanna go back to jail for something I &lt;i&gt;actually&lt;/i&gt; did this time.</state>
                 <state img="5-annoyed.png">This shit again? &lt;i&gt;Real funny&lt;/i&gt;.</state>
             </case>
@@ -5239,6 +5708,11 @@
             </case>
             <case tag="male_removed_accessory" target="ryuji" targetStage="4">
                 <state img="5-cheers.png">Even if ya lost your belt just now, good to see it's faring better!</state>
+            </case>
+            <case tag="male_removed_accessory" targetStatus="exposed">
+                <state img="5-angry.png">Scared? C'mon you're alreayd mostly there...</state>
+                <state img="5-miffed.png">Ugh. You've stripped this far, but can't finish the job. That it?</state>
+                <state img="5-annoyed.png">&lt;i&gt;Now&lt;/i&gt; we're gettin' cold feet?</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="5-angry.png">Oh bloody hell, what is it now?</state>
@@ -5332,10 +5806,10 @@
                 <state img="5-confident.png">Just don't meet too many people in my own line of work these days, is all.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="0">
-                <state img="5-calm.png">I grew up in a family of women warriors, actually.</state>
+                <state img="5-calm.png">I grew up in a family of warrior women, actually.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="1">
-                <state img="5-excited.png">I'm privy to swords myself. Usually like to keep two lasses with me on contracts and such.</state>
+                <state img="5-excited.png">I'm partial to swords, myself. Usually like to keep two lasses with me on contracts and such.</state>
             </case>
             <case tag="female_removing_accessory" target="sei" targetStage="0">
                 <state img="5-cheers.png">Though we'll see how fully stocked it is after we're done with it.</state>
@@ -5346,7 +5820,7 @@
             <case tag="female_removed_accessory">
                 <state img="5-calm.png">Now, back to business as usual.</state>
                 <state img="5-yell.png">I hope you've gotta back-up plan when this stuff runs out.</state>
-                <state img="5-stretch.png">Well it’s a very… acrobatic way of going about this &lt;i&gt;stripping&lt;/i&gt; business.</state>
+                <state img="5-stretch.png">Well, I suppose that's one way to do this stripping business. Tits first, then crotch woulda been better, but... y'know.</state>
                 <state img="5-stretch.png">Are we just goin’ round in circles at this point?</state>
                 <state img="5-calm.png">Ah don’t fret, love. That was well enough.</state>
                 <state img="5-shocked.png">That all? Seems like chump change, is all.</state>
@@ -5382,7 +5856,7 @@
                 <state img="5-cheers.png">I think we're gonna get along just fine, you and I.</state>
             </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
-                <state img="5-excited.png">Come from a mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
+                <state img="5-excited.png">Come from a group of mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
             </case>
             <case tag="female_removed_accessory" target="monika" targetStage="1">
                 <state img="5-flustered.png">&lt;i&gt;(What... why am I getting this weird feeling about this chick?)&lt;/i&gt;</state>
@@ -5484,7 +5958,7 @@
                 <state img="5-yell.png">This feels like a celebration that could go all night!</state>
                 <state img="5-flustered.png">Man. Stripping is like an aggro spell. All the attention goes straight to you.</state>
                 <state img="5-awkward.png">Ugh. It’s no use counting how many layers you’re wearing. My brain’s fried.</state>
-                <state img="5-awkward.png">I’m so hungry, I could scoff down a seven course meal if I wanted to.</state>
+                <state img="5-awkward.png">I’m so hungry, I could scoff down a seven course meal. Can't even think about ~name~...</state>
             </case>
             <case tag="female_removed_minor" id="5-3" target="emi" targetStage="7">
                 <state img="5-calm.png">Ooh. Be nice to have a pair of them. Then my feet wouldn't get so tired...</state>
@@ -5624,7 +6098,7 @@
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="5-stretch.png" marker="+drinks">Y'know there's something to having a reasonably sized weapon.</state>
-                <state img="5-stretch.png" marker="+drinks">I’m sure that marriage material for some girls.</state>
+                <state img="5-stretch.png" marker="+drinks">I’m sure that's marriage material for some girls.</state>
                 <state img="5-shocked.png" marker="+drinks">&lt;i&gt;Whooooaaaaahhh&lt;/i&gt;,</state>
                 <state img="5-angry.png" marker="+drinks">You tryin' to poke someone's eye out?</state>
             </case>
@@ -5729,7 +6203,7 @@
             <case tag="male_must_masturbate">
                 <state img="5-horny.png">I know how it is... men getting these... &lt;i&gt;urges&lt;/i&gt; from time to time...</state>
                 <state img="5-horny.png">You’re still a guy, right? &lt;i&gt;I know how it is.&lt;/i&gt;</state>
-                <state img="5-horny.png">Hmm... I don't know any healing magic, so I guess I'll have to fine a &lt;i&gt;substitute.&lt;/i&gt;</state>
+                <state img="5-horny.png">Hmm... I don't know any healing magic, so I guess I'll have to find a &lt;i&gt;substitute.&lt;/i&gt;</state>
             </case>
             <case tag="male_start_masturbating">
                 <state img="5-yell.png">You'll never get any better if you don't practice, eh?</state>
@@ -5762,7 +6236,7 @@
             </case>
             <case tag="female_must_masturbate">
                 <state img="5-excited.png">You don't know how many turns I've spent waitin' for this!</state>
-                <state img="5-cheers.png">This is almost worth it's price in gold!</state>
+                <state img="5-cheers.png">This is almost worth it's weight in gold!</state>
                 <state img="5-flustered.png">*hic* Looks *hic* like you're gonna *hic* have to surprise me here *hic*, ~name~.</state>
             </case>
             <case tag="female_must_masturbate" target="remilia">
@@ -5798,8 +6272,8 @@
             </case>
             <case tag="female_heavy_masturbating">
                 <state img="5-shocked.png">Am I helping out &lt;i&gt;that&lt;/i&gt; much?</state>
-                <state img="5-stretch.png">It's the tattoos innit? People love the tattoos.</state>
-                <state img="5-flustered.png">I gettin' shivers, ~name~.</state>
+                <state img="5-confident.png">It's the tattoos, innit? People love the tattoos.</state>
+                <state img="5-flustered.png">I'm gettin' shivers, ~name~.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="5-horny.png">A thing of beauty, that was.</state>
@@ -5814,11 +6288,11 @@
 
         <stage id="6">
             <case tag="swap_cards">
-                <state img="6-excited.png">Hit me up with ~cards~ cards!</state>
-                <state img="6-cheers.png">That'll be ~cards~ cards  for me!</state>
-                <state img="6-cheers.png">~cards~ cards and another pint.</state>
-                <state img="6-awkward.png">I dunno... ~cards~ cards?</state>
-                <state img="6-yell.png">~cards~ cards. Give 'em 'ere.</state>
+                <state img="6-excited.png">Hit me up with ~cards.text~ cards!</state>
+                <state img="6-cheers.png">That'll be ~cards.text~ cards  for me!</state>
+                <state img="6-cheers.png">~cards.text~ cards and another pint.</state>
+                <state img="6-awkward.png">I dunno... ~cards.text~ cards?</state>
+                <state img="6-yell.png">~cards.text~ cards. Give 'em 'ere.</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -5847,10 +6321,10 @@
                 <state img="6-cheers.png">Just make sure to write out my tab to Zael. I'm sure he'd love to cover for me.</state>
             </case>
             <case tag="good_hand" timeInStage="0">
-                <state img="6-awkward.png">Well that last plan when tits up, but I've got a better feelin' on this one.</state>
+                <state img="6-awkward.png">Well that last plan went tits up, but I've got a better feelin' on this one.</state>
             </case>
             <case tag="okay_hand">
-                <state img="6-awkward.png">Well that card draw didn't help all that much...</state>
+                <state img="6-awkward.png">Well, that card draw didn't help all that much...</state>
                 <state img="6-flustered.png">Guess I've got a glass half full here... and some so-so cards, too.</state>
                 <state img="6-stretch.png">Maybe these can buy me some time?</state>
                 <state img="6-cheers.png">I'll blow this round if anyone wants to pick up my tab!</state>
@@ -5892,6 +6366,30 @@
             <case tag="hand" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" notSaidMarker="sei_drinks_syrenne" alsoPlayingNotSaidMarker="sei_anal" alsoPlayingSayingMarker="sei_anal">
                 <state img="6-cheers.png" marker="sei_drinks_syrenne">It'll take more than say... ~marker.drinks~ of these, before I'm stepping near that!</state>
             </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_army1" alsoPlayingSayingMarker="syr_army1">
+                <state img="6-shocked.png">Wha... nobody's asked me about the army in ages... thought I'd downed enough drinks to pass away those thoughts...</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_lowell1" alsoPlayingSayingMarker="syr_lowell1">
+                <state img="6-miffed.png">Hmph. Little personal there, but no. There ain't anybody like that for me.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingNotSaidMarker="syr_skin1" alsoPlayingSayingMarker="syr_skin1">
+                <state img="6-confident.png">It's about time one of you gawkers noticed. It ain't easy keepin' it like this, for starters.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_merc1" alsoPlayingSayingMarker="syr_merc1">
+                <state img="6-stretch.png">Well, we did track down this vampire a few days ago that was abductin' people. Found out one of my mates screams like a school girl. Pretty good time, all in all.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingNotSaidMarker="syr_royal1" alsoPlayingSayingMarker="syr_royal1">
+                <state img="6-confident.png">Well, it was mostly that contract mumbo-jumbo until we got a gig working as security in a castle, under a count.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_snob1" alsoPlayingSayingMarker="syr_snob1">
+                <state img="6-awkward.png">The fuck...? ...Uh, well, no. An' I've seen enough guys tryna make me bed 'em by doin' that, you'd think I'd 'ave an idea.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_sticky1" alsoPlayingSayingMarker="syr_sticky1">
+                <state img="6-awkward.png">Ugh. I hate those places. I dunno, guess ...the sewers beneath the prison was an absolute rank mess. Felt my nose was about to leg it.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="syr_tricks1" alsoPlayingSayingMarker="syr_tricks1">
+                <state img="6-cheers.png">Well, I don't think we have enough people for me to show off my latest trick! No spoliers, but it involves three knives, a fire mage, and another ten mugs of the good stuff!</state>
+            </case>
             <case tag="must_strip" consecutiveLosses="2">
                 <state img="6-angry.png">Twice in a row? You &lt;i&gt;bastards...&lt;/i&gt;</state>
                 <state img="6-stretch.png">Me again? Thought I'd do better than that.</state>
@@ -5920,15 +6418,66 @@
                 <state img="6-strip.png">As if we weren't celebrating hard enough beforehand.</state>
                 <state img="6-strip.png">Guess I'm gettin' a little attention here.</state>
             </case>
+            <case tag="stripping" alsoPlaying="sei">
+                <state img="6-strip.png">My my, Sei. Aren't we being eager?</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army1" alsoPlayingNotSaidMarker="syr_army2" alsoPlayingSayingMarker="syr_army2">
+                <state img="6-awkward.png">I mean... well yes... I was in the army, but I haven't been part since... well since all the men turned tail and left the rest of us to... to...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell1" alsoPlayingNotSaidMarker="syr_lowell2" alsoPlayingSayingMarker="syr_lowell2">
+                <state img="6-angry.png">&lt;i&gt;HEY! Listen you orange gremlin,&lt;/i&gt; who the bloody hell is tellin' you about Lowe- ...About my personal life.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc1" alsoPlayingNotSaidMarker="syr_merc2" alsoPlayingSayingMarker="syr_merc2">
+                <state img="6-strip.png">Sure. Meet other mercs all the time. They just don't got what my mates an' I got, is all.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal1" alsoPlayingNotSaidMarker="syr_royal2" alsoPlayingSayingMarker="syr_royal2">
+                <state img="6-strip.png">Well, turns out that one of the Lords there was a closet perv and was peerin' in on the princess.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin1" alsoPlayingNotSaidMarker="syr_skin2" alsoPlayingSayingMarker="syr_skin2">
+                <state img="6-strip.png">I wish I could spend that much, but that'd cut into my boozin' money an' I won't be havin' that. ...Hmmm. Yeah, I don't see the harm if you wanna come in for a touch.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_snob1" alsoPlayingNotSaidMarker="syr_snob2" alsoPlayingSayingMarker="syr_snob2">
+                <state img="6-annoyed.png">Ugh... these fuckin' pricks. Like this one chap with the fuckin' balls to try to whip it out durin' a rescue! I woulda had him out cold if I was a tad more drunk at the time.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky1" alsoPlayingNotSaidMarker="syr_sticky2" alsoPlayingSayingMarker="syr_sticky2">
+                <state img="6-stretch.png">'SPose I'm constantly goin' from one grimy place to another, so I get the feelin'.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks1" alsoPlayingNotSaidMarker="syr_tricks2" alsoPlayingSayingMarker="syr_tricks2">
+                <state img="6-strip.png">I mean, it's really all in the hips. Good enough rotation and you'll send even the toughest of lads cryin' back to their mums!</state>
+            </case>
             <case tag="stripped">
                 <state img="6-stripped.png">Cleaned it all... Someone get me a new glass... Strongest stuff you got...</state>
-                <state img="6-stripped.png">Think I've cleaned it, but his is a little sooner than I would've liked... Guess I'll take another drink...</state>
+                <state img="6-stripped.png">Think I've cleaned it, but this is a little sooner than I would've liked... Guess I'll take another drink...</state>
             </case>
             <case tag="stripped" alsoPlaying="kamina">
                 <state img="6-cheers.png">Well... I'm not drunk yet so... &lt;i&gt;yeah, I'm still drinkin'!&lt;/i&gt;</state>
             </case>
             <case tag="stripped" alsoPlaying="rinkah">
                 <state img="6-miffed.png">Yeah. I'd watch your own hubris, too, hothead. This ain't over just yet...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="sei">
+                <state img="6-stripped.png">That's a real nice offer... Guess I'll take you up on that, Sei.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army2" alsoPlayingNotSaidMarker="syr_army3" alsoPlayingSayingMarker="syr_army3">
+                <state img="6-miffed.png">You gotta lotta nerve tryn' to dredge up those memories...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell2" alsoPlayingNotSaidMarker="syr_lowell3" alsoPlayingSayingMarker="syr_lowell3">
+                <state img="6-flustered.png">Mmmm... &lt;i&gt;(Great. Now I'm all flustered about him. Dammit, Lowell. If you were here, stripping...)&lt;i&gt;</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc2" alsoPlayingNotSaidMarker="syr_merc3" alsoPlayingSayingMarker="syr_merc3">
+                <state img="6-horny.png">Heh. I'm always down for a natter. Long as booze is involved, that is.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal2" alsoPlayingNotSaidMarker="syr_royal3" alsoPlayingSayingMarker="syr_royal3">
+                <state img="6-horny.png">That's nothin'. Turns out that maid's are huge gossips... if you can push all the right buttons.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin2" alsoPlayingNotSaidMarker="syr_skin3" alsoPlayingSayingMarker="syr_skin3">
+                <state img="6-cheers.png">Too bad Mirania can't be here to hear that! All those baths together 'ave been worth it!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky2" alsoPlayingNotSaidMarker="syr_sticky3" alsoPlayingSayingMarker="syr_sticky3">
+                <state img="6-flustered.png">I &lt;i&gt;suppose&lt;/i&gt; you might be onto something...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks2" alsoPlayingNotSaidMarker="syr_tricks3" alsoPlayingSayingMarker="syr_tricks3">
+                <state img="6-awkward.png">Ain't no idea who you're talkin' to, but ...what's this talk about your feet...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="6-cheers.png">It'd be just grand if we were gettin' paid for all this.</state>
@@ -5985,7 +6534,7 @@
             </case>
             <case tag="female_must_strip">
                 <state img="6-annoyed.png">Sorry, but I doubt the dealer'll bat an eyelash if ya start battin' ya eyelashes.</state>
-                <state img="6-horny.png">Maybe we should get in bath together after this. Not that ~player~ would want to join that sort of thing.</state>
+                <state img="6-horny.png">Maybe we should get in a bath together after this. Not that ~player~ would want to join that sort of thing.</state>
                 <state img="6-confident.png">Hate to say it, but your clothing's coverin' up your beauty. Best remove it now.</state>
                 <state img="6-confident.png">Nice.</state>
                 <state img="6-horny.png">&lt;i&gt;Scandalous&lt;/i&gt;. How does it feel?</state>
@@ -6162,7 +6711,7 @@
             <case tag="male_removed_accessory">
                 <state img="6-cheers.png">Alright! Another round!</state>
                 <state img="6-annoyed.png">Always the nitty-gritty with you.</state>
-                <state img="6-angry.png">Oh? Someone really wants their arse kicked than? Bring it!</state>
+                <state img="6-angry.png">Oh? Someone really wants their arse kicked then? Bring it!</state>
                 <state img="6-stretch.png">No… no. I’m fine… Don’t wanna go back to jail for something I &lt;i&gt;actually&lt;/i&gt; did this time.</state>
                 <state img="6-annoyed.png">This shit again? &lt;i&gt;Real funny&lt;/i&gt;.</state>
             </case>
@@ -6184,6 +6733,11 @@
             </case>
             <case tag="male_removed_accessory" target="ryuji" targetStage="4">
                 <state img="6-cheers.png">Even if ya lost your belt just now, good to see it's faring better!</state>
+            </case>
+            <case tag="male_removed_accessory" targetStatus="exposed">
+                <state img="6-angry.png">Scared? C'mon you're alreayd mostly there...</state>
+                <state img="6-miffed.png">Ugh. You've stripped this far, but can't finish the job. That it?</state>
+                <state img="6-annoyed.png">&lt;i&gt;Now&lt;/i&gt; we're gettin' cold feet?</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="6-angry.png">Oh bloody hell, what is it now?</state>
@@ -6277,10 +6831,10 @@
                 <state img="6-confident.png">Just don't meet too many people in my own line of work these days, is all.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="0">
-                <state img="6-calm.png">I grew up in a family of women warriors, actually.</state>
+                <state img="6-calm.png">I grew up in a family of warrior women, actually.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="1">
-                <state img="6-excited.png">I'm privy to swords myself. Usually like to keep two lasses with me on contracts and such.</state>
+                <state img="6-excited.png">I'm partial to swords, myself. Usually like to keep two lasses with me on contracts and such.</state>
             </case>
             <case tag="female_removing_accessory" target="sei" targetStage="0">
                 <state img="6-cheers.png">Though we'll see how fully stocked it is after we're done with it.</state>
@@ -6291,7 +6845,7 @@
             <case tag="female_removed_accessory">
                 <state img="6-calm.png">Now, back to business as usual.</state>
                 <state img="6-yell.png">I hope you've gotta back-up plan when this stuff runs out.</state>
-                <state img="6-stretch.png">Well it’s a very… acrobatic way of going about this &lt;i&gt;stripping&lt;/i&gt; business.</state>
+                <state img="6-stretch.png">Well, I suppose that's one way to do this stripping business. Tits first, then crotch woulda been better, but... y'know.</state>
                 <state img="6-stretch.png">Are we just goin’ round in circles at this point?</state>
                 <state img="6-calm.png">Ah don’t fret, love. That was well enough.</state>
                 <state img="6-shocked.png">That all? Seems like chump change, is all.</state>
@@ -6327,7 +6881,7 @@
                 <state img="6-cheers.png">I think we're gonna get along just fine, you and I.</state>
             </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
-                <state img="6-excited.png">Come from a mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
+                <state img="6-excited.png">Come from a group of mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
             </case>
             <case tag="female_removed_accessory" target="monika" targetStage="1">
                 <state img="6-flustered.png">&lt;i&gt;(What... why am I getting this weird feeling about this chick?)&lt;/i&gt;</state>
@@ -6429,7 +6983,7 @@
                 <state img="6-yell.png">This feels like a celebration that could go all night!</state>
                 <state img="6-flustered.png">Man. Stripping is like an aggro spell. All the attention goes straight to you.</state>
                 <state img="6-awkward.png">Ugh. It’s no use counting how many layers you’re wearing. My brain’s fried.</state>
-                <state img="6-awkward.png">I’m so hungry, I could scoff down a seven course meal if I wanted to.</state>
+                <state img="6-awkward.png">I’m so hungry, I could scoff down a seven course meal. Can't even think about ~name~...</state>
             </case>
             <case tag="female_removed_minor" id="6-3" target="emi" targetStage="7">
                 <state img="6-calm.png">Ooh. Be nice to have a pair of them. Then my feet wouldn't get so tired...</state>
@@ -6569,7 +7123,7 @@
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="6-stretch.png" marker="+drinks">Y'know there's something to having a reasonably sized weapon.</state>
-                <state img="6-stretch.png" marker="+drinks">I’m sure that marriage material for some girls.</state>
+                <state img="6-stretch.png" marker="+drinks">I’m sure that's marriage material for some girls.</state>
                 <state img="6-shocked.png" marker="+drinks">&lt;i&gt;Whooooaaaaahhh&lt;/i&gt;,</state>
                 <state img="6-angry.png" marker="+drinks">You tryin' to poke someone's eye out?</state>
             </case>
@@ -6673,7 +7227,7 @@
             <case tag="male_must_masturbate">
                 <state img="6-horny.png">I know how it is... men getting these... &lt;i&gt;urges&lt;/i&gt; from time to time...</state>
                 <state img="6-horny.png">You’re still a guy, right? &lt;i&gt;I know how it is.&lt;/i&gt;</state>
-                <state img="6-horny.png">Hmm... I don't know any healing magic, so I guess I'll have to fine a &lt;i&gt;substitute.&lt;/i&gt;</state>
+                <state img="6-horny.png">Hmm... I don't know any healing magic, so I guess I'll have to find a &lt;i&gt;substitute.&lt;/i&gt;</state>
             </case>
             <case tag="male_start_masturbating">
                 <state img="6-yell.png">You'll never get any better if you don't practice, eh?</state>
@@ -6706,7 +7260,7 @@
             </case>
             <case tag="female_must_masturbate">
                 <state img="6-excited.png">You don't know how many turns I've spent waitin' for this!</state>
-                <state img="6-cheers.png">This is almost worth it's price in gold!</state>
+                <state img="6-cheers.png">This is almost worth it's weight in gold!</state>
                 <state img="6-flustered.png">*hic* Looks *hic* like you're gonna *hic* have to surprise me here *hic*, ~name~.</state>
             </case>
             <case tag="female_must_masturbate" target="remilia">
@@ -6742,8 +7296,8 @@
             </case>
             <case tag="female_heavy_masturbating">
                 <state img="6-shocked.png">Am I helping out &lt;i&gt;that&lt;/i&gt; much?</state>
-                <state img="6-stretch.png">It's the tattoos innit? People love the tattoos.</state>
-                <state img="6-flustered.png">I gettin' shivers, ~name~.</state>
+                <state img="6-confident.png">It's the tattoos, innit? People love the tattoos.</state>
+                <state img="6-flustered.png">I'm gettin' shivers, ~name~.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="6-horny.png">A thing of beauty, that was.</state>
@@ -6759,11 +7313,11 @@
 
         <stage id="7">
             <case tag="swap_cards">
-                <state img="7-excited.png">Hit me up with ~cards~ cards!</state>
-                <state img="7-cheers.png">That'll be ~cards~ cards  for me!</state>
-                <state img="7-cheers.png">~cards~ cards and another pint.</state>
-                <state img="7-awkward.png">I dunno... ~cards~ cards?</state>
-                <state img="7-yell.png">~cards~ cards. Give 'em 'ere.</state>
+                <state img="7-excited.png">Hit me up with ~cards.text~ cards!</state>
+                <state img="7-cheers.png">That'll be ~cards.text~ cards  for me!</state>
+                <state img="7-cheers.png">~cards.text~ cards and another pint.</state>
+                <state img="7-awkward.png">I dunno... ~cards.text~ cards?</state>
+                <state img="7-yell.png">~cards.text~ cards. Give 'em 'ere.</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -6792,7 +7346,7 @@
                 <state img="7-cheers.png">Just make sure to write out my tab to Zael. I'm sure he'd love to cover for me.</state>
             </case>
             <case tag="okay_hand">
-                <state img="7-awkward.png">Well that card draw didn't help all that much...</state>
+                <state img="7-awkward.png">Well, that card draw didn't help all that much...</state>
                 <state img="7-flustered.png">Guess I've got a glass half full here... and some so-so cards, too.</state>
                 <state img="7-stretch.png">Maybe these can buy me some time?</state>
                 <state img="7-cheers.png">I'll blow this round if anyone wants to pick up my tab!</state>
@@ -6848,6 +7402,30 @@
             <case tag="stripped">
                 <state img="7-stripped.png">Now, how about a long chat. I'm &lt;i&gt;sure&lt;/i&gt; that's what you came here for. Ha ha.</state>
                 <state img="7-stripped.png">Maybe I should have thought this through more... Nah!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="sei">
+                <state img="7-horny.png">That depends, Sei. Do you like your martini's ...dirty?</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_army2" alsoPlayingNotSaidMarker="syr_army3" alsoPlayingSayingMarker="syr_army3">
+                <state img="7-miffed.png">You gotta lotta nerve tryn' to dredge up those memories...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_lowell2" alsoPlayingNotSaidMarker="syr_lowell3" alsoPlayingSayingMarker="syr_lowell3">
+                <state img="7-flustered.png">Mmmm... &lt;i&gt;(Great. Now I'm all flustered about him. Dammit, Lowell. If you were here, stripping...)&lt;i&gt;</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_merc2" alsoPlayingNotSaidMarker="syr_merc3" alsoPlayingSayingMarker="syr_merc3">
+                <state img="7-horny.png">Heh. I'm always down for a natter. Long as booze is involved, that is.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_royal2" alsoPlayingNotSaidMarker="syr_royal3" alsoPlayingSayingMarker="syr_royal3">
+                <state img="7-horny.png">That's nothin'. Turns out that maid's are huge gossips... if you can push all the right buttons.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_skin2" alsoPlayingNotSaidMarker="syr_skin3" alsoPlayingSayingMarker="syr_skin3">
+                <state img="7-cheers.png">Too bad Mirania can't be here to hear that! All those baths together 'ave been worth it!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_sticky2" alsoPlayingNotSaidMarker="syr_sticky3" alsoPlayingSayingMarker="syr_sticky3">
+                <state img="7-flustered.png">I &lt;i&gt;suppose&lt;/i&gt; you might be onto something...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="syr_tricks2" alsoPlayingNotSaidMarker="syr_tricks3" alsoPlayingSayingMarker="syr_tricks3">
+                <state img="7-awkward.png">Ain't no idea who you're talkin' to, but ...what's this talk about your feet...</state>
             </case>
             <case tag="stripped">
                 <condition count="1-3" filter="boob_envy" />
@@ -6909,7 +7487,7 @@
             </case>
             <case tag="female_must_strip">
                 <state img="7-annoyed.png">Sorry, but I doubt the dealer'll bat an eyelash if ya start battin' ya eyelashes.</state>
-                <state img="7-horny.png">Maybe we should get in bath together after this. Not that ~player~ would want to join that sort of thing.</state>
+                <state img="7-horny.png">Maybe we should get in a bath together after this. Not that ~player~ would want to join that sort of thing.</state>
                 <state img="7-confident.png">Hate to say it, but your clothing's coverin' up your beauty. Best remove it now.</state>
                 <state img="7-confident.png">Nice.</state>
                 <state img="7-horny.png">&lt;i&gt;Scandalous&lt;/i&gt;. How does it feel?</state>
@@ -7086,7 +7664,7 @@
             <case tag="male_removed_accessory">
                 <state img="7-cheers.png">Alright! Another round!</state>
                 <state img="7-annoyed.png">Always the nitty-gritty with you.</state>
-                <state img="7-angry.png">Oh? Someone really wants their arse kicked than? Bring it!</state>
+                <state img="7-angry.png">Oh? Someone really wants their arse kicked then? Bring it!</state>
                 <state img="7-stretch.png">No… no. I’m fine… Don’t wanna go back to jail for something I &lt;i&gt;actually&lt;/i&gt; did this time.</state>
                 <state img="7-annoyed.png">This shit again? &lt;i&gt;Real funny&lt;/i&gt;.</state>
             </case>
@@ -7108,6 +7686,11 @@
             </case>
             <case tag="male_removed_accessory" target="ryuji" targetStage="4">
                 <state img="7-cheers.png">Even if ya lost your belt just now, good to see it's faring better!</state>
+            </case>
+            <case tag="male_removed_accessory" targetStatus="exposed">
+                <state img="7-angry.png">Scared? C'mon you're alreayd mostly there...</state>
+                <state img="7-miffed.png">Ugh. You've stripped this far, but can't finish the job. That it?</state>
+                <state img="7-annoyed.png">&lt;i&gt;Now&lt;/i&gt; we're gettin' cold feet?</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="7-angry.png">Oh bloody hell, what is it now?</state>
@@ -7201,10 +7784,10 @@
                 <state img="7-confident.png">Just don't meet too many people in my own line of work these days, is all.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="0">
-                <state img="7-calm.png">I grew up in a family of women warriors, actually.</state>
+                <state img="7-calm.png">I grew up in a family of warrior women, actually.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="1">
-                <state img="7-excited.png">I'm privy to swords myself. Usually like to keep two lasses with me on contracts and such.</state>
+                <state img="7-excited.png">I'm partial to swords, myself. Usually like to keep two lasses with me on contracts and such.</state>
             </case>
             <case tag="female_removing_accessory" target="sei" targetStage="0">
                 <state img="7-cheers.png">Though we'll see how fully stocked it is after we're done with it.</state>
@@ -7215,7 +7798,7 @@
             <case tag="female_removed_accessory">
                 <state img="7-calm.png">Now, back to business as usual.</state>
                 <state img="7-yell.png">I hope you've gotta back-up plan when this stuff runs out.</state>
-                <state img="7-stretch.png">Well it’s a very… acrobatic way of going about this &lt;i&gt;stripping&lt;/i&gt; business.</state>
+                <state img="7-stretch.png">Well, I suppose that's one way to do this stripping business. Tits first, then crotch woulda been better, but... y'know.</state>
                 <state img="7-stretch.png">Are we just goin’ round in circles at this point?</state>
                 <state img="7-calm.png">Ah don’t fret, love. That was well enough.</state>
                 <state img="7-shocked.png">That all? Seems like chump change, is all.</state>
@@ -7251,7 +7834,7 @@
                 <state img="7-cheers.png">I think we're gonna get along just fine, you and I.</state>
             </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
-                <state img="7-excited.png">Come from a mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
+                <state img="7-excited.png">Come from a group of mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
             </case>
             <case tag="female_removed_accessory" target="monika" targetStage="1">
                 <state img="7-flustered.png">&lt;i&gt;(What... why am I getting this weird feeling about this chick?)&lt;/i&gt;</state>
@@ -7353,7 +7936,7 @@
                 <state img="7-yell.png">This feels like a celebration that could go all night!</state>
                 <state img="7-flustered.png">Man. Stripping is like an aggro spell. All the attention goes straight to you.</state>
                 <state img="7-awkward.png">Ugh. It’s no use counting how many layers you’re wearing. My brain’s fried.</state>
-                <state img="7-awkward.png">I’m so hungry, I could scoff down a seven course meal if I wanted to.</state>
+                <state img="7-awkward.png">I’m so hungry, I could scoff down a seven course meal. Can't even think about ~name~...</state>
             </case>
             <case tag="female_removed_minor" id="7-3" target="emi" targetStage="7">
                 <state img="7-calm.png">Ooh. Be nice to have a pair of them. Then my feet wouldn't get so tired...</state>
@@ -7493,7 +8076,7 @@
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="7-stretch.png" marker="+drinks">Y'know there's something to having a reasonably sized weapon.</state>
-                <state img="7-stretch.png" marker="+drinks">I’m sure that marriage material for some girls.</state>
+                <state img="7-stretch.png" marker="+drinks">I’m sure that's marriage material for some girls.</state>
                 <state img="7-shocked.png" marker="+drinks">&lt;i&gt;Whooooaaaaahhh&lt;/i&gt;,</state>
                 <state img="7-angry.png" marker="+drinks">You tryin' to poke someone's eye out?</state>
             </case>
@@ -7591,7 +8174,7 @@
             <case tag="male_must_masturbate">
                 <state img="7-horny.png">I know how it is... men getting these... &lt;i&gt;urges&lt;/i&gt; from time to time...</state>
                 <state img="7-horny.png">You’re still a guy, right? &lt;i&gt;I know how it is.&lt;/i&gt;</state>
-                <state img="7-horny.png">Hmm... I don't know any healing magic, so I guess I'll have to fine a &lt;i&gt;substitute.&lt;/i&gt;</state>
+                <state img="7-horny.png">Hmm... I don't know any healing magic, so I guess I'll have to find a &lt;i&gt;substitute.&lt;/i&gt;</state>
             </case>
             <case tag="male_start_masturbating">
                 <state img="7-yell.png">You'll never get any better if you don't practice, eh?</state>
@@ -7624,7 +8207,7 @@
             </case>
             <case tag="female_must_masturbate">
                 <state img="7-excited.png">You don't know how many turns I've spent waitin' for this!</state>
-                <state img="7-cheers.png">This is almost worth it's price in gold!</state>
+                <state img="7-cheers.png">This is almost worth it's weight in gold!</state>
                 <state img="7-flustered.png">*hic* Looks *hic* like you're gonna *hic* have to surprise me here *hic*, ~name~.</state>
             </case>
             <case tag="female_must_masturbate" target="remilia">
@@ -7660,8 +8243,8 @@
             </case>
             <case tag="female_heavy_masturbating">
                 <state img="7-shocked.png">Am I helping out &lt;i&gt;that&lt;/i&gt; much?</state>
-                <state img="7-stretch.png">It's the tattoos innit? People love the tattoos.</state>
-                <state img="7-flustered.png">I gettin' shivers, ~name~.</state>
+                <state img="7-confident.png">It's the tattoos, innit? People love the tattoos.</state>
+                <state img="7-flustered.png">I'm gettin' shivers, ~name~.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="7-horny.png">A thing of beauty, that was.</state>
@@ -8102,10 +8685,10 @@
                 <state img="8-confident.png">Just don't meet too many people in my own line of work these days, is all.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="0">
-                <state img="8-calm.png">I grew up in a family of women warriors, actually.</state>
+                <state img="8-calm.png">I grew up in a family of warrior women, actually.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="1">
-                <state img="8-excited.png">I'm privy to swords myself. Usually like to keep two lasses with me on contracts and such.</state>
+                <state img="8-excited.png">I'm partial to swords, myself. Usually like to keep two lasses with me on contracts and such.</state>
             </case>
             <case tag="female_removing_accessory" target="sei" targetStage="0">
                 <state img="8-cheers.png">Though we'll see how fully stocked it is after we're done with it.</state>
@@ -8157,7 +8740,7 @@
                 <state img="8-cheers.png">I think we're gonna get along just fine, you and I.</state>
             </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
-                <state img="8-excited.png">Come from a mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
+                <state img="8-excited.png">Come from a group of mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
             </case>
             <case tag="female_removed_accessory" target="monika" targetStage="1">
                 <state img="8-flustered.png">&lt;i&gt;(What... why am I getting this weird feeling about this chick?)&lt;/i&gt;</state>
@@ -8278,7 +8861,7 @@
             </case>
             <case tag="female_removed_minor" saidMarker="sober">
                 <state img="8-1confident.png">It's been six times that some floozy's given Zael a garment as a token of her gratitude. ...I've gotten twenty-three, myself.</state>
-                <state img="8-1awkward.png">Nice. Just don't do that around any roguish blonde boys with scruffy little beards if you see any. They'll go an' whisk you off your feet 'fore your ~clothing~ hits the ground.</state>
+                <state img="8-1awkward.png">Nice. Just don't do that around any roguish blonde boys with scruffy little beards if you see any. They'll go an' whisk you off your feet 'fore your ~clothing.ifPlural( hit|hits)~ the ground.</state>
             </case>
             <case tag="female_removed_minor" id="8-3" target="emi" targetStage="7">
                 <state img="8-calm.png">Ooh. Be nice to have a pair of them. Then my feet wouldn't get so tired...</state>
@@ -9218,10 +9801,10 @@
                 <state img="9-confident.png">Just don't meet too many people in my own line of work these days, is all.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="0">
-                <state img="9-calm.png">I grew up in a family of women warriors, actually.</state>
+                <state img="9-calm.png">I grew up in a family of warrior women, actually.</state>
             </case>
             <case tag="female_removing_accessory" target="rinkah" targetStage="1">
-                <state img="9-excited.png">I'm privy to swords myself. Usually like to keep two lasses with me on contracts and such.</state>
+                <state img="9-excited.png">I'm partial to swords, myself. Usually like to keep two lasses with me on contracts and such.</state>
             </case>
             <case tag="female_removing_accessory" target="sei" targetStage="0">
                 <state img="9-cheers.png">Though we'll see how fully stocked it is after we're done with it.</state>
@@ -9273,7 +9856,7 @@
                 <state img="9-cheers.png">I think we're gonna get along just fine, you and I.</state>
             </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
-                <state img="9-excited.png">Come from a mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
+                <state img="9-excited.png">Come from a group of mostly all women warriors, myself. Wouldn't mind goin' back to that from time to time.</state>
             </case>
             <case tag="female_removed_accessory" target="monika" targetStage="1">
                 <state img="9-flustered.png">&lt;i&gt;(What... why am I getting this weird feeling about this chick?)&lt;/i&gt;</state>
