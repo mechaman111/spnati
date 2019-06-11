@@ -335,6 +335,8 @@ Player.prototype.initClothingStatus = function () {
  *******************************************************************/
 Player.prototype.resetState = function () {
     this.out = this.finished = false;
+    this.outOrder = undefined;
+    this.biggestLead = 0;
 	this.forfeit = "";
 	this.stage = this.current = this.consecutiveLosses = 0;
 	this.timeInStage = -1;
@@ -477,6 +479,44 @@ Player.prototype.removeTag = function(tag) {
 Player.prototype.hasTag = function(tag) {
     return tag && this.tags && this.tags.indexOf(canonicalizeTag(tag)) >= 0;
 };
+
+Player.prototype.countLayers = function() {
+	return this.clothing.length;
+};
+
+Player.prototype.checkStatus = function(status) {
+	if (status.substr(0, 4) == "not_") {
+		return !this.checkStatus(status.substr(4));
+	}
+	switch (status.trim()) {
+	case STATUS_LOST_SOME:
+		return this.stage > 0;
+	case STATUS_MOSTLY_CLOTHED:
+		return this.mostlyClothed;
+	case STATUS_DECENT:
+		return this.decent;
+	case STATUS_EXPOSED_TOP:
+		return this.exposed.upper;
+	case STATUS_EXPOSED_BOTTOM:
+		return this.exposed.lower;
+	case STATUS_EXPOSED:
+		return this.exposed.upper || this.exposed.lower;
+	case STATUS_EXPOSED_TOP_ONLY:
+		return this.exposed.upper && !this.exposed.lower;
+	case STATUS_EXPOSED_BOTTOM_ONLY:
+		return !this.exposed.upper && this.exposed.lower;
+	case STATUS_NAKED:
+		return this.exposed.upper && this.exposed.lower;
+	case STATUS_ALIVE:
+		return !this.out;
+	case STATUS_LOST_ALL:
+		return this.clothing.length == 0;
+	case STATUS_MASTURBATING:
+		return this.out && !this.finished;
+	case STATUS_FINISHED:
+		return this.finished;
+	}
+}
 
 /*****************************************************************************
  * Subclass of Player for AI-controlled players.

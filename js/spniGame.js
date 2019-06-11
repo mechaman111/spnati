@@ -183,6 +183,7 @@ function loadGameScreen () {
 
     updateAllBehaviours(null, null, GAME_START);
     saveAllTranscriptEntries();
+    updateBiggestLead();
 
     /* set up the poker library */
     setupPoker();
@@ -701,6 +702,7 @@ function endRound () {
         endWaitDisplay = 0;
 		handleGameOver();
 	} else {
+        updateBiggestLead();
 		allowProgression(eGamePhase.DEAL);
 		preloadCardImages();
 	}
