@@ -480,6 +480,15 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
         }
         return undefined;
     default:
+        substitution = expandAliases(self, target);
+    }
+}
+
+function expandAliases (self, target) {
+    if (self && (target.id in self.aliases || '*' in self.aliases)) {
+        var aliasList = self.aliases[target.id] || self.aliases['*'];
+        return expandDialogue(aliasList[getRandomNumber(0, aliasList.length)], null, target);
+    } else {
         return target.label;
     }
 }
@@ -501,10 +510,10 @@ function expandDialogue (dialogue, self, target, bindings) {
         try {
             switch (variable.toLowerCase()) {
             case 'player':
-                substitution = players[HUMAN_PLAYER].label;
+                substitution = expandAliases(self, players[HUMAN_PLAYER]);
                 break;
             case 'name':
-                substitution = target.label;
+                substitution = expandAliases(self, target);
                 break;
             case 'clothing':
                 var clothing = (target||self).removedClothing;

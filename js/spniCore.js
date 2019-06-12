@@ -860,6 +860,16 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             });
 
             this.targetedLines = targetedLines;
+
+            var aliases = {};
+            $xml.find('aliases>alias').each(function() {
+                if ($(this).text() in aliases) {
+                    aliases[$(this).attr('for')].push($(this).text());
+                } else {
+                    aliases[$(this).attr('for')] = [ $(this).text() ];
+                }
+            });
+            this.aliases = aliases;
             
             if (this.selected_costume) {
                 return this.loadAlternateCostume();
