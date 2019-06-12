@@ -802,6 +802,27 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.stamina = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
 
+            var stylesheet = $xml.find('stylesheet').text();
+            if (stylesheet) {
+                var m = stylesheet.match(/[a-zA-Z0-9()~!*:@,;\-.\/]+\.css/i);
+                if (m) {
+                    var href = 'opponents/'+this.id+'/'+m[0];
+                    
+                    // check for duplicate <link> elements:
+                    if ($('link[href=\"'+href+'\"]').length === 0) {
+                        var link_elem = $('<link />', {
+                            'rel': 'stylesheet',
+                            'type': 'text/css',
+                            'href': href
+                        });
+                        
+                        console.log("Loading stylesheet: "+href);
+                        
+                        $('head').append(link_elem);
+                    }
+                }
+            }
+
             /* The gender listed in meta.xml and behaviour.xml might differ
              * (for example with gender-revealing characters)
              * So assume behaviour.xml holds the 'definitive' starting gender
