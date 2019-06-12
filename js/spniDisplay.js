@@ -593,6 +593,7 @@ OpponentDisplay.prototype.updateText = function (player) {
         var wrapperSpan = document.createElement('span');
         wrapperSpan.innerHTML = fixupDialogue(comp.text);
         wrapperSpan.className = comp.classes;
+        wrapperSpan.setAttribute('data-character', player.id);
         
         return wrapperSpan;
     });
