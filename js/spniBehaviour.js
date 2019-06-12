@@ -627,7 +627,8 @@ var fixupDialogueSubstitutions = { // Order matters
     "''":  '\u201d', // right double quotation mark
     "'":   '\u2019', // right single quotation mark
     '&lt;i&gt;': '<i>',
-    '&lt;/i&gt;': '</i>'
+    '&lt;/i&gt;': '</i>',
+    '&lt;/br&gt;': '</br>'
 };
 var fixupDialogueRE = new RegExp(Object.keys(fixupDialogueSubstitutions).map(escapeRegExp).join('|'), 'gi');
 
@@ -641,6 +642,27 @@ function fixupDialogue (str) {
                 return fixupDialogueSubstitutions[match.toLowerCase()]
             });
     }).join('');
+}
+
+var styleSpecifierRE = /({(?:[a-zA-Z0-9\-\_!]+\s*)+})/gi;
+function parseStyleSpecifiers (str) {
+    var rawFragments = str.split(styleSpecifierRE);
+    var styledComponents = [];
+    var curClasses = '';
+    
+    rawFragments.forEach(function (frag) {
+        if (frag.length === 0) return;
+        
+        if (frag[0] === '{') {
+            var classes = frag.slice(1, -1).trim();
+            
+            curClasses = (classes === '!reset') ? '' : classes;
+        } else {
+            styledComponents.push({'text': frag, 'classes': curClasses});
+        }
+    });
+    
+    return styledComponents;
 }
 
 /************************************************************
