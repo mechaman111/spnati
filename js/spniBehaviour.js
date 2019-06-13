@@ -241,7 +241,7 @@ function State($xml, parentCase) {
     }
     
     if (markerOp) {
-        var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?[^~]+~))$/);
+        var match = markerOp.match(/^(?:(\+|-)([\w-]+)(\*?)|([\w-]+)(\*?)\s*=\s*(.*?)\s*)$/);
         var name;
         
         this.marker = {name: null, perTarget: false, persistent: persistMarker, op: null, val: null};
@@ -276,11 +276,10 @@ State.prototype.evaluateMarker = function (self, opp) {
     if (!this.marker) return;
     
     var name = this.marker.name;
+    if (this.marker.perTarget && opp) {
+        name = getTargetMarker(name, opp);
+    }
     if (this.marker.op === '+') {
-        if (this.marker.perTarget && opp) {
-            name = getTargetMarker(name, opp);
-        }
-        
         if (this.marker.persistent) {
             var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
         } else {
@@ -289,10 +288,6 @@ State.prototype.evaluateMarker = function (self, opp) {
         
         return !curVal ? 1 : curVal + 1;
     } else if (this.marker.op === '-') {
-        if (this.marker.perTarget && opp) {
-            name = getTargetMarker(name, opp);
-        }
-        
         if (this.marker.persistent) {
             var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
         } else {
@@ -485,12 +480,15 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
 }
 
 function expandAliases (self, target) {
-    if (self && (target.id in self.aliases || '*' in self.aliases)) {
-        var aliasList = self.aliases[target.id] || self.aliases['*'];
-        return expandDialogue(aliasList[getRandomNumber(0, aliasList.length)], null, target);
-    } else {
-        return target.label;
+    if (self) {
+        var nickmarker = self.markers[getTargetMarker('nickname', target)];
+        if (nickmarker) return nickmarker;
+        if (target.id in self.aliases || '*' in self.aliases) {
+            var aliasList = self.aliases[target.id] || self.aliases['*'];
+            return expandDialogue(aliasList[getRandomNumber(0, aliasList.length)], null, target);
+        }
     }
+    return target.label;
 }
 
 /************************************************************
