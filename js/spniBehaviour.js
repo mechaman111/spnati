@@ -212,7 +212,7 @@ function State($xml, parentCase) {
     this.setSize = $xml.attr('set-size');
     this.setGender = $xml.attr('set-gender');
     this.setLabel = $xml.attr('set-label');
-    this.oneShotId = $xml.attr('one-shot-id');
+    this.oneShotId = $xml.attr('oneShotId');
     
     var collectibleId = $xml.attr('collectible') || undefined;
     var collectibleOp = $xml.attr('collectible-value') || undefined;
@@ -1444,12 +1444,9 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         /* Assign new best-match case and state. */
         this.bestVolatileMatch = bestMatch;
         this.currentPriority = bestPriority;
-        this.allStates = bestMatch.states.reduce(function (list, state) {
-            if (!state.oneShotId || !this.oneShotStates[state.oneShotId]) {
-                list.push(state);
-            }
-            return list;
-        }, []);
+        this.allStates = states.filter(function(state) {
+            return !state.oneShotId || !this.oneShotStates[state.oneShotId];
+        });
         this.chosenState = bestMatch.states[getRandomNumber(0, bestMatch.states.length)];
         this.stateCommitted = false;
         
