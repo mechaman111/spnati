@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.4b at 5:23:21 AM on June 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.4b at 6:20:52 AM on June 15, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.4b</version>
     <first>Nugi-chan</first>
@@ -60,6 +60,31 @@
                 <condition count="2-3" filter="chinese" />
                 <state img="0-calm.png">Oh, yay! I love Chinese cartoons.</state>
             </case>
+            <case tag="selected">
+                <condition count="4" filter="nugi-chan" />
+                <test expr="~self.slot~" value="1" />
+                <state img="0-sad.png">Oh, does ~player~-sama want a harem? A harem of &lt;i&gt;Nugi-chans&lt;/i&gt;?</state>
+            </case>
+            <case tag="selected" totalFemales="5">
+                <condition count="4" filter="nugi-chan" />
+                <test expr="~self.slot~" value="2" />
+                <state img="0-interested.png">She &lt;i&gt;is&lt;/i&gt; very cute. I guess we could help her out.</state>
+            </case>
+            <case tag="selected" totalMales="1">
+                <condition count="4" filter="nugi-chan" />
+                <test expr="~self.slot~" value="2" />
+                <state img="0-interested.png">He &lt;i&gt;is&lt;/i&gt; very cute. I guess we could him help out.</state>
+            </case>
+            <case tag="selected">
+                <condition count="4" filter="nugi-chan" />
+                <test expr="~self.slot~" value="3" />
+                <state img="0-awkward.png">But I suppose that means he'll see three of us naked. Or all four of us if we all lose.</state>
+            </case>
+            <case tag="selected">
+                <condition count="4" filter="nugi-chan" />
+                <test expr="~self.slot~" value="4" />
+                <state img="0-loss.png">I guess it can't be helped.</state>
+            </case>
             <case tag="opponent_selected" target="natsuki">
                 <condition count="0" filter="pit" />
                 <state img="0-happy.png">Let's invite Pit-kun too! I need to see his epilogue with Natsuki-chan.</state>
@@ -83,6 +108,10 @@
             <case tag="game_start" alsoPlaying="meia">
                 <condition count="1" filter="misato" />
                 <state img="0-loss.png" marker="nugi-chan_former_glory">I used to be on the second page of the roster, you know. Hanging out with the cool kids. It's sad to think that most of those girls are dead now.</state>
+            </case>
+            <case tag="game_start">
+                <condition count="2-4" filter="nugi-chan" />
+                <state img="0-happy.png">May the best Nugi-chan win!</state>
             </case>
             <case tag="swap_cards">
                 <state img="0-calm.png">I'll take ~cards~ cards, dealer-sama!</state>
@@ -168,6 +197,9 @@
             <case tag="hand" alsoPlaying="lara" totalRounds="0">
                 <state img="0-shocked.png">So Sam-sama couldn't make it, Lara-sama? Don't tell me I did all that prior reading for nothing!</state>
             </case>
+            <case tag="hand" alsoPlaying="pit" alsoPlayingStage="1" alsoPlayingTimeInStage="1-2" alsoPlayingSaying="taking off any of my clothes in front of others">
+                <state img="0-interested.png">If you need any help undressing, let me know, Pit-sama.</state>
+            </case>
             <case tag="hand" alsoPlaying="zone-tan" totalRounds="0">
                 <state img="0-calm.png">Hey, Zone-tan! Long time, no see!</state>
             </case>
@@ -195,8 +227,21 @@
                 <test expr="~sakura.position~" value="left" />
                 <state img="0-mean.png" marker="nugi-chan_sakura_pee">Okay, Sakura-sama. But if you pee yourself, I'm going to start calling you Number One again.</state>
             </case>
+            <case tag="hand" alsoPlaying="syrenne" alsoPlayingStage="6" alsoPlayingTimeInStage="0" alsoPlayingSaying="that last plan went tits up">
+                <test expr="~syrenne.position~" value="left" />
+                <state img="0-happy.png">If this next plan could be tits &lt;i&gt;out&lt;/i&gt;, I think we'd all appreciate it.</state>
+            </case>
             <case tag="hand" totalAlive="3" totalRounds="0">
                 <state img="0-sad.png">Oh, an epilogue farm? I see how it is...</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="pit">
+                <test expr="~pit.position~" value="left" />
+                <state img="0-loss.png">I'm cosplaying as a maid because my Webmaster likes it. And why are &lt;i&gt;you&lt;/i&gt; dressed as the boy of my dreams, Pit-sama?</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="pit">
+                <test expr="~pit.position~" value="left" />
+                <test expr="~weekday~" value="Monday" />
+                <state img="0-calm.png">It's a Monday, and I always cosplay as a maid on Mondays!</state>
             </case>
             <case tag="must_strip" alsoPlaying="remilia" alsoPlayingStage="0-6" alsoPlayingSayingMarker="nugi1">
                 <test expr="~remilia.position~" value="left" />
@@ -230,6 +275,10 @@
             <case tag="stripping" alsoPlaying="estelle" alsoPlayingSaying="already mastered your">
                 <test expr="~estelle.position~" value="left" />
                 <state img="0-strip.png">Don't worry, Estelle-hime. I've already mastered removing my shoes. Laces are for suckers!</state>
+            </case>
+            <case tag="stripping" alsoPlaying="pit">
+                <test expr="~pit.position~" value="left" />
+                <state img="0-strip.png">I don't know when he's watching, so I always have to be on my best behavior.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="0-mean.png">Lost the hand? Lose the clothes!</state>
@@ -356,6 +405,10 @@
                 <test expr="~background~" value="bedroom" />
                 <state img="0-loss.png" marker="nugi-chan_sakura_player_bedroom">We're in ~player~=sama's bedroom. You're brave to put bare feet on the floor, Sakura-sama!</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
+                <test expr="~target.position~" value="left" />
+                <state img="0-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
+            </case>
             <case tag="female_must_strip" totalRounds="0">
                 <state img="0-calm.png">Lucky! You get to strip for me first, ~name~-sama!</state>
             </case>
@@ -383,6 +436,7 @@
             <case tag="male_human_must_strip">
                 <state img="0-calm.png">If you wouldn't mind, ~name~-sama.</state>
                 <state img="0-interested.png">What would I take off if &lt;i&gt;I&lt;/i&gt; were a cute boy? Give me ideas, ~name~-sama.</state>
+                <state img="0-loss.png">Anything you'd like to show us, ~player~-sama?</state>
             </case>
             <case tag="male_human_must_strip" totalRounds="0">
                 <state img="0-interested.png">First up is ~name~-sama. Let's find out why there's a hundred people lined up to play against him.</state>
@@ -390,8 +444,13 @@
             <case tag="male_removing_accessory">
                 <state img="0-loss.png">You have to run out of tiny things to take off eventually.</state>
             </case>
+            <case tag="male_removing_accessory" target="pit" targetStage="1" alsoPlayingSaying="Hope my bottoms">
+                <test expr="~target.position~" value="left" />
+                <state img="0-interested.png">Hope they do...</state>
+            </case>
             <case tag="male_removed_accessory">
                 <state img="0-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
+                <state img="0-calm.png">I hope you don't mind me saying this, but ~clothing.ifPlural(those are|that's)~ the second nicest ~clothing~ I've seen today.</state>
             </case>
             <case tag="male_removed_accessory" targetStatus="decent">
                 <test expr="~clothing~" value="belt" />
@@ -402,6 +461,12 @@
                 <state img="0-awkward.png">~clothing.ifPlural(Those are the ugliest ~clothing~ I've ever seen...|I'm sure &lt;i&gt;somebody&lt;/i&gt; out there has an unhealthy ~clothing~ fetish...)~</state>
                 <state img="0-calm.png">If you need help at any time, please don't hesitate to ask.</state>
                 <state img="0-interested.png">Good things come to those who wait.</state>
+            </case>
+            <case tag="female_removing_accessory" id="0-1" target="larachel" targetStage="1">
+                <condition count="1" filter="princess" />
+                <test expr="" />
+                <test expr="~target.position~" value="left" />
+                <state img="0-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -476,9 +541,11 @@
             <case tag="male_removed_minor">
                 <state img="0-happy.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
             </case>
+            <case tag="male_removed_minor" target="xander" targetStage="1">
+                <state img="0-small2.png">Okay, that's zero this time.</state>
+            </case>
             <case tag="female_removing_minor">
                 <state img="0-mean.png">Your ~clothing~? Banished from the game!</state>
-                <state img="0-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removing_minor" filter="japanese" targetStage="0" priority="0">
                 <state img="0-calm.png">I am well versed in the ancient Japanese art of ~clothing~ removal. I can review your performance if you'd like, ~name~-sama. ♡</state>
@@ -501,6 +568,10 @@
             <case tag="female_removing_minor" alsoPlaying="raven" alsoPlayingSaying="get a taste of the Teen Titans team">
                 <test expr="~raven.position~" value="left" />
                 <state img="0-interested.png" marker="nugi-chan_raven_taste">So that's all I have to do to get a taste, Raven-sama?</state>
+            </case>
+            <case tag="female_removing_minor" priority="0">
+                <test expr="~target.position~" value="right" />
+                <state img="0-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="0-interested.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
@@ -535,6 +606,18 @@
             </case>
             <case tag="female_removed_minor" target="sakura" targetStage="4">
                 <state img="0-small2.png">Oh, you're still able to play, Sakura-sama? I guess that's good.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="revy" alsoPlayingStage="1" alsoPlayingSaying="strip you myself">
+                <test expr="~revy.position~" value="left" />
+                <state img="0-small2.png">A little hypocritcal there don't you think, Revy-sama?</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="sheena" alsoPlayingStage="0-2" alsoPlayingSaying="I can give you a private lesson">
+                <test expr="~sheena.position~" value="left" />
+                <state img="0-interested.png">Sheena-sama, I would make a good teacher's assistant.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
+                <test expr="~xander.position~" value="left" />
+                <state img="0-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="0-loss.png">Oh my, finally you have to take off something interesting!</state>
@@ -571,6 +654,10 @@
             </case>
             <case tag="female_removing_major" targetStage="3-10">
                 <state img="0-shocked.png">Oh my, finally you have to take off something interesting!</state>
+            </case>
+            <case tag="female_removing_major" alsoPlaying="larachel" alsoPlayingStage="0-1" alsoPlayingSaying="the conclusion is foregone">
+                <test expr="~larachel.position~" value="left" />
+                <state img="0-mean.png">Don't count me out yet, L'Arachel-sama!</state>
             </case>
             <case tag="female_removed_major">
                 <state img="0-interested.png">Your underwear is nice, ~name~-sama, but you don't need it either.</state>
@@ -728,6 +815,10 @@
             <case tag="female_crotch_will_be_visible" target="zelda" alsoPlaying="link" alsoPlayingStage="7-9">
                 <state img="0-devious.png">I can't want to see how hard Link-kun is about to get!</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="syrenne" alsoPlayingSaying="bottoms first">
+                <test expr="~target.position~" value="left" />
+                <state img="0-shocked.png">You mean we have to wait another round to see those boobies?!</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="0-interested.png">My rating: Nudity 5, Difficulty 1.</state>
             </case>
@@ -830,7 +921,7 @@
                 <state img="0-shocked.png">Pee? Is it pee, Mercy-sensei?</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="0-awkward.png">... Fine, you can stare at me while you do that...</state>
+                <state img="0-devious.png">You can look over here if you need any inspiration.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="0-interested.png">Feel free to get as loud as you like, Her-moanier-sama!</state>
@@ -935,6 +1026,9 @@
             <case tag="bad_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="1-loss.png" marker="nugi-chan_amalia_flower">It's like a flower... so pretty!</state>
             </case>
+            <case tag="hand" alsoPlaying="pit" alsoPlayingStage="1" alsoPlayingTimeInStage="1-2" alsoPlayingSaying="taking off any of my clothes in front of others">
+                <state img="1-interested.png">If you need any help undressing, let me know, Pit-sama.</state>
+            </case>
             <case tag="hand" alsoPlaying="akko" alsoPlayingStage="0-3" alsoPlayingSayingMarker="shiny_chariot">
                 <test expr="~akko.position~" value="left" />
                 <state img="1-small2.png" marker="nugi-chan_akko_shiny_chariot_hentai">Shiny Chariot? Which hentai was she in again?</state>
@@ -954,6 +1048,10 @@
             <case tag="hand" alsoPlaying="sakura" notSaidMarker="nugi-chan_sakura_pee" alsoPlayingSaying="you can call me Sakura">
                 <test expr="~sakura.position~" value="left" />
                 <state img="1-mean.png" marker="nugi-chan_sakura_pee">Okay, Sakura-sama. But if you pee yourself, I'm going to start calling you Number One again.</state>
+            </case>
+            <case tag="hand" alsoPlaying="syrenne" alsoPlayingStage="6" alsoPlayingTimeInStage="0" alsoPlayingSaying="that last plan went tits up">
+                <test expr="~syrenne.position~" value="left" />
+                <state img="1-happy.png">If this next plan could be tits &lt;i&gt;out&lt;/i&gt;, I think we'd all appreciate it.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="1-loss.png">I guess it would hardly be strip poker if I only took my shoes off.</state>
@@ -1001,6 +1099,7 @@
                 <state img="1-calm.png">Confront your fears! You'll feel better when you take down your biggest shield.</state>
                 <state img="1-calm.png">We're ready when you are.</state>
                 <state img="1-calm.png">Any bets on what ~name~-sama will choose?</state>
+                <state img="1-interested.png">What would you like her to take off, ~player~-sama?</state>
             </case>
             <case tag="female_must_strip" filter="japanese" targetStage="1" priority="0">
                 <state img="1-calm.png">I'd like to compliment you on your English, ~name~-sama. You speak it well for a Japanese girl. ♡</state>
@@ -1115,6 +1214,10 @@
                 <test expr="~background~" value="bedroom" />
                 <state img="1-loss.png" marker="nugi-chan_sakura_player_bedroom">We're in ~player~=sama's bedroom. You're brave to put bare feet on the floor, Sakura-sama!</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
+                <test expr="~target.position~" value="left" />
+                <state img="1-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
+            </case>
             <case tag="tie">
                 <state img="1-shocked.png">What?! A perfect tie for worst?</state>
             </case>
@@ -1124,8 +1227,13 @@
             <case tag="male_removing_accessory">
                 <state img="1-loss.png">You have to run out of tiny things to take off eventually.</state>
             </case>
+            <case tag="male_removing_accessory" target="pit" targetStage="1" alsoPlayingSaying="Hope my bottoms">
+                <test expr="~target.position~" value="left" />
+                <state img="1-interested.png">Hope they do...</state>
+            </case>
             <case tag="male_removed_accessory">
                 <state img="1-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
+                <state img="1-calm.png">I hope you don't mind me saying this, but ~clothing.ifPlural(those are|that's)~ the second nicest ~clothing~ I've seen today.</state>
             </case>
             <case tag="male_removed_accessory" targetStatus="decent">
                 <test expr="~clothing~" value="belt" />
@@ -1134,6 +1242,12 @@
             <case tag="female_removing_accessory">
                 <state img="1-loss.png">Not too exciting.</state>
                 <state img="1-loss.png">Uh huh.</state>
+            </case>
+            <case tag="female_removing_accessory" id="1-1" target="larachel" targetStage="1">
+                <condition count="1" filter="princess" />
+                <test expr="" />
+                <test expr="~target.position~" value="left" />
+                <state img="1-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
             <case tag="female_removing_accessory" filter="anime" priority="0">
                 <state img="1-small2.png">You're in an anime, so I know you're familiar with the concept of "filler".</state>
@@ -1223,8 +1337,12 @@
             <case tag="male_removed_minor">
                 <state img="1-happy.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
             </case>
+            <case tag="male_removed_minor" target="xander" targetStage="1">
+                <state img="1-small2.png">Okay, that's zero this time.</state>
+            </case>
             <case tag="female_removing_minor">
                 <state img="1-interested.png">A bit of cheesecake is nice, but be prepared to dish out the main course later, ~name~-sama. ♡</state>
+                <state img="1-small2.png">I guess skin is skin...</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="1-loss.png">This isn't the kind of bouncing I expected, but I'll take it.</state>
@@ -1280,6 +1398,18 @@
             <case tag="female_removed_minor" target="sakura" targetStage="4">
                 <state img="1-small2.png">Oh, you're still able to play, Sakura-sama? I guess that's good.</state>
             </case>
+            <case tag="female_removed_minor" alsoPlaying="revy" alsoPlayingStage="1" alsoPlayingSaying="strip you myself">
+                <test expr="~revy.position~" value="left" />
+                <state img="1-small2.png">A little hypocritcal there don't you think, Revy-sama?</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="sheena" alsoPlayingStage="0-2" alsoPlayingSaying="I can give you a private lesson">
+                <test expr="~sheena.position~" value="left" />
+                <state img="1-interested.png">Sheena-sama, I would make a good teacher's assistant.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
+                <test expr="~xander.position~" value="left" />
+                <state img="1-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
+            </case>
             <case tag="male_removing_major">
                 <state img="1-loss.png">Oh my, finally you have to take off something interesting!</state>
             </case>
@@ -1313,9 +1443,14 @@
             <case tag="female_removing_major" targetStage="3-10">
                 <state img="1-shocked.png">Oh my, finally you have to take off something interesting!</state>
             </case>
+            <case tag="female_removing_major" alsoPlaying="larachel" alsoPlayingStage="0-1" alsoPlayingSaying="the conclusion is foregone">
+                <test expr="~larachel.position~" value="left" />
+                <state img="1-mean.png">Don't count me out yet, L'Arachel-sama!</state>
+            </case>
             <case tag="female_removed_major">
                 <state img="1-interested.png">You're showing a lot of skin now, but we won't be satisfied until we see &lt;i&gt;all&lt;/i&gt; of it!</state>
                 <state img="1-calm.png">It's free real estate.</state>
+                <state img="1-happy.png">We're almost there!</state>
             </case>
             <case tag="female_removed_major" filter="virtual" targetStage="5">
                 <state img="1-sad.png">If getting excited about a video game character is wrong, then I don't &lt;i&gt;wanna&lt;/i&gt; be right!</state>
@@ -1474,6 +1609,10 @@
             <case tag="female_crotch_will_be_visible" target="zelda" alsoPlaying="link" alsoPlayingStage="7-9">
                 <state img="1-devious.png">I can't want to see how hard Link-kun is about to get!</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="syrenne" alsoPlayingSaying="bottoms first">
+                <test expr="~target.position~" value="left" />
+                <state img="1-shocked.png">You mean we have to wait another round to see those boobies?!</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="1-interested.png">My rating: Nudity 5, Difficulty 1.</state>
             </case>
@@ -1573,7 +1712,7 @@
                 <state img="1-shocked.png">Pee? Is it pee, Mercy-sensei?</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="1-awkward.png">... Fine, you can stare at me while you do that...</state>
+                <state img="1-devious.png">You can look over here if you need any inspiration.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="1-interested.png">Feel free to get as loud as you like, Her-moanier-sama!</state>
@@ -1593,6 +1732,7 @@
             <case tag="female_masturbating">
                 <state img="1-horny.png">No holding back, loser-sama! I can hear you panting.</state>
                 <state img="1-embarrassed.png">So hot!</state>
+                <state img="1-interested.png">You're the center of attention, ~name~-sama.</state>
             </case>
             <case tag="female_masturbating" target="daria" alsoPlaying="jane">
                 <state img="1-embarrassed.png">Jane, can I pre-order a painting of this scene?</state>
@@ -1681,6 +1821,9 @@
             <case tag="bad_hand" notSaidMarker="nugi-chan_submit_query" priority="0">
                 <state img="2-annoyed.png" marker="nugi-chan_submit_query">What the fuck is a "Submit Query" card?</state>
             </case>
+            <case tag="hand" alsoPlaying="pit" alsoPlayingStage="1" alsoPlayingTimeInStage="1-2" alsoPlayingSaying="taking off any of my clothes in front of others">
+                <state img="2-interested.png">If you need any help undressing, let me know, Pit-sama.</state>
+            </case>
             <case tag="hand" alsoPlaying="akko" alsoPlayingStage="0-3" alsoPlayingSayingMarker="shiny_chariot">
                 <test expr="~akko.position~" value="left" />
                 <state img="2-small2.png" marker="nugi-chan_akko_shiny_chariot_hentai">Shiny Chariot? Which hentai was she in again?</state>
@@ -1700,6 +1843,10 @@
             <case tag="hand" alsoPlaying="sakura" notSaidMarker="nugi-chan_sakura_pee" alsoPlayingSaying="you can call me Sakura">
                 <test expr="~sakura.position~" value="left" />
                 <state img="2-mean.png" marker="nugi-chan_sakura_pee">Okay, Sakura-sama. But if you pee yourself, I'm going to start calling you Number One again.</state>
+            </case>
+            <case tag="hand" alsoPlaying="syrenne" alsoPlayingStage="6" alsoPlayingTimeInStage="0" alsoPlayingSaying="that last plan went tits up">
+                <test expr="~syrenne.position~" value="left" />
+                <state img="2-happy.png">If this next plan could be tits &lt;i&gt;out&lt;/i&gt;, I think we'd all appreciate it.</state>
             </case>
             <case tag="must_strip" alsoPlaying="miko" alsoPlayingStage="1-10" alsoPlayingSaying="You seem a respectable sort">
                 <test expr="~miko.position~" value="left" />
@@ -1737,6 +1884,10 @@
             </case>
             <case tag="stripped" alsoPlaying="shimakaze" alsoPlayingStage="0-8">
                 <state img="2-stripped.png" marker="nugi-chan_shimakaze_half_nelson">If it helps, you can think of me as &lt;i&gt;half&lt;/i&gt; Nelson.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="pit">
+                <test expr="~pit.position~" value="left" />
+                <state img="2-loss.png">Isn't Pit-sama just the cutest?</state>
             </case>
             <case tag="stripped" alsoPlaying="remilia">
                 <test expr="~remilia.position~" value="left" />
@@ -1868,6 +2019,10 @@
                 <test expr="~background~" value="bedroom" />
                 <state img="2-loss.png" marker="nugi-chan_sakura_player_bedroom">We're in ~player~=sama's bedroom. You're brave to put bare feet on the floor, Sakura-sama!</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
+                <test expr="~target.position~" value="left" />
+                <state img="2-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
+            </case>
             <case tag="tie">
                 <state img="2-shocked.png">What?! A perfect tie for worst?</state>
             </case>
@@ -1877,8 +2032,13 @@
             <case tag="male_removing_accessory">
                 <state img="2-loss.png">You have to run out of tiny things to take off eventually.</state>
             </case>
+            <case tag="male_removing_accessory" target="pit" targetStage="1" alsoPlayingSaying="Hope my bottoms">
+                <test expr="~target.position~" value="left" />
+                <state img="2-interested.png">Hope they do...</state>
+            </case>
             <case tag="male_removed_accessory">
                 <state img="2-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
+                <state img="2-calm.png">I hope you don't mind me saying this, but ~clothing.ifPlural(those are|that's)~ the second nicest ~clothing~ I've seen today.</state>
             </case>
             <case tag="male_removed_accessory" targetStatus="decent">
                 <test expr="~clothing~" value="belt" />
@@ -1886,6 +2046,12 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="2-loss.png">An accessory is fine too.</state>
+            </case>
+            <case tag="female_removing_accessory" id="2-1" target="larachel" targetStage="1">
+                <condition count="1" filter="princess" />
+                <test expr="" />
+                <test expr="~target.position~" value="left" />
+                <state img="2-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
             <case tag="female_removing_accessory" target="buffy">
                 <state img="2-devious.png">I liked you better in the standalone movie, Buffy-sama. That movie's name: &lt;i&gt;Buffy Gone Wild&lt;/i&gt;.</state>
@@ -1969,9 +2135,11 @@
             <case tag="male_removed_minor">
                 <state img="2-happy.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
             </case>
+            <case tag="male_removed_minor" target="xander" targetStage="1">
+                <state img="2-small2.png">Okay, that's zero this time.</state>
+            </case>
             <case tag="female_removing_minor">
                 <state img="2-mean.png">Your ~clothing~? Banished from the game!</state>
-                <state img="2-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="2-loss.png">This isn't the kind of bouncing I expected, but I'll take it.</state>
@@ -1991,6 +2159,10 @@
             <case tag="female_removing_minor" alsoPlaying="raven" alsoPlayingSaying="get a taste of the Teen Titans team">
                 <test expr="~raven.position~" value="left" />
                 <state img="2-interested.png" marker="nugi-chan_raven_taste">So that's all I have to do to get a taste, Raven-sama?</state>
+            </case>
+            <case tag="female_removing_minor" priority="0">
+                <test expr="~target.position~" value="right" />
+                <state img="2-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="2-interested.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
@@ -2029,6 +2201,18 @@
             <case tag="female_removed_minor" target="nugi-chan" alsoPlaying="jin" notSaidMarker="nugi-chan_jin_bad_news_butt" alsoPlayingSaying="your cute butt">
                 <test expr="~jin.position~" value="left" />
                 <state img="2-awkward.png" marker="nugi-chan_jin_bad_news_butt">I've got bad news about my butt, Jin-sama...</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="revy" alsoPlayingStage="1" alsoPlayingSaying="strip you myself">
+                <test expr="~revy.position~" value="left" />
+                <state img="2-small2.png">A little hypocritcal there don't you think, Revy-sama?</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="sheena" alsoPlayingStage="0-2" alsoPlayingSaying="I can give you a private lesson">
+                <test expr="~sheena.position~" value="left" />
+                <state img="2-interested.png">Sheena-sama, I would make a good teacher's assistant.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
+                <test expr="~xander.position~" value="left" />
+                <state img="2-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="2-loss.png">Oh my, finally you have to take off something interesting!</state>
@@ -2218,6 +2402,10 @@
             <case tag="female_crotch_will_be_visible" target="zelda" alsoPlaying="link" alsoPlayingStage="7-9">
                 <state img="2-devious.png">I can't want to see how hard Link-kun is about to get!</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="syrenne" alsoPlayingSaying="bottoms first">
+                <test expr="~target.position~" value="left" />
+                <state img="2-shocked.png">You mean we have to wait another round to see those boobies?!</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="2-interested.png">My rating: Nudity 5, Difficulty 1.</state>
             </case>
@@ -2317,7 +2505,7 @@
                 <state img="2-shocked.png">Pee? Is it pee, Mercy-sensei?</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="2-awkward.png">... Fine, you can stare at me while you do that...</state>
+                <state img="2-devious.png">You can look over here if you need any inspiration.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="2-interested.png">Feel free to get as loud as you like, Her-moanier-sama!</state>
@@ -2337,6 +2525,7 @@
             <case tag="female_masturbating">
                 <state img="2-horny.png">No holding back, loser-sama! I can hear you panting.</state>
                 <state img="2-embarrassed.png">So hot!</state>
+                <state img="2-interested.png">You're the center of attention, ~name~-sama.</state>
             </case>
             <case tag="female_masturbating" target="daria" alsoPlaying="jane">
                 <state img="2-embarrassed.png">Jane, can I pre-order a painting of this scene?</state>
@@ -2398,11 +2587,9 @@
                 <state img="3-sad.png">You're all so precious.</state>
             </case>
             <case tag="okay_hand">
-                <state img="3-calm.png">I can handle this.</state>
-                <state img="3-calm.png">What did everybody else get?</state>
-                <state img="3-calm.png">Ready and waiting.</state>
-                <state img="3-awkward.png">Are we just waiting for ~player~-sama now?</state>
-                <state img="3-calm.png">Let's see what all of you have.</state>
+                <state img="3-calm.png">I've got something. Who doesn't?</state>
+                <state img="3-loss.png">Just two cards short of a four-of-a-kind.</state>
+                <state img="3-calm.png">Who will it be?</state>
             </case>
             <case tag="okay_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="3-devious.png" marker="nugi-chan_amalia_flower">Have you considered just going around with your flower open like that?</state>
@@ -2420,6 +2607,9 @@
             </case>
             <case tag="bad_hand" alsoPlaying="zone-tan" priority="0">
                 <state img="3-awkward.png">Zone-tan and I are in a similar line of work, so we go way back. Sometimes we go so far back that... Let's not tell that story.</state>
+            </case>
+            <case tag="hand" alsoPlaying="pit" alsoPlayingStage="1" alsoPlayingTimeInStage="1-2" alsoPlayingSaying="taking off any of my clothes in front of others">
+                <state img="3-interested.png">If you need any help undressing, let me know, Pit-sama.</state>
             </case>
             <case tag="hand" alsoPlaying="akko" alsoPlayingStage="0-3" alsoPlayingSayingMarker="shiny_chariot">
                 <test expr="~akko.position~" value="left" />
@@ -2440,6 +2630,10 @@
             <case tag="hand" alsoPlaying="sakura" notSaidMarker="nugi-chan_sakura_pee" alsoPlayingSaying="you can call me Sakura">
                 <test expr="~sakura.position~" value="left" />
                 <state img="3-mean.png" marker="nugi-chan_sakura_pee">Okay, Sakura-sama. But if you pee yourself, I'm going to start calling you Number One again.</state>
+            </case>
+            <case tag="hand" alsoPlaying="syrenne" alsoPlayingStage="6" alsoPlayingTimeInStage="0" alsoPlayingSaying="that last plan went tits up">
+                <test expr="~syrenne.position~" value="left" />
+                <state img="3-happy.png">If this next plan could be tits &lt;i&gt;out&lt;/i&gt;, I think we'd all appreciate it.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="3-loss.png">I suppose I could offer a little something to keep the game going.</state>
@@ -2568,6 +2762,10 @@
                 <test expr="~background~" value="bedroom" />
                 <state img="3-loss.png" marker="nugi-chan_sakura_player_bedroom">We're in ~player~=sama's bedroom. You're brave to put bare feet on the floor, Sakura-sama!</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
+                <test expr="~target.position~" value="left" />
+                <state img="3-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
+            </case>
             <case tag="tie">
                 <state img="3-shocked.png">What?! A perfect tie for worst?</state>
             </case>
@@ -2577,8 +2775,13 @@
             <case tag="male_removing_accessory">
                 <state img="3-loss.png">You have to run out of tiny things to take off eventually.</state>
             </case>
+            <case tag="male_removing_accessory" target="pit" targetStage="1" alsoPlayingSaying="Hope my bottoms">
+                <test expr="~target.position~" value="left" />
+                <state img="3-interested.png">Hope they do...</state>
+            </case>
             <case tag="male_removed_accessory">
                 <state img="3-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
+                <state img="3-calm.png">I hope you don't mind me saying this, but ~clothing.ifPlural(those are|that's)~ the second nicest ~clothing~ I've seen today.</state>
             </case>
             <case tag="male_removed_accessory" targetStatus="decent" totalFemales="3-">
                 <test expr="~clothing~" value="belt" />
@@ -2586,6 +2789,12 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="3-loss.png">You have to run out of tiny things to take off eventually.</state>
+            </case>
+            <case tag="female_removing_accessory" id="3-1" target="larachel" targetStage="1">
+                <condition count="1" filter="princess" />
+                <test expr="" />
+                <test expr="~target.position~" value="left" />
+                <state img="3-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
             <case tag="female_removing_accessory" target="buffy">
                 <state img="3-devious.png">I liked you better in the standalone movie, Buffy-sama. That movie's name: &lt;i&gt;Buffy Gone Wild&lt;/i&gt;.</state>
@@ -2665,9 +2874,11 @@
             <case tag="male_removed_minor">
                 <state img="3-happy.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
             </case>
+            <case tag="male_removed_minor" target="xander" targetStage="1">
+                <state img="3-small2.png">Okay, that's zero this time.</state>
+            </case>
             <case tag="female_removing_minor">
                 <state img="3-mean.png">Your ~clothing~? Banished from the game!</state>
-                <state img="3-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="3-loss.png">This isn't the kind of bouncing I expected, but I'll take it.</state>
@@ -2687,6 +2898,10 @@
             <case tag="female_removing_minor" alsoPlaying="raven" alsoPlayingSaying="get a taste of the Teen Titans team">
                 <test expr="~raven.position~" value="left" />
                 <state img="3-interested.png" marker="nugi-chan_raven_taste">So that's all I have to do to get a taste, Raven-sama?</state>
+            </case>
+            <case tag="female_removing_minor" priority="0">
+                <test expr="~target.position~" value="right" />
+                <state img="3-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="3-interested.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
@@ -2725,6 +2940,18 @@
             <case tag="female_removed_minor" target="nugi-chan" alsoPlaying="jin" notSaidMarker="nugi-chan_jin_bad_news_butt" alsoPlayingSaying="your cute butt">
                 <test expr="~jin.position~" value="left" />
                 <state img="3-awkward.png" marker="nugi-chan_jin_bad_news_butt">I've got bad news about my butt, Jin-sama...</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="revy" alsoPlayingStage="1" alsoPlayingSaying="strip you myself">
+                <test expr="~revy.position~" value="left" />
+                <state img="3-small2.png">A little hypocritcal there don't you think, Revy-sama?</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="sheena" alsoPlayingStage="0-2" alsoPlayingSaying="I can give you a private lesson">
+                <test expr="~sheena.position~" value="left" />
+                <state img="3-interested.png">Sheena-sama, I would make a good teacher's assistant.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
+                <test expr="~xander.position~" value="left" />
+                <state img="3-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="3-loss.png">Oh my, finally you have to take off something interesting!</state>
@@ -2906,6 +3133,10 @@
             <case tag="female_crotch_will_be_visible" target="zelda" alsoPlaying="link" alsoPlayingStage="7-9">
                 <state img="3-devious.png">I can't want to see how hard Link-kun is about to get!</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="syrenne" alsoPlayingSaying="bottoms first">
+                <test expr="~target.position~" value="left" />
+                <state img="3-shocked.png">You mean we have to wait another round to see those boobies?!</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="3-interested.png">My rating: Nudity 5, Difficulty 1.</state>
             </case>
@@ -3005,7 +3236,7 @@
                 <state img="3-shocked.png">Pee? Is it pee, Mercy-sensei?</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="3-awkward.png">... Fine, you can stare at me while you do that...</state>
+                <state img="3-devious.png">You can look over here if you need any inspiration.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="3-interested.png">Feel free to get as loud as you like, Her-moanier-sama!</state>
@@ -3025,6 +3256,7 @@
             <case tag="female_masturbating">
                 <state img="3-horny.png">No holding back, loser-sama! I can hear you panting.</state>
                 <state img="3-embarrassed.png">So hot!</state>
+                <state img="3-interested.png">You're the center of attention, ~name~-sama.</state>
             </case>
             <case tag="female_masturbating" target="daria" alsoPlaying="jane">
                 <state img="3-embarrassed.png">Jane, can I pre-order a painting of this scene?</state>
@@ -3084,6 +3316,7 @@
                 <state img="4-loss.png">Sorry if you were hoping for a naked apron look.</state>
                 <state img="4-loss.png">I think I'll be okay.</state>
                 <state img="4-loss.png">It would be pretty sad if you only got the strip game mascot down to her bra, wouldn't it?</state>
+                <state img="4-interested.png" marker="nugi-chan_cute_couple">These two cards would make a cute couple. Just like me and ~player~-sama. ♡</state>
             </case>
             <case tag="okay_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="4-devious.png" marker="nugi-chan_amalia_flower">Have you considered just going around with your flower open like that?</state>
@@ -3099,6 +3332,9 @@
             </case>
             <case tag="bad_hand" saidMarker="nugi-chan_sph" notSaidMarker="nugi-chan_sph_lifetime">
                 <state img="4-mean.png" marker="nugi-chan_sph_lifetime">This hand is more disappointing than ~player~-sama's little dick. Just kidding! How could I compare it to a &lt;i&gt;lifetime&lt;/i&gt; of disappointment?</state>
+            </case>
+            <case tag="hand" alsoPlaying="pit" alsoPlayingStage="1" alsoPlayingTimeInStage="1-2" alsoPlayingSaying="taking off any of my clothes in front of others">
+                <state img="4-interested.png">If you need any help undressing, let me know, Pit-sama.</state>
             </case>
             <case tag="hand" alsoPlaying="akko" alsoPlayingStage="0-3" alsoPlayingSayingMarker="shiny_chariot">
                 <test expr="~akko.position~" value="left" />
@@ -3119,6 +3355,10 @@
             <case tag="hand" alsoPlaying="sakura" notSaidMarker="nugi-chan_sakura_pee" alsoPlayingSaying="you can call me Sakura">
                 <test expr="~sakura.position~" value="left" />
                 <state img="4-mean.png" marker="nugi-chan_sakura_pee">Okay, Sakura-sama. But if you pee yourself, I'm going to start calling you Number One again.</state>
+            </case>
+            <case tag="hand" alsoPlaying="syrenne" alsoPlayingStage="6" alsoPlayingTimeInStage="0" alsoPlayingSaying="that last plan went tits up">
+                <test expr="~syrenne.position~" value="left" />
+                <state img="4-happy.png">If this next plan could be tits &lt;i&gt;out&lt;/i&gt;, I think we'd all appreciate it.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="4-annoyed.png">You... you stupid cards! How am I going to maintain my lead?!</state>
@@ -3238,6 +3478,10 @@
             <case tag="female_must_strip" target="zoey" targetStage="1">
                 <state img="4-devious.png">All according to plan.</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
+                <test expr="~target.position~" value="left" />
+                <state img="4-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
+            </case>
             <case tag="tie">
                 <state img="4-shocked.png">What?! A perfect tie for worst?</state>
             </case>
@@ -3247,8 +3491,12 @@
             <case tag="male_removing_accessory">
                 <state img="4-loss.png">You have to run out of tiny things to take off eventually.</state>
             </case>
+            <case tag="male_removing_accessory" target="pit" targetStage="1" alsoPlayingSaying="Hope my bottoms">
+                <test expr="~target.position~" value="left" />
+                <state img="4-interested.png">Hope they do...</state>
+            </case>
             <case tag="male_removed_accessory">
-                <state img="4-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
+                <state img="4-small2.png">I guess that wasn't nothing.</state>
             </case>
             <case tag="male_removed_accessory" targetStatus="decent">
                 <test expr="~clothing~" value="belt" />
@@ -3256,6 +3504,12 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="4-loss.png">You have to run out of tiny things to take off eventually.</state>
+            </case>
+            <case tag="female_removing_accessory" id="4-1" target="larachel" targetStage="1">
+                <condition count="1" filter="princess" />
+                <test expr="" />
+                <test expr="~target.position~" value="left" />
+                <state img="4-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
             <case tag="female_removing_accessory" target="buffy">
                 <state img="4-devious.png">I liked you better in the standalone movie, Buffy-sama. That movie's name: &lt;i&gt;Buffy Gone Wild&lt;/i&gt;.</state>
@@ -3323,14 +3577,16 @@
                 <state img="4-devious.png">Mercy-sensei, you can be honest with us.  How clean were your hands when you filmed Mercy Fists Widowmaker Dot Mp4?</state>
             </case>
             <case tag="male_removing_minor">
-                <state img="4-calm.png">Any progress is still progress.</state>
+                <state img="4-small2.png">Maybe ~name~-sama doesn't want me to continue.</state>
             </case>
             <case tag="male_removed_minor">
                 <state img="4-happy.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
             </case>
+            <case tag="male_removed_minor" target="xander" targetStage="1">
+                <state img="4-small2.png">Okay, that's zero this time.</state>
+            </case>
             <case tag="female_removing_minor">
                 <state img="4-mean.png">Your ~clothing~? Banished from the game!</state>
-                <state img="4-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="4-loss.png">This isn't the kind of bouncing I expected, but I'll take it.</state>
@@ -3350,6 +3606,10 @@
             <case tag="female_removing_minor" alsoPlaying="raven" alsoPlayingSaying="get a taste of the Teen Titans team">
                 <test expr="~raven.position~" value="left" />
                 <state img="4-interested.png" marker="nugi-chan_raven_taste">So that's all I have to do to get a taste, Raven-sama?</state>
+            </case>
+            <case tag="female_removing_minor" priority="0">
+                <test expr="~target.position~" value="right" />
+                <state img="4-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="4-interested.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
@@ -3384,6 +3644,18 @@
             </case>
             <case tag="female_removed_minor" target="sakura" targetStage="4">
                 <state img="4-small2.png">Oh, you're still able to play, Sakura-sama? I guess that's good.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="revy" alsoPlayingStage="1" alsoPlayingSaying="strip you myself">
+                <test expr="~revy.position~" value="left" />
+                <state img="4-small2.png">A little hypocritcal there don't you think, Revy-sama?</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="sheena" alsoPlayingStage="0-2" alsoPlayingSaying="I can give you a private lesson">
+                <test expr="~sheena.position~" value="left" />
+                <state img="4-interested.png">Sheena-sama, I would make a good teacher's assistant.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
+                <test expr="~xander.position~" value="left" />
+                <state img="4-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="4-loss.png">Oh my, finally you have to take off something interesting!</state>
@@ -3561,6 +3833,10 @@
             <case tag="female_crotch_will_be_visible" target="zelda" alsoPlaying="link" alsoPlayingStage="7-9">
                 <state img="4-devious.png">I can't want to see how hard Link-kun is about to get!</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="syrenne" alsoPlayingSaying="bottoms first">
+                <test expr="~target.position~" value="left" />
+                <state img="4-shocked.png">You mean we have to wait another round to see those boobies?!</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="4-devious.png">You're all naked, ~name~-sama! I said no covering up... uh oh, I guess &lt;i&gt;someone's&lt;/i&gt; "turned on". ♡</state>
             </case>
@@ -3660,7 +3936,7 @@
                 <state img="4-shocked.png">Pee? Is it pee, Mercy-sensei?</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="4-awkward.png">... Fine, you can stare at me while you do that...</state>
+                <state img="4-devious.png">You can look over here if you need any inspiration.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="4-interested.png">Feel free to get as loud as you like, Her-moanier-sama!</state>
@@ -3680,6 +3956,7 @@
             <case tag="female_masturbating">
                 <state img="4-horny.png">No holding back, loser-sama! I can hear you panting.</state>
                 <state img="4-embarrassed.png">So hot!</state>
+                <state img="4-interested.png">You're the center of attention, ~name~-sama.</state>
             </case>
             <case tag="female_masturbating" target="daria" alsoPlaying="jane">
                 <state img="4-embarrassed.png">Jane, can I pre-order a painting of this scene?</state>
@@ -3742,11 +4019,9 @@
                 <state img="5-mean.png">Okay, enough of me. Let's get back to the part where someone else strips!</state>
             </case>
             <case tag="okay_hand">
-                <state img="5-calm.png">I can handle this.</state>
-                <state img="5-calm.png">What did everybody else get?</state>
-                <state img="5-calm.png">Ready and waiting.</state>
-                <state img="5-awkward.png">Are we just waiting for ~player~-sama now?</state>
-                <state img="5-calm.png">Let's see what all of you have.</state>
+                <state img="5-awkward.png">My bra is relying on this pair...</state>
+                <state img="5-calm.png">I'm not giving anything away.</state>
+                <state img="5-interested.png">Enjoying yourself, ~player~-sama?</state>
             </case>
             <case tag="okay_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="5-devious.png" marker="nugi-chan_amalia_flower">Have you considered just going around with your flower open like that?</state>
@@ -3759,6 +4034,9 @@
             </case>
             <case tag="bad_hand" alsoPlaying="shaggy" priority="0">
                 <state img="5-awkward.png">Shaggy-sama, why do I get the feeling that you're stranger-danger incarnate?</state>
+            </case>
+            <case tag="hand" alsoPlaying="pit" alsoPlayingStage="1" alsoPlayingTimeInStage="1-2" alsoPlayingSaying="taking off any of my clothes in front of others">
+                <state img="5-interested.png">If you need any help undressing, let me know, Pit-sama.</state>
             </case>
             <case tag="hand" alsoPlaying="akko" alsoPlayingStage="0-3" alsoPlayingSayingMarker="shiny_chariot">
                 <test expr="~akko.position~" value="left" />
@@ -3779,6 +4057,10 @@
             <case tag="hand" alsoPlaying="sakura" notSaidMarker="nugi-chan_sakura_pee" alsoPlayingSaying="you can call me Sakura">
                 <test expr="~sakura.position~" value="left" />
                 <state img="5-mean.png" marker="nugi-chan_sakura_pee">Okay, Sakura-sama. But if you pee yourself, I'm going to start calling you Number One again.</state>
+            </case>
+            <case tag="hand" alsoPlaying="syrenne" alsoPlayingStage="6" alsoPlayingTimeInStage="0" alsoPlayingSaying="that last plan went tits up">
+                <test expr="~syrenne.position~" value="left" />
+                <state img="5-happy.png">If this next plan could be tits &lt;i&gt;out&lt;/i&gt;, I think we'd all appreciate it.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="5-interested.png">It's about time I joined this party!</state>
@@ -3895,6 +4177,10 @@
             <case tag="female_must_strip" target="zoey" targetStage="1">
                 <state img="5-awkward.png">What happened to our plan to make Zoey-sama lose first?</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
+                <test expr="~target.position~" value="left" />
+                <state img="5-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
+            </case>
             <case tag="tie">
                 <state img="5-shocked.png">What?! A perfect tie for worst?</state>
             </case>
@@ -3906,8 +4192,12 @@
             <case tag="male_removing_accessory">
                 <state img="5-loss.png">You have to run out of tiny things to take off eventually.</state>
             </case>
+            <case tag="male_removing_accessory" target="pit" targetStage="1" alsoPlayingSaying="Hope my bottoms">
+                <test expr="~target.position~" value="left" />
+                <state img="5-interested.png">Hope they do...</state>
+            </case>
             <case tag="male_removed_accessory">
-                <state img="5-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
+                <state img="5-small2.png">I guess that wasn't nothing.</state>
             </case>
             <case tag="male_removed_accessory" target="human" saidMarker="nugi-chan_sph">
                 <state img="5-calm.png">I swear, give this guy an inch... and he'd have two inches.</state>
@@ -3918,6 +4208,12 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="5-loss.png">You have to run out of tiny things to take off eventually.</state>
+            </case>
+            <case tag="female_removing_accessory" id="5-1" target="larachel" targetStage="1">
+                <condition count="1" filter="princess" />
+                <test expr="" />
+                <test expr="~target.position~" value="left" />
+                <state img="5-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
             <case tag="female_removing_accessory" target="buffy">
                 <state img="5-devious.png">I liked you better in the standalone movie, Buffy-sama. That movie's name: &lt;i&gt;Buffy Gone Wild&lt;/i&gt;.</state>
@@ -3979,14 +4275,16 @@
                 <state img="5-devious.png">Mercy-sensei, you can be honest with us.  How clean were your hands when you filmed Mercy Fists Widowmaker Dot Mp4?</state>
             </case>
             <case tag="male_removing_minor">
-                <state img="5-calm.png">Any progress is still progress.</state>
+                <state img="5-small2.png">Maybe ~name~-sama doesn't want me to continue.</state>
             </case>
             <case tag="male_removed_minor">
                 <state img="5-happy.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
             </case>
+            <case tag="male_removed_minor" target="xander" targetStage="1">
+                <state img="5-small2.png">Okay, that's zero this time.</state>
+            </case>
             <case tag="female_removing_minor">
                 <state img="5-mean.png">Your ~clothing~? Banished from the game!</state>
-                <state img="5-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="5-loss.png">This isn't the kind of bouncing I expected, but I'll take it.</state>
@@ -4006,6 +4304,10 @@
             <case tag="female_removing_minor" alsoPlaying="raven" alsoPlayingSaying="get a taste of the Teen Titans team">
                 <test expr="~raven.position~" value="left" />
                 <state img="5-interested.png" marker="nugi-chan_raven_taste">So that's all I have to do to get a taste, Raven-sama?</state>
+            </case>
+            <case tag="female_removing_minor" priority="0">
+                <test expr="~target.position~" value="right" />
+                <state img="5-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="5-interested.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
@@ -4033,6 +4335,18 @@
             </case>
             <case tag="female_removed_minor" target="sakura" targetStage="4">
                 <state img="5-small2.png">Oh, you're still able to play, Sakura-sama? I guess that's good.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="revy" alsoPlayingStage="1" alsoPlayingSaying="strip you myself">
+                <test expr="~revy.position~" value="left" />
+                <state img="5-small2.png">A little hypocritcal there don't you think, Revy-sama?</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="sheena" alsoPlayingStage="0-2" alsoPlayingSaying="I can give you a private lesson">
+                <test expr="~sheena.position~" value="left" />
+                <state img="5-interested.png">Sheena-sama, I would make a good teacher's assistant.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
+                <test expr="~xander.position~" value="left" />
+                <state img="5-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="5-loss.png">Oh my, finally you have to take off something interesting!</state>
@@ -4213,6 +4527,10 @@
             <case tag="female_crotch_will_be_visible" target="zelda" alsoPlaying="link" alsoPlayingStage="7-9">
                 <state img="5-devious.png">I can't want to see how hard Link-kun is about to get!</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="syrenne" alsoPlayingSaying="bottoms first">
+                <test expr="~target.position~" value="left" />
+                <state img="5-shocked.png">You mean we have to wait another round to see those boobies?!</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="5-devious.png">You're all naked, ~name~-sama! I said no covering up... uh oh, I guess &lt;i&gt;someone's&lt;/i&gt; "turned on". ♡</state>
             </case>
@@ -4318,7 +4636,7 @@
                 <state img="5-shocked.png">Pee? Is it pee, Mercy-sensei?</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="5-awkward.png">... Fine, you can stare at me while you do that...</state>
+                <state img="5-devious.png">You can look over here if you need any inspiration.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="5-interested.png">Feel free to get as loud as you like, Her-moanier-sama!</state>
@@ -4338,6 +4656,7 @@
             <case tag="female_masturbating">
                 <state img="5-horny.png">No holding back, loser-sama! I can hear you panting.</state>
                 <state img="5-embarrassed.png">So hot!</state>
+                <state img="5-interested.png">You're the center of attention, ~name~-sama.</state>
             </case>
             <case tag="female_masturbating" target="daria" alsoPlaying="jane">
                 <state img="5-embarrassed.png">Jane, can I pre-order a painting of this scene?</state>
@@ -4427,6 +4746,9 @@
             <case tag="bad_hand" totalRounds="13">
                 <state img="6-calm.png">Don't start thinking you're better than me just because I lost a few hands.</state>
             </case>
+            <case tag="hand" alsoPlaying="pit" alsoPlayingStage="1" alsoPlayingTimeInStage="1-2" alsoPlayingSaying="taking off any of my clothes in front of others">
+                <state img="6-interested.png">If you need any help undressing, let me know, Pit-sama.</state>
+            </case>
             <case tag="hand" alsoPlaying="akko" alsoPlayingStage="0-3" alsoPlayingSayingMarker="shiny_chariot">
                 <test expr="~akko.position~" value="left" />
                 <state img="6-small2.png" marker="nugi-chan_akko_shiny_chariot_hentai">Shiny Chariot? Which hentai was she in again?</state>
@@ -4446,6 +4768,10 @@
             <case tag="hand" alsoPlaying="sakura" notSaidMarker="nugi-chan_sakura_pee" alsoPlayingSaying="you can call me Sakura">
                 <test expr="~sakura.position~" value="left" />
                 <state img="6-mean.png" marker="nugi-chan_sakura_pee">Okay, Sakura-sama. But if you pee yourself, I'm going to start calling you Number One again.</state>
+            </case>
+            <case tag="hand" alsoPlaying="syrenne" alsoPlayingStage="6" alsoPlayingTimeInStage="0" alsoPlayingSaying="that last plan went tits up">
+                <test expr="~syrenne.position~" value="left" />
+                <state img="6-happy.png">If this next plan could be tits &lt;i&gt;out&lt;/i&gt;, I think we'd all appreciate it.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="6-happy.png">You know what this game could use? More nudity!</state>
@@ -4575,6 +4901,10 @@
             <case tag="female_must_strip" target="zoey" targetStage="1">
                 <state img="6-awkward.png">What happened to our plan to make Zoey-sama lose first?</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
+                <test expr="~target.position~" value="left" />
+                <state img="6-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
+            </case>
             <case tag="tie">
                 <state img="6-shocked.png">What?! A perfect tie for worst?</state>
             </case>
@@ -4584,8 +4914,12 @@
             <case tag="male_removing_accessory">
                 <state img="6-loss.png">You have to run out of tiny things to take off eventually.</state>
             </case>
+            <case tag="male_removing_accessory" target="pit" targetStage="1" alsoPlayingSaying="Hope my bottoms">
+                <test expr="~target.position~" value="left" />
+                <state img="6-interested.png">Hope they do...</state>
+            </case>
             <case tag="male_removed_accessory">
-                <state img="6-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
+                <state img="6-small2.png">I guess that wasn't nothing.</state>
             </case>
             <case tag="male_removed_accessory" target="human" saidMarker="nugi-chan_sph">
                 <state img="6-calm.png">I swear, give this guy an inch... and he'd have two inches.</state>
@@ -4597,6 +4931,12 @@
             <case tag="female_removing_accessory">
                 <state img="6-calm.png">I feel like I'm giving more than I'm getting.</state>
                 <state img="6-calm.png">Hurry it up, would you? I'm not getting any younger or older here.</state>
+            </case>
+            <case tag="female_removing_accessory" id="6-1" target="larachel" targetStage="1">
+                <condition count="1" filter="princess" />
+                <test expr="" />
+                <test expr="~target.position~" value="left" />
+                <state img="6-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -4652,7 +4992,7 @@
                 <state img="6-devious.png">Mercy-sensei, you can be honest with us.  How clean were your hands when you filmed Mercy Fists Widowmaker Dot Mp4?</state>
             </case>
             <case tag="male_removing_minor">
-                <state img="6-calm.png">Any progress is still progress.</state>
+                <state img="6-small2.png">Maybe ~name~-sama doesn't want me to continue.</state>
             </case>
             <case tag="male_removed_minor">
                 <state img="6-happy.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
@@ -4660,9 +5000,11 @@
             <case tag="male_removed_minor" target="link" targetStage="2">
                 <state img="6-calm.png">I'm wet, you're taking off your boots, and this is taking forever. Am I trapped in this Water Temple I keep hearing about?</state>
             </case>
+            <case tag="male_removed_minor" target="xander" targetStage="1">
+                <state img="6-small2.png">Okay, that's zero this time.</state>
+            </case>
             <case tag="female_removing_minor">
                 <state img="6-mean.png">Your ~clothing~? Banished from the game!</state>
-                <state img="6-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="6-loss.png">This isn't the kind of bouncing I expected, but I'll take it.</state>
@@ -4682,6 +5024,10 @@
             <case tag="female_removing_minor" alsoPlaying="raven" alsoPlayingSaying="get a taste of the Teen Titans team">
                 <test expr="~raven.position~" value="left" />
                 <state img="6-interested.png" marker="nugi-chan_raven_taste">So that's all I have to do to get a taste, Raven-sama?</state>
+            </case>
+            <case tag="female_removing_minor" priority="0">
+                <test expr="~target.position~" value="right" />
+                <state img="6-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="6-awkward.png">Forgive me for being disappointed, ~name~-sama...</state>
@@ -4709,6 +5055,18 @@
             </case>
             <case tag="female_removed_minor" target="sakura" targetStage="4">
                 <state img="6-small2.png">Oh, you're still able to play, Sakura-sama? I guess that's good.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="revy" alsoPlayingStage="1" alsoPlayingSaying="strip you myself">
+                <test expr="~revy.position~" value="left" />
+                <state img="6-small2.png">A little hypocritcal there don't you think, Revy-sama?</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="sheena" alsoPlayingStage="0-2" alsoPlayingSaying="I can give you a private lesson">
+                <test expr="~sheena.position~" value="left" />
+                <state img="6-interested.png">Sheena-sama, I would make a good teacher's assistant.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
+                <test expr="~xander.position~" value="left" />
+                <state img="6-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="6-loss.png">Oh my, finally you have to take off something interesting!</state>
@@ -4882,6 +5240,10 @@
             <case tag="female_crotch_will_be_visible" target="zelda" alsoPlaying="link" alsoPlayingStage="7-9">
                 <state img="6-devious.png">I can't want to see how hard Link-kun is about to get!</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="syrenne" alsoPlayingSaying="bottoms first">
+                <test expr="~target.position~" value="left" />
+                <state img="6-shocked.png">You mean we have to wait another round to see those boobies?!</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="6-devious.png">You're all naked, ~name~-sama! I said no covering up... uh oh, I guess &lt;i&gt;someone's&lt;/i&gt; "turned on". ♡</state>
             </case>
@@ -4990,7 +5352,7 @@
                 <state img="6-shocked.png">Pee? Is it pee, Mercy-sensei?</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="6-awkward.png">... Fine, you can stare at me while you do that...</state>
+                <state img="6-devious.png">You can look over here if you need any inspiration.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="6-interested.png">Feel free to get as loud as you like, Her-moanier-sama!</state>
@@ -5010,6 +5372,7 @@
             <case tag="female_masturbating">
                 <state img="6-horny.png">No holding back, loser-sama! I can hear you panting.</state>
                 <state img="6-embarrassed.png">So hot!</state>
+                <state img="6-interested.png">You're the center of attention, ~name~-sama.</state>
             </case>
             <case tag="female_masturbating" target="daria" alsoPlaying="jane">
                 <state img="6-embarrassed.png">Jane, can I pre-order a painting of this scene?</state>
@@ -5069,11 +5432,9 @@
                 <state img="7-devious.png">I once played strip golf with a girl who started stripping after only two holes! Coindcidentally, I was after &lt;i&gt;her&lt;/i&gt; two holes...</state>
             </case>
             <case tag="okay_hand">
-                <state img="7-calm.png">I can handle this.</state>
-                <state img="7-calm.png">What did everybody else get?</state>
-                <state img="7-calm.png">Ready and waiting.</state>
-                <state img="7-awkward.png">Are we just waiting for ~player~-sama now?</state>
-                <state img="7-calm.png">Let's see what all of you have.</state>
+                <state img="7-awkward.png">Barely hanging on here.</state>
+                <state img="7-interested.png">Don't think I'm not looking right back at you, ~player~-sama. ♡</state>
+                <state img="7-happy.png">Yeah! I didn't get nothing!</state>
             </case>
             <case tag="okay_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="7-devious.png" marker="nugi-chan_amalia_flower">Have you considered just going around with your flower open like that?</state>
@@ -5086,6 +5447,9 @@
             </case>
             <case tag="bad_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="7-loss.png" marker="nugi-chan_amalia_flower">It's like a flower... so pretty!</state>
+            </case>
+            <case tag="hand" alsoPlaying="pit" alsoPlayingStage="1" alsoPlayingTimeInStage="1-2" alsoPlayingSaying="taking off any of my clothes in front of others">
+                <state img="7-interested.png">If you need any help undressing, let me know, Pit-sama.</state>
             </case>
             <case tag="hand" alsoPlaying="akko" alsoPlayingStage="0-3" alsoPlayingSayingMarker="shiny_chariot">
                 <test expr="~akko.position~" value="left" />
@@ -5106,6 +5470,10 @@
             <case tag="hand" alsoPlaying="sakura" notSaidMarker="nugi-chan_sakura_pee" alsoPlayingSaying="you can call me Sakura">
                 <test expr="~sakura.position~" value="left" />
                 <state img="7-mean.png" marker="nugi-chan_sakura_pee">Okay, Sakura-sama. But if you pee yourself, I'm going to start calling you Number One again.</state>
+            </case>
+            <case tag="hand" alsoPlaying="syrenne" alsoPlayingStage="6" alsoPlayingTimeInStage="0" alsoPlayingSaying="that last plan went tits up">
+                <test expr="~syrenne.position~" value="left" />
+                <state img="7-happy.png">If this next plan could be tits &lt;i&gt;out&lt;/i&gt;, I think we'd all appreciate it.</state>
             </case>
             <case tag="stripped">
                 <state img="7-stripped.png">So you better appreciate this.</state>
@@ -5206,6 +5574,10 @@
             <case tag="female_must_strip" target="zoey" targetStage="1">
                 <state img="7-awkward.png">What happened to our plan to make Zoey-sama lose first?</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
+                <test expr="~target.position~" value="left" />
+                <state img="7-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
+            </case>
             <case tag="tie">
                 <state img="7-shocked.png">What?! A perfect tie for worst?</state>
             </case>
@@ -5217,8 +5589,12 @@
             <case tag="male_removing_accessory">
                 <state img="7-loss.png">You have to run out of tiny things to take off eventually.</state>
             </case>
+            <case tag="male_removing_accessory" target="pit" targetStage="1" alsoPlayingSaying="Hope my bottoms">
+                <test expr="~target.position~" value="left" />
+                <state img="7-interested.png">Hope they do...</state>
+            </case>
             <case tag="male_removed_accessory">
-                <state img="7-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
+                <state img="7-small2.png">I guess that wasn't nothing.</state>
             </case>
             <case tag="male_removed_accessory" target="human" saidMarker="nugi-chan_sph">
                 <state img="7-calm.png">I swear, give this guy an inch... and he'd have two inches.</state>
@@ -5229,6 +5605,12 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="7-loss.png">You have to run out of tiny things to take off eventually.</state>
+            </case>
+            <case tag="female_removing_accessory" id="7-1" target="larachel" targetStage="1">
+                <condition count="1" filter="princess" />
+                <test expr="" />
+                <test expr="~target.position~" value="left" />
+                <state img="7-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -5286,7 +5668,7 @@
                 <state img="7-devious.png">Mercy-sensei, you can be honest with us.  How clean were your hands when you filmed Mercy Fists Widowmaker Dot Mp4?</state>
             </case>
             <case tag="male_removing_minor">
-                <state img="7-calm.png">Any progress is still progress.</state>
+                <state img="7-small2.png">Sorry to bore you so much with my naked body that you felt like taking off your ~clothing~ was a good idea.</state>
             </case>
             <case tag="male_removed_minor">
                 <state img="7-happy.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
@@ -5294,9 +5676,11 @@
             <case tag="male_removed_minor" target="link" targetStage="2">
                 <state img="7-calm.png">I'm wet, you're taking off your boots, and this is taking forever. Am I trapped in this Water Temple I keep hearing about?</state>
             </case>
+            <case tag="male_removed_minor" target="xander" targetStage="1">
+                <state img="7-small2.png">Okay, that's zero this time.</state>
+            </case>
             <case tag="female_removing_minor">
                 <state img="7-mean.png">Your ~clothing~? Banished from the game!</state>
-                <state img="7-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="7-loss.png">This isn't the kind of bouncing I expected, but I'll take it.</state>
@@ -5316,6 +5700,10 @@
             <case tag="female_removing_minor" alsoPlaying="raven" alsoPlayingSaying="get a taste of the Teen Titans team">
                 <test expr="~raven.position~" value="left" />
                 <state img="7-interested.png" marker="nugi-chan_raven_taste">So that's all I have to do to get a taste, Raven-sama?</state>
+            </case>
+            <case tag="female_removing_minor" priority="0">
+                <test expr="~target.position~" value="right" />
+                <state img="7-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="7-stripped.png">If you want to remove something bigger out of pity, I'd be okay with that.</state>
@@ -5343,6 +5731,18 @@
             </case>
             <case tag="female_removed_minor" target="sakura" targetStage="4">
                 <state img="7-small2.png">Oh, you're still able to play, Sakura-sama? I guess that's good.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="revy" alsoPlayingStage="1" alsoPlayingSaying="strip you myself">
+                <test expr="~revy.position~" value="left" />
+                <state img="7-small2.png">A little hypocritcal there don't you think, Revy-sama?</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="sheena" alsoPlayingStage="0-2" alsoPlayingSaying="I can give you a private lesson">
+                <test expr="~sheena.position~" value="left" />
+                <state img="7-interested.png">Sheena-sama, I would make a good teacher's assistant.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
+                <test expr="~xander.position~" value="left" />
+                <state img="7-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="7-loss.png">Oh my, finally you have to take off something interesting!</state>
@@ -5511,6 +5911,10 @@
             <case tag="female_crotch_will_be_visible" target="zelda" alsoPlaying="link" alsoPlayingStage="7-9">
                 <state img="7-devious.png">We're about to find out if Link-kun can get any harder!</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="syrenne" alsoPlayingSaying="bottoms first">
+                <test expr="~target.position~" value="left" />
+                <state img="7-shocked.png">You mean we have to wait another round to see those boobies?!</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="7-devious.png">You're all naked, ~name~-sama! I said no covering up... uh oh, I guess &lt;i&gt;someone's&lt;/i&gt; "turned on". ♡</state>
             </case>
@@ -5625,7 +6029,7 @@
                 <state img="7-shocked.png">Pee? Is it pee, Mercy-sensei?</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="7-awkward.png">... Fine, you can stare at me while you do that...</state>
+                <state img="7-devious.png">You can look over here if you need any inspiration.</state>
             </case>
             <case tag="female_start_masturbating" target="harley">
                 <state img="7-devious.png">I should join a motorcycle gang. I've always wanted a Harley between my legs.</state>
@@ -5648,6 +6052,7 @@
             <case tag="female_masturbating">
                 <state img="7-horny.png">No holding back, loser-sama! I can hear you panting.</state>
                 <state img="7-embarrassed.png">So hot!</state>
+                <state img="7-interested.png">You're the center of attention, ~name~-sama.</state>
             </case>
             <case tag="female_masturbating" target="daria" alsoPlaying="jane">
                 <state img="7-embarrassed.png">Jane, can I pre-order a painting of this scene?</state>
@@ -5791,6 +6196,10 @@
             <case tag="female_must_strip" target="zoey" targetStage="1">
                 <state img="8-awkward.png">What happened to our plan to make Zoey-sama lose first?</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
+                <test expr="~target.position~" value="left" />
+                <state img="8-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
+            </case>
             <case tag="tie">
                 <state img="8-shocked.png">What?! A perfect tie for worst?</state>
             </case>
@@ -5800,6 +6209,10 @@
             </case>
             <case tag="male_removing_accessory">
                 <state img="8-loss.png">You have to run out of tiny things to take off eventually.</state>
+            </case>
+            <case tag="male_removing_accessory" target="pit" targetStage="1" alsoPlayingSaying="Hope my bottoms">
+                <test expr="~target.position~" value="left" />
+                <state img="8-interested.png">Hope they do...</state>
             </case>
             <case tag="male_removed_accessory">
                 <state img="8-interested.png">Haahh, ahhh... I'm going to cover your ~clothing~ with my fluids, ~name~-sama! ♡</state>
@@ -5814,6 +6227,12 @@
             <case tag="female_removing_accessory">
                 <state img="8-sad.png">Is that it?</state>
                 <state img="8-devious.png">Don't think I can't fuel sexy thoughts with just the sight of your taking off your ~clothing~.</state>
+            </case>
+            <case tag="female_removing_accessory" id="8-1" target="larachel" targetStage="1">
+                <condition count="1" filter="princess" />
+                <test expr="" />
+                <test expr="~target.position~" value="left" />
+                <state img="8-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
             <case tag="female_removing_accessory" target="elena" targetStage="0">
                 <state img="8-devious.png">You can drop your scepter if you want, but you'll miss it when you're pleasuring yourself, Elena-hime.</state>
@@ -5861,7 +6280,7 @@
                 <state img="8-devious.png">Mercy-sensei, you can be honest with us.  How clean were your hands when you filmed Mercy Fists Widowmaker Dot Mp4?</state>
             </case>
             <case tag="male_removing_minor">
-                <state img="8-calm.png">Any progress is still progress.</state>
+                <state img="8-small2.png">Sorry to bore you so much with my naked body that you felt like taking off your ~clothing~ was a good idea.</state>
             </case>
             <case tag="male_removed_minor">
                 <state img="8-happy.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
@@ -5869,9 +6288,11 @@
             <case tag="male_removed_minor" target="link" targetStage="2">
                 <state img="8-calm.png">I'm wet, you're taking off your boots, and this is taking forever. Am I trapped in this Water Temple I keep hearing about?</state>
             </case>
+            <case tag="male_removed_minor" target="xander" targetStage="1">
+                <state img="8-small2.png">Okay, that's zero this time.</state>
+            </case>
             <case tag="female_removing_minor">
                 <state img="8-mean.png">Your ~clothing~? Banished from the game!</state>
-                <state img="8-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="8-awkward.png">This isn't the kind of bouncing I expected, but I can still get off to this...</state>
@@ -5891,6 +6312,10 @@
             <case tag="female_removing_minor" alsoPlaying="raven" alsoPlayingSaying="get a taste of the Teen Titans team">
                 <test expr="~raven.position~" value="left" />
                 <state img="8-interested.png" marker="nugi-chan_raven_taste">So that's all I have to do to get a taste, Raven-sama?</state>
+            </case>
+            <case tag="female_removing_minor" priority="0">
+                <test expr="~target.position~" value="right" />
+                <state img="8-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="8-interested.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
@@ -5913,6 +6338,18 @@
             <case tag="female_removed_minor" target="sakura" targetStage="4">
                 <state img="8-small2.png">Oh, you're still able to play, Sakura-sama? I guess that's good.</state>
             </case>
+            <case tag="female_removed_minor" alsoPlaying="revy" alsoPlayingStage="1" alsoPlayingSaying="strip you myself">
+                <test expr="~revy.position~" value="left" />
+                <state img="8-small2.png">A little hypocritcal there don't you think, Revy-sama?</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="sheena" alsoPlayingStage="0-2" alsoPlayingSaying="I can give you a private lesson">
+                <test expr="~sheena.position~" value="left" />
+                <state img="8-interested.png">Sheena-sama, I would make a good teacher's assistant.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
+                <test expr="~xander.position~" value="left" />
+                <state img="8-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
+            </case>
             <case tag="male_removing_major">
                 <state img="8-loss.png">Oh my, finally you have to take off something interesting!</state>
             </case>
@@ -5933,6 +6370,10 @@
             </case>
             <case tag="female_removing_major" targetStage="3-10">
                 <state img="8-shocked.png">Oh my, finally you have to take off something interesting!</state>
+            </case>
+            <case tag="female_removing_major" alsoPlaying="larachel" alsoPlayingStage="0-1" alsoPlayingSaying="the conclusion is foregone">
+                <test expr="~larachel.position~" value="left" />
+                <state img="8-mean.png">Don't count me out yet, L'Arachel-sama!</state>
             </case>
             <case tag="female_removed_major">
                 <state img="8-interested.png">Your underwear is nice, ~name~-sama, but you don't need it either.</state>
@@ -6064,6 +6505,10 @@
             <case tag="female_crotch_will_be_visible" target="zelda" alsoPlaying="link" alsoPlayingStage="7-9">
                 <state img="8-devious.png">We're about to find out if Link-kun can get any harder!</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="syrenne" alsoPlayingSaying="bottoms first">
+                <test expr="~target.position~" value="left" />
+                <state img="8-shocked.png">You mean we have to wait another round to see those boobies?!</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="8-devious.png">You're all naked, ~name~-sama! I said no covering up... uh oh, I guess &lt;i&gt;someone's&lt;/i&gt; "turned on". ♡</state>
             </case>
@@ -6166,7 +6611,7 @@
                 <state img="8-shocked.png">Pee? Is it pee, Mercy-sensei?</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="8-awkward.png">... Fine, you can stare at me while you do that...</state>
+                <state img="8-devious.png">You can look over here if you need any inspiration.</state>
             </case>
             <case tag="female_start_masturbating" target="harley">
                 <state img="8-devious.png">I should join a motorcycle gang. I've always wanted a Harley between my legs.</state>
@@ -6189,6 +6634,7 @@
             <case tag="female_masturbating">
                 <state img="8-horny.png">No holding back, loser-sama! I can hear you panting.</state>
                 <state img="8-embarrassed.png">So hot!</state>
+                <state img="8-interested.png">You're the center of attention, ~name~-sama.</state>
             </case>
             <case tag="female_masturbating" target="daria" alsoPlaying="jane">
                 <state img="8-embarrassed.png">Jane, can I pre-order a painting of this scene?</state>
@@ -6326,6 +6772,10 @@
             <case tag="female_must_strip" target="zoey" targetStage="1">
                 <state img="9-awkward.png">What happened to our plan to make Zoey-sama lose first?</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
+                <test expr="~target.position~" value="left" />
+                <state img="9-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
+            </case>
             <case tag="tie">
                 <state img="9-shocked.png">What?! A perfect tie for worst?</state>
             </case>
@@ -6334,6 +6784,10 @@
             </case>
             <case tag="male_removing_accessory">
                 <state img="9-loss.png">You have to run out of tiny things to take off eventually.</state>
+            </case>
+            <case tag="male_removing_accessory" target="pit" targetStage="1" alsoPlayingSaying="Hope my bottoms">
+                <test expr="~target.position~" value="left" />
+                <state img="9-interested.png">Hope they do...</state>
             </case>
             <case tag="male_removed_accessory">
                 <state img="9-awkward.png">Is there a strip slide puzzle that I could be doing to make this go faster?</state>
@@ -6347,6 +6801,12 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="9-loss.png">You have to run out of tiny things to take off eventually.</state>
+            </case>
+            <case tag="female_removing_accessory" id="9-1" target="larachel" targetStage="1">
+                <condition count="1" filter="princess" />
+                <test expr="" />
+                <test expr="~target.position~" value="left" />
+                <state img="9-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
             <case tag="female_removing_accessory" target="elena" targetStage="0">
                 <state img="9-interested.png">You can drop your scepter if you want, but you'll miss it when you're pleasuring yourself, Elena-hime.</state>
@@ -6403,7 +6863,7 @@
                 <state img="9-devious.png">Mercy-sensei, you can be honest with us.  How clean were your hands when you filmed Mercy Fists Widowmaker Dot Mp4?</state>
             </case>
             <case tag="male_removing_minor">
-                <state img="9-calm.png">Any progress is still progress.</state>
+                <state img="9-small2.png">Sorry to bore you so much with my naked body that you felt like taking off your ~clothing~ was a good idea.</state>
             </case>
             <case tag="male_removed_minor">
                 <state img="9-happy.png">That's better, ~name~-sama. Keep losing and show me the rest. ♡</state>
@@ -6411,9 +6871,11 @@
             <case tag="male_removed_minor" target="link" targetStage="2">
                 <state img="9-calm.png">I'm wet, you're taking off your boots, and this is taking forever. Am I trapped in this Water Temple I keep hearing about?</state>
             </case>
+            <case tag="male_removed_minor" target="xander" targetStage="1">
+                <state img="9-small2.png">Okay, that's zero this time.</state>
+            </case>
             <case tag="female_removing_minor">
                 <state img="9-mean.png">Your ~clothing~? Banished from the game!</state>
-                <state img="9-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="9-loss.png">This isn't the kind of bouncing I expected, but I'll take it.</state>
@@ -6433,6 +6895,10 @@
             <case tag="female_removing_minor" alsoPlaying="raven" alsoPlayingSaying="get a taste of the Teen Titans team">
                 <test expr="~raven.position~" value="left" />
                 <state img="9-interested.png" marker="nugi-chan_raven_taste">So that's all I have to do to get a taste, Raven-sama?</state>
+            </case>
+            <case tag="female_removing_minor" priority="0">
+                <test expr="~target.position~" value="right" />
+                <state img="9-calm.png">How about taking off your ~clothing~?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="9-embarrassed.png">Maybe I should hide myself until you show something worth seeing, ~name~-sama.</state>
@@ -6460,6 +6926,18 @@
             </case>
             <case tag="female_removed_minor" target="sakura" targetStage="4">
                 <state img="9-small2.png">Oh, you're still able to play, Sakura-sama? I guess that's good.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="revy" alsoPlayingStage="1" alsoPlayingSaying="strip you myself">
+                <test expr="~revy.position~" value="left" />
+                <state img="9-small2.png">A little hypocritcal there don't you think, Revy-sama?</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="sheena" alsoPlayingStage="0-2" alsoPlayingSaying="I can give you a private lesson">
+                <test expr="~sheena.position~" value="left" />
+                <state img="9-interested.png">Sheena-sama, I would make a good teacher's assistant.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
+                <test expr="~xander.position~" value="left" />
+                <state img="9-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="9-loss.png">Oh my, finally you have to take off something interesting!</state>
@@ -6630,6 +7108,10 @@
             <case tag="female_crotch_will_be_visible" target="zelda" alsoPlaying="link" alsoPlayingStage="7-9">
                 <state img="9-devious.png">We're about to find out if Link-kun can get any harder!</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="syrenne" alsoPlayingSaying="bottoms first">
+                <test expr="~target.position~" value="left" />
+                <state img="9-shocked.png">You mean we have to wait another round to see those boobies?!</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="9-devious.png">You're all naked, ~name~-sama! I said no covering up... uh oh, I guess &lt;i&gt;someone's&lt;/i&gt; "turned on". ♡</state>
             </case>
@@ -6744,7 +7226,7 @@
                 <state img="9-shocked.png">Pee? Is it pee, Mercy-sensei?</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="9-awkward.png">... Fine, you can stare at me while you do that...</state>
+                <state img="9-devious.png">You can look over here if you need any inspiration.</state>
             </case>
             <case tag="female_start_masturbating" target="harley">
                 <state img="9-devious.png">I should join a motorcycle gang. I've always wanted a Harley between my legs.</state>
@@ -6767,6 +7249,7 @@
             <case tag="female_masturbating">
                 <state img="9-horny.png">No holding back, loser-sama! I can hear you panting.</state>
                 <state img="9-embarrassed.png">So hot!</state>
+                <state img="9-interested.png">You're the center of attention, ~name~-sama.</state>
             </case>
             <case tag="female_masturbating" target="alice">
                 <state img="9-devious.png">You're just begging for a little sign that says "Eat Me", Alice-sama!</state>
@@ -6851,6 +7334,9 @@
             </case>
             <case tag="game_over_defeat" target="marinette">
                 <state img="9-interested.png" marker="nugi-chan_defeated">I can wait until next game to find out how a ladybird pleasures herself.</state>
+            </case>
+            <case tag="game_over_defeat" target="nugi-chan">
+                <state img="9-annoyed.png">When I said "May the best Nugi-chan win", I meant me.</state>
             </case>
             <case tag="game_over_defeat" target="penny">
                 <state img="9-awkward.png" marker="nugi-chan_defeated">I can't believe I lost to Little Miss Sorry over here!</state>
