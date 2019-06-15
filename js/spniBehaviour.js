@@ -1495,9 +1495,9 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         /* Assign new best-match case and state. */
         this.bestVolatileMatch = bestMatch;
         this.currentPriority = bestPriority;
-        this.allStates = states.filter(function(state) {
+        this.allStates = bestMatch.states.filter(function(state) {
             return !state.oneShotId || !this.oneShotStates[state.oneShotId];
-        });
+        }.bind(this));
         this.chosenState = bestMatch.states[getRandomNumber(0, bestMatch.states.length)];
         this.stateCommitted = false;
         
