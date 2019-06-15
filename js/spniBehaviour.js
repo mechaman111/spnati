@@ -371,6 +371,12 @@ State.prototype.applyCollectible = function (player) {
     }
 }
 
+State.prototype.applyOneShot = function (player) {
+    if (this.oneShotId) {
+        player.oneShotStates[this.oneShotId] = true;
+    }
+}
+
 function getTargetMarker(marker, target) {
     if (!target) { return marker; }
     return "__" + target.id + "_" + marker;
@@ -1275,6 +1281,12 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     return false;
 }
 
+Case.prototype.applyOneShot = function (player) {
+    if (this.oneShotId) {
+        player.oneShotCases[this.oneShotId] = true;
+    }
+}
+
 /**********************************************************************
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
@@ -1508,14 +1520,10 @@ Opponent.prototype.commitBehaviourUpdate = function () {
             parentCase.addTags.forEach(this.addTag.bind(this));
             this.updateTags();
         }
-        if (parentCase.oneShotId) {
-            this.oneShotCases[parentCase.oneShotId] = true;
-        }
+        parentCase.applyOneShot(this);
     }
     
-    if (this.chosenState.oneShotId) {
-        this.oneShotStates[this.chosenState.oneShotId] = true;
-    }
+    this.chosenState.applyOneShot(this);
     
     if (this.chosenState.collectible) {
         this.chosenState.applyCollectible(this);
@@ -1529,9 +1537,11 @@ Opponent.prototype.commitBehaviourUpdate = function () {
  ************************************************************/
 Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
     var self = this;
+    chosenCase.applyOneShot(self);
     chosenCase.states.forEach(function (c) {
         c.applyMarker(self, opp);
         c.applyCollectible(self);
+        c.applyOneShot(self);
     });
 }
 
