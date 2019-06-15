@@ -475,7 +475,7 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
         }
         return undefined;
     default:
-        substitution = expandAliases(self, target);
+        substitution = expandNicknames(self, target);
     }
 }
 
@@ -508,10 +508,10 @@ function expandDialogue (dialogue, self, target, bindings) {
         try {
             switch (variable.toLowerCase()) {
             case 'player':
-                substitution = expandAliases(self, players[HUMAN_PLAYER]);
+                substitution = expandNicknames(self, players[HUMAN_PLAYER]);
                 break;
             case 'name':
-                substitution = expandAliases(self, target);
+                substitution = expandNicknames(self, target);
                 break;
             case 'clothing':
                 var clothing = (target||self).removedClothing;
