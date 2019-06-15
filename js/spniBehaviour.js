@@ -479,13 +479,13 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
     }
 }
 
-function expandAliases (self, target) {
+function expandNicknames (self, target) {
     if (self) {
         var nickmarker = self.markers[getTargetMarker('nickname', target)];
         if (nickmarker) return nickmarker;
-        if (target.id in self.aliases || '*' in self.aliases) {
-            var aliasList = self.aliases[target.id] || self.aliases['*'];
-            return expandDialogue(aliasList[getRandomNumber(0, aliasList.length)], null, target);
+        if (target.id in self.nicknames || '*' in self.nicknames) {
+            var nickList = self.nicknames[target.id] || self.nicknames['*'];
+            return expandDialogue(nickList[getRandomNumber(0, nickList.length)], null, target);
         }
     }
     return target.label;
