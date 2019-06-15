@@ -350,17 +350,15 @@ Player.prototype.resetState = function () {
          * This may be overridden by later updateBehaviour calls if
          * the player has (new-style) selected or game start case lines.
          */
-		this.startStates = [];
+        this.startStates = this.xml.children('start').children('state').get().map(function(el) {
+            return new State($(el));
+        });
 
         /* Initialize reaction handling state. */
         this.currentTarget = null;
         this.currentTags = [];
         this.currentPriority = -1;
         this.stateCommitted = false;
-
-        this.xml.children('start').children('state').each(function () {
-            this.startStates.push(new State($(this)));
-        });
 
 		this.chosenState = this.startStates[0];
 

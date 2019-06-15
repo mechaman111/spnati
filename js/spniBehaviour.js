@@ -1574,7 +1574,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
 Opponent.prototype.updateVolatileBehaviour = function () {
     if (players.some(function(p) {
         if (p !== players[HUMAN_PLAYER]
-            && !p.pendingUpdate && p.chosenState) {
+            && !p.pendingUpdate && p.chosenState && p.chosenState.parentCase) {
             var dependencies = p.chosenState.parentCase.volatileDependencies;
             return dependencies && dependencies.has(this);
         } else return false;
@@ -1583,7 +1583,7 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         return;
     }
     
-    console.log("Player "+this.slot+": Current priority "+this.chosenState.parentCase.priority);
+    console.log("Player "+this.slot+": Current priority "+this.currentPriority);
     
     var newState = this.findBehaviour(this.currentTags, this.currentTarget, this.currentPriority + 1);
 
