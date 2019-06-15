@@ -212,6 +212,7 @@ function State($xml, parentCase) {
     this.setSize = $xml.attr('set-size');
     this.setGender = $xml.attr('set-gender');
     this.setLabel = $xml.attr('set-label');
+    this.oneShotId = $xml.attr('oneShotId');
     
     var collectibleId = $xml.attr('collectible') || undefined;
     var collectibleOp = $xml.attr('collectible-value') || undefined;
@@ -367,6 +368,12 @@ State.prototype.applyCollectible = function (player) {
                 return true;
             }
         }.bind(this));
+    }
+}
+
+State.prototype.applyOneShot = function (player) {
+    if (this.oneShotId) {
+        player.oneShotStates[this.oneShotId] = true;
     }
 }
 
@@ -788,6 +795,7 @@ function Case($xml, stage) {
     this.hidden =                   $xml.attr("hidden");
     this.addTags =                  $xml.attr("addCharacterTags");
     this.removeTags =               $xml.attr("removeCharacterTags");
+    this.oneShotId =                $xml.attr("oneShotId");
     
     if (this.addTags) {
         this.addTags = this.addTags.split(',').map(canonicalizeTag);
@@ -996,6 +1004,16 @@ Case.prototype.getVolatileDependencies = function (self, opp) {
 }
 
 Case.prototype.basicRequirementsMet = function (self, opp, captures) {
+    // one-time use
+    if (this.oneShotId && self.oneShotCases[this.oneShotId]) {
+        return false;
+    }
+
+    // all states used up
+    if (this.states.every(function (state) { return state.oneShotId && self.oneShotStates[state.oneShotId]; })) {
+        return false;
+    }
+
     // stage
     if (this.stage) {
         if (!inInterval(self.stage, this.stage)) {
@@ -1302,6 +1320,12 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     return false;
 }
 
+Case.prototype.applyOneShot = function (player) {
+    if (this.oneShotId) {
+        player.oneShotCases[this.oneShotId] = true;
+    }
+}
+
 /**********************************************************************
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
@@ -1387,8 +1411,14 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
      * priority >= bestMatchPriority. */
     volatileMatches = volatileMatches.filter(function (c) { return c.priority >= bestMatchPriority; });
     
-    var states = bestMatch.reduce(function(list, caseObject) {
-        return list.concat(caseObject.states);
+    var self = this;
+    var states = bestMatch.reduce(function (list, caseObject) {
+        for (var i = 0; i < caseObject.states.length; i++) {
+            if (!caseObject.states[i].oneShotId || !self.oneShotStates[caseObject.states[i].oneShotId]) {
+                list.push(caseObject.states[i]);
+            }
+        }
+        return list;
     }.bind(this), []);
     
     var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
@@ -1465,7 +1495,9 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         /* Assign new best-match case and state. */
         this.bestVolatileMatch = bestMatch;
         this.currentPriority = bestPriority;
-        this.allStates = bestMatch.states;
+        this.allStates = states.filter(function(state) {
+            return !state.oneShotId || !this.oneShotStates[state.oneShotId];
+        });
         this.chosenState = bestMatch.states[getRandomNumber(0, bestMatch.states.length)];
         this.stateCommitted = false;
         
@@ -1520,11 +1552,17 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         this.size = this.chosenState.setSize;
     }
     
-    if (this.chosenState.parentCase && (this.chosenState.parentCase.removeTags.length > 0 || this.chosenState.parentCase.addTags.length > 0)) {
-        this.chosenState.parentCase.removeTags.forEach(this.removeTag.bind(this));
-        this.chosenState.parentCase.addTags.forEach(this.addTag.bind(this));
-        this.updateTags();
+    var parentCase = this.chosenState.parentCase;
+    if (parentCase) {
+        if (parentCase.removeTags.length > 0 || parentCase.addTags.length > 0) {
+            parentCase.removeTags.forEach(this.removeTag.bind(this));
+            parentCase.addTags.forEach(this.addTag.bind(this));
+            this.updateTags();
+        }
+        parentCase.applyOneShot(this);
     }
+    
+    this.chosenState.applyOneShot(this);
     
     if (this.chosenState.collectible) {
         this.chosenState.applyCollectible(this);
@@ -1538,9 +1576,11 @@ Opponent.prototype.commitBehaviourUpdate = function () {
  ************************************************************/
 Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
     var self = this;
+    chosenCase.applyOneShot(self);
     chosenCase.states.forEach(function (c) {
         c.applyMarker(self, opp);
         c.applyCollectible(self);
+        c.applyOneShot(self);
     });
 }
 

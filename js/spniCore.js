@@ -129,7 +129,9 @@ function compileBaseErrorReport(userDesc, bugType) {
                 'slot': i,
                 'stage': players[i].stage,
                 'timeInStage': players[i].timeInStage,
-                'markers': players[i].markers
+                'markers': players[i].markers,
+                'oneShotCases': players[i].oneShotCases,
+                'oneShotStates': players[i].oneShotStates,
             }
 
             if (players[i].chosenState) {
@@ -341,6 +343,8 @@ Player.prototype.resetState = function () {
 	this.stage = this.current = this.consecutiveLosses = 0;
 	this.timeInStage = -1;
 	this.markers = {};
+	this.oneShotCases = {};
+	this.oneShotStates = {};
 
 	if (this.xml !== null) {
         /* Load in the legacy "start" lines, and also
