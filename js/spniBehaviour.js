@@ -388,6 +388,26 @@ function findVariablePlayer(variable, self, target, bindings) {
 }
 
 /************************************************************
+ * Applies any personal nicknames to target player.
+ * First looks for a per-character marker called "nickname".
+ * Second, picks a random nickname from the list of nicknames
+ * for the character from the <nicknames> section after 
+ * variable expansion (with self set to null in order to 
+ * avoid infinite recursion).
+ ************************************************************/
+function expandNicknames (self, target) {
+    if (self) {
+        var nickmarker = self.markers[getTargetMarker('nickname', target)];
+        if (nickmarker) return nickmarker;
+        if (target.id in self.nicknames || '*' in self.nicknames) {
+            var nickList = self.nicknames[target.id] || self.nicknames['*'];
+            return expandDialogue(nickList[getRandomNumber(0, nickList.length)], null, target);
+        }
+    }
+    return target.label;
+}
+
+/************************************************************
  * Expands ~target.*~ and ~[player].*~ variables.
  ************************************************************/
 function expandPlayerVariable(split_fn, args, self, target, bindings) {
@@ -477,18 +497,6 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
     default:
         substitution = expandNicknames(self, target);
     }
-}
-
-function expandNicknames (self, target) {
-    if (self) {
-        var nickmarker = self.markers[getTargetMarker('nickname', target)];
-        if (nickmarker) return nickmarker;
-        if (target.id in self.nicknames || '*' in self.nicknames) {
-            var nickList = self.nicknames[target.id] || self.nicknames['*'];
-            return expandDialogue(nickList[getRandomNumber(0, nickList.length)], null, target);
-        }
-    }
-    return target.label;
 }
 
 /************************************************************
