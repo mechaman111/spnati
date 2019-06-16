@@ -696,7 +696,7 @@ function inInterval (value, interval) {
  * current state marker only. This is used for volatile conditions.
  ************************************************************/
 function checkMarker(predicate, self, target, currentOnly) {
-    var match = predicate.match(/([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?/);
+    var match = predicate.match(/^([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(.+))?\s*$/);
     
     var name;
     var perTarget;
@@ -718,7 +718,7 @@ function checkMarker(predicate, self, target, currentOnly) {
             if (!isNaN(parseInt(match[5], 10))) {
                 cmpVal = parseInt(match[5], 10);
             } else {
-                cmpVal = expandDialogue(match[5], self, target); 
+                cmpVal = expandDialogue(match[5], self, target);
             }
         } else {
             op = '!!';
