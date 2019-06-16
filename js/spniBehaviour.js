@@ -1086,9 +1086,12 @@ Case.prototype.checkConditions = function (self, opp) {
 
     // targetSaidMarker
     if (opp && this.targetSaidMarker) {
-        if (checkMarker(this.targetSaidMarker, opp, null)) {
-            if (!checkMarker(this.targetSaidMarker, opp, null, false, true)) {
-                // Only matches pending marker changes; treat as volatile.
+        // If target is to the right, only check committed state.
+        if (checkMarker(this.targetSaidMarker, opp, null, false, opp.slot > self.slot)) {
+            if (opp.slot < self.slot && !checkMarker(this.targetSaidMarker, opp, null, false, true)) {
+                // Only matches pending marker changes; treat as
+                // volatile. This is unnecessary to check if the
+                // target is to the right.
                 volatileDependencies.add(opp);
             }
         } else {
@@ -1099,8 +1102,8 @@ Case.prototype.checkConditions = function (self, opp) {
     // targetNotSaidMarker
     if (opp && this.targetNotSaidMarker) {
         // Negated marker - false if true
-        if (!checkMarker(this.targetNotSaidMarker, opp, null)) {
-            if (checkMarker(this.targetNotSaidMarker, opp, null, false, true)) {
+        if (!checkMarker(this.targetNotSaidMarker, opp, null, false, opp.slot > self.slot)) {
+            if (opp.slot < self.slot && checkMarker(this.targetNotSaidMarker, opp, null, false, true)) {
                 // Only matches pending marker changes; treat as volatile
                 volatileDependencies.add(opp);
             }
@@ -1186,8 +1189,8 @@ Case.prototype.checkConditions = function (self, opp) {
                     
             // marker checks have very low priority as they're mainly intended to be used with other target types
             if (this.alsoPlayingSaidMarker) {
-                if (checkMarker(this.alsoPlayingSaidMarker, ap, opp)) {
-                    if (!checkMarker(this.alsoPlayingSaidMarker, ap, opp, false, true)) {
+                if (checkMarker(this.alsoPlayingSaidMarker, ap, opp, false, ap.slot > self.slot)) {
+                    if (ap.slot < self.slot && !checkMarker(this.alsoPlayingSaidMarker, ap, opp, false, true)) {
                         // Matches pending marker changes; treat as volatile
                         volatileDependencies.add(ap);
                     }
@@ -1198,8 +1201,8 @@ Case.prototype.checkConditions = function (self, opp) {
                     
             if (this.alsoPlayingNotSaidMarker) {
                 // Negated marker condition - false if it matches
-                if (checkMarker(this.alsoPlayingNotSaidMarker, ap, opp)) {
-                    if (!checkMarker(this.alsoPlayingNotSaidMarker, ap, opp, false, true)) {
+                if (checkMarker(this.alsoPlayingNotSaidMarker, ap, opp, false, ap.slot > self.slot)) {
+                    if (ap.slot < self.slot && !checkMarker(this.alsoPlayingNotSaidMarker, ap, opp, false, true)) {
                         // Matches pending marker changes; treat as volatile
                         volatileDependencies.add(ap);
                     } else {
@@ -1360,7 +1363,7 @@ Case.prototype.checkConditions = function (self, opp) {
                    If the marker was said, but is being unsaid, we have to depend on the character not 
                    changing their state if there's an upper limit to the count. */
                 var before = checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null, false, true),
-                    after = checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null);
+                    after = checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null, false, p.slot < self.slot);
                 if (after) {
                     if (!before) {
                         volatileDependencies.add(p);
@@ -1374,7 +1377,7 @@ Case.prototype.checkConditions = function (self, opp) {
             }
             if (ctr.notSaidMarker !== undefined) {
                 var before = !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null, false, true),
-                    after = !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null);
+                    after = !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null, false, p.slot < self.slot);
                 if (after) {
                     if (!before) {
                         volatileDependencies.add(p);
