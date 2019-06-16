@@ -864,6 +864,16 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             });
 
             this.targetedLines = targetedLines;
+
+            var nicknames = {};
+            $xml.find('nicknames>nickname').each(function() {
+                if ($(this).attr('for') in nicknames) {
+                    nicknames[$(this).attr('for')].push($(this).text());
+                } else {
+                    nicknames[$(this).attr('for')] = [ $(this).text() ];
+                }
+            });
+            this.nicknames = nicknames;
             
             if (this.selected_costume) {
                 return this.loadAlternateCostume();

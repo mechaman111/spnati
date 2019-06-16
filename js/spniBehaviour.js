@@ -242,7 +242,7 @@ function State($xml, parentCase) {
     }
     
     if (markerOp) {
-        var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?[^~]+~))$/);
+        var match = markerOp.match(/^(?:(\+|-)([\w-]+)(\*?)|([\w-]+)(\*?)\s*=\s*(.*?)\s*)$/);
         var name;
         
         this.marker = {name: null, perTarget: false, persistent: persistMarker, op: null, val: null};
@@ -277,11 +277,10 @@ State.prototype.evaluateMarker = function (self, opp) {
     if (!this.marker) return;
     
     var name = this.marker.name;
+    if (this.marker.perTarget && opp) {
+        name = getTargetMarker(name, opp);
+    }
     if (this.marker.op === '+') {
-        if (this.marker.perTarget && opp) {
-            name = getTargetMarker(name, opp);
-        }
-        
         if (this.marker.persistent) {
             var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
         } else {
@@ -290,10 +289,6 @@ State.prototype.evaluateMarker = function (self, opp) {
         
         return !curVal ? 1 : curVal + 1;
     } else if (this.marker.op === '-') {
-        if (this.marker.perTarget && opp) {
-            name = getTargetMarker(name, opp);
-        }
-        
         if (this.marker.persistent) {
             var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
         } else {
@@ -400,6 +395,26 @@ function findVariablePlayer(variable, self, target, bindings) {
 }
 
 /************************************************************
+ * Applies any personal nicknames to target player.
+ * First looks for a per-character marker called "nickname".
+ * Second, picks a random nickname from the list of nicknames
+ * for the character from the <nicknames> section after 
+ * variable expansion (with self set to null in order to 
+ * avoid infinite recursion).
+ ************************************************************/
+function expandNicknames (self, target) {
+    if (self) {
+        var nickmarker = self.markers[getTargetMarker('nickname', target)];
+        if (nickmarker) return nickmarker;
+        if (target.id in self.nicknames || '*' in self.nicknames) {
+            var nickList = self.nicknames[target.id] || self.nicknames['*'];
+            return expandDialogue(nickList[getRandomNumber(0, nickList.length)], null, target);
+        }
+    }
+    return target.label;
+}
+
+/************************************************************
  * Expands ~target.*~ and ~[player].*~ variables.
  ************************************************************/
 function expandPlayerVariable(split_fn, args, self, target, bindings) {
@@ -487,7 +502,7 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
         }
         return undefined;
     default:
-        return target.label;
+        substitution = expandNicknames(self, target);
     }
 }
 
@@ -508,10 +523,10 @@ function expandDialogue (dialogue, self, target, bindings) {
         try {
             switch (variable.toLowerCase()) {
             case 'player':
-                substitution = players[HUMAN_PLAYER].label;
+                substitution = expandNicknames(self, players[HUMAN_PLAYER]);
                 break;
             case 'name':
-                substitution = target.label;
+                substitution = expandNicknames(self, target);
                 break;
             case 'clothing':
                 var clothing = (target||self).removedClothing;
