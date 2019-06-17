@@ -572,7 +572,7 @@ function expandDialogue (dialogue, self, target, bindings) {
                         }
                     }
                 } else {
-                    substitution = 'collectible'; // no collectible ID supplied
+                    console.error("No collectible ID specified");
                 }
                 break;
             case 'marker':
@@ -600,7 +600,7 @@ function expandDialogue (dialogue, self, target, bindings) {
                     
                     substitution = marker || "";
                 } else {
-                    substitution = variable.toLowerCase(); //didn't supply a marker name
+                    console.error("No marker name specified");
                 }
                 break;
             case 'background':
@@ -619,6 +619,8 @@ function expandDialogue (dialogue, self, target, bindings) {
                 var variablePlayer = findVariablePlayer(variable, self, target, bindings);
                 if (variablePlayer) {
                     substitution = expandPlayerVariable(fn_parts, args, self, variablePlayer, bindings);
+                } else {
+                    console.error("Unknown variable:", variable);
                 }
                 break;
             }
@@ -627,14 +629,14 @@ function expandDialogue (dialogue, self, target, bindings) {
             }
         } catch (ex) {
             //throw ex;
-            console.log("Invalid substitution caused exception " + ex);
+            console.error("Invalid substitution caused exception:", ex);
         }
         return substitution;
     }
     // variable or
     // variable.attribute or
     // variable.function(arguments)
-    return dialogue.replace(/~(\w+)(?:\.([^\(]+)(?:\(([^)]*)\))?)?~/g, substitute);
+    return dialogue.replace(/~(\w+)(?:\.(.+?)(?:\(([^)]*)\))?)?~/g, substitute);
 }
 
 function escapeRegExp(string) {
