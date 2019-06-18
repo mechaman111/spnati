@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.3 at 9:02:28 PM on June 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.3 at 6:22:54 PM on June 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.3</version>
     <first>Leggy</first>
@@ -17,6 +17,7 @@
         <tag>white_hair</tag>
         <tag>short_hair</tag>
         <tag>dark_eyes</tag>
+        <tag>fair-skinned</tag>
         <tag>short</tag>
         <tag>hairy</tag>
         <tag>pubic_hair</tag>
@@ -91,12 +92,12 @@
                 <state img="0-happy.png">Ain't we just the cutest flock y'ever did see?</state>
             </case>
             <case tag="swap_cards">
-                <state img="0-confused.png">Could ya throw ~cards.text~ my way?</state>
-                <state img="0-embarrassed.png">I... I don't quite know for sure what... c-can I just have ~cards.text~, please?</state>
+                <state img="0-confused.png">Could ya throw ~cards.text~ ~cards.ifPlural(cards|card)~ my way?</state>
+                <state img="0-embarrassed.png">I... I don't quite know for sure what... c-can I just have ~cards.text~ ~cards.ifPlural(cards|card)~, please?</state>
             </case>
             <case tag="swap_cards" saidMarker="strip" notSaidMarker="strip2">
-                <state img="0-confused.png" marker="strip2">Could ya throw ~cards.text~ my way?</state>
-                <state img="0-embarrassed.png" marker="strip2">I... I don't quite know for sure what... c-can I just have ~cards.text~, please?</state>
+                <state img="0-confused.png" marker="strip2">Could ya throw ~cards.text~ ~cards.ifPlural(cards|card)~ my way?</state>
+                <state img="0-embarrassed.png" marker="strip2">I... I don't quite know for sure what... c-can I just have ~cards.text~ ~cards.ifPlural(cards|card)~, please?</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -112,8 +113,8 @@
                 <state img="0-smug.png">These're just fine. Sure I've seen better, but I bet you don't!</state>
             </case>
             <case tag="bad_hand">
-                <state img="0-smug.png">Hey ~player~ wanna swap?</state>
-                <state img="0-sad.png">&lt;i&gt;Oooh&lt;/i&gt; darn it!</state>
+                <state img="0-smug.png">Hey, ~player~, wanna swap?</state>
+                <state img="0-sad.png">&lt;i&gt;Oooh,&lt;/i&gt; darn it!</state>
                 <state img="0-sad.png">Now that's just low...</state>
                 <state img="0-embarrassed.png">I &lt;i&gt;knew&lt;/i&gt; I wouldn't be no good at this!</state>
             </case>
@@ -233,6 +234,10 @@
                 <state img="0-smug.png">Ain't much of a prize, now is it?</state>
                 <state img="0-smug.png">Darlin', you know my &lt;i&gt;tail's&lt;/i&gt; bigger'n that, right?</state>
             </case>
+            <case tag="male_small_crotch_is_visible" filter="hairy" priority="0">
+                <state img="0-confused.png">Wait a second, now... I can't hardly... is that it?</state>
+                <state img="0-sad.png">I ain't tryin' to be mean, darlin', but I don't see nothin' but wool down there.</state>
+            </case>
             <case tag="male_small_crotch_is_visible" target="human">
                 <state img="0-happy.png">It's so cute!</state>
                 <state img="0-smug.png">Hope you at least know how to handle that thing, ~player~.</state>
@@ -241,10 +246,17 @@
                 <state img="0-horny.png">Lookit &lt;i&gt;you&lt;/i&gt;! I wouldn't mind a closer look, darlin'; I don't bite.</state>
                 <state img="0-boisterous.png">Now &lt;i&gt;that's&lt;/i&gt; what I call a big reveal!</state>
             </case>
+            <case tag="male_medium_crotch_is_visible" filter="hairy" priority="0">
+                <state img="0-smug.png">Y'know, just 'cause I'm a sheep don't mean I'll just fall for that look.</state>
+                <state img="0-smug.png">Ya need to borrow some shears? I don't mind none...</state>
+            </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="0-interested.png">&lt;i&gt;Talk&lt;/i&gt; about givin' a dog a &lt;i&gt;bone!&lt;/i&gt;</state>
                 <state img="0-embarrassed.png">&lt;i&gt;Shoot,&lt;/i&gt; that thing almost hurts to &lt;i&gt;look&lt;/i&gt; at!</state>
                 <state img="0-smug.png">Well doggone... you could give Barbra a run for her money, couldn't you?</state>
+            </case>
+            <case tag="male_large_crotch_is_visible" filter="hairy" priority="0">
+                <state img="0-shocked.png">It's like... some kinda bizarre tree!</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="0-interested.png">Oh, hold on, now... you're 'bout on your last leg.</state>
@@ -298,7 +310,7 @@
                 <state img="0-confident.png">Ain't no harm in a li'l old win like that!</state>
             </case>
             <case tag="opponent_lost" target="aimee" targetStage="1-4">
-                <state img="0-confused.png">Wait a second, you're the one what...</state>
+                <state img="0-confused.png">Wait a second, you're the one who...</state>
                 <state img="0-embarrassed.png">Not again!</state>
                 <state img="0-mad.png">Don't you dare!</state>
             </case>
@@ -335,6 +347,9 @@
             <case tag="opponent_lost" target="lucina" targetStage="0">
                 <state img="0-smug.png">I gotta say, you've got my interest. Whatchya thinkin', Mr. Marth?</state>
             </case>
+            <case tag="opponent_lost" target="mae" targetStage="1">
+                <state img="0-pun.png">Thanks for them boots earlier, but Mae I have somethin' else?</state>
+            </case>
             <case tag="opponent_lost" target="marinette" targetStage="0">
                 <state img="0-confused.png">What're &lt;i&gt;you?&lt;/i&gt; Ain't never seen no get-up like &lt;i&gt;that!&lt;/i&gt;</state>
             </case>
@@ -360,6 +375,9 @@
             </case>
             <case tag="opponent_lost" target="palutena" targetStage="1">
                 <state img="0-smug.png">I don't know if you &lt;i&gt;are&lt;/i&gt; somethin' special, but you sure are losin' like anyone else.</state>
+            </case>
+            <case tag="opponent_lost" target="pinkie_pie" targetStage="1">
+                <state img="0-interested.png">Oh, I oughtta keep an eye on you, Pinkie. I bet I could learn somethin' smart.</state>
             </case>
             <case tag="opponent_lost" target="pit" targetStage="0">
                 <state img="0-confused.png">So... hang on, now... you ain't a bird?</state>
@@ -459,6 +477,9 @@
             <case tag="opponent_stripping" target="mae" targetStage="0">
                 <state img="0-interested.png">Now &lt;i&gt;those&lt;/i&gt; boots look nice 'n practical.</state>
             </case>
+            <case tag="opponent_stripping" target="mae" targetStage="1">
+                <state img="0-happy.png">I know y'ain't got no much of a choice, just lemme poke my fun!</state>
+            </case>
             <case tag="opponent_stripping" target="marinette" targetStage="0">
                 <state img="0-smug.png">Well, whatever y'are, you're not unstoppable.</state>
             </case>
@@ -480,11 +501,26 @@
             <case tag="opponent_stripping" target="nayru" targetStage="4" targetNotSaidMarker="null_possess">
                 <state img="0-embarrassed.png">Shoot!</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="0">
+                <state img="0-happy.png">What cute shoes!</state>
+            </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="1">
+                <state img="0-interested.png">Gotta say, Nugi, I ain't too sure what you... are.</state>
+            </case>
             <case tag="opponent_stripping" target="palutena" targetStage="0">
                 <state img="0-happy.png">It's absolutely glowing!</state>
             </case>
             <case tag="opponent_stripping" target="palutena" targetStage="1">
                 <state img="0-calm.png">But that don't matter none. Angel or not, I still think you're fine.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="0">
+                <state img="0-confused.png">You're on a race to the bottom, ain't ya? Startin' with your top?</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="1">
+                <state img="0-happy.png">I shoulda known! I bet Pinkie's the one what's playin' this right.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="2">
+                <state img="0-confused.png">Wait... you're actually kickin' off them shoes? I don't...</state>
             </case>
             <case tag="opponent_stripping" target="pit" targetStage="0">
                 <state img="0-interested.png">Oh, I get it! You're like an angel or somethin'!</state>
@@ -597,6 +633,9 @@
             <case tag="opponent_stripped" target="mae" targetStage="1">
                 <state img="0-smug.png">Glad &lt;i&gt;someone's&lt;/i&gt; bein' sensible 'bout their footwear.</state>
             </case>
+            <case tag="opponent_stripped" target="mae" targetStage="2">
+                <state img="0-calm.png">Ain't no need to be a sourpuss.</state>
+            </case>
             <case tag="opponent_stripped" target="marinette" targetStage="1">
                 <state img="0-calm.png">Even if ya &lt;i&gt;do&lt;/i&gt; talk like you've gone bonkers.</state>
             </case>
@@ -618,11 +657,26 @@
             <case tag="opponent_stripped" target="nayru" targetStage="5" targetNotSaidMarker="null_possess">
                 <state img="0-confused.png">Y'all alright? Hello? Nayru?</state>
             </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="1">
+                <state img="0-calm.png">Sometimes I sure wish they made shoes for sheep.</state>
+            </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="2">
+                <state img="0-calm.png">Well, human, sure; I seen them plenty. Just never seen no one like you 'round the farm.</state>
+            </case>
             <case tag="opponent_stripped" target="palutena" targetStage="1" alsoPlaying="pit" notSaidMarker="angel">
                 <state img="0-shocked.png" marker="angel">Wait a sec... you're glowy all over! Are you... are you &lt;i&gt;both&lt;/i&gt; some kinda angel?</state>
             </case>
             <case tag="opponent_stripped" target="palutena" targetStage="2">
                 <state img="0-happy.png">&lt;i&gt;Ooh&lt;/i&gt;, why do I just wanna give you a hug so badly?</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="1">
+                <state img="0-interested.png">Oh, don't mind me none. You seem like you've done this before.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="2">
+                <state img="0-smug.png">And it ain't so bad to watch, if ya don't mind my sayin'.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="3">
+                <state img="0-sad.png">I just can't keep up, Pinkie. Is it better to strip quick or no?</state>
             </case>
             <case tag="opponent_stripped" target="pit" targetStage="1">
                 <state img="0-happy.png">I never thought I'd see the day! Anything you want, Mr. Angel, just gimme a holler!</state>
@@ -678,6 +732,13 @@
                 <state img="0-smug.png">Your ~clothing~ wouldn't last too long back on the farm.</state>
                 <state img="0-sad.png">I sure would like a closer look...</state>
             </case>
+            <case tag="opponent_start_masturbating" target="pinkie_pie">
+                <state img="0-shocked.png">Now what on Earth? You're puttin &lt;i&gt;that&lt;/i&gt; up in...?</state>
+            </case>
+            <case tag="opponent_masturbating" target="pinkie_pie" priority="0">
+                <state img="0-interested.png">Y'all humans sure get into some weird things, don't you?</state>
+                <state img="0-embarrassed.png">I hear Pinkie goin' nuts over there, but I just can't &lt;i&gt;stand&lt;/i&gt; the thought of doin' that!</state>
+            </case>
             <case tag="opponent_finished_masturbating" target="9s">
                 <state img="0-confused.png">Wait just a... there wasn't even no...</state>
             </case>
@@ -731,12 +792,12 @@
 
         <stage id="1">
             <case tag="swap_cards">
-                <state img="1-confused.png">Could ya throw ~cards.text~ my way?</state>
-                <state img="1-embarrassed.png">I... I don't quite know for sure what... c-can I just have ~cards.text~, please?</state>
+                <state img="1-confused.png">Could ya throw ~cards.text~ ~cards.ifPlural(cards|card)~ my way?</state>
+                <state img="1-embarrassed.png">I... I don't quite know for sure what... c-can I just have ~cards.text~ ~cards.ifPlural(cards|card)~, please?</state>
             </case>
             <case tag="swap_cards" saidMarker="strip" notSaidMarker="strip2">
-                <state img="1-confused.png" marker="strip2">Could ya throw ~cards.text~ my way?</state>
-                <state img="1-embarrassed.png" marker="strip2">I... I don't quite know for sure what... c-can I just have ~cards.text~, please?</state>
+                <state img="1-confused.png" marker="strip2">Could ya throw ~cards.text~ ~cards.ifPlural(cards|card)~ my way?</state>
+                <state img="1-embarrassed.png" marker="strip2">I... I don't quite know for sure what... c-can I just have ~cards.text~ ~cards.ifPlural(cards|card)~, please?</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -752,8 +813,8 @@
                 <state img="1-smug.png">These're just fine. Sure I've seen better, but I bet you don't!</state>
             </case>
             <case tag="bad_hand">
-                <state img="1-smug.png">Hey ~player~ wanna swap?</state>
-                <state img="1-sad.png">&lt;i&gt;Oooh&lt;/i&gt; darn it!</state>
+                <state img="1-smug.png">Hey, ~player~, wanna swap?</state>
+                <state img="1-sad.png">&lt;i&gt;Oooh,&lt;/i&gt; darn it!</state>
                 <state img="1-sad.png">Now that's just low...</state>
                 <state img="1-embarrassed.png">I &lt;i&gt;knew&lt;/i&gt; I wouldn't be no good at this!</state>
             </case>
@@ -866,6 +927,10 @@
                 <state img="1-smug.png">Ain't much of a prize, now is it?</state>
                 <state img="1-smug.png">Darlin', you know my &lt;i&gt;tail's&lt;/i&gt; bigger'n that, right?</state>
             </case>
+            <case tag="male_small_crotch_is_visible" filter="hairy" priority="0">
+                <state img="1-confused.png">Wait a second, now... I can't hardly... is that it?</state>
+                <state img="1-sad.png">I ain't tryin' to be mean, darlin', but I don't see nothin' but wool down there.</state>
+            </case>
             <case tag="male_small_crotch_is_visible" target="human">
                 <state img="1-happy.png">It's so cute!</state>
                 <state img="1-smug.png">Hope you at least know how to handle that thing, ~player~.</state>
@@ -874,10 +939,17 @@
                 <state img="1-horny.png">Lookit &lt;i&gt;you&lt;/i&gt;! I wouldn't mind a closer look, darlin'; I don't bite.</state>
                 <state img="1-boisterous.png">Now &lt;i&gt;that's&lt;/i&gt; what I call a big reveal!</state>
             </case>
+            <case tag="male_medium_crotch_is_visible" filter="hairy" priority="0">
+                <state img="1-smug.png">Y'know, just 'cause I'm a sheep don't mean I'll just fall for that look.</state>
+                <state img="1-smug.png">Ya need to borrow some shears? I don't mind none...</state>
+            </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="1-interested.png">&lt;i&gt;Talk&lt;/i&gt; about givin' a dog a &lt;i&gt;bone!&lt;/i&gt;</state>
                 <state img="1-embarrassed.png">&lt;i&gt;Shoot,&lt;/i&gt; that thing almost hurts to &lt;i&gt;look&lt;/i&gt; at!</state>
                 <state img="1-smug.png">Well doggone... you could give Barbra a run for her money, couldn't you?</state>
+            </case>
+            <case tag="male_large_crotch_is_visible" filter="hairy" priority="0">
+                <state img="1-shocked.png">It's like... some kinda bizarre tree!</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="1-interested.png">Oh, hold on, now... you're 'bout on your last leg.</state>
@@ -923,12 +995,15 @@
                 <state img="1-confident.png">Ain't no harm in a li'l old win like that!</state>
             </case>
             <case tag="opponent_lost" target="aimee" targetStage="1-4">
-                <state img="1-confused.png">Wait a second, you're the one what...</state>
+                <state img="1-confused.png">Wait a second, you're the one who...</state>
                 <state img="1-embarrassed.png">Not again!</state>
                 <state img="1-mad.png">Don't you dare!</state>
             </case>
             <case tag="opponent_lost" target="chihiro" targetStage="0">
                 <state img="1-happy.png">Ain't &lt;i&gt;you&lt;/i&gt; just the cutest li'l thing.</state>
+            </case>
+            <case tag="opponent_lost" target="estelle" targetStage="0">
+                <state img="1-interested.png">&lt;i&gt;Oooh...&lt;/i&gt; I been meanin' to ask; where'd you even &lt;i&gt;get&lt;/i&gt; an outfit like that?</state>
             </case>
             <case tag="opponent_lost" target="haru" targetStage="0">
                 <state img="1-sad.png">Aww, Haru lost? I sure didn't wanna lose, but I didn't want &lt;i&gt;this&lt;/i&gt; neither!</state>
@@ -957,6 +1032,9 @@
             <case tag="opponent_lost" target="lucina" targetStage="0">
                 <state img="1-smug.png">I gotta say, you've got my interest. Whatchya thinkin', Mr. Marth?</state>
             </case>
+            <case tag="opponent_lost" target="mae" targetStage="1">
+                <state img="1-pun.png">Thanks for them boots earlier, but Mae I have somethin' else?</state>
+            </case>
             <case tag="opponent_lost" target="marinette" targetStage="0">
                 <state img="1-confused.png">What're &lt;i&gt;you?&lt;/i&gt; Ain't never seen no get-up like &lt;i&gt;that!&lt;/i&gt;</state>
             </case>
@@ -982,6 +1060,9 @@
             </case>
             <case tag="opponent_lost" target="palutena" targetStage="1">
                 <state img="1-smug.png">I don't know if you &lt;i&gt;are&lt;/i&gt; somethin' special, but you sure are losin' like anyone else.</state>
+            </case>
+            <case tag="opponent_lost" target="pinkie_pie" targetStage="1">
+                <state img="1-interested.png">Oh, I oughtta keep an eye on you, Pinkie. I bet I could learn somethin' smart.</state>
             </case>
             <case tag="opponent_lost" target="pit" targetStage="0">
                 <state img="1-confused.png">So... hang on, now... you ain't a bird?</state>
@@ -1081,6 +1162,9 @@
             <case tag="opponent_stripping" target="mae" targetStage="0">
                 <state img="1-interested.png">Now &lt;i&gt;those&lt;/i&gt; boots look nice 'n practical.</state>
             </case>
+            <case tag="opponent_stripping" target="mae" targetStage="1">
+                <state img="1-happy.png">I know y'ain't got no much of a choice, just lemme poke my fun!</state>
+            </case>
             <case tag="opponent_stripping" target="marinette" targetStage="0">
                 <state img="1-smug.png">Well, whatever y'are, you're not unstoppable.</state>
             </case>
@@ -1102,11 +1186,26 @@
             <case tag="opponent_stripping" target="nayru" targetStage="4" targetNotSaidMarker="null_possess">
                 <state img="1-embarrassed.png">Shoot!</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="0">
+                <state img="1-happy.png">What cute shoes!</state>
+            </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="1">
+                <state img="1-interested.png">Gotta say, Nugi, I ain't too sure what you... are.</state>
+            </case>
             <case tag="opponent_stripping" target="palutena" targetStage="0">
                 <state img="1-happy.png">It's absolutely glowing!</state>
             </case>
             <case tag="opponent_stripping" target="palutena" targetStage="1">
                 <state img="1-calm.png">But that don't matter none. Angel or not, I still think you're fine.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="0">
+                <state img="1-confused.png">You're on a race to the bottom, ain't ya? Startin' with your top?</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="1">
+                <state img="1-happy.png">I shoulda known! I bet Pinkie's the one what's playin' this right.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="2">
+                <state img="1-confused.png">Wait... you're actually kickin' off them shoes? I don't...</state>
             </case>
             <case tag="opponent_stripping" target="pit" targetStage="0">
                 <state img="1-interested.png">Oh, I get it! You're like an angel or somethin'!</state>
@@ -1219,6 +1318,9 @@
             <case tag="opponent_stripped" target="mae" targetStage="1">
                 <state img="1-smug.png">Glad &lt;i&gt;someone's&lt;/i&gt; bein' sensible 'bout their footwear.</state>
             </case>
+            <case tag="opponent_stripped" target="mae" targetStage="2">
+                <state img="1-calm.png">Ain't no need to be a sourpuss.</state>
+            </case>
             <case tag="opponent_stripped" target="marinette" targetStage="1">
                 <state img="1-calm.png">Even if ya &lt;i&gt;do&lt;/i&gt; talk like you've gone bonkers.</state>
             </case>
@@ -1240,11 +1342,26 @@
             <case tag="opponent_stripped" target="nayru" targetStage="5" targetNotSaidMarker="null_possess">
                 <state img="1-confused.png">Y'all alright? Hello? Nayru?</state>
             </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="1">
+                <state img="1-calm.png">Sometimes I sure wish they made shoes for sheep.</state>
+            </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="2">
+                <state img="1-calm.png">Well, human, sure; I seen them plenty. Just never seen no one like you 'round the farm.</state>
+            </case>
             <case tag="opponent_stripped" target="palutena" targetStage="1" alsoPlaying="pit" notSaidMarker="angel">
                 <state img="1-shocked.png" marker="angel">Wait a sec... you're glowy all over! Are you... are you &lt;i&gt;both&lt;/i&gt; some kinda angel?</state>
             </case>
             <case tag="opponent_stripped" target="palutena" targetStage="2">
                 <state img="1-happy.png">&lt;i&gt;Ooh&lt;/i&gt;, why do I just wanna give you a hug so badly?</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="1">
+                <state img="1-interested.png">Oh, don't mind me none. You seem like you've done this before.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="2">
+                <state img="1-smug.png">And it ain't so bad to watch, if ya don't mind my sayin'.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="3">
+                <state img="1-sad.png">I just can't keep up, Pinkie. Is it better to strip quick or no?</state>
             </case>
             <case tag="opponent_stripped" target="pit" targetStage="1">
                 <state img="1-happy.png">I never thought I'd see the day! Anything you want, Mr. Angel, just gimme a holler!</state>
@@ -1300,6 +1417,13 @@
                 <state img="1-smug.png">Your ~clothing~ wouldn't last too long back on the farm.</state>
                 <state img="1-sad.png">I sure would like a closer look...</state>
             </case>
+            <case tag="opponent_start_masturbating" target="pinkie_pie">
+                <state img="1-shocked.png">Now what on Earth? You're puttin &lt;i&gt;that&lt;/i&gt; up in...?</state>
+            </case>
+            <case tag="opponent_masturbating" target="pinkie_pie" priority="0">
+                <state img="1-interested.png">Y'all humans sure get into some weird things, don't you?</state>
+                <state img="1-embarrassed.png">I hear Pinkie goin' nuts over there, but I just can't &lt;i&gt;stand&lt;/i&gt; the thought of doin' that!</state>
+            </case>
             <case tag="opponent_finished_masturbating" target="9s">
                 <state img="1-confused.png">Wait just a... there wasn't even no...</state>
             </case>
@@ -1353,11 +1477,11 @@
 
         <stage id="2">
             <case tag="swap_cards">
-                <state img="2-calm.png">I could use ~cards.text~ if ya don't mind.</state>
+                <state img="2-calm.png">I could use ~cards.text~ ~cards.ifPlural(cards|card)~, if ya don't mind.</state>
                 <state img="2-smug.png">Gimme a hit would ya, dealer?</state>
             </case>
             <case tag="swap_cards" saidMarker="strip" notSaidMarker="strip2">
-                <state img="2-calm.png" marker="strip2">I could use ~cards.text~ if ya don't mind.</state>
+                <state img="2-calm.png" marker="strip2">I could use ~cards.text~ ~cards.ifPlural(cards|card)~, if ya don't mind.</state>
                 <state img="2-smug.png" marker="strip2">Gimme a hit would ya, dealer?</state>
             </case>
             <case tag="swap_cards">
@@ -1393,6 +1517,9 @@
             <case tag="stripping" id="2-1">
                 <state img="2-stripping.png">I sure hope y'all don't mind if I lose somethin' else instead!</state>
                 <state img="2-stripping.png">&lt;i&gt;Oops!&lt;/i&gt; Cut that one a little close...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="nugi-chan" alsoPlayingSaying="you hiding a vibrator">
+                <state img="2-stripping.png">Not quite, Nugi dear, but it sure does vibrate. Tickles somethin' fierce!</state>
             </case>
             <case tag="stripped">
                 <state img="2-stripped.png">Got it! I'm alright!</state>
@@ -1490,6 +1617,10 @@
                 <state img="2-smug.png">Ain't much of a prize, now is it?</state>
                 <state img="2-smug.png">Darlin', you know my &lt;i&gt;tail's&lt;/i&gt; bigger'n that, right?</state>
             </case>
+            <case tag="male_small_crotch_is_visible" filter="hairy" priority="0">
+                <state img="2-confused.png">Wait a second, now... I can't hardly... is that it?</state>
+                <state img="2-sad.png">I ain't tryin' to be mean, darlin', but I don't see nothin' but wool down there.</state>
+            </case>
             <case tag="male_small_crotch_is_visible" target="human">
                 <state img="2-happy.png">It's so cute!</state>
                 <state img="2-smug.png">Hope you at least know how to handle that thing, ~player~.</state>
@@ -1498,10 +1629,17 @@
                 <state img="2-horny.png">Lookit &lt;i&gt;you&lt;/i&gt;! I wouldn't mind a closer look, darlin'; I don't bite.</state>
                 <state img="2-boisterous.png">Now &lt;i&gt;that's&lt;/i&gt; what I call a big reveal!</state>
             </case>
+            <case tag="male_medium_crotch_is_visible" filter="hairy" priority="0">
+                <state img="2-smug.png">Y'know, just 'cause I'm a sheep don't mean I'll just fall for that look.</state>
+                <state img="2-smug.png">Ya need to borrow some shears? I don't mind none...</state>
+            </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="2-interested.png">&lt;i&gt;Talk&lt;/i&gt; about givin' a dog a &lt;i&gt;bone!&lt;/i&gt;</state>
                 <state img="2-embarrassed.png">&lt;i&gt;Shoot,&lt;/i&gt; that thing almost hurts to &lt;i&gt;look&lt;/i&gt; at!</state>
                 <state img="2-smug.png">Well doggone... you could give Barbra a run for her money, couldn't you?</state>
+            </case>
+            <case tag="male_large_crotch_is_visible" filter="hairy" priority="0">
+                <state img="2-shocked.png">It's like... some kinda bizarre tree!</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="2-interested.png">Oh, hold on, now... you're 'bout on your last leg.</state>
@@ -1547,12 +1685,15 @@
                 <state img="2-confident.png">Ain't no harm in a li'l old win like that!</state>
             </case>
             <case tag="opponent_lost" target="aimee" targetStage="1-4">
-                <state img="2-confused.png">Wait a second, you're the one what...</state>
+                <state img="2-confused.png">Wait a second, you're the one who...</state>
                 <state img="2-embarrassed.png">Not again!</state>
                 <state img="2-mad.png">Don't you dare!</state>
             </case>
             <case tag="opponent_lost" target="chihiro" targetStage="0">
                 <state img="2-happy.png">Ain't &lt;i&gt;you&lt;/i&gt; just the cutest li'l thing.</state>
+            </case>
+            <case tag="opponent_lost" target="estelle" targetStage="0">
+                <state img="2-interested.png">&lt;i&gt;Oooh...&lt;/i&gt; I been meanin' to ask; where'd you even &lt;i&gt;get&lt;/i&gt; an outfit like that?</state>
             </case>
             <case tag="opponent_lost" target="haru" targetStage="0">
                 <state img="2-sad.png">Aww, Haru lost? I sure didn't wanna lose, but I didn't want &lt;i&gt;this&lt;/i&gt; neither!</state>
@@ -1581,6 +1722,9 @@
             <case tag="opponent_lost" target="lucina" targetStage="0">
                 <state img="2-smug.png">I gotta say, you've got my interest. Whatchya thinkin', Mr. Marth?</state>
             </case>
+            <case tag="opponent_lost" target="mae" targetStage="1">
+                <state img="2-pun.png">Thanks for them boots earlier, but Mae I have somethin' else?</state>
+            </case>
             <case tag="opponent_lost" target="marinette" targetStage="0">
                 <state img="2-confused.png">What're &lt;i&gt;you?&lt;/i&gt; Ain't never seen no get-up like &lt;i&gt;that!&lt;/i&gt;</state>
             </case>
@@ -1606,6 +1750,9 @@
             </case>
             <case tag="opponent_lost" target="palutena" targetStage="1">
                 <state img="2-smug.png">I don't know if you &lt;i&gt;are&lt;/i&gt; somethin' special, but you sure are losin' like anyone else.</state>
+            </case>
+            <case tag="opponent_lost" target="pinkie_pie" targetStage="1">
+                <state img="2-interested.png">Oh, I oughtta keep an eye on you, Pinkie. I bet I could learn somethin' smart.</state>
             </case>
             <case tag="opponent_lost" target="pit" targetStage="0">
                 <state img="2-confused.png">So... hang on, now... you ain't a bird?</state>
@@ -1705,6 +1852,9 @@
             <case tag="opponent_stripping" target="mae" targetStage="0">
                 <state img="2-interested.png">Now &lt;i&gt;those&lt;/i&gt; boots look nice 'n practical.</state>
             </case>
+            <case tag="opponent_stripping" target="mae" targetStage="1">
+                <state img="2-happy.png">I know y'ain't got no much of a choice, just lemme poke my fun!</state>
+            </case>
             <case tag="opponent_stripping" target="marinette" targetStage="0">
                 <state img="2-smug.png">Well, whatever y'are, you're not unstoppable.</state>
             </case>
@@ -1726,11 +1876,26 @@
             <case tag="opponent_stripping" target="nayru" targetStage="4" targetNotSaidMarker="null_possess">
                 <state img="2-embarrassed.png">Shoot!</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="0">
+                <state img="2-happy.png">What cute shoes!</state>
+            </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="1">
+                <state img="2-interested.png">Gotta say, Nugi, I ain't too sure what you... are.</state>
+            </case>
             <case tag="opponent_stripping" target="palutena" targetStage="0">
                 <state img="2-happy.png">It's absolutely glowing!</state>
             </case>
             <case tag="opponent_stripping" target="palutena" targetStage="1">
                 <state img="2-calm.png">But that don't matter none. Angel or not, I still think you're fine.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="0">
+                <state img="2-confused.png">You're on a race to the bottom, ain't ya? Startin' with your top?</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="1">
+                <state img="2-happy.png">I shoulda known! I bet Pinkie's the one what's playin' this right.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="2">
+                <state img="2-confused.png">Wait... you're actually kickin' off them shoes? I don't...</state>
             </case>
             <case tag="opponent_stripping" target="pit" targetStage="0">
                 <state img="2-interested.png">Oh, I get it! You're like an angel or somethin'!</state>
@@ -1843,6 +2008,9 @@
             <case tag="opponent_stripped" target="mae" targetStage="1">
                 <state img="2-smug.png">Glad &lt;i&gt;someone's&lt;/i&gt; bein' sensible 'bout their footwear.</state>
             </case>
+            <case tag="opponent_stripped" target="mae" targetStage="2">
+                <state img="2-calm.png">Ain't no need to be a sourpuss.</state>
+            </case>
             <case tag="opponent_stripped" target="marinette" targetStage="1">
                 <state img="2-calm.png">Even if ya &lt;i&gt;do&lt;/i&gt; talk like you've gone bonkers.</state>
             </case>
@@ -1864,11 +2032,26 @@
             <case tag="opponent_stripped" target="nayru" targetStage="5" targetNotSaidMarker="null_possess">
                 <state img="2-confused.png">Y'all alright? Hello? Nayru?</state>
             </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="1">
+                <state img="2-calm.png">Sometimes I sure wish they made shoes for sheep.</state>
+            </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="2">
+                <state img="2-calm.png">Well, human, sure; I seen them plenty. Just never seen no one like you 'round the farm.</state>
+            </case>
             <case tag="opponent_stripped" target="palutena" targetStage="1" alsoPlaying="pit" notSaidMarker="angel">
                 <state img="2-shocked.png" marker="angel">Wait a sec... you're glowy all over! Are you... are you &lt;i&gt;both&lt;/i&gt; some kinda angel?</state>
             </case>
             <case tag="opponent_stripped" target="palutena" targetStage="2">
                 <state img="2-happy.png">&lt;i&gt;Ooh&lt;/i&gt;, why do I just wanna give you a hug so badly?</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="1">
+                <state img="2-interested.png">Oh, don't mind me none. You seem like you've done this before.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="2">
+                <state img="2-smug.png">And it ain't so bad to watch, if ya don't mind my sayin'.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="3">
+                <state img="2-sad.png">I just can't keep up, Pinkie. Is it better to strip quick or no?</state>
             </case>
             <case tag="opponent_stripped" target="pit" targetStage="1">
                 <state img="2-happy.png">I never thought I'd see the day! Anything you want, Mr. Angel, just gimme a holler!</state>
@@ -1924,6 +2107,13 @@
                 <state img="2-smug.png">Your ~clothing~ wouldn't last too long back on the farm.</state>
                 <state img="2-sad.png">I sure would like a closer look...</state>
             </case>
+            <case tag="opponent_start_masturbating" target="pinkie_pie">
+                <state img="2-shocked.png">Now what on Earth? You're puttin &lt;i&gt;that&lt;/i&gt; up in...?</state>
+            </case>
+            <case tag="opponent_masturbating" target="pinkie_pie" priority="0">
+                <state img="2-interested.png">Y'all humans sure get into some weird things, don't you?</state>
+                <state img="2-embarrassed.png">I hear Pinkie goin' nuts over there, but I just can't &lt;i&gt;stand&lt;/i&gt; the thought of doin' that!</state>
+            </case>
             <case tag="opponent_finished_masturbating" target="9s">
                 <state img="2-confused.png">Wait just a... there wasn't even no...</state>
             </case>
@@ -1978,11 +2168,11 @@
 
         <stage id="3">
             <case tag="swap_cards">
-                <state img="3-calm.png">I could use ~cards.text~ if ya don't mind.</state>
+                <state img="3-calm.png">I could use ~cards.text~ ~cards.ifPlural(cards|card)~, if ya don't mind.</state>
                 <state img="3-smug.png">Gimme a hit would ya, dealer?</state>
             </case>
             <case tag="swap_cards" saidMarker="strip" notSaidMarker="strip2">
-                <state img="3-calm.png" marker="strip2">I could use ~cards.text~ if ya don't mind.</state>
+                <state img="3-calm.png" marker="strip2">I could use ~cards.text~ ~cards.ifPlural(cards|card)~, if ya don't mind.</state>
                 <state img="3-smug.png" marker="strip2">Gimme a hit would ya, dealer?</state>
             </case>
             <case tag="swap_cards">
@@ -2109,6 +2299,10 @@
                 <state img="3-smug.png">Ain't much of a prize, now is it?</state>
                 <state img="3-smug.png">Darlin', you know my &lt;i&gt;tail's&lt;/i&gt; bigger'n that, right?</state>
             </case>
+            <case tag="male_small_crotch_is_visible" filter="hairy" priority="0">
+                <state img="3-confused.png">Wait a second, now... I can't hardly... is that it?</state>
+                <state img="3-sad.png">I ain't tryin' to be mean, darlin', but I don't see nothin' but wool down there.</state>
+            </case>
             <case tag="male_small_crotch_is_visible" target="human">
                 <state img="3-happy.png">It's so cute!</state>
                 <state img="3-smug.png">Hope you at least know how to handle that thing, ~player~.</state>
@@ -2117,10 +2311,17 @@
                 <state img="3-horny.png">Lookit &lt;i&gt;you&lt;/i&gt;! I wouldn't mind a closer look, darlin'; I don't bite.</state>
                 <state img="3-boisterous.png">Now &lt;i&gt;that's&lt;/i&gt; what I call a big reveal!</state>
             </case>
+            <case tag="male_medium_crotch_is_visible" filter="hairy" priority="0">
+                <state img="3-smug.png">Y'know, just 'cause I'm a sheep don't mean I'll just fall for that look.</state>
+                <state img="3-smug.png">Ya need to borrow some shears? I don't mind none...</state>
+            </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="3-interested.png">&lt;i&gt;Talk&lt;/i&gt; about givin' a dog a &lt;i&gt;bone!&lt;/i&gt;</state>
                 <state img="3-embarrassed.png">&lt;i&gt;Shoot,&lt;/i&gt; that thing almost hurts to &lt;i&gt;look&lt;/i&gt; at!</state>
                 <state img="3-smug.png">Well doggone... you could give Barbra a run for her money, couldn't you?</state>
+            </case>
+            <case tag="male_large_crotch_is_visible" filter="hairy" priority="0">
+                <state img="3-shocked.png">It's like... some kinda bizarre tree!</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="3-interested.png">Oh, hold on, now... you're 'bout on your last leg.</state>
@@ -2161,12 +2362,15 @@
                 <state img="3-shocked.png">Now how'd...? Ain't no shears cuttin' &lt;i&gt;that&lt;/i&gt; close!</state>
             </case>
             <case tag="opponent_lost" target="aimee" targetStage="1-4">
-                <state img="3-confused.png">Wait a second, you're the one what...</state>
+                <state img="3-confused.png">Wait a second, you're the one who...</state>
                 <state img="3-embarrassed.png">Not again!</state>
                 <state img="3-mad.png">Don't you dare!</state>
             </case>
             <case tag="opponent_lost" target="chihiro" targetStage="0">
                 <state img="3-happy.png">Ain't &lt;i&gt;you&lt;/i&gt; just the cutest li'l thing.</state>
+            </case>
+            <case tag="opponent_lost" target="estelle" targetStage="0">
+                <state img="3-interested.png">&lt;i&gt;Oooh...&lt;/i&gt; I been meanin' to ask; where'd you even &lt;i&gt;get&lt;/i&gt; an outfit like that?</state>
             </case>
             <case tag="opponent_lost" target="haru" targetStage="0">
                 <state img="3-sad.png">Aww, Haru lost? I sure didn't wanna lose, but I didn't want &lt;i&gt;this&lt;/i&gt; neither!</state>
@@ -2195,6 +2399,9 @@
             <case tag="opponent_lost" target="lucina" targetStage="0">
                 <state img="3-smug.png">I gotta say, you've got my interest. Whatchya thinkin', Mr. Marth?</state>
             </case>
+            <case tag="opponent_lost" target="mae" targetStage="1">
+                <state img="3-pun.png">Thanks for them boots earlier, but Mae I have somethin' else?</state>
+            </case>
             <case tag="opponent_lost" target="marinette" targetStage="0">
                 <state img="3-confused.png">What're &lt;i&gt;you?&lt;/i&gt; Ain't never seen no get-up like &lt;i&gt;that!&lt;/i&gt;</state>
             </case>
@@ -2220,6 +2427,9 @@
             </case>
             <case tag="opponent_lost" target="palutena" targetStage="1">
                 <state img="3-smug.png">I don't know if you &lt;i&gt;are&lt;/i&gt; somethin' special, but you sure are losin' like anyone else.</state>
+            </case>
+            <case tag="opponent_lost" target="pinkie_pie" targetStage="1">
+                <state img="3-interested.png">Oh, I oughtta keep an eye on you, Pinkie. I bet I could learn somethin' smart.</state>
             </case>
             <case tag="opponent_lost" target="pit" targetStage="0">
                 <state img="3-confused.png">So... hang on, now... you ain't a bird?</state>
@@ -2311,6 +2521,9 @@
             <case tag="opponent_stripping" target="mae" targetStage="0">
                 <state img="3-interested.png">Now &lt;i&gt;those&lt;/i&gt; boots look nice 'n practical.</state>
             </case>
+            <case tag="opponent_stripping" target="mae" targetStage="1">
+                <state img="3-happy.png">I know y'ain't got no much of a choice, just lemme poke my fun!</state>
+            </case>
             <case tag="opponent_stripping" target="marinette" targetStage="0">
                 <state img="3-smug.png">Well, whatever y'are, you're not unstoppable.</state>
             </case>
@@ -2332,11 +2545,26 @@
             <case tag="opponent_stripping" target="nayru" targetStage="4" targetNotSaidMarker="null_possess">
                 <state img="3-embarrassed.png">Shoot!</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="0">
+                <state img="3-happy.png">What cute shoes!</state>
+            </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="1">
+                <state img="3-interested.png">Gotta say, Nugi, I ain't too sure what you... are.</state>
+            </case>
             <case tag="opponent_stripping" target="palutena" targetStage="0">
                 <state img="3-happy.png">It's absolutely glowing!</state>
             </case>
             <case tag="opponent_stripping" target="palutena" targetStage="1">
                 <state img="3-calm.png">But that don't matter none. Angel or not, I still think you're fine.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="0">
+                <state img="3-confused.png">You're on a race to the bottom, ain't ya? Startin' with your top?</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="1">
+                <state img="3-happy.png">I shoulda known! I bet Pinkie's the one what's playin' this right.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="2">
+                <state img="3-confused.png">Wait... you're actually kickin' off them shoes? I don't...</state>
             </case>
             <case tag="opponent_stripping" target="pit" targetStage="0">
                 <state img="3-interested.png">Oh, I get it! You're like an angel or somethin'!</state>
@@ -2432,6 +2660,9 @@
             <case tag="opponent_stripped" target="mae" targetStage="1">
                 <state img="3-smug.png">Glad &lt;i&gt;someone's&lt;/i&gt; bein' sensible 'bout their footwear.</state>
             </case>
+            <case tag="opponent_stripped" target="mae" targetStage="2">
+                <state img="3-calm.png">Ain't no need to be a sourpuss.</state>
+            </case>
             <case tag="opponent_stripped" target="marinette" targetStage="1">
                 <state img="3-calm.png">Even if ya &lt;i&gt;do&lt;/i&gt; talk like you've gone bonkers.</state>
             </case>
@@ -2453,11 +2684,26 @@
             <case tag="opponent_stripped" target="nayru" targetStage="5" targetNotSaidMarker="null_possess">
                 <state img="3-confused.png">Y'all alright? Hello? Nayru?</state>
             </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="1">
+                <state img="3-calm.png">Sometimes I sure wish they made shoes for sheep.</state>
+            </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="2">
+                <state img="3-calm.png">Well, human, sure; I seen them plenty. Just never seen no one like you 'round the farm.</state>
+            </case>
             <case tag="opponent_stripped" target="palutena" targetStage="1" alsoPlaying="pit" notSaidMarker="angel">
                 <state img="3-shocked.png" marker="angel">Wait a sec... you're glowy all over! Are you... are you &lt;i&gt;both&lt;/i&gt; some kinda angel?</state>
             </case>
             <case tag="opponent_stripped" target="palutena" targetStage="2">
                 <state img="3-happy.png">&lt;i&gt;Ooh&lt;/i&gt;, why do I just wanna give you a hug so badly?</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="1">
+                <state img="3-interested.png">Oh, don't mind me none. You seem like you've done this before.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="2">
+                <state img="3-smug.png">And it ain't so bad to watch, if ya don't mind my sayin'.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="3">
+                <state img="3-sad.png">I just can't keep up, Pinkie. Is it better to strip quick or no?</state>
             </case>
             <case tag="opponent_stripped" target="pit" targetStage="1">
                 <state img="3-happy.png">I never thought I'd see the day! Anything you want, Mr. Angel, just gimme a holler!</state>
@@ -2508,6 +2754,13 @@
                 <state img="3-smug.png">I think I've seen people 'round the farm wearin' stuff like that, but never so fancy!</state>
                 <state img="3-smug.png">Your ~clothing~ wouldn't last too long back on the farm.</state>
                 <state img="3-sad.png">I sure would like a closer look...</state>
+            </case>
+            <case tag="opponent_start_masturbating" target="pinkie_pie">
+                <state img="3-shocked.png">Now what on Earth? You're puttin &lt;i&gt;that&lt;/i&gt; up in...?</state>
+            </case>
+            <case tag="opponent_masturbating" target="pinkie_pie" priority="0">
+                <state img="3-interested.png">Y'all humans sure get into some weird things, don't you?</state>
+                <state img="3-embarrassed.png">I hear Pinkie goin' nuts over there, but I just can't &lt;i&gt;stand&lt;/i&gt; the thought of doin' that!</state>
             </case>
             <case tag="opponent_finished_masturbating" target="9s">
                 <state img="3-confused.png">Wait just a... there wasn't even no...</state>
@@ -2563,8 +2816,8 @@
 
         <stage id="4">
             <case tag="swap_cards">
-                <state img="4-confused.png">Toss t-- no... ~cards.text~ my way, if ya please!</state>
-                <state img="4-calm.png">~cards.text~'ll have to do.</state>
+                <state img="4-confused.png">Toss t-- no... ~cards.text~ ~cards.ifPlural(cards|card)~ my way, if ya please!</state>
+                <state img="4-calm.png">~Cards.text~'ll have to do.</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -2594,9 +2847,15 @@
                 <state img="4-stripping.png">&lt;i&gt;Doggone&lt;/i&gt;, y'all ain't ever happy, are ya?</state>
                 <state img="4-stripping.png">&lt;i&gt;Ooh, darlin'!&lt;/i&gt; It's never felt like &lt;i&gt;this!&lt;/i&gt;</state>
             </case>
+            <case tag="stripping" alsoPlaying="nugi-chan" alsoPlayingSaying="can't see">
+                <state img="4-stripping.png">I hear ya, Nugi, but this right here's a delicate operation, y'know!</state>
+            </case>
             <case tag="stripped">
                 <state img="4-sad.png">Ah, shoot. I didn't think it'd be so nippy in here.</state>
                 <state img="4-horny.png">Well, gosh... I'm gonna need someone to keep me warm now...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="nugi-chan">
+                <state img="4-confused.png">Furry? What're you talkin' about? Y'ain't got a lick'a fur on you!</state>
             </case>
             <case tag="stripped" saidMarker="wolf">
                 <state img="4-mad.png">If'n it wasn't for Droopy, I'd have given that wolf what for myself!</state>
@@ -2613,7 +2872,6 @@
             <case tag="female_must_strip">
                 <state img="4-smug.png">Well ain't that a fine holstein!</state>
                 <state img="4-interested.png">Now this I don't mind at all!</state>
-                <state img="4-smug.png"></state>
                 <state img="4-boisterous.png">'Nother round, 'nother step closer to winnin'!</state>
             </case>
             <case tag="tie">
@@ -2702,6 +2960,10 @@
                 <state img="4-pun.png">It's alright! It's a little chilly in here anyways...</state>
                 <state img="4-smug.png">They say the best things come in small packages, ya know.</state>
             </case>
+            <case tag="male_small_crotch_is_visible" filter="hairy" priority="0">
+                <state img="4-confused.png">Wait a second, now... I can't hardly... is that it?</state>
+                <state img="4-sad.png">I ain't tryin' to be mean, darlin', but I don't see nothin' but wool down there.</state>
+            </case>
             <case tag="male_small_crotch_is_visible" target="human">
                 <state img="4-happy.png">It's so cute!</state>
                 <state img="4-smug.png">Hope you at least know how to handle that thing, ~player~.</state>
@@ -2710,10 +2972,17 @@
                 <state img="4-smug.png">Guess I can't complain too much!</state>
                 <state img="4-horny.png">Come to momma!</state>
             </case>
+            <case tag="male_medium_crotch_is_visible" filter="hairy" priority="0">
+                <state img="4-smug.png">Y'know, just 'cause I'm a sheep don't mean I'll just fall for that look.</state>
+                <state img="4-smug.png">Ya need to borrow some shears? I don't mind none...</state>
+            </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="4-interested.png">Now ain't that a looker!</state>
                 <state img="4-smug.png">Now ain't you hung like a horse!</state>
                 <state img="4-horny.png">Oh my...</state>
+            </case>
+            <case tag="male_large_crotch_is_visible" filter="hairy" priority="0">
+                <state img="4-shocked.png">It's like... some kinda bizarre tree!</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="4-interested.png">Well shoot, I sure don't mind no company, standin' here like this.</state>
@@ -2767,12 +3036,15 @@
                 <state img="4-shocked.png">Now how'd...? Ain't no shears cuttin' &lt;i&gt;that&lt;/i&gt; close!</state>
             </case>
             <case tag="opponent_lost" target="aimee" targetStage="1-4">
-                <state img="4-confused.png">Wait a second, you're the one what...</state>
+                <state img="4-confused.png">Wait a second, you're the one who...</state>
                 <state img="4-embarrassed.png">Not again!</state>
                 <state img="4-mad.png">Don't you dare!</state>
             </case>
             <case tag="opponent_lost" target="chihiro" targetStage="0">
                 <state img="4-happy.png">Ain't &lt;i&gt;you&lt;/i&gt; just the cutest li'l thing.</state>
+            </case>
+            <case tag="opponent_lost" target="estelle" targetStage="0">
+                <state img="4-interested.png">&lt;i&gt;Oooh...&lt;/i&gt; I been meanin' to ask; where'd you even &lt;i&gt;get&lt;/i&gt; an outfit like that?</state>
             </case>
             <case tag="opponent_lost" target="haru" targetStage="0">
                 <state img="4-sad.png">Aww, Haru lost? I sure didn't wanna lose, but I didn't want &lt;i&gt;this&lt;/i&gt; neither!</state>
@@ -2801,6 +3073,9 @@
             <case tag="opponent_lost" target="lucina" targetStage="0">
                 <state img="4-smug.png">I gotta say, you've got my interest. Whatchya thinkin', Mr. Marth?</state>
             </case>
+            <case tag="opponent_lost" target="mae" targetStage="1">
+                <state img="4-pun.png">Thanks for them boots earlier, but Mae I have somethin' else?</state>
+            </case>
             <case tag="opponent_lost" target="marinette" targetStage="0">
                 <state img="4-confused.png">What're &lt;i&gt;you?&lt;/i&gt; Ain't never seen no get-up like &lt;i&gt;that!&lt;/i&gt;</state>
             </case>
@@ -2826,6 +3101,9 @@
             </case>
             <case tag="opponent_lost" target="palutena" targetStage="1">
                 <state img="4-smug.png">I don't know if you &lt;i&gt;are&lt;/i&gt; somethin' special, but you sure are losin' like anyone else.</state>
+            </case>
+            <case tag="opponent_lost" target="pinkie_pie" targetStage="1">
+                <state img="4-interested.png">Oh, I oughtta keep an eye on you, Pinkie. I bet I could learn somethin' smart.</state>
             </case>
             <case tag="opponent_lost" target="pit" targetStage="0">
                 <state img="4-confused.png">So... hang on, now... you ain't a bird?</state>
@@ -2917,6 +3195,9 @@
             <case tag="opponent_stripping" target="mae" targetStage="0">
                 <state img="4-interested.png">Now &lt;i&gt;those&lt;/i&gt; boots look nice 'n practical.</state>
             </case>
+            <case tag="opponent_stripping" target="mae" targetStage="1">
+                <state img="4-happy.png">I know y'ain't got no much of a choice, just lemme poke my fun!</state>
+            </case>
             <case tag="opponent_stripping" target="marinette" targetStage="0">
                 <state img="4-smug.png">Well, whatever y'are, you're not unstoppable.</state>
             </case>
@@ -2938,11 +3219,26 @@
             <case tag="opponent_stripping" target="nayru" targetStage="4" targetNotSaidMarker="null_possess">
                 <state img="4-embarrassed.png">Shoot!</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="0">
+                <state img="4-happy.png">What cute shoes!</state>
+            </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="1">
+                <state img="4-interested.png">Gotta say, Nugi, I ain't too sure what you... are.</state>
+            </case>
             <case tag="opponent_stripping" target="palutena" targetStage="0">
                 <state img="4-happy.png">It's absolutely glowing!</state>
             </case>
             <case tag="opponent_stripping" target="palutena" targetStage="1">
                 <state img="4-calm.png">But that don't matter none. Angel or not, I still think you're fine.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="0">
+                <state img="4-confused.png">You're on a race to the bottom, ain't ya? Startin' with your top?</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="1">
+                <state img="4-happy.png">I shoulda known! I bet Pinkie's the one what's playin' this right.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="2">
+                <state img="4-confused.png">Wait... you're actually kickin' off them shoes? I don't...</state>
             </case>
             <case tag="opponent_stripping" target="pit" targetStage="0">
                 <state img="4-interested.png">Oh, I get it! You're like an angel or somethin'!</state>
@@ -3038,6 +3334,9 @@
             <case tag="opponent_stripped" target="mae" targetStage="1">
                 <state img="4-smug.png">Glad &lt;i&gt;someone's&lt;/i&gt; bein' sensible 'bout their footwear.</state>
             </case>
+            <case tag="opponent_stripped" target="mae" targetStage="2">
+                <state img="4-calm.png">Ain't no need to be a sourpuss.</state>
+            </case>
             <case tag="opponent_stripped" target="marinette" targetStage="1">
                 <state img="4-calm.png">Even if ya &lt;i&gt;do&lt;/i&gt; talk like you've gone bonkers.</state>
             </case>
@@ -3059,11 +3358,26 @@
             <case tag="opponent_stripped" target="nayru" targetStage="5" targetNotSaidMarker="null_possess">
                 <state img="4-confused.png">Y'all alright? Hello? Nayru?</state>
             </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="1">
+                <state img="4-calm.png">Sometimes I sure wish they made shoes for sheep.</state>
+            </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="2">
+                <state img="4-calm.png">Well, human, sure; I seen them plenty. Just never seen no one like you 'round the farm.</state>
+            </case>
             <case tag="opponent_stripped" target="palutena" targetStage="1" alsoPlaying="pit" notSaidMarker="angel">
                 <state img="4-shocked.png" marker="angel">Wait a sec... you're glowy all over! Are you... are you &lt;i&gt;both&lt;/i&gt; some kinda angel?</state>
             </case>
             <case tag="opponent_stripped" target="palutena" targetStage="2">
                 <state img="4-happy.png">&lt;i&gt;Ooh&lt;/i&gt;, why do I just wanna give you a hug so badly?</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="1">
+                <state img="4-interested.png">Oh, don't mind me none. You seem like you've done this before.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="2">
+                <state img="4-smug.png">And it ain't so bad to watch, if ya don't mind my sayin'.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="3">
+                <state img="4-sad.png">I just can't keep up, Pinkie. Is it better to strip quick or no?</state>
             </case>
             <case tag="opponent_stripped" target="pit" targetStage="1">
                 <state img="4-happy.png">I never thought I'd see the day! Anything you want, Mr. Angel, just gimme a holler!</state>
@@ -3114,6 +3428,13 @@
                 <state img="4-smug.png">I think I've seen people 'round the farm wearin' stuff like that, but never so fancy!</state>
                 <state img="4-smug.png">Your ~clothing~ wouldn't last too long back on the farm.</state>
                 <state img="4-sad.png">I sure would like a closer look...</state>
+            </case>
+            <case tag="opponent_start_masturbating" target="pinkie_pie">
+                <state img="4-shocked.png">Now what on Earth? You're puttin &lt;i&gt;that&lt;/i&gt; up in...?</state>
+            </case>
+            <case tag="opponent_masturbating" target="pinkie_pie" priority="0">
+                <state img="4-interested.png">Y'all humans sure get into some weird things, don't you?</state>
+                <state img="4-embarrassed.png">I hear Pinkie goin' nuts over there, but I just can't &lt;i&gt;stand&lt;/i&gt; the thought of doin' that!</state>
             </case>
             <case tag="opponent_finished_masturbating" target="9s">
                 <state img="4-confused.png">Wait just a... there wasn't even no...</state>
@@ -3176,8 +3497,8 @@
 
         <stage id="5">
             <case tag="swap_cards">
-                <state img="5-confused.png">Toss t-- no... ~cards.text~ my way, if ya please!</state>
-                <state img="5-calm.png">~cards.text~'ll have to do.</state>
+                <state img="5-confused.png">Toss t-- no... ~cards.text~ ~cards.ifPlural(cards|card)~ my way, if ya please!</state>
+                <state img="5-calm.png">~Cards.text~'ll have to do.</state>
             </case>
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
@@ -3215,7 +3536,6 @@
             <case tag="female_must_strip">
                 <state img="5-smug.png">Well ain't that a fine holstein!</state>
                 <state img="5-interested.png">Now this I don't mind at all!</state>
-                <state img="5-smug.png"></state>
                 <state img="5-boisterous.png">'Nother round, 'nother step closer to winnin'!</state>
             </case>
             <case tag="tie">
@@ -3304,6 +3624,10 @@
                 <state img="5-pun.png">It's alright! It's a little chilly in here anyways...</state>
                 <state img="5-smug.png">They say the best things come in small packages, ya know.</state>
             </case>
+            <case tag="male_small_crotch_is_visible" filter="hairy" priority="0">
+                <state img="5-confused.png">Wait a second, now... I can't hardly... is that it?</state>
+                <state img="5-sad.png">I ain't tryin' to be mean, darlin', but I don't see nothin' but wool down there.</state>
+            </case>
             <case tag="male_small_crotch_is_visible" target="human">
                 <state img="5-happy.png">It's so cute!</state>
                 <state img="5-smug.png">Hope you at least know how to handle that thing, ~player~.</state>
@@ -3312,10 +3636,17 @@
                 <state img="5-smug.png">Guess I can't complain too much!</state>
                 <state img="5-horny.png">Come to momma!</state>
             </case>
+            <case tag="male_medium_crotch_is_visible" filter="hairy" priority="0">
+                <state img="5-smug.png">Y'know, just 'cause I'm a sheep don't mean I'll just fall for that look.</state>
+                <state img="5-smug.png">Ya need to borrow some shears? I don't mind none...</state>
+            </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="5-interested.png">Now ain't that a looker!</state>
                 <state img="5-smug.png">Now ain't you hung like a horse!</state>
                 <state img="5-horny.png">Oh my...</state>
+            </case>
+            <case tag="male_large_crotch_is_visible" filter="hairy" priority="0">
+                <state img="5-shocked.png">It's like... some kinda bizarre tree!</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="5-interested.png">Well shoot, I sure don't mind no company, standin' here like this.</state>
@@ -3369,12 +3700,15 @@
                 <state img="5-shocked.png">Now how'd...? Ain't no shears cuttin' &lt;i&gt;that&lt;/i&gt; close!</state>
             </case>
             <case tag="opponent_lost" target="aimee" targetStage="1-4">
-                <state img="5-confused.png">Wait a second, you're the one what...</state>
+                <state img="5-confused.png">Wait a second, you're the one who...</state>
                 <state img="5-embarrassed.png">Not again!</state>
                 <state img="5-mad.png">Don't you dare!</state>
             </case>
             <case tag="opponent_lost" target="chihiro" targetStage="0">
                 <state img="5-happy.png">Ain't &lt;i&gt;you&lt;/i&gt; just the cutest li'l thing.</state>
+            </case>
+            <case tag="opponent_lost" target="estelle" targetStage="0">
+                <state img="5-interested.png">&lt;i&gt;Oooh...&lt;/i&gt; I been meanin' to ask; where'd you even &lt;i&gt;get&lt;/i&gt; an outfit like that?</state>
             </case>
             <case tag="opponent_lost" target="haru" targetStage="0">
                 <state img="5-sad.png">Aww, Haru lost? I sure didn't wanna lose, but I didn't want &lt;i&gt;this&lt;/i&gt; neither!</state>
@@ -3403,6 +3737,9 @@
             <case tag="opponent_lost" target="lucina" targetStage="0">
                 <state img="5-smug.png">I gotta say, you've got my interest. Whatchya thinkin', Mr. Marth?</state>
             </case>
+            <case tag="opponent_lost" target="mae" targetStage="1">
+                <state img="5-pun.png">Thanks for them boots earlier, but Mae I have somethin' else?</state>
+            </case>
             <case tag="opponent_lost" target="marinette" targetStage="0">
                 <state img="5-confused.png">What're &lt;i&gt;you?&lt;/i&gt; Ain't never seen no get-up like &lt;i&gt;that!&lt;/i&gt;</state>
             </case>
@@ -3428,6 +3765,9 @@
             </case>
             <case tag="opponent_lost" target="palutena" targetStage="1">
                 <state img="5-smug.png">I don't know if you &lt;i&gt;are&lt;/i&gt; somethin' special, but you sure are losin' like anyone else.</state>
+            </case>
+            <case tag="opponent_lost" target="pinkie_pie" targetStage="1">
+                <state img="5-interested.png">Oh, I oughtta keep an eye on you, Pinkie. I bet I could learn somethin' smart.</state>
             </case>
             <case tag="opponent_lost" target="pit" targetStage="0">
                 <state img="5-confused.png">So... hang on, now... you ain't a bird?</state>
@@ -3519,6 +3859,9 @@
             <case tag="opponent_stripping" target="mae" targetStage="0">
                 <state img="5-interested.png">Now &lt;i&gt;those&lt;/i&gt; boots look nice 'n practical.</state>
             </case>
+            <case tag="opponent_stripping" target="mae" targetStage="1">
+                <state img="5-happy.png">I know y'ain't got no much of a choice, just lemme poke my fun!</state>
+            </case>
             <case tag="opponent_stripping" target="marinette" targetStage="0">
                 <state img="5-smug.png">Well, whatever y'are, you're not unstoppable.</state>
             </case>
@@ -3540,11 +3883,26 @@
             <case tag="opponent_stripping" target="nayru" targetStage="4" targetNotSaidMarker="null_possess">
                 <state img="5-embarrassed.png">Shoot!</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="0">
+                <state img="5-happy.png">What cute shoes!</state>
+            </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="1">
+                <state img="5-interested.png">Gotta say, Nugi, I ain't too sure what you... are.</state>
+            </case>
             <case tag="opponent_stripping" target="palutena" targetStage="0">
                 <state img="5-happy.png">It's absolutely glowing!</state>
             </case>
             <case tag="opponent_stripping" target="palutena" targetStage="1">
                 <state img="5-calm.png">But that don't matter none. Angel or not, I still think you're fine.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="0">
+                <state img="5-confused.png">You're on a race to the bottom, ain't ya? Startin' with your top?</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="1">
+                <state img="5-happy.png">I shoulda known! I bet Pinkie's the one what's playin' this right.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="2">
+                <state img="5-confused.png">Wait... you're actually kickin' off them shoes? I don't...</state>
             </case>
             <case tag="opponent_stripping" target="pit" targetStage="0">
                 <state img="5-interested.png">Oh, I get it! You're like an angel or somethin'!</state>
@@ -3640,6 +3998,9 @@
             <case tag="opponent_stripped" target="mae" targetStage="1">
                 <state img="5-smug.png">Glad &lt;i&gt;someone's&lt;/i&gt; bein' sensible 'bout their footwear.</state>
             </case>
+            <case tag="opponent_stripped" target="mae" targetStage="2">
+                <state img="5-calm.png">Ain't no need to be a sourpuss.</state>
+            </case>
             <case tag="opponent_stripped" target="marinette" targetStage="1">
                 <state img="5-calm.png">Even if ya &lt;i&gt;do&lt;/i&gt; talk like you've gone bonkers.</state>
             </case>
@@ -3661,11 +4022,26 @@
             <case tag="opponent_stripped" target="nayru" targetStage="5" targetNotSaidMarker="null_possess">
                 <state img="5-confused.png">Y'all alright? Hello? Nayru?</state>
             </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="1">
+                <state img="5-calm.png">Sometimes I sure wish they made shoes for sheep.</state>
+            </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="2">
+                <state img="5-calm.png">Well, human, sure; I seen them plenty. Just never seen no one like you 'round the farm.</state>
+            </case>
             <case tag="opponent_stripped" target="palutena" targetStage="1" alsoPlaying="pit" notSaidMarker="angel">
                 <state img="5-shocked.png" marker="angel">Wait a sec... you're glowy all over! Are you... are you &lt;i&gt;both&lt;/i&gt; some kinda angel?</state>
             </case>
             <case tag="opponent_stripped" target="palutena" targetStage="2">
                 <state img="5-happy.png">&lt;i&gt;Ooh&lt;/i&gt;, why do I just wanna give you a hug so badly?</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="1">
+                <state img="5-interested.png">Oh, don't mind me none. You seem like you've done this before.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="2">
+                <state img="5-smug.png">And it ain't so bad to watch, if ya don't mind my sayin'.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="3">
+                <state img="5-sad.png">I just can't keep up, Pinkie. Is it better to strip quick or no?</state>
             </case>
             <case tag="opponent_stripped" target="pit" targetStage="1">
                 <state img="5-happy.png">I never thought I'd see the day! Anything you want, Mr. Angel, just gimme a holler!</state>
@@ -3717,11 +4093,18 @@
                 <state img="5-smug.png">Your ~clothing~ wouldn't last too long back on the farm.</state>
                 <state img="5-sad.png">I sure would like a closer look...</state>
             </case>
+            <case tag="opponent_start_masturbating" target="pinkie_pie">
+                <state img="5-shocked.png">Now what on Earth? You're puttin &lt;i&gt;that&lt;/i&gt; up in...?</state>
+            </case>
             <case tag="opponent_masturbating" priority="0">
                 <condition count="1" status="alive" />
                 <state img="5-horny.png">I'm not even sure if I &lt;i&gt;want&lt;/i&gt; to win like this...</state>
                 <state img="5-sad.png">Gosh, y'all sure I can't join in?</state>
                 <state img="5-embarrassed.png">Sure is &lt;i&gt;awful&lt;/i&gt; lonesome up here...</state>
+            </case>
+            <case tag="opponent_masturbating" target="pinkie_pie" priority="0">
+                <state img="5-interested.png">Y'all humans sure get into some weird things, don't you?</state>
+                <state img="5-embarrassed.png">I hear Pinkie goin' nuts over there, but I just can't &lt;i&gt;stand&lt;/i&gt; the thought of doin' that!</state>
             </case>
             <case tag="opponent_finished_masturbating" target="9s">
                 <state img="5-confused.png">Wait just a... there wasn't even no...</state>
@@ -3786,6 +4169,9 @@
             <case tag="must_masturbate">
                 <state img="5-smug.png">I ain't too happy 'bout losin', but... I don't mind this none.</state>
             </case>
+            <case tag="must_masturbate" alsoPlaying="nugi-chan">
+                <state img="5-mad.png" marker="bleat">&lt;i&gt;Hmph!&lt;/i&gt; It's just a tick, y'hear? I can't help the occasional bleat...</state>
+            </case>
             <case tag="must_masturbate" totalMasturbating="1-">
                 <state img="5-calm.png">Another loss? Well shoot, I don't got no more wool... guess I don't got no choice but to join the fun.</state>
             </case>
@@ -3811,7 +4197,6 @@
             <case tag="female_must_strip">
                 <state img="6-smug.png">Well ain't that a fine holstein!</state>
                 <state img="6-interested.png">Now this I don't mind at all!</state>
-                <state img="6-smug.png"></state>
             </case>
             <case tag="tie">
                 <state img="6-shocked.png">Wait just a... that can happen? What's goin' on here?</state>
@@ -3899,6 +4284,10 @@
                 <state img="6-pun.png">It's alright! It's a little chilly in here anyways...</state>
                 <state img="6-smug.png">They say the best things come in small packages, ya know.</state>
             </case>
+            <case tag="male_small_crotch_is_visible" filter="hairy" priority="0">
+                <state img="6-confused.png">Wait a second, now... I can't hardly... is that it?</state>
+                <state img="6-sad.png">I ain't tryin' to be mean, darlin', but I don't see nothin' but wool down there.</state>
+            </case>
             <case tag="male_small_crotch_is_visible" target="human">
                 <state img="6-happy.png">It's so cute!</state>
                 <state img="6-smug.png">Hope you at least know how to handle that thing, ~player~.</state>
@@ -3907,10 +4296,17 @@
                 <state img="6-smug.png">Guess I can't complain too much!</state>
                 <state img="6-boisterous.png">Come to momma!</state>
             </case>
+            <case tag="male_medium_crotch_is_visible" filter="hairy" priority="0">
+                <state img="6-smug.png">Y'know, just 'cause I'm a sheep don't mean I'll just fall for that look.</state>
+                <state img="6-smug.png">Ya need to borrow some shears? I don't mind none...</state>
+            </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="6-interested.png">Now ain't that a looker!</state>
                 <state img="6-smug.png">Now ain't you hung like a horse!</state>
                 <state img="6-boisterous.png">Oh my...</state>
+            </case>
+            <case tag="male_large_crotch_is_visible" filter="hairy" priority="0">
+                <state img="6-shocked.png">It's like... some kinda bizarre tree!</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="6-interested.png">Well shoot, I sure don't mind no company, standin' here like this.</state>
@@ -3965,12 +4361,15 @@
                 <state img="6-boisterous.png">About &lt;i&gt;time&lt;/i&gt; someone finally joined me.</state>
             </case>
             <case tag="opponent_lost" target="aimee" targetStage="1-4">
-                <state img="6-confused.png">Wait a second, you're the one what...</state>
+                <state img="6-confused.png">Wait a second, you're the one who...</state>
                 <state img="6-embarrassed.png">Not again!</state>
                 <state img="6-mad.png">Don't you dare!</state>
             </case>
             <case tag="opponent_lost" target="chihiro" targetStage="0">
                 <state img="6-happy.png">Ain't &lt;i&gt;you&lt;/i&gt; just the cutest li'l thing.</state>
+            </case>
+            <case tag="opponent_lost" target="estelle" targetStage="0">
+                <state img="6-interested.png">&lt;i&gt;Oooh...&lt;/i&gt; I been meanin' to ask; where'd you even &lt;i&gt;get&lt;/i&gt; an outfit like that?</state>
             </case>
             <case tag="opponent_lost" target="haru" targetStage="0">
                 <state img="6-sad.png">Aww, Haru lost? I sure didn't wanna lose, but I didn't want &lt;i&gt;this&lt;/i&gt; neither!</state>
@@ -3999,6 +4398,9 @@
             <case tag="opponent_lost" target="lucina" targetStage="0">
                 <state img="6-smug.png">I gotta say, you've got my interest. Whatchya thinkin', Mr. Marth?</state>
             </case>
+            <case tag="opponent_lost" target="mae" targetStage="1">
+                <state img="6-pun.png">Thanks for them boots earlier, but Mae I have somethin' else?</state>
+            </case>
             <case tag="opponent_lost" target="marinette" targetStage="0">
                 <state img="6-confused.png">What're &lt;i&gt;you?&lt;/i&gt; Ain't never seen no get-up like &lt;i&gt;that!&lt;/i&gt;</state>
             </case>
@@ -4024,6 +4426,9 @@
             </case>
             <case tag="opponent_lost" target="palutena" targetStage="1">
                 <state img="6-smug.png">I don't know if you &lt;i&gt;are&lt;/i&gt; somethin' special, but you sure are losin' like anyone else.</state>
+            </case>
+            <case tag="opponent_lost" target="pinkie_pie" targetStage="1">
+                <state img="6-interested.png">Oh, I oughtta keep an eye on you, Pinkie. I bet I could learn somethin' smart.</state>
             </case>
             <case tag="opponent_lost" target="pit" targetStage="0">
                 <state img="6-confused.png">So... hang on, now... you ain't a bird?</state>
@@ -4115,6 +4520,9 @@
             <case tag="opponent_stripping" target="mae" targetStage="0">
                 <state img="6-interested.png">Now &lt;i&gt;those&lt;/i&gt; boots look nice 'n practical.</state>
             </case>
+            <case tag="opponent_stripping" target="mae" targetStage="1">
+                <state img="6-happy.png">I know y'ain't got no much of a choice, just lemme poke my fun!</state>
+            </case>
             <case tag="opponent_stripping" target="marinette" targetStage="0">
                 <state img="6-smug.png">Well, whatever y'are, you're not unstoppable.</state>
             </case>
@@ -4136,11 +4544,26 @@
             <case tag="opponent_stripping" target="nayru" targetStage="4" targetNotSaidMarker="null_possess">
                 <state img="6-embarrassed.png">Shoot!</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="0">
+                <state img="6-happy.png">What cute shoes!</state>
+            </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="1">
+                <state img="6-interested.png">Gotta say, Nugi, I ain't too sure what you... are.</state>
+            </case>
             <case tag="opponent_stripping" target="palutena" targetStage="0">
                 <state img="6-happy.png">It's absolutely glowing!</state>
             </case>
             <case tag="opponent_stripping" target="palutena" targetStage="1">
                 <state img="6-calm.png">But that don't matter none. Angel or not, I still think you're fine.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="0">
+                <state img="6-confused.png">You're on a race to the bottom, ain't ya? Startin' with your top?</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="1">
+                <state img="6-happy.png">I shoulda known! I bet Pinkie's the one what's playin' this right.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="2">
+                <state img="6-confused.png">Wait... you're actually kickin' off them shoes? I don't...</state>
             </case>
             <case tag="opponent_stripping" target="pit" targetStage="0">
                 <state img="6-interested.png">Oh, I get it! You're like an angel or somethin'!</state>
@@ -4233,6 +4656,9 @@
             <case tag="opponent_stripped" target="mae" targetStage="1">
                 <state img="6-smug.png">Glad &lt;i&gt;someone's&lt;/i&gt; bein' sensible 'bout their footwear.</state>
             </case>
+            <case tag="opponent_stripped" target="mae" targetStage="2">
+                <state img="6-calm.png">Ain't no need to be a sourpuss.</state>
+            </case>
             <case tag="opponent_stripped" target="marinette" targetStage="1">
                 <state img="6-calm.png">Even if ya &lt;i&gt;do&lt;/i&gt; talk like you've gone bonkers.</state>
             </case>
@@ -4254,11 +4680,26 @@
             <case tag="opponent_stripped" target="nayru" targetStage="5" targetNotSaidMarker="null_possess">
                 <state img="6-confused.png">Y'all alright? Hello? Nayru?</state>
             </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="1">
+                <state img="6-calm.png">Sometimes I sure wish they made shoes for sheep.</state>
+            </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="2">
+                <state img="6-calm.png">Well, human, sure; I seen them plenty. Just never seen no one like you 'round the farm.</state>
+            </case>
             <case tag="opponent_stripped" target="palutena" targetStage="1" alsoPlaying="pit" notSaidMarker="angel">
                 <state img="6-shocked.png" marker="angel">Wait a sec... you're glowy all over! Are you... are you &lt;i&gt;both&lt;/i&gt; some kinda angel?</state>
             </case>
             <case tag="opponent_stripped" target="palutena" targetStage="2">
                 <state img="6-happy.png">&lt;i&gt;Ooh&lt;/i&gt;, why do I just wanna give you a hug so badly?</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="1">
+                <state img="6-interested.png">Oh, don't mind me none. You seem like you've done this before.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="2">
+                <state img="6-smug.png">And it ain't so bad to watch, if ya don't mind my sayin'.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="3">
+                <state img="6-sad.png">I just can't keep up, Pinkie. Is it better to strip quick or no?</state>
             </case>
             <case tag="opponent_stripped" target="pit" targetStage="1">
                 <state img="6-happy.png">I never thought I'd see the day! Anything you want, Mr. Angel, just gimme a holler!</state>
@@ -4309,6 +4750,13 @@
                 <state img="6-smug.png">I think I've seen people 'round the farm wearin' stuff like that, but never so fancy!</state>
                 <state img="6-smug.png">Your ~clothing~ wouldn't last too long back on the farm.</state>
                 <state img="6-sad.png">I sure would like a closer look...</state>
+            </case>
+            <case tag="opponent_start_masturbating" target="pinkie_pie">
+                <state img="6-shocked.png">Now what on Earth? You're puttin &lt;i&gt;that&lt;/i&gt; up in...?</state>
+            </case>
+            <case tag="opponent_masturbating" target="pinkie_pie" priority="0">
+                <state img="6-interested.png">Y'all humans sure get into some weird things, don't you?</state>
+                <state img="6-embarrassed.png">I hear Pinkie goin' nuts over there, but I just can't &lt;i&gt;stand&lt;/i&gt; the thought of doin' that!</state>
             </case>
             <case tag="opponent_finished_masturbating" target="9s">
                 <state img="6-confused.png">Wait just a... there wasn't even no...</state>
@@ -4362,6 +4810,10 @@
                 <state img="6-calm.png">This ain't half bad.</state>
                 <state img="6-smug.png">Oh, don't be sheepish, hon! I came here to have fun!</state>
             </case>
+            <case tag="masturbating" saidMarker="bleat" priority="0">
+                <state img="6-embarrassed.png">&lt;i&gt;Ba!&lt;/i&gt; Nn-- D-don't say nothin'! Hard to focus when things like all this ha-&lt;i&gt;a-apen!&lt;/i&gt;</state>
+                <state img="6-happy.png">&lt;i&gt;Ba-a...&lt;/i&gt; D-dang it, Nugi... y'all got it on my mind, now I can't stop!</state>
+            </case>
             <case tag="masturbating" totalMasturbating="1-" priority="0">
                 <state img="6-boisterous.png">Oh, it's &lt;i&gt;so&lt;/i&gt; nice to have company...</state>
             </case>
@@ -4389,7 +4841,6 @@
             <case tag="female_must_strip">
                 <state img="7-smug.png">Well ain't that a fine holstein!</state>
                 <state img="7-interested.png">Now this I don't mind at all!</state>
-                <state img="7-smug.png"></state>
             </case>
             <case tag="tie">
                 <state img="7-shocked.png">Wait just a... that can happen? What's goin' on here?</state>
@@ -4477,6 +4928,10 @@
                 <state img="7-pun.png">It's alright! It's a little chilly in here anyways...</state>
                 <state img="7-smug.png">They say the best things come in small packages, ya know.</state>
             </case>
+            <case tag="male_small_crotch_is_visible" filter="hairy" priority="0">
+                <state img="7-confused.png">Wait a second, now... I can't hardly... is that it?</state>
+                <state img="7-sad.png">I ain't tryin' to be mean, darlin', but I don't see nothin' but wool down there.</state>
+            </case>
             <case tag="male_small_crotch_is_visible" target="human">
                 <state img="7-happy.png">It's so cute!</state>
                 <state img="7-smug.png">Hope you at least know how to handle that thing, ~player~.</state>
@@ -4485,10 +4940,17 @@
                 <state img="7-smug.png">Guess I can't complain too much!</state>
                 <state img="7-horny.png">Come to momma!</state>
             </case>
+            <case tag="male_medium_crotch_is_visible" filter="hairy" priority="0">
+                <state img="7-smug.png">Y'know, just 'cause I'm a sheep don't mean I'll just fall for that look.</state>
+                <state img="7-smug.png">Ya need to borrow some shears? I don't mind none...</state>
+            </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="7-interested.png">Now ain't that a looker!</state>
                 <state img="7-smug.png">Now ain't you hung like a horse!</state>
                 <state img="7-horny.png">Oh my...</state>
+            </case>
+            <case tag="male_large_crotch_is_visible" filter="hairy" priority="0">
+                <state img="7-shocked.png">It's like... some kinda bizarre tree!</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="7-interested.png">Well shoot, I sure don't mind no company, standin' here like this.</state>
@@ -4549,12 +5011,15 @@
                 <state img="7-boisterous.png">And we have ourselves a winner!</state>
             </case>
             <case tag="opponent_lost" target="aimee" targetStage="1-4">
-                <state img="7-confused.png">Wait a second, you're the one what...</state>
+                <state img="7-confused.png">Wait a second, you're the one who...</state>
                 <state img="7-embarrassed.png">Not again!</state>
                 <state img="7-mad.png">Don't you dare!</state>
             </case>
             <case tag="opponent_lost" target="chihiro" targetStage="0">
                 <state img="7-happy.png">Ain't &lt;i&gt;you&lt;/i&gt; just the cutest li'l thing.</state>
+            </case>
+            <case tag="opponent_lost" target="estelle" targetStage="0">
+                <state img="7-interested.png">&lt;i&gt;Oooh...&lt;/i&gt; I been meanin' to ask; where'd you even &lt;i&gt;get&lt;/i&gt; an outfit like that?</state>
             </case>
             <case tag="opponent_lost" target="haru" targetStage="0">
                 <state img="7-sad.png">Aww, Haru lost? I sure didn't wanna lose, but I didn't want &lt;i&gt;this&lt;/i&gt; neither!</state>
@@ -4583,6 +5048,9 @@
             <case tag="opponent_lost" target="lucina" targetStage="0">
                 <state img="7-smug.png">I gotta say, you've got my interest. Whatchya thinkin', Mr. Marth?</state>
             </case>
+            <case tag="opponent_lost" target="mae" targetStage="1">
+                <state img="7-pun.png">Thanks for them boots earlier, but Mae I have somethin' else?</state>
+            </case>
             <case tag="opponent_lost" target="marinette" targetStage="0">
                 <state img="7-confused.png">What're &lt;i&gt;you?&lt;/i&gt; Ain't never seen no get-up like &lt;i&gt;that!&lt;/i&gt;</state>
             </case>
@@ -4608,6 +5076,9 @@
             </case>
             <case tag="opponent_lost" target="palutena" targetStage="1">
                 <state img="7-smug.png">I don't know if you &lt;i&gt;are&lt;/i&gt; somethin' special, but you sure are losin' like anyone else.</state>
+            </case>
+            <case tag="opponent_lost" target="pinkie_pie" targetStage="1">
+                <state img="7-interested.png">Oh, I oughtta keep an eye on you, Pinkie. I bet I could learn somethin' smart.</state>
             </case>
             <case tag="opponent_lost" target="pit" targetStage="0">
                 <state img="7-confused.png">So... hang on, now... you ain't a bird?</state>
@@ -4702,6 +5173,9 @@
             <case tag="opponent_stripping" target="mae" targetStage="0">
                 <state img="7-interested.png">Now &lt;i&gt;those&lt;/i&gt; boots look nice 'n practical.</state>
             </case>
+            <case tag="opponent_stripping" target="mae" targetStage="1">
+                <state img="7-happy.png">I know y'ain't got no much of a choice, just lemme poke my fun!</state>
+            </case>
             <case tag="opponent_stripping" target="marinette" targetStage="0">
                 <state img="7-smug.png">Well, whatever y'are, you're not unstoppable.</state>
             </case>
@@ -4723,11 +5197,26 @@
             <case tag="opponent_stripping" target="nayru" targetStage="4" targetNotSaidMarker="null_possess">
                 <state img="7-embarrassed.png">Shoot!</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="0">
+                <state img="7-happy.png">What cute shoes!</state>
+            </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="1">
+                <state img="7-interested.png">Gotta say, Nugi, I ain't too sure what you... are.</state>
+            </case>
             <case tag="opponent_stripping" target="palutena" targetStage="0">
                 <state img="7-happy.png">It's absolutely glowing!</state>
             </case>
             <case tag="opponent_stripping" target="palutena" targetStage="1">
                 <state img="7-calm.png">But that don't matter none. Angel or not, I still think you're fine.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="0">
+                <state img="7-confused.png">You're on a race to the bottom, ain't ya? Startin' with your top?</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="1">
+                <state img="7-happy.png">I shoulda known! I bet Pinkie's the one what's playin' this right.</state>
+            </case>
+            <case tag="opponent_stripping" target="pinkie_pie" targetStage="2">
+                <state img="7-confused.png">Wait... you're actually kickin' off them shoes? I don't...</state>
             </case>
             <case tag="opponent_stripping" target="pit" targetStage="0">
                 <state img="7-interested.png">Oh, I get it! You're like an angel or somethin'!</state>
@@ -4823,6 +5312,9 @@
             <case tag="opponent_stripped" target="mae" targetStage="1">
                 <state img="7-smug.png">Glad &lt;i&gt;someone's&lt;/i&gt; bein' sensible 'bout their footwear.</state>
             </case>
+            <case tag="opponent_stripped" target="mae" targetStage="2">
+                <state img="7-calm.png">Ain't no need to be a sourpuss.</state>
+            </case>
             <case tag="opponent_stripped" target="marinette" targetStage="1">
                 <state img="7-calm.png">Even if ya &lt;i&gt;do&lt;/i&gt; talk like you've gone bonkers.</state>
             </case>
@@ -4844,11 +5336,26 @@
             <case tag="opponent_stripped" target="nayru" targetStage="5" targetNotSaidMarker="null_possess">
                 <state img="7-confused.png">Y'all alright? Hello? Nayru?</state>
             </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="1">
+                <state img="7-calm.png">Sometimes I sure wish they made shoes for sheep.</state>
+            </case>
+            <case tag="opponent_stripped" target="nugi-chan" targetStage="2">
+                <state img="7-calm.png">Well, human, sure; I seen them plenty. Just never seen no one like you 'round the farm.</state>
+            </case>
             <case tag="opponent_stripped" target="palutena" targetStage="1" alsoPlaying="pit" notSaidMarker="angel">
                 <state img="7-shocked.png" marker="angel">Wait a sec... you're glowy all over! Are you... are you &lt;i&gt;both&lt;/i&gt; some kinda angel?</state>
             </case>
             <case tag="opponent_stripped" target="palutena" targetStage="2">
                 <state img="7-happy.png">&lt;i&gt;Ooh&lt;/i&gt;, why do I just wanna give you a hug so badly?</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="1">
+                <state img="7-interested.png">Oh, don't mind me none. You seem like you've done this before.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="2">
+                <state img="7-smug.png">And it ain't so bad to watch, if ya don't mind my sayin'.</state>
+            </case>
+            <case tag="opponent_stripped" target="pinkie_pie" targetStage="3">
+                <state img="7-sad.png">I just can't keep up, Pinkie. Is it better to strip quick or no?</state>
             </case>
             <case tag="opponent_stripped" target="pit" targetStage="1">
                 <state img="7-happy.png">I never thought I'd see the day! Anything you want, Mr. Angel, just gimme a holler!</state>
@@ -4899,6 +5406,13 @@
                 <state img="7-smug.png">I think I've seen people 'round the farm wearin' stuff like that, but never so fancy!</state>
                 <state img="7-smug.png">Your ~clothing~ wouldn't last too long back on the farm.</state>
                 <state img="7-sad.png">I sure would like a closer look...</state>
+            </case>
+            <case tag="opponent_start_masturbating" target="pinkie_pie">
+                <state img="7-shocked.png">Now what on Earth? You're puttin &lt;i&gt;that&lt;/i&gt; up in...?</state>
+            </case>
+            <case tag="opponent_masturbating" target="pinkie_pie" priority="0">
+                <state img="7-interested.png">Y'all humans sure get into some weird things, don't you?</state>
+                <state img="7-embarrassed.png">I hear Pinkie goin' nuts over there, but I just can't &lt;i&gt;stand&lt;/i&gt; the thought of doin' that!</state>
             </case>
             <case tag="opponent_finished_masturbating" target="9s">
                 <state img="7-confused.png">Wait just a... there wasn't even no...</state>
