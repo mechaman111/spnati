@@ -502,7 +502,7 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
         }
         return undefined;
     default:
-        substitution = expandNicknames(self, target);
+        return expandNicknames(self, target);
     }
 }
 
