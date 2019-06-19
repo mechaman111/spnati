@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.3 at 6:22:54 PM on June 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.3 at 5:54:45 PM on June 18, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.3</version>
     <first>Leggy</first>
@@ -71,6 +71,9 @@
                 <state img="0-happy.png">We ready to go? Alright! I'm Leggy; how do I play?</state>
                 <state img="0-calm.png">Sorry 'bout that; still gettin' used to this place. Call me Leggy, y'hear?</state>
             </case>
+            <case tag="game_start" alsoPlaying="pit" alsoPlayingSaying="talking sheep">
+                <state img="0-confused.png">Well... yeah, sure am. I didn't know I wasn't supposed to talk.</state>
+            </case>
             <case tag="game_start">
                 <condition count="2-4" filter="leggy" />
                 <test expr="~self.slot~" value="1" />
@@ -128,6 +131,9 @@
                 <state img="0-embarrassed.png">Shoot, I knew I wasn't no good at these kinda things...</state>
                 <state img="0-confused.png">Wait, did I... I didn't forget to swap my cards, now did I?</state>
             </case>
+            <case tag="must_strip" alsoPlaying="pit">
+                <state img="0-confused.png">Did I? I don't never feel like I'm in the right place...</state>
+            </case>
             <case tag="must_strip">
                 <condition count="0" status="lost_some" />
                 <state img="0-confused.png">Y'all want &lt;i&gt;clothin'?&lt;/i&gt; This sure is a strange game.</state>
@@ -137,10 +143,17 @@
                 <condition count="1" status="not_lost_some" />
                 <state img="0-zuzu.png">This is only my first loss? Y'all about to have a &lt;i&gt;ba-a-a-ad time.&lt;/i&gt;</state>
             </case>
+            <case tag="must_strip" priority="0">
+                <test expr="~background~" value="haunted forest" />
+                <state img="0-embarrassed.png">Oh, I don't like this &lt;i&gt;none!&lt;/i&gt; I didn't think this place would get to me so bad!</state>
+            </case>
             <case tag="stripping">
                 <state img="0-stripping.png">I don't get this game... sure wish Peggy was here to explain things...</state>
                 <state img="0-stripping.png">I 'spose I can do without this lil' ol' thing.</state>
                 <state img="0-stripping.png">I'm glad y'all don't want no more'n this silly thing...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="pit">
+                <state img="0-stripping.png">Well I sure got a sheepherder, if that's what you're askin'. Careful, now; Droopy's sneaky enough to be right here with us.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="0-calm.png">Don't worry none, y'can't win every game.</state>
@@ -432,6 +445,9 @@
                 <state img="0-shocked.png">My ears! Make it stop!</state>
                 <state img="0-shocked.png">This ain't what I wanted!</state>
             </case>
+            <case tag="opponent_stripping" target="amalia" targetStage="0">
+                <state img="0-confused.png">You wearin'... &lt;i&gt;leaves?&lt;/i&gt; Guess I can't talk much about strange clothin', but...</state>
+            </case>
             <case tag="opponent_stripping" target="calisto" targetStage="0">
                 <state img="0-interested.png">Lots of work keepin' them shoes nice and pretty, ain't it darlin'?</state>
             </case>
@@ -587,6 +603,12 @@
                 <state img="0-mad.png">I oughtta... why, if Barbra were here, you'd get it right proper!</state>
                 <state img="0-embarrassed.png">Don't do that again!</state>
                 <state img="0-mad.png">You're lucky I didn't have to pee!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="1">
+                <state img="0-boisterous.png">Sure is creative, I'll say that!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="5">
+                <state img="0-happy.png">How smart! How'd you do that? With the flowers? You've &lt;i&gt;got&lt;/i&gt; to teach me! Please?</state>
             </case>
             <case tag="opponent_stripped" target="calisto" targetStage="1">
                 <state img="0-smug.png">I guess most ain't blessed with hooves, now are they?</state>
@@ -827,6 +849,9 @@
                 <state img="1-lost.png">&lt;i&gt;Again?&lt;/i&gt; Well... only &lt;i&gt;clothing&lt;/i&gt; I've got left is --</state>
                 <state img="1-lost.png">Well alright. I guess I'll give up my last --</state>
             </case>
+            <case tag="must_strip" alsoPlaying="pit">
+                <state img="1-lost.png">W-well, they &lt;i&gt;used&lt;/i&gt; to be, but then that --</state>
+            </case>
             <case tag="stripping">
                 <state img="1-stripping.png">&lt;i&gt;Unh!&lt;/i&gt;</state>
                 <state img="1-stripping.png">&lt;i&gt;Shoot!&lt;/i&gt;</state>
@@ -834,6 +859,9 @@
             <case tag="stripped">
                 <state img="1-stripped.png">&lt;i&gt;Ooh,&lt;/i&gt; that feels different. How do I look?</state>
                 <state img="1-stripped.png">Aww, finally! Ain't no feelin' better'n takin' a collar off, y'know?</state>
+            </case>
+            <case tag="stripped" alsoPlaying="pit">
+                <state img="1-stripped.png">Just like that? That was easy!</state>
             </case>
             <case tag="male_must_strip">
                 <state img="1-calm.png">Don't worry none, y'can't win every game.</state>
@@ -1117,6 +1145,9 @@
                 <state img="1-shocked.png">My ears! Make it stop!</state>
                 <state img="1-shocked.png">This ain't what I wanted!</state>
             </case>
+            <case tag="opponent_stripping" target="amalia" targetStage="0">
+                <state img="1-confused.png">You wearin'... &lt;i&gt;leaves?&lt;/i&gt; Guess I can't talk much about strange clothin', but...</state>
+            </case>
             <case tag="opponent_stripping" target="calisto" targetStage="0">
                 <state img="1-interested.png">Lots of work keepin' them shoes nice and pretty, ain't it darlin'?</state>
             </case>
@@ -1272,6 +1303,12 @@
                 <state img="1-mad.png">I oughtta... why, if Barbra were here, you'd get it right proper!</state>
                 <state img="1-embarrassed.png">Don't do that again!</state>
                 <state img="1-mad.png">You're lucky I didn't have to pee!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="1">
+                <state img="1-boisterous.png">Sure is creative, I'll say that!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="5">
+                <state img="1-happy.png">How smart! How'd you do that? With the flowers? You've &lt;i&gt;got&lt;/i&gt; to teach me! Please?</state>
             </case>
             <case tag="opponent_stripped" target="calisto" targetStage="1">
                 <state img="1-smug.png">I guess most ain't blessed with hooves, now are they?</state>
@@ -1510,6 +1547,9 @@
             <case tag="must_strip" alsoPlaying="jura" alsoPlayingStage="0">
                 <state img="2-lost.png">Don't get any ideas, now; I don't need no &lt;i&gt;swords&lt;/i&gt; to cut my wool.</state>
             </case>
+            <case tag="must_strip" alsoPlaying="pit">
+                <state img="2-lost.png">You've sure got a good point, there, Pit. I ain't got nothin' left but wool...</state>
+            </case>
             <case tag="must_strip" notSaidMarker="strip">
                 <state img="2-lost.png" marker="strip">Whaddaya mean, strip again? I'm already outta clothes! Unless...</state>
                 <state img="2-lost.png" marker="strip">I don't got nothin' else to &lt;i&gt;take off&lt;/i&gt; now, but... maybe I can come up with somethin', huh?</state>
@@ -1521,9 +1561,15 @@
             <case tag="stripping" alsoPlaying="nugi-chan" alsoPlayingSaying="you hiding a vibrator">
                 <state img="2-stripping.png">Not quite, Nugi dear, but it sure does vibrate. Tickles somethin' fierce!</state>
             </case>
+            <case tag="stripping" alsoPlaying="pit">
+                <state img="2-stripping.png">Don't you worry none, I'll be ready in no t-- oops! I oughtta focus a minute...</state>
+            </case>
             <case tag="stripped">
                 <state img="2-stripped.png">Got it! I'm alright!</state>
                 <state img="2-stripped.png">I'm okay! Silly thing; I don't even know why Peggy told me to wear it.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="pit">
+                <state img="2-stripped.png">I'm alright! Even if this &lt;i&gt;is&lt;/i&gt; the last bit I've got to take off.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="2-calm.png">Don't worry none, y'can't win every game.</state>
@@ -1807,6 +1853,9 @@
                 <state img="2-shocked.png">My ears! Make it stop!</state>
                 <state img="2-shocked.png">This ain't what I wanted!</state>
             </case>
+            <case tag="opponent_stripping" target="amalia" targetStage="0">
+                <state img="2-confused.png">You wearin'... &lt;i&gt;leaves?&lt;/i&gt; Guess I can't talk much about strange clothin', but...</state>
+            </case>
             <case tag="opponent_stripping" target="calisto" targetStage="0">
                 <state img="2-interested.png">Lots of work keepin' them shoes nice and pretty, ain't it darlin'?</state>
             </case>
@@ -1962,6 +2011,12 @@
                 <state img="2-mad.png">I oughtta... why, if Barbra were here, you'd get it right proper!</state>
                 <state img="2-embarrassed.png">Don't do that again!</state>
                 <state img="2-mad.png">You're lucky I didn't have to pee!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="1">
+                <state img="2-boisterous.png">Sure is creative, I'll say that!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="5">
+                <state img="2-happy.png">How smart! How'd you do that? With the flowers? You've &lt;i&gt;got&lt;/i&gt; to teach me! Please?</state>
             </case>
             <case tag="opponent_stripped" target="calisto" targetStage="1">
                 <state img="2-smug.png">I guess most ain't blessed with hooves, now are they?</state>
@@ -2198,14 +2253,34 @@
                 <state img="3-lost.png">Shoot, now I'm startin' to... I didn't think y'all could make a shearing so excitin'...</state>
                 <state img="3-lost.png">Aww, this wool's &lt;i&gt;filthy...&lt;/i&gt; Guess I don't gotta deal with it for much longer...</state>
             </case>
+            <case tag="must_strip" alsoPlaying="pit">
+                <state img="3-lost.png">Well, it wouldn't be no fun to just cut it all off. I still wanna win.</state>
+            </case>
             <case tag="stripping">
                 <state img="3-stripping.png">Here we go again~!</state>
                 <state img="3-stripping.png">Ain't no way I'm hurryin' this along; gotta get it &lt;i&gt;just&lt;/i&gt; right.</state>
                 <state img="3-stripping.png" marker="wolf">I'll tell ya, it's much nicer shavin' it off than when that darn wolf shows up.</state>
             </case>
+            <case tag="stripping" alsoPlaying="pit" alsoPlayingSaying="butt">
+                <state img="3-stripping.png">Is it, Pit? Wonder why nobody's told me before. Ain't like I can move my wool though.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="pit" alsoPlayingSaying="difficulty">
+                <state img="3-stripping.png">Well I ain't supposed to be &lt;i&gt;easy&lt;/i&gt; to beat!</state>
+            </case>
             <case tag="stripped">
                 <state img="3-smug.png">Glad I realized what y'all meant. I've still got &lt;i&gt;plenty&lt;/i&gt; to trim!</state>
                 <state img="3-smug.png">Silly ol' me, thinkin' I was already through!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="pit">
+                <state img="3-smug.png">What's wrong? Don't that count?</state>
+            </case>
+            <case tag="stripped">
+                <test expr="~background~" value="beach" />
+                <state img="3-happy.png">Finally! Look, y'all, it's like I'm beach-ready!</state>
+            </case>
+            <case tag="stripped">
+                <test expr="~background~" value="poolside" />
+                <state img="3-horny.png">Y'all wanna go for a quick swim? Ain't this how you wear a swimsuit?</state>
             </case>
             <case tag="male_must_strip">
                 <state img="3-calm.png">Don't worry none, y'can't win every game.</state>
@@ -2476,6 +2551,9 @@
                 <state img="3-shocked.png">My ears! Make it stop!</state>
                 <state img="3-shocked.png">This ain't what I wanted!</state>
             </case>
+            <case tag="opponent_stripping" target="amalia" targetStage="0">
+                <state img="3-confused.png">You wearin'... &lt;i&gt;leaves?&lt;/i&gt; Guess I can't talk much about strange clothin', but...</state>
+            </case>
             <case tag="opponent_stripping" target="calisto" targetStage="0">
                 <state img="3-interested.png">Lots of work keepin' them shoes nice and pretty, ain't it darlin'?</state>
             </case>
@@ -2614,6 +2692,12 @@
                 <state img="3-mad.png">I oughtta... why, if Barbra were here, you'd get it right proper!</state>
                 <state img="3-embarrassed.png">Don't do that again!</state>
                 <state img="3-mad.png">You're lucky I didn't have to pee!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="1">
+                <state img="3-boisterous.png">Sure is creative, I'll say that!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="5">
+                <state img="3-happy.png">How smart! How'd you do that? With the flowers? You've &lt;i&gt;got&lt;/i&gt; to teach me! Please?</state>
             </case>
             <case tag="opponent_stripped" target="calisto" targetStage="1">
                 <state img="3-smug.png">I guess most ain't blessed with hooves, now are they?</state>
@@ -2843,6 +2927,9 @@
                 <state img="4-lost.png">Well, I sure hope y'all are ready for just a bit more lamb...</state>
                 <state img="4-lost.png">I'm not out just yet! Just you wait.</state>
             </case>
+            <case tag="must_strip" alsoPlaying="pit">
+                <state img="4-lost.png">Oh, no, hon'. Peggy found this little dear not long ago. Don't tell her I've got it.</state>
+            </case>
             <case tag="stripping">
                 <state img="4-stripping.png">&lt;i&gt;Doggone&lt;/i&gt;, y'all ain't ever happy, are ya?</state>
                 <state img="4-stripping.png">&lt;i&gt;Ooh, darlin'!&lt;/i&gt; It's never felt like &lt;i&gt;this!&lt;/i&gt;</state>
@@ -2856,6 +2943,9 @@
             </case>
             <case tag="stripped" alsoPlaying="nugi-chan">
                 <state img="4-confused.png">Furry? What're you talkin' about? Y'ain't got a lick'a fur on you!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="pit">
+                <state img="4-mad.png">Hey! We aren't pigs, Pit!</state>
             </case>
             <case tag="stripped" saidMarker="wolf">
                 <state img="4-mad.png">If'n it wasn't for Droopy, I'd have given that wolf what for myself!</state>
@@ -3150,6 +3240,9 @@
                 <state img="4-shocked.png">My ears! Make it stop!</state>
                 <state img="4-shocked.png">This ain't what I wanted!</state>
             </case>
+            <case tag="opponent_stripping" target="amalia" targetStage="0">
+                <state img="4-confused.png">You wearin'... &lt;i&gt;leaves?&lt;/i&gt; Guess I can't talk much about strange clothin', but...</state>
+            </case>
             <case tag="opponent_stripping" target="calisto" targetStage="0">
                 <state img="4-interested.png">Lots of work keepin' them shoes nice and pretty, ain't it darlin'?</state>
             </case>
@@ -3288,6 +3381,12 @@
                 <state img="4-mad.png">I oughtta... why, if Barbra were here, you'd get it right proper!</state>
                 <state img="4-embarrassed.png">Don't do that again!</state>
                 <state img="4-mad.png">You're lucky I didn't have to pee!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="1">
+                <state img="4-boisterous.png">Sure is creative, I'll say that!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="5">
+                <state img="4-happy.png">How smart! How'd you do that? With the flowers? You've &lt;i&gt;got&lt;/i&gt; to teach me! Please?</state>
             </case>
             <case tag="opponent_stripped" target="calisto" targetStage="1">
                 <state img="4-smug.png">I guess most ain't blessed with hooves, now are they?</state>
@@ -3523,6 +3622,9 @@
                 <state img="5-calm.png">There goes the last of it. Careful, now; that wool's pretty valuable y'know!</state>
                 <state img="5-confused.png">Well, &lt;i&gt;shoot!&lt;/i&gt; I ain't got nothin' else to lose!</state>
                 <state img="5-mad.png">I'm gonna be &lt;i&gt;mighty cold&lt;/i&gt; for the next month or so, y'know. I hope it was worth it!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="pit">
+                <state img="5-mad.png">Doggone, Pit! C'mon, now, let me keep &lt;i&gt;some&lt;/i&gt; of my wool!</state>
             </case>
             <case tag="male_must_strip">
                 <state img="5-interested.png">Oh, now I wonder what's comin' off &lt;i&gt;now...&lt;/i&gt;</state>
@@ -3814,6 +3916,9 @@
                 <state img="5-shocked.png">My ears! Make it stop!</state>
                 <state img="5-shocked.png">This ain't what I wanted!</state>
             </case>
+            <case tag="opponent_stripping" target="amalia" targetStage="0">
+                <state img="5-confused.png">You wearin'... &lt;i&gt;leaves?&lt;/i&gt; Guess I can't talk much about strange clothin', but...</state>
+            </case>
             <case tag="opponent_stripping" target="calisto" targetStage="0">
                 <state img="5-interested.png">Lots of work keepin' them shoes nice and pretty, ain't it darlin'?</state>
             </case>
@@ -3952,6 +4057,12 @@
                 <state img="5-mad.png">I oughtta... why, if Barbra were here, you'd get it right proper!</state>
                 <state img="5-embarrassed.png">Don't do that again!</state>
                 <state img="5-mad.png">You're lucky I didn't have to pee!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="1">
+                <state img="5-boisterous.png">Sure is creative, I'll say that!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="5">
+                <state img="5-happy.png">How smart! How'd you do that? With the flowers? You've &lt;i&gt;got&lt;/i&gt; to teach me! Please?</state>
             </case>
             <case tag="opponent_stripped" target="calisto" targetStage="1">
                 <state img="5-smug.png">I guess most ain't blessed with hooves, now are they?</state>
@@ -4475,6 +4586,9 @@
                 <state img="6-shocked.png">My ears! Make it stop!</state>
                 <state img="6-shocked.png">This ain't what I wanted!</state>
             </case>
+            <case tag="opponent_stripping" target="amalia" targetStage="0">
+                <state img="6-confused.png">You wearin'... &lt;i&gt;leaves?&lt;/i&gt; Guess I can't talk much about strange clothin', but...</state>
+            </case>
             <case tag="opponent_stripping" target="calisto" targetStage="0">
                 <state img="6-interested.png">Lots of work keepin' them shoes nice and pretty, ain't it darlin'?</state>
             </case>
@@ -4613,6 +4727,12 @@
                 <state img="6-mad.png">I oughtta... why, if Barbra were here, you'd get it right proper!</state>
                 <state img="6-embarrassed.png">Don't do that again!</state>
                 <state img="6-mad.png">You're lucky I didn't have to pee!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="1">
+                <state img="6-boisterous.png">Sure is creative, I'll say that!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="5">
+                <state img="6-happy.png">How smart! How'd you do that? With the flowers? You've &lt;i&gt;got&lt;/i&gt; to teach me! Please?</state>
             </case>
             <case tag="opponent_stripped" target="calisto" targetStage="1">
                 <state img="6-smug.png">I guess most ain't blessed with hooves, now are they?</state>
@@ -5128,6 +5248,9 @@
                 <state img="7-shocked.png">My ears! Make it stop!</state>
                 <state img="7-shocked.png">This ain't what I wanted!</state>
             </case>
+            <case tag="opponent_stripping" target="amalia" targetStage="0">
+                <state img="7-confused.png">You wearin'... &lt;i&gt;leaves?&lt;/i&gt; Guess I can't talk much about strange clothin', but...</state>
+            </case>
             <case tag="opponent_stripping" target="calisto" targetStage="0">
                 <state img="7-interested.png">Lots of work keepin' them shoes nice and pretty, ain't it darlin'?</state>
             </case>
@@ -5266,6 +5389,12 @@
                 <state img="7-mad.png">I oughtta... why, if Barbra were here, you'd get it right proper!</state>
                 <state img="7-embarrassed.png">Don't do that again!</state>
                 <state img="7-mad.png">You're lucky I didn't have to pee!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="1">
+                <state img="7-boisterous.png">Sure is creative, I'll say that!</state>
+            </case>
+            <case tag="opponent_stripped" target="amalia" targetStage="5">
+                <state img="7-happy.png">How smart! How'd you do that? With the flowers? You've &lt;i&gt;got&lt;/i&gt; to teach me! Please?</state>
             </case>
             <case tag="opponent_stripped" target="calisto" targetStage="1">
                 <state img="7-smug.png">I guess most ain't blessed with hooves, now are they?</state>
