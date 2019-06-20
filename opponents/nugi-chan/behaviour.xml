@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.4b at 7:09:55 AM on June 18, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.4b at 6:31:25 AM on June 19, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.4b</version>
     <first>Nugi-chan</first>
@@ -122,6 +122,8 @@
                 <state img="0-mean.png">I'd like to see any of you beat what I've got!</state>
                 <state img="0-happy.png">I kick ass at this game.</state>
                 <state img="0-happy.png">Of course I have a great hand! I'm in my element.</state>
+                <state img="0-calm.png">Don't you think I look cute in this outfit? And it's all staying on this round.</state>
+                <state img="0-calm.png">My game's still going well.</state>
             </case>
             <case tag="good_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="0-calm.png" marker="nugi-chan_amalia_flower">What a pretty little flower.</state>
@@ -217,6 +219,10 @@
             <case tag="hand" alsoPlaying="kizuna" alsoPlayingStage="1-6" alsoPlayingSaying="be happy to see Ai-chan win this hand">
                 <test expr="~kizuna.position~" value="left" />
                 <state img="0-awkward.png">I seriously doubt that, Ai-chan...</state>
+            </case>
+            <case tag="hand" alsoPlaying="leggy" totalRounds="0-2" notSaidMarker="nugi-chan_leggy_mentor" alsoPlayingSaying="explain herself">
+                <test expr="~leggy.position~" value="left" />
+                <state img="0-devious.png" marker="nugi-chan_leggy_mentor">Don't worry, Leggy-sama. We'll show you how this game is played.</state>
             </case>
             <case tag="hand" alsoPlaying="miko" alsoPlayingStage="1-8" alsoPlayingSaying="my dojo is accessible from any crack">
                 <test expr="~miko.position~" value="left" />
@@ -420,9 +426,17 @@
                 <test expr="~target.position~" value="left" />
                 <state img="0-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
             </case>
+            <case tag="female_must_strip" target="leggy" targetStage="1">
+                <test expr="~target.position~" value="left" />
+                <state img="0-calm.png">What do you mean, Leggy-sama? You've got more to take off than that.</state>
+            </case>
             <case tag="female_must_strip" target="leggy" targetStage="4" targetSaying="ready for just a bit more lamb">
                 <test expr="~target.position~" value="left" />
                 <state img="0-happy.png">We're ready, Leggy-sama!</state>
+            </case>
+            <case tag="female_must_strip" target="leggy" totalRounds="0">
+                <test expr="~target.position~" value="right" />
+                <state img="0-calm.png">You're first up to take off some clothing, Leggy-sama. Maybe that big woolen thing you're wearing?</state>
             </case>
             <case tag="female_must_strip" totalRounds="0">
                 <state img="0-calm.png">Lucky! You get to strip for me first, ~name~-sama!</state>
@@ -485,6 +499,10 @@
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="0-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
+            <case tag="female_removing_accessory" alsoPlaying="kizuna" alsoPlayingSayingMarker="fair-skinned_2">
+                <test expr="~kizuna.position~" value="left" />
+                <state img="0-interested.png">That makes two of us, Kizuna-sama.</state>
+            </case>
             <case tag="female_removing_accessory" target="leggy" targetStage="0" targetSaying="want no more">
                 <test expr="~target.position~" value="left" />
                 <state img="0-happy.png">Uh, we do want more. A &lt;i&gt;lot&lt;/i&gt; more, Leggy-sama! But we can wait.</state>
@@ -493,9 +511,14 @@
                 <test expr="~target.position~" value="left" />
                 <state img="0-shocked.png">You have such pearls of wisdom, Mercy-sensei!</state>
             </case>
+            <case tag="female_removing_accessory" target="misato" targetStage="1" targetSaying="legs">
+                <test expr="~target.position~" value="left" />
+                <state img="0-interested.png">Yes... your &lt;i&gt;legs&lt;/i&gt;. Sure thing, Misato-sama!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="0-loss.png">But was it too much to hope for more?</state>
                 <state img="0-calm.png">And you look exactly the same. Okay then.</state>
+                <state img="0-calm.png">Would you mind if I borrowed ~clothing.ifPlural(those|that)~ ~clothing~? I need ~clothing.ifPlural(them|one like that)~ for a ~name~ cosplay I'm working on.</state>
             </case>
             <case tag="female_removed_accessory" target="alpha" targetStage="1">
                 <state img="0-awkward.png">Can someone swipe those discs for me? I'll let you know if I find any stage nine poses on them.</state>
@@ -524,6 +547,9 @@
             <case tag="female_removed_accessory" target="meg" targetStage="1">
                 <state img="0-shocked.png">Suspect is &lt;i&gt;hatless&lt;/i&gt;! Repeat, hatless!</state>
             </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="0-happy.png">If this isn't motivation, I don't know what is!</state>
+            </case>
             <case tag="female_removed_accessory" target="revy" targetStage="3">
                 <state img="0-devious.png">Don't think that's the only holster you'll be showing off this game, Revy-sama. ♡</state>
             </case>
@@ -546,6 +572,10 @@
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
                 <state img="0-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+            </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
+                <test expr="~target.position~" value="left" />
+                <state img="0-awkward.png" marker="nugi-chan_leggy_collar">No, I don't know what you mean, Leggy-sama. Nothing that me or my Webmaster would know about...</state>
             </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -1032,7 +1062,7 @@
             <case tag="female_masturbating">
                 <state img="0-embarrassed.png">Looks like you managed to turn ~player~-sama on! Don't skip ahead to the penalty stage just because ~name~-sama is terrible at this game.</state>
             </case>
-            <case tag="female_masturbating" alsoPlaying="human" alsoPlayingStage="10">
+            <case tag="female_masturbating" alsoPlaying="human" alsoPlayingStage="0">
                 <state img="0-embarrassed.png">Did you just come here to lose and make eyes at ~name~-sama, ~player~-sama?</state>
             </case>
             <case tag="female_masturbating" alsoPlaying="human" alsoPlayingStage="9">
@@ -1141,6 +1171,10 @@
             <case tag="hand" alsoPlaying="kizuna" alsoPlayingStage="1-6" alsoPlayingSaying="be happy to see Ai-chan win this hand">
                 <test expr="~kizuna.position~" value="left" />
                 <state img="1-awkward.png">I seriously doubt that, Ai-chan...</state>
+            </case>
+            <case tag="hand" alsoPlaying="leggy" totalRounds="0-2" notSaidMarker="nugi-chan_leggy_mentor" alsoPlayingSaying="explain herself">
+                <test expr="~leggy.position~" value="left" />
+                <state img="1-devious.png" marker="nugi-chan_leggy_mentor">Don't worry, Leggy-sama. We'll show you how this game is played.</state>
             </case>
             <case tag="hand" alsoPlaying="miko" alsoPlayingStage="1-8" alsoPlayingSaying="my dojo is accessible from any crack">
                 <test expr="~miko.position~" value="left" />
@@ -1326,9 +1360,17 @@
                 <test expr="~target.position~" value="left" />
                 <state img="1-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
             </case>
+            <case tag="female_must_strip" target="leggy" targetStage="1">
+                <test expr="~target.position~" value="left" />
+                <state img="1-calm.png">What do you mean, Leggy-sama? You've got more to take off than that.</state>
+            </case>
             <case tag="female_must_strip" target="leggy" targetStage="4" targetSaying="ready for just a bit more lamb">
                 <test expr="~target.position~" value="left" />
                 <state img="1-happy.png">We're ready, Leggy-sama!</state>
+            </case>
+            <case tag="female_must_strip" target="leggy" totalRounds="0">
+                <test expr="~target.position~" value="right" />
+                <state img="1-calm.png">You're first up to take off some clothing, Leggy-sama. Maybe that big woolen thing you're wearing?</state>
             </case>
             <case tag="tie">
                 <state img="1-shocked.png">What?! A perfect tie for worst?</state>
@@ -1373,6 +1415,10 @@
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="1-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
+            <case tag="female_removing_accessory" alsoPlaying="kizuna" alsoPlayingSayingMarker="fair-skinned_2">
+                <test expr="~kizuna.position~" value="left" />
+                <state img="1-interested.png">That makes two of us, Kizuna-sama.</state>
+            </case>
             <case tag="female_removing_accessory" target="leggy" targetStage="0" targetSaying="want no more">
                 <test expr="~target.position~" value="left" />
                 <state img="1-happy.png">Uh, we do want more. A &lt;i&gt;lot&lt;/i&gt; more, Leggy-sama! But we can wait.</state>
@@ -1380,6 +1426,10 @@
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
                 <state img="1-shocked.png">You have such pearls of wisdom, Mercy-sensei!</state>
+            </case>
+            <case tag="female_removing_accessory" target="misato" targetStage="1" targetSaying="legs">
+                <test expr="~target.position~" value="left" />
+                <state img="1-interested.png">Yes... your &lt;i&gt;legs&lt;/i&gt;. Sure thing, Misato-sama!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="1-small2.png">I suppose that's a fair trade. My shoes for your... trinket.</state>
@@ -1415,6 +1465,9 @@
             <case tag="female_removed_accessory" target="meg" targetStage="1">
                 <state img="1-shocked.png">Suspect is &lt;i&gt;hatless&lt;/i&gt;! Repeat, hatless!</state>
             </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="1-happy.png">If this isn't motivation, I don't know what is!</state>
+            </case>
             <case tag="female_removed_accessory" target="revy" targetStage="3">
                 <state img="1-devious.png">Don't think that's the only holster you'll be showing off this game, Revy-sama. ♡</state>
             </case>
@@ -1437,6 +1490,10 @@
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
                 <state img="1-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+            </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
+                <test expr="~target.position~" value="left" />
+                <state img="1-awkward.png" marker="nugi-chan_leggy_collar">No, I don't know what you mean, Leggy-sama. Nothing that me or my Webmaster would know about...</state>
             </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -2035,6 +2092,10 @@
                 <test expr="~kizuna.position~" value="left" />
                 <state img="2-awkward.png">I seriously doubt that, Ai-chan...</state>
             </case>
+            <case tag="hand" alsoPlaying="leggy" totalRounds="0-2" notSaidMarker="nugi-chan_leggy_mentor" alsoPlayingSaying="explain herself">
+                <test expr="~leggy.position~" value="left" />
+                <state img="2-devious.png" marker="nugi-chan_leggy_mentor">Don't worry, Leggy-sama. We'll show you how this game is played.</state>
+            </case>
             <case tag="hand" alsoPlaying="miko" alsoPlayingStage="1-8" alsoPlayingSaying="my dojo is accessible from any crack">
                 <test expr="~miko.position~" value="left" />
                 <state img="2-awkward.png">I've heard bad things about crack, but that has to be the worst.</state>
@@ -2231,9 +2292,17 @@
                 <test expr="~target.position~" value="left" />
                 <state img="2-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
             </case>
+            <case tag="female_must_strip" target="leggy" targetStage="1">
+                <test expr="~target.position~" value="left" />
+                <state img="2-calm.png">What do you mean, Leggy-sama? You've got more to take off than that.</state>
+            </case>
             <case tag="female_must_strip" target="leggy" targetStage="4" targetSaying="ready for just a bit more lamb">
                 <test expr="~target.position~" value="left" />
                 <state img="2-happy.png">We're ready, Leggy-sama!</state>
+            </case>
+            <case tag="female_must_strip" target="leggy" totalRounds="0">
+                <test expr="~target.position~" value="right" />
+                <state img="2-calm.png">You're first up to take off some clothing, Leggy-sama. Maybe that big woolen thing you're wearing?</state>
             </case>
             <case tag="tie">
                 <state img="2-shocked.png">What?! A perfect tie for worst?</state>
@@ -2276,6 +2345,10 @@
                 <test expr="~clothing~" value="gloves" />
                 <state img="2-annoyed.png" marker="nugi-chan_gloves_slap">Who wears &lt;i&gt;gloves&lt;/i&gt; anymore? What a slap in the face!</state>
             </case>
+            <case tag="female_removing_accessory" alsoPlaying="kizuna" alsoPlayingSayingMarker="fair-skinned_2">
+                <test expr="~kizuna.position~" value="left" />
+                <state img="2-interested.png">That makes two of us, Kizuna-sama.</state>
+            </case>
             <case tag="female_removing_accessory" target="leggy" targetStage="0" targetSaying="want no more">
                 <test expr="~target.position~" value="left" />
                 <state img="2-happy.png">Uh, we do want more. A &lt;i&gt;lot&lt;/i&gt; more, Leggy-sama! But we can wait.</state>
@@ -2283,6 +2356,10 @@
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
                 <state img="2-shocked.png">You have such pearls of wisdom, Mercy-sensei!</state>
+            </case>
+            <case tag="female_removing_accessory" target="misato" targetStage="1" targetSaying="legs">
+                <test expr="~target.position~" value="left" />
+                <state img="2-interested.png">Yes... your &lt;i&gt;legs&lt;/i&gt;. Sure thing, Misato-sama!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="2-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
@@ -2318,6 +2395,9 @@
             <case tag="female_removed_accessory" target="meg" targetStage="1">
                 <state img="2-shocked.png">Suspect is &lt;i&gt;hatless&lt;/i&gt;! Repeat, hatless!</state>
             </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="2-happy.png">If this isn't motivation, I don't know what is!</state>
+            </case>
             <case tag="female_removed_accessory" target="revy" targetStage="3">
                 <state img="2-devious.png">Don't think that's the only holster you'll be showing off this game, Revy-sama. ♡</state>
             </case>
@@ -2340,6 +2420,10 @@
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
                 <state img="2-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+            </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
+                <test expr="~target.position~" value="left" />
+                <state img="2-awkward.png" marker="nugi-chan_leggy_collar">No, I don't know what you mean, Leggy-sama. Nothing that me or my Webmaster would know about...</state>
             </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -2924,6 +3008,10 @@
                 <test expr="~kizuna.position~" value="left" />
                 <state img="3-awkward.png">I seriously doubt that, Ai-chan...</state>
             </case>
+            <case tag="hand" alsoPlaying="leggy" totalRounds="0-2" notSaidMarker="nugi-chan_leggy_mentor" alsoPlayingSaying="explain herself">
+                <test expr="~leggy.position~" value="left" />
+                <state img="3-devious.png" marker="nugi-chan_leggy_mentor">Don't worry, Leggy-sama. We'll show you how this game is played.</state>
+            </case>
             <case tag="hand" alsoPlaying="miko" alsoPlayingStage="1-8" alsoPlayingSaying="my dojo is accessible from any crack">
                 <test expr="~miko.position~" value="left" />
                 <state img="3-awkward.png">I've heard bad things about crack, but that has to be the worst.</state>
@@ -3074,9 +3162,17 @@
                 <test expr="~target.position~" value="left" />
                 <state img="3-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
             </case>
+            <case tag="female_must_strip" target="leggy" targetStage="1">
+                <test expr="~target.position~" value="left" />
+                <state img="3-calm.png">What do you mean, Leggy-sama? You've got more to take off than that.</state>
+            </case>
             <case tag="female_must_strip" target="leggy" targetStage="4" targetSaying="ready for just a bit more lamb">
                 <test expr="~target.position~" value="left" />
                 <state img="3-happy.png">We're ready, Leggy-sama!</state>
+            </case>
+            <case tag="female_must_strip" target="leggy" totalRounds="0">
+                <test expr="~target.position~" value="right" />
+                <state img="3-calm.png">You're first up to take off some clothing, Leggy-sama. Maybe that big woolen thing you're wearing?</state>
             </case>
             <case tag="tie">
                 <state img="3-shocked.png">What?! A perfect tie for worst?</state>
@@ -3114,6 +3210,10 @@
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="3-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
+            <case tag="female_removing_accessory" alsoPlaying="kizuna" alsoPlayingSayingMarker="fair-skinned_2">
+                <test expr="~kizuna.position~" value="left" />
+                <state img="3-interested.png">That makes two of us, Kizuna-sama.</state>
+            </case>
             <case tag="female_removing_accessory" target="leggy" targetStage="0" targetSaying="want no more">
                 <test expr="~target.position~" value="left" />
                 <state img="3-happy.png">Uh, we do want more. A &lt;i&gt;lot&lt;/i&gt; more, Leggy-sama! But we can wait.</state>
@@ -3121,6 +3221,10 @@
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
                 <state img="3-shocked.png">You have such pearls of wisdom, Mercy-sensei!</state>
+            </case>
+            <case tag="female_removing_accessory" target="misato" targetStage="1" targetSaying="legs">
+                <test expr="~target.position~" value="left" />
+                <state img="3-interested.png">Yes... your &lt;i&gt;legs&lt;/i&gt;. Sure thing, Misato-sama!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="3-loss.png">I can live with that.</state>
@@ -3156,6 +3260,9 @@
             <case tag="female_removed_accessory" target="meg" targetStage="1">
                 <state img="3-shocked.png">Suspect is &lt;i&gt;hatless&lt;/i&gt;! Repeat, hatless!</state>
             </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="3-happy.png">If this isn't motivation, I don't know what is!</state>
+            </case>
             <case tag="female_removed_accessory" target="revy" targetStage="3">
                 <state img="3-devious.png">Don't think that's the only holster you'll be showing off this game, Revy-sama. ♡</state>
             </case>
@@ -3178,6 +3285,10 @@
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
                 <state img="3-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+            </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
+                <test expr="~target.position~" value="left" />
+                <state img="3-awkward.png" marker="nugi-chan_leggy_collar">No, I don't know what you mean, Leggy-sama. Nothing that me or my Webmaster would know about...</state>
             </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -3748,6 +3859,10 @@
                 <test expr="~kizuna.position~" value="left" />
                 <state img="4-awkward.png">I seriously doubt that, Ai-chan...</state>
             </case>
+            <case tag="hand" alsoPlaying="leggy" totalRounds="0-2" notSaidMarker="nugi-chan_leggy_mentor" alsoPlayingSaying="explain herself">
+                <test expr="~leggy.position~" value="left" />
+                <state img="4-devious.png" marker="nugi-chan_leggy_mentor">Don't worry, Leggy-sama. We'll show you how this game is played.</state>
+            </case>
             <case tag="hand" alsoPlaying="miko" alsoPlayingStage="1-8" alsoPlayingSaying="my dojo is accessible from any crack">
                 <test expr="~miko.position~" value="left" />
                 <state img="4-awkward.png">I've heard bad things about crack, but that has to be the worst.</state>
@@ -3889,9 +4004,17 @@
                 <test expr="~target.position~" value="left" />
                 <state img="4-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
             </case>
+            <case tag="female_must_strip" target="leggy" targetStage="1">
+                <test expr="~target.position~" value="left" />
+                <state img="4-calm.png">What do you mean, Leggy-sama? You've got more to take off than that.</state>
+            </case>
             <case tag="female_must_strip" target="leggy" targetStage="4" targetSaying="ready for just a bit more lamb">
                 <test expr="~target.position~" value="left" />
                 <state img="4-happy.png">We're ready, Leggy-sama!</state>
+            </case>
+            <case tag="female_must_strip" target="leggy" totalRounds="0">
+                <test expr="~target.position~" value="right" />
+                <state img="4-calm.png">You're first up to take off some clothing, Leggy-sama. Maybe that big woolen thing you're wearing?</state>
             </case>
             <case tag="tie">
                 <state img="4-shocked.png">What?! A perfect tie for worst?</state>
@@ -3927,6 +4050,10 @@
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="4-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
+            <case tag="female_removing_accessory" alsoPlaying="kizuna" alsoPlayingSayingMarker="fair-skinned_2">
+                <test expr="~kizuna.position~" value="left" />
+                <state img="4-interested.png">That makes two of us, Kizuna-sama.</state>
+            </case>
             <case tag="female_removing_accessory" target="leggy" targetStage="0" targetSaying="want no more">
                 <test expr="~target.position~" value="left" />
                 <state img="4-happy.png">Uh, we do want more. A &lt;i&gt;lot&lt;/i&gt; more, Leggy-sama! But we can wait.</state>
@@ -3934,6 +4061,10 @@
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
                 <state img="4-shocked.png">You have such pearls of wisdom, Mercy-sensei!</state>
+            </case>
+            <case tag="female_removing_accessory" target="misato" targetStage="1" targetSaying="legs">
+                <test expr="~target.position~" value="left" />
+                <state img="4-interested.png">Yes... your &lt;i&gt;legs&lt;/i&gt;. Sure thing, Misato-sama!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="4-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
@@ -3966,6 +4097,9 @@
             <case tag="female_removed_accessory" target="meg" targetStage="1">
                 <state img="4-shocked.png">Suspect is &lt;i&gt;hatless&lt;/i&gt;! Repeat, hatless!</state>
             </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="4-happy.png">If this isn't motivation, I don't know what is!</state>
+            </case>
             <case tag="female_removed_accessory" target="revy" targetStage="3">
                 <state img="4-devious.png">Don't think that's the only holster you'll be showing off this game, Revy-sama. ♡</state>
             </case>
@@ -3988,6 +4122,10 @@
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
                 <state img="4-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+            </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
+                <test expr="~target.position~" value="left" />
+                <state img="4-awkward.png" marker="nugi-chan_leggy_collar">No, I don't know what you mean, Leggy-sama. Nothing that me or my Webmaster would know about...</state>
             </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -4540,6 +4678,10 @@
                 <test expr="~kizuna.position~" value="left" />
                 <state img="5-awkward.png">I seriously doubt that, Ai-chan...</state>
             </case>
+            <case tag="hand" alsoPlaying="leggy" totalRounds="0-2" notSaidMarker="nugi-chan_leggy_mentor" alsoPlayingSaying="explain herself">
+                <test expr="~leggy.position~" value="left" />
+                <state img="5-devious.png" marker="nugi-chan_leggy_mentor">Don't worry, Leggy-sama. We'll show you how this game is played.</state>
+            </case>
             <case tag="hand" alsoPlaying="miko" alsoPlayingStage="1-8" alsoPlayingSaying="my dojo is accessible from any crack">
                 <test expr="~miko.position~" value="left" />
                 <state img="5-awkward.png">I've heard bad things about crack, but that has to be the worst.</state>
@@ -4678,9 +4820,17 @@
                 <test expr="~target.position~" value="left" />
                 <state img="5-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
             </case>
+            <case tag="female_must_strip" target="leggy" targetStage="1">
+                <test expr="~target.position~" value="left" />
+                <state img="5-calm.png">What do you mean, Leggy-sama? You've got more to take off than that.</state>
+            </case>
             <case tag="female_must_strip" target="leggy" targetStage="4" targetSaying="ready for just a bit more lamb">
                 <test expr="~target.position~" value="left" />
                 <state img="5-happy.png">We're ready, Leggy-sama!</state>
+            </case>
+            <case tag="female_must_strip" target="leggy" totalRounds="0">
+                <test expr="~target.position~" value="right" />
+                <state img="5-calm.png">You're first up to take off some clothing, Leggy-sama. Maybe that big woolen thing you're wearing?</state>
             </case>
             <case tag="tie">
                 <state img="5-shocked.png">What?! A perfect tie for worst?</state>
@@ -4721,6 +4871,10 @@
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="5-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
+            <case tag="female_removing_accessory" alsoPlaying="kizuna" alsoPlayingSayingMarker="fair-skinned_2">
+                <test expr="~kizuna.position~" value="left" />
+                <state img="5-interested.png">That makes two of us, Kizuna-sama.</state>
+            </case>
             <case tag="female_removing_accessory" target="leggy" targetStage="0" targetSaying="want no more">
                 <test expr="~target.position~" value="left" />
                 <state img="5-happy.png">Uh, we do want more. A &lt;i&gt;lot&lt;/i&gt; more, Leggy-sama! But we can wait.</state>
@@ -4728,6 +4882,10 @@
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
                 <state img="5-shocked.png">You have such pearls of wisdom, Mercy-sensei!</state>
+            </case>
+            <case tag="female_removing_accessory" target="misato" targetStage="1" targetSaying="legs">
+                <test expr="~target.position~" value="left" />
+                <state img="5-interested.png">Yes... your &lt;i&gt;legs&lt;/i&gt;. Sure thing, Misato-sama!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="5-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
@@ -4760,6 +4918,9 @@
             <case tag="female_removed_accessory" target="meg" targetStage="1">
                 <state img="5-shocked.png">Suspect is &lt;i&gt;hatless&lt;/i&gt;! Repeat, hatless!</state>
             </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="5-happy.png">If this isn't motivation, I don't know what is!</state>
+            </case>
             <case tag="female_removed_accessory" target="shego">
                 <state img="5-awkward.png">Thanks for the false hope, Shego-sama...</state>
             </case>
@@ -4776,6 +4937,10 @@
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
                 <state img="5-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+            </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
+                <test expr="~target.position~" value="left" />
+                <state img="5-awkward.png" marker="nugi-chan_leggy_collar">No, I don't know what you mean, Leggy-sama. Nothing that me or my Webmaster would know about...</state>
             </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -5341,6 +5506,10 @@
                 <test expr="~kizuna.position~" value="left" />
                 <state img="6-awkward.png">I seriously doubt that, Ai-chan...</state>
             </case>
+            <case tag="hand" alsoPlaying="leggy" totalRounds="0-2" notSaidMarker="nugi-chan_leggy_mentor" alsoPlayingSaying="explain herself">
+                <test expr="~leggy.position~" value="left" />
+                <state img="6-devious.png" marker="nugi-chan_leggy_mentor">Don't worry, Leggy-sama. We'll show you how this game is played.</state>
+            </case>
             <case tag="hand" alsoPlaying="miko" alsoPlayingStage="1-8" alsoPlayingSaying="my dojo is accessible from any crack">
                 <test expr="~miko.position~" value="left" />
                 <state img="6-awkward.png">I've heard bad things about crack, but that has to be the worst.</state>
@@ -5492,9 +5661,17 @@
                 <test expr="~target.position~" value="left" />
                 <state img="6-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
             </case>
+            <case tag="female_must_strip" target="leggy" targetStage="1">
+                <test expr="~target.position~" value="left" />
+                <state img="6-calm.png">What do you mean, Leggy-sama? You've got more to take off than that.</state>
+            </case>
             <case tag="female_must_strip" target="leggy" targetStage="4" targetSaying="ready for just a bit more lamb">
                 <test expr="~target.position~" value="left" />
                 <state img="6-happy.png">We're ready, Leggy-sama!</state>
+            </case>
+            <case tag="female_must_strip" target="leggy" totalRounds="0">
+                <test expr="~target.position~" value="right" />
+                <state img="6-calm.png">You're first up to take off some clothing, Leggy-sama. Maybe that big woolen thing you're wearing?</state>
             </case>
             <case tag="tie">
                 <state img="6-shocked.png">What?! A perfect tie for worst?</state>
@@ -5531,6 +5708,10 @@
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="6-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
+            <case tag="female_removing_accessory" alsoPlaying="kizuna" alsoPlayingSayingMarker="fair-skinned_2">
+                <test expr="~kizuna.position~" value="left" />
+                <state img="6-interested.png">That makes two of us, Kizuna-sama.</state>
+            </case>
             <case tag="female_removing_accessory" target="leggy" targetStage="0" targetSaying="want no more">
                 <test expr="~target.position~" value="left" />
                 <state img="6-happy.png">Uh, we do want more. A &lt;i&gt;lot&lt;/i&gt; more, Leggy-sama! But we can wait.</state>
@@ -5538,6 +5719,10 @@
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
                 <state img="6-shocked.png">You have such pearls of wisdom, Mercy-sensei!</state>
+            </case>
+            <case tag="female_removing_accessory" target="misato" targetStage="1" targetSaying="legs">
+                <test expr="~target.position~" value="left" />
+                <state img="6-interested.png">Yes... your &lt;i&gt;legs&lt;/i&gt;. Sure thing, Misato-sama!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="6-annoyed.png">Oh, nice dialogue, ~name~-sama. How about &lt;i&gt;some nudity&lt;/i&gt; next time?</state>
@@ -5567,6 +5752,9 @@
             <case tag="female_removed_accessory" target="meg" targetStage="1">
                 <state img="6-shocked.png">Suspect is &lt;i&gt;hatless&lt;/i&gt;! Repeat, hatless!</state>
             </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="6-happy.png">If this isn't motivation, I don't know what is!</state>
+            </case>
             <case tag="female_removed_accessory" target="shego">
                 <state img="6-awkward.png">Thanks for the false hope, Shego-sama...</state>
             </case>
@@ -5583,6 +5771,10 @@
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
                 <state img="6-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+            </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
+                <test expr="~target.position~" value="left" />
+                <state img="6-awkward.png" marker="nugi-chan_leggy_collar">No, I don't know what you mean, Leggy-sama. Nothing that me or my Webmaster would know about...</state>
             </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -5691,6 +5883,10 @@
             <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
                 <test expr="~xander.position~" value="left" />
                 <state img="6-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="zoey" alsoPlayingStage="0-3" alsoPlayingSaying="actually see something good">
+                <test expr="~zoey.position~" value="left" />
+                <state img="6-sad.png">But... but... Zoey-sama... Don't I count for anything?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="6-loss.png">Oh my, finally you have to take off something interesting!</state>
@@ -6130,6 +6326,10 @@
                 <test expr="~kizuna.position~" value="left" />
                 <state img="7-awkward.png">I seriously doubt that, Ai-chan...</state>
             </case>
+            <case tag="hand" alsoPlaying="leggy" totalRounds="0-2" notSaidMarker="nugi-chan_leggy_mentor" alsoPlayingSaying="explain herself">
+                <test expr="~leggy.position~" value="left" />
+                <state img="7-devious.png" marker="nugi-chan_leggy_mentor">Don't worry, Leggy-sama. We'll show you how this game is played.</state>
+            </case>
             <case tag="hand" alsoPlaying="miko" alsoPlayingStage="1-8" alsoPlayingSaying="my dojo is accessible from any crack">
                 <test expr="~miko.position~" value="left" />
                 <state img="7-awkward.png">I've heard bad things about crack, but that has to be the worst.</state>
@@ -6258,9 +6458,17 @@
                 <test expr="~target.position~" value="left" />
                 <state img="7-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
             </case>
+            <case tag="female_must_strip" target="leggy" targetStage="1">
+                <test expr="~target.position~" value="left" />
+                <state img="7-calm.png">What do you mean, Leggy-sama? You've got more to take off than that.</state>
+            </case>
             <case tag="female_must_strip" target="leggy" targetStage="4" targetSaying="ready for just a bit more lamb">
                 <test expr="~target.position~" value="left" />
                 <state img="7-happy.png">We're ready, Leggy-sama!</state>
+            </case>
+            <case tag="female_must_strip" target="leggy" totalRounds="0">
+                <test expr="~target.position~" value="right" />
+                <state img="7-calm.png">You're first up to take off some clothing, Leggy-sama. Maybe that big woolen thing you're wearing?</state>
             </case>
             <case tag="tie">
                 <state img="7-shocked.png">What?! A perfect tie for worst?</state>
@@ -6298,6 +6506,10 @@
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="7-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
+            <case tag="female_removing_accessory" alsoPlaying="kizuna" alsoPlayingSayingMarker="fair-skinned_2">
+                <test expr="~kizuna.position~" value="left" />
+                <state img="7-interested.png">That makes two of us, Kizuna-sama.</state>
+            </case>
             <case tag="female_removing_accessory" target="leggy" targetStage="0" targetSaying="want no more">
                 <test expr="~target.position~" value="left" />
                 <state img="7-happy.png">Uh, we do want more. A &lt;i&gt;lot&lt;/i&gt; more, Leggy-sama! But we can wait.</state>
@@ -6305,6 +6517,10 @@
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
                 <state img="7-shocked.png">You have such pearls of wisdom, Mercy-sensei!</state>
+            </case>
+            <case tag="female_removing_accessory" target="misato" targetStage="1" targetSaying="legs">
+                <test expr="~target.position~" value="left" />
+                <state img="7-interested.png">Yes... your &lt;i&gt;legs&lt;/i&gt;. Sure thing, Misato-sama!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="7-annoyed.png">Oh, I'm sorry, are we playing &lt;i&gt;strip&lt;/i&gt; poker or &lt;i&gt;try-to-stay-clothed&lt;/i&gt; poker?</state>
@@ -6336,6 +6552,9 @@
             <case tag="female_removed_accessory" target="meg" targetStage="1">
                 <state img="7-shocked.png">Suspect is &lt;i&gt;hatless&lt;/i&gt;! Repeat, hatless!</state>
             </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="7-happy.png">If this isn't motivation, I don't know what is!</state>
+            </case>
             <case tag="female_removed_accessory" target="shego">
                 <state img="7-awkward.png">Thanks for the false hope, Shego-sama...</state>
             </case>
@@ -6352,6 +6571,10 @@
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
                 <state img="7-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+            </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
+                <test expr="~target.position~" value="left" />
+                <state img="7-awkward.png" marker="nugi-chan_leggy_collar">No, I don't know what you mean, Leggy-sama. Nothing that me or my Webmaster would know about...</state>
             </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -6464,6 +6687,10 @@
             <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
                 <test expr="~xander.position~" value="left" />
                 <state img="7-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="zoey" alsoPlayingStage="0-3" alsoPlayingSaying="actually see something good">
+                <test expr="~zoey.position~" value="left" />
+                <state img="7-sad.png">But... but... Zoey-sama... Don't I count for anything?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="7-loss.png">Oh my, finally you have to take off something interesting!</state>
@@ -6965,9 +7192,17 @@
                 <test expr="~target.position~" value="left" />
                 <state img="8-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
             </case>
+            <case tag="female_must_strip" target="leggy" targetStage="1">
+                <test expr="~target.position~" value="left" />
+                <state img="8-calm.png">What do you mean, Leggy-sama? You've got more to take off than that.</state>
+            </case>
             <case tag="female_must_strip" target="leggy" targetStage="4" targetSaying="ready for just a bit more lamb">
                 <test expr="~target.position~" value="left" />
                 <state img="8-happy.png">We're ready, Leggy-sama!</state>
+            </case>
+            <case tag="female_must_strip" target="leggy" totalRounds="0">
+                <test expr="~target.position~" value="right" />
+                <state img="8-calm.png">You're first up to take off some clothing, Leggy-sama. Maybe that big woolen thing you're wearing?</state>
             </case>
             <case tag="tie">
                 <state img="8-shocked.png">What?! A perfect tie for worst?</state>
@@ -7008,6 +7243,10 @@
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="8-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
+            <case tag="female_removing_accessory" alsoPlaying="kizuna" alsoPlayingSayingMarker="fair-skinned_2">
+                <test expr="~kizuna.position~" value="left" />
+                <state img="8-interested.png">That makes two of us, Kizuna-sama.</state>
+            </case>
             <case tag="female_removing_accessory" target="leggy" targetStage="0" targetSaying="want no more">
                 <test expr="~target.position~" value="left" />
                 <state img="8-happy.png">Uh, we do want more. A &lt;i&gt;lot&lt;/i&gt; more, Leggy-sama! But we can wait.</state>
@@ -7015,6 +7254,10 @@
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
                 <state img="8-shocked.png">You have such pearls of wisdom, Mercy-sensei!</state>
+            </case>
+            <case tag="female_removing_accessory" target="misato" targetStage="1" targetSaying="legs">
+                <test expr="~target.position~" value="left" />
+                <state img="8-interested.png">Yes... your &lt;i&gt;legs&lt;/i&gt;. Sure thing, Misato-sama!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="8-annoyed.png">I am posting so much Rule 34 of you after the game, ~name~-sama!</state>
@@ -7037,6 +7280,9 @@
             <case tag="female_removed_accessory" target="meg" targetStage="1">
                 <state img="8-awkward.png">I'm jilling off for you, and you fuel me with your &lt;i&gt;hat&lt;/i&gt;?! You could have at least taken your pants off...</state>
             </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="8-happy.png">If this isn't motivation, I don't know what is!</state>
+            </case>
             <case tag="female_removed_accessory" target="shego">
                 <state img="8-finishing.png">Can't you see how much I need this?! You truly are evil, Shego-sama...</state>
             </case>
@@ -7049,6 +7295,10 @@
             <case tag="female_removed_accessory" target="akko" targetStage="1" alsoPlayingSaying="any requests?">
                 <test expr="~akko.position~" value="left" />
                 <state img="8-interested.png" marker="nugi-chan_akko_request_skirt">I have a request, Akko-sama. That skirt, if you please.</state>
+            </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
+                <test expr="~target.position~" value="left" />
+                <state img="8-awkward.png" marker="nugi-chan_leggy_collar">No, I don't know what you mean, Leggy-sama. Nothing that me or my Webmaster would know about...</state>
             </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -7151,6 +7401,10 @@
             <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
                 <test expr="~xander.position~" value="left" />
                 <state img="8-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="zoey" alsoPlayingStage="0-3" alsoPlayingSaying="actually see something good">
+                <test expr="~zoey.position~" value="left" />
+                <state img="8-sad.png">But... but... Zoey-sama... Don't I count for anything?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="8-loss.png">Oh my, finally you have to take off something interesting!</state>
@@ -7628,9 +7882,17 @@
                 <test expr="~target.position~" value="left" />
                 <state img="9-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
             </case>
+            <case tag="female_must_strip" target="leggy" targetStage="1">
+                <test expr="~target.position~" value="left" />
+                <state img="9-calm.png">What do you mean, Leggy-sama? You've got more to take off than that.</state>
+            </case>
             <case tag="female_must_strip" target="leggy" targetStage="4" targetSaying="ready for just a bit more lamb">
                 <test expr="~target.position~" value="left" />
                 <state img="9-happy.png">We're ready, Leggy-sama!</state>
+            </case>
+            <case tag="female_must_strip" target="leggy" totalRounds="0">
+                <test expr="~target.position~" value="right" />
+                <state img="9-calm.png">You're first up to take off some clothing, Leggy-sama. Maybe that big woolen thing you're wearing?</state>
             </case>
             <case tag="tie">
                 <state img="9-shocked.png">What?! A perfect tie for worst?</state>
@@ -7672,6 +7934,10 @@
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="9-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
+            <case tag="female_removing_accessory" alsoPlaying="kizuna" alsoPlayingSayingMarker="fair-skinned_2">
+                <test expr="~kizuna.position~" value="left" />
+                <state img="9-interested.png">That makes two of us, Kizuna-sama.</state>
+            </case>
             <case tag="female_removing_accessory" target="leggy" targetStage="0" targetSaying="want no more">
                 <test expr="~target.position~" value="left" />
                 <state img="9-happy.png">Uh, we do want more. A &lt;i&gt;lot&lt;/i&gt; more, Leggy-sama! But we can wait.</state>
@@ -7679,6 +7945,10 @@
             <case tag="female_removing_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
                 <state img="9-shocked.png">You have such pearls of wisdom, Mercy-sensei!</state>
+            </case>
+            <case tag="female_removing_accessory" target="misato" targetStage="1" targetSaying="legs">
+                <test expr="~target.position~" value="left" />
+                <state img="9-interested.png">Yes... your &lt;i&gt;legs&lt;/i&gt;. Sure thing, Misato-sama!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="9-calm.png">Oh, I'm sorry, are we playing &lt;i&gt;strip&lt;/i&gt; poker or &lt;i&gt;try-to-stay-clothed&lt;/i&gt; poker?</state>
@@ -7710,6 +7980,9 @@
             <case tag="female_removed_accessory" target="meg" targetStage="1">
                 <state img="9-shocked.png">Suspect is &lt;i&gt;hatless&lt;/i&gt;! Repeat, hatless!</state>
             </case>
+            <case tag="female_removed_accessory" target="misato" targetStage="2">
+                <state img="9-happy.png">If this isn't motivation, I don't know what is!</state>
+            </case>
             <case tag="female_removed_accessory" target="shego">
                 <state img="9-awkward.png">Thanks for the false hope, Shego-sama...</state>
             </case>
@@ -7722,6 +7995,10 @@
             <case tag="female_removed_accessory" target="akko" targetStage="1" alsoPlayingSaying="any requests?">
                 <test expr="~akko.position~" value="left" />
                 <state img="9-interested.png" marker="nugi-chan_akko_request_skirt">I have a request, Akko-sama. That skirt, if you please.</state>
+            </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
+                <test expr="~target.position~" value="left" />
+                <state img="9-awkward.png" marker="nugi-chan_leggy_collar">No, I don't know what you mean, Leggy-sama. Nothing that me or my Webmaster would know about...</state>
             </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <test expr="~target.position~" value="left" />
@@ -7830,6 +8107,10 @@
             <case tag="female_removed_minor" alsoPlaying="xander" alsoPlayingStage="0" alsoPlayingSaying="nobody invites me">
                 <test expr="~xander.position~" value="left" />
                 <state img="9-awkward.png">Xander-sama, I can hear the distant echo of the laugh track from &lt;i&gt;The Big Bang Theory&lt;/i&gt;.</state>
+            </case>
+            <case tag="female_removed_minor" alsoPlaying="zoey" alsoPlayingStage="0-3" alsoPlayingSaying="actually see something good">
+                <test expr="~zoey.position~" value="left" />
+                <state img="9-sad.png">But... but... Zoey-sama... Don't I count for anything?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="9-loss.png">Oh my, finally you have to take off something interesting!</state>
