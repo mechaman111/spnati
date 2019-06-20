@@ -608,6 +608,8 @@ function expandDialogue (dialogue, self, target, bindings) {
                     substitution = selectedBackground;
                 } else if (fn in backgrounds[selectedBackground] && args === undefined) {
                     substitution = backgrounds[selectedBackground][fn];
+                } else if (fn == 'time' && args === undefined) {
+                    substitution = localDayOrNight;            
                 }
                 break;
             case 'weekday':
