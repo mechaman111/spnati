@@ -805,9 +805,11 @@ function clickedRandomFillButton (predicate) {
 function clickedRemoveAllButton ()
 {
     for (var i = 1; i < 5; i++) {
-        players[i].unloadOpponent();
-        delete players[i];
-        $selectImages[i-1].off('load');
+        if (players[i]) {
+            players[i].unloadOpponent();
+            delete players[i];
+            $selectImages[i-1].off('load');
+        }
     }
     updateSelectionVisuals();
 }
