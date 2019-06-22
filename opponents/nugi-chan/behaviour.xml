@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.4b at 6:31:25 AM on June 19, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0b at 4:24:51 AM on June 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v4.4b</version>
+    <version>v5.0b</version>
     <first>Nugi-chan</first>
     <last />
     <label>Nugi-chan</label>
@@ -85,6 +85,10 @@
                 <test expr="~self.slot~" value="4" />
                 <state img="0-loss.png">I guess it can't be helped.</state>
             </case>
+            <case tag="selected">
+                <test expr="~background~" value="locker room" />
+                <state img="0-mop_um3.png">How did those boys even get this floor so dirty?</state>
+            </case>
             <case tag="opponent_selected" target="natsuki">
                 <condition count="0" filter="pit" />
                 <state img="0-happy.png">Let's invite Pit-kun too! I need to see his epilogue with Natsuki-chan.</state>
@@ -112,6 +116,14 @@
             <case tag="game_start">
                 <condition count="2-4" filter="nugi-chan" />
                 <state img="0-happy.png">May the best Nugi-chan win!</state>
+            </case>
+            <case tag="game_start" alsoPlaying="florina" totalMales="1-2" alsoPlayingSaying="m-m-man">
+                <test expr="~florina.position~" value="left" />
+                <state img="0-shocked.png">Florina-chan, do you have a problem with "m-m-men"? Even cute ones like ~player~-sama?</state>
+            </case>
+            <case tag="game_start" alsoPlaying="sakura" alsoPlayingSaying="what song">
+                <test expr="~sakura.position~" value="left" />
+                <state img="0-calm.png">Number One, do you know "Hot in Herre" by Nelly?</state>
             </case>
             <case tag="swap_cards">
                 <state img="0-calm.png">I'll take ~cards~ cards, dealer-sama!</state>
@@ -172,6 +184,10 @@
             </case>
             <case tag="okay_hand" hasHand="one pair" totalRounds="0">
                 <state img="0-calm.png">I'll give you a sporting chance this game. Can you beat a pair?</state>
+            </case>
+            <case tag="okay_hand" alsoPlaying="florina" alsoPlayingStage="0-2" alsoPlayingSaying="will I really have to">
+                <test expr="~florina.position~" value="left" />
+                <state img="0-devious.png" oneShotId="3">Florina-chan, the answer is yes. Don't you even &lt;i&gt;think&lt;/i&gt; about skipping out on us!</state>
             </case>
             <case tag="bad_hand">
                 <state img="0-awkward.png">I guess I won't be able to make it the whole game without losing anything.</state>
@@ -417,6 +433,14 @@
             <case tag="female_must_strip" target="zone-tan" targetStage="0">
                 <state img="0-awkward.png">Zone-tan, just a heads up, but I might call you Zone-tan-sama this game. The double honorific is respectful.</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="0">
+                <test expr="~felicia.position~" value="left" />
+                <state img="0-awkward.png">Uh, no, I don't think so, Felicia-sama. If you didn't come here with any clothing, you're out already.</state>
+            </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="situation">
+                <test expr="~felicia.position~" value="left" />
+                <state img="0-loss.png">Felicia-sama, may I remind you that your "situation" was caused by you not wearing clothing to a strip poker game?</state>
+            </case>
             <case tag="female_must_strip" target="sakura" alsoPlayingSaying="get my socks dirty.">
                 <test expr="~sakura.position~" value="left" />
                 <test expr="~background~" value="bedroom" />
@@ -496,6 +520,9 @@
                 <test expr="~target.position~" value="left" />
                 <state img="0-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
+            <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
+                <state img="0-shocked.png">She made a run for it!</state>
+            </case>
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="0-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
@@ -520,6 +547,10 @@
                 <state img="0-calm.png">And you look exactly the same. Okay then.</state>
                 <state img="0-calm.png">Would you mind if I borrowed ~clothing.ifPlural(those|that)~ ~clothing~? I need ~clothing.ifPlural(them|one like that)~ for a ~name~ cosplay I'm working on.</state>
             </case>
+            <case tag="female_removed_accessory" target="larachel" targetStage="2">
+                <condition count="1" filter="princess" />
+                <state img="0-interested.png">Your royal body is safe with us, your highness.</state>
+            </case>
             <case tag="female_removed_accessory" target="alpha" targetStage="1">
                 <state img="0-awkward.png">Can someone swipe those discs for me? I'll let you know if I find any stage nine poses on them.</state>
             </case>
@@ -531,6 +562,9 @@
             </case>
             <case tag="female_removed_accessory" target="daisy" targetStage="4">
                 <state img="0-calm.png">You can just put that crown right on my head now if you like, Daisy-hime!</state>
+            </case>
+            <case tag="female_removed_accessory" target="florina" targetStage="1" targetSaidMarker="fled">
+                <state img="0-sad.png">Please don't leave us again, Florina-chan! You're the second-cutest girl here!</state>
             </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="0-devious.png">If it helps, you should know that you're about to get &lt;i&gt;real&lt;/i&gt; naked, Hermione-sama!</state>
@@ -571,7 +605,7 @@
             </case>
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
-                <state img="0-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+                <state img="0-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, One-sama...</state>
             </case>
             <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
                 <test expr="~target.position~" value="left" />
@@ -609,7 +643,7 @@
                 <state img="0-calm.png">You can put ~clothing.ifPlural(those|that)~ little ~clothing~ wherever you like.</state>
             </case>
             <case tag="female_removing_minor" filter="japanese" targetStage="0" priority="0">
-                <state img="0-calm.png">I am well versed in the ancient Japanese art of ~clothing~ removal. I can review your performance if you'd like, ~name~-sama. ♡</state>
+                <state img="0-calm.png" oneShotId="5">I am well versed in the ancient Japanese art of ~clothing~ removal. I can review your performance if you'd like, ~name~-sama. ♡</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="0-loss.png">This isn't the kind of bouncing I expected, but I'll take it.</state>
@@ -839,6 +873,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="0-embarrassed.png">This wouldn't be the first game I've played where something went up further than expected...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="felicia">
+                <state img="0-loss.png">Are... are we just letting this happen?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="leggy" targetStage="3">
                 <state img="0-loss.png">Oh. More shearing. This is kind of exciting, I suppose.</state>
             </case>
@@ -981,6 +1018,11 @@
             </case>
             <case tag="female_crotch_is_visible" targetStage="8">
                 <state img="0-mean.png">Oh how the mighty have fallen! Did you think you could beat a strip game expert with those layers?</state>
+            </case>
+            <case tag="opponent_stripping" targetStatus="not_chest_visible">
+                <test expr="~clothing~" value="breastplate" />
+                <test expr="~target.gender~" value="female" />
+                <state img="0-interested.png" oneShotId="4">Let's see beneath that breastplate. I'm sure you have breasts worth protecting.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="0-devious.png">I didn't realize that this was a CFNM game! Proceed with your penalty, loser-sama. ♡</state>
@@ -1146,9 +1188,14 @@
             <case tag="okay_hand">
                 <state img="1-calm.png">This is fun!</state>
                 <state img="1-happy.png">Yes, got the pair I needed!</state>
+                <state img="1-calm.png">Don't worry. I've played this before.</state>
             </case>
             <case tag="okay_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="1-devious.png" marker="nugi-chan_amalia_flower">Have you considered just going around with your flower open like that?</state>
+            </case>
+            <case tag="okay_hand" alsoPlaying="florina" alsoPlayingStage="0-2" alsoPlayingSaying="will I really have to">
+                <test expr="~florina.position~" value="left" />
+                <state img="1-devious.png" oneShotId="3">Florina-chan, the answer is yes. Don't you even &lt;i&gt;think&lt;/i&gt; about skipping out on us!</state>
             </case>
             <case tag="bad_hand">
                 <state img="1-awkward.png">Aww, this hand is awful.</state>
@@ -1217,7 +1264,7 @@
             <case tag="stripped" alsoPlaying="shimakaze" alsoPlayingStage="0-8">
                 <state img="1-stripped.png" marker="nugi-chan_shimakaze_belfast">I normally only offer breakfast-in-bed, not Belfast-in-bed. But I can cosplay.</state>
             </case>
-            <case tag="stripped" alsoPlaying="sakura" alsoPlayingSaying="certainly cleaning up here">
+            <case tag="stripped" alsoPlaying="sakura" alsoPlayingStage="0-4" alsoPlayingSaying="certainly cleaning up here">
                 <test expr="~sakura.position~" value="left" />
                 <state img="1-annoyed.png" marker="nugi-chan_sakura_misunderstanding">Are you making fun of me, Sakura-sama? Watch me wipe the floor with that precious little outfit of yours.</state>
             </case>
@@ -1235,10 +1282,10 @@
             </case>
             <case tag="female_must_strip">
                 <state img="1-happy.png">Safe!</state>
-                <state img="1-calm.png">Confront your fears! You'll feel better when you take down your biggest shield.</state>
+                <state img="1-calm.png" oneShotId="2">Confront your fears! You'll feel better when you take down your biggest shield.</state>
                 <state img="1-calm.png">We're ready when you are.</state>
                 <state img="1-calm.png">Any bets on what ~name~-sama will choose?</state>
-                <state img="1-interested.png">What would you like her to take off, ~player~-sama?</state>
+                <state img="1-interested.png" oneShotId="1">What would you like her to take off, ~player~-sama?</state>
             </case>
             <case tag="female_must_strip" filter="japanese" targetStage="1" priority="0">
                 <state img="1-calm.png">I'd like to compliment you on your English, ~name~-sama. You speak it well for a Japanese girl. ♡</state>
@@ -1351,6 +1398,14 @@
             <case tag="female_must_strip" target="zone-tan" targetStage="0">
                 <state img="1-awkward.png">Zone-tan, just a heads up, but I might call you Zone-tan-sama this game. The double honorific is respectful.</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="0">
+                <test expr="~felicia.position~" value="left" />
+                <state img="1-awkward.png">Uh, no, I don't think so, Felicia-sama. If you didn't come here with any clothing, you're out already.</state>
+            </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="situation">
+                <test expr="~felicia.position~" value="left" />
+                <state img="1-loss.png">Felicia-sama, may I remind you that your "situation" was caused by you not wearing clothing to a strip poker game?</state>
+            </case>
             <case tag="female_must_strip" target="sakura" alsoPlayingSaying="get my socks dirty.">
                 <test expr="~sakura.position~" value="left" />
                 <test expr="~background~" value="bedroom" />
@@ -1412,6 +1467,9 @@
             <case tag="female_removing_accessory" target="buffy">
                 <state img="1-devious.png">I liked you better in the standalone movie, Buffy-sama. That movie's name: &lt;i&gt;Buffy Gone Wild&lt;/i&gt;.</state>
             </case>
+            <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
+                <state img="1-shocked.png">She made a run for it!</state>
+            </case>
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="1-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
@@ -1435,6 +1493,10 @@
                 <state img="1-small2.png">I suppose that's a fair trade. My shoes for your... trinket.</state>
                 <state img="1-shocked.png">Your ~clothing~? Such a lack of imagination.</state>
             </case>
+            <case tag="female_removed_accessory" target="larachel" targetStage="2">
+                <condition count="1" filter="princess" />
+                <state img="1-interested.png">Your royal body is safe with us, your highness.</state>
+            </case>
             <case tag="female_removed_accessory" target="alpha" targetStage="1">
                 <state img="1-awkward.png">Can someone swipe those discs for me? I'll let you know if I find any stage nine poses on them.</state>
             </case>
@@ -1449,6 +1511,9 @@
             </case>
             <case tag="female_removed_accessory" target="daisy" targetStage="4">
                 <state img="1-calm.png">You can just put that crown right on my head now if you like, Daisy-hime!</state>
+            </case>
+            <case tag="female_removed_accessory" target="florina" targetStage="1" targetSaidMarker="fled">
+                <state img="1-sad.png">Please don't leave us again, Florina-chan! You're the second-cutest girl here!</state>
             </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="1-devious.png">If it helps, you should know that you're about to get &lt;i&gt;real&lt;/i&gt; naked, Hermione-sama!</state>
@@ -1489,7 +1554,7 @@
             </case>
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
-                <state img="1-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+                <state img="1-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, One-sama...</state>
             </case>
             <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
                 <test expr="~target.position~" value="left" />
@@ -1526,6 +1591,7 @@
             <case tag="female_removing_minor">
                 <state img="1-interested.png">A bit of cheesecake is nice, but be prepared to dish out the main course later, ~name~-sama. ♡</state>
                 <state img="1-small2.png">I guess skin is skin...</state>
+                <state img="1-calm.png">We're just a little bit closer.</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="1-loss.png">This isn't the kind of bouncing I expected, but I'll take it.</state>
@@ -1559,8 +1625,9 @@
                 <state img="1-happy.png">I'm expecting even &lt;i&gt;more&lt;/i&gt; lewdness out of you later, Zoey-sama!</state>
             </case>
             <case tag="female_removed_minor">
-                <state img="1-happy.png">If a queue forms for you after the game, know that I was here first!</state>
+                <state img="1-happy.png" oneShotId="6">If a queue forms for you after the game, know that I was here first!</state>
                 <state img="1-calm.png">Not a bad performance. Let's see how you do with bigger pieces.</state>
+                <state img="1-calm.png">If you take off something bigger next time, I'll consider lowering my socks.</state>
             </case>
             <case tag="female_removed_minor" target="corrin_f" targetStage="3">
                 <condition count="1" filter="corrin_m" />
@@ -1755,6 +1822,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="1-embarrassed.png">This wouldn't be the first game I've played where something went up further than expected...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="felicia">
+                <state img="1-loss.png">Are... are we just letting this happen?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="leggy" targetStage="3">
                 <state img="1-loss.png">Oh. More shearing. This is kind of exciting, I suppose.</state>
             </case>
@@ -1805,7 +1875,7 @@
                 <state img="1-interested.png">All nice and topless for me... now I wonder, are you cold, or turned on by stripping in front of others? ♡</state>
             </case>
             <case tag="female_large_chest_is_visible">
-                <state img="1-shocked.png">Glorious! I'm going to put a screenshot of this on Reddit! ♡</state>
+                <state img="1-happy.png">Glorious! I'm going to put a screenshot of this on Discord! ♡</state>
             </case>
             <case tag="female_large_chest_is_visible" target="nugi-chan">
                 <state img="1-shocked.png">Band-aids?! That gives me an idea...</state>
@@ -1894,6 +1964,11 @@
             </case>
             <case tag="female_crotch_is_visible" targetStage="8">
                 <state img="1-mean.png">Oh how the mighty have fallen! Did you think you could beat a strip game expert with those layers?</state>
+            </case>
+            <case tag="opponent_stripping" targetStatus="not_chest_visible">
+                <test expr="~clothing~" value="breastplate" />
+                <test expr="~target.gender~" value="female" />
+                <state img="1-interested.png" oneShotId="4">Let's see beneath that breastplate. I'm sure you have breasts worth protecting.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="1-interested.png">It's already time to polish the dolphin, loser-sama!</state>
@@ -2065,6 +2140,10 @@
             </case>
             <case tag="okay_hand" alsoPlaying="neo" priority="0">
                 <state img="2-awkward.png">Neo-sama, you &lt;i&gt;do&lt;/i&gt; know that half this game is banter, right? Just checking. Good chat.</state>
+            </case>
+            <case tag="okay_hand" alsoPlaying="florina" alsoPlayingStage="0-2" alsoPlayingSaying="will I really have to">
+                <test expr="~florina.position~" value="left" />
+                <state img="2-devious.png" oneShotId="3">Florina-chan, the answer is yes. Don't you even &lt;i&gt;think&lt;/i&gt; about skipping out on us!</state>
             </case>
             <case tag="bad_hand">
                 <state img="2-awkward.png">Anyone want to trade hands before looking at them?</state>
@@ -2283,6 +2362,14 @@
             <case tag="female_must_strip" target="zone-tan" targetStage="0">
                 <state img="2-awkward.png">Zone-tan, just a heads up, but I might call you Zone-tan-sama this game. The double honorific is respectful.</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="0">
+                <test expr="~felicia.position~" value="left" />
+                <state img="2-awkward.png">Uh, no, I don't think so, Felicia-sama. If you didn't come here with any clothing, you're out already.</state>
+            </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="situation">
+                <test expr="~felicia.position~" value="left" />
+                <state img="2-loss.png">Felicia-sama, may I remind you that your "situation" was caused by you not wearing clothing to a strip poker game?</state>
+            </case>
             <case tag="female_must_strip" target="sakura" alsoPlayingSaying="get my socks dirty.">
                 <test expr="~sakura.position~" value="left" />
                 <test expr="~background~" value="bedroom" />
@@ -2338,6 +2425,9 @@
             <case tag="female_removing_accessory" target="buffy">
                 <state img="2-devious.png">I liked you better in the standalone movie, Buffy-sama. That movie's name: &lt;i&gt;Buffy Gone Wild&lt;/i&gt;.</state>
             </case>
+            <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
+                <state img="2-shocked.png">She made a run for it!</state>
+            </case>
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="2-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
@@ -2365,6 +2455,10 @@
                 <state img="2-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
                 <state img="2-awkward.png">Don't worry, ~name~-sama. I barely noticed that you were wearing that. ♡</state>
             </case>
+            <case tag="female_removed_accessory" target="larachel" targetStage="2">
+                <condition count="1" filter="princess" />
+                <state img="2-interested.png">Your royal body is safe with us, your highness.</state>
+            </case>
             <case tag="female_removed_accessory" target="alpha" targetStage="1">
                 <state img="2-awkward.png">Can someone swipe those discs for me? I'll let you know if I find any stage nine poses on them.</state>
             </case>
@@ -2379,6 +2473,9 @@
             </case>
             <case tag="female_removed_accessory" target="daisy" targetStage="4">
                 <state img="2-calm.png">You can just put that crown right on my head now if you like, Daisy-hime!</state>
+            </case>
+            <case tag="female_removed_accessory" target="florina" targetStage="1" targetSaidMarker="fled">
+                <state img="2-sad.png">Please don't leave us again, Florina-chan! You're the second-cutest girl here!</state>
             </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="2-devious.png">If it helps, you should know that you're about to get &lt;i&gt;real&lt;/i&gt; naked, Hermione-sama!</state>
@@ -2419,7 +2516,7 @@
             </case>
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
-                <state img="2-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+                <state img="2-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, One-sama...</state>
             </case>
             <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
                 <test expr="~target.position~" value="left" />
@@ -2677,6 +2774,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="2-embarrassed.png">This wouldn't be the first game I've played where something went up further than expected...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="felicia">
+                <state img="2-loss.png">Are... are we just letting this happen?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="leggy" targetStage="3">
                 <state img="2-loss.png">Oh. More shearing. This is kind of exciting, I suppose.</state>
             </case>
@@ -2816,6 +2916,11 @@
             </case>
             <case tag="female_crotch_is_visible" targetStage="8">
                 <state img="2-mean.png">Oh how the mighty have fallen! Did you think you could beat a strip game expert with those layers?</state>
+            </case>
+            <case tag="opponent_stripping" targetStatus="not_chest_visible">
+                <test expr="~clothing~" value="breastplate" />
+                <test expr="~target.gender~" value="female" />
+                <state img="2-interested.png" oneShotId="4">Let's see beneath that breastplate. I'm sure you have breasts worth protecting.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="2-mean.png">Well, you're the one that got all hard seeing me dressed like this. Jerk off, loser-sama!</state>
@@ -2979,6 +3084,10 @@
             </case>
             <case tag="okay_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="3-devious.png" marker="nugi-chan_amalia_flower">Have you considered just going around with your flower open like that?</state>
+            </case>
+            <case tag="okay_hand" alsoPlaying="florina" alsoPlayingStage="0-2" alsoPlayingSaying="will I really have to">
+                <test expr="~florina.position~" value="left" />
+                <state img="3-devious.png" oneShotId="3">Florina-chan, the answer is yes. Don't you even &lt;i&gt;think&lt;/i&gt; about skipping out on us!</state>
             </case>
             <case tag="bad_hand">
                 <state img="3-awkward.png">I have a big decision to make. Should I show my bra first or my panties first?</state>
@@ -3153,6 +3262,14 @@
             <case tag="female_must_strip" target="zoey" targetStage="4">
                 <state img="3-happy.png">Time for the jeans to exit scene!</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="0">
+                <test expr="~felicia.position~" value="left" />
+                <state img="3-awkward.png">Uh, no, I don't think so, Felicia-sama. If you didn't come here with any clothing, you're out already.</state>
+            </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="situation">
+                <test expr="~felicia.position~" value="left" />
+                <state img="3-loss.png">Felicia-sama, may I remind you that your "situation" was caused by you not wearing clothing to a strip poker game?</state>
+            </case>
             <case tag="female_must_strip" target="sakura" alsoPlayingSaying="get my socks dirty.">
                 <test expr="~sakura.position~" value="left" />
                 <test expr="~background~" value="bedroom" />
@@ -3207,6 +3324,9 @@
             <case tag="female_removing_accessory" target="buffy">
                 <state img="3-devious.png">I liked you better in the standalone movie, Buffy-sama. That movie's name: &lt;i&gt;Buffy Gone Wild&lt;/i&gt;.</state>
             </case>
+            <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
+                <state img="3-shocked.png">She made a run for it!</state>
+            </case>
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="3-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
@@ -3230,6 +3350,10 @@
                 <state img="3-loss.png">I can live with that.</state>
                 <state img="3-small2.png">Wow, that's almost 1% on the progress bar.</state>
             </case>
+            <case tag="female_removed_accessory" target="larachel" targetStage="2">
+                <condition count="1" filter="princess" />
+                <state img="3-interested.png">Your royal body is safe with us, your highness.</state>
+            </case>
             <case tag="female_removed_accessory" target="alpha" targetStage="1">
                 <state img="3-awkward.png">Can someone swipe those discs for me? I'll let you know if I find any stage nine poses on them.</state>
             </case>
@@ -3244,6 +3368,9 @@
             </case>
             <case tag="female_removed_accessory" target="daisy" targetStage="4">
                 <state img="3-calm.png">You can just put that crown right on my head now if you like, Daisy-hime!</state>
+            </case>
+            <case tag="female_removed_accessory" target="florina" targetStage="1" targetSaidMarker="fled">
+                <state img="3-sad.png">Please don't leave us again, Florina-chan! You're the second-cutest girl here!</state>
             </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="3-devious.png">If it helps, you should know that you're about to get &lt;i&gt;real&lt;/i&gt; naked, Hermione-sama!</state>
@@ -3284,7 +3411,7 @@
             </case>
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
-                <state img="3-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+                <state img="3-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, One-sama...</state>
             </case>
             <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
                 <test expr="~target.position~" value="left" />
@@ -3537,6 +3664,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="3-embarrassed.png">This wouldn't be the first game I've played where something went up further than expected...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="felicia">
+                <state img="3-loss.png">Are... are we just letting this happen?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="leggy" targetStage="3">
                 <state img="3-loss.png">Oh. More shearing. This is kind of exciting, I suppose.</state>
             </case>
@@ -3673,6 +3803,11 @@
             </case>
             <case tag="female_crotch_is_visible" targetStage="8">
                 <state img="3-mean.png">Oh how the mighty have fallen! Did you think you could beat a strip game expert with those layers?</state>
+            </case>
+            <case tag="opponent_stripping" targetStatus="not_chest_visible">
+                <test expr="~clothing~" value="breastplate" />
+                <test expr="~target.gender~" value="female" />
+                <state img="3-interested.png" oneShotId="4">Let's see beneath that breastplate. I'm sure you have breasts worth protecting.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="3-mean.png">Well, you're the one that got all hard seeing me dressed like this. Jerk off, loser-sama!</state>
@@ -3832,6 +3967,10 @@
             </case>
             <case tag="okay_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="4-devious.png" marker="nugi-chan_amalia_flower">Have you considered just going around with your flower open like that?</state>
+            </case>
+            <case tag="okay_hand" alsoPlaying="florina" alsoPlayingStage="0-2" alsoPlayingSaying="will I really have to">
+                <test expr="~florina.position~" value="left" />
+                <state img="4-devious.png" oneShotId="3">Florina-chan, the answer is yes. Don't you even &lt;i&gt;think&lt;/i&gt; about skipping out on us!</state>
             </case>
             <case tag="bad_hand">
                 <state img="4-sad.png">Does anyone want to play rock-paper-scissors to decide who wins from now on?</state>
@@ -4000,6 +4139,14 @@
             <case tag="female_must_strip" target="zoey" targetStage="4">
                 <state img="4-happy.png">Time for the jeans to exit scene!</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="0">
+                <test expr="~felicia.position~" value="left" />
+                <state img="4-awkward.png">Uh, no, I don't think so, Felicia-sama. If you didn't come here with any clothing, you're out already.</state>
+            </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="situation">
+                <test expr="~felicia.position~" value="left" />
+                <state img="4-loss.png">Felicia-sama, may I remind you that your "situation" was caused by you not wearing clothing to a strip poker game?</state>
+            </case>
             <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
                 <test expr="~target.position~" value="left" />
                 <state img="4-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
@@ -4047,6 +4194,9 @@
             <case tag="female_removing_accessory" target="buffy">
                 <state img="4-devious.png">I liked you better in the standalone movie, Buffy-sama. That movie's name: &lt;i&gt;Buffy Gone Wild&lt;/i&gt;.</state>
             </case>
+            <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
+                <state img="4-shocked.png">She made a run for it!</state>
+            </case>
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="4-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
@@ -4070,6 +4220,10 @@
                 <state img="4-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
                 <state img="4-awkward.png">Don't worry, ~name~-sama. I barely noticed that you were wearing that. ♡</state>
             </case>
+            <case tag="female_removed_accessory" target="larachel" targetStage="2">
+                <condition count="1" filter="princess" />
+                <state img="4-interested.png">Your royal body is safe with us, your highness.</state>
+            </case>
             <case tag="female_removed_accessory" target="alpha" targetStage="1">
                 <state img="4-awkward.png">Can someone swipe those discs for me? I'll let you know if I find any stage nine poses on them.</state>
             </case>
@@ -4081,6 +4235,9 @@
             </case>
             <case tag="female_removed_accessory" target="buffy">
                 <state img="4-awkward.png">Now thank I think about it, it might have been a porn parody.</state>
+            </case>
+            <case tag="female_removed_accessory" target="florina" targetStage="1" targetSaidMarker="fled">
+                <state img="4-sad.png">Please don't leave us again, Florina-chan! You're the second-cutest girl here!</state>
             </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="4-devious.png">If it helps, you should know that you're about to get &lt;i&gt;real&lt;/i&gt; naked, Hermione-sama!</state>
@@ -4121,7 +4278,7 @@
             </case>
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
-                <state img="4-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+                <state img="4-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, One-sama...</state>
             </case>
             <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
                 <test expr="~target.position~" value="left" />
@@ -4357,6 +4514,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="4-embarrassed.png">This wouldn't be the first game I've played where something went up further than expected...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="felicia">
+                <state img="4-loss.png">Are... are we just letting this happen?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="leggy" targetStage="3">
                 <state img="4-loss.png">Oh. More shearing. This is kind of exciting, I suppose.</state>
             </case>
@@ -4490,6 +4650,11 @@
             </case>
             <case tag="female_crotch_is_visible" targetStage="8">
                 <state img="4-mean.png">Oh how the mighty have fallen! Did you think you could beat a strip game expert with those layers?</state>
+            </case>
+            <case tag="opponent_stripping" targetStatus="not_chest_visible">
+                <test expr="~clothing~" value="breastplate" />
+                <test expr="~target.gender~" value="female" />
+                <state img="4-interested.png" oneShotId="4">Let's see beneath that breastplate. I'm sure you have breasts worth protecting.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="4-mean.png">Well, you're the one that got all hard seeing me dressed like this. Jerk off, loser-sama!</state>
@@ -4655,6 +4820,10 @@
             <case tag="okay_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="5-devious.png" marker="nugi-chan_amalia_flower">Have you considered just going around with your flower open like that?</state>
             </case>
+            <case tag="okay_hand" alsoPlaying="florina" alsoPlayingStage="0-2" alsoPlayingSaying="will I really have to">
+                <test expr="~florina.position~" value="left" />
+                <state img="5-devious.png" oneShotId="3">Florina-chan, the answer is yes. Don't you even &lt;i&gt;think&lt;/i&gt; about skipping out on us!</state>
+            </case>
             <case tag="bad_hand">
                 <state img="5-stripped.png">I'm fail-tastically unlucky...</state>
             </case>
@@ -4816,6 +4985,14 @@
             <case tag="female_must_strip" target="zoey" targetStage="4">
                 <state img="5-happy.png">Time for the jeans to exit scene!</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="0">
+                <test expr="~felicia.position~" value="left" />
+                <state img="5-awkward.png">Uh, no, I don't think so, Felicia-sama. If you didn't come here with any clothing, you're out already.</state>
+            </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="situation">
+                <test expr="~felicia.position~" value="left" />
+                <state img="5-loss.png">Felicia-sama, may I remind you that your "situation" was caused by you not wearing clothing to a strip poker game?</state>
+            </case>
             <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
                 <test expr="~target.position~" value="left" />
                 <state img="5-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
@@ -4868,6 +5045,9 @@
             <case tag="female_removing_accessory" target="buffy">
                 <state img="5-devious.png">I liked you better in the standalone movie, Buffy-sama. That movie's name: &lt;i&gt;Buffy Gone Wild&lt;/i&gt;.</state>
             </case>
+            <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
+                <state img="5-shocked.png">She made a run for it!</state>
+            </case>
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="5-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
@@ -4891,6 +5071,10 @@
                 <state img="5-calm.png">I approve, ~name~-sama. Keep up the good work! ♡</state>
                 <state img="5-awkward.png">Don't worry, ~name~-sama. I barely noticed that you were wearing that. ♡</state>
             </case>
+            <case tag="female_removed_accessory" target="larachel" targetStage="2">
+                <condition count="1" filter="princess" />
+                <state img="5-interested.png">Your royal body is safe with us, your highness.</state>
+            </case>
             <case tag="female_removed_accessory" target="alpha" targetStage="1">
                 <state img="5-awkward.png">Can someone swipe those discs for me? I'll let you know if I find any stage nine poses on them.</state>
             </case>
@@ -4902,6 +5086,9 @@
             </case>
             <case tag="female_removed_accessory" target="buffy">
                 <state img="5-awkward.png">Now thank I think about it, it might have been a porn parody.</state>
+            </case>
+            <case tag="female_removed_accessory" target="florina" targetStage="1" targetSaidMarker="fled">
+                <state img="5-sad.png">Please don't leave us again, Florina-chan! You're the second-cutest girl here!</state>
             </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="5-devious.png">If it helps, you should know that you're about to get &lt;i&gt;real&lt;/i&gt; naked, Hermione-sama!</state>
@@ -4936,7 +5123,7 @@
             </case>
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
-                <state img="5-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+                <state img="5-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, One-sama...</state>
             </case>
             <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
                 <test expr="~target.position~" value="left" />
@@ -5168,6 +5355,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="5-embarrassed.png">This wouldn't be the first game I've played where something went up further than expected...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="felicia">
+                <state img="5-loss.png">Are... are we just letting this happen?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="leggy" targetStage="3">
                 <state img="5-loss.png">Oh. More shearing. This is kind of exciting, I suppose.</state>
             </case>
@@ -5304,6 +5494,11 @@
             </case>
             <case tag="female_crotch_is_visible" targetStage="8">
                 <state img="5-mean.png">Oh how the mighty have fallen! Did you think you could beat a strip game expert with those layers?</state>
+            </case>
+            <case tag="opponent_stripping" targetStatus="not_chest_visible">
+                <test expr="~clothing~" value="breastplate" />
+                <test expr="~target.gender~" value="female" />
+                <state img="5-interested.png" oneShotId="4">Let's see beneath that breastplate. I'm sure you have breasts worth protecting.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="5-mean.png">Well, you're the one that got all hard seeing me dressed like this. Jerk off, loser-sama!</state>
@@ -5469,6 +5664,7 @@
             </case>
             <case tag="okay_hand">
                 <state img="6-awkward.png">This game is pretty tough, but it's not the hardest I've played. There's no combat or mandatory peeing... as far as I know.</state>
+                <state img="6-calm.png">I'm living dangerously here.</state>
             </case>
             <case tag="okay_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="6-devious.png" marker="nugi-chan_amalia_flower">Have you considered just going around with your flower open like that?</state>
@@ -5481,6 +5677,10 @@
             </case>
             <case tag="okay_hand" saidMarker="nugi-chan_sph" notSaidMarker="nugi-chan_sph_lipstick">
                 <state img="6-small1.png" marker="nugi-chan_sph_lipstick">So today we learned that ~player~-sama has a penis the size of my lipstick. But unlike lipstick, I don't want it anywhere near my mouth.</state>
+            </case>
+            <case tag="okay_hand" alsoPlaying="florina" alsoPlayingStage="0-2" alsoPlayingSaying="will I really have to">
+                <test expr="~florina.position~" value="left" />
+                <state img="6-devious.png" oneShotId="3">Florina-chan, the answer is yes. Don't you even &lt;i&gt;think&lt;/i&gt; about skipping out on us!</state>
             </case>
             <case tag="bad_hand">
                 <state img="6-sad.png" marker="nugi-chan_blames_ai">I thought that my AI was going to improve as I revealed more! Apparently not...</state>
@@ -5657,6 +5857,14 @@
             <case tag="female_must_strip" target="zoey" targetStage="4">
                 <state img="6-happy.png">Time for the jeans to exit scene!</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="0">
+                <test expr="~felicia.position~" value="left" />
+                <state img="6-awkward.png">Uh, no, I don't think so, Felicia-sama. If you didn't come here with any clothing, you're out already.</state>
+            </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="situation">
+                <test expr="~felicia.position~" value="left" />
+                <state img="6-loss.png">Felicia-sama, may I remind you that your "situation" was caused by you not wearing clothing to a strip poker game?</state>
+            </case>
             <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
                 <test expr="~target.position~" value="left" />
                 <state img="6-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
@@ -5705,6 +5913,9 @@
                 <test expr="~target.position~" value="left" />
                 <state img="6-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
+            <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
+                <state img="6-shocked.png">She made a run for it!</state>
+            </case>
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="6-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
@@ -5728,6 +5939,10 @@
                 <state img="6-annoyed.png">Oh, nice dialogue, ~name~-sama. How about &lt;i&gt;some nudity&lt;/i&gt; next time?</state>
                 <state img="6-annoyed.png">Does anyone know if there's a garbage can nearby? ~name~-sama is &lt;i&gt;finally&lt;/i&gt; giving up her ~clothing~.</state>
             </case>
+            <case tag="female_removed_accessory" target="larachel" targetStage="2">
+                <condition count="1" filter="princess" />
+                <state img="6-interested.png">Your royal body is safe with us, your highness.</state>
+            </case>
             <case tag="female_removed_accessory" target="alpha" targetStage="1">
                 <state img="6-awkward.png">Can someone swipe those discs for me? I'll let you know if I find any stage nine poses on them.</state>
             </case>
@@ -5739,6 +5954,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6" alsoPlaying="caleb">
                 <state img="6-awkward.png">Now I understand why you left just before Blake-sama joined, Caleb-sama. You didn't want to play strip poker with your sister.</state>
+            </case>
+            <case tag="female_removed_accessory" target="florina" targetStage="1" targetSaidMarker="fled">
+                <state img="6-sad.png">Please don't leave us again, Florina-chan! You're the second-cutest girl here!</state>
             </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="6-devious.png">If it helps, you should know that you're about to get &lt;i&gt;real&lt;/i&gt; naked, Hermione-sama!</state>
@@ -5770,7 +5988,7 @@
             </case>
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
-                <state img="6-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+                <state img="6-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, One-sama...</state>
             </case>
             <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
                 <test expr="~target.position~" value="left" />
@@ -5998,6 +6216,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="6-embarrassed.png">This wouldn't be the first game I've played where something went up further than expected...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="felicia">
+                <state img="6-loss.png">Are... are we just letting this happen?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="leggy" targetStage="3">
                 <state img="6-loss.png">Oh. More shearing. This is kind of exciting, I suppose.</state>
             </case>
@@ -6137,6 +6358,11 @@
             </case>
             <case tag="female_crotch_is_visible" targetStage="8">
                 <state img="6-mean.png">Oh how the mighty have fallen! Did you think you could beat a strip game expert with those layers?</state>
+            </case>
+            <case tag="opponent_stripping" targetStatus="not_chest_visible">
+                <test expr="~clothing~" value="breastplate" />
+                <test expr="~target.gender~" value="female" />
+                <state img="6-interested.png" oneShotId="4">Let's see beneath that breastplate. I'm sure you have breasts worth protecting.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="6-mean.png">Well, you're the one that got all hard seeing me dressed like this. Jerk off, loser-sama!</state>
@@ -6303,6 +6529,10 @@
             <case tag="okay_hand" alsoPlaying="amalia" alsoPlayingStage="5" notSaidMarker="nugi-chan_amalia_flower">
                 <state img="7-devious.png" marker="nugi-chan_amalia_flower">Have you considered just going around with your flower open like that?</state>
             </case>
+            <case tag="okay_hand" alsoPlaying="florina" alsoPlayingStage="0-2" alsoPlayingSaying="will I really have to">
+                <test expr="~florina.position~" value="left" />
+                <state img="7-devious.png" oneShotId="3">Florina-chan, the answer is yes. Don't you even &lt;i&gt;think&lt;/i&gt; about skipping out on us!</state>
+            </case>
             <case tag="bad_hand">
                 <state img="7-sad.png">Who else thinks that we should play a long piece of classical music between each hand?</state>
                 <state img="7-annoyed.png">Is this hand okay? Is &lt;i&gt;Pepsi&lt;/i&gt; "okay"?</state>
@@ -6454,6 +6684,14 @@
             <case tag="female_must_strip" target="zoey" targetStage="4">
                 <state img="7-happy.png">Time for the jeans to exit scene!</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="0">
+                <test expr="~felicia.position~" value="left" />
+                <state img="7-awkward.png">Uh, no, I don't think so, Felicia-sama. If you didn't come here with any clothing, you're out already.</state>
+            </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="situation">
+                <test expr="~felicia.position~" value="left" />
+                <state img="7-loss.png">Felicia-sama, may I remind you that your "situation" was caused by you not wearing clothing to a strip poker game?</state>
+            </case>
             <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
                 <test expr="~target.position~" value="left" />
                 <state img="7-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
@@ -6503,6 +6741,9 @@
                 <test expr="~target.position~" value="left" />
                 <state img="7-happy.png">Oho! We're stripping a &lt;i&gt;princess&lt;/i&gt; you say, L'Arachel-sama? L'Arachel-&lt;i&gt;hime&lt;/i&gt;.</state>
             </case>
+            <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
+                <state img="7-shocked.png">She made a run for it!</state>
+            </case>
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="7-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
@@ -6525,6 +6766,10 @@
             <case tag="female_removed_accessory">
                 <state img="7-annoyed.png">Oh, I'm sorry, are we playing &lt;i&gt;strip&lt;/i&gt; poker or &lt;i&gt;try-to-stay-clothed&lt;/i&gt; poker?</state>
             </case>
+            <case tag="female_removed_accessory" target="larachel" targetStage="2">
+                <condition count="1" filter="princess" />
+                <state img="7-interested.png">Your royal body is safe with us, your highness.</state>
+            </case>
             <case tag="female_removed_accessory" target="alpha" targetStage="1">
                 <state img="7-awkward.png">Can someone swipe those discs for me? I'll let you know if I find any stage nine poses on them.</state>
             </case>
@@ -6539,6 +6784,9 @@
             </case>
             <case tag="female_removed_accessory" target="daria" targetStage="6">
                 <state img="7-sad.png">Aw, with your glasses off, you won't be able to see my amazing body!</state>
+            </case>
+            <case tag="female_removed_accessory" target="florina" targetStage="1" targetSaidMarker="fled">
+                <state img="7-sad.png">Please don't leave us again, Florina-chan! You're the second-cutest girl here!</state>
             </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="7-devious.png">If it helps, you should know that you're about to get &lt;i&gt;real&lt;/i&gt; naked, Hermione-sama!</state>
@@ -6570,7 +6818,7 @@
             </case>
             <case tag="female_removed_accessory" target="sakura" alsoPlayingSaying="Let me make it up to you, okay?">
                 <test expr="~sakura.position~" value="left" />
-                <state img="7-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, Sakura-sama...</state>
+                <state img="7-interested.png" marker="nugi-chan_sakura_epilogue">You can make it up to me in your epilogue, One-sama...</state>
             </case>
             <case tag="female_removed_accessory" target="leggy" targetStage="1" targetSaying="a collar off">
                 <test expr="~target.position~" value="left" />
@@ -6797,6 +7045,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="7-embarrassed.png">This wouldn't be the first game I've played where something went up further than expected...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="felicia">
+                <state img="7-loss.png">Are... are we just letting this happen?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="leggy" targetStage="3">
                 <state img="7-loss.png">Oh. More shearing. This is kind of exciting, I suppose.</state>
             </case>
@@ -6936,6 +7187,11 @@
             </case>
             <case tag="female_crotch_is_visible" target="twilight">
                 <state img="7-shocked.png">Wow, I never expected that to actually work!</state>
+            </case>
+            <case tag="opponent_stripping" targetStatus="not_chest_visible">
+                <test expr="~clothing~" value="breastplate" />
+                <test expr="~target.gender~" value="female" />
+                <state img="7-interested.png" oneShotId="4">Let's see beneath that breastplate. I'm sure you have breasts worth protecting.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="7-happy.png">We got him! You lasted longer than I expected.</state>
@@ -7188,6 +7444,14 @@
             <case tag="female_must_strip" target="zoey" targetStage="4">
                 <state img="8-happy.png">Time for the jeans to exit scene!</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="0">
+                <test expr="~felicia.position~" value="left" />
+                <state img="8-awkward.png">Uh, no, I don't think so, Felicia-sama. If you didn't come here with any clothing, you're out already.</state>
+            </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="situation">
+                <test expr="~felicia.position~" value="left" />
+                <state img="8-loss.png">Felicia-sama, may I remind you that your "situation" was caused by you not wearing clothing to a strip poker game?</state>
+            </case>
             <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
                 <test expr="~target.position~" value="left" />
                 <state img="8-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
@@ -7240,6 +7504,9 @@
             <case tag="female_removing_accessory" target="elena" targetStage="0">
                 <state img="8-devious.png">You can drop your scepter if you want, but you'll miss it when you're pleasuring yourself, Elena-hime.</state>
             </case>
+            <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
+                <state img="8-shocked.png">She made a run for it!</state>
+            </case>
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="8-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
@@ -7262,6 +7529,10 @@
             <case tag="female_removed_accessory">
                 <state img="8-annoyed.png">I am posting so much Rule 34 of you after the game, ~name~-sama!</state>
             </case>
+            <case tag="female_removed_accessory" target="larachel" targetStage="2">
+                <condition count="1" filter="princess" />
+                <state img="8-interested.png">Your royal body is safe with us, your highness.</state>
+            </case>
             <case tag="female_removed_accessory" target="alpha" targetStage="1">
                 <state img="8-awkward.png">Can someone swipe those discs for me? I'll let you know if I find any stage nine poses on them.</state>
             </case>
@@ -7270,6 +7541,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="8-sad.png">Are you really a catgirl, Blake-sama?</state>
+            </case>
+            <case tag="female_removed_accessory" target="florina" targetStage="1" targetSaidMarker="fled">
+                <state img="8-sad.png">Please don't leave us again, Florina-chan! You're the second-cutest girl here!</state>
             </case>
             <case tag="female_removed_accessory" target="hermione">
                 <state img="8-embarrassed.png">Ah, Hermione-sama... Give me a little peek at your panties! Help a maid out! ♡</state>
@@ -7510,6 +7784,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="8-embarrassed.png">This wouldn't be the first game I've played where something went up further than expected...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="felicia">
+                <state img="8-loss.png">Are... are we just letting this happen?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="leggy" targetStage="3">
                 <state img="8-loss.png">Oh. More shearing. This is kind of exciting, I suppose.</state>
             </case>
@@ -7632,6 +7909,11 @@
             </case>
             <case tag="female_crotch_is_visible" target="twilight">
                 <state img="8-happy.png">Wow, I never expected that to actually work!</state>
+            </case>
+            <case tag="opponent_stripping" targetStatus="not_chest_visible">
+                <test expr="~clothing~" value="breastplate" />
+                <test expr="~target.gender~" value="female" />
+                <state img="8-interested.png" oneShotId="4">Let's see beneath that breastplate. I'm sure you have breasts worth protecting.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="8-mean.png">Your turn to join in, loser-sama. Make sure you give us a good view when you jerk off for us!</state>
@@ -7878,6 +8160,14 @@
             <case tag="female_must_strip" target="zoey" targetStage="4">
                 <state img="9-happy.png">Time for the jeans to exit scene!</state>
             </case>
+            <case tag="female_must_strip" target="felicia" targetStage="0">
+                <test expr="~felicia.position~" value="left" />
+                <state img="9-awkward.png">Uh, no, I don't think so, Felicia-sama. If you didn't come here with any clothing, you're out already.</state>
+            </case>
+            <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="situation">
+                <test expr="~felicia.position~" value="left" />
+                <state img="9-loss.png">Felicia-sama, may I remind you that your "situation" was caused by you not wearing clothing to a strip poker game?</state>
+            </case>
             <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
                 <test expr="~target.position~" value="left" />
                 <state img="9-small2.png">Felicia-sama, try wearing clothes to the strip poker game next time.</state>
@@ -7931,6 +8221,9 @@
             <case tag="female_removing_accessory" target="elena" targetStage="0">
                 <state img="9-interested.png">You can drop your scepter if you want, but you'll miss it when you're pleasuring yourself, Elena-hime.</state>
             </case>
+            <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
+                <state img="9-shocked.png">She made a run for it!</state>
+            </case>
             <case tag="female_removing_accessory" target="zoey" targetStage="4">
                 <state img="9-annoyed.png">Wait, what? It's not nice to tease us like that.</state>
             </case>
@@ -7953,6 +8246,10 @@
             <case tag="female_removed_accessory">
                 <state img="9-calm.png">Oh, I'm sorry, are we playing &lt;i&gt;strip&lt;/i&gt; poker or &lt;i&gt;try-to-stay-clothed&lt;/i&gt; poker?</state>
             </case>
+            <case tag="female_removed_accessory" target="larachel" targetStage="2">
+                <condition count="1" filter="princess" />
+                <state img="9-interested.png">Your royal body is safe with us, your highness.</state>
+            </case>
             <case tag="female_removed_accessory" target="alpha" targetStage="1">
                 <state img="9-awkward.png">Can someone swipe those discs for me? I'll let you know if I find any stage nine poses on them.</state>
             </case>
@@ -7967,6 +8264,9 @@
             </case>
             <case tag="female_removed_accessory" target="d.va">
                 <state img="9-annoyed.png">Did somebody accidentally set this D.Va to hard difficulty!</state>
+            </case>
+            <case tag="female_removed_accessory" target="florina" targetStage="1" targetSaidMarker="fled">
+                <state img="9-sad.png">Please don't leave us again, Florina-chan! You're the second-cutest girl here!</state>
             </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="9-devious.png">If it helps, you should know that you're about to get &lt;i&gt;real&lt;/i&gt; naked, Hermione-sama!</state>
@@ -8219,6 +8519,9 @@
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="9-embarrassed.png">This wouldn't be the first game I've played where something went up further than expected...</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="felicia">
+                <state img="9-loss.png">Are... are we just letting this happen?</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="leggy" targetStage="3">
                 <state img="9-loss.png">Oh. More shearing. This is kind of exciting, I suppose.</state>
             </case>
@@ -8361,6 +8664,11 @@
             </case>
             <case tag="female_crotch_is_visible" target="twilight">
                 <state img="9-shocked.png">Wow, I never expected that to actually work!</state>
+            </case>
+            <case tag="opponent_stripping" targetStatus="not_chest_visible">
+                <test expr="~clothing~" value="breastplate" />
+                <test expr="~target.gender~" value="female" />
+                <state img="9-interested.png" oneShotId="4">Let's see beneath that breastplate. I'm sure you have breasts worth protecting.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="9-loss.png">If it makes you feel any better, I was going to make you jerk off for us even if you won.</state>
@@ -8583,6 +8891,7 @@
         </stage>
 
     </behaviour>
+    <nicknames />
     <epilogue gender="any" img="nugi-epilogue-sa-03.png">
         <title>SPNatI Auditions</title>
         <scene name="" background="nugi-epilogue-sa-08.png" width="1600" height="1200">
