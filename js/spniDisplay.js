@@ -587,7 +587,18 @@ OpponentDisplay.prototype.onResize = function () {
 }
 
 OpponentDisplay.prototype.updateText = function (player) {
-    this.dialogue.html(fixupDialogue(player.chosenState.dialogue));
+    var displayElems = parseStyleSpecifiers(player.chosenState.dialogue).map(function (comp) {
+        /* {'text': 'foo', 'classes': 'cls1 cls2 cls3'} --> <span class="cls1 cls2 cls3">foo</span> */
+        
+        var wrapperSpan = document.createElement('span');
+        wrapperSpan.innerHTML = fixupDialogue(comp.text);
+        wrapperSpan.className = comp.classes;
+        wrapperSpan.setAttribute('data-character', player.id);
+        
+        return wrapperSpan;
+    });
+    
+    this.dialogue.empty().append(displayElems);
 }
 
 OpponentDisplay.prototype.updateImage = function(player) {

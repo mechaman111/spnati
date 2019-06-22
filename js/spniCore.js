@@ -618,6 +618,22 @@ Opponent.prototype.onSelected = function(individual) {
     this.resetState();
     console.log(this.slot+": ");
     console.log(this);
+    
+    // check for duplicate <link> elements:
+    if (this.stylesheet) {
+        if ($('link[href=\"'+this.stylesheet+'\"]').length === 0) {
+            console.log("Loading stylesheet: "+this.stylesheet);
+            
+            var link_elem = $('<link />', {
+                'rel': 'stylesheet',
+                'type': 'text/css',
+                'href': this.stylesheet
+            });
+            
+            $('head').append(link_elem);
+        }
+    }
+    
     this.preloadStageImages(-1);
     if (individual) {
         updateAllBehaviours(this.slot, SELECTED, [[OPPONENT_SELECTED]]);
@@ -770,6 +786,14 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
 	});
 }
 
+/* Called prior to removing a character from the table. */
+Opponent.prototype.unloadOpponent = function () {
+    if (this.stylesheet) {
+        /* Remove the <link> to this opponent's stylesheet. */
+        $('link[href=\"'+this.stylesheet+'\"]').remove();
+    }
+}
+
 /************************************************************
  * Loads and parses the start of the behaviour XML file of the
  * given opponent.
@@ -805,6 +829,16 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.size = $xml.find('size').text();
             this.stamina = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
+
+            this.stylesheet = null;
+            
+            var stylesheet = $xml.find('stylesheet').text();
+            if (stylesheet) {
+                var m = stylesheet.match(/[a-zA-Z0-9()~!*:@,;\-.\/]+\.css/i);
+                if (m) {
+                    this.stylesheet = 'opponents/'+this.id+'/'+m[0];
+                }
+            }
 
             /* The gender listed in meta.xml and behaviour.xml might differ
              * (for example with gender-revealing characters)
