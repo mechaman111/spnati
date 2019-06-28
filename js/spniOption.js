@@ -9,32 +9,38 @@
 $masturbationTimerBox = $("#player-masturbation-timer-box");
 $masturbationWarningLabel = $("#masturbation-warning-label");
 
+var localDayOrNight;
+function setLocalDayOrNight () {
+    var hour = new Date().getHours();
+    localDayOrNight = (hour >= 7 && hour < 19) ? 'day' : 'night';            
+}
+
 /**********************************************************************
  *****                    Background metadata                     *****
  **********************************************************************/
 var backgrounds = {
     'inventory': { location: 'indoors' },
-    'beach': { location: 'outdoors' },
+    'beach': { location: 'outdoors', time: 'day' },
     'classroom': { location: 'indoors' },
     'brick': { location: 'indoors' },
-    'night': { location: 'outdoors', filter: 'brightness(0.8)' },
-    'roof': { location: 'outdoors' },
+    'night': { location: 'outdoors', filter: 'brightness(0.8)', time: 'night' },
+    'roof': { location: 'outdoors', time: 'day' },
     'seasonal': { location: 'indoors' },
     'library': { location: 'indoors' },
     'bathhouse': { location: 'indoors' },
-    'poolside': { location: 'outdoors' },
-    'hot spring': { location: 'outdoors' },
-    'mansion': { location: 'indoors' },
+    'poolside': { location: 'outdoors', time: 'day' },
+    'hot spring': { location: 'outdoors', time: 'day' },
+    'mansion': { location: 'indoors', time: 'night' },
     'purple room': { location: 'indoors' },
     'showers': { location: 'indoors' },
-    'street': { location: 'outdoors' },
+    'street': { location: 'outdoors', time: 'night' },
     'green screen': { location: 'indoors' },
     'arcade': { location: 'indoors' },
     'club': { location: 'indoors' },
-    'bedroom': { location: 'indoors' },
+    'bedroom': { location: 'indoors', time: 'night' },
     'hall': { location: 'indoors' },
     'locker room': { location: 'indoors' },
-    'haunted forest': { location: 'outdoors', filter: 'brightness(0.7) saturate(0.9)'},
+    'haunted forest': { location: 'outdoors', filter: 'brightness(0.7) saturate(0.9)', time: 'night' },
     'romantic': { location: 'indoors' },
     'classic': { location: 'indoors' }
 };
