@@ -139,16 +139,21 @@ function PoseAnimation (targetSprite, pose, args) {
     this.delay = args.delay || 0;
     this.interpolation = args.interpolation || 'none';
     this.ease = args.ease || 'linear';
+    this.clamp = args.clamp || 'wrap';
+    this.iterations = parseInt(args.iterations, 10) || 0;
 }
 
 PoseAnimation.prototype.isComplete = function () {
-    return (this.elapsed - this.delay) >= this.duration;
+    var life = this.elapsed - this.delay;
+    if (this.looped) {
+        return this.iterations > 0 ? life / this.duration >= this.iterations : false;
+    }
+    return life >= this.duration;
 }
 
 PoseAnimation.prototype.update = function (dt) {
     this.elapsed += dt;
     
-    if (this.looped && this.isComplete()) { this.elapsed -= this.duration; }
     var t = (this.elapsed - this.delay);
     if (t < 0) return;
     if (this.duration === 0) {
@@ -157,7 +162,15 @@ PoseAnimation.prototype.update = function (dt) {
     else {
         var easingFunction = this.ease;
         t /= this.duration;
-        t = Math.min(1, t);
+        if (this.looped) {
+            t = clampingFunctions[this.clamp](t);
+            if (this.isComplete()) {
+                t = 1;
+            }
+        }
+        else {
+            t = Math.min(1, t);
+        }
         t = Animation.prototype.easingFunctions[easingFunction](t)
         t *= this.duration;  
     }
