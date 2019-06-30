@@ -56,7 +56,8 @@ base_tag_spec = {
                     'content': None,
                 }
             }
-        }
+        },
+        'nicknames': { 'nickname': None }
     }
 } 
 
