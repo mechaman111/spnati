@@ -182,6 +182,7 @@ root.completeMasturbatePhase = hookWrapper('completeMasturbatePhase');
 root.completeStripPhase = hookWrapper('completeStripPhase');
 root.completeRevealPhase = hookWrapper('completeRevealPhase');
 root.updateGameVisual = hookWrapper('updateGameVisual');
+root.advanceSelectScreen = hookWrapper('advanceSelectScreen');
 
 function handleOptionsModal() {
     if(utils.monika_present()) {
@@ -233,7 +234,7 @@ function setGlitchMarkers (targetedSlot, glitch_type, value) {
     var monika_player = monika.utils.get_monika_player();
     var target = players[targetedSlot];
     
-    if (!target) {
+    if (!target || !monika_player) {
         return;
     }
     
@@ -272,6 +273,17 @@ function clearRepeatVisualsGlitch () {
     }
 }
 registerHook('completeRevealPhase', 'pre', clearRepeatVisualsGlitch);
+
+function resetAllEffects () {
+    clearDeleteGlitch();
+    clearRepeatVisualsGlitch();
+    
+    if (exports.ACTIVE_FORFEIT_EFFECT) {
+        exports.ACTIVE_FORFEIT_EFFECT.revert();
+        exports.ACTIVE_FORFEIT_EFFECT = null;
+    }
+}
+registerHook('advanceSelectScreen', 'pre', resetAllEffects);
 
 function setupRoundGlitches () {
     /* don't do anything if effects are disabled */
