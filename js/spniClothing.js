@@ -331,9 +331,9 @@ function showStrippingModal () {
     /* display the stripping modal */
     $stripModal.modal({show: true, keyboard: false});
     $stripModal.one('shown.bs.modal', function() {
-        $stripClothing.find('input').first().focus();
+        $stripClothing.find('input').last().focus();
     });
-    $(document).keydown(clothing_keyDown);
+    $(document).keyup(clothing_keyUp);
 }
 
 /************************************************************
@@ -358,11 +358,13 @@ function selectClothingToStrip (id) {
 /************************************************************
  * A keybound handler.
  ************************************************************/
-function clothing_keyDown(e) {
-    if (e.keyCode == 13 && !$stripButton.prop('disabled')) { // Enter
+function clothing_keyUp(e) {
+    if (e.keyCode == 32 && !$stripButton.prop('disabled')  // Space
+        && $('.modal-clothing-image:focus').not('.modal-selected-clothing-image').length == 0) {
 		$stripButton.click();
+        e.preventDefault();
     } else if (e.keyCode >= 49 && e.keyCode < 49 + players[HUMAN_PLAYER].clothing.length) { // A number key
-		$('.clothing-modal-container:nth-child('+(e.keyCode - 48)+') > .modal-clothing-image').click();
+        $('.clothing-modal-container:nth-child('+(e.keyCode - 48)+') > .modal-clothing-image').focus().click();
     }
 }
 
@@ -441,7 +443,7 @@ function closeStrippingModal (id) {
 
         /* allow progression */
         $('#stripping-modal').modal('hide');
-		$(document).off('keydown', clothing_keyDown);
+        $(document).off('keyup', clothing_keyUp);
         endRound();
     } else {
         /* how the hell did this happen? */
