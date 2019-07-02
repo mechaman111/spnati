@@ -501,6 +501,8 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
             return target.countLayers() - other.countLayers();
         }
         return undefined;
+    case 'stage':
+        return target.stage;
     default:
         return expandNicknames(self, target);
     }
