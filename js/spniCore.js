@@ -1866,5 +1866,5 @@ $('.modal').on('show.bs.modal', function() {
 });
 
 $('.modal').on('hidden.bs.modal', function() {
-	$('.screen:visible').find('button, input').attr('tabIndex', 0);
+	$('.screen:visible').find('button, input').removeAttr('tabIndex');
 });
