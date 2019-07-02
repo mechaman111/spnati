@@ -146,7 +146,7 @@ function showGameSettingsModal () {
     $('#game-settings-modal').modal('show');
 }
 $('#game-settings-modal').on('shown.bs.modal', function() {
-	$('#settings-background-' + (selectedBackground + 1) + '>a').focus();
+	$('ul#settings-background>li.active>a').focus();
 	console.log($('.modal:visible'));
 });
 
