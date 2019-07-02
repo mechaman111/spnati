@@ -198,6 +198,7 @@ function loadGameScreen () {
 	allowProgression(eGamePhase.DEAL);
 
     $(document).keyup(game_keyUp);
+    $mainButton.focus();
 }
 
 /**********************************************************************

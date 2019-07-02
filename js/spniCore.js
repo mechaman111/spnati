@@ -994,7 +994,7 @@ function initialSetup () {
 
 	/* show the title screen */
 	$warningScreen.show();
-	$('warning-start-button').focus();
+	$('#warning-start-button').focus();
     autoResizeFont();
 
     /* Generate a random session ID. */
@@ -1201,6 +1201,7 @@ function loadGeneralCollectibles () {
 function enterTitleScreen() {
     $warningScreen.hide();
     $titleScreen.show();
+    $('#title-start-button').focus();
 }
 
 /************************************************************
