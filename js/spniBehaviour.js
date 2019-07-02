@@ -195,6 +195,7 @@ function expandTagsList(input_tags) {
 
 function State($xml, parentCase) {
     this.parentCase = parentCase;
+    this.id = $xml.attr('dev-id') || null;
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
@@ -211,6 +212,7 @@ function State($xml, parentCase) {
     this.setSize = $xml.attr('set-size');
     this.setGender = $xml.attr('set-gender');
     this.setLabel = $xml.attr('set-label');
+    this.oneShotId = $xml.attr('oneShotId');
     
     var collectibleId = $xml.attr('collectible') || undefined;
     var collectibleOp = $xml.attr('collectible-value') || undefined;
@@ -240,7 +242,7 @@ function State($xml, parentCase) {
     }
     
     if (markerOp) {
-        var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?[^~]+~))$/);
+        var match = markerOp.match(/^(?:(\+|-)([\w-]+)(\*?)|([\w-]+)(\*?)\s*=\s*(.*?)\s*)$/);
         var name;
         
         this.marker = {name: null, perTarget: false, persistent: persistMarker, op: null, val: null};
@@ -275,11 +277,10 @@ State.prototype.evaluateMarker = function (self, opp) {
     if (!this.marker) return;
     
     var name = this.marker.name;
+    if (this.marker.perTarget && opp) {
+        name = getTargetMarker(name, opp);
+    }
     if (this.marker.op === '+') {
-        if (this.marker.perTarget && opp) {
-            name = getTargetMarker(name, opp);
-        }
-        
         if (this.marker.persistent) {
             var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
         } else {
@@ -288,10 +289,6 @@ State.prototype.evaluateMarker = function (self, opp) {
         
         return !curVal ? 1 : curVal + 1;
     } else if (this.marker.op === '-') {
-        if (this.marker.perTarget && opp) {
-            name = getTargetMarker(name, opp);
-        }
-        
         if (this.marker.persistent) {
             var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
         } else {
@@ -369,15 +366,58 @@ State.prototype.applyCollectible = function (player) {
     }
 }
 
+State.prototype.applyOneShot = function (player) {
+    if (this.oneShotId) {
+        player.oneShotStates[this.oneShotId] = true;
+    }
+}
+
 function getTargetMarker(marker, target) {
     if (!target) { return marker; }
     return "__" + target.id + "_" + marker;
 }
 
+function findVariablePlayer(variable, self, target, bindings) {
+    var player;
+    if (!variable) return null;
+    if (variable == 'self') return self;
+    if (variable == 'target') return target;
+    if (bindings && variable.toLowerCase() in bindings) return bindings[variable.toLowerCase()];
+    if (players.some(function (p) {
+        if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
+            player = p;
+            return true;
+        }
+    })) {
+        return player;
+    }
+    return null;
+}
+
+/************************************************************
+ * Applies any personal nicknames to target player.
+ * First looks for a per-character marker called "nickname".
+ * Second, picks a random nickname from the list of nicknames
+ * for the character from the <nicknames> section after 
+ * variable expansion (with self set to null in order to 
+ * avoid infinite recursion).
+ ************************************************************/
+function expandNicknames (self, target) {
+    if (self) {
+        var nickmarker = self.markers[getTargetMarker('nickname', target)];
+        if (nickmarker) return nickmarker;
+        if (target.id in self.nicknames || '*' in self.nicknames) {
+            var nickList = self.nicknames[target.id] || self.nicknames['*'];
+            return expandDialogue(nickList[getRandomNumber(0, nickList.length)], null, target);
+        }
+    }
+    return target.label;
+}
+
 /************************************************************
  * Expands ~target.*~ and ~[player].*~ variables.
  ************************************************************/
-function expandPlayerVariable(split_fn, args, self, target) {
+function expandPlayerVariable(split_fn, args, self, target, bindings) {
     if (split_fn.length > 0) var fn = split_fn[0].toLowerCase();
     
     switch (fn) {
@@ -435,8 +475,34 @@ function expandPlayerVariable(split_fn, args, self, target) {
         return target.size;
     case 'gender':
         return target.gender;
+    case 'place':
+        if (target.out) return players.countTrue() + 1 - target.outOrder;
+        return 1 + players.countTrue(function(p) { return p.countLayers() > target.countLayers(); });
+    case 'revplace':
+        if (target.out) return target.outOrder;
+        return 1 + players.countTrue(function(p) { return p.out || p.countLayers() < target.countLayers(); });
+    case 'biggestlead':
+        return target.biggestLead;
+    case 'lead':
+        return target.countLayers() - players.reduce(function(max, p) {
+            if (p != target) {
+                return Math.max(max, p.countLayers());
+            } else return max;
+        }, 0);
+    case 'trail':
+        return players.reduce(function(min, p) {
+            if (p != target && !p.out) {
+                return Math.min(min, p.countLayers());
+            } else return min;
+        }, 10) - target.countLayers();
+    case 'diff':
+        var other = (!args ? self : findVariablePlayer(args, self, target, bindings));
+        if (other) {
+            return target.countLayers() - other.countLayers();
+        }
+        return undefined;
     default:
-        return target.label;
+        return expandNicknames(self, target);
     }
 }
 
@@ -457,10 +523,10 @@ function expandDialogue (dialogue, self, target, bindings) {
         try {
             switch (variable.toLowerCase()) {
             case 'player':
-                substitution = players[HUMAN_PLAYER].label;
+                substitution = expandNicknames(self, players[HUMAN_PLAYER]);
                 break;
             case 'name':
-                substitution = target.label;
+                substitution = expandNicknames(self, target);
                 break;
             case 'clothing':
                 var clothing = (target||self).removedClothing;
@@ -506,7 +572,7 @@ function expandDialogue (dialogue, self, target, bindings) {
                         }
                     }
                 } else {
-                    substitution = 'collectible'; // no collectible ID supplied
+                    console.error("No collectible ID specified");
                 }
                 break;
             case 'marker':
@@ -534,36 +600,29 @@ function expandDialogue (dialogue, self, target, bindings) {
                     
                     substitution = marker || "";
                 } else {
-                    substitution = variable.toLowerCase(); //didn't supply a marker name
+                    console.error("No marker name specified");
                 }
                 break;
             case 'background':
                 if (fn == undefined) {
-                    substitution = backgrounds[selectedBackground].name;
+                    substitution = selectedBackground;
                 } else if (fn in backgrounds[selectedBackground] && args === undefined) {
                     substitution = backgrounds[selectedBackground][fn];
+                } else if (fn == 'time' && args === undefined) {
+                    substitution = localDayOrNight;            
                 }
                 break;
             case 'weekday':
                 substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
                 break;
             case 'target':
-                substitution = expandPlayerVariable(fn_parts, args, self, target);
-                break;
             case 'self':
-                substitution = expandPlayerVariable(fn_parts, args, self, self);
-                break;
             default:
-                if (bindings && variable.toLowerCase() in bindings) {
-                    substitution = expandPlayerVariable(fn_parts, args, self, bindings[variable.toLowerCase()]);
+                var variablePlayer = findVariablePlayer(variable, self, target, bindings);
+                if (variablePlayer) {
+                    substitution = expandPlayerVariable(fn_parts, args, self, variablePlayer, bindings);
                 } else {
-                    /* Find a specific character at the table by ID. */
-                    players.some(function (p) {
-                        if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
-                            substitution = expandPlayerVariable(fn_parts, args, self, p);
-                            return true;
-                        }
-                    });
+                    console.error("Unknown variable:", variable);
                 }
                 break;
             }
@@ -572,14 +631,14 @@ function expandDialogue (dialogue, self, target, bindings) {
             }
         } catch (ex) {
             //throw ex;
-            console.log("Invalid substitution caused exception " + ex);
+            console.error("Invalid substitution caused exception:", ex);
         }
         return substitution;
     }
     // variable or
     // variable.attribute or
     // variable.function(arguments)
-    return dialogue.replace(/~(\w+)(?:\.([^\(]+)(?:\(([^)]*)\))?)?~/g, substitute);
+    return dialogue.replace(/~(\w+)(?:\.(.+?)(?:\(([^)]*)\))?)?~/g, substitute);
 }
 
 function escapeRegExp(string) {
@@ -594,7 +653,11 @@ var fixupDialogueSubstitutions = { // Order matters
     "''":  '\u201d', // right double quotation mark
     "'":   '\u2019', // right single quotation mark
     '&lt;i&gt;': '<i>',
-    '&lt;/i&gt;': '</i>'
+    '&lt;br&gt;': '<br>',
+    '&lt;hr&gt;': '<hr>',
+    '&lt;/i&gt;': '</i>',
+    '&lt;/br&gt;': '</br>',
+    '&lt;/hr&gt;': '</hr>'
 };
 var fixupDialogueRE = new RegExp(Object.keys(fixupDialogueSubstitutions).map(escapeRegExp).join('|'), 'gi');
 
@@ -608,6 +671,27 @@ function fixupDialogue (str) {
                 return fixupDialogueSubstitutions[match.toLowerCase()]
             });
     }).join('');
+}
+
+var styleSpecifierRE = /({(?:[a-zA-Z0-9\-\_!]+\s*)+})/gi;
+function parseStyleSpecifiers (str) {
+    var rawFragments = str.split(styleSpecifierRE);
+    var styledComponents = [];
+    var curClasses = '';
+    
+    rawFragments.forEach(function (frag) {
+        if (frag.length === 0) return;
+        
+        if (frag[0] === '{') {
+            var classes = frag.slice(1, -1).trim();
+            
+            curClasses = (classes === '!reset') ? '' : classes;
+        } else {
+            styledComponents.push({'text': frag, 'classes': curClasses});
+        }
+    });
+    
+    return styledComponents;
 }
 
 /************************************************************
@@ -626,8 +710,9 @@ function parseInterval (str) {
 }
 
 function inInterval (value, interval) {
-    return (interval.min === null || interval.min <= value)
-    && (interval.max === null || value <= interval.max);
+    return interval
+        && (interval.min === null || interval.min <= value)
+        && (interval.max === null || value <= interval.max);
 }
 
 
@@ -638,7 +723,7 @@ function inInterval (value, interval) {
  * current state marker only. This is used for volatile conditions.
  ************************************************************/
 function checkMarker(predicate, self, target, currentOnly) {
-    var match = predicate.match(/([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?/);
+    var match = predicate.match(/^([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(.+))?\s*$/);
     
     var name;
     var perTarget;
@@ -660,7 +745,7 @@ function checkMarker(predicate, self, target, currentOnly) {
             if (!isNaN(parseInt(match[5], 10))) {
                 cmpVal = parseInt(match[5], 10);
             } else {
-                cmpVal = expandDialogue(match[5], self, target); 
+                cmpVal = expandDialogue(match[5], self, target);
             }
         } else {
             op = '!!';
@@ -754,6 +839,7 @@ function Case($xml, stage) {
     this.hidden =                   $xml.attr("hidden");
     this.addTags =                  $xml.attr("addCharacterTags");
     this.removeTags =               $xml.attr("removeCharacterTags");
+    this.oneShotId =                $xml.attr("oneShotId");
     
     if (this.addTags) {
         this.addTags = this.addTags.split(',').map(canonicalizeTag);
@@ -841,6 +927,56 @@ function Case($xml, stage) {
     }
 }
 
+/* Convert this case's conditions into a plain object, into a format suitable
+ * for e.g. JSON serialization.
+ */
+Case.prototype.serializeConditions = function () {
+    var complexProps = ['states', 'tests', 'counters', 'addTags', 'removeTags', 'variableBindings', 'priority'];
+    var ser = {};
+    
+    Object.keys(this).forEach(function (prop) {
+        if (complexProps.indexOf(prop) >= 0) return;
+        var val = this[prop];
+        
+        if (val && typeof val === "object" && (val.min !== undefined || val.max !== undefined)) {
+            // convert interval objects back into strings
+            var min = (val.min !== null) ? val.min : "";
+            var max = (val.max !== null) ? val.max : "";
+            
+            if (min === max) {
+                ser[prop] = (min !== "") ? min.toString() : null;
+            } else {
+                ser[prop] = min+"-"+max;
+            }
+        } else {
+            ser[prop] = val;
+        }
+    }.bind(this));
+    
+    ser.tests = this.tests.map(function (test) {
+        return {
+            'expr': test.attr('expr'),
+            'value': test.attr('value'),
+            'cmp': test.attr('cmp'),
+        };
+    });
+    
+    ser.counters = this.counters.map(function (ctr) {
+        return {
+            'count': ctr.attr('count'),
+            'role': ctr.attr('role'),
+            'var': ctr.attr('var'),
+            'character': ctr.attr('character'),
+            'stage': ctr.attr('stage'),
+            'filter': ctr.attr('filter'),
+            'gender': ctr.attr('gender'),
+            'status': ctr.attr('status'),
+        };
+    });
+    
+    return ser;
+}
+
 Case.prototype.getAlsoPlaying = function (opp) {
     if (!this.alsoPlaying) return null;
     
@@ -912,6 +1048,16 @@ Case.prototype.getVolatileDependencies = function (self, opp) {
 }
 
 Case.prototype.basicRequirementsMet = function (self, opp, captures) {
+    // one-time use
+    if (this.oneShotId && self.oneShotCases[this.oneShotId]) {
+        return false;
+    }
+
+    // all states used up
+    if (this.states.every(function (state) { return state.oneShotId && self.oneShotStates[state.oneShotId]; })) {
+        return false;
+    }
+
     // stage
     if (this.stage) {
         if (!inInterval(self.stage, this.stage)) {
@@ -942,14 +1088,14 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     
     // targetLayers
     if (opp && this.targetLayers) {
-        if (!inInterval(opp.clothing.length, this.targetLayers)) {
+        if (!inInterval(opp.countLayers(), this.targetLayers)) {
             return false; 
         }
     }
     
     // targetStatus
     if (opp && this.targetStatus) {
-        if (!checkPlayerStatus(opp, this.targetStatus)) {
+        if (!opp.checkStatus(this.targetStatus)) {
             return false;
         }
     }
@@ -1156,7 +1302,7 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
                 && (filterStage === undefined || inInterval(p.stage, filterStage))
                 && (filterTag == undefined || p.hasTag(filterTag))
                 && (filterGender == undefined || (p.gender == filterGender))
-                && (filterStatus == undefined || checkPlayerStatus(p, filterStatus));
+                && (filterStatus == undefined || p.checkStatus(filterStatus));
         });
 
         if (inInterval(matches.length, desiredCount)) {
@@ -1177,11 +1323,17 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
         if (this.tests.every(function(test) {
             var expr = expandDialogue(test.attr('expr'), self, opp, bindingCombinations[i]);
             var value = test.attr('value');
-            var cmp = test.attr('cmp') || '==';
+            var cmp = test.attr('cmp');
 
-            var interval = parseInterval(value);
-            if (interval) {
-                return (cmp === '!=') ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
+            /* For backwards compatibility, if cmp is unspecified, try
+             * parsing value as an interval, and if it's not, fall
+             * back to equality. If cmp is @ or !@, fail if value is
+             * not an interval. */
+            if (!cmp || cmp == '@' || cmp == '!@') {
+                var interval = parseInterval(value);
+                if (interval || cmp) {
+                    return cmp === '!@' ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
+                }
             }
 
             if (!isNaN(Number(expr))) expr = Number(expr);
@@ -1210,6 +1362,12 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     }
 
     return false;
+}
+
+Case.prototype.applyOneShot = function (player) {
+    if (this.oneShotId) {
+        player.oneShotCases[this.oneShotId] = true;
+    }
 }
 
 /**********************************************************************
@@ -1269,7 +1427,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     var volatileMatches = [];
     
     for (var i = 0; i < cases.length; i++) {
-        var curCase = new Case(cases[i]);
+        var curCase = new Case(cases[i], stageNum);
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             curCase.basicRequirementsMet(this, opp)) 
@@ -1297,8 +1455,14 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
      * priority >= bestMatchPriority. */
     volatileMatches = volatileMatches.filter(function (c) { return c.priority >= bestMatchPriority; });
     
-    var states = bestMatch.reduce(function(list, caseObject) {
-        return list.concat(caseObject.states);
+    var self = this;
+    var states = bestMatch.reduce(function (list, caseObject) {
+        for (var i = 0; i < caseObject.states.length; i++) {
+            if (!caseObject.states[i].oneShotId || !self.oneShotStates[caseObject.states[i].oneShotId]) {
+                list.push(caseObject.states[i]);
+            }
+        }
+        return list;
     }.bind(this), []);
     
     var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
@@ -1315,6 +1479,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
         this.currentPriority = bestMatchPriority;
         this.stateLockCount = 0;
         this.stateCommitted = false;
+        this.lastUpdateTags = tags;
         
         this.allStates = states;
         this.chosenState = states[i - 1];
@@ -1374,7 +1539,9 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         /* Assign new best-match case and state. */
         this.bestVolatileMatch = bestMatch;
         this.currentPriority = bestPriority;
-        this.allStates = bestMatch.states;
+        this.allStates = bestMatch.states.filter(function(state) {
+            return !state.oneShotId || !this.oneShotStates[state.oneShotId];
+        }.bind(this));
         this.chosenState = bestMatch.states[getRandomNumber(0, bestMatch.states.length)];
         this.stateCommitted = false;
         
@@ -1429,11 +1596,17 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         this.size = this.chosenState.setSize;
     }
     
-    if (this.chosenState.parentCase && (this.chosenState.parentCase.removeTags.length > 0 || this.chosenState.parentCase.addTags.length > 0)) {
-        this.chosenState.parentCase.removeTags.forEach(this.removeTag.bind(this));
-        this.chosenState.parentCase.addTags.forEach(this.addTag.bind(this));
-        this.updateTags();
+    var parentCase = this.chosenState.parentCase;
+    if (parentCase) {
+        if (parentCase.removeTags.length > 0 || parentCase.addTags.length > 0) {
+            parentCase.removeTags.forEach(this.removeTag.bind(this));
+            parentCase.addTags.forEach(this.addTag.bind(this));
+            this.updateTags();
+        }
+        parentCase.applyOneShot(this);
     }
+    
+    this.chosenState.applyOneShot(this);
     
     if (this.chosenState.collectible) {
         this.chosenState.applyCollectible(this);
@@ -1447,9 +1620,11 @@ Opponent.prototype.commitBehaviourUpdate = function () {
  ************************************************************/
 Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
     var self = this;
+    chosenCase.applyOneShot(self);
     chosenCase.states.forEach(function (c) {
         c.applyMarker(self, opp);
         c.applyCollectible(self);
+        c.applyOneShot(self);
     });
 }
 

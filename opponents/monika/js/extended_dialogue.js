@@ -1,6 +1,19 @@
-monika.current_ext_dialogue = null;
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD
+        define(['monika'], factory);
+    } else if (typeof exports === 'object') {
+        // Node, CommonJS-like
+        module.exports = factory(require('monika'));
+    } else {
+        // Browser globals (root is window)
+        root.monika_ext_dialogue = factory(root, root.monika);
+        root.monika.ext_dialogue = root.monika_ext_dialogue;
+    }
+}(this, function (root, monika) {
+var exports = {};
 
-monika.ext_dialogues = {
+var extended_dialogues = {
     'psa1': [
         ["happy", "Thanks, ~player~! That really means a lot to me. I promise it won't take too long!"],
         ["awkward-question", "So, um... I know there are a lot of, um... other people... that you might want to see here at the Inventory!"],
@@ -18,86 +31,106 @@ monika.ext_dialogues = {
     ]
 }
 
-monika.extendedDialoguePhase = [ "Talking...", function() { monika.extended_dialogue_continue(); }, false ];
-monika.previousGamePhase = null;
+exports.dialogues = extended_dialogues;
 
-monika.display_dialogue = function(pose, dialogue) {
-    var slot = monika.find_slot();
+var extendedDialoguePhase = [ "Talking...", function() { monika.ext_dialogue.continue_extended_dialogue(); }, false ];
+var previousGamePhase = null;
+var currentExtendedDialogue = null;
+var backgroundEffects = [];
+
+exports.extendedDialoguePhase = extendedDialoguePhase;
+
+function display_dialogue (pose, dialogue) {
+    var pl = monika.utils.get_monika_player();
+    var img = pl.stage + '-' + pose + '.png';
     
-    var current_img = monika.assemble_pose_filename({
-        'base': players[slot].folder,
-        'stage': players[slot].stage,
-        'pose': pose,
-        'ext': 'png'
-    });
+    pl.chosenState.dialogue = dialogue;
+    pl.chosenState.image = img;
     
-    var expanded = expandDialogue(dialogue, players[slot], null);
-    
-    $gameImages[slot-1].attr('src', current_img);
-    $gameDialogues[slot-1].html(expanded);
+    gameDisplays[pl.slot-1].update(pl);
 }
 
-monika.extended_dialogue_continue = function () {
-    var curr_info = monika.current_ext_dialogue;
+function continue_extended_dialogue () {
+    var curr_info = currentExtendedDialogue;
     
-    try {        
-        var next_line = monika.ext_dialogues[curr_info.id][curr_info.line];
-        monika.display_dialogue(next_line[0], next_line[1]);
+    try {
+        var next_line = extended_dialogues[curr_info.id][curr_info.line];
+        display_dialogue(next_line[0], next_line[1]);
         curr_info.line++;
     } catch (e) {
-        console.error(e);
+        monika.reportException('in extended dialogue', e);
     } finally {
-        if(curr_info.line >= monika.ext_dialogues[curr_info.id].length) {
-            monika.extended_dialogue_end();
+        if(curr_info.line >= extended_dialogues[curr_info.id].length) {
+            end_extended_dialogue();
         } else {
-            allowProgression(monika.extendedDialoguePhase);
+            allowProgression(extendedDialoguePhase);
         }
     }
 }
+exports.continue_extended_dialogue = continue_extended_dialogue;
 
-monika.extended_dialogue_end = function() {
-    allowProgression(monika.previousGamePhase);
-    monika.current_ext_dialogue = null;
-    
-    for(var i=1;i<players.length;i++) {
-        if(players[i]) {
-            try {
-                $gameBubbles[i-1].show();
-                monika.undoCharacterGlitch(i);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-    }
-}
-
-monika.extended_dialogue_start = function (id) {
-    var monika_slot = monika.find_slot();
+function extended_dialogue_start (id) {
+    var slot = monika.utils.monika_slot();
     
     try {
         console.log("[Monika] Beginning extended dialogue with ID "+id);
         
-        monika.current_ext_dialogue = {
+        if (AUTO_FADE) forceTableVisibility(false);
+        
+        currentExtendedDialogue = {
             'id': id,
             'line': 0,
         }
 
         for(var i=1;i<players.length;i++) {
-            if(players[i] && i !== monika_slot) {
+            if(players[i] && i !== slot) {
                 try {
                     $gameBubbles[i-1].hide();
-                    monika.glitchCharacter(i);
+                    
+                    var eff = new monika.effects.VisualGlitchEffect(i);
+                    eff.execute();
+                    backgroundEffects.push(eff);
                 } catch (e) {
-                    console.error(e);
+                    monika.reportException('when starting BG effects in extended_dialogue_start', e);
                 }
             }
         }
     } catch(e) {
-        console.error(e);
+        monika.reportException('in extended_dialogue_start', e);
     } finally {
-        monika.previousGamePhase = gamePhase;
-        $gameBubbles[monika_slot-1].show();
+        previousGamePhase = gamePhase;
+        $gameBubbles[slot-1].show();
         
-        monika.extended_dialogue_continue();
+        continue_extended_dialogue();
     }
 }
+monika.registerBehaviourCallback('extended_dialogue_start', extended_dialogue_start);
+
+function end_extended_dialogue() {
+    allowProgression(previousGamePhase);
+    currentExtendedDialogue = null;
+    
+    for(var i=1;i<players.length;i++) {
+        if(players[i]) {
+            try {
+                $gameBubbles[i-1].show();
+            } catch (e) {
+                monika.reportException('when re-showing bubbles in end_extended_dialogue', e);
+            }
+        }
+    }
+    
+    backgroundEffects.forEach(function (eff) {
+        try {
+            eff.revert();    
+        } catch (e) {
+            monika.reportException('when reverting effects in end_extended_dialogue', e);
+        }
+    });
+    backgroundEffects = [];
+    
+    if (AUTO_FADE) forceTableVisibility(true);
+}
+
+return exports;
+}));

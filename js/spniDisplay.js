@@ -139,16 +139,21 @@ function PoseAnimation (targetSprite, pose, args) {
     this.delay = args.delay || 0;
     this.interpolation = args.interpolation || 'none';
     this.ease = args.ease || 'linear';
+    this.clamp = args.clamp || 'wrap';
+    this.iterations = parseInt(args.iterations, 10) || 0;
 }
 
 PoseAnimation.prototype.isComplete = function () {
-    return (this.elapsed - this.delay) >= this.duration;
+    var life = this.elapsed - this.delay;
+    if (this.looped) {
+        return this.iterations > 0 ? life / this.duration >= this.iterations : false;
+    }
+    return life >= this.duration;
 }
 
 PoseAnimation.prototype.update = function (dt) {
     this.elapsed += dt;
     
-    if (this.looped && this.isComplete()) { this.elapsed -= this.duration; }
     var t = (this.elapsed - this.delay);
     if (t < 0) return;
     if (this.duration === 0) {
@@ -157,7 +162,15 @@ PoseAnimation.prototype.update = function (dt) {
     else {
         var easingFunction = this.ease;
         t /= this.duration;
-        t = Math.min(1, t);
+        if (this.looped) {
+            t = clampingFunctions[this.clamp](t);
+            if (this.isComplete()) {
+                t = 1;
+            }
+        }
+        else {
+            t = Math.min(1, t);
+        }
         t = Animation.prototype.easingFunctions[easingFunction](t)
         t *= this.duration;  
     }
@@ -586,6 +599,39 @@ OpponentDisplay.prototype.onResize = function () {
     }
 }
 
+OpponentDisplay.prototype.updateText = function (player) {
+    var displayElems = parseStyleSpecifiers(player.chosenState.dialogue).map(function (comp) {
+        /* {'text': 'foo', 'classes': 'cls1 cls2 cls3'} --> <span class="cls1 cls2 cls3">foo</span> */
+        
+        var wrapperSpan = document.createElement('span');
+        wrapperSpan.innerHTML = fixupDialogue(comp.text);
+        wrapperSpan.className = comp.classes;
+        wrapperSpan.setAttribute('data-character', player.id);
+        
+        return wrapperSpan;
+    });
+    
+    this.dialogue.empty().append(displayElems);
+}
+
+OpponentDisplay.prototype.updateImage = function(player) {
+    var chosenState = player.chosenState;
+    
+    if (!chosenState.image) {
+        this.clearPose();
+    } else if (chosenState.image.startsWith('custom:')) {
+        var key = chosenState.image.split(':', 2)[1];
+        var poseDef = player.poses[key];
+        if (poseDef) {
+            this.drawPose(new Pose(poseDef, this));
+        } else {
+            this.clearPose();
+        }
+    } else {
+        this.drawPose(player.folder + chosenState.image);
+    }
+}
+
 OpponentDisplay.prototype.update = function(player) {
     if (!player) {
         this.hideBubble();
@@ -602,22 +648,10 @@ OpponentDisplay.prototype.update = function(player) {
     var chosenState = player.chosenState;
     
     /* update dialogue */
-    this.dialogue.html(fixupDialogue(chosenState.dialogue));
+    this.updateText(player);
     
     /* update image */
-    if (!chosenState.image) {
-        this.clearPose();
-    } else if (chosenState.image.startsWith('custom:')) {
-        var key = chosenState.image.split(':', 2)[1];
-        var poseDef = player.poses[key];
-        if (poseDef) {
-            this.drawPose(new Pose(poseDef, this));
-        } else {
-            this.clearPose();
-        }
-    } else {
-        this.drawPose(player.folder + chosenState.image);
-    }
+    this.updateImage(player);    
     
     /* update label */
     this.label.html(player.label.initCap());
@@ -663,6 +697,7 @@ function GameScreenDisplay (slot) {
     this.collectibleIndicator = $('#collectible-button-'+slot);
     
     this.collectibleIndicator.click(this.onCollectibleIndicatorClick.bind(this));
+    this.devModeController = new DevModeDialogueBox(this.bubble);
 }
 GameScreenDisplay.prototype = Object.create(OpponentDisplay.prototype);
 GameScreenDisplay.prototype.constructor = GameScreenDisplay;
@@ -692,6 +727,8 @@ GameScreenDisplay.prototype.reset = function (player) {
 GameScreenDisplay.prototype.update = function (player) {
     this.player = player;
     OpponentDisplay.prototype.update.call(this, player);
+    
+    if (devModeActive) this.devModeController.update(player);
     
     if (player && player.pendingCollectiblePopup) {
         this.collectibleIndicator.show();
@@ -1098,6 +1135,12 @@ OpponentDetailsDisplay.prototype.updateCollectiblesView = function () {
 }
 
 OpponentDetailsDisplay.prototype.update = function (opponent) {
+    if (this.opponent === opponent) {
+        // Interpret double-clicks as selection events.
+        return this.handleSelected();
+    }
+    
+    
     this.opponent = opponent;
     
     this.displayContainer.show();

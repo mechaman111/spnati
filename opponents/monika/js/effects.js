@@ -1,124 +1,572 @@
-monika.effects_flag = true;
-
-monika.effects_enabled = function() {
-    if(monika.find_slot() === undefined || !monika.effects_flag) {
-        return false;
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD
+        define(['monika'], factory);
+    } else if (typeof exports === 'object') {
+        // Node, CommonJS-like
+        module.exports = factory(require('monika'));
+    } else {
+        // Browser globals (root is window)
+        root.monika_effects = factory(root, root.monika);
+        root.monika.effects = root.monika_effects;
     }
-    return true;
-}
+}(this, function (root, monika) {
 
-monika.active_effects = {
-    // each entry in these arrays corresponds to an opponent slot,
-    // and stores information for undoing an active effect.
-    'overflow_text': [false, false, false, false],
-    'edited_style': [false, false, false, false],
-    'corrupted_dialogue': [null, null, null, null],
-    'character_glitch': [null, null, null, null],    // oneshot glitches
-    'character_glitching': [null, null, null, null], // repeating glitches
-    'modified_body_style': null,
-    'image_relocation': [null, null, null, null],
-    'label_corruption': [null, null, null, null],
-    
-    'glitch_masturbation': null,
-    'glitch_heavy_masturbation': false,
-    'joint_masturbation': false,
-    'affections_glitch': false,
-    
-    'round_targeted_glitching': null,   // for the continuous-glitching round effect; set to targeted character's slot
-    'round_dialogue_glitching': null,
-    'round_edit_glitching': null,       // for the dialogue-editing round effect
-    'round_delete_glitching': null,
+var exports = {};
+
+/* Effect - base class for all effects. */
+function Effect (id) {}
+
+Effect.prototype.execute = function (on_finished) {
+    on_finished();
 };
 
-/* Change up styles on the dialogue boxes for a slot so that text overflows out of the box properly. */
-monika.setOverflowTextStyles = function(slot) {
-    if(!monika.active_effects.modified_body_style) {
-        /* If we can, try to prevent overflowing contents from causing scrollbars to appear */
-        var original_body_style = $('body').attr('style');
-        
-        $('body').attr('style', original_body_style+';overflow-x:hidden;');
-        
-        monika.active_effects.modified_body_style = original_body_style;
-    }
-    
-    $gameBubbles[slot-1].attr('style', 'display: table; z-index: 1;');
-    $('game-bubble-'+slot.toString()+'.dialogue-bubble').attr('style', 'width:90%; overflow:visible');
-    $gameDialogues[slot-1].attr('style', 'white-space: nowrap; position: absolute; left: 5%; top: 50%; transform: translate(0, -50%);');
+Effect.prototype.revert = function (on_finished) {
+    on_finished();
+};
 
-    monika.active_effects.overflow_text[slot-1] = true;    
+exports.Effect = Effect;
+
+/* CanvasEffect - an Effect that uses a Canvas for image processing.
+ *  - source_elem: jQuery object containing the source <img> element to modify.
+ *  - processing_cb: a callback that takes this CanvasEffect object and performs out the needed image modifications.
+ *  - keep_empty: if true, the internal canvas will not be pre-filled with the source image.
+ */
+function CanvasEffect (source_elem, processing_cb, keep_empty) {
+    Effect.call(this);
+    
+    this.dest_elem = source_elem;
+    this.image = new Image();
+    this.canvas = document.createElement('canvas');
+    this.context = this.canvas.getContext('2d');
+    
+    this.source = null;
+    this.data_url = null;
+    
+    this.processing_cb = processing_cb;
+    this.from_empty_canvas = keep_empty;
+    
+    this.on_finished = null;
+    
+    this.image.onload = function () {
+        try {
+            this.canvas.width = this.image.naturalWidth;
+            this.canvas.height = this.image.naturalHeight;
+            
+            if (this.canvas.width <= 0 || this.canvas.height <= 0) {
+                return;
+            }
+            
+            if (!this.from_empty_canvas) {
+                this.context.drawImage(this.image, 0, 0);
+            }
+            
+            this.processing_cb(this);
+            
+            this.data_url = this.canvas.toDataURL();
+            this.dest_elem[0].src = this.data_url;
+        } catch (e) {
+            console.error(e);
+        } finally {
+            if (this.on_finished) this.on_finished();
+        }
+    }.bind(this);
 }
 
-monika.resetBodyStyle = function() {
-    if(monika.active_effects.modified_body_style) {
-        $('body').attr('style', monika.active_effects.modified_body_style);
-        monika.active_effects.modified_body_style = null;
-    }
+CanvasEffect.prototype = Object.create(Effect.prototype);
+CanvasEffect.prototype.constructor = CanvasEffect;
+exports.CanvasEffect = CanvasEffect;
+
+CanvasEffect.prototype.execute = function (on_finished) {
+    this.source = this.dest_elem.attr('src');
+    
+    this.on_finished = on_finished;
+    this.image.src = this.source;
 }
 
-/* Reset any modified styles on a given dialogue box */
-monika.resetDialogueBoxStyles = function(slot) {
-    if(monika.active_effects.overflow_text[slot-1]) {
-        $gameBubbles[slot-1].attr('style', 'display: table;');
-        $('game-bubble-'+slot.toString()+'.dialogue-bubble').removeAttr('style');
-        $gameDialogues[slot-1].removeAttr('style');
+CanvasEffect.prototype.revert = function (on_finished) {
+    if(this.dest_elem && this.data_url && this.source) {
+        // the element's displayed image might have changed in the meantime (game advancing, pose changes, etc.)
+        // don't mess with images that weren't set by us.
+        if (this.dest_elem[0].src === this.data_url) {
+            this.dest_elem[0].src = this.source;
+        }
+        
+        this.data_url = null;
+    }
+    
+    on_finished();
+}
+
+/* Canvas effect filters... */
+
+/* generate `n_divisions` random numbers that all sum to `total_sum`
+ * not perfect, statistically speaking-- but good enough for our purposes. */
+function random_divide(n_divisions, total_sum) {
+    var divisions = [];
+    var div_sum = 0;
+
+    for(var i=0;i<n_divisions;i++) {
+        var r = Math.random();
+
+        divisions.push(r);
+        div_sum += r;
     }
 
-    monika.active_effects.overflow_text[slot-1] = false;
+    return divisions.map(function(v) { return Math.floor((v / div_sum) * total_sum); });
+}
+
+
+CanvasEffect.prototype.tile_filter = function (tile_src_images) {
+    /* Replace the entirety of the input image with random tiles taken from the images in tile_src_images */
+    this.context.save();
     
-    // check to see if any more overflow text effects are active
-    var n_active_overflow = 0;
-    for(var i=0;i<monika.active_effects.overflow_text.length;i++) {
-        if(monika.active_effects.overflow_text[i]) {
-            n_active_overflow++;
+    var tile_size = 32; // px square
+    var width_tiles = Math.ceil(this.canvas.width / tile_size);
+    var height_tiles = Math.ceil(this.canvas.height / tile_size);
+    
+    for (var iter=0;iter<4;iter++) {
+        for(var col=0; col<width_tiles; col++) {
+            for(var row=0; row<height_tiles; row++) {
+                var src = getRandomNumber(0, tile_src_images.length);
+                
+                var x_offset = getRandomNumber(-9, 9);
+                var y_offset = getRandomNumber(-9, 9); 
+                
+                // source tile coordinates
+                var sx_tile = col + x_offset;
+                var sy_tile = row + y_offset;
+                
+                // draw the tile into the image
+                this.context.drawImage(
+                    tile_src_images[src][0],
+                    sx_tile * tile_size, sy_tile * tile_size, // source pixel coords
+                    tile_size, tile_size, // source rect size
+                    col * tile_size, row * tile_size, // dest pixel coords
+                    tile_size, tile_size, // dest rect size
+                );
+            }
         }
     }
     
-    if(n_active_overflow <= 0) {
-        monika.resetBodyStyle();
+    this.context.restore();
+}
+
+CanvasEffect.prototype.waver_filter = function(start_y, affected_height) {
+    /* Divide the image into horizontal slices and offset them randomly */
+    this.context.save();
+
+    if(!start_y) {
+        start_y = 0;
+    }
+
+    if(!affected_height) {
+        affected_height = this.canvas.height;
+    }
+
+    // create a copy of the image data to use for offsetting:
+    var original = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+    var cp = this.context.createImageData(original);
+    cp.data.set(original.data);
+
+    // divide image into random slices
+    var divisions = random_divide(getRandomNumber(7, 15), affected_height);
+
+    // draw slices from the copy onto the destination canvas w/ random offset:
+    var current_y = start_y;
+    for(var i=0;i<divisions.length;i++) {
+        var random_offset = getRandomNumber(0, Math.floor(cp.width/5));
+        if(Math.random() < 0.5) {
+            random_offset *= -1;
+        }
+
+        // clear destination canvas segment:
+        this.context.clearRect(0, current_y, cp.width, divisions[i]);
+        this.context.putImageData(cp, random_offset, 0, 0, current_y, cp.width, divisions[i]);
+
+        current_y += divisions[i];
+    }
+
+    this.context.restore();
+}
+
+CanvasEffect.prototype.channel_split_filter = function(start_y, affected_height) {
+    this.context.save();
+
+    /* Randomly offset one channel in each strip */
+    if(!start_y) {
+        start_y = 0;
+    }
+
+    if(!affected_height) {
+        affected_height = this.canvas.height;
+    }
+
+    // divide image into random slices
+    var divisions = random_divide(getRandomNumber(15, 25), affected_height);
+
+    var original = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+    var outData = this.context.createImageData(this.canvas.width, this.canvas.height);
+
+    /* Copy over unaffected areas */
+    outData.data.set(original.data);
+
+    // draw slices from random channels onto the destination canvas w/ random offset:
+    var current_y = start_y;
+    for(var i=0;i<divisions.length;i++) {
+        var random_x_offset = getRandomNumber(0, Math.floor(this.canvas.width*0.25));
+        if(Math.random() < 0.5) {
+            random_x_offset *= -1;
+        }
+
+        var random_y_offset = getRandomNumber(0, Math.floor(this.canvas.height*0.01));
+        if(Math.random() < 0.5) {
+            random_y_offset *= -1;
+        }
+
+        /* Randomly select a channel */
+        var offset_channel = Math.floor(Math.random() * 3);
+        var pixel_index_offset = ((random_y_offset * this.canvas.width) + random_x_offset) * 4;
+
+        for (
+            var dstIdx = current_y * this.canvas.width * 4;
+            dstIdx < (current_y + divisions[i]) * this.canvas.width * 4;
+            dstIdx += 4
+        ) {
+            var srcIdx = dstIdx + pixel_index_offset;
+            
+            if (srcIdx < 0) continue;
+            if (srcIdx >= original.data.length - 4) break;
+            
+            outData.data[dstIdx+offset_channel] = original.data[srcIdx+offset_channel];
+        }
+
+        current_y += divisions[i];
+    }
+
+    this.context.putImageData(outData, 0, 0);
+    this.context.restore();
+}
+
+CanvasEffect.prototype.color_bars_filter = function() {
+    /* Apply randomly-colored overlays to horizontal strips of the image */
+    this.context.save();
+
+    this.context.globalCompositeOperation = 'source-atop';
+
+    var divisions = random_divide(getRandomNumber(10, 20), this.canvas.height);
+    var current_y = 0;
+
+    for(var i=0;i<divisions.length;i++) {
+        if(Math.random() >= 0.4) { // don't colorize 40% of the strips
+            // generate a random fill color:
+            var hue = getRandomNumber(0, 360);
+            this.context.fillStyle = "hsl("+hue.toString()+", 100%, 50%)";
+
+            // randomize alpha within 25%-50% range
+            this.context.globalAlpha = (Math.random() * 0.25) + 0.25;
+
+            // draw the strip:
+            this.context.fillRect(0, current_y, this.canvas.width, divisions[i]);
+
+            current_y += divisions[i];
+        }
+    }
+
+    this.context.restore();
+}
+
+/* End canvas effect code */
+
+
+function CollectionEffect () {
+    Effect.call(this);
+    this.subeffects = [];
+}
+
+CollectionEffect.prototype = Object.create(Effect.prototype);
+CollectionEffect.prototype.constructor = CollectionEffect;
+exports.CollectionEffect = CollectionEffect;
+
+CollectionEffect.prototype.push = function (effect) {
+    this.subeffects.push(effect);
+}
+
+CollectionEffect.prototype.remove = function (effect) {
+    var idx = this.subeffects.indexOf(effect);
+    if (idx >= 0) this.subeffects.splice(idx, 1);
+}
+
+CollectionEffect.prototype.execute = function (on_finished) {
+    var n_completed = 0;
+    var complete = false;
+    
+    this.subeffects.forEach(function (effect) {
+        effect.execute(function () {
+            n_completed += 1;
+            
+            if (!complete && n_completed >= this.subeffects.length && on_finished) {
+                complete = true;
+                on_finished();
+            } 
+        }.bind(this));
+    }.bind(this));
+}
+
+CollectionEffect.prototype.revert = function (on_finished) {
+    var n_completed = 0;
+    var complete = false;
+    
+    this.subeffects.forEach(function (effect) {
+        effect.revert(function () {
+            n_completed += 1;
+            
+            if (!complete && n_completed >= this.subeffects.length && on_finished) {
+                complete = true;
+                on_finished();
+            } 
+        }.bind(this));
+    }.bind(this));
+}
+
+
+function VisualGlitchEffect (target_slot, start_y, affected_height) {
+    CollectionEffect.call(this);
+    
+    this.target_slot = target_slot;
+    this.target_display = gameDisplays[target_slot-1];
+    
+    this.start_y = start_y;
+    this.affected_height = affected_height;
+    
+    if (this.target_display.pose instanceof Pose) {
+        var target_pose = this.target_display.pose;
+        
+        for (var id in target_pose.sprites) {
+            if (target_pose.sprites.hasOwnProperty(id)) {
+                this.subeffects.push(new CanvasEffect(
+                    $(target_pose.sprites[id].img),
+                    function (canvas_effect) {
+                        canvas_effect.channel_split_filter();
+                        canvas_effect.waver_filter();
+                    }.bind(this),
+                    false
+                ));
+            }
+        }
+    } else {
+        this.subeffects.push(new CanvasEffect(
+            this.target_display.simpleImage,
+            function (canvas_effect) {
+                canvas_effect.channel_split_filter(this.start_y, this.affected_height);
+                canvas_effect.waver_filter(this.start_y, this.affected_height);
+            }.bind(this),
+            false
+        ));
     }
 }
 
-monika.applyEditedDialogueStyle = function(slot) {
-    $gameDialogues[slot-1].addClass('monika-edited-dialogue');
-    monika.active_effects.edited_style[slot-1] = true;
-}
+VisualGlitchEffect.prototype = Object.create(CollectionEffect.prototype);
+VisualGlitchEffect.prototype.constructor = VisualGlitchEffect;
+exports.VisualGlitchEffect = VisualGlitchEffect;
 
-monika.removeEditedDialogueStyle = function(slot) {
-    $gameDialogues[slot-1].removeClass('monika-edited-dialogue');
-    monika.active_effects.edited_style[slot-1] = false;
-}
 
-monika.corruptCharacterLabel = function(slot) {
-    var original = players[slot].label;
-    
-    players[slot].label = monika.generate_glitch_text(original.length + getRandomNumber(0, 5));
-    monika.active_effects.label_corruption[slot-1] = original;
-}
-
-monika.undoLabelCorruption = function(slot) {
-    if(monika.active_effects.label_corruption[slot-1]) {
-        players[slot].label = monika.active_effects.label_corruption[slot-1];
-    }
-    
-    monika.active_effects.label_corruption[slot-1] = null;
-}
-
-/* Corrupts a character's dialogue by zalgo-texting it. */
-monika.zalgoCorruptDialogue = function(slot) {
-    var original = $gameDialogues[slot-1].html();
-    
-    $gameDialogues[slot-1].html(monika.zalgo_text(original));
-    
-    monika.active_effects.corrupted_dialogue[slot-1] = original;
-}
-
-/* Corrupts a character's dialogue by picking a random letter and repeating it (cutting off the rest of the text).
- * For example: "Hi, what's your name?" -> "Hi, what's youuuuuuuuuuuu--"
- * We also apply the overflow text style for maximum effect.
+/* RepeatingVisualGlitchEffect - a variant on the above VisualGlitchEffect
+ * That repeatedly applies a visual glitch.
  */
-monika.repeatCorruptDialogue = function(slot) {
-    var original = $gameDialogues[slot-1].html();
-    var text = $gameDialogues[slot-1].text();
+function RepeatingVisualGlitchEffect (target_slot, glitchTime, normalTime) {
+    VisualGlitchEffect.call(this, target_slot);
+    
+    this.glitchTime = glitchTime;
+    this.normalTime = normalTime;
+    
+    this.cancelled = false;
+    this.currentTimerID = null;
+}
+
+RepeatingVisualGlitchEffect.prototype = Object.create(VisualGlitchEffect.prototype);
+RepeatingVisualGlitchEffect.prototype.constructor = RepeatingVisualGlitchEffect;
+exports.RepeatingVisualGlitchEffect = RepeatingVisualGlitchEffect;
+
+RepeatingVisualGlitchEffect.prototype.glitchOn = function () {
+    if (this.cancelled) { return; }
+    VisualGlitchEffect.prototype.execute.call(this, function () {
+        this.currentTimerID = setTimeout(this.glitchOff.bind(this), this.glitchTime);
+    }.bind(this));
+}
+
+RepeatingVisualGlitchEffect.prototype.glitchOff = function () {
+    if (this.cancelled) { return; }
+    VisualGlitchEffect.prototype.revert.call(this, function () {
+        this.currentTimerID = setTimeout(this.glitchOn.bind(this), this.normalTime);
+    }.bind(this));
+}
+
+RepeatingVisualGlitchEffect.prototype.execute = function (on_finished) {
+    this.cancelled = false;
+    this.glitchOn();
+    
+    if (on_finished) on_finished();
+}
+
+RepeatingVisualGlitchEffect.prototype.revert = function (on_finished) {
+    this.cancelled = true;
+    clearTimeout(this.currentTimerID);
+    VisualGlitchEffect.prototype.revert.call(this, on_finished);
+}
+
+
+function GlitchPoseChange (target_slot, dest_pose, glitch_time, start_y, affected_height) {
+    VisualGlitchEffect.call(this, target_slot, start_y, affected_height);
+    
+    this.target_player = players[target_slot];
+    this.glitchTime = glitch_time;
+    this.dest_pose_name = dest_pose;
+    this.currentTimerID = null;
+    
+    if (!dest_pose) {
+        this.dest_pose = null;
+    } else if (dest_pose.startsWith('custom:')) {
+        var key = dest_pose.split(':', 2)[1];
+        var poseDef = this.target_player.poses[key];
+        
+        if (poseDef) {
+            this.dest_pose = new Pose(poseDef, this);
+        } else {
+            this.dest_pose = null;
+        }
+    } else {
+        this.dest_pose = this.target_player.folder + dest_pose;
+    }
+}
+
+GlitchPoseChange.prototype = Object.create(VisualGlitchEffect.prototype);
+GlitchPoseChange.prototype.constructor = GlitchPoseChange;
+exports.GlitchPoseChange = GlitchPoseChange;
+
+GlitchPoseChange.prototype.doTransition = function (on_finished) {
+    try {
+        if (this.original_pose && this.original_pose === this.target_display.pose) {
+            if (!this.dest_pose) {
+                this.target_display.clearPose();
+            } else {
+                this.target_display.drawPose(this.dest_pose);
+            }
+        }
+    } catch (e) {
+        monika.reportException('in glitch pose transition', e);
+    } finally {
+        if (on_finished) return on_finished();
+    }
+}
+
+GlitchPoseChange.prototype.execute = function (on_finished) {
+    this.original_pose = this.target_display.pose;
+    
+    VisualGlitchEffect.prototype.execute.call(this, function () {
+        this.currentTimerID = setTimeout(this.doTransition.bind(this, on_finished), this.glitchTime);
+    }.bind(this));
+}
+
+GlitchPoseChange.prototype.revert = function (on_finished) {
+    try {
+        if (this.original_pose) {
+            this.target_display.drawPose(this.original_pose);
+        } else {
+            this.target_display.clearPose();
+        }
+    } catch (e) {
+        monika.reportException('in glitch pose reverting', e);
+    } finally {
+        if (on_finished) return on_finished();
+    }
+}
+
+
+/* DialogueContentEffect - an Effect that modifies the _content_ of a
+ * character's dialogue.
+ */
+function DialogueContentEffect (target_slot, dialogueReplacement) {
+    Effect.call(this);
+    
+    this.target_slot = target_slot;
+    this.target_display = gameDisplays[target_slot-1];
+    this.replacement = dialogueReplacement;
+}
+
+DialogueContentEffect.prototype = Object.create(Effect.prototype);
+DialogueContentEffect.prototype.constructor = DialogueContentEffect;
+exports.DialogueContentEffect = DialogueContentEffect;
+
+DialogueContentEffect.prototype.execute = function (on_finished) {
+    this.original = this.target_display.dialogue.html();
+    
+    if (typeof this.replacement === 'function') {
+        var modified = this.replacement(this.original, this.target_display);
+    } else {
+        var modified = this.replacement
+    }
+    
+    /* Avoid accidentally causing multiple script invocations due to replacements. */
+    if (players[this.target_slot].id === 'monika') {
+        modified = modified.replace(/<script>.+<\/script>/gi, '');
+    }
+    
+    this.target_display.dialogue.html(modified);
+    
+    if (on_finished) on_finished();
+}
+
+DialogueContentEffect.prototype.revert = function (on_finished) {
+    this.target_display.dialogue.html(this.original);
+    if (on_finished) on_finished();
+}
+
+
+/* DialogueStyleEffect - an Effect that applies a CSS style to a character's
+ * dialogue or bubble.
+ */
+function DialogueStyleEffect (target_slot, textStyle, bubbleStyle) {
+    Effect.call(this);
+    
+    this.target_display = gameDisplays[target_slot-1];
+    this.textStyle = textStyle;
+    this.bubbleStyle = bubbleStyle;
+}
+
+DialogueStyleEffect.prototype = Object.create(Effect.prototype);
+DialogueStyleEffect.prototype.constructor = DialogueStyleEffect;
+exports.DialogueStyleEffect = DialogueStyleEffect;
+
+DialogueStyleEffect.prototype.execute = function (on_finished) {
+    if (this.textStyle) this.target_display.dialogue.addClass(this.textStyle);
+    if (this.bubbleStyle) this.target_display.bubble.addClass(this.bubbleStyle);
+    
+    if (on_finished) on_finished();
+}
+
+DialogueStyleEffect.prototype.revert = function (on_finished) {
+    if (this.textStyle) this.target_display.dialogue.removeClass(this.textStyle);
+    if (this.bubbleStyle) this.target_display.bubble.removeClass(this.bubbleStyle);
+    
+    if (on_finished) on_finished();
+}
+
+
+/* DialogueOverflowEffect - an Effect that causes a character's dialogue to
+ * overflow the box. Also applies some styling.
+ */
+function DialogueOverflowEffect (target_slot) {
+    this.content_effect = new DialogueContentEffect(target_slot, this.doReplacement.bind(this));
+    this.style_effect = new DialogueStyleEffect(target_slot, null, 'monika-overflow-bubble');
+}
+
+DialogueOverflowEffect.prototype = Object.create(Effect.prototype);
+DialogueOverflowEffect.prototype.constructor = DialogueOverflowEffect;
+exports.DialogueOverflowEffect = DialogueOverflowEffect;
+
+DialogueOverflowEffect.prototype.doReplacement = function (original, target_display) {
+    var text = target_display.dialogue.text();
     
     /* Find all words in the dialogue. */
     var re = /\w+(\w)/gi;
@@ -129,7 +577,7 @@ monika.repeatCorruptDialogue = function(slot) {
     }
     
     // don't corrupt dialogue that's very short.
-    if(all_words.length >= 7) {
+    if(all_words.length >= 4) {
         var min = Math.floor(all_words.length * 0.4);
         var max = Math.floor(all_words.length * 0.6);
         var selected = all_words[getRandomNumber(min, max+1)];
@@ -141,96 +589,28 @@ monika.repeatCorruptDialogue = function(slot) {
         /* Put the corrupted word in the edited style: */
         modified_text = modified_text + '<span class="monika-edited-dialogue">' + corrupted_word + '</span>';
         
-        $gameDialogues[slot-1].html(modified_text);
-        
-        monika.active_effects.corrupted_dialogue[slot-1] = original;
-        
-        monika.setOverflowTextStyles(slot);
-    }
-}
-
-monika.undoDialogueCorruption = function(slot) {
-    if(monika.active_effects.corrupted_dialogue[slot-1]) {
-        $gameDialogues[slot-1].html(monika.active_effects.corrupted_dialogue[slot-1]);
-        monika.active_effects.corrupted_dialogue[slot-1] = null;
+        return modified_text;
     }
     
-    if(monika.active_effects.overflow_text[slot-1]) {
-        monika.resetDialogueBoxStyles(slot);
-    }
+    return original;
+}
+
+DialogueOverflowEffect.prototype.execute = function (on_finished) {
+    this.content_effect.execute();
+    this.style_effect.execute();
     
-    if(monika.active_effects.edited_style[slot-1]) {
-        monika.removeEditedDialogueStyle(slot);
-    }
+    if (on_finished) on_finished();
 }
 
-monika.slot_to_css_class = function(slot) {
-    switch (slot) {
-        case 0: return "veryFarLeft";
-        case 1: return "farLeft";
-        case 2: return "almostLeft";
-        case 3: return "almostRight";
-        case 4: return "farRight";
-        case 5: return "veryFarRight";
-        default: return "centered";
-    }
+DialogueOverflowEffect.prototype.revert = function (on_finished) {
+    this.content_effect.revert();
+    this.style_effect.revert();
     
-    return "centered";
+    if (on_finished) on_finished();
 }
 
-/* dest_pos is either a slot number (0-5) or null/undefined for relocation to the center of the screen */
-monika.moveCharacterOverUI = function(slot, dest_pos) {
-    var dest_css = monika.slot_to_css_class(dest_pos);
-    var classes_to_add = 'monika-over-ui '+dest_css;
-    
-    $gameImages[slot-1].appendTo('#game-screen > .screen').addClass(classes_to_add);
-    monika.active_effects.image_relocation[slot-1] = classes_to_add;
-}
-
-monika.undoCharacterRelocation = function(slot) {
-    if(monika.active_effects.image_relocation[slot-1]) {
-        var dest_css = monika.slot_to_css_class(slot);
-        var classes_to_remove = monika.active_effects.image_relocation[slot-1];
-        
-        $gameImages[slot-1].appendTo('#game-screen .image-row .'+dest_css).removeClass(classes_to_remove);
-        monika.active_effects.image_relocation[slot-1] = null;
-    }
-}
-
-monika.cleanUpEffects = function() {
-    for(var i=0;i<4;i++) {
-        if(monika.active_effects.corrupted_dialogue[i]) monika.undoDialogueCorruption(i+1);
-        if(monika.active_effects.overflow_text[i]) monika.resetDialogueBoxStyles(i+1);
-        if(monika.active_effects.edited_style[i]) monika.removeEditedDialogueStyle(i+1);
-        if(monika.active_effects.character_glitch[i]) monika.undoCharacterGlitch(i+1);
-        if(monika.active_effects.character_glitching[i]) monika.stopContinuousGlitching(i+1);
-        if(monika.active_effects.image_relocation[i]) monika.undoCharacterRelocation(i+1);
-    }
-}
-
-monika.random_character_replacement = function(allowed_chars, in_str, replace_prob) {
-    var out_str = "";
-    for(var i=0;i<in_str.length;i++) {
-        if(Math.random() < replace_prob) {
-            out_str += allowed_chars[getRandomNumber(0, allowed_chars.length)];
-        } else {
-            out_str += in_str.charAt(i);
-        }
-    }
-    
-    return out_str;
-}
-
-monika.generate_character_sequence = function(allowed_chars, length) {
-    var ret = '';
-    for(var i=0;i<length;i++) {
-        ret += allowed_chars[getRandomNumber(0, allowed_chars.length)];
-    }
-    
-    return ret;
-}
-
-monika.inline_glitch_chars = [
+/* Effects for doing various kinds of glitch text */
+var inline_glitch_chars = [
     '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', 'ª',
     '«', '¬', '®', '¯', '°', '±', '²', '³', '´', 'µ',
     '¶', '·', '¸', '¹', 'º', '»', '¼', '½', '¾', '¿',
@@ -253,17 +633,54 @@ monika.inline_glitch_chars = [
     'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ',
     'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'À',
     'Á', 'à', 'á', 'Ā', 'ā', 'Ġ', 'ġ', 'ŀ', 'Ł', 'Š', 'š',
-]
+];
 
-monika.generate_glitch_text = function(length) {
-    return monika.generate_character_sequence(monika.inline_glitch_chars, length);
+/* DialogueCharacterReplacement - replaces some characters in dialogue with glitch characters */
+function DialogueCharacterReplacement (target_slot, replace_freq) {
+    DialogueContentEffect.call(this, target_slot, this.inlineCharacterReplacement.bind(this));
+    this.replace_freq = replace_freq;
 }
+
+DialogueCharacterReplacement.prototype = Object.create(DialogueContentEffect.prototype);
+DialogueCharacterReplacement.prototype.constructor = DialogueCharacterReplacement;
+exports.DialogueCharacterReplacement = DialogueCharacterReplacement;
+
+DialogueCharacterReplacement.prototype.inlineCharacterReplacement = function (original, target_display) {
+    var out_str = "";
+    
+    for(var i=0;i<original.length;i++) {
+        if(Math.random() < this.replace_freq) {
+            out_str += inline_glitch_chars[getRandomNumber(0, inline_glitch_chars.length)];
+        } else {
+            out_str += original.charAt(i);
+        }
+    }
+    
+    return out_str;
+}
+
+
+function generate_character_sequence (allowed_chars, length) {
+    var ret = '';
+    for(var i=0;i<length;i++) {
+        ret += allowed_chars[getRandomNumber(0, allowed_chars.length)];
+    }
+    
+    return ret;
+}
+
+
+function generate_glitch_text (length) {
+    return generate_character_sequence(inline_glitch_chars, length);
+}
+
+exports.generate_glitch_text = generate_glitch_text;
 
 
 // taken from tchouky's zalgo text site: http://www.eeemo.net/
 
 //those go UP
-monika.zalgo_up = [
+var zalgo_up = [
 	'\u030d', /*     ̍     */		'\u030e', /*     ̎     */		'\u0304', /*     ̄     */		'\u0305', /*     ̅     */
 	'\u033f', /*     ̿     */		'\u0311', /*     ̑     */		'\u0306', /*     ̆     */		'\u0310', /*     ̐     */
 	'\u0352', /*     ͒     */		'\u0357', /*     ͗     */		'\u0351', /*     ͑     */		'\u0307', /*     ̇     */
@@ -280,7 +697,7 @@ monika.zalgo_up = [
 ];
 
 //those go DOWN
-monika.zalgo_down = [
+var zalgo_down = [
 	'\u0316', /*     ̖     */		'\u0317', /*     ̗     */		'\u0318', /*     ̘     */		'\u0319', /*     ̙     */
 	'\u031c', /*     ̜     */		'\u031d', /*     ̝     */		'\u031e', /*     ̞     */		'\u031f', /*     ̟     */
 	'\u0320', /*     ̠     */		'\u0324', /*     ̤     */		'\u0325', /*     ̥     */		'\u0326', /*     ̦     */
@@ -294,7 +711,7 @@ monika.zalgo_down = [
 ];
 
 //those always stay in the middle
-monika.zalgo_mid = [
+var zalgo_mid = [
 	'\u0315', /*     ̕     */		'\u031b', /*     ̛     */		'\u0340', /*     ̀     */		'\u0341', /*     ́     */
 	'\u0358', /*     ͘     */		'\u0321', /*     ̡     */		'\u0322', /*     ̢     */		'\u0327', /*     ̧     */
 	'\u0328', /*     ̨     */		'\u0334', /*     ̴     */		'\u0335', /*     ̵     */		'\u0336', /*     ̶     */
@@ -303,19 +720,267 @@ monika.zalgo_mid = [
 	'\u0337', /*     ̷     */		'\u0361', /*     ͡     */		'\u0489' /*     ҉_     */		
 ];
 
-monika.zalgo_text = function(in_str) {
+/* DialogueZalgoText - inserts zalgo text into a character's dialogue */
+function DialogueZalgoText (target_slot) {
+    DialogueContentEffect.call(this, target_slot, this.insertZalgoText.bind(this));
+}
+
+DialogueZalgoText.prototype = Object.create(DialogueContentEffect.prototype);
+DialogueZalgoText.prototype.constructor = DialogueZalgoText;
+exports.DialogueZalgoText = DialogueZalgoText;
+
+DialogueZalgoText.prototype.insertZalgoText = function (original, target_display) {
     var out_str = '';
-    for(var i=0;i<in_str.length;i++) {
-        out_str += in_str.charAt(i);
+    for(var i=0;i<original.length;i++) {
+        out_str += original.charAt(i);
         
         var n_up = getRandomNumber(0, 3);
         var n_mid = getRandomNumber(0, 2);
         var n_down = getRandomNumber(0, 3);
         
-        out_str += monika.generate_character_sequence(monika.zalgo_up, n_up);
-        out_str += monika.generate_character_sequence(monika.zalgo_mid, n_mid);
-        out_str += monika.generate_character_sequence(monika.zalgo_down, n_down);
+        out_str += generate_character_sequence(zalgo_up, n_up);
+        out_str += generate_character_sequence(zalgo_mid, n_mid);
+        out_str += generate_character_sequence(zalgo_down, n_down);
     }
     
     return out_str;
 }
+
+
+function FakeDeleteCharacter (target_slot) {
+    CollectionEffect.call(this);
+    
+    this.target_slot = target_slot;
+    
+    this.image_sources = [];
+    this.target_display = gameDisplays[target_slot-1];
+    
+    this.original_label = this.target_display.label.html();
+    this.target_player = players[target_slot];
+    
+    /* Get all displayed sprites as image sources */
+    gameDisplays.forEach(function (disp) {
+        if (!players[disp.slot]) return;
+        
+        if (disp.slot !== target_slot) {
+            this.push(new DialogueContentEffect(
+                disp.slot,
+                this.replaceCharacterReferences.bind(this)
+            ));
+        } else {
+            this.push(new DialogueCharacterReplacement(
+                disp.slot,
+                0.2
+            ));
+        }
+        
+        if (disp.pose instanceof Pose) {
+            var target_pose = disp.pose;
+            
+            for (var id in target_pose.sprites) {
+                if (target_pose.sprites.hasOwnProperty(id)) {
+                    this.image_sources.push($(target_pose.sprites[id].img));
+                }
+            }
+        } else {
+            this.image_sources.push($(disp.simpleImage));
+        }
+    }.bind(this));
+    
+    /* Set up the visual effects */
+    if (this.target_display.pose instanceof Pose) {
+        var target_pose = this.target_display.pose;
+        
+        for (var id in target_pose.sprites) {
+            if (target_pose.sprites.hasOwnProperty(id)) {
+                this.push(new CanvasEffect(
+                    $(target_pose.sprites[id].img),
+                    function (canvas_effect) {
+                        canvas_effect.tile_filter(this.image_sources);
+                    }.bind(this),
+                    true
+                ));
+            }
+        }
+    } else {
+        this.push(new CanvasEffect(
+            this.target_display.simpleImage,
+            function (canvas_effect) {
+                canvas_effect.tile_filter(this.image_sources);
+            }.bind(this),
+            true
+        ));
+    }
+}
+
+FakeDeleteCharacter.prototype = Object.create(CollectionEffect.prototype);
+FakeDeleteCharacter.prototype.constructor = FakeDeleteCharacter;
+exports.FakeDeleteCharacter = FakeDeleteCharacter;
+
+FakeDeleteCharacter.prototype.replaceCharacterReferences = function (in_text) {
+    var re = new RegExp(this.original_label, 'gi');
+    var re2 = new RegExp(this.target_player.label, 'gi');
+    
+    var modified_dialogue = in_text.replace(re, function (match) {
+        return generate_glitch_text(match.length + getRandomNumber(0, 5))
+    });
+    
+    modified_dialogue = modified_dialogue.replace(re2, function (match) {
+        return generate_glitch_text(match.length)
+    });
+    
+    return modified_dialogue;
+}
+
+FakeDeleteCharacter.prototype.execute = function (on_finished) {
+    this.target_display.label.html(generate_glitch_text(this.original_label.length));
+    CollectionEffect.prototype.execute.call(this, on_finished);
+}
+
+FakeDeleteCharacter.prototype.revert = function (on_finished) {
+    this.target_display.label.html(this.original_label);
+    CollectionEffect.prototype.revert.call(this, on_finished);
+}
+
+function CharacterDisplacementEffect (slot, dest_slot) {
+    Effect.call(this);
+    
+    this.target_slot = slot;
+    this.target_display = gameDisplays[slot-1];
+    this.position_css = 'monika-over-ui ';
+    
+    if (dest_slot !== undefined) {
+        this.position_css = this.position_css + ['veryFarLeft', 'farLeft', 'almostLeft', 'almostRight', 'farRight', 'veryFarRight'][dest_slot];
+    } else {
+        this.position_css = this.position_css + 'centered';
+    }
+}
+
+CharacterDisplacementEffect.prototype = Object.create(Effect.prototype);
+CharacterDisplacementEffect.prototype.constructor = CharacterDisplacementEffect;
+exports.CharacterDisplacementEffect = CharacterDisplacementEffect;
+
+CharacterDisplacementEffect.prototype.execute = function (on_finished) {
+    this.clone_img = this.target_display.imageArea.clone();
+    this.prev_pose = this.target_display.pose;
+    
+    this.clone_img.appendTo('#game-screen > .screen').addClass(this.position_css).css({
+        'height': '80%',
+        'bottom': '0',
+        'top': ''
+    });
+    
+    setTimeout(function () {
+        this.target_display.clearPose();
+        this.revertHook = monika.registerHook('updateGameVisual', 'pre', this.revert.bind(this, null));
+    }.bind(this), 0);
+    
+    
+    if (on_finished) on_finished();
+}
+
+CharacterDisplacementEffect.prototype.revert = function (on_finished) {
+    if (this.clone_img) this.clone_img.remove();
+    if (this.prev_pose) this.target_display.drawPose(this.prev_pose);
+    if (this.revertHook) monika.unregisterHook('updateGameVisual', 'pre', this.revertHook);
+    
+    if (on_finished) on_finished();
+}
+
+
+function GlitchMasturbationEffect (target_slot) {
+    this.glitchEffect = new VisualGlitchEffect(target_slot);
+    this.target_display = gameDisplays[target_slot-1];
+    this.target_slot = target_slot;
+    this.heavy = false;
+    this.intervalID = null;
+    this.hookHandle = null;
+    this.images = [];
+}
+
+GlitchMasturbationEffect.prototype = Object.create(Effect.prototype);
+GlitchMasturbationEffect.prototype.constructor = GlitchMasturbationEffect;
+exports.GlitchMasturbationEffect = GlitchMasturbationEffect;
+
+GlitchMasturbationEffect.prototype.shuffleImages = function () {
+    this.images = [];
+
+    for(var i=1;i<=9;i++) {
+        if (this.heavy) {
+            this.images.push('opponents/monika/9-mast-'+i+'-alt.png');
+        } else {
+            this.images.push('opponents/monika/9-mast-'+i+'.png');
+        }
+    }
+
+    /* fisher-yates shuffle */
+    for(var i=0;i<this.images.length;i++) {
+        var j = getRandomNumber(i, this.images.length);
+
+        // swap images[i] and images[j]
+        var t = this.images[i];
+        this.images[i] = this.images[j];
+        this.images[j] = t;
+    }
+}
+
+GlitchMasturbationEffect.prototype.setHeavyMode = function (v) {
+    this.heavy = v;
+    this.shuffleImages();
+}
+
+GlitchMasturbationEffect.prototype.doTransition = function (after) {
+    if (this.images.length <= 0) this.shuffleImages();
+    var nextImage = this.images.pop();
+    
+    //console.log("doing transition from " + this.target_display.pose);
+    if (monika.JOINT_FORFEIT_ACTIVE) return;
+    
+    setTimeout(function () {
+        if (monika.JOINT_FORFEIT_ACTIVE) return;
+        
+        this.glitchEffect.execute(function () {
+            setTimeout(function () {
+                if (monika.JOINT_FORFEIT_ACTIVE) return;
+                
+                this.target_display.simpleImage.attr('src', nextImage);
+                if (after) after();
+            }.bind(this), 500);
+        }.bind(this));
+    }.bind(this), 0);
+}
+
+GlitchMasturbationEffect.prototype.updateGameVisualHook = function (player) {
+    if (this.target_slot !== player || monika.JOINT_FORFEIT_ACTIVE) return;
+    
+    if (
+        (players[this.target_slot].forfeit[0] === PLAYER_FINISHING_MASTURBATING)
+        || (players[this.target_slot].forfeit[0] === PLAYER_FINISHED_MASTURBATING)
+    ) {
+        this.revert();
+    } else {
+        if (players[this.target_slot].forfeit[0] === PLAYER_HEAVY_MASTURBATING && !this.heavy) {
+            this.setHeavyMode(true);
+        }
+        this.doTransition();
+    }
+}
+
+GlitchMasturbationEffect.prototype.execute = function (on_finished) {
+    this.doTransition();
+    this.intervalID = setInterval(this.doTransition.bind(this), 5000);
+    this.hookHandle = monika.registerHook('updateGameVisual', 'post', this.updateGameVisualHook.bind(this));
+    
+    if (on_finished) on_finished();
+}
+
+GlitchMasturbationEffect.prototype.revert = function (on_finished) {
+    clearInterval(this.intervalID);
+    this.glitchEffect.revert(on_finished);
+    monika.unregisterHook('updateGameVisual', 'post', this.hookHandle);
+    
+    if (on_finished) on_finished();
+}
+
+return exports;
+}));

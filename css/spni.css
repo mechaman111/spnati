@@ -267,7 +267,7 @@ body.modal-open {
     position: absolute;
     left: 1%;
     bottom: 5%;
-    
+
     width: 7%;
     height: 8%;
 }
@@ -290,11 +290,17 @@ body.modal-open {
 
 .dropdown-button-item span {
     display: inline;
+    margin: 0 3%;
 }
 
 .dropdown-button-item {
     width: 100%;
     font-size: 1.5em;
+    line-height: 1.30em;
+
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 /************************************************************
@@ -356,7 +362,7 @@ body.modal-open {
 	height: auto;
 	box-sizing: border-box;
 	margin: 0px auto;
-	padding: 5px;    
+	padding: 5px;
 }
 
 .thin-modal-dialog {
@@ -748,6 +754,17 @@ body.modal-open {
     text-align: left;
 }
 
+#io-modal .modal-content {
+    overflow-y: auto;
+    max-height: 75vh;
+}
+
+.import-restriction-warning {
+    font-size: 125%;
+    margin-bottom: 2%;
+    color: firebrick;
+}
+
 /************************************************************
  * Classes for the dialogue transcript modal.
  ************************************************************/
@@ -756,7 +773,7 @@ body.modal-open {
 	overflow-y: scroll;
 	max-height: 65vh;
 }
- 
+
 .log-entry-container {
 	border: 0.2rem solid #111111;
 	border-radius: 0.5rem;
@@ -832,25 +849,34 @@ body.modal-open {
 /* the area around the dialogue bubble */
 .dialogue-bubble-area {
 	position: absolute;
-    display: table;
     width: 24.5%;
     top: 10%;
-    height: 90%;
+    min-height: 90%;
     margin: 0 0.25%;
     padding: 1%;
-    text-align: center;
     font-size: 120%;
     background: #F5F5F5;
     border-radius: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
 }
 
 /* the body of the dialogue bubble */
 .dialogue-bubble {
-	display: table-cell;
-    width: 90%;
-    height: 90%;
     margin: 1%;
-    vertical-align: middle;
+    min-height: 100%;
+
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.dialogue {
+    text-align: center;
 }
 
 .arrow-down::before, .arrow-down::after,
@@ -966,6 +992,158 @@ body.modal-open {
 }
 
 /************************************************************
+ * Classes for Developer Mode.
+ ************************************************************/
+
+#game-dev-export-button {
+    display: none;
+}
+
+.dev-mode #game-dev-export-button {
+    display: inline-flex;
+}
+
+.dev-select-button {
+    position: absolute;
+    right: 20%;
+    top: -40%;
+    width: 19%;
+    height: 35%;
+}
+
+.dev-select-button.active {
+    background: linear-gradient(#80FF80, #33AA33);
+	background-color: #66FF66;
+}
+
+.edit-options-row {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+
+    display: none;
+    align-items: stretch;
+    justify-content: flex-end;
+    z-index: 1; /* Force layering _over_ poses */
+}
+
+.edit-pose-row {
+    position: absolute;
+    top: 130%;
+    right: 0;
+    left: 0;
+
+    background-color: #555555;
+
+    display: none;
+    padding: 1.5% 2%;
+    z-index: 1;
+}
+
+.edit-options-row button {
+    padding: 2.5% 2%;
+    font-size: 100%;
+
+    margin-left: 1.5%;
+
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+
+    background: linear-gradient(#D9D9D9, #A6A6A6);
+    background-color: #D9D9D9;
+}
+
+.edit-options-row button:first-child {
+    margin-left: 0;
+}
+
+.edit-options-row button:hover {
+    background: linear-gradient(#FFFFFF, #D9D9D9);
+    background-color: #FFFFFF;
+}
+
+.edit-options-row .edit-pose {
+    font-size: 1.5vmin;
+}
+
+.dialogue-pose-entry {
+    font-family: monospace;
+    font-size: 1.85vmin;
+    line-height: 2.22vmin;
+
+    width: 100%;
+    height: 100%;
+}
+
+.dialogue-edit-entry {
+    flex: 4;
+
+    font-family: monospace;
+    font-size: 1.85vmin;
+    line-height: 2.22vmin;
+    min-height: 11.1vmin;
+    cursor: text;
+}
+
+.dialogue-edit-status {
+    flex: 1;
+
+    font-family: monospace;
+    font-size: 1.75vmin;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#export-edit-log {
+    font-family: monospace;
+    font-size: 1.45vmin;
+    cursor: text;
+}
+
+.dialogue-bubble-area[data-editing="preview"] .dialogue-edit-status::after {
+    content: " (Preview)";
+}
+
+.edit-preview {
+    margin-right: auto;
+}
+
+.dialogue-edit, .dialogue-edit-button, .dialogue-entry-button {
+    display: none;
+}
+
+.dialogue-bubble-area[data-dev-target="true"] .dialogue-edit-button {
+    display: inline;
+}
+
+.dialogue-bubble-area[data-editing] .dialogue-entry-button {
+    display: inline;
+}
+
+.dialogue-bubble-area[data-editing] .dialogue-edit-button, .dialogue-bubble-area[data-editing] .dialogue-edit-status {
+    display: inline;
+}
+
+.dialogue-bubble-area[data-editing]:not([data-editing="preview"]) .dialogue-bubble .dialogue {
+    display: none;
+}
+
+.dialogue-bubble-area[data-editing="entry"] .dialogue-edit-entry {
+    display: block;
+}
+
+.dev-mode .edit-options-row {
+    display: flex;
+}
+
+/************************************************************
  * Classes for opponent images.
  ************************************************************/
 
@@ -992,6 +1170,10 @@ body.modal-open {
 	right: 0;
 }
 
+#game-screen .image-row {
+    pointer-events: none;
+}
+
 /************************************************************
  * Classes for the title screen.
  ************************************************************/
@@ -1008,7 +1190,7 @@ body.modal-open {
 .warning-text {
     position: relative;
     top: 5%;
-    
+
     text-align: center;
 	font-size: 130%;
 	color: #F0F0F0;
@@ -1103,7 +1285,7 @@ body.modal-open {
     left: 25%;
     width: 50%;
     bottom: 0;
-    
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1113,7 +1295,7 @@ body.modal-open {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     width: 100%;
 }
 
@@ -1150,7 +1332,7 @@ body.modal-open {
 .title-size-block {
     width: 60%;
     margin-left: auto;
-    
+
     display: flex;
     justify-content: flex-end;
 }
@@ -1308,18 +1490,18 @@ body.modal-open {
 .title-gallery-edge {
 	width: 20%;
     height: 80%;
-    
+
 	font-size: 200%;
 	padding: 0.2%;
     background: linear-gradient(#222222, #111111);
-    
+
     margin-right: 6.25%;
 }
 
 .title-gallery-button {
     width: 100%;
     height: 100%;
-    
+
 	padding-top: 1%;
 	padding-bottom: 1%;
     padding-left: 2%;
@@ -1330,18 +1512,18 @@ body.modal-open {
 .title-tags-edge {
     width: 20%;
     height: 80%;
-    
+
 	font-size: 200%;
 	padding: 0.2%;
     background: linear-gradient(#222222, #111111);
-    
+
     margin-left: 6.25%;
 }
 
 .title-tags-button {
     width: 100%;
     height: 100%;
-    
+
     padding-left: 3%;
     padding-right: 2%;
     font-size: 100%;
@@ -1452,9 +1634,9 @@ body.modal-open {
 
 .select-random-col {
     width: 49%;
-    
+
     height: 100%;
-    
+
     display: inline-flex;
     flex-direction: column;
 }
@@ -1652,16 +1834,16 @@ body.modal-open {
 .opponent-cards-container {
     width: 75%;
     height: 90%;
-    
+
     position: absolute;
     left: 0;
     top: 10%;
     bottom: 0;
-    
+
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    
+
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -1669,13 +1851,13 @@ body.modal-open {
 .opponent-card {
     width: 19.5%;
     height: 44%;
-    
+
     margin: 0.5% 0.25%;
     background-color: rgba(51, 51, 51, 0.65);
-    
+
     border: 2px solid #111111;
 	border-radius: 5px;
-    
+
     position: relative;
     cursor: pointer;
 }
@@ -1686,7 +1868,7 @@ body.modal-open {
     bottom: 0;
     left: 0;
     right: 0;
-    
+
     overflow: hidden;
 }
 
@@ -1695,18 +1877,18 @@ body.modal-open {
     top: -1.5%;
     left: 0;
     right: 0;
-    
+
     display: inline;
     height: 135%;
     width: auto;
-    
+
     margin: 0 auto;
 }
 
 .selection-card-image-area > * {
     width: auto;
     height: 100%;
-    
+
     position: absolute;
     right: 50%;
     transform: translateX(50%);
@@ -1719,9 +1901,9 @@ body.modal-open {
     left: 70%;
     top: 0;
     bottom: 25%;
-    
+
     padding: 2% 2.5%;
-    
+
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -1730,10 +1912,10 @@ body.modal-open {
 
 .badge-icon {
     opacity: 0.75;
-    
+
     height: 18%;
     width: auto;
-    
+
     position: absolute;
     left: 0;
     top: 0;
@@ -1756,7 +1938,7 @@ body.modal-open {
 
 .selection-card-sidebar .status-icon {
     opacity: 0.50;
-    margin-top: 3%;    
+    margin-top: 3%;
 }
 
 .selection-card-footer {
@@ -1765,7 +1947,7 @@ body.modal-open {
     left: 0;
     right: 0;
     top: 70%;
-    
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1777,10 +1959,10 @@ body.modal-open {
 	border-radius: 5px;
     background-color: #FFFFFF;
     opacity: 0.80;
-    
+
     transition-property: opacity;
     transition-duration: 0.5s;
-    
+
     text-align: center;
     padding: 2%;
 }
@@ -1804,7 +1986,7 @@ body.modal-open {
 
 .opponent-card:hover .selection-card-footer .selection-card-label, .opponent-card:active .selection-card-footer .selection-card-label {
     opacity: 1.0;
-    
+
     transition-property: opacity;
     transition-duration: 0.5s;
 }
@@ -1812,20 +1994,20 @@ body.modal-open {
 /************************************************************
  * Classes for the sort / filter options row.
  ************************************************************/
- 
+
 .selection-options-row {
     position: absolute;
     top: 0;
     bottom: 90%;
     left: 0;
     right: 0;
-    
+
     width: 75%;
-    
+
     padding: 0.5% 1.5%;
-    
+
     background-color: #555555;
-    
+
     display: flex;
     align-items: center;
     flex-basis: 0;
@@ -1838,7 +2020,7 @@ body.modal-open {
 .option-component {
     white-space: nowrap;
     margin: 0.5% 0;
-    
+
     display: flex;
     justify-content: flex-start;
     align-items: stretch;
@@ -1848,15 +2030,15 @@ body.modal-open {
     border: 2px solid #111111;
     border-radius: 5px;
     text-align: center;
-    
+
     background: linear-gradient(rgb(204, 204, 204), rgb(170, 170, 170)) rgb(204, 204, 204);
     margin-bottom: 0.5%;
     flex: 1;
-    
+
     font-size: 1.5vmin;
     line-height: 1.8vmin;
     margin: 0;
-    
+
     padding: 1% 1%;
 }
 
@@ -1866,7 +2048,7 @@ body.modal-open {
     width: auto;
     height: auto;
     margin: 0;
-    
+
     flex: 2;
 }
 
@@ -1884,14 +2066,14 @@ body.modal-open {
 .gender-component {
     font-size: 1.6vmin;
     line-height: 1.92vmin;
-    
+
     margin: 0;
 }
 
 .gender-component > nav > ul {
     margin: 0;
     white-space: nowrap;
-    
+
     display: inline-flex;
     justify-content: center;
 }
@@ -1918,7 +2100,7 @@ body.modal-open {
     margin-top: 0.5%;
     width: 100%;
     font-size: 1.6vmin;
-    
+
     padding: 0.5% 0;
 }
 
@@ -1939,7 +2121,7 @@ body.modal-open {
 .select-back-btn {
     height: 100%;
     font-size: 2.5vmin;
-    
+
     margin-left: 0;
     flex: 1;
 }
@@ -1995,9 +2177,9 @@ body.modal-open {
     right: 0;
     top: -1.5%;
     bottom: 10%;
-    
+
     z-index: -1;
-    
+
     display: flex;
     justify-content: center;
 }
@@ -2005,7 +2187,7 @@ body.modal-open {
 .opponent-details-image-area > * {
     width: auto;
     height: 100%;
-    
+
     position: absolute;
     right: 50%;
     transform: translateX(50%);
@@ -2027,7 +2209,7 @@ body.modal-open {
 .opponent-select-button > button {
     width: 100%;
     height: 100%;
-    
+
     font-size: 2.75vmin;
 }
 
@@ -2036,13 +2218,13 @@ body.modal-open {
     left: 0;
     right: 0;
     bottom: 8%;
-    
+
     /*height: 35%;*/
     height: auto;
     /*min-height: 15%;*/
     max-height: 82%;
     overflow-y: auto;
-    
+
     background-color: #555555;
     padding: 1.5%;
 }
@@ -2050,7 +2232,7 @@ body.modal-open {
 .opponent-details-view {
     width: 100%;
     height: 100%;
-    
+
     display: flex;
     flex-direction: column;
 }
@@ -2058,10 +2240,10 @@ body.modal-open {
 .opponent-details-field {
     background-color: #FFFFFF;
     margin: 0.5% 0;
-    
+
     font-size: 1.65vmin;
     line-height: 1.98vmin;
-    
+
     display: flex;
     align-items: stretch;
     flex: 1;
@@ -2075,9 +2257,9 @@ body.modal-open {
 .opponent-details-field > * {
     display: flex;
     align-items: center;
-    
+
     padding: 0.5% 2%;
-    
+
     flex: 1;
     word-wrap: break-word;
 }
@@ -2099,12 +2281,12 @@ body.modal-open {
 .opponent-details-name {
     min-height: 17%;
     padding: 2% 0;
-    
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+
     flex: 2;
 }
 
@@ -2125,11 +2307,11 @@ body.modal-open {
     min-height: 20%;
     padding: 1%;
     flex-grow: 1;
-    
+
     font-size: 1.65vmin;
     line-height: 1.98vmin;
     flex: 3;
-    
+
     display: block;
 }
 
@@ -2150,10 +2332,10 @@ body.modal-open {
 .opponent-options-row {
     margin: 0.5% 0;
     flex: 1;
-    
+
     font-size: 1.6vmin;
     line-height: 1.98vmin;
-    
+
     display: flex;
 }
 
@@ -2209,6 +2391,10 @@ body.modal-open {
     display: flex;
 }
 
+.opponent-details-basic .opponent-details-description {
+    display: block;
+}
+
 .opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
     display: none;
 }
@@ -2221,14 +2407,14 @@ body.modal-open {
     padding: 1% 2%;
     margin: 2% 5%;
     background: #FFFFFF;
-    
+
     display: flex;
     flex-direction: column;
 }
 
 .opponent-subview-title {
     flex: 2;
-    
+
     text-align: left;
     font-size: 2.5vmin;
 }
@@ -2236,9 +2422,9 @@ body.modal-open {
 .opponent-subview-row {
     margin: 1% 0;
     display: flex;
-    
+
     font-size: 1.85vmin;
-    
+
     flex: 1;
     word-wrap: break-word;
 }
@@ -2246,9 +2432,9 @@ body.modal-open {
 .opponent-subview-row > * {
     display: flex;
     align-items: center;
-    
+
     padding: 0.5% 2%;
-    
+
     flex: 1;
     word-wrap: break-word;
 }
@@ -2280,33 +2466,33 @@ body.modal-open {
     .gender-component, .sort-component > .dropdown-menu > li, .sort-component > button {
         font-size: 1vw;
     }
-    
+
     .option-component > label {
         font-size: 1.1vw;
         line-height: calc(1.1vw * 1.2);
     }
-    
+
     .option-component > input {
         font-size: 1.1vw;
         line-height: calc(1.1vw * 1.2);
     }
-    
+
     .selection-card-footer .selection-card-name {
         font-size: 1.75vw;
     }
-    
+
     .selection-card-footer .selection-card-source {
         font-size: 1.1vw;
     }
-    
+
     .opponent-select-button > button, .select-back-btn {
         font-size: 2vw;
     }
-    
+
     .opponent-full-name {
         font-size: 2vw;
     }
-    
+
     .opponent-source {
         font-size: 1.75vw;
     }
@@ -2408,8 +2594,10 @@ body.modal-open {
 .badge-icon {
     position: absolute;
     width: 36%;
+    height: auto;
     left: 0;
     top: 0;
+    opacity: 0.75;
 }
 
 .status-icon {
@@ -2836,14 +3024,14 @@ body.modal-open {
 .ui-minimal .opponent-area {
     background: none;
     text-align: center;
-    
+
     bottom: auto;
     top: 70%;
-    
+
     height: calc(11.5% * 0.75);
     width: calc(22% * 0.75);
     opacity: 0.5;
-    
+
     transition-property: opacity, transform, height, width;
     transition-duration: 0.5s;
 }
@@ -2878,24 +3066,24 @@ body.modal-open {
     opacity: 1.0;
     height: 11.5%;
     width: 22%;
-    
+
     transition-property: opacity, transform, height, width;
     transition-duration: 0.25s;
 }
 
-.ui-minimal .player-card-area  {    
+.ui-minimal .player-card-area  {
     background: none;
     left: 57%;
-    
+
     display: flex;
     align-items: center;
-    
+
     opacity: 0.50;
     transition-property: opacity;
     transition-duration: 0.5s;
 }
 
-.ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active, .ui-minimal .player-card-area.prompt-exchange {  
+.ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active, .ui-minimal .player-card-area.prompt-exchange {
     opacity: 1.0;
     transition-property: opacity;
     transition-duration: 0.25s;
@@ -2904,7 +3092,7 @@ body.modal-open {
 .ui-minimal .player-card-area .large-card-image {
     width: 10%;
     height: 50%;
-    
+
     transition-property: width, height;
     transition-duration: 0.5s;
 }
@@ -2912,7 +3100,7 @@ body.modal-open {
 .ui-minimal .player-card-area:hover .large-card-image, .ui-minimal .player-card-area:active .large-card-image, .ui-minimal .player-card-area.prompt-exchange .large-card-image {
     width: 19%;
     height: 100%;
-    
+
     transition-property: width, height;
     transition-duration: 0.5s;
 }
@@ -2931,7 +3119,7 @@ body.modal-open {
 .ui-minimal .opponent-revealed-cards .small-card-image {
     margin-right: 0;
     transform: none;
-    
+
     transition-property: margin-right, transform;
     transition-duration: 0.5s;
 }
@@ -2948,15 +3136,15 @@ body.modal-open {
     align-items: flex-end;
     flex-direction: column;
     flex-basis: 0;
-    
+
     position: absolute;
-    
+
     right: 57%;
     bottom: 5%;
-    
+
     width: 33%;
     transform: none;
-    
+
     transition-property: height, transform;
     transition-duration: 0.5s;
 }
@@ -2965,12 +3153,12 @@ body.modal-open {
     display: inline-flex;
     justify-content: flex-end;
     align-items: center;
-    
+
     width: 100%;
-    
+
     opacity: 0.33;
     transform: none;
-    
+
     transition-property: opacity, transform;
     transition-duration: 0.5s;
 }
@@ -2998,7 +3186,7 @@ body.modal-open {
     height: auto;
     margin-left: 1%;
     transform: none;
-    
+
     transition-property: width;
     transition-duration: 0.5s;
 }
@@ -3006,7 +3194,7 @@ body.modal-open {
 
 .player-lost .small-clothing-image-container {
     width: 20%;
-    
+
     transition-property: width;
     transition-duration: 0.5s;
 }
@@ -3014,7 +3202,7 @@ body.modal-open {
 .minimal-clothing-area-row .small-clothing-image {
     height: auto;
     width: 100%;
-    
+
     margin-bottom: 0;
     object-fit: contain;
 }
@@ -3031,11 +3219,11 @@ body.modal-open {
     left: 0;
     right: 0;
     bottom: 1%;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     pointer-events: none;
 }
 
@@ -3318,10 +3506,10 @@ body.modal-open {
     position: absolute;
     left: 24%;
     top: 10%;
-    
+
     width: 20%;
     height: 6%;
-    
+
     font-size: 110%;
 }
 
@@ -3390,12 +3578,12 @@ body.modal-open {
 	transform: translateX(-50%) translateY(-50%);
 	-webkit-transform: translateX(-50%) translateY(-50%);
 	-moz-transform: translateX(-50%) translateY(-50%);
-	
+
 	max-width: 95%;
 	max-height: 95%;
 	width: auto;
 	height: auto;
-	
+
 }
 
 
@@ -3427,7 +3615,7 @@ body.modal-open {
 	top: 7%;
 	height: 40%;
 	font-size: 105%;
-    
+
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -3450,7 +3638,7 @@ body.modal-open {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     padding-left: 1.5em;
     padding-right: 1.5em;
 }
@@ -3461,7 +3649,7 @@ body.modal-open {
 
 .collectible-info-text {
     margin-left: 2em;
-    
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -3624,9 +3812,9 @@ body.modal-open {
     top: -45%;
     width: 19%;
     height: 40%;
-    
+
     animation: 2.5s ease-in-out 0s infinite alternate flash-collectible-button;
-    
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -3653,7 +3841,7 @@ body.modal-open {
     left: 1.5%;
     bottom: 14%;
     width: 4%;
-    height: 4%;
+    height: 4%;7
 }
 
 .player-debug-button.active {

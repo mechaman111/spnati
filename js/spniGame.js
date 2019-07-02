@@ -107,6 +107,7 @@ var eGamePhase = {
 var gamePhase = eGamePhase.DEAL;
 var globalSavedTableVisibility;
 
+var inGame = false;
 var currentTurn = 0;
 var currentRound = -1;
 var previousLoser = -1;
@@ -182,6 +183,8 @@ function loadGameScreen () {
 
     updateAllBehaviours(null, null, GAME_START);
     saveAllTranscriptEntries();
+    updateBiggestLead();
+    setLocalDayOrNight();
 
     /* set up the poker library */
     setupPoker();
@@ -267,6 +270,7 @@ function makeAIDecision () {
 	determineAIAction(players[currentTurn]);
 	
 	/* update a few hardcoded visuals */
+	players[currentTurn].swapping = true;
 	players[currentTurn].updateBehaviour(SWAP_CARDS);
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
@@ -297,6 +301,8 @@ function reactToNewAICards () {
     players[currentTurn].updateVolatileBehaviour();
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
+    
+    players[currentTurn].swapping = false;
     
     saveSingleTranscriptEntry(currentTurn);
 
@@ -683,6 +689,7 @@ function endRound () {
 		console.log("The game has ended!");
 		$gameBanner.html("Game Over! "+players[lastPlayer].label+" won Strip Poker Night at the Inventory!");
 		gameOver = true;
+        codeImportEnabled = true;
 
         for (var i = 0; i < players.length; i++) {
             if (HUMAN_PLAYER == i) {
@@ -696,6 +703,7 @@ function endRound () {
         endWaitDisplay = 0;
 		handleGameOver();
 	} else {
+        updateBiggestLead();
 		allowProgression(eGamePhase.DEAL);
 		preloadCardImages();
 	}
@@ -1020,6 +1028,7 @@ function game_keyUp(e)
         else if (e.keyCode == 81 && DEBUG) {
             showDebug = !showDebug;
             updateDebugState(showDebug);
+            setDevSelectorVisibility(showDebug);
         }
         else if (e.keyCode == 84) {
             toggleTableVisibility();

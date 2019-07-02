@@ -69,6 +69,7 @@ var jsErrors = [];
 var sessionID = '';
 var gameID = '';
 var generalCollectibles = [];
+var codeImportEnabled = false;
 
 /**********************************************************************
  * Screens & Modals
@@ -128,7 +129,9 @@ function compileBaseErrorReport(userDesc, bugType) {
                 'slot': i,
                 'stage': players[i].stage,
                 'timeInStage': players[i].timeInStage,
-                'markers': players[i].markers
+                'markers': players[i].markers,
+                'oneShotCases': players[i].oneShotCases,
+                'oneShotStates': players[i].oneShotStates,
             }
 
             if (players[i].chosenState) {
@@ -334,10 +337,14 @@ Player.prototype.initClothingStatus = function () {
  *******************************************************************/
 Player.prototype.resetState = function () {
     this.out = this.finished = false;
+    this.outOrder = undefined;
+    this.biggestLead = 0;
 	this.forfeit = "";
 	this.stage = this.current = this.consecutiveLosses = 0;
 	this.timeInStage = -1;
 	this.markers = {};
+	this.oneShotCases = {};
+	this.oneShotStates = {};
 
 	if (this.xml !== null) {
         /* Load in the legacy "start" lines, and also
@@ -477,6 +484,44 @@ Player.prototype.hasTag = function(tag) {
     return tag && this.tags && this.tags.indexOf(canonicalizeTag(tag)) >= 0;
 };
 
+Player.prototype.countLayers = function() {
+	return this.clothing.length;
+};
+
+Player.prototype.checkStatus = function(status) {
+	if (status.substr(0, 4) == "not_") {
+		return !this.checkStatus(status.substr(4));
+	}
+	switch (status.trim()) {
+	case STATUS_LOST_SOME:
+		return this.stage > 0;
+	case STATUS_MOSTLY_CLOTHED:
+		return this.mostlyClothed;
+	case STATUS_DECENT:
+		return this.decent;
+	case STATUS_EXPOSED_TOP:
+		return this.exposed.upper;
+	case STATUS_EXPOSED_BOTTOM:
+		return this.exposed.lower;
+	case STATUS_EXPOSED:
+		return this.exposed.upper || this.exposed.lower;
+	case STATUS_EXPOSED_TOP_ONLY:
+		return this.exposed.upper && !this.exposed.lower;
+	case STATUS_EXPOSED_BOTTOM_ONLY:
+		return !this.exposed.upper && this.exposed.lower;
+	case STATUS_NAKED:
+		return this.exposed.upper && this.exposed.lower;
+	case STATUS_ALIVE:
+		return !this.out;
+	case STATUS_LOST_ALL:
+		return this.clothing.length == 0;
+	case STATUS_MASTURBATING:
+		return this.out && !this.finished;
+	case STATUS_FINISHED:
+		return this.finished;
+	}
+}
+
 /*****************************************************************************
  * Subclass of Player for AI-controlled players.
  ****************************************************************************/
@@ -573,6 +618,22 @@ Opponent.prototype.onSelected = function(individual) {
     this.resetState();
     console.log(this.slot+": ");
     console.log(this);
+    
+    // check for duplicate <link> elements:
+    if (this.stylesheet) {
+        if ($('link[href=\"'+this.stylesheet+'\"]').length === 0) {
+            console.log("Loading stylesheet: "+this.stylesheet);
+            
+            var link_elem = $('<link />', {
+                'rel': 'stylesheet',
+                'type': 'text/css',
+                'href': this.stylesheet
+            });
+            
+            $('head').append(link_elem);
+        }
+    }
+    
     this.preloadStageImages(-1);
     if (individual) {
         updateAllBehaviours(this.slot, SELECTED, [[OPPONENT_SELECTED]]);
@@ -725,6 +786,14 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
 	});
 }
 
+/* Called prior to removing a character from the table. */
+Opponent.prototype.unloadOpponent = function () {
+    if (this.stylesheet) {
+        /* Remove the <link> to this opponent's stylesheet. */
+        $('link[href=\"'+this.stylesheet+'\"]').remove();
+    }
+}
+
 /************************************************************
  * Loads and parses the start of the behaviour XML file of the
  * given opponent.
@@ -760,6 +829,16 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.size = $xml.find('size').text();
             this.stamina = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
+
+            this.stylesheet = null;
+            
+            var stylesheet = $xml.find('stylesheet').text();
+            if (stylesheet) {
+                var m = stylesheet.match(/[a-zA-Z0-9()~!*:@,;\-.\/]+\.css/i);
+                if (m) {
+                    this.stylesheet = 'opponents/'+this.id+'/'+m[0];
+                }
+            }
 
             /* The gender listed in meta.xml and behaviour.xml might differ
              * (for example with gender-revealing characters)
@@ -820,6 +899,16 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.targetedLines = targetedLines;
 
+            var nicknames = {};
+            $xml.find('nicknames>nickname').each(function() {
+                if ($(this).attr('for') in nicknames) {
+                    nicknames[$(this).attr('for')].push($(this).text());
+                } else {
+                    nicknames[$(this).attr('for')] = [ $(this).text() ];
+                }
+            });
+            this.nicknames = nicknames;
+            
             if (this.selected_costume) {
                 return this.loadAlternateCostume();
             }
@@ -1169,6 +1258,7 @@ function restartGame () {
     $gamePlayerCardArea.show();
     if (!MINIMAL_UI) $gamePlayerClothingArea.show();
     
+    inGame = false;
 
 	/* trigger screen refreshes */
 	updateSelectionVisuals();
@@ -1308,6 +1398,64 @@ function disableUsageTracking() {
     save.saveUsageTracking();
 }
 
+var SEMVER_RE = /[vV]?(\d+)\.(\d+)(?:\.(\d+))?(?:\-([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-])*))?(?:\+([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*))?/;
+function parseSemVer (versionString) {
+    var m = versionString.match(SEMVER_RE);
+    if (!m) return null;
+    
+    var ver = {
+        'major': parseInt(m[1], 10) || 0,
+        'minor': parseInt(m[2], 10) || 0,
+        'patch': parseInt(m[3], 10) || 0,
+    }
+    
+    if (m[4]) {
+        ver.prerelease = m[4].split('.');
+    }
+    
+    return ver;
+}
+
+/* Implements semver precedence rules, as specified in the Semantic Versioning 2.0.0 spec. */
+function compareVersions (v1, v2) {
+    var m1 = parseSemVer(v1);
+    var m2 = parseSemVer(v2);
+    
+    // compare major - minor - patch first, in that order
+    if (m1.major !== m2.major) return (m1.major > m2.major) ? 1 : -1;
+    if (m1.minor !== m2.minor) return (m1.minor > m2.minor) ? 1 : -1;
+    if (m1.patch !== m2.patch) return (m1.patch > m2.patch) ? 1 : -1;
+    
+    // prerelease versions always have less precedence than release versions
+    if (!m1.prerelease && m2.prerelease) return 1;
+    if (!m2.prerelease && m1.prerelease) return -1;
+    
+    // Compare pre-release identifiers from left to right
+    for (var i=0;i<Math.min(m1.prerelease.length, m2.prerelease.length);i++) {
+        var pr1 = parseInt(m1.prerelease[i], 10);
+        var pr2 = parseInt(m2.prerelease[i], 10);
+        
+        if (m1.prerelease[i] !== m2.prerelease[i]) {
+            // if both are numerical or both are non-numeric
+            if (isNaN(pr1) === isNaN(pr2)) return (pr1 > pr2) ? 1 : -1;
+            
+            // otherwise, if we're comparing numeric to non-numeric,
+            // numeric PR identifiers always have less precedence than non-numeric
+            return isNaN(pr1) ? 1 : -1;
+        }
+    }
+    
+    // All pre-release identifiers to now compared equal
+    // in this case, the version with a larger set of pre-release fields has
+    // higher precedence
+    if (m1.prerelease.length !== m2.prerelease.length) {
+        return (m1.prerelease.length > m2.prerelease.length) ? 1 : -1;
+    }
+    
+    // If all else fails, both versions compare equal
+    return 0;
+}
+
 /************************************************************
  * The player clicked the version button. Shows the version modal.
  ************************************************************/
@@ -1326,8 +1474,8 @@ function showVersionModal () {
     
     /* Construct the version modal DOM: */
     $changelog.empty().append(entries.sort(function (e1, e2) {
-        // Sort in reverse lexographical order
-        return (e1.version < e2.version) ? 1 : -1;
+        // Sort in reverse-precedence order
+        return compareVersions(e1.version, e2.version) * -1;
     }).map(function (ent) {
         var row = document.createElement('tr');
         var versionCell = document.createElement('td');
@@ -1581,6 +1729,15 @@ function forceTableVisibility(state) {
  ************************************************************/
 function showImportModal() {
     $("#export-code").text(save.serializeLocalStorage());
+    
+    if (codeImportEnabled) {
+        $('#import-progress').prop('disabled', false);
+        $('.import-restriction-warning').hide();
+    } else {
+        $('#import-progress').prop('disabled', true);
+        $('.import-restriction-warning').show();
+    }
+    
     $ioModal.modal('show');
 
     $('#import-progress').click(function() {

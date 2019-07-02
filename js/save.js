@@ -206,6 +206,8 @@ function Save() {
         this.loadEndings();
         if (!(character in endings)) {
             endings[character] = [];
+        } else if (endings[character].indexOf(title) >= 0) {
+            return
         }
         endings[character].push(title);
         localStorage.setItem(prefix + 'endings', JSON.stringify(endings));

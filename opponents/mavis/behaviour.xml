@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.8.2 at 4:07:01 p. m. on marzo 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0b at 11:09:56 p. m. on junio 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v3.8.2</version>
+    <version>v5.0b</version>
     <first>Mavis</first>
     <last>Dracula</last>
     <label>Mavis</label>
@@ -16,13 +16,17 @@
     <tags>
         <tag>black_hair</tag>
         <tag>medium_hair</tag>
+        <tag>ahoge</tag>
         <tag>blue_eyes</tag>
         <tag>pale-skinned</tag>
+        <tag>big_butt</tag>
         <tag>shaved</tag>
         <tag>large_breasts</tag>
         <tag>monster</tag>
         <tag>non-human</tag>
         <tag>supernatural</tag>
+        <tag>vampire</tag>
+        <tag from="3" to="3">thigh_highs</tag>
         <tag>cheerful</tag>
         <tag>ditzy</tag>
         <tag>innocent</tag>
@@ -32,13 +36,11 @@
         <tag>bi-curious</tag>
         <tag>cartoon</tag>
         <tag>movie</tag>
-        <tag>goth</tag>
         <tag>hotel_transylvania</tag>
-        <tag>vampire</tag>
         <tag>bottomless_first</tag>
-        <tag>ahoge</tag>
-        <tag>big_butt</tag>
-        <tag>thigh_highs</tag>
+        <tag from="0" to="2">flies</tag>
+        <tag from="7" to="7">flies</tag>
+        <tag>goth</tag>
     </tags>
 
     <start />
@@ -67,6 +69,7 @@
                 <state img="0-Start.png">Strip poker? Is that something humans play for fun?</state>
                 <state img="0-Start.png">Strip poker? Is this how humans have fun?</state>
                 <state img="0-Start.png">Strip poker? Is this what humans play to have fun?</state>
+                <state img="0-Start.png">Is this something humans do for fun?</state>
             </case>
             <case tag="selected">
                 <condition count="3-4" filter="monster" />
@@ -96,6 +99,10 @@
                 <state img="0-Calm.png">Oh, nevermind. I think ~player~'s the only human here!</state>
             </case>
             <case tag="game_start">
+                <test expr="~background~" value="beach" />
+                <state img="0-Thinking.png">For some reason I thought the sun was gonna &lt;i&gt;burn me&lt;/i&gt;...</state>
+            </case>
+            <case tag="game_start">
                 <test expr="~background~" value="haunted forest" />
                 <state img="0-Calm.png">Hey, look! This place isn't much different from the hotel!</state>
                 <state img="0-Happy.png">This place isn't much different from the hotel! I like it!</state>
@@ -120,6 +127,14 @@
                 <state img="0-Calm.png">~cards~ cards, please! Thanks!</state>
                 <state img="0-Calm.png">~cards~, please! Thank you!</state>
                 <state img="0-Calm.png">~cards~. Thanks!</state>
+            </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="0-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="0-Calm.png">One will do!</state>
+                <state img="0-Thinking.png">Hmm... one...</state>
+                <state img="0-Thinking.png">I'll take... one!</state>
+                <state img="0-Thinking.png">One... yeah! One!</state>
             </case>
             <case tag="good_hand">
                 <state img="0-Giggling.png">This is good, right?</state>
@@ -150,6 +165,9 @@
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5">
                 <state img="0-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; Okay, but how are you gonna play?</state>
                 <state img="0-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; That's fine but... how are you gonna play this game?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6">
+                <state img="0-Calm.png">Well, it doesn't matter if you're a boy or a girl. You're still very cute, Chihiro!</state>
             </case>
             <case tag="hand" alsoPlaying="felicia" alsoPlayingStage="2" alsoPlayingTimeInStage="0">
                 <state img="0-Thinking.png">But wait, what are you gonna shave &lt;i&gt;now&lt;/i&gt;, Felicia?</state>
@@ -196,6 +214,16 @@
             <case tag="hand" totalRounds="0">
                 <state img="0-Calm.png">Hi there! I'm Mavis, Dracula's daughter. Yeah, I know, everyone freaks out at first.</state>
             </case>
+            <case tag="must_strip" alsoPlaying="9s">
+                <state img="0-Interested.png">Human? Oh no, Nines, I'm not a human!</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="misato">
+                <state img="0-Interested.png">What's that, Misato? Oh, I just turned 118 years old!</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="9s">
+                <condition count="3-" filter="monster" />
+                <state img="0-Embarrassed.png">Eeh... a little bit, Nines. But don't worry! You two are still cute!</state>
+            </case>
             <case tag="must_strip_winning">
                 <state img="0-Calm.png">No problem! I'm winning, after all...</state>
                 <state img="0-Calm.png">I'm okay with losing once...</state>
@@ -233,6 +261,56 @@
                 <state img="0-Strip.png">I'll go for my ~clothing~. It can't be too hard!</state>
                 <state img="0-Strip.png">My ~clothing~.  That's okay for my first loss, right?</state>
                 <state img="0-Strip.png">~Clothing~! Got it.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="9s">
+                <state img="0-Strip.png">I'm not an android or a human, Nines. I'm a vampire!</state>
+            </case>
+            <case tag="stripping" alsoPlaying="misato">
+                <state img="0-Strip.png">Yes, and now that I'm older I'll try to go outside more!</state>
+            </case>
+            <case tag="male_human_must_strip" consecutiveLosses="3">
+                <state img="0-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
+                <state img="0-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="0-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
+                <state img="0-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1">
+                <state img="0-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
+                <state img="0-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="2">
+                <state img="0-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
+                <state img="0-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="3">
+                <state img="0-Giggling.png">Hehee... your turn!</state>
+                <state img="0-Calm.png">Sorry! Maybe you'll do better next time!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4">
+                <state img="0-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
+                <state img="0-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
+                <state img="0-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="5">
+                <state img="0-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
+                <state img="0-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
+                <state img="0-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="6">
+                <state img="0-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
+                <state img="0-Happy.png">Yay! It's ~player~'s turn!</state>
+                <state img="0-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="0-Embarrassed.png">Y-You can still come back, ~player~...</state>
+                <state img="0-Embarrassed.png">Y-You still have a chance, ~player~!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="8">
+                <state img="0-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
+                <state img="0-Interested.png">Oh! I know what's happening now, and I like it!</state>
+                <state img="0-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="0-Happy.png">This'll be fun!</state>
@@ -272,8 +350,8 @@
                 <state img="0-Calm.png">You don't know much about the outside world, do you, ~name~? Don't worry, I don't either. Maybe we could learn together?</state>
             </case>
             <case tag="female_must_strip" filter="student" targetStage="0">
-                <state img="0-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was homeschooled...</state>
-                <state img="0-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm homeschooled...</state>
+                <state img="0-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was home schooled...</state>
+                <state img="0-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm home-schooled...</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="0-Calm.png">~name~! That's a pretty costu-</state>
@@ -318,7 +396,7 @@
                 <state img="0-Calm.png">Why do people say clowns are scary? They aren't!</state>
             </case>
             <case tag="female_must_strip" target="kali" targetStage="0">
-                <state img="0-Calm.png">A werecat? I haven't seen one in years!</state>
+                <state img="0-Calm.png">A were-cat? I haven't seen one in years!</state>
             </case>
             <case tag="female_must_strip" target="marceline" targetStage="0">
                 <state img="0-Happy.png">You're a vampire too?</state>
@@ -361,50 +439,7 @@
             </case>
             <case tag="tie">
                 <state img="0-Thinking.png">Huh? What do we do now?</state>
-            </case>
-            <case tag="male_human_must_strip" consecutiveLosses="3">
-                <state img="0-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
-                <state img="0-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="0-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
-                <state img="0-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1">
-                <state img="0-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
-                <state img="0-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="2">
-                <state img="0-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
-                <state img="0-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="3">
-                <state img="0-Giggling.png">Hehehe... your turn!</state>
-                <state img="0-Calm.png">Sorry! Maybe you'll do better next time!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4">
-                <state img="0-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
-                <state img="0-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
-                <state img="0-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="5">
-                <state img="0-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
-                <state img="0-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
-                <state img="0-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="6">
-                <state img="0-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
-                <state img="0-Happy.png">Yay! It's ~player~'s turn!</state>
-                <state img="0-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="0-Embarrassed.png">Y-You can still come back, ~player~...</state>
-                <state img="0-Embarrassed.png">Y-You still have a chance, ~player~!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="8">
-                <state img="0-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
-                <state img="0-Interested.png">Oh! I know what's happening now, and I like it!</state>
-                <state img="0-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+                <state img="0-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="0-Thinking.png">Is that what you wanna go for, ~name~?</state>
@@ -442,6 +477,9 @@
             <case tag="female_removing_accessory" target="blake" targetStage="5">
                 <state img="0-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="0-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
+            </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="0-Embarrassed.png">(I'm so glad she's taking that off!)</state>
             </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="0-Sad.png">Aww... she seemed nice.</state>
@@ -502,6 +540,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="0-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="0-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="0-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -590,9 +631,9 @@
             </case>
             <case tag="male_removed_major">
                 <state img="0-EmbarrassedHorny.png">&lt;i&gt;(Escaping from home and coming here was such a good idea!)&lt;/i&gt;</state>
-                <state img="0-EmbarrassedHorny.png">Heheheh!</state>
-                <state img="0-Horny.png">&lt;i&gt;I... uhm...&lt;/i&gt;</state>
                 <state img="0-Happy.png">Woohoo!</state>
+                <state img="0-EmbarrassedHorny.png">Hehe heh!</state>
+                <state img="0-Horny.png">&lt;i&gt;I... uhm...&lt;/i&gt;</state>
             </case>
             <case tag="male_removed_major" target="9s" targetStage="3">
                 <state img="0-Thinking.png">Wait... why don't you... Oh, that's right! You were built in a laboratory, like Uncle Frank!</state>
@@ -721,12 +762,12 @@
                 <state img="0-Embarrassed.png">What do you mean, Nugi? I think his... thingy is cute...</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="chihiro">
-                <state img="0-Thinking.png">You said you were a girl just because it's small? I'll never understand humans...</state>
-                <state img="0-Thinking.png">You dressed up as a girl just because you have a small one? I don't get humans...</state>
+                <state img="0-Surprised.png">Wait! So human girls can also be boys? Wow!</state>
+                <state img="0-Surprised.png">Wow! Human girls can turn into boys? I didn't know that!</state>
             </case>
             <case tag="male_small_crotch_is_visible" totalNaked="1">
-                <state img="0-Calm.png">Oh. That's it? I can't believe I was that nervous, heh.</state>
-                <state img="0-Calm.png">Oh. That's it? I can't believe I was almost scared, heh!</state>
+                <state img="0-Calm.png">Oh! &lt;i&gt;That's it?&lt;/i&gt; I can't believe I was so nervous for such a cute thing, heh.</state>
+                <state img="0-Calm.png">Oh? That's cute! There was no reason to be nervous!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="0-EmbarrassedHorny.png">I-It's nice...</state>
@@ -909,14 +950,14 @@
                 <state img="0-Calm.png">Now you look even more pretty, Felicia!</state>
             </case>
             <case tag="female_crotch_is_visible" target="florina" targetSaidMarker="panties_butt" targetSayingMarker="butt">
-                <state img="0-Giggling.png">Heheh! Cute butt.</state>
+                <state img="0-Giggling.png">Hehee! Cute butt.</state>
                 <state img="0-Giggling.png">Cute butt, Florina. &lt;i&gt;Heehee...&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="0-Thinking.png">You forgot it, Futaba? But... you don't seem embarrassed...</state>
             </case>
             <case tag="female_crotch_is_visible" target="joey">
-                <state img="0-Giggling.png">Heheheh! That's so funny, Joey!</state>
+                <state img="0-Giggling.png">Hehe heh! That's so funny, Joey!</state>
                 <state img="0-Giggling.png">Heeheehe! That's a really funny trick, Joey!</state>
             </case>
             <case tag="female_crotch_is_visible" target="jolyne">
@@ -1108,7 +1149,7 @@
             <case tag="female_finished_masturbating">
                 <state img="0-Horny.png">I...I feel so strange...</state>
                 <state img="0-Horny.png">Is it normal to feel... warm...?</state>
-                <state img="0-Horny.png">&lt;i&gt;Am I suppossed to feel like this?&lt;/i&gt;</state>
+                <state img="0-Horny.png">&lt;i&gt;Am I supposed to feel like this?&lt;/i&gt;</state>
                 <state img="0-Horny.png">&lt;i&gt;That was so...&lt;/i&gt;</state>
                 <state img="0-Horny.png">&lt;i&gt;Oh m-my!&lt;/i&gt; That was so...</state>
                 <state img="0-Horny.png">(It must have felt real good!)</state>
@@ -1159,6 +1200,14 @@
                 <state img="1-Calm.png">~cards~, please! Thank you!</state>
                 <state img="1-Calm.png">~cards~. Thanks!</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="1-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="1-Calm.png">One will do!</state>
+                <state img="1-Thinking.png">Hmm... one...</state>
+                <state img="1-Thinking.png">I'll take... one!</state>
+                <state img="1-Thinking.png">One... yeah! One!</state>
+            </case>
             <case tag="good_hand">
                 <state img="1-Happy.png">I love them!</state>
                 <state img="1-Happy.png">Yes! Just what I wanted!</state>
@@ -1190,6 +1239,9 @@
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5">
                 <state img="1-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; Okay, but how are you gonna play?</state>
                 <state img="1-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; That's fine but... how are you gonna play this game?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6">
+                <state img="1-Calm.png">Well, it doesn't matter if you're a boy or a girl. You're still very cute, Chihiro!</state>
             </case>
             <case tag="hand" alsoPlaying="felicia" alsoPlayingStage="2" alsoPlayingTimeInStage="0">
                 <state img="1-Thinking.png">But wait, what are you gonna shave &lt;i&gt;now&lt;/i&gt;, Felicia?</state>
@@ -1234,6 +1286,56 @@
                 <state img="1-Stripped.png">This isn't so bad! I'm having &lt;i&gt;fun!&lt;/i&gt;</state>
                 <state img="1-Stripped.png">This ain't so bad! It's even &lt;i&gt;fun!&lt;/i&gt;</state>
             </case>
+            <case tag="stripped" alsoPlaying="9s">
+                <state img="1-Calm.png">Thank you! This is my first time in a place like this...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="misato">
+                <state img="1-Interested.png">Like coming here! Do you think this is a good idea, Misato?</state>
+            </case>
+            <case tag="male_human_must_strip" consecutiveLosses="3">
+                <state img="1-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
+                <state img="1-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="1-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
+                <state img="1-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1">
+                <state img="1-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
+                <state img="1-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="2">
+                <state img="1-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
+                <state img="1-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="3">
+                <state img="1-Giggling.png">Hehee... your turn!</state>
+                <state img="1-Calm.png">Sorry! Maybe you'll do better next time!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4">
+                <state img="1-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
+                <state img="1-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
+                <state img="1-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="5">
+                <state img="1-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
+                <state img="1-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
+                <state img="1-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="6">
+                <state img="1-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
+                <state img="1-Happy.png">Yay! It's ~player~'s turn!</state>
+                <state img="1-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="1-Embarrassed.png">Y-You can still come back, ~player~...</state>
+                <state img="1-Embarrassed.png">Y-You still have a chance, ~player~!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="8">
+                <state img="1-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
+                <state img="1-Interested.png">Oh! I know what's happening now, and I like it!</state>
+                <state img="1-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="1-Calm.png">You'll do better next time!</state>
                 <state img="1-Calm.png">Don't worry, ~name~! You'll do better next time!</state>
@@ -1271,8 +1373,8 @@
                 <state img="1-Calm.png">You don't know much about the outside world, do you, ~name~? Don't worry, I don't either. Maybe we could learn together?</state>
             </case>
             <case tag="female_must_strip" filter="student" targetStage="0">
-                <state img="1-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was homeschooled...</state>
-                <state img="1-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm homeschooled...</state>
+                <state img="1-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was home schooled...</state>
+                <state img="1-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm home-schooled...</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="1-Calm.png">~name~! That's a pretty costu-</state>
@@ -1317,7 +1419,7 @@
                 <state img="1-Calm.png">Why do people say clowns are scary? They aren't!</state>
             </case>
             <case tag="female_must_strip" target="kali" targetStage="0">
-                <state img="1-Calm.png">A werecat? I haven't seen one in years!</state>
+                <state img="1-Calm.png">A were-cat? I haven't seen one in years!</state>
             </case>
             <case tag="female_must_strip" target="marceline" targetStage="0">
                 <state img="1-Happy.png">You're a vampire too?</state>
@@ -1360,50 +1462,7 @@
             </case>
             <case tag="tie">
                 <state img="1-Thinking.png">Huh? What do we do now?</state>
-            </case>
-            <case tag="male_human_must_strip" consecutiveLosses="3">
-                <state img="1-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
-                <state img="1-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="1-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
-                <state img="1-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1">
-                <state img="1-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
-                <state img="1-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="2">
-                <state img="1-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
-                <state img="1-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="3">
-                <state img="1-Giggling.png">Hehehe... your turn!</state>
-                <state img="1-Calm.png">Sorry! Maybe you'll do better next time!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4">
-                <state img="1-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
-                <state img="1-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
-                <state img="1-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="5">
-                <state img="1-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
-                <state img="1-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
-                <state img="1-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="6">
-                <state img="1-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
-                <state img="1-Happy.png">Yay! It's ~player~'s turn!</state>
-                <state img="1-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="1-Embarrassed.png">Y-You can still come back, ~player~...</state>
-                <state img="1-Embarrassed.png">Y-You still have a chance, ~player~!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="8">
-                <state img="1-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
-                <state img="1-Interested.png">Oh! I know what's happening now, and I like it!</state>
-                <state img="1-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+                <state img="1-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="1-Thinking.png">Is that what you wanna go for, ~name~?</state>
@@ -1441,6 +1500,9 @@
             <case tag="female_removing_accessory" target="blake" targetStage="5">
                 <state img="1-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="1-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
+            </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="1-Embarrassed.png">(I'm so glad she's taking that off!)</state>
             </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="1-Sad.png">Aww... she seemed nice.</state>
@@ -1501,6 +1563,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="1-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="1-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="1-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -1589,9 +1654,9 @@
             </case>
             <case tag="male_removed_major">
                 <state img="1-EmbarrassedHorny.png">&lt;i&gt;(Escaping from home and coming here was such a good idea!)&lt;/i&gt;</state>
-                <state img="1-EmbarrassedHorny.png">Heheheh!</state>
-                <state img="1-Horny.png">&lt;i&gt;I... uhm...&lt;/i&gt;</state>
                 <state img="1-Happy.png">Woohoo!</state>
+                <state img="1-EmbarrassedHorny.png">Hehe heh!</state>
+                <state img="1-Horny.png">&lt;i&gt;I... uhm...&lt;/i&gt;</state>
             </case>
             <case tag="male_removed_major" target="9s" targetStage="3">
                 <state img="1-Thinking.png">Wait... why don't you... Oh, that's right! You were built in a laboratory, like Uncle Frank!</state>
@@ -1719,12 +1784,12 @@
                 <state img="1-Embarrassed.png">What do you mean, Nugi? I think his... thingy is cute...</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="chihiro">
-                <state img="1-Thinking.png">You said you were a girl just because it's small? I'll never understand humans...</state>
-                <state img="1-Thinking.png">You dressed up as a girl just because you have a small one? I don't get humans...</state>
+                <state img="1-Surprised.png">Wait! So human girls can also be boys? Wow!</state>
+                <state img="1-Surprised.png">Wow! Human girls can turn into boys? I didn't know that!</state>
             </case>
             <case tag="male_small_crotch_is_visible" totalNaked="1">
-                <state img="1-Calm.png">Oh. That's it? I can't believe I was that nervous, heh.</state>
-                <state img="1-Calm.png">Oh. That's it? I can't believe I was almost scared, heh!</state>
+                <state img="1-Calm.png">Oh! &lt;i&gt;That's it?&lt;/i&gt; I can't believe I was so nervous for such a cute thing, heh.</state>
+                <state img="1-Calm.png">Oh? That's cute! There was no reason to be nervous!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="1-EmbarrassedHorny.png">I-It's nice...</state>
@@ -1907,14 +1972,14 @@
                 <state img="1-Calm.png">Now you look even more pretty, Felicia!</state>
             </case>
             <case tag="female_crotch_is_visible" target="florina" targetSaidMarker="panties_butt" targetSayingMarker="butt">
-                <state img="1-Giggling.png">Heheh! Cute butt.</state>
+                <state img="1-Giggling.png">Hehee! Cute butt.</state>
                 <state img="1-Giggling.png">Cute butt, Florina. &lt;i&gt;Heehee...&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="1-Thinking.png">You forgot it, Futaba? But... you don't seem embarrassed...</state>
             </case>
             <case tag="female_crotch_is_visible" target="joey">
-                <state img="1-Giggling.png">Heheheh! That's so funny, Joey!</state>
+                <state img="1-Giggling.png">Hehe heh! That's so funny, Joey!</state>
                 <state img="1-Giggling.png">Heeheehe! That's a really funny trick, Joey!</state>
             </case>
             <case tag="female_crotch_is_visible" target="jolyne">
@@ -2106,7 +2171,7 @@
             <case tag="female_finished_masturbating">
                 <state img="1-Horny.png">I...I feel so strange...</state>
                 <state img="1-Horny.png">Is it normal to feel... warm...?</state>
-                <state img="1-Horny.png">&lt;i&gt;Am I suppossed to feel like this?&lt;/i&gt;</state>
+                <state img="1-Horny.png">&lt;i&gt;Am I supposed to feel like this?&lt;/i&gt;</state>
                 <state img="1-Horny.png">&lt;i&gt;That was so...&lt;/i&gt;</state>
                 <state img="1-Horny.png">&lt;i&gt;Oh m-my!&lt;/i&gt; That was so...</state>
                 <state img="1-Horny.png">(It must have felt real good!)</state>
@@ -2157,10 +2222,18 @@
                 <state img="2-Calm.png">~cards~, please! Thank you!</state>
                 <state img="2-Calm.png">~cards~. Thanks!</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="2-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="2-Calm.png">One will do!</state>
+                <state img="2-Thinking.png">Hmm... one...</state>
+                <state img="2-Thinking.png">I'll take... one!</state>
+                <state img="2-Thinking.png">One... yeah! One!</state>
+            </case>
             <case tag="good_hand">
                 <state img="2-Happy.png">What a great hand!</state>
-                <state img="2-Happy.png">Very good!</state>
                 <state img="2-Happy.png">&lt;i&gt;Yay!&lt;/i&gt; I won't lose this round!</state>
+                <state img="2-Happy.png">Very good!</state>
             </case>
             <case tag="okay_hand">
                 <state img="2-Calm.png">Not bad...</state>
@@ -2181,6 +2254,9 @@
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5">
                 <state img="2-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; Okay, but how are you gonna play?</state>
                 <state img="2-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; That's fine but... how are you gonna play this game?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6">
+                <state img="2-Calm.png">Well, it doesn't matter if you're a boy or a girl. You're still very cute, Chihiro!</state>
             </case>
             <case tag="hand" alsoPlaying="felicia" alsoPlayingStage="2" alsoPlayingTimeInStage="0">
                 <state img="2-Thinking.png">But wait, what are you gonna shave &lt;i&gt;now&lt;/i&gt;, Felicia?</state>
@@ -2216,6 +2292,56 @@
                 <state img="2-Stripped.png">And... the other one!</state>
                 <state img="2-Stripped.png">Here's the other one, let's keep playing!</state>
                 <state img="2-Stripped.png">And there's the other one. Now let's keep playing!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="9s">
+                <state img="2-Stripped.png">Floating? This is something vampires can do, Nines!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="roxie">
+                <state img="2-Stripped.png">I'm sure you'd look very cute with them, Roxie!</state>
+            </case>
+            <case tag="male_human_must_strip" consecutiveLosses="3">
+                <state img="2-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
+                <state img="2-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="2-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
+                <state img="2-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1">
+                <state img="2-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
+                <state img="2-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="2">
+                <state img="2-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
+                <state img="2-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="3">
+                <state img="2-Giggling.png">Hehee... your turn!</state>
+                <state img="2-Calm.png">Sorry! Maybe you'll do better next time!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4">
+                <state img="2-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
+                <state img="2-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
+                <state img="2-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="5">
+                <state img="2-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
+                <state img="2-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
+                <state img="2-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="6">
+                <state img="2-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
+                <state img="2-Happy.png">Yay! It's ~player~'s turn!</state>
+                <state img="2-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="2-Embarrassed.png">Y-You can still come back, ~player~...</state>
+                <state img="2-Embarrassed.png">Y-You still have a chance, ~player~!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="8">
+                <state img="2-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
+                <state img="2-Interested.png">Oh! I know what's happening now, and I like it!</state>
+                <state img="2-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="2-Happy.png">I'm liking this!</state>
@@ -2254,8 +2380,8 @@
                 <state img="2-Calm.png">You don't know much about the outside world, do you, ~name~? Don't worry, I don't either. Maybe we could learn together?</state>
             </case>
             <case tag="female_must_strip" filter="student" targetStage="0">
-                <state img="2-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was homeschooled...</state>
-                <state img="2-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm homeschooled...</state>
+                <state img="2-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was home schooled...</state>
+                <state img="2-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm home-schooled...</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="2-Calm.png">~name~! That's a pretty costu-</state>
@@ -2300,7 +2426,7 @@
                 <state img="2-Calm.png">Why do people say clowns are scary? They aren't!</state>
             </case>
             <case tag="female_must_strip" target="kali" targetStage="0">
-                <state img="2-Calm.png">A werecat? I haven't seen one in years!</state>
+                <state img="2-Calm.png">A were-cat? I haven't seen one in years!</state>
             </case>
             <case tag="female_must_strip" target="marceline" targetStage="0">
                 <state img="2-Happy.png">You're a vampire too?</state>
@@ -2343,50 +2469,7 @@
             </case>
             <case tag="tie">
                 <state img="2-Thinking.png">Huh? What do we do now?</state>
-            </case>
-            <case tag="male_human_must_strip" consecutiveLosses="3">
-                <state img="2-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
-                <state img="2-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="2-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
-                <state img="2-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1">
-                <state img="2-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
-                <state img="2-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="2">
-                <state img="2-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
-                <state img="2-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="3">
-                <state img="2-Giggling.png">Hehehe... your turn!</state>
-                <state img="2-Calm.png">Sorry! Maybe you'll do better next time!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4">
-                <state img="2-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
-                <state img="2-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
-                <state img="2-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="5">
-                <state img="2-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
-                <state img="2-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
-                <state img="2-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="6">
-                <state img="2-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
-                <state img="2-Happy.png">Yay! It's ~player~'s turn!</state>
-                <state img="2-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="2-Embarrassed.png">Y-You can still come back, ~player~...</state>
-                <state img="2-Embarrassed.png">Y-You still have a chance, ~player~!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="8">
-                <state img="2-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
-                <state img="2-Interested.png">Oh! I know what's happening now, and I like it!</state>
-                <state img="2-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+                <state img="2-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="2-Thinking.png">Is that what you wanna go for, ~name~?</state>
@@ -2424,6 +2507,9 @@
             <case tag="female_removing_accessory" target="blake" targetStage="5">
                 <state img="2-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="2-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
+            </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="2-Embarrassed.png">(I'm so glad she's taking that off!)</state>
             </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="2-Sad.png">Aww... she seemed nice.</state>
@@ -2484,6 +2570,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="2-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="2-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="2-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -2572,9 +2661,9 @@
             </case>
             <case tag="male_removed_major">
                 <state img="2-EmbarrassedHorny.png">&lt;i&gt;(Escaping from home and coming here was such a good idea!)&lt;/i&gt;</state>
-                <state img="2-EmbarrassedHorny.png">Heheheh!</state>
-                <state img="2-Horny.png">&lt;i&gt;I... uhm...&lt;/i&gt;</state>
                 <state img="2-Happy.png">Woohoo!</state>
+                <state img="2-EmbarrassedHorny.png">Hehe heh!</state>
+                <state img="2-Horny.png">&lt;i&gt;I... uhm...&lt;/i&gt;</state>
             </case>
             <case tag="male_removed_major" target="9s" targetStage="3">
                 <state img="2-Thinking.png">Wait... why don't you... Oh, that's right! You were built in a laboratory, like Uncle Frank!</state>
@@ -2698,6 +2787,8 @@
                 <state img="2-Embarrassed.png">Are you embarrassed, ~name~? &lt;i&gt;But I think it's cute...&lt;/i&gt;</state>
                 <state img="2-Embarrassed.png">Why are you laughing at ~name~? His thing? &lt;i&gt;I think it's cute...&lt;/i&gt;</state>
                 <state img="2-Happy.png">Don't be embarrassed, ~name~! I think it's cute!</state>
+                <state img="2-Giggling.png">It's cute! Why is it embarrassing?</state>
+                <state img="2-Giggling.png">&lt;i&gt;Hehee! So cute!&lt;/i&gt;</state>
             </case>
             <case tag="male_small_crotch_is_visible" alsoPlaying="nugi-chan">
                 <state img="2-Angry.png">That is so &lt;i&gt;mean&lt;/i&gt;, Nugi! ~name~ can't help who he is!</state>
@@ -2706,12 +2797,12 @@
                 <state img="2-Embarrassed.png">What do you mean, Nugi? I think his... thingy is cute...</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="chihiro">
-                <state img="2-Thinking.png">You said you were a girl just because it's small? I'll never understand humans...</state>
-                <state img="2-Thinking.png">You dressed up as a girl just because you have a small one? I don't get humans...</state>
+                <state img="2-Surprised.png">Wait! So human girls can also be boys? Wow!</state>
+                <state img="2-Surprised.png">Wow! Human girls can turn into boys? I didn't know that!</state>
             </case>
             <case tag="male_small_crotch_is_visible" totalNaked="1">
-                <state img="2-Calm.png">Oh. That's it? I can't believe I was that nervous, heh.</state>
-                <state img="2-Calm.png">Oh. That's it? I can't believe I was almost scared, heh!</state>
+                <state img="2-Calm.png">Oh! &lt;i&gt;That's it?&lt;/i&gt; I can't believe I was so nervous for such a cute thing, heh.</state>
+                <state img="2-Calm.png">Oh? That's cute! There was no reason to be nervous!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="2-EmbarrassedHorny.png">I-It's nice...</state>
@@ -2894,14 +2985,14 @@
                 <state img="2-Calm.png">Now you look even more pretty, Felicia!</state>
             </case>
             <case tag="female_crotch_is_visible" target="florina" targetSaidMarker="panties_butt" targetSayingMarker="butt">
-                <state img="2-Giggling.png">Heheh! Cute butt.</state>
+                <state img="2-Giggling.png">Hehee! Cute butt.</state>
                 <state img="2-Giggling.png">Cute butt, Florina. &lt;i&gt;Heehee...&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="2-Thinking.png">You forgot it, Futaba? But... you don't seem embarrassed...</state>
             </case>
             <case tag="female_crotch_is_visible" target="joey">
-                <state img="2-Giggling.png">Heheheh! That's so funny, Joey!</state>
+                <state img="2-Giggling.png">Hehe heh! That's so funny, Joey!</state>
                 <state img="2-Giggling.png">Heeheehe! That's a really funny trick, Joey!</state>
             </case>
             <case tag="female_crotch_is_visible" target="jolyne">
@@ -3093,7 +3184,7 @@
             <case tag="female_finished_masturbating">
                 <state img="2-Horny.png">I...I feel so strange...</state>
                 <state img="2-Horny.png">Is it normal to feel... warm...?</state>
-                <state img="2-Horny.png">&lt;i&gt;Am I suppossed to feel like this?&lt;/i&gt;</state>
+                <state img="2-Horny.png">&lt;i&gt;Am I supposed to feel like this?&lt;/i&gt;</state>
                 <state img="2-Horny.png">&lt;i&gt;That was so...&lt;/i&gt;</state>
                 <state img="2-Horny.png">&lt;i&gt;Oh m-my!&lt;/i&gt; That was so...</state>
                 <state img="2-Horny.png">(It must have felt real good!)</state>
@@ -3144,6 +3235,14 @@
                 <state img="3-Calm.png">~cards~, please! Thank you!</state>
                 <state img="3-Calm.png">~cards~. Thanks!</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="3-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="3-Calm.png">One will do!</state>
+                <state img="3-Thinking.png">Hmm... one...</state>
+                <state img="3-Thinking.png">I'll take... one!</state>
+                <state img="3-Thinking.png">One... yeah! One!</state>
+            </case>
             <case tag="good_hand">
                 <state img="3-Happy.png">This... is &lt;i&gt;great!&lt;/i&gt;</state>
                 <state img="3-Happy.png">&lt;i&gt;Ooh!&lt;/i&gt; Lucky me!</state>
@@ -3169,6 +3268,9 @@
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5">
                 <state img="3-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; Okay, but how are you gonna play?</state>
                 <state img="3-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; That's fine but... how are you gonna play this game?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6">
+                <state img="3-Calm.png">Well, it doesn't matter if you're a boy or a girl. You're still very cute, Chihiro!</state>
             </case>
             <case tag="hand" alsoPlaying="felicia" alsoPlayingStage="2" alsoPlayingTimeInStage="0">
                 <state img="3-Thinking.png">But wait, what are you gonna shave &lt;i&gt;now&lt;/i&gt;, Felicia?</state>
@@ -3208,6 +3310,50 @@
                 <state img="3-Stripped.png">&lt;i&gt;Is this better?&lt;/i&gt;</state>
                 <state img="3-Stripped.png">&lt;i&gt;Do you like this more?&lt;/i&gt;</state>
             </case>
+            <case tag="male_human_must_strip" consecutiveLosses="3">
+                <state img="3-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
+                <state img="3-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="3-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
+                <state img="3-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1">
+                <state img="3-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
+                <state img="3-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="2">
+                <state img="3-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
+                <state img="3-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="3">
+                <state img="3-Giggling.png">Hehee... your turn!</state>
+                <state img="3-Calm.png">Sorry! Maybe you'll do better next time!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4">
+                <state img="3-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
+                <state img="3-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
+                <state img="3-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="5">
+                <state img="3-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
+                <state img="3-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
+                <state img="3-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="6">
+                <state img="3-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
+                <state img="3-Happy.png">Yay! It's ~player~'s turn!</state>
+                <state img="3-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="3-Embarrassed.png">Y-You can still come back, ~player~...</state>
+                <state img="3-Embarrassed.png">Y-You still have a chance, ~player~!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="8">
+                <state img="3-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
+                <state img="3-Interested.png">Oh! I know what's happening now, and I like it!</state>
+                <state img="3-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="3-Interested.png">Don't mind me, ~name~.</state>
             </case>
@@ -3241,8 +3387,8 @@
                 <state img="3-Calm.png">You don't know much about the outside world, do you, ~name~? Don't worry, I don't either. Maybe we could learn together?</state>
             </case>
             <case tag="female_must_strip" filter="student" targetStage="0">
-                <state img="3-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was homeschooled...</state>
-                <state img="3-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm homeschooled...</state>
+                <state img="3-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was home schooled...</state>
+                <state img="3-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm home-schooled...</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="3-Calm.png">~name~! That's a pretty costu-</state>
@@ -3287,7 +3433,7 @@
                 <state img="3-Calm.png">Why do people say clowns are scary? They aren't!</state>
             </case>
             <case tag="female_must_strip" target="kali" targetStage="0">
-                <state img="3-Calm.png">A werecat? I haven't seen one in years!</state>
+                <state img="3-Calm.png">A were-cat? I haven't seen one in years!</state>
             </case>
             <case tag="female_must_strip" target="marceline" targetStage="0">
                 <state img="3-Happy.png">You're a vampire too?</state>
@@ -3330,50 +3476,7 @@
             </case>
             <case tag="tie">
                 <state img="3-Thinking.png">Huh? What do we do now?</state>
-            </case>
-            <case tag="male_human_must_strip" consecutiveLosses="3">
-                <state img="3-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
-                <state img="3-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="3-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
-                <state img="3-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1">
-                <state img="3-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
-                <state img="3-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="2">
-                <state img="3-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
-                <state img="3-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="3">
-                <state img="3-Giggling.png">Hehehe... your turn!</state>
-                <state img="3-Calm.png">Sorry! Maybe you'll do better next time!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4">
-                <state img="3-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
-                <state img="3-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
-                <state img="3-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="5">
-                <state img="3-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
-                <state img="3-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
-                <state img="3-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="6">
-                <state img="3-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
-                <state img="3-Happy.png">Yay! It's ~player~'s turn!</state>
-                <state img="3-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="3-Embarrassed.png">Y-You can still come back, ~player~...</state>
-                <state img="3-Embarrassed.png">Y-You still have a chance, ~player~!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="8">
-                <state img="3-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
-                <state img="3-Interested.png">Oh! I know what's happening now, and I like it!</state>
-                <state img="3-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+                <state img="3-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="3-Thinking.png">Is that what you wanna go for, ~name~?</state>
@@ -3413,6 +3516,9 @@
             <case tag="female_removing_accessory" target="blake" targetStage="5">
                 <state img="3-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="3-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
+            </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="3-Embarrassed.png">(I'm so glad she's taking that off!)</state>
             </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="3-Sad.png">Aww... she seemed nice.</state>
@@ -3472,6 +3578,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="3-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="3-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="3-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -3558,8 +3667,8 @@
                 <state img="3-Interested.png">Oh? Your ~clothing~?</state>
             </case>
             <case tag="male_removed_major">
-                <state img="3-Happy.png">Woohoo!</state>
                 <state img="3-Horny.png">&lt;i&gt;(Escaping from home and coming here was such a good idea!)&lt;/i&gt;</state>
+                <state img="3-Happy.png">Woohoo!</state>
                 <state img="3-Horny.png">Hmm!</state>
                 <state img="3-Horny.png">&lt;i&gt;O-Oh... ~name~...&lt;/i&gt;</state>
                 <state img="3-Horny.png">&lt;i&gt;O-oh gee...&lt;/i&gt;</state>
@@ -3676,6 +3785,8 @@
                 <state img="3-Embarrassed.png">Are you embarrassed, ~name~? &lt;i&gt;But I think it's cute...&lt;/i&gt;</state>
                 <state img="3-Embarrassed.png">Why are you laughing at ~name~? His thing? &lt;i&gt;I think it's cute...&lt;/i&gt;</state>
                 <state img="3-Happy.png">Don't be embarrassed, ~name~! I think it's cute!</state>
+                <state img="3-Giggling.png">It's cute! Why is it embarrassing?</state>
+                <state img="3-Giggling.png">&lt;i&gt;Hehee! So cute!&lt;/i&gt;</state>
             </case>
             <case tag="male_small_crotch_is_visible" alsoPlaying="nugi-chan">
                 <state img="3-Angry.png">That is so &lt;i&gt;mean&lt;/i&gt;, Nugi! ~name~ can't help who he is!</state>
@@ -3684,12 +3795,12 @@
                 <state img="3-Embarrassed.png">What do you mean, Nugi? I think his... thingy is cute...</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="chihiro">
-                <state img="3-Thinking.png">You said you were a girl just because it's small? I'll never understand humans...</state>
-                <state img="3-Thinking.png">You dressed up as a girl just because you have a small one? I don't get humans...</state>
+                <state img="3-Surprised.png">Wait! So human girls can also be boys? Wow!</state>
+                <state img="3-Surprised.png">Wow! Human girls can turn into boys? I didn't know that!</state>
             </case>
             <case tag="male_small_crotch_is_visible" totalNaked="1">
-                <state img="3-Calm.png">Oh. That's it? I can't believe I was that nervous, heh.</state>
-                <state img="3-Calm.png">Oh. That's it? I can't believe I was almost scared, heh!</state>
+                <state img="3-Calm.png">Oh! &lt;i&gt;That's it?&lt;/i&gt; I can't believe I was so nervous for such a cute thing, heh.</state>
+                <state img="3-Calm.png">Oh? That's cute! There was no reason to be nervous!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="3-Horny.png">C-Could you like... &lt;i&gt;play with it?&lt;/i&gt;</state>
@@ -3876,14 +3987,14 @@
                 <state img="3-Calm.png">Now you look even more pretty, Felicia!</state>
             </case>
             <case tag="female_crotch_is_visible" target="florina" targetSaidMarker="panties_butt" targetSayingMarker="butt">
-                <state img="3-Giggling.png">Heheh! Cute butt.</state>
+                <state img="3-Giggling.png">Hehee! Cute butt.</state>
                 <state img="3-Giggling.png">Cute butt, Florina. &lt;i&gt;Heehee...&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="3-Thinking.png">You forgot it, Futaba? But... you don't seem embarrassed...</state>
             </case>
             <case tag="female_crotch_is_visible" target="joey">
-                <state img="3-Giggling.png">Heheheh! That's so funny, Joey!</state>
+                <state img="3-Giggling.png">Hehe heh! That's so funny, Joey!</state>
                 <state img="3-Giggling.png">Heeheehe! That's a really funny trick, Joey!</state>
             </case>
             <case tag="female_crotch_is_visible" target="jolyne">
@@ -4073,7 +4184,7 @@
             <case tag="female_finished_masturbating">
                 <state img="3-Horny.png">I...I feel so strange...</state>
                 <state img="3-Horny.png">Is it normal to feel... warm...?</state>
-                <state img="3-Horny.png">&lt;i&gt;Am I suppossed to feel like this?&lt;/i&gt;</state>
+                <state img="3-Horny.png">&lt;i&gt;Am I supposed to feel like this?&lt;/i&gt;</state>
                 <state img="3-Horny.png">&lt;i&gt;That was so...&lt;/i&gt;</state>
                 <state img="3-Horny.png">&lt;i&gt;Oh m-my!&lt;/i&gt; That was so...</state>
                 <state img="3-Horny.png">(It must have felt real good!)</state>
@@ -4124,6 +4235,14 @@
                 <state img="4-Calm.png">~cards~, please! Thank you!</state>
                 <state img="4-Calm.png">~cards~. Thanks!</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="4-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="4-Calm.png">One will do!</state>
+                <state img="4-Thinking.png">Hmm... one...</state>
+                <state img="4-Thinking.png">I'll take... one!</state>
+                <state img="4-Thinking.png">One... yeah! One!</state>
+            </case>
             <case tag="good_hand">
                 <state img="4-Embarrassed.png">&lt;i&gt;Great!&lt;/i&gt; Oh... &lt;i&gt;(I shouldn't say it out loud...)&lt;/i&gt;</state>
                 <state img="4-Thinking.png">&lt;i&gt;(Should I say how good this hand is out loud...?)&lt;/i&gt;</state>
@@ -4149,9 +4268,15 @@
                 <state img="4-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; Okay, but how are you gonna play?</state>
                 <state img="4-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; That's fine but... how are you gonna play this game?</state>
             </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6">
+                <state img="4-Calm.png">Well, it doesn't matter if you're a boy or a girl. You're still very cute, Chihiro!</state>
+            </case>
             <case tag="hand" alsoPlaying="felicia" alsoPlayingStage="2" alsoPlayingTimeInStage="0">
                 <state img="4-Thinking.png">But wait, what are you gonna shave &lt;i&gt;now&lt;/i&gt;, Felicia?</state>
                 <state img="4-Thinking.png">But... what are you gonna shave &lt;i&gt;now&lt;/i&gt;, Felicia?</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="9s">
+                <state img="4-Embarrassed.png">I may not know a lot about the outside world, Nines, but I do know what comes off next!</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="4-Embarrassed.png">I guess being at the top didn't matter in the end...</state>
@@ -4181,6 +4306,50 @@
                 <state img="4-Stripped.png">Did you like that look? I thought it was cute...</state>
                 <state img="4-Stripped.png">That was a cute look, wasn't it?</state>
                 <state img="4-Stripped.png">That look with my stockings on, wasn't it cute?</state>
+            </case>
+            <case tag="male_human_must_strip" consecutiveLosses="3">
+                <state img="4-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
+                <state img="4-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="4-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
+                <state img="4-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1">
+                <state img="4-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
+                <state img="4-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="2">
+                <state img="4-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
+                <state img="4-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="3">
+                <state img="4-Giggling.png">Hehee... your turn!</state>
+                <state img="4-Calm.png">Sorry! Maybe you'll do better next time!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4">
+                <state img="4-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
+                <state img="4-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
+                <state img="4-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="5">
+                <state img="4-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
+                <state img="4-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
+                <state img="4-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="6">
+                <state img="4-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
+                <state img="4-Happy.png">Yay! It's ~player~'s turn!</state>
+                <state img="4-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="4-Embarrassed.png">Y-You can still come back, ~player~...</state>
+                <state img="4-Embarrassed.png">Y-You still have a chance, ~player~!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="8">
+                <state img="4-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
+                <state img="4-Interested.png">Oh! I know what's happening now, and I like it!</state>
+                <state img="4-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="4-Calm.png">You'll do better next time!</state>
@@ -4218,8 +4387,8 @@
                 <state img="4-Calm.png">You don't know much about the outside world, do you, ~name~? Don't worry, I don't either. Maybe we could learn together?</state>
             </case>
             <case tag="female_must_strip" filter="student" targetStage="0">
-                <state img="4-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was homeschooled...</state>
-                <state img="4-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm homeschooled...</state>
+                <state img="4-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was home schooled...</state>
+                <state img="4-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm home-schooled...</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="4-Calm.png">~name~! That's a pretty costu-</state>
@@ -4264,7 +4433,7 @@
                 <state img="4-Calm.png">Why do people say clowns are scary? They aren't!</state>
             </case>
             <case tag="female_must_strip" target="kali" targetStage="0">
-                <state img="4-Calm.png">A werecat? I haven't seen one in years!</state>
+                <state img="4-Calm.png">A were-cat? I haven't seen one in years!</state>
             </case>
             <case tag="female_must_strip" target="marceline" targetStage="0">
                 <state img="4-Happy.png">You're a vampire too?</state>
@@ -4307,50 +4476,7 @@
             </case>
             <case tag="tie">
                 <state img="4-Thinking.png">Huh? What do we do now?</state>
-            </case>
-            <case tag="male_human_must_strip" consecutiveLosses="3">
-                <state img="4-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
-                <state img="4-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="4-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
-                <state img="4-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1">
-                <state img="4-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
-                <state img="4-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="2">
-                <state img="4-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
-                <state img="4-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="3">
-                <state img="4-Giggling.png">Hehehe... your turn!</state>
-                <state img="4-Calm.png">Sorry! Maybe you'll do better next time!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4">
-                <state img="4-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
-                <state img="4-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
-                <state img="4-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="5">
-                <state img="4-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
-                <state img="4-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
-                <state img="4-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="6">
-                <state img="4-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
-                <state img="4-Happy.png">Yay! It's ~player~'s turn!</state>
-                <state img="4-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="4-Embarrassed.png">Y-You can still come back, ~player~...</state>
-                <state img="4-Embarrassed.png">Y-You still have a chance, ~player~!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="8">
-                <state img="4-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
-                <state img="4-Interested.png">Oh! I know what's happening now, and I like it!</state>
-                <state img="4-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+                <state img="4-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="4-Thinking.png">Is that what you wanna go for, ~name~?</state>
@@ -4390,6 +4516,9 @@
             <case tag="female_removing_accessory" target="blake" targetStage="5">
                 <state img="4-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="4-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
+            </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="4-Embarrassed.png">(I'm so glad she's taking that off!)</state>
             </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="4-Sad.png">Aww... she seemed nice.</state>
@@ -4449,6 +4578,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="4-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="4-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="4-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -4527,8 +4659,8 @@
                 <state img="4-Interested.png">Oh? Your ~clothing~?</state>
             </case>
             <case tag="male_removed_major">
-                <state img="4-Happy.png">Woohoo!</state>
                 <state img="4-Horny.png">&lt;i&gt;(Escaping from home and coming here was such a good idea!)&lt;/i&gt;</state>
+                <state img="4-Happy.png">Woohoo!</state>
                 <state img="4-Horny.png">Hmm!</state>
                 <state img="4-Horny.png">&lt;i&gt;O-Oh... ~name~...&lt;/i&gt;</state>
                 <state img="4-Horny.png">&lt;i&gt;O-oh gee...&lt;/i&gt;</state>
@@ -4645,6 +4777,8 @@
                 <state img="4-Embarrassed.png">Are you embarrassed, ~name~? &lt;i&gt;But I think it's cute...&lt;/i&gt;</state>
                 <state img="4-Embarrassed.png">Why are you laughing at ~name~? His thing? &lt;i&gt;I think it's cute...&lt;/i&gt;</state>
                 <state img="4-Happy.png">Don't be embarrassed, ~name~! I think it's cute!</state>
+                <state img="4-Giggling.png">It's cute! Why is it embarrassing?</state>
+                <state img="4-Giggling.png">&lt;i&gt;Hehee! So cute!&lt;/i&gt;</state>
             </case>
             <case tag="male_small_crotch_is_visible" alsoPlaying="nugi-chan">
                 <state img="4-Angry.png">That is so &lt;i&gt;mean&lt;/i&gt;, Nugi! ~name~ can't help who he is!</state>
@@ -4653,12 +4787,12 @@
                 <state img="4-Embarrassed.png">What do you mean, Nugi? I think his... thingy is cute...</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="chihiro">
-                <state img="4-Thinking.png">You said you were a girl just because it's small? I'll never understand humans...</state>
-                <state img="4-Thinking.png">You dressed up as a girl just because you have a small one? I don't get humans...</state>
+                <state img="4-Surprised.png">Wait! So human girls can also be boys? Wow!</state>
+                <state img="4-Surprised.png">Wow! Human girls can turn into boys? I didn't know that!</state>
             </case>
             <case tag="male_small_crotch_is_visible" totalNaked="1">
-                <state img="4-Calm.png">Oh. That's it? I can't believe I was that nervous, heh.</state>
-                <state img="4-Calm.png">Oh. That's it? I can't believe I was almost scared, heh!</state>
+                <state img="4-Calm.png">Oh! &lt;i&gt;That's it?&lt;/i&gt; I can't believe I was so nervous for such a cute thing, heh.</state>
+                <state img="4-Calm.png">Oh? That's cute! There was no reason to be nervous!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="4-Horny.png">C-Could you like... &lt;i&gt;play with it?&lt;/i&gt;</state>
@@ -4841,14 +4975,14 @@
                 <state img="4-Calm.png">Now you look even more pretty, Felicia!</state>
             </case>
             <case tag="female_crotch_is_visible" target="florina" targetSaidMarker="panties_butt" targetSayingMarker="butt">
-                <state img="4-Giggling.png">Heheh! Cute butt.</state>
+                <state img="4-Giggling.png">Hehee! Cute butt.</state>
                 <state img="4-Giggling.png">Cute butt, Florina. &lt;i&gt;Heehee...&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="4-Thinking.png">You forgot it, Futaba? But... you don't seem embarrassed...</state>
             </case>
             <case tag="female_crotch_is_visible" target="joey">
-                <state img="4-Giggling.png">Heheheh! That's so funny, Joey!</state>
+                <state img="4-Giggling.png">Hehe heh! That's so funny, Joey!</state>
                 <state img="4-Giggling.png">Heeheehe! That's a really funny trick, Joey!</state>
             </case>
             <case tag="female_crotch_is_visible" target="jolyne">
@@ -5038,7 +5172,7 @@
             <case tag="female_finished_masturbating">
                 <state img="4-Horny.png">I...I feel so strange...</state>
                 <state img="4-Horny.png">Is it normal to feel... warm...?</state>
-                <state img="4-Horny.png">&lt;i&gt;Am I suppossed to feel like this?&lt;/i&gt;</state>
+                <state img="4-Horny.png">&lt;i&gt;Am I supposed to feel like this?&lt;/i&gt;</state>
                 <state img="4-Horny.png">&lt;i&gt;That was so...&lt;/i&gt;</state>
                 <state img="4-Horny.png">&lt;i&gt;Oh m-my!&lt;/i&gt; That was so...</state>
                 <state img="4-Horny.png">(It must have felt real good!)</state>
@@ -5089,6 +5223,14 @@
                 <state img="5-Calm.png">~cards~, please! Thank you!</state>
                 <state img="5-Calm.png">~cards~. Thanks!</state>
             </case>
+            <case tag="swap_cards">
+                <test expr="~cards~" value="1" />
+                <state img="5-Calm.png">Just ~cards~. Thanks!</state>
+                <state img="5-Calm.png">One will do!</state>
+                <state img="5-Thinking.png">Hmm... one...</state>
+                <state img="5-Thinking.png">I'll take... one!</state>
+                <state img="5-Thinking.png">One... yeah! One!</state>
+            </case>
             <case tag="good_hand">
                 <state img="5-Happy.png">Yes! I love these cards!</state>
                 <state img="5-Embarrassed.png">Good! But... I'm almost naked anyway...</state>
@@ -5113,6 +5255,9 @@
             <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5">
                 <state img="5-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; Okay, but how are you gonna play?</state>
                 <state img="5-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; That's fine but... how are you gonna play this game?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6">
+                <state img="5-Calm.png">Well, it doesn't matter if you're a boy or a girl. You're still very cute, Chihiro!</state>
             </case>
             <case tag="hand" alsoPlaying="felicia" alsoPlayingStage="2" alsoPlayingTimeInStage="0">
                 <state img="5-Thinking.png">But wait, what are you gonna shave &lt;i&gt;now&lt;/i&gt;, Felicia?</state>
@@ -5148,6 +5293,9 @@
                 <state img="5-Strip.png">Y-You won't laugh, will you, ~player~?</state>
                 <state img="5-Strip.png">D-Do you guys like how I look...?</state>
             </case>
+            <case tag="stripping" alsoPlaying="9s">
+                <state img="5-Strip.png">Huh... I think so, Nines...</state>
+            </case>
             <case tag="stripping" alsoPlaying="mahiru" alsoPlayingStage="7-9" alsoPlayingSayingMarker="mavisselfie">
                 <state img="5-Happy.png">A photo? Yeah, I'd love to!</state>
             </case>
@@ -5155,6 +5303,50 @@
                 <state img="5-Stripped.png">There! &lt;i&gt;(Wait...)&lt;/i&gt;</state>
                 <state img="5-Stripped.png">Done! &lt;i&gt;(Wait a minute...)&lt;/i&gt;</state>
                 <state img="5-Stripped.png">I'm ready! &lt;i&gt;(...Something doesn't feel right...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" consecutiveLosses="3">
+                <state img="5-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
+                <state img="5-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="5-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
+                <state img="5-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1">
+                <state img="5-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
+                <state img="5-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="2">
+                <state img="5-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
+                <state img="5-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="3">
+                <state img="5-Giggling.png">Hehee... your turn!</state>
+                <state img="5-Calm.png">Sorry! Maybe you'll do better next time!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4">
+                <state img="5-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
+                <state img="5-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
+                <state img="5-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="5">
+                <state img="5-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
+                <state img="5-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
+                <state img="5-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="6">
+                <state img="5-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
+                <state img="5-Happy.png">Yay! It's ~player~'s turn!</state>
+                <state img="5-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="5-Embarrassed.png">Y-You can still come back, ~player~...</state>
+                <state img="5-Embarrassed.png">Y-You still have a chance, ~player~!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="8">
+                <state img="5-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
+                <state img="5-Interested.png">Oh! I know what's happening now, and I like it!</state>
+                <state img="5-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="5-Embarrassed.png"></state>
@@ -5190,8 +5382,8 @@
                 <state img="5-Calm.png">You don't know much about the outside world, do you, ~name~? Don't worry, I don't either. Maybe we could learn together?</state>
             </case>
             <case tag="female_must_strip" filter="student" targetStage="0">
-                <state img="5-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was homeschooled...</state>
-                <state img="5-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm homeschooled...</state>
+                <state img="5-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was home schooled...</state>
+                <state img="5-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm home-schooled...</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="5-Calm.png">~name~! That's a pretty costu-</state>
@@ -5236,7 +5428,7 @@
                 <state img="5-Calm.png">Why do people say clowns are scary? They aren't!</state>
             </case>
             <case tag="female_must_strip" target="kali" targetStage="0">
-                <state img="5-Calm.png">A werecat? I haven't seen one in years!</state>
+                <state img="5-Calm.png">A were-cat? I haven't seen one in years!</state>
             </case>
             <case tag="female_must_strip" target="marceline" targetStage="0">
                 <state img="5-Happy.png">You're a vampire too?</state>
@@ -5279,50 +5471,7 @@
             </case>
             <case tag="tie">
                 <state img="5-Thinking.png">Huh? What do we do now?</state>
-            </case>
-            <case tag="male_human_must_strip" consecutiveLosses="3">
-                <state img="5-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
-                <state img="5-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="5-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
-                <state img="5-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1">
-                <state img="5-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
-                <state img="5-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="2">
-                <state img="5-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
-                <state img="5-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="3">
-                <state img="5-Giggling.png">Hehehe... your turn!</state>
-                <state img="5-Calm.png">Sorry! Maybe you'll do better next time!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4">
-                <state img="5-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
-                <state img="5-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
-                <state img="5-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="5">
-                <state img="5-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
-                <state img="5-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
-                <state img="5-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="6">
-                <state img="5-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
-                <state img="5-Happy.png">Yay! It's ~player~'s turn!</state>
-                <state img="5-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="5-Embarrassed.png">Y-You can still come back, ~player~...</state>
-                <state img="5-Embarrassed.png">Y-You still have a chance, ~player~!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="8">
-                <state img="5-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
-                <state img="5-Interested.png">Oh! I know what's happening now, and I like it!</state>
-                <state img="5-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+                <state img="5-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="5-Angry.png">Ah! That's nothing!</state>
@@ -5363,6 +5512,9 @@
             <case tag="female_removing_accessory" target="blake" targetStage="5">
                 <state img="5-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="5-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
+            </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="5-Embarrassed.png">(I'm so glad she's taking that off!)</state>
             </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="5-Sad.png">Aww... she seemed nice.</state>
@@ -5422,6 +5574,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="5-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="5-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="5-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -5500,8 +5655,8 @@
                 <state img="5-Interested.png">Oh? Your ~clothing~?</state>
             </case>
             <case tag="male_removed_major">
-                <state img="5-Happy.png">Woohoo!</state>
                 <state img="5-Horny.png">&lt;i&gt;(Escaping from home and coming here was such a good idea!)&lt;/i&gt;</state>
+                <state img="5-Happy.png">Woohoo!</state>
                 <state img="5-Horny.png">Hmm!</state>
                 <state img="5-Horny.png">&lt;i&gt;O-Oh... ~name~...&lt;/i&gt;</state>
                 <state img="5-Horny.png">&lt;i&gt;O-oh gee...&lt;/i&gt;</state>
@@ -5608,7 +5763,7 @@
             <case tag="male_small_crotch_is_visible">
                 <state img="5-Giggling.png">Look at that tiny thing! It's so cute!</state>
                 <state img="5-Giggling.png">&lt;i&gt;Aww!&lt;/i&gt; It's so small and cute!</state>
-                <state img="5-Giggling.png">Heehe! It's so cute, ~name~!</state>
+                <state img="5-Giggling.png">Hehee! It's so cute, ~name~!</state>
                 <state img="5-Giggling.png">&lt;i&gt;Aww! It's cute!&lt;/i&gt;</state>
                 <state img="5-Giggling.png">&lt;i&gt;Aww! So adorable!&lt;/i&gt;</state>
                 <state img="5-Giggling.png">&lt;i&gt;Heehee, that's the most adorable thing.&lt;/i&gt;</state>
@@ -5623,12 +5778,12 @@
                 <state img="5-Embarrassed.png">What do you mean, Nugi? I think his... thingy is cute...</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="chihiro">
-                <state img="5-Thinking.png">You said you were a girl just because it's small? I'll never understand humans...</state>
-                <state img="5-Thinking.png">You dressed up as a girl just because you have a small one? I don't get humans...</state>
+                <state img="5-Surprised.png">Wait! So human girls can also be boys? Wow!</state>
+                <state img="5-Surprised.png">Wow! Human girls can turn into boys? I didn't know that!</state>
             </case>
             <case tag="male_small_crotch_is_visible" totalNaked="1">
-                <state img="5-Calm.png">Oh. That's it? I can't believe I was that nervous, heh.</state>
-                <state img="5-Calm.png">Oh. That's it? I can't believe I was almost scared, heh!</state>
+                <state img="5-Calm.png">Oh! &lt;i&gt;That's it?&lt;/i&gt; I can't believe I was so nervous for such a cute thing, heh.</state>
+                <state img="5-Calm.png">Oh? That's cute! There was no reason to be nervous!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="5-Horny.png">C-Could you like... &lt;i&gt;play with it?&lt;/i&gt;</state>
@@ -5815,14 +5970,14 @@
                 <state img="5-Calm.png">Now you look even more pretty, Felicia!</state>
             </case>
             <case tag="female_crotch_is_visible" target="florina" targetSaidMarker="panties_butt" targetSayingMarker="butt">
-                <state img="5-Giggling.png">Heheh! Cute butt.</state>
+                <state img="5-Giggling.png">Hehee! Cute butt.</state>
                 <state img="5-Giggling.png">Cute butt, Florina. &lt;i&gt;Heehee...&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="5-Thinking.png">You forgot it, Futaba? But... you don't seem embarrassed...</state>
             </case>
             <case tag="female_crotch_is_visible" target="joey">
-                <state img="5-Giggling.png">Heheheh! That's so funny, Joey!</state>
+                <state img="5-Giggling.png">Hehe heh! That's so funny, Joey!</state>
                 <state img="5-Giggling.png">Heeheehe! That's a really funny trick, Joey!</state>
             </case>
             <case tag="female_crotch_is_visible" target="jolyne">
@@ -6008,7 +6163,7 @@
             <case tag="female_finished_masturbating">
                 <state img="5-Horny.png">I...I feel so strange...</state>
                 <state img="5-Horny.png">Is it normal to feel... warm...?</state>
-                <state img="5-Horny.png">&lt;i&gt;Am I suppossed to feel like this?&lt;/i&gt;</state>
+                <state img="5-Horny.png">&lt;i&gt;Am I supposed to feel like this?&lt;/i&gt;</state>
                 <state img="5-Horny.png">&lt;i&gt;That was so...&lt;/i&gt;</state>
                 <state img="5-Horny.png">&lt;i&gt;Oh m-my!&lt;/i&gt; That was so...</state>
                 <state img="5-Horny.png">(It must have felt real good!)</state>
@@ -6075,9 +6230,16 @@
                 <state img="6-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; Okay, but how are you gonna play?</state>
                 <state img="6-Thinking.png">&lt;i&gt;Alter Ego?&lt;/i&gt; That's fine but... how are you gonna play this game?</state>
             </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6">
+                <state img="6-Calm.png">Well, it doesn't matter if you're a boy or a girl. You're still very cute, Chihiro!</state>
+            </case>
             <case tag="hand" alsoPlaying="felicia" alsoPlayingStage="2" alsoPlayingTimeInStage="0">
                 <state img="6-Thinking.png">But wait, what are you gonna shave &lt;i&gt;now&lt;/i&gt;, Felicia?</state>
                 <state img="6-Thinking.png">But... what are you gonna shave &lt;i&gt;now&lt;/i&gt;, Felicia?</state>
+            </case>
+            <case tag="hand" alsoPlaying="jolyne" timeInStage="0">
+                <state img="6-Butt.png">Moon? I don't see anything, Jolyne...</state>
+                <state img="6-Butt.png">Huh? I don't see no moon, Jolyne!</state>
             </case>
             <case tag="hand" timeInStage="0">
                 <test expr="~background~" value="bedroom" />
@@ -6104,6 +6266,50 @@
             </case>
             <case tag="stripped" alsoPlaying="mahiru" alsoPlayingStage="7-9" alsoPlayingSayingMarker="mavisselfie">
                 <state img="custom:6-Selfie"></state>
+            </case>
+            <case tag="male_human_must_strip" consecutiveLosses="3">
+                <state img="6-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
+                <state img="6-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="6-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
+                <state img="6-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1">
+                <state img="6-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
+                <state img="6-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="2">
+                <state img="6-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
+                <state img="6-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="3">
+                <state img="6-Giggling.png">Hehee... your turn!</state>
+                <state img="6-Calm.png">Sorry! Maybe you'll do better next time!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4">
+                <state img="6-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
+                <state img="6-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
+                <state img="6-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="5">
+                <state img="6-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
+                <state img="6-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
+                <state img="6-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="6">
+                <state img="6-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
+                <state img="6-Happy.png">Yay! It's ~player~'s turn!</state>
+                <state img="6-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="6-Embarrassed.png">Y-You can still come back, ~player~...</state>
+                <state img="6-Embarrassed.png">Y-You still have a chance, ~player~!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="8">
+                <state img="6-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
+                <state img="6-Interested.png">Oh! I know what's happening now, and I like it!</state>
+                <state img="6-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="6-Calm.png">You'll do better next time!</state>
@@ -6143,8 +6349,8 @@
                 <state img="6-Calm.png">You don't know much about the outside world, do you, ~name~? Don't worry, I don't either. Maybe we could learn together?</state>
             </case>
             <case tag="female_must_strip" filter="student" targetStage="0">
-                <state img="6-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was homeschooled...</state>
-                <state img="6-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm homeschooled...</state>
+                <state img="6-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was home schooled...</state>
+                <state img="6-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm home-schooled...</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="6-Calm.png">~name~! That's a pretty costu-</state>
@@ -6189,7 +6395,7 @@
                 <state img="6-Calm.png">Why do people say clowns are scary? They aren't!</state>
             </case>
             <case tag="female_must_strip" target="kali" targetStage="0">
-                <state img="6-Calm.png">A werecat? I haven't seen one in years!</state>
+                <state img="6-Calm.png">A were-cat? I haven't seen one in years!</state>
             </case>
             <case tag="female_must_strip" target="marceline" targetStage="0">
                 <state img="6-Happy.png">You're a vampire too?</state>
@@ -6232,50 +6438,7 @@
             </case>
             <case tag="tie">
                 <state img="6-Thinking.png">Huh? What do we do now?</state>
-            </case>
-            <case tag="male_human_must_strip" consecutiveLosses="3">
-                <state img="6-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
-                <state img="6-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="6-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
-                <state img="6-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1">
-                <state img="6-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
-                <state img="6-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="2">
-                <state img="6-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
-                <state img="6-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="3">
-                <state img="6-Giggling.png">Hehehe... your turn!</state>
-                <state img="6-Calm.png">Sorry! Maybe you'll do better next time!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4">
-                <state img="6-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
-                <state img="6-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
-                <state img="6-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="5">
-                <state img="6-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
-                <state img="6-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
-                <state img="6-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="6">
-                <state img="6-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
-                <state img="6-Happy.png">Yay! It's ~player~'s turn!</state>
-                <state img="6-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="6-Embarrassed.png">Y-You can still come back, ~player~...</state>
-                <state img="6-Embarrassed.png">Y-You still have a chance, ~player~!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="8">
-                <state img="6-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
-                <state img="6-Interested.png">Oh! I know what's happening now, and I like it!</state>
-                <state img="6-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+                <state img="6-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="6-Angry.png">Ah! That's nothing!</state>
@@ -6320,6 +6483,9 @@
             <case tag="female_removing_accessory" target="blake" targetStage="5">
                 <state img="6-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="6-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
+            </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="6-Embarrassed.png">(I'm so glad she's taking that off!)</state>
             </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="6-Sad.png">Aww... she seemed nice.</state>
@@ -6381,6 +6547,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="6-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="6-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="6-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -6458,8 +6627,8 @@
                 <state img="6-Interested.png">Oh? Your ~clothing~?</state>
             </case>
             <case tag="male_removed_major">
-                <state img="6-Happy.png">Woohoo!</state>
                 <state img="6-Horny.png">&lt;i&gt;(Escaping from home and coming here was such a good idea!)&lt;/i&gt;</state>
+                <state img="6-Happy.png">Woohoo!</state>
                 <state img="6-Horny.png">Hmm!</state>
                 <state img="6-Horny.png">&lt;i&gt;O-Oh... ~name~...&lt;/i&gt;</state>
                 <state img="6-Horny.png">&lt;i&gt;O-oh gee...&lt;/i&gt;</state>
@@ -6566,7 +6735,7 @@
             <case tag="male_small_crotch_is_visible">
                 <state img="6-Giggling.png">Look at that tiny thing! It's so cute!</state>
                 <state img="6-Giggling.png">&lt;i&gt;Aww!&lt;/i&gt; It's so small and cute!</state>
-                <state img="6-Giggling.png">Heehe! It's so cute, ~name~!</state>
+                <state img="6-Giggling.png">Hehee! It's so cute, ~name~!</state>
                 <state img="6-Giggling.png">&lt;i&gt;Aww! It's cute!&lt;/i&gt;</state>
                 <state img="6-Giggling.png">&lt;i&gt;Aww! So adorable!&lt;/i&gt;</state>
                 <state img="6-Giggling.png">&lt;i&gt;Heehee, that's the most adorable thing.&lt;/i&gt;</state>
@@ -6581,12 +6750,12 @@
                 <state img="6-Embarrassed.png">What do you mean, Nugi? I think his... thingy is cute...</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="chihiro">
-                <state img="6-Thinking.png">You said you were a girl just because it's small? I'll never understand humans...</state>
-                <state img="6-Thinking.png">You dressed up as a girl just because you have a small one? I don't get humans...</state>
+                <state img="6-Surprised.png">Wait! So human girls can also be boys? Wow!</state>
+                <state img="6-Surprised.png">Wow! Human girls can turn into boys? I didn't know that!</state>
             </case>
             <case tag="male_small_crotch_is_visible" totalNaked="1">
-                <state img="6-Calm.png">Oh. That's it? I can't believe I was that nervous, heh.</state>
-                <state img="6-Calm.png">Oh. That's it? I can't believe I was almost scared, heh!</state>
+                <state img="6-Calm.png">Oh! &lt;i&gt;That's it?&lt;/i&gt; I can't believe I was so nervous for such a cute thing, heh.</state>
+                <state img="6-Calm.png">Oh? That's cute! There was no reason to be nervous!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="6-Horny.png">C-Could you like... &lt;i&gt;play with it?&lt;/i&gt;</state>
@@ -6773,14 +6942,14 @@
                 <state img="6-Calm.png">Now you look even more pretty, Felicia!</state>
             </case>
             <case tag="female_crotch_is_visible" target="florina" targetSaidMarker="panties_butt" targetSayingMarker="butt">
-                <state img="6-Giggling.png">Heheh! Cute butt.</state>
+                <state img="6-Giggling.png">Hehee! Cute butt.</state>
                 <state img="6-Giggling.png">Cute butt, Florina. &lt;i&gt;Heehee...&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="6-Thinking.png">You forgot it, Futaba? But... you don't seem embarrassed...</state>
             </case>
             <case tag="female_crotch_is_visible" target="joey">
-                <state img="6-Giggling.png">Heheheh! That's so funny, Joey!</state>
+                <state img="6-Giggling.png">Hehe heh! That's so funny, Joey!</state>
                 <state img="6-Giggling.png">Heeheehe! That's a really funny trick, Joey!</state>
             </case>
             <case tag="female_crotch_is_visible" target="jolyne">
@@ -6966,7 +7135,7 @@
             <case tag="female_finished_masturbating">
                 <state img="6-Horny.png">I...I feel so strange...</state>
                 <state img="6-Horny.png">Is it normal to feel... warm...?</state>
-                <state img="6-Horny.png">&lt;i&gt;Am I suppossed to feel like this?&lt;/i&gt;</state>
+                <state img="6-Horny.png">&lt;i&gt;Am I supposed to feel like this?&lt;/i&gt;</state>
                 <state img="6-Horny.png">&lt;i&gt;That was so...&lt;/i&gt;</state>
                 <state img="6-Horny.png">&lt;i&gt;Oh m-my!&lt;/i&gt; That was so...</state>
                 <state img="6-Horny.png">(It must have felt real good!)</state>
@@ -7005,6 +7174,50 @@
         </stage>
 
         <stage id="7">
+            <case tag="male_human_must_strip" consecutiveLosses="3">
+                <state img="7-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
+                <state img="7-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="7-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
+                <state img="7-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1">
+                <state img="7-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
+                <state img="7-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="2">
+                <state img="7-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
+                <state img="7-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="3">
+                <state img="7-Giggling.png">Hehee... your turn!</state>
+                <state img="7-Calm.png">Sorry! Maybe you'll do better next time!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4">
+                <state img="7-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
+                <state img="7-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
+                <state img="7-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="5">
+                <state img="7-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
+                <state img="7-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
+                <state img="7-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="6">
+                <state img="7-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
+                <state img="7-Happy.png">Yay! It's ~player~'s turn!</state>
+                <state img="7-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="7-Embarrassed.png">Y-You can still come back, ~player~...</state>
+                <state img="7-Embarrassed.png">Y-You still have a chance, ~player~!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="8">
+                <state img="7-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
+                <state img="7-Interested.png">Oh! I know what's happening now, and I like it!</state>
+                <state img="7-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="7-Happy.png">&lt;i&gt;Yes!&lt;/i&gt;</state>
                 <state img="7-Happy.png">&lt;i&gt;Great!&lt;/i&gt;</state>
@@ -7039,8 +7252,8 @@
                 <state img="7-Calm.png">You don't know much about the outside world, do you, ~name~? Don't worry, I don't either. Maybe we could learn together?</state>
             </case>
             <case tag="female_must_strip" filter="student" targetStage="0">
-                <state img="7-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was homeschooled...</state>
-                <state img="7-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm homeschooled...</state>
+                <state img="7-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was home schooled...</state>
+                <state img="7-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm home-schooled...</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="7-Calm.png">~name~! That's a pretty costu-</state>
@@ -7085,7 +7298,7 @@
                 <state img="7-Calm.png">Why do people say clowns are scary? They aren't!</state>
             </case>
             <case tag="female_must_strip" target="kali" targetStage="0">
-                <state img="7-Calm.png">A werecat? I haven't seen one in years!</state>
+                <state img="7-Calm.png">A were-cat? I haven't seen one in years!</state>
             </case>
             <case tag="female_must_strip" target="marceline" targetStage="0">
                 <state img="7-Happy.png">You're a vampire too?</state>
@@ -7128,50 +7341,7 @@
             </case>
             <case tag="tie">
                 <state img="7-Thinking.png">Huh? What do we do now?</state>
-            </case>
-            <case tag="male_human_must_strip" consecutiveLosses="3">
-                <state img="7-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
-                <state img="7-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="7-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
-                <state img="7-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1">
-                <state img="7-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
-                <state img="7-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="2">
-                <state img="7-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
-                <state img="7-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="3">
-                <state img="7-Giggling.png">Hehehe... your turn!</state>
-                <state img="7-Calm.png">Sorry! Maybe you'll do better next time!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4">
-                <state img="7-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
-                <state img="7-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
-                <state img="7-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="5">
-                <state img="7-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
-                <state img="7-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
-                <state img="7-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="6">
-                <state img="7-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
-                <state img="7-Happy.png">Yay! It's ~player~'s turn!</state>
-                <state img="7-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="7-Embarrassed.png">Y-You can still come back, ~player~...</state>
-                <state img="7-Embarrassed.png">Y-You still have a chance, ~player~!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="8">
-                <state img="7-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
-                <state img="7-Interested.png">Oh! I know what's happening now, and I like it!</state>
-                <state img="7-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+                <state img="7-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="7-Angry.png">Ah! That's nothing!</state>
@@ -7216,6 +7386,9 @@
             <case tag="female_removing_accessory" target="blake" targetStage="5">
                 <state img="7-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="7-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
+            </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="7-Embarrassed.png">(I'm so glad she's taking that off!)</state>
             </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="7-Sad.png">Aww... she seemed nice.</state>
@@ -7277,6 +7450,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="7-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="7-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="7-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -7354,8 +7530,8 @@
                 <state img="7-Interested.png">Oh? Your ~clothing~?</state>
             </case>
             <case tag="male_removed_major">
-                <state img="7-Happy.png">Woohoo!</state>
                 <state img="7-Horny.png">&lt;i&gt;(Escaping from home and coming here was such a good idea!)&lt;/i&gt;</state>
+                <state img="7-Happy.png">Woohoo!</state>
                 <state img="7-Horny.png">Hmm!</state>
                 <state img="7-Horny.png">&lt;i&gt;O-Oh... ~name~...&lt;/i&gt;</state>
                 <state img="7-Horny.png">&lt;i&gt;O-oh gee...&lt;/i&gt;</state>
@@ -7458,7 +7634,7 @@
             <case tag="male_small_crotch_is_visible">
                 <state img="7-Giggling.png">Look at that tiny thing! It's so cute!</state>
                 <state img="7-Giggling.png">&lt;i&gt;Aww!&lt;/i&gt; It's so small and cute!</state>
-                <state img="7-Giggling.png">Heehe! It's so cute, ~name~!</state>
+                <state img="7-Giggling.png">Hehee! It's so cute, ~name~!</state>
                 <state img="7-Giggling.png">&lt;i&gt;Aww! It's cute!&lt;/i&gt;</state>
                 <state img="7-Giggling.png">&lt;i&gt;Aww! So adorable!&lt;/i&gt;</state>
                 <state img="7-Giggling.png">&lt;i&gt;Heehee, that's the most adorable thing.&lt;/i&gt;</state>
@@ -7473,12 +7649,12 @@
                 <state img="7-Embarrassed.png">What do you mean, Nugi? I think his... thingy is cute...</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="chihiro">
-                <state img="7-Thinking.png">You said you were a girl just because it's small? I'll never understand humans...</state>
-                <state img="7-Thinking.png">You dressed up as a girl just because you have a small one? I don't get humans...</state>
+                <state img="7-Surprised.png">Wait! So human girls can also be boys? Wow!</state>
+                <state img="7-Surprised.png">Wow! Human girls can turn into boys? I didn't know that!</state>
             </case>
             <case tag="male_small_crotch_is_visible" totalNaked="1">
-                <state img="7-Calm.png">Oh. That's it? I can't believe I was that nervous, heh.</state>
-                <state img="7-Calm.png">Oh. That's it? I can't believe I was almost scared, heh!</state>
+                <state img="7-Calm.png">Oh! &lt;i&gt;That's it?&lt;/i&gt; I can't believe I was so nervous for such a cute thing, heh.</state>
+                <state img="7-Calm.png">Oh? That's cute! There was no reason to be nervous!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="7-Horny.png">C-Could you like... &lt;i&gt;play with it?&lt;/i&gt;</state>
@@ -7665,14 +7841,14 @@
                 <state img="7-Calm.png">Now you look even more pretty, Felicia!</state>
             </case>
             <case tag="female_crotch_is_visible" target="florina" targetSaidMarker="panties_butt" targetSayingMarker="butt">
-                <state img="7-Giggling.png">Heheh! Cute butt.</state>
+                <state img="7-Giggling.png">Hehee! Cute butt.</state>
                 <state img="7-Giggling.png">Cute butt, Florina. &lt;i&gt;Heehee...&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="7-Thinking.png">You forgot it, Futaba? But... you don't seem embarrassed...</state>
             </case>
             <case tag="female_crotch_is_visible" target="joey">
-                <state img="7-Giggling.png">Heheheh! That's so funny, Joey!</state>
+                <state img="7-Giggling.png">Hehe heh! That's so funny, Joey!</state>
                 <state img="7-Giggling.png">Heeheehe! That's a really funny trick, Joey!</state>
             </case>
             <case tag="female_crotch_is_visible" target="jolyne">
@@ -7711,7 +7887,7 @@
                 <state img="7-Horny.png">Y-You won't mind if I watch, right?</state>
             </case>
             <case tag="male_masturbating">
-                <state img="7-Horny.png">T-Thanks, ~name~. It's much more easier now...</state>
+                <state img="7-Horny.png">T-Thanks, ~name~. It's much easier now...</state>
                 <state img="7-MasturbA.png">Aah~ ~name~!</state>
                 <state img="7-MasturbB.png">~name~... Ahh~</state>
                 <state img="7-HeavyA.png">C-Crap... ~name~!</state>
@@ -7863,7 +8039,7 @@
                 <state img="7-MasturbB.png">&lt;i&gt;OooOoh&lt;/i&gt;... yes...</state>
             </case>
             <case tag="heavy_masturbating">
-                <state img="7-HeavyA.png">&lt;i&gt;Hnngg...&lt;/i&gt;</state>
+                <state img="7-HeavyA.png">&lt;i&gt;Hnngh...&lt;/i&gt;</state>
                 <state img="7-HeavyB.png">&lt;i&gt;Hnngg...&lt;/i&gt; Ah~</state>
                 <state img="7-HeavyA.png">&lt;i&gt;Ah! Yes...&lt;/i&gt;</state>
                 <state img="7-HeavyA.png">&lt;i&gt;Oh...&lt;/i&gt; Hnng...</state>
@@ -7881,6 +8057,50 @@
         </stage>
 
         <stage id="8">
+            <case tag="male_human_must_strip" consecutiveLosses="3">
+                <state img="8-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
+                <state img="8-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="8-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
+                <state img="8-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1">
+                <state img="8-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
+                <state img="8-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="2">
+                <state img="8-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
+                <state img="8-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="3">
+                <state img="8-Giggling.png">Hehee... your turn!</state>
+                <state img="8-Calm.png">Sorry! Maybe you'll do better next time!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4">
+                <state img="8-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
+                <state img="8-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
+                <state img="8-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="5">
+                <state img="8-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
+                <state img="8-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
+                <state img="8-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="6">
+                <state img="8-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
+                <state img="8-Happy.png">Yay! It's ~player~'s turn!</state>
+                <state img="8-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="8-Embarrassed.png">Y-You can still come back, ~player~...</state>
+                <state img="8-Embarrassed.png">Y-You still have a chance, ~player~!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="8">
+                <state img="8-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
+                <state img="8-Interested.png">Oh! I know what's happening now, and I like it!</state>
+                <state img="8-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="8-Calm.png">Look on the bright side, ~name~. You still have something on!</state>
                 <state img="8-Embarrassed.png">At least you're still playing, ~name~!</state>
@@ -7914,8 +8134,8 @@
                 <state img="8-Calm.png">You don't know much about the outside world, do you, ~name~? Don't worry, I don't either. Maybe we could learn together?</state>
             </case>
             <case tag="female_must_strip" filter="student" targetStage="0">
-                <state img="8-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was homeschooled...</state>
-                <state img="8-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm homeschooled...</state>
+                <state img="8-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was home schooled...</state>
+                <state img="8-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm home-schooled...</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="8-Calm.png">~name~! That's a pretty costu-</state>
@@ -7960,7 +8180,7 @@
                 <state img="8-Calm.png">Why do people say clowns are scary? They aren't!</state>
             </case>
             <case tag="female_must_strip" target="kali" targetStage="0">
-                <state img="8-Calm.png">A werecat? I haven't seen one in years!</state>
+                <state img="8-Calm.png">A were-cat? I haven't seen one in years!</state>
             </case>
             <case tag="female_must_strip" target="marceline" targetStage="0">
                 <state img="8-Happy.png">You're a vampire too?</state>
@@ -8003,50 +8223,7 @@
             </case>
             <case tag="tie">
                 <state img="8-Thinking.png">Huh? What do we do now?</state>
-            </case>
-            <case tag="male_human_must_strip" consecutiveLosses="3">
-                <state img="8-Embarrassed.png">This is starting to get embarrassing for you, ~player~…</state>
-                <state img="8-Embarrassed.png">Poor ~player~. He's so unlucky...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="8-Calm.png">Don't be shy, ~name~. I don't &lt;i&gt;bite!&lt;/i&gt;</state>
-                <state img="8-Embarrassed.png">Why haven't you said anything, ~name~? A-Am I scaring you?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1">
-                <state img="8-Horny.png">&lt;i&gt;(~Player~ is kind of cute, now that I think about it...)&lt;/i&gt;</state>
-                <state img="8-Horny.png">&lt;i&gt;(~Player~'s kind of cute...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="2">
-                <state img="8-Horny.png">(&lt;i&gt;I'm so lucky!&lt;/i&gt;)</state>
-                <state img="8-Horny.png">~Player~ again? (&lt;i&gt;Yes!&lt;/i&gt;)</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="3">
-                <state img="8-Giggling.png">Hehehe... your turn!</state>
-                <state img="8-Calm.png">Sorry! Maybe you'll do better next time!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4">
-                <state img="8-Embarrassed.png">Is it too weird to say that I like... &lt;i&gt;this?&lt;/i&gt;</state>
-                <state img="8-Embarrassed.png">Would you like it if I said I like you... &lt;i&gt;losing?&lt;/i&gt;</state>
-                <state img="8-Embarrassed.png">Would you like it if I said I liked... &lt;i&gt;when you lose?&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="5">
-                <state img="8-Thinking.png">&lt;i&gt;(There's something eerie about him, but what is it...?)&lt;/i&gt;</state>
-                <state img="8-Horny.png">&lt;i&gt;I-If you must...&lt;/i&gt;</state>
-                <state img="8-Horny.png">&lt;i&gt;(I definitely need to leave home more often...)&lt;/i&gt;</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="6">
-                <state img="8-Embarrassed.png">You've seen me naked already, ~player~... what are you going to take off?</state>
-                <state img="8-Happy.png">Yay! It's ~player~'s turn!</state>
-                <state img="8-Calm.png">Y-You lost, ~player~. But losing isn't &lt;i&gt;that&lt;/i&gt; bad...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="8-Embarrassed.png">Y-You can still come back, ~player~...</state>
-                <state img="8-Embarrassed.png">Y-You still have a chance, ~player~!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="8">
-                <state img="8-Calm.png">Don't worry about losing, ~player~. It's not that bad, trust me...</state>
-                <state img="8-Interested.png">Oh! I know what's happening now, and I like it!</state>
-                <state img="8-Horny.png">Oh... it's &lt;i&gt;that&lt;/i&gt; time...</state>
+                <state img="8-Embarrassed.png">Is this supposed to happen? What do we do?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="8-Angry.png">Ah! That's nothing!</state>
@@ -8091,6 +8268,9 @@
             <case tag="female_removing_accessory" target="blake" targetStage="5">
                 <state img="8-Thinking.png">What's wrong, Blake? Do you really like that bow &lt;i&gt;that&lt;/i&gt; much?</state>
                 <state img="8-Calm.png">Ah, I see. You must really like that bow. Heh, don't worry, I'm the same with some of my stuff.</state>
+            </case>
+            <case tag="female_removing_accessory" target="buffy" targetStage="3">
+                <state img="8-Embarrassed.png">(I'm so glad she's taking that off!)</state>
             </case>
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSaidMarker="fled">
                 <state img="8-Sad.png">Aww... she seemed nice.</state>
@@ -8152,6 +8332,9 @@
             </case>
             <case tag="female_removed_accessory" target="blake" targetStage="6">
                 <state img="8-Calm.png">Don't worry, Blake. Sometimes when I transform into a bat my ears stay like that.</state>
+            </case>
+            <case tag="female_removed_accessory" target="buffy" targetStage="4">
+                <state img="8-Embarrassed.png">I-It didn't drive me crazy, Buffy. J-Just a little dizzy...</state>
             </case>
             <case tag="female_removed_accessory" target="marceline" targetStage="1">
                 <state img="8-Calm.png">Oh well. It's not like I leave home often.</state>
@@ -8229,8 +8412,8 @@
                 <state img="8-Interested.png">Oh? Your ~clothing~?</state>
             </case>
             <case tag="male_removed_major">
-                <state img="8-Happy.png">Woohoo!</state>
                 <state img="8-Horny.png">&lt;i&gt;(Escaping from home and coming here was such a good idea!)&lt;/i&gt;</state>
+                <state img="8-Happy.png">Woohoo!</state>
                 <state img="8-Horny.png">Hmm!</state>
                 <state img="8-Horny.png">&lt;i&gt;O-Oh... ~name~...&lt;/i&gt;</state>
                 <state img="8-Horny.png">&lt;i&gt;O-oh gee...&lt;/i&gt;</state>
@@ -8333,7 +8516,7 @@
             <case tag="male_small_crotch_is_visible">
                 <state img="8-Giggling.png">Look at that tiny thing! It's so cute!</state>
                 <state img="8-Giggling.png">&lt;i&gt;Aww!&lt;/i&gt; It's so small and cute!</state>
-                <state img="8-Giggling.png">Heehe! It's so cute, ~name~!</state>
+                <state img="8-Giggling.png">Hehee! It's so cute, ~name~!</state>
                 <state img="8-Giggling.png">&lt;i&gt;Aww! It's cute!&lt;/i&gt;</state>
                 <state img="8-Giggling.png">&lt;i&gt;Aww! So adorable!&lt;/i&gt;</state>
                 <state img="8-Giggling.png">&lt;i&gt;Heehee, that's the most adorable thing.&lt;/i&gt;</state>
@@ -8348,12 +8531,12 @@
                 <state img="8-Embarrassed.png">What do you mean, Nugi? I think his... thingy is cute...</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="chihiro">
-                <state img="8-Thinking.png">You said you were a girl just because it's small? I'll never understand humans...</state>
-                <state img="8-Thinking.png">You dressed up as a girl just because you have a small one? I don't get humans...</state>
+                <state img="8-Surprised.png">Wait! So human girls can also be boys? Wow!</state>
+                <state img="8-Surprised.png">Wow! Human girls can turn into boys? I didn't know that!</state>
             </case>
             <case tag="male_small_crotch_is_visible" totalNaked="1">
-                <state img="8-Calm.png">Oh. That's it? I can't believe I was that nervous, heh.</state>
-                <state img="8-Calm.png">Oh. That's it? I can't believe I was almost scared, heh!</state>
+                <state img="8-Calm.png">Oh! &lt;i&gt;That's it?&lt;/i&gt; I can't believe I was so nervous for such a cute thing, heh.</state>
+                <state img="8-Calm.png">Oh? That's cute! There was no reason to be nervous!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="8-Horny.png">C-Could you like... &lt;i&gt;play with it?&lt;/i&gt;</state>
@@ -8540,14 +8723,14 @@
                 <state img="8-Calm.png">Now you look even more pretty, Felicia!</state>
             </case>
             <case tag="female_crotch_is_visible" target="florina" targetSaidMarker="panties_butt" targetSayingMarker="butt">
-                <state img="8-Giggling.png">Heheh! Cute butt.</state>
+                <state img="8-Giggling.png">Hehee! Cute butt.</state>
                 <state img="8-Giggling.png">Cute butt, Florina. &lt;i&gt;Heehee...&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="8-Thinking.png">You forgot it, Futaba? But... you don't seem embarrassed...</state>
             </case>
             <case tag="female_crotch_is_visible" target="joey">
-                <state img="8-Giggling.png">Heheheh! That's so funny, Joey!</state>
+                <state img="8-Giggling.png">Hehe heh! That's so funny, Joey!</state>
                 <state img="8-Giggling.png">Heeheehe! That's a really funny trick, Joey!</state>
             </case>
             <case tag="female_crotch_is_visible" target="jolyne">
@@ -8734,6 +8917,9 @@
                 <state img="8-Embarrassed.png">&lt;i&gt;(Levitating must have looked so weird for them...)&lt;/i&gt;</state>
                 <state img="8-Embarrassed.png">&lt;i&gt;(I can't believe I did that... and in front of ~player~...)&lt;/i&gt;</state>
             </case>
+            <case tag="finished_masturbating" alsoPlaying="roxie">
+                <state img="8-Happy.png">Sure, Roxie! We could go for some &lt;i&gt;scream-pie&lt;/i&gt;!</state>
+            </case>
             <case tag="finished_masturbating" timeInStage="0">
                 <state img="8-Finished.png">Ah~ T-That was...</state>
                 <state img="8-Finished.png">&lt;i&gt;Aah~... ah... so intense...&lt;/i&gt;</state>
@@ -8749,4 +8935,5 @@
         </stage>
 
     </behaviour>
+    <nicknames />
 </opponent>
