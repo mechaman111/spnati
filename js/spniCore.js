@@ -1018,6 +1018,14 @@ function initialSetup () {
         });
         bubbleArrowOffsetRules.push(pair);
     }
+    $(document).keydown(function(ev) {
+        if (ev.keyCode == 9) {
+            $("body").addClass('focus-indicators-enabled');
+        }
+    });
+    $(document).mousedown(function(ev) {
+        $("body").removeClass('focus-indicators-enabled');
+    });
 }
 
 function loadVersionInfo () {
