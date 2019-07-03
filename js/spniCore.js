@@ -1202,6 +1202,7 @@ function enterTitleScreen() {
 function screenTransition (first, second) {
 	first.hide();
 	second.show();
+    autoResizeFont();
 }
 
 /************************************************************
@@ -1792,32 +1793,16 @@ function generateRandomID() {
 }
 
 /**********************************************************************
- * Returns the width of the visible screen in pixels.
- **/
-function getScreenWidth ()
-{
-	/* fetch all game screens */
-	var screens = document.getElementsByClassName('screen');
-
-	/* figure out which screen is visible */
-	for (var i = 0; i < screens.length; i++)
-    {
-		if (screens[i].offsetWidth > 0)
-        {
-			/* this screen is currently visible */
-			return screens[i].offsetWidth;
-		}
-	}
-}
-
-/**********************************************************************
  * Automatically adjusts the size of all font based on screen width.
  **/
 function autoResizeFont ()
 {
 	/* resize font */
-	var screenWidth = getScreenWidth();
-	document.body.style.fontSize = (14*(screenWidth/1000))+'px';
+    if ($('.screen:visible').height()) {
+	    $(':root').css('font-size', ($('.screen:visible').height() / 74.747)+'px');
+    } else if ($('.epilogue-viewport:visible').height()) {
+        $(':root').css('font-size', ($('.epilogue-viewport:visible').height() / 75)+'px');
+    }
 
 	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
 		var w = window.innerWidth, h = window.innerHeight;
