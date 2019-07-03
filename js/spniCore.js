@@ -1800,6 +1800,8 @@ function autoResizeFont ()
 	/* resize font */
     if ($('.screen:visible').height()) {
 	    $(':root').css('font-size', ($('.screen:visible').height() / 74.747)+'px');
+    } else if ($('.epilogue-viewport:visible').height()) {
+        $(':root').css('font-size', ($('.epilogue-viewport:visible').height() / 75)+'px');
     }
 
 	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
