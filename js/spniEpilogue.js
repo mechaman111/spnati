@@ -1719,11 +1719,10 @@ SceneView.prototype.removeText = function (directive, context) {
 SceneView.prototype.applyTextDirective = function (directive, box) {
   var content = expandDialogue(directive.text, null, players[HUMAN_PLAYER]);
 
-  box.html('<span class="dialogue-bubble ' + directive.arrow + '">' + content + '</span>');
+  box.html('<div class="dialogue-bubble ' + directive.arrow + '">' + content + '</div>');
   box.attr('style', directive.css);
 
   //use css to position the box
-  box.css('position', "absolute");
   box.css('left', directive.x);
   box.css('top', directive.y);
   box.css('width', directive.width);
