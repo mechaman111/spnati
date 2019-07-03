@@ -88,11 +88,9 @@ $galleryScreen = $('#gallery-screen');
 var allScreens = [$warningScreen, $titleScreen, $selectScreen, $individualSelectScreen, $groupSelectScreen, $gameScreen, $epilogueScreen, $galleryScreen];
 
 /* Modals */
-$searchModal = $('#search-modal');
-$groupSearchModal = $('#group-search-modal');
 $helpModal = $('#help-modal');
+$creditModal = $('#credit-modal');
 $versionModal = $('#version-modal');
-$gameSettingsModal = $('#game-settings-modal');
 $bugReportModal = $('#bug-report-modal');
 $usageTrackingModal = $('#usage-reporting-modal');
 $playerTagsModal = $('#player-tags-modal');
@@ -996,6 +994,7 @@ function initialSetup () {
 
 	/* show the title screen */
 	$warningScreen.show();
+	$('#warning-start-button').focus();
     autoResizeFont();
 
     /* Generate a random session ID. */
@@ -1019,6 +1018,14 @@ function initialSetup () {
         });
         bubbleArrowOffsetRules.push(pair);
     }
+    $(document).keydown(function(ev) {
+        if (ev.keyCode == 9) {
+            $("body").addClass('focus-indicators-enabled');
+        }
+    });
+    $(document).mousedown(function(ev) {
+        $("body").removeClass('focus-indicators-enabled');
+    });
 }
 
 function loadVersionInfo () {
@@ -1194,6 +1201,7 @@ function loadGeneralCollectibles () {
 function enterTitleScreen() {
     $warningScreen.hide();
     $titleScreen.show();
+    $('#title-start-button').focus();
 }
 
 /************************************************************
@@ -1246,7 +1254,8 @@ function resetPlayers () {
  * Restarts the game.
  ************************************************************/
 function restartGame () {
-    KEYBINDINGS_ENABLED = false;
+
+    $(document).off('keyup');
 
 	clearTimeout(timeoutID); // No error if undefined or no longer valid
 	timeoutID = autoForfeitTimeoutID = undefined;
@@ -1371,13 +1380,14 @@ function showBugReportModal () {
     $('#bug-report-modal span[data-toggle="tooltip"]').tooltip();
     updateBugReportOutput();
 
-    KEYBINDINGS_ENABLED = false;
-
     $bugReportModal.modal('show');
 }
 
+$bugReportModal.on('shown.bs.modal', function() {
+	$('#bug-report-type').focus();
+});
+
 function closeBugReportModal() {
-    KEYBINDINGS_ENABLED = true;
     $bugReportModal.modal('hide');
 }
 
@@ -1457,6 +1467,10 @@ function compareVersions (v1, v2) {
     return 0;
 }
 
+$creditModal.on('shown.bs.modal', function() {
+	$('#credit-modal-button').focus();
+});
+
 /************************************************************
  * The player clicked the version button. Shows the version modal.
  ************************************************************/
@@ -1505,6 +1519,10 @@ function showVersionModal () {
     
     $versionModal.modal('show');
 }
+
+$versionModal.on('shown.bs.modal', function() {
+	$('#version-modal-button').focus();
+});
 
 /************************************************************
  * The player clicked the help / FAQ button. Shows the help modal.
@@ -1828,3 +1846,11 @@ function autoResizeFont ()
 function countLoadedOpponents() {
     return players.reduce(function (a, v) { return a + (v ? 1 : 0); }, 0);
 }
+
+$('.modal').on('show.bs.modal', function() {
+	$('.screen:visible').find('button, input').attr('tabIndex', -1);
+});
+
+$('.modal').on('hidden.bs.modal', function() {
+	$('.screen:visible').find('button, input').removeAttr('tabIndex');
+});

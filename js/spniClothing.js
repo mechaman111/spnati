@@ -328,13 +328,12 @@ function showStrippingModal () {
   /* disable the strip button */
   $stripButton.attr('disabled', true);
 
-  /* display the stripping modal */
-  $stripModal.modal('show');
-
-  /* hijack keybindings */
-  KEYBINDINGS_ENABLED = true;
-  document.removeEventListener('keyup', game_keyUp, false);
-  document.addEventListener('keyup', clothing_keyUp, false);
+    /* display the stripping modal */
+    $stripModal.modal({show: true, keyboard: false});
+    $stripModal.one('shown.bs.modal', function() {
+        $stripClothing.find('input').last().focus();
+    });
+    $(document).keyup(clothing_keyUp);
 }
 
 /************************************************************
@@ -360,32 +359,25 @@ function selectClothingToStrip (id) {
  * A keybound handler.
  ************************************************************/
 function clothing_keyUp(e) {
-  if (KEYBINDINGS_ENABLED) {
-    if (e.keyCode == 32 && !$stripButton.prop('disabled')) { // Space
-      $stripButton.click();
+    if (e.keyCode == 32 && !$stripButton.prop('disabled')  // Space
+        && $('.modal-clothing-image:focus').not('.modal-selected-clothing-image').length == 0) {
+		$stripButton.click();
+        e.preventDefault();
+    } else if (e.keyCode >= 49 && e.keyCode < 49 + players[HUMAN_PLAYER].clothing.length) { // A number key
+        $('.clothing-modal-container:nth-child('+(e.keyCode - 48)+') > .modal-clothing-image').focus().click();
     }
-    else if (e.keyCode >= 49 && e.keyCode < 49 + players[HUMAN_PLAYER].clothing.length) { // A number key
-      $('.clothing-modal-container:nth-child('+(e.keyCode - 48)+') > .modal-clothing-image').click();
-    }
-  }
 }
 
 /************************************************************
  * The human player closed the stripping modal. Removes an
  * article of clothing from the human player.
  ************************************************************/
-
 function closeStrippingModal (id) {
     if (id >= 0) {
 		/* prevent double-clicking the stripping modal buttons. */
 		$stripButton.attr('disabled', true).removeAttr('onclick');
 		$stripClothing.html("");
 				
-        /* return keybindings */
-        KEYBINDINGS_ENABLED = true;
-        document.removeEventListener('keyup', clothing_keyUp, false);
-        document.addEventListener('keyup', game_keyUp, false);
-
         /* grab the removed article of clothing */
         var removedClothing = players[HUMAN_PLAYER].clothing[id];
 
@@ -451,6 +443,7 @@ function closeStrippingModal (id) {
 
         /* allow progression */
         $('#stripping-modal').modal('hide');
+        $(document).off('keyup', clothing_keyUp);
         endRound();
     } else {
         /* how the hell did this happen? */
