@@ -1798,7 +1798,9 @@ function generateRandomID() {
 function autoResizeFont ()
 {
 	/* resize font */
-	$(':root').css('font-size', ($('.screen:visible').height() / 74.747)+'px');
+    if ($('.screen:visible').height()) {
+	    $(':root').css('font-size', ($('.screen:visible').height() / 74.747)+'px');
+    }
 
 	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
 		var w = window.innerWidth, h = window.innerHeight;
