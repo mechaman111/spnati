@@ -211,15 +211,15 @@ monika.registerBehaviourCallback('startJointMasturbation', function () {
 
     monika.JOINT_FORFEIT_ACTIVE = true;
     
+    if (previousLoser == sayori.slot) {
+        previousLoser = -1;
+    }
+    
     setTimeout(function () {
         /* Make Sayori's player entry disappear for the time being. */
         
         saved_sayori_player = players[sayori.slot];
         delete players[sayori.slot];
-        
-        if (!players[previousLoser]) {
-            previousLoser = -1;
-        }
         
         updateAllBehaviours(monika_pl.slot, PLAYER_START_MASTURBATING, FEMALE_MASTURBATING);
         monika_pl.stage = 9;
