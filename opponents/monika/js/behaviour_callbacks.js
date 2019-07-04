@@ -217,7 +217,7 @@ monika.registerBehaviourCallback('startJointMasturbation', function () {
         saved_sayori_player = players[sayori.slot];
         delete players[sayori.slot];
         
-        if (previousLoser === sayori.slot) {
+        if (!players[previousLoser]) {
             previousLoser = -1;
         }
         
