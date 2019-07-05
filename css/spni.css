@@ -302,9 +302,10 @@ label {
 }
 
 .select-slot-button {
-    width: 100%;
-    height: 61%;
-    margin-top: 1.2%;
+    width: 21.2rem;
+    height: 5.44rem;  /* To match small-card-image */
+    margin: 0.2rem;
+    margin-top: 0.1rem;
     font-size: 130%;
 }
 
@@ -2738,12 +2739,11 @@ label {
 }
 
 .opponent-area {
-	position: absolute;
-    width: 22%;
-    height: 11.5%;
+    position: absolute;
+    width: 22rem;
+    /*height: 12.5%;*/
     bottom: 19%;
-    margin: 0 1.5%;
-    padding: 0.2% 0.25%;
+    margin: 0 1.5rem;
     background-color: rgba(40, 40, 40, 0.75);
 }
 
@@ -2758,29 +2758,22 @@ label {
 }
 
 .opponent-name-label {
-	height: 33%;
+    height: 30%;
     text-align: center;
     background-color: #F5F5F5;
+    margin: 0.2rem;
+    margin-bottom: 0.1rem;
 }
 
 .opponent-card-area {
-	width: 100%;
-    height: 62%;
-}
-
-.opponent-card-area :first-child {
-   margin-left: 0;
-}
-
-.opponent-card-area :last-child {
-   margin-right: 0;
+    display: flex;
+    padding: 0.1rem;
 }
 
 .small-card-image {
-	float: left;
-    height: 100%;
-    width: 19.15%;
-    margin: 1.25% 0.5%;
+    height: 5.44rem;
+    width: 4.08rem;
+    margin: 0.1rem;
     background-color: #F5F5F5;
 }
 
@@ -2876,8 +2869,8 @@ label {
     position: absolute;
     width: 33%;
     height: 15%;
-    left: 8.5%;
-    bottom: 2%;
+    left: 9%;
+    bottom: 1%;
     background-color: rgba(40, 40, 40, 0.75);
 }
 
@@ -2890,16 +2883,17 @@ label {
 
 .player-card-area {
     position: absolute;
-    width: 40%;
-    height: 15%;
+  /*width: 40.3rem;
+    height: 11.2rem;*/
     right: 1.5%;
-    bottom: 2%;
+    bottom: 1%;
     padding: 0.3%;
     background-color: rgba(40, 40, 40, 0.75);
+    display: flex;
 }
 
 .player-name-label {
-	position: absolute;
+    position: absolute;
     width: 65.5%;
     height: 24%;
     left: 17.25%;
@@ -2909,7 +2903,7 @@ label {
 }
 
 #game-clothing-label {
-	position: absolute;
+    position: absolute;
     width: 65.5%;
     height: 22%;
     left: 17.25%;
@@ -2919,43 +2913,18 @@ label {
     background-color: #F5F5F5;
 }
 
-.large-card-image {
-	float: left;
-    height: 100%;
-    width: 19%;
-    margin: 0 0.5%;
+.large-card-image, .ui-minimal.prompt-exchange .large-card-image, #deck {
+    height: 10rem;
+    width: 7.5rem;
+    margin: 0.2rem;
     background-color: #F5F5F5;
 }
 
-.dock-card {
+.dock-card, #deck {
+    margin: 0 !important;
     position: absolute;
-    width: 8%;
-    height: 14%;
-    left: 45.5%;
-    bottom: 2%;
-}
-
-.hidden-large-card {
-    opacity: 0;
-}
-
-.shown-card {
-	opacity: 1;
-}
-
-.large-dealt-card {
-    width: 7.5%;
-    height: 14%;
-}
-
-.ui-minimal .large-dealt-card {
-    width: 3.75%;
-    height: 7%;
-}
-
-.small-dealt-card {
-    width: 4%;
-    height: 6.5%;
+    left: 46.25%;
+    bottom: 2.2%;
 }
 
 #main-game-button {
@@ -2986,21 +2955,10 @@ label {
 
     bottom: auto;
     top: 70%;
-
-    height: calc(11.5% * 0.75);
-    width: calc(22% * 0.75);
     opacity: 0.5;
 
-    transition-property: opacity, transform, height, width;
+    transition-property: opacity;
     transition-duration: 0.5s;
-}
-
-.ui-minimal .opponent-area.left, .ui-minimal .opponent-area.halfLeft {
-    transform: translateX(12.5%);
-}
-
-.ui-minimal .opponent-area.right, .ui-minimal .opponent-area.halfRight {
-    transform: translateX(-12.5%);
 }
 
 .ui-minimal .opponent-revealed-cards {
@@ -3020,48 +2978,12 @@ label {
     transition: none;
 }
 
-.ui-minimal .opponent-area.opponent-revealed-cards:hover, .ui-minimal .opponent-area.opponent-revealed-cards:active, .ui-minimal .opponent-area.opponent-lost {
-    transform: none;
-    opacity: 1.0;
-    height: 11.5%;
-    width: 22%;
-
-    transition-property: opacity, transform, height, width;
-    transition-duration: 0.25s;
-}
-
-.ui-minimal .player-card-area  {
-    background: none;
-    left: 57%;
-
-    display: flex;
-    align-items: center;
-
-    opacity: 0.50;
-    transition-property: opacity;
-    transition-duration: 0.5s;
-}
-
-.ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active, .ui-minimal .player-card-area.prompt-exchange {
+.ui-minimal .opponent-area.opponent-revealed-cards:hover,
+.ui-minimal .opponent-area.opponent-revealed-cards:active,
+.ui-minimal .opponent-area.opponent-lost {
     opacity: 1.0;
     transition-property: opacity;
     transition-duration: 0.25s;
-}
-
-.ui-minimal .player-card-area .large-card-image {
-    width: 10%;
-    height: 50%;
-
-    transition-property: width, height;
-    transition-duration: 0.5s;
-}
-
-.ui-minimal .player-card-area:hover .large-card-image, .ui-minimal .player-card-area:active .large-card-image, .ui-minimal .player-card-area.prompt-exchange .large-card-image {
-    width: 19%;
-    height: 100%;
-
-    transition-property: width, height;
-    transition-duration: 0.5s;
 }
 
 .ui-minimal .opponent-card-area {
@@ -3071,22 +2993,79 @@ label {
 }
 
 .ui-minimal .small-card-image {
-    margin-right: -17%;
-    transform: translateX(-45%);
+    height: 4rem;
+    width: 3rem;
+}
+
+.ui-minimal .opponent-area .small-card-image {
+    margin: 0.05rem;
+    margin-right: -2.45rem;
+    transform: translateX(-1.3rem);
 }
 
 .ui-minimal .opponent-revealed-cards .small-card-image {
-    margin-right: 0;
+    margin-right: 0.05rem;
     transform: none;
 
     transition-property: margin-right, transform;
     transition-duration: 0.5s;
 }
 
+.ui-minimal .opponent-area.opponent-lost .small-card-image,
+.ui-minimal .opponent-area.opponent-revealed-cards:hover .small-card-image,
+.ui-minimal .opponent-area.opponent-revealed-cards:active .small-card-image
+{
+    width: 4.125rem;
+    height: 5.5rem;
+    transition-property: width, height;
+    transition-duration: 0.25s;
+}
+
 .ui-minimal .opponent-name-label {
     text-align: left;
     display: inline;
     padding: 1% 5%;
+    white-space: nowrap;
+}
+
+.ui-minimal .player-card-area  {
+    background: none;
+    left: 57%;
+    bottom: 1%;
+    height: 15%;
+
+    justify-content: center;
+    align-items: end;
+
+    opacity: 0.50;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active, .ui-minimal.prompt-exchange .player-card-area {
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+.ui-minimal .large-card-image {
+    width: 4.125rem;
+    height: 5.5rem;
+    margin: 0 0.1rem;
+
+    transition-property: width, height, margin;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-card-area:hover .large-card-image,
+.ui-minimal .player-card-area:active .large-card-image,
+.ui-minimal.prompt-exchange .player-card-area .large-card-image {
+   height: 10rem;
+    width: 7.5rem;
+    margin: 0 0.2rem;
+
+    transition-property: width, height, margin;
+    transition-duration: 0.25s;
 }
 
 #player-game-clothing-area-minimal {
@@ -3099,7 +3078,7 @@ label {
     position: absolute;
 
     right: 57%;
-    bottom: 5%;
+    bottom: 1%;
 
     width: 33%;
     transform: none;
@@ -3110,7 +3089,7 @@ label {
 
 .minimal-clothing-area-row {
     display: inline-flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 
     width: 100%;
