@@ -1827,8 +1827,11 @@ function generateRandomID() {
 function autoResizeFont ()
 {
 	/* resize font */
-    if ($('.screen:visible').height()) {
-	    $(':root').css('font-size', ($('.screen:visible').height() / 74.747)+'px');
+    if ($('.wide-screen-container .screen:visible').width()) {
+        // Calculate 4/3 of the height a normal screen would have ((16/9) / (4/3) = 4/3) 
+        $(':root').css('font-size', ($('.screen:visible').width() / 4 * 3 / 100)+'px');
+    } else if ($('.screen:visible').width()) {
+        $(':root').css('font-size', ($('.screen:visible').width() / 100)+'px');
     } else if ($('.epilogue-viewport:visible').height()) {
         $(':root').css('font-size', ($('.epilogue-viewport:visible').height() / 75)+'px');
     }
