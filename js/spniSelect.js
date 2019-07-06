@@ -247,13 +247,14 @@ function loadListingFile () {
 				});
 			}
 		}
-		if (--outstandingLoads % 16 == 0) {
-			updateSelectableOpponents();
-			updateIndividualSelectScreen();
-			updateSelectableGroups(0);
-			updateSelectableGroups(1);
-			updateGroupSelectScreen();
-		}
+        if (--outstandingLoads % 16 == 0) {
+            updateSelectableOpponents();
+            updateIndividualSelectScreen();
+            updateSelectableGroups(0);
+            updateSelectableGroups(1);
+            updateGroupSelectScreen();
+            updateSelectionVisuals();
+        }
         if (outstandingLoads == 0) {
             $tagList.append(Object.keys(tagSet).sort().map(function(tag) {
                 return new Option(canonicalizeTag(tag));
@@ -786,7 +787,7 @@ function clickedRandomFillButton (predicate) {
 	/* compose a copy of the loaded opponents list */
 	var loadedOpponentsCopy = loadedOpponents.filter(function(opp) {
         // Filter out already selected characters
-        return (!players.some(function(p) { return p && p.id == opp .id; })
+        return (!players.some(function(p) { return p && p.id == opp.id; })
                 && (!predicate || predicate(opp)));
     });
 
@@ -997,13 +998,13 @@ function updateSelectionVisuals () {
     $selectMainButton.attr('disabled', filled < 2 || loaded < filled);
 
     /* if all slots are taken, disable fill buttons */
-    $selectRandomButtons.attr('disabled', filled >= 4);
+    $selectRandomButtons.attr('disabled', filled >= 4 || loadedOpponents.length == 0);
 
     /* if no opponents are loaded, disable remove all button */
     $selectRemoveAllButton.attr('disabled', filled <= 0 || loaded < filled);
 
     /* Disable buttons while loading is going on */
-    $selectRandomTableButton.attr('disabled', loaded < filled);
+    $selectRandomTableButton.attr('disabled', loaded < filled || loadedOpponents.length == 0);
     $groupButton.attr('disabled', loaded < filled);
 
     /* Update suggestions images. */
