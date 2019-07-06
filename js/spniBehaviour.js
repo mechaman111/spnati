@@ -1405,7 +1405,8 @@ Case.prototype.applyOneShot = function (player) {
  **********************************************************************/
 
 function checkStage(curStage, stageStr) {
-    return stageStr.split(/\s+/).some(function(s) {
+    return stageStr === undefined
+        || stageStr.split(/\s+/).some(function(s) {
         return inInterval(curStage, parseInterval(s));
     });
 }

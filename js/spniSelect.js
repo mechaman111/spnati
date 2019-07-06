@@ -1395,7 +1395,7 @@ function countLinesImages(xml) {
                     var stageInterval = getRelevantStagesForTrigger($trigger.attr('id'), layers);
 
                     for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
-                        if ($case.attr('stage') === undefined || checkStage(stage, $case.attr('stage'))) {
+                        if (checkStage(stage, $case.attr('stage'))) {
                             var stageImg = img.replace('#', stage);
                             if (!(stageImg in poses)) {
                                 numUniqueUsedPoses++;
