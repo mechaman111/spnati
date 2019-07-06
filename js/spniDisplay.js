@@ -41,7 +41,7 @@ function PoseSprite(id, src, onload, pose, args) {
         onload(this);
         this.draw();
     }.bind(this);
-    this.img.src = this.src;
+    this.img.src = this.src.replace('#', this.player.stage);
     
     this.pivot.appendChild(this.img);
     
