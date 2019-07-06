@@ -1225,6 +1225,7 @@ function advanceToNextScreen (screen) {
         $selectScreen.hide();
 		loadGameScreen();
         $gameScreen.show();
+        $mainButton.focus();
     }
 }
 
