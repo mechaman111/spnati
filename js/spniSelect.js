@@ -1392,7 +1392,7 @@ function countLinesImages(xml) {
                     // Expand # to the relevant stages
                     var $case = $(data).parent();
                     var $trigger = $case.parent();
-                    var stageInterval = getRelevantStagesForTrigger($trigger.attr('tag'), layers);
+                    var stageInterval = getRelevantStagesForTrigger($trigger.attr('id'), layers);
 
                     for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
                         if ($case.attr('stage') === undefined || checkStage(stage, $case.attr('stage'))) {

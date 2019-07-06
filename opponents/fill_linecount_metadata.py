@@ -3,9 +3,55 @@ from __future__ import print_function
 import os
 import os.path as osp
 from bs4 import BeautifulSoup
+import xml.etree.ElementTree as ET
 import shutil
 import stat
 import sys
+import re
+
+def getRelevantStagesForTrigger(tag, layers):
+    if tag in ('selected', 'game_start'):
+        return (0, 0)
+    if tag in ('swap_cards', 'good_hand', 'okay_hand', 'bad_hand', 'hand', 'game_over_victory'):
+        return (0, layers)
+    if tag in ('must_strip_winning', 'must_strip_normal', 'must_strip_losing', 'must_strip', 'stripping'):
+        return (0, layers - 1)
+    if tag == 'stripped':
+        return (1, layers)
+    if tag in ('must_masturbate_first', 'must_masturbate', 'start_masturbating'):
+        return (layers, layers)
+    if tag in ('masturbating', 'heavy_masturbating', 'finishing_masturbating'):
+        return (layers + 1, layers + 1)
+    if tag in ('finished_masturbating', 'game_over_defeat'):
+        return (layers + 2, layers + 2)
+    return (0, layers + 2)
+
+def parseInterval(string):
+    pieces = string.split("-")
+    min = None
+    max = None
+    if pieces[0].strip() != "":
+        try:
+            min = int(pieces[0])
+        except ValueError:
+            return None
+    if len(pieces) == 1:
+        max = min
+    else:
+        max = int(pieces[1])
+
+    return (min, max)
+
+def inInterval(value, interval):
+    return interval and (interval[0] is None or interval[0] <= value) and (interval[1] is None or value <= interval[1])
+
+def checkStage(curStage, stageStr):
+    if stageStr is None:
+        return True
+    for stageInt in re.split('\\s+', stageStr):
+        if inInterval(curStage, parseInterval(stageInt)):
+            return True
+    return False
 
 def process(opponent_folder_path):
     opponent = osp.basename(opponent_folder_path)
@@ -26,10 +72,21 @@ def process(opponent_folder_path):
     
     all_lines = set()
     all_poses = set()
+
+    num_layers = len(soup.findChild('wardrobe').findChildren('clothing'))
+    print(num_layers)
     
     for state in soup.find_all('state', recursive=True):
         pose = state.get('img', '')
-        all_poses.add(pose)
+        if pose.find('#') >= 0:
+            case = state.findParent()
+            trigger = case.findParent()
+            stageInterval = getRelevantStagesForTrigger(trigger.get('id'), num_layers)
+            for stage in range(stageInterval[0], stageInterval[1] + 1):
+                if checkStage(stage, case.get('stage')):
+                    all_poses.add(pose.replace('#', str(stage)))
+        else:
+            all_poses.add(pose)
         
         dialogue = ''.join(str(child) for child in state.stripped_strings).strip()
         all_lines.add(dialogue)
