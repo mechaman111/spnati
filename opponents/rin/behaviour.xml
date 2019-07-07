@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.3 at 1:01:07 AM on July 07, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.3 at 2:57:01 PM on July 07, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.3</version>
     <first>Rin</first>
@@ -21,6 +21,8 @@
         <tag>messy_hair</tag>
         <tag>green_eyes</tag>
         <tag>fair-skinned</tag>
+        <tag>hairy</tag>
+        <tag>pubic_hair</tag>
         <tag>medium_breasts</tag>
         <tag>school_uniform</tag>
         <tag>ditzy</tag>
@@ -54,26 +56,6 @@
                 <state img="0-bored.png">Helloooo...</state>
                 <state img="0-absent.png">Hello there. I'm Rin. Rin Tezuka. Tezuka Rin. Rin Tezuka.</state>
             </case>
-            <case tag="selected" alsoPlaying="akko">
-                <state img="0-curious.png">Is...Is that a witch?</state>
-            </case>
-            <case tag="selected" alsoPlaying="emi">
-                <state img="0-confused.png">Strip Poker? Emi...why are we here?</state>
-            </case>
-            <case tag="selected" alsoPlaying="hanako">
-                <state img="0-curious.png">Wait...is that...the Mysterious Toilet Girl?</state>
-            </case>
-            <case tag="selected" alsoPlaying="monika">
-                <state img="0-confused.png">Who are you?...I'm...getting some...weird vibes from you...</state>
-            </case>
-            <case tag="selected" alsoPlaying="natsuki">
-                <state img="0-bored.png">Hello Misha-...Wait...you aren't Misha...aren't you?</state>
-            </case>
-            <case tag="selected" alsoPlaying="sayori">
-                <state img="0-curious.png">Hey...you kinda look like me...except with a bow.</state>
-                <state img="0-curious.png">Hey...you kinda look like me...except with that orange hair of yours.</state>
-                <state img="0-confused.png">Hey...you kinda look like me...except...you act like a bit more like Emi...</state>
-            </case>
             <case tag="selected" alsoPlaying="emi" priority="150">
                 <condition count="1" filter="hanako" />
                 <state img="0-surprised.png">Emi's here...and...the Mysterious Toilet Girl?</state>
@@ -81,6 +63,26 @@
             <case tag="selected" id="0-1" priority="100">
                 <test expr="~name~" value="Hisao" />
                 <state img="0-curious.png">...Hisao?</state>
+            </case>
+            <case tag="opponent_selected" alsoPlaying="akko">
+                <state img="0-curious.png">Is...Is that a witch?</state>
+            </case>
+            <case tag="opponent_selected" alsoPlaying="emi">
+                <state img="0-confused.png">Strip Poker? Emi...why are we here?</state>
+            </case>
+            <case tag="opponent_selected" alsoPlaying="hanako">
+                <state img="0-curious.png">Wait...is that...the Mysterious Toilet Girl?</state>
+            </case>
+            <case tag="opponent_selected" alsoPlaying="monika">
+                <state img="0-doubt.png">Who are you?...I'm...getting some...weird vibes from you...</state>
+            </case>
+            <case tag="opponent_selected" alsoPlaying="natsuki">
+                <state img="0-bored.png">Hello Misha-...Wait...you aren't Misha...aren't you?</state>
+            </case>
+            <case tag="opponent_selected" alsoPlaying="sayori">
+                <state img="0-curious.png">Hey...you kinda look like me...except with a bow.</state>
+                <state img="0-curious.png">Hey...you kinda look like me...except with that orange hair of yours.</state>
+                <state img="0-confused.png">Hey...you kinda look like me...except...you act like a bit more like Emi...</state>
             </case>
             <case tag="game_start">
                 <state img="0-DPNormal.png">I won't shake hands with you, but at least we know who we are now.</state>
@@ -189,9 +191,13 @@
                 <state img="0-DPNormal.png">...Perhaps I'm hungry...but remember the last time we tried to have a picnic?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="2-4" alsoPlayingSaying="Could someone put some music on? Preferably not something weird like what Rin listens to...">
-                <state img="0-DPNormal.png">...What? There's nothing wrong with listening to rain ambience.</state>
+                <state img="0-DPNormal.png">...What? There's nothing wrong with listening to the rain...</state>
                 <state img="0-confused.png">...What are you talking about Emi? What's wrong with listening to the sky?</state>
                 <state img="0-doubt.png">I could listen to the trees all day...what are you going on about?</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi" alsoPlayingStage="5-8" alsoPlayingSaidMarker="rin_olympics">
+                <state img="0-confused.png">Pierre de...what?</state>
+                <state img="0-confused.png">Pierre? Who's Pierre?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="8" alsoPlayingSaidMarker="pirate" alsoPlayingNotSaidMarker="captain" alsoPlayingSayingMarker="captain">
                 <state img="0-DPNormal.png">...You've gotta be kidding me.</state>
@@ -235,6 +241,10 @@
                 <condition count="0" filter="emi" />
                 <state img="0-doubt.png">I'm actually a little glad Emi is not here to play this. She can make me feel a little weird sometimes.</state>
                 <state img="0-lucid.png">Sometimes, Emi just talks about nothing for hours, it's like her head is made of bubblegum foam bath jelly.</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi">
+                <condition count="1" filter="futaba" />
+                <state img="0-doubt.png">...My taste in music isn't weird...what are you talking about Emi?</state>
             </case>
             <case tag="hand" priority="9">
                 <state img="0-absent.png">Clubs...Well, I am a part of the Art Club back in Yamaku.</state>
@@ -853,12 +863,12 @@
             <case tag="female_removing_major" target="emi" targetStage="2">
                 <state img="0-surprised.png">...Oh, you're showing us your-</state>
             </case>
+            <case tag="female_removing_major" target="emi" targetStage="3" targetSaidMarker="emi_uniform_off">
+                <state img="0-confused.png">Are you kidding? The girl uniforms are actually annoying to deal with.</state>
+            </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Ready to see me pop my top?">
                 <state img="0-bored.png">...You never told me you were a volcano.</state>
                 <state img="0-lucid.png">...Let's not set off any explosions in here...</state>
-            </case>
-            <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="These uniforms are more comfortable than they look, but they're still more comfortable when they're coming off!">
-                <state img="0-confused.png">Are you kidding? The girl uniforms are actually quite annoying to deal with.</state>
             </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Who said I need a shirt? I don't need a shirt.">
                 <state img="0-curious.png">Oh...but you do need a shirt...wait...what?</state>
@@ -877,7 +887,7 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="0-curious.png">I've never seen so many bullets fly since...ever!</state>
                 <state img="0-doubt.png">...I hope you didn't kill anyone with those bullets...</state>
-                <state img="0-disgust.png">...You have sandals under your shoes!?</state>
+                <state img="0-disgust.png" weight="2">...You have sandals under your shoes!?</state>
             </case>
             <case tag="female_removed_major" target="emi" targetStage="3">
                 <state img="0-lucid.png">...Nope...I'm not letting my bad luck take my innocence away.</state>
@@ -893,7 +903,7 @@
                 <state img="0-lucid.png">...No comment.</state>
                 <state img="0-lucid.png">...You're really gonna do it, aren't you?</state>
                 <state img="0-lucid.png">...Wow.</state>
-                <state img="0-confused.png">Oh, you're really doing it? I was being sarcastic.</state>
+                <state img="0-doubt.png" weight="2">Oh, you're really doing it? I was being sarcastic.</state>
             </case>
             <case tag="female_removed_major" target="hanako" targetStage="5" targetSaying="I'd... prefer it if you guys don't treat me any differently...">
                 <state img="0-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
@@ -902,6 +912,9 @@
                 <state img="0-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
             </case>
             <case tag="female_removed_major" target="natsuki" targetStage="5">
+                <state img="0-amused.png">Not a bad strategy Natsuki...it'll force people to look away from you.</state>
+            </case>
+            <case tag="female_removed_major" target="natsuki" targetStage="5" alsoPlaying="emi">
                 <state img="0-lucid.png">Underpants are the soul of a girl, You shouldn't peek at someone else's soul. Even if you are not a girl.</state>
             </case>
             <case tag="male_chest_will_be_visible">
@@ -997,7 +1010,7 @@
                 <state img="0-pondering.png">Y'know, I do know a few girls that are flat...</state>
                 <state img="0-confused.png">...Are you sure you're not a boy?</state>
             </case>
-            <case tag="female_small_chest_is_visible" target="emi" targetSaying="I don't run just to have a great body, but it &lt;i&gt;is&lt;/i&gt; a nice benefit.">
+            <case tag="female_small_chest_is_visible" target="emi" targetSaidMarker="emi_great_body">
                 <state img="0-lucid.png">I mean, so is painting, but...to each their own.</state>
             </case>
             <case tag="female_small_chest_is_visible" target="emi" targetSaying="If guys can walk around topless, why can't we?">
@@ -1035,7 +1048,7 @@
                 <state img="0-DPDelighted.png">~name~? Oh...looks like they're going for it.</state>
                 <state img="0-DPNormal.png">...Finally...looking at them really made me uncomfortable...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" alsoPlayingSaying="pussy">
+            <case tag="female_crotch_will_be_visible" notSaidMarker="pussycat" alsoPlayingSaying="pussy">
                 <state img="0-curious.png" marker="pussycat">Why is it even called a "pussy" anyways? It doesn't even look close to a cat.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
@@ -1366,9 +1379,13 @@
                 <state img="1-DPNormal.png">...Perhaps I'm hungry...but remember the last time we tried to have a picnic?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="2-4" alsoPlayingSaying="Could someone put some music on? Preferably not something weird like what Rin listens to...">
-                <state img="1-DPNormal.png">...What? There's nothing wrong with listening to rain ambience.</state>
+                <state img="1-DPNormal.png">...What? There's nothing wrong with listening to the rain...</state>
                 <state img="1-confused.png">...What are you talking about Emi? What's wrong with listening to the sky?</state>
                 <state img="1-doubt.png">I could listen to the trees all day...what are you going on about?</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi" alsoPlayingStage="5-8" alsoPlayingSaidMarker="rin_olympics">
+                <state img="1-confused.png">Pierre de...what?</state>
+                <state img="1-confused.png">Pierre? Who's Pierre?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="8" alsoPlayingSaidMarker="pirate" alsoPlayingNotSaidMarker="captain" alsoPlayingSayingMarker="captain">
                 <state img="1-DPNormal.png">...You've gotta be kidding me.</state>
@@ -1412,6 +1429,10 @@
                 <condition count="0" filter="emi" />
                 <state img="1-doubt.png">I'm actually a little glad Emi is not here to play this. She can make me feel a little weird sometimes.</state>
                 <state img="1-lucid.png">Sometimes, Emi just talks about nothing for hours, it's like her head is made of bubblegum foam bath jelly.</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi">
+                <condition count="1" filter="futaba" />
+                <state img="1-doubt.png">...My taste in music isn't weird...what are you talking about Emi?</state>
             </case>
             <case tag="hand" priority="9">
                 <state img="1-absent.png">Clubs...Well, I am a part of the Art Club back in Yamaku.</state>
@@ -1483,6 +1504,7 @@
                 <state img="1-DPNormal.png">Well, Emi's not around to take my clothes off, so...~player~ I could use your help getting my tie.</state>
                 <state img="1-DPNormal.png">It's pretty hard to strip without any hands...so ~player~, help me out here...with my tie.</state>
                 <state img="1-confused.png">Removing clothes is very hard when Emi is not around. ~player~, come over here and help me with my tie, will you?</state>
+                <state>Oh...I think Emi is too busy to help me</state>
             </case>
             <case tag="stripping" alsoPlaying="emi" priority="200">
                 <state img="1-doubt.png">Emi, would you mind getting my tie off?</state>
@@ -2044,12 +2066,12 @@
             <case tag="female_removing_major" target="emi" targetStage="2">
                 <state img="1-surprised.png">...Oh, you're showing us your-</state>
             </case>
+            <case tag="female_removing_major" target="emi" targetStage="3" targetSaidMarker="emi_uniform_off">
+                <state img="1-confused.png">Are you kidding? The girl uniforms are actually annoying to deal with.</state>
+            </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Ready to see me pop my top?">
                 <state img="1-bored.png">...You never told me you were a volcano.</state>
                 <state img="1-lucid.png">...Let's not set off any explosions in here...</state>
-            </case>
-            <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="These uniforms are more comfortable than they look, but they're still more comfortable when they're coming off!">
-                <state img="1-confused.png">Are you kidding? The girl uniforms are actually quite annoying to deal with.</state>
             </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Who said I need a shirt? I don't need a shirt.">
                 <state img="1-curious.png">Oh...but you do need a shirt...wait...what?</state>
@@ -2068,7 +2090,7 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="1-curious.png">I've never seen so many bullets fly since...ever!</state>
                 <state img="1-doubt.png">...I hope you didn't kill anyone with those bullets...</state>
-                <state img="1-disgust.png">...You have sandals under your shoes!?</state>
+                <state img="1-disgust.png" weight="2">...You have sandals under your shoes!?</state>
             </case>
             <case tag="female_removed_major" target="emi" targetStage="3">
                 <state img="1-lucid.png">...Nope...I'm not letting my bad luck take my innocence away.</state>
@@ -2084,7 +2106,7 @@
                 <state img="1-lucid.png">...No comment.</state>
                 <state img="1-lucid.png">...You're really gonna do it, aren't you?</state>
                 <state img="1-lucid.png">...Wow.</state>
-                <state img="1-confused.png">Oh, you're really doing it? I was being sarcastic.</state>
+                <state img="1-doubt.png" weight="2">Oh, you're really doing it? I was being sarcastic.</state>
             </case>
             <case tag="female_removed_major" target="hanako" targetStage="5" targetSaying="I'd... prefer it if you guys don't treat me any differently...">
                 <state img="1-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
@@ -2093,6 +2115,9 @@
                 <state img="1-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
             </case>
             <case tag="female_removed_major" target="natsuki" targetStage="5">
+                <state img="1-amused.png">Not a bad strategy Natsuki...it'll force people to look away from you.</state>
+            </case>
+            <case tag="female_removed_major" target="natsuki" targetStage="5" alsoPlaying="emi">
                 <state img="1-lucid.png">Underpants are the soul of a girl, You shouldn't peek at someone else's soul. Even if you are not a girl.</state>
             </case>
             <case tag="male_chest_will_be_visible">
@@ -2188,7 +2213,7 @@
                 <state img="1-pondering.png">Y'know, I do know a few girls that are flat...</state>
                 <state img="1-confused.png">...Are you sure you're not a boy?</state>
             </case>
-            <case tag="female_small_chest_is_visible" target="emi" targetSaying="I don't run just to have a great body, but it &lt;i&gt;is&lt;/i&gt; a nice benefit.">
+            <case tag="female_small_chest_is_visible" target="emi" targetSaidMarker="emi_great_body">
                 <state img="1-lucid.png">I mean, so is painting, but...to each their own.</state>
             </case>
             <case tag="female_small_chest_is_visible" target="emi" targetSaying="If guys can walk around topless, why can't we?">
@@ -2226,7 +2251,7 @@
                 <state img="1-DPDelighted.png">~name~? Oh...looks like they're going for it.</state>
                 <state img="1-DPNormal.png">...Finally...looking at them really made me uncomfortable...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" alsoPlayingSaying="pussy">
+            <case tag="female_crotch_will_be_visible" notSaidMarker="pussycat" alsoPlayingSaying="pussy">
                 <state img="1-curious.png" marker="pussycat">Why is it even called a "pussy" anyways? It doesn't even look close to a cat.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
@@ -2554,9 +2579,13 @@
                 <state img="2-DPNormal.png">...Perhaps I'm hungry...but remember the last time we tried to have a picnic?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="2-4" alsoPlayingSaying="Could someone put some music on? Preferably not something weird like what Rin listens to...">
-                <state img="2-DPNormal.png">...What? There's nothing wrong with listening to rain ambience.</state>
+                <state img="2-DPNormal.png">...What? There's nothing wrong with listening to the rain...</state>
                 <state img="2-confused.png">...What are you talking about Emi? What's wrong with listening to the sky?</state>
                 <state img="2-doubt.png">I could listen to the trees all day...what are you going on about?</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi" alsoPlayingStage="5-8" alsoPlayingSaidMarker="rin_olympics">
+                <state img="2-confused.png">Pierre de...what?</state>
+                <state img="2-confused.png">Pierre? Who's Pierre?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="8" alsoPlayingSaidMarker="pirate" alsoPlayingNotSaidMarker="captain" alsoPlayingSayingMarker="captain">
                 <state img="2-DPNormal.png">...You've gotta be kidding me.</state>
@@ -2600,6 +2629,10 @@
                 <condition count="0" filter="emi" />
                 <state img="2-doubt.png">I'm actually a little glad Emi is not here to play this. She can make me feel a little weird sometimes.</state>
                 <state img="2-lucid.png">Sometimes, Emi just talks about nothing for hours, it's like her head is made of bubblegum foam bath jelly.</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi">
+                <condition count="1" filter="futaba" />
+                <state img="2-doubt.png">...My taste in music isn't weird...what are you talking about Emi?</state>
             </case>
             <case tag="hand" priority="9">
                 <state img="2-absent.png">Clubs...Well, I am a part of the Art Club back in Yamaku.</state>
@@ -2673,7 +2706,7 @@
             <case tag="stripping" alsoPlaying="emi" priority="200">
                 <state img="2-lucid.png">Emi...if you may.</state>
                 <state img="2-DPNormal.png">Emi...pants.</state>
-                <state img="2-lucid.png">Emi...my pants...and nothing else.</state>
+                <state img="2-lucid.png" marker="rin_pants_only">Emi...my pants...and nothing else.</state>
             </case>
             <case tag="stripping" alsoPlaying="franziska" alsoPlayingSaying="Too slow! Take your ~clothing~ off faster!">
                 <state img="2-lucid.png" marker="cropswing">~player~...if you may.</state>
@@ -2696,8 +2729,9 @@
                 <state img="2-DPAmused.png">What's with that look ~player~? Not used to seeing a girl strip other girls before?</state>
                 <state img="2-amused.png">Thank you Emi.</state>
                 <state img="2-DPAmused.png">...Much appreciated Emi.</state>
-                <state img="2-amused.png">Emi is usually my other half, so I guess you could say that we do complete each other...like a brush and some paint.</state>
-                <state img="2-amused.png">Emi's a good friend. For those times I can't do things. She helps me do those things for me.</state>
+                <state img="2-amused.png" marker="emi_half" weight="2">Emi is usually my other half, so I guess you could say that we do complete each other...like a brush and some paint.</state>
+                <state img="2-amused.png" marker="emi_friend" weight="2">Emi's a good friend. For those times I can't do things. She helps me do those things for me.</state>
+                <state img="2-DPAmused.png">Do you enjoy watching two girls stripping each other, ~player~?</state>
             </case>
             <case tag="stripped" alsoPlaying="franziska" alsoPlayingSaidMarker="cropswing">
                 <state img="2-annoyed.png">Also...will you stop that!?</state>
@@ -3228,12 +3262,12 @@
             <case tag="female_removing_major" target="emi" targetStage="2">
                 <state img="2-surprised.png">...Oh, you're showing us your-</state>
             </case>
+            <case tag="female_removing_major" target="emi" targetStage="3" targetSaidMarker="emi_uniform_off">
+                <state img="2-confused.png">Are you kidding? The girl uniforms are actually annoying to deal with.</state>
+            </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Ready to see me pop my top?">
                 <state img="2-bored.png">...You never told me you were a volcano.</state>
                 <state img="2-lucid.png">...Let's not set off any explosions in here...</state>
-            </case>
-            <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="These uniforms are more comfortable than they look, but they're still more comfortable when they're coming off!">
-                <state img="2-confused.png">Are you kidding? The girl uniforms are actually quite annoying to deal with.</state>
             </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Who said I need a shirt? I don't need a shirt.">
                 <state img="2-curious.png">Oh...but you do need a shirt...wait...what?</state>
@@ -3252,7 +3286,7 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="2-curious.png">I've never seen so many bullets fly since...ever!</state>
                 <state img="2-doubt.png">...I hope you didn't kill anyone with those bullets...</state>
-                <state img="2-disgust.png">...You have sandals under your shoes!?</state>
+                <state img="2-disgust.png" weight="2">...You have sandals under your shoes!?</state>
             </case>
             <case tag="female_removed_major" target="emi" targetStage="3">
                 <state img="2-lucid.png">...Nope...I'm not letting my bad luck take my innocence away.</state>
@@ -3268,7 +3302,7 @@
                 <state img="2-lucid.png">...No comment.</state>
                 <state img="2-lucid.png">...You're really gonna do it, aren't you?</state>
                 <state img="2-lucid.png">...Wow.</state>
-                <state img="2-confused.png">Oh, you're really doing it? I was being sarcastic.</state>
+                <state img="2-doubt.png" weight="2">Oh, you're really doing it? I was being sarcastic.</state>
             </case>
             <case tag="female_removed_major" target="hanako" targetStage="5" targetSaying="I'd... prefer it if you guys don't treat me any differently...">
                 <state img="2-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
@@ -3277,6 +3311,9 @@
                 <state img="2-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
             </case>
             <case tag="female_removed_major" target="natsuki" targetStage="5">
+                <state img="2-amused.png">Not a bad strategy Natsuki...it'll force people to look away from you.</state>
+            </case>
+            <case tag="female_removed_major" target="natsuki" targetStage="5" alsoPlaying="emi">
                 <state img="2-lucid.png">Underpants are the soul of a girl, You shouldn't peek at someone else's soul. Even if you are not a girl.</state>
             </case>
             <case tag="male_chest_will_be_visible">
@@ -3372,7 +3409,7 @@
                 <state img="2-pondering.png">Y'know, I do know a few girls that are flat...</state>
                 <state img="2-confused.png">...Are you sure you're not a boy?</state>
             </case>
-            <case tag="female_small_chest_is_visible" target="emi" targetSaying="I don't run just to have a great body, but it &lt;i&gt;is&lt;/i&gt; a nice benefit.">
+            <case tag="female_small_chest_is_visible" target="emi" targetSaidMarker="emi_great_body">
                 <state img="2-lucid.png">I mean, so is painting, but...to each their own.</state>
             </case>
             <case tag="female_small_chest_is_visible" target="emi" targetSaying="If guys can walk around topless, why can't we?">
@@ -3410,7 +3447,7 @@
                 <state img="2-DPDelighted.png">~name~? Oh...looks like they're going for it.</state>
                 <state img="2-DPNormal.png">...Finally...looking at them really made me uncomfortable...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" alsoPlayingSaying="pussy">
+            <case tag="female_crotch_will_be_visible" notSaidMarker="pussycat" alsoPlayingSaying="pussy">
                 <state img="2-curious.png" marker="pussycat">Why is it even called a "pussy" anyways? It doesn't even look close to a cat.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
@@ -3749,9 +3786,13 @@
                 <state img="3-DPNormal.png">...Perhaps I'm hungry...but remember the last time we tried to have a picnic?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="2-4" alsoPlayingSaying="Could someone put some music on? Preferably not something weird like what Rin listens to...">
-                <state img="3-DPNormal.png">...What? There's nothing wrong with listening to rain ambience.</state>
+                <state img="3-DPNormal.png">...What? There's nothing wrong with listening to the rain...</state>
                 <state img="3-confused.png">...What are you talking about Emi? What's wrong with listening to the sky?</state>
                 <state img="3-doubt.png">I could listen to the trees all day...what are you going on about?</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi" alsoPlayingStage="5-8" alsoPlayingSaidMarker="rin_olympics">
+                <state img="3-confused.png">Pierre de...what?</state>
+                <state img="3-confused.png">Pierre? Who's Pierre?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="8" alsoPlayingSaidMarker="pirate" alsoPlayingNotSaidMarker="captain" alsoPlayingSayingMarker="captain">
                 <state img="3-DPNormal.png">...You've gotta be kidding me.</state>
@@ -3795,6 +3836,10 @@
                 <condition count="0" filter="emi" />
                 <state img="3-doubt.png">I'm actually a little glad Emi is not here to play this. She can make me feel a little weird sometimes.</state>
                 <state img="3-lucid.png">Sometimes, Emi just talks about nothing for hours, it's like her head is made of bubblegum foam bath jelly.</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi">
+                <condition count="1" filter="futaba" />
+                <state img="3-doubt.png">...My taste in music isn't weird...what are you talking about Emi?</state>
             </case>
             <case tag="hand" saidMarker="pantiessoul" notSaidMarker="unluckypanties" priority="999">
                 <state img="3-confused.png" marker="unluckypanties">...Why do I feel like that a stroke of bad luck is going to strike?</state>
@@ -4423,12 +4468,12 @@
             <case tag="female_removing_major" target="emi" targetStage="2">
                 <state img="3-surprised.png">...Oh, you're showing us your-</state>
             </case>
+            <case tag="female_removing_major" target="emi" targetStage="3" targetSaidMarker="emi_uniform_off">
+                <state img="3-confused.png">Are you kidding? The girl uniforms are actually annoying to deal with.</state>
+            </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Ready to see me pop my top?">
                 <state img="3-bored.png">...You never told me you were a volcano.</state>
                 <state img="3-lucid.png">...Let's not set off any explosions in here...</state>
-            </case>
-            <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="These uniforms are more comfortable than they look, but they're still more comfortable when they're coming off!">
-                <state img="3-confused.png">Are you kidding? The girl uniforms are actually quite annoying to deal with.</state>
             </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Who said I need a shirt? I don't need a shirt.">
                 <state img="3-curious.png">Oh...but you do need a shirt...wait...what?</state>
@@ -4447,7 +4492,7 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="3-curious.png">I've never seen so many bullets fly since...ever!</state>
                 <state img="3-doubt.png">...I hope you didn't kill anyone with those bullets...</state>
-                <state img="3-disgust.png">...You have sandals under your shoes!?</state>
+                <state img="3-disgust.png" weight="2">...You have sandals under your shoes!?</state>
             </case>
             <case tag="female_removed_major" target="emi" targetStage="3">
                 <state img="3-lucid.png">...Nope...I'm not letting my bad luck take my innocence away.</state>
@@ -4463,7 +4508,7 @@
                 <state img="3-lucid.png">...No comment.</state>
                 <state img="3-lucid.png">...You're really gonna do it, aren't you?</state>
                 <state img="3-lucid.png">...Wow.</state>
-                <state img="3-confused.png">Oh, you're really doing it? I was being sarcastic.</state>
+                <state img="3-doubt.png" weight="2">Oh, you're really doing it? I was being sarcastic.</state>
             </case>
             <case tag="female_removed_major" target="hanako" targetStage="5" targetSaying="I'd... prefer it if you guys don't treat me any differently...">
                 <state img="3-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
@@ -4472,6 +4517,9 @@
                 <state img="3-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
             </case>
             <case tag="female_removed_major" target="natsuki" targetStage="5">
+                <state img="3-amused.png">Not a bad strategy Natsuki...it'll force people to look away from you.</state>
+            </case>
+            <case tag="female_removed_major" target="natsuki" targetStage="5" alsoPlaying="emi">
                 <state img="3-lucid.png">Underpants are the soul of a girl, You shouldn't peek at someone else's soul. Even if you are not a girl.</state>
             </case>
             <case tag="male_chest_will_be_visible">
@@ -4567,7 +4615,7 @@
                 <state img="3-pondering.png">Y'know, I do know a few girls that are flat...</state>
                 <state img="3-confused.png">...Are you sure you're not a boy?</state>
             </case>
-            <case tag="female_small_chest_is_visible" target="emi" targetSaying="I don't run just to have a great body, but it &lt;i&gt;is&lt;/i&gt; a nice benefit.">
+            <case tag="female_small_chest_is_visible" target="emi" targetSaidMarker="emi_great_body">
                 <state img="3-lucid.png">I mean, so is painting, but...to each their own.</state>
             </case>
             <case tag="female_small_chest_is_visible" target="emi" targetSaying="If guys can walk around topless, why can't we?">
@@ -4605,7 +4653,7 @@
                 <state img="3-DPDelighted.png">~name~? Oh...looks like they're going for it.</state>
                 <state img="3-DPNormal.png">...Finally...looking at them really made me uncomfortable...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" alsoPlayingSaying="pussy">
+            <case tag="female_crotch_will_be_visible" notSaidMarker="pussycat" alsoPlayingSaying="pussy">
                 <state img="3-curious.png" marker="pussycat">Why is it even called a "pussy" anyways? It doesn't even look close to a cat.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
@@ -4963,9 +5011,13 @@
                 <state img="4-DPNormal.png">...Perhaps I'm hungry...but remember the last time we tried to have a picnic?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="2-4" alsoPlayingSaying="Could someone put some music on? Preferably not something weird like what Rin listens to...">
-                <state img="4-DPNormal.png">...What? There's nothing wrong with listening to rain ambience.</state>
+                <state img="4-DPNormal.png">...What? There's nothing wrong with listening to the rain...</state>
                 <state img="4-confused.png">...What are you talking about Emi? What's wrong with listening to the sky?</state>
                 <state img="4-doubt.png">I could listen to the trees all day...what are you going on about?</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi" alsoPlayingStage="5-8" alsoPlayingSaidMarker="rin_olympics">
+                <state img="4-confused.png">Pierre de...what?</state>
+                <state img="4-confused.png">Pierre? Who's Pierre?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="8" alsoPlayingSaidMarker="pirate" alsoPlayingNotSaidMarker="captain" alsoPlayingSayingMarker="captain">
                 <state img="4-DPNormal.png">...You've gotta be kidding me.</state>
@@ -5009,6 +5061,10 @@
                 <condition count="0" filter="emi" />
                 <state img="4-doubt.png">I'm actually a little glad Emi is not here to play this. She can make me feel a little weird sometimes.</state>
                 <state img="4-lucid.png">Sometimes, Emi just talks about nothing for hours, it's like her head is made of bubblegum foam bath jelly.</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi">
+                <condition count="1" filter="futaba" />
+                <state img="4-doubt.png">...My taste in music isn't weird...what are you talking about Emi?</state>
             </case>
             <case tag="hand" saidMarker="sleep==3" priority="999">
                 <state img="4-bored.png" marker="-sleep">...Sorry...I...drifted off...</state>
@@ -5630,12 +5686,12 @@
             <case tag="female_removing_major" target="emi" targetStage="2">
                 <state img="4-surprised.png">...Oh, you're showing us your-</state>
             </case>
+            <case tag="female_removing_major" target="emi" targetStage="3" targetSaidMarker="emi_uniform_off">
+                <state img="4-confused.png">Are you kidding? The girl uniforms are actually annoying to deal with.</state>
+            </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Ready to see me pop my top?">
                 <state img="4-bored.png">...You never told me you were a volcano.</state>
                 <state img="4-lucid.png">...Let's not set off any explosions in here...</state>
-            </case>
-            <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="These uniforms are more comfortable than they look, but they're still more comfortable when they're coming off!">
-                <state img="4-confused.png">Are you kidding? The girl uniforms are actually quite annoying to deal with.</state>
             </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Who said I need a shirt? I don't need a shirt.">
                 <state img="4-curious.png">Oh...but you do need a shirt...wait...what?</state>
@@ -5654,7 +5710,7 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="4-curious.png">I've never seen so many bullets fly since...ever!</state>
                 <state img="4-doubt.png">...I hope you didn't kill anyone with those bullets...</state>
-                <state img="4-disgust.png">...You have sandals under your shoes!?</state>
+                <state img="4-disgust.png" weight="2">...You have sandals under your shoes!?</state>
             </case>
             <case tag="female_removed_major" target="emi" targetStage="3">
                 <state img="4-lucid.png">...Nope...I'm not letting my bad luck take my innocence away.</state>
@@ -5670,7 +5726,7 @@
                 <state img="4-lucid.png">...No comment.</state>
                 <state img="4-lucid.png">...You're really gonna do it, aren't you?</state>
                 <state img="4-lucid.png">...Wow.</state>
-                <state img="4-confused.png">Oh, you're really doing it? I was being sarcastic.</state>
+                <state img="4-doubt.png" weight="2">Oh, you're really doing it? I was being sarcastic.</state>
             </case>
             <case tag="female_removed_major" target="hanako" targetStage="5" targetSaying="I'd... prefer it if you guys don't treat me any differently...">
                 <state img="4-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
@@ -5679,6 +5735,9 @@
                 <state img="4-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
             </case>
             <case tag="female_removed_major" target="natsuki" targetStage="5">
+                <state img="4-amused.png">Not a bad strategy Natsuki...it'll force people to look away from you.</state>
+            </case>
+            <case tag="female_removed_major" target="natsuki" targetStage="5" alsoPlaying="emi">
                 <state img="4-lucid.png">Underpants are the soul of a girl, You shouldn't peek at someone else's soul. Even if you are not a girl.</state>
             </case>
             <case tag="male_chest_will_be_visible">
@@ -5774,7 +5833,7 @@
                 <state img="4-pondering.png">Y'know, I do know a few girls that are flat...</state>
                 <state img="4-confused.png">...Are you sure you're not a boy?</state>
             </case>
-            <case tag="female_small_chest_is_visible" target="emi" targetSaying="I don't run just to have a great body, but it &lt;i&gt;is&lt;/i&gt; a nice benefit.">
+            <case tag="female_small_chest_is_visible" target="emi" targetSaidMarker="emi_great_body">
                 <state img="4-lucid.png">I mean, so is painting, but...to each their own.</state>
             </case>
             <case tag="female_small_chest_is_visible" target="emi" targetSaying="If guys can walk around topless, why can't we?">
@@ -5812,7 +5871,7 @@
                 <state img="4-DPDelighted.png">~name~? Oh...looks like they're going for it.</state>
                 <state img="4-DPNormal.png">...Finally...looking at them really made me uncomfortable...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" alsoPlayingSaying="pussy">
+            <case tag="female_crotch_will_be_visible" notSaidMarker="pussycat" alsoPlayingSaying="pussy">
                 <state img="4-curious.png" marker="pussycat">Why is it even called a "pussy" anyways? It doesn't even look close to a cat.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
@@ -6172,9 +6231,13 @@
                 <state img="5-DPNormal.png">...Perhaps I'm hungry...but remember the last time we tried to have a picnic?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="2-4" alsoPlayingSaying="Could someone put some music on? Preferably not something weird like what Rin listens to...">
-                <state img="5-DPNormal.png">...What? There's nothing wrong with listening to rain ambience.</state>
+                <state img="5-DPNormal.png">...What? There's nothing wrong with listening to the rain...</state>
                 <state img="5-confused.png">...What are you talking about Emi? What's wrong with listening to the sky?</state>
                 <state img="5-doubt.png">I could listen to the trees all day...what are you going on about?</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi" alsoPlayingStage="5-8" alsoPlayingSaidMarker="rin_olympics">
+                <state img="5-confused.png">Pierre de...what?</state>
+                <state img="5-confused.png">Pierre? Who's Pierre?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="8" alsoPlayingSaidMarker="pirate" alsoPlayingNotSaidMarker="captain" alsoPlayingSayingMarker="captain">
                 <state img="5-DPNormal.png">...You've gotta be kidding me.</state>
@@ -6218,6 +6281,10 @@
                 <condition count="0" filter="emi" />
                 <state img="5-doubt.png">I'm actually a little glad Emi is not here to play this. She can make me feel a little weird sometimes.</state>
                 <state img="5-lucid.png">Sometimes, Emi just talks about nothing for hours, it's like her head is made of bubblegum foam bath jelly.</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi">
+                <condition count="1" filter="futaba" />
+                <state img="5-doubt.png">...My taste in music isn't weird...what are you talking about Emi?</state>
             </case>
             <case tag="hand" saidMarker="sleep==3" priority="999">
                 <state img="5-bored.png" marker="-sleep">...Sorry...I...drifted off...</state>
@@ -6817,12 +6884,12 @@
             <case tag="female_removing_major" target="emi" targetStage="2">
                 <state img="5-surprised.png">...Oh, you're showing us your-</state>
             </case>
+            <case tag="female_removing_major" target="emi" targetStage="3" targetSaidMarker="emi_uniform_off">
+                <state img="5-confused.png">Are you kidding? The girl uniforms are actually annoying to deal with.</state>
+            </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Ready to see me pop my top?">
                 <state img="5-bored.png">...You never told me you were a volcano.</state>
                 <state img="5-lucid.png">...Let's not set off any explosions in here...</state>
-            </case>
-            <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="These uniforms are more comfortable than they look, but they're still more comfortable when they're coming off!">
-                <state img="5-confused.png">Are you kidding? The girl uniforms are actually quite annoying to deal with.</state>
             </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Who said I need a shirt? I don't need a shirt.">
                 <state img="5-curious.png">Oh...but you do need a shirt...wait...what?</state>
@@ -6841,7 +6908,7 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="5-curious.png">I've never seen so many bullets fly since...ever!</state>
                 <state img="5-doubt.png">...I hope you didn't kill anyone with those bullets...</state>
-                <state img="5-disgust.png">...You have sandals under your shoes!?</state>
+                <state img="5-disgust.png" weight="2">...You have sandals under your shoes!?</state>
             </case>
             <case tag="female_removed_major" target="emi" targetStage="3">
                 <state img="5-lucid.png">...Nope...I'm not letting my bad luck take my innocence away.</state>
@@ -6857,7 +6924,7 @@
                 <state img="5-lucid.png">...No comment.</state>
                 <state img="5-lucid.png">...You're really gonna do it, aren't you?</state>
                 <state img="5-lucid.png">...Wow.</state>
-                <state img="5-confused.png">Oh, you're really doing it? I was being sarcastic.</state>
+                <state img="5-doubt.png" weight="2">Oh, you're really doing it? I was being sarcastic.</state>
             </case>
             <case tag="female_removed_major" target="hanako" targetStage="5" targetSaying="I'd... prefer it if you guys don't treat me any differently...">
                 <state img="5-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
@@ -6866,6 +6933,9 @@
                 <state img="5-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
             </case>
             <case tag="female_removed_major" target="natsuki" targetStage="5">
+                <state img="5-amused.png">Not a bad strategy Natsuki...it'll force people to look away from you.</state>
+            </case>
+            <case tag="female_removed_major" target="natsuki" targetStage="5" alsoPlaying="emi">
                 <state img="5-lucid.png">Underpants are the soul of a girl, You shouldn't peek at someone else's soul. Even if you are not a girl.</state>
             </case>
             <case tag="male_chest_will_be_visible">
@@ -6961,7 +7031,7 @@
                 <state img="5-pondering.png">Y'know, I do know a few girls that are flat...</state>
                 <state img="5-confused.png">...Are you sure you're not a boy?</state>
             </case>
-            <case tag="female_small_chest_is_visible" target="emi" targetSaying="I don't run just to have a great body, but it &lt;i&gt;is&lt;/i&gt; a nice benefit.">
+            <case tag="female_small_chest_is_visible" target="emi" targetSaidMarker="emi_great_body">
                 <state img="5-lucid.png">I mean, so is painting, but...to each their own.</state>
             </case>
             <case tag="female_small_chest_is_visible" target="emi" targetSaying="If guys can walk around topless, why can't we?">
@@ -6999,7 +7069,7 @@
                 <state img="5-DPDelighted.png">~name~? Oh...looks like they're going for it.</state>
                 <state img="5-DPNormal.png">...Finally...looking at them really made me uncomfortable...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" alsoPlayingSaying="pussy">
+            <case tag="female_crotch_will_be_visible" notSaidMarker="pussycat" alsoPlayingSaying="pussy">
                 <state img="5-curious.png" marker="pussycat">Why is it even called a "pussy" anyways? It doesn't even look close to a cat.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
@@ -7359,9 +7429,13 @@
                 <state img="6-DPNormal.png">...Perhaps I'm hungry...but remember the last time we tried to have a picnic?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="2-4" alsoPlayingSaying="Could someone put some music on? Preferably not something weird like what Rin listens to...">
-                <state img="6-DPNormal.png">...What? There's nothing wrong with listening to rain ambience.</state>
+                <state img="6-DPNormal.png">...What? There's nothing wrong with listening to the rain...</state>
                 <state img="6-confused.png">...What are you talking about Emi? What's wrong with listening to the sky?</state>
                 <state img="6-doubt.png">I could listen to the trees all day...what are you going on about?</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi" alsoPlayingStage="5-8" alsoPlayingSaidMarker="rin_olympics">
+                <state img="6-confused.png">Pierre de...what?</state>
+                <state img="6-confused.png">Pierre? Who's Pierre?</state>
             </case>
             <case tag="hand" alsoPlaying="emi" alsoPlayingStage="8" alsoPlayingSaidMarker="pirate" alsoPlayingNotSaidMarker="captain" alsoPlayingSayingMarker="captain">
                 <state img="6-DPNormal.png">...You've gotta be kidding me.</state>
@@ -7400,6 +7474,10 @@
                 <condition count="0" filter="emi" />
                 <state img="6-doubt.png">I'm actually a little glad Emi is not here to play this. She can make me feel a little weird sometimes.</state>
                 <state img="6-lucid.png">Sometimes, Emi just talks about nothing for hours, it's like her head is made of bubblegum foam bath jelly.</state>
+            </case>
+            <case tag="hand" alsoPlaying="emi">
+                <condition count="1" filter="futaba" />
+                <state img="6-doubt.png">...My taste in music isn't weird...what are you talking about Emi?</state>
             </case>
             <case tag="hand" saidMarker="sleep==3" priority="999">
                 <state img="6-bored.png" marker="-sleep">...Sorry...I...drifted off...</state>
@@ -7955,12 +8033,12 @@
             <case tag="female_removing_major" target="emi" targetStage="2">
                 <state img="6-surprised.png">...Oh, you're showing us your-</state>
             </case>
+            <case tag="female_removing_major" target="emi" targetStage="3" targetSaidMarker="emi_uniform_off">
+                <state img="6-confused.png">Are you kidding? The girl uniforms are actually annoying to deal with.</state>
+            </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Ready to see me pop my top?">
                 <state img="6-bored.png">...You never told me you were a volcano.</state>
                 <state img="6-lucid.png">...Let's not set off any explosions in here...</state>
-            </case>
-            <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="These uniforms are more comfortable than they look, but they're still more comfortable when they're coming off!">
-                <state img="6-confused.png">Are you kidding? The girl uniforms are actually quite annoying to deal with.</state>
             </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Who said I need a shirt? I don't need a shirt.">
                 <state img="6-curious.png">Oh...but you do need a shirt...wait...what?</state>
@@ -7979,7 +8057,7 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="6-curious.png">I've never seen so many bullets fly since...ever!</state>
                 <state img="6-doubt.png">...I hope you didn't kill anyone with those bullets...</state>
-                <state img="6-disgust.png">...You have sandals under your shoes!?</state>
+                <state img="6-disgust.png" weight="2">...You have sandals under your shoes!?</state>
             </case>
             <case tag="female_removed_major" target="emi" targetStage="3">
                 <state img="6-lucid.png">...Nope...I'm not letting my bad luck take my innocence away.</state>
@@ -7995,7 +8073,7 @@
                 <state img="6-lucid.png">...No comment.</state>
                 <state img="6-lucid.png">...You're really gonna do it, aren't you?</state>
                 <state img="6-lucid.png">...Wow.</state>
-                <state img="6-confused.png">Oh, you're really doing it? I was being sarcastic.</state>
+                <state img="6-doubt.png" weight="2">Oh, you're really doing it? I was being sarcastic.</state>
             </case>
             <case tag="female_removed_major" target="hanako" targetStage="5" targetSaying="I'd... prefer it if you guys don't treat me any differently...">
                 <state img="6-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
@@ -8004,6 +8082,9 @@
                 <state img="6-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
             </case>
             <case tag="female_removed_major" target="natsuki" targetStage="5">
+                <state img="6-amused.png">Not a bad strategy Natsuki...it'll force people to look away from you.</state>
+            </case>
+            <case tag="female_removed_major" target="natsuki" targetStage="5" alsoPlaying="emi">
                 <state img="6-lucid.png">Underpants are the soul of a girl, You shouldn't peek at someone else's soul. Even if you are not a girl.</state>
             </case>
             <case tag="male_chest_will_be_visible">
@@ -8099,7 +8180,7 @@
                 <state img="6-pondering.png">Y'know, I do know a few girls that are flat...</state>
                 <state img="6-confused.png">...Are you sure you're not a boy?</state>
             </case>
-            <case tag="female_small_chest_is_visible" target="emi" targetSaying="I don't run just to have a great body, but it &lt;i&gt;is&lt;/i&gt; a nice benefit.">
+            <case tag="female_small_chest_is_visible" target="emi" targetSaidMarker="emi_great_body">
                 <state img="6-lucid.png">I mean, so is painting, but...to each their own.</state>
             </case>
             <case tag="female_small_chest_is_visible" target="emi" targetSaying="If guys can walk around topless, why can't we?">
@@ -8137,7 +8218,7 @@
                 <state img="6-DPDelighted.png">~name~? Oh...looks like they're going for it.</state>
                 <state img="6-DPNormal.png">...Finally...looking at them really made me uncomfortable...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" alsoPlayingSaying="pussy">
+            <case tag="female_crotch_will_be_visible" notSaidMarker="pussycat" alsoPlayingSaying="pussy">
                 <state img="6-curious.png" marker="pussycat">Why is it even called a "pussy" anyways? It doesn't even look close to a cat.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
@@ -8391,13 +8472,13 @@
                 <state img="6-DPDelighted.png">And there goes another one...</state>
             </case>
             <case tag="must_masturbate_first">
-                <state img="6-DPUpset.png">I...honestly kinda expected I'd lose first. I'm not good at remembering things.</state>
-                <state img="6-doubt.png">...What is wrong with me...?</state>
-                <state img="6-doubt.png">...There's something wrong with me...</state>
+                <state img="6-lucid.png">I...honestly kinda expected I'd lose first. I'm not good at remembering things.</state>
+                <state img="6-DPUpset.png">...What is wrong with me...?</state>
+                <state img="6-DPUpset.png">...There's something wrong with me...</state>
             </case>
             <case tag="must_masturbate">
                 <state img="6-pondering.png">I'm surprised that I'm not the first one to do this.</state>
-                <state img="6-DPUpset.png">I suppose it's my turn to...destroy myself.</state>
+                <state img="6-DPUpset.png" marker="rin_destroy">I suppose it's my turn to...destroy myself.</state>
                 <state img="6-lucid.png">...There is nothing more to me than me, that's all I am.</state>
             </case>
             <case tag="start_masturbating">
@@ -8779,12 +8860,12 @@
             <case tag="female_removing_major" target="emi" targetStage="2">
                 <state img="7-surprised.png">...Oh, you're showing us your-</state>
             </case>
+            <case tag="female_removing_major" target="emi" targetStage="3" targetSaidMarker="emi_uniform_off">
+                <state img="7-confused.png">Are you kidding? The girl uniforms are actually annoying to deal with.</state>
+            </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Ready to see me pop my top?">
                 <state img="7-bored.png">...You never told me you were a volcano.</state>
                 <state img="7-lucid.png">...Let's not set off any explosions in here...</state>
-            </case>
-            <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="These uniforms are more comfortable than they look, but they're still more comfortable when they're coming off!">
-                <state img="7-confused.png">Are you kidding? The girl uniforms are actually quite annoying to deal with.</state>
             </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Who said I need a shirt? I don't need a shirt.">
                 <state img="7-curious.png">Oh...but you do need a shirt...wait...what?</state>
@@ -8799,7 +8880,7 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="7-curious.png">I've never seen so many bullets fly since...ever!</state>
                 <state img="7-doubt.png">...I hope you didn't kill anyone with those bullets...</state>
-                <state img="7-disgust.png">...You have sandals under your shoes!?</state>
+                <state img="7-disgust.png" weight="2">...You have sandals under your shoes!?</state>
             </case>
             <case tag="female_removed_major" target="emi" targetStage="3">
                 <state img="7-lucid.png">...Nope...I'm not letting my bad luck take my innocence away.</state>
@@ -8815,7 +8896,7 @@
                 <state img="7-lucid.png">...No comment.</state>
                 <state img="7-lucid.png">...You're really gonna do it, aren't you?</state>
                 <state img="7-lucid.png">...Wow.</state>
-                <state img="7-confused.png">Oh, you're really doing it? I was being sarcastic.</state>
+                <state img="7-doubt.png" weight="2">Oh, you're really doing it? I was being sarcastic.</state>
             </case>
             <case tag="female_removed_major" target="hanako" targetStage="5" targetSaying="I'd... prefer it if you guys don't treat me any differently...">
                 <state img="7-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
@@ -8824,6 +8905,9 @@
                 <state img="7-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
             </case>
             <case tag="female_removed_major" target="natsuki" targetStage="5">
+                <state img="7-amused.png">Not a bad strategy Natsuki...it'll force people to look away from you.</state>
+            </case>
+            <case tag="female_removed_major" target="natsuki" targetStage="5" alsoPlaying="emi">
                 <state img="7-lucid.png">Underpants are the soul of a girl, You shouldn't peek at someone else's soul. Even if you are not a girl.</state>
             </case>
             <case tag="male_chest_will_be_visible">
@@ -8886,7 +8970,7 @@
             <case tag="female_small_chest_is_visible">
                 <state img="7-lucid.png">...Just as flat as Hisao.</state>
             </case>
-            <case tag="female_small_chest_is_visible" target="emi" targetSaying="I don't run just to have a great body, but it &lt;i&gt;is&lt;/i&gt; a nice benefit.">
+            <case tag="female_small_chest_is_visible" target="emi" targetSaidMarker="emi_great_body">
                 <state img="7-lucid.png">I mean, so is painting, but...to each their own.</state>
             </case>
             <case tag="female_small_chest_is_visible" target="emi" targetSaying="If guys can walk around topless, why can't we?">
@@ -9672,12 +9756,12 @@
             <case tag="female_removing_major" target="emi" targetStage="2">
                 <state img="8-surprised.png">...Oh, you're showing us your-</state>
             </case>
+            <case tag="female_removing_major" target="emi" targetStage="3" targetSaidMarker="emi_uniform_off">
+                <state img="8-confused.png">Are you kidding? The girl uniforms are actually annoying to deal with.</state>
+            </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Ready to see me pop my top?">
                 <state img="8-bored.png">...You never told me you were a volcano.</state>
                 <state img="8-lucid.png">...Let's not set off any explosions in here...</state>
-            </case>
-            <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="These uniforms are more comfortable than they look, but they're still more comfortable when they're coming off!">
-                <state img="8-confused.png">Are you kidding? The girl uniforms are actually quite annoying to deal with.</state>
             </case>
             <case tag="female_removing_major" target="emi" targetStage="3" targetSaying="Who said I need a shirt? I don't need a shirt.">
                 <state img="8-curious.png">Oh...but you do need a shirt...wait...what?</state>
@@ -9696,7 +9780,7 @@
             <case tag="female_removed_major" target="aimee" targetStage="1">
                 <state img="8-curious.png">I've never seen so many bullets fly since...ever!</state>
                 <state img="8-doubt.png">...I hope you didn't kill anyone with those bullets...</state>
-                <state img="8-disgust.png">...You have sandals under your shoes!?</state>
+                <state img="8-disgust.png" weight="2">...You have sandals under your shoes!?</state>
             </case>
             <case tag="female_removed_major" target="emi" targetStage="3">
                 <state img="8-lucid.png">...Nope...I'm not letting my bad luck take my innocence away.</state>
@@ -9712,7 +9796,7 @@
                 <state img="8-lucid.png">...No comment.</state>
                 <state img="8-lucid.png">...You're really gonna do it, aren't you?</state>
                 <state img="8-lucid.png">...Wow.</state>
-                <state img="8-confused.png">Oh, you're really doing it? I was being sarcastic.</state>
+                <state img="8-doubt.png" weight="2">Oh, you're really doing it? I was being sarcastic.</state>
             </case>
             <case tag="female_removed_major" target="hanako" targetStage="5" targetSaying="I'd... prefer it if you guys don't treat me any differently...">
                 <state img="8-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
@@ -9721,6 +9805,9 @@
                 <state img="8-DPNormal.png">Do you see me judging?...I'm not, because I'm not judgemental...At least towards you.</state>
             </case>
             <case tag="female_removed_major" target="natsuki" targetStage="5">
+                <state img="8-amused.png">Not a bad strategy Natsuki...it'll force people to look away from you.</state>
+            </case>
+            <case tag="female_removed_major" target="natsuki" targetStage="5" alsoPlaying="emi">
                 <state img="8-lucid.png">Underpants are the soul of a girl, You shouldn't peek at someone else's soul. Even if you are not a girl.</state>
             </case>
             <case tag="male_chest_will_be_visible">
@@ -9816,7 +9903,7 @@
                 <state img="8-pondering.png">Y'know, I do know a few girls that are flat...</state>
                 <state img="8-confused.png">...Are you sure you're not a boy?</state>
             </case>
-            <case tag="female_small_chest_is_visible" target="emi" targetSaying="I don't run just to have a great body, but it &lt;i&gt;is&lt;/i&gt; a nice benefit.">
+            <case tag="female_small_chest_is_visible" target="emi" targetSaidMarker="emi_great_body">
                 <state img="8-lucid.png">I mean, so is painting, but...to each their own.</state>
             </case>
             <case tag="female_small_chest_is_visible" target="emi" targetSaying="If guys can walk around topless, why can't we?">
@@ -9854,7 +9941,7 @@
                 <state img="8-DPDelighted.png">~name~? Oh...looks like they're going for it.</state>
                 <state img="8-DPNormal.png">...Finally...looking at them really made me uncomfortable...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" alsoPlayingSaying="pussy">
+            <case tag="female_crotch_will_be_visible" notSaidMarker="pussycat" alsoPlayingSaying="pussy">
                 <state img="8-curious.png" marker="pussycat">Why is it even called a "pussy" anyways? It doesn't even look close to a cat.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
