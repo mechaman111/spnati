@@ -1783,6 +1783,16 @@ String.prototype.initCap = function() {
 	return this.substr(0, 1).toUpperCase() + this.substr(1);
 }
 
+// Polyfill for IE
+if (!String.prototype.startsWith) {
+    Object.defineProperty(String.prototype, 'startsWith', {
+        value: function(search, pos) {
+            pos = !pos || pos < 0 ? 0 : +pos;
+            return this.substring(pos, pos + search.length) === search;
+        }
+    });
+}
+
 /************************************************************
  * Counts the number of elements that evaluate as true, or,
  * if a function is provided, passes the test implemented by it.
