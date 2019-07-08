@@ -186,8 +186,6 @@ DevModeDialogueBox.prototype.updatePoseField = function () {
 }
 
 DevModeDialogueBox.prototype.startEditMode = function (start_text, status_line) {
-    KEYBINDINGS_ENABLED = false;
-    
     this.editData = {
         'text': start_text,
         'image': this.currentState.image,
@@ -224,7 +222,6 @@ DevModeDialogueBox.prototype.startEditMode = function (start_text, status_line) 
 }
 
 DevModeDialogueBox.prototype.exitEditMode = function () {
-    KEYBINDINGS_ENABLED = true;
     this.editData = null;
     this.respondingToPlayer = null;
     
