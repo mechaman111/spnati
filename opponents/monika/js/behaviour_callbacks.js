@@ -211,8 +211,8 @@ monika.registerBehaviourCallback('startJointMasturbation', function () {
 
     monika.JOINT_FORFEIT_ACTIVE = true;
     
-    if (previousLoser == sayori.slot) {
-        previousLoser = -1;
+    if (root.previousLoser == sayori.slot) {
+        root.previousLoser = -1;
     }
     
     setTimeout(function () {

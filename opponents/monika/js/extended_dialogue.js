@@ -44,7 +44,7 @@ function display_dialogue (pose, dialogue) {
     var pl = monika.utils.get_monika_player();
     var img = pl.stage + '-' + pose + '.png';
     
-    pl.chosenState.dialogue = dialogue;
+    pl.chosenState.dialogue = expandDialogue(dialogue, pl, pl.currentTarget, null);
     pl.chosenState.image = img;
     
     gameDisplays[pl.slot-1].update(pl);
