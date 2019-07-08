@@ -1695,7 +1695,7 @@ SceneView.prototype.addText = function (directive, context) {
     context.oldDirective = box.data("directive");
   }
   else {
-    box = $(document.createElement('div')).addClass('epilogue-text');
+    box = $(document.createElement('div')).addClass('bordered dialogue-bubble');
     //attach new div element to the content div
     this.$textContainer.append(box[0]);
     box.data("id", id);
@@ -1719,7 +1719,8 @@ SceneView.prototype.removeText = function (directive, context) {
 SceneView.prototype.applyTextDirective = function (directive, box) {
   var content = expandDialogue(directive.text, null, players[HUMAN_PLAYER]);
 
-  box.html('<div class="dialogue-bubble ' + directive.arrow + '">' + content + '</div>');
+  box.html('<span>' + content + '</span>');
+  box.addClass(directive.arrow)
   box.attr('style', directive.css);
 
   //use css to position the box
