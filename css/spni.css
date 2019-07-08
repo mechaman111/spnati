@@ -887,36 +887,32 @@ label {
     position: absolute;
     width: 100%;
     height: 20%;
-    top: 0;
+    top: 2%;
 }
 
-/* the area around the dialogue bubble */
-.dialogue-bubble-area {
-	position: absolute;
-    width: 24.5%;
-    top: 10%;
-    min-height: 90%;
-    margin: 0 0.25%;
-    padding: 1%;
+.dialogue-bubble {
+    width: 100%;
+    position: absolute;
     font-size: 120%;
     background: #F5F5F5;
     border-radius: 1rem;
+    padding: 1rem;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
+    text-align: center;
 }
 
-/* the body of the dialogue bubble */
-.dialogue-bubble {
-    margin: 1%;
-    min-height: 100%;
+.dialogue-bubble-row .dialogue-bubble {
+    min-height: 90%;
+}
 
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
+.dialogue-bubble-row .dialogue-bubble, .stats-box {
+    top: 0;
+    width: 24.5%;
+    margin: 0 0.25%;
 }
 
 .dialogue {
@@ -1141,6 +1137,7 @@ label {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    text-align: left;
 }
 
 #export-edit-log {
@@ -1149,7 +1146,7 @@ label {
     cursor: text;
 }
 
-.dialogue-bubble-area[data-editing="preview"] .dialogue-edit-status::after {
+.dialogue-bubble[data-editing="preview"] .dialogue-edit-status::after {
     content: " (Preview)";
 }
 
@@ -1161,23 +1158,23 @@ label {
     display: none;
 }
 
-.dialogue-bubble-area[data-dev-target="true"] .dialogue-edit-button {
+.dialogue-bubble[data-dev-target="true"] .dialogue-edit-button {
     display: inline;
 }
 
-.dialogue-bubble-area[data-editing] .dialogue-entry-button {
+.dialogue-bubble[data-editing] .dialogue-entry-button {
     display: inline;
 }
 
-.dialogue-bubble-area[data-editing] .dialogue-edit-button, .dialogue-bubble-area[data-editing] .dialogue-edit-status {
+.dialogue-bubble[data-editing] .dialogue-edit-button, .dialogue-bubble[data-editing] .dialogue-edit-status {
     display: inline;
 }
 
-.dialogue-bubble-area[data-editing]:not([data-editing="preview"]) .dialogue-bubble .dialogue {
+.dialogue-bubble[data-editing]:not([data-editing="preview"])>.dialogue {
     display: none;
 }
 
-.dialogue-bubble-area[data-editing="entry"] .dialogue-edit-entry {
+.dialogue-bubble[data-editing="entry"] .dialogue-edit-entry {
     display: block;
 }
 
@@ -2531,7 +2528,15 @@ label {
     background-color: #282828;
 }
 
-.dialogue-bubble-area .stats-section {
+.stats-box {
+    display: table;
+    position: absolute;
+    background: #F5F5F5;
+    padding: 1rem;
+    height: 88%;
+}
+
+.stats-box .stats-section {
     display: table;
     position: relative;
     width: 100%;
@@ -2539,14 +2544,14 @@ label {
     margin-bottom: 1%;
 }
 
-.dialogue-bubble-area .stats-section-large {
+.stats-box .stats-section-large {
     position: relative;
     width: 100%;
     height: 47%;
     margin-bottom: 1%;
 }
 
-.dialogue-bubble-area .stats-label {
+.stats-box .stats-label {
     display: table-cell;
     position: relative;
     width: 25%;
@@ -2554,13 +2559,16 @@ label {
     left: 0;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
-    font-size: 70%;
+    border-right: none;
+    font-size: 88%;
     background: linear-gradient(#CCCCCC, #AAAAAA);
     background-color: #CCCCCC;
-    vertical-align: top;
+    vertical-align: baseline;
+    text-align: right;
+    padding: 0.1rem 0.3rem;
 }
 
-.dialogue-bubble-area .stats-content {
+.stats-box .stats-content {
     display: table-cell;
     position: relative;
     width: 75.75%;
@@ -2568,9 +2576,14 @@ label {
     right: 0;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
-    font-size: 80%;
+    font-size: 100%;
     background: #F5F5F5;
-    padding: 0 0.2rem;
+    vertical-align: baseline;
+    padding: 0.1rem 0.3rem;
+}
+
+.character-description {
+    text-align: center;
 }
 
 #group-select-area {
@@ -3309,14 +3322,13 @@ label {
     border: 0.2rem solid #171717;
     position: absolute;
     background: #F5F5F5;
-    border-radius: 0.7rem;
 
 }
 .epilogue-content .dialogue-bubble {
     padding: 0.9rem;
     margin: 0;
-    width: 100%;
-    height: 100%;
+    font-size: 100%;
+    border-radius: 0.7rem;
 }
 
 .epilogue-content > .epilogue-image > img {

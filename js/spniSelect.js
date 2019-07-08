@@ -429,8 +429,8 @@ function updateGroupSelectScreen () {
 			$groupPrefersLabels[i].html(opponent.label);
 			$groupSexLabels[i].html(opponent.gender);
 			$groupSourceLabels[i].html(opponent.source);
-			$groupWriterLabels[i].html(wordWrapHtml(opponent.writer));
-			$groupArtistLabels[i].html(wordWrapHtml(opponent.artist));
+			$groupWriterLabels[i].html(opponent.writer);
+			$groupArtistLabels[i].html(opponent.artist);
 			$groupDescriptionLabels[i].html(opponent.description);
 
             if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
