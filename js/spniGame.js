@@ -1003,7 +1003,7 @@ function showLogModal () {
 function game_keyUp(e)
 {
     console.log(e);
-    if ($('.modal:visible').length == 0) {
+    if ($('.modal:visible').length == 0 && $('#game-screen .dialogue-edit:visible').length == 0) {
         if (e.keyCode == 32 && !$mainButton.prop('disabled')) { // Space
 			e.preventDefault();
             advanceGame();

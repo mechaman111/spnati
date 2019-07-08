@@ -915,115 +915,53 @@ label {
     margin: 0 0.25%;
 }
 
-.arrow-down::before, .arrow-down::after,
-.arrow-left::before, .arrow-left::after,
-.arrow-right::before, .arrow-right::after,
-.arrow-up::before, .arrow-up::after {
-	width: 0;
-	height: 0;
-
-	content: "";
-	position: absolute;
-
-	border-style: solid;
-	border-color: transparent;
+.dialogue-bubble > * {
+    z-index: 1;
 }
 
-.arrow-down::before, .arrow-down::after {
-	border-bottom: 0;
-}
-
-.arrow-left::before, .arrow-left::after {
-	border-left: 0;
-}
-
-.arrow-right:before, .arrow-right::after {
-	border-right: 0;
-}
-
-.arrow-up::before, .arrow-up::after {
-	border-top: 0;
-}
-
-/* the stroke of the bottom triangle */
-.arrow-down::before {
-	border-top-color: black;
-	border-width: 1.5rem;
-
-    bottom: -1.5rem;
-	left: 50%;
-	margin-left: -1.5rem;
-}
-
-/* the fill of the bottom triangle */
-.arrow-down::after {
-	border-top-color: #F5F5F5;
-	border-width: 1.5rem;
-
-    bottom: -1.35rem;
-	left: 50%;
-	margin-left: -1.5rem;
-}
-
-/* the stroke of the left triangle */
-.arrow-left::before {
-	border-right-color: black;
-	border-width: 1.5rem;
-
-    left: -1.5rem;
-	top: 50%;
-	margin-top: -1.5rem;
-}
-
-/* the fill of the left triangle */
-.arrow-left::after {
-	border-right-color: #F5F5F5;
-	border-width: 1.5rem;
-
-    left: -1.35rem;
-	top: 50%;
-	margin-top: -1.5rem;
-}
-
-/* the stroke of the right triangle */
-.arrow-right::before {
-	border-left-color: black;
-	border-width: 1.5rem;
-
-    margin-top: -1.5rem;
-    top: 50%;
-	left: 100%;
-}
-
-/* the fill of the right triangle */
-.arrow-right::after {
-	border-left-color: #F5F5F5;
-	border-width: 1.35rem;
-
-	top: 50%;
-	margin-top: -1.35rem;
-	left: 100%;
-}
-
-/* the stroke of the top triangle */
+.arrow-down::before,
+.arrow-left::before,
+.arrow-right::before,
 .arrow-up::before {
-	border-bottom-color: black;
-	border-width: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
 
-    top: -1.5rem;
-	left: 50%;
-	margin-left: -1.5rem;
+    content: "";
+    position: absolute;
+    background: #F5F5F5;
+    border-color: transparent black black transparent;
+    border-width: 0.25rem;
+    border-style: solid;
 }
 
-/* the fill of the top triangle */
-.arrow-up::after {
-    border-bottom-color: #F5F5F5;
-    border-width: 1.5rem;
-
-    top: -1.35rem;
+.arrow-down::before {
     left: 50%;
-    margin-left: -1.5rem;
+    bottom: calc(-2.5rem / 2);
+    margin-left: calc(-2.5rem / 2);
+    transform: scaleX(0.6) rotate(45deg);
 }
+
+.arrow-left::before {
+    top: 50%;
+    left: calc(-2.5rem / 2);
+    margin-top: calc(-2.5rem / 2);
+    transform: scaleY(0.6) rotate(135deg);
+}
+
+.arrow-right::before {
+    top: 50%;
+    margin-top: calc(-2.5rem / 2);
+    right: calc(-2.5rem / 2);
+    transform: scaleY(0.6) rotate(-45deg);
+}
+
+.arrow-up::before {
+    left: 50%;
+    margin-left: calc(-2.5rem / 2);
+    top: calc(-2.5rem / 2);
+    transform: scaleX(0.6) rotate(-135deg);
+}
+
 
 /************************************************************
  * Classes for Developer Mode.
