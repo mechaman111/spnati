@@ -392,7 +392,7 @@ function getCostumeOption(alt_costume, selected_costume) {
  * Loads opponents onto the individual select screen.
  ************************************************************/
 function updateIndividualSelectScreen () {
-    $('#individual-select-screen .opponent-cards-container')
+    $('#individual-select-screen .selection-cards-container')
         .empty()
         .append(selectableOpponents.map(function (opp) {
             return opp.selectionCard.mainElem;

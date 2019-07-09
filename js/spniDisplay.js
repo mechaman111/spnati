@@ -818,11 +818,11 @@ function createElementWithClass (elemType, className) {
 function OpponentSelectionCard (opponent) {
     this.opponent = opponent;
     
-    this.mainElem = createElementWithClass('div', 'opponent-card');
+    this.mainElem = createElementWithClass('div', 'selection-card');
     
     var clipElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-image-clip'));
     this.imageArea = clipElem.appendChild(createElementWithClass('div', 'selection-card-image-area'));
-    this.simpleImage = $(this.imageArea.appendChild(createElementWithClass('img', 'opponent-card-image-simple')));
+    this.simpleImage = $(this.imageArea.appendChild(createElementWithClass('img', 'selection-card-image-simple')));
     
     this.imageArea = $(this.imageArea);
     
