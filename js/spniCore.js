@@ -1826,8 +1826,9 @@ function generateRandomID() {
  **/
 function autoResizeFont ()
 {
-	/* resize font */
-    if ($('.wide-screen-container .screen:visible').width()) {
+    var w = window.innerWidth, h = window.innerHeight;
+    /* resize font. Note: the 3/2 threshold must match the @media CSS block */
+    if ($('.wide-screen-container .screen:visible').width() && w / h >= 3/2) {
         // Calculate 4/3 of the height a normal screen would have ((16/9) / (4/3) = 4/3) 
         $(':root').css('font-size', ($('.screen:visible').width() / 4 * 3 / 100)+'px');
     } else if ($('.screen:visible').width()) {
@@ -1837,7 +1838,6 @@ function autoResizeFont ()
     }
 
 	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
-		var w = window.innerWidth, h = window.innerHeight;
 		if (h > (3/4) * w) {
 			h = (3/4) * w;
 		} else {

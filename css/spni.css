@@ -1799,14 +1799,11 @@ label {
   ************************************************************/
 
 .selection-cards-container {
-    width: 75%;
-    height: 90%;
-
     position: absolute;
     left: 0;
-    top: 10%;
     bottom: 0;
-
+    width: 75%;
+    height: 90%;
 
     overflow-y: scroll;
     overflow-x: hidden;
@@ -2358,6 +2355,34 @@ label {
 
 .opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
     display: none;
+}
+
+/* Modifications on non-widescreen devices 
+   Note: The threshold here must match autoResizeFont(). */
+@media (max-aspect-ratio: 3/2) {
+    .wide-screen-container {
+        height: 75vw;
+        max-width: 133.33vh;
+    }
+    .selection-card {
+        width: 24.5%;
+	height: 38.4%;
+    }
+    .selection-cards-container, .selection-options-row {
+	width: 70%;
+    }
+    .opponent-details-container {
+	left: 70.5%;
+    }
+    .option-component label {
+        font-size: 1rem;
+    }
+    .option-component input {
+        font-size: 1.2rem;
+    }
+    #gender-sort-column {
+	font-size: 1.1rem;
+    }
 }
 
 /************************************************************
