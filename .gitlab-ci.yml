@@ -11,6 +11,19 @@ deploy_testing:
         name: testing/$CI_COMMIT_REF_NAME
         url: https://spnati-testing.faraway-vision.io/$CI_COMMIT_REF_NAME
 
+cleanup_testing:
+    stage: deploy
+    tags:
+        - testing
+    variables:
+        - GIT_STRATEGY: none
+    script:
+        - rm -rf "/opt/spnati-testing/${CI_COMMIT_REF_NAME}"
+    when: manual
+    environment:
+        name: testing/$CI_COMMIT_REF_NAME
+        action: stop
+        
 deploy_production:
     stage: deploy
     tags:
