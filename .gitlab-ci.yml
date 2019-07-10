@@ -1,25 +1,34 @@
 image: python:3.7-stretch
 
-pages:
-  stage: deploy
-  script:
-  # tar may be the easiest way to copy an arbitrary
-  # list of files, keeping the directory structure.
-  # Include *.js and *.css to accomodate Monika.
-  - mkdir -p .public/opponents
-  - cp -r css fonts img js player index.html version-info.xml .public
-  - sed "s/__CI_COMMIT_SHA/${CI_COMMIT_SHA}/g" prod-config.xml > .public/config.xml
-  - cp opponents/listing.xml .public/opponents
-  - cp opponents/general_collectibles.xml .public/opponents
-  - pip3 install beautifulsoup4
-  - find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" | tar -cT - | tar -C .public -x
-  - python3 opponents/fill_linecount_metadata.py .public/opponents
-  - python opponents/gzip_dialogue.py .public/opponents/*/behaviour.xml
-  - python opponents/analyze_image_space.py .public/opponents
-  #- python opponents/copy_event_alts.py .public/ ./ easter
-  - mv .public public
-  artifacts:
-    paths:
-    - public
-  only:
-  - master
+before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+
+deploy:
+    stage: deploy
+    script:
+        # tar may be the easiest way to copy an arbitrary
+        # list of files, keeping the directory structure.
+        # Include *.js and *.css to accomodate Monika.
+        - mkdir -p .public/opponents
+        - cp -r css fonts img js player index.html version-info.xml .public
+        - sed "s/__CI_COMMIT_SHA/${CI_COMMIT_SHA}/g" prod-config.xml > .public/config.xml
+        - cp opponents/listing.xml .public/opponents
+        - cp opponents/general_collectibles.xml .public/opponents
+        - pip3 install beautifulsoup4
+        - find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" | tar -cT - | tar -C .public -x
+        - python3 opponents/fill_linecount_metadata.py .public/opponents
+        - python opponents/gzip_dialogue.py .public/opponents/*/behaviour.xml
+        - python opponents/analyze_image_space.py .public/opponents
+        #- python opponents/copy_event_alts.py .public/ ./ easter
+        - rsync -avz .public/ "deploy@${DEPLOY_IP}:/opt/spnati"
+    artifacts:
+        paths:
+            - public
+    only:
+        - master
