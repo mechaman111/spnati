@@ -36,16 +36,14 @@ var STATUS_FINISHED = "finished";
 /************************************************************
  * Stores information on an article of clothing.
  ************************************************************/
-function createNewClothing (formal, generic, type, position, image, plural, id) {
-	var newClothingObject = {formal:formal,
-						     generic:generic,
-						     type:type,
-						     position:position,
-                             image:image,
-							 plural:plural||false,
-							 id:id};
-
-	return newClothingObject;
+function Clothing (name, generic, type, position, image, plural, id) {
+    this.name = name;
+    this.generic = generic || name;
+    this.type = type;
+    this.position = position;
+    this.image = image;
+    this.plural = plural || false;
+    this.id = id;
 }
 
 /**********************************************************************

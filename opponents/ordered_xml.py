@@ -66,7 +66,7 @@ class OrderedXMLElement(object):
                 yield child
 
     def __serialize(self, level=0):
-        attr_string = " ".join(["{:s}=\"{:s}\"".format(k, XMLEscape(v, ATTR_ESCAPES, ATTR_ESCAPE_RE)) for k,v in self.attributes.items()])
+        attr_string = " ".join(["{:s}=\"{:s}\"".format(k, XMLEscape(v, ATTR_ESCAPES, ATTR_ESCAPE_RE)) for k,v in self.attributes.items() if v is not None])
         
         if len(attr_string) > 0:
             attr_string = ' '+attr_string

@@ -67,7 +67,7 @@ function Save() {
                     var profile = data[gender];
                     profile.clothing = clothingChoices[gender].filter(function(item, ix) {
                         return profile.clothing[ix];
-                    }).map(function(item) { return item.generic; });
+                    }).map(function(item) { return item.name; });
                     localStorage.setItem(prefix + gender, JSON.stringify(profile));
                 }
             });
@@ -105,7 +105,7 @@ function Save() {
         $nameField.val(profile.name || '');
         changePlayerSize(profile.size || eSize.MEDIUM);
         selectedChoices = clothingChoices[gender].map(function(item) {
-            return (profile.clothing || defaultWardrobes[gender]).indexOf(item.generic) >= 0;
+            return (profile.clothing || defaultWardrobes[gender]).indexOf(item.name) >= 0;
         });
         playerTagSelections = profile.tags || {};
     };
@@ -121,7 +121,7 @@ function Save() {
             tags: playerTagSelections,
             clothing: clothingChoices[players[HUMAN_PLAYER].gender].filter(function(item, ix) {
                 return selectedChoices[ix];
-            }).map(function(item) { return item.generic; }),
+            }).map(function(item) { return item.name; }),
         };
         localStorage.setItem(prefix + players[HUMAN_PLAYER].gender, JSON.stringify(profile));
     };

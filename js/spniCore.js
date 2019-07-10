@@ -396,15 +396,15 @@ Player.prototype.resetState = function () {
     	/* find and create all of their clothing */
         var clothingArr = [];
     	$wardrobe.find('clothing').each(function () {
-    		var formalName = $(this).attr('formalName');
-    		var genericName = $(this).attr('genericName') || $(this).attr('lowercase');
-    		var type = $(this).attr('type');
-    		var position = $(this).attr('position');
-    		var plural = ['true', 'yes'].indexOf($(this).attr('plural')) >= 0;
+            var generic = $(this).attr('generic');
+            var name = $(this).attr('name') || $(this).attr('lowercase');
+            var type = $(this).attr('type');
+            var position = $(this).attr('position');
+            var plural = ['true', 'yes'].indexOf($(this).attr('plural')) >= 0;
 
-    		var newClothing = createNewClothing(formalName, genericName, type, position, null, plural, 0);
+            var newClothing = new Clothing(name, generic, type, position, null, plural, 0);
 
-    		clothingArr.push(newClothing);
+            clothingArr.push(newClothing);
     	});
         
         this.poses = appearance.poses;

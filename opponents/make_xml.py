@@ -305,7 +305,11 @@ def write_xml(data, filename):
 	clothes_count = len(clothes)
 	for i in range(clothes_count - 1, -1, -1):
 		pname, lname, tp, pos, num = (clothes[i] + ",").split(",")[:5]
-		clothesattr = OrderedDict([("lowercase", lname), ("position", pos), ("formalName", pname), ("type", tp)])
+                generic = None
+                if pname[0].lower() == pname[0]:
+                        generic = lname
+                        lname = pname
+		clothesattr = OrderedDict([("name", lname), ("generic", generic), ("position", pos), ("type", tp)])
 		if num=="plural":
 			clothesattr["plural"] = "true"
 		clth.subElement("clothing", None, clothesattr)
