@@ -1,16 +1,7 @@
-image: python:3.7-stretch
-
-before_script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
-
 deploy:
     stage: deploy
+    tags:
+        - frontend
     script:
         # tar may be the easiest way to copy an arbitrary
         # list of files, keeping the directory structure.
@@ -26,7 +17,7 @@ deploy:
         - python opponents/gzip_dialogue.py .public/opponents/*/behaviour.xml
         - python opponents/analyze_image_space.py .public/opponents
         #- python opponents/copy_event_alts.py .public/ ./ easter
-        - rsync -avz .public/ "deploy@${DEPLOY_IP}:/opt/spnati"
+        - rsync -avz --delete --progress .public/ /opt/spnati
     artifacts:
         paths:
             - public
