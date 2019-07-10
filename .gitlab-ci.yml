@@ -10,6 +10,7 @@ deploy_testing:
     environment:
         name: testing/$CI_COMMIT_REF_NAME
         url: https://spnati-testing.faraway-vision.io/$CI_COMMIT_REF_NAME
+        on_stop: cleanup_testing
 
 cleanup_testing:
     stage: deploy
