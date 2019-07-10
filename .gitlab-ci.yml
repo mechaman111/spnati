@@ -4,12 +4,12 @@ deploy_testing:
         - testing
     script:
         - bash ./prepare-online.sh
-        - mkdir -p "/opt/spnati-testing/${CI_COMMIT_REF_NAME}"
-        - rsync -rltz --delete .public/ "/opt/spnati-testing/${CI_COMMIT_REF_NAME}"
+        - mkdir -p "/opt/spnati-testing/${CI_ENVIRONMENT_SLUG}"
+        - rsync -rltz --delete .public/ "/opt/spnati-testing/${CI_ENVIRONMENT_SLUG}"
     when: manual
     environment:
         name: testing/$CI_COMMIT_REF_NAME
-        url: https://spnati-testing.faraway-vision.io/$CI_COMMIT_REF_NAME
+        url: https://spnati-testing.faraway-vision.io/$CI_ENVIRONMENT_SLUG
         on_stop: cleanup_testing
 
 cleanup_testing:
