@@ -4,7 +4,7 @@ deploy_testing:
         - testing
     script:
         - bash ./prepare-online.sh
-        - mkdir -p /mnt/disks/data/spnati-testing/$CI_COMMIT_REF_NAME
+        - mkdir -p /opt/spnati-testing/$CI_COMMIT_REF_NAME
         - rsync -rltz --delete .public/ /opt/spnati-testing/$CI_COMMIT_REF_NAME
     when: manual
     environment:
