@@ -1,21 +1,26 @@
-deploy:
+deploy_testing:
     stage: deploy
     tags:
-        - frontend
+        - testing
     script:
-        # tar may be the easiest way to copy an arbitrary
-        # list of files, keeping the directory structure.
-        # Include *.js and *.css to accomodate Monika.
-        - mkdir -p .public/opponents
-        - cp -r css fonts img js player index.html version-info.xml .public
-        - sed "s/__CI_COMMIT_SHA/${CI_COMMIT_SHA}/g" prod-config.xml > .public/config.xml
-        - cp opponents/listing.xml .public/opponents
-        - cp opponents/general_collectibles.xml .public/opponents
-        - find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" | tar -cT - | tar -C .public -x
-        - python3 opponents/fill_linecount_metadata.py .public/opponents
-        - python opponents/gzip_dialogue.py .public/opponents/*/behaviour.xml
-        - python opponents/analyze_image_space.py .public/opponents
-        #- python opponents/copy_event_alts.py .public/ ./ easter
+        - bash ./prepare-online.sh
+        - mkdir -p /mnt/disks/data/spnati-testing/$CI_COMMIT_REF_NAME
+        - rsync -rltz --delete .public/ /opt/spnati-testing/$CI_COMMIT_REF_NAME
+    when: manual
+    environment:
+        name: testing/$CI_COMMIT_REF_NAME
+        url: https://spnati-testing.faraway-vision.io/$CI_COMMIT_REF_NAME
+
+deploy_production:
+    stage: deploy
+    tags:
+        - production
+    script:
+        - bash ./prepare-online.sh
         - rsync -rltz --delete .public/ /opt/spnati
+    environment:
+        # Change to 'production' and https://spnati.net if/when we switch over
+        name: staging
+        url: https://spnati-staging.faraway-vision.io/
     only:
         - master
