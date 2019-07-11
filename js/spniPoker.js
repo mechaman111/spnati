@@ -27,18 +27,6 @@ var FOUR_OF_A_KIND	= 8;
 var STRAIGHT_FLUSH	= 9;
 var ROYAL_FLUSH 	= 10;
 
-/************************************************************
- * Stores information on a poker hand.
- ************************************************************/
-function createNewHand (cards, strength, value, tradeIns) {
-	var newHandObject = {cards:cards, 
-						 strength:strength, 
-						 value:value, 
-						 tradeIns:tradeIns};
-						  
-	return newHandObject;
-}
- 
 /**********************************************************************
  *****                      Poker UI Elements                     *****
  **********************************************************************/
