@@ -6,13 +6,12 @@ deploy_testing:
         - bash ./prepare-online.sh
         - mkdir -p "/mnt/disks/data/spnati-testing-environments/${CI_ENVIRONMENT_SLUG}"
         - rsync -rltz --delete .public/ "/mnt/disks/data/spnati-testing-environments/${CI_ENVIRONMENT_SLUG}"
-    when: manual
     environment:
         name: testing/$CI_COMMIT_REF_NAME
         url: https://spnati.faraway-vision.io/test/$CI_ENVIRONMENT_SLUG
         on_stop: cleanup_testing
-    only:
-        - merge_requests
+    except:
+        - master
 
 cleanup_testing:
     stage: deploy
@@ -35,7 +34,6 @@ deploy_production:
         - bash ./prepare-online.sh
         - rsync -rltz --delete .public/ /opt/spnati
     environment:
-        # Change to 'production' and https://spnati.net if/when we switch over
         name: production
         url: https://spnati.net/
     only:
