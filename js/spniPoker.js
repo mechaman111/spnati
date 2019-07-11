@@ -187,9 +187,9 @@ function displayCard (player, i, visible) {
 function showHand (player) {
     displayHand(player, true);
     if (player > 0) {
-        $('#game-opponent-area-' + player + '>.opponent-card-area').attr('data-original-title', players[player].hand.describeFormal()).tooltip('show');
+        $gameOpponentAreas[player-1].attr('data-original-title', players[player].hand.describeFormal()).tooltip('show');
     } else {
-        $('#player-game-card-area').attr('data-original-title', players[player].hand.describeFormal()).tooltip('show');
+        $gamePlayerCardArea.attr('data-original-title', players[player].hand.describeFormal()).tooltip('show');
     }
 }
 
@@ -210,9 +210,9 @@ function clearHand (player) {
         clearCard(player, i);
     }
     if (player > 0) {
-        $('#game-opponent-area-' + player + '>.opponent-card-area').attr('data-original-title', '').tooltip('hide');
+        $gameOpponentAreas[player-1].attr('data-original-title', '').tooltip('hide');
     } else {
-        $('#player-game-card-area').attr('data-original-title', '').tooltip('hide');
+        $gamePlayerCardArea.attr('data-original-title', '').tooltip('hide');
     }
 }
 
