@@ -4,12 +4,12 @@ deploy_testing:
         - testing
     script:
         - bash ./prepare-online.sh
-        - mkdir -p "/opt/spnati-testing/${CI_ENVIRONMENT_SLUG}"
-        - rsync -rltz --delete .public/ "/opt/spnati-testing/${CI_ENVIRONMENT_SLUG}"
+        - mkdir -p "/mnt/disks/data/spnati-testing-environments/${CI_ENVIRONMENT_SLUG}"
+        - rsync -rltz --delete .public/ "/mnt/disks/data/spnati-testing-environments/${CI_ENVIRONMENT_SLUG}"
     when: manual
     environment:
         name: testing/$CI_COMMIT_REF_NAME
-        url: https://spnati-testing.faraway-vision.io/$CI_ENVIRONMENT_SLUG
+        url: https://spnati.faraway-vision.io/test/$CI_ENVIRONMENT_SLUG
         on_stop: cleanup_testing
     only:
         - merge_requests
@@ -21,7 +21,7 @@ cleanup_testing:
     variables:
         GIT_STRATEGY: none
     script:
-        - rm -rf "/opt/spnati-testing/${CI_ENVIRONMENT_SLUG}"
+        - rm -rf "/mnt/disks/data/spnati-testing-environments/${CI_ENVIRONMENT_SLUG}"
     when: manual
     environment:
         name: testing/$CI_COMMIT_REF_NAME
@@ -36,7 +36,7 @@ deploy_production:
         - rsync -rltz --delete .public/ /opt/spnati
     environment:
         # Change to 'production' and https://spnati.net if/when we switch over
-        name: staging
-        url: https://spnati-staging.faraway-vision.io/
+        name: production
+        url: https://spnati.net/
     only:
         - master
