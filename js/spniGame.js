@@ -521,6 +521,7 @@ function completeRevealPhase () {
     for (var i = 0; i < players.length; i++) {
         if (players[i] && !players[i].out) {
             players[i].hand.determine();
+            players[i].hand.sort();
             showHand(i);
             
             if (i > 0) $gameOpponentAreas[i-1].addClass('opponent-revealed-cards');

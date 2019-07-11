@@ -503,6 +503,12 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
         return undefined;
     case 'stage':
         return target.stage;
+    case 'hand':
+        if (split_fn[1] == 'score') {
+            return target.hand.score();
+        } else if (split_fn[1] == 'noart' || split_fn[1] === undefined) {
+            return target.hand.describe(split_fn[1] == undefined);
+        }
     default:
         return expandNicknames(self, target);
     }
