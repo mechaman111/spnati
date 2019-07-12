@@ -1858,11 +1858,6 @@ function autoResizeFont ()
 	window.onresize = autoResizeFont;
 }
 
-/* Get the number of players loaded, including the human player.*/
-function countLoadedOpponents() {
-    return players.reduce(function (a, v) { return a + (v ? 1 : 0); }, 0);
-}
-
 $('.modal').on('show.bs.modal', function() {
 	$('.screen:visible').find('button, input').attr('tabIndex', -1);
 });

@@ -647,8 +647,7 @@ function selectOpponentSlot (slot) {
         /* Make sure the user doesn't have target-count sorting set if
          * the amount of loaded opponents drops to 0. */
         if (sortingMode === "Targeted most by selected") {
-            var player_count = countLoadedOpponents();
-            if (player_count <= 1) {
+            if (players.countTrue() <= 1) {
                 setSortingMode("Featured");
             }
         }
@@ -1008,9 +1007,7 @@ function updateSelectionVisuals () {
     $groupButton.attr('disabled', loaded < filled);
 
     /* Update suggestions images. */
-    var current_player_count = countLoadedOpponents();
-
-    if (current_player_count >= 3) {
+    if (players.countTrue() >= 3) {
         var suggested_opponents = loadedOpponents.filter(function(opp) {
             /* hide selected opponents */
             if (players.some(function(p) { return p && p.id == opp.id; })) {
