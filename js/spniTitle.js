@@ -325,19 +325,19 @@ function loadClothing () {
  * Updates the clothing on the title screen.
  ************************************************************/
 function updateTitleClothing () {
-	if (players[HUMAN_PLAYER].gender == eGender.MALE) {
+	if (humanPlayer.gender == eGender.MALE) {
 		$('#female-clothing-container').hide();
 		$('#male-clothing-container').show();
-	} else if (players[HUMAN_PLAYER].gender == eGender.FEMALE) {
+	} else if (humanPlayer.gender == eGender.FEMALE) {
 		$('#male-clothing-container').hide();
 		$('#female-clothing-container').show();
 	}
 
 	for (var i = 0; i < selectedChoices.length; i++) {
 		if (selectedChoices[i]) {
-			$('#'+players[HUMAN_PLAYER].gender+'-clothing-option-'+i).css('opacity', '1');
+			$('#'+humanPlayer.gender+'-clothing-option-'+i).css('opacity', '1');
 		} else {
-			$('#'+players[HUMAN_PLAYER].gender+'-clothing-option-'+i).css('opacity', '0.4');
+			$('#'+humanPlayer.gender+'-clothing-option-'+i).css('opacity', '0.4');
 		}
 	}
 	//$warningLabel.html("");
@@ -353,7 +353,7 @@ function updateTitleClothing () {
  ************************************************************/
 function changePlayerGender (gender) {
 	save.savePlayer();
-	players[HUMAN_PLAYER].gender = gender;
+	humanPlayer.gender = gender;
 	save.loadPlayer();
 	updateTitleGender();
 }
@@ -362,8 +362,8 @@ function changePlayerGender (gender) {
  * Updates the gender dependent controls on the title screen.
  ************************************************************/
 function updateTitleGender() {
-    $titleContainer.removeClass('male female').addClass(players[HUMAN_PLAYER].gender);
-    $playerTagsModal.removeClass('male female').addClass(players[HUMAN_PLAYER].gender);
+    $titleContainer.removeClass('male female').addClass(humanPlayer.gender);
+    $playerTagsModal.removeClass('male female').addClass(humanPlayer.gender);
 
 	updateTitleClothing();
 }
@@ -373,7 +373,7 @@ function updateTitleGender() {
  * screen, or this was called by an internal source.
  ************************************************************/
 function changePlayerSize (size) {
-	players[HUMAN_PLAYER].size = size;
+	humanPlayer.size = size;
 
     $sizeBlocks.removeClass(eSize.SMALL + ' ' + eSize.MEDIUM + ' ' + eSize.LARGE).addClass(size).attr('data-size', size);
 }
@@ -396,8 +396,8 @@ function selectClothing (id) {
  * dialog and the size.
  **************************************************************/
 function setPlayerTags () {
-    var playerTagList = ['human', 'human_' + players[HUMAN_PLAYER].gender,
-                         players[HUMAN_PLAYER].size + (players[HUMAN_PLAYER].gender == 'male' ? '_penis' : '_breasts')];
+    var playerTagList = ['human', 'human_' + humanPlayer.gender,
+                         humanPlayer.size + (humanPlayer.gender == 'male' ? '_penis' : '_breasts')];
 
     for (category in playerTagSelections) {
         var sel = playerTagSelections[category];
@@ -419,8 +419,8 @@ function setPlayerTags () {
     }
     /* applies tags to the player*/
     console.log(playerTagList);
-    players[HUMAN_PLAYER].baseTags = playerTagList.map(canonicalizeTag);
-    players[HUMAN_PLAYER].updateTags();
+    humanPlayer.baseTags = playerTagList.map(canonicalizeTag);
+    humanPlayer.updateTags();
 }
 
 /************************************************************
@@ -433,23 +433,23 @@ function validateTitleScreen () {
     
 	if ($nameField.val() != "") {
         playerName = $nameField.val();
-	} else if (players[HUMAN_PLAYER].gender == "male") {
+	} else if (humanPlayer.gender == "male") {
         playerName = "Mister";
-	} else if (players[HUMAN_PLAYER].gender == "female") {
+	} else if (humanPlayer.gender == "female") {
         playerName = 'Missy';
 	}
     
     // Nuke all angle-brackets
     playerName = playerName.replace(/<|>/g, '');
     
-    players[HUMAN_PLAYER].first = playerName;
-    players[HUMAN_PLAYER].label = playerName;
+    humanPlayer.first = playerName;
+    humanPlayer.label = playerName;
     
-	$gameLabels[HUMAN_PLAYER].html(players[HUMAN_PLAYER].label);
+	$gameLabels[HUMAN_PLAYER].html(humanPlayer.label);
 
 	/* count clothing */
 	var clothingCount = [0, 0, 0, 0];
-	var genderClothingChoices = clothingChoices[players[HUMAN_PLAYER].gender];
+	var genderClothingChoices = clothingChoices[humanPlayer.gender];
 	for (i = 0; i < genderClothingChoices.length; i++) {
 		if (selectedChoices[i]) {
 			if (genderClothingChoices[i].position == UPPER_ARTICLE) {
@@ -495,7 +495,7 @@ function validateTitleScreen () {
 function wearClothing () {
 	var position = [[], [], []];
 	var importantWorn = [false, false];
-    var genderClothingChoices = clothingChoices[players[HUMAN_PLAYER].gender];
+    var genderClothingChoices = clothingChoices[humanPlayer.gender];
 
     /* sort the clothing by position */
     for (var i = genderClothingChoices.length - 1; i >= 0; i--) {
@@ -511,27 +511,27 @@ function wearClothing () {
     }
 
 	/* clear player clothing array */
-	players[HUMAN_PLAYER].clothing = [];
+	humanPlayer.clothing = [];
 
 	/* wear the clothing is sorted order */
 	for (var i = 0; i < position[0].length || i < position[1].length; i++) {
 		/* wear a lower article, if any remain */
 		if (i < position[1].length) {
-			players[HUMAN_PLAYER].clothing.push(position[1][i]);
+			humanPlayer.clothing.push(position[1][i]);
 		}
 
 		/* wear an upper article, if any remain */
 		if (i < position[0].length) {
-			players[HUMAN_PLAYER].clothing.push(position[0][i]);
+			humanPlayer.clothing.push(position[0][i]);
 		}
 	}
 
 	/* wear any other clothing */
 	for (var i = 0; i < position[2].length; i++) {
-		players[HUMAN_PLAYER].clothing.push(position[2][i]);
+		humanPlayer.clothing.push(position[2][i]);
 	}
 
-	players[HUMAN_PLAYER].initClothingStatus();
+	humanPlayer.initClothingStatus();
 
 	/* update the visuals */
     displayHumanPlayerClothing();

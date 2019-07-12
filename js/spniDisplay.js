@@ -1211,9 +1211,9 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         if (endingGenders.male && endingGenders.female) {
             epilogueAvailable = true;
         } else if (endingGenders.male) {
-            epilogueAvailable = (players[HUMAN_PLAYER].gender === 'male');
+            epilogueAvailable = (humanPlayer.gender === 'male');
         } else if (endingGenders.female) {
-            epilogueAvailable = (players[HUMAN_PLAYER].gender === 'female');
+            epilogueAvailable = (humanPlayer.gender === 'female');
         }
         
         if (epilogueAvailable) {
