@@ -142,7 +142,7 @@ var rolledBackGamePhase = null;
  * screen.
  ************************************************************/
 function loadGameScreen () {
-    $('#game-screen [data-toggle="tooltip"]').tooltip();
+    $('#game-screen [data-toggle="tooltip"]').tooltip({ delay: { show: 200 }});
 
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
