@@ -1798,16 +1798,18 @@ if (!String.prototype.startsWith) {
  * Counts the number of elements that evaluate as true, or,
  * if a function is provided, passes the test implemented by it.
  ************************************************************/
-Array.prototype.countTrue = function(func) {
-    var count = 0;
-    for (var i = 0; i < this.length; i++) {
-        if (i in this
-            && (func ? func(this[i], i, this) : this[i])) {
-            count++;
+Object.defineProperty(Array.prototype, 'countTrue', {
+    value: function(func) {
+        var count = 0;
+        for (var i = 0; i < this.length; i++) {
+            if (i in this
+                && (func ? func(this[i], i, this) : this[i])) {
+                count++;
+            }
         }
+        return count;
     }
-    return count;
-}
+});
 
 /************************************************************
  * Generate a random alphanumeric ID.
