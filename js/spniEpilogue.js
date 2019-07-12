@@ -930,7 +930,7 @@ function doEpilogue() {
 
   loadEpilogue(chosenEpilogue);
 
-  screenTransition($titleScreen, $epilogueScreen); //currently transitioning from title screen, because this is for testing
+  screenTransition($gameScreen, $epilogueScreen);
   $epilogueSelectionModal.modal("hide");
 }
 
