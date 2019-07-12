@@ -397,17 +397,17 @@ function distance2d (x1, y1, x2, y2)
  ************************************************************/
 function handStrengthToString (number) {
 	switch (number) {
-		case NONE: 				return "Nothing";
-		case HIGH_CARD: 		return "High Card";
-		case PAIR: 				return "One Pair";
-		case TWO_PAIR: 			return "Two Pair";
-		case THREE_OF_A_KIND: 	return "Three of a Kind";
-		case STRAIGHT: 			return "Straight";
-		case FLUSH: 			return "Flush";
-		case FULL_HOUSE: 		return "Full House";
-		case FOUR_OF_A_KIND:	return "Four of a Kind";
-		case STRAIGHT_FLUSH: 	return "Straight Flush";
-		case ROYAL_FLUSH: 		return "Royal Flush";
+        case NONE:              return "Nothing";
+        case HIGH_CARD:         return "High card";
+        case PAIR:              return "One pair";
+        case TWO_PAIR:          return "Two pair";
+        case THREE_OF_A_KIND:   return "Three of a kind";
+        case STRAIGHT:          return "Straight";
+        case FLUSH:             return "Flush";
+        case FULL_HOUSE:        return "Full house";
+        case FOUR_OF_A_KIND:    return "Four of a kind";
+        case STRAIGHT_FLUSH:    return "Straight flush";
+        case ROYAL_FLUSH:       return "Royal flush";
 	}
 }
 
@@ -468,7 +468,7 @@ Hand.prototype.describeFormal = function() {
     case STRAIGHT:
     case FLUSH:
     case STRAIGHT_FLUSH:
-        description += cardRankNames[this.value[0]-2] + ' high'; break;
+        description += cardRankToString(this.value[0], false) + ' high'; break;
     case FULL_HOUSE:
         description += cardRankToString(this.value[0]) + " full of "
             + cardRankToString(this.value[1]); break;
