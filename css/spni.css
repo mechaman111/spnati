@@ -2747,7 +2747,7 @@ label {
     background-color: rgba(40, 40, 40, 0.75);
 }
 
-.opponent-name-label {
+.opponent-area .name-label {
     text-align: center;
     background-color: #F5F5F5;
     margin-bottom: 0.2rem;
@@ -2873,14 +2873,17 @@ label {
     display: flex;
 }
 
-.player-name-label {
+.name-label {
+    text-align: center;
+    background-color: #F5F5F5;
+}
+
+#player-game-clothing-area .name-label {
     position: absolute;
     width: 65.5%;
     height: 24%;
     left: 17.25%;
     bottom: 3%;
-    text-align: center;
-    background-color: #F5F5F5;
 }
 
 #game-clothing-label {
@@ -3009,7 +3012,7 @@ label {
     transition-duration: 0.25s;
 }
 
-.ui-minimal .opponent-name-label {
+.ui-minimal .opponent-area .name-label {
     text-align: left;
     display: inline;
     padding: 1% 5%;
@@ -3146,6 +3149,10 @@ label {
 }
 
 .player-name-label-container {
+    display: none;
+}
+
+.ui-minimal .player-name-label-container {
     position: absolute;
     left: 0;
     right: 0;
@@ -3158,25 +3165,10 @@ label {
     pointer-events: none;
 }
 
-.player-name-label-minimal {
-    display: none;
-    text-align: center;
+.ui-minimal .player-name-label-container .name-label {
     min-width: 12%;
-    background-color: #f5f5f5;
     padding-top: 0.125em;
     padding-bottom: 0.125em;
-}
-
-.player-name-label-minimal.loser {
-    background-color: #DD4444;
-}
-
-.ui-minimal .player-name-label {
-    display: none;
-}
-
-.ui-minimal .player-name-label-minimal {
-    display: inline;
 }
 
 .optional-bordered {
@@ -3191,13 +3183,13 @@ label {
 /************************************************************
  * Classes for name labels to indicate current player, loser, etc.
  ************************************************************/
-.player-name-label.loser, .opponent-name-label.loser {
+.name-label.loser {
     background-color: #DD4444;
 }
-.player-name-label.tied, .opponent-name-label.tied {
+.name-label.tied {
     background-color: #CCCC44;
 }
-.player-name-label.current, .opponent-name-label.current {
+.name-label.current {
     background-color: #63AAE7
 }
 
