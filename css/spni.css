@@ -286,10 +286,8 @@ label {
 }
 
 .select-slot-button {
-    width: 21.2rem;  /* Same as opponent-name-label */
+    width: 100%;
     height: 5.44rem;  /* To match small-card-image */
-    margin: 0.2rem;
-    margin-top: 0.1rem;
     font-size: 130%;
 }
 
@@ -2719,30 +2717,30 @@ label {
 .opponent-area {
     position: absolute;
     width: 22rem;
-    /*height: 12.5%;*/
     bottom: 19%;
     margin: 0 1.5rem;
+    padding: 0.2rem;
     background-color: rgba(40, 40, 40, 0.75);
 }
 
 .opponent-name-label {
-    width: 21.2rem;
     text-align: center;
     background-color: #F5F5F5;
-    margin: 0.2rem;
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.2rem;
 }
 
 .opponent-card-area {
     display: flex;
-    padding: 0.1rem;
+    justify-content: space-between; /* If not supported it's not a big deal */
 }
 
 .small-card-image {
     height: 5.44rem;
     width: 4.08rem;
-    margin: 0.1rem;
     background-color: #F5F5F5;
+}
+.small-card-image + .small-card-image {
+    margin-left: 0.2rem; /* not needed if space-between works. */
 }
 
 /************************************************************
@@ -2846,7 +2844,7 @@ label {
     height: 11.2rem;*/
     right: 1.5%;
     bottom: 1%;
-    padding: 0.3%;
+    padding: 0.45%;
     background-color: rgba(40, 40, 40, 0.75);
     display: flex;
 }
@@ -2880,8 +2878,8 @@ label {
     background-color: #F5F5F5;
 }
 
-.player-card-area .large-card-image {
-    margin: 0.2rem;
+.player-card-area .large-card-image + .large-card-image {
+    margin-left: 0.4rem;
 }
 
 .dock-card {
@@ -2953,6 +2951,7 @@ label {
     background: none;
     display: flex;
     justify-content: center;
+    margin-top: 0.2rem;
 }
 
 .ui-minimal .small-card-image {
