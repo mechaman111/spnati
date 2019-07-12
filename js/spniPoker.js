@@ -45,7 +45,6 @@ function createNewHand (cards, strength, value, tradeIns) {
 
 /* hidden cards and hidden card areas */
 $gameHiddenArea = $('#game-hidden-area');
-$hiddenLargeCard = $('#hidden-large-card');
  
 /* player card cells */
 $cardCells = [[$("#player-0-card-1"), $("#player-0-card-2"), $("#player-0-card-3"), $("#player-0-card-4"), $("#player-0-card-5")],
@@ -298,6 +297,7 @@ function exchangeCards (player) {
 	if (inDeck.length < swap) {
 		shuffleDeck();
 	}
+    dealLock = swap;
 	
 	/* collect their old cards */
 	for (var i = 0; i < CARDS_PER_HAND; i++) {
@@ -333,14 +333,12 @@ function exchangeCards (player) {
  * in the order dealt, used to calculate the initial delay.
  ************************************************************/
 function animateDealtCard (player, card, n) {
-	$clonedCard = $hiddenLargeCard.clone().prependTo($gameHiddenArea);
-	$clonedCard.addClass("shown-card");
-	$clonedCard.attr('id', 'dealt-card-'+player+'-'+card);
+	var $clonedCard = $('#deck').clone().attr('id', 'dealt-card-'+player+'-'+card).prependTo($gameHiddenArea);
 	
 	if (player == HUMAN_PLAYER) {
-      $clonedCard.addClass("large-dealt-card");
-	} else {
-      $clonedCard.addClass("small-dealt-card");
+        $clonedCard.addClass("large-card-image");
+    } else {
+        $clonedCard.addClass('small-card-image');
 	}
 	
 	var offset = $cardCells[player][card].offset();
@@ -360,7 +358,10 @@ function animateDealtCard (player, card, n) {
 	$clonedCard.delay(n * ANIM_DELAY).animate({top: top, left: left}, animTime, function() {
 		$('#dealt-card-'+player+'-'+card).remove();
 		displayCard(player, card, player == HUMAN_PLAYER);
-		dealLock++;
+		dealLock--;
+        if (dealLock <= 0) {
+            $gameScreen.removeClass('prompt-exchange');
+        }
 	});
 }
 
@@ -369,7 +370,7 @@ function animateDealtCard (player, card, n) {
  ************************************************************/
 function getFarthestDealDistance()
 {
-	return offsetDistance($('#player-4-card-5').offset(), $('#hidden-large-card').offset());
+	return offsetDistance($('#player-4-card-5').offset(), $('#deck').offset());
 }
 
 /************************************************************

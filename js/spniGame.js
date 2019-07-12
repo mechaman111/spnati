@@ -363,7 +363,7 @@ function advanceTurn () {
         if (players[HUMAN_PLAYER].out) {
 			allowProgression(eGamePhase.REVEAL);
 		} else {
-            $('#player-game-card-area').addClass('prompt-exchange');
+            $gameScreen.addClass('prompt-exchange');
 			allowProgression(eGamePhase.EXCHANGE);
 		}
 	} else if (!players[currentTurn]) {
@@ -384,7 +384,7 @@ function startDealPhase () {
     saveTranscriptMessage("Starting round "+(currentRound+1)+"...");
     
     /* dealing cards */
-	dealLock = 0;
+	dealLock = getNumPlayersInStage(STATUS_ALIVE) * CARDS_PER_HAND;
     for (var i = 0; i < players.length; i++) {
         if (players[i]) {
             /* collect the player's hand */
@@ -431,11 +431,8 @@ function startDealPhase () {
  * Checks the deal lock to see if the animation is finished.
  ************************************************************/
 function checkDealLock () {
-	/* count the players still in the game */
-	var inGame = getNumPlayersInStage(STATUS_ALIVE);
-
 	/* check the deal lock */
-	if (dealLock < inGame * CARDS_PER_HAND) {
+	if (dealLock > 0) {
 		timeoutID = window.setTimeout(checkDealLock, 100);
 	} else {
 		gamePhase = eGamePhase.AITURN;
@@ -506,8 +503,6 @@ function completeExchangePhase () {
     /* exchange the player's chosen cards */
     exchangeCards(HUMAN_PLAYER);
     
-    $('#player-game-card-area').removeClass('prompt-exchange');
-
     /* disable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
        $cardButtons[i].attr('disabled', true);

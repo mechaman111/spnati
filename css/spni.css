@@ -81,6 +81,14 @@ ul {
 label {
     font-weight: 500;
 }
+.tooltip {
+    font-size: 1.2rem;
+}
+.form-control {
+    font-size: 1.4rem;
+    height: 3.4rem;
+    padding: 0.6rem 1.2rem;
+}
 
 /************************************************************
  * Global style classes.
@@ -90,22 +98,6 @@ label {
 	border: 0.2rem solid #111111;
 	border-radius: 0.5rem;
 	padding: 0;
-}
-
-.shaded {
-	box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.4) inset,
-		    0 0.2rem 0.2rem rgba(0, 0, 0, 0.4);
-}
-
-.flare-bordered {
-	border: 2px solid black;
-	border-radius: 0.4rem;
-	box-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.4) inset,
-		    0px 0.2rem 0.2rem rgba(0, 0, 0, 0.4);
-}
-
-.centred {
-	margin: 0px auto;
 }
 
 /************************************************************
@@ -295,14 +287,7 @@ label {
 
 .select-slot-button {
     width: 100%;
-    height: 61%;
-    margin-top: 1.2%;
-    font-size: 130%;
-}
-
-.full-select-slot-button {
-    width: 100%;
-    height: 100%;
+    height: 5.44rem;  /* To match small-card-image */
     font-size: 130%;
 }
 
@@ -338,7 +323,7 @@ label {
 
 .dropdown-button-item {
     width: 100%;
-    font-size: 1.5em;
+    font-size: 1.4rem;
     line-height: 1.30em;
 
     display: inline-flex;
@@ -893,6 +878,7 @@ label {
 .dialogue-bubble {
     width: 100%;
     position: absolute;
+    z-index: 0;
     font-size: 120%;
     background: #F5F5F5;
     border-radius: 1rem;
@@ -1813,24 +1799,19 @@ label {
   * Classes for select screen cards.
   ************************************************************/
 
-.opponent-cards-container {
-    width: 75%;
-    height: 90%;
-
+.selection-cards-container {
     position: absolute;
     left: 0;
-    top: 10%;
     bottom: 0;
-
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
+    width: 75%;
+    height: 90%;
 
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
-.opponent-card {
+.selection-card {
+    display: inline-block;
     width: 19.5%;
     height: 44%;
 
@@ -2350,7 +2331,7 @@ label {
 .show-more-button {
     display: block;
     font-size: 0.7em;
-    padding: 0 0.5em; 
+    padding: 0 0.5em;
 }
 
 .show-more-button::after {
@@ -2375,6 +2356,34 @@ label {
 
 .opponent-epilogues-field:not(.has-epilogues), .opponent-collectibles-field:not(.has-collectibles) {
     display: none;
+}
+
+/* Modifications on non-widescreen devices
+   Note: The threshold here must match autoResizeFont(). */
+@media (max-aspect-ratio: 3/2) {
+    .wide-screen-container {
+        height: 75vw;
+        max-width: 133.33vh;
+    }
+    .selection-card {
+        width: 24.5%;
+	height: 38.4%;
+    }
+    .selection-cards-container, .selection-options-row {
+	width: 70%;
+    }
+    .opponent-details-container {
+	left: 70.5%;
+    }
+    .option-component label {
+        font-size: 1rem;
+    }
+    .option-component input {
+        font-size: 1.2rem;
+    }
+    #gender-sort-column {
+	font-size: 1.1rem;
+    }
 }
 
 /************************************************************
@@ -2730,65 +2739,39 @@ label {
 }
 
 .opponent-area {
-	position: absolute;
-    width: 22%;
-    height: 11.5%;
+    position: absolute;
+    width: 22rem;
     bottom: 19%;
-    margin: 0 1.5%;
-    padding: 0.2% 0.25%;
+    margin: 0 1.5rem;
+    padding: 0.2rem;
     background-color: rgba(40, 40, 40, 0.75);
 }
 
-.small-opponent-area {
-	position: absolute;
-    width: 22%;
-    height: 7.5%;
-    bottom: 20.5%;
-    margin: 0 1.5%;
-    padding: 0.2% 0.25%;
-    background-color: rgba(40, 40, 40, 0.75);
-}
-
-.opponent-name-label {
-	height: 33%;
+.opponent-area .name-label {
+    height: 33%;
     text-align: center;
     background-color: #F5F5F5;
+    margin-bottom: 0.2rem;
 }
 
 .opponent-card-area {
-	width: 100%;
-    height: 62%;
-}
-
-.opponent-card-area :first-child {
-   margin-left: 0;
-}
-
-.opponent-card-area :last-child {
-   margin-right: 0;
+    display: flex;
+    justify-content: space-between; /* If not supported it's not a big deal */
 }
 
 .small-card-image {
-	float: left;
-    height: 100%;
-    width: 19.15%;
-    margin: 1.25% 0.5%;
+    height: 5.44rem;
+    width: 4.08rem;
     background-color: #F5F5F5;
+}
+.small-card-image + .small-card-image {
+    margin-left: 0.2rem; /* not needed if space-between works. */
 }
 
 /************************************************************
  * Classes for the human player section of the table on the
  * main game screen.
  ************************************************************/
-
-.player-table-area {
-	width: auto;
-	margin: 0 auto;
-	margin-top: 0.5rem;
-	box-sizing: border-box;
-	background: radial-gradient(#454545, #454545, #454545);
-    border: 0.2rem solid black;
-}
 
 /*
 #game-home-button {
@@ -2868,8 +2851,8 @@ label {
     position: absolute;
     width: 33%;
     height: 15%;
-    left: 8.5%;
-    bottom: 2%;
+    left: 9%;
+    bottom: 1%;
     background-color: rgba(40, 40, 40, 0.75);
 }
 
@@ -2882,26 +2865,30 @@ label {
 
 .player-card-area {
     position: absolute;
-    width: 40%;
-    height: 15%;
+  /*width: 40.3rem;
+    height: 11.2rem;*/
     right: 1.5%;
-    bottom: 2%;
-    padding: 0.3%;
+    bottom: 1%;
+    padding: 0.45%;
     background-color: rgba(40, 40, 40, 0.75);
+    display: flex;
 }
 
-.player-name-label {
-	position: absolute;
-    width: 65.5%;
-    height: 24%;
-    left: 17.25%;
-    bottom: 3%;
+.name-label {
     text-align: center;
     background-color: #F5F5F5;
 }
 
+#player-game-clothing-area .name-label {
+    position: absolute;
+    width: 65.5%;
+    height: 24%;
+    left: 17.25%;
+    bottom: 3%;
+}
+
 #game-clothing-label {
-	position: absolute;
+    position: absolute;
     width: 65.5%;
     height: 22%;
     left: 17.25%;
@@ -2911,43 +2898,22 @@ label {
     background-color: #F5F5F5;
 }
 
-.large-card-image {
-	float: left;
-    height: 100%;
-    width: 19%;
-    margin: 0 0.5%;
+.large-card-image, .ui-minimal.prompt-exchange .large-card-image, #deck {
+    height: 10rem;
+    width: 7.5rem;
+    border-radius: 0.65rem;
+    border-width: 0.2rem;
     background-color: #F5F5F5;
+}
+
+.large-card-image + .large-card-image {
+    margin-left: 0.4rem;
 }
 
 .dock-card {
     position: absolute;
-    width: 8%;
-    height: 14%;
-    left: 45.5%;
-    bottom: 2%;
-}
-
-.hidden-large-card {
-    opacity: 0;
-}
-
-.shown-card {
-	opacity: 1;
-}
-
-.large-dealt-card {
-    width: 7.5%;
-    height: 14%;
-}
-
-.ui-minimal .large-dealt-card {
-    width: 3.75%;
-    height: 7%;
-}
-
-.small-dealt-card {
-    width: 4%;
-    height: 6.5%;
+    left: 46.25%;
+    bottom: 2.2%;
 }
 
 #main-game-button {
@@ -2978,21 +2944,10 @@ label {
 
     bottom: auto;
     top: 70%;
-
-    height: calc(11.5% * 0.75);
-    width: calc(22% * 0.75);
     opacity: 0.5;
 
-    transition-property: opacity, transform, height, width;
+    transition-property: opacity;
     transition-duration: 0.5s;
-}
-
-.ui-minimal .opponent-area.left, .ui-minimal .opponent-area.halfLeft {
-    transform: translateX(12.5%);
-}
-
-.ui-minimal .opponent-area.right, .ui-minimal .opponent-area.halfRight {
-    transform: translateX(-12.5%);
 }
 
 .ui-minimal .opponent-revealed-cards {
@@ -3012,70 +2967,92 @@ label {
     transition: none;
 }
 
-.ui-minimal .opponent-area.opponent-revealed-cards:hover, .ui-minimal .opponent-area.opponent-revealed-cards:active, .ui-minimal .opponent-area.opponent-lost {
-    transform: none;
-    opacity: 1.0;
-    height: 11.5%;
-    width: 22%;
-
-    transition-property: opacity, transform, height, width;
-    transition-duration: 0.25s;
-}
-
-.ui-minimal .player-card-area  {
-    background: none;
-    left: 57%;
-
-    display: flex;
-    align-items: center;
-
-    opacity: 0.50;
-    transition-property: opacity;
-    transition-duration: 0.5s;
-}
-
-.ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active, .ui-minimal .player-card-area.prompt-exchange {
+.ui-minimal .opponent-area.opponent-revealed-cards:hover,
+.ui-minimal .opponent-area.opponent-revealed-cards:active,
+.ui-minimal .opponent-area.opponent-lost {
     opacity: 1.0;
     transition-property: opacity;
     transition-duration: 0.25s;
-}
-
-.ui-minimal .player-card-area .large-card-image {
-    width: 10%;
-    height: 50%;
-
-    transition-property: width, height;
-    transition-duration: 0.5s;
-}
-
-.ui-minimal .player-card-area:hover .large-card-image, .ui-minimal .player-card-area:active .large-card-image, .ui-minimal .player-card-area.prompt-exchange .large-card-image {
-    width: 19%;
-    height: 100%;
-
-    transition-property: width, height;
-    transition-duration: 0.5s;
 }
 
 .ui-minimal .opponent-card-area {
     background: none;
     display: flex;
     justify-content: center;
+    margin-top: 0.2rem;
 }
 
 .ui-minimal .small-card-image {
-    margin-right: -17%;
-    transform: translateX(-45%);
+    height: 4rem;
+    width: 3rem;
+    border-width: 0.15rem;
+    border-radius: 0.4rem;
+}
+
+.ui-minimal .opponent-area .small-card-image {
+    margin: 0.05rem;
+    margin-right: -2.45rem;
+    transform: translateX(-1.3rem);
 }
 
 .ui-minimal .opponent-revealed-cards .small-card-image {
-    margin-right: 0;
+    margin-right: 0.05rem;
     transform: none;
 
     transition-property: margin-right, transform;
     transition-duration: 0.5s;
 }
 
+.ui-minimal .opponent-area.opponent-lost .small-card-image,
+.ui-minimal .opponent-area.opponent-revealed-cards:hover .small-card-image,
+.ui-minimal .opponent-area.opponent-revealed-cards:active .small-card-image
+{
+    width: 4.125rem;
+    height: 5.5rem;
+    transition-property: width, height;
+    transition-duration: 0.25s;
+}
+
 .ui-minimal .opponent-name-label {
+    text-align: left;
+    display: inline;
+    padding: 1% 5%;
+    white-space: nowrap;
+}
+
+.ui-minimal .player-card-area  {
+    background: none;
+    left: 57%;
+    bottom: 1%;
+    height: 15%;
+    padding: 0;
+
+    justify-content: center;
+    align-items: flex-end;
+
+    opacity: 0.50;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active, .ui-minimal.prompt-exchange .player-card-area {
+    opacity: 1.0;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+.ui-minimal .large-card-image {
+    width: 4.125rem;
+    height: 5.5rem;
+    margin: 0 0.1rem;
+    border-width: 0.15rem;
+    border-radius: 0.4rem;
+
+    transition-property: width, height, margin, border-radius, border-width;
+    transition-duration: 0.5s;
+}
+
+.ui-minimal .opponent-area .name-label {
     text-align: left;
     display: inline;
     padding: 1% 5%;
@@ -3091,7 +3068,7 @@ label {
     position: absolute;
 
     right: 57%;
-    bottom: 5%;
+    bottom: 1%;
 
     width: 33%;
     transform: none;
@@ -3102,7 +3079,7 @@ label {
 
 .minimal-clothing-area-row {
     display: inline-flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 
     width: 100%;
@@ -3166,6 +3143,10 @@ label {
 }
 
 .player-name-label-container {
+    display: none;
+}
+
+.ui-minimal .player-name-label-container {
     position: absolute;
     left: 0;
     right: 0;
@@ -3178,25 +3159,10 @@ label {
     pointer-events: none;
 }
 
-.player-name-label-minimal {
-    display: none;
-    text-align: center;
+.ui-minimal .player-name-label-container .name-label {
     min-width: 12%;
-    background-color: #f5f5f5;
     padding-top: 0.125em;
     padding-bottom: 0.125em;
-}
-
-.player-name-label-minimal.loser {
-    background-color: #DD4444;
-}
-
-.ui-minimal .player-name-label {
-    display: none;
-}
-
-.ui-minimal .player-name-label-minimal {
-    display: inline;
 }
 
 .optional-bordered {
@@ -3211,13 +3177,13 @@ label {
 /************************************************************
  * Classes for name labels to indicate current player, loser, etc.
  ************************************************************/
-.player-name-label.loser, .opponent-name-label.loser {
+.name-label.loser {
     background-color: #DD4444;
 }
-.player-name-label.tied, .opponent-name-label.tied {
+.name-label.tied {
     background-color: #CCCC44;
 }
-.player-name-label.current, .opponent-name-label.current {
+.name-label.current {
     background-color: #63AAE7
 }
 

@@ -536,12 +536,10 @@ function expandDialogue (dialogue, self, target, bindings) {
                     substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target, bindings);
                 } else if (fn === 'plural') {
                     substitution = clothing.plural ? 'plural' : 'single';
-                } else if (fn == 'formal' && args === undefined) {
-                    substitution = clothing.formal || clothing.generic;
                 } else if ((fn == 'type' || fn == 'position') && args === undefined) {
                     substitution = clothing[fn];
                 } else if (fn === undefined) {
-                    substitution = clothing.generic;
+                    substitution = clothing.name;
                 }
                 break;
             case 'cards': /* determine how many cards are being swapped */

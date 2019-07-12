@@ -396,15 +396,15 @@ Player.prototype.resetState = function () {
     	/* find and create all of their clothing */
         var clothingArr = [];
     	$wardrobe.find('clothing').each(function () {
-    		var formalName = $(this).attr('formalName');
-    		var genericName = $(this).attr('genericName') || $(this).attr('lowercase');
-    		var type = $(this).attr('type');
-    		var position = $(this).attr('position');
-    		var plural = ['true', 'yes'].indexOf($(this).attr('plural')) >= 0;
+            var generic = $(this).attr('generic');
+            var name = $(this).attr('name') || $(this).attr('lowercase');
+            var type = $(this).attr('type');
+            var position = $(this).attr('position');
+            var plural = ['true', 'yes'].indexOf($(this).attr('plural')) >= 0;
 
-    		var newClothing = createNewClothing(formalName, genericName, type, position, null, plural, 0);
+            var newClothing = new Clothing(name, generic, type, position, null, plural, 0);
 
-    		clothingArr.push(newClothing);
+            clothingArr.push(newClothing);
     	});
         
         this.poses = appearance.poses;
@@ -1826,15 +1826,18 @@ function generateRandomID() {
  **/
 function autoResizeFont ()
 {
-	/* resize font */
-    if ($('.screen:visible').height()) {
-	    $(':root').css('font-size', ($('.screen:visible').height() / 74.747)+'px');
+    var w = window.innerWidth, h = window.innerHeight;
+    /* resize font. Note: the 3/2 threshold must match the @media CSS block */
+    if ($('.wide-screen-container .screen:visible').width() && w / h >= 3/2) {
+        // Calculate 4/3 of the height a normal screen would have ((16/9) / (4/3) = 4/3) 
+        $(':root').css('font-size', ($('.screen:visible').width() / 4 * 3 / 100)+'px');
+    } else if ($('.screen:visible').width()) {
+        $(':root').css('font-size', ($('.screen:visible').width() / 100)+'px');
     } else if ($('.epilogue-viewport:visible').height()) {
         $(':root').css('font-size', ($('.epilogue-viewport:visible').height() / 75)+'px');
     }
 
 	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
-		var w = window.innerWidth, h = window.innerHeight;
 		if (h > (3/4) * w) {
 			h = (3/4) * w;
 		} else {
