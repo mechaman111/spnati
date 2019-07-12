@@ -514,12 +514,12 @@ function doEpilogueFromGallery(){
 			});
 			
 			if($nameField.val()){
-				players[HUMAN_PLAYER].label = $nameField.val();
+				humanPlayer.label = $nameField.val();
 			} else {
 				switch(chosenEpilogue.gender){
-					case "male": players[HUMAN_PLAYER].label = "Mister"; break;
-					case "female" : players[HUMAN_PLAYER].label = "Missy"; break;
-					default: players[HUMAN_PLAYER].label = (players[HUMAN_PLAYER].gender=="male")?"Mister":"Missy";
+					case "male": humanPlayer.label = "Mister"; break;
+					case "female" : humanPlayer.label = "Missy"; break;
+					default: humanPlayer.label = (humanPlayer.gender=="male")?"Mister":"Missy";
 				}
 			}
 			

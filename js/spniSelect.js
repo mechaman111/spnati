@@ -905,7 +905,7 @@ function advanceSelectScreen () {
             'userAgent': navigator.userAgent,
             'origin': getReportedOrigin(),
             'table': {},
-			'tags': players[HUMAN_PLAYER].tags
+			'tags': humanPlayer.tags
         };
 
         for (let i=1;i<5;i++) {
