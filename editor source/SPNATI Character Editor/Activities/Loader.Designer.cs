@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.progressBar = new System.Windows.Forms.ProgressBar();
-			this.lblProgress = new System.Windows.Forms.Label();
+			this.progressBar = new Desktop.Skinning.SkinnedProgressBar();
+			this.lblProgress = new Desktop.Skinning.SkinnedLabel();
 			this.SuspendLayout();
 			// 
 			// progressBar
@@ -44,6 +44,7 @@
 			// 
 			this.lblProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblProgress.Level = Desktop.Skinning.SkinnedLabelLevel.Heading;
 			this.lblProgress.Location = new System.Drawing.Point(3, 220);
 			this.lblProgress.Name = "lblProgress";
 			this.lblProgress.Size = new System.Drawing.Size(856, 50);
@@ -65,7 +66,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.ProgressBar progressBar;
-		private System.Windows.Forms.Label lblProgress;
+		private Desktop.Skinning.SkinnedProgressBar progressBar;
+		private Desktop.Skinning.SkinnedLabel lblProgress;
 	}
 }

@@ -1,11 +1,12 @@
-﻿using SPNATI_Character_Editor.EpilogueEditor;
+﻿using Desktop.Skinning;
+using SPNATI_Character_Editor.EpilogueEditor;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class CreateSequenceForm : Form
+	public partial class CreateSequenceForm : SkinnedForm
 	{
 		public LiveSprite Sprite;
 		private ISkin _character;
@@ -26,6 +27,26 @@ namespace SPNATI_Character_Editor.Forms
 		public float Duration
 		{
 			get { return (float)valTime.Value; }
+		}
+
+		public string SequenceName
+		{
+			get
+			{
+				string name = txtName.Text;
+				if (string.IsNullOrEmpty(name))
+				{
+					if (lstFrames.Items.Count > 0)
+					{
+						name = Path.GetFileNameWithoutExtension(lstFrames.Items[0]?.ToString());
+					}
+					else
+					{
+						name = "sequence";
+					}
+				}
+				return name;
+			}
 		}
 
 		public CreateSequenceForm(ISkin character, LiveSprite sprite) : this()
@@ -140,12 +161,33 @@ namespace SPNATI_Character_Editor.Forms
 		private void radCreate_CheckedChanged(object sender, System.EventArgs e)
 		{
 			lstFrames.Items.Clear();
+			if (txtName.Text == "")
+			{
+				txtName.Text = "New Sequence";
+			}
+			txtName.Enabled = true;
 		}
 
 		private void radConvert_CheckedChanged(object sender, System.EventArgs e)
 		{
 			lstFrames.Items.Clear();
-			CreateFrames(Sprite.Keyframes[0].Src);
+			txtName.Enabled = false;
+			txtName.Text = Sprite.Id;
+			if (Sprite.Keyframes.Count == 1)
+			{
+				CreateFrames((Sprite.Keyframes[0] as LiveSpriteKeyframe).Src);
+			}
+			else
+			{
+				foreach (LiveSpriteKeyframe kf in Sprite.Keyframes)
+				{
+					AddFrame(kf.Src);
+				}
+				if (Sprite.Keyframes.Count > 1)
+				{
+					valTime.Value = (decimal)(Sprite.Keyframes[1].Time - Sprite.Keyframes[0].Time);
+				}
+			}
 			lstFrames.SelectedIndex = 0;
 		}
 

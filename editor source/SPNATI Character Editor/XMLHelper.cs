@@ -61,6 +61,14 @@ namespace SPNATI_Character_Editor
 			text = text.Replace("<I>", "&lt;i&gt;");
 			text = text.Replace("</i>", "&lt;/i&gt;");
 			text = text.Replace("</I>", "&lt;/i&gt;");
+			text = text.Replace("<br>", "&lt;br&gt;");
+			text = text.Replace("<BR>", "&lt;BR&gt;");
+			text = text.Replace("</br>", "&lt;/br&gt;");
+			text = text.Replace("</BR>", "&lt;/BR&gt;");
+			text = text.Replace("<hr>", "&lt;hr&gt;");
+			text = text.Replace("<HR>", "&lt;HR&gt;");
+			text = text.Replace("</hr>", "&lt;/hr&gt;");
+			text = text.Replace("</HR>", "&lt;/HR&gt;");
 			return text;
 		}
 

@@ -165,7 +165,7 @@ namespace SPNATI_Character_Editor.Controls
 		private void LoadEnding(Epilogue ending)
 		{
 			SaveEnding();
-			Config.LastEnding = ending.Title;
+			Config.LastEnding = ending?.Title ?? "";
 			_ending = ending;
 			PopulateDataFields();
 			cmdDeleteEnding.Enabled = tabs.Enabled = (ending != null);

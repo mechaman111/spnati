@@ -38,6 +38,11 @@ namespace KisekaeImporter.ImageImport
 			return Regex.IsMatch(Data, @"^\d*\*\*.*");
 		}
 
+		public override string ToString()
+		{
+			return ImageKey;
+		}
+
 		public string Serialize()
 		{
 			List<string> attributes = new List<string>();

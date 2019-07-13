@@ -10,6 +10,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 		public DirectiveMarkerControl()
 		{
 			InitializeComponent();
+			cboOperator.DataSource = ExpressionTest.Operators;
 			recField.RecordType = typeof(Marker);
 		}
 
@@ -76,7 +77,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			txtValue.TextChanged += ValueChanged;
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			RemoveHandlers();
 			recField.RecordKey = null;
@@ -86,7 +87,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			Save();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			string record = recField.RecordKey;
 			if (string.IsNullOrEmpty(record))

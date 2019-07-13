@@ -1,12 +1,13 @@
 ﻿using Desktop.Forms;
 using Desktop.Providers;
+using Desktop.Skinning;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Desktop
 {
-	public partial class MacroEditor : Form
+	public partial class MacroEditor : SkinnedForm
 	{
 		private Macro _macro;
 		private IMacroEditor _editor;
@@ -14,6 +15,8 @@ namespace Desktop
 		public MacroEditor()
 		{
 			InitializeComponent();
+
+			cboMenu.Items.AddRange(new string[] { "", "Also Playing", "Game", "Player", "Self", "Table","Target" });
 		}
 
 		public void SetMacro(Macro macro, IMacroEditor editor)
@@ -21,6 +24,7 @@ namespace Desktop
 			_macro = macro;
 			_editor = editor;
 			txtName.Text = macro.Name;
+			cboMenu.SelectedItem = macro.Group;
 		}
 
 		private void cmdOK_Click(object sender, EventArgs e)
@@ -65,6 +69,7 @@ namespace Desktop
 				_macro.Name = name;
 				provider.Add(macroType, _macro);
 			}
+			_macro.Group = cboMenu.SelectedItem?.ToString() ?? "";
 			return true;
 		}
 
@@ -93,6 +98,7 @@ namespace Desktop
 			tableConditions.Data = _editor.CreateData();
 			tableConditions.Context = _editor.GetRecordContext();
 			tableConditions.RecordFilter = _editor.GetRecordFilter(tableConditions.Data);
+			_editor.AddSpeedButtons(tableConditions);
 			tableConditions.ApplyMacro(_macro, new Dictionary<string, string>());
 		}
 	}

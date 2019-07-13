@@ -1,8 +1,9 @@
-﻿using System.Windows.Forms;
+﻿using Desktop.Skinning;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class TagStageSelect : Form
+	public partial class TagStageSelect : SkinnedForm
 	{
 		private BindableTag _bindable;
 

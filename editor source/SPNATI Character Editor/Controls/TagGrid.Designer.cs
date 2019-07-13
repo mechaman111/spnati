@@ -30,7 +30,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.panel = new Desktop.CommonControls.SelectablePanel();
-			this.lblGroup = new System.Windows.Forms.Label();
+			this.lblGroup = new Desktop.Skinning.SkinnedLabel();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.SuspendLayout();
 			// 
@@ -39,8 +39,10 @@
 			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel.Location = new System.Drawing.Point(0, 0);
 			this.panel.Name = "panel";
+			this.panel.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
 			this.panel.Size = new System.Drawing.Size(307, 232);
 			this.panel.TabIndex = 3;
+			this.panel.TabStop = true;
 			this.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Paint);
 			this.panel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel_MouseDown);
 			this.panel.MouseLeave += new System.EventHandler(this.panel_MouseLeave);
@@ -49,6 +51,7 @@
 			// lblGroup
 			// 
 			this.lblGroup.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblGroup.Level = Desktop.Skinning.SkinnedLabelLevel.Heading;
 			this.lblGroup.Location = new System.Drawing.Point(3, 0);
 			this.lblGroup.Name = "lblGroup";
 			this.lblGroup.Size = new System.Drawing.Size(100, 66);
@@ -72,7 +75,7 @@
 		#endregion
 
 		private Desktop.CommonControls.SelectablePanel panel;
-		private System.Windows.Forms.Label lblGroup;
+		private Desktop.Skinning.SkinnedLabel lblGroup;
 		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }

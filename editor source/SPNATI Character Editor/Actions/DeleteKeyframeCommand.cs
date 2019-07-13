@@ -8,23 +8,23 @@ namespace SPNATI_Character_Editor.Actions
 	/// </summary>
 	public class DeleteKeyframeCommand : ICommand
 	{
-		private LiveSprite _sprite;
+		private LiveAnimatedObject _data;
 		private LiveKeyframe _keyframe;
 
-		public DeleteKeyframeCommand(LiveSprite sprite, LiveKeyframe keyframe)
+		public DeleteKeyframeCommand(LiveAnimatedObject data, LiveKeyframe keyframe)
 		{
-			_sprite = sprite;
+			_data = data;
 			_keyframe = keyframe;
 		}
 
 		public void Do()
 		{
-			_sprite.RemoveKeyframe(_keyframe);
+			_data.RemoveKeyframe(_keyframe);
 		}
 
 		public void Undo()
 		{
-			_sprite.AddKeyframe(_keyframe);
+			_data.AddKeyframe(_keyframe);
 		}
 	}
 }

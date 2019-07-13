@@ -8,6 +8,7 @@ namespace Desktop.CommonControls.PropertyControls
 	public partial class TextControl : PropertyEditControl
 	{
 		private string _validatorMethodName;
+		private string _formatterMethodName;
 
 		public TextControl()
 		{
@@ -19,6 +20,7 @@ namespace Desktop.CommonControls.PropertyControls
 			TextAttribute attrib = parameters as TextAttribute;
 			txtValue.Multiline = attrib.Multiline;
 			_validatorMethodName = attrib.Validator;
+			_formatterMethodName = attrib.Formatter;
 		}
 
 		public override void ApplyMacro(List<string> values)
@@ -65,7 +67,7 @@ namespace Desktop.CommonControls.PropertyControls
 			txtValue.Text = GetValue()?.ToString();
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			RemoveHandlers();
 			txtValue.Text = "";
@@ -73,9 +75,27 @@ namespace Desktop.CommonControls.PropertyControls
 			Save();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
-			SetValue(txtValue.Text);
+			string text = txtValue.Text;
+
+			if (!string.IsNullOrEmpty(_formatterMethodName))
+			{
+				MethodInfo mi = Data.GetType().GetMethod(_formatterMethodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+				if (mi != null)
+				{
+					Func<string, string> formatter = (Func<string, string>)Delegate.CreateDelegate(typeof(Func<string, string>), Data, mi);
+					text = formatter(text);
+				}
+			}
+			if (string.IsNullOrEmpty(text))
+			{
+				SetValue(null);
+			}
+			else
+			{
+				SetValue(text);
+			}
 		}
 
 		private void txtValue_TextChanged(object sender, System.EventArgs e)
@@ -115,6 +135,7 @@ namespace Desktop.CommonControls.PropertyControls
 
 		public bool Multiline;
 		public string Validator;
+		public string Formatter;
 	}
 
 	public interface IAutoCompleteList

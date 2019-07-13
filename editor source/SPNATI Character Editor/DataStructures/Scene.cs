@@ -14,6 +14,10 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("transition")]
 		public bool Transition;
 
+		[Text(DisplayName = "ID", GroupOrder = -2, Description = "Scene ID")]
+		[XmlAttribute("id")]
+		public string Id;
+
 		[Text(DisplayName = "Name", GroupOrder = -1, Description = "Scene name")]
 		[XmlAttribute("name")]
 		public string Name;

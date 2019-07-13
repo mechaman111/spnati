@@ -51,20 +51,31 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
+			List<KisekaeCode> codes = new List<KisekaeCode>();
+			codes.Add(code);
+			ImportUnrecognizedAssets(character, codes);
+		}
+
+		public static bool ImportUnrecognizedAssets(ISkin character, List<KisekaeCode> codes)
+		{
+			bool cancelled = false;
 			List<string> unknownUrls = new List<string>();
 			string imagesDir = character.GetAttachmentsDirectory();
 
 			List<KisekaeChunk> chunks = new List<KisekaeChunk>();
-			for (int i = 0; i < code.Models.Length; i++)
+			foreach (KisekaeCode code in codes)
 			{
-				if (code.Models[i] != null)
+				for (int i = 0; i < code.Models.Length; i++)
 				{
-					chunks.Add(code.Models[i]);
+					if (code.Models[i] != null)
+					{
+						chunks.Add(code.Models[i]);
+					}
 				}
-			}
-			if (code.Scene != null)
-			{
-				chunks.Add(code.Scene);
+				if (code.Scene != null)
+				{
+					chunks.Add(code.Scene);
+				}
 			}
 
 			foreach (KisekaeChunk chunk in chunks)
@@ -89,7 +100,7 @@ namespace SPNATI_Character_Editor
 				{
 					PropImporter importer = new PropImporter();
 					importer.SetData(unknownUrls, imagesDir);
-					importer.ShowDialog();
+					cancelled = (importer.ShowDialog() == System.Windows.Forms.DialogResult.Cancel);
 				}
 				if (chunk.Assets.Count > 0)
 				{
@@ -115,6 +126,7 @@ namespace SPNATI_Character_Editor
 					chunk.ReplaceAssetPaths("images");
 				}
 			}
+			return !cancelled;
 		}
 
 		/// <summary>

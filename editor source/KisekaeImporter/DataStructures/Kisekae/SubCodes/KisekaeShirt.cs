@@ -92,5 +92,77 @@
 			get { return GetInt(14); }
 			set { Set(14, value.ToString()); }
 		}
+
+		public int Pocket
+		{
+			get { return GetInt(15); }
+			set { Set(15, value.ToString()); }
+		}
+
+		public KisekaeColor PocketColor1
+		{
+			get { return new KisekaeColor(GetString(16)); }
+			set { Set(16, value.ToString()); }
+		}
+
+		public KisekaeColor PocketColor2
+		{
+			get { return new KisekaeColor(GetString(17)); }
+			set { Set(17, value.ToString()); }
+		}
+
+		public KisekaeColor PocketColor3
+		{
+			get { return new KisekaeColor(GetString(18)); }
+			set { Set(18, value.ToString()); }
+		}
+
+		public int PocketSide
+		{
+			get { return GetInt(19); }
+			set { Set(19, value.ToString()); }
+		}
+		
+		public int CollarStyle
+		{
+			get { return GetInt(20); }
+			set { Set(20, value.ToString()); }
+		}
+
+		public int CollarPattern
+		{
+			get { return GetInt(21); }
+			set { Set(21, value.ToString()); }
+		}
+
+		public int LowerPocket
+		{
+			get { return GetInt(22); }
+			set { Set(22, value.ToString()); }
+		}
+
+		public KisekaeColor LowerPocketColor1
+		{
+			get { return new KisekaeColor(GetString(23)); }
+			set { Set(23, value.ToString()); }
+		}
+
+		public KisekaeColor LowerPocketColor2
+		{
+			get { return new KisekaeColor(GetString(24)); }
+			set { Set(24, value.ToString()); }
+		}
+
+		public KisekaeColor LowerPocketColor3
+		{
+			get { return new KisekaeColor(GetString(25)); }
+			set { Set(25, value.ToString()); }
+		}
+
+		public int LowerPocketRotation
+		{
+			get { return GetInt(26); }
+			set { Set(26, value.ToString()); }
+		}
 	}
 }

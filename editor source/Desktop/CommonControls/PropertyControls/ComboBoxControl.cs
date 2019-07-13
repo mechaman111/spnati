@@ -50,13 +50,13 @@ namespace Desktop.CommonControls.PropertyControls
 			cboItems.SelectedItem = GetValue()?.ToString() ?? "";
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			cboItems.SelectedItem = "";
 			Save();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			string text = cboItems.SelectedItem?.ToString();
 			if (string.IsNullOrEmpty(text))

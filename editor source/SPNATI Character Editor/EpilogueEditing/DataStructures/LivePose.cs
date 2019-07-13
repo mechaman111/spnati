@@ -1,15 +1,15 @@
-﻿using Desktop;
-using Desktop.CommonControls.PropertyControls;
-using Desktop.DataStructures;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
+using Desktop;
+using Desktop.CommonControls.PropertyControls;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
-	public class LivePose : BindableObject, ITimelineData, ILabel
+	public class LivePose : LiveData, ILabel
 	{
 		public ISkin Character;
 		public Pose Pose;
@@ -34,8 +34,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		[Numeric(DisplayName = "Base Height", Key = "baseHeight", GroupOrder = 10, Minimum = 0, Maximum = 50000)]
-		public int BaseHeight
+		[Numeric(DisplayName = "Base Height", Key = "baseHeight", GroupOrder = 10, Minimum = 1, Maximum = 50000)]
+		public override int BaseHeight
 		{
 			get { return Get<int>(); }
 			set { Set(value); }
@@ -43,11 +43,35 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private float _time;
 
+		public LivePose()
+		{
+			Sprites = new ObservableCollection<LiveSprite>();
+		}
 		public LivePose(ISkin character, Pose pose)
 		{
 			Character = character;
 
 			ConvertPose(pose);
+		}
+
+		public override LiveObject Find(string id)
+		{
+			return Sprites.Find(s => s.Id == id);
+		}
+
+		public override void FitScene(int windowWidth, int windowHeight, ref Point offset, ref float zoom)
+		{
+			offset = new Point(0, 0);
+			zoom = 1;
+		}
+
+		public override Matrix GetSceneTransform(int width, int height, Point offset, float zoom)
+		{
+			Matrix transform = new Matrix();
+			float screenScale = height * zoom / BaseHeight;
+			transform.Scale(screenScale, screenScale, MatrixOrder.Append); // scale to display * zoom
+			transform.Translate(width * 0.5f + offset.X, offset.Y, MatrixOrder.Append); // center horizontally
+			return transform;
 		}
 
 		/// <summary>
@@ -102,7 +126,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						sprites[preview.Id] = preview;
 					}
 				}
-				preview.AddDirective(directive);
+				preview.AddKeyframeDirective(directive, 0);
 			}
 		}
 
@@ -123,7 +147,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <returns></returns>
 		public LiveSprite AddSprite(LiveSprite sprite, int index)
 		{
-			sprite.Pose = this;
+			sprite.Data = this;
 			sprite.PropertyChanged += Sprite_PropertyChanged;
 			if (index == -1)
 			{
@@ -180,11 +204,37 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			});
 		}
 
-		public event EventHandler<WidgetCreationArgs> WidgetMoved;
-		public event EventHandler<WidgetCreationArgs> WidgetCreated;
-		public event EventHandler<WidgetCreationArgs> WidgetRemoved;
+		public override event EventHandler<WidgetCreationArgs> WidgetMoved;
+		public override event EventHandler<WidgetCreationArgs> WidgetCreated;
+		public override event EventHandler<WidgetCreationArgs> WidgetRemoved;
 
-		public List<ITimelineWidget> CreateWidgets(Timeline timeline)
+		/// <summary>
+		/// Gets the topmost object beneath the given screen coordinate
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="objects"></param>
+		/// <returns></returns>
+		public override LiveObject GetObjectAtPoint(int x, int y, Matrix sceneTransform, bool ignoreMarkers, List<string> markers)
+		{
+			//search in reverse order because objects are sorted by depth
+			for (int i = DrawingOrder.Count - 1; i >= 0; i--)
+			{
+				LiveObject obj = DrawingOrder[i];
+				if (!obj.IsVisible || obj.Hidden || obj.Alpha == 0 || obj.HiddenByMarker(ignoreMarkers ? null : markers)) { continue; }
+
+				//transform point to local space
+				PointF localPt = obj.ToLocalPt(x, y, sceneTransform);
+				if (localPt.X >= 0 && localPt.X <= obj.Width &&
+					localPt.Y >= 0 && localPt.Y <= obj.Height)
+				{
+					return obj;
+				}
+			}
+			return null;
+		}
+
+		public override List<ITimelineWidget> CreateWidgets(Timeline timeline)
 		{
 			List<ITimelineWidget> list = new List<ITimelineWidget>();
 			for (int i = 0; i < Sprites.Count; i++)
@@ -195,7 +245,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return list;
 		}
 
-		public ITimelineWidget CreateWidget(Timeline timeline, float time, object context)
+		public override ITimelineWidget CreateWidget(Timeline timeline, float time, object context)
 		{
 			LiveSprite sprite = AddSprite(time);
 			SpriteWidget widget = new SpriteWidget(sprite, timeline);
@@ -228,16 +278,42 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return id;
 		}
 
-		public ITimelineWidget CreateWidget(Timeline timeline, float time, object data, int index)
+		public override ITimelineWidget CreateWidget(Timeline timeline, float time, object data, int index)
 		{
 			LiveSprite sprite = data as LiveSprite;
-			sprite.Id += "(copy)";
+			sprite.Id = GetCopyId(sprite.Id);
 			AddSprite(sprite, index);
 			SpriteWidget widget = new SpriteWidget(sprite, timeline);
 			return widget;
 		}
 
-		public void MoveWidget(ITimelineWidget widget, int track)
+		private string GetCopyId(string id)
+		{
+			HashSet<string> ids = new HashSet<string>();
+			foreach (LiveSprite sprite in Sprites)
+			{
+				ids.Add(sprite.Id);
+			}
+			string prefix = id;
+			string newId = id;
+			int suffix = 0;
+			while (ids.Contains(newId))
+			{
+				if (prefix == id)
+				{
+					prefix += "(copy)";
+					newId = prefix;
+				}
+				else
+				{
+					++suffix;
+					newId = prefix + suffix;
+				}
+			}
+			return newId;
+		}
+
+		public override void MoveWidget(ITimelineObject widget, int track)
 		{
 			if (widget is SpriteWidget)
 			{
@@ -257,7 +333,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			WidgetMoved?.Invoke(this, new WidgetCreationArgs(widget, track));
 		}
 
-		public void InsertWidget(ITimelineWidget widget, float time, int index)
+		public override void InsertWidget(ITimelineObject widget, float time, int index)
 		{
 			if (widget is SpriteWidget)
 			{
@@ -278,7 +354,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			WidgetCreated?.Invoke(this, new WidgetCreationArgs(widget, index));
 		}
 
-		public int RemoveWidget(ITimelineWidget widget)
+		public override int RemoveWidget(ITimelineObject widget)
 		{
 			if (widget is SpriteWidget)
 			{
@@ -296,9 +372,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return -1;
 		}
 
-		public void UpdateSelection(WidgetSelectionArgs args)
+		public override void UpdateSelection(WidgetSelectionArgs args)
 		{
-			object clipboardData = Clipboards.Get<SpriteWidget, object>();
+			object clipboardData = Clipboards.Get<KeyframedWidget, object>();
 			args.AllowCut = false;
 			args.AllowCopy = false;
 			args.AllowDelete = false;
@@ -311,18 +387,41 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		#region Drawing
-		public void UpdateTime(float time, bool inPlayback)
+		public override void UpdateTime(float time, float elapsedTime, bool inPlayback)
 		{
 			_time = time;
 			foreach (LiveSprite sprite in Sprites)
 			{
-				sprite.Update(time, inPlayback);
+				sprite.Update(time, elapsedTime, inPlayback);
 			}
 		}
 
-		public bool Paste(WidgetOperationArgs args, int index)
+		public override void UpdateRealTime(float deltaTime, bool inPlayback)
 		{
-			LiveSprite clipboardData = Clipboards.Get<SpriteWidget, LiveSprite>();
+
+		}
+
+		public override void Draw(Graphics g, Matrix sceneTransform, List<string> markers, LiveObject selectedObject, LiveObject selectedPreview, bool inPlayback)
+		{
+			foreach (LiveSprite sprite in DrawingOrder)
+			{
+				sprite.Draw(g, sceneTransform, markers, inPlayback);
+				if (selectedObject == sprite && !selectedObject.Hidden && selectedPreview != null)
+				{
+					selectedPreview.Draw(g, sceneTransform, markers, inPlayback);
+				}
+			}
+		}
+		#endregion
+
+		public override bool Paste(WidgetOperationArgs args, LiveObject after)
+		{
+			int index = -1;
+			if (after != null)
+			{
+				index = Sprites.IndexOf(after as LiveSprite) + 1;
+			}
+			LiveSprite clipboardData = Clipboards.Get<KeyframedWidget, LiveSprite>();
 			if (clipboardData != null)
 			{
 				args.Timeline.CreateWidget(clipboardData.Copy(), index);
@@ -331,10 +430,46 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return false;
 		}
 
-		public bool OnPaste(WidgetOperationArgs args)
+		public override bool OnPaste(WidgetOperationArgs args)
 		{
-			return Paste(args, -1);
+			return Paste(args, null);
 		}
-		#endregion;
+
+		public override List<LiveObject> GetAvailableParents(LiveObject child)
+		{
+			List<LiveObject> list = new List<LiveObject>();
+			foreach (LiveSprite sprite in Sprites)
+			{
+				if (string.IsNullOrEmpty(sprite.Id) || sprite == child)
+				{
+					continue;
+				}
+				//if this is an ancestor of the sprite, disallow it to avoid infinite chains
+				LiveObject parent = sprite.Parent;
+				bool isAncestor = false;
+				while (parent != null)
+				{
+					if (parent == child)
+					{
+						isAncestor = true;
+						break;
+					}
+					parent = parent.Parent as LiveSprite;
+				}
+				if (!isAncestor)
+				{
+					list.Add(sprite);
+				}
+			}
+			list.Sort();
+			return list;
+		}
+
+		public override List<ITimelineBreak> CreateBreaks(Timeline timeline)
+		{
+			List<ITimelineBreak> list = new List<ITimelineBreak>();
+			return list;
+		}
+		public override ITimelineBreak AddBreak(float time) { throw new NotImplementedException(); }
 	}
 }

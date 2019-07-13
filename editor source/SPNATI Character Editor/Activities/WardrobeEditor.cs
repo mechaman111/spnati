@@ -17,6 +17,8 @@ namespace SPNATI_Character_Editor.Controls
 		public WardrobeEditor()
 		{
 			InitializeComponent();
+			ColType.Items.AddRange(new object[] { "extra", "minor", "major", "important"});
+			ColPosition.Items.AddRange(new object[] { "upper", "lower", "both", "head", "neck", "hands", "arms", "feet", "legs", "waist", "other"});
 			ColPlural.TrueValue = true;
 		}
 
@@ -72,6 +74,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (gridWardrobe.SelectedCells.Count > 0)
 			{
+				gridWardrobe.EndEdit();
 				SaveLayer(gridWardrobe.SelectedCells[0].OwningRow.Index);
 			}
 			ApplyWardrobeChanges();
@@ -94,10 +97,6 @@ namespace SPNATI_Character_Editor.Controls
 				layer.Plural = plural;
 				layer.Type = type;
 				layer.Position = position;
-			}
-			else
-			{
-				
 			}
 		}
 

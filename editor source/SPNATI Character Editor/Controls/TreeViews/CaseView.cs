@@ -1,9 +1,10 @@
-﻿using SPNATI_Character_Editor.Forms;
+﻿using Desktop.CommonControls;
+using Desktop.Skinning;
+using SPNATI_Character_Editor.Forms;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -13,31 +14,63 @@ namespace SPNATI_Character_Editor.Controls
 	/// </summary>
 	public class CaseView : IDialogueTreeView
 	{
-		public event EventHandler<TreeNode> DeleteNode;
 		public event EventHandler SaveNode;
 
-		/// <summary>
-		/// Mapping from tag to grouper node
-		/// </summary>
-		private Dictionary<string, TreeNode> _tagMap = new Dictionary<string, TreeNode>();
+		private GroupedList<DialogueNode> _model = new GroupedList<DialogueNode>();
+
+		private Font _font = new Font("Arial", 9, FontStyle.Bold);
 
 		/// <summary>
 		/// Mapping from case to node
 		/// </summary>
-		private Dictionary<Case, TreeNode> _caseMap = new Dictionary<Case, TreeNode>();
+		private Dictionary<Case, DialogueNode> _caseMap = new Dictionary<Case, DialogueNode>();
 
-		private TreeView treeDialogue;
+		private AccordionListView _listView;
 		private ContextMenuStrip splitMenu;
 		private Character _character;
 		private CharacterEditorData _editorData;
 		private Func<Case, bool> _filter;
 		private bool _showHidden;
 
-		public void Initialize(TreeView tree, Character character)
+		public void Initialize(AccordionListView listView, Character character)
 		{
-			treeDialogue = tree;
+			_listView = listView;
 			_character = character;
 			_editorData = CharacterDatabase.GetEditorData(character);
+
+			InitializeColumns();
+		}
+
+		private void InitializeColumns()
+		{
+			AccordionColumn column;
+			if (Config.UseSimpleTree)
+			{
+				column = new AccordionColumn("Case", "Label");
+				column.FillWeight = 1;
+				_listView.AddColumn(column);
+			}
+			else
+			{
+				column = new AccordionColumn("Stage", "StageRange");
+				column.Width = 40;
+				_listView.AddColumn(column);
+
+				column = new AccordionColumn("Target", "Target");
+				column.Width = 55;
+				_listView.AddColumn(column);
+
+				column = new AccordionColumn("Conditions", "Conditions");
+				column.FillWeight = 1;
+				_listView.AddColumn(column);
+
+				column = new AccordionColumn("Pri", "Priority");
+				column.Width = 31;
+				column.TextAlign = HorizontalAlignment.Right;
+				_listView.AddColumn(column);
+			}
+
+			_listView.RebuildColumns();
 		}
 
 		public ContextMenuStrip GetCopyMenu()
@@ -52,22 +85,26 @@ namespace SPNATI_Character_Editor.Controls
 			return splitMenu;
 		}
 
+		public void Sort()
+		{
+			_model.SortItems();
+		}
+
 		public void BuildTree(bool showHidden)
 		{
 			_showHidden = showHidden;
-			treeDialogue.Nodes.Clear();
+			_listView.DataSource = null;
 
-			_tagMap = new Dictionary<string, TreeNode>();
+			_model = new GroupedList<DialogueNode>();
+			_model.GroupComparer = SortGroups;
+			_model.ItemComparer = DialogueNode.CompareCases;
 
 			//Make nodes for each case tag
 			foreach (string tag in TriggerDatabase.GetTags())
 			{
 				if (tag == "-") { continue; }
 				Trigger trigger = TriggerDatabase.GetTrigger(tag);
-				TreeNode node = new TreeNode(trigger.Label);
-				node.Tag = tag;
-				treeDialogue.Nodes.Add(node);
-				_tagMap[tag] = node;
+				_model.AddGroup(trigger.Tag);
 			}
 
 			//Add working cases to the right grouper
@@ -78,8 +115,8 @@ namespace SPNATI_Character_Editor.Controls
 				CreateCaseNode(workingCase);
 			}
 
-			treeDialogue.TreeViewNodeSorter = new NodeSorter();
-			treeDialogue.Sort();
+			_model.Sorted = true;
+			_listView.DataSource = _model;
 		}
 
 		private void CreateCaseNode(Case workingCase)
@@ -90,12 +127,9 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			}
 
-			string tag = workingCase.Tag;
-			TreeNode grouper = _tagMap.Get(tag);
-			if (grouper == null) { return; } //should we display a warning message here? The dialogue is using an unrecognized tag
-
 			DialogueNode wrapper = new DialogueNode(_character, new Stage(workingCase.Stages[0]), workingCase);
-			CreateNode(wrapper, grouper, false);
+			wrapper.Mode = NodeMode.Case;
+			CreateNode(wrapper);
 		}
 
 		/// <summary>
@@ -104,125 +138,10 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="wrapper"></param>
 		/// <param name="parent"></param>
 		/// <returns></returns>
-		private TreeNode CreateNode(DialogueNode wrapper, TreeNode parent, bool sorted)
-		{
-			TreeNode node = new TreeNode();
-			node.Tag = wrapper;
-
-			node.ContextMenuStrip = splitMenu;
-			UpdateNodeAppearance(node);
-
-			if (sorted)
-			{
-				bool inserted = false;
-				for (int i = 0; i < parent.Nodes.Count; i++)
-				{
-					DialogueNode sibling = parent.Nodes[i].Tag as DialogueNode;
-					if (Behaviour.CompareTags(wrapper.Case, sibling.Case) <= 0)
-					{
-						parent.Nodes.Insert(i, node);
-						inserted = true;
-						break;
-					}
-				}
-				if (!inserted)
-				{
-					parent.Nodes.Add(node);
-				}
-			}
-			else
-			{
-				parent.Nodes.Add(node);
-			}
-			_caseMap[wrapper.Case] = node;
-			return node;
-		}
-
-		private void UpdateNodeAppearance(TreeNode node)
-		{
-			DialogueNode wrapper = node.Tag as DialogueNode;
-			if (_editorData.IsHidden(wrapper.Case))
-			{
-				node.ForeColor = System.Drawing.Color.LightGray;
-			}
-			else if (wrapper.Case.Hidden == "1")
-			{
-				node.ForeColor = System.Drawing.Color.Gray;
-			}
-			else if (wrapper.Case.HasCollectible)
-			{
-				node.ForeColor = System.Drawing.Color.OrangeRed;
-			}
-			else if (wrapper.Case.HasConditions)
-			{
-				//Highlight targeted dialogue
-				node.ForeColor = System.Drawing.Color.Green;
-			}
-			else
-			{
-				node.ForeColor = System.Drawing.Color.Black;
-				//Highlight lines that are still using the default
-				Tuple<string, string> template = DialogueDatabase.GetTemplate(wrapper.Case.Tag);
-				if (template != null)
-				{
-					foreach (var line in wrapper.Case.Lines)
-					{
-						if (Path.GetFileNameWithoutExtension(line.Image) == template.Item1 && line.Text?.Trim() == template.Item2)
-						{
-							node.ForeColor = System.Drawing.Color.Blue;
-
-							//Color ancestors too
-							TreeNode ancestor = node.Parent;
-							while (ancestor != null)
-							{
-								ancestor.ForeColor = System.Drawing.Color.Blue;
-								ancestor = ancestor.Parent;
-							}
-						}
-					}
-				}
-			}
-
-			//Prefix the case with the stage range			
-			Case c = wrapper.Case;
-			StringBuilder sb = new StringBuilder();
-			if (c.Stages.Count == 0)
-			{
-				sb.Append("???");
-			}
-			else
-			{
-				int last = c.Stages[0];
-				int startRange = last;
-				for (int i = 1; i < c.Stages.Count; i++)
-				{
-					int stage = c.Stages[i];
-					if (stage - 1 > last)
-					{
-						if (startRange == last)
-						{
-							sb.Append(startRange.ToString() + ",");
-						}
-						else
-						{
-							sb.Append($"{startRange}-{last},");
-						}
-						startRange = stage;
-					}
-					last = stage;
-				}
-				if (startRange == last)
-				{
-					sb.Append(startRange.ToString());
-				}
-				else
-				{
-					sb.Append($"{startRange}-{last}");
-				}
-				wrapper.Stage = new Stage(c.Stages[0]);
-			}
-
-			node.Text = $"{sb.ToString()} - {wrapper.ToString()}";
+		private void CreateNode(DialogueNode wrapper)
+		{	
+			_model.AddItem(wrapper);
+			_caseMap[wrapper.Case] = wrapper;
 		}
 
 		public void SetFilter(Func<Case, bool> filter)
@@ -233,26 +152,44 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void SelectNode(int stage, Case stageCase)
 		{
-			TreeNode node = _caseMap.Get(stageCase);
+			DialogueNode node = _caseMap.Get(stageCase);
 			if (node != null)
 			{
-				treeDialogue.SelectedNode = node;
+				_listView.SelectedItem = node;
 			}
 		}
 
-		public string AddingCase()
+		public string AddingCase(out string folder)
 		{
-			DialogueNode node = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			folder = "";
 			if (_character == null)
 			{
 				return null;
 			}
+			DialogueNode node = _listView.SelectedItem as DialogueNode;
 			if (node == null)
 			{
-				string tag = treeDialogue.SelectedNode?.Tag?.ToString();
+				GroupedListGrouper group = _listView.SelectedItem as GroupedListGrouper;
+				string tag = group.RootKey ?? group?.Key?.ToString();
 				if (!string.IsNullOrEmpty(tag))
 				{
+					if (tag != group?.Key?.ToString())
+					{
+						folder = group?.Key?.ToString();
+					}
 					return tag;
+				}
+			}
+			else
+			{
+				Case c = node?.Case;
+				if (c != null && _editorData != null)
+				{
+					CaseLabel label = _editorData.GetLabel(c);
+					if (label != null)
+					{
+						folder = label.Folder;
+					}
 				}
 			}
 
@@ -262,71 +199,34 @@ namespace SPNATI_Character_Editor.Controls
 		public void ModifyCase(Case modifiedCase)
 		{
 			//since all stages are in the same node, we don't need to do anything but update that node's appearance!
-			TreeNode node = _caseMap.Get(modifiedCase);
+			DialogueNode node = _caseMap.Get(modifiedCase);
 			if (node != null)
 			{
-				UpdateNodeAppearance(node);
+				if (modifiedCase.Stages.Count > 0)
+				{
+					node.Stage = new Stage(modifiedCase.Stages[0]);
+				}
 			}
 		}
 
 		public void AddCase(Case newCase)
 		{
-			TreeNode grouper = _tagMap.Get(newCase.Tag);
 			DialogueNode wrapper = new DialogueNode(_character, new Stage(newCase.Stages[0]), newCase);
-			CreateNode(wrapper, grouper, false);
+			wrapper.Mode = NodeMode.Case;
+			CreateNode(wrapper);
 		}
 
 		public void RemoveCase(Case removedCase)
 		{
-			TreeNode node = _caseMap.Get(removedCase);
+			DialogueNode node = _caseMap.Get(removedCase);
 			if (node == null) { return; }
-			//TreeView will crash if trying to delete the node that is being unselected, so delay it to let the stack unwind
-			DeleteNode?.Invoke(this, node);
+			_model.RemoveItem(node);
 			_caseMap.Remove(removedCase);
 		}
-
-		private class NodeSorter : IComparer
-		{
-			public int Compare(object x, object y)
-			{
-				TreeNode node1 = x as TreeNode;
-				TreeNode node2 = y as TreeNode;
-
-				DialogueNode caseNode1 = node1.Tag as DialogueNode;
-				DialogueNode caseNode2 = node2.Tag as DialogueNode;
-				if (caseNode1 != null)
-				{
-					//case nodes
-					int stage1 = caseNode1.Case.Stages.Count > 0 ? caseNode1.Case.Stages[0] : -1;
-					int stage2 = caseNode2.Case.Stages.Count > 0 ? caseNode2.Case.Stages[0] : -1;
-					int diff = stage1.CompareTo(stage2);
-					if (diff == 0)
-					{
-						diff = caseNode1.Case.Stages[caseNode1.Case.Stages.Count - 1].CompareTo(caseNode2.Case.Stages[caseNode2.Case.Stages.Count - 1]);
-						if (diff == 0)
-						{
-							diff = caseNode2.Case.GetPriority().CompareTo(caseNode1.Case.GetPriority());
-							if (diff == 0)
-							{
-								diff = node1.Text.CompareTo(node2.Text);
-							}
-						}
-					}
-					return diff;
-				}
-				else
-				{
-					//groupers
-					string t1 = (string)node1.Tag;
-					string t2 = (string)node2.Tag;
-					return TriggerDatabase.Compare(t1, t2);
-				}
-			}
-		}
-
+		
 		private void SeparateCaseFromStage(object sender, EventArgs e)
 		{
-			DialogueNode selectedNode = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			DialogueNode selectedNode = _listView.SelectedItem as DialogueNode;
 			if (_character == null || selectedNode?.Case == null)
 				return;
 			Case selectedCase = selectedNode?.Case;
@@ -343,7 +243,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void SplitCaseAtPoint(object sender, EventArgs e)
 		{
-			DialogueNode selectedNode = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			DialogueNode selectedNode = _listView.SelectedItem as DialogueNode;
 			if (_character == null || selectedNode?.Case == null)
 				return;
 			Case selectedCase = selectedNode?.Case;
@@ -363,7 +263,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		private void SplitAllStages(object sender, EventArgs e)
 		{
-			DialogueNode selectedNode = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			DialogueNode selectedNode = _listView.SelectedItem as DialogueNode;
 			if (_character == null || selectedNode?.Case == null)
 				return;
 			int stage = selectedNode.Stage.Id;
@@ -375,13 +275,13 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void DuplicateCase(object sender, EventArgs e)
 		{
-			DialogueNode selectedNode = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			DialogueNode selectedNode = _listView.SelectedItem as DialogueNode;
 			if (_character == null || selectedNode?.Case == null)
 				return;
 			Case selectedCase = selectedNode.Case;
 			int stage = selectedNode.Stage.Id;
 			SaveNode?.Invoke(this, EventArgs.Empty);
-			Case copy = _character.Behavior.DuplicateCase(selectedCase);
+			Case copy = _character.Behavior.DuplicateCase(selectedCase, true);
 			SelectNode(stage, copy);
 		}
 
@@ -390,7 +290,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		private void DeleteCase(object sender, EventArgs e)
 		{
-			DialogueNode selectedNode = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			DialogueNode selectedNode = _listView.SelectedItem as DialogueNode;
 			if (_character == null || selectedNode?.Case == null)
 				return;
 
@@ -410,16 +310,12 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (hide)
 			{
-				TreeNode node = _caseMap.Get(c);
+				DialogueNode node = _caseMap.Get(c);
 				if (node != null)
 				{
-					if (_showHidden)
+					if (!_showHidden)
 					{
-						UpdateNodeAppearance(node);
-					}
-					else
-					{
-						node.Remove();
+						_model.RemoveItem(node);
 						_caseMap.Remove(c);
 					}
 				}
@@ -428,10 +324,10 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				if (_showHidden)
 				{
-					TreeNode node = _caseMap.Get(c);
+					DialogueNode node = _caseMap.Get(c);
 					if (node != null)
 					{
-						UpdateNodeAppearance(node);
+						node.Dummy++;
 					}
 				}
 				else
@@ -440,6 +336,92 @@ namespace SPNATI_Character_Editor.Controls
 					CreateCaseNode(c);
 				}
 			}
+		}
+
+		public int SortGroups(string key1, string key2)
+		{
+			return TriggerDatabase.Compare(key1, key2);
+		}
+
+		public void FormatRow(FormatRowEventArgs args)
+		{
+			Skin skin = SkinManager.Instance.CurrentSkin;
+			DialogueNode node = args.Model as DialogueNode;
+			args.Tooltip = node.Case.ToString();
+
+			CaseLabel label = _editorData.GetLabel(node.Case);
+			if (label != null)
+			{
+				ColorCode colorCode = Definitions.Instance.Get<ColorCode>(label.ColorCode);
+				if (colorCode != null)
+				{
+					args.ForeColor = colorCode.GetColor();
+					return;
+				}
+			}
+			args.GrouperColor = GetGroupColor(args.Group.Key, args.Group.Index);
+
+			if (_editorData.IsHidden(node.Case))
+			{
+				args.ForeColor = skin.LightGray;
+			}
+			else if (node.Case.Hidden == "1")
+			{
+				args.ForeColor = skin.Gray;
+			}
+			else if (node.Case.HasCollectible)
+			{
+				args.ForeColor = skin.Orange;
+			}
+			else if ((Config.ColorTargetedLines || Config.UseSimpleTree) && node.Case.HasTargetedConditions)
+			{
+				args.ForeColor = skin.Green;
+			}
+			else
+			{
+				//Highlight lines that are still using the default
+				Tuple<string, string> template = DialogueDatabase.GetTemplate(node.Case.Tag);
+				if (template != null)
+				{
+					foreach (var line in node.Case.Lines)
+					{
+						if (Path.GetFileNameWithoutExtension(line.Image) == template.Item1 && line.Text?.Trim() == template.Item2)
+						{
+							args.ForeColor = skin.Blue;
+						}
+					}
+				}
+			}
+		}
+
+		private Color GetGroupColor(string key, int index)
+		{
+			Trigger trigger = TriggerDatabase.GetTrigger(key);
+			if (string.IsNullOrEmpty(trigger.Label))
+			{
+				return index % 2 == 0 ? SkinManager.Instance.CurrentSkin.PrimaryForeColor : SkinManager.Instance.CurrentSkin.SecondaryForeColor;
+			}
+			return SkinManager.Instance.CurrentSkin.GetGrouper(trigger.ColorScheme);
+		}
+
+		public void FormatGroup(FormatGroupEventArgs args)
+		{
+			args.Font = _font;
+			args.ForeColor = GetGroupColor(args.Group.Key, args.Group.Index);
+			Trigger trigger = TriggerDatabase.GetTrigger(args.Group.Key);
+			if (!string.IsNullOrEmpty(trigger.Label))
+			{
+				args.Label = trigger.Label;
+			}
+		}
+
+		public ContextMenuStrip ShowContextMenu(AccordionListViewEventArgs args)
+		{
+			if (args.Model != null)
+			{
+				return splitMenu;
+			}
+			return null;
 		}
 	}
 }

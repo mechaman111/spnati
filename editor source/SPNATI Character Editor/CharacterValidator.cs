@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SPNATI_Character_Editor.DataStructures;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Linq;
-using SPNATI_Character_Editor.Controls;
+using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor
 {
@@ -13,7 +13,7 @@ namespace SPNATI_Character_Editor
 		/// Validates the character's dialogue and returns a list of warnings (bad images, targets, etc.)
 		/// </summary>
 		/// <returns></returns>
-		public static bool Validate(Character character, Listing listing, out List<ValidationError> warnings)
+		public static bool Validate(Character character, out List<ValidationError> warnings)
 		{
 			warnings = new List<ValidationError>();
 			string[] hands = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight",
@@ -57,9 +57,18 @@ namespace SPNATI_Character_Editor
 			//wardrobe
 			ValidateWardrobe(character, warnings);
 
+			HashSet<string> usedCollectibles = new HashSet<string>();
+
 			//dialogue
 			foreach (Case stageCase in character.Behavior.GetWorkingCases())
 			{
+				if (stageCase.Stages.Count > 0)
+				{
+					ValidationContext context = new ValidationContext(new Stage(stageCase.Stages[0]), stageCase, null);
+					ValidateSaying(stageCase.Target, stageCase.TargetSaying, warnings, "targetSaying", stageCase.Tag, context);
+					ValidateSaying(stageCase.AlsoPlaying, stageCase.AlsoPlayingSaying, warnings, "alsoPlayingSaying", stageCase.Tag, context);
+				}
+
 				foreach (int stageIndex in stageCase.Stages)
 				{
 					Stage stage = new Stage(stageIndex);
@@ -100,21 +109,11 @@ namespace SPNATI_Character_Editor
 						{
 							if (stageCase.Target != "human")
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not exist. {0}", caseLabel, stageCase.Target), context));
+								warnings.Add(new ValidationError(ValidationFilterLevel.MissingTargets, string.Format("target \"{1}\" does not exist. {0}", caseLabel, stageCase.Target), context));
 							}
 						}
 						else
 						{
-							OpponentStatus status = listing.GetCharacterStatus(target.FolderName);
-							if (status == OpponentStatus.Incomplete)
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is flagged as incomplete. {0}", caseLabel, stageCase.Target), context));
-							}
-							else if (status == OpponentStatus.Offline)
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is offline only. {0}", caseLabel, stageCase.Target), context));
-							}
-
 							if (target.FolderName != "human")
 							{
 								if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender && !target.Metadata.CrossGender)
@@ -192,19 +191,7 @@ namespace SPNATI_Character_Editor
 						{
 							if (stageCase.AlsoPlaying != "human")
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlaying target \"{1}\" does not exist. {0}", caseLabel, stageCase.AlsoPlaying), context));
-							}
-						}
-						else
-						{
-							OpponentStatus status = listing.GetCharacterStatus(other.FolderName);
-							if (status == OpponentStatus.Incomplete)
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is flagged as incomplete. {0}", caseLabel, stageCase.AlsoPlaying), context));
-							}
-							else if (status == OpponentStatus.Offline)
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is offline only. {0}", caseLabel, stageCase.AlsoPlaying), context));
+								warnings.Add(new ValidationError(ValidationFilterLevel.MissingTargets, string.Format("alsoPlaying target \"{1}\" does not exist. {0}", caseLabel, stageCase.AlsoPlaying), context));
 							}
 						}
 					}
@@ -358,7 +345,7 @@ namespace SPNATI_Character_Editor
 						}
 
 						//Validate variables
-						List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase.Tag, line.Text);
+						List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase, line.Text);
 						if (invalidVars.Count > 0)
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
@@ -385,6 +372,16 @@ namespace SPNATI_Character_Editor
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, $"Line has mismatched <i> </i> tags: {line.Text}", context));
 						}
+
+						//validate collectibles
+						if (!string.IsNullOrEmpty(line.CollectibleId))
+						{
+							usedCollectibles.Add(line.CollectibleId);
+							if (character.Collectibles.Get(line.CollectibleId) == null)
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Collectibles, string.Format("Unknown collectible for case {0}: {1}", caseLabel, line.CollectibleId), context));
+							}
+						}
 					}
 				}
 			}
@@ -398,6 +395,11 @@ namespace SPNATI_Character_Editor
 			foreach (Pose pose in character.Poses)
 			{
 				ValidatePose(character, pose, unusedImages);
+			}
+
+			foreach (Collectible collectible in character.Collectibles.Collectibles)
+			{
+				ValidateCollectible(character, collectible, warnings, unusedImages, usedCollectibles);
 			}
 
 			if (unusedImages.Count > 0)
@@ -552,13 +554,20 @@ namespace SPNATI_Character_Editor
 
 			if (character == null)
 			{
-				warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Missing character for {1}. {0}", caseLabel, name), context));
+				warnings.Add(new ValidationError(ValidationFilterLevel.MissingTargets, string.Format("Missing character for {1}. {0}", caseLabel, name), context));
 			}
 			else
 			{
 				string value;
 				MarkerOperator op;
 				bool perTarget;
+
+				//check for simple typos
+				if (name.Contains(" "))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Lines, $"Markers cannot contain spaces: \"{name}\". {caseLabel}", context));
+				}
+
 				name = Marker.ExtractConditionPieces(name, out op, out value, out perTarget);
 				if (!character.Markers.Contains(name))
 				{
@@ -763,10 +772,49 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		/// <summary>
+		/// Validates a collectible
+		/// </summary>
+		private static void ValidateCollectible(Character character, Collectible collectible, List<ValidationError> warnings, HashSet<string> unusedImages, HashSet<string> usedCollectibles)
+		{
+			ValidationContext context = new ValidationContext(collectible);
+			if (!usedCollectibles.Contains(collectible.Id))
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Collectibles, $"Collectible {collectible.Id} is never unlocked by any dialogue.", context));
+			}
+			if (!string.IsNullOrEmpty(collectible.Thumbnail))
+			{
+				string path = GetRelativeImagePath(character, collectible.Thumbnail);
+				if (!string.IsNullOrEmpty(path))
+				{
+					unusedImages.Remove(path);
+				}
+				string fullpath = Path.Combine(Config.SpnatiDirectory, collectible.Thumbnail);
+				if (!File.Exists(fullpath))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Collectibles, $"The thumbnail \"{collectible.Thumbnail}\" for collectible \"{collectible.Id}\" does not exist.", context));
+				}
+			}
+			if (!string.IsNullOrEmpty(collectible.Image))
+			{
+				string path = GetRelativeImagePath(character, collectible.Image);
+				if (!string.IsNullOrEmpty(path))
+				{
+					unusedImages.Remove(path);
+				}
+				string fullpath = Path.Combine(Config.SpnatiDirectory, collectible.Image);
+				if (!File.Exists(fullpath))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Collectibles, $"The image \"{collectible.Image}\" for collectible \"{collectible.Id}\" does not exist.", context));
+				}
+			}
+		}
+
 		private static string GetRelativeImagePath(Character character, string path)
 		{
 			string characterRoot = character.GetDirectory();
-			string fullPath = Path.Combine(Config.SpnatiDirectory, "opponents", path);
+			string fullPath = Path.Combine(Config.SpnatiDirectory, path.StartsWith("opponents") ? path : Path.Combine("opponents", path));
+			fullPath = fullPath.Replace("/", "\\");
 			if (fullPath.StartsWith(characterRoot))
 			{
 				string relPath = fullPath.Substring(characterRoot.Length + 1);
@@ -778,6 +826,45 @@ namespace SPNATI_Character_Editor
 				return relPath;
 			}
 			return path;
+		}
+
+		private static void ValidateSaying(string target, string text, List<ValidationError> warnings, string conditionType, string caseLabel, ValidationContext context)
+		{
+			if (string.IsNullOrEmpty(text))
+			{
+				return;
+			}
+			Character other = CharacterDatabase.Get(target);
+			if (other != null)
+			{
+				bool found = false;
+				foreach (Stage stage in other.Behavior.Stages)
+				{
+					foreach (Case stageCase in stage.Cases)
+					{
+						foreach (DialogueLine line in stageCase.Lines)
+						{
+							if (line.Text.Contains(text))
+							{
+								found = true;
+								break;
+							}
+						}
+						if (found)
+						{
+							break;
+						}
+					}
+					if (found)
+					{
+						break;
+					}
+				}
+				if (!found)
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"Using {conditionType} but {target} never says this text: \"{text}\". {caseLabel}.", context));
+				}
+			}
 		}
 
 		/// <summary>
@@ -906,6 +993,7 @@ namespace SPNATI_Character_Editor
 		public Epilogue Epilogue;
 		public Scene Scene;
 		public Directive Directive;
+		public Collectible Collectible;
 
 		public ValidationContext() { }
 		public ValidationContext(Stage stage, Case stageCase, DialogueLine line)
@@ -924,11 +1012,18 @@ namespace SPNATI_Character_Editor
 			Directive = directive;
 		}
 
+		public ValidationContext(Collectible collectible)
+		{
+			Collectible = collectible;
+			ContextArea = Area.Collectible;
+		}
+
 		public enum Area
 		{
 			Dialogue,
 			Epilogue,
 			Skin,
+			Collectible,
 		}
 	}
 
@@ -936,14 +1031,16 @@ namespace SPNATI_Character_Editor
 	public enum ValidationFilterLevel
 	{
 		None = 0,
-		Minor = 1,
-		MissingImages = 2,
-		Metadata = 4,
-		Lines = 8,
-		TargetedDialogue = 16,
-		Case = 32,
-		Stage = 64,
-		Epilogue = 128,
-		Reskins = 256
+		Minor = 1 << 0,
+		MissingTargets = 1 << 1,
+		MissingImages = 1 << 2,
+		Metadata = 1 << 3,
+		Lines = 1 << 4,
+		TargetedDialogue = 1 << 5,
+		Case = 1 << 6,
+		Stage = 1 << 7,
+		Epilogue = 1 << 8,
+		Reskins = 1 << 9,
+		Collectibles = 1 << 10,
 	}
 }

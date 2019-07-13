@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Windows.Forms;
 
 namespace Desktop.CommonControls
 {
-	public partial class TextField : UserControl
+	public partial class TextField : UserControl, ISkinControl
 	{
 		private bool _selectAllDone;
 
@@ -129,6 +130,12 @@ namespace Desktop.CommonControls
 			{
 				_selectAllDone = false;
 			}
+		}
+
+		public void OnUpdateSkin(Skin skin)
+		{
+			lblPlaceholder.BackColor = skin.FieldBackColor;
+			lblPlaceholder.ForeColor = skin.Surface.DisabledForeColor;
 		}
 	}
 }

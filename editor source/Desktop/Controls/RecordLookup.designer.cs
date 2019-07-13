@@ -28,21 +28,27 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.label1 = new System.Windows.Forms.Label();
-			this.txtName = new System.Windows.Forms.TextBox();
-			this.cmdNew = new System.Windows.Forms.Button();
-			this.cmdAccept = new System.Windows.Forms.Button();
-			this.cmdCancel = new System.Windows.Forms.Button();
-			this.lstItems = new System.Windows.Forms.ListView();
-			this.cmdDelete = new System.Windows.Forms.Button();
-			this.lblRecent = new System.Windows.Forms.Label();
-			this.lstRecent = new System.Windows.Forms.ListView();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
+			this.txtName = new Desktop.Skinning.SkinnedTextBox();
+			this.cmdNew = new Desktop.Skinning.SkinnedButton();
+			this.cmdAccept = new Desktop.Skinning.SkinnedButton();
+			this.cmdCancel = new Desktop.Skinning.SkinnedButton();
+			this.lstItems = new Desktop.Skinning.SkinnedListView();
+			this.cmdDelete = new Desktop.Skinning.SkinnedButton();
+			this.lblRecent = new Desktop.Skinning.SkinnedLabel();
+			this.lstRecent = new Desktop.Skinning.SkinnedListView();
+			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
+			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(9, 13);
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+			this.label1.Location = new System.Drawing.Point(9, 34);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(38, 13);
 			this.label1.TabIndex = 0;
@@ -52,18 +58,25 @@
 			// 
 			this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtName.Location = new System.Drawing.Point(57, 10);
+			this.txtName.BackColor = System.Drawing.Color.White;
+			this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.txtName.ForeColor = System.Drawing.Color.Black;
+			this.txtName.Location = new System.Drawing.Point(57, 31);
 			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(485, 20);
+			this.txtName.Size = new System.Drawing.Size(592, 20);
 			this.txtName.TabIndex = 1;
 			this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
 			this.txtName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtName_KeyDown);
 			// 
 			// cmdNew
 			// 
-			this.cmdNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdNew.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdNew.Enabled = false;
-			this.cmdNew.Location = new System.Drawing.Point(239, 326);
+			this.cmdNew.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdNew.Flat = true;
+			this.cmdNew.ForeColor = System.Drawing.Color.White;
+			this.cmdNew.Location = new System.Drawing.Point(355, 3);
 			this.cmdNew.Name = "cmdNew";
 			this.cmdNew.Size = new System.Drawing.Size(97, 23);
 			this.cmdNew.TabIndex = 3;
@@ -73,8 +86,12 @@
 			// 
 			// cmdAccept
 			// 
-			this.cmdAccept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdAccept.Location = new System.Drawing.Point(342, 326);
+			this.cmdAccept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdAccept.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdAccept.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdAccept.Flat = false;
+			this.cmdAccept.ForeColor = System.Drawing.Color.Blue;
+			this.cmdAccept.Location = new System.Drawing.Point(458, 3);
 			this.cmdAccept.Name = "cmdAccept";
 			this.cmdAccept.Size = new System.Drawing.Size(97, 23);
 			this.cmdAccept.TabIndex = 4;
@@ -84,9 +101,13 @@
 			// 
 			// cmdCancel
 			// 
-			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdCancel.Background = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cmdCancel.Location = new System.Drawing.Point(445, 326);
+			this.cmdCancel.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdCancel.Flat = true;
+			this.cmdCancel.ForeColor = System.Drawing.Color.White;
+			this.cmdCancel.Location = new System.Drawing.Point(561, 3);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(97, 23);
 			this.cmdCancel.TabIndex = 5;
@@ -102,10 +123,12 @@
 			this.lstItems.FullRowSelect = true;
 			this.lstItems.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstItems.HideSelection = false;
-			this.lstItems.Location = new System.Drawing.Point(12, 36);
+			this.lstItems.Location = new System.Drawing.Point(12, 57);
 			this.lstItems.MultiSelect = false;
 			this.lstItems.Name = "lstItems";
-			this.lstItems.Size = new System.Drawing.Size(530, 199);
+			this.lstItems.OwnerDraw = true;
+			this.lstItems.ShowItemToolTips = true;
+			this.lstItems.Size = new System.Drawing.Size(637, 199);
 			this.lstItems.TabIndex = 6;
 			this.lstItems.UseCompatibleStateImageBehavior = false;
 			this.lstItems.View = System.Windows.Forms.View.Tile;
@@ -113,8 +136,11 @@
 			// 
 			// cmdDelete
 			// 
-			this.cmdDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdDelete.Location = new System.Drawing.Point(12, 326);
+			this.cmdDelete.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdDelete.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdDelete.Flat = true;
+			this.cmdDelete.ForeColor = System.Drawing.Color.White;
+			this.cmdDelete.Location = new System.Drawing.Point(3, 3);
 			this.cmdDelete.Name = "cmdDelete";
 			this.cmdDelete.Size = new System.Drawing.Size(97, 23);
 			this.cmdDelete.TabIndex = 7;
@@ -127,9 +153,13 @@
 			// 
 			this.lblRecent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lblRecent.AutoSize = true;
-			this.lblRecent.Location = new System.Drawing.Point(12, 238);
+			this.lblRecent.Font = new System.Drawing.Font("Segoe UI", 12F);
+			this.lblRecent.ForeColor = System.Drawing.Color.Blue;
+			this.lblRecent.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.lblRecent.Level = Desktop.Skinning.SkinnedLabelLevel.Heading;
+			this.lblRecent.Location = new System.Drawing.Point(12, 261);
 			this.lblRecent.Name = "lblRecent";
-			this.lblRecent.Size = new System.Drawing.Size(42, 13);
+			this.lblRecent.Size = new System.Drawing.Size(57, 21);
 			this.lblRecent.TabIndex = 8;
 			this.lblRecent.Text = "Recent";
 			// 
@@ -140,15 +170,30 @@
 			this.lstRecent.FullRowSelect = true;
 			this.lstRecent.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstRecent.HideSelection = false;
-			this.lstRecent.Location = new System.Drawing.Point(12, 254);
+			this.lstRecent.Location = new System.Drawing.Point(12, 285);
 			this.lstRecent.MultiSelect = false;
 			this.lstRecent.Name = "lstRecent";
-			this.lstRecent.Size = new System.Drawing.Size(530, 66);
+			this.lstRecent.OwnerDraw = true;
+			this.lstRecent.Size = new System.Drawing.Size(637, 71);
 			this.lstRecent.TabIndex = 9;
 			this.lstRecent.UseCompatibleStateImageBehavior = false;
 			this.lstRecent.View = System.Windows.Forms.View.Tile;
 			this.lstRecent.SelectedIndexChanged += new System.EventHandler(this.lstRecent_SelectedIndexChanged);
 			this.lstRecent.DoubleClick += new System.EventHandler(this.lstRecent_DoubleClick);
+			// 
+			// skinnedPanel1
+			// 
+			this.skinnedPanel1.Controls.Add(this.cmdCancel);
+			this.skinnedPanel1.Controls.Add(this.cmdAccept);
+			this.skinnedPanel1.Controls.Add(this.cmdNew);
+			this.skinnedPanel1.Controls.Add(this.cmdDelete);
+			this.skinnedPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.skinnedPanel1.Location = new System.Drawing.Point(0, 362);
+			this.skinnedPanel1.Name = "skinnedPanel1";
+			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
+			this.skinnedPanel1.Size = new System.Drawing.Size(661, 30);
+			this.skinnedPanel1.TabIndex = 10;
+			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
 			// RecordLookup
 			// 
@@ -156,21 +201,19 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(554, 361);
+			this.ClientSize = new System.Drawing.Size(661, 392);
 			this.ControlBox = false;
+			this.Controls.Add(this.skinnedPanel1);
 			this.Controls.Add(this.lstRecent);
 			this.Controls.Add(this.lblRecent);
-			this.Controls.Add(this.cmdDelete);
 			this.Controls.Add(this.lstItems);
-			this.Controls.Add(this.cmdCancel);
-			this.Controls.Add(this.cmdAccept);
-			this.Controls.Add(this.cmdNew);
 			this.Controls.Add(this.txtName);
 			this.Controls.Add(this.label1);
 			this.Name = "RecordLookup";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Record Lookup";
 			this.Shown += new System.EventHandler(this.RecordLookup_Shown);
+			this.skinnedPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -178,14 +221,15 @@
 
 		#endregion
 
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox txtName;
-		private System.Windows.Forms.Button cmdNew;
-		private System.Windows.Forms.Button cmdAccept;
-		private System.Windows.Forms.Button cmdCancel;
-		private System.Windows.Forms.ListView lstItems;
-		private System.Windows.Forms.Button cmdDelete;
-		private System.Windows.Forms.Label lblRecent;
-		private System.Windows.Forms.ListView lstRecent;
+		private Desktop.Skinning.SkinnedLabel label1;
+		private Desktop.Skinning.SkinnedTextBox txtName;
+		private Desktop.Skinning.SkinnedButton cmdNew;
+		private Desktop.Skinning.SkinnedButton cmdAccept;
+		private Desktop.Skinning.SkinnedButton cmdCancel;
+		private Desktop.Skinning.SkinnedListView lstItems;
+		private Desktop.Skinning.SkinnedButton cmdDelete;
+		private Desktop.Skinning.SkinnedLabel lblRecent;
+		private Desktop.Skinning.SkinnedListView lstRecent;
+		private Skinning.SkinnedPanel skinnedPanel1;
 	}
 }

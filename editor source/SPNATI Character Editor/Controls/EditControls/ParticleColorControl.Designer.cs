@@ -29,25 +29,32 @@
 		private void InitializeComponent()
 		{
 			this.txtValue = new Desktop.CommonControls.TextField();
-			this.label1 = new System.Windows.Forms.Label();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
 			this.cmdColor = new System.Windows.Forms.Button();
-			this.label2 = new System.Windows.Forms.Label();
+			this.label2 = new Desktop.Skinning.SkinnedLabel();
 			this.txtValue2 = new Desktop.CommonControls.TextField();
-			this.label3 = new System.Windows.Forms.Label();
+			this.label3 = new Desktop.Skinning.SkinnedLabel();
 			this.cmdColor2 = new System.Windows.Forms.Button();
 			this.colorPicker = new System.Windows.Forms.ColorDialog();
 			this.SuspendLayout();
 			// 
 			// txtValue
 			// 
+			this.txtValue.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.txtValue.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
 			this.txtValue.Location = new System.Drawing.Point(58, 0);
+			this.txtValue.Multiline = false;
 			this.txtValue.Name = "txtValue";
+			this.txtValue.PlaceholderText = "";
+			this.txtValue.ReadOnly = false;
 			this.txtValue.Size = new System.Drawing.Size(49, 20);
 			this.txtValue.TabIndex = 6;
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
+			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label1.Location = new System.Drawing.Point(44, 3);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(14, 13);
@@ -68,6 +75,10 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.label2.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.label2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label2.Location = new System.Drawing.Point(113, 3);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(16, 13);
@@ -76,14 +87,21 @@
 			// 
 			// txtValue2
 			// 
+			this.txtValue2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.txtValue2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
 			this.txtValue2.Location = new System.Drawing.Point(190, 0);
+			this.txtValue2.Multiline = false;
 			this.txtValue2.Name = "txtValue2";
+			this.txtValue2.PlaceholderText = "";
+			this.txtValue2.ReadOnly = false;
 			this.txtValue2.Size = new System.Drawing.Size(49, 20);
 			this.txtValue2.TabIndex = 10;
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
+			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label3.Location = new System.Drawing.Point(176, 3);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(14, 13);
@@ -127,11 +145,11 @@
 		#endregion
 
 		private Desktop.CommonControls.TextField txtValue;
-		private System.Windows.Forms.Label label1;
+		private Desktop.Skinning.SkinnedLabel label1;
 		private System.Windows.Forms.Button cmdColor;
-		private System.Windows.Forms.Label label2;
+		private Desktop.Skinning.SkinnedLabel label2;
 		private Desktop.CommonControls.TextField txtValue2;
-		private System.Windows.Forms.Label label3;
+		private Desktop.Skinning.SkinnedLabel label3;
 		private System.Windows.Forms.Button cmdColor2;
 		private System.Windows.Forms.ColorDialog colorPicker;
 	}

@@ -44,6 +44,7 @@ namespace SPNATI_Character_Editor.Activities
 		private void lstLines_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			MarkerItem marker = lstLines.SelectedItem as MarkerItem;
+			if (marker == null) { return; }
 			DialogueLine line = marker.Case.Lines[0];
 			int stage = marker.Case.Stages[0];
 			CharacterImage image = _imageLibrary.Find(string.Format("{0}-{1}", stage, line.Image));

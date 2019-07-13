@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -12,6 +13,9 @@ namespace SPNATI_Character_Editor
 	{
 		[XmlElement("costume")]
 		public List<SkinLink> Skins = new List<SkinLink>();
+
+		[XmlAnyElement]
+		public List<XmlElement> ExtraXml;
 	}
 
 	[XmlRoot("costume", Namespace = "")]
@@ -59,6 +63,9 @@ namespace SPNATI_Character_Editor
 		[XmlArray("poses")]
 		[XmlArrayItem("pose")]
 		public List<Pose> Poses = new List<Pose>();
+
+		[XmlAnyElement]
+		public List<XmlElement> ExtraXml;
 
 		[XmlIgnore]
 		public Character Character { get; set; }

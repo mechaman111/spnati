@@ -7,10 +7,11 @@ using System.Linq;
 using System.Windows.Forms;
 using Desktop;
 using SPNATI_Character_Editor.Actions;
+using Desktop.Skinning;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
-	public partial class Timeline : UserControl
+	public partial class Timeline : UserControl, ISkinControl
 	{
 		private const int MajorTickHeight = 10;
 		private const int TickHeight = 6;
@@ -29,31 +30,32 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public static Cursor HandOpen = LoadCursor(Properties.Resources.hand_open);
 		public static Cursor HandClosed = LoadCursor(Properties.Resources.hand_closed);
 		private NumberFormatInfo _timeFormatter;
-		private Brush _trackFill;
-		private Brush _trackFillAlternate;
-		private Brush _trackFillSelected;
-		private Brush _brushTimeline;
-		private Brush _brushWidgetHeader;
+		private SolidBrush _trackFill;
+		private SolidBrush _trackFillAlternate;
+		private SolidBrush _trackFillSelected;
+		private SolidBrush _timelineBack;
+		private SolidBrush _widgetHeaderFill;
 		private Pen _penTickMajor;
 		private Pen _penTick;
 		private Pen _penTickMinor;
-		private Pen _penCanvasTickMajor;
-		private Pen _penCanvasTickMinor;
+		private Pen _trackBorder;
+		private Pen _trackRowBorder;
 		private Font _fontTimeline;
-		private Brush _brushFont;
+		private SolidBrush _timelineFore;
+		private SolidBrush _widgetTitleFore;
 		private StringFormat _rowHeaderFormat;
-		private Brush _widgetSelectedFill;
-		private Pen _widgetOutline;
-		private Pen _widgetSelectedOutline;
+		private SolidBrush _widgetSelectedFill;
+		public static Pen WidgetOutline;
+		public static Pen WidgetSelectedOutline;
 		private Pen _timeLineAxis;
 		private Pen _timeLine;
 		private Pen _playbackLineAxis;
 		private Pen _playbackLine;
-		private Brush _iconHoverFill;
+		private SolidBrush _iconHoverFill;
 
 		private float _zoom = 1;
 		private ITimelineAction _pendingAction = null;
-		private ITimelineWidget _pendingWidget = null;
+		private ITimelineObject _pendingObject = null;
 		private ITimelineAction _currentAction = null;
 		private DateTime _lastTick;
 		private ITimelineWidget _headerHoverWidget = null;
@@ -62,17 +64,23 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private int _headerX;
 		private int _headerY;
+		private DateTime _lastClick = DateTime.Now;
 
 		private List<ITimelineWidget> _widgets = new List<ITimelineWidget>();
-		private ITimelineWidget _selectedWidget;
+		private ITimelineObject _selectedObject;
+		private List<ITimelineBreak> _breaks = new List<ITimelineBreak>();
 
 		private PlaybackMode _playbackMode = PlaybackMode.Once;
+		public bool PlaybackAwaitingInput { get; set; }
+		public bool PauseOnBreaks { get; set; }
 
-		public event EventHandler<ITimelineWidget> WidgetSelected;
+		public event EventHandler<ITimelineObject> WidgetSelected;
 		public event EventHandler<float> TimeChanged;
 		public event EventHandler<float> PlaybackTimeChanged;
+		public event EventHandler<float> ElapsedTimeChanged;
 		public event EventHandler<DataSelectionArgs> DataSelected;
 		public event EventHandler<bool> PlaybackChanged;
+		public event EventHandler<object> UIRequested;
 
 		private UndoManager _history;
 		public UndoManager CommandHistory
@@ -88,9 +96,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		public ITimelineWidget SelectedWidget
+		public ITimelineObject SelectedObject
 		{
-			get { return _selectedWidget; }
+			get { return _selectedObject; }
 		}
 
 		private float _time = 0;
@@ -100,17 +108,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set
 			{
 				UpdateMarker(value);
-				//int x = TimeToX(value);
-				//int left = container.HorizontalScroll.Value;
-				//int right = left + container.Width;
-				//if (x < left || x > right)
-				//{
-				//	//using (Control child = new Control() { Parent = container, Left = x })
-				//	//{
-				//	//	container.ScrollControlIntoView(child);
-				//	//}
-				//	container.HorizontalScroll.Value = Math.Max(container.HorizontalScroll.Minimum, Math.Max(container.HorizontalScroll.Maximum, x - (right - left) / 2));
-				//}
 			}
 		}
 
@@ -121,9 +118,27 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set
 			{
 				if (_playbackTime == value) { return; }
+				ITimelineBreak brk = GetBreakBetween(_playbackTime, value);
+				if (brk != null && PauseOnBreaks)
+				{
+					value = brk.Time - 0.001f;
+					PlaybackAwaitingInput = true;
+				}
 				_playbackTime = value;
 				Redraw();
 				PlaybackTimeChanged?.Invoke(this, value);
+			}
+		}
+
+		private float _elapsedTime = 0;
+		public float ElapsedTime
+		{
+			get { return _elapsedTime; }
+			set
+			{
+				if (_elapsedTime == value) { return; }
+				_elapsedTime = value;
+				ElapsedTimeChanged?.Invoke(this, value);
 			}
 		}
 
@@ -146,19 +161,20 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_trackFill = new SolidBrush(Color.FromArgb(200, 200, 200));
 			_trackFillAlternate = new SolidBrush(Color.FromArgb(210, 210, 210));
 			_trackFillSelected = new SolidBrush(Color.FromArgb(230, 230, 255));
-			_brushTimeline = new SolidBrush(Color.FromArgb(230, 230, 230));
-			_brushWidgetHeader = new SolidBrush(Color.FromArgb(185, 185, 185));
+			_timelineBack = new SolidBrush(Color.FromArgb(230, 230, 230));
+			_widgetHeaderFill = new SolidBrush(Color.FromArgb(185, 185, 185));
 			_fontTimeline = new Font("Arial", 8);
-			_brushFont = new SolidBrush(Color.Black);
+			_timelineFore = new SolidBrush(Color.Black);
 			_penTickMajor = new Pen(Color.FromArgb(0, 0, 0));
 			_penTick = new Pen(Color.FromArgb(130, 130, 130));
 			_penTickMinor = new Pen(Color.FromArgb(170, 170, 170));
-			_penCanvasTickMinor = new Pen(Color.FromArgb(170, 170, 170));
-			_penCanvasTickMajor = new Pen(Color.FromArgb(150, 150, 150));
+			_trackRowBorder = new Pen(Color.FromArgb(170, 170, 170));
+			_trackBorder = new Pen(Color.FromArgb(150, 150, 150));
 			_rowHeaderFormat = new StringFormat() { LineAlignment = StringAlignment.Center, Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.LineLimit };
 			_widgetSelectedFill = new SolidBrush(Color.White);
-			_widgetOutline = new Pen(Color.Black);
-			_widgetSelectedOutline = new Pen(Color.White);
+			WidgetOutline = new Pen(Color.Black);
+			WidgetSelectedOutline = new Pen(Color.White);
+			_widgetTitleFore = new SolidBrush(Color.Black);
 			_timeLineAxis = new Pen(Color.Red, 3);
 			_timeLine = new Pen(Color.Red, 1);
 			_playbackLineAxis = new Pen(Color.DarkGreen, 3);
@@ -168,6 +184,63 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			container.MouseWheel += Panel_MouseWheel;
 
 			UpdateMarker(0);
+			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
+		}
+
+		private void SetDefaultColors()
+		{
+			_trackFill.Color = Color.FromArgb(200, 200, 200);
+			_trackFillAlternate.Color = Color.FromArgb(210, 210, 210);
+			_trackFillSelected.Color = Color.FromArgb(230, 230, 255);
+			_timelineBack.Color = Color.FromArgb(230, 230, 230);
+			_widgetHeaderFill.Color = Color.FromArgb(185, 185, 185);
+			_timelineFore.Color = Color.Black;
+			_penTickMajor.Color = Color.FromArgb(0, 0, 0);
+			_penTick.Color = Color.FromArgb(130, 130, 130);
+			_penTickMinor.Color = Color.FromArgb(170, 170, 170);
+			_trackRowBorder.Color = Color.FromArgb(170, 170, 170);
+			_trackBorder.Color = Color.FromArgb(150, 150, 150);
+			_widgetSelectedFill.Color = Color.White;
+			WidgetOutline.Color = Color.Black;
+			WidgetSelectedOutline.Color = Color.White;
+			_widgetTitleFore.Color = Color.Black;
+			_timeLine.Color = _timeLineAxis.Color = Color.Red;
+			_playbackLine.Color = _playbackLineAxis.Color = Color.DarkGreen;
+			_iconHoverFill.Color = Color.FromArgb(50, 0, 0, 0);
+		}
+
+		public void OnUpdateSkin(Skin skin)
+		{
+			_timelineBack.Color = skin.Surface.Normal;
+			_timelineFore.Color = skin.Surface.ForeColor;
+			if (!skin.AppColors.ContainsKey("TimelineFore"))
+			{
+				SetDefaultColors();
+			}
+			else
+			{
+				_trackFill.Color = skin.GetAppColor("TimelineRow");
+				_trackFillAlternate.Color = skin.GetAppColor("TimelineRowAlt");
+				_trackFillSelected.Color = skin.GetAppColor("TimelineSelected");
+				_widgetTitleFore.Color = skin.GetAppColor("TimelineFore");
+				_widgetSelectedFill.Color = skin.GetAppColor("WidgetTitleSelected");
+				_widgetHeaderFill.Color = skin.GetAppColor("WidgetTitle");
+				WidgetSelectedOutline.Color = skin.Group == "Dark" ? Color.Black : Color.White;
+				WidgetOutline.Color = skin.GetAppColor("WidgetBorder");
+				_playbackLine.Color = _playbackLineAxis.Color = skin.GetAppColor("PlaybackBar");
+				_timeLine.Color = _timeLineAxis.Color = skin.GetAppColor("TimelineBar");
+				_iconHoverFill.Color = skin.PrimaryColor.Hover;
+
+				_penTickMajor.Color = ColorSet.BlendColor(_timelineBack.Color, _timelineFore.Color, 0.5f);
+				_penTickMinor.Color = ColorSet.BlendColor(_timelineBack.Color, _timelineFore.Color, 0.3f);
+				_trackBorder.Color = skin.GetAppColor("TimelineRowBorder");
+				_trackRowBorder.Color = skin.GetAppColor("TimelineSubRowBorder");
+			}
+
+			foreach (ITimelineWidget widget in _widgets)
+			{
+				widget.UpdateSkin(skin);
+			}
 		}
 
 		private void Timeline_Load(object sender, EventArgs e)
@@ -188,11 +261,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			tsUndo.Enabled = CommandHistory.CanUndo();
 			tsRedo.Enabled = CommandHistory.CanRedo();
-			if (_selectedWidget != null)
+			if (_selectedObject != null)
 			{
-				if (!_widgets.Contains(_selectedWidget))
+				if (!_widgets.Contains(_selectedObject))
 				{
-					SelectWidget(null);
+					SelectObject(null);
 				}
 				else
 				{
@@ -205,7 +278,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void UpdateEditMenu()
 		{
 			WidgetSelectionArgs args = new WidgetSelectionArgs(this, SelectionType.Select, ModifierKeys);
-			_selectedWidget?.UpdateSelection(args);
+			_selectedObject?.UpdateSelection(args);
 			UpdateButtons(args);
 		}
 
@@ -219,11 +292,15 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Data.WidgetRemoved += Data_WidgetRemoved;
 			foreach (ITimelineWidget widget in data.CreateWidgets(this))
 			{
-				AddWidget(widget, _widgets.Count);
+				AddObject(widget, _widgets.Count);
+			}
+			foreach (ITimelineBreak timeBreak in data.CreateBreaks(this))
+			{
+				AddBreak(timeBreak);
 			}
 			ResizeTimeline();
 			UpdateMarker(0);
-			SelectWidget(null);
+			SelectObject(null);
 			AutoZoom();
 		}
 
@@ -238,21 +315,22 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				Data = null;
 			}
 			_widgets.Clear();
+			_breaks.Clear();
 		}
 
 		private void Data_WidgetMoved(object sender, WidgetCreationArgs args)
 		{
-			MoveWidget(args.Widget, args.Index);
+			MoveObject(args.Widget, args.Index);
 		}
 
 		private void Data_WidgetRemoved(object sender, WidgetCreationArgs args)
 		{
-			RemoveWidget(args.Widget);
+			RemoveObject(args.Widget);
 		}
 
 		private void Data_WidgetCreated(object sender, WidgetCreationArgs args)
 		{
-			AddWidget(args.Widget, args.Index);
+			AddObject(args.Widget, args.Index);
 		}
 
 		public ITimelineWidget CreateWidget(object context)
@@ -260,7 +338,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			//TODO: This needs to be a command to be undoable
 			if (Data == null) { return null; }
 			ITimelineWidget widget = Data.CreateWidget(this, _time, context);
-			AddWidget(widget, _widgets.Count);
+			AddObject(widget, _widgets.Count);
 			return widget;
 		}
 
@@ -269,51 +347,92 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			//TODO: This needs to be a command to be undoable
 			if (Data == null) { return; }
 			ITimelineWidget widget = Data.CreateWidget(this, _time, data, index);
-			AddWidget(widget, index);
+			AddObject(widget, index);
+			SelectObject(widget);
+			SelectData(data);
 		}
 
 		public void RemoveSelectedWidget()
 		{
-			if (_selectedWidget == null) { return; }
-			DeleteWidgetCommand action = new DeleteWidgetCommand(Data, _selectedWidget);
+			if (_selectedObject == null) { return; }
+			DeleteWidgetCommand action = new DeleteWidgetCommand(Data, _selectedObject);
 			_history?.Commit(action);
 		}
 
-		private void AddWidget(ITimelineWidget widget, int index)
+		public void AddBreak(ITimelineBreak timeBreak)
 		{
-			if (index == -1)
+			AddObject(timeBreak, -1);
+		}
+
+		private void AddObject(ITimelineObject obj, int index)
+		{
+			ITimelineWidget widget = obj as ITimelineWidget;
+			if (widget != null)
 			{
-				_widgets.Add(widget);
+				if (index == -1)
+				{
+					_widgets.Add(widget);
+				}
+				else
+				{
+					_widgets.Insert(index, widget);
+				}
+				widget.Invalidated += Widget_Invalidated;
+				ResizeTimeline();
 			}
-			else
+			else if (obj is ITimelineBreak)
 			{
-				_widgets.Insert(index, widget);
+				ITimelineBreak brk = obj as ITimelineBreak;
+				_breaks.Add(brk);
 			}
-			widget.Invalidated += Widget_Invalidated;
-			ResizeTimeline();
 			Redraw();
 		}
 
-		private void RemoveWidget(ITimelineWidget widget)
+		private void RemoveObject(ITimelineObject obj)
 		{
-			_widgets.Remove(widget);
-			widget.Invalidated -= Widget_Invalidated;
-			ResizeTimeline();
+			if (obj is ITimelineWidget)
+			{
+				ITimelineWidget widget = obj as ITimelineWidget;
+				_widgets.Remove(widget);
+				widget.Invalidated -= Widget_Invalidated;
+				ResizeTimeline();
+			}
+			else if (obj is ITimelineBreak)
+			{
+				_breaks.Remove(obj as ITimelineBreak);
+			}
 			Redraw();
 		}
 
-		private void MoveWidget(ITimelineWidget widget, int index)
+		private void MoveObject(ITimelineObject obj, int index)
 		{
-			int track = _widgets.IndexOf(widget);
+			if (obj is ITimelineWidget)
+			{
+				ITimelineWidget widget = obj as ITimelineWidget;
+				int track = _widgets.IndexOf(widget);
 
-			_widgets.RemoveAt(track);
-			if (index >= _widgets.Count || index == -1)
-			{
-				_widgets.Add(widget);
+				_widgets.RemoveAt(track);
+				if (index >= _widgets.Count || index == -1)
+				{
+					_widgets.Add(widget);
+				}
+				else
+				{
+					_widgets.Insert(index, widget);
+				}
 			}
-			else
+			else if (obj is ITimelineBreak)
 			{
-				_widgets.Insert(index, widget);
+				ITimelineBreak brk = obj as ITimelineBreak;
+				_breaks.RemoveAt(index);
+				if (index >= _breaks.Count || index == -1)
+				{
+					_breaks.Add(brk);
+				}
+				else
+				{
+					_breaks.Insert(index, brk);
+				}
 			}
 		}
 
@@ -324,20 +443,28 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			TimeSpan elapsed = now - _lastTick;
 			float elapsedSec = (float)elapsed.TotalSeconds;
 			_lastTick = now;
-			float time = _playbackTime + elapsedSec;
-			if (time > duration)
+
+			if (!PlaybackAwaitingInput)
 			{
-				switch (_playbackMode)
+				float time = _playbackTime + elapsedSec;
+				if (time > duration)
 				{
-					case PlaybackMode.Once:
-						EnablePlayback(false);
-						break;
-					case PlaybackMode.Looping:
-						time -= duration;
-						break;
+					switch (_playbackMode)
+					{
+						case PlaybackMode.Once:
+							EnablePlayback(false);
+							break;
+						case PlaybackMode.Looping:
+							time -= duration;
+							break;
+					}
 				}
+				PlaybackTime = time;
 			}
-			PlaybackTime = time;// (_playbackTime + elapsedSec) % duration;
+
+			float elapsedTime = _elapsedTime + elapsedSec;
+			ElapsedTime = elapsedTime;
+
 			Redraw();
 		}
 
@@ -487,7 +614,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			int height = panelAxis.Height;
 			int startX = container.HorizontalScroll.Value;
 			Graphics g = e.Graphics;
-			g.FillRectangle(_brushTimeline, 0, 0, panelAxis.Width, height);
+			g.FillRectangle(_timelineBack, 0, 0, panelAxis.Width, height);
 			g.DrawLine(_penTickMajor, 0, height, panelAxis.Width, height);
 			g.DrawLine(_penTickMajor, 0, panelAxis.Height - 1, panelAxis.Width, panelAxis.Height - 1);
 			int step = 0;
@@ -510,7 +637,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (major || (_zoom > 1.25f && step % 5 == 0))
 				{
 					major = true;
-					g.DrawString(time.ToString("0.00", _timeFormatter), _fontTimeline, _brushFont, x + 1, 0);
+					g.DrawString(time.ToString("0.00", _timeFormatter), _fontTimeline, _timelineFore, x + 1, 0);
 				}
 
 				if (major)
@@ -559,7 +686,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					int rowCount = widget.GetRowCount();
 					int trackY = y;
-					if (widget == _selectedWidget)
+					if (widget == _selectedObject)
 					{
 						g.FillRectangle(_trackFillSelected, 0, trackY + 1, panelHeader.Width, rowCount * RowHeight - 1);
 					}
@@ -567,12 +694,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					for (int row = 0; row < rowCount; row++)
 					{
 						int rowY = trackY + row * RowHeight;
-						if (row == 0 || _selectedWidget == widget)
+						if (row == 0 || _selectedObject == widget)
 						{
 							bool highlighted = widget.IsRowHighlighted(row);
 							if (row == 0 || highlighted)
 							{
-								g.FillRectangle(_selectedWidget == widget && highlighted ? _widgetSelectedFill : _brushWidgetHeader, 0, rowY + 1, width, RowHeight - 1);
+								g.FillRectangle(_selectedObject == widget && highlighted ? _widgetSelectedFill : _widgetHeaderFill, 0, rowY + 1, width, RowHeight - 1);
 							}
 						}
 						string label = widget.GetLabel(row);
@@ -587,10 +714,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 							g.DrawImage(thumbnail, new Rectangle(left + 2, rowY + 1, RowHeight - 2, RowHeight - 2), new Rectangle(0, 0, thumbnail.Width, thumbnail.Height), GraphicsUnit.Pixel);
 							left += RowHeight;
 						}
-						g.DrawString(label, _fontTimeline, _brushFont, new Rectangle(left, rowY, width - left, RowHeight), _rowHeaderFormat);
-
 						int headerIconCount = widget.GetHeaderIconCount(row);
 						int iconLeft = panelHeader.Width - IconPadding - IconSize;
+
+						g.DrawString(label, _fontTimeline, _widgetTitleFore, new Rectangle(left, rowY, width - left - (panelHeader.Width - iconLeft), RowHeight), _rowHeaderFormat);
+
 						int iconTop = rowY + RowHeight / 2 - IconSize / 2;
 						for (int i = 0; i < headerIconCount; i++)
 						{
@@ -604,7 +732,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 							iconLeft -= IconSize + IconPadding;
 						}
 
-						g.DrawLine(_penCanvasTickMinor, 0, rowY + RowHeight, width, rowY + RowHeight);
+						g.DrawLine(_trackRowBorder, 0, rowY + RowHeight, width, rowY + RowHeight);
 
 						if (y > panelHeader.Height)
 						{
@@ -617,9 +745,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					y += RowHeight;
 				}
-				g.DrawLine(_penCanvasTickMajor, 0, y, panelHeader.Width, y);
+				g.DrawLine(_trackBorder, 0, y, panelHeader.Width, y);
 			}
-			g.DrawLine(_penCanvasTickMajor, panelHeader.Width - 1, 0, panelHeader.Width - 1, panelHeader.Height);
+			g.DrawLine(_trackBorder, panelHeader.Width - 1, 0, panelHeader.Width - 1, panelHeader.Height);
 		}
 
 		private void panel_Paint(object sender, PaintEventArgs e)
@@ -630,6 +758,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			float duration = Duration;
 
 			float pps = PixelsPerSecond * _zoom;
+
+			//widget backgrounds
 			int y = 0;
 			for (int i = 0; i < _widgets.Count; i++)
 			{
@@ -639,10 +769,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (widget != null)
 				{
 					rowCount = widget.GetRowCount();
-					trackHeight = widget.GetRowCount() * RowHeight;
+					trackHeight = rowCount * RowHeight;
 				}
 				int trackY = y;
-				if (_selectedWidget == widget)
+				if (_selectedObject == widget)
 				{
 					g.FillRectangle(_trackFillSelected, 0, y + 1, panel.Width, trackHeight - 1);
 				}
@@ -655,9 +785,40 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					//grid line
 					int rowY = y + r * RowHeight + RowHeight;
-					g.DrawLine(r < rowCount - 1 ? _penCanvasTickMinor : _penCanvasTickMajor, 0, rowY, panel.Width, rowY);
+					g.DrawLine(r < rowCount - 1 ? _trackRowBorder : _trackBorder, 0, rowY, panel.Width, rowY);
 				}
 				DrawTickMarks(g, y, trackHeight);
+
+				if (widget != null)
+				{
+					y += rowCount * RowHeight;
+				}
+				else
+				{
+					y += RowHeight;
+				}
+			}
+
+			//break backgrounds
+			for (int i = 0; i < _breaks.Count; i++)
+			{
+				ITimelineBreak brk = _breaks[i];
+				brk.DrawBackground(g, pps, panel.Height, brk == _selectedObject);
+			}
+
+			//widgets
+			y = 0;
+			for (int i = 0; i < _widgets.Count; i++)
+			{
+				ITimelineWidget widget = _widgets[i];
+				int trackHeight = RowHeight;
+				int rowCount = 1;
+				if (widget != null)
+				{
+					rowCount = widget.GetRowCount();
+					trackHeight = rowCount * RowHeight;
+				}
+				int trackY = y;
 
 				if (widget != null)
 				{
@@ -666,27 +827,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					float length = widget.GetLength(duration);
 					int x = TimeToX(start);
 
-					//background
-					int top = trackY;
-					int widgetWidth = TimeToX(length);
-					g.FillRectangle(widget.GetFillBrush(), x, top, widgetWidth, count * RowHeight);
-
-					//outline
-					int width = TimeToX(length);
-					g.DrawRectangle(_widgetOutline, x, top, width, count * RowHeight - 1);
-					if (_selectedWidget == widget)
-					{
-						g.DrawRectangle(_widgetSelectedOutline, x + 2, top + 2, width - 4, count * RowHeight - 5);
-					}
-
 					//contents
 					for (int row = 0; row < count; row++)
 					{
 						int rowY = trackY + row * RowHeight;
-						//contents
-						widget.DrawContents(g, row, x + 1, rowY + 1, pps, widgetWidth - 1, RowHeight - 2);
+						widget.DrawContents(g, row, x + 1, rowY + 1, pps, RowHeight - 2);
 					}
-
 
 					y += rowCount * RowHeight;
 				}
@@ -694,6 +840,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					y += RowHeight;
 				}
+			}
+
+			//breaks
+			for (int i = 0; i < _breaks.Count; i++)
+			{
+				ITimelineBreak brk = _breaks[i];
+				brk.Draw(g, pps, panel.Height, brk == _selectedObject);
 			}
 
 			int timeX;
@@ -724,10 +877,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 				bool major = step % MajorTickFrequency == 0;
 				int x = TimeToX(time);
-				Pen canvasPen = _penCanvasTickMinor;
+				Pen canvasPen = _trackRowBorder;
 				if (major)
 				{
-					canvasPen = _penCanvasTickMajor;
+					canvasPen = _trackBorder;
 				}
 				g.DrawLine(canvasPen, x, y, x, y + height);
 				step++;
@@ -757,47 +910,68 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void panelHeader_MouseDown(object sender, MouseEventArgs e)
 		{
-			int startY = container.VerticalScroll.Value;
-			int row = (e.Y + startY) / RowHeight; //absolute row
-			int currentRow = 0;
-			foreach (ITimelineWidget widget in _widgets)
+			if (e.Button == MouseButtons.Left)
 			{
-				int count = widget == null ? 1 : widget.GetRowCount();
-				if (currentRow + count > row)
+				int startY = container.VerticalScroll.Value;
+				int row = (e.Y + startY) / RowHeight; //absolute row
+				int currentRow = 0;
+				foreach (ITimelineWidget widget in _widgets)
 				{
-					if (currentRow == row)
+					int count = widget == null ? 1 : widget.GetRowCount();
+					if (currentRow + count > row)
 					{
-						//clicking collapsible button on title row
-						if (widget != null && e.X <= Properties.Resources.Expand.Width && widget.IsCollapsible)
+						if (currentRow == row)
 						{
-							widget.IsCollapsed = !widget.IsCollapsed;
-							panel.Invalidate();
-							ResizeTimeline();
-							return;
+							//clicking collapsible button on title row
+							if (widget != null && e.X <= Properties.Resources.Expand.Width && widget.IsCollapsible)
+							{
+								widget.IsCollapsed = !widget.IsCollapsed;
+								panel.Invalidate();
+								ResizeTimeline();
+								return;
+							}
 						}
-					}
-					//clicking any row within the widget
-					if (widget != null)
-					{
-						SelectWidget(widget);
+						//clicking any row within the widget
+						if (widget != null)
+						{
+							bool doubleClick = false;
+							DateTime clickTime = DateTime.Now;
+							if (_selectedObject == widget && (clickTime - _lastClick).TotalMilliseconds < 200)
+							{
+								doubleClick = true;
+							}
+							_lastClick = clickTime;
 
-						int track;
-						int r = YToRow(e.Y + startY, out track);
-						int icon = GetHeaderIconIndex(e.X, widget, r);
-						WidgetActionArgs args = GetWidgetArgs(_time, e.Y + startY);
-						if (icon >= 0)
-						{
-							widget.OnClickHeaderIcon(args, icon);
+							SelectObject(widget);
+
+							int track;
+							int r = YToRow(e.Y + startY, out track);
+							int icon = GetHeaderIconIndex(e.X, widget, r);
+							WidgetActionArgs args = GetWidgetArgs(_time, e.Y + startY);
+							if (icon >= 0)
+							{
+								widget.OnClickHeaderIcon(args, icon);
+							}
+							else
+							{
+								if (doubleClick)
+								{
+									widget.OnDoubleClickHeader(args);
+								}
+								else
+								{
+									widget.OnClickHeader(args);
+								}
+							}
+							WidgetSelectionArgs selectionArgs = new WidgetSelectionArgs(this, SelectionType.Reselect, ModifierKeys);
+							widget.UpdateSelection(selectionArgs);
+							UpdateButtons(selectionArgs);
 						}
-						widget.OnClickHeader(args);
-						WidgetSelectionArgs selectionArgs = new WidgetSelectionArgs(this, SelectionType.Reselect, ModifierKeys);
-						widget.UpdateSelection(selectionArgs);
-						UpdateButtons(selectionArgs);
+						panelHeader.Invalidate();
+						return;
 					}
-					panelHeader.Invalidate();
-					return;
+					currentRow += count;
 				}
-				currentRow += count;
 			}
 		}
 
@@ -842,20 +1016,40 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (e.Button == MouseButtons.None)
 			{
 				ITimelineAction old = _pendingAction;
+				ITimelineBreak brk = GetBreakUnderCursor(e.X);
 				ITimelineWidget widget = GetWidgetUnderCursor(e.Y);
-				if (widget != _pendingWidget && _pendingWidget != null)
+				ITimelineObject hoverObj = null;
+				ITimelineAction hoverAction = null;
+				ITimelineAction brkAction = GetAction(brk, e.X, e.Y);
+				ITimelineAction widgetAction = GetAction(widget, e.X, e.Y);
+				if (_selectedObject != brk && widgetAction != null && !(widgetAction is SelectAction))
 				{
-					_pendingWidget.OnMouseOut();
+					hoverObj = widget;
+					hoverAction = widgetAction;
 				}
-				if (widget != null)
+				else
 				{
-					_pendingAction = GetAction(widget, e.X, e.Y);
+					hoverObj = brk;
+					hoverAction = brkAction;
+				}
+				if (hoverObj != _pendingObject && _pendingObject != null)
+				{
+					_pendingObject.OnMouseOut();
+				}
+				if (hoverObj != null)
+				{
+					_pendingAction = hoverAction;
 					if (_pendingAction != null || old != null)
 					{
-						_pendingWidget = widget;
+						_pendingObject = hoverObj;
 						panel.Invalidate();
 					}
 					Cursor = (_pendingAction != null ? _pendingAction.GetHoverCursor() : Cursors.Default);
+				}
+				else
+				{
+					_pendingAction = null;
+					Cursor = Cursors.Default;
 				}
 			}
 			else if (_currentAction != null)
@@ -878,18 +1072,38 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				int track;
 				YToRow(e.Y, out track);
-				ITimelineWidget widget = GetWidgetUnderCursor(e.Y);
-
-				if (_selectedWidget != widget)
+				ITimelineObject widget = GetBreakUnderCursor(e.X);
+				ITimelineWidget overWidget = GetWidgetUnderCursor(e.Y);
+				if (widget == null || _pendingObject is ITimelineWidget)
 				{
-					SelectWidget(widget);
+					widget = overWidget;
 				}
 
-				if (widget != null && _pendingAction != null)
+				bool doubleClick = false;
+				DateTime clickTime = DateTime.Now;
+				if (_selectedObject == widget && (clickTime - _lastClick).TotalMilliseconds < 200)
 				{
-					_currentAction = _pendingAction;
-					_pendingAction = null;
-					StartAction(XToTime(e.X), e.Y);
+					doubleClick = true;
+				}
+				_lastClick = clickTime;
+
+				if (_selectedObject != widget)
+				{
+					SelectObject(widget);
+				}
+
+				if (widget != null)
+				{
+					if (doubleClick)
+					{
+						widget.OnDoubleClick(GetWidgetArgs(CurrentTime, e.Y));
+					}
+					else if (_pendingAction != null)
+					{
+						_currentAction = _pendingAction;
+						_pendingAction = null;
+						StartAction(XToTime(e.X), e.Y);
+					}
 				}
 			}
 		}
@@ -899,37 +1113,37 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			EndAction();
 		}
 
-		private void SelectWidget(ITimelineWidget widget)
+		public void SelectObject(ITimelineObject widget)
 		{
-			ApplyWidgetSelection(widget);
+			ApplyObjectSelection(widget);
 		}
 
-		public void ApplyWidgetSelection(ITimelineWidget widget)
+		public void ApplyObjectSelection(ITimelineObject widget)
 		{
 			WidgetSelectionArgs args = new WidgetSelectionArgs(this, SelectionType.Select, ModifierKeys);
-			if (widget != _selectedWidget)
+			if (widget != _selectedObject)
 			{
-				if (_selectedWidget != null)
+				if (_selectedObject != null)
 				{
 					args.IsSelected = SelectionType.Deselect;
-					_selectedWidget.OnWidgetSelectionChanged(args);
+					_selectedObject.OnWidgetSelectionChanged(args);
 				}
-				_selectedWidget = widget;
+				_selectedObject = widget;
 				args.IsSelected = SelectionType.Select;
 			}
 			else
 			{
 				args.IsSelected = SelectionType.Reselect;
 			}
-			if (_selectedWidget != null)
+			if (_selectedObject != null)
 			{
-				_selectedWidget.OnWidgetSelectionChanged(args);
+				_selectedObject.OnWidgetSelectionChanged(args);
 				tsNext.Enabled = true;
 				tsPrevious.Enabled = true;
 			}
 			else
 			{
-				Data.UpdateSelection(args);
+				Data?.UpdateSelection(args);
 				tsNext.Enabled = false;
 				tsPrevious.Enabled = false;
 			}
@@ -937,7 +1151,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			if (args.IsSelected == SelectionType.Select)
 			{
-				WidgetSelected?.Invoke(this, _selectedWidget);
+				WidgetSelected?.Invoke(this, _selectedObject);
 			}
 
 			Redraw();
@@ -961,7 +1175,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			ITimelineWidget widget = _widgets.Find(w => w.GetData() == data);
 			if (widget != null)
 			{
-				SelectWidget(widget);
+				SelectObject(widget);
 			}
 		}
 
@@ -972,6 +1186,20 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public void SelectData(object data, object previewData)
 		{
 			DataSelected?.Invoke(this, new DataSelectionArgs(data, previewData));
+		}
+
+		private ITimelineBreak GetBreakUnderCursor(int x)
+		{
+			for (int i = _breaks.Count - 1; i >= 0; i--)
+			{
+				ITimelineBreak brk = _breaks[i];
+				int brkX = TimeToX(brk.Time);
+				if (Math.Abs(brkX - x) <= 5)
+				{
+					return brk;
+				}
+			}
+			return null;
 		}
 
 		private ITimelineWidget GetWidgetUnderCursor(int y)
@@ -1006,7 +1234,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				History = _history,
 				Timeline = this,
 				Data = Data,
-				Widget = _selectedWidget,
+				Widget = _selectedObject,
 				Time = time,
 				Row = row,
 				SnapIncrement = _tickResolution,
@@ -1045,10 +1273,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				_currentAction.Finish();
 				_currentAction = null;
 				Cursor = Cursors.Default;
-				if (_selectedWidget != null)
+				if (_selectedObject != null)
 				{
 					WidgetSelectionArgs args = new WidgetSelectionArgs(this, SelectionType.Select, ModifierKeys);
-					_selectedWidget.UpdateSelection(args);
+					_selectedObject.UpdateSelection(args);
 					UpdateButtons(args);
 				}
 			}
@@ -1059,6 +1287,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (e.Button == MouseButtons.Left)
 			{
 				//placing the time marker
+				panel.Select();
 				_currentAction = new TimelineDragAction(this);
 				float time = XToTime(e.X + container.HorizontalScroll.Value);
 				float inverse = 1 / _tickResolution * 2;
@@ -1085,6 +1314,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						time = (float)Math.Round(Math.Round(time * inverse) / inverse, 2);
 					}
 					UpdateAction(time, 0);
+					panelAxis.Update();
 				}
 			}
 		}
@@ -1101,9 +1331,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public void FinalizeTimeMovement()
 		{
-			if (_selectedWidget != null)
+			if (_selectedObject != null)
 			{
-				_selectedWidget.OnTimeChanged(GetOperationArgs());
+				_selectedObject.OnTimeChanged(GetOperationArgs());
 			}
 		}
 
@@ -1113,18 +1343,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <returns></returns>
-		private ITimelineAction GetAction(ITimelineWidget widget, int x, int y)
+		private ITimelineAction GetAction(ITimelineObject widget, int x, int y)
 		{
 			float pps = PixelsPerSecond * _zoom;
 			if (widget != null)
 			{
-				_pendingWidget = widget;
 				float start = widget.GetStart();
 				int track;
 				int row = YToRow(y, out track);
-				return widget.GetAction(x - TimeToX(start), TimeToX(widget.GetLength(Duration)), XToTime(x), row, TimeToX(Duration), pps);
+				return widget.GetAction(x - TimeToX(start), XToTime(x), row, TimeToX(Duration), pps);
 			}
-			return _selectedWidget != null ? null : new SelectAction();
+			return _selectedObject != null ? null : new SelectAction();
 		}
 
 		/// <summary>
@@ -1141,10 +1370,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void tsPlay_Click(object sender, EventArgs e)
 		{
+			if (ModifierKeys.HasFlag(Keys.Control)) { return; }
 			EnablePlayback(!tmrTick.Enabled);
 		}
 
-		private void EnablePlayback(bool enabled)
+		public void ResumePlayback()
+		{
+			if (!PlaybackAwaitingInput) { return; }
+			PlaybackAwaitingInput = false;
+			_playbackTime += 0.001f;
+		}
+
+		public void EnablePlayback(bool enabled)
 		{
 			if (tmrTick.Enabled == enabled)
 			{
@@ -1152,7 +1389,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			if (enabled)
 			{
-				PlaybackTime = 0;
+				PlaybackAwaitingInput = false;
+				_playbackTime = CurrentTime - 0.01f;
+				PlaybackTime = (CurrentTime < Duration ? CurrentTime : 0);
+				ElapsedTime = 0;
 			}
 			tmrTick.Enabled = enabled;
 			_lastTick = DateTime.Now;
@@ -1176,7 +1416,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						tsPlay.Image = Properties.Resources.TimelinePlayLoops;
 						break;
 				}
-				
 			}
 			PlaybackChanged?.Invoke(this, tmrTick.Enabled);
 			foreach (ITimelineWidget widget in _widgets)
@@ -1190,6 +1429,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			UpdateMarker(0);
 			PlaybackTime = 0;
+			ElapsedTime = 0;
 		}
 
 		private void tsLast_Click(object sender, EventArgs e)
@@ -1215,11 +1455,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (tmrTick.Enabled) { return; }
 			if (this.ContainsActiveControl())
 			{
-				if (_selectedWidget == null) { return; }
+				if (_selectedObject == null) { return; }
 				WidgetOperationArgs args = GetOperationArgs();
 				args.IsSilent = true;
-				_selectedWidget.OnCopy(args);
-				_selectedWidget.OnDelete(args);
+				_selectedObject.OnCopy(args);
+				_selectedObject.OnDelete(args);
 				tsPaste.Enabled = true;
 			}
 			else
@@ -1233,9 +1473,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			if (this.ContainsActiveControl())
 			{
-				if (_selectedWidget == null) { return; }
+				if (_selectedObject == null) { return; }
 				WidgetOperationArgs args = GetOperationArgs();
-				_selectedWidget.OnCopy(args);
+				_selectedObject.OnCopy(args);
 
 				tsPaste.Enabled = true;
 			}
@@ -1250,7 +1490,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (this.ContainsActiveControl())
 			{
 				WidgetOperationArgs args = GetOperationArgs();
-				if (_selectedWidget != null && _selectedWidget.OnPaste(args))
+				if (_selectedObject != null && _selectedObject.OnPaste(args))
 				{
 					return;
 				}
@@ -1267,21 +1507,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (this.ContainsActiveControl())
 			{
 				WidgetOperationArgs args = GetOperationArgs();
-				_selectedWidget?.OnDuplicate(args);
+				_selectedObject?.OnDuplicate(args);
 			}
-
-			//int track = _selectedWidget != null ? _widgets.IndexOf(_selectedWidget) : -1;
-			//DuplicateWidgetAction action = new DuplicateWidgetAction(this, Data, _selectedWidget, _time, track);
-			//_history?.Commit(action);
 		}
 
 		private void tsDelete_Click(object sender, EventArgs e)
 		{
 			if (this.ContainsActiveControl())
 			{
-				if (_selectedWidget == null) { return; }
+				if (_selectedObject == null) { return; }
 				WidgetOperationArgs args = GetOperationArgs();
-				_selectedWidget.OnDelete(args);
+				_selectedObject.OnDelete(args);
 			}
 			else
 			{
@@ -1356,12 +1592,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void tsPrevious_Click(object sender, EventArgs e)
 		{
-			_selectedWidget?.AdvanceSubWidget(false);
+			_selectedObject?.AdvanceSubWidget(false);
 		}
 
 		private void tsNext_Click(object sender, EventArgs e)
 		{
-			_selectedWidget?.AdvanceSubWidget(true);
+			_selectedObject?.AdvanceSubWidget(true);
 		}
 
 		private void ZoomOut()
@@ -1428,7 +1664,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			_contextMenuItems.Clear();
 			ContextMenuArgs args = new ContextMenuArgs();
-			_selectedWidget?.OnOpeningContextMenu(args);
+			_selectedObject?.OnOpeningContextMenu(args);
 			foreach (ContextMenuItem item in args.ItemsToAdd)
 			{
 				ToolStripMenuItem menuItem = new ToolStripMenuItem(item.Text, item.Icon, item.Click);
@@ -1462,6 +1698,24 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Once,
 			Looping,
 			OnceLooping,
+		}
+
+		public void RequestUI(object data)
+		{
+			UIRequested?.Invoke(this, data);
+		}
+
+		private ITimelineBreak GetBreakBetween(float start, float end)
+		{
+			for (int i = 0; i < _breaks.Count; i++)
+			{
+				float time = _breaks[i].Time;
+				if (time > start && time <= end)
+				{
+					return _breaks[i];
+				}
+			}
+			return null;
 		}
 	}
 

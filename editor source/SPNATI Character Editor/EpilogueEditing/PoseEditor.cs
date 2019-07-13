@@ -19,6 +19,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private Pose _sourcePose;
 		private UndoManager _history = new UndoManager();
 		private float _time;
+		private float _elapsedTime;
 		private float _playbackTime;
 		private bool _playing;
 		private ILabel _labelData;
@@ -32,8 +33,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			timeline.DataSelected += Timeline_DataSelected;
 			timeline.TimeChanged += Timeline_TimeChanged;
 			timeline.PlaybackTimeChanged += Timeline_PlaybackTimeChanged;
+			timeline.ElapsedTimeChanged += Timeline_ElapsedTimeChanged;
 			timeline.WidgetSelected += Timeline_WidgetSelected;
 			timeline.PlaybackChanged += Timeline_PlaybackChanged;
+			timeline.UIRequested += Timeline_UIRequested;
 			//table.UndoManager = _history;
 			table.RecordFilter = RecordFilter;
 
@@ -75,21 +78,27 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			timeline.SelectWidgetWithData(args.Object);
 		}
 
-		private void Timeline_WidgetSelected(object sender, ITimelineWidget widget)
+		private void Timeline_WidgetSelected(object sender, ITimelineObject widget)
 		{
 			canvas.SelectData(widget?.GetData());
+		}
+
+		private void Timeline_ElapsedTimeChanged(object sender, float time)
+		{
+			_elapsedTime = time;
+			canvas.UpdateTime(_time, _playbackTime, _elapsedTime);
 		}
 
 		private void Timeline_PlaybackTimeChanged(object sender, float time)
 		{
 			_playbackTime = time;
-			canvas.UpdateTime(_time, _playbackTime);
+			canvas.UpdateTime(_time, _playbackTime, _elapsedTime);
 		}
 
 		private void Timeline_TimeChanged(object sender, float time)
 		{
 			_time = time;
-			canvas.UpdateTime(time, _playbackTime);
+			canvas.UpdateTime(time, _playbackTime, _elapsedTime);
 			UpdateToolbar();
 		}
 
@@ -113,12 +122,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public override void Save()
 		{
 			SavePose();
-		}
-
-		public override void Destroy()
-		{
-			LiveImageCache.Clear();
-			base.Destroy();
 		}
 
 		private void RebuildPoseList()
@@ -287,12 +290,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void UpdateToolbar()
 		{
 			if (_playing) { return; }
-			SpriteWidget selectedWidget = timeline.SelectedWidget as SpriteWidget;
+			SpriteWidget selectedWidget = timeline.SelectedObject as SpriteWidget;
 
 			tsRemoveSprite.Enabled = tsAddEndFrame.Enabled = (selectedWidget != null);
 			tsCreateSequence.Enabled = true;
 			tsAddKeyframe.Enabled = false;
 			tsRemoveKeyframe.Enabled = false;
+			tsFrameType.Enabled = false;
 			if (selectedWidget != null)
 			{
 				tsRemoveSprite.Enabled = true;
@@ -308,6 +312,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (selectedWidget.SelectedFrame != null && selectedWidget.SelectedFrame.Time != 0)
 				{
 					tsRemoveKeyframe.Enabled = true;
+					tsFrameType.Enabled = true;
 				}
 			}
 		}
@@ -318,14 +323,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (openFileDialog1.ShowDialog(_character, "") == DialogResult.OK)
 			{
 				string src = openFileDialog1.FileName;
-				timeline.SelectData(timeline.CreateWidget(src)?.GetData());
+				timeline.SelectObject(timeline.CreateWidget(src));
 			}
 		}
 
 		private void AddKeyframe_Click(object sender, EventArgs e)
 		{
-			if (timeline.SelectedWidget == null) { return; }
-			SpriteWidget widget = timeline.SelectedWidget as SpriteWidget;
+			if (timeline.SelectedObject == null) { return; }
+			SpriteWidget widget = timeline.SelectedObject as SpriteWidget;
 			//TODO: Make this a command
 			LiveKeyframe frame = widget.Sprite.AddKeyframe(_time - widget.GetStart());
 			widget.SelectKeyframe(frame, null, false);
@@ -334,8 +339,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void RemoveSprite_Click(object sender, EventArgs e)
 		{
-			if (timeline.SelectedWidget == null) { return; }
-			if (MessageBox.Show($"Are you sure you want to remove {timeline.SelectedWidget.ToString()}?", "Remove Sprite", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+			if (timeline.SelectedObject == null) { return; }
+			if (MessageBox.Show($"Are you sure you want to remove {timeline.SelectedObject.ToString()}?", "Remove Sprite", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 			{
 				timeline.RemoveSelectedWidget();
 				UpdateToolbar();
@@ -344,8 +349,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void RemoveKeyframe_Click(object sender, EventArgs e)
 		{
-			if (timeline.SelectedWidget == null) { return; }
-			SpriteWidget widget = timeline.SelectedWidget as SpriteWidget;
+			if (timeline.SelectedObject == null) { return; }
+			SpriteWidget widget = timeline.SelectedObject as SpriteWidget;
 			LiveKeyframe frame = widget.SelectedFrame;
 			if (frame != null)
 			{
@@ -357,8 +362,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void CopyFirstFrame_Click(object sender, EventArgs e)
 		{
-			if (timeline.SelectedWidget == null) { return; }
-			SpriteWidget widget = timeline.SelectedWidget as SpriteWidget;
+			if (timeline.SelectedObject == null) { return; }
+			SpriteWidget widget = timeline.SelectedObject as SpriteWidget;
 			LiveSprite sprite = widget.Sprite;
 			if (sprite.Keyframes.Count > 0)
 			{
@@ -483,7 +488,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void tsCreateSequence_Click(object sender, EventArgs e)
 		{
-			SpriteWidget widget = timeline.SelectedWidget as SpriteWidget;
+			SpriteWidget widget = timeline.SelectedObject as SpriteWidget;
 			LiveSprite sprite = widget?.Sprite;
 			if (!CanBeSequenced(widget))
 			{
@@ -500,13 +505,21 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (form.Sprite == null)
 				{
 					sprite = timeline.CreateWidget(form.Frames[0])?.GetData() as LiveSprite;
+					sprite.Id = form.SequenceName;
 				}
-				AnimatedProperty prop = sprite.GetAnimationProperties("Src");
-				prop.Ease.SetValue(0, "linear");
-				sprite.Keyframes[0].Src = frames[0];
+				else
+				{
+					while (sprite.Keyframes.Count > 1)
+					{
+						sprite.Keyframes.RemoveAt(1);
+					}
+				}
+				sprite.GetBlockMetadata("Src", 0).Ease = "linear";
+				LiveSpriteKeyframe keyframe = sprite.Keyframes[0] as LiveSpriteKeyframe;
+				keyframe.Src = frames[0];
 				for (int i = 1; i < frames.Count; i++)
 				{
-					LiveKeyframe kf = sprite.AddKeyframe(i * form.Duration);
+					LiveSpriteKeyframe kf = sprite.AddKeyframe(i * form.Duration) as LiveSpriteKeyframe;
 					kf.Src = frames[i];
 				}
 			}
@@ -519,18 +532,89 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				return false;
 			}
 			LiveSprite sprite = widget.Sprite;
-			if (sprite.Keyframes.Count == 1)
+			if (sprite.AnimatedProperties.Count <= 3) //only "X", "Y", and "Src" are allowed
 			{
+				if (!sprite.AnimatedProperties.Contains("Src"))
+				{
+					return false;
+				}
+				if (sprite.AnimatedProperties.Count == 2 && !sprite.AnimatedProperties.Contains("X") && !sprite.AnimatedProperties.Contains("Y"))
+				{
+					return false;
+				}
+				if (sprite.AnimatedProperties.Count == 3 && (!sprite.AnimatedProperties.Contains("X") || !sprite.AnimatedProperties.Contains("Y")))
+				{
+					return false;
+				}
 				return true;
 			}
 
-			string path = sprite.Keyframes[0].Src;
-			if (!path.EndsWith("0"))
-			{
-				return false;
-			}
-
 			return false;
+		}
+
+		private void tsRefresh_Click(object sender, EventArgs e)
+		{
+			LiveImageCache.Refresh();
+			foreach (LiveSprite sprite in _pose.Sprites)
+			{
+				if (!string.IsNullOrEmpty(sprite.Src))
+				{
+					sprite.Image = LiveImageCache.Get(sprite.Src);
+					if (sprite.Image != null)
+					{
+						sprite.Width = sprite.Image.Width;
+						sprite.Height = sprite.Image.Height;
+					}
+					else
+					{
+						sprite.Width = 100;
+						sprite.Height = 100;
+					}
+				}
+			}
+			canvas.InvalidateCanvas();
+		}
+
+
+		private void Timeline_UIRequested(object sender, object data)
+		{
+			LiveSpriteKeyframe frame = data as LiveSpriteKeyframe;
+			if (frame != null)
+			{
+				openFileDialog1.UseAbsolutePaths = true;
+				if (openFileDialog1.ShowDialog(_character, frame.Src ?? "") == DialogResult.OK)
+				{
+					string src = openFileDialog1.FileName;
+					frame.Src = src;
+				}
+			}
+		}
+
+		private void tsExport_Click(object sender, EventArgs e)
+		{
+			if (_pose == null) { return; }
+			SavePose();
+			PoseExporter exporter = new PoseExporter();
+			exporter.SetPose(_sourcePose);
+			exporter.ShowDialog();
+		}
+
+		private void tsFrameType_Click(object sender, EventArgs e)
+		{
+			if (timeline.SelectedObject == null) { return; }
+			SpriteWidget widget = timeline.SelectedObject as SpriteWidget;
+			LiveKeyframe frame = widget.SelectedFrame;
+			if (frame != null)
+			{
+				HashSet<string> props = new HashSet<string>();
+				foreach (string p in widget.SelectedProperties)
+				{
+					props.Add(p);
+				}
+				ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(widget.Sprite, frame, props);
+				_history.Commit(command);
+			}
+			UpdateToolbar();
 		}
 	}
 

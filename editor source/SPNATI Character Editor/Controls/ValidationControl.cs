@@ -43,7 +43,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			pnlValid.Visible = false;
 			List<ValidationError> warnings;
-			bool valid = CharacterValidator.Validate(character, Listing.Instance, out warnings);
+			bool valid = CharacterValidator.Validate(character, out warnings);
 			if (valid)
 			{
 				pnlValid.Visible = true;
@@ -123,7 +123,7 @@ namespace SPNATI_Character_Editor.Controls
 							continue; //don't validate characters that aren't in the main opponents folder, since they're likely to have errors but aren't being actively worked on
 						progress.Report(c);
 						List<ValidationError> warnings;
-						if (!CharacterValidator.Validate(c, Listing.Instance, out warnings))
+						if (!CharacterValidator.Validate(c, out warnings))
 						{
 							allWarnings[c] = warnings;
 						}
@@ -156,7 +156,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (level == ValidationFilterLevel.None)
 					continue;
 				lstFilters.Items.Add(level);
-				if (level != ValidationFilterLevel.Minor)
+				if (level != ValidationFilterLevel.Minor && level != ValidationFilterLevel.MissingTargets)
 					lstFilters.SelectedItems.Add(level);
 			}
 		}
@@ -244,6 +244,9 @@ namespace SPNATI_Character_Editor.Controls
 					break;
 				case ValidationContext.Area.Epilogue:
 					Shell.Instance.Launch<Character, EpilogueEditor>(_character, error.Context);
+					break;
+				case ValidationContext.Area.Collectible:
+					Shell.Instance.Launch<Character, CollectibleEditor>(_character, error.Context);
 					break;
 			}			
 		}

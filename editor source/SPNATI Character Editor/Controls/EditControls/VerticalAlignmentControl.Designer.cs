@@ -29,9 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.chkTop = new System.Windows.Forms.RadioButton();
-			this.chkMiddle = new System.Windows.Forms.RadioButton();
-			this.chkBottom = new System.Windows.Forms.RadioButton();
+			this.chkTop = new Desktop.Skinning.SkinnedRadioButton();
+			this.chkMiddle = new Desktop.Skinning.SkinnedRadioButton();
+			this.chkBottom = new Desktop.Skinning.SkinnedRadioButton();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.SuspendLayout();
 			// 
@@ -86,9 +86,9 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.RadioButton chkTop;
-		private System.Windows.Forms.RadioButton chkMiddle;
-		private System.Windows.Forms.RadioButton chkBottom;
+		private Desktop.Skinning.SkinnedRadioButton chkTop;
+		private Desktop.Skinning.SkinnedRadioButton chkMiddle;
+		private Desktop.Skinning.SkinnedRadioButton chkBottom;
 		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }

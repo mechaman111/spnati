@@ -1,10 +1,9 @@
-﻿using SPNATI_Character_Editor.IO;
+﻿using Desktop.CommonControls;
+using SPNATI_Character_Editor.IO;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
 
 namespace SPNATI_Character_Editor
 {
@@ -64,6 +63,8 @@ namespace SPNATI_Character_Editor
 			lines.Add("writer=" + metadata.Writer);
 			lines.Add("artist=" + metadata.Artist);
 			lines.Add("description=" + metadata.Description);
+			lines.Add("z-layer=" + metadata.Z);
+			lines.Add("dialogue-layer=" + metadata.BubblePosition);
 
 			lines.Add("");
 			lines.Add("#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.");
@@ -188,14 +189,17 @@ namespace SPNATI_Character_Editor
 				{
 					foreach (int stage in c.Stages)
 					{
-						Case stageCase = c.CopyConditions();
-						stageCase.Stages.Add(stage);
-						stageCase.Id = c.Id;
-						foreach (var line in c.Lines)
+						foreach (Case set in c.GetConditionSets())
 						{
-							stageCase.Lines.Add(Behaviour.CreateStageSpecificLine(line, stage, character));
+							Case stageCase = set.CopyConditions();
+							stageCase.Stages.Add(stage);
+							stageCase.Id = c.Id;
+							foreach (var line in c.Lines)
+							{
+								stageCase.Lines.Add(Behaviour.CreateStageSpecificLine(line, stage, character));
+							}
+							cases.Add(stageCase);
 						}
-						cases.Add(stageCase);
 					}
 				}
 			}
@@ -360,6 +364,10 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += $",persist-marker:1";
 					}
+					if (defaultLine.OneShotId > 0)
+					{
+						lineCode += $",one-shot-id:{defaultLine.OneShotId}";
+					}
 					if (defaultLine.Weight != 1)
 					{
 						lineCode += $",weight:{defaultLine.Weight.ToString(CultureInfo.InvariantCulture)}";
@@ -483,6 +491,10 @@ namespace SPNATI_Character_Editor
 					{
 						lines.Add($"\t\t\ttext={directive.Text}");
 					}
+					else if (!string.IsNullOrEmpty(directive.Title))
+					{
+						lines.Add($"\t\t\ttext={directive.Title}");
+					}
 
 					foreach (Keyframe keyframe in directive.Keyframes)
 					{
@@ -503,6 +515,31 @@ namespace SPNATI_Character_Editor
 							keyAttributes.Add($"{info.Attribute.AttributeName}:{value}");
 						}
 						lines.Add($"\t\t\tkeyframe={string.Join(",", keyAttributes)}");
+					}
+
+					foreach (Choice choice in directive.Choices)
+					{
+						List<string> choiceAttributes = new List<string>();
+						ElementInformation choiceInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Choice));
+						foreach (FieldInformation info in choiceInfo.Fields)
+						{
+							if (info.Attribute == null) { continue; }
+							string value = info.GetValue(choice)?.ToString();
+							if (info.FieldType == typeof(bool))
+							{
+								value = (bool)info.GetValue(choice) ? "1" : null;
+							}
+							if (string.IsNullOrEmpty(value))
+							{
+								continue;
+							}
+							choiceAttributes.Add($"{info.Attribute.AttributeName}:{value}");
+						}
+						lines.Add($"\t\t\tchoice={string.Join(",", choiceAttributes)}");
+						if (!string.IsNullOrEmpty(choice.Caption))
+						{
+							lines.Add($"\t\t\t\ttext={choice.Caption}");
+						}
 					}
 				}
 			}
@@ -725,6 +762,10 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("hidden:1");
 			}
+			if (stageCase.OneShotId > 0)
+			{
+				filters.Add("oneShotId:" + stageCase.OneShotId);
+			}
 			if (!string.IsNullOrEmpty(stageCase.CustomPriority))
 			{
 				filters.Add("priority:" + stageCase.CustomPriority);
@@ -762,6 +803,7 @@ namespace SPNATI_Character_Editor
 			EndingText currentText = null;
 			Scene currentScene = null;
 			Directive currentDirective = null;
+			Choice currentChoice = null;
 			Pose currentPose = null;
 			PoseDirective currentPoseDirective = null;
 
@@ -858,6 +900,16 @@ namespace SPNATI_Character_Editor
 					case "description":
 						character.Metadata.Description = value;
 						break;
+					case "z-layer":
+						int layer;
+						if (int.TryParse(value, out layer))
+						{
+							character.Metadata.Z = layer;
+						}
+						break;
+					case "dialogue-layer":
+						Enum.TryParse(value, out character.Metadata.BubblePosition);
+						break;
 					case "start":
 						Case temp = MakeLine(key, value, character, true);
 						if (temp != null)
@@ -873,6 +925,7 @@ namespace SPNATI_Character_Editor
 						currentText = null;
 						currentScene = null;
 						currentDirective = null;
+						currentChoice = null;
 						currentPose = null;
 						currentPoseDirective = null;
 						character.Endings.Add(currentEnding);
@@ -899,9 +952,20 @@ namespace SPNATI_Character_Editor
 							currentText.Content = value;
 							currentScreen.Text.Add(currentText);
 						}
+						else if (currentChoice != null)
+						{
+							currentChoice.Caption = value;
+						}
 						else if (currentDirective != null)
 						{
-							currentDirective.Text = value;
+							if (currentDirective.DirectiveType == "prompt")
+							{
+								currentDirective.Title = value;
+							}
+							else
+							{
+								currentDirective.Text = value;
+							}
 						}
 						break;
 					case "x":
@@ -943,6 +1007,7 @@ namespace SPNATI_Character_Editor
 						{
 							currentScene = new Scene();
 							currentDirective = null;
+							currentChoice = null;
 							ParseAttributes(currentScene, value);
 							currentEnding.Scenes.Add(currentScene);
 						}
@@ -951,6 +1016,7 @@ namespace SPNATI_Character_Editor
 						if (currentScene != null)
 						{
 							currentDirective = new Directive();
+							currentChoice = null;
 							ParseAttributes(currentDirective, value);
 							currentScene.Directives.Add(currentDirective);
 						}
@@ -975,10 +1041,20 @@ namespace SPNATI_Character_Editor
 							currentPoseDirective.Keyframes.Add(keyframe);
 						}
 						break;
+					case "choice":
+						if (currentDirective != null)
+						{
+							Choice choice = new Choice();
+							currentChoice = choice;
+							ParseAttributes(choice, value);
+							currentDirective.Choices.Add(choice);
+						}
+						break;
 					case "pose":
 						currentScene = null;
 						currentDirective = null;
 						currentEnding = null;
+						currentChoice = null;
 						currentPose = new Pose();
 						currentPose.Id = value;
 						currentPoseDirective = null;
@@ -1361,6 +1437,19 @@ namespace SPNATI_Character_Editor
 						break;
 					case "direction":
 						line.Direction = value;
+						break;
+					case "oneShotId":
+						int oneShotId;
+						if (int.TryParse(value, out oneShotId))
+						{
+							lineCase.OneShotId = oneShotId;
+						}
+						break;
+					case "one-shot-id":
+						if (int.TryParse(value, out oneShotId))
+						{
+							line.OneShotId = oneShotId;
+						}
 						break;
 					case "set-gender":
 						line.Gender = value;

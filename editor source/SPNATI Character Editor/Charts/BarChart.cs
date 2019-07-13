@@ -9,11 +9,12 @@ namespace SPNATI_Character_Editor.Charts
 	/// <summary>
 	/// Generic bar graph
 	/// </summary>
-	public partial class BarChart : UserControl, IChartControl
+	public partial class BarChart : SkinnedChart, IChartControl
 	{
 		public BarChart()
 		{
 			InitializeComponent();
+			AddChart(chart);
 		}
 
 		public void SetTitle(string title)

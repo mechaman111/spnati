@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -20,52 +19,6 @@ namespace Desktop
 		{
 			InitializeComponent();
 		}
-
-		#region Tab drawing
-		private void tabActivities_DrawItem(object sender, DrawItemEventArgs e)
-		{
-			Graphics g = e.Graphics;
-			Brush textBrush;
-			Brush backBrush;
-
-			Rectangle rect = tabActivities.ClientRectangle;
-			//e.Graphics.FillRectangle(Brushes.LightSlateGray, rect);
-
-			// Get the item from the collection.
-			TabPage tabPage = tabActivities.TabPages[e.Index];
-
-			if (_spacers.Contains(tabPage))
-			{
-				return;
-			}
-
-			// Get the real bounds for the tab rectangle.
-			Rectangle tabBounds = tabActivities.GetTabRect(e.Index);
-
-			if (e.State == DrawItemState.Selected)
-			{
-				// Draw a different background color, and don't paint a focus rectangle.
-				textBrush = new SolidBrush(Color.White);
-				backBrush = new SolidBrush(Color.SlateBlue);
-				g.FillRectangle(backBrush, e.Bounds);
-			}
-			else
-			{
-				textBrush = new SolidBrush(e.ForeColor);
-				//e.DrawBackground();
-				g.FillRectangle(Brushes.White, e.Bounds);
-			}
-
-			// Use our own font.
-			Font tabFont = new Font("Arial", (float)11.0, FontStyle.Bold, GraphicsUnit.Pixel);
-
-			// Draw string. Center the text.
-			StringFormat stringFlags = new StringFormat();
-			stringFlags.Alignment = StringAlignment.Center;
-			stringFlags.LineAlignment = StringAlignment.Center;
-			g.DrawString(tabPage.Text, tabFont, textBrush, tabBounds, new StringFormat(stringFlags));
-		}
-		#endregion
 
 		internal void AddActivity(IActivity activity)
 		{
@@ -103,6 +56,7 @@ namespace Desktop
 		private void AddSpacer(WorkspacePane pane)
 		{
 			TabPage page = new TabPage();
+			page.Tag = "spacer";
 			switch (pane)
 			{
 				case WorkspacePane.Main:
@@ -163,7 +117,7 @@ namespace Desktop
 			TabPage page = tabActivities.TabPages[0];
 			Control ctl = page.Tag as Control;
 
-			DockTabPage(_tabs, tabActivities, splitContainer1.Panel1);
+			DockTabPage(_tabs, tabActivities, splitContainer1.Panel1, stripActivities);
 
 			//Update sidebar visibility
 			if (tabSidebarActivities.TabPages.Count == 0)
@@ -173,11 +127,11 @@ namespace Desktop
 			else
 			{
 				splitContainer1.Panel2Collapsed = false;
-				DockTabPage(_sideTabs, tabSidebarActivities, sidebar);
+				DockTabPage(_sideTabs, tabSidebarActivities, sidebar, stripSidebar);
 			}
 		}
 
-		private void DockTabPage(Dictionary<IActivity, TabPage> tabs, TabControl tabControl, Control parentControl)
+		private void DockTabPage(Dictionary<IActivity, TabPage> tabs, TabControl tabControl, Control parentControl, Control tabStrip)
 		{
 			TabPage page = tabControl.TabPages[0];
 			Control ctl = page.Tag as Control;
@@ -187,12 +141,14 @@ namespace Desktop
 				//Move the control out of the tabstrip
 				parentControl.Controls.Add(ctl);
 				tabControl.Visible = false;
+				tabStrip.Visible = false;
 			}
 			else
 			{
 				//put the control back into the tabstrip
 				page.Controls.Add(ctl);
 				tabControl.Visible = true;
+				tabStrip.Visible = true;
 			}
 		}
 

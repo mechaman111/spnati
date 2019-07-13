@@ -28,15 +28,18 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.valFrom = new System.Windows.Forms.NumericUpDown();
-			this.label1 = new System.Windows.Forms.Label();
-			this.valTo = new System.Windows.Forms.NumericUpDown();
+			this.valFrom = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
+			this.valTo = new Desktop.Skinning.SkinnedNumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.valFrom)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valTo)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// valFrom
 			// 
+			this.valFrom.BackColor = System.Drawing.Color.White;
+			this.valFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valFrom.ForeColor = System.Drawing.Color.Black;
 			this.valFrom.Location = new System.Drawing.Point(0, 0);
 			this.valFrom.Name = "valFrom";
 			this.valFrom.Size = new System.Drawing.Size(53, 20);
@@ -45,6 +48,10 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label1.Location = new System.Drawing.Point(56, 2);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(19, 13);
@@ -53,6 +60,9 @@
 			// 
 			// valTo
 			// 
+			this.valTo.BackColor = System.Drawing.Color.White;
+			this.valTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valTo.ForeColor = System.Drawing.Color.Black;
 			this.valTo.Location = new System.Drawing.Point(77, 0);
 			this.valTo.Name = "valTo";
 			this.valTo.Size = new System.Drawing.Size(53, 20);
@@ -76,8 +86,8 @@
 
 		#endregion
 
-		private System.Windows.Forms.NumericUpDown valFrom;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.NumericUpDown valTo;
+		private Desktop.Skinning.SkinnedNumericUpDown valFrom;
+		private Desktop.Skinning.SkinnedLabel label1;
+		private Desktop.Skinning.SkinnedNumericUpDown valTo;
 	}
 }

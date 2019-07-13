@@ -52,12 +52,17 @@
     <ApplicationIcon>editor.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
       <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -77,11 +82,10 @@
     <Compile Include="Actions\DeleteWidgetCommand.cs" />
     <Compile Include="Actions\MoveSpriteStartCommand.cs" />
     <Compile Include="Actions\PasteKeyframeCommand.cs" />
-    <Compile Include="Actions\ToggleAnimationBreakCommand.cs" />
+    <Compile Include="Actions\TimelineActions\ModifyWidgetLengthTimelineAction.cs" />
     <Compile Include="Actions\TimelineActions\MoveWidgetTimelineAction.cs" />
     <Compile Include="Actions\TimelineActions\SelectKeyframeTimelineAction.cs" />
-    <Compile Include="Actions\TimelineActions\WidgetEndTimelineAction.cs" />
-    <Compile Include="Actions\TimelineActions\WidgetStartTimelineAction.cs" />
+    <Compile Include="Actions\ToggleKeyframeTypeCommand.cs" />
     <Compile Include="Activities\AdvancedMetadataEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -93,6 +97,18 @@
     </Compile>
     <Compile Include="Activities\BanterWizard.Designer.cs">
       <DependentUpon>BanterWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\CaseDataSlicer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\CaseDataSlicer.Designer.cs">
+      <DependentUpon>CaseDataSlicer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\CharacterConfiguration.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\CharacterConfiguration.Designer.cs">
+      <DependentUpon>CharacterConfiguration.cs</DependentUpon>
     </Compile>
     <Compile Include="Activities\CharacterPreview.cs">
       <SubType>UserControl</SubType>
@@ -136,6 +152,30 @@
     <Compile Include="Activities\DictionaryEditor.Designer.cs">
       <DependentUpon>DictionaryEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Activities\LineImporter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\LineImporter.Designer.cs">
+      <DependentUpon>LineImporter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\PoseUsageGraph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\PoseUsageGraph.Designer.cs">
+      <DependentUpon>PoseUsageGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\RecipeEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\RecipeEditor.Designer.cs">
+      <DependentUpon>RecipeEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\RespondToThis.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\RespondToThis.Designer.cs">
+      <DependentUpon>RespondToThis.cs</DependentUpon>
+    </Compile>
     <Compile Include="Activities\ScreenshotTaker.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -160,10 +200,17 @@
     <Compile Include="Activities\SpellCheck.Designer.cs">
       <DependentUpon>SpellCheck.cs</DependentUpon>
     </Compile>
+    <Compile Include="Activities\ThemeEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\ThemeEditor.Designer.cs">
+      <DependentUpon>ThemeEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Analyzers\AnalyzerReportCriteria.cs" />
     <Compile Include="Analyzers\CollectibleAnalyzers.cs" />
     <Compile Include="Analyzers\DataCriterion.cs" />
     <Compile Include="Analyzers\DialogueAnalyzers.cs" />
+    <Compile Include="Analyzers\StatusAnalyzer.cs" />
     <Compile Include="Analyzers\VersionAnalyzer.cs" />
     <Compile Include="Analyzers\WardrobeAnalyzers.cs" />
     <Compile Include="Analyzers\MetadataAnalyzers.cs" />
@@ -175,9 +222,15 @@
     <Compile Include="Analyzers\TagAnalyzer.cs" />
     <Compile Include="Analyzers\PoseDirectiveAnalyzers.cs" />
     <Compile Include="Analyzers\PoseCountAnalyzer.cs" />
+    <Compile Include="Categories\RelativePosition.cs" />
+    <Compile Include="Categories\Slot.cs" />
     <Compile Include="Charts\Builders\CollectibleBuilder.cs" />
+    <Compile Include="Charts\Builders\ClothingBuilder.cs" />
     <Compile Include="Charts\Builders\CustomPoseBuilder.cs" />
     <Compile Include="Charts\Builders\StorageSpaceImagesBuilder.cs" />
+    <Compile Include="Charts\SkinnedChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\CaseControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -202,52 +255,55 @@
     <Compile Include="Controls\EditControls\AnimDurationControl.Designer.cs">
       <DependentUpon>AnimDurationControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EditControls\CharacterTagControl.cs">
+    <Compile Include="Controls\EditControls\LayerDifferenceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\EditControls\CharacterTagControl.Designer.cs">
-      <DependentUpon>CharacterTagControl.cs</DependentUpon>
+    <Compile Include="Controls\EditControls\LayerDifferenceControl.Designer.cs">
+      <DependentUpon>LayerDifferenceControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EditControls\CharacterCollectibleControl.cs">
+    <Compile Include="Controls\EditControls\OneShotControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\EditControls\CharacterCollectibleControl.Designer.cs">
-      <DependentUpon>CharacterCollectibleControl.cs</DependentUpon>
+    <Compile Include="Controls\EditControls\OneShotControl.Designer.cs">
+      <DependentUpon>OneShotControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EditControls\CharacterCollectibleCountControl.cs">
+    <Compile Include="Controls\EditControls\VariableControls\PlayerStageControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\EditControls\CharacterCollectibleCountControl.Designer.cs">
-      <DependentUpon>CharacterCollectibleCountControl.cs</DependentUpon>
+    <Compile Include="Controls\EditControls\VariableControls\PlayerStageControl.Designer.cs">
+      <DependentUpon>PlayerStageControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EditControls\CharacterPersistentMarkerControl.cs">
+    <Compile Include="Controls\EditControls\VariableControls\CategoryControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\EditControls\CharacterPersistentMarkerControl.Designer.cs">
-      <DependentUpon>CharacterPersistentMarkerControl.cs</DependentUpon>
+    <Compile Include="Controls\EditControls\VariableControls\CategoryControl.Designer.cs">
+      <DependentUpon>CategoryControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EditControls\PersistentMarkerControl.cs">
+    <Compile Include="Controls\EditControls\VariableControls\PersistentMarkerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\EditControls\PersistentMarkerControl.Designer.cs">
+    <Compile Include="Controls\EditControls\VariableControls\PersistentMarkerControl.Designer.cs">
       <DependentUpon>PersistentMarkerControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EditControls\TagControl.cs">
+    <Compile Include="Controls\EditControls\PlacementControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\EditControls\TagControl.Designer.cs">
+    <Compile Include="Controls\EditControls\VariableControls\TagControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\VariableControls\TagControl.Designer.cs">
       <DependentUpon>TagControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EditControls\CollectibleCountControl.cs">
+    <Compile Include="Controls\EditControls\VariableControls\CollectibleCountControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\EditControls\CollectibleCountControl.Designer.cs">
+    <Compile Include="Controls\EditControls\VariableControls\CollectibleCountControl.Designer.cs">
       <DependentUpon>CollectibleCountControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EditControls\CollectibleControl.cs">
+    <Compile Include="Controls\EditControls\VariableControls\CollectibleControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\EditControls\CollectibleControl.Designer.cs">
+    <Compile Include="Controls\EditControls\VariableControls\CollectibleControl.Designer.cs">
       <DependentUpon>CollectibleControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditControls\DirectiveMarkerControl.cs">
@@ -261,6 +317,18 @@
     </Compile>
     <Compile Include="Controls\EditControls\ExpressionControl.Designer.cs">
       <DependentUpon>ExpressionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\VariableControls\CostumeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\VariableControls\CostumeControl.Designer.cs">
+      <DependentUpon>CostumeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\VariableControls\PlayerControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\VariableControls\PlayerControlBase.Designer.cs">
+      <DependentUpon>PlayerControlBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditControls\VerticalAlignmentControl.cs">
       <SubType>UserControl</SubType>
@@ -301,6 +369,18 @@
     <Compile Include="Controls\CharacterImageDialog.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\IntervalSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\IntervalSlider.Designer.cs">
+      <DependentUpon>IntervalSlider.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LiveEpilogueEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LiveEpilogueEditor.Designer.cs">
+      <DependentUpon>LiveEpilogueEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MarkerOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -312,6 +392,12 @@
     </Compile>
     <Compile Include="Controls\PartTransparencySlider.Designer.cs">
       <DependentUpon>PartTransparencySlider.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Reference\TagGuide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Reference\TagGuide.Designer.cs">
+      <DependentUpon>TagGuide.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\SceneTree.cs">
       <SubType>UserControl</SubType>
@@ -325,11 +411,95 @@
     <Compile Include="Controls\RecordSelectBox.Designer.cs">
       <DependentUpon>RecordSelectBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SlicerControls\IntervalSlicerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SlicerControls\IntervalSlicerControl.Designer.cs">
+      <DependentUpon>IntervalSlicerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SlicerControls\OneShotSlicerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SlicerControls\OneShotSlicerControl.Designer.cs">
+      <DependentUpon>OneShotSlicerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SlicerControls\StageSlicerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SlicerControls\StageSlicerControl.Designer.cs">
+      <DependentUpon>StageSlicerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StageSpecificGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\StageSpecificGrid.Designer.cs">
       <DependentUpon>StageSpecificGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StageGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StageGrid.Designer.cs">
+      <DependentUpon>StageGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StyleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StyleControl.Designer.cs">
+      <DependentUpon>StyleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleAttributeEditControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleAttributeEditControl.Designer.cs">
+      <DependentUpon>StyleAttributeEditControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleColorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleColorControl.Designer.cs">
+      <DependentUpon>StyleColorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleFontFamilyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleFontFamilyControl.Designer.cs">
+      <DependentUpon>StyleFontFamilyControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleFontSizeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleFontSizeControl.Designer.cs">
+      <DependentUpon>StyleFontSizeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleFontStyleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleFontStyleControl.Designer.cs">
+      <DependentUpon>StyleFontStyleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleFontVariantControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleFontVariantControl.Designer.cs">
+      <DependentUpon>StyleFontVariantControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleFontWeightControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleFontWeightControl.Designer.cs">
+      <DependentUpon>StyleFontWeightControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleTextDecorationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleTextDecorationControl.Designer.cs">
+      <DependentUpon>StyleTextDecorationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleTextShadowControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StyleControls\StyleTextShadowControl.Designer.cs">
+      <DependentUpon>StyleTextShadowControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TagGrid.cs">
       <SubType>UserControl</SubType>
@@ -346,9 +516,15 @@
     <Compile Include="Controls\TreeViews\IDialogueTreeView.cs" />
     <Compile Include="Controls\TreeViews\CaseView.cs" />
     <Compile Include="Controls\TreeViews\StageView.cs" />
+    <Compile Include="DataSlicers\IntervalSlicer.cs" />
+    <Compile Include="DataSlicers\OneShotSlicer.cs" />
+    <Compile Include="DataSlicers\StageSlicer.cs" />
     <Compile Include="DataStructures\BindableTag.cs" />
     <Compile Include="DataStructures\BindableTagList.cs" />
+    <Compile Include="DataStructures\CaseLabel.cs" />
     <Compile Include="DataStructures\CaseNote.cs" />
+    <Compile Include="DataStructures\Choice.cs" />
+    <Compile Include="DataStructures\ClothingDatabase.cs" />
     <Compile Include="DataStructures\Collectible.cs" />
     <Compile Include="DataStructures\CollectibleData.cs" />
     <Compile Include="DataStructures\DataConversions.cs" />
@@ -542,12 +718,6 @@
     <Compile Include="Controls\SelectBox.Designer.cs">
       <DependentUpon>SelectBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TagControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TagControl.Designer.cs">
-      <DependentUpon>TagControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Activities\WardrobeEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -580,27 +750,46 @@
     <Compile Include="DataStructures\CountedSet.cs" />
     <Compile Include="DataStructures\Directive.cs" />
     <Compile Include="DataStructures\Epilogue.cs" />
+    <Compile Include="DataStructures\ExpressionTest.cs" />
     <Compile Include="DataStructures\ISkin.cs" />
     <Compile Include="DataStructures\Marker.cs" />
     <Compile Include="DataStructures\MarkerData.cs" />
     <Compile Include="DataStructures\CharacterEditorData.cs" />
+    <Compile Include="DataStructures\Nickname.cs" />
     <Compile Include="DataStructures\Pose.cs" />
     <Compile Include="DataStructures\PoseDirective.cs" />
+    <Compile Include="DataStructures\Recipe.cs" />
     <Compile Include="DataStructures\Scene.cs" />
     <Compile Include="DataStructures\Screen.cs" />
     <Compile Include="DataStructures\Skin.cs" />
     <Compile Include="DataStructures\SpellChecker.cs" />
     <Compile Include="DataStructures\SpnatiConfig.cs" />
     <Compile Include="DataStructures\Sprite.cs" />
+    <Compile Include="DataStructures\CharacterStyleSheet.cs" />
     <Compile Include="DataStructures\Tag.cs" />
     <Compile Include="DataStructures\TagDictionary.cs" />
+    <Compile Include="DataStructures\TargetCondition.cs" />
+    <Compile Include="DataStructures\TargetId.cs" />
     <Compile Include="DataStructures\Variable.cs" />
     <Compile Include="DataStructures\VariableDatabase.cs" />
     <Compile Include="DesktopMessages.cs" />
     <Compile Include="DialogueDatabase.cs" />
     <Compile Include="DialogueLine.cs" />
-    <Compile Include="EpilogueEditing\DataStructures\AnimatedProperty.cs" />
     <Compile Include="EpilogueEditing\AnimationHelpers.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveAnimatedObject.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveBreak.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveBubble.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveBubbleKeyframe.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveCamera.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveCameraKeyframe.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveData.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveEmitter.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveEmitterKeyframe.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveKeyframeMetadata.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveObject.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveParticle.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveScene.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveSpriteKeyframe.cs" />
     <Compile Include="EpilogueEditing\DirectiveDefinition.cs" />
     <Compile Include="EpilogueEditing\EpilogueCanvas.cs">
       <SubType>UserControl</SubType>
@@ -608,9 +797,13 @@
     <Compile Include="EpilogueEditing\EpilogueCanvas.Designer.cs">
       <DependentUpon>EpilogueCanvas.cs</DependentUpon>
     </Compile>
+    <Compile Include="EpilogueEditing\Interfaces\ICanInvalidate.cs" />
+    <Compile Include="EpilogueEditing\Interfaces\ICanvasViewport.cs" />
     <Compile Include="EpilogueEditing\Interfaces\ILabel.cs" />
     <Compile Include="EpilogueEditing\Interfaces\ITimelineAction.cs" />
+    <Compile Include="EpilogueEditing\Interfaces\ITimelineBreak.cs" />
     <Compile Include="EpilogueEditing\Interfaces\ITimelineData.cs" />
+    <Compile Include="EpilogueEditing\Interfaces\ITimelineObject.cs" />
     <Compile Include="EpilogueEditing\Interfaces\ITimelineWidget.cs" />
     <Compile Include="EpilogueEditing\LiveCanvas.cs">
       <SubType>UserControl</SubType>
@@ -629,7 +822,6 @@
       <DependentUpon>PoseEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="EpilogueEditing\PropertyDefinition.cs" />
-    <Compile Include="EpilogueEditing\SimpleIK.cs" />
     <Compile Include="EpilogueEditing\RandomParameter.cs" />
     <Compile Include="EpilogueEditing\SceneAnimation.cs" />
     <Compile Include="EpilogueEditing\SceneObject.cs" />
@@ -637,6 +829,9 @@
     <Compile Include="EpilogueEditing\SceneParticle.cs" />
     <Compile Include="EpilogueEditing\ScenePreview.cs" />
     <Compile Include="EpilogueEditing\SceneTransition.cs" />
+    <Compile Include="EpilogueEditing\Widgets\CameraWidget.cs" />
+    <Compile Include="EpilogueEditing\Widgets\EmitterWidget.cs" />
+    <Compile Include="EpilogueEditing\Widgets\KeyframedWidget.cs" />
     <Compile Include="EpilogueEditing\Widgets\SpriteWidget.cs" />
     <Compile Include="EpilogueEditing\Timeline.cs">
       <SubType>UserControl</SubType>
@@ -644,14 +839,9 @@
     <Compile Include="EpilogueEditing\Timeline.Designer.cs">
       <DependentUpon>Timeline.cs</DependentUpon>
     </Compile>
+    <Compile Include="EpilogueEditing\Widgets\TextWidget.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="FileNameSelect.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FileNameSelect.Designer.cs">
-      <DependentUpon>FileNameSelect.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\CanvasHelp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -670,11 +860,35 @@
     <Compile Include="Forms\CreateSequenceForm.Designer.cs">
       <DependentUpon>CreateSequenceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DialogueResponder.cs">
+    <Compile Include="Forms\CropCopier.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DialogueResponder.Designer.cs">
-      <DependentUpon>DialogueResponder.cs</DependentUpon>
+    <Compile Include="Forms\CropCopier.Designer.cs">
+      <DependentUpon>CropCopier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DialogueLegend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DialogueLegend.Designer.cs">
+      <DependentUpon>DialogueLegend.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ErrorTrace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ErrorTrace.Designer.cs">
+      <DependentUpon>ErrorTrace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FailedImport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FailedImport.Designer.cs">
+      <DependentUpon>FailedImport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FirstLaunchSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FirstLaunchSetup.Designer.cs">
+      <DependentUpon>FirstLaunchSetup.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\GameConfig.cs">
       <SubType>Form</SubType>
@@ -712,11 +926,23 @@
     <Compile Include="Forms\MarkerSetup.Designer.cs">
       <DependentUpon>MarkerSetup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PoseExporter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PoseExporter.Designer.cs">
+      <DependentUpon>PoseExporter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PoseSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\PoseSettingsForm.Designer.cs">
       <DependentUpon>PoseSettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DiscardResponsePrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DiscardResponsePrompt.Designer.cs">
+      <DependentUpon>DiscardResponsePrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ResponseSetupForm.cs">
       <SubType>Form</SubType>
@@ -729,6 +955,12 @@
     </Compile>
     <Compile Include="Forms\SituationLinker.Designer.cs">
       <DependentUpon>SituationLinker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StageImageSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StageImageSelection.Designer.cs">
+      <DependentUpon>StageImageSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\StageSelect.cs">
       <SubType>Form</SubType>
@@ -754,6 +986,7 @@
     <Compile Include="Forms\WhatsNew.Designer.cs">
       <DependentUpon>WhatsNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="GifWriter.cs" />
     <Compile Include="GUIHelper.cs" />
     <Compile Include="HelpForm.cs">
       <SubType>Form</SubType>
@@ -767,6 +1000,7 @@
     <Compile Include="IO\FlatFileSerializer.cs" />
     <Compile Include="IO\SpnatiXmlSerializer.cs" />
     <Compile Include="DataStructures\Listing.cs" />
+    <Compile Include="IO\CharacterStyleSheetSerializer.cs" />
     <Compile Include="KisekaeConverter.cs" />
     <Compile Include="MathExtensions.cs" />
     <Compile Include="MathUtil.cs" />
@@ -780,9 +1014,13 @@
     <Compile Include="Providers\DefinitionProvider.cs" />
     <Compile Include="Providers\CollectibleProvider.cs" />
     <Compile Include="Providers\RoleProvider.cs" />
-    <Compile Include="Providers\SkinProvider.cs" />
+    <Compile Include="Providers\CostumeProvider.cs" />
     <Compile Include="Providers\MarkerProvider.cs" />
+    <Compile Include="Providers\StyleControlProvider.cs" />
     <Compile Include="Providers\TagProvider.cs" />
+    <Compile Include="Providers\TargetProvider.cs" />
+    <Compile Include="Serialization\ImportEdit.cs" />
+    <Compile Include="WorkflowFilter.cs" />
     <Compile Include="WorkspaceMessages.cs" />
     <Compile Include="NewCharacterPrompt.cs">
       <SubType>Form</SubType>
@@ -821,6 +1059,12 @@
     <EmbeddedResource Include="Activities\BanterWizard.resx">
       <DependentUpon>BanterWizard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Activities\CaseDataSlicer.resx">
+      <DependentUpon>CaseDataSlicer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\CharacterConfiguration.resx">
+      <DependentUpon>CharacterConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Activities\CharacterPreview.resx">
       <DependentUpon>CharacterPreview.cs</DependentUpon>
     </EmbeddedResource>
@@ -842,6 +1086,9 @@
     <EmbeddedResource Include="Activities\DictionaryEditor.resx">
       <DependentUpon>DictionaryEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Activities\LineImporter.resx">
+      <DependentUpon>LineImporter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Activities\MarkerEditor.resx">
       <DependentUpon>MarkerEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -853,6 +1100,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\Loader.resx">
       <DependentUpon>Loader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\PoseUsageGraph.resx">
+      <DependentUpon>PoseUsageGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\RecipeEditor.resx">
+      <DependentUpon>RecipeEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\RespondToThis.resx">
+      <DependentUpon>RespondToThis.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\ScreenshotTaker.resx">
       <DependentUpon>ScreenshotTaker.cs</DependentUpon>
@@ -877,6 +1133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\TemplateEditor.resx">
       <DependentUpon>TemplateEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\ThemeEditor.resx">
+      <DependentUpon>ThemeEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\ValidateActivity.resx">
       <DependentUpon>ValidateActivity.cs</DependentUpon>
@@ -914,28 +1173,31 @@
     <EmbeddedResource Include="Controls\DialogueTree.resx">
       <DependentUpon>DialogueTree.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\EditControls\CharacterTagControl.resx">
-      <DependentUpon>CharacterTagControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\EditControls\LayerDifferenceControl.resx">
+      <DependentUpon>LayerDifferenceControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\EditControls\CharacterCollectibleControl.resx">
-      <DependentUpon>CharacterCollectibleControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\EditControls\OneShotControl.resx">
+      <DependentUpon>OneShotControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\EditControls\CharacterCollectibleCountControl.resx">
-      <DependentUpon>CharacterCollectibleCountControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\EditControls\VariableControls\PlayerStageControl.resx">
+      <DependentUpon>PlayerStageControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\EditControls\CharacterPersistentMarkerControl.resx">
-      <DependentUpon>CharacterPersistentMarkerControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\EditControls\VariableControls\CategoryControl.resx">
+      <DependentUpon>CategoryControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\EditControls\PersistentMarkerControl.resx">
+    <EmbeddedResource Include="Controls\EditControls\VariableControls\PersistentMarkerControl.resx">
       <DependentUpon>PersistentMarkerControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\EditControls\TagControl.resx">
+    <EmbeddedResource Include="Controls\EditControls\PlacementControl.resx">
+      <DependentUpon>PlacementControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\VariableControls\TagControl.resx">
       <DependentUpon>TagControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\EditControls\CollectibleCountControl.resx">
+    <EmbeddedResource Include="Controls\EditControls\VariableControls\CollectibleCountControl.resx">
       <DependentUpon>CollectibleCountControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\EditControls\CollectibleControl.resx">
+    <EmbeddedResource Include="Controls\EditControls\VariableControls\CollectibleControl.resx">
       <DependentUpon>CollectibleControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EditControls\DirectiveMarkerControl.resx">
@@ -946,6 +1208,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EditControls\FilterControl.resx">
       <DependentUpon>FilterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\VariableControls\CostumeControl.resx">
+      <DependentUpon>CostumeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\VariableControls\PlayerControlBase.resx">
+      <DependentUpon>PlayerControlBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EditControls\VerticalAlignmentControl.resx">
       <DependentUpon>VerticalAlignmentControl.cs</DependentUpon>
@@ -986,6 +1254,9 @@
     <EmbeddedResource Include="Controls\IntellisenseControl.resx">
       <DependentUpon>IntellisenseControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\IntervalSlider.resx">
+      <DependentUpon>IntervalSlider.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\KeyboardDataGridView.resx">
       <DependentUpon>KeyboardDataGridView.cs</DependentUpon>
     </EmbeddedResource>
@@ -1004,23 +1275,65 @@
     <EmbeddedResource Include="Controls\PartTransparencySlider.resx">
       <DependentUpon>PartTransparencySlider.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Reference\TagGuide.resx">
+      <DependentUpon>TagGuide.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\SceneTree.resx">
       <DependentUpon>SceneTree.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\RecordSelectBox.resx">
       <DependentUpon>RecordSelectBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SlicerControls\IntervalSlicerControl.resx">
+      <DependentUpon>IntervalSlicerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SlicerControls\OneShotSlicerControl.resx">
+      <DependentUpon>OneShotSlicerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SlicerControls\StageSlicerControl.resx">
+      <DependentUpon>StageSlicerControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\StageSpecificGrid.resx">
       <DependentUpon>StageSpecificGrid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TagControl.resx">
-      <DependentUpon>TagControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SelectBox.resx">
       <DependentUpon>SelectBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\WardrobeEditor.resx">
       <DependentUpon>WardrobeEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StageGrid.resx">
+      <DependentUpon>StageGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StyleControl.resx">
+      <DependentUpon>StyleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StyleControls\StyleAttributeEditControl.resx">
+      <DependentUpon>StyleAttributeEditControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StyleControls\StyleColorControl.resx">
+      <DependentUpon>StyleColorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StyleControls\StyleFontFamilyControl.resx">
+      <DependentUpon>StyleFontFamilyControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StyleControls\StyleFontSizeControl.resx">
+      <DependentUpon>StyleFontSizeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StyleControls\StyleFontStyleControl.resx">
+      <DependentUpon>StyleFontStyleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StyleControls\StyleFontVariantControl.resx">
+      <DependentUpon>StyleFontVariantControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StyleControls\StyleFontWeightControl.resx">
+      <DependentUpon>StyleFontWeightControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StyleControls\StyleTextDecorationControl.resx">
+      <DependentUpon>StyleTextDecorationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StyleControls\StyleTextShadowControl.resx">
+      <DependentUpon>StyleTextShadowControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TagGrid.resx">
       <DependentUpon>TagGrid.cs</DependentUpon>
@@ -1043,8 +1356,8 @@
     <EmbeddedResource Include="EpilogueEditing\Timeline.resx">
       <DependentUpon>Timeline.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FileNameSelect.resx">
-      <DependentUpon>FileNameSelect.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CanvasHelp.resx">
+      <DependentUpon>CanvasHelp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangeLogReview.resx">
       <DependentUpon>ChangeLogReview.cs</DependentUpon>
@@ -1052,8 +1365,23 @@
     <EmbeddedResource Include="Forms\CreateSequenceForm.resx">
       <DependentUpon>CreateSequenceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DialogueResponder.resx">
-      <DependentUpon>DialogueResponder.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CropCopier.resx">
+      <DependentUpon>CropCopier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DialogueLegend.resx">
+      <DependentUpon>DialogueLegend.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DiscardResponsePrompt.resx">
+      <DependentUpon>DiscardResponsePrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ErrorTrace.resx">
+      <DependentUpon>ErrorTrace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FailedImport.resx">
+      <DependentUpon>FailedImport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FirstLaunchSetup.resx">
+      <DependentUpon>FirstLaunchSetup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GameConfig.resx">
       <DependentUpon>GameConfig.cs</DependentUpon>
@@ -1073,6 +1401,9 @@
     <EmbeddedResource Include="Forms\MarkerSetup.resx">
       <DependentUpon>MarkerSetup.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PoseExporter.resx">
+      <DependentUpon>PoseExporter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PoseSettingsForm.resx">
       <DependentUpon>PoseSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -1081,6 +1412,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SituationLinker.resx">
       <DependentUpon>SituationLinker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StageImageSelection.resx">
+      <DependentUpon>StageImageSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StageSelect.resx">
       <DependentUpon>StageSelect.cs</DependentUpon>
@@ -1129,6 +1463,45 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Skins\Black Forest.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\Mint Chocolate.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\Purple.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\Blue.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\Classic.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\Dark Mode.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\Dark Rose.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\Deep Sea.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\Florina.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\Forest.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\Mandevilla.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\Morning Rays.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Skins\The Inventory.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -1136,6 +1509,21 @@
   <ItemGroup>
     <None Include="Cursors\hand_closed.cur" />
     <None Include="Cursors\hand_open.cur" />
+    <Content Include="Help\conditions.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\nickname.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\slicer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\text_formatting.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\line_slicer.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Help\data_analyzer.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1158,6 +1546,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\collectible_unlock.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\layout.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\tut1_sequence.png">
@@ -1248,22 +1639,22 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\tut2_copy.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\tut2_final.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\tut2_loop.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\tut2_move_time.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\tut2_screen1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\tut2_wing.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\tut3_bounce.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1311,6 +1702,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\pose_tutorial4.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\advanced.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\tutorial_template.html">
@@ -1433,6 +1827,76 @@
     <None Include="Icons\BookmarkUnfilled.png" />
     <None Include="Icons\ColorPalette.png" />
     <None Include="Icons\Ellipsis.png" />
+    <None Include="Icons\Refresh.png" />
+    <None Include="Icons\Image.png" />
+    <None Include="Icons\GIF.png" />
+    <None Include="Icons\Legend.png" />
+    <None Include="Icons\Recipe.png" />
+    <None Include="Icons\Settings.png" />
+    <None Include="Icons\Theme.png" />
+    <None Include="Icons\Sort.png" />
+    <None Include="Icons\AddPause.png" />
+    <None Include="Icons\SpeechBubble.png" />
+    <Content Include="Resources\license.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\preview.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\15f3a04f-8e03-40e0-b426-dcba8b4f5b3b.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\1ac2b058-5e06-4321-9ea7-d6bc3098748e.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\40a78c86-ea36-42da-b84b-039a1e3c2a9c.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\43e68bf4-4dc8-4938-a5d7-8f1e17e1202e.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\4df79a02-26c8-4fa7-b7cd-e8377533ed58.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\5343e2e7-3c56-477d-b248-332021a916e1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\5eced77a-bd5e-4d35-8a1b-a979a1c73250.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\6091088d-2c85-4d55-a5f3-05bab45351a8.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\670e7368-4059-4a56-8171-65d18d43ebff.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\70dd1e4f-4d07-4b44-947d-57b494522f40.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\797c82ff-421e-4c29-a950-094bca5a147d.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\8338b475-6f72-461a-9cb7-4510428e1297.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\841c009f-617e-47e1-b1dd-214ba5892e88.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\93fb1799-f582-4f08-a53c-49d5e56f6278.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\ab63638e-fcc5-44e9-b020-a677785bb36f.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\b90f559d-7557-4180-989e-63b583b9a82d.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\dba5778a-dbed-4079-9052-d204275d6f93.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Recipes\eb570363-dbe2-45bb-ac47-916fc820de42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\words.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1453,9 +1917,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\faq.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Help\file.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\help.css">
@@ -1533,6 +1994,9 @@
     <Content Include="VersionHistory\v4.2.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="VersionHistory\v5.0.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="VersionHistory\v4.3.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1601,6 +2065,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

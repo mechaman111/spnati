@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace SPNATI_Character_Editor
 {
@@ -15,6 +16,16 @@ namespace SPNATI_Character_Editor
 				img.Dispose();
 			}
 			_images.Clear();
+		}
+
+		public static void Refresh()
+		{
+			string[] keys = _images.Keys.ToArray();
+			foreach (string key in keys)
+			{
+				_images.Remove(key);
+				Get(key);
+			}
 		}
 
 		public static Bitmap Get(string src)

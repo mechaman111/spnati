@@ -28,16 +28,18 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.label1 = new System.Windows.Forms.Label();
-			this.txtName = new System.Windows.Forms.TextBox();
-			this.cmdImport = new System.Windows.Forms.Button();
-			this.label2 = new System.Windows.Forms.Label();
-			this.cmdAdvanced = new System.Windows.Forms.Button();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
+			this.txtName = new Desktop.Skinning.SkinnedTextBox();
+			this.cmdImport = new Desktop.Skinning.SkinnedButton();
+			this.label2 = new Desktop.Skinning.SkinnedLabel();
+			this.cmdAdvanced = new Desktop.Skinning.SkinnedButton();
 			this.SuspendLayout();
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
+			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label1.Location = new System.Drawing.Point(3, 6);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(55, 13);
@@ -46,6 +48,9 @@
 			// 
 			// txtName
 			// 
+			this.txtName.BackColor = System.Drawing.Color.White;
+			this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.txtName.ForeColor = System.Drawing.Color.Black;
 			this.txtName.Location = new System.Drawing.Point(64, 3);
 			this.txtName.Name = "txtName";
 			this.txtName.Size = new System.Drawing.Size(174, 20);
@@ -53,6 +58,9 @@
 			// 
 			// cmdImport
 			// 
+			this.cmdImport.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdImport.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdImport.Flat = false;
 			this.cmdImport.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.cmdImport.Location = new System.Drawing.Point(6, 29);
 			this.cmdImport.Name = "cmdImport";
@@ -66,6 +74,8 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.label2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label2.Location = new System.Drawing.Point(6, 102);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(903, 169);
@@ -75,9 +85,12 @@
 			// 
 			// cmdAdvanced
 			// 
+			this.cmdAdvanced.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdAdvanced.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdAdvanced.Flat = false;
 			this.cmdAdvanced.Location = new System.Drawing.Point(244, 29);
 			this.cmdAdvanced.Name = "cmdAdvanced";
-			this.cmdAdvanced.Size = new System.Drawing.Size(148, 23);
+			this.cmdAdvanced.Size = new System.Drawing.Size(194, 23);
 			this.cmdAdvanced.TabIndex = 6;
 			this.cmdAdvanced.Text = "Set Part Transparencies...";
 			this.cmdAdvanced.UseVisualStyleBackColor = true;
@@ -101,10 +114,10 @@
 
 		#endregion
 
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox txtName;
-		private System.Windows.Forms.Button cmdImport;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Button cmdAdvanced;
+		private Desktop.Skinning.SkinnedLabel label1;
+		private Desktop.Skinning.SkinnedTextBox txtName;
+		private Desktop.Skinning.SkinnedButton cmdImport;
+		private Desktop.Skinning.SkinnedLabel label2;
+		private Desktop.Skinning.SkinnedButton cmdAdvanced;
 	}
 }

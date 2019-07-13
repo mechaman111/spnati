@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Desktop;
 using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
-using SPNATI_Character_Editor.Controls;
-using Desktop;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
@@ -12,11 +11,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 	/// </summary>
 	public class LiveKeyframe : BindableObject, ILabel
 	{
-		public static List<string> TrackedProperties;
-
 		public event EventHandler LabelChanged;
 
-		public LiveSprite Sprite;
+		public LiveAnimatedObject Data;
 
 		[Float(DisplayName = "Time", Key = "time", GroupOrder = 0, Increment = 0.1f)]
 		public float Time
@@ -29,12 +26,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		[FileSelect(DisplayName = "Source", GroupOrder = 10, Key = "src", Description = "Sprite source image")]
-		public string Src
-		{
-			get { return Get<string>(); }
-			set { Set(value); }
-		}
+		public HashSet<string> TrackedProperties { get; }
 
 		[Float(DisplayName = "X", Key = "x", GroupOrder = 15, Minimum = -100000, Maximum = 100000, DecimalPlaces = 0)]
 		public float? X
@@ -50,71 +42,38 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set { Set(value); }
 		}
 
-		[Float(DisplayName = "Scale X", GroupOrder = 40, Key = "scalex", Increment = 0.1f, Minimum = -1000, Maximum = 1000)]
-		public float? ScaleX
-		{
-			get { return Get<float?>(); }
-			set { Set(value); }
-		}
-
-		[Float(DisplayName = "Scale Y", GroupOrder = 45, Key = "scaley", Increment = 0.1f, Minimum = -1000, Maximum = 1000)]
-		public float? ScaleY
-		{
-			get { return Get<float?>(); }
-			set { Set(value); }
-		}
-
-		[Slider(DisplayName = "Opacity (0-100)", GroupOrder = 30, Key = "alpha", Description = "Opacity/transparency level")]
-		public float? Alpha
-		{
-			get { return Get<float?>(); }
-			set { Set(value); }
-		}
-
-		[Float(DisplayName = "Rotation (deg)", GroupOrder = 50, Key = "rotation", Description = "Sprite rotation", DecimalPlaces = 0, Minimum = -7020, Maximum = 7020)]
-		public float? Rotation
-		{
-			get { return Get<float?>(); }
-			set { Set(value); }
-		}
-
-		[Float(DisplayName = "Skew X", GroupOrder = 60, Key = "skewx", Description = "Sprite shearing factor horizontally", DecimalPlaces = 2, Minimum = -89, Maximum = 89, Increment = 1f)]
-		public float? SkewX
-		{
-			get { return Get<float?>(); }
-			set { Set(value); }
-		}
-
-		[Float(DisplayName = "Skew Y", GroupOrder = 65, Key = "skewx", Description = "Sprite shearing factor vertically", DecimalPlaces = 2, Minimum = -89, Maximum = 89, Increment = 1f)]
-		public float? SkewY
-		{
-			get { return Get<float?>(); }
-			set { Set(value); }
-		}
-
 		/// <summary>
-		/// Properties that should not be interpolated from the previous frame, like being the start of a completely separate animation
+		/// Data specific to a single property within the keyframe
 		/// </summary>
-		public ObservableDictionary<string, bool> InterpolationBreaks
+		public ObservableDictionary<string, LiveKeyframeMetadata> PropertyMetadata
 		{
-			get { return Get<ObservableDictionary<string, bool>>(); }
+			get { return Get<ObservableDictionary<string, LiveKeyframeMetadata>>(); }
 			set { Set(value); }
 		}
 
 		public LiveKeyframe()
 		{
-			InterpolationBreaks = new ObservableDictionary<string, bool>();
+			PropertyMetadata = new ObservableDictionary<string, LiveKeyframeMetadata>();
+			TrackedProperties = new HashSet<string>();
+			TrackedProperties.Add("X");
+			TrackedProperties.Add("Y");
 		}
 
-		public LiveKeyframe(float time) : this()
+		public virtual bool FilterRecord(PropertyRecord record)
 		{
-			Time = time;
+			if (record.Key == "time" && Time == 0)
+			{
+				return false;
+			}
+			return true;
 		}
 
-		static LiveKeyframe()
+		public KeyframeType GetFrameType(string property)
 		{
-			TrackedProperties = new List<string>();
-			TrackedProperties.AddRange(new string[] { "Src", "X", "Y", "ScaleX", "ScaleY", "Alpha", "Rotation", "SkewX", "SkewY" });
+			if (string.IsNullOrEmpty(property)) { return KeyframeType.Normal; }
+			LiveKeyframeMetadata metadata = GetMetadata(property, false);
+			if (metadata == null) { return KeyframeType.Normal; }
+			return metadata.FrameType;
 		}
 
 		public override string ToString()
@@ -124,7 +83,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public string GetLabel()
 		{
-			return $"Keyframe: {Sprite.Id} ({Time}s)";
+			if (Data == null) { return "???"; }
+			return $"Keyframe: {Data.Id} ({Time}s)";
 		}
 
 		/// <summary>
@@ -134,9 +94,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			get
 			{
-				for (int i = 0; i < TrackedProperties.Count; i++)
+				foreach (string propName in TrackedProperties)
 				{
-					if (HasProperty(TrackedProperties[i]))
+					if (HasProperty(propName))
 					{
 						return false;
 					}
@@ -153,15 +113,33 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			get
 			{
 				int count = 0;
-				for (int i = 0; i < TrackedProperties.Count; i++)
+				foreach (string propName in TrackedProperties)
 				{
-					if (HasProperty(TrackedProperties[i]))
+					if (HasProperty(propName))
 					{
 						count++;
 					}
 				}
 				return count;
 			}
+		}
+
+		public LiveKeyframeMetadata GetMetadata(string property, bool addIfNew)
+		{
+			if (!PropertyMetadata.ContainsKey(property))
+			{
+				if (addIfNew)
+				{
+					LiveKeyframeMetadata metadata = new LiveKeyframeMetadata(property);
+					PropertyMetadata.Add(property, metadata);
+					return metadata;
+				}
+				else
+				{
+					return new LiveKeyframeMetadata(property);
+				}
+			}
+			return PropertyMetadata[property];
 		}
 	}
 }

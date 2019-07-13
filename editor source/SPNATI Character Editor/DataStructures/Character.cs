@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -29,6 +30,9 @@ namespace SPNATI_Character_Editor
 
 		[XmlIgnore]
 		public string Group { get; }
+
+		[XmlIgnore]
+		public DateTime LastUpdate;
 
 		/// <summary>
 		/// Where did this character come from?
@@ -92,6 +96,23 @@ namespace SPNATI_Character_Editor
 		[XmlArrayItem("tag")]
 		public List<CharacterTag> Tags;
 
+		[XmlElement("stylesheet")]
+		public string StyleSheetName;
+
+		private CharacterStyleSheet _styles;
+		[XmlIgnore]
+		public CharacterStyleSheet Styles
+		{
+			get
+			{
+				if (_styles == null && !string.IsNullOrEmpty(StyleSheetName))
+				{
+					_styles = CharacterStyleSheetSerializer.Load(this, StyleSheetName);
+				}
+				return _styles;
+			}
+		}
+
 		[XmlNewLine]
 		[XmlArray("start")]
 		[XmlArrayItem("state")]
@@ -110,6 +131,10 @@ namespace SPNATI_Character_Editor
 		[XmlNewLine(XmlNewLinePosition.Both)]
 		[XmlElement("behaviour")]
 		public Behaviour Behavior = new Behaviour();
+
+		[XmlArray("nicknames")]
+		[XmlArrayItem("nickname")]
+		public List<Nickname> Nicknames = new List<Nickname>();
 
 		[XmlNewLine(XmlNewLinePosition.After)]
 		[XmlElement("epilogue")]
@@ -880,6 +905,9 @@ namespace SPNATI_Character_Editor
 
 		[XmlAttribute("to")]
 		public string To;
+
+		[XmlAnyElement]
+		public List<XmlElement> ExtraXml;
 
 		public CharacterTag() { }
 		public CharacterTag(string tag)

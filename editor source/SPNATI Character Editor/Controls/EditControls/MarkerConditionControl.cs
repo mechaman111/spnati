@@ -11,7 +11,7 @@ namespace SPNATI_Character_Editor
 		public MarkerConditionControl()
 		{
 			InitializeComponent();
-
+			cboOperator.DataSource = ExpressionTest.Operators;
 			recField.RecordType = typeof(Marker);
 		}
 
@@ -120,7 +120,7 @@ namespace SPNATI_Character_Editor
 			chkPerTarget.CheckedChanged += ValueChanged;
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			RemoveHandlers();
 			recField.RecordKey = null;
@@ -153,7 +153,7 @@ namespace SPNATI_Character_Editor
 			return record;
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			string value = BuildValue();
 			SetValue(value);

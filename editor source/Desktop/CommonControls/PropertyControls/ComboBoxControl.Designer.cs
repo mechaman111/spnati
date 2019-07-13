@@ -28,17 +28,25 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.cboItems = new System.Windows.Forms.ComboBox();
+			this.cboItems = new Desktop.Skinning.SkinnedComboBox();
 			this.SuspendLayout();
 			// 
 			// cboItems
 			// 
+			this.cboItems.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.cboItems.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+			this.cboItems.BackColor = System.Drawing.Color.White;
 			this.cboItems.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cboItems.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboItems.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cboItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboItems.FormattingEnabled = true;
 			this.cboItems.Location = new System.Drawing.Point(0, 0);
 			this.cboItems.Name = "cboItems";
-			this.cboItems.Size = new System.Drawing.Size(175, 21);
+			this.cboItems.SelectedIndex = -1;
+			this.cboItems.SelectedItem = null;
+			this.cboItems.Size = new System.Drawing.Size(175, 25);
+			this.cboItems.Sorted = false;
 			this.cboItems.TabIndex = 0;
 			// 
 			// ComboBoxControl
@@ -54,6 +62,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.ComboBox cboItems;
+		private Desktop.Skinning.SkinnedComboBox cboItems;
 	}
 }

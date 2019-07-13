@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 
 namespace Desktop.CommonControls
 {
-	public partial class NumericField : UserControl, ISupportInitialize
+	public partial class NumericField : UserControl, ISupportInitialize, ISkinControl
 	{
 		public decimal Minimum
 		{
@@ -111,6 +112,12 @@ namespace Desktop.CommonControls
 		private void valField_Leave(object sender, EventArgs e)
 		{
 			lblPlaceholder.Visible = IsPlaceholderVisible;
+		}
+
+		public void OnUpdateSkin(Skin skin)
+		{
+			lblPlaceholder.BackColor = skin.FieldBackColor;
+			lblPlaceholder.ForeColor = skin.Surface.DisabledForeColor;
 		}
 	}
 }

@@ -15,25 +15,40 @@ namespace Desktop.CommonControls.PropertyControls
 
 		protected override void OnBoundData()
 		{
-			string value = GetValue()?.ToString();
-			if (string.IsNullOrEmpty(value))
+			if (DataType == typeof(Color))
 			{
-				cmdColor.BackColor = Color.Empty;
-				_cleared = true;
+				Color value = (Color)GetValue();
+				if (value == Color.Empty)
+				{
+					_cleared = true;
+				}
+				else
+				{
+					cmdColor.BackColor = value;
+				}
 			}
 			else
 			{
-				try
-				{
-					Color color = ColorTranslator.FromHtml(value);
-					txtValue.Text = value.Substring(1);
-					cmdColor.BackColor = color;
-					_cleared = false;
-				}
-				catch
+				string value = GetValue()?.ToString();
+				if (string.IsNullOrEmpty(value))
 				{
 					cmdColor.BackColor = Color.Empty;
 					_cleared = true;
+				}
+				else
+				{
+					try
+					{
+						Color color = ColorTranslator.FromHtml(value);
+						txtValue.Text = value.Substring(1);
+						cmdColor.BackColor = color;
+						_cleared = false;
+					}
+					catch
+					{
+						cmdColor.BackColor = Color.Empty;
+						_cleared = true;
+					}
 				}
 			}
 		}
@@ -82,7 +97,7 @@ namespace Desktop.CommonControls.PropertyControls
 			catch { }
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			RemoveHandlers();
 			cmdColor.BackColor = Color.Transparent;
@@ -92,16 +107,30 @@ namespace Desktop.CommonControls.PropertyControls
 			Save();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
-			if (_cleared)
+			if (DataType == typeof(Color))
 			{
-				SetValue(null);
+				if (_cleared)
+				{
+					SetValue(Color.Empty);
+				}
+				else
+				{
+					SetValue(cmdColor.BackColor);
+				}
 			}
 			else
 			{
-				string value = "#" + ToHexValue(cmdColor.BackColor);
-				SetValue(value);
+				if (_cleared)
+				{
+					SetValue(null);
+				}
+				else
+				{
+					string value = "#" + ToHexValue(cmdColor.BackColor);
+					SetValue(value);
+				}
 			}
 		}
 

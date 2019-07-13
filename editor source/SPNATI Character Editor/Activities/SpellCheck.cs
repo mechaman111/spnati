@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using Desktop.Skinning;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -78,6 +79,12 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			_unprocessedCases.Clear();
 			GetNextMisspelling();
+		}
+
+		protected override void OnSkinChanged(Skin skin)
+		{
+			txtLine.ForeColor = skin.Surface.ForeColor;
+			txtLine.BackColor = skin.FieldDisabledBackColor;
 		}
 
 		private void ProcessCase(Case workingCase)
@@ -170,6 +177,8 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void DisplayWord(Misspelling misspelling)
 		{
+			Skin skin = SkinManager.Instance.CurrentSkin;
+
 			_currentMisspelling = misspelling;
 			lblProgress.Text = $"Remaining: {_misspellings.Count}";
 			DisplayImage(misspelling.Case, misspelling.Line.Image);
@@ -185,7 +194,7 @@ namespace SPNATI_Character_Editor.Activities
 				txtLine.SelectionLength = word.Length;
 				txtLine.AppendText(text.Substring(0, start));
 				txtLine.SelectionFont = new Font(txtLine.Font, FontStyle.Bold);
-				txtLine.SelectionColor = Color.Red;
+				txtLine.SelectionColor = skin.BadForeColor;
 				txtLine.AppendText(word);
 				txtLine.SelectionFont = new Font(txtLine.Font, FontStyle.Regular);
 				txtLine.SelectionColor = txtLine.ForeColor;
