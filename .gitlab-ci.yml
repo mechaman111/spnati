@@ -20,7 +20,7 @@ bundle_offline_package:
     tags:
         - production
     script:
-        - zip -r spnati-offline.zip ./
+        - zip -qr spnati-offline.zip ./ -x .git
         - cp ./spnati-offline.zip /opt/spnati
     only:
         - master@spnati/spnati
@@ -31,7 +31,7 @@ bundle_online_package:
         - production
     script:
         - bash ./prepare-online.sh
-        - zip -r spnati-online.zip ./.public
+        - zip -qr spnati-online.zip ./.public
         - cp ./spnati-online.zip /opt/spnati
     only:
         - master@spnati/spnati
