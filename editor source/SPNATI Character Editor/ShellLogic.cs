@@ -7,6 +7,7 @@ using SPNATI_Character_Editor.DataSlicers;
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Threading;
@@ -239,6 +240,18 @@ namespace SPNATI_Character_Editor
 			Definitions.Instance.Add(property);
 
 			property = new PropertyDefinition("SkewY", "Skew (Y)", typeof(float), 65);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Zoom", "Zoom", typeof(float), 20);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Color", "Color", typeof(Color), 25);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Rate", "Rate", typeof(float), 90);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Burst", "Burst", typeof(int), 100);
 			Definitions.Instance.Add(property);
 		}
 
