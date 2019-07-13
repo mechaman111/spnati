@@ -32,11 +32,6 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridWardrobe = new Desktop.Skinning.SkinnedDataGridView();
-			this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColLower = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColPlural = new Desktop.Skinning.SkinnedDataGridViewCheckBoxColumn();
-			this.ColType = new Desktop.Skinning.SkinnedDataGridViewComboBoxColumn();
-			this.ColPosition = new Desktop.Skinning.SkinnedDataGridViewComboBoxColumn();
 			this.cmdClothesDown = new Desktop.Skinning.SkinnedButton();
 			this.cmdClothesUp = new Desktop.Skinning.SkinnedButton();
 			this.label9 = new Desktop.Skinning.SkinnedLabel();
@@ -50,6 +45,11 @@
 			this.label6 = new Desktop.Skinning.SkinnedLabel();
 			this.label7 = new Desktop.Skinning.SkinnedLabel();
 			this.label8 = new Desktop.Skinning.SkinnedLabel();
+			this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColLower = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColPlural = new Desktop.Skinning.SkinnedDataGridViewCheckBoxColumn();
+			this.ColType = new Desktop.Skinning.SkinnedDataGridViewComboBoxColumn();
+			this.ColPosition = new Desktop.Skinning.SkinnedDataGridViewComboBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridWardrobe)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -108,43 +108,6 @@
 			this.gridWardrobe.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.gridWardrobe_CellValidating);
 			this.gridWardrobe.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.gridWardrobe_RowsAdded);
 			this.gridWardrobe.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.gridWardrobe_RowsRemoved);
-			// 
-			// ColName
-			// 
-			this.ColName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColName.HeaderText = "Proper Name";
-			this.ColName.Name = "ColName";
-			this.ColName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.ColName.Visible = false;
-			// 
-			// ColLower
-			// 
-			this.ColLower.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColLower.HeaderText = "Name (lowercase)";
-			this.ColLower.Name = "ColLower";
-			this.ColLower.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			// 
-			// ColPlural
-			// 
-			this.ColPlural.HeaderText = "Is Plural?";
-			this.ColPlural.Name = "ColPlural";
-			this.ColPlural.Width = 50;
-			// 
-			// ColType
-			// 
-			this.ColType.AutoComplete = false;
-			this.ColType.DisplayMember = null;
-			this.ColType.HeaderText = "Type";
-			this.ColType.Name = "ColType";
-			this.ColType.Sorted = false;
-			// 
-			// ColPosition
-			// 
-			this.ColPosition.AutoComplete = false;
-			this.ColPosition.DisplayMember = null;
-			this.ColPosition.HeaderText = "Position";
-			this.ColPosition.Name = "ColPosition";
-			this.ColPosition.Sorted = false;
 			// 
 			// cmdClothesDown
 			// 
@@ -318,6 +281,43 @@
 			this.label8.Size = new System.Drawing.Size(145, 13);
 			this.label8.TabIndex = 0;
 			this.label8.Text = "Upper: covers the chest area";
+			// 
+			// ColName
+			// 
+			this.ColName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ColName.HeaderText = "Generic Name";
+			this.ColName.Name = "ColName";
+			this.ColName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.ColName.Visible = false;
+			// 
+			// ColLower
+			// 
+			this.ColLower.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ColLower.HeaderText = "Name (lowercase)";
+			this.ColLower.Name = "ColLower";
+			this.ColLower.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// ColPlural
+			// 
+			this.ColPlural.HeaderText = "Is Plural?";
+			this.ColPlural.Name = "ColPlural";
+			this.ColPlural.Width = 50;
+			// 
+			// ColType
+			// 
+			this.ColType.AutoComplete = false;
+			this.ColType.DisplayMember = null;
+			this.ColType.HeaderText = "Type";
+			this.ColType.Name = "ColType";
+			this.ColType.Sorted = false;
+			// 
+			// ColPosition
+			// 
+			this.ColPosition.AutoComplete = false;
+			this.ColPosition.DisplayMember = null;
+			this.ColPosition.HeaderText = "Position";
+			this.ColPosition.Name = "ColPosition";
+			this.ColPosition.Sorted = false;
 			// 
 			// WardrobeEditor
 			// 

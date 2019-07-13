@@ -10,13 +10,11 @@ using SPNATI_Character_Editor.Forms;
 using SPNATI_Character_Editor.Properties;
 
 
-/* Todo - I'm pausing this because I'm not convinced it really makes epilogues easier to make - speech bubbles and pauses are pretty annoying with this system
+/* Todo
  * ----
- * need way to define length on looped sprites (maybe use an event like bursts?)
- * insert pauses into correct position
+ * Need to be able to drag length
  * Conversion between Scene and LiveScene
- * Emitter bursts (add events to LiveAnimatedObject?)
-
+ * Delay not being handled properly when making move directive, etc.
 */
 
 namespace SPNATI_Character_Editor.EpilogueEditor

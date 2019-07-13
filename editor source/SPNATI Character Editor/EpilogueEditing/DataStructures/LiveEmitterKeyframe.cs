@@ -10,7 +10,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			TrackedProperties.Add("Src");
 			TrackedProperties.Add("Rotation");
 			TrackedProperties.Add("Rate");
-			TrackedProperties.Add("Burst");
 			Rate = 1;
 		}
 
@@ -32,13 +31,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public float? Rate
 		{
 			get { return Get<float?>(); }
-			set { Set(value); }
-		}
-
-		[Numeric(DisplayName = "Burst", Key = "burst", GroupOrder = 100, Description = "Number of particles to emit at this moment", Minimum = 1, Maximum = 100)]
-		public int? Burst
-		{
-			get { return Get<int?>(); }
 			set { Set(value); }
 		}
 	}

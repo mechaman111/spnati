@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using Desktop;
 using SPNATI_Character_Editor.Actions;
 using Desktop.Skinning;
+using SPNATI_Character_Editor.Actions.TimelineActions;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
@@ -123,6 +124,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					value = brk.Time - 0.001f;
 					PlaybackAwaitingInput = true;
+				}
+				foreach (LiveEvent evt in GetEventsBetween(_playbackTime, value))
+				{
+					evt.Trigger();
 				}
 				_playbackTime = value;
 				Redraw();
@@ -824,14 +829,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					int count = rowCount;
 					float start = widget.GetStart();
-					float length = widget.GetLength(duration);
 					int x = TimeToX(start);
 
 					//contents
 					for (int row = 0; row < count; row++)
 					{
 						int rowY = trackY + row * RowHeight;
-						widget.DrawContents(g, row, x + 1, rowY + 1, pps, RowHeight - 2);
+						widget.DrawContents(g, row, x + 1, rowY + 1, pps, RowHeight - 2, duration);
 					}
 
 					y += rowCount * RowHeight;
@@ -1022,7 +1026,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				ITimelineAction hoverAction = null;
 				ITimelineAction brkAction = GetAction(brk, e.X, e.Y);
 				ITimelineAction widgetAction = GetAction(widget, e.X, e.Y);
-				if (_selectedObject != brk && widgetAction != null && !(widgetAction is SelectAction))
+				if (brk == null || (_selectedObject != brk && widgetAction != null && !(widgetAction is SelectAction) && !(widgetAction is MoveWidgetTimelineAction)))
 				{
 					hoverObj = widget;
 					hoverAction = widgetAction;
@@ -1217,7 +1221,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			return null;
 		}
-		
+
 		private void StartAction(float time, int y)
 		{
 			WidgetActionArgs args = GetWidgetArgs(time, y);
@@ -1416,6 +1420,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						tsPlay.Image = Properties.Resources.TimelinePlayLoops;
 						break;
 				}
+
 			}
 			PlaybackChanged?.Invoke(this, tmrTick.Enabled);
 			foreach (ITimelineWidget widget in _widgets)
@@ -1716,6 +1721,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 			}
 			return null;
+		}
+
+		private IEnumerable<LiveEvent> GetEventsBetween(float start, float end)
+		{
+			for (int i = 0; i < _widgets.Count; i++)
+			{
+				LiveEvent evt = _widgets[i].GetEventBetween(start, end);
+				if (evt != null)
+				{
+					yield return evt;
+				}
+			}
 		}
 	}
 

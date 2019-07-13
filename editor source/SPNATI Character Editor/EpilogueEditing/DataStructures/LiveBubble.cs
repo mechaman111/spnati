@@ -55,6 +55,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			DisplayPastEnd = false;
 			Data = data;
 			Length = 1;
+			LinkedToEnd = true;
 
 			TextX = directive.X;
 			TextY = directive.Y;
@@ -533,7 +534,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		public override void GetBlock(string property, float time, out LiveKeyframe start, out LiveKeyframe end)
+		public override void GetBlock(string property, float time, bool useNextBlock, out LiveKeyframe start, out LiveKeyframe end)
 		{
 			start = null;
 			end = null;

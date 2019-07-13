@@ -6,7 +6,7 @@
 
 		public static void AddClothing(Clothing item)
 		{
-			Items.Add(item.GenericName);
+			Items.Add(item.Name);
 		}
 	}
 }

@@ -233,6 +233,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Length = 0.5f;
 			Id = directive.Id;
 			Z = directive.Layer;
+			LinkedToEnd = true;
 			Start = time;
 			if (!string.IsNullOrEmpty(directive.Delay))
 			{
@@ -247,6 +248,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				float angle;
 				float.TryParse(directive.Delay, NumberStyles.Number, CultureInfo.InvariantCulture, out angle);
 				Angle = angle;
+			}
+
+			if (!string.IsNullOrEmpty(directive.Src))
+			{
+				Image = LiveImageCache.Get(character.FolderName + "/" + directive.Src);
+				if (Image != null)
+				{
+					ParticleWidth = Image.Width;
+					ParticleHeight = Image.Height;
+				}
 			}
 
 			InitializeParameters(directive);
@@ -361,6 +372,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return typeof(LiveEmitterKeyframe);
 		}
 
+		public override Type GetEventType()
+		{
+			return typeof(LiveBurst);
+		}
+
 		protected override void ParseKeyframe(Keyframe kf, bool addBreak, HashSet<string> properties, float time)
 		{
 			if (!string.IsNullOrEmpty(kf.X))
@@ -438,7 +454,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_particles.Clear();
 		}
 
-		private void Emit()
+		public void Emit()
 		{
 			_particles.Add(new LiveParticle(this));
 		}
@@ -476,7 +492,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 
 			//emitter
-			if (IsVisible && !Hidden)
+			if (IsVisible && !Hidden && !inPlayback)
 			{
 				g.MultiplyTransform(WorldTransform);
 				g.MultiplyTransform(sceneTransform, MatrixOrder.Append);

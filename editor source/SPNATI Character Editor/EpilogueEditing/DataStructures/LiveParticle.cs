@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -115,19 +116,40 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override void Draw(Graphics g, Matrix sceneTransform, List<string> markers, bool inPlayback)
 		{
-			g.MultiplyTransform(WorldTransform);
-			g.MultiplyTransform(sceneTransform, MatrixOrder.Append);
-
-			if (Image != null)
+			if (Alpha > 0)
 			{
-				g.DrawImage(Image, 0, 0, Width, Height);
-			}
-			else
-			{
-				g.FillEllipse(_brush, 0, 0, Width, Height);
-			}
+				g.MultiplyTransform(WorldTransform);
+				g.MultiplyTransform(sceneTransform, MatrixOrder.Append);
 
-			g.ResetTransform();
+				if (Image != null)
+				{
+					if (Alpha < 100)
+					{
+						float[][] matrixItems = new float[][] {
+						  new float[] { 1, 0, 0, 0, 0 },
+						  new float[] { 0, 1, 0, 0, 0 },
+						  new float[] { 0, 0, 1, 0, 0 },
+						  new float[] { 0, 0, 0, Alpha / 100.0f, 0 },
+						  new float[] { 0, 0, 0, 0, 1 }
+						 };
+						ColorMatrix cm = new ColorMatrix(matrixItems);
+						ImageAttributes ia = new ImageAttributes();
+						ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+						g.DrawImage(Image, new Rectangle(0, 0, Width, Height), 0, 0, Image.Width, Image.Height, GraphicsUnit.Pixel, ia);
+					}
+					else
+					{
+						g.DrawImage(Image, 0, 0, Width, Height);
+					}
+				}
+				else
+				{
+					g.FillEllipse(_brush, 0, 0, Width, Height);
+				}
+
+				g.ResetTransform();
+			}
 		}
 
 		public override void Update(float time, float elapsedTime, bool inPlayback)

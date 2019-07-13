@@ -126,7 +126,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						sprites[preview.Id] = preview;
 					}
 				}
-				preview.AddKeyframeDirective(directive, 0);
+				preview.AddKeyframeDirective(directive, 0, "linear", "none");
 			}
 		}
 
@@ -471,5 +471,129 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return list;
 		}
 		public override ITimelineBreak AddBreak(float time) { throw new NotImplementedException(); }
+
+		#region debugging
+		public void PrintPlainText()
+		{
+			for (int i = 0; i < Sprites.Count; i++)
+			{
+				List<List<string>> output = new List<List<string>>();
+				List<string> header = new List<string>();
+				header.Add("Keyframe".PadRight(15));
+				HashSet<string> includedProperties = new HashSet<string>();
+				Dictionary<string, List<string>> lines = new Dictionary<string, List<string>>();
+				output.Add(header);
+				LiveSprite sprite = Sprites[i];
+				for (int j = 0; j < sprite.Keyframes.Count; j++)
+				{
+					LiveKeyframe kf = sprite.Keyframes[j];
+					header.Add((sprite.Start + kf.Time).ToString().PadRight(7));
+					foreach (string property in kf.TrackedProperties)
+					{
+						List<string> line;
+						if (!lines.TryGetValue(property, out line))
+						{
+							line = new List<string>();
+							lines[property] = line;
+							line.Add(property.PadRight(15));
+							output.Add(line);
+						}
+						if (kf.HasProperty(property))
+						{
+							includedProperties.Add(property);
+						}
+						LiveKeyframeMetadata metadata;
+						if (kf.PropertyMetadata.TryGetValue(property, out metadata))
+						{
+							line.Add($"{TypeToString(metadata)}{EaseToString(metadata)}{InterpolationToString(metadata)}{LoopToString(metadata)}".PadRight(7));
+						}
+						else
+						{
+							line.Add((kf.HasProperty(property) ? "-" : "").PadRight(7));
+						}
+					}
+				}
+				foreach (List<string> line in output)
+				{
+					if (line[0].StartsWith("Keyframe") || includedProperties.Contains(line[0].Substring(0, line[0].IndexOf(' '))))
+					{
+						Console.WriteLine(string.Join("\t", line));
+					}
+				}
+			}
+		}
+
+		private string TypeToString(LiveKeyframeMetadata metadata)
+		{
+			switch (metadata.FrameType)
+			{
+				case KeyframeType.Begin:
+					return ">";
+				case KeyframeType.Split:
+					return "|";
+				default:
+					return "O";
+			}
+		}
+
+		private string EaseToString(LiveKeyframeMetadata metadata)
+		{
+			string ease = metadata.Ease;
+			if (string.IsNullOrEmpty(ease))
+			{
+				return "-";
+			}
+			if (ease.StartsWith("smooth"))
+			{
+				return "S";
+			}
+			else if (ease.StartsWith("ease-in"))
+			{
+				return "I";
+			}
+			else if (ease.StartsWith("ease-out"))
+			{
+				return "O";
+			}
+			else if (ease.StartsWith("bounce"))
+			{
+				return "B";
+			}
+			else if (ease.StartsWith("elastic"))
+			{
+				return "L";
+			}
+			return "-";
+		}
+
+		private string InterpolationToString(LiveKeyframeMetadata metadata)
+		{
+			string tween = metadata.Interpolation;
+			if (string.IsNullOrEmpty(tween)) { return " "; }
+
+			if (tween.StartsWith("linear"))
+			{
+				return "-";
+			}
+			else if (tween.StartsWith("spline"))
+			{
+				return "S";
+			}
+			else if (tween.StartsWith("none"))
+			{
+				return "N";
+			}
+			return "-";
+		}
+
+		private string LoopToString(LiveKeyframeMetadata metadata)
+		{
+			bool loop = metadata.Looped;
+			int count = metadata.Iterations;
+			string style = metadata.ClampMethod;
+			if (!loop) { return "-"; }
+			return count.ToString();
+		}
+		#endregion
 	}
 }

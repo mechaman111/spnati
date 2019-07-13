@@ -25,7 +25,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			get
 			{
-				if (Keyframes.Count > 1)
+				if (!AllowLinkToEnd && Keyframes.Count > 1)
 				{
 					float time = Keyframes[Keyframes.Count - 1].Time;
 					return time;
@@ -55,9 +55,15 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set { Set(value); }
 		}
 
+		public ObservableCollection<LiveEvent> Events
+		{
+			get { return Get<ObservableCollection<LiveEvent>>(); }
+			set { Set(value); }
+		}
+
 		public override bool IsVisible
 		{
-			get { return Time >= Start && (IsPreview || DisplayPastEnd || Time <= Start + Length || HasLoops()); }
+			get { return Time >= Start && (IsPreview || DisplayPastEnd || LinkedToEnd || Time <= Start + Length); }
 		}
 
 		public event EventHandler<LiveKeyframe> KeyframeChanged;
@@ -66,6 +72,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			Properties = new ObservableCollection<string>();
 			Keyframes = new ObservableCollection<LiveKeyframe>();
+			Events = new ObservableCollection<LiveEvent>();
 			AnimatedProperties = new ObservableSet<string>();
 		}
 
@@ -79,10 +86,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					kf.Data = animatedCopy;
 					kf.PropertyChanged += Kf_PropertyChanged;
 				}
+				foreach (LiveEvent evt in animatedCopy.Events)
+				{
+					evt.Data = animatedCopy;
+				}
 			}
 		}
 
 		public abstract Type GetKeyframeType();
+		public virtual Type GetEventType()
+		{
+			return null;
+		}
 
 		public LiveKeyframe CreateKeyframe(float time)
 		{
@@ -204,6 +219,31 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					UpdateProperty(prop);
 				}
 			}
+		}
+
+		public void RemoveEvent(LiveEvent evt)
+		{
+			evt.Data = null;
+			Events.Remove(evt);
+		}
+
+		public void AddEvent(LiveEvent evt)
+		{
+			if (Events.Find(e => e.Time == evt.Time) != null)
+			{
+				return;
+			}
+			evt.Data = this;
+
+			for (int i = 0; i < Events.Count; i++)
+			{
+				if (evt.Time < Events[i].Time)
+				{
+					Events.Insert(i, evt);
+					return;
+				}
+			}
+			Events.Add(evt);
 		}
 
 		private void ResortKeyframe(LiveKeyframe kf)
@@ -367,7 +407,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// </summary>
 		/// <param name="time"></param>
 		/// <returns></returns>
-		public virtual LiveKeyframe GetBlockKeyframe(string property, float time)
+		public LiveKeyframe GetBlockKeyframe(string property, float time)
 		{
 			LiveKeyframe firstFrame = null;
 			for (int i = Keyframes.Count - 1; i >= 0; i--)
@@ -711,6 +751,31 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		/// <summary>
+		/// Copies an event
+		/// </summary>
+		/// <param name="evt"></param>
+		/// <returns></returns>
+		public LiveEvent CopyEvent(LiveEvent evt)
+		{
+			LiveEvent copy = CreateEvent(evt.Time);
+			evt.CopyPropertiesInto(copy);
+			return copy;
+		}
+
+		public LiveEvent PasteEvent(LiveEvent source, float time)
+		{
+			LiveEvent target = Events.Find(kf => kf.Time == time);
+			if (target != null)
+			{
+				return target;
+			}
+			target = AddEvent(time);
+			source.CopyPropertiesInto(target);
+			target.Time = time;
+			return target;
+		}
+
+		/// <summary>
 		/// Creates a keyframe representing the interpolated values at a particular time, without adding the frame to the sprite
 		/// </summary>
 		/// <param name="time">Relative time</param>
@@ -931,7 +996,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// Merges a directive into this preview to have one single animation
 		/// </summary>
 		/// <param name="directive"></param>
-		public void AddKeyframeDirective(Directive directive, float offset)
+		public void AddKeyframeDirective(Directive directive, float offset, string defaultEase, string defaultInterpolation)
 		{
 			float delay = Start;
 			if (!string.IsNullOrEmpty(directive.Delay))
@@ -971,8 +1036,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (startFrame != null)
 				{
 					LiveKeyframeMetadata metadata = startFrame.GetMetadata(prop, true);
-					string ease = directive.EasingMethod ?? "linear";
-					string interpolation = directive.InterpolationMethod ?? "none";
+					string ease = directive.EasingMethod ?? defaultEase;
+					string interpolation = directive.InterpolationMethod ?? defaultInterpolation;
 					bool looped = directive.Looped;
 					string clamp = directive.ClampingMethod;
 					int iterations = directive.Iterations;
@@ -982,6 +1047,34 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					metadata.Looped = looped;
 					metadata.ClampMethod = clamp;
 					metadata.Iterations = iterations;
+				}
+			}
+		}
+
+		public void AddStopDirective(Directive directive, float offset)
+		{
+			offset -= Start;
+
+			//Add a new begin frame with the same values as the last keyframe of every looping property
+			foreach (string property in Properties)
+			{
+				for (int i = Keyframes.Count - 1; i >= 0; i--)
+				{
+					LiveKeyframe kf = Keyframes[i];
+					if (kf.HasProperty(property))
+					{
+						LiveKeyframeMetadata metadata = GetBlockMetadata(property, kf.Time);
+						if (metadata.Looped)
+						{
+							HashSet<string> properties = new HashSet<string>();
+							properties.Add(property);
+							LiveKeyframe copy = CopyKeyframe(kf, properties);
+							LiveKeyframe target = PasteKeyframe(copy, offset, null);
+							LiveKeyframeMetadata md = target.GetMetadata(property, true);
+							md.FrameType = KeyframeType.Begin;
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -1010,12 +1103,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// </summary>
 		/// <param name="property">Property being animated</param>
 		/// <param name="time">Time to find which block it belongs to</param>
+		/// <param name="useNextBlock">If true, gets the block following this time if it's not part of a block, otherwise the previous block</param>
 		/// <param name="start">Outputs start frame</param>
 		/// <param name="end">Outputs end frame</param>
-		public virtual void GetBlock(string property, float time, out LiveKeyframe start, out LiveKeyframe end)
+		public virtual void GetBlock(string property, float time, bool useNextBlock, out LiveKeyframe start, out LiveKeyframe end)
 		{
 			start = null;
 			end = null;
+			LiveKeyframe firstStart = null;
 			LiveKeyframe first = null;
 			LiveKeyframe last = null;
 			for (int i = 0; i < Keyframes.Count; i++)
@@ -1041,6 +1136,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					{
 						//first frame for a particular property is considered start point if time is before that frame
 						start = kf;
+					}
+					else if (useNextBlock && firstStart == null && kf.Time > time)
+					{
+						//if this starts past the given time but we're using the next block, count it
+						start = kf;
+					}
+
+					if (start != null && firstStart != null)
+					{
+						firstStart = start;
 					}
 				}
 				else
@@ -1102,26 +1207,45 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					}
 				}
 			}
+			if (start == null)
+			{
+				start = last;
+			}
 			end = (last == null ? start : last);
 		}
 
 		private bool HasLoops()
 		{
-			for (int i = 0; i < Keyframes.Count; i++)
+			if (Keyframes.Count == 0) { return false; }
+			float endTime = Keyframes[Keyframes.Count - 1].Time;
+			foreach (string property in AnimatedProperties)
 			{
-				LiveKeyframe kf = Keyframes[i];
-				foreach (string property in kf.TrackedProperties)
-				{
-					if (!kf.HasProperty(property)) { continue; }
-
-					LiveKeyframeMetadata metadata = kf.GetMetadata(property, false);
-					if (metadata != null && metadata.Looped)
-					{
-						return true;
-					}
-				}
+				LiveKeyframeMetadata meta = GetBlockMetadata(property, endTime);
+				if (meta.Looped) { return true; }
 			}
 			return false;
+		}
+
+		/// <summary>
+		/// Adds an event at the given point
+		/// </summary>
+		/// <param name="time"></param>
+		public LiveEvent AddEvent(float time)
+		{
+			LiveEvent evt = CreateEvent(time);
+			if (evt == null) { return null; }
+
+			AddEvent(evt);
+			return evt;
+		}
+
+		public LiveEvent CreateEvent(float time)
+		{
+			Type type = GetEventType();
+			if (type == null) { return null; }
+			LiveEvent kf = Activator.CreateInstance(type) as LiveEvent;
+			kf.Time = time - Start;
+			return kf;
 		}
 	}
 }

@@ -91,7 +91,7 @@ namespace SPNATI_Character_Editor
 			for (int i = character.Wardrobe.Count - 1; i >= 0; i--)
 			{
 				Clothing clothes = character.Wardrobe[i];
-				lines.Add(string.Format("clothes={0},{1},{2},{3}{4}", clothes.FormalName, clothes.GenericName, clothes.Type, clothes.Position, clothes.Plural ? ",plural" : ""));
+				lines.Add(string.Format("clothes={0},{1},{2},{3}{4}", clothes.GenericName, clothes.Name, clothes.Type, clothes.Position, clothes.Plural ? ",plural" : ""));
 			}
 
 			#region Lines commentary
@@ -1202,8 +1202,8 @@ namespace SPNATI_Character_Editor
 			if (pieces.Length >= 4)
 			{
 				Clothing c = new Clothing();
-				c.FormalName = pieces[0];
-				c.GenericName = pieces[1];
+				c.GenericName = pieces[0];
+				c.Name = pieces[1];
 				c.Type = pieces[2];
 				c.Position = pieces[3];
 				if (pieces.Length >= 5)

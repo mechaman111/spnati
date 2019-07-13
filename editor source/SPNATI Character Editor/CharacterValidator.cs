@@ -138,7 +138,7 @@ namespace SPNATI_Character_Editor
 										{
 											if (clothing == null)
 												warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel), context));
-											else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.GenericName, clothing.Type), context));
+											else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.Name, clothing.Type), context));
 										}
 									}
 								}
@@ -435,22 +435,22 @@ namespace SPNATI_Character_Editor
 			{
 				Clothing c = character.GetClothing(i);
 				foundPlural = c.Plural || foundPlural;
-				if (pluralGuess == null && !c.Plural && c.GenericName.EndsWith("s"))
+				if (pluralGuess == null && !c.Plural && c.Name.EndsWith("s"))
 				{
-					pluralGuess = c.GenericName;
+					pluralGuess = c.Name;
 				}
 				if (c.Position == "upper" && c.Type == "major")
-					upper = c.GenericName;
+					upper = c.Name;
 				if (c.Position == "lower" && c.Type == "major")
-					lower = c.GenericName;
+					lower = c.Name;
 				if (c.Position == "both" && c.Type == "major")
 					foundBoth = true;
 				if (c.Position == "upper" && c.Type == "important")
-					importantUpper = c.GenericName;
+					importantUpper = c.Name;
 				if (c.Position == "lower" && c.Type == "important")
-					importantLower = c.GenericName;
+					importantLower = c.Name;
 				if (c.Position == "other" && c.Type == "major")
-					otherMajor = c.GenericName;
+					otherMajor = c.Name;
 			}
 			if (!foundBoth)
 			{

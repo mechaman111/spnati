@@ -49,6 +49,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_penLens.Color = Color.FromArgb(127, _penLens.Color);
 
 			_outsideBrush = new SolidBrush(Color.FromArgb(80, 0, 10, 30));
+
 			AddValue<float>(0, "Zoom", "1");
 		}
 

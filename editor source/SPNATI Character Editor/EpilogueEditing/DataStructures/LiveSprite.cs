@@ -88,6 +88,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			DisplayPastEnd = false;
 			Data = scene;
 			ParentId = directive.ParentId;
+			LinkedToEnd = true;
 			Length = 0.5f;
 			Id = directive.Id;
 			Z = directive.Layer;

@@ -1,5 +1,4 @@
 ﻿using Desktop;
-using Desktop.Skinning;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,7 +8,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 	public interface ITimelineWidget : ITimelineObject
 	{
 		event EventHandler Invalidated;
-		void DrawContents(Graphics g, int rowIndex, int x, int y, float pps, int rowHeight);
+		void DrawContents(Graphics g, int rowIndex, int x, int y, float pps, int rowHeight, float dataEndTime);
 		string GetLabel(int row);
 		int GetRowCount();
 		Image GetThumbnail();
@@ -63,6 +62,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="y"></param>
 		/// <param name="rowHeight"></param>
 		void DrawHeaderIcon(Graphics g, int rowIndex, int iconIndex, int x, int y, int size, int highlightedIconIndex);
+		LiveEvent GetEventBetween(float start, float end);
 	}
 
 	public class WidgetOperationArgs

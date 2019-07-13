@@ -18,10 +18,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		protected bool _collapsed = false;
 
 		protected bool AllowParenting = false;
-		protected bool AllowDelete = true;
+		public bool AllowDelete = true;
 		protected bool ShowPropertyRows = true;
 
-		private static SolidBrush _repeatFill;
 		private static Dictionary<string, Image> _easeIcons;
 		private static Dictionary<string, Image> _tweenIcons;
 		private static SolidBrush _headerKeyframeFill;
@@ -30,15 +29,21 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private static Pen _penKeyframe;
 
 		private const int KeyframeRadius = 5;
+		private const int EventWidth = 5;
+		private const int EventHeight = 10;
 
 		protected Timeline _timeline;
 
 		public event EventHandler Invalidated;
 		private LiveKeyframe _selectedFrame;
+		private LiveEvent _selectedEvent;
 		private HashSet<string> _selectedProperties = new HashSet<string>();
+		private LiveEvent _hoverEvent;
 		private LiveKeyframe _hoverFrame;
 		private int _hoverRow;
 		private bool _playing;
+
+		private Dictionary<string, WidgetDrawInfo> _drawInfo;
 
 		private LiveAnimatedObject _data;
 		public LiveAnimatedObject Data
@@ -60,7 +65,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_headerKeyframeFill = new SolidBrush(Color.FromArgb(255, 226, 66));
 			_keyframeFill = new SolidBrush(Color.FromArgb(180, 180, 180));
 			_keyframeFillSelected = new SolidBrush(Color.FromArgb(245, 245, 255));
-			_repeatFill = new SolidBrush(Color.FromArgb(103, 106, 116));
 
 			_penKeyframe = new Pen(Color.Black);
 
@@ -101,7 +105,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_headerKeyframeFill.Color = Color.FromArgb(255, 226, 66);
 			_keyframeFill.Color = Color.FromArgb(180, 180, 180);
 			_keyframeFillSelected.Color = Color.FromArgb(245, 245, 255);
-			_repeatFill.Color = Color.FromArgb(103, 106, 116);
 			_penKeyframe.Color = Color.Black;
 		}
 		protected virtual void OnSetDefaultColors()
@@ -120,7 +123,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_keyframeFill.Color = skin.GetAppColor("Keyframe0");
 			_penKeyframe.Color = skin.GetAppColor("KeyframeBorder");
 			_keyframeFillSelected.Color = skin.GetAppColor("KeyframeSelected");
-			_repeatFill.Color = skin.GetAppColor("WidgetRepeat");
 		}
 
 		public KeyframedWidget(LiveAnimatedObject data, Timeline timeline)
@@ -201,6 +203,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_selected = (args.IsSelected != SelectionType.Deselect);
 			if (args.IsSelected != SelectionType.Select)
 			{
+				_hoverEvent = null;
 				_hoverFrame = null;
 				ClearSelection();
 			}
@@ -244,6 +247,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void Data_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
+			string property = e.PropertyName;
+			switch (property)
+			{
+				case "Keyframes":
+				case "AnimatedProperties":
+				case "Start":
+				case "Length":
+					_drawInfo = null;
+					break;
+			}
 			OnDataPropertyChanged(sender, e);
 			Invalidate();
 		}
@@ -274,7 +287,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			else
 			{
-				return Data.Length;
+				if (Data.AllowLinkToEnd)
+				{
+					float length = Data.Length;
+					if (Data.Keyframes.Count > 1)
+					{
+						length = Math.Max(length, Data.Keyframes[Data.Keyframes.Count - 1].Time);
+					}
+					return length;
+				}
+				else
+				{
+					return Data.Length;
+				}
 			}
 		}
 
@@ -294,6 +319,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public void ClearSelection()
 		{
 			_selectedFrame = null;
+			_selectedEvent = null;
 			_selectedProperties.Clear();
 			Invalidate();
 		}
@@ -316,9 +342,22 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			get { return _selectedFrame; }
 		}
 
+		public LiveEvent SelectedEvent
+		{
+			get { return _selectedEvent; }
+		}
+
+		public void SelectEvent(LiveEvent evt)
+		{
+			if (_selectedEvent == evt) { return; }
+			ClearSelection();
+			_selectedEvent = evt;
+		}
+
 		public void SelectKeyframe(LiveKeyframe keyframe, string property, bool addToSelection)
 		{
 			Invalidate();
+			_selectedEvent = null;
 			if (_selectedFrame != keyframe || property == null)
 			{
 				_selectedProperties.Clear();
@@ -453,173 +492,115 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		protected virtual Image GetExtraHeaderIcon(int iconIndex) { return null; }
 		protected virtual string GetExtraHeaderTooltip(WidgetActionArgs args, int iconIndex) { return ""; }
 
-		private void DrawBlock(Graphics g, LiveKeyframe start, LiveKeyframe end, int y, float pps, int rowHeight)
+		private void CacheDrawData()
 		{
-			DrawBlock(g, start.Time, end.Time, y, pps, rowHeight);
+			_drawInfo = new Dictionary<string, WidgetDrawInfo>();
+			_drawInfo.Add("", new WidgetDrawInfo(Data, ""));
+			foreach (string property in Data.AnimatedProperties)
+			{
+				_drawInfo.Add(property, new WidgetDrawInfo(Data, property));
+			}
 		}
 
-		private void DrawBlock(Graphics g, float start, float end, int y, float pps, int rowHeight)
+		public void DrawContents(Graphics g, int rowIndex, int x, int y, float pps, int rowHeight, float dataEndTime)
 		{
-			float startX = (Data.Start + start) * pps;
-			float length = (end - start) * pps;
-			g.FillRectangle(GetFillBrush(), startX, y, length, rowHeight + 1);
-			Pen outline = GetOutline();
-			g.DrawLine(outline, startX, y, startX, y + rowHeight);
-			g.DrawLine(outline, startX + length, y, startX + length, y + rowHeight);
-		}
+			if (_drawInfo == null)
+			{
+				CacheDrawData();
+			}
 
-		public void DrawContents(Graphics g, int rowIndex, int x, int y, float pps, int rowHeight)
-		{
 			if (rowIndex == 0)
 			{
-				float length = Data.Keyframes[Data.Keyframes.Count - 1].Time * pps;
-				if (Data.Keyframes.Count == 1)
+				WidgetDrawInfo drawInfo = _drawInfo[""];
+				float endTime = 0;
+				if (Data.AllowLinkToEnd)
 				{
-					length = Data.Length * pps;
+					if (Data.LinkedToEnd)
+					{
+						endTime = dataEndTime;
+					}
+					else
+					{
+						endTime = Data.Start + Data.Length;
+					}
 				}
-				float startX = Data.Start * pps;
-				g.FillRectangle(GetTitleBrush(), startX, y, length, rowHeight + 1);
-				g.DrawLine(Timeline.WidgetOutline, startX, y, startX, y + rowHeight);
-				g.DrawLine(Timeline.WidgetOutline, startX + length, y, startX + length, y + rowHeight);
+				drawInfo.Draw(g, GetTitleBrush(), Timeline.WidgetOutline, y, pps, rowHeight, endTime);
 
 				//global keyframes
 				foreach (LiveKeyframe kf in Data.Keyframes)
 				{
-					DrawKeyframe(g, (kf == _selectedFrame && _selectedProperties.Count == 0) || (kf == _hoverFrame && _hoverRow == 0) ? _keyframeFillSelected : _headerKeyframeFill, TimeToX(Data.Start + kf.Time, pps), y + rowHeight / 2 - KeyframeRadius - 1, kf, -1, null);
+					DrawKeyframe(g, (kf == _selectedFrame && _selectedProperties.Count == 0) || (kf == _hoverFrame && _hoverRow == 0) ? _keyframeFillSelected : _headerKeyframeFill, TimeToX(Data.Start + kf.Time, pps), y + rowHeight / 2 - KeyframeRadius - 1, drawInfo.GetKeyframeType(kf));
+				}
+
+				foreach (LiveEvent evt in Data.Events)
+				{
+					DrawEvent(g, evt == _selectedEvent || evt == _hoverEvent ? Brushes.White : Brushes.Pink, TimeToX(Data.Start + evt.Time, pps), y);
+				}
+
+				if (Data.LinkedToEnd && Data.Start + GetLength(0) < endTime)
+				{
+					g.DrawImage(Properties.Resources.Lock, TimeToX(endTime, pps), y + rowHeight / 2 - Properties.Resources.Lock.Height / 2);
 				}
 			}
 			else
 			{
 				string property = Data.Properties[rowIndex - 1];
 
-				if (Data.Keyframes.Count == 1)
+				WidgetDrawInfo drawInfo;
+				if (_drawInfo.TryGetValue(property, out drawInfo))
 				{
-					DrawBlock(g, 0, Data.Length, y, pps, rowHeight);
-				}
-				else
-				{
-					//fill blocks of contiguous animation
-					LiveKeyframe startFrame = null;
-					LiveKeyframe lastFrame = null;
+					drawInfo.Draw(g, GetFillBrush(), GetOutline(), y, pps, rowHeight, 0);
+
+					if (_playing)
+					{
+						float start, end;
+						float time = Data.GetInterpolatedTime(property, Data.Time, Data.TimeOffset, null, null, out start, out end);
+						int right = TimeToX(end + Data.Start, pps);
+						int left = TimeToX(start + Data.Start, pps);
+						int width = (right - left);
+						int interpolatedX = left + (int)(width * time);
+						g.FillRectangle(Brushes.DarkBlue, interpolatedX - 1, y, 3, rowHeight);
+					}
+
 					for (int i = 0; i < Data.Keyframes.Count; i++)
 					{
 						LiveKeyframe kf = Data.Keyframes[i];
-						if (kf.HasProperty(property))
-						{
-							KeyframeType type = kf.GetFrameType(property);
-							if (startFrame == null)
-							{
-								startFrame = kf;
-								lastFrame = kf;
-							}
-							else if (type == KeyframeType.Split)
-							{
-								//found the end frame
-								DrawBlock(g, startFrame, kf, y, pps, rowHeight);
-								startFrame = kf;
-								lastFrame = kf;
-							}
-							else if (type == KeyframeType.Begin)
-							{
-								//found the end frame
-								DrawBlock(g, startFrame, lastFrame, y, pps, rowHeight);
-								startFrame = kf;
-							}
-							else
-							{
-								lastFrame = kf;
-							}
-						}
+						if (!kf.HasProperty(property)) { continue; }
+
+						//keyframe
+						DrawKeyframe(g, (kf == _selectedFrame && (_selectedProperties.Count == 0 || _selectedProperties.Contains(property))) || (kf == _hoverFrame && (_hoverRow == 0 || _hoverRow == rowIndex)) ? _keyframeFillSelected : _keyframeFill, TimeToX(Data.Start + kf.Time, pps), y + rowHeight / 2 - KeyframeRadius - 1, drawInfo.GetKeyframeType(kf));
 					}
-					if (startFrame != null && startFrame != Data.Keyframes[Data.Keyframes.Count - 1])
-					{
-						DrawBlock(g, startFrame, Data.Keyframes[Data.Keyframes.Count - 1], y, pps, rowHeight);
-					}
-				}
-
-				if (_playing)
-				{
-					float start, end;
-					float time = Data.GetInterpolatedTime(property, Data.Time, Data.TimeOffset, null, null, out start, out end);
-					int right = TimeToX(end + Data.Start, pps);
-					int left = TimeToX(start + Data.Start, pps);
-					int width = (right - left);
-					int interpolatedX = left + (int)(width * time);
-					g.FillRectangle(Brushes.DarkBlue, interpolatedX - 1, y, 3, rowHeight);
-				}
-
-				HashSet<LiveKeyframe> drawnBlocks = new HashSet<LiveKeyframe>();
-				for (int i = 0; i < Data.Keyframes.Count; i++)
-				{
-					LiveKeyframe kf = Data.Keyframes[i];
-					if (!kf.HasProperty(property)) { continue; }
-
-					//repeat sign if this is the last frame of a looped block
-					LiveKeyframe start, end;
-					Data.GetBlock(property, kf.Time, out start, out end);
-					if (start != null)
-					{
-						if (!drawnBlocks.Contains(start))
-						{
-							drawnBlocks.Add(start);
-							LiveKeyframeMetadata metadata = start.GetMetadata(property, false);
-							if (metadata != null && metadata.Looped)
-							{
-								int repeatX = TimeToX(Data.Start + end.Time, pps);
-								g.FillEllipse(_repeatFill, repeatX + 6, y + rowHeight / 3 - 2, 4, 4);
-								g.FillEllipse(_repeatFill, repeatX + 6, y + 2 * rowHeight / 3 - 2, 4, 4);
-								g.FillRectangle(_repeatFill, repeatX + 11, y, 1, rowHeight + 1);
-								g.FillRectangle(_repeatFill, repeatX + 13, y, 3, rowHeight + 1);
-							}
-						}
-					}
-
-					//keyframe
-					DrawKeyframe(g, (kf == _selectedFrame && (_selectedProperties.Count == 0 || _selectedProperties.Contains(property))) || (kf == _hoverFrame && (_hoverRow == 0 || _hoverRow == rowIndex)) ? _keyframeFillSelected : _keyframeFill, TimeToX(Data.Start + kf.Time, pps), y + rowHeight / 2 - KeyframeRadius - 1, kf, i, property);
 				}
 			}
 		}
 
-		private void DrawKeyframe(Graphics g, Brush brush, int x, int y, LiveKeyframe kf, int frameIndex, string property)
+		private void DrawKeyframe(Graphics g, Brush brush, int x, int y, KeyframeDrawStyle type)
 		{
 			y += KeyframeRadius + 1;
 			Point[] pts;
-			KeyframeType type = kf.GetFrameType(property);
-			LiveKeyframe nextFrame = null;
-			if (property != null)
+			switch (type)
 			{
-				for (int i = frameIndex + 1; i < Data.Keyframes.Count; i++)
-				{
-					LiveKeyframe next = Data.Keyframes[i];
-					if (next.HasProperty(property))
-					{
-						nextFrame = next;
-						break;
-					}
-				}
-			}
-			if (property != null && type == KeyframeType.Begin)
-			{
-				// >
-				pts = new Point[] { new Point(x, y - KeyframeRadius), new Point(x + KeyframeRadius, y), new Point(x, y + KeyframeRadius) };
-			}
-			else if (property != null && frameIndex > 0 && nextFrame != null && nextFrame.GetFrameType(property) == KeyframeType.Begin)
-			{
-				// <
-				pts = new Point[] { new Point(x, y - KeyframeRadius), new Point(x, y + KeyframeRadius), new Point(x - KeyframeRadius, y) };
-			}
-			else if (property != null && type == KeyframeType.Split)
-			{
-				// <|>
-				pts = new Point[] { new Point(x, y - KeyframeRadius), new Point(x + KeyframeRadius, y), new Point(x, y + KeyframeRadius), new Point(x - KeyframeRadius, y), new Point(x, y - KeyframeRadius), new Point(x, y + KeyframeRadius) };
-			}
-			else
-			{
-				// <>
-				pts = new Point[] { new Point(x - KeyframeRadius, y), new Point(x, y - KeyframeRadius), new Point(x + KeyframeRadius, y), new Point(x, y + KeyframeRadius) };
+				case KeyframeDrawStyle.Begin:   // >
+					pts = new Point[] { new Point(x, y - KeyframeRadius), new Point(x + KeyframeRadius, y), new Point(x, y + KeyframeRadius) };
+					break;
+				case KeyframeDrawStyle.End:     // <
+					pts = new Point[] { new Point(x, y - KeyframeRadius), new Point(x, y + KeyframeRadius), new Point(x - KeyframeRadius, y) };
+					break;
+				case KeyframeDrawStyle.Split:   // <|>
+					pts = new Point[] { new Point(x, y - KeyframeRadius), new Point(x + KeyframeRadius, y), new Point(x, y + KeyframeRadius), new Point(x - KeyframeRadius, y), new Point(x, y - KeyframeRadius), new Point(x, y + KeyframeRadius) };
+					break;
+				default:  // <>
+					pts = new Point[] { new Point(x - KeyframeRadius, y), new Point(x, y - KeyframeRadius), new Point(x + KeyframeRadius, y), new Point(x, y + KeyframeRadius) };
+					break;
 			}
 			g.FillPolygon(brush, pts);
 			g.DrawPolygon(_penKeyframe, pts);
+		}
+
+		private void DrawEvent(Graphics g, Brush brush, int x, int y)
+		{
+			g.FillRectangle(brush, x - EventWidth / 2, y, EventWidth, EventHeight);
+			g.DrawRectangle(_penKeyframe, x - EventWidth / 2, y, EventWidth, EventHeight);
 		}
 
 		protected int TimeToX(float time, float pps)
@@ -836,6 +817,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					ClearSelection();
 				}
 				_selectedFrame = null;
+				_selectedEvent = null;
 				string property = Data.Properties[row - 1];
 				_selectedProperties.Add(property);
 				LiveKeyframeMetadata metadata = Data.GetBlockMetadata(property, args.Time);
@@ -853,6 +835,23 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public ITimelineAction GetAction(int x, float start, int row, int timelineWidth, float pps)
 		{
 			_hoverFrame = null;
+			_hoverEvent = null;
+
+			//see if an event is selected
+			if (row == 0)
+			{
+				for (int i = Data.Events.Count - 1; i >= 0; i--)
+				{
+					LiveEvent evt = Data.Events[i];
+					int evX = TimeToX(evt.Time, pps);
+					if (Math.Abs(x - evX) <= 5)
+					{
+						_hoverEvent = evt;
+						_hoverRow = row;
+						return new SelectEventTimelineAction(this, evt);
+					}
+				}
+			}
 
 			//see if a keyframe is selected
 			for (int i = Data.Keyframes.Count - 1; i >= 0; i--)
@@ -895,6 +894,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public void OnMouseOut()
 		{
 			_hoverFrame = null;
+			_hoverEvent = null;
 			Invalidate();
 		}
 
@@ -920,7 +920,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			LiveKeyframe previewFrame = Data.GetInterpolatedFrame(time - Data.Start);
 
 			//show whatever keyframe is under the current time, or an interpolated placeholder if there is none
-			LiveKeyframe frame = Data.Keyframes.Find(kf => kf.Time == time);
+			LiveKeyframe frame = Data.Keyframes.Find(kf => kf.Time + Data.Start == time);
 			if (frame == null)
 			{
 				frame = Data.CreateKeyframe(time - Data.Start);
@@ -959,7 +959,22 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public void UpdateSelection(WidgetSelectionArgs args)
 		{
-			if (_selectedFrame != null)
+			if (_selectedEvent != null)
+			{
+				//event selected
+				if (!Data.Events.Contains(_selectedEvent))
+				{
+					ClearSelection();
+				}
+				if (_selectedEvent != null)
+				{
+					args.AllowCut = true;
+					args.AllowCopy = true;
+					args.AllowDelete = true;
+					args.AllowDuplicate = false;
+				}
+			}
+			else if (_selectedFrame != null)
 			{
 				//keyframe selected
 				if (!Data.Keyframes.Contains(_selectedFrame))
@@ -990,7 +1005,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					args.AllowCut = true;
 					args.AllowCopy = true;
 					args.AllowDelete = _selectedFrame.Time > 0 || _selectedProperties.Count > 0;
-					args.AllowDuplicate = true;
+					args.AllowDuplicate = false;
 				}
 			}
 			if (_selectedFrame == null)
@@ -1023,6 +1038,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				args.AllowPaste = args.Timeline.CurrentTime >= Data.Start;
 			}
+			else if (clipboardData is LiveEvent)
+			{
+				args.AllowPaste = true;
+			}
 		}
 
 		public bool OnCopy(WidgetOperationArgs args)
@@ -1032,6 +1051,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				//copy a frame
 				LiveKeyframe kf = Data.CopyKeyframe(_selectedFrame, _selectedProperties);
 				Clipboards.Set<KeyframedWidget>(kf);
+				return true;
+			}
+			else if (_selectedEvent != null)
+			{
+				//copy an event
+				LiveEvent evt = Data.CopyEvent(_selectedEvent);
+				Clipboards.Set<KeyframedWidget>(evt);
 				return true;
 			}
 			else
@@ -1063,6 +1089,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					}
 					args.History.EndBulkRecord();
 				}
+			}
+			else if (_selectedEvent != null)
+			{
+				DeleteEventCommand command = new DeleteEventCommand(Data, _selectedEvent);
+				args.History.Commit(command);
 			}
 			else if (_selectedProperties.Count > 0)
 			{
@@ -1112,10 +1143,31 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 					PasteKeyframeCommand command = new PasteKeyframeCommand(Data, copiedFrame, time);
 					args.History.Commit(command);
+					ClearSelection();
 					_selectedFrame = command.NewKeyframe;
-					_selectedProperties.Clear();
 					args.Timeline.SelectData(_selectedFrame);
 				}
+			}
+			else if (clipboardData is LiveEvent)
+			{
+				LiveEvent evt = clipboardData as LiveEvent;
+				float time = args.Time;
+
+				//if an event is nearby, paste into it
+				int x = args.Timeline.TimeToX(time);
+				float minTime = args.Timeline.XToTime(x - EventWidth);
+				float maxTime = args.Timeline.XToTime(x + EventWidth);
+				LiveEvent otherEvent = Data.Events.Find(k => minTime <= k.Time && maxTime >= k.Time);
+				if (otherEvent != null)
+				{
+					time = otherEvent.Time;
+				}
+
+				PasteEventCommand command = new PasteEventCommand(Data, evt, time);
+				args.History.Commit(command);
+				ClearSelection();
+				_selectedEvent = command.NewEvent;
+				args.Timeline.SelectData(_selectedEvent);
 			}
 			else if (clipboardData is LiveAnimatedObject)
 			{
@@ -1126,7 +1178,34 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public bool OnDuplicate(WidgetOperationArgs args)
 		{
-			if (_selectedFrame == null)
+			if (_selectedEvent != null)
+			{
+				//duplicating event
+				float time = args.Time;
+
+				//if a keyframe is nearby, paste into it
+				int x = args.Timeline.TimeToX(time);
+				float minTime = args.Timeline.XToTime(x - KeyframeRadius);
+				float maxTime = args.Timeline.XToTime(x + KeyframeRadius);
+				LiveEvent evt = Data.Events.Find(k => minTime <= k.Time && maxTime >= k.Time);
+				if (evt != null)
+				{
+					time = evt.Time;
+				}
+				if (Math.Abs(_selectedEvent.Time + Data.Start - time) < 0.001f)
+				{
+					return false; //can't duplicate into itself
+				}
+
+				PasteEventCommand command = new PasteEventCommand(Data, _selectedEvent, time);
+				args.History.Commit(command);
+				ClearSelection();
+				_selectedEvent = command.NewEvent;
+				args.Timeline.SelectData(_selectedEvent);
+				return true;
+
+			}
+			else if (_selectedFrame == null)
 			{
 				//duplicating whole widget
 				LiveObject sprite = Data.Copy();
@@ -1185,6 +1264,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public void OnDoubleClick(WidgetActionArgs args)
 		{
 			SelectFrameDataWithPreview(args.Time);
+		}
+
+		public LiveEvent GetEventBetween(float start, float end)
+		{
+			for (int i = 0; i < Data.Events.Count; i++)
+			{
+				float time = Data.Events[i].Time + Data.Start;
+				if (start <= time && end >= time)
+				{
+					return Data.Events[i];
+				}
+			}
+			return null;
 		}
 	}
 }

@@ -112,7 +112,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public ITimelineAction GetAction(int x, float start, int row, int timelineWidth, float pps)
 		{
-			return new MoveWidgetTimelineAction(false);
+			return new MoveBreakTimelineAction();
 		}
 
 		public void UpdateSelection(WidgetSelectionArgs args)
@@ -127,7 +127,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public bool OnDelete(WidgetOperationArgs args)
 		{
-			if (args.IsSilent || MessageBox.Show($"Are you sure you want to completely remove {ToString()}?", "Remove Sprite", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+			if (args.IsSilent || MessageBox.Show($"Are you sure you want to completely remove {ToString()}?", "Remove Break", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 			{
 				DeleteWidgetCommand command = new DeleteWidgetCommand(Data, this);
 				args.History.Commit(command);

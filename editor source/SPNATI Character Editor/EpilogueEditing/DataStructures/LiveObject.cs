@@ -6,7 +6,6 @@ using System.Globalization;
 using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
 using SPNATI_Character_Editor.Controls;
-using SPNATI_Character_Editor.Controls.EditControls;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
@@ -77,15 +76,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public abstract bool IsVisible { get; }
 
-		//Not exposing since there are still some questions about the best way to recognize this from a PoseDirective
-		//[Boolean(DisplayName = "Full Length", GroupOrder = 10, Description = "If checked, the sprite has no set end time.")]
-		public bool LinkedToEnd
+		public bool AllowLinkToEnd
 		{
 			get { return Get<bool>(); }
 			set { Set(value); }
 		}
 
-		[DirectiveMarker(DisplayName = "Marker", GroupOrder = 13, Key = "marker", Description = "Run this directive only if the marker's condition is met", ShowPrivate = true)]
+		public bool LinkedToEnd
+		{
+			get { return Get<bool>(); }
+			set { Set(value); if (value) { AllowLinkToEnd = true; } }
+		}
+
+		[Text(DisplayName = "Marker", GroupOrder = 13, Key = "marker", Description = "Run this directive only if the marker's condition is met")]
 		public string Marker
 		{
 			get { return Get<string>(); }
