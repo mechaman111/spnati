@@ -417,7 +417,7 @@ function expandNicknames (self, target) {
 /************************************************************
  * Expands ~target.*~ and ~[player].*~ variables.
  ************************************************************/
-function expandPlayerVariable(split_fn, args, self, player, bindings) {
+function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     if (split_fn.length > 0) var fn = split_fn[0].toLowerCase();
     
     switch (fn) {
@@ -496,7 +496,7 @@ function expandPlayerVariable(split_fn, args, self, player, bindings) {
             } else return min;
         }, 10) - player.countLayers();
     case 'diff':
-        var other = (!args ? self : findVariablePlayer(args, self, player, bindings));
+        var other = (!args ? self : findVariablePlayer(args, self, target, bindings));
         if (other) {
             return player.countLayers() - other.countLayers();
         }
@@ -620,7 +620,7 @@ function expandDialogue (dialogue, self, target, bindings) {
             default:
                 var variablePlayer = findVariablePlayer(variable, self, target, bindings);
                 if (variablePlayer) {
-                    substitution = expandPlayerVariable(fn_parts, args, self, variablePlayer, bindings);
+                    substitution = expandPlayerVariable(fn_parts, args, variablePlayer, self, target, bindings);
                 } else {
                     console.error("Unknown variable:", variable);
                 }
