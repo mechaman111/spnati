@@ -1288,14 +1288,7 @@ function updateOpponentCountStats(opponentArr, uiElements) {
                 console.log("[LineImageCount] Fetching counts for " + opp.label + " in slot " + idx);
             }
 
-            var countsPromise = new Promise(function (resolve, reject) {
-                fetchCompressedURL(
-                    opp.folder + 'behaviour.xml',
-                    resolve, reject
-                );
-            });
-
-            countsPromise.then(countLinesImages).then(function(response) {
+            fetchCompressedURL(opp.folder + 'behaviour.xml').then(countLinesImages).then(function(response) {
                 opp.uniqueLineCount = response.numUniqueLines;
                 opp.posesImageCount = response.numPoses;
 
@@ -1367,40 +1360,40 @@ function countLinesImages(xml) {
     var poses = {};
     
     var matched = $(xml).find('state').get();
+    var deferred = $.Deferred();
     
-    return new Promise(function (resolve, reject) {
-        /* Avoid blocking the UI by breaking the work into smaller chunks. */
-        function process () {
-            var startTs = Date.now();
+    /* Avoid blocking the UI by breaking the work into smaller chunks. */
+    function process () {
+        var startTs = Date.now();
             
-            if (DEBUG) console.log("Processing: "+matched.length+" states to go");
-            do {
-                data = matched.shift();
-                
-                numTotalLines++;
-                
-        		// count only unique lines of dialogue
-        		if (lines[data.textContent.trim()] === undefined) numUniqueDialogueLines++;
-                lines[data.textContent.trim()] = 1;
-                
-        		// count unique number of poses used in dialogue
-        		// note that this number may differ from actual image count if some images
-        		// are never used, or if images that don't exist are used in the dialogue
-        		if (poses[data.getAttribute("img")] === undefined) numUniqueUsedPoses++;
-                poses[data.getAttribute("img")] = 1;
-            } while (Date.now() - startTs < 50 && matched.length > 0);
+        if (DEBUG) console.log("Processing: "+matched.length+" states to go");
+        do {
+            data = matched.shift();
+
+            numTotalLines++;
             
-            if (matched.length > 0) {
-                setTimeout(process.bind(null), 50);
-            } else {
-                return resolve({
-                    numTotalLines : numTotalLines,
-                    numUniqueLines : numUniqueDialogueLines,
-                    numPoses : numUniqueUsedPoses
-                });
-            }
-        }
+        	// count only unique lines of dialogue
+        	if (lines[data.textContent.trim()] === undefined) numUniqueDialogueLines++;
+            lines[data.textContent.trim()] = 1;
+            
+        	// count unique number of poses used in dialogue
+        	// note that this number may differ from actual image count if some images
+        	// are never used, or if images that don't exist are used in the dialogue
+        	if (poses[data.getAttribute("img")] === undefined) numUniqueUsedPoses++;
+            poses[data.getAttribute("img")] = 1;
+        } while (Date.now() - startTs < 50 && matched.length > 0);
         
-        process();
-    });
+        if (matched.length > 0) {
+            setTimeout(process.bind(null), 50);
+        } else {
+            return deferred.resolve({
+                numTotalLines : numTotalLines,
+                numUniqueLines : numUniqueDialogueLines,
+                numPoses : numUniqueUsedPoses
+            });
+        }
+    }
+    
+    process();
+    return deferred.promise();
 }

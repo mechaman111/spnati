@@ -1286,16 +1286,10 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             console.log("[LineImageCount] Fetching counts for " + opponent.label);
         }
 
-        var countsPromise = new Promise(function (resolve, reject) {
-            fetchCompressedURL(
-                opponent.folder + 'behaviour.xml',
-                resolve, reject
-            );
-        });
-
         this.linecountLabel.text("Loading...");
         this.posecountLabel.text("Loading...");
-        countsPromise.then(countLinesImages).then(function(response) {
+
+        fetchCompressedURL(opponent.folder + 'behaviour.xml').then(countLinesImages).then(function(response) {
             opponent.uniqueLineCount = response.numUniqueLines;
             opponent.posesImageCount = response.numPoses;
 
