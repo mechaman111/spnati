@@ -1,7 +1,7 @@
 ﻿using Desktop;
-using Desktop.Messaging;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
@@ -12,12 +12,14 @@ namespace SPNATI_Character_Editor.Activities
 	{
 		private Character _character;
 		private TargetData _selectedData;
-		private int _currentLine;
 		private Case _workingResponse;
 		public bool Modified { get; private set; }
 		private Dictionary<Character, List<TargetData>> _lines = new Dictionary<Character, List<TargetData>>();
 		private Dictionary<Character, List<TargetData>> _filterLines = new Dictionary<Character, List<TargetData>>();
 		private ImageLibrary _imageLibrary;
+		private int _oldSplitter;
+		private bool _editing;
+		private bool _loading;
 
 		public BanterWizard()
 		{
@@ -40,6 +42,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnFirstActivate()
 		{
+			ctlResponse.SetCharacter(_character);
 			HideResponses();
 			lblCharacters.Text = string.Format(lblCharacters.Text, _character);
 			lstCharacters.Sorted = true;
@@ -58,6 +61,24 @@ namespace SPNATI_Character_Editor.Activities
 			}
 		}
 
+		public override bool CanQuit(CloseArgs args)
+		{
+			if (_loading)
+			{
+				return false;
+			}
+			return base.CanQuit(args);
+		}
+
+		public override bool CanDeactivate(DeactivateArgs args)
+		{
+			if (_loading)
+			{
+				return false;
+			}
+			return base.CanDeactivate(args);
+		}
+
 		private void lstCharacters_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			ShowTargetedLines(lstCharacters.SelectedItem as Character, _lines, TargetType.DirectTarget);
@@ -72,6 +93,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private List<TargetData> LoadLines(Character other, TargetType targetType)
 		{
+			other.Behavior.FlagTemporary();
 			List<TargetData> lines = new List<TargetData>();
 			foreach (var stageCase in other.GetWorkingCasesTargetedAtCharacter(_character, targetType))
 			{
@@ -107,6 +129,7 @@ namespace SPNATI_Character_Editor.Activities
 				TargetData data = new TargetData(other, lastCase);
 				lines.Add(data);
 			}
+			other.Behavior.ReleaseTemporary();
 			return lines;
 		}
 
@@ -114,7 +137,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (other == null)
 				return;
-			lblLines.Text = "Lines spoken by " + other;
+			grpLines.Text = "Lines spoken by " + other;
 			HideResponses();
 			List<TargetData> lines = targetedLines.GetOrAddDefault(other, () =>
 			{
@@ -152,6 +175,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (targetedCase.Target != null)
 			{
 				target = CharacterDatabase.Get(targetedCase.Target);
+				if (target == null) { return "???"; }
 			}
 
 			if (trigger.Tag.Contains("_removing_"))
@@ -186,7 +210,6 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void gridLines_CellEnter(object sender, DataGridViewCellEventArgs e)
 		{
-			_currentLine = e.RowIndex;
 			SelectLine(e.RowIndex);
 		}
 
@@ -200,7 +223,7 @@ namespace SPNATI_Character_Editor.Activities
 				_selectedData = data;
 				lblCaseInfo.Text = data.Case.ToString();
 
-				lblBaseLine.Text = string.Format("{0} is reacting to these lines from {1}:", _selectedData.Character, _character);
+				grpBaseLine.Text = string.Format("{0} may be reacting to these lines from {1}:", _selectedData.Character, _character);
 
 				ImageLibrary library = ImageLibrary.Get(_selectedData.Character);
 				DialogueLine line = row.Cells["ColText"].Tag as DialogueLine;
@@ -231,7 +254,7 @@ namespace SPNATI_Character_Editor.Activities
 						if (workingCase.MatchesConditions(sampleResponse))
 						{
 							//Found one
-							ShowResponse(workingCase);
+							ShowResponse(workingCase, false);
 							hasResponses = true;
 							break;
 						}
@@ -283,7 +306,15 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (index == -1)
 				return;
-			string image = gridResponse.GetImage(index);
+			string image = "";
+			if (ctlResponse.Visible)
+			{
+				image = ctlResponse.GetImage(index);
+			}
+			else
+			{
+				image = gridResponse.GetImage(index);
+			}
 			CharacterImage img = null;
 			img = _imageLibrary.Find(image);
 			if (img == null)
@@ -297,26 +328,12 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void cmdCreateResponse_Click(object sender, EventArgs e)
 		{
-			if (_workingResponse != null)
-			{
-				DeleteResponse();
-			}
-			else
+			if (_workingResponse == null)
 			{
 				CreateResponse();
 			}
 		}
-
-		private void DeleteResponse()
-		{
-			if (_workingResponse == null)
-				return;
-			Modified = true;
-			_character.Behavior.RemoveWorkingCase(_workingResponse);
-			HideResponses();
-			SelectLine(_currentLine);
-		}
-
+		
 		private void CreateResponse()
 		{
 			if (_selectedData == null)
@@ -325,8 +342,7 @@ namespace SPNATI_Character_Editor.Activities
 			Case response = _selectedData.Case.CreateResponse(_selectedData.Character, _character);
 			if (response == null)
 				return;
-			_character.Behavior.AddWorkingCase(response);
-			ShowResponse(response);
+			ShowResponse(response, true);
 		}
 
 		private void HideResponses()
@@ -336,14 +352,24 @@ namespace SPNATI_Character_Editor.Activities
 			splitContainer3.Panel1Collapsed = false;
 			if (_workingResponse != null)
 			{
-				gridResponse.Save();
-				gridResponse.Clear();
+				if (gridResponse.Visible)
+				{
+					gridResponse.Save();
+					gridResponse.Clear();
+				}
+				else if (_editing)
+				{
+					ctlResponse.SetCase(null, null);
+					_editing = false;
+					gridLines.Enabled = true;
+					splitContainer2.SplitterDistance = _oldSplitter;
+				}
 				_workingResponse = null;
 				_selectedData = null;
 			}
 		}
 
-		private void ShowResponse(Case response)
+		private void ShowResponse(Case response, bool editing)
 		{
 			HashSet<int> selectedStages = new HashSet<int>();
 			foreach (int stage in response.Stages)
@@ -351,12 +377,37 @@ namespace SPNATI_Character_Editor.Activities
 				selectedStages.Add(stage);
 			}
 			_workingResponse = response;
-			gridResponse.SetData(_character, _character.Behavior.Stages.Find(s => s.Id == response.Stages[0]), response, selectedStages, _imageLibrary);
-			lblResponse.Text = response.ToString();
+			if (editing)
+			{
+				gridResponse.Visible = false;
+				ctlResponse.Visible = true;
+				ctlResponse.SetCase(new Stage(response.Stages[0]), response);
+			}
+			else
+			{
+				gridResponse.Visible = true;
+				ctlResponse.Visible = false;
+				gridResponse.SetData(_character, _character.Behavior.Stages.Find(s => s.Id == response.Stages[0]), response, selectedStages, _imageLibrary);
+			}			
+			
+			grpResponse.Text = $"Response from {_character}";
 			splitContainer3.Panel2Collapsed = false;
 			splitContainer3.Panel1Collapsed = true;
+			cmdAccept.Enabled = editing;
+			cmdDiscard.Enabled = editing;
 
-			cmdCreateResponse.Text = "Delete Response";
+			cmdCreateResponse.Enabled = false;
+			if (editing)
+			{
+				_editing = true;
+				_oldSplitter = splitContainer2.SplitterDistance;
+				splitContainer2.SplitterDistance = 110;
+				if (gridLines.SelectedRows.Count > 0)
+				{
+					gridLines.FirstDisplayedScrollingRowIndex = gridLines.SelectedRows[0].Index;
+				}
+				gridLines.Enabled = false;
+			}
 		}
 
 		private class TargetData
@@ -376,7 +427,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_workingResponse != null)
 			{
-				gridResponse.Save();
+				ctlResponse.Save();
 			}
 		}
 
@@ -411,38 +462,84 @@ namespace SPNATI_Character_Editor.Activities
 			FilterTargets();
 		}
 
-		private void FilterTargets()
+		private async void FilterTargets()
 		{
+			_loading = true;
+			splitContainer1.Panel1.Enabled = false;
+			panelLoad.Visible = true;
+			panelLoad.BringToFront();
+			int characters = CharacterDatabase.Count;
 			Cursor.Current = Cursors.WaitCursor;
 			lstCharacters.Items.Clear();
+			int count = 0;
+			progress.Maximum = characters;
 			foreach (Character other in CharacterDatabase.Characters)
 			{
+				progress.Value = count++;
 				if (other == _character || other.FolderName == "human")
 				{
 					continue;
 				}
-				if (_lines.ContainsKey(other))
+				lblProgress.Text = $"Scanning {other}...";
+				bool add = await Task.Run(() =>
 				{
-					if (_lines[other].Count > 0)
+					if (_lines.ContainsKey(other))
 					{
-						lstCharacters.Items.Add(other);
+						if (_lines[other].Count > 0)
+						{
+							return true;
+						}
 					}
-				}
-				else
+					else
+					{
+						List<TargetData> lines = LoadLines(other, TargetType.DirectTarget);
+						_lines[other] = lines;
+						if (lines.Count > 0)
+						{
+							return true;
+						}
+					}
+					return false;
+				});
+				if (add)
 				{
-					List<TargetData> lines = LoadLines(other, TargetType.DirectTarget);
-					_lines[other] = lines;
-					if (lines.Count > 0)
-					{
-						lstCharacters.Items.Add(other);
-					}
+					lstCharacters.Items.Add(other);
 				}
 			}
+			panelLoad.Visible = false;
 			int margin = lstCharacters.Top - cmdFilter.Bottom;
 			lstCharacters.Height = lstCharacters.Height + cmdFilter.Height + margin;
 			lstCharacters.Top = cmdFilter.Top;
 			cmdFilter.Visible = false;
+			splitContainer1.Panel1.Enabled = true;
 			Cursor.Current = Cursors.Default;
+			_loading = false;
+		}
+
+		private void cmdJump_Click(object sender, EventArgs e)
+		{
+			if (_editing)
+			{
+				ctlResponse.Save();
+				_character.Behavior.AddWorkingCase(_workingResponse);
+			}
+			else
+			{
+				gridResponse.Save();
+			}
+			Shell.Instance.Launch<Character, DialogueEditor>(_character, _workingResponse);
+		}
+
+		private void cmdAccept_Click(object sender, EventArgs e)
+		{
+			ctlResponse.Save();
+			_character.Behavior.AddWorkingCase(_workingResponse);
+			HideResponses();
+		}
+
+		private void cmdDiscard_Click(object sender, EventArgs e)
+		{
+			HideResponses();
 		}
 	}
 }

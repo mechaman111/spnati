@@ -1,12 +1,14 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
+using Desktop.Skinning;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	public partial class DialogueTree : UserControl
+	public partial class DialogueTree : UserControl, ISkinControl
 	{
 		private string LastViewSetting = "TreeView";
 
@@ -32,40 +34,65 @@ namespace SPNATI_Character_Editor.Controls
 		private DialogueNode _selectedNode;
 		private bool _changingViews;
 		private IDialogueTreeView _view;
-		private Queue<TreeNode> _pendingDeletion = new Queue<TreeNode>();
 		private bool _showHidden;
 
 		public DialogueTree()
 		{
 			InitializeComponent();
 
-			recTreeTarget.RecordType = typeof(Character);
-			recTag.RecordType = typeof(Tag);
+			cboView.Items.AddRange(new string[] { "Stage", "Case" });
+		}
+
+		private void DialogueTree_Load(object sender, EventArgs e)
+		{
+			if (!DesignMode)
+			{
+				recTreeTarget.RecordType = typeof(Character);
+				recTag.RecordType = typeof(Tag);
+
+				lstDialogue.FormatRow += LstDialogue_FormatRow;
+				lstDialogue.FormatGroup += LstDialogue_FormatGroup;
+				lstDialogue.RightClick += LstDialogue_RightClick;
+			}
 		}
 
 		public void SetData(Character character)
 		{
 			_character = character;
 			_editorData = CharacterDatabase.GetEditorData(_character);
-			cboView.SelectedIndexChanged += cboView_SelectedIndexChanged;
 			int view = Config.GetInt(LastViewSetting);
 			cboView.SelectedIndex = view;
+			cboView.SelectedIndexChanged += cboView_SelectedIndexChanged;
 			if (_view == null)
 			{
-				_view = new StageView();
-				_view.DeleteNode += _view_DeleteNode;
-				_view.SaveNode += _view_SaveNode;
-				_view.Initialize(treeDialogue, character);
+				if (view == 0)
+				{
+					_view = new StageView();
+				}
+				else
+				{
+					_view = new CaseView();
+				}
+				InitializeView();
 			}
 			tsbtnSplit.DropDown = _view.GetCopyMenu();
+			if (tsbtnSplit.DropDown != null)
+			{
+				SkinManager.Instance.ReskinControl(tsbtnSplit.DropDown, SkinManager.Instance.CurrentSkin);
+			}
 			_character.Behavior.CaseAdded += Behavior_CaseAdded;
 			_character.Behavior.CaseRemoved += Behavior_CaseRemoved;
 			_character.Behavior.CaseModified += Behavior_CaseModified;
 			PopulateTriggerMenu();
 			_view.BuildTree(_showHidden);
+		}
 
-			treeDialogue.BeforeSelect += TreeDialogue_BeforeSelect;
-			treeDialogue.AfterSelect += TreeDialogue_AfterSelect;
+		private void InitializeView()
+		{
+			_view.SaveNode += _view_SaveNode;
+			lstDialogue.DataSource = null;
+			lstDialogue.ClearColumns();
+			_view.Initialize(lstDialogue, _character);
 		}
 
 		private void PopulateTriggerMenu()
@@ -107,7 +134,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="tag">Tag of case to add</param>
 		/// <param name="singleStage">If true, initial stages will only be the current stage. If false, all possible stages will be checked.</param>
-		private void AddAndSelectNewCase(string tag, bool singleStage)
+		private void AddAndSelectNewCase(string tag, string folder, bool singleStage)
 		{
 			Case newCase = new Case(tag);
 			int startStage;
@@ -122,7 +149,8 @@ namespace SPNATI_Character_Editor.Controls
 
 			if (singleStage)
 			{
-				int offset = currentStage - Clothing.MaxLayers;
+				//shift finished stages to the layer-appropriate number
+				int offset = trigger.StartStage - Clothing.MaxLayers;
 				if (offset >= 0)
 				{
 					currentStage = _character.Layers + offset;
@@ -138,6 +166,11 @@ namespace SPNATI_Character_Editor.Controls
 						newCase.Stages.Add(stageIndex);
 					}
 				}
+			}
+
+			if (!string.IsNullOrEmpty(folder) && _editorData != null)
+			{
+				_editorData.SetLabel(newCase, null, null, folder);
 			}
 
 			//Give the host control a chance to setup some properties
@@ -174,7 +207,7 @@ namespace SPNATI_Character_Editor.Controls
 			CaseSelectionEventArgs args = new CaseSelectionEventArgs(_selectedNode.Stage, selectedCase);
 			SelectedNodeChanging?.Invoke(this, args);
 			_selectedNode = null;
-			treeDialogue.SelectedNode = null;
+			lstDialogue.SelectedItem = null;
 		}
 
 		/// <summary>
@@ -215,7 +248,6 @@ namespace SPNATI_Character_Editor.Controls
 		private void CleanupView()
 		{
 			if (_view == null) { return; }
-			_view.DeleteNode -= _view_DeleteNode;
 			_view.SaveNode -= _view_SaveNode;
 		}
 
@@ -253,7 +285,7 @@ namespace SPNATI_Character_Editor.Controls
 					return workingCase.Target == key || workingCase.AlsoPlaying == key;
 				});
 			}
-			treeDialogue.ExpandAll();
+			lstDialogue.ExpandAll();
 		}
 
 		private void recTag_RecordChanged(object sender, RecordEventArgs e)
@@ -279,54 +311,49 @@ namespace SPNATI_Character_Editor.Controls
 					return workingCase.Filter == key;
 				});
 			}
-			treeDialogue.ExpandAll();
+			lstDialogue.ExpandAll();
 		}
 
-		private void TreeDialogue_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+		private void lstDialogue_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (_changingViews) { return; }
 			if (_selectedNode != null)
 			{
-				CaseSelectionEventArgs args = new CaseSelectionEventArgs();
-				args.Stage = _selectedNode.Stage;
-				args.Case = _selectedNode.Case;
-				SelectedNodeChanging?.Invoke(this, args);
-			}
-		}
+				CaseSelectionEventArgs selectionArgs = new CaseSelectionEventArgs();
+				selectionArgs.Stage = _selectedNode.Stage;
+				selectionArgs.Case = _selectedNode.Case;
+				//DialogueNode targetNode = lstDialogue.SelectedItem as DialogueNode;
+				SelectedNodeChanging?.Invoke(this, selectionArgs);
 
-		private void TreeDialogue_AfterSelect(object sender, TreeViewEventArgs e)
-		{
-			if (_changingViews) { return; }
-			TreeNode node = treeDialogue.SelectedNode;
-			DialogueNode wrapper = node?.Tag as DialogueNode;
-			_selectedNode = wrapper;
+				//the above might have shuffled items around, so make sure we actually have the targetNode selected
+				//if (targetNode != lstDialogue.SelectedItem)
+				//{
+				//	_selectedNode = null;
+				//	lstDialogue.SelectedItem = targetNode;
+				//	return; //another event will be raised
+				//}
+			}
+
+			DialogueNode node = lstDialogue.SelectedItem as DialogueNode;
+			_selectedNode = node;
 
 			CaseSelectionEventArgs args = new CaseSelectionEventArgs();
-			if (wrapper != null)
+			if (node != null)
 			{
-				args.Stage = wrapper.Stage;
-				args.Case = wrapper.Case;
+				args.Stage = node.Stage;
+				args.Case = node.Case;
 			}
 			SelectedNodeChanged?.Invoke(this, args);
 
-			if (wrapper == null)
+			if (node == null)
 			{
 				tsbtnRemoveDialogue.Enabled = false;
 				tsbtnSplit.Enabled = false;
 				return;
 			}
 
-			switch (wrapper.NodeType)
-			{
-				case NodeType.Case:
-					tsbtnRemoveDialogue.Enabled = true;
-					tsbtnSplit.Enabled = true;
-					break;
-				case NodeType.Stage:
-					tsbtnRemoveDialogue.Enabled = false;
-					tsbtnSplit.Enabled = false;
-					break;
-			}
+			tsbtnRemoveDialogue.Enabled = true;
+			tsbtnSplit.Enabled = true;
 		}
 
 		private void Behavior_CaseModified(object sender, Case modifiedCase)
@@ -354,7 +381,8 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="e"></param>
 		private void tsbtnAddDialogue_ButtonClick(object sender, EventArgs e)
 		{
-			string tag = _view.AddingCase();
+			string folder;
+			string tag = _view.AddingCase(out folder);
 			if (tag == null)
 			{
 				return;
@@ -365,7 +393,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
-				AddAndSelectNewCase(tag, true);
+				AddAndSelectNewCase(tag, folder, true);
 			}
 		}
 
@@ -375,7 +403,7 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 
 			string tag = ((ToolStripMenuItem)sender).Name;
-			AddAndSelectNewCase(tag, false);
+			AddAndSelectNewCase(tag, "", false);
 		}
 
 		private void tsmiRemove_Click(object sender, EventArgs e)
@@ -383,28 +411,12 @@ namespace SPNATI_Character_Editor.Controls
 			DeleteSelectedCase();
 		}
 
-		private void treeDialogue_KeyDown(object sender, KeyEventArgs e)
+		private void lstDialogue_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Delete)
 			{
 				DeleteSelectedCase();
 			}
-		}
-
-		private void tmrDelete_Tick(object sender, EventArgs e)
-		{
-			tmrDelete.Enabled = false;
-			while (_pendingDeletion.Count > 0)
-			{
-				TreeNode node = _pendingDeletion.Dequeue();
-				node.Remove();
-			}
-		}
-
-		private void _view_DeleteNode(object sender, TreeNode node)
-		{
-			_pendingDeletion.Enqueue(node);
-			tmrDelete.Enabled = true;
 		}
 
 		private void _view_SaveNode(object sender, EventArgs e)
@@ -428,9 +440,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				_view = new CaseView();
 			}
-			_view.DeleteNode += _view_DeleteNode;
-			_view.SaveNode += _view_SaveNode;
-			_view.Initialize(treeDialogue, _character);
+			InitializeView();
 			tsbtnSplit.DropDown = _view.GetCopyMenu();
 			_view.SetFilter(null);
 			_view.BuildTree(_showHidden);
@@ -440,8 +450,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void triggerMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			TreeNode selected = treeDialogue.SelectedNode;
-			DialogueNode node = selected?.Tag as DialogueNode;
+			DialogueNode node = lstDialogue.SelectedItem as DialogueNode;
 
 			foreach (ToolStripMenuItem group in triggerMenu.Items)
 			{
@@ -465,7 +474,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void tsConfig_DropDownOpening(object sender, EventArgs e)
 		{
-			DialogueNode node = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			DialogueNode node = lstDialogue.SelectedItem as DialogueNode;
 			if (node == null || node.Case == null)
 			{
 				tsHide.Enabled = false;
@@ -482,7 +491,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void tsHide_Click(object sender, EventArgs e)
 		{
-			DialogueNode node = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			DialogueNode node = lstDialogue.SelectedItem as DialogueNode;
 			Case selectedCase = node?.Case;
 			if (selectedCase == null) { return; }
 
@@ -492,7 +501,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void tsUnhide_Click(object sender, EventArgs e)
 		{
-			DialogueNode node = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			DialogueNode node = lstDialogue.SelectedItem as DialogueNode;
 			Case selectedCase = node?.Case;
 			if (selectedCase == null) { return; }
 
@@ -504,6 +513,61 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			_showHidden = !_showHidden;
 			RegenerateTree();
+		}
+
+		private void LstDialogue_FormatGroup(object sender, FormatGroupEventArgs e)
+		{
+			_view?.FormatGroup(e);
+		}
+
+		private void LstDialogue_FormatRow(object sender, FormatRowEventArgs e)
+		{
+			_view?.FormatRow(e);
+		}
+
+		private void LstDialogue_RightClick(object sender, AccordionListViewEventArgs e)
+		{
+			ContextMenuStrip strip = _view?.ShowContextMenu(e);
+			if (strip != null)
+			{
+				strip.Show(Cursor.Position);
+			}
+		}
+
+		private void cmdLegend_Click(object sender, EventArgs e)
+		{
+			new DialogueLegend().ShowDialog();
+		}
+
+		private void tsRecipe_Click(object sender, EventArgs e)
+		{
+			Recipe recipe = RecordLookup.DoLookup(typeof(Recipe), "", false, null) as Recipe;
+			if (recipe != null)
+			{
+				Case instance = recipe.AddToCharacter(_character);
+				SelectNode(instance.Stages[0], instance);
+			}
+		}
+
+		private void tsRefresh_Click(object sender, EventArgs e)
+		{
+			int currentStage = _selectedNode?.Stage?.Id ?? -1;
+			Case currentCase = _selectedNode?.Case;
+			_view?.Sort();
+			Invalidate(true);
+			if (currentCase != null && currentStage >= 0)
+			{
+				_view.SelectNode(currentStage, currentCase);
+			}
+		}
+
+		public void OnUpdateSkin(Skin skin)
+		{
+			SkinManager.Instance.ReskinControl(triggerMenu, skin);
+			if (tsbtnSplit.DropDown != null)
+			{
+				SkinManager.Instance.ReskinControl(tsbtnSplit.DropDown, skin);
+			}
 		}
 	}
 

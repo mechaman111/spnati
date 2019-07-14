@@ -28,26 +28,35 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.cboFrom = new System.Windows.Forms.ComboBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.cboTo = new System.Windows.Forms.ComboBox();
+			this.cboFrom = new Desktop.Skinning.SkinnedComboBox();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
+			this.label2 = new Desktop.Skinning.SkinnedLabel();
+			this.cboTo = new Desktop.Skinning.SkinnedComboBox();
 			this.SuspendLayout();
 			// 
 			// cboFrom
 			// 
 			this.cboFrom.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-			this.cboFrom.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cboFrom.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+			this.cboFrom.BackColor = System.Drawing.Color.White;
+			this.cboFrom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+			this.cboFrom.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cboFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboFrom.FormattingEnabled = true;
 			this.cboFrom.Location = new System.Drawing.Point(42, 0);
 			this.cboFrom.Name = "cboFrom";
+			this.cboFrom.SelectedIndex = -1;
+			this.cboFrom.SelectedItem = null;
 			this.cboFrom.Size = new System.Drawing.Size(150, 21);
+			this.cboFrom.Sorted = false;
 			this.cboFrom.TabIndex = 0;
 			// 
 			// label1
 			// 
 			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label1.AutoSize = true;
+			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label1.Location = new System.Drawing.Point(3, 3);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(33, 13);
@@ -58,6 +67,8 @@
 			// 
 			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label2.AutoSize = true;
+			this.label2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label2.Location = new System.Drawing.Point(198, 3);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(19, 13);
@@ -67,11 +78,18 @@
 			// cboTo
 			// 
 			this.cboTo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-			this.cboTo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cboTo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+			this.cboTo.BackColor = System.Drawing.Color.White;
+			this.cboTo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+			this.cboTo.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cboTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboTo.FormattingEnabled = true;
 			this.cboTo.Location = new System.Drawing.Point(223, 0);
 			this.cboTo.Name = "cboTo";
+			this.cboTo.SelectedIndex = -1;
+			this.cboTo.SelectedItem = null;
 			this.cboTo.Size = new System.Drawing.Size(150, 21);
+			this.cboTo.Sorted = false;
 			this.cboTo.TabIndex = 3;
 			// 
 			// StageControl
@@ -91,9 +109,9 @@
 
 		#endregion
 
-		private System.Windows.Forms.ComboBox cboFrom;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.ComboBox cboTo;
+		private Desktop.Skinning.SkinnedComboBox cboFrom;
+		private Desktop.Skinning.SkinnedLabel label1;
+		private Desktop.Skinning.SkinnedLabel label2;
+		private Desktop.Skinning.SkinnedComboBox cboTo;
 	}
 }

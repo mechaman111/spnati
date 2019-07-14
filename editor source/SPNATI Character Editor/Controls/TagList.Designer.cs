@@ -29,9 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.grid = new System.Windows.Forms.DataGridView();
+			this.grid = new Desktop.Skinning.SkinnedDataGridView();
 			this.ColTag = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColStages = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.ColStages = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			this.SuspendLayout();
@@ -86,9 +86,9 @@
 
 		#endregion
 
-		private System.Windows.Forms.DataGridView grid;
+		private Desktop.Skinning.SkinnedDataGridView grid;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColTag;
-		private System.Windows.Forms.DataGridViewButtonColumn ColStages;
+		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColStages;
 		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }

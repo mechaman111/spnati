@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class ChangeLogReview : Form
+	public partial class ChangeLogReview : SkinnedForm
 	{
 		public ChangeLogReview()
 		{

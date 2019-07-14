@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using Desktop.Skinning;
 using SPNATI_Character_Editor.Analyzers;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace SPNATI_Character_Editor.Activities
 		public DataAnalyzer()
 		{
 			InitializeComponent();
-
+			ColDelete.Flat = true;
 			ColOperator.ValueType = typeof(string);
 
 			radAnd.Checked = true;
@@ -39,7 +40,7 @@ namespace SPNATI_Character_Editor.Activities
 			gridExample3.Rows.Add(new object[] { "2", "Wardrobe - Layer Count", ">=", "6" });
 			gridExample3.Rows.Add(new object[] { "3", "Targeted Line Count", ">=", "50" });
 
-			gridExample1.Rows.Add(new object[] { "1", "Tags", "==", "shy" });
+			gridExample4.Rows.Add(new object[] { "1", "Tags", "==", "shy" });
 		}
 
 		private void cmdLoad_Click(object sender, System.EventArgs e)
@@ -200,7 +201,7 @@ namespace SPNATI_Character_Editor.Activities
 			row.Cells[nameof(ColIndex)].Value = gridCriteria.Rows.Count;
 			row.Cells[nameof(ColData)].Value = analyzer.FullName;
 
-			DataGridViewComboBoxCell combo = row.Cells[nameof(ColOperator)] as DataGridViewComboBoxCell;
+			SkinnedDataGridViewComboBoxCell combo = row.Cells[nameof(ColOperator)] as SkinnedDataGridViewComboBoxCell;
 			combo.Items.Clear();
 			if (analyzer != null)
 			{

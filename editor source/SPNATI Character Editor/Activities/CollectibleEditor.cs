@@ -2,9 +2,12 @@
 using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.DataStructures;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using Desktop.Skinning;
 
 namespace SPNATI_Character_Editor.Activities
 {
@@ -42,6 +45,26 @@ namespace SPNATI_Character_Editor.Activities
 			PopulateCollectibles();
 		}
 
+		protected override void OnParametersUpdated(params object[] parameters)
+		{
+			if (parameters.Length > 0)
+			{
+				ValidationContext context = parameters[0] as ValidationContext;
+				if (context != null)
+				{
+					for (int i = 0; i < lstCollectibles.Items.Count; i++)
+					{
+						Collectible c = lstCollectibles.Items[i].Tag as Collectible;
+						if (c == context.Collectible)
+						{
+							lstCollectibles.Items[i].Selected = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+
 		private void PopulateCollectibles()
 		{
 			lstCollectibles.Items.Clear();
@@ -49,7 +72,6 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				AddCollectible(c, false);
 			}
-			lstCollectibles.Sort();
 		}
 
 		private void AddCollectible(Collectible c, bool select)
@@ -190,6 +212,73 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				picPreview.Image = null;
 			}
+		}
+
+		private void tsUp_Click(object sender, EventArgs e)
+		{
+			Collectible collectible = _selectedItem?.Tag as Collectible;
+			if (collectible == null)
+			{
+				return;
+			}
+			List<Collectible> collectibles = _character.Collectibles.Collectibles;
+
+			int index = collectibles.IndexOf(collectible);
+			if (index == 0)
+			{
+				return;
+			}
+			collectibles.Remove(collectible);
+			collectibles.Insert(index - 1, collectible);
+
+			lstCollectibles.ListViewItemSorter = new CollectibleSorter(collectibles);
+			lstCollectibles.Sort();
+		}
+
+		private void tsDown_Click(object sender, EventArgs e)
+		{
+			Collectible collectible = _selectedItem?.Tag as Collectible;
+			if (collectible == null)
+			{
+				return;
+			}
+			List<Collectible> collectibles = _character.Collectibles.Collectibles;
+
+			int index = collectibles.IndexOf(collectible);
+			if (index == collectibles.Count - 1)
+			{
+				return;
+			}
+			collectibles.Remove(collectible);
+			collectibles.Insert(index + 1, collectible);
+
+			lstCollectibles.ListViewItemSorter = new CollectibleSorter(collectibles);
+			lstCollectibles.Sort();
+		}
+
+		private class CollectibleSorter : IComparer
+		{
+			private List<Collectible> _list;
+			public CollectibleSorter(List<Collectible> list)
+			{
+				_list = list;
+			}
+
+			public int Compare(object x, object y)
+			{
+				ListViewItem i1 = x as ListViewItem;
+				ListViewItem i2 = y as ListViewItem;
+				Collectible c1 = i1.Tag as Collectible;
+				Collectible c2 = i2.Tag as Collectible;
+				return _list.IndexOf(c1).CompareTo(_list.IndexOf(c2));
+			}
+		}
+
+		protected override void OnSkinChanged(Skin skin)
+		{
+			base.OnSkinChanged(skin);
+			lstCollectibles.BackColor = skin.FieldBackColor;
+			lstCollectibles.ForeColor = skin.Surface.ForeColor;
 		}
 	}
 

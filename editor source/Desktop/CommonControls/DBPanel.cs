@@ -1,9 +1,10 @@
-﻿using System.Drawing;
+﻿using Desktop.Skinning;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Desktop.CommonControls
 {
-	public class DBPanel : Panel
+	public class DBPanel : SkinnedPanel
 	{
 		public DBPanel()
 		{

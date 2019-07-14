@@ -51,9 +51,11 @@
 			this.stopAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.fadeEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.jumpToSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.waitForAnimationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.waitForInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.userPromptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsAddKeyframe = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsUp = new System.Windows.Forms.ToolStripButton();
@@ -67,7 +69,6 @@
 			this.tsLock = new System.Windows.Forms.ToolStripButton();
 			this.openFileDialog = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
-			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -77,19 +78,17 @@
 			// 
 			// toolStripContainer1.ContentPanel
 			// 
+			this.toolStripContainer1.ContentPanel.Controls.Add(this.toolStrip1);
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.lblDragger);
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeScenes);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(357, 380);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(357, 405);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+			this.toolStripContainer1.Margin = new System.Windows.Forms.Padding(0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.Size = new System.Drawing.Size(357, 405);
 			this.toolStripContainer1.TabIndex = 4;
 			this.toolStripContainer1.Text = "toolStripContainer1";
-			// 
-			// toolStripContainer1.TopToolStripPanel
-			// 
-			this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
 			// 
 			// lblDragger
 			// 
@@ -105,9 +104,8 @@
 			// treeScenes
 			// 
 			this.treeScenes.AllowDrop = true;
-			this.treeScenes.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeScenes.HideSelection = false;
-			this.treeScenes.Location = new System.Drawing.Point(0, 0);
+			this.treeScenes.Location = new System.Drawing.Point(0, 25);
 			this.treeScenes.Name = "treeScenes";
 			this.treeScenes.Size = new System.Drawing.Size(357, 380);
 			this.treeScenes.TabIndex = 2;
@@ -120,7 +118,11 @@
 			// 
 			// toolStrip1
 			// 
+			this.toolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolStrip1.AutoSize = false;
 			this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+			this.toolStrip1.GripMargin = new System.Windows.Forms.Padding(0);
 			this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsAddScene,
@@ -138,9 +140,9 @@
             this.tsDuplicate,
             this.toolStripSeparator7,
             this.tsLock});
-			this.toolStrip1.Location = new System.Drawing.Point(3, 0);
+			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(306, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(357, 25);
 			this.toolStrip1.TabIndex = 4;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -196,9 +198,11 @@
             this.stopAnimationToolStripMenuItem,
             this.toolStripSeparator4,
             this.fadeEffectToolStripMenuItem,
+            this.jumpToSceneToolStripMenuItem,
             this.toolStripSeparator3,
             this.waitForAnimationsToolStripMenuItem,
-            this.waitForInputToolStripMenuItem});
+            this.waitForInputToolStripMenuItem,
+            this.userPromptToolStripMenuItem});
 			this.tsAddDirective.Image = global::SPNATI_Character_Editor.Properties.Resources.AddChildNode;
 			this.tsAddDirective.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsAddDirective.Name = "tsAddDirective";
@@ -329,6 +333,17 @@
 			this.fadeEffectToolStripMenuItem.Text = "Fade Effect";
 			this.fadeEffectToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
 			// 
+			// jumpToSceneToolStripMenuItem
+			// 
+			this.jumpToSceneToolStripMenuItem.Name = "jumpToSceneToolStripMenuItem";
+			this.jumpToSceneToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.D2)));
+			this.jumpToSceneToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.jumpToSceneToolStripMenuItem.Tag = "jump";
+			this.jumpToSceneToolStripMenuItem.Text = "Jump to Scene";
+			this.jumpToSceneToolStripMenuItem.Visible = false;
+			this.jumpToSceneToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
+			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -353,6 +368,16 @@
 			this.waitForInputToolStripMenuItem.Text = "Wait For Input";
 			this.waitForInputToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
 			// 
+			// userPromptToolStripMenuItem
+			// 
+			this.userPromptToolStripMenuItem.Name = "userPromptToolStripMenuItem";
+			this.userPromptToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Return)));
+			this.userPromptToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.userPromptToolStripMenuItem.Tag = "prompt";
+			this.userPromptToolStripMenuItem.Text = "User Prompt";
+			this.userPromptToolStripMenuItem.Visible = false;
+			this.userPromptToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
+			// 
 			// tsAddKeyframe
 			// 
 			this.tsAddKeyframe.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -360,7 +385,7 @@
 			this.tsAddKeyframe.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsAddKeyframe.Name = "tsAddKeyframe";
 			this.tsAddKeyframe.Size = new System.Drawing.Size(23, 22);
-			this.tsAddKeyframe.Text = "Add Keyframe";
+			this.tsAddKeyframe.Text = "Add Keyframe or Choice";
 			this.tsAddKeyframe.Click += new System.EventHandler(this.TsAddKeyframe_Click);
 			// 
 			// toolStripSeparator1
@@ -453,6 +478,7 @@
 			// openFileDialog
 			// 
 			this.openFileDialog.Filter = "";
+			this.openFileDialog.IncludeOpponents = false;
 			this.openFileDialog.UseAbsolutePaths = false;
 			// 
 			// SceneTree
@@ -464,8 +490,6 @@
 			this.Name = "SceneTree";
 			this.Size = new System.Drawing.Size(357, 405);
 			this.toolStripContainer1.ContentPanel.ResumeLayout(false);
-			this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
-			this.toolStripContainer1.TopToolStripPanel.PerformLayout();
 			this.toolStripContainer1.ResumeLayout(false);
 			this.toolStripContainer1.PerformLayout();
 			this.toolStrip1.ResumeLayout(false);
@@ -514,5 +538,7 @@
 		private System.Windows.Forms.ToolStripMenuItem emitParticleToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
 		private CharacterImageDialog openFileDialog;
+		private System.Windows.Forms.ToolStripMenuItem jumpToSceneToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem userPromptToolStripMenuItem;
 	}
 }

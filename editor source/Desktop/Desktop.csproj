@@ -30,10 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SPNATI Character Editor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,7 +47,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ALV\AccordionColumn.cs" />
+    <Compile Include="ALV\FormatRowEventArgs.cs" />
     <Compile Include="BasicRecord.cs" />
+    <Compile Include="CommonControls\AccordionListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\AccordionListView.Designer.cs">
+      <DependentUpon>AccordionListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonControls\ColorField.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CommonControls\DataGridView\RecordCell.cs" />
+    <Compile Include="CommonControls\DataGridView\RecordColumn.cs" />
+    <Compile Include="CommonControls\DataGridView\RecordEditingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\DataSlicerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\DataSlicerControl.Designer.cs">
+      <DependentUpon>DataSlicerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonControls\DBTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -66,6 +93,12 @@
     </Compile>
     <Compile Include="CommonControls\PropertyControls\ColorControl.Designer.cs">
       <DependentUpon>ColorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonControls\PropertyControls\ColorSetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\PropertyControls\ColorSetControl.Designer.cs">
+      <DependentUpon>ColorSetControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonControls\PropertyControls\ComboBoxControl.cs">
       <SubType>UserControl</SubType>
@@ -151,23 +184,11 @@
     <Compile Include="CommonControls\EnumSelect.designer.cs">
       <DependentUpon>EnumSelect.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommonControls\ListSelect.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CommonControls\ListSelect.designer.cs">
-      <DependentUpon>ListSelect.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\RecordLookup.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Controls\RecordLookup.designer.cs">
       <DependentUpon>RecordLookup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CommonControls\Slider.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CommonControls\Slider.designer.cs">
-      <DependentUpon>Slider.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\WorkspaceControl.cs">
       <SubType>UserControl</SubType>
@@ -176,10 +197,13 @@
       <DependentUpon>WorkspaceControl.cs</DependentUpon>
     </Compile>
     <Compile Include="DataStructures\BindableObject.cs" />
+    <Compile Include="DataStructures\Category.cs" />
     <Compile Include="DataStructures\Clipboards.cs" />
     <Compile Include="DataStructures\DualKeyDictionary.cs" />
     <Compile Include="DataStructures\DuplicateKeyComparer.cs" />
+    <Compile Include="DataStructures\GroupedList.cs" />
     <Compile Include="DataStructures\ObservableDictionary.cs" />
+    <Compile Include="DataStructures\ObservableSet.cs" />
     <Compile Include="DataStructures\PropertyMacro.cs" />
     <Compile Include="DataStructures\PropertyRecord.cs" />
     <Compile Include="Extensions\NativeMethods.cs" />
@@ -205,6 +229,7 @@
     <Compile Include="Interfaces\IMacroEditor.cs" />
     <Compile Include="Interfaces\IRecord.cs" />
     <Compile Include="Interfaces\IWorkspace.cs" />
+    <Compile Include="Messaging\CoreDesktopMessages.cs" />
     <Compile Include="Messaging\Mailbox.cs" />
     <Compile Include="Messaging\PostOffice.cs" />
     <Compile Include="Messaging\Subscription.cs" />
@@ -217,9 +242,44 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Providers\BasicProvider.cs" />
+    <Compile Include="Providers\CategoryProvider.cs" />
     <Compile Include="Providers\IRecordProvider.cs" />
     <Compile Include="Providers\MacroProvider.cs" />
     <Compile Include="Providers\PropertyProvider.cs" />
+    <Compile Include="Providers\SkinProvider.cs" />
+    <Compile Include="Providers\SlicerProvider.cs" />
+    <Compile Include="Reporting\BaseSlicer.cs" />
+    <Compile Include="Reporting\BooleanSlicer.cs" />
+    <Compile Include="Reporting\ComboSlicer.cs" />
+    <Compile Include="Reporting\Controls\BooleanSlicerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Reporting\Controls\BooleanSlicerControl.Designer.cs">
+      <DependentUpon>BooleanSlicerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Controls\ComboSlicerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Reporting\Controls\ComboSlicerControl.Designer.cs">
+      <DependentUpon>ComboSlicerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Controls\RecordSlicerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Reporting\Controls\RecordSlicerControl.Designer.cs">
+      <DependentUpon>RecordSlicerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Controls\SlicerGroupEntry.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Reporting\Controls\SlicerGroupEntry.Designer.cs">
+      <DependentUpon>SlicerGroupEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\DataSlicer.cs" />
+    <Compile Include="Reporting\DataSlicerControlMap.cs" />
+    <Compile Include="Reporting\RecordSlicer.cs" />
+    <Compile Include="Reporting\SlicerGroup.cs" />
+    <Compile Include="Serialization\Json.cs" />
     <Compile Include="Serialization\PropertyTypeInfo.cs" />
     <Compile Include="Shell.cs">
       <SubType>Form</SubType>
@@ -227,20 +287,114 @@
     <Compile Include="Shell.designer.cs">
       <DependentUpon>Shell.cs</DependentUpon>
     </Compile>
+    <Compile Include="Skinning\Animator.cs" />
+    <Compile Include="Skinning\ColorSet.cs" />
+    <Compile Include="Skinning\DataGridView\SkinnedDataGridViewButtonCell.cs" />
+    <Compile Include="Skinning\DataGridView\SkinnedDataGridViewButtonColumn.cs" />
+    <Compile Include="Skinning\DataGridView\SkinnedDataGridViewCheckBoxCell.cs" />
+    <Compile Include="Skinning\DataGridView\SkinnedDataGridViewCheckBoxColumn.cs" />
+    <Compile Include="Skinning\DataGridView\SkinnedDataGridViewComboBoxCell.cs" />
+    <Compile Include="Skinning\DataGridView\SkinnedDataGridViewComboBoxColumn.cs" />
+    <Compile Include="Skinning\DataGridView\SkinnedDataGridViewComboBoxEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\ISkinControl.cs" />
+    <Compile Include="Skinning\Skin.cs" />
+    <Compile Include="Skinning\SkinManager.cs" />
+    <Compile Include="Skinning\SkinnedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedRenderer.cs" />
+    <Compile Include="Skinning\SkinnedSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedSlider.Designer.cs">
+      <DependentUpon>SkinnedSlider.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Skinning\SkinnedSplitContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedTabStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinnedTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinTester.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Skinning\SkinTester.Designer.cs">
+      <DependentUpon>SkinTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Skinning\VisualState.cs" />
     <Compile Include="UndoRedo\ICommand.cs" />
     <Compile Include="UndoRedo\MultiCommand.cs" />
     <Compile Include="UndoRedo\UndoManager.cs" />
     <Compile Include="Workspace.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CommonControls\AccordionListView.resx">
+      <DependentUpon>AccordionListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommonControls\DataSlicerControl.resx">
+      <DependentUpon>DataSlicerControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CommonControls\EnumSelect.resx">
       <DependentUpon>EnumSelect.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CommonControls\ListSelect.resx">
-      <DependentUpon>ListSelect.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CommonControls\PropertyControls\BooleanControl.resx">
       <DependentUpon>BooleanControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommonControls\PropertyControls\ColorControl.resx">
+      <DependentUpon>ColorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommonControls\PropertyControls\ColorSetControl.resx">
+      <DependentUpon>ColorSetControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CommonControls\PropertyControls\ComboBoxControl.resx">
       <DependentUpon>ComboBoxControl.cs</DependentUpon>
@@ -269,9 +423,6 @@
     <EmbeddedResource Include="Controls\RecordLookup.resx">
       <DependentUpon>RecordLookup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CommonControls\Slider.resx">
-      <DependentUpon>Slider.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\WorkspaceControl.resx">
       <DependentUpon>WorkspaceControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -288,8 +439,23 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\Controls\BooleanSlicerControl.resx">
+      <DependentUpon>BooleanSlicerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\Controls\ComboSlicerControl.resx">
+      <DependentUpon>ComboSlicerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\Controls\RecordSlicerControl.resx">
+      <DependentUpon>RecordSlicerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\Controls\SlicerGroupEntry.resx">
+      <DependentUpon>SlicerGroupEntry.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Shell.resx">
       <DependentUpon>Shell.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Skinning\SkinTester.resx">
+      <DependentUpon>SkinTester.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -309,6 +475,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Icons\StarOutline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Collapse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Expand.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\Pencil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\Grouped.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\Ungrouped.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DownArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UpArrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

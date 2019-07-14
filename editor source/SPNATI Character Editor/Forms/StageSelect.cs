@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class StageSelect : Form
+	public partial class StageSelect : SkinnedForm
 	{
 		private List<int> _stages = new List<int>();
 

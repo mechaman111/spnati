@@ -28,9 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.label1 = new System.Windows.Forms.Label();
-			this.toc = new System.Windows.Forms.TreeView();
-			this.mainPane = new System.Windows.Forms.Panel();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
+			this.toc = new Desktop.Skinning.SkinnedListBox();
+			this.mainPane = new Desktop.Skinning.SkinnedPanel();
 			this.tagGrid = new SPNATI_Character_Editor.Controls.TagGrid();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.tagList = new SPNATI_Character_Editor.Controls.TagList();
@@ -44,6 +44,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label1.Location = new System.Drawing.Point(3, 0);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(264, 13);
@@ -54,15 +55,17 @@
 			// 
 			this.toc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-			this.toc.BackColor = System.Drawing.SystemColors.Window;
+			this.toc.BackColor = System.Drawing.Color.White;
 			this.toc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.toc.HideSelection = false;
+			this.toc.Font = new System.Drawing.Font("Arial", 9F);
+			this.toc.ForeColor = System.Drawing.Color.Black;
+			this.toc.ItemHeight = 15;
 			this.toc.Location = new System.Drawing.Point(0, 0);
 			this.toc.Margin = new System.Windows.Forms.Padding(0);
 			this.toc.Name = "toc";
-			this.toc.Size = new System.Drawing.Size(156, 569);
+			this.toc.Size = new System.Drawing.Size(156, 557);
 			this.toc.TabIndex = 110;
-			this.toc.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.toc_AfterSelect);
+			this.toc.SelectedIndexChanged += new System.EventHandler(this.toc_SelectedIndexChanged);
 			// 
 			// mainPane
 			// 
@@ -74,6 +77,7 @@
 			this.mainPane.Location = new System.Drawing.Point(159, 0);
 			this.mainPane.Margin = new System.Windows.Forms.Padding(0);
 			this.mainPane.Name = "mainPane";
+			this.mainPane.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
 			this.mainPane.Size = new System.Drawing.Size(514, 569);
 			this.mainPane.TabIndex = 111;
 			// 
@@ -137,10 +141,10 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.Label label1;
+		private Desktop.Skinning.SkinnedLabel label1;
 		private Controls.TagGrid tagGrid;
-		private System.Windows.Forms.TreeView toc;
-		private System.Windows.Forms.Panel mainPane;
+		private Desktop.Skinning.SkinnedListBox toc;
+		private Desktop.Skinning.SkinnedPanel mainPane;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private Controls.TagList tagList;
 	}

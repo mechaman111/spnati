@@ -16,11 +16,16 @@ namespace SPNATI_Character_Editor.Providers
 
 		public IRecord Create(string key)
 		{
+			T definition = CreateRecord(key);
+			ApplyDefaults(definition);
+			Definitions.Instance.Add(definition);
+			return definition;
+		}
+		protected virtual T CreateRecord(string key)
+		{
 			T definition = Activator.CreateInstance<T>();
 			definition.Key = key;
 			definition.Name = key;
-			ApplyDefaults(definition);
-			Definitions.Instance.Add(definition);
 			return definition;
 		}
 		public abstract void ApplyDefaults(T definition);

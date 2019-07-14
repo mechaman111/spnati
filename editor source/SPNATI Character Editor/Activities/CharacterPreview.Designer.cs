@@ -28,37 +28,45 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.lblLinesOfDialogue = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.lblSkin = new System.Windows.Forms.Label();
-			this.cboSkin = new System.Windows.Forms.ComboBox();
-			this.chkText = new System.Windows.Forms.CheckBox();
+			this.lblLinesOfDialogue = new Desktop.Skinning.SkinnedLabel();
+			this.lblSkin = new Desktop.Skinning.SkinnedLabel();
+			this.cboSkin = new Desktop.Skinning.SkinnedComboBox();
+			this.chkText = new Desktop.Skinning.SkinnedCheckBox();
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.cmdReference = new Desktop.Skinning.SkinnedButton();
 			this.picPortrait = new SPNATI_Character_Editor.Controls.CharacterImageBox();
+			this.tabsReference = new Desktop.Skinning.SkinnedTabControl();
+			this.tabTags = new System.Windows.Forms.TabPage();
+			this.stripReference = new Desktop.Skinning.SkinnedTabStrip();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+			this.splitContainer1.Panel1.SuspendLayout();
+			this.splitContainer1.Panel2.SuspendLayout();
+			this.splitContainer1.SuspendLayout();
+			this.tabsReference.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblLinesOfDialogue
 			// 
 			this.lblLinesOfDialogue.AutoSize = true;
-			this.lblLinesOfDialogue.Location = new System.Drawing.Point(129, -2);
+			this.lblLinesOfDialogue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lblLinesOfDialogue.ForeColor = System.Drawing.Color.Black;
+			this.lblLinesOfDialogue.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.lblLinesOfDialogue.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.lblLinesOfDialogue.Location = new System.Drawing.Point(0, 1);
 			this.lblLinesOfDialogue.Name = "lblLinesOfDialogue";
 			this.lblLinesOfDialogue.Size = new System.Drawing.Size(13, 13);
 			this.lblLinesOfDialogue.TabIndex = 17;
 			this.lblLinesOfDialogue.Text = "0";
 			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(0, -2);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(123, 13);
-			this.label4.TabIndex = 16;
-			this.label4.Text = "Unique lines of dialogue:";
-			// 
 			// lblSkin
 			// 
-			this.lblSkin.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.lblSkin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblSkin.AutoSize = true;
-			this.lblSkin.Location = new System.Drawing.Point(40, 620);
+			this.lblSkin.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lblSkin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.lblSkin.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.lblSkin.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+			this.lblSkin.Location = new System.Drawing.Point(115, 623);
 			this.lblSkin.Name = "lblSkin";
 			this.lblSkin.Size = new System.Drawing.Size(31, 13);
 			this.lblSkin.TabIndex = 18;
@@ -66,12 +74,20 @@
 			// 
 			// cboSkin
 			// 
-			this.cboSkin.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.cboSkin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cboSkin.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.cboSkin.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+			this.cboSkin.BackColor = System.Drawing.Color.White;
 			this.cboSkin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboSkin.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cboSkin.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboSkin.FormattingEnabled = true;
-			this.cboSkin.Location = new System.Drawing.Point(76, 617);
+			this.cboSkin.Location = new System.Drawing.Point(145, 619);
 			this.cboSkin.Name = "cboSkin";
-			this.cboSkin.Size = new System.Drawing.Size(121, 21);
+			this.cboSkin.SelectedIndex = -1;
+			this.cboSkin.SelectedItem = null;
+			this.cboSkin.Size = new System.Drawing.Size(105, 21);
+			this.cboSkin.Sorted = false;
 			this.cboSkin.TabIndex = 19;
 			this.cboSkin.SelectedIndexChanged += new System.EventHandler(this.cboSkin_SelectedIndexChanged);
 			// 
@@ -79,7 +95,7 @@
 			// 
 			this.chkText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkText.AutoSize = true;
-			this.chkText.Location = new System.Drawing.Point(176, -1);
+			this.chkText.Location = new System.Drawing.Point(172, 0);
 			this.chkText.Name = "chkText";
 			this.chkText.Size = new System.Drawing.Size(77, 17);
 			this.chkText.TabIndex = 20;
@@ -87,40 +103,130 @@
 			this.chkText.UseVisualStyleBackColor = true;
 			this.chkText.CheckedChanged += new System.EventHandler(this.chkText_CheckedChanged);
 			// 
+			// splitContainer1
+			// 
+			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer1.Name = "splitContainer1";
+			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add(this.cboSkin);
+			this.splitContainer1.Panel1.Controls.Add(this.chkText);
+			this.splitContainer1.Panel1.Controls.Add(this.cmdReference);
+			this.splitContainer1.Panel1.Controls.Add(this.lblLinesOfDialogue);
+			this.splitContainer1.Panel1.Controls.Add(this.lblSkin);
+			this.splitContainer1.Panel1.Controls.Add(this.picPortrait);
+			this.splitContainer1.Panel1.Resize += new System.EventHandler(this.splitContainer1_Panel1_Resize);
+			// 
+			// splitContainer1.Panel2
+			// 
+			this.splitContainer1.Panel2.Controls.Add(this.tabsReference);
+			this.splitContainer1.Panel2.Controls.Add(this.stripReference);
+			this.splitContainer1.Panel2Collapsed = true;
+			this.splitContainer1.Size = new System.Drawing.Size(251, 641);
+			this.splitContainer1.SplitterDistance = 448;
+			this.splitContainer1.TabIndex = 22;
+			// 
+			// cmdReference
+			// 
+			this.cmdReference.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.cmdReference.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdReference.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdReference.Flat = false;
+			this.cmdReference.Image = global::SPNATI_Character_Editor.Properties.Resources.ChevronUp;
+			this.cmdReference.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.cmdReference.Location = new System.Drawing.Point(2, 619);
+			this.cmdReference.Name = "cmdReference";
+			this.cmdReference.Size = new System.Drawing.Size(103, 21);
+			this.cmdReference.TabIndex = 21;
+			this.cmdReference.Text = "Reference";
+			this.cmdReference.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.cmdReference.UseVisualStyleBackColor = true;
+			this.cmdReference.Click += new System.EventHandler(this.cmdReference_Click);
+			// 
 			// picPortrait
 			// 
-			this.picPortrait.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.picPortrait.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.picPortrait.Location = new System.Drawing.Point(0, 0);
 			this.picPortrait.Name = "picPortrait";
 			this.picPortrait.ShowTextBox = false;
-			this.picPortrait.Size = new System.Drawing.Size(251, 641);
+			this.picPortrait.Size = new System.Drawing.Size(251, 640);
 			this.picPortrait.TabIndex = 15;
 			this.picPortrait.TabStop = false;
+			// 
+			// tabsReference
+			// 
+			this.tabsReference.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabsReference.Controls.Add(this.tabTags);
+			this.tabsReference.Location = new System.Drawing.Point(0, 23);
+			this.tabsReference.Margin = new System.Windows.Forms.Padding(0);
+			this.tabsReference.Name = "tabsReference";
+			this.tabsReference.SelectedIndex = 0;
+			this.tabsReference.Size = new System.Drawing.Size(251, 166);
+			this.tabsReference.TabIndex = 0;
+			// 
+			// tabTags
+			// 
+			this.tabTags.BackColor = System.Drawing.Color.White;
+			this.tabTags.Location = new System.Drawing.Point(4, 22);
+			this.tabTags.Name = "tabTags";
+			this.tabTags.Padding = new System.Windows.Forms.Padding(3);
+			this.tabTags.Size = new System.Drawing.Size(243, 140);
+			this.tabTags.TabIndex = 0;
+			this.tabTags.Text = "Tags";
+			// 
+			// stripReference
+			// 
+			this.stripReference.Dock = System.Windows.Forms.DockStyle.Top;
+			this.stripReference.Location = new System.Drawing.Point(0, 0);
+			this.stripReference.Margin = new System.Windows.Forms.Padding(0);
+			this.stripReference.Name = "stripReference";
+			this.stripReference.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.stripReference.ShowCloseButton = false;
+			this.stripReference.Size = new System.Drawing.Size(150, 23);
+			this.stripReference.StartMargin = 5;
+			this.stripReference.TabControl = this.tabsReference;
+			this.stripReference.TabIndex = 1;
+			this.stripReference.TabMargin = 5;
+			this.stripReference.TabPadding = 20;
+			this.stripReference.TabSize = -1;
+			this.stripReference.TabType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.stripReference.Vertical = false;
 			// 
 			// CharacterPreview
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.chkText);
-			this.Controls.Add(this.cboSkin);
-			this.Controls.Add(this.lblSkin);
-			this.Controls.Add(this.lblLinesOfDialogue);
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.picPortrait);
+			this.Controls.Add(this.splitContainer1);
 			this.Name = "CharacterPreview";
 			this.Size = new System.Drawing.Size(251, 641);
+			this.splitContainer1.Panel1.ResumeLayout(false);
+			this.splitContainer1.Panel1.PerformLayout();
+			this.splitContainer1.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+			this.splitContainer1.ResumeLayout(false);
+			this.tabsReference.ResumeLayout(false);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.Label lblLinesOfDialogue;
-		private System.Windows.Forms.Label label4;
+		private Desktop.Skinning.SkinnedLabel lblLinesOfDialogue;
 		private SPNATI_Character_Editor.Controls.CharacterImageBox picPortrait;
-		private System.Windows.Forms.Label lblSkin;
-		private System.Windows.Forms.ComboBox cboSkin;
-		private System.Windows.Forms.CheckBox chkText;
+		private Desktop.Skinning.SkinnedLabel lblSkin;
+		private Desktop.Skinning.SkinnedComboBox cboSkin;
+		private Desktop.Skinning.SkinnedCheckBox chkText;
+		private Desktop.Skinning.SkinnedButton cmdReference;
+		private System.Windows.Forms.SplitContainer splitContainer1;
+		private Desktop.Skinning.SkinnedTabControl tabsReference;
+		private System.Windows.Forms.TabPage tabTags;
+		private Desktop.Skinning.SkinnedTabStrip stripReference;
 	}
 }

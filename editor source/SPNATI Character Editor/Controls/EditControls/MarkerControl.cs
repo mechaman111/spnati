@@ -77,12 +77,12 @@ namespace SPNATI_Character_Editor
 			Save();
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			recField.RecordKey = null;
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			string key = recField.RecordKey;
 			SetValue(key);

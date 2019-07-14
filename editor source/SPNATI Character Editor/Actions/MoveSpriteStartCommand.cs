@@ -10,7 +10,7 @@ namespace SPNATI_Character_Editor.Actions
 	/// </summary>
 	public class MoveSpriteStartCommand : ITimeCommand
 	{
-		private LiveSprite _sprite;
+		private LiveAnimatedObject _data;
 		private float _oldStart;
 		private float _oldLength;
 		public float Time;
@@ -19,16 +19,16 @@ namespace SPNATI_Character_Editor.Actions
 
 		public LiveKeyframe NewKeyframe
 		{
-			get { return _sprite.Keyframes[0]; }
+			get { return _data.Keyframes[0]; }
 		}
 
-		public MoveSpriteStartCommand(LiveSprite sprite, float start)
+		public MoveSpriteStartCommand(LiveAnimatedObject data, float start)
 		{
-			_sprite = sprite;
+			_data = data;
 			Time = start;
-			_oldStart = _sprite.Start;
-			_oldLength = _sprite.Length;
-			foreach (LiveKeyframe kf in sprite.Keyframes)
+			_oldStart = _data.Start;
+			_oldLength = _data.Length;
+			foreach (LiveKeyframe kf in data.Keyframes)
 			{
 				_oldTimes[kf] = kf.Time;
 			}
@@ -38,15 +38,15 @@ namespace SPNATI_Character_Editor.Actions
 		{
 			Time = (float)Math.Round(Time, 3);
 			//delete any keyframes that are moving out of range, or adjust their positions so the absolute time remains the same
-			if (Time == _sprite.Start)
+			if (Time == _data.Start)
 			{
 				return;
 			}
-			float relTime = (float)Math.Round(Time - _sprite.Start, 3);
+			float relTime = (float)Math.Round(Time - _data.Start, 3);
 			List<LiveKeyframe> frames = new List<LiveKeyframe>();
-			for (int i = 1; i < _sprite.Keyframes.Count; i++)
+			for (int i = 1; i < _data.Keyframes.Count; i++)
 			{
-				LiveKeyframe kf = _sprite.Keyframes[i];
+				LiveKeyframe kf = _data.Keyframes[i];
 				if (kf.Time <= relTime)
 				{
 					frames.Add(kf);
@@ -58,15 +58,15 @@ namespace SPNATI_Character_Editor.Actions
 			}
 			foreach (LiveKeyframe kf in frames)
 			{
-				DeleteKeyframeCommand deletion = new DeleteKeyframeCommand(_sprite, kf);
+				DeleteKeyframeCommand deletion = new DeleteKeyframeCommand(_data, kf);
 				deletion.Do();
 				_deletions[kf] = deletion;
 			}
 
 			//move the start point
-			float duration = _sprite.Start + _sprite.Length - Time;
-			_sprite.Start = Time;
-			_sprite.Length = duration;
+			float duration = _data.Start + _data.Length - Time;
+			_data.Start = Time;
+			_data.Length = duration;
 
 			//add back any deletions that are no longer deleted
 			frames.Clear();
@@ -93,8 +93,8 @@ namespace SPNATI_Character_Editor.Actions
 
 		public void Undo()
 		{
-			_sprite.Start = _oldStart;
-			_sprite.Length = _oldLength;
+			_data.Start = _oldStart;
+			_data.Length = _oldLength;
 			foreach (KeyValuePair<LiveKeyframe, float> kvp in _oldTimes)
 			{
 				LiveKeyframe kf = kvp.Key;

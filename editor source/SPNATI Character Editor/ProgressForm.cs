@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
-	public partial class ProgressForm : Form
+	public partial class ProgressForm : SkinnedForm
 	{
 		private CancellationTokenSource _cts;
 

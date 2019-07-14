@@ -47,7 +47,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			Save();
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			RemoveHandlers();
 			chkLeft.Checked = false;
@@ -56,7 +56,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			AddHandlers();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			if (chkLeft.Checked)
 			{

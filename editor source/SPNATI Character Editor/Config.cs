@@ -12,7 +12,7 @@ namespace SPNATI_Character_Editor
 		/// List of released versions since update tracking was added, used for determining which updates a user skipped and providing info about those
 		/// </summary>
 		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6",
-			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2", "v4.0b", "v4.0.1b", "v4.0.2b", "v4.0.3b", "v4.0", "v4.1", "v4.2", "v4.2.1", "v4.3" };
+			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2", "v4.0b", "v4.0.1b", "v4.0.2b", "v4.0.3b", "v4.0", "v4.1", "v4.2", "v4.2.1", "v4.3", "v4.4b", "v5.0b", "v5.0" };
 
 		/// <summary>
 		/// Current Version
@@ -365,6 +365,55 @@ namespace SPNATI_Character_Editor
 			set { Set("suppressdefaultlines", value); }
 		}
 
+		public static bool UseSimpleTree
+		{
+			get { return GetBoolean("simpletree"); }
+			set { Set("simpletree", value); }
+		}
+
+		public static bool DevMode
+		{
+			get { return GetBoolean(Settings.DevMode); }
+			set { Set(Settings.DevMode, value); }
+		}
+
+		public static string Skin
+		{
+			get { return GetString("skin"); }
+			set { Set("skin", value); }
+		}
+
+		public static bool ColorTargetedLines
+		{
+			get { return GetBoolean("colortargets"); }
+			set { Set("colortargets", value); }
+		}
+
+		public static bool DisableWorkflowTracer
+		{
+			get { return GetBoolean("workflowtracer"); }
+			set { Set("workflowtracer", value); }
+		}
+
+		public static HashSet<string> AutoPauseDirectives
+		{
+			get
+			{
+				HashSet<string> set = new HashSet<string>();
+				string items = GetString("autopause") ?? "";
+				foreach (string item in items.Split(','))
+				{
+					set.Add(item);
+				}
+				return set;
+			}
+			set
+			{
+				string items = string.Join(",", value);
+				Set("autopause", items);
+			}
+		}
+
 		public static void SaveMacros(string key)
 		{
 			MacroProvider provider = new MacroProvider();
@@ -416,10 +465,11 @@ namespace SPNATI_Character_Editor
 		public static readonly string DisableIntellisense = "nointellisense";
 		public static readonly string HideNoPrefix = "hidenoprefix";
 		public static readonly string PrefixFilter = "prefixfilter";
+		public static readonly string HideImages = "safemode";
 
 		#region Settings that probably only make sense for debugging
 		public static readonly string LoadOnlyLastCharacter = "loadlast";
-		public static readonly string HideImages = "safemode";
+		public static readonly string DevMode = "devmode";
 		#endregion
 	}
 }

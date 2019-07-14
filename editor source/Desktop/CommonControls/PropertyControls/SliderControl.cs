@@ -77,14 +77,14 @@ namespace Desktop.CommonControls.PropertyControls
 			}
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			_cleared = true;
 			valValue.Text = "";
 			Save();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			if (DataType == typeof(int))
 			{

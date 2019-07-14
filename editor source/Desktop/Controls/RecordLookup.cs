@@ -1,16 +1,20 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Desktop
 {
-	public partial class RecordLookup : Form
+	public partial class RecordLookup : SkinnedForm
 	{
 		private static Dictionary<Type, IRecordProvider> _recordProviders;
 		private static Dictionary<Type, List<IRecord>> _recentRecords = new Dictionary<Type, List<IRecord>>();
 
+		public static bool IsOpen { get; set; }
+
 		public static IRecord Get(Type type, string key, bool allowCreate, object recordContext)
 		{
+			if (key == null) { return null; }
 			if (_recordProviders == null)
 			{
 				PrepRecordProviders();
@@ -92,14 +96,17 @@ namespace Desktop
 			RecordLookup form = new RecordLookup();
 			form.AllowCreate = allowCreate;
 			form.Text = provider.GetLookupCaption();
-			form.SetContext(type, text);
+			form.SetContext(type, text, filter);
 			form.Filter = filter;
+			IsOpen = true;
 			if (form.ShowDialog() == DialogResult.OK)
 			{
+				IsOpen = false;
 				return form.Record;
 			}
 			else
 			{
+				IsOpen = false;
 				return null;
 			}
 		}
@@ -211,7 +218,7 @@ namespace Desktop
 			return key;
 		}
 
-		public void SetContext(Type recordType, string startText)
+		public void SetContext(Type recordType, string startText, Func<IRecord, bool> filter)
 		{
 			_loading = true;
 			_recordType = recordType;
@@ -223,9 +230,11 @@ namespace Desktop
 			lstRecent.HeaderStyle = ColumnHeaderStyle.None;
 			lstRecent.Columns.Clear();
 			lstItems.Columns.Clear();
-			foreach (string col in _provider.GetColumns())
+			string[] cols = _provider.GetColumns();
+			for (int i = 0; i < cols.Length; i++)
 			{
-				int width = (lstItems.Columns.Count == 0 ? 150 : -2);
+				string col = cols[i];
+				int width = (i == 0 ? 150 : i < cols.Length - 1 ? 100 : -2);
 				lstItems.Columns.Add(col, width);
 				lstRecent.Columns.Add(col, width);
 			}
@@ -250,9 +259,12 @@ namespace Desktop
 				}
 				foreach (IRecord record in records)
 				{
-					ListViewItem item = _provider.FormatItem(record);
-					item.Tag = record;
-					lstRecent.Items.Insert(0, item);
+					if (filter == null || filter(record))
+					{
+						ListViewItem item = _provider.FormatItem(record);
+						item.Tag = record;
+						lstRecent.Items.Insert(0, item);
+					}
 				}
 			}
 			else

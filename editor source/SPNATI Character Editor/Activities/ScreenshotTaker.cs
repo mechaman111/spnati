@@ -9,9 +9,10 @@ using System.Windows.Forms;
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 215)]
+	[Activity(typeof(Costume), 215)]
 	public partial class ScreenshotTaker : Activity
 	{
-		private Character _character;
+		private ISkin _character;
 		private Dictionary<string, string> _extraData = new Dictionary<string, string>();
 
 		public ScreenshotTaker()
@@ -26,7 +27,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnInitialize()
 		{
-			_character = Record as Character;
+			_character = Record as ISkin;
 		}
 
 		private void cmdImport_Click(object sender, EventArgs e)

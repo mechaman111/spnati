@@ -4,6 +4,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Linq;
 using SPNATI_Character_Editor.IO;
+using System.Collections.ObjectModel;
 
 namespace SPNATI_Character_Editor
 {
@@ -32,6 +33,12 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		[XmlIgnore]
 		public int NextId { get; set; }
+		[XmlIgnore]
+		public int MaxCaseId { get; set; }
+		[XmlIgnore]
+		public int MaxStageId { get; set; }
+
+		private bool _temporary;
 
 		/// <summary>
 		/// Only used when serializing or deserializing XML. Cases that share text across stages are split into separate cases per stage here
@@ -89,6 +96,25 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// The Banter Wizard has to build WorkingCases for every character, which runs into OutOfMemoryExceptions.
+		/// This is a quick and dirty measure to avoid that by unloading the working cases after we no longer need them, but only if we aren't actually editing this character
+		/// </summary>
+		public void FlagTemporary()
+		{
+			if (_builtWorkingCases) { return; }
+			_temporary = true;
+		}
+		public void ReleaseTemporary()
+		{
+			if (_temporary)
+			{
+				_temporary = false;
+				_builtWorkingCases = false;
+				_workingCases.Clear();
+			}
+		}
+
+		/// <summary>
 		/// Called when loading a character to edit
 		/// </summary>
 		/// <param name="character"></param>
@@ -115,6 +141,12 @@ namespace SPNATI_Character_Editor
 		public static DialogueLine CreateStageSpecificLine(DialogueLine line, int stage, Character character)
 		{
 			DialogueLine copy = line.Copy();
+			if (copy.StageImages.ContainsKey(stage))
+			{
+				LineImage li = copy.StageImages[stage];
+				copy.Image = li.Image;
+				copy.IsGenericImage = li.IsGenericImage;
+			}
 			if (!copy.IsGenericImage)
 			{
 				copy.Image = DialogueLine.GetStageImage(stage, copy.Image);
@@ -122,50 +154,51 @@ namespace SPNATI_Character_Editor
 			if (copy.Image != null)
 			{
 				bool custom = copy.Image.StartsWith("custom:");
-
 				string path = character != null ? Config.GetRootDirectory(character) : "";
 				string extension = line.ImageExtension;
-				if (string.IsNullOrEmpty(extension) && !custom)
+				if (!custom)
 				{
-					//figure out the extension by searching for files of different names
-					bool basePngExists = File.Exists(Path.Combine(path, copy.Image + ".png"));
-					bool baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
+					if (string.IsNullOrEmpty(extension))
+					{
+						//figure out the extension by searching for files of different names
+						bool basePngExists = File.Exists(Path.Combine(path, copy.Image + ".png"));
+						bool baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
 
-					if (!copy.Image.StartsWith(stage + "-") && !basePngExists && !baseGifExists)
+						if (!copy.Image.StartsWith(stage + "-") && !basePngExists && !baseGifExists)
+						{
+							copy.Image = stage + "-" + copy.Image;
+							baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
+							if (baseGifExists)
+							{
+								extension = ".gif";
+							}
+							else
+							{
+								extension = ".png";
+							}
+						}
+						else
+						{
+							if (baseGifExists)
+							{
+								extension = ".gif";
+							}
+							else
+							{
+								extension = ".png";
+							}
+						}
+					}
+					if (!copy.Image.StartsWith(stage + "-") && !File.Exists(Path.Combine(path, copy.Image + extension)))
 					{
 						copy.Image = stage + "-" + copy.Image;
-						baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
-						if (baseGifExists)
-						{
-							extension = ".gif";
-						}
-						else
-						{
-							extension = ".png";
-						}
 					}
-					else
+					if (extension != null && !copy.Image.EndsWith(extension))
 					{
-						if (baseGifExists)
-						{
-							extension = ".gif";
-						}
-						else
-						{
-							extension = ".png";
-						}
+						copy.Image += extension;
 					}
+					copy.ImageExtension = extension;
 				}
-
-				if (!custom && !copy.Image.StartsWith(stage + "-") && !File.Exists(Path.Combine(path, copy.Image + extension)))
-				{
-					copy.Image = stage + "-" + copy.Image;
-				}
-				if (extension != null && !copy.Image.EndsWith(extension))
-				{
-					copy.Image += extension;
-				}
-				copy.ImageExtension = extension;
 			}
 			copy.Text = line.Text?.Trim();
 			return copy;
@@ -274,12 +307,8 @@ namespace SPNATI_Character_Editor
 		public static DialogueLine CreateDefaultLine(DialogueLine line)
 		{
 			DialogueLine copy = line.Copy();
-			string extension = line.ImageExtension ?? Path.GetExtension(line.Image);
-			copy.ImageExtension = extension;
-			line.ImageExtension = extension;
-			copy.Image = DialogueLine.GetDefaultImage(line.Image);
 			copy.Text = line.Text.Trim();
-			copy.IsGenericImage = line.IsGenericImage;
+			copy.GeneralizeImage(line);
 			return copy;
 		}
 
@@ -328,8 +357,16 @@ namespace SPNATI_Character_Editor
 			character.Metadata.CrossGender = false;
 
 			//Put each case into the appropriate stage(s)
-			foreach (var workingCase in _workingCases)
+			foreach (Case workingCase in _workingCases)
 			{
+				List<Case> alternativeCases = new List<Case>();
+				alternativeCases.Add(workingCase);
+				foreach (Case alternate in workingCase.AlternativeConditions)
+				{
+					//copy lines and stages into the alternate cases
+					alternativeCases.Add(alternate);
+				}
+
 				foreach (int s in workingCase.Stages)
 				{
 					if (s >= Stages.Count) { continue; }
@@ -343,24 +380,28 @@ namespace SPNATI_Character_Editor
 					Stage stage = Stages[s];
 
 					//Find a case to merge into
-					Case existingCase = stage.Cases.Find(c => c.MatchesConditions(workingCase) && (c.StageId == id || (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(c.StageId))));
-					if (existingCase == null)
+					foreach (Case sourceCase in alternativeCases)
 					{
-						//No case exists yet, so create one
-						existingCase = workingCase.CopyConditions();
-						existingCase.StageId = id;
-						existingCase.Stages.Add(s); //Not really necessary for serialization, since each case will have a single stage, and will be a child of that stage
-						stage.Cases.Add(existingCase);
-					}
-
-					//Move the lines over, and make them stage-specific
-					foreach (var line in workingCase.Lines)
-					{
-						existingCase.Lines.Add(CreateStageSpecificLine(line, s, character));
-
-						if (!string.IsNullOrEmpty(line.Gender))
+						Case existingCase = stage.Cases.Find(c => c.MatchesConditions(sourceCase) && (c.StageId == id || (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(c.StageId))));
+						if (existingCase == null)
 						{
-							character.Metadata.CrossGender = true;
+							//No case exists yet, so create one
+							existingCase = sourceCase.CopyConditions();
+							existingCase.StageId = id;
+							existingCase.Stages.Add(s); //Not really necessary for serialization, since each case will have a single stage, and will be a child of that stage
+							stage.Cases.Add(existingCase);
+						}
+
+						//Move the lines over, and make them stage-specific
+						foreach (var line in workingCase.Lines)
+						{
+							DialogueLine stageLine = CreateStageSpecificLine(line, s, character);
+							existingCase.Lines.Add(stageLine);
+
+							if (!string.IsNullOrEmpty(line.Gender))
+							{
+								character.Metadata.CrossGender = true;
+							}
 						}
 					}
 				}
@@ -386,6 +427,11 @@ namespace SPNATI_Character_Editor
 						continue;
 					int code = stageCase.GetCode();
 
+					if (stageCase.OneShotId > 0)
+					{
+						MaxCaseId = Math.Max(MaxCaseId, stageCase.OneShotId);
+					}
+
 					int id = 0;
 					if (!string.IsNullOrEmpty(stageCase.StageId))
 					{
@@ -396,12 +442,20 @@ namespace SPNATI_Character_Editor
 						}
 					}
 
+					HashSet<string> builtCases = new HashSet<string>();
 					foreach (DialogueLine line in stageCase.Lines)
 					{
+						bool addedDuplicate = false;
 						line.IsGenericImage = !DialogueLine.IsStageSpecificImage(line.Image);
 						var defaultLine = CreateDefaultLine(line);
-						int hash = defaultLine.GetHashCode();
-						hash = code + hash;
+
+						if (defaultLine.OneShotId > 0)
+						{
+							MaxStageId = Math.Max(MaxStageId, defaultLine.OneShotId);
+						}
+
+						int lineHash = defaultLine.GetHashCodeWithoutImage();
+						int hash = (code * 397) ^ lineHash;
 						//See if there's a case that already contains this line, and make one if there isn't
 						Case existing;
 						if (!map.TryGetValue(hash, out existing))
@@ -411,16 +465,42 @@ namespace SPNATI_Character_Editor
 							map[hash] = existing;
 							existing.Lines.Add(defaultLine);
 							buckets.Add(existing);
+							if (!string.IsNullOrEmpty(defaultLine.Text))
+							{
+								builtCases.Add(defaultLine.Text);
+							}
+						}
+						else if (builtCases.Contains(defaultLine.Text))
+						{
+							//If the same text appears multiple times in the same case, make sure to include them all
+							existing.Lines.Add(defaultLine);
 						}
 						if (!existing.Stages.Contains(stage.Id))
 						{
 							existing.Stages.Add(stage.Id);
+
+							if (!addedDuplicate)
+							{
+								//find the existing line if there is one
+								foreach (DialogueLine existingLine in existing.Lines)
+								{
+									if (existingLine.GetHashCodeWithoutImage() == lineHash)
+									{
+										if (existingLine.Image != defaultLine.Image)
+										{
+											//if the images are different, remember that difference
+											existingLine.StageImages[stage.Id] = new LineImage(defaultLine.Image, line.IsGenericImage);
+										}
+										break;
+									}
+								}
+							}
 						}
 					}
 				}
 			}
 
-			//Sort each buckets's Stages set for easier equivalence checks
+			//Sort each bucket's Stages set for easier equivalence checks
 			foreach (Case c in buckets)
 			{
 				c.Stages.Sort();
@@ -445,16 +525,51 @@ namespace SPNATI_Character_Editor
 					caseMatchingStages.Stages.AddRange(bucket.Stages);
 					caseList.Add(caseMatchingStages);
 				}
-				foreach (var line in bucket.Lines)
+				foreach (DialogueLine line in bucket.Lines)
 				{
 					caseMatchingStages.Lines.Add(line);
 				}
 			}
 
+			Dictionary<int, List<Case>> lineCodes = new Dictionary<int, List<Case>>();
+
 			//Done grouping. Put the cases into the WorkingCase list
 			foreach (List<Case> list in cases.Values)
 			{
-				_workingCases.AddRange(list);
+				foreach (Case c in list)
+				{
+					int lineCode = c.GetLineCode();
+					List<Case> similarCases;
+					bool newCase = true;
+					if (lineCodes.TryGetValue(lineCode, out similarCases))
+					{
+						bool foundSimilar = false;
+						foreach (Case similar in similarCases)
+						{
+							if (similar.MatchesNonConditions(c))
+							{
+								similar.AlternativeConditions.Add(c);
+								foundSimilar = true;
+								newCase = false;
+								break;
+							}
+						}
+						if (!foundSimilar)
+						{
+							similarCases.Add(c);
+						}
+					}
+					else
+					{
+						similarCases = new List<Case>();
+						lineCodes[lineCode] = similarCases;
+						similarCases.Add(c);
+					}
+					if (newCase)
+					{
+						_workingCases.Add(c);
+					}
+				}
 			}
 
 			//Move the legacy Start lines into Selected/Game start cases
@@ -560,7 +675,7 @@ namespace SPNATI_Character_Editor
 			{
 				if (stage != retainStage)
 				{
-					Case stageCase = original.Copy();
+					Case stageCase = DuplicateCase(original, false);
 					stageCase.Stages.Add(stage);
 					AddWorkingCase(stageCase);
 				}
@@ -577,7 +692,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="splitPoint">Stage to split at</param>
 		public void SplitCaseStage(Case original, int splitPoint)
 		{
-			Case beforeSplitCase = original.Copy();
+			Case beforeSplitCase = DuplicateCase(original, false);
 			for (int s = original.Stages.Count - 1; s >= 0; s--)
 			{
 				if (original.Stages[s] != splitPoint)
@@ -598,7 +713,11 @@ namespace SPNATI_Character_Editor
 		/// <param name="splitPoint">Stage to split at</param>
 		public void SplitCaseAtStage(Case original, int splitPoint)
 		{
-			Case beforeSplitCase = original.Copy();
+			if (original.Stages.Count == 0 || original.Stages[0] == splitPoint)
+			{
+				return;
+			}
+			Case beforeSplitCase = DuplicateCase(original, false);
 			for (int s = original.Stages.Count - 1; s >= 0; s--)
 			{
 				if (original.Stages[s] < splitPoint)
@@ -617,11 +736,30 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="original"></param>
 		/// <returns></returns>
-		public Case DuplicateCase(Case original)
+		public Case DuplicateCase(Case original, bool addToWorking)
 		{
 			Case copy = original.Copy();
-			copy.Stages.AddRange(original.Stages);
-			AddWorkingCase(copy);
+			if (copy.Id != 0)
+			{
+				CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
+				editorData.Copy(copy);
+			}
+			if (copy.OneShotId > 0)
+			{
+				copy.OneShotId = ++MaxCaseId;
+			}
+			foreach (DialogueLine line in copy.Lines)
+			{
+				if (line.OneShotId > 0)
+				{
+					line.OneShotId = ++MaxStageId;
+				}
+			}
+			if (addToWorking)
+			{
+				copy.Stages.AddRange(original.Stages);
+				AddWorkingCase(copy);
+			}
 			return copy;
 		}
 
@@ -697,7 +835,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (Case workingCase in _workingCases)
 			{
-				List<int> stages = workingCase.Stages;
+				ObservableCollection<int> stages = workingCase.Stages;
 				for (int i = 0; i < stages.Count; i++)
 				{
 					int stage = stages[i];
@@ -715,7 +853,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (Case workingCase in _workingCases)
 			{
-				List<int> stages = workingCase.Stages;
+				ObservableCollection<int> stages = workingCase.Stages;
 				for (int i = stages.Count - 1; i >= 0; i--)
 				{
 					int stage = stages[i];
@@ -736,7 +874,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (Case workingCase in _workingCases)
 			{
-				List<int> stages = workingCase.Stages;
+				ObservableCollection<int> stages = workingCase.Stages;
 				for (int i = 0; i < stages.Count; i++)
 				{
 					int stage = stages[i];

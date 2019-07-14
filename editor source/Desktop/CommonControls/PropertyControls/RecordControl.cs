@@ -17,7 +17,12 @@ namespace Desktop.CommonControls.PropertyControls
 		{
 			if (values.Count > 0)
 			{
-				recField.RecordKey = values[0];
+				string key = values[0];
+				if (string.IsNullOrEmpty(key))
+				{
+					key = null;
+				}
+				recField.RecordKey = key;
 			}
 		}
 
@@ -64,12 +69,12 @@ namespace Desktop.CommonControls.PropertyControls
 			}
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			recField.Record = null;
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			IRecord record = recField.Record;
 			if (record == null)

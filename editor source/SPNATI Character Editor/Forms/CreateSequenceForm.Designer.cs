@@ -29,17 +29,19 @@
 		private void InitializeComponent()
 		{
 			this.picPreview = new System.Windows.Forms.PictureBox();
-			this.radConvert = new System.Windows.Forms.RadioButton();
-			this.radCreate = new System.Windows.Forms.RadioButton();
-			this.label1 = new System.Windows.Forms.Label();
-			this.lstFrames = new System.Windows.Forms.ListBox();
+			this.radConvert = new Desktop.Skinning.SkinnedRadioButton();
+			this.radCreate = new Desktop.Skinning.SkinnedRadioButton();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
+			this.lstFrames = new Desktop.Skinning.SkinnedListBox();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.tsAdd = new System.Windows.Forms.ToolStripButton();
 			this.tsRemove = new System.Windows.Forms.ToolStripButton();
-			this.label2 = new System.Windows.Forms.Label();
-			this.valTime = new System.Windows.Forms.NumericUpDown();
-			this.cmdOK = new System.Windows.Forms.Button();
-			this.cmdCancel = new System.Windows.Forms.Button();
+			this.label2 = new Desktop.Skinning.SkinnedLabel();
+			this.valTime = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.cmdOK = new Desktop.Skinning.SkinnedButton();
+			this.cmdCancel = new Desktop.Skinning.SkinnedButton();
+			this.label3 = new Desktop.Skinning.SkinnedLabel();
+			this.txtName = new Desktop.Skinning.SkinnedTextBox();
 			this.openDialog = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
 			((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
 			this.toolStrip1.SuspendLayout();
@@ -51,9 +53,9 @@
 			this.picPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.picPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.picPreview.Location = new System.Drawing.Point(12, 12);
+			this.picPreview.Location = new System.Drawing.Point(12, 32);
 			this.picPreview.Name = "picPreview";
-			this.picPreview.Size = new System.Drawing.Size(96, 225);
+			this.picPreview.Size = new System.Drawing.Size(96, 248);
 			this.picPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picPreview.TabIndex = 0;
 			this.picPreview.TabStop = false;
@@ -61,7 +63,7 @@
 			// radConvert
 			// 
 			this.radConvert.AutoSize = true;
-			this.radConvert.Location = new System.Drawing.Point(116, 12);
+			this.radConvert.Location = new System.Drawing.Point(114, 32);
 			this.radConvert.Name = "radConvert";
 			this.radConvert.Size = new System.Drawing.Size(165, 17);
 			this.radConvert.TabIndex = 1;
@@ -74,7 +76,7 @@
 			// 
 			this.radCreate.AutoSize = true;
 			this.radCreate.Checked = true;
-			this.radCreate.Location = new System.Drawing.Point(116, 35);
+			this.radCreate.Location = new System.Drawing.Point(114, 55);
 			this.radCreate.Name = "radCreate";
 			this.radCreate.Size = new System.Drawing.Size(133, 17);
 			this.radCreate.TabIndex = 2;
@@ -86,7 +88,8 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(116, 59);
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.label1.Location = new System.Drawing.Point(114, 77);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(44, 13);
 			this.label1.TabIndex = 3;
@@ -96,10 +99,13 @@
 			// 
 			this.lstFrames.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+			this.lstFrames.BackColor = System.Drawing.Color.White;
+			this.lstFrames.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lstFrames.ForeColor = System.Drawing.Color.Black;
 			this.lstFrames.FormattingEnabled = true;
-			this.lstFrames.Location = new System.Drawing.Point(116, 103);
+			this.lstFrames.Location = new System.Drawing.Point(116, 120);
 			this.lstFrames.Name = "lstFrames";
-			this.lstFrames.Size = new System.Drawing.Size(139, 134);
+			this.lstFrames.Size = new System.Drawing.Size(139, 160);
 			this.lstFrames.TabIndex = 4;
 			this.lstFrames.SelectedIndexChanged += new System.EventHandler(this.lstFrames_SelectedIndexChanged);
 			// 
@@ -111,10 +117,11 @@
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsAdd,
             this.tsRemove});
-			this.toolStrip1.Location = new System.Drawing.Point(116, 77);
+			this.toolStrip1.Location = new System.Drawing.Point(116, 95);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(139, 25);
 			this.toolStrip1.TabIndex = 5;
+			this.toolStrip1.Tag = "Background";
 			this.toolStrip1.Text = "toolStrip1";
 			// 
 			// tsAdd
@@ -140,7 +147,8 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(264, 59);
+			this.label2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.label2.Location = new System.Drawing.Point(261, 116);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(125, 13);
 			this.label2.TabIndex = 6;
@@ -148,13 +156,16 @@
 			// 
 			// valTime
 			// 
+			this.valTime.BackColor = System.Drawing.Color.White;
 			this.valTime.DecimalPlaces = 2;
+			this.valTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valTime.ForeColor = System.Drawing.Color.Black;
 			this.valTime.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-			this.valTime.Location = new System.Drawing.Point(267, 75);
+			this.valTime.Location = new System.Drawing.Point(264, 132);
 			this.valTime.Name = "valTime";
 			this.valTime.Size = new System.Drawing.Size(57, 20);
 			this.valTime.TabIndex = 7;
@@ -167,25 +178,54 @@
 			// cmdOK
 			// 
 			this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdOK.Location = new System.Drawing.Point(309, 185);
+			this.cmdOK.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdOK.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdOK.Flat = false;
+			this.cmdOK.Location = new System.Drawing.Point(309, 228);
 			this.cmdOK.Name = "cmdOK";
 			this.cmdOK.Size = new System.Drawing.Size(75, 23);
 			this.cmdOK.TabIndex = 8;
-			this.cmdOK.Text = "OK";
+			this.cmdOK.Text = "Create";
 			this.cmdOK.UseVisualStyleBackColor = true;
 			this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
 			// 
 			// cmdCancel
 			// 
 			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdCancel.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cmdCancel.Location = new System.Drawing.Point(309, 214);
+			this.cmdCancel.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdCancel.Flat = true;
+			this.cmdCancel.ForeColor = System.Drawing.Color.Blue;
+			this.cmdCancel.Location = new System.Drawing.Point(309, 257);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(75, 23);
 			this.cmdCancel.TabIndex = 9;
 			this.cmdCancel.Text = "Cancel";
 			this.cmdCancel.UseVisualStyleBackColor = true;
 			this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.label3.Location = new System.Drawing.Point(261, 77);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(38, 13);
+			this.label3.TabIndex = 10;
+			this.label3.Text = "Name:";
+			// 
+			// txtName
+			// 
+			this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtName.BackColor = System.Drawing.Color.White;
+			this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.txtName.ForeColor = System.Drawing.Color.Black;
+			this.txtName.Location = new System.Drawing.Point(264, 93);
+			this.txtName.Name = "txtName";
+			this.txtName.Size = new System.Drawing.Size(117, 20);
+			this.txtName.TabIndex = 11;
 			// 
 			// openDialog
 			// 
@@ -199,8 +239,10 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(396, 249);
+			this.ClientSize = new System.Drawing.Size(396, 292);
 			this.ControlBox = false;
+			this.Controls.Add(this.txtName);
+			this.Controls.Add(this.label3);
 			this.Controls.Add(this.cmdCancel);
 			this.Controls.Add(this.cmdOK);
 			this.Controls.Add(this.valTime);
@@ -226,17 +268,19 @@
 		#endregion
 
 		private System.Windows.Forms.PictureBox picPreview;
-		private System.Windows.Forms.RadioButton radConvert;
-		private System.Windows.Forms.RadioButton radCreate;
-		private System.Windows.Forms.Label label1;
+		private Desktop.Skinning.SkinnedRadioButton radConvert;
+		private Desktop.Skinning.SkinnedRadioButton radCreate;
+		private Desktop.Skinning.SkinnedLabel label1;
 		private System.Windows.Forms.ToolStrip toolStrip1;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.NumericUpDown valTime;
-		private System.Windows.Forms.Button cmdOK;
-		private System.Windows.Forms.Button cmdCancel;
-		private System.Windows.Forms.ListBox lstFrames;
+		private Desktop.Skinning.SkinnedLabel label2;
+		private Desktop.Skinning.SkinnedNumericUpDown valTime;
+		private Desktop.Skinning.SkinnedButton cmdOK;
+		private Desktop.Skinning.SkinnedButton cmdCancel;
+		private Desktop.Skinning.SkinnedListBox lstFrames;
 		private System.Windows.Forms.ToolStripButton tsAdd;
 		private System.Windows.Forms.ToolStripButton tsRemove;
 		private Controls.CharacterImageDialog openDialog;
+		private Desktop.Skinning.SkinnedLabel label3;
+		private Desktop.Skinning.SkinnedTextBox txtName;
 	}
 }

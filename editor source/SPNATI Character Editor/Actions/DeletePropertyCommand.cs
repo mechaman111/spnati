@@ -8,14 +8,14 @@ namespace SPNATI_Character_Editor.Actions
 	/// </summary>
 	public class DeletePropertyCommand : ICommand
 	{
-		private LiveSprite _sprite;
+		private LiveAnimatedObject _object;
 		private LiveKeyframe _keyframe;
 		private string _property;
 		private object _value;
 
-		public DeletePropertyCommand(LiveSprite sprite, LiveKeyframe keyframe, string property)
+		public DeletePropertyCommand(LiveAnimatedObject obj, LiveKeyframe keyframe, string property)
 		{
-			_sprite = sprite;
+			_object = obj;
 			_keyframe = keyframe;
 			_property = property;
 			_value = keyframe.Get<object>(property);
@@ -31,9 +31,9 @@ namespace SPNATI_Character_Editor.Actions
 			_keyframe.Set(_value, _property);
 
 			//if deleting the property wiped out the keyframe, add it back
-			if (!_sprite.Keyframes.Contains(_keyframe))
+			if (!_object.Keyframes.Contains(_keyframe))
 			{
-				_sprite.AddKeyframe(_keyframe);
+				_object.AddKeyframe(_keyframe);
 			}
 		}
 	}

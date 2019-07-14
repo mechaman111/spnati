@@ -33,10 +33,13 @@
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.tsAdd = new System.Windows.Forms.ToolStripButton();
 			this.tsRemove = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsUp = new System.Windows.Forms.ToolStripButton();
+			this.tsDown = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.table = new Desktop.CommonControls.PropertyTable();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
 			this.picPreview = new System.Windows.Forms.PictureBox();
-			this.label1 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -85,7 +88,10 @@
 			this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsAdd,
-            this.tsRemove});
+            this.tsRemove,
+            this.toolStripSeparator1,
+            this.tsUp,
+            this.tsDown});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(197, 25);
@@ -111,6 +117,31 @@
 			this.tsRemove.Size = new System.Drawing.Size(23, 22);
 			this.tsRemove.Text = "Remove Collectible";
 			this.tsRemove.Click += new System.EventHandler(this.tsRemove_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsUp
+			// 
+			this.tsUp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsUp.Image = global::SPNATI_Character_Editor.Properties.Resources.UpArrow;
+			this.tsUp.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsUp.Name = "tsUp";
+			this.tsUp.Size = new System.Drawing.Size(23, 22);
+			this.tsUp.Text = "Move Up";
+			this.tsUp.Click += new System.EventHandler(this.tsUp_Click);
+			// 
+			// tsDown
+			// 
+			this.tsDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsDown.Image = global::SPNATI_Character_Editor.Properties.Resources.DownArrow;
+			this.tsDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsDown.Name = "tsDown";
+			this.tsDown.Size = new System.Drawing.Size(23, 22);
+			this.tsDown.Text = "Move Down";
+			this.tsDown.Click += new System.EventHandler(this.tsDown_Click);
 			// 
 			// splitContainer2
 			// 
@@ -155,6 +186,18 @@
 			this.table.UseAutoComplete = false;
 			this.table.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.table_PropertyChanged);
 			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label1.Location = new System.Drawing.Point(4, 4);
+			this.label1.Margin = new System.Windows.Forms.Padding(0);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(286, 38);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "Note: To unlock a collectible, associate it with dialogue in the Dialogue tab usi" +
+    "ng the trophy button.";
+			// 
 			// picPreview
 			// 
 			this.picPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -167,18 +210,6 @@
 			this.picPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picPreview.TabIndex = 0;
 			this.picPreview.TabStop = false;
-			// 
-			// label1
-			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.label1.Location = new System.Drawing.Point(4, 4);
-			this.label1.Margin = new System.Windows.Forms.Padding(0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(286, 38);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "Note: To unlock a collectible, associate it with dialogue in the Dialogue tab usi" +
-    "ng the trophy button.";
 			// 
 			// CollectibleEditor
 			// 
@@ -213,6 +244,9 @@
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private Desktop.CommonControls.PropertyTable table;
 		private System.Windows.Forms.PictureBox picPreview;
-		private System.Windows.Forms.Label label1;
+		private Desktop.Skinning.SkinnedLabel label1;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripButton tsUp;
+		private System.Windows.Forms.ToolStripButton tsDown;
 	}
 }

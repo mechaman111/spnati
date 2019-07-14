@@ -28,17 +28,19 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.chkDebug = new System.Windows.Forms.CheckBox();
-			this.chkEpilogues = new System.Windows.Forms.CheckBox();
-			this.cmdOK = new System.Windows.Forms.Button();
-			this.cmdCancel = new System.Windows.Forms.Button();
-			this.chkCollectibles = new System.Windows.Forms.CheckBox();
+			this.chkDebug = new Desktop.Skinning.SkinnedCheckBox();
+			this.chkEpilogues = new Desktop.Skinning.SkinnedCheckBox();
+			this.cmdOK = new Desktop.Skinning.SkinnedButton();
+			this.cmdCancel = new Desktop.Skinning.SkinnedButton();
+			this.chkCollectibles = new Desktop.Skinning.SkinnedCheckBox();
+			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
+			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// chkDebug
 			// 
 			this.chkDebug.AutoSize = true;
-			this.chkDebug.Location = new System.Drawing.Point(12, 12);
+			this.chkDebug.Location = new System.Drawing.Point(12, 42);
 			this.chkDebug.Name = "chkDebug";
 			this.chkDebug.Size = new System.Drawing.Size(405, 17);
 			this.chkDebug.TabIndex = 0;
@@ -48,7 +50,7 @@
 			// chkEpilogues
 			// 
 			this.chkEpilogues.AutoSize = true;
-			this.chkEpilogues.Location = new System.Drawing.Point(12, 35);
+			this.chkEpilogues.Location = new System.Drawing.Point(12, 65);
 			this.chkEpilogues.Name = "chkEpilogues";
 			this.chkEpilogues.Size = new System.Drawing.Size(305, 17);
 			this.chkEpilogues.TabIndex = 1;
@@ -58,7 +60,11 @@
 			// cmdOK
 			// 
 			this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdOK.Location = new System.Drawing.Point(260, 158);
+			this.cmdOK.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdOK.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdOK.Flat = false;
+			this.cmdOK.ForeColor = System.Drawing.Color.White;
+			this.cmdOK.Location = new System.Drawing.Point(269, 3);
 			this.cmdOK.Name = "cmdOK";
 			this.cmdOK.Size = new System.Drawing.Size(75, 23);
 			this.cmdOK.TabIndex = 2;
@@ -69,8 +75,12 @@
 			// cmdCancel
 			// 
 			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdCancel.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cmdCancel.Location = new System.Drawing.Point(341, 158);
+			this.cmdCancel.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdCancel.Flat = true;
+			this.cmdCancel.ForeColor = System.Drawing.Color.White;
+			this.cmdCancel.Location = new System.Drawing.Point(350, 3);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(75, 23);
 			this.cmdCancel.TabIndex = 3;
@@ -81,12 +91,23 @@
 			// chkCollectibles
 			// 
 			this.chkCollectibles.AutoSize = true;
-			this.chkCollectibles.Location = new System.Drawing.Point(12, 58);
+			this.chkCollectibles.Location = new System.Drawing.Point(12, 88);
 			this.chkCollectibles.Name = "chkCollectibles";
 			this.chkCollectibles.Size = new System.Drawing.Size(312, 17);
 			this.chkCollectibles.TabIndex = 4;
 			this.chkCollectibles.Text = "Unlock Collectibles (allows viewing collectibles in the Gallery)";
 			this.chkCollectibles.UseVisualStyleBackColor = true;
+			// 
+			// skinnedPanel1
+			// 
+			this.skinnedPanel1.Controls.Add(this.cmdCancel);
+			this.skinnedPanel1.Controls.Add(this.cmdOK);
+			this.skinnedPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.skinnedPanel1.Location = new System.Drawing.Point(0, 163);
+			this.skinnedPanel1.Name = "skinnedPanel1";
+			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
+			this.skinnedPanel1.Size = new System.Drawing.Size(428, 30);
+			this.skinnedPanel1.TabIndex = 5;
 			// 
 			// GameConfig
 			// 
@@ -96,15 +117,16 @@
 			this.CancelButton = this.cmdCancel;
 			this.ClientSize = new System.Drawing.Size(428, 193);
 			this.ControlBox = false;
+			this.Controls.Add(this.skinnedPanel1);
 			this.Controls.Add(this.chkCollectibles);
-			this.Controls.Add(this.cmdCancel);
-			this.Controls.Add(this.cmdOK);
 			this.Controls.Add(this.chkEpilogues);
 			this.Controls.Add(this.chkDebug);
 			this.Name = "GameConfig";
+			this.ShowIcon = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Game Configuration";
 			this.Load += new System.EventHandler(this.GameConfig_Load);
+			this.skinnedPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -112,10 +134,11 @@
 
 		#endregion
 
-		private System.Windows.Forms.CheckBox chkDebug;
-		private System.Windows.Forms.CheckBox chkEpilogues;
-		private System.Windows.Forms.Button cmdOK;
-		private System.Windows.Forms.Button cmdCancel;
-		private System.Windows.Forms.CheckBox chkCollectibles;
+		private Desktop.Skinning.SkinnedCheckBox chkDebug;
+		private Desktop.Skinning.SkinnedCheckBox chkEpilogues;
+		private Desktop.Skinning.SkinnedButton cmdOK;
+		private Desktop.Skinning.SkinnedButton cmdCancel;
+		private Desktop.Skinning.SkinnedCheckBox chkCollectibles;
+		private Desktop.Skinning.SkinnedPanel skinnedPanel1;
 	}
 }

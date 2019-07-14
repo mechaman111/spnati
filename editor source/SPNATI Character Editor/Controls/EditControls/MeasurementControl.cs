@@ -162,7 +162,7 @@ namespace SPNATI_Character_Editor.EditControls
 			Save();
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			RemoveHandlers();
 			radPx.Checked = true;
@@ -171,7 +171,7 @@ namespace SPNATI_Character_Editor.EditControls
 			AddHandlers();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			if (chkCentered.Checked)
 			{

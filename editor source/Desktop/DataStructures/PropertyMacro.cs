@@ -13,10 +13,7 @@ namespace Desktop
 
 		public List<PropertyMacro> Properties = new List<PropertyMacro>();
 
-		public string Group
-		{
-			get { return ""; }
-		}
+		public string Group { get; set; }
 
 		public string Key
 		{
@@ -72,7 +69,7 @@ namespace Desktop
 			{
 				applications.Add(prop.Serialize());
 			}
-			return $"{Name}$#{string.Join("#$", applications)}";
+			return $"{Name}$#{string.Join("#$", applications)}$#{Group}";
 		}
 
 		public static Macro Deserialize(string data)
@@ -87,6 +84,10 @@ namespace Desktop
 				{
 					PropertyMacro property = PropertyMacro.Deserialize(piece);
 					macro.Properties.Add(property);
+				}
+				if (pieces.Length > 2)
+				{
+					macro.Group = pieces[2];
 				}
 				return macro;
 			}
@@ -139,6 +140,10 @@ namespace Desktop
 			string pattern = @"(\$\w+)";
 			foreach (string value in Values)
 			{
+				if (value == null)
+				{
+					continue;
+				}
 				if (value.Contains("$"))
 				{
 					MatchCollection matches = Regex.Matches(value, pattern);

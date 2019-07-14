@@ -28,16 +28,22 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.cmdOK = new System.Windows.Forms.Button();
-			this.cmdCancel = new System.Windows.Forms.Button();
+			this.cmdOK = new Desktop.Skinning.SkinnedButton();
+			this.cmdCancel = new Desktop.Skinning.SkinnedButton();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
 			this.lstItems = new SPNATI_Character_Editor.Controls.SelectBox();
-			this.label1 = new System.Windows.Forms.Label();
+			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
+			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// cmdOK
 			// 
 			this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdOK.Location = new System.Drawing.Point(116, 226);
+			this.cmdOK.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdOK.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdOK.Flat = false;
+			this.cmdOK.ForeColor = System.Drawing.Color.White;
+			this.cmdOK.Location = new System.Drawing.Point(125, 3);
 			this.cmdOK.Name = "cmdOK";
 			this.cmdOK.Size = new System.Drawing.Size(75, 23);
 			this.cmdOK.TabIndex = 1;
@@ -48,8 +54,12 @@
 			// cmdCancel
 			// 
 			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdCancel.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cmdCancel.Location = new System.Drawing.Point(197, 226);
+			this.cmdCancel.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdCancel.Flat = true;
+			this.cmdCancel.ForeColor = System.Drawing.Color.White;
+			this.cmdCancel.Location = new System.Drawing.Point(206, 3);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(75, 23);
 			this.cmdCancel.TabIndex = 2;
@@ -57,26 +67,38 @@
 			this.cmdCancel.UseVisualStyleBackColor = true;
 			this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
 			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.label1.Location = new System.Drawing.Point(12, 33);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(260, 40);
+			this.label1.TabIndex = 3;
+			this.label1.Text = "These markers will be considered \"set\" for the purposes of the preview.";
+			// 
 			// lstItems
 			// 
 			this.lstItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstItems.Location = new System.Drawing.Point(12, 52);
+			this.lstItems.Location = new System.Drawing.Point(12, 76);
 			this.lstItems.Name = "lstItems";
 			this.lstItems.SelectedItems = new string[0];
-			this.lstItems.Size = new System.Drawing.Size(260, 168);
+			this.lstItems.Size = new System.Drawing.Size(260, 149);
 			this.lstItems.TabIndex = 0;
 			// 
-			// label1
+			// skinnedPanel1
 			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.label1.Location = new System.Drawing.Point(12, 9);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(260, 40);
-			this.label1.TabIndex = 3;
-			this.label1.Text = "These markers will be considered \"set\" for the purposes of the preview.";
+			this.skinnedPanel1.Controls.Add(this.cmdCancel);
+			this.skinnedPanel1.Controls.Add(this.cmdOK);
+			this.skinnedPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.skinnedPanel1.Location = new System.Drawing.Point(0, 231);
+			this.skinnedPanel1.Name = "skinnedPanel1";
+			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
+			this.skinnedPanel1.Size = new System.Drawing.Size(284, 30);
+			this.skinnedPanel1.TabIndex = 4;
 			// 
 			// MarkerSetup
 			// 
@@ -86,13 +108,13 @@
 			this.CancelButton = this.cmdCancel;
 			this.ClientSize = new System.Drawing.Size(284, 261);
 			this.ControlBox = false;
+			this.Controls.Add(this.skinnedPanel1);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.cmdCancel);
-			this.Controls.Add(this.cmdOK);
 			this.Controls.Add(this.lstItems);
 			this.Name = "MarkerSetup";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Set Markers";
+			this.skinnedPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -100,8 +122,9 @@
 		#endregion
 
 		private Controls.SelectBox lstItems;
-		private System.Windows.Forms.Button cmdOK;
-		private System.Windows.Forms.Button cmdCancel;
-		private System.Windows.Forms.Label label1;
+		private Desktop.Skinning.SkinnedButton cmdOK;
+		private Desktop.Skinning.SkinnedButton cmdCancel;
+		private Desktop.Skinning.SkinnedLabel label1;
+		private Desktop.Skinning.SkinnedPanel skinnedPanel1;
 	}
 }

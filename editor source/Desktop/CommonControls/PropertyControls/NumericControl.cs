@@ -53,15 +53,15 @@ namespace Desktop.CommonControls.PropertyControls
 			valValue.TextChanged -= valValue_TextChanged;
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
-			valValue.Value = 0;
+			valValue.Value = valValue.Minimum;
 			valValue.Text = "";
 			_cleared = true;
 			Save();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			if (PropertyType == typeof(int?))
 			{

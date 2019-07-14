@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class CanvasHelp : Form
+	public partial class CanvasHelp : SkinnedForm
 	{
 		public CanvasHelp()
 		{

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 
 namespace SPNATI_Character_Editor
 {
@@ -37,6 +38,35 @@ namespace SPNATI_Character_Editor
 		{
 			int index = _random.Next(list.Count);
 			return list[index];
+		}
+
+		public static void AddRange<T>(this ObservableCollection<T> list, IEnumerable<T> items)
+		{
+			foreach (T item in items)
+			{
+				list.Add(item);
+			}
+		}
+
+		public static void Sort<T>(this ObservableCollection<T> list)
+		{
+			List<T> temp = new List<T>();
+			temp.AddRange(list);
+			temp.Sort();
+			list.Clear();
+			list.AddRange(temp);
+		}
+
+		/// <summary>
+		/// Converts a color to #RRGGBB
+		/// </summary>
+		/// <param name="color"></param>
+		/// <returns></returns>
+		public static string ToHexValue(this Color color)
+		{
+			return "#" + color.R.ToString("X2") +
+					   color.G.ToString("X2") +
+					   color.B.ToString("X2");
 		}
 	}
 }

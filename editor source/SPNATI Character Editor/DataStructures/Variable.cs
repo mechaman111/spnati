@@ -24,7 +24,7 @@ namespace SPNATI_Character_Editor
 		public bool UseMarkers;
 
 		[XmlElement("function")]
-		public List<VariableFunction> Functions;
+		public List<VariableFunction> Functions = new List<VariableFunction>();
 
 		public bool HasFunctions()
 		{
@@ -59,7 +59,7 @@ namespace SPNATI_Character_Editor
 			{
 				yield return func;
 			}
-			if (UseMarkers)
+			if (UseMarkers && character != null)
 			{
 				foreach (Marker marker in character.Markers.Values)
 				{

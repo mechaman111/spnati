@@ -30,10 +30,10 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.table = new System.Windows.Forms.TableLayoutPanel();
-			this.lblName = new System.Windows.Forms.Label();
+			this.lblName = new Desktop.Skinning.SkinnedLabel();
 			this.cmdPin = new System.Windows.Forms.Button();
 			this.cmdRemove = new System.Windows.Forms.Button();
-			this.lblHelp = new System.Windows.Forms.Label();
+			this.lblHelp = new Desktop.Skinning.SkinnedLabel();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.menuFavorite = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.itemFavorite = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,7 +45,7 @@
 			// table
 			// 
 			this.table.ColumnCount = 5;
-			this.table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 22F));
 			this.table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
 			this.table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 26F));
@@ -65,7 +65,11 @@
 			// lblName
 			// 
 			this.lblName.AutoSize = true;
-			this.lblName.Location = new System.Drawing.Point(23, 7);
+			this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lblName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.lblName.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.lblName.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.lblName.Location = new System.Drawing.Point(25, 7);
 			this.lblName.Margin = new System.Windows.Forms.Padding(3, 7, 3, 0);
 			this.lblName.Name = "lblName";
 			this.lblName.Size = new System.Drawing.Size(35, 13);
@@ -105,11 +109,15 @@
 			// 
 			// lblHelp
 			// 
+			this.lblHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lblHelp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.lblHelp.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
 			this.lblHelp.Image = global::Desktop.Properties.Resources.Help;
+			this.lblHelp.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.lblHelp.Location = new System.Drawing.Point(3, 3);
 			this.lblHelp.Margin = new System.Windows.Forms.Padding(3);
 			this.lblHelp.Name = "lblHelp";
-			this.lblHelp.Size = new System.Drawing.Size(14, 22);
+			this.lblHelp.Size = new System.Drawing.Size(16, 22);
 			this.lblHelp.TabIndex = 4;
 			// 
 			// menuFavorite
@@ -118,7 +126,7 @@
             this.itemFavorite,
             this.itemMacro});
 			this.menuFavorite.Name = "menuFavorite";
-			this.menuFavorite.Size = new System.Drawing.Size(159, 70);
+			this.menuFavorite.Size = new System.Drawing.Size(159, 48);
 			// 
 			// itemFavorite
 			// 
@@ -152,11 +160,11 @@
 		#endregion
 
 		private System.Windows.Forms.TableLayoutPanel table;
-		private System.Windows.Forms.Label lblName;
+		private Desktop.Skinning.SkinnedLabel lblName;
 		private System.Windows.Forms.Button cmdRemove;
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.Button cmdPin;
-		private System.Windows.Forms.Label lblHelp;
+		private Desktop.Skinning.SkinnedLabel lblHelp;
 		private System.Windows.Forms.ContextMenuStrip menuFavorite;
 		private System.Windows.Forms.ToolStripMenuItem itemFavorite;
 		private System.Windows.Forms.ToolStripMenuItem itemMacro;

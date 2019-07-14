@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -21,11 +22,13 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					gridMarkers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 					gridMarkers.AllowUserToDeleteRows = false;
+					ColDelete.Visible = false;
 				}
 				else
 				{
-					gridMarkers.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
-					gridMarkers.AllowUserToDeleteRows = true;
+					gridMarkers.SelectionMode = DataGridViewSelectionMode.CellSelect;
+					gridMarkers.AllowUserToDeleteRows = false;
+					ColDelete.Visible = true;
 				}
 				gridMarkers.ReadOnly = value;
 			}
@@ -34,6 +37,8 @@ namespace SPNATI_Character_Editor.Controls
 		public MarkerGrid()
 		{
 			InitializeComponent();
+			ColScope.Items.AddRange(new object[] { "Private", "Public" });
+			ColDelete.Flat = true;
 		}
 
 		public void SetCharacter(Character character)
@@ -111,6 +116,35 @@ namespace SPNATI_Character_Editor.Controls
 				marker = row.Tag as Marker;
 			}
 			SelectionChanged?.Invoke(this, marker);
+		}
+
+		private void gridMarkers_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+		{
+			if (e.ColumnIndex == ColDelete.Index)
+			{
+				Image img = Properties.Resources.Delete;
+				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+				var w = img.Width;
+				var h = img.Height;
+				var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+				var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
+
+				e.Graphics.DrawImage(img, new Rectangle(x, y, w, h));
+				e.Handled = true;
+			}
+		}
+
+		private void gridMarkers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex < 0 || e.ColumnIndex >= gridMarkers.Columns.Count || e.RowIndex == gridMarkers.NewRowIndex || ReadOnly)
+			{
+				return;
+			}
+			DataGridViewColumn col = gridMarkers.Columns[e.ColumnIndex];
+			if (col == ColDelete)
+			{
+				gridMarkers.Rows.RemoveAt(e.RowIndex);
+			}
 		}
 	}
 }

@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Desktop.Skinning;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class MarkerSetup : Form
+	public partial class MarkerSetup : SkinnedForm
 	{
 		public MarkerSetup()
 		{

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.CommonControls;
+using System;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -9,10 +10,6 @@ namespace SPNATI_Character_Editor.Controls
 	public interface IDialogueTreeView
 	{
 		/// <summary>
-		/// Informs the host that it should delete a node
-		/// </summary>
-		event EventHandler<TreeNode> DeleteNode;
-		/// <summary>
 		/// Informs the host that it should save a node
 		/// </summary>
 		event EventHandler SaveNode;
@@ -22,7 +19,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="tree">The tree control this is affecting</param>
 		/// <param name="character">The character whose data should be populated</param>
-		void Initialize(TreeView tree,  Character character);
+		void Initialize(AccordionListView listView, Character character);
 
 		/// <summary>
 		/// Gets the context menu to use for the Copy Tools menu
@@ -58,7 +55,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// Called when the Add button is clicked
 		/// </summary>
 		/// <returns>A tag for a new case to add, "" to open the Add dropdown, or null to do nothing</returns>
-		string AddingCase();
+		string AddingCase(out string folder);
 
 		/// <summary>
 		/// Adds a brand new case to the tree
@@ -83,6 +80,13 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="theCase"></param>
 		/// <param name="hide"></param>
 		void HideCase(Case theCase, bool hide);
+
+		int SortGroups(string key1, string key2);
+		void FormatRow(FormatRowEventArgs args);
+		void FormatGroup(FormatGroupEventArgs args);
+		void Sort();
+
+		ContextMenuStrip ShowContextMenu(AccordionListViewEventArgs args);
 	}
 
 	public enum TreeFilterMode

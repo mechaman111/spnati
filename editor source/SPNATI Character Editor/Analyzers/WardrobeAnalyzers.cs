@@ -116,7 +116,7 @@ namespace SPNATI_Character_Editor.Analyzers
 		{
 			foreach (Clothing c in character.Wardrobe)
 			{
-				if (StringOperations.Matches(c.GenericName, op, value))
+				if (StringOperations.Matches(c.Name, op, value))
 				{
 					return true;
 				}

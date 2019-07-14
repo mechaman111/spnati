@@ -9,24 +9,24 @@ namespace SPNATI_Character_Editor.Actions
 	/// </summary>
 	public class DeleteAnimatedPropertyCommand : ICommand
 	{
-		private LiveSprite _sprite;
+		private LiveAnimatedObject _object;
 		private string _property;
 		private List<ICommand> _commands = new List<ICommand>();
 
-		public DeleteAnimatedPropertyCommand(LiveSprite sprite, string property)
+		public DeleteAnimatedPropertyCommand(LiveAnimatedObject obj, string property)
 		{
-			_sprite = sprite;
+			_object = obj;
 			_property = property;
 		}
 
 		public void Do()
 		{
 			_commands.Clear();
-			for (int i = _sprite.Keyframes.Count - 1; i >= 0; i--)
+			for (int i = _object.Keyframes.Count - 1; i >= 0; i--)
 			{
-				if (_sprite.Keyframes[i].HasProperty(_property))
+				if (_object.Keyframes[i].HasProperty(_property))
 				{
-					DeletePropertyCommand command = new DeletePropertyCommand(_sprite, _sprite.Keyframes[i], _property);
+					DeletePropertyCommand command = new DeletePropertyCommand(_object, _object.Keyframes[i], _property);
 					command.Do();
 					_commands.Add(command);
 				}

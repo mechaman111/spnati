@@ -52,13 +52,13 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			txtValue.Text = "";
 			Save();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			if (txtValue.Text == "")
 			{

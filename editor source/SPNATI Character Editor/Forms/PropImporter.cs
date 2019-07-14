@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Desktop.Skinning;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
-	public partial class PropImporter : Form
+	public partial class PropImporter : SkinnedForm
 	{
 		private string _imagesDirectory;
 

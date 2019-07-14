@@ -19,6 +19,10 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("id")]
 		public string Id;
 
+		[DefaultValue("")]
+		[XmlAttribute("parent")]
+		public string ParentId;
+
 		[DirectiveMarker(DisplayName = "Marker", GroupOrder = 0, Key = "marker", Description = "Run this directive only if the marker's condition is met", ShowPrivate = true)]
 		[XmlAttribute("marker")]
 		public string Marker;
@@ -181,8 +185,15 @@ namespace SPNATI_Character_Editor
 		public bool IgnoreRotation;
 		#endregion
 
+		[Text(DisplayName = "Title", Key = "title", GroupOrder = -1, Description = "User prompt title text", RowHeight = 52, Multiline = true)]
+		[XmlElement("title")]
+		public string Title;
+
 		[XmlElement("keyframe")]
 		public List<Keyframe> Keyframes = new List<Keyframe>();
+
+		[XmlElement("choice")]
+		public List<Choice> Choices = new List<Choice>();
 
 		public Directive() { }
 
@@ -252,6 +263,12 @@ namespace SPNATI_Character_Editor
 				case "emit":
 					text = $"Emit {Id} ({Count})";
 					break;
+				case "jump":
+					text = $"Jump to scene {Id}";
+					break;
+				case "prompt":
+					text = $"Prompt: {Title}";
+					break;
 			}
 
 			return $"{prefix}{text}";
@@ -280,6 +297,13 @@ namespace SPNATI_Character_Editor
 				clonedFrame.Directive = clone;
 				clone.Keyframes.Add(clonedFrame);
 			}
+			clone.Choices = new List<Choice>();
+			foreach (Choice c in Choices)
+			{
+				Choice clonedChoice = c.Clone() as Choice;
+				clonedChoice.Directive = clone;
+				clone.Choices.Add(clonedChoice);
+			}
 			return clone;
 		}
 
@@ -307,6 +331,9 @@ namespace SPNATI_Character_Editor
 			Scene scene = cxt.Scene;
 
 			HashSet<string> usedIds = new HashSet<string>();
+			usedIds.Add("camera");
+			usedIds.Add("fade");
+			usedIds.Add("background");
 
 			//make sure this is the first "add" directive with this ID
 			for (int i = 0; i < scene.Directives.Count; i++)
