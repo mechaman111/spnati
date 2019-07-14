@@ -126,7 +126,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			switch (iconIndex)
 			{
 				case 0:
-					return "Change source at current frame";
+					return "Change source for first frame";
 			}
 			return "";
 		}
@@ -136,10 +136,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			switch (iconIndex)
 			{
 				case 0:
-					LiveKeyframe frame = SelectFrameDataWithPreview(0);
-					if (frame != null)
+					if (SelectedFrame != null)
 					{
-						_timeline.RequestUI(frame);
+						_timeline.RequestUI(SelectedFrame);
+					}
+					else
+					{
+						LiveKeyframe frame = SelectFrameDataWithPreview(Data.Start);
+						if (frame != null)
+						{
+							_timeline.RequestUI(frame);
+						}
 					}
 					break;
 			}

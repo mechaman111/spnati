@@ -136,7 +136,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			string oldSrc = directive.Src;
 			if (!string.IsNullOrEmpty(directive.Src))
 			{
-				directive.Src = character.FolderName + "/" + directive.Src;
+				directive.Src = LiveScene.FixPath(directive.Src, character);
 			}
 			AddKeyframe(directive, 0, false, out temp);
 			directive.Src = oldSrc;
@@ -188,8 +188,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			if (!string.IsNullOrEmpty(kf.Opacity))
 			{
-				AddValue<float>(time, "Alpha", kf.Opacity, addBreak);
-				properties.Add("Alpha");
+				AddValue<float>(time, "Opacity", kf.Opacity, addBreak);
+				properties.Add("Opacity");
 			}
 			if (!string.IsNullOrEmpty(kf.Rotation))
 			{
@@ -217,7 +217,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Image = LiveImageCache.Get(src);
 			ScaleX = GetPropertyValue("ScaleX", time, offset, 1.0f, easeOverride, interpolationOverride, looped);
 			ScaleY = GetPropertyValue("ScaleY", time, offset, 1.0f, easeOverride, interpolationOverride, looped);
-			Alpha = GetPropertyValue("Alpha", time, offset, 100.0f, easeOverride, interpolationOverride, looped);
+			Alpha = GetPropertyValue("Opacity", time, offset, 100.0f, easeOverride, interpolationOverride, looped);
 			Rotation = GetPropertyValue("Rotation", time, offset, 0.0f, easeOverride, interpolationOverride, looped);
 			SkewX = GetPropertyValue("SkewX", time, offset, 0f, easeOverride, interpolationOverride, looped);
 			SkewY = GetPropertyValue("SkewY", time, offset, 0f, easeOverride, interpolationOverride, looped);
@@ -276,6 +276,65 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				//restore
 				g.ResetTransform();
 			}
+		}
+
+		public override Directive CreateCreationDirective(Scene scene)
+		{
+			Directive sprite = new Directive()
+			{
+				Id = Id,
+				DirectiveType = "sprite"
+			};
+
+			sprite.PivotX = Math.Round(PivotX * 100, 0).ToString(CultureInfo.InvariantCulture) + "%";
+			sprite.PivotY = Math.Round(PivotY * 100, 0).ToString(CultureInfo.InvariantCulture) + "%";
+
+			sprite.Z = Z;
+			sprite.ParentId = ParentId;
+			sprite.Marker = Marker;
+
+			if (Keyframes.Count > 0)
+			{
+				LiveSpriteKeyframe initialFrame = Keyframes[0] as LiveSpriteKeyframe;
+				if (!string.IsNullOrEmpty(initialFrame.Src))
+				{
+					sprite.Src = Scene.FixPath(initialFrame.Src, (Data as LiveScene).Character);
+				}
+				if (initialFrame.X.HasValue)
+				{
+					sprite.X = initialFrame.X.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (initialFrame.Y.HasValue)
+				{
+					sprite.Y = initialFrame.Y.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (initialFrame.ScaleX.HasValue)
+				{
+					sprite.ScaleX = initialFrame.ScaleX.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (initialFrame.ScaleY.HasValue)
+				{
+					sprite.ScaleY = initialFrame.ScaleY.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (initialFrame.SkewX.HasValue)
+				{
+					sprite.SkewX = initialFrame.SkewX.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (initialFrame.SkewY.HasValue)
+				{
+					sprite.SkewY = initialFrame.SkewY.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (initialFrame.Rotation.HasValue)
+				{
+					sprite.Rotation = initialFrame.Rotation.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (initialFrame.Opacity.HasValue)
+				{
+					sprite.Opacity = initialFrame.Opacity.Value.ToString(CultureInfo.InvariantCulture);
+				}
+			}
+
+			return sprite;
 		}
 	}
 }

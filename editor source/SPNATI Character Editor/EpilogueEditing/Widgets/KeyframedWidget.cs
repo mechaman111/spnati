@@ -871,7 +871,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 
 			float end = Data.Length * pps;
-			if (Data.Keyframes.Count <= 1 && x > end - 5 && x <= end + 5)
+			if ((Data.Keyframes.Count <= 1 || (Data.AllowLinkToEnd && !Data.LinkedToEnd)) && x > end - 5 && x <= end + 5)
 			{
 				return new ModifyWidgetLengthTimelineAction();
 			}

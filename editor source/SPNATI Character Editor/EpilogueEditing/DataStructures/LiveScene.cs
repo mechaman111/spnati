@@ -119,17 +119,54 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Breaks = new ObservableCollection<LiveBreak>();
 		}
 
+		/// <summary>
+		/// Updates a path to be relative to opponents
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="character"></param>
+		public static string FixPath(string path, Character character)
+		{
+			if (path.StartsWith("/opponents/"))
+			{
+				return path.Substring("/opponents/".Length);
+			}
+			else
+			{
+				return character.FolderName + "/" + path;
+			}
+		}
+
 		public LiveScene(Scene scene, Character character) : this()
 		{
 			Character = character;
 			Name = scene.Name ?? "New scene";
 			if (!string.IsNullOrEmpty(scene.BackgroundColor))
 			{
-				BackColor = ColorTranslator.FromHtml(scene.BackgroundColor);
+				try
+				{
+					BackColor = ColorTranslator.FromHtml(scene.BackgroundColor);
+				}
+				catch { }
 			}
 			if (!string.IsNullOrEmpty(scene.Background))
 			{
-				BackgroundImage = character.FolderName + "/" + scene.Background;
+				BackgroundImage = FixPath(scene.Background, character);
+			}
+			if (!string.IsNullOrEmpty(scene.Width))
+			{
+				int w;
+				if (int.TryParse(scene.Width, out w))
+				{
+					Width = w;
+				}
+			}
+			if (!string.IsNullOrEmpty(scene.Height))
+			{
+				int h;
+				if (int.TryParse(scene.Height, out h))
+				{
+					Height = h;
+				}
 			}
 			Camera = new LiveCamera(scene);
 			Camera.PropertyChanged += Camera_PropertyChanged;
@@ -139,6 +176,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			HashSet<string> _removedIds = new HashSet<string>();
 
+			HashSet<LiveAnimatedObject> currentBatch = new HashSet<LiveAnimatedObject>();
+
 			foreach (Directive directive in scene.Directives)
 			{
 				switch (directive.DirectiveType)
@@ -146,39 +185,39 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					case "sprite":
 						LiveSprite sprite = new LiveSprite(this, directive, Character, _time);
 						sprite.PropertyChanged += Sprite_PropertyChanged;
+						currentBatch.Add(sprite);
 						Tracks.Add(sprite);
 						break;
 					case "text":
-						LiveBubble bubble = new LiveBubble(this, directive, _time);
-						Tracks.Add(bubble);
+						AddBubbleDirective(directive, currentBatch);
 						break;
 					case "move":
 					case "camera":
-						AddMoveDirective(directive);
+						AddMoveDirective(directive, currentBatch);
 						break;
 					case "fade":
-						AddFadeDirective(directive);
+						AddFadeDirective(directive, currentBatch);
 						break;
 					case "stop":
-						AddStopDirective(directive);
+						AddStopDirective(directive, currentBatch);
 						break;
 					case "wait":
 					case "pause":
-						AddPauseDirective(directive);
+						AddPauseDirective(directive, currentBatch);
 						break;
 					case "remove":
 					case "clear":
-						AddRemoveDirective(directive);
+						AddRemoveDirective(directive, currentBatch);
 						break;
 					case "clear-all":
-						AddClearAllDirective(directive);
+						AddClearAllDirective(directive, currentBatch);
 						break;
 					case "emitter":
 						LiveEmitter emitter = new LiveEmitter(this, directive, Character, _time);
 						Tracks.Add(emitter);
 						break;
 					case "emit":
-						AddEmitDirective(directive);
+						AddEmitDirective(directive, currentBatch);
 						break;
 					case "skip":
 						break;
@@ -217,7 +256,32 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		private void AddMoveDirective(Directive directive)
+		private void AddBubbleDirective(Directive directive, HashSet<LiveAnimatedObject> batch)
+		{
+			//see if any bubbles with this ID already exist
+			LiveBubble bubble = null;
+			if (!string.IsNullOrEmpty(directive.Id))
+			{
+				bubble = Tracks.Find(t => t.Id == directive.Id) as LiveBubble;
+			}
+			if (bubble == null)
+			{
+				bubble = new LiveBubble(this, directive, GetDelayedTime(directive));
+				Tracks.Add(bubble);
+			}
+			else
+			{
+				//reusing a bubble; add a keyframe
+				float time = GetDelayedTime(directive);
+				bubble.AddValue<string>(time - bubble.Start, "Text", directive.Text);
+			}
+			if (bubble != null)
+			{
+				batch.Add(bubble);
+			}
+		}
+
+		private void AddMoveDirective(Directive directive, HashSet<LiveAnimatedObject> batch)
 		{
 			LiveAnimatedObject obj = null;
 			if (directive.Id == "camera")
@@ -230,20 +294,78 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			if (obj == null) { return; }
 
+			batch.Add(obj);
+
 			float time = GetDelayedTime(directive);
 
 			//create a keyframe from the directive
 			if (directive.Keyframes.Count == 0)
 			{
 				LiveKeyframe firstFrame;
-				obj.AddKeyframe(directive, time, false, out firstFrame);
+				obj.AddKeyframe(directive, time - obj.Start, false, out firstFrame);
 			}
 
 			//add the directive's keyframes
 			obj.AddKeyframeDirective(directive, _time, "smooth", "linear");
+
+			//if the first frame isn't at time 0, need to copy the previous frame's values to there
+			if (obj.Keyframes.Count > 0 && (directive.Keyframes.Count == 0 && directive.Time != "0" || directive.Keyframes.Count > 0 && directive.Keyframes[0].Time != "0"))
+			{
+				int startIndex = 0;
+				float relTime = time - obj.Start;
+				for (int i = 0; i < obj.Keyframes.Count; i++)
+				{
+					if (obj.Keyframes[i].Time > relTime)
+					{
+						startIndex = i;
+						break;
+					}
+				}
+
+				foreach (string property in obj.Properties)
+				{
+					//for each property, get the first frame from this directive that modified the property
+					LiveKeyframe next = null;
+					for (int i = startIndex; i < obj.Keyframes.Count; i++)
+					{
+						if (obj.Keyframes[i].HasProperty(property))
+						{
+							next = obj.Keyframes[i];
+							break;
+						}
+					}
+
+					if (next != null)
+					{
+						//then, get the first frame from an earlier directive that modified the property
+						LiveKeyframe previous = null;
+						for (int i = startIndex - 1; i >= 0; i--)
+						{
+							if (obj.Keyframes[i].HasProperty(property))
+							{
+								previous = obj.Keyframes[i];
+								break;
+							}
+						}
+
+						if (previous != null)
+						{
+							//finally, copy the previous frame's value into the start of this directive
+							obj.AddValue<object>(relTime, property, Convert.ToString(previous.Get<object>(property), CultureInfo.InvariantCulture), true);
+
+							//and make the next frame not a begin anymore
+							LiveKeyframeMetadata metadata = next.GetMetadata(property, false);
+							LiveKeyframeMetadata oldData = obj.Keyframes.Find(k => k.Time == relTime).GetMetadata(property, true);
+							metadata.CopyPropertiesInto(oldData);
+							metadata.Clear();
+							metadata.FrameType = KeyframeType.Normal;
+						}
+					}
+				}
+			}
 		}
 
-		private void AddRemoveDirective(Directive directive)
+		private void AddRemoveDirective(Directive directive, HashSet<LiveAnimatedObject> batch)
 		{
 			LiveAnimatedObject obj = Tracks.Find(o => o.Id == directive.Id) as LiveAnimatedObject;
 			if (obj == null)
@@ -252,9 +374,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			obj.LinkedToEnd = false;
 			obj.Length = GetDelayedTime(directive) - obj.Start;
+			batch.Add(obj);
 		}
 
-		private void AddClearAllDirective(Directive directive)
+		private void AddClearAllDirective(Directive directive, HashSet<LiveAnimatedObject> batch)
 		{
 			float time = GetDelayedTime(directive);
 			foreach (LiveObject obj in Tracks)
@@ -263,12 +386,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					obj.LinkedToEnd = false;
 					LiveAnimatedObject o = obj as LiveAnimatedObject;
+					batch.Add(o);
 					o.Length = time - obj.Start;
 				}
 			}
 		}
 
-		private void AddEmitDirective(Directive directive)
+		private void AddEmitDirective(Directive directive, HashSet<LiveAnimatedObject> batch)
 		{
 			float time = GetDelayedTime(directive);
 			LiveEmitter emitter = Tracks.Find(o => o.Id == directive.Id) as LiveEmitter;
@@ -277,11 +401,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				return;
 			}
 
+			batch.Add(emitter);
 			LiveBurst burst = emitter.AddEvent(time) as LiveBurst;
 			burst.Count = directive.Count;
 		}
 
-		private void AddStopDirective(Directive directive)
+		private void AddStopDirective(Directive directive, HashSet<LiveAnimatedObject> batch)
 		{
 			LiveAnimatedObject obj = null;
 			if (directive.Id == "camera")
@@ -294,6 +419,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			if (obj == null) { return; }
 
+			batch.Add(obj);
 			float time = GetDelayedTime(directive);
 			obj.AddStopDirective(directive, time);
 		}
@@ -308,10 +434,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return _time;
 		}
 
-		private void AddPauseDirective(Directive directive)
+		private void AddPauseDirective(Directive directive, HashSet<LiveAnimatedObject> batch)
 		{
 			//update the current start basis to match the end time of the last non-looping animation
-			float max = Math.Max(GetEnd(Camera), _time);
+			float max = _time;
 			foreach (LiveObject obj in Tracks)
 			{
 				LiveAnimatedObject animObj = obj as LiveAnimatedObject;
@@ -319,7 +445,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					continue;
 				}
-				float end = GetEnd(animObj);
+				float end = GetEnd(animObj) + 1;
 				max = Math.Max(end, max);
 			}
 			_time = Math.Max(max, _time);
@@ -332,10 +458,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		private void AddFadeDirective(Directive directive)
+		private void AddFadeDirective(Directive directive, HashSet<LiveAnimatedObject> batch)
 		{
 			LiveCamera camera = Camera;
 			camera.AddKeyframeDirective(directive, _time, "smooth", "linear");
+			batch.Add(camera);
 		}
 
 		private static float GetEnd(LiveAnimatedObject obj)
@@ -352,12 +479,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					for (int i = obj.Keyframes.Count - 1; i >= 0; i--)
 					{
 						LiveKeyframe kf = obj.Keyframes[i];
-						LiveKeyframeMetadata metadata = obj.GetBlockMetadata(prop, kf.Time);
-						if (!metadata.Looped)
+						if (kf.HasProperty(prop))
 						{
-							if (kf.HasProperty(prop))
+							LiveKeyframeMetadata metadata = obj.GetBlockMetadata(prop, kf.Time);
+							if (!metadata.Looped)
 							{
-								end = Math.Max(end, obj.Start + kf.Time);
+								if (!obj.LinkedToEnd)
+								{
+									end = Math.Max(end, obj.Start);
+								}
+								else
+								{
+									end = Math.Max(end, obj.Start + kf.Time);
+								}
 								break;
 							}
 						}
@@ -779,6 +913,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			float earliestBegin = float.MaxValue;
 			foreach (LiveObject obj in Tracks)
 			{
+				if (obj is LiveBubble)
+				{
+					continue; //speech bubbles don't have any bearing on break points
+				}
 				LiveAnimatedObject anim = obj as LiveAnimatedObject;
 				if (anim != null)
 				{
@@ -800,12 +938,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 								}
 								else
 								{
-									if (start == end && obj is LiveBubble && anim.Keyframes.Count == 1)
-									{
-										//for speech bubbles, count their end point as a potential break if there's only one key frame
-										endTime = startTime + anim.Length;
-									}
-
 									if (endTime < time)
 									{
 										//if this ends before the desired time, don't consider it

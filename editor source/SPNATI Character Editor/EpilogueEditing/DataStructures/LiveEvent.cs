@@ -20,5 +20,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		public abstract void Trigger();
+
+		public abstract Directive CreateDirectiveDefinition();
 	}
 }

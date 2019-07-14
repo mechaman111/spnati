@@ -25,5 +25,13 @@
 				}
 			}
 		}
+
+		public override Directive CreateDirectiveDefinition()
+		{
+			Directive directive = new Directive();
+			directive.DirectiveType = "emit";
+			directive.Count = Count;
+			return directive;
+		}
 	}
 }

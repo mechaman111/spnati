@@ -536,7 +536,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="propName"></param>
 		/// <param name="serializedValue"></param>
 		/// <returns>Keyframe at that point</returns>
-		protected virtual void AddValue<T>(float time, string propName, string serializedValue, bool addAnimBreak)
+		public virtual void AddValue<T>(float time, string propName, string serializedValue, bool addAnimBreak)
 		{
 		}
 

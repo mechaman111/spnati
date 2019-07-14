@@ -252,28 +252,25 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			if (!string.IsNullOrEmpty(directive.Src))
 			{
-				Image = LiveImageCache.Get(character.FolderName + "/" + directive.Src);
+				Image = LiveImageCache.Get(LiveScene.FixPath(directive.Src, character));
 				if (Image != null)
 				{
 					ParticleWidth = Image.Width;
 					ParticleHeight = Image.Height;
 				}
 			}
+			if (!string.IsNullOrEmpty(directive.EasingMethod))
+			{
+				ParticleEase = directive.EasingMethod;
+			}
 
 			InitializeParameters(directive);
-
-			if (!string.IsNullOrEmpty(directive.Width))
-			{
-			}
-			if (!string.IsNullOrEmpty(directive.Height))
-			{
-			}
 
 			LiveKeyframe temp;
 			string oldSrc = directive.Src;
 			if (!string.IsNullOrEmpty(directive.Src))
 			{
-				directive.Src = character.FolderName + "/" + directive.Src;
+				directive.Src = LiveScene.FixPath(directive.Src, character);
 			}
 			AddKeyframe(directive, 0, false, out temp);
 			directive.Src = oldSrc;
@@ -525,5 +522,129 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public override bool CanScale { get { return false; } }
 		public override bool CanSkew { get { return false; } }
 		public override bool CanPivot { get { return false; } }
+
+		public override Directive CreateCreationDirective(Scene scene)
+		{
+			Directive emitter = new Directive()
+			{
+				Id = Id,
+				DirectiveType = "emitter"
+			};
+
+			emitter.Z = Z;
+			emitter.ParentId = ParentId;
+			emitter.Marker = Marker;
+			emitter.Width = ParticleWidth.ToString(CultureInfo.InvariantCulture);
+			emitter.Height = ParticleHeight.ToString(CultureInfo.InvariantCulture);
+			emitter.EasingMethod = ParticleEase;
+			emitter.IgnoreRotation = IgnoreRotation;
+			if (Angle != 0)
+			{
+				emitter.Angle = Angle.ToString(CultureInfo.InvariantCulture);
+			}
+			if (Lifetime != null)
+			{
+				emitter.Lifetime = Lifetime.Serialize();
+			}
+			if (StartScaleX != null)
+			{
+				emitter.StartScaleX = StartScaleX.Serialize();
+			}
+			if (EndScaleX != null)
+			{
+				emitter.EndScaleX = EndScaleX.Serialize();
+			}
+			if (StartScaleY != null)
+			{
+				emitter.StartScaleY = StartScaleY.Serialize();
+			}
+			if (EndScaleY != null)
+			{
+				emitter.EndScaleY = EndScaleY.Serialize();
+			}
+			if (StartSkewX != null)
+			{
+				emitter.StartSkewX = StartSkewX.Serialize();
+			}
+			if (EndSkewX != null)
+			{
+				emitter.EndSkewX = EndSkewX.Serialize();
+			}
+			if (StartSkewY != null)
+			{
+				emitter.StartSkewY = StartSkewY.Serialize();
+			}
+			if (EndSkewY != null)
+			{
+				emitter.EndSkewY = EndSkewY.Serialize();
+			}
+			if (Speed != null)
+			{
+				emitter.Speed = Speed.Serialize();
+			}
+			if (Acceleration != null)
+			{
+				emitter.Acceleration = Acceleration.Serialize();
+			}
+			if (ForceX != null)
+			{
+				emitter.ForceX = ForceX.Serialize();
+			}
+			if (ForceY != null)
+			{
+				emitter.ForceY = ForceY.Serialize();
+			}
+			if (StartColor != null)
+			{
+				emitter.StartColor = StartColor.Serialize();
+			}
+			if (EndColor != null)
+			{
+				emitter.EndColor = EndColor.Serialize();
+			}
+			if (StartAlpha != null)
+			{
+				emitter.StartAlpha = StartAlpha.Serialize();
+			}
+			if (EndAlpha != null)
+			{
+				emitter.EndAlpha = EndAlpha.Serialize();
+			}
+			if (StartRotation != null)
+			{
+				emitter.StartRotation = StartRotation.Serialize();
+			}
+			if (EndRotation != null)
+			{
+				emitter.EndRotation = EndRotation.Serialize();
+			}
+
+			if (Keyframes.Count > 0)
+			{
+				LiveEmitterKeyframe initialFrame = Keyframes[0] as LiveEmitterKeyframe;
+				if (!string.IsNullOrEmpty(initialFrame.Src))
+				{
+					emitter.Src = Scene.FixPath(initialFrame.Src, (Data as LiveScene).Character);
+				}
+				if (initialFrame.X.HasValue)
+				{
+					emitter.X = initialFrame.X.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (initialFrame.Y.HasValue)
+				{
+					emitter.Y = initialFrame.Y.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (initialFrame.Rotation.HasValue)
+				{
+					emitter.Rotation = initialFrame.Rotation.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (initialFrame.Rate.HasValue)
+				{
+					emitter.Rate = initialFrame.Rate.Value.ToString(CultureInfo.InvariantCulture);
+				}
+			}
+
+			return emitter;
+		}
 	}
 }

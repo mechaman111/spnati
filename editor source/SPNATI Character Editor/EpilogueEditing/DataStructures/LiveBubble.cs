@@ -54,6 +54,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			DisplayPastEnd = false;
 			Data = data;
+			Start = time;
 			Length = 1;
 			LinkedToEnd = true;
 
@@ -560,6 +561,34 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 			}
 			end = start = Keyframes[0];
+		}
+
+		public override Directive CreateCreationDirective(Scene scene)
+		{
+			Directive text = new Directive()
+			{
+				Id = Id,
+				DirectiveType = "text"
+			};
+
+			text.Marker = Marker;
+			text.X = TextX;
+			text.Y = TextY;
+			text.Width = TextWidth;
+			text.AlignmentX = AlignmentX;
+			text.AlignmentY = AlignmentY;
+			text.Arrow = Arrow;
+
+			if (Keyframes.Count > 0)
+			{
+				LiveBubbleKeyframe initialFrame = Keyframes[0] as LiveBubbleKeyframe;
+				if (!string.IsNullOrEmpty(initialFrame.Text))
+				{
+					text.Text = initialFrame.Text;
+				}
+			}
+
+			return text;
 		}
 	}
 }

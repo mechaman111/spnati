@@ -10,7 +10,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			TrackedProperties.Add("Src");
 			TrackedProperties.Add("ScaleX");
 			TrackedProperties.Add("ScaleY");
-			TrackedProperties.Add("Alpha");
+			TrackedProperties.Add("Opacity");
 			TrackedProperties.Add("Rotation");
 			TrackedProperties.Add("SkewX");
 			TrackedProperties.Add("SkewY");
@@ -38,7 +38,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		[Slider(DisplayName = "Opacity (0-100)", GroupOrder = 30, Key = "alpha", Description = "Opacity/transparency level")]
-		public float? Alpha
+		public float? Opacity
 		{
 			get { return Get<float?>(); }
 			set { Set(value); }

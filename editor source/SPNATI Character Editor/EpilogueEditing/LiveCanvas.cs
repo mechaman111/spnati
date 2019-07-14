@@ -9,14 +9,6 @@ using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.Forms;
 using SPNATI_Character_Editor.Properties;
 
-
-/* Todo
- * ----
- * Need to be able to drag length
- * Conversion between Scene and LiveScene
- * Delay not being handled properly when making move directive, etc.
-*/
-
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
 	public partial class LiveCanvas : UserControl, ISkinControl

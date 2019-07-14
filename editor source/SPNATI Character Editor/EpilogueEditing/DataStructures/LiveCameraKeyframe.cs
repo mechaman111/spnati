@@ -13,7 +13,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		[Slider(DisplayName = "Opacity (0-100)", GroupOrder = 90, Key = "alpha", Description = "Opacity/transparency level")]
-		public float? Alpha
+		public float? Opacity
 		{
 			get { return Get<float?>(); }
 			set { Set(value); }
@@ -30,7 +30,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			TrackedProperties.Add("Zoom");
 			TrackedProperties.Add("Color");
-			TrackedProperties.Add("Alpha");
+			TrackedProperties.Add("Opacity");
 		}
 	}
 }

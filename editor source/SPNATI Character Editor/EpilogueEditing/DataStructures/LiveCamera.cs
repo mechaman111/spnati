@@ -75,7 +75,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			AddValue<float>(0, "X", scene.X);
 			AddValue<float>(0, "Y", scene.Y);
 			AddValue<float>(0, "Zoom", scene.Zoom);
-			AddValue<float>(0, "Alpha", scene.FadeOpacity);
+			AddValue<float>(0, "Opacity", scene.FadeOpacity);
 			AddValue<Color>(0, "Color", scene.FadeColor);
 			Update(0, 0, false);
 		}
@@ -112,8 +112,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			if (!string.IsNullOrEmpty(kf.Opacity))
 			{
-				AddValue<float>(time, "Alpha", kf.Opacity, addBreak);
-				properties.Add("Alpha");
+				AddValue<float>(time, "Opacity", kf.Opacity, addBreak);
+				properties.Add("Opacity");
 			}
 			if (!string.IsNullOrEmpty(kf.Color))
 			{
@@ -134,7 +134,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			X = GetPropertyValue("X", time, offset, 0.0f, ease, interpolation, looped);
 			Y = GetPropertyValue("Y", time, offset, 0.0f, ease, interpolation, looped);
 			Zoom = GetPropertyValue("Zoom", time, offset, 1.0f, ease, interpolation, looped);
-			Alpha = GetPropertyValue("Alpha", time, offset, 0.0f, ease, interpolation, looped);
+			Alpha = GetPropertyValue("Opacity", time, offset, 0.0f, ease, interpolation, looped);
 			Color = GetPropertyValue("Color", time, offset, Color.Black, ease, interpolation, looped);
 		}
 
@@ -286,6 +286,36 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				default:
 					return true;
 			}
+		}
+
+		public override Directive CreateCreationDirective(Scene scene)
+		{
+			//camera doesn't actually create a directive, it sets properties on the scene
+			if (Keyframes.Count > 0)
+			{
+				LiveCameraKeyframe firstFrame = Keyframes[0] as LiveCameraKeyframe;
+				if (firstFrame.X.HasValue)
+				{
+					scene.X = firstFrame.X.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (firstFrame.Y.HasValue)
+				{
+					scene.Y = firstFrame.Y.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (firstFrame.Zoom.HasValue)
+				{
+					scene.Zoom = firstFrame.Zoom.Value.ToString(CultureInfo.InvariantCulture);
+				}
+				if (firstFrame.Color != Color.Empty)
+				{
+					scene.FadeColor = firstFrame.Color.ToHexValue();
+				}
+				if (firstFrame.Opacity.HasValue)
+				{
+					scene.FadeOpacity = firstFrame.Opacity.Value.ToString(CultureInfo.InvariantCulture);
+				}
+			}
+			return null;
 		}
 	}
 }

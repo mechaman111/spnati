@@ -54,6 +54,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					//fill blocks of contiguous animation
 					HashSet<LiveKeyframe> visited = new HashSet<LiveKeyframe>();
 					LiveKeyframe lastFrame = null;
+					int lastFrameIndex = -1;
 					for (int i = 0; i < Data.Keyframes.Count; i++)
 					{
 						LiveKeyframe kf = Data.Keyframes[i];
@@ -64,11 +65,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 							KeyframeType type = kf.GetFrameType(property);
 							_keyframesType[kf] = ToDrawStyle(type);
-							if (type == KeyframeType.Begin && lastFrame != null && _keyframesType[lastFrame] != KeyframeDrawStyle.Begin)
+							if (type == KeyframeType.Begin && lastFrame != null && _keyframesType[lastFrame] != KeyframeDrawStyle.Begin && lastFrameIndex > 0)
 							{
 								_keyframesType[lastFrame] = KeyframeDrawStyle.End;
 							}
 							lastFrame = kf;
+							lastFrameIndex = i;
 
 							Data.GetBlock(property, kf.Time, false, out startFrame, out endFrame);
 							if (visited.Contains(startFrame)) { continue; }

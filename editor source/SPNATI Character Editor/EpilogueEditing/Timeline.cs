@@ -1380,9 +1380,23 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public void ResumePlayback()
 		{
-			if (!PlaybackAwaitingInput) { return; }
-			PlaybackAwaitingInput = false;
-			_playbackTime += 0.001f;
+			if (tmrTick.Enabled)
+			{
+				if (!PlaybackAwaitingInput)
+				{
+					//jump to the next break if there is one
+					for (int i = 0; i < _breaks.Count; i++)
+					{
+						if (_breaks[i].Time > _playbackTime + 0.001f)
+						{
+							_playbackTime = _breaks[i].Time;
+							break;
+						}
+					}
+				}
+				PlaybackAwaitingInput = false;
+				_playbackTime += 0.001f;
+			}
 		}
 
 		public void EnablePlayback(bool enabled)

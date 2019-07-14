@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using Desktop;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
@@ -76,6 +77,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			AnimatedProperties = new ObservableSet<string>();
 		}
 
+		public abstract Directive CreateCreationDirective(Scene scene);
+
 		protected override void OnCopyTo(LiveObject copy)
 		{
 			LiveAnimatedObject animatedCopy = copy as LiveAnimatedObject;
@@ -113,7 +116,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="propName"></param>
 		/// <param name="serializedValue"></param>
 		/// <returns>Keyframe at that point</returns>
-		protected override void AddValue<T>(float time, string propName, string serializedValue, bool addAnimBreak)
+		public override void AddValue<T>(float time, string propName, string serializedValue, bool addAnimBreak)
 		{
 			if (string.IsNullOrEmpty(serializedValue))
 			{
@@ -138,6 +141,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			object val = null;
 			Type propType = typeof(T);
+			if (propType == typeof(Object))
+			{
+				propType = PropertyTypeInfo.GetType(this.GetType(), propName);
+			}
 			if (propType == typeof(string))
 			{
 				val = serializedValue;
@@ -974,6 +981,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// Adds a keyframe from a definition
 		/// </summary>
 		/// <param name="kf"></param>
+		/// <param name="timeOffset">Relative time from start of animation</param>
 		public HashSet<string> AddKeyframe(Keyframe kf, float timeOffset, bool addBreak, out LiveKeyframe frame)
 		{
 			HashSet<string> properties = new HashSet<string>();
@@ -996,14 +1004,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// Merges a directive into this preview to have one single animation
 		/// </summary>
 		/// <param name="directive"></param>
+		/// <param name="offset">Absolute time that this animation block starts</param>
 		public void AddKeyframeDirective(Directive directive, float offset, string defaultEase, string defaultInterpolation)
 		{
-			float delay = Start;
+			float startTime = offset - Start;
 			if (!string.IsNullOrEmpty(directive.Delay))
 			{
-				float.TryParse(directive.Delay, NumberStyles.Number, CultureInfo.InvariantCulture, out delay);
+				float delay;
+				if (float.TryParse(directive.Delay, NumberStyles.Number, CultureInfo.InvariantCulture, out delay))
+				{
+					startTime += delay;
+				}
 			}
-			float startTime = delay - Start + offset;
 			if (startTime < 0)
 			{
 				startTime = 0; //if the delay was shorter than the sprite's delay, use no delay at all. This setup wouldn't work well anyway.
@@ -1014,7 +1026,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				string t1 = k1.Time ?? "0";
 				string t2 = k2.Time ?? "0";
-				return t1.CompareTo(t2);
+				float f1, f2;
+				float.TryParse(t1, NumberStyles.Number, CultureInfo.InvariantCulture, out f1);
+				float.TryParse(t2, NumberStyles.Number, CultureInfo.InvariantCulture, out f2);
+				return f1.CompareTo(f2);
 			});
 			bool frameExists = Keyframes.Find(k => k.Time == startTime) != null;
 			for (int i = 0; i < directive.Keyframes.Count; i++)
@@ -1031,9 +1046,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 
 			LiveKeyframe startFrame = Keyframes.Find(kf => kf.Time == startTime);
-			foreach (string prop in affectedProperties)
+			if (startFrame == null)
 			{
-				if (startFrame != null)
+				startFrame = AddKeyframe(startTime);
+			}
+			if (startFrame != null)
+			{
+				foreach (string prop in affectedProperties)
 				{
 					LiveKeyframeMetadata metadata = startFrame.GetMetadata(prop, true);
 					string ease = directive.EasingMethod ?? defaultEase;
@@ -1157,7 +1176,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					{
 						//this frame is a begin, so use the last frame as the end if time is in range
 						//this should only be entered if the previous frame was the start. Otherwise the nextType == Begin below would cover this case a step earlier
-						if (time <= kf.Time)
+						if (time < kf.Time)
 						{
 							end = start;
 							return;

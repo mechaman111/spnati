@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Reflection;
 using Desktop;
+using Desktop.CommonControls;
 using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
 
@@ -140,6 +143,44 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 			}
 			return PropertyMetadata[property];
+		}
+
+		public virtual Keyframe CreateKeyframeDefinition(Directive directive)
+		{
+			Type keyframeType = typeof(Keyframe);
+			string time = Time.ToString(CultureInfo.InvariantCulture);
+			Keyframe kf = directive.Keyframes.Find(k => k.Time == time) ?? new Keyframe();
+			kf.Time = time;
+			foreach (string property in TrackedProperties)
+			{
+				if (HasProperty(property))
+				{
+					MemberInfo mi = PropertyTypeInfo.GetMemberInfo(keyframeType, property);
+					if (mi == null)
+					{
+						throw new InvalidOperationException($"No property on Keyframe called {property} found.");
+					}
+					Type dataType = mi.GetDataType();
+					if (dataType == typeof(int))
+					{
+						mi.SetValue(kf, Get<int>(property));
+					}
+					else if (dataType == typeof(float))
+					{
+						mi.SetValue(kf, Get<float>(property));
+					}
+					else if (dataType == typeof(bool))
+					{
+						mi.SetValue(kf, Get<bool>(property));
+					}
+					else
+					{
+						string value = Convert.ToString(Get<object>(property), CultureInfo.InvariantCulture);
+						mi.SetValue(kf, value);
+					}
+				}
+			}
+			return kf;
 		}
 	}
 }
