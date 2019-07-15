@@ -282,8 +282,8 @@ function loadClothing () {
             new Clothing('t-shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/tshirt.png", false, 4),
             new Clothing('undershirt', 'undershirt', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/male/undershirt.png", false, 5),
 
-            new Clothing('Glasses', 'glasses', EXTRA_ARTICLE, 'head', "player/male/glasses.png", true, 6),
-            new Clothing('Belt', 'belt', EXTRA_ARTICLE, 'waist', "player/male/belt.png", false, 7),
+            new Clothing('glasses', 'glasses', EXTRA_ARTICLE, 'head', "player/male/glasses.png", true, 6),
+            new Clothing('belt', 'belt', EXTRA_ARTICLE, 'waist', "player/male/belt.png", false, 7),
             new Clothing('pants', 'pants', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/pants.png", true, 8),
             new Clothing('shorts', 'shorts', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/shorts.png", true, 9),
             new Clothing('kilt', 'kilt', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/kilt.png", false, 10),
@@ -302,7 +302,7 @@ function loadClothing () {
             new Clothing('jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/female/jacket.png", false, 2),
             new Clothing('shirt', 'top', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/shirt.png", false, 3),
             new Clothing('tank top', 'top', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/tanktop.png", false, 4),
-            new Clothing('Bra', 'bra', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/female/bra.png", false, 5),
+            new Clothing('bra', 'bra', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/female/bra.png", false, 5),
 
             new Clothing('glasses', 'glasses', EXTRA_ARTICLE, 'head', "player/female/glasses.png", true, 6),
             new Clothing('belt', 'belt', EXTRA_ARTICLE, 'waist', "player/female/belt.png", false, 7),
