@@ -34,6 +34,10 @@ namespace SPNATI_Character_Editor
 
 		public override string ToString()
 		{
+			if (string.IsNullOrEmpty(Id))
+			{
+				return "???";
+			}
 			return Id;
 		}
 
@@ -102,9 +106,9 @@ namespace SPNATI_Character_Editor
 					sprite.Delay = item.Start.ToString(CultureInfo.InvariantCulture);
 				}
 
-				if (item.Keyframes.Count >= 0)
+				if (item.Keyframes.Count > 0)
 				{
-					LiveKeyframe initialFrame = item.Keyframes[0];
+					LiveSpriteKeyframe initialFrame = item.Keyframes[0] as LiveSpriteKeyframe;
 					if (!string.IsNullOrEmpty(initialFrame.Src))
 					{
 						sprite.Src = initialFrame.Src;
@@ -137,96 +141,44 @@ namespace SPNATI_Character_Editor
 					{
 						sprite.Rotation = initialFrame.Rotation.Value.ToString(CultureInfo.InvariantCulture);
 					}
-					if (initialFrame.Alpha.HasValue)
+					if (initialFrame.Opacity.HasValue)
 					{
-						sprite.Opacity = initialFrame.Alpha.Value.ToString(CultureInfo.InvariantCulture);
+						sprite.Opacity = initialFrame.Opacity.Value.ToString(CultureInfo.InvariantCulture);
 					}
 
 					//2. split remainder of keyframes into animation directives of similar settings
 					DualKeyDictionary<float, string, PoseDirective> directives = new DualKeyDictionary<float, string, PoseDirective>();
-					foreach (string property in LiveKeyframe.TrackedProperties)
+					foreach (string property in initialFrame.TrackedProperties)
 					{
 						float delay = item.Start;
-						if (item.Keyframes.Count > 0)
+						bool foundFirst = false;
+						for (int i = 0; i < item.Keyframes.Count; i++)
 						{
-							for (int i = 0; i < item.Keyframes.Count; i++)
+							LiveSpriteKeyframe kf = item.Keyframes[i] as LiveSpriteKeyframe;
+							if (!kf.HasProperty(property)) { continue; }
+							if (!foundFirst)
 							{
-								LiveKeyframe kf = item.Keyframes[i];
-								if (kf.HasProperty(property))
-								{
-									PoseDirective directive;
-
-									AnimatedProperty settings = item.GetAnimationProperties(property);
-									string settingsKey = settings.ToKey(kf.Time);
-									if (kf.InterpolationBreaks.ContainsKey(property))
-									{
-										//force a new directive
-										delay = item.Start + kf.Time;
-									}
-									directive = directives.Get(delay, settingsKey);
-									if (directive == null)
-									{
-										directive = new PoseDirective()
-										{
-											Id = item.Id,
-											DirectiveType = "animation",
-											Looped = settings.Looped,
-											EasingMethod = settings.Ease.GetValue(kf.Time),
-											InterpolationMethod = settings.Interpolation.GetValue(kf.Time),
-											Marker = item.Marker,
-										};
-										if (delay > 0)
-										{
-											directive.Delay = delay.ToString(CultureInfo.InvariantCulture);
-										}
-										Directives.Add(directive);
-										directives.Set(delay, settingsKey, directive);
-									}
-
-									string time = (kf.Time + item.Start - delay).ToString(CultureInfo.InvariantCulture);
-									Keyframe frame = directive.Keyframes.Find(k => k.Time == time);
-									if (frame == null)
-									{
-										frame = new Keyframe();
-										frame.Time = time;
-										directive.Keyframes.Add(frame);
-										directive.Keyframes.Sort((k1, k2) =>
-										{
-											return k1.Time.CompareTo(k2.Time);
-										});
-									}
-									switch (property)
-									{
-										case "Src":
-											frame.Src = kf.Src;
-											break;
-										case "X":
-											frame.X = kf.X.Value.ToString(CultureInfo.InvariantCulture);
-											break;
-										case "Y":
-											frame.Y = kf.Y.Value.ToString(CultureInfo.InvariantCulture);
-											break;
-										case "Alpha":
-											frame.Opacity = kf.Alpha.Value.ToString(CultureInfo.InvariantCulture);
-											break;
-										case "Rotation":
-											frame.Rotation = kf.Rotation.Value.ToString(CultureInfo.InvariantCulture);
-											break;
-										case "ScaleX":
-											frame.ScaleX = kf.ScaleX.Value.ToString(CultureInfo.InvariantCulture);
-											break;
-										case "ScaleY":
-											frame.ScaleY = kf.ScaleY.Value.ToString(CultureInfo.InvariantCulture);
-											break;
-										case "SkewX":
-											frame.SkewX = kf.SkewX.Value.ToString(CultureInfo.InvariantCulture);
-											break;
-										case "SkewY":
-											frame.SkewY = kf.SkewY.Value.ToString(CultureInfo.InvariantCulture);
-											break;
-									}
-								}
+								foundFirst = true;
+								delay += kf.Time;
 							}
+							LiveKeyframe blockStart = item.GetBlockKeyframe(property, kf.Time);
+							LiveKeyframeMetadata metadata = blockStart.GetMetadata(property, false);
+							string metaKey = metadata.ToKey();
+							KeyframeType frameType = kf.GetFrameType(property);
+							if (frameType != KeyframeType.Normal)
+							{
+								if (frameType == KeyframeType.Split)
+								{
+									//for a split, we need a key frame to conclude this animation and use the same thing at the start of the next animation, so create an extra
+									LiveKeyframeMetadata previousMetadata = item.GetBlockMetadata(property, kf.Time - 0.001f);
+									string previousMetaKey = previousMetadata.ToKey();
+									CreateKeyFrame(item, directives, property, delay, kf, previousMetadata, previousMetaKey);
+								}
+
+								//force a new directive
+								delay = item.Start + kf.Time;
+							}
+							CreateKeyFrame(item, directives, property, delay, kf, metadata, metaKey);
 						}
 					}
 
@@ -238,34 +190,97 @@ namespace SPNATI_Character_Editor
 						{
 							Directives.RemoveAt(i);
 						}
+						else if (directive.Keyframes.Count > 1)
+						{
+							directive.Keyframes.Sort((k1, k2) =>
+							{
+								float t1;
+								float t2;
+								float.TryParse(k1.Time, NumberStyles.Number, CultureInfo.InvariantCulture, out t1);
+								float.TryParse(k2.Time, NumberStyles.Number, CultureInfo.InvariantCulture, out t2);
+								return t1.CompareTo(t2);
+							});
+						}
 					}
 				}
-				//if (!item.LinkedToEnd)
-				//{
-				//	//for finite-length sprites, add an anim-break opacity change at the very end
-				//	string delay = (item.Start + item.Length).ToString(CultureInfo.InvariantCulture);
+			}
+		}
 
-				//	//but first get rid of any directives that change opacity starting at that point
-				//	for (int i = 0; i < Directives.Count; i++)
-				//	{
-				//		Directive dir = Directives[i];
-				//		if (dir.Id == item.Id && dir.Delay == delay && dir.Opacity == "0")
-				//		{
-				//			Directives.RemoveAt(i);
-				//			break;
-				//		}
-				//	}
+		private void CreateKeyFrame(LiveSprite item, DualKeyDictionary<float, string, PoseDirective> directives, string property, float delay, LiveSpriteKeyframe kf, LiveKeyframeMetadata metadata, string metaKey)
+		{
+			PoseDirective directive = directives.Get(delay, metaKey);
+			if (directive == null)
+			{
+				directive = new PoseDirective()
+				{
+					Id = item.Id,
+					DirectiveType = "animation",
+					Looped = metadata.Looped,
+					Iterations = metadata.Iterations,
+					ClampingMethod = metadata.ClampMethod,
+					EasingMethod = metadata.Ease,
+					InterpolationMethod = metadata.Interpolation,
+					Marker = item.Marker,
+				};
+				if (delay > 0)
+				{
+					directive.Delay = delay.ToString(CultureInfo.InvariantCulture);
+				}
+				Directives.Add(directive);
+				directives.Set(delay, metaKey, directive);
+			}
 
-				//	//now add the opacity change
-				//	PoseDirective directive = new PoseDirective()
-				//	{
-				//		Id = item.Id,
-				//		DirectiveType = "animation",
-				//		Delay = delay
-				//	};
-				//	directive.Keyframes.Add(new Keyframe() { Time = "0", Opacity = "0" });
-				//	Directives.Add(directive);
-				//}
+			string time = (kf.Time + item.Start - delay).ToString(CultureInfo.InvariantCulture);
+			Keyframe frame = directive.Keyframes.Find(k => k.Time == time);
+			if (frame == null)
+			{
+				frame = new Keyframe();
+				frame.Time = time;
+				bool added = false;
+				for (int i = 0; i < directive.Keyframes.Count; i++)
+				{
+					Keyframe other = directive.Keyframes[i];
+					if (other.Time.CompareTo(time) > 0)
+					{
+						directive.Keyframes.Insert(i, frame);
+						added = true;
+						break;
+					}
+				}
+				if (!added)
+				{
+					directive.Keyframes.Add(frame);
+				}
+			}
+			switch (property)
+			{
+				case "Src":
+					frame.Src = kf.Src;
+					break;
+				case "X":
+					frame.X = kf.X.Value.ToString(CultureInfo.InvariantCulture);
+					break;
+				case "Y":
+					frame.Y = kf.Y.Value.ToString(CultureInfo.InvariantCulture);
+					break;
+				case "Opacity":
+					frame.Opacity = kf.Opacity.Value.ToString(CultureInfo.InvariantCulture);
+					break;
+				case "Rotation":
+					frame.Rotation = kf.Rotation.Value.ToString(CultureInfo.InvariantCulture);
+					break;
+				case "ScaleX":
+					frame.ScaleX = kf.ScaleX.Value.ToString(CultureInfo.InvariantCulture);
+					break;
+				case "ScaleY":
+					frame.ScaleY = kf.ScaleY.Value.ToString(CultureInfo.InvariantCulture);
+					break;
+				case "SkewX":
+					frame.SkewX = kf.SkewX.Value.ToString(CultureInfo.InvariantCulture);
+					break;
+				case "SkewY":
+					frame.SkewY = kf.SkewY.Value.ToString(CultureInfo.InvariantCulture);
+					break;
 			}
 		}
 

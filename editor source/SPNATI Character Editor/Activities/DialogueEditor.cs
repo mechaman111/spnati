@@ -1,6 +1,5 @@
 ﻿using Desktop;
 using SPNATI_Character_Editor.Controls;
-using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +18,6 @@ namespace SPNATI_Character_Editor.Activities
 		private Stage _selectedStage;
 		private Case _selectedCase;
 		private FindReplace _findForm;
-		private bool _populatingCase;
 		private bool _pendingWardrobeChange;
 		private bool _exportOnQuit;
 
@@ -49,7 +47,7 @@ namespace SPNATI_Character_Editor.Activities
 			_character = Record as Character;
 			_editorData = CharacterDatabase.GetEditorData(_character);
 			SetupMessageHandlers();
-			panelCase.Enabled = false;
+			panelCase.Visible = false;
 			caseControl.TextUpdated += GridDialogue_TextUpdated;
 			caseControl.HighlightRow += HighlightRow;
 			caseControl.KeyDown += CaseControl_KeyDown;
@@ -263,7 +261,7 @@ namespace SPNATI_Character_Editor.Activities
 		/// <param name="index"></param>
 		private void HighlightRow(object sender, int index)
 		{
-			if (index == -1 || _populatingCase)
+			if (index == -1)
 				return;
 			string image = caseControl.GetImage(index);
 			CharacterImage img = null;
@@ -291,6 +289,11 @@ namespace SPNATI_Character_Editor.Activities
 		/// <param name="image">Image to display</param>
 		private void DisplayImage(CharacterImage image)
 		{
+			if (_selectedCase != null)
+			{
+				List<string> markers = _selectedCase.GetMarkers();
+				Workspace.SendMessage(WorkspaceMessages.UpdateMarkers, markers);
+			}
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, image);
 		}
 
@@ -350,34 +353,22 @@ namespace SPNATI_Character_Editor.Activities
 						MessageBox.Show("Couldn't create a response based on this case's conditions.", "Make Response", MessageBoxButtons.OK, MessageBoxIcon.Error);
 						return;
 					}
-
-					isNew = true;
-					responder.PrepareForEdit();
-				}
-
-				DialogueResponder form = new DialogueResponder(_character, _selectedCase, responder, response);
-				DialogResult result = form.ShowDialog();
-				if (result != DialogResult.Cancel)
-				{
-					if (isNew)
+					//see if there's a response already matching the conditions of this response and just reuse that if possible
+					existing = responder.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(response));
+					if (existing == null)
 					{
-						responderData.MarkResponse(_character, _selectedCase, response);
-						responder.Behavior.AddWorkingCase(response);
-					}
-					if (result == DialogResult.Retry)
-					{
-						Shell.Instance.Launch<Character, DialogueEditor>(responder, response);
+						isNew = true;
 					}
 					else
 					{
-						//if their workspace isn't open, save them now
-						IWorkspace ws = Shell.Instance.GetWorkspace(responder);
-						if (ws == null)
-						{
-							Serialization.ExportCharacter(responder);
-						}
+						isNew = false;
+						response = existing;
 					}
+					responder.PrepareForEdit();
 				}
+
+				ResponseRecord record = new ResponseRecord(_character, _selectedCase, responder, response, isNew);
+				Shell.Instance.LaunchWorkspace(record);
 			}
 		}
 
@@ -403,7 +394,6 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				splitDialogue.Panel2.Visible = true;
 				panelCase.Visible = true;
-				panelCase.Enabled = true;
 				cmdCallOut.Enabled = cmdMakeResponse.Enabled = _selectedCase.GetResponseTag(_character, _character) != null;
 			}
 			else
@@ -412,9 +402,7 @@ namespace SPNATI_Character_Editor.Activities
 				splitDialogue.Panel2.Visible = false;
 			}
 
-			_populatingCase = true;
 			caseControl.SetCase(_selectedStage, _selectedCase);
-			_populatingCase = false;
 		}
 
 		private void tree_CreatingCase(object sender, CaseCreationEventArgs e)

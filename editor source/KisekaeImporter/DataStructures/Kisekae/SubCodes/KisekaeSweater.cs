@@ -110,5 +110,35 @@
 			get { return GetInt(18); }
 			set { Set(18, value.ToString()); }
 		}
+
+		public int LowerPocket
+		{
+			get { return GetInt(19); }
+			set { Set(19, value.ToString()); }
+		}
+
+		public KisekaeColor LowerPocketColor1
+		{
+			get { return new KisekaeColor(GetString(20)); }
+			set { Set(20, value.ToString()); }
+		}
+
+		public KisekaeColor LowerPocketColor2
+		{
+			get { return new KisekaeColor(GetString(21)); }
+			set { Set(21, value.ToString()); }
+		}
+
+		public KisekaeColor LowerPocketColor3
+		{
+			get { return new KisekaeColor(GetString(22)); }
+			set { Set(22, value.ToString()); }
+		}
+
+		public int LowerPocketRotation
+		{
+			get { return GetInt(23); }
+			set { Set(23, value.ToString()); }
+		}
 	}
 }

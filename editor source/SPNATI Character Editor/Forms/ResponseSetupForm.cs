@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Desktop.Skinning;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class ResponseSetupForm : Form
+	public partial class ResponseSetupForm : SkinnedForm
 	{
 		private Character _character;
 		private Case _original;

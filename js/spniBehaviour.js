@@ -453,19 +453,19 @@ function expandNicknames (self, target) {
 /************************************************************
  * Expands ~target.*~ and ~[player].*~ variables.
  ************************************************************/
-function expandPlayerVariable(split_fn, args, self, target, bindings) {
+function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     if (split_fn.length > 0) var fn = split_fn[0].toLowerCase();
     
     switch (fn) {
     case 'position':
-        if (target.slot === self.slot) return 'self';
-        return (target.slot < self.slot) ? 'left' : 'right';
+        if (player.slot === self.slot) return 'self';
+        return (player.slot < self.slot) ? 'left' : 'right';
     case 'slot':
-        return target.slot;
+        return player.slot;
     case 'collectible':
         var collectibleID = split_fn[1];
         if (collectibleID) {
-            var collectibles = target.collectibles.filter(function (c) { return c.id === collectibleID; });
+            var collectibles = player.collectibles.filter(function (c) { return c.id === collectibleID; });
             var targetCollectible = collectibles[0];
             
             if (split_fn[2] && split_fn[2] === 'counter') {
@@ -483,19 +483,19 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
         var markerName = split_fn[1];
         if (markerName) {
             var marker;
-            if (target) {
-                var targetedName = getTargetMarker(markerName, target);
+            if (player) {
+                var targetedName = getTargetMarker(markerName, player);
                 if (fn === 'persistent') {
-                    marker = save.getPersistentMarker(target, targetedName);
+                    marker = save.getPersistentMarker(player, targetedName);
                 } else {
-                    marker = target.markers[targetedName];
+                    marker = player.markers[targetedName];
                 }
             }
             if (!marker) {
                 if (fn === 'persistent') {
-                    marker = save.getPersistentMarker(target, markerName);
+                    marker = save.getPersistentMarker(player, markerName);
                 } else {
-                    marker = target.markers[markerName];
+                    marker = player.markers[markerName];
                 }
             }
             return marker || "";
@@ -503,44 +503,44 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
             return fn; //didn't supply a marker name
         }
     case 'tag':
-        return target.hasTag(split_fn[1]) ? 'true' : 'false';
+        return player.hasTag(split_fn[1]) ? 'true' : 'false';
     case 'costume':
-        if (!target.alt_costume) return 'default';
-        return target.alt_costume.id;
+        if (!player.alt_costume) return 'default';
+        return player.alt_costume.id;
     case 'size':
-        return target.size;
+        return player.size;
     case 'gender':
-        return target.gender;
+        return player.gender;
     case 'place':
-        if (target.out) return players.countTrue() + 1 - target.outOrder;
-        return 1 + players.countTrue(function(p) { return p.countLayers() > target.countLayers(); });
+        if (player.out) return players.countTrue() + 1 - player.outOrder;
+        return 1 + players.countTrue(function(p) { return p.countLayers() > player.countLayers(); });
     case 'revplace':
-        if (target.out) return target.outOrder;
-        return 1 + players.countTrue(function(p) { return p.out || p.countLayers() < target.countLayers(); });
+        if (player.out) return player.outOrder;
+        return 1 + players.countTrue(function(p) { return p.out || p.countLayers() < player.countLayers(); });
     case 'biggestlead':
-        return target.biggestLead;
+        return player.biggestLead;
     case 'lead':
-        return target.countLayers() - players.reduce(function(max, p) {
-            if (p != target) {
+        return player.countLayers() - players.reduce(function(max, p) {
+            if (p != player) {
                 return Math.max(max, p.countLayers());
             } else return max;
         }, 0);
     case 'trail':
         return players.reduce(function(min, p) {
-            if (p != target && !p.out) {
+            if (p != player && !p.out) {
                 return Math.min(min, p.countLayers());
             } else return min;
-        }, 10) - target.countLayers();
+        }, 10) - player.countLayers();
     case 'diff':
         var other = (!args ? self : findVariablePlayer(args, self, target, bindings));
         if (other) {
-            return target.countLayers() - other.countLayers();
+            return player.countLayers() - other.countLayers();
         }
         return undefined;
     case 'stage':
-        return target.stage;
+        return player.stage;
     default:
-        return expandNicknames(self, target);
+        return expandNicknames(self, player);
     }
 }
 
@@ -656,7 +656,7 @@ function expandDialogue (dialogue, self, target, bindings) {
             default:
                 var variablePlayer = findVariablePlayer(variable, self, target, bindings);
                 if (variablePlayer) {
-                    substitution = expandPlayerVariable(fn_parts, args, self, variablePlayer, bindings);
+                    substitution = expandPlayerVariable(fn_parts, args, variablePlayer, self, target, bindings);
                 } else {
                     console.error("Unknown variable:", variable);
                 }

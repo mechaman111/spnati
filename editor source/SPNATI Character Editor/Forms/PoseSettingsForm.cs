@@ -1,4 +1,5 @@
-﻿using KisekaeImporter;
+﻿using Desktop.Skinning;
+using KisekaeImporter;
 using SPNATI_Character_Editor.Controls;
 using System.Collections.Generic;
 using System.Globalization;
@@ -6,7 +7,7 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class PoseSettingsForm : Form
+	public partial class PoseSettingsForm : SkinnedForm
 	{
 		private Dictionary<KisekaePart, PartTransparencySlider> _sliders = new Dictionary<KisekaePart, PartTransparencySlider>();
 

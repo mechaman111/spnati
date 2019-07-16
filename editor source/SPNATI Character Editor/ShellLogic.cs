@@ -1,7 +1,13 @@
 ﻿using Desktop;
+using Desktop.Providers;
+using Desktop.Reporting;
+using Desktop.Skinning;
 using SPNATI_Character_Editor.Activities;
+using SPNATI_Character_Editor.DataSlicers;
 using SPNATI_Character_Editor.Forms;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Threading;
@@ -20,6 +26,7 @@ namespace SPNATI_Character_Editor
 				return;
 			}
 			BuildDefinitions();
+			CreateActionBar();
 			CreateToolbar();
 
 			Shell.Instance.LaunchWorkspace(new LoaderRecord());
@@ -71,6 +78,8 @@ namespace SPNATI_Character_Editor
 		{
 			BuildDirectiveTypes();
 			BuildPropertyTypes();
+			BuildColorCodes();
+			BuildDataSlicers();
 		}
 
 		private static void BuildDirectiveTypes()
@@ -80,6 +89,7 @@ namespace SPNATI_Character_Editor
 			DirectiveProvider provider = new DirectiveProvider();
 			DirectiveDefinition def = provider.Create("sprite") as DirectiveDefinition;
 			def.Description = "Adds a sprite to the scene.";
+			def.SortOrder = 1;
 			foreach (string key in new string[] { "id", "src", "layer", "width", "height", "x", "y", "scalex", "scaley", "rotation", "alpha", "pivotx", "pivoty", "marker", "delay", "skewx", "skewy" })
 			{
 				def.AllowedProperties.Add(key);
@@ -87,6 +97,7 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("text") as DirectiveDefinition;
 			def.Description = "Displays a speech bubble.";
+			def.SortOrder = 1;
 			foreach (string key in new string[] { "id", "x", "y", "text", "arrow", "width", "alignmentx", "alignmenty", "marker", "delay" })
 			{
 				def.AllowedProperties.Add(key);
@@ -94,6 +105,7 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("clear") as DirectiveDefinition;
 			def.Description = "Removes a speech bubble.";
+			def.SortOrder = 5;
 			foreach (string key in new string[] { "id", "marker", "delay" })
 			{
 				def.AllowedProperties.Add(key);
@@ -104,12 +116,14 @@ namespace SPNATI_Character_Editor
 			{
 				def.AllowedProperties.Add(key);
 			}
+			def.SortOrder = 5;
 			def.Description = "Removes all speech bubbles.";
 
 			def = provider.Create("move") as DirectiveDefinition;
 			def.IsAnimatable = true;
 			def.Description = "Moves/rotates/scales a sprite or emitter.";
 			def.FilterPropertiesById = true;
+			def.SortOrder = 5;
 			foreach (string key in new string[] { "id", "src", "x", "y", "scalex", "scaley", "rotation", "alpha", "rate", "time", "delay", "loop", "ease", "tween", "clamp", "iterations", "marker", "skewx", "skewy" })
 			{
 				def.AllowedProperties.Add(key);
@@ -122,6 +136,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("camera") as DirectiveDefinition;
 			def.IsAnimatable = true;
 			def.Description = "Pans or zooms the camera.";
+			def.SortOrder = 5;
 			foreach (string key in new string[] { "x", "y", "zoom", "time", "delay", "loop", "ease", "tween", "clamp", "iterations", "marker" })
 			{
 				def.AllowedProperties.Add(key);
@@ -134,6 +149,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("fade") as DirectiveDefinition;
 			def.Description = "Fades the overlay to a new color and opacity level.";
 			def.IsAnimatable = true;
+			def.SortOrder = 5;
 			foreach (string key in new string[] { "color", "alpha", "time", "delay", "loop", "ease", "tween", "clamp", "iterations", "marker" })
 			{
 				def.AllowedProperties.Add(key);
@@ -145,6 +161,7 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("stop") as DirectiveDefinition;
 			def.Description = "Stops an animation.";
+			def.SortOrder = 5;
 			foreach (string key in new string[] { "id", "marker", "delay" })
 			{
 				def.AllowedProperties.Add(key);
@@ -152,6 +169,7 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("wait") as DirectiveDefinition;
 			def.Description = "Waits for animations to complete.";
+			def.SortOrder = 10;
 			foreach (string key in new string[] { "marker" })
 			{
 				def.AllowedProperties.Add(key);
@@ -159,6 +177,7 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("pause") as DirectiveDefinition;
 			def.Description = "Waits for the user to click next.";
+			def.SortOrder = 10;
 			foreach (string key in new string[] { "marker" })
 			{
 				def.AllowedProperties.Add(key);
@@ -166,6 +185,7 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("remove") as DirectiveDefinition;
 			def.Description = "Removes a sprite or emitter from the scene.";
+			def.SortOrder = 5;
 			foreach (string key in new string[] { "id", "marker", "delay" })
 			{
 				def.AllowedProperties.Add(key);
@@ -173,6 +193,7 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("emitter") as DirectiveDefinition;
 			def.Description = "Adds an object emitter to the scene.";
+			def.SortOrder = 5;
 			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX", "delay", 
 				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease", "ignoreRotation", "marker",
 				"startSkewX", "startSkewY", "endSkewX", "endSkewY" })
@@ -182,7 +203,24 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("emit") as DirectiveDefinition;
 			def.Description = "Emits an object from an emitter.";
+			def.SortOrder = 5;
 			foreach (string key in new string[] { "id", "count", "marker", "delay" })
+			{
+				def.AllowedProperties.Add(key);
+			}
+
+			def = provider.Create("jump") as DirectiveDefinition;
+			def.Description = "Jumps to another scene.";
+			def.SortOrder = 10;
+			foreach (string key in new string[] { "id", "marker", "delay" })
+			{
+				def.AllowedProperties.Add(key);
+			}
+
+			def = provider.Create("prompt") as DirectiveDefinition;
+			def.Description = "Displays a multiple choice prompt to the user.";
+			def.SortOrder = 10;
+			foreach (string key in new string[] { "title", "marker", "delay" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -218,6 +256,74 @@ namespace SPNATI_Character_Editor
 
 			property = new PropertyDefinition("SkewY", "Skew (Y)", typeof(float), 65);
 			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Zoom", "Zoom", typeof(float), 20);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Color", "Color", typeof(Color), 25);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Rate", "Rate", typeof(float), 90);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Burst", "Burst", typeof(int), 100);
+			Definitions.Instance.Add(property);
+		}
+
+		private static void BuildColorCodes()
+		{
+			Definitions.Instance.Add(new ColorCode("None", 0, skin => skin.Surface.ForeColor));
+			Definitions.Instance.Add(new ColorCode("Red", 1, skin => skin.Red));
+			Definitions.Instance.Add(new ColorCode("Orange", 2, skin => skin.Orange));
+			Definitions.Instance.Add(new ColorCode("Green", 3, skin => skin.Green));
+			Definitions.Instance.Add(new ColorCode("Blue", 4, skin => skin.Blue));
+			Definitions.Instance.Add(new ColorCode("Purple", 5, skin => skin.Purple));
+			Definitions.Instance.Add(new ColorCode("Pink", 6, skin => skin.Pink));
+			Definitions.Instance.Add(new ColorCode("Gray", 7, skin => skin.Gray));
+		}
+
+		private static void BuildDataSlicers()
+		{
+			SlicerProvider.AddSlicer("Case Type", "Groups by case type", () => new RecordSlicer(typeof(Trigger), "Tag", "Case Type", true, false));
+			SlicerProvider.AddSlicer("Target", "Groups by target", () => new RecordSlicer(typeof(Character), "Target", "Target", true, true));
+			SlicerProvider.AddSlicer("Target Hand", "Groups by self hand", () => new ComboSlicer(typeof(Case), "TargetHand", "Target Hand"));
+			SlicerProvider.AddSlicer("Target Stage", "Groups by target stage", () => new IntervalSlicer("TargetStage", "Target Stage", 0, 10));
+			SlicerProvider.AddSlicer("Target Tag", "Groups by target tag", () => new RecordSlicer(typeof(Tag), "Filter", "Tag", true, true));
+			SlicerProvider.AddSlicer("Target Time In Stage", "Groups by target time in stage", () => new IntervalSlicer("TargetTimeInStage", "Target Time In Stage", 0, 20));
+			SlicerProvider.AddSlicer("Target Layers", "Groups by target remaining layers", () => new IntervalSlicer("TargetLayers", "Target Layers", 0, 8));
+			SlicerProvider.AddSlicer("Target Starting Layers", "Groups by target remaining layers", () => new IntervalSlicer("TargetStartingLayers", "Target Starting Layers", 0, 8));
+			KeyValuePair<string, string>[] statuses = new KeyValuePair<string, string>[TargetCondition.StatusTypes.Length * 2];
+			for (int i = 0; i < TargetCondition.StatusTypes.Length; i++)
+			{
+				statuses[i * 2] = TargetCondition.StatusTypes[i];
+				statuses[i * 2 + 1] = new KeyValuePair<string, string>(TargetCondition.StatusTypes[i].Key == null ? null : "not_" + TargetCondition.StatusTypes[i].Key, "Not " + TargetCondition.StatusTypes[i].Value);
+			}
+			SlicerProvider.AddSlicer("Target Status", "Groups by target status", () => new ComboSlicer(typeof(Case), "TargetStatus", "Target Status", statuses));
+
+			SlicerProvider.AddSlicer("Also Playing", "Groups by Also Playing", () => new RecordSlicer(typeof(Character), "AlsoPlaying", "Also Playing", true, true));
+			SlicerProvider.AddSlicer("Also Playing Hand", "Groups by another character's hand", () => new ComboSlicer(typeof(Case), "AlsoPlayingHand", "Also Playing Hand"));
+			SlicerProvider.AddSlicer("Also Playing Stage", "Groups by another character's stage", () => new IntervalSlicer("AlsoPlayingStage", "Also Playing Stage", 0, 10));
+			SlicerProvider.AddSlicer("Also Playing Time In Stage", "Groups by another character's time in stage", () => new IntervalSlicer("AlsoPlayingTimeInStage", "Also Playing Time In Stage", 0, 20));
+
+			SlicerProvider.AddSlicer("Total Males", "Groups by total males", () => new IntervalSlicer("TotalMales", "Total Males", 0, 5));
+			SlicerProvider.AddSlicer("Total Females", "Groups by total females", () => new IntervalSlicer("TotalFemales", "Total Females", 0, 5));
+			SlicerProvider.AddSlicer("Total Playing", "Groups by total playing", () => new IntervalSlicer("TotalPlaying", "Total Playing", 0, 5));
+			SlicerProvider.AddSlicer("Total Exposed", "Groups by total exposed", () => new IntervalSlicer("TotalExposed", "Total Exposed", 0, 5));
+			SlicerProvider.AddSlicer("Total Naked", "Groups by total naked", () => new IntervalSlicer("TotalNaked", "Total Naked", 0, 5));
+			SlicerProvider.AddSlicer("Total Masturbating", "Groups by total masturbating", () => new IntervalSlicer("TotalMasturbating", "Total Masturbating", 0, 5));
+			SlicerProvider.AddSlicer("Total Finished", "Groups by total finished", () => new IntervalSlicer("TotalFinished", "Total Finished", 0, 5));
+			SlicerProvider.AddSlicer("Time In Stage", "Groups by own time in stage", () => new IntervalSlicer("TimeInStage", "Time In Stage", 0, 20));
+			SlicerProvider.AddSlicer("Total Rounds", "Groups by own total rounds completed", () => new IntervalSlicer("TotalRounds", "Total Rounds", 0, 20));
+			SlicerProvider.AddSlicer("Consecutive Losses", "Groups by losses in a row", () => new IntervalSlicer("ConsecutiveLosses", "Consecutive Losses", 0, 20));
+
+			SlicerProvider.AddSlicer("Hidden", "Groups by Hidden case", () => new BooleanSlicer("Hidden", "Hidden"));
+			SlicerProvider.AddSlicer("Said Marker", "Groups by marker", () => new RecordSlicer(typeof(Marker), "SaidMarker", "Said Marker", true, true));
+			SlicerProvider.AddSlicer("Not Said Marker", "Groups by marker not said", () => new RecordSlicer(typeof(Marker), "NotSaidMarker", "Not Said Marker", true, true));
+
+			SlicerProvider.AddSlicer("Play Once", "Groups by cases that play once per game", () => new OneShotSlicer());
+			SlicerProvider.AddSlicer("Has Hand", "Groups by self hand", () => new ComboSlicer(typeof(Case), "HasHand", "Own Hand"));
+
+			SlicerProvider.AddSlicer("Case Stage", "Groups by what stage the case applies to", () => new StageSlicer());
 		}
 
 		private static bool DoInitialSetup()
@@ -229,7 +335,7 @@ namespace SPNATI_Character_Editor
 			}
 			if (string.IsNullOrEmpty(Config.GetString(Settings.GameDirectory)))
 			{
-				if (OpenSetup() == DialogResult.Cancel)
+				if (OpenInitialSetup() == DialogResult.Cancel)
 				{
 					ErrorLog.LogError("Unable to launch because setup was cancelled.");
 					return false;
@@ -250,12 +356,47 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Opens the initial setup form
+		/// Opens the first time settings screen
 		/// </summary>
-		private static DialogResult OpenSetup()
+		/// <returns></returns>
+		private static DialogResult OpenInitialSetup()
 		{
-			SettingsSetup form = new SettingsSetup();
-			return form.ShowDialog();
+			FirstLaunchSetup setup = new FirstLaunchSetup();
+			return setup.ShowDialog();
+		}
+
+		private static void CreateActionBar()
+		{
+			Shell shell = Shell.Instance;
+
+			shell.AddActionItem(Properties.Resources.Settings, "Open Setup", "Open Setup", Setup, null);
+
+			ToolStripMenuItem themes = shell.AddActionMenu(Properties.Resources.Theme, "Change Theme");
+
+			List<Skin> darkThemes = new List<Skin>();
+
+			foreach (Skin skin in SkinManager.Instance.AvailableSkins)
+			{
+				if (skin.Group == "Dark")
+				{
+					darkThemes.Add(skin); //add dark themes after light ones
+				}
+				else
+				{
+					shell.AddActionItem(skin.GetIcon(), skin.Name, skin.Description, () => ChangeTheme(skin), themes);
+				}
+			}
+			shell.AddActionSeparator(themes);
+			foreach (Skin skin in darkThemes)
+			{
+				shell.AddActionItem(skin.GetIcon(), skin.Name, skin.Description, () => ChangeTheme(skin), themes);
+			}
+		}
+
+		private static void ChangeTheme(Skin skin)
+		{
+			SkinManager.Instance.SetSkin(skin);
+			Config.Skin = skin.Name;
 		}
 
 		private static void CreateToolbar()
@@ -270,7 +411,7 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarItem("Import .txt...", ImportCharacter, menu, Keys.Control | Keys.I);
 			shell.AddToolbarItem("Export .txt for make_xml.py", ExportCharacter, menu, Keys.Control | Keys.E);
 			shell.AddToolbarSeparator(menu);
-			shell.AddToolbarItem("Setup...", Setup, menu, Keys.None);
+			shell.AddToolbarItem("Settings...", Setup, menu, Keys.None);
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Exit", Exit, menu, Keys.Alt | Keys.F4);
 
@@ -282,7 +423,7 @@ namespace SPNATI_Character_Editor
 
 			//Characters
 			shell.AddToolbarItem("Characters...", OpenCharacterSelect, Keys.None);
-			shell.AddToolbarItem("Skins...", typeof(Costume));
+			shell.AddToolbarItem("Skins...", OpenCostumeSelect, Keys.None);
 
 			//Validate
 			menu = shell.AddToolbarSubmenu("Validate");
@@ -297,9 +438,17 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarItem("Configure Game...", ConfigGame, menu, Keys.None);
 			shell.AddToolbarItem("Manage Macros...", ManageCaseMacros, menu, Keys.None);
 			shell.AddToolbarItem("Manage Dictionary...", typeof(DictionaryRecord), menu);
+			shell.AddToolbarItem("Manage Recipes...", typeof(Recipe), GetRecipe, menu);
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Data Recovery", OpenDataRecovery, menu, Keys.None);
 			shell.AddToolbarItem("Fix Kisekae", ResetKisekae, menu, Keys.None);
+
+			//Dev tools
+			if (Config.DevMode)
+			{
+				menu = shell.AddToolbarSubmenu("Dev");
+				shell.AddToolbarItem("Themes...", typeof(Skin), menu);
+			}
 
 			//Help
 			shell.AddToolbarSeparator();
@@ -326,6 +475,15 @@ namespace SPNATI_Character_Editor
 			if (record != null)
 			{
 				Shell.Instance.LaunchWorkspace(record as Character);
+			}
+		}
+
+		private static void OpenCostumeSelect()
+		{
+			IRecord record = RecordLookup.DoLookup(typeof(Costume), "", true, CharacterDatabase.FilterDefaultCostume, null);
+			if (record != null)
+			{
+				Shell.Instance.LaunchWorkspace(record as Costume);
 			}
 		}
 
@@ -447,7 +605,7 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			string dir = Config.GetRootDirectory(current);
-			string file = Shell.Instance.ShowOpenFileDialog(dir, "edit-dialogue.txt");
+			string file = Shell.Instance.ShowOpenFileDialog(dir, "edit-dialogue.txt", "Text files|*.txt|All files|*.*");
 			if (!string.IsNullOrEmpty(file))
 			{
 				FlatFileSerializer.Import(file, current);
@@ -503,6 +661,18 @@ namespace SPNATI_Character_Editor
 			form.SetType(typeof(Case), "Case");
 			form.ShowDialog();
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.MacrosUpdated);
+		}
+
+		private static IRecord GetRecipe()
+		{
+			IRecord record = RecordLookup.DoLookup(typeof(Recipe), "", true, FilterCoreRecipes, true, null);
+			return record;
+		}
+
+		private static bool FilterCoreRecipes(IRecord record)
+		{
+			Recipe recipe = record as Recipe;
+			return Config.DevMode || !recipe.Core;
 		}
 	}
 }

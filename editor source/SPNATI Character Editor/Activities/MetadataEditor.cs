@@ -15,6 +15,10 @@ namespace SPNATI_Character_Editor.Activities
 		public MetadataEditor()
 		{
 			InitializeComponent();
+
+			cboGender.Items.AddRange(new string[] { "female", "male" });
+			cboSize.Items.AddRange(new string[] { "small", "medium", "large" });
+			ColDifficulty.Items.AddRange(DialogueLine.AILevels);
 		}
 
 		public override string Caption
@@ -69,11 +73,9 @@ namespace SPNATI_Character_Editor.Activities
 			images.AddRange(_imageLibrary.GetImages(0));
 			if (Config.UsePrefixlessImages)
 			{
-				string prefix = Config.PrefixFilter;
 				foreach (CharacterImage img in _imageLibrary.GetImages(-1))
 				{
-					string file = img.Name;
-					if (string.IsNullOrEmpty(prefix) || !file.StartsWith(prefix))
+					if (!_imageLibrary.FilterImage(_character, img.Name))
 					{
 						images.Add(img);
 					}
@@ -147,6 +149,19 @@ namespace SPNATI_Character_Editor.Activities
 				return;
 			_character.Metadata.Portrait = image.Name + image.FileExtension;
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, _imageLibrary.Find(_character.Metadata.Portrait));
+		}
+
+		private void cboGender_SelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			string gender = cboGender.SelectedItem?.ToString();
+			if (gender == "male")
+			{
+				lblSize.Text = "Crotch:";
+			}
+			else
+			{
+				lblSize.Text = "Chest:";
+			}
 		}
 	}
 }

@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.colorPicker = new System.Windows.Forms.ColorDialog();
-			this.label1 = new System.Windows.Forms.Label();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
 			this.cmdColor = new System.Windows.Forms.Button();
 			this.txtValue = new Desktop.CommonControls.TextField();
 			this.SuspendLayout();
@@ -42,6 +42,10 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
 			this.label1.Location = new System.Drawing.Point(87, 3);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(14, 13);
@@ -61,8 +65,13 @@
 			// 
 			// txtValue
 			// 
+			this.txtValue.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.txtValue.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
 			this.txtValue.Location = new System.Drawing.Point(102, 0);
+			this.txtValue.Multiline = false;
 			this.txtValue.Name = "txtValue";
+			this.txtValue.PlaceholderText = "";
+			this.txtValue.ReadOnly = false;
 			this.txtValue.Size = new System.Drawing.Size(49, 20);
 			this.txtValue.TabIndex = 3;
 			// 
@@ -84,7 +93,7 @@
 
 		private System.Windows.Forms.Button cmdColor;
 		private System.Windows.Forms.ColorDialog colorPicker;
-		private System.Windows.Forms.Label label1;
+		private Desktop.Skinning.SkinnedLabel label1;
 		private TextField txtValue;
 	}
 }

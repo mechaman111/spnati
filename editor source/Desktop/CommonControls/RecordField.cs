@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Desktop.CommonControls
 {
-	public partial class RecordField : UserControl
+	public partial class RecordField : UserControl, ISkinnedPanel
 	{
 		public event EventHandler<RecordEventArgs> RecordChanged;
 
@@ -40,10 +41,19 @@ namespace Desktop.CommonControls
 		private bool _selectAllDone = false;
 		private bool _populatingRecord = false;
 
+		private Func<IRecord, bool> _filter;
 		/// <summary>
 		/// Filter for hiding records from the record select
 		/// </summary>
-		public Func<IRecord, bool> RecordFilter;
+		public Func<IRecord, bool> RecordFilter
+		{
+			get { return _filter; }
+			set
+			{
+				_filter = value;
+				PopulateAutoComplete();
+			}
+		}
 
 		private IRecord _record;
 		public IRecord Record
@@ -64,11 +74,24 @@ namespace Desktop.CommonControls
 					{
 						txtInput.Text = "";
 					}
-					txtInput.ForeColor = ForeColor;
+					txtInput.ForeColor = SkinManager.Instance.CurrentSkin.Surface.ForeColor;
 					RecordChanged?.Invoke(this, new RecordEventArgs(_record));
+					OnRecordChanged();
 					_populatingRecord = false;
 				}
 			}
+		}
+
+		protected override void OnPaintBackground(PaintEventArgs e)
+		{
+			base.OnPaintBackground(e);
+			Skin skin = SkinManager.Instance.CurrentSkin;
+			e.Graphics.Clear(Enabled ? skin.FieldBackColor : SystemColors.Control);
+			e.Graphics.DrawRectangle(skin.PrimaryColor.GetPen(VisualState.Normal, Focused, Enabled), ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
+		}
+
+		protected virtual void OnRecordChanged()
+		{
 		}
 
 		public string RecordKey
@@ -134,6 +157,11 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		public SkinnedBackgroundType PanelType
+		{
+			get { return SkinnedBackgroundType.Field; }
+		}
+
 		public RecordField()
 		{
 			InitializeComponent();
@@ -146,12 +174,26 @@ namespace Desktop.CommonControls
 			SetPlaceholder();
 		}
 
+		private string GetText()
+		{
+			string text = txtInput.Text;
+			int bracketStart = text.IndexOf('[');
+			int bracketEnd = text.IndexOf(']');
+			if (bracketStart >= 0 && bracketEnd > bracketStart)
+			{
+				text = text.Substring(bracketStart + 1, bracketEnd - bracketStart - 1);
+			}
+			return text;
+		}
+
 		private void RecordField_Validating(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			if (_needValidation && txtInput.Text != "" && txtInput.Text != PlaceholderText)
-			{
-				DoSearch(false);
-			}
+			ValidateField();
+		}
+
+		public void SelectAll()
+		{
+			txtInput.SelectAll();
 		}
 
 		private void txtInput_Enter(object sender, EventArgs e)
@@ -220,7 +262,7 @@ namespace Desktop.CommonControls
 			if (txtInput.Text == "")
 			{
 				txtInput.Text = PlaceholderText;
-				txtInput.ForeColor = Color.Gray;
+				txtInput.ForeColor = SkinManager.Instance.CurrentSkin.Gray;
 			}
 		}
 
@@ -230,7 +272,16 @@ namespace Desktop.CommonControls
 			if (txtInput.Text == PlaceholderText && !string.IsNullOrEmpty(PlaceholderText))
 			{
 				txtInput.Text = "";
-				txtInput.ForeColor = ForeColor;
+				txtInput.ForeColor = SkinManager.Instance.CurrentSkin.Surface.ForeColor;
+			}
+		}
+
+		public void ValidateField()
+		{
+			string text = GetText();
+			if (_needValidation && text != "" && text != PlaceholderText)
+			{
+				DoSearch(false);				
 			}
 		}
 
@@ -239,11 +290,12 @@ namespace Desktop.CommonControls
 			DoSearch(true);
 		}
 
-		private void DoSearch(bool forceLookup, string text = null)
+		protected void DoSearch(bool forceLookup, string text = null)
 		{
+			if (RecordLookup.IsOpen) { return; }
 			if (text == null)
 			{
-				text = txtInput.Text;
+				text = GetText();
 				if (text == PlaceholderText)
 				{
 					text = "";

@@ -108,7 +108,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			catch { }
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			RemoveHandlers();
 			cmdColor.BackColor = Color.Transparent;
@@ -119,7 +119,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			Save();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			string color1 = txtValue.Text;
 			string color2 = txtValue2.Text;

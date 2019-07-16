@@ -28,46 +28,36 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.recId = new Desktop.CommonControls.RecordField();
-			this.label1 = new System.Windows.Forms.Label();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.valSet = new System.Windows.Forms.NumericUpDown();
-			this.radSet = new System.Windows.Forms.RadioButton();
-			this.valIncrement = new System.Windows.Forms.NumericUpDown();
-			this.radIncrement = new System.Windows.Forms.RadioButton();
-			this.valDecrement = new System.Windows.Forms.NumericUpDown();
-			this.radDecrement = new System.Windows.Forms.RadioButton();
-			this.radUnlock = new System.Windows.Forms.RadioButton();
-			this.cmdOK = new System.Windows.Forms.Button();
-			this.cmdCancel = new System.Windows.Forms.Button();
-			this.lblText = new System.Windows.Forms.Label();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
+			this.groupBox1 = new Desktop.Skinning.SkinnedGroupBox();
+			this.valSet = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.radSet = new Desktop.Skinning.SkinnedRadioButton();
+			this.valIncrement = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.radIncrement = new Desktop.Skinning.SkinnedRadioButton();
+			this.valDecrement = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.radDecrement = new Desktop.Skinning.SkinnedRadioButton();
+			this.radUnlock = new Desktop.Skinning.SkinnedRadioButton();
+			this.cmdOK = new Desktop.Skinning.SkinnedButton();
+			this.cmdCancel = new Desktop.Skinning.SkinnedButton();
+			this.lblText = new Desktop.Skinning.SkinnedLabel();
 			this.picPreview = new System.Windows.Forms.PictureBox();
+			this.recId = new Desktop.CommonControls.RecordField();
+			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
+			this.skinnedPanel2 = new Desktop.Skinning.SkinnedPanel();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valSet)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valIncrement)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valDecrement)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
+			this.skinnedPanel1.SuspendLayout();
+			this.skinnedPanel2.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// recId
-			// 
-			this.recId.AllowCreate = false;
-			this.recId.Location = new System.Drawing.Point(76, 12);
-			this.recId.Name = "recId";
-			this.recId.PlaceholderText = null;
-			this.recId.Record = null;
-			this.recId.RecordContext = null;
-			this.recId.RecordKey = null;
-			this.recId.RecordType = null;
-			this.recId.Size = new System.Drawing.Size(150, 20);
-			this.recId.TabIndex = 0;
-			this.recId.UseAutoComplete = true;
-			this.recId.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recId_RecordChanged);
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 16);
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Primary;
+			this.label1.Location = new System.Drawing.Point(3, 8);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(58, 13);
 			this.label1.TabIndex = 1;
@@ -82,16 +72,19 @@
 			this.groupBox1.Controls.Add(this.valDecrement);
 			this.groupBox1.Controls.Add(this.radDecrement);
 			this.groupBox1.Controls.Add(this.radUnlock);
-			this.groupBox1.Location = new System.Drawing.Point(15, 38);
+			this.groupBox1.Location = new System.Drawing.Point(13, 65);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(211, 114);
+			this.groupBox1.Size = new System.Drawing.Size(211, 128);
 			this.groupBox1.TabIndex = 3;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Effect";
 			// 
 			// valSet
 			// 
-			this.valSet.Location = new System.Drawing.Point(91, 88);
+			this.valSet.BackColor = System.Drawing.Color.White;
+			this.valSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valSet.ForeColor = System.Drawing.Color.Black;
+			this.valSet.Location = new System.Drawing.Point(91, 93);
 			this.valSet.Name = "valSet";
 			this.valSet.Size = new System.Drawing.Size(53, 20);
 			this.valSet.TabIndex = 6;
@@ -99,7 +92,7 @@
 			// radSet
 			// 
 			this.radSet.AutoSize = true;
-			this.radSet.Location = new System.Drawing.Point(6, 88);
+			this.radSet.Location = new System.Drawing.Point(6, 95);
 			this.radSet.Name = "radSet";
 			this.radSet.Size = new System.Drawing.Size(44, 17);
 			this.radSet.TabIndex = 5;
@@ -110,7 +103,10 @@
 			// 
 			// valIncrement
 			// 
-			this.valIncrement.Location = new System.Drawing.Point(91, 65);
+			this.valIncrement.BackColor = System.Drawing.Color.White;
+			this.valIncrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valIncrement.ForeColor = System.Drawing.Color.Black;
+			this.valIncrement.Location = new System.Drawing.Point(91, 70);
 			this.valIncrement.Minimum = new decimal(new int[] {
             1,
             0,
@@ -128,7 +124,7 @@
 			// radIncrement
 			// 
 			this.radIncrement.AutoSize = true;
-			this.radIncrement.Location = new System.Drawing.Point(6, 65);
+			this.radIncrement.Location = new System.Drawing.Point(6, 72);
 			this.radIncrement.Name = "radIncrement";
 			this.radIncrement.Size = new System.Drawing.Size(75, 17);
 			this.radIncrement.TabIndex = 3;
@@ -139,7 +135,10 @@
 			// 
 			// valDecrement
 			// 
-			this.valDecrement.Location = new System.Drawing.Point(91, 42);
+			this.valDecrement.BackColor = System.Drawing.Color.White;
+			this.valDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valDecrement.ForeColor = System.Drawing.Color.Black;
+			this.valDecrement.Location = new System.Drawing.Point(91, 47);
 			this.valDecrement.Minimum = new decimal(new int[] {
             1,
             0,
@@ -157,7 +156,7 @@
 			// radDecrement
 			// 
 			this.radDecrement.AutoSize = true;
-			this.radDecrement.Location = new System.Drawing.Point(6, 42);
+			this.radDecrement.Location = new System.Drawing.Point(6, 49);
 			this.radDecrement.Name = "radDecrement";
 			this.radDecrement.Size = new System.Drawing.Size(80, 17);
 			this.radDecrement.TabIndex = 1;
@@ -169,7 +168,7 @@
 			// radUnlock
 			// 
 			this.radUnlock.AutoSize = true;
-			this.radUnlock.Location = new System.Drawing.Point(6, 19);
+			this.radUnlock.Location = new System.Drawing.Point(6, 26);
 			this.radUnlock.Name = "radUnlock";
 			this.radUnlock.Size = new System.Drawing.Size(59, 17);
 			this.radUnlock.TabIndex = 0;
@@ -181,7 +180,11 @@
 			// cmdOK
 			// 
 			this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdOK.Location = new System.Drawing.Point(205, 204);
+			this.cmdOK.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdOK.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdOK.Flat = false;
+			this.cmdOK.ForeColor = System.Drawing.Color.White;
+			this.cmdOK.Location = new System.Drawing.Point(214, 3);
 			this.cmdOK.Name = "cmdOK";
 			this.cmdOK.Size = new System.Drawing.Size(75, 23);
 			this.cmdOK.TabIndex = 4;
@@ -192,8 +195,12 @@
 			// cmdCancel
 			// 
 			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdCancel.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cmdCancel.Location = new System.Drawing.Point(286, 204);
+			this.cmdCancel.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdCancel.Flat = true;
+			this.cmdCancel.ForeColor = System.Drawing.Color.White;
+			this.cmdCancel.Location = new System.Drawing.Point(295, 3);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(75, 23);
 			this.cmdCancel.TabIndex = 5;
@@ -203,9 +210,10 @@
 			// 
 			// lblText
 			// 
-			this.lblText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.lblText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblText.Location = new System.Drawing.Point(12, 155);
+			this.lblText.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.lblText.Location = new System.Drawing.Point(12, 200);
 			this.lblText.Name = "lblText";
 			this.lblText.Size = new System.Drawing.Size(349, 47);
 			this.lblText.TabIndex = 6;
@@ -213,12 +221,50 @@
 			// 
 			// picPreview
 			// 
-			this.picPreview.Location = new System.Drawing.Point(232, 16);
+			this.picPreview.BackColor = System.Drawing.Color.Transparent;
+			this.picPreview.Location = new System.Drawing.Point(232, 65);
 			this.picPreview.Name = "picPreview";
 			this.picPreview.Size = new System.Drawing.Size(128, 128);
 			this.picPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picPreview.TabIndex = 7;
 			this.picPreview.TabStop = false;
+			// 
+			// recId
+			// 
+			this.recId.AllowCreate = false;
+			this.recId.Location = new System.Drawing.Point(67, 5);
+			this.recId.Name = "recId";
+			this.recId.PlaceholderText = null;
+			this.recId.Record = null;
+			this.recId.RecordContext = null;
+			this.recId.RecordFilter = null;
+			this.recId.RecordKey = null;
+			this.recId.RecordType = null;
+			this.recId.Size = new System.Drawing.Size(150, 20);
+			this.recId.TabIndex = 0;
+			this.recId.UseAutoComplete = true;
+			this.recId.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recId_RecordChanged);
+			// 
+			// skinnedPanel1
+			// 
+			this.skinnedPanel1.Controls.Add(this.cmdCancel);
+			this.skinnedPanel1.Controls.Add(this.cmdOK);
+			this.skinnedPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.skinnedPanel1.Location = new System.Drawing.Point(0, 253);
+			this.skinnedPanel1.Name = "skinnedPanel1";
+			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
+			this.skinnedPanel1.Size = new System.Drawing.Size(373, 30);
+			this.skinnedPanel1.TabIndex = 8;
+			// 
+			// skinnedPanel2
+			// 
+			this.skinnedPanel2.Controls.Add(this.label1);
+			this.skinnedPanel2.Controls.Add(this.recId);
+			this.skinnedPanel2.Location = new System.Drawing.Point(1, 27);
+			this.skinnedPanel2.Name = "skinnedPanel2";
+			this.skinnedPanel2.PanelType = Desktop.Skinning.SkinnedBackgroundType.Primary;
+			this.skinnedPanel2.Size = new System.Drawing.Size(371, 30);
+			this.skinnedPanel2.TabIndex = 9;
 			// 
 			// TrophyForm
 			// 
@@ -226,15 +272,13 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(373, 239);
+			this.ClientSize = new System.Drawing.Size(373, 283);
 			this.ControlBox = false;
+			this.Controls.Add(this.skinnedPanel2);
+			this.Controls.Add(this.skinnedPanel1);
 			this.Controls.Add(this.picPreview);
 			this.Controls.Add(this.lblText);
-			this.Controls.Add(this.cmdCancel);
-			this.Controls.Add(this.cmdOK);
 			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.recId);
 			this.Name = "TrophyForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Unlock Collectible";
@@ -245,26 +289,30 @@
 			((System.ComponentModel.ISupportInitialize)(this.valIncrement)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.valDecrement)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
+			this.skinnedPanel1.ResumeLayout(false);
+			this.skinnedPanel2.ResumeLayout(false);
+			this.skinnedPanel2.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
 		private Desktop.CommonControls.RecordField recId;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.NumericUpDown valSet;
-		private System.Windows.Forms.RadioButton radSet;
-		private System.Windows.Forms.NumericUpDown valIncrement;
-		private System.Windows.Forms.RadioButton radIncrement;
-		private System.Windows.Forms.NumericUpDown valDecrement;
-		private System.Windows.Forms.RadioButton radDecrement;
-		private System.Windows.Forms.RadioButton radUnlock;
-		private System.Windows.Forms.Button cmdOK;
-		private System.Windows.Forms.Button cmdCancel;
-		private System.Windows.Forms.Label lblText;
+		private Desktop.Skinning.SkinnedLabel label1;
+		private Desktop.Skinning.SkinnedGroupBox groupBox1;
+		private Desktop.Skinning.SkinnedNumericUpDown valSet;
+		private Desktop.Skinning.SkinnedRadioButton radSet;
+		private Desktop.Skinning.SkinnedNumericUpDown valIncrement;
+		private Desktop.Skinning.SkinnedRadioButton radIncrement;
+		private Desktop.Skinning.SkinnedNumericUpDown valDecrement;
+		private Desktop.Skinning.SkinnedRadioButton radDecrement;
+		private Desktop.Skinning.SkinnedRadioButton radUnlock;
+		private Desktop.Skinning.SkinnedButton cmdOK;
+		private Desktop.Skinning.SkinnedButton cmdCancel;
+		private Desktop.Skinning.SkinnedLabel lblText;
 		private System.Windows.Forms.PictureBox picPreview;
+		private Desktop.Skinning.SkinnedPanel skinnedPanel1;
+		private Desktop.Skinning.SkinnedPanel skinnedPanel2;
 	}
 }

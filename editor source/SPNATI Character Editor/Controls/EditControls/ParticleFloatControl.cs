@@ -98,7 +98,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			}
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			RemoveHandlers();
 			valFrom.Value = Math.Max(0, valFrom.Minimum);
@@ -109,7 +109,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			AddHandlers();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			if (valFrom.Text == "")
 			{

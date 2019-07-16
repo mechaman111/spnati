@@ -15,7 +15,7 @@ namespace SPNATI_Character_Editor
 		public FilterControl()
 		{
 			InitializeComponent();
-
+			cboGender.Items.AddRange(new string[] { "", "female", "male" });
 			recTag.RecordType = typeof(Tag);
 		}
 
@@ -44,8 +44,18 @@ namespace SPNATI_Character_Editor
 					_filter.FilterId = values[6];
 					_filter.FilterStage = values[7];
 				}
-
-				RebindTable();
+				if (values.Count > 16)
+				{
+					_filter.Hand = values[8];
+					_filter.Layers = values[9];
+					_filter.StartingLayers = values[10];
+					_filter.SaidMarker = values[11];
+					_filter.NotSaidMarker = values[12];
+					_filter.SayingMarker = values[13];
+					_filter.Saying = values[14];
+					_filter.TimeInStage = values[15];
+					_filter.ConsecutiveLosses = values[16];
+				}
 
 				ToggleCollapsed(!_filter.HasAdvancedConditions);
 			}
@@ -64,6 +74,15 @@ namespace SPNATI_Character_Editor
 			values.Add(_filter.Variable);
 			values.Add(_filter.FilterId);
 			values.Add(_filter.FilterStage);
+			values.Add(_filter.Hand);
+			values.Add(_filter.Layers);
+			values.Add(_filter.StartingLayers);
+			values.Add(_filter.SaidMarker);
+			values.Add(_filter.NotSaidMarker);
+			values.Add(_filter.SayingMarker);
+			values.Add(_filter.Saying);
+			values.Add(_filter.TimeInStage);
+			values.Add(_filter.ConsecutiveLosses);
 		}
 
 		protected override void OnBoundData()
@@ -175,7 +194,7 @@ namespace SPNATI_Character_Editor
 			return GUIHelper.ToRange(from, to);
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			RemoveHandlers();
 			valFrom.Text = "";
@@ -184,24 +203,11 @@ namespace SPNATI_Character_Editor
 			recTag.RecordKey = null;
 			_filter.Status = null;
 
-			RebindTable();
-
 			Save();
 			AddHandlers();
 		}
 
-		private void RebindTable()
-		{
-			//TODO: Once properties serialize properly with SpnatiXmlSerializer, we can switch TargetCondition to use a BindableObject, make
-			//the fields properties, and get rid of this method
-			tableAdvanced.UpdateProperty("Status");
-			tableAdvanced.UpdateProperty("Role");
-			tableAdvanced.UpdateProperty("Variable");
-			tableAdvanced.UpdateProperty("FilterId");
-			tableAdvanced.UpdateProperty("FilterStage");
-		}
-
-		public override void Save()
+		protected override void OnSave()
 		{
 			string count = GetCount() ?? "0";
 			string tag = recTag.RecordKey;

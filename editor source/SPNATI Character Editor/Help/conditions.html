@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta charset='utf-8' />
+    <link rel="stylesheet" type="text/css" href="topic.css" />
+    <title>Conditions</title>
+</head>
+<body>
+    <header id="header">Conditions</header>
+    <article id="main">
+        <section class="card">
+            <h1>Overview</h1>
+            Conditions do exactly what you'd think - make cases conditional based on certain criteria. By using conditions wisely, you can make your character act in a much more convincing way than just filling out the bare minimum generic lines for each phase.<br />
+            You can add conditions to a case in three ways:
+            <ol>
+                <li>Using a pre-built recipe with the flask in the dialogue tree.</li>
+                <li>Searching for a condition type using the "Add a condition" field near the middle of the case editor.</li>
+                <li>Choosing a condition from the various Speed Button menus next to the search field. This is the fastest method once you know what you're looking for.</li>
+            </ol>
+            Each condition type is summarized below, categorized by which Speed Button they appear under.
+        </section>
+        <section class="card">
+            <h1>Also Playing</h1>
+            These conditions revolve around another character at the table other than yours, and other than the current phase target (ex. during a stripping phase, the target is the character stripping).
+            <ul>
+                <li><span class="label">Also Playing:</span> Checks that the chosen character is playing with yours. This is required for all other Also Playing-type conditions to function.</li>
+                <li><span class="label">Also Playing Stage:</span> Checks that the "Also Playing" character is within a certain state of undress. For instance, they have lost their socks but not their shirt yet. Since each character has a different stripping order, the options here vary depending on which character is plugged into "Also Playing".</li>
+                <li><span class="label">Also Playing Said Marker:</span> Checks that the "Also Playing" character has said a particular marker at some earlier point in the game. Refer to the Markers section in the Dialogue help for more information about markers.</li>
+                <li><span class="label">Also Playing Not Said Marker:</span> Checks that the "Also Playing" character has not said a particular marker yet.</li>
+                <li><span class="label">Also Playing Saying Marker:</span> Checks if the "Also Playing" character is saying a line with a particular marker <i>right this moment</i>.</li>
+                <li><span class="label">Also Playing Saying Text:</span> Checks if the "Also Playing" character is saying something <i>right this moment</i> containing this chunk of case-sensitive text.</li>
+                <li><span class="label">Also Playing Time In Stage:</span> Checks how many rounds the "Also Playing" character has been in their current stage (i.e. how long since they last lost).</li>
+                <li><span class="label">Also Playing Hand:</span> Checks that the "Also Playing" character has a particular poker hand.</li>
+            </ul>
+        </section>
+        <section class="card">
+            <h1>Game</h1>
+            These conditions are for game-wide events.
+            <ul>
+                <li><span class="label">Consecutive Losses:</span> For phases with a target, this checks how many rounds in a row that target has lost now. For phases without a target, this checks how many rounds your character has lost in a row.</li>
+                <li><span class="label">Total Rounds:</span> Checks that the game has been through a certain number of completed rounds. Therefore, to condition on the first round of the game, Total Rounds would be 0, not 1.</li>
+                <li><span class="label">Variable Test:</span> Checks that the contents of a variable matches an expected value. See the Variables section for a more detailed list. You can add multiple of these. </li>
+                <li><span class="label">Background:</span> Checks what venue you are playing at.</li>
+                <li><span class="label">Indoors/outdoors:</span> Checks more generically than background whether you are at an indoor or outdoor locale.</li>
+            </ul>
+        </section>
+        <section class="card">
+            <h1>Self</h1>
+            These conditions target information about your own character.
+            <ul>
+                <li><span class="label">Said Marker:</span> Checks if your character has said a marker at an earlier point in the game. Refer to the Markers section in the Dialogue help for more details about markers.</li>
+                <li><span class="label">Not Said Marker:</span> Checks that your character has not said a marker yet in this game.</li>
+                <li><span class="label">Time In Stage:</span> Checks that your character has been in the current stage for a certain number of rounds. In other words, how long since they last lost.</li>
+                <li><span class="label">Has Hand:</span> Checks that your character has a particular poker hand.</li>
+                <li><span class="label">Play Once:</span> This is not a true condition. Rather, it marks this case as only being valid once per game. If a line from it plays once, it will be disqualified from consideration in all future phases. Useful for limiting repeated dialogue.</li>
+                <li><span class="label">Hidden:</span> This is not a true condition. Rather, if all other conditions are valid, then the lines from this case will "play" silently in the background, setting any markers or other advanced changes (changing label, gender, AI, etc.), before a non-hidden case is then chosen to play in the foreground. This allows you to set multiple markers at once, for one thing.</li>
+            </ul>
+        </section>
+        <section class="card">
+            <h1>Table</h1>
+            These conditions target information about the overall state of the poker table (i.e. the general demographics of the people playing)
+            <ul>
+                <li><span class="label">Filter:</span> Checks advanced conditions about the state of the table. Refer to the Filters section below for more details.</li>
+                <li><span class="label">Total Females:</span> Checks that the number of females (including the human and your own character if applicable) falls within a certain range.</li>
+                <li><span class="label">Total Males:</span> Checks that the number of males (including the human and your own character if applicable) falls within a certain range.</li>
+                <li><span class="label">Total Playing:</span> Checks that the number of people still active in the game (including the human and your own character if applicable) falls within a certain range.</li>
+                <li><span class="label">Total Exposed:</span> Checks that the number of people revealing their chest or crotch (including the human and your own character if applicable) falls within a certain range.</li>
+                <li><span class="label">Total Naked:</span> Checks that the number of people completely naked (including the human and your own character if applicable) falls within a certain range.</li>
+                <li><span class="label">Total Masturbating:</span> Checks that the number of people actively masturbating (including the human and your own character if applicable) falls within a certain range.</li>
+                <li><span class="label">Total Finished:</span> Checks that the number of people completely finished and out of the game (including the human and your own character if applicable) falls within a certain range.</li>
+                <li><span class="label">Human Name:</span> Checks that the human player has a particular name.</li>
+            </ul>
+        </section>
+        <section class="card">
+            <h1>Target</h1>
+            These conditions target information about the current phase's target when there is one. The target is the player who lost the hand, is stripping, or is masturbating and people are reacting.
+            <ul>
+                <li><span class="label">Target:</span> Checks that the chosen character is the current target.</li>
+                <li><span class="label">Target Tag:</span> Checks that the target has a certain tag.</li>
+                <li><span class="label">Target Stage:</span> Checks that the target is within a certain state of undress. For instance, they have lost their socks but not their shirt yet. Since each character has a different stripping order, the options here vary depending on which character is plugged into "Target".</li>
+                <li><span class="label">Target Said Marker:</span> Checks that the target has said a particular marker at some earlier point in the game. Refer to the Markers section in the Dialogue help for more information about markers.</li>
+                <li><span class="label">Target Not Said Marker:</span> Checks that the target has not said a particular marker yet.</li>
+                <li><span class="label">Target Saying Marker:</span> Checks if the target is saying a line with a particular marker <i>right this moment</i>.</li>
+                <li><span class="label">Target Saying Text:</span> Checks if the target is saying something <i>right this moment</i> containing this chunk of case-sensitive text.</li>
+                <li><span class="label">Target Time In Stage:</span> Checks how many rounds the target has been in their current stage (i.e. how long since they last lost).</li>
+                <li><span class="label">Target Hand:</span> Checks that the target has a particular poker hand.</li>
+                <li><span class="label">Target Status:</span> Checks that the target's current state of dress matches a particular condition.</li>
+                <li><span class="label">Target Layers:</span> Checks that the target has a certain number of clothing layers remaining.</li>
+                <li><span class="label">Target Starting Layers:</span> Checks that the target started the game with a certain number of layers of clothing.</li>
+                <li><span class="label">Gender:</span> Checks that the target's gender matches a certain criterion.</li>
+                <li><span class="label">Size:</span> Checks that the target's chest or crotch size matches a certain criterion.</li>
+            </ul>
+        </section>
+        <section class="card">
+            <h1>Player</h1>
+            Everything under the Player category is used to target different information about a player. Each condition takes a player you want to test information about, which can be:
+            <ul>
+                <li>Self - Tests information about yourself</li>
+                <li>Target - Tests information about the current target if there is one</li>
+                <li>Character - Fill in any character's name to test information about that character if they are at the table.</li>
+            </ul>
+            Player conditions include:
+            <ul>
+                <li><span class="label">Collectible:</span> Tests if the user has unlocked a particular collectible that belongs to a character.</li>
+                <li><span class="label">Collectible:</span> For collectibles that use counters, this tests what level a collectible's counter is currently at. For example, with a collectible whose unlock condition is "win 5 games with Monika", you could use this to test that they've currently won 2.</li>
+                <li><span class="label">Costume:</span> For characters that have alternate outfits, this tests which outfit they are wearing. To test if a character is not wearing an alternate outfit, you can check if their costume == default.</li>
+                <li><span class="label">Largest lead:</span> This tests what was the largest lead a character has held at any point in the game. A lead is determined by comparing layers of clothing left. So if your character has 5 layers remaining, and the other players have 2, 0, and 3, your character's largest lead is 2 (5-3).</li>
+                <li><span class="label">Layer difference:</span> This tests the difference in remaining clothing layers between two players. For instance, if you have 2 layers left and Florina has 4, your layer difference is -2 (2 - 4).</li>
+                <li><span class="label">Marker:</span> Tests if the player has said a marker. Functionally this is similar to the "Said Marker" condition, but unlike "Said Marker" you can add multiple of these to check for multiple markers.</li>
+                <li><span class="label">Marker (Persistent):</span> Persistent markers last between games. This is the same as the Marker check, except it checks markers that have been tagged as persistent.</li>
+                <li>
+                    <span class="label">Place:</span> Tests various conditions regarding what place your character is in, where place is determined by the number of layers of clothing left. The player with the least layers left is in last place, and the player with the most is in first place. Placement checks include:
+                    <ul>
+                        <li><span class="label">Place:</span> The character's current place, where 1 is first and 5 (in a 5 player game) is last.</li>
+                        <li><span class="label">Reverse place:</span> Like place but inverted, so 1 is last and 5 (in a 5 player game) is first. This is useful to see who is in last place without needing to assume there are 5 players playing.</li>
+                        <li><span class="label">Layers in lead:</span> If the character is currently winning, how many layers remaining they have over 2nd place. If they are not winning, this is how many layers behind first place. (ex. -3 means they are 3 layers behind first place, and 2 means they are 2 layers ahead of 2nd place)</li>
+                        <li><span class="label">Layers behind:</span> If the character is currently losing, how many layers remaining they have over 2nd to last place. If they are not losing, this is how many layers ahead of last place (among players who are still in the game). For example, 2 means they are 2 layers behind 2nd-to-last place, while -3 means they have 3 more layers than last place.</li>
+                        <li><span class="label">Largest lead:</span> The same thing as Player > Largest lead, which is just one less click to get to this condition.</li>
+                    </ul>
+                </li>
+                <li><span class="label">Relative Position:</span> Used to check where a player is standing relative to yours. For instance, you can check that the stripping player is standing to the left. Left in this case means towards the left side of the screen, not the characters' true left.</li>
+                <li><span class="label">Slot:</span> Tests the exact spot a player is standing at where 1 is the far left of the screen and 4 is the far right.</li>
+                <li><span class="label">Collectible:</span> Tests if a player has or does not have a particular tag. This is like Target Tag except you can add multiple tag checks and it works for players other than the current target.</li>
+            </ul>
+        </section>
+        <section class="card">
+            <h1>Clothing</h1>
+            When clothing is being removed, this can test information about that clothing.
+            <ul>
+                <li><span class="label">Clothing Position:</span> Checks that the clothing covers a certain body part.</li>
+                <li><span class="label">Clothing Type:</span> Checks that the clothing is of a certain type (minor, major, etc.)</li>
+            </ul>
+        </section>
+        <section class="card">
+            <h1>Macros</h1>
+            Any user-defined condition macros that were not categorized into another menu can be found here. See the Macros help for more information about macros.
+        </section>
+        <section class="card">
+            <h1>Variable Tests</h1>
+            Variables are placeholder text that gets replaced with other text during the game. For instance, ~name~ gets replaced with the current target's name.
+            While some variables are useful for dialogue, other variables are more useful for checking the state of the game when creating case conditions by using Variable Tests. In fact, a good number of conditions listed above are actually just variable tests in disguise.
+            <br />
+            <strong>Example variable test: </strong> ~clothing.plural~ == plural
+            <br />
+            This condition would hold true if the current article of clothing being stripped has a plural name (ex. socks).<br />
+            Most variables worth testing are given dedicated conditions in the speed menus so that you don't have to worry about the details of the variable name, but here are a few that may be useful that don't have their own conditions:
+            <ul>
+                <li><span class="label">~cards~:</span> This is replaced with the number of cards swapped, so you could test if 0 cards were swapped (meaning the character likely has a really good hand).</li>
+                <li><span class="label">~weekday~:</span> This is replaced with the name of the current day of the week (in real life).</li>
+                <li><span class="label">~clothing~:</span> This is replaced with the name of the clothing being removed, so you can make general reactions to certain types of clothing without needing to target specific characters.</li>
+            </ul>
+        </section>
+        <section class="card">
+            <h1>Filters</h1>
+            Filters are the most powerful type of condition, particularly because they let you create one-time-use variables for dialogue. For instance, you could identify in a table with 3 clothed males and 2 naked females, the name of the other female, store that into a variable, and then in your dialogue reference that variable to name the other female without knowing in advance who that female actually is.<br />
+            Filters also effectively let you use multiple "Also Playing" conditions. <br />
+            A filter takes a range and then one or more other criteria, including:
+            <ul>
+                <li><span class="label">Tag:</span> Targeting that a range of characters have a certain tag. Every character has their own name as a tag, so you can make a filter of 1-1 of tag: X to identify that character X is also playing.</li>
+                <li><span class="label">Gender:</span> Targeting that a range of characters is of a certain gender.</li>
+                <li><span class="label">Status:</span> Targeting that a range of characters is in a certain state of undress.</li>
+            </ul>
+            To see some of these more advanced options, click the double arrows on the right of the filter to expand it. Then click Add Filter to add the filter type you want to use.<br />
+            You can refine your filters to limit them to certain characters using the character and role fields.<br />
+            Finally, you can use "store into variable" to create a variable that will hold the name of one random character that matched the filter's conditions. For instance, if you make a filter with the following settings:
+            <ul>
+                <li>1-5 females</li>
+                <li>Naked</li>
+                <li>Role: Opponent</li>
+                <li>Store into variable: naked</li>
+            </ul>
+            You could write a line of dialogue, "Hey, ~naked~, how's life?" and ~naked~ would be replaced with the name of a naked female character other than the speaker.
+        </section>
+    </article>
+</body>
+</html>

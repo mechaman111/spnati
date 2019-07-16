@@ -44,6 +44,66 @@
 			set { Set(10, value.ToString()); }
 		}
 
+		public int Pocket
+		{
+			get { return GetInt(11); }
+			set { Set(11, value.ToString()); }
+		}
+
+		public KisekaeColor PocketColor1
+		{
+			get { return new KisekaeColor(GetString(12)); }
+			set { Set(12, value.ToString()); }
+		}
+
+		public KisekaeColor PocketColor2
+		{
+			get { return new KisekaeColor(GetString(13)); }
+			set { Set(13, value.ToString()); }
+		}
+
+		public KisekaeColor PocketColor3
+		{
+			get { return new KisekaeColor(GetString(14)); }
+			set { Set(14, value.ToString()); }
+		}
+
+		public int PocketSide
+		{
+			get { return GetInt(15); }
+			set { Set(15, value.ToString()); }
+		}
+
+		public int LowerPocket
+		{
+			get { return GetInt(16); }
+			set { Set(16, value.ToString()); }
+		}
+
+		public KisekaeColor LowerPocketColor1
+		{
+			get { return new KisekaeColor(GetString(17)); }
+			set { Set(17, value.ToString()); }
+		}
+
+		public KisekaeColor LowerPocketColor2
+		{
+			get { return new KisekaeColor(GetString(18)); }
+			set { Set(18, value.ToString()); }
+		}
+
+		public KisekaeColor LowerPocketColor3
+		{
+			get { return new KisekaeColor(GetString(19)); }
+			set { Set(19, value.ToString()); }
+		}
+
+		public int LowerPocketRotation
+		{
+			get { return GetInt(20); }
+			set { Set(20, value.ToString()); }
+		}
+
 		public void SetOpenState(int state)
 		{
 			OpenState = state;

@@ -28,11 +28,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.label2 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.valFrom = new System.Windows.Forms.NumericUpDown();
-			this.valTo = new System.Windows.Forms.NumericUpDown();
-			this.chkUpper = new System.Windows.Forms.CheckBox();
+			this.label2 = new Desktop.Skinning.SkinnedLabel();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
+			this.valFrom = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.valTo = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.chkUpper = new Desktop.Skinning.SkinnedCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valFrom)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valTo)).BeginInit();
 			this.SuspendLayout();
@@ -41,6 +41,10 @@
 			// 
 			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.label2.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.label2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label2.Location = new System.Drawing.Point(83, 3);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(19, 13);
@@ -51,6 +55,10 @@
 			// 
 			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label1.Location = new System.Drawing.Point(-2, 3);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(33, 13);
@@ -59,6 +67,9 @@
 			// 
 			// valFrom
 			// 
+			this.valFrom.BackColor = System.Drawing.Color.White;
+			this.valFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valFrom.ForeColor = System.Drawing.Color.Black;
 			this.valFrom.Location = new System.Drawing.Point(37, 1);
 			this.valFrom.Name = "valFrom";
 			this.valFrom.Size = new System.Drawing.Size(43, 20);
@@ -66,6 +77,9 @@
 			// 
 			// valTo
 			// 
+			this.valTo.BackColor = System.Drawing.Color.White;
+			this.valTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valTo.ForeColor = System.Drawing.Color.Black;
 			this.valTo.Location = new System.Drawing.Point(106, 1);
 			this.valTo.Name = "valTo";
 			this.valTo.Size = new System.Drawing.Size(41, 20);
@@ -100,10 +114,10 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.NumericUpDown valFrom;
-		private System.Windows.Forms.NumericUpDown valTo;
-		private System.Windows.Forms.CheckBox chkUpper;
+		private Desktop.Skinning.SkinnedLabel label2;
+		private Desktop.Skinning.SkinnedLabel label1;
+		private Desktop.Skinning.SkinnedNumericUpDown valFrom;
+		private Desktop.Skinning.SkinnedNumericUpDown valTo;
+		private Desktop.Skinning.SkinnedCheckBox chkUpper;
 	}
 }

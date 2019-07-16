@@ -35,7 +35,7 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// Selected widget
 		/// </summary>
-		public ITimelineWidget Widget;
+		public ITimelineObject Widget;
 		/// <summary>
 		/// Selected time
 		/// </summary>

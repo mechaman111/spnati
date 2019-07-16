@@ -28,51 +28,72 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			this.gridDialogue = new SPNATI_Character_Editor.KeyboardDataGridView();
-			this.ColImage = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+			this.gridDialogue = new Desktop.Skinning.SkinnedDataGridView();
+			this.ColImage = new Desktop.Skinning.SkinnedDataGridViewComboBoxColumn();
+			this.ColImageOptions = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
 			this.ColText = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColMarker = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColMarkerOptions = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.ColTrophy = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.ColMore = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.ColMarkerOptions = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
+			this.ColTrophy = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
+			this.ColMore = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
+			this.ColDelete = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// gridDialogue
 			// 
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridDialogue.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			this.gridDialogue.BackgroundColor = System.Drawing.Color.White;
+			this.gridDialogue.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.gridDialogue.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+			this.gridDialogue.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridDialogue.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
 			this.gridDialogue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridDialogue.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColImage,
+            this.ColImageOptions,
             this.ColText,
             this.ColMarker,
             this.ColMarkerOptions,
             this.ColTrophy,
             this.ColMore,
             this.ColDelete});
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridDialogue.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridDialogue.DefaultCellStyle = dataGridViewCellStyle8;
 			this.gridDialogue.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gridDialogue.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+			this.gridDialogue.EnableHeadersVisualStyles = false;
+			this.gridDialogue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.gridDialogue.GridColor = System.Drawing.Color.LightGray;
 			this.gridDialogue.Location = new System.Drawing.Point(0, 0);
 			this.gridDialogue.MultiSelect = false;
 			this.gridDialogue.Name = "gridDialogue";
+			this.gridDialogue.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridDialogue.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+			this.gridDialogue.RowHeadersVisible = false;
+			this.gridDialogue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
 			this.gridDialogue.Size = new System.Drawing.Size(572, 380);
 			this.gridDialogue.TabIndex = 42;
 			this.gridDialogue.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellContentClick);
@@ -88,10 +109,20 @@
 			// 
 			// ColImage
 			// 
+			this.ColImage.AutoComplete = false;
+			this.ColImage.DisplayMember = null;
 			this.ColImage.HeaderText = "Image";
-			this.ColImage.MaxDropDownItems = 20;
 			this.ColImage.Name = "ColImage";
+			this.ColImage.Sorted = false;
 			this.ColImage.Width = 120;
+			// 
+			// ColImageOptions
+			// 
+			this.ColImageOptions.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.ColImageOptions.Flat = false;
+			this.ColImageOptions.HeaderText = "";
+			this.ColImageOptions.Name = "ColImageOptions";
+			this.ColImageOptions.Width = 21;
 			// 
 			// ColText
 			// 
@@ -108,24 +139,32 @@
 			// 
 			// ColMarkerOptions
 			// 
+			this.ColMarkerOptions.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.ColMarkerOptions.Flat = false;
 			this.ColMarkerOptions.HeaderText = "";
 			this.ColMarkerOptions.Name = "ColMarkerOptions";
 			this.ColMarkerOptions.Width = 21;
 			// 
 			// ColTrophy
 			// 
+			this.ColTrophy.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.ColTrophy.Flat = false;
 			this.ColTrophy.HeaderText = "";
 			this.ColTrophy.Name = "ColTrophy";
 			this.ColTrophy.Width = 21;
 			// 
 			// ColMore
 			// 
+			this.ColMore.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.ColMore.Flat = false;
 			this.ColMore.HeaderText = "";
 			this.ColMore.Name = "ColMore";
 			this.ColMore.Width = 21;
 			// 
 			// ColDelete
 			// 
+			this.ColDelete.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.ColDelete.Flat = false;
 			this.ColDelete.HeaderText = "";
 			this.ColDelete.Name = "ColDelete";
 			this.ColDelete.Width = 21;
@@ -145,13 +184,14 @@
 
 		#endregion
 
-		private KeyboardDataGridView gridDialogue;
-		private System.Windows.Forms.DataGridViewComboBoxColumn ColImage;
+		private Desktop.Skinning.SkinnedDataGridView gridDialogue;
+		private Desktop.Skinning.SkinnedDataGridViewComboBoxColumn ColImage;
+		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColImageOptions;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColText;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarker;
-		private System.Windows.Forms.DataGridViewButtonColumn ColMarkerOptions;
-		private System.Windows.Forms.DataGridViewButtonColumn ColTrophy;
-		private System.Windows.Forms.DataGridViewButtonColumn ColMore;
-		private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
+		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColMarkerOptions;
+		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColTrophy;
+		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColMore;
+		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColDelete;
 	}
 }

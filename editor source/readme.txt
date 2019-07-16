@@ -5,4 +5,4 @@
 5. Once in the editor Go to Help > View Help for more detailed documentation about using the character editor.
 
 
-IMPORTANT: If you are looking at this in the GitLab repository, SPNATI Character Editor.exe is not here. Get it from https://www.reddit.com/r/spnati/comments/7071mz/character_editor_official_release/
+IMPORTANT: If you are looking at this in the GitLab repository, SPNATI Character Editor.exe is not here. Get it from the tools folder.

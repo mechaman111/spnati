@@ -1,5 +1,6 @@
 ﻿using Desktop.Forms;
 using Desktop.Providers;
+using Desktop.Skinning;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Desktop.CommonControls
 {
-	public partial class PropertyTable : UserControl
+	public partial class PropertyTable : UserControl, ISkinControl, ISkinnedPanel
 	{
 		/// <summary>
 		/// Contextual object that will be passed to edit controls
@@ -21,6 +22,19 @@ namespace Desktop.CommonControls
 		public event PropertyChangedEventHandler PropertyChanged;
 		public event EventHandler<MacroArgs> EditingMacro;
 		public event EventHandler<MacroArgs> MacroChanged;
+
+		private SkinnedBackgroundType _background;
+		public SkinnedBackgroundType PanelType
+		{
+			get { return _background; }
+			set { _background = value; OnUpdateSkin(SkinManager.Instance.CurrentSkin); Invalidate(true); }
+		}
+
+		public SkinnedBackgroundType HeaderType
+		{
+			get { return menuSpeedButtons.Background; }
+			set { menuSpeedButtons.Background = value; }
+		}
 
 		private int _pendingDataChanges = 0;
 
@@ -203,6 +217,8 @@ namespace Desktop.CommonControls
 
 		private DualKeyDictionary<string, int, PropertyTableRow> _rows = new DualKeyDictionary<string, int, PropertyTableRow>();
 
+		public string ModifyingProperty { get; set; }
+
 		public PropertyTable()
 		{
 			RemoveCaption = "Remove";
@@ -210,6 +226,8 @@ namespace Desktop.CommonControls
 
 			recAdd.RecordFilter = FilterControlsToData;
 			recAdd.RecordType = typeof(PropertyRecord);
+
+			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 		}
 
 		/// <summary>
@@ -550,7 +568,7 @@ namespace Desktop.CommonControls
 				ctl.SetParameters(result.Attribute);
 				ctl.RequireHeight += PropertyEditControl_RequireHeight;
 
-				ctl.SetData(Data, result.Property, index, Context, UndoManager, _previewData);
+				ctl.SetData(Data, result.Property, index, Context, UndoManager, _previewData, this);
 
 				row = new PropertyTableRow();
 				if (result.RowHeight > 0)
@@ -692,7 +710,7 @@ namespace Desktop.CommonControls
 			if (!_rows.ContainsPrimaryKey(propertyName))
 			{
 				PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == propertyName);
-				if (RecordFilter == null || RecordFilter(record))
+				if (record != null && (RecordFilter == null || RecordFilter(record)))
 				{
 					AddControl(record);
 				}
@@ -780,10 +798,16 @@ namespace Desktop.CommonControls
 
 		private ToolStripMenuItem GetOrAddGroupMenu(string group)
 		{
+			int macroSeparator = -1;
 			ToolStripMenuItem groupMenu = null;
 			for (int i = 0; i < menuSpeedButtons.Items.Count; i++)
 			{
 				ToolStripItem mnuItem = menuSpeedButtons.Items[i];
+				if (mnuItem is ToolStripSeparator)
+				{
+					macroSeparator = i;
+					continue;
+				}
 				if (mnuItem.Text == group)
 				{
 					groupMenu = mnuItem as ToolStripMenuItem;
@@ -793,7 +817,18 @@ namespace Desktop.CommonControls
 			if (groupMenu == null)
 			{
 				groupMenu = new ToolStripMenuItem(group);
-				menuSpeedButtons.Items.Add(groupMenu);
+				if (macroSeparator >= 0)
+				{
+					menuSpeedButtons.Items.Insert(macroSeparator, groupMenu);
+				}
+				else
+				{
+					if (group == "Macros")
+					{
+						menuSpeedButtons.Items.Add(new ToolStripSeparator());
+					}
+					menuSpeedButtons.Items.Add(groupMenu);
+				}
 			}
 			return groupMenu;
 		}
@@ -805,6 +840,17 @@ namespace Desktop.CommonControls
 			ToolStripMenuItem item = new ToolStripMenuItem(caption);
 			item.Tag = propertyCreator;
 			item.Click += CustomSpeedButtonClick;
+
+			//insert before the macro separator if there is one
+			for (int i = 0; i < groupMenu.DropDownItems.Count; i++)
+			{
+				if (groupMenu.DropDownItems[i] is ToolStripSeparator)
+				{
+					groupMenu.DropDownItems.Insert(i, item);
+					return;
+				}
+			}
+
 			groupMenu.DropDownItems.Add(item);
 		}
 
@@ -855,12 +901,47 @@ namespace Desktop.CommonControls
 				}
 			}
 
-			ToolStripMenuItem groupMenu = GetOrAddGroupMenu("Macros");
+			string group = macro.Group;
+			if (string.IsNullOrEmpty(group))
+			{
+				group = "Macros";
+			}
+			ToolStripMenuItem groupMenu = GetOrAddGroupMenu(group);
 			_macroMenu = groupMenu;
 			ToolStripMenuItem item = new ToolStripMenuItem(macro.Name);
 			item.Tag = macro;
 			item.Click += MacroButtonClick;
-			groupMenu.DropDownItems.Add(item);
+
+			bool added = false;
+			int macroSeparator = -1;
+			for (int i = 0; i < groupMenu.DropDownItems.Count; i++)
+			{
+				ToolStripSeparator separator = groupMenu.DropDownItems[i] as ToolStripSeparator;
+				if (separator != null)
+				{
+					macroSeparator = i;
+					break;
+				}
+				if (macroSeparator >= 0 || group == "Macros")
+				{
+					ToolStripItem existing = groupMenu.DropDownItems[i];
+					if (existing.Name.CompareTo(macro.Name) > 0)
+					{
+						added = true;
+						groupMenu.DropDownItems.Insert(i, item);
+						break;
+					}
+				}
+			}
+
+			if (!added)
+			{
+				if (macroSeparator == -1 && group != "Macros")
+				{
+					groupMenu.DropDownItems.Add(new ToolStripSeparator());
+				}
+				groupMenu.DropDownItems.Add(item);
+			}
 		}
 
 		private void MacroButtonClick(object sender, EventArgs e)
@@ -916,6 +997,11 @@ namespace Desktop.CommonControls
 				}
 			}
 			return macro;
+		}
+
+		public void OnUpdateSkin(Skin skin)
+		{
+			BackColor = skin.GetBackColor(PanelType);
 		}
 	}
 }

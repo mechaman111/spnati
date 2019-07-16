@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Desktop.CommonControls;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml;
@@ -143,10 +146,11 @@ namespace SPNATI_Character_Editor.IO
 				XmlAttributeAttribute attribute = field.Attribute;
 				if (attribute != null)
 				{
-					string value = field.GetValue(data)?.ToString();
 					foundSomething = true;
-					if (value == null)
+					object objValue = field.GetValue(data);
+					if (objValue == null)
 						continue;
+					string value = Convert.ToString(objValue, CultureInfo.InvariantCulture);
 					if (field.FieldType == typeof(bool))
 					{
 						value = value.ToLowerInvariant();
@@ -285,21 +289,29 @@ namespace SPNATI_Character_Editor.IO
 		{
 			Header = type.GetCustomAttribute<XmlHeaderAttribute>();
 
-			FieldInfo[] fields = type.GetFields();
-			foreach (FieldInfo field in fields)
+			MemberInfo[] fields = type.GetMembers();
+			foreach (MemberInfo field in fields)
 			{
-				if (field.GetCustomAttribute<XmlIgnoreAttribute>() != null)
-					continue;
+				if (field.MemberType == MemberTypes.Field || field.MemberType == MemberTypes.Property)
+				{
+					if (field.GetCustomAttribute<XmlIgnoreAttribute>() != null)
+						continue;
 
-				FieldInformation info = new FieldInformation(type, field);
-				Fields.Add(info);
+					FieldInformation info = new FieldInformation(type, field);
+					Fields.Add(info);
+				}
+			}
+
+			if (Fields.Any(fi => fi.Order != 0))
+			{
+				Fields.Sort();
 			}
 		}
 	}
 
-	public class FieldInformation
+	public class FieldInformation : IComparable<FieldInformation>
 	{
-		public FieldInfo Info;
+		public MemberInfo Info;
 		public Type FieldType;
 		public DefaultValueAttribute DefaultValue;
 		public XmlElementAttribute Element;
@@ -310,11 +322,12 @@ namespace SPNATI_Character_Editor.IO
 		public XmlNewLineAttribute NewLine;
 		public MethodInfo SortMethod;
 		public XmlAnyElementAttribute AnyElement;
+		public int Order;
 
-		public FieldInformation(Type parentType, FieldInfo field)
+		public FieldInformation(Type parentType, MemberInfo field)
 		{
 			Info = field;
-			FieldType = Info.FieldType;
+			FieldType = Info.GetDataType();
 			DefaultValue = field.GetCustomAttribute<DefaultValueAttribute>();
 			Element = field.GetCustomAttribute<XmlElementAttribute>();
 			Array = field.GetCustomAttribute<XmlArrayAttribute>();
@@ -323,6 +336,12 @@ namespace SPNATI_Character_Editor.IO
 			Attribute = field.GetCustomAttribute<XmlAttributeAttribute>();
 			NewLine = field.GetCustomAttribute<XmlNewLineAttribute>();
 
+			XmlOrderAttribute orderAttribute = field.GetCustomAttribute<XmlOrderAttribute>();
+			if (orderAttribute != null)
+			{
+				Order = orderAttribute.SortOrder;
+			}
+
 			XmlSortMethodAttribute sortAttribute = field.GetCustomAttribute<XmlSortMethodAttribute>();
 			if (sortAttribute != null)
 			{
@@ -330,12 +349,21 @@ namespace SPNATI_Character_Editor.IO
 			}
 
 			AnyElement = field.GetCustomAttribute<XmlAnyElementAttribute>();
-
 		}
 
 		public object GetValue(object obj)
 		{
 			return Info.GetValue(obj);
+		}
+
+		public override string ToString()
+		{
+			return Info.Name;
+		}
+
+		public int CompareTo(FieldInformation other)
+		{
+			return Order.CompareTo(other.Order);
 		}
 	}
 
@@ -380,6 +408,16 @@ namespace SPNATI_Character_Editor.IO
 		public XmlSortMethodAttribute(string method)
 		{
 			Method = method;
+		}
+	}
+
+	public class XmlOrderAttribute : Attribute
+	{
+		public int SortOrder { get; set; }
+
+		public XmlOrderAttribute(int order)
+		{
+			SortOrder = order;
 		}
 	}
 }

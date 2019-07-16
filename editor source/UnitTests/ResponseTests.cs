@@ -13,9 +13,13 @@ namespace UnitTests
 		private static Character _male;
 		private static Character _bifemale;
 		private static Character _bimale;
+		private static Character _femaleMajor;
+		private static Character _maleMajor;
+		private static Character _bifemaleMajor;
+		private static Character _bimaleMajor;
 
-		[ClassInitialize]
-		public static void Init(TestContext context)
+		[TestInitialize]
+		public void Init()
 		{
 			TriggerDatabase.Load();
 
@@ -23,6 +27,10 @@ namespace UnitTests
 			_male = new Character() { Gender = "male", FolderName = "male" };
 			_bifemale = new Character() { Gender = "female", FolderName = "female" };
 			_bimale = new Character() { Gender = "male", FolderName = "male" };
+			_femaleMajor = new Character() { Gender = "female", FolderName = "female" };
+			_maleMajor = new Character() { Gender = "male", FolderName = "male" };
+			_bifemaleMajor = new Character() { Gender = "female", FolderName = "female" };
+			_bimaleMajor = new Character() { Gender = "male", FolderName = "male" };
 			foreach (Character c in new Character[] { _female, _male, _bifemale, _bimale })
 			{
 				c.AddLayer(new Clothing() { Type = "extra" });
@@ -31,8 +39,18 @@ namespace UnitTests
 				c.AddLayer(new Clothing() { Type = "important", Position = "upper" });
 				c.AddLayer(new Clothing() { Type = "important", Position = "lower" });
 			}
+			foreach (Character c in new Character[] { _femaleMajor, _maleMajor, _bifemaleMajor, _bimaleMajor })
+			{
+				c.AddLayer(new Clothing() { Type = "extra" });
+				c.AddLayer(new Clothing() { Type = "minor" });
+				c.AddLayer(new Clothing() { Type = "major", Position = "both" });
+				c.AddLayer(new Clothing() { Type = "major", Position = "upper" });
+				c.AddLayer(new Clothing() { Type = "major", Position = "lower" });
+			}
 			_bimale.Metadata.CrossGender = true;
 			_bifemale.Metadata.CrossGender = true;
+			_bimaleMajor.Metadata.CrossGender = true;
+			_bifemaleMajor.Metadata.CrossGender = true;
 		}
 
 		[TestMethod]
@@ -132,6 +150,22 @@ namespace UnitTests
 		}
 
 		[TestMethod]
+		public void Stripping_Upper_Female_AsImportant()
+		{
+			Case c = new Case("stripping");
+			c.Stages.Add(3);
+			Assert.AreEqual("female_chest_will_be_visible", c.GetResponseTag(_femaleMajor, _male));
+		}
+
+		[TestMethod]
+		public void Stripping_Lower_Female_AsImportant()
+		{
+			Case c = new Case("stripping");
+			c.Stages.Add(4);
+			Assert.AreEqual("female_crotch_will_be_visible", c.GetResponseTag(_femaleMajor, _male));
+		}
+
+		[TestMethod]
 		public void Male_Stripping_Extra_Male()
 		{
 			Case c = new Case("stripping");
@@ -155,6 +189,16 @@ namespace UnitTests
 			Assert.AreEqual("male_removing_major", c.GetResponseTag(_male, _female));
 		}
 
+
+		[TestMethod]
+		public void Stripping_Major_Male_Both()
+		{
+			Case c = new Case("stripping");
+			c.Stages.Add(2);
+			_male.Wardrobe[2].Position = "both";
+			Assert.AreEqual("male_removing_major", c.GetResponseTag(_male, _female));
+		}
+
 		[TestMethod]
 		public void Stripping_Upper_Male()
 		{
@@ -169,6 +213,22 @@ namespace UnitTests
 			Case c = new Case("stripping");
 			c.Stages.Add(4);
 			Assert.AreEqual("male_crotch_will_be_visible", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Stripping_Upper_Male_AsImportant()
+		{
+			Case c = new Case("stripping");
+			c.Stages.Add(3);
+			Assert.AreEqual("male_chest_will_be_visible", c.GetResponseTag(_maleMajor, _female));
+		}
+
+		[TestMethod]
+		public void Stripping_Lower_Male_AsImportant()
+		{
+			Case c = new Case("stripping");
+			c.Stages.Add(4);
+			Assert.AreEqual("male_crotch_will_be_visible", c.GetResponseTag(_maleMajor, _female));
 		}
 
 		[TestMethod]
@@ -231,6 +291,41 @@ namespace UnitTests
 		}
 
 		[TestMethod]
+		public void Stripped_Upper_Large_Female_AsImportant()
+		{
+			_femaleMajor.Size = "large";
+			Case c = new Case("stripped");
+			c.Stages.Add(4);
+			Assert.AreEqual("female_large_chest_is_visible", c.GetResponseTag(_femaleMajor, _male));
+		}
+
+		[TestMethod]
+		public void Stripped_Upper_Medium_Female_AsImportant()
+		{
+			_femaleMajor.Size = "medium";
+			Case c = new Case("stripped");
+			c.Stages.Add(4);
+			Assert.AreEqual("female_medium_chest_is_visible", c.GetResponseTag(_femaleMajor, _male));
+		}
+
+		[TestMethod]
+		public void Stripped_Upper_Female_AsImportant()
+		{
+			_femaleMajor.Size = "small";
+			Case c = new Case("stripped");
+			c.Stages.Add(4);
+			Assert.AreEqual("female_small_chest_is_visible", c.GetResponseTag(_femaleMajor, _male));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Female_AsImportant()
+		{
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("female_crotch_is_visible", c.GetResponseTag(_femaleMajor, _male));
+		}
+
+		[TestMethod]
 		public void Stripped_Extra_Male()
 		{
 			Case c = new Case("stripped");
@@ -287,6 +382,41 @@ namespace UnitTests
 			Case c = new Case("stripped");
 			c.Stages.Add(5);
 			Assert.AreEqual("male_small_crotch_is_visible", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Upper_Male_AsImportant()
+		{
+			Case c = new Case("stripped");
+			c.Stages.Add(4);
+			Assert.AreEqual("male_chest_is_visible", c.GetResponseTag(_maleMajor, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Large_Male_AsImportant()
+		{
+			_maleMajor.Size = "large";
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("male_large_crotch_is_visible", c.GetResponseTag(_maleMajor, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Medium_Male_AsImportant()
+		{
+			_maleMajor.Size = "medium";
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("male_medium_crotch_is_visible", c.GetResponseTag(_maleMajor, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Small_Male_AsImportant()
+		{
+			_maleMajor.Size = "small";
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("male_small_crotch_is_visible", c.GetResponseTag(_maleMajor, _female));
 		}
 
 		[TestMethod]
@@ -354,6 +484,49 @@ namespace UnitTests
 			Case c = new Case("stripped");
 			c.Stages.Add(5);
 			Assert.AreEqual("opponent_crotch_is_visible", c.GetResponseTag(_bimale, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Upper_Opponent_AsImportant()
+		{
+			Case c = new Case("stripped");
+			c.Stages.Add(4);
+			Assert.AreEqual("opponent_chest_is_visible", c.GetResponseTag(_bimaleMajor, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Opponent_AsImportant()
+		{
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("opponent_crotch_is_visible", c.GetResponseTag(_bifemaleMajor, _male));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Large_Opponent_AsImportant()
+		{
+			_bimaleMajor.Size = "large";
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("opponent_crotch_is_visible", c.GetResponseTag(_bimaleMajor, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Medium_Opponent_AsImportant()
+		{
+			_bimaleMajor.Size = "medium";
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("opponent_crotch_is_visible", c.GetResponseTag(_bimaleMajor, _female));
+		}
+
+		[TestMethod]
+		public void Stripped_Lower_Small_Opponent_AsImportant()
+		{
+			_bimaleMajor.Size = "small";
+			Case c = new Case("stripped");
+			c.Stages.Add(5);
+			Assert.AreEqual("opponent_crotch_is_visible", c.GetResponseTag(_bimaleMajor, _female));
 		}
 
 		[TestMethod]
@@ -487,6 +660,21 @@ namespace UnitTests
 		{
 			Case c = new Case("game_over_victory");
 			Assert.AreEqual("game_over_defeat", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void GameOver_Defeat()
+		{
+			Case c = new Case("game_over_defeat");
+			Assert.AreEqual("game_over_defeat", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void GameOver_Defeat_TargetingWinner()
+		{
+			Case c = new Case("game_over_defeat");
+			c.Target = _female.FolderName;
+			Assert.AreEqual("game_over_victory", c.GetResponseTag(_male, _female));
 		}
 
 		[TestMethod]

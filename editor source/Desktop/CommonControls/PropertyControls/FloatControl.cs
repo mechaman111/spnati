@@ -146,7 +146,7 @@ namespace Desktop.CommonControls.PropertyControls
 			}
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			_cleared = true;
 			valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, 0));
@@ -154,7 +154,7 @@ namespace Desktop.CommonControls.PropertyControls
 			Save();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			float value = (float)valValue.Value;
 			SaveValue(value, valValue.Text);

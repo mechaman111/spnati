@@ -1,11 +1,11 @@
-﻿using SPNATI_Character_Editor.Providers;
+﻿using Desktop.Skinning;
+using SPNATI_Character_Editor.Providers;
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
-	public partial class NewCharacterPrompt : Form
+	public partial class NewCharacterPrompt : SkinnedForm
 	{
 		public Character Character { get; private set; }
 

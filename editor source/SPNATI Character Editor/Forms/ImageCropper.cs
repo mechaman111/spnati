@@ -1,4 +1,5 @@
-﻿using KisekaeImporter;
+﻿using Desktop.Skinning;
+using KisekaeImporter;
 using KisekaeImporter.ImageImport;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class ImageCropper : Form
+	public partial class ImageCropper : SkinnedForm
 	{
 		private Image _previewImage;
 		private ImageImporter _importer = new ImageImporter();
@@ -84,7 +85,8 @@ namespace SPNATI_Character_Editor.Forms
 			_previewImage = image;
 			if (image == null)
 			{
-				MessageBox.Show("Failed to import. Is Kisekae running?");
+				FailedImport import = new FailedImport();
+				import.ShowDialog();
 				DialogResult = DialogResult.Cancel;
 				this.Close();
 			}

@@ -1288,14 +1288,7 @@ function updateOpponentCountStats(opponentArr, uiElements) {
                 console.log("[LineImageCount] Fetching counts for " + opp.label + " in slot " + idx);
             }
 
-            var countsPromise = new Promise(function (resolve, reject) {
-                fetchCompressedURL(
-                    opp.folder + 'behaviour.xml',
-                    resolve, reject
-                );
-            });
-
-            countsPromise.then(countLinesImages).then(function(response) {
+            fetchCompressedURL(opp.folder + 'behaviour.xml').then(countLinesImages).then(function(response) {
                 opp.uniqueLineCount = response.numUniqueLines;
                 opp.posesImageCount = response.numPoses;
 
@@ -1368,60 +1361,60 @@ function countLinesImages(xml) {
     
     var matched = $(xml).find('state').get();
     var layers = $(xml).find('wardrobe>clothing').length;
+    var deferred = $.Deferred();
     
-    return new Promise(function (resolve, reject) {
-        /* Avoid blocking the UI by breaking the work into smaller chunks. */
-        function process () {
-            var startTs = Date.now();
+    /* Avoid blocking the UI by breaking the work into smaller chunks. */
+    function process () {
+        var startTs = Date.now();
             
-            if (DEBUG) console.log("Processing: "+matched.length+" states to go");
-            do {
-                data = matched.shift();
-                
-                numTotalLines++;
-                
-        		// count only unique lines of dialogue
-        		if (lines[data.textContent.trim()] === undefined) numUniqueDialogueLines++;
-                lines[data.textContent.trim()] = 1;
-                
-        		// count unique number of poses used in dialogue
-        		// note that this number may differ from actual image count if some images
-        		// are never used, or if images that don't exist are used in the dialogue
-                var img = $(data).attr("img");
-                if (img.indexOf('#') >= 0) {
-                    // Expand # to the relevant stages
-                    var $case = $(data).parent();
-                    var $trigger = $case.parent();
-                    var stageInterval = getRelevantStagesForTrigger($trigger.attr('id'), layers);
+        if (DEBUG) console.log("Processing: "+matched.length+" states to go");
+        do {
+            data = matched.shift();
+            
+            numTotalLines++;
+            
+        	// count only unique lines of dialogue
+        	if (lines[data.textContent.trim()] === undefined) numUniqueDialogueLines++;
+            lines[data.textContent.trim()] = 1;
+            
+        	// count unique number of poses used in dialogue
+        	// note that this number may differ from actual image count if some images
+        	// are never used, or if images that don't exist are used in the dialogue
+            var img = $(data).attr("img");
+            if (img.indexOf('#') >= 0) {
+                // Expand # to the relevant stages
+                var $case = $(data).parent();
+                var $trigger = $case.parent();
+                var stageInterval = getRelevantStagesForTrigger($trigger.attr('id'), layers);
 
-                    for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
-                        if (checkStage(stage, $case.attr('stage'))) {
-                            var stageImg = img.replace('#', stage);
-                            if (!(stageImg in poses)) {
-                                numUniqueUsedPoses++;
-                                poses[stageImg] = 1;
-                            }
+                for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
+                    if (checkStage(stage, $case.attr('stage'))) {
+                        var stageImg = img.replace('#', stage);
+                        if (!(stageImg in poses)) {
+                            numUniqueUsedPoses++;
+                            poses[stageImg] = 1;
                         }
                     }
-                } else {
-                    if (!(img in poses)) {
-                        numUniqueUsedPoses++;
-                        poses[img] = 1;
-                    }
                 }
-            } while (Date.now() - startTs < 50 && matched.length > 0);
-            
-            if (matched.length > 0) {
-                setTimeout(process.bind(null), 50);
             } else {
-                return resolve({
-                    numTotalLines : numTotalLines,
-                    numUniqueLines : numUniqueDialogueLines,
-                    numPoses : numUniqueUsedPoses
-                });
+                if (!(img in poses)) {
+                    numUniqueUsedPoses++;
+                    poses[img] = 1;
+                }
             }
-        }
+        } while (Date.now() - startTs < 50 && matched.length > 0);
         
-        process();
-    });
+        if (matched.length > 0) {
+            setTimeout(process.bind(null), 50);
+        } else {
+            return deferred.resolve({
+                numTotalLines : numTotalLines,
+                numUniqueLines : numUniqueDialogueLines,
+                numPoses : numUniqueUsedPoses
+            });
+        }
+    }
+    
+    process();
+    return deferred.promise();
 }

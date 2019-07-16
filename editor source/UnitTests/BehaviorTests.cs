@@ -134,7 +134,7 @@ namespace UnitTests
 		[TestMethod]
 		public void StageTreeSharedCase()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			behavior.PrepareForEdit(_character);
 			CreateWorkingCase(behavior, "a", new int[] { 1, 2, 3 }, "a1");
 			behavior.BuildStageTree(_character);
@@ -155,7 +155,7 @@ namespace UnitTests
 		[TestMethod]
 		public void StageTreeCrossStages()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			behavior.PrepareForEdit(_character);
 			CreateWorkingCase(behavior, "a", new int[] { 1, 2, 3 }, "a1");
 			CreateWorkingCase(behavior, "b", new int[] { 1, 3 }, "b1");
@@ -169,7 +169,7 @@ namespace UnitTests
 		[TestMethod]
 		public void StageTreeMergeDialogue()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			behavior.PrepareForEdit(_character);
 			CreateWorkingCase(behavior, "a", new int[] { 0 }, "a1");
 			CreateWorkingCase(behavior, "a", new int[] { 0 }, "a2");
@@ -181,7 +181,7 @@ namespace UnitTests
 		[TestMethod]
 		public void DoesNotCombineAlsoPlayingWithAlsoPlayingStage()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			behavior.PrepareForEdit(_character);
 			Case c = CreateWorkingCase(behavior, "a", new int[] { 0 }, "a1");
 			c.AlsoPlaying = "bob";
@@ -197,7 +197,7 @@ namespace UnitTests
 		[TestMethod]
 		public void StageTreeIntegration()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			behavior.PrepareForEdit(_character);
 			CreateWorkingCase(behavior, "a", new int[] { 1, 2, 3 }, "z");
 			CreateWorkingCase(behavior, "b", new int[] { 1, 3 }, "y");
@@ -223,7 +223,7 @@ namespace UnitTests
 		[TestMethod]
 		public void SplitSharedCase()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			CreateCase(behavior, 1, "a", "a1");
 			CreateCase(behavior, 2, "a", "a1");
 			CreateCase(behavior, 3, "a", "a1");
@@ -235,7 +235,7 @@ namespace UnitTests
 		[TestMethod]
 		public void SplitSharedCaseExtraLine()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			CreateCase(behavior, 1, "a", "a1", "a2");
 			CreateCase(behavior, 2, "a", "a1", "a2");
 			CreateCase(behavior, 3, "a", "a1");
@@ -246,7 +246,7 @@ namespace UnitTests
 		[TestMethod]
 		public void SplitSharedCaseSharedLines()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			CreateCase(behavior, 1, "a", "a1", "a2", "a3");
 			CreateCase(behavior, 2, "a", "a1", "a2");
 			CreateCase(behavior, 3, "a", "a1", "a2");
@@ -255,20 +255,22 @@ namespace UnitTests
 		}
 
 		[TestMethod]
-		public void TreatsConditionsAsSeparateCases()
+		public void TreatsConditionsAsAlternativeCases()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			CreateCase(behavior, 0, "a", "a1", "a2");
 			Case conditioned = CreateCase(behavior, 0, "a", "a1", "a2");
 			conditioned.Filter = "x";
 			behavior.PrepareForEdit(_character);
-			Assert.AreEqual(2, behavior.GetWorkingCases().Count());
+			Assert.AreEqual(1, behavior.GetWorkingCases().Count());
+			Case first = behavior.GetWorkingCases().First();
+			Assert.AreEqual(1, first.AlternativeConditions.Count);
 		}
 
 		[TestMethod]
 		public void SplitIntegration()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			CreateCase(behavior, 1, "a", "a1", "a2");
 			CreateCase(behavior, 1, "b", "b1");
 			CreateCase(behavior, 1, "c", "b1");
@@ -283,7 +285,7 @@ namespace UnitTests
 		[TestMethod]
 		public void BackAndForth()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			CreateCase(behavior, 1, "a", "a1", "a2");
 			CreateCase(behavior, 1, "b", "b1");
 			CreateCase(behavior, 1, "c", "b1");
@@ -308,7 +310,7 @@ namespace UnitTests
 		[TestMethod]
 		public void ReplaceReplaces()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			behavior.PrepareForEdit(_character);
 			CreateWorkingCase(behavior, "a", new int[] { 0, 1, 2 }, "a1");
 			CreateWorkingCase(behavior, "b", new int[] { 0, 1, 2 }, "c");
@@ -322,7 +324,7 @@ namespace UnitTests
 		[TestMethod]
 		public void ReplaceReplacesMultiple()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			behavior.PrepareForEdit(_character);
 			CreateWorkingCase(behavior, "a", new int[] { 0, 1, 2 }, "a1");
 			CreateWorkingCase(behavior, "b", new int[] { 0, 1, 2 }, "c");
@@ -340,7 +342,7 @@ namespace UnitTests
 		[TestMethod]
 		public void ReplaceIgnoresConditions()
 		{
-			Behaviour behavior = new Behaviour();
+			Behaviour behavior = _character.Behavior;
 			behavior.PrepareForEdit(_character);
 			CreateWorkingCase(behavior, "a", new int[] { 0, 1, 2 }, "a1");
 			Case c = CreateWorkingCase(behavior, "b", new int[] { 0, 1, 2 }, "c");

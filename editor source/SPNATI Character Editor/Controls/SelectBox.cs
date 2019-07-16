@@ -59,12 +59,12 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void cboSelectableItems_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			cmdAdd.Enabled = cboSelectableItems.SelectedIndex >= 0 || !String.IsNullOrWhiteSpace(cboSelectableItems.Text);
+			cmdAdd.Enabled = cboSelectableItems.SelectedIndex >= 0 || !string.IsNullOrWhiteSpace(cboSelectableItems.Text);
 		}
 
-		private void cboSelectableItems_TextUpdate(object sender, EventArgs e)
+		private void cboSelectableItems_TextChanged(object sender, EventArgs e)
 		{
-			cmdAdd.Enabled = cboSelectableItems.SelectedIndex >= 0 || !String.IsNullOrWhiteSpace(cboSelectableItems.Text);
+			cmdAdd.Enabled = cboSelectableItems.SelectedIndex >= 0 || !string.IsNullOrWhiteSpace(cboSelectableItems.Text);
 		}
 
 		private void cmdAdd_Click(object sender, EventArgs e)

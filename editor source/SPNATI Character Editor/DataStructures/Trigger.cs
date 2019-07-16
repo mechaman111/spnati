@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Desktop;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Xml.Serialization;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
 	/// <summary>
 	/// Case tag metadata
 	/// </summary>
-	public class Trigger
+	public class Trigger : IRecord
 	{
 		public const string StartTrigger = "-";
 
@@ -44,6 +47,13 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("hasTarget")]
 		public bool HasTarget;
 
+		[XmlAttribute("color")]
+		public int ColorScheme
+		{
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// Generic trigger that satisfies this as a default
 		/// </summary>
@@ -75,6 +85,22 @@ namespace SPNATI_Character_Editor
 
 		[XmlIgnore]
 		public bool Unrecognized { get; set; }
+
+		public string Name
+		{
+			get { return Label; }
+		}
+
+		public string Key
+		{
+			get { return Tag; }
+			set { Tag = value; }
+		}
+
+		string IRecord.Group
+		{
+			get { return ""; }
+		}
 
 		/// <summary>
 		/// Used by the editor to group tags that correspond to the same phase (ex. must_strip_normal and must_strip_winning)
@@ -127,6 +153,16 @@ namespace SPNATI_Character_Editor
 		public override string ToString()
 		{
 			return Label;
+		}
+
+		public string ToLookupString()
+		{
+			return Label;
+		}
+
+		public int CompareTo(IRecord other)
+		{
+			return TriggerDatabase.Compare(Key, other.Key);
 		}
 	}
 
@@ -214,9 +250,18 @@ namespace SPNATI_Character_Editor
 
 		public static int Compare(string tag1, string tag2)
 		{
-			int index1 = _tagOrder.IndexOf(tag1);
-			int index2 = _tagOrder.IndexOf(tag2);
-			return index1.CompareTo(index2);
+			Trigger t1 = GetTrigger(tag1);
+			Trigger t2 = GetTrigger(tag2);
+			int compare = t1.Group.CompareTo(t2.Group);
+			if (compare == 0)
+			{
+				compare = t1.GroupOrder.CompareTo(t2.GroupOrder);
+			}
+			if (compare == 0)
+			{
+				compare = tag1.CompareTo(tag2);
+			}
+			return compare;
 		}
 
 		public static void AddGroup(TextGroup group)
@@ -255,7 +300,8 @@ namespace SPNATI_Character_Editor
 		public static bool IsVariableAvailable(string tag, string variable)
 		{
 			Trigger trigger;
-			string varName = variable.ToLower();
+			string[] pieces = variable.ToLower().Split('.');
+			string varName = pieces[0];
 			if (varName.ToLower() == "clothes")
 				varName = "clothing";
 			Variable v = VariableDatabase.Get(varName);
@@ -263,7 +309,7 @@ namespace SPNATI_Character_Editor
 				return true;
 			if (_triggers.TryGetValue(tag, out trigger))
 			{
-				return trigger.AvailableVariables.Contains(variable.ToLower());
+				return trigger.AvailableVariables.Contains(varName);
 			}
 			return false;
 		}
@@ -398,6 +444,69 @@ namespace SPNATI_Character_Editor
 			Trigger t1 = GetTrigger(tag1);
 			Trigger t2 = GetTrigger(tag2);
 			return t1.RelatedGroup == t2.RelatedGroup && t2.RelatedGroup > 0;
+		}
+	}
+
+	public class TriggerProvider : IRecordProvider<Trigger>
+	{
+		public bool AllowsNew { get { return false; } }
+
+		public bool TrackRecent { get { return false; } }
+
+		public IRecord Create(string key)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Delete(IRecord record)
+		{
+			throw new NotImplementedException();
+		}
+
+		public ListViewItem FormatItem(IRecord record)
+		{
+			ListViewItem item = new ListViewItem(new string[] { record.Key, record.Name });
+			return item;
+		}
+
+		public string[] GetColumns()
+		{
+			return new string[] { "Tag", "Label" };
+		}
+
+		public string GetLookupCaption()
+		{
+			return "Select a Case Type";
+		}
+
+		public List<IRecord> GetRecords(string text)
+		{
+			text = text.ToLower();
+			List<IRecord> list = new List<IRecord>();
+			foreach (Trigger record in TriggerDatabase.Triggers)
+			{
+				if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text))
+				{
+					//partial match
+					list.Add(record);
+				}
+			}
+			return list;
+		}
+
+		public void SetContext(object context)
+		{
+			
+		}
+
+		public void Sort(List<IRecord> list)
+		{
+			list.Sort((r1, r2) =>
+			{
+				Trigger t1 = r1 as Trigger;
+				Trigger t2 = r2 as Trigger;
+				return TriggerDatabase.Compare(t1.Tag, t2.Tag);
+			});
 		}
 	}
 }

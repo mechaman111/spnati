@@ -21,14 +21,29 @@
         </section>
         <section class="card" id="basics">
             <h1>Basics</h1>
-            Character poses are generated using the offline version of Kisekae found in the tools folder of the SPNATI repository you downloaded. This guide will not include details about creating characters. There are many resources online.
+            <p>
+                Stripping away (ha!) all the game's fancy whistles, at its heart a character consists of a bunch of lines of dialogue, where each line contains some text and a corresponding pose.
+                Before you jump into writing dialogue, it's generally useful to at least have a few poses at your disposal, because looking at your character's reactions can inform your writing.
+            </p>
+            <p>
+                Poses can either be image files (.PNG or .GIF) or a real-time animation created by the Pose Maker that is built from one or more image files. Images use a specific naming convention <strong>#-emotion</strong> where <strong>#</strong> is the stage the image belongs to, and <strong>emotion</strong> is the name of the pose.
+            </p>
+            <p>
+                In order to maintain a consistent art style across characters, we use a paper doll tool known as Kisekae / KKL for generating the PNGs used by the game. You can find this in the tools folder of the SPNATI repository that you downloaded. This guide will not include details about creating models. There are many resources online, and a dedicated Discord channel for using KKL with SPNATI.
+            </p>
+
+            <div class="info">
+                <h5><i class="fa fa-info"></i>Remember, SPNATI does <b>not</b> use KKL.</h5>
+                KKL is merely the tool used for producing the image files that SPNATI <em>does</em> use. The game does not know or care  where an image originated from. Indeed, many characters are touched up in Photoshop after being created in KKL.
+            </div>
+
             <p>Your primary friend when using Kisekae to interact with the editor is the Export button found in the file menu:</p>
             <img src="images/export.png" alt="Kisekae export button" />
-            <p>This will display a textbox containing a bunch of gibberish code. You will be copying this code and pasting it into the relevant fields in the Images tab of the editor.</p>
+            <p>This will display a textbox containing a bunch of gibberish code. You will be copying this code and pasting it into the relevant fields in the Poses tab of the editor.</p>
             <p>You can filter out pieces of the scene by clicking the buttons at the bottom of the Export window. This is important when generating templates, but for simply getting an image generated, you typically want everything selected.</p>
-            <p>Kisekae codes are essentially the entire character information (face, clothing, pose, etc.) compressed into a text format. The editor can in turn take these codes and convert them into PNG files.</p>
-            <p>An example code:</p>
-            <pre style="word-break: break-all; white-space: pre-wrap;">54***0*0*0*aa8.99.1.0.59.8.0.1.0.59_ab_ac_ba46_bb6.1_bc440.500.7.0.1.0_bd6_be180_ca63.1.16.63.29.18.31.18.31.1.60.80_daF0CDC8.0.0.100_db_dd9.3.21.0.0.29_dhE08781.20.50.43.3_di5_qa_qb_dc7.4.F8D2D2.D2948E.E6826C_eh_ea2.32.32.56.0.0_ec7.29.32.32.56.42.63.1_ed15.12.1.1.32.56_ef_eg_r00_fa1.65.53.49.16.50.56_fb_fh_fc1.32.55.1.32.55.42.61.61.42.50.50_fj0.0.0_fd2.0.31.32.5_fe50.77_ff0000000000_fg8.63.56.0.0.1.0.0_fi4.70.20.30.30_pa0.0.0.0.10.50.85.78.0.0_t00_pb_pc_pd_pe_ga0_gb0_gc3.0_ge0000000000_gh_gf_gg_gd10000000_ha100.100_hb53.1.50.100_hc0.50.48.0.50.48_hd0.1.50.50_ia_if_ib_id_ic_jc_ie_ja_jb_jd_je_jf_jg_ka_kb_kc_kd_ke_kf_la_lb_oa_os_ob_oc_od_oe_of_lc_m00_n00_s00_og_oh_oo_op_oq_or_om_on_ok_ol_oi_oj_ad0.0.0.0.0.0.0.0.0.0*0*0*0*0*0</pre>
+            <p>Kisekae codes are essentially the entire model information (face, clothing, pose, etc.) encoded into a text format. The editor can in turn take these codes and convert them into PNG files (or rather, tells Kisekae to convert them).</p>
+            <p>An example code for SPNATI-chan, the SPNATI Character Editor mascot:</p>
+            <pre class="code">86**aa13.84.0.0.59.8.82.0.14.59_ab_ac_ba68_bb10.1_bc410.500.8.0.1.0_bd2_be189_bf_bg_bh1_ca63.1.16.63.0.9.31.18.31.1.60.80_daf7dcd0.0.25.100_db_dd9.1.32.-30.10.17_dheb9e8c.20.50.43.3_di6_qa_qb_dc5.4.f7dcd0.f9c3c7.e6826c.0_eh_ea2.6.6.56.0.0_ec6.29.6.6.56.42.63.1_ed17.22.1.1.6.56_ef0.2.22.6.6.56.0.1_eg0.2.22.6.6.56.0.1_r00_fa15.54.65.54.23.36.56_fb_fh_fc1.32.55.1.32.55.42.61.61.42.50.50_fj0.0.0_fd2.0.20.5.5_fe48.82_ff0000010000_fg1.45.56.50.56.1.0.0_fi1.71.18.25.25_pa0.55.8.51.10.50.85.78.0.0_t00_pb_pc_pd_pe_ga0_gb0.0.10.40.65_gc10.0_ge0000000000_gh0_gf_gg_gd000000_ha100.100_hb50.1.50.50.50.50.50_hc0.50.48.0.50.48_hd0.1.50.50.2.60.50.50_ad0.0.0.0.0.0.0.0.0.0_ae1.0.0.0.0_ia_if10.c3ffe4.3f253c.973636.1.12.b2e9d0.55.12.b2e9d0.55.1.1.1.0.0.0.0.1_ib_id10.55.3f1e4b.3f1e4b.0.0.1.3.02218b.55.3.02218b.55.2.0.0.0.0.1_ic32.260134.3f1e4b.260134.0_jc_ie4.56.51.48.19.1b0c23.43.0.19.1b0c23.43.0.0_ja_jb_jf_jg_jd11.55.3f1e4b.55.4.6e5e63.58.59_je11.55.3f1e4b.55.4.6e5e63.58.59_ka2.14.14.14.0_kb2.14.14.14_kc_kd_ke_kf_la_lb_oa_os_ob_oc_od_oe_of_lc_m004.1b0c23.2.42.1.2.-15.28.280.99.1.61.0.500.0.2.1_m014.1b0c23.2.42.2.2.-15.17.862.136.1.61.0.500.0.2.1_n00_s150.55.55.43.0.0.144.604.911.1.11.0.25.0.61.500_og_oh_oo_op_oq_or_om_on_ok_ol_oi_oj_f00</pre>
         </section>
         <section class="card" id="template">
             <h1>Templates</h1>
@@ -69,7 +84,7 @@
         </section>
         <section class="card" id="poseList">
             <h1>Pose Lists</h1>
-            If you choose to do each pose manually, or want to convert a specific code into an image, or tweak something the template created, you would do it on the Poses tab.
+            If you choose to do each pose manually, or want to convert a specific code into an image, or tweak something in the list the template created, you would do it on the Poses tab.
             A pose list contains the Kisekae codes typically corresponding to the images in the character's folder. Images can also be split among several pose lists.
             <div class="info">
                 <i class="fa fa-info"></i>
@@ -86,6 +101,7 @@
                         The editor and make_images.py use different importing techniques, including how cropping is defined. Therefore, it's best to always import using the same tool, either the Python script or the Character Editor, and not mix them.
                     </div>
                 </li>
+                <li><span class="label">Metadata:</span> The more button brings up pose metadata, where you can control part transparencies (ex. hide an arm or make a skirt partially transparent), or turn off the editor's pre-processors for a pose.</li>
                 <li><span class="label">Code:</span> The complete Kisekae export code for the pose. This can be imported back into Kisekae to modify the pose, and then reexported.</li>
                 <li><span class="label">Image:</span> If the file for this pose exists, its preview will be displayed here. If the image has never been generated, this will be blank.</li>
             </ul>
@@ -143,7 +159,7 @@
             </ol>
         </section>
         <section class="card navCard" id="next">
-            <a href="wardrobe.html">« 4. Wardrobe</a> | <a href="dialogue.html">5. Dialogue »</a>
+            <a href="tags.html">« Wardrobe</a> | <a href="dialogue.html">Dialogue »</a>
         </section>
     </article>
 </body>

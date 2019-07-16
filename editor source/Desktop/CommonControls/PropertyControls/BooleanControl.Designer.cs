@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.chkEnabled = new System.Windows.Forms.CheckBox();
+			this.chkEnabled = new Desktop.Skinning.SkinnedCheckBox();
 			this.SuspendLayout();
 			// 
 			// chkEnabled
@@ -56,6 +56,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.CheckBox chkEnabled;
+		private Desktop.Skinning.SkinnedCheckBox chkEnabled;
 	}
 }

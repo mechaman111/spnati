@@ -497,12 +497,11 @@ function doEpilogueFromGallery(){
 	
 	var player = chosenEpilogue.player;
 	
-	fetchCompressedURL(
-		'opponents/' + player.id + "/behaviour.xml",
+	fetchCompressedURL('opponents/' + player.id + "/behaviour.xml")
 		/* Success callback.
 		 * 'this' is bound to the Opponent object.
 		 */
-		function(xml) {
+		.then(function(xml) {
 			var $xml = $(xml);
 			
 			var endingElem = null;
@@ -557,6 +556,5 @@ function doEpilogueFromGallery(){
 			loadEpilogue(chosenEpilogue); //initialise buttons and text boxes
 			screenTransition($galleryScreen, $epilogueScreen);
 			$epilogueSelectionModal.modal("hide");
-		}
-	);
+		});
 }

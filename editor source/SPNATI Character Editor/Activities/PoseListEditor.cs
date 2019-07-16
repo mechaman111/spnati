@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -40,7 +41,7 @@ namespace SPNATI_Character_Editor.Activities
 		public PoseListEditor()
 		{
 			InitializeComponent();
-
+			ColImport.Flat = ColAdvanced.Flat = true;
 			ColImage.DefaultCellStyle.NullValue = null;
 		}
 
@@ -644,6 +645,21 @@ namespace SPNATI_Character_Editor.Activities
 		/// <param name="list"></param>
 		private void ImportPosesAsync(List<ImageMetadata> list)
 		{
+			//find all unrecognized props and assign them all up front
+			List<KisekaeCode> codes = new List<KisekaeCode>();
+			foreach (ImageMetadata metadata in list)
+			{
+				KisekaeCode code = new KisekaeCode(metadata.Data, true);
+				if (code.TotalAssets > 0)
+				{
+					codes.Add(code);
+				}
+			}
+			if (!CharacterGenerator.ImportUnrecognizedAssets(_character, codes))
+			{
+				return;
+			}
+
 			ProgressForm progressForm = new ProgressForm();
 			progressForm.Text = "Import New Poses";
 			progressForm.Show(this);
@@ -695,7 +711,9 @@ namespace SPNATI_Character_Editor.Activities
 							if (img == null)
 							{
 								//Something went wrong. Stop here.
-								MessageBox.Show("Couldn't import " + metadata.ImageKey + ". Is Kisekae running?", "Import Pose", MessageBoxButtons.OK, MessageBoxIcon.Error);
+								FailedImport import = new FailedImport();
+								import.ShowDialog();
+								//MessageBox.Show("Couldn't import " + metadata.ImageKey + ". Is Kisekae running?", "Import Pose", MessageBoxButtons.OK, MessageBoxIcon.Error);
 								return -1;
 							}
 
@@ -1040,6 +1058,63 @@ namespace SPNATI_Character_Editor.Activities
 					compare *= -1;
 				}
 				return compare;
+			}
+		}
+
+		private void gridPoses_CellEnter(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewRow row = gridPoses.Rows[e.RowIndex];
+			string stage = row.Cells["ColStage"].Value?.ToString();
+			string pose = row.Cells["ColPose"].Value?.ToString();
+			if (string.IsNullOrEmpty(pose))
+			{
+				return;
+			}
+			string name = pose;
+			if (!string.IsNullOrEmpty(stage))
+			{
+				name = stage + "-" + pose;
+			}
+
+			CharacterImage img = _imageLibrary.Find(name);
+			if (img != null)
+			{
+				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
+			}
+		}
+
+		private void cmdCopyCrop_Click(object sender, EventArgs e)
+		{
+			MakePoseList();
+			ImageMetadata selected = null;
+			if (gridPoses.SelectedCells.Count > 0)
+			{
+				int index = gridPoses.SelectedCells[0].RowIndex;
+				selected = index < _poseList.Poses.Count ? _poseList.Poses[index] : null;
+			}
+			CropCopier copier = new CropCopier(_poseList, selected);
+			if (copier.ShowDialog() == DialogResult.OK)
+			{
+				PopulatePoseGrid();
+			}
+		}
+
+		private void cmdFolder_Click(object sender, EventArgs e)
+		{
+			string directory = _character.GetDirectory();
+			try
+			{
+				ProcessStartInfo startInfo = new ProcessStartInfo()
+				{
+					Arguments = directory,
+					FileName = "explorer.exe"
+				};
+
+				Process.Start(startInfo);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
 			}
 		}
 	}

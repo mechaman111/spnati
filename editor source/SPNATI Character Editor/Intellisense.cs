@@ -24,6 +24,12 @@ namespace SPNATI_Character_Editor
 							contexts.Push(currentContext);
 							sb = currentContext.Builder;
 						}
+						else if (c == '{')
+						{
+							currentContext = new IntellisenseContext(ContextType.StyleName, i);
+							contexts.Push(currentContext);
+							sb = currentContext.Builder;
+						}
 						break;
 					case ContextType.VariableName:
 						if (c == '.')
@@ -101,6 +107,21 @@ namespace SPNATI_Character_Editor
 							sb.Append(c);
 						}
 						break;
+					case ContextType.StyleName:
+						if (c == '}' || (!char.IsLetterOrDigit(c) && c != '_' && c != '!'))
+						{
+							//End of style, so go up. We don't need to remember anything from this context
+							contexts.Pop();
+							currentContext = contexts.Peek();
+							currentContext.Builder.Append("{" + sb.ToString() + "}");
+							sb = currentContext.Builder;
+							break;
+						}
+						else
+						{
+							sb.Append(c);
+						}
+						break;
 					case ContextType.FunctionEnd:
 						//regardless of the character, we're at the end of the function or have invalid syntax for one, so we can just reset
 						contexts.Pop();
@@ -167,6 +188,9 @@ namespace SPNATI_Character_Editor
 				case ContextType.VariableName:
 					VariableName = Builder.ToString();
 					break;
+				case ContextType.StyleName:
+					VariableName = Builder.ToString();
+					break;
 				case ContextType.FunctionName:
 					FunctionName = Builder.ToString();
 					break;
@@ -202,5 +226,9 @@ namespace SPNATI_Character_Editor
 		/// Next character should be a ~ or it was all invalid
 		/// </summary>
 		FunctionEnd,
+		/// <summary>
+		/// Reading a style name
+		/// </summary>
+		StyleName,
 	}
 }

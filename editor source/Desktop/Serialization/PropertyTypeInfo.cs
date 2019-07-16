@@ -10,6 +10,7 @@ namespace Desktop
 	{
 		public static DualKeyDictionary<Type, string, Type> _mapping = new DualKeyDictionary<Type, string, Type>();
 		public static DualKeyDictionary<Type, string, FieldInfo> _fieldMapping = new DualKeyDictionary<Type, string, FieldInfo>();
+		public static DualKeyDictionary<Type, string, MemberInfo> _memberMapping = new DualKeyDictionary<Type, string, MemberInfo>();
 
 		public static Type GetType(Type type, string property)
 		{
@@ -36,6 +37,21 @@ namespace Desktop
 				_fieldMapping.Set(type, property, fi);
 			}
 			return fi;
+		}
+
+		public static MemberInfo GetMemberInfo(Type type, string property)
+		{
+			MemberInfo mi = _memberMapping.Get(type, property);
+			if (mi == null)
+			{
+				MemberInfo[] mis = type.GetMember(property, BindingFlags.Public | BindingFlags.Instance);
+				if (mis.Length > 0)
+				{
+					mi = mis[0];
+					_memberMapping.Set(type, property, mi);
+				}
+			}
+			return mi;
 		}
 	}
 }

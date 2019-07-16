@@ -7,15 +7,25 @@ using System.ComponentModel;
 namespace SPNATI_Character_Editor
 {
 	/// <summary>
-	/// A single ine of dialogue and its pose
+	/// A single line of dialogue and its pose
 	/// </summary>
 	public class DialogueLine
 	{
 		[XmlAttribute("img")]
 		public string Image;
 
+		[XmlIgnore]
+		public Dictionary<int, LineImage> StageImages = new Dictionary<int, LineImage>();
+
 		[XmlText]
 		public string Text;
+
+		/// <summary>
+		/// Line will only play once
+		/// </summary>
+		[DefaultValue(0)]
+		[XmlAttribute("oneShotId")]
+		public int OneShotId;
 
 		[XmlAttribute("marker")]
 		public string Marker;
@@ -67,6 +77,7 @@ namespace SPNATI_Character_Editor
 		public bool IsMarkerPersistent;
 
 		public static readonly string[] ArrowDirections = new string[] { "", "down", "left", "right", "up" };
+		public static readonly string[] AILevels = new string[] { "", "throw", "bad", "average", "good", "best" };
 
 		public DialogueLine()
 		{
@@ -87,13 +98,22 @@ namespace SPNATI_Character_Editor
 		public DialogueLine Copy()
 		{
 			DialogueLine copy = MemberwiseClone() as DialogueLine;
+			copy.StageImages = new Dictionary<int, LineImage>();
+			foreach (KeyValuePair<int, LineImage> kvp in StageImages)
+			{
+				copy.StageImages[kvp.Key] = new LineImage(kvp.Value.Image, kvp.Value.IsGenericImage);
+			}
 			return copy;
 		}
 
-		public override int GetHashCode()
+		/// <summary>
+		/// Gets a hash code not including the image
+		/// </summary>
+		/// <param name="line"></param>
+		/// <returns></returns>
+		public int GetHashCodeWithoutImage()
 		{
-			int hash = (Image ?? string.Empty).GetHashCode();
-			hash = (hash * 397) ^ (Text ?? string.Empty).GetHashCode();
+			int hash = (Text ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Marker ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Direction ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Location ?? string.Empty).GetHashCode();
@@ -105,6 +125,14 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (CollectibleId ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (CollectibleValue ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ IsMarkerPersistent.GetHashCode();
+			hash = (hash * 397) ^ (OneShotId > 0 ? OneShotId : -1);
+			return hash;
+		}
+
+		public override int GetHashCode()
+		{
+			int hash = GetHashCodeWithoutImage();
+			hash = (hash * 397) ^ (Image ?? string.Empty).GetHashCode();
 			return hash;
 		}
 
@@ -198,9 +226,10 @@ namespace SPNATI_Character_Editor
 		/// <param name="tag"></param>
 		/// <param name="text"></param>
 		/// <returns></returns>
-		public static List<string> GetInvalidVariables(string tag, string text)
+		public static List<string> GetInvalidVariables(Case dialogueCase, string text)
 		{
-			Regex varRegex = new Regex(@"~\w*~", RegexOptions.IgnoreCase);
+			string tag = dialogueCase.Tag;
+			Regex varRegex = new Regex(@"~[^\s~]*~", RegexOptions.IgnoreCase);
 			List<string> invalidVars = new List<string>();
 			if (text == "~silent~")
 			{
@@ -212,10 +241,27 @@ namespace SPNATI_Character_Editor
 				string variable = match.ToString().Trim('~');
 				if (!TriggerDatabase.IsVariableAvailable(tag, variable))
 				{
-					invalidVars.Add(variable);
+					//check filters for variables
+					TargetCondition filter = dialogueCase.Conditions.Find(c => c.Variable == variable);
+					if (filter == null)
+					{
+						invalidVars.Add(variable);
+					}
 				}
 			}
 			return invalidVars;
+		}
+
+		/// <summary>
+		/// Sets a dialogue line to use the generic version of a particular image
+		/// </summary>
+		public void GeneralizeImage(DialogueLine line)
+		{
+			string extension = line.ImageExtension ?? Path.GetExtension(line.Image);
+			ImageExtension = extension;
+			line.ImageExtension = extension;
+			Image = GetDefaultImage(line.Image);
+			IsGenericImage = line.IsGenericImage;
 		}
 
 		public bool HasAdvancedMarker
@@ -224,6 +270,23 @@ namespace SPNATI_Character_Editor
 			{
 				return IsMarkerPersistent || (Marker != null && (Marker.Contains("=") || Marker.Contains("+") || Marker.Contains("-") ||  Marker.Contains("*")));
 			}
+		}
+	}
+
+	public class LineImage
+	{
+		public string Image;
+		public bool IsGenericImage;
+
+		public LineImage(string img, bool generic)
+		{
+			Image = img;
+			IsGenericImage = generic;
+		}
+
+		public override string ToString()
+		{
+			return Image;
 		}
 	}
 }

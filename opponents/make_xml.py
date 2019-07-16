@@ -257,6 +257,8 @@ def create_case_xml(base_element, lines):
 		attrib = OrderedDict(img=line_data["image"])
 		if "marker" in line_data:
 			attrib["marker"] = line_data["marker"]
+		if "weight" in line_data:
+			attrib["weight"] = line_data["weight"]
 		if "direction" in line_data:
 			attrib["direction"] = line_data["direction"]
 		if "location" in line_data:
@@ -736,7 +738,7 @@ def read_player_file(filename):
 					#skip this target type
 					pass
 
-				elif target_type in ["marker", "direction", "location"]:
+				elif target_type in ["marker", "direction", "location", "weight"]:
 					line_data[target_type] = target_value
 					pass
 

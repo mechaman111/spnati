@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.valValue = new System.Windows.Forms.NumericUpDown();
+			this.valValue = new Desktop.Skinning.SkinnedNumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.valValue)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -54,6 +54,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.NumericUpDown valValue;
+		private Desktop.Skinning.SkinnedNumericUpDown valValue;
 	}
 }

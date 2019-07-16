@@ -29,12 +29,12 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.valValue = new System.Windows.Forms.NumericUpDown();
-			this.radPx = new System.Windows.Forms.RadioButton();
-			this.radPct = new System.Windows.Forms.RadioButton();
-			this.chkCentered = new System.Windows.Forms.CheckBox();
+			this.valValue = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.radPx = new Desktop.Skinning.SkinnedRadioButton();
+			this.radPct = new Desktop.Skinning.SkinnedRadioButton();
+			this.chkCentered = new Desktop.Skinning.SkinnedCheckBox();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.lblPct = new System.Windows.Forms.Label();
+			this.lblPct = new Desktop.Skinning.SkinnedLabel();
 			((System.ComponentModel.ISupportInitialize)(this.valValue)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -121,11 +121,11 @@
 
 		#endregion
 
-		private System.Windows.Forms.NumericUpDown valValue;
-		private System.Windows.Forms.RadioButton radPx;
-		private System.Windows.Forms.RadioButton radPct;
-		private System.Windows.Forms.CheckBox chkCentered;
+		private Desktop.Skinning.SkinnedNumericUpDown valValue;
+		private Desktop.Skinning.SkinnedRadioButton radPx;
+		private Desktop.Skinning.SkinnedRadioButton radPct;
+		private Desktop.Skinning.SkinnedCheckBox chkCentered;
 		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.Label lblPct;
+		private Desktop.Skinning.SkinnedLabel lblPct;
 	}
 }

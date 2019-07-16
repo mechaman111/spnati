@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Desktop.Skinning;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Desktop.Forms
 {
-	public partial class VariableMapper : Form
+	public partial class VariableMapper : SkinnedForm
 	{
 		public Dictionary<string, string> Map
 		{

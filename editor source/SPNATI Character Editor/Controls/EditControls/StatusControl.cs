@@ -52,7 +52,7 @@ namespace SPNATI_Character_Editor
 			return value;
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			chkNegate.Checked = false;
 			cboStatus.SelectedIndex = 0;
@@ -77,7 +77,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			string value = BuildValue();
 			SetValue(value);
