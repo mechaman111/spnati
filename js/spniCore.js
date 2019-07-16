@@ -1015,9 +1015,7 @@ function initialSetup () {
             var index = document.styleSheets[2].cssRules.length;
             var rule = p.map(function(d) {
                 return ["select", "game"].map(function(s) {
-                    return ["before", "after"].map(function(r) {
-                        return '#'+s+'-bubble-'+i+'>.dialogue-bubble.arrow-'+d+'::'+r;
-                    }).join(', ');
+                    return '#'+s+'-bubble-'+i+'.arrow-'+d+'::before';
                 }).join(', ');
             }).join(', ') + ' {}';
             document.styleSheets[2].insertRule(rule, index);
