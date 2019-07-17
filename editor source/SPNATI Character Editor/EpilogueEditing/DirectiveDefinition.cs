@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor
 		public HashSet<string> AllowedProperties = new HashSet<string>();
 		public HashSet<string> RequiredAnimatedProperties = new HashSet<string>();
 		public bool IsAnimatable;
+		public int SortOrder;
 
 		public bool FilterPropertiesById;
 

@@ -1,3 +1,7 @@
+stages:
+    - deploy
+    - bundle
+
 deploy_production:
     stage: deploy
     tags:
@@ -9,4 +13,25 @@ deploy_production:
         name: production
         url: https://spnati.net/
     only:
-        - master
+        - master@spnati/spnati
+
+bundle_offline_package:
+    stage: bundle
+    tags:
+        - production
+    script:
+        - zip -qr spnati-offline.zip ./* -x ./.git
+        - mv ./spnati-offline.zip /opt/spnati-bundles
+    only:
+        - master@spnati/spnati
+        
+bundle_online_package:
+    stage: bundle
+    tags:
+        - production
+    script:
+        - bash ./prepare-online.sh
+        - zip -qr spnati-online.zip ./README.md ./LICENSE ./start_offline.exe ./start_offline.sh ./.public/*
+        - mv ./spnati-online.zip /opt/spnati-bundles
+    only:
+        - master@spnati/spnati

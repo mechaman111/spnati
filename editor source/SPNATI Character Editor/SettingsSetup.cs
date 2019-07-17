@@ -1,12 +1,13 @@
 ﻿using Desktop;
+using Desktop.Skinning;
 using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
-	public partial class SettingsSetup : Form
+	public partial class SettingsSetup : SkinnedForm
 	{
 		public SettingsSetup()
 		{
@@ -18,16 +19,39 @@ namespace SPNATI_Character_Editor
 			txtUserName.Text = Config.UserName;
 			valAutoSave.Value = Config.AutoSaveInterval;
 			chkIntellisense.Checked = Config.UseIntellisense;
-			chkHideImages.Checked = Config.UsePrefixlessImages;
+			chkHidePrefixlessImages.Checked = Config.UsePrefixlessImages;
 			txtFilter.Text = Config.PrefixFilter;
 			chkAutoBanter.Checked = Config.AutoLoadBanterWizard;
 			chkAutoBackup.Checked = Config.AutoBackupEnabled;
 			chkInitialAdd.Checked = Config.AutoOpenConditions;
 			chkDefaults.Checked = !Config.SuppressDefaults;
-		}
+			chkCaseTree.Checked = !Config.UseSimpleTree;
+			chkHideImages.Checked = Config.GetBoolean(Settings.HideImages);
+			chkColorTargets.Checked = Config.ColorTargetedLines;
+			chkWorkflowTracer.Checked = !Config.DisableWorkflowTracer;
 
+			HashSet<string> pauses = Config.AutoPauseDirectives;
+			foreach (DirectiveDefinition def in Definitions.Instance.Get<DirectiveDefinition>())
+			{
+				if (def.Key == "pause" || def.Key == "wait" || def.Key == "prompt")
+				{
+					continue;
+				}
+				lstPauses.Items.Add(def.Key, pauses.Contains(def.Key));
+			}
+			lstPauses.Sorted = true;
+		}
+		
 		private void cmdBrowse_Click(object sender, EventArgs e)
 		{
+			if (!string.IsNullOrEmpty(txtApplicationDirectory.Text))
+			{
+				try
+				{
+					folderBrowserDialog1.SelectedPath = txtApplicationDirectory.Text;
+				}
+				catch { }
+			}
 			if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
 			{
 				txtApplicationDirectory.Text = folderBrowserDialog1.SelectedPath;
@@ -77,17 +101,53 @@ namespace SPNATI_Character_Editor
 			Config.AutoSaveInterval = (int)valAutoSave.Value;
 			Config.UserName = txtUserName.Text;
 			Config.UseIntellisense = chkIntellisense.Checked;
-			Config.UsePrefixlessImages = chkHideImages.Checked;
+			Config.UsePrefixlessImages = chkHidePrefixlessImages.Checked;
 			Config.PrefixFilter = txtFilter.Text;
 			Config.AutoLoadBanterWizard = chkAutoBanter.Checked;
 			Config.AutoBackupEnabled = chkAutoBackup.Checked;
 			Config.AutoOpenConditions = chkInitialAdd.Checked;
-			Config.KisekaeDirectory = txtKisekae.Text;
+			if (txtKisekae.Text != Config.KisekaeDirectory)
+			{
+				if (!string.IsNullOrEmpty(Config.KisekaeDirectory))
+				{
+					CopyKisekaeImagesTo(txtKisekae.Text);
+				}
+				Config.KisekaeDirectory = txtKisekae.Text;
+			}
 			Config.SuppressDefaults = !chkDefaults.Checked;
+			Config.UseSimpleTree = !chkCaseTree.Checked;
+			Config.ColorTargetedLines = chkColorTargets.Checked;
+			Config.DisableWorkflowTracer = !chkWorkflowTracer.Checked;
+
+			HashSet<string> pauses = new HashSet<string>();
+			foreach (string item in lstPauses.CheckedItems)
+			{
+				pauses.Add(item);	
+			}
+			Config.AutoPauseDirectives = pauses;
+
 			DialogResult = DialogResult.OK;
 			Config.Save();
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.SettingsUpdated);
 			Close();
+		}
+
+		private void CopyKisekaeImagesTo(string newPath)
+		{
+			string oldDir = Path.Combine(Path.GetDirectoryName(Config.KisekaeDirectory), "images");
+			string newDir = Path.Combine(Path.GetDirectoryName(newPath), "images");
+			try
+			{
+				if (!Directory.Exists(newDir))
+				{
+					Directory.CreateDirectory(newDir);
+				}
+				foreach (string file in Directory.EnumerateFiles(oldDir))
+				{
+					File.Copy(file, Path.Combine(newDir, Path.GetFileName(file)));
+				}
+			}
+			catch { }
 		}
 
 		private void cmdCancel_Click(object sender, EventArgs e)
@@ -98,48 +158,16 @@ namespace SPNATI_Character_Editor
 
 		private void chkHideImages_CheckedChanged(object sender, EventArgs e)
 		{
-			txtFilter.Enabled = chkHideImages.Checked;
-		}
-
-		private void tabsSections_DrawItem(object sender, DrawItemEventArgs e)
-		{
-			Graphics g = e.Graphics;
-			Brush textBrush;
-			Brush backBrush;
-
-			// Get the item from the collection.
-			TabPage tabPage = tabsSections.TabPages[e.Index];
-
-			// Get the real bounds for the tab rectangle.
-			Rectangle tabBounds = tabsSections.GetTabRect(e.Index);
-
-			if (e.State == DrawItemState.Selected)
-			{
-				// Draw a different background color, and don't paint a focus rectangle.
-				textBrush = new SolidBrush(Color.White);
-				backBrush = new SolidBrush(Color.SlateBlue);
-				g.FillRectangle(backBrush, e.Bounds);
-			}
-			else
-			{
-				textBrush = new SolidBrush(e.ForeColor);
-				//e.DrawBackground();
-				g.FillRectangle(Brushes.White, e.Bounds);
-			}
-
-			// Use our own font.
-			Font tabFont = new Font("Arial", (float)11.0, FontStyle.Bold, GraphicsUnit.Pixel);
-
-			// Draw string. Center the text.
-			StringFormat stringFlags = new StringFormat();
-			stringFlags.Alignment = StringAlignment.Center;
-			stringFlags.LineAlignment = StringAlignment.Center;
-			g.DrawString(tabPage.Text, tabFont, textBrush, tabBounds, new StringFormat(stringFlags));
+			txtFilter.Enabled = chkHidePrefixlessImages.Checked;
 		}
 
 		private void cmdBrowseKisekae_Click(object sender, EventArgs e)
 		{
-			openFileDialog1.FileName = txtKisekae.Text;
+			if (!string.IsNullOrEmpty(txtKisekae.Text))
+			{
+				openFileDialog1.InitialDirectory = Path.GetDirectoryName(txtKisekae.Text);
+				openFileDialog1.FileName = Path.GetFileName(txtKisekae.Text);
+			}
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
 				string file = openFileDialog1.FileName;
@@ -193,6 +221,12 @@ namespace SPNATI_Character_Editor
 			{
 				txtApplicationDirectory.Text = dir;
 			}
+		}
+
+		private void chkHideImages_CheckedChanged_1(object sender, EventArgs e)
+		{
+			Config.Set(Settings.HideImages, chkHideImages.Checked);
+			Shell.Instance.PostOffice.SendMessage(DesktopMessages.ToggleImages);
 		}
 	}
 }

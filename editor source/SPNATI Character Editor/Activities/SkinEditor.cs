@@ -35,7 +35,6 @@ namespace SPNATI_Character_Editor.Activities
 			if (!auto)
 			{
 				Save();
-				Serialization.ExportSkin(_costume);
 				if (Serialization.ExportSkin(_costume))
 				{
 					Shell.Instance.SetStatus(string.Format("{0} exported successfully at {1}.", _costume, DateTime.Now.ToShortTimeString()));
@@ -104,17 +103,16 @@ namespace SPNATI_Character_Editor.Activities
 			images.AddRange(_imageLibrary.GetImages(0));
 			if (Config.UsePrefixlessImages)
 			{
-				string prefix = Config.PrefixFilter;
 				foreach (CharacterImage img in _imageLibrary.GetImages(-1))
 				{
 					string file = img.Name;
-					if (string.IsNullOrEmpty(prefix) || !file.StartsWith(prefix))
+					if (!_imageLibrary.FilterImage(_costume.Character, file))
 					{
 						images.Add(img);
 					}
 				}
 			}
-			cboDefaultPic.DataSource = images;
+			cboDefaultPic.Items.AddRange(images);
 			_populatingImages = false;
 		}
 

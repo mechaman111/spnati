@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Desktop.Skinning;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	public partial class TagGrid : UserControl
+	public partial class TagGrid : UserControl, ISkinControl
 	{
 		private const int CellSize = 30;
 		private const int HeaderPadding = 10;
 
-		private Pen _border = Pens.DarkGray;
+		private Pen _border = new Pen(Color.DarkGray);
 
 		private BindableTagList _bindings;
 		private Character _character;
@@ -35,6 +37,11 @@ namespace SPNATI_Character_Editor.Controls
 		public TagGrid()
 		{
 			InitializeComponent();
+		}
+
+		public void OnUpdateSkin(Skin skin)
+		{
+			_border = skin.PrimaryColor.GetBorderPen(VisualState.Normal, false, Enabled);
 		}
 
 		private void ResizeGrid()
@@ -83,11 +90,19 @@ namespace SPNATI_Character_Editor.Controls
 			Graphics g = e.Graphics;
 			StringFormat sf = new StringFormat() { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center };
 
+			Skin skin = SkinManager.Instance.CurrentSkin;
+
 			if (_highlightedCell.X != -1)
 			{
-				g.FillRectangle(Brushes.LightCyan, 0, _headerHeight + _highlightedCell.Y * CellSize, _headerWidth + _highlightedCell.X * CellSize + CellSize, CellSize);
-				g.FillRectangle(Brushes.LightCyan, _headerWidth + _highlightedCell.X * CellSize, _headerHeight, CellSize, _highlightedCell.Y * CellSize);
-				g.FillRectangle(Brushes.LightSkyBlue, _headerWidth + _highlightedCell.X * CellSize, _headerHeight + _highlightedCell.Y * CellSize, CellSize, CellSize);
+				using (SolidBrush lineBrush = new SolidBrush(Color.FromArgb(100, skin.SecondaryLightColor.Normal)))
+				{
+					g.FillRectangle(lineBrush, 0, _headerHeight + _highlightedCell.Y * CellSize, _headerWidth + _layerCount * CellSize + CellSize, CellSize);
+					g.FillRectangle(lineBrush, _headerWidth + _highlightedCell.X * CellSize, _headerHeight, CellSize, _tags.Count * CellSize);
+				}
+				using (SolidBrush pointBrush = new SolidBrush(Color.FromArgb(127, skin.SecondaryColor.Normal)))
+				{
+					g.FillRectangle(pointBrush, _headerWidth + _highlightedCell.X * CellSize, _headerHeight + _highlightedCell.Y * CellSize, CellSize, CellSize);
+				}
 			}
 
 			Image applyIcon = Properties.Resources.ApplyCheckbox;
@@ -113,7 +128,7 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 
-			using (Brush fontBrush = new SolidBrush(this.ForeColor))
+			using (Brush fontBrush = new SolidBrush(skin.Background.ForeColor))
 			{
 				g.DrawLine(_border, 0, _headerHeight, 0, Height);
 				g.DrawLine(_border, _headerWidth + _headerHeight, 0, Width, 0);
@@ -121,7 +136,7 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					int y = _headerHeight + CellSize * i;
 
-					g.DrawString(_tags[i].DisplayName, Font, fontBrush, new Rectangle(HeaderPadding, y + 1, _headerWidth - HeaderPadding * 2, CellSize), sf);
+					g.DrawString(_tags[i].DisplayName, Skin.TextFont, fontBrush, new Rectangle(HeaderPadding, y + 1, _headerWidth - HeaderPadding * 2, CellSize), sf);
 
 					g.DrawLine(_border, 0, y, Width - _headerHeight, y);
 				}
@@ -202,6 +217,16 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
+				if (e.X < _headerWidth && y >= 0 && y < _tags.Count)
+				{
+					Tag tag = _tags[y];
+					toolTip1.Show(tag.Description, panel, new Point(e.X + 5, e.Y + 5));
+				}
+				else
+				{
+					toolTip1.Hide(panel);
+				}
+
 				_highlightedCell.X = -1;
 				_highlightedCell.Y = -1;
 				Cursor = Cursors.Default;
@@ -214,6 +239,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void panel_MouseLeave(object sender, System.EventArgs e)
 		{
+			toolTip1.Hide(panel);
 			if (_highlightedCell.X >= 0)
 			{
 				_highlightedCell.X = -1;

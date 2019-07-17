@@ -86,10 +86,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			AddImage(scene.Background);
 			foreach (Directive directive in scene.Directives)
 			{
-				if (!string.IsNullOrEmpty(directive.Marker) && !Marker.CheckMarker(directive.Marker, Markers))
-				{
-					continue;
-				}
 				AddImage(directive.Src);
 				foreach (Keyframe frame in directive.Keyframes)
 				{

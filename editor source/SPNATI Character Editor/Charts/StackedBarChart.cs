@@ -1,7 +1,5 @@
 ﻿using SPNATI_Character_Editor.Charts.Builders;
-using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Charts
 {
@@ -9,11 +7,12 @@ namespace SPNATI_Character_Editor.Charts
 	/// <summary>
 	/// Stacked bar graph for lines spoken to a character
 	/// </summary>
-	public partial class StackedBarChart : UserControl, IChartControl
+	public partial class StackedBarChart : SkinnedChart, IChartControl
 	{
 		public StackedBarChart()
 		{
 			InitializeComponent();
+			AddChart(chart);
 		}
 
 		public void SetTitle(string title)

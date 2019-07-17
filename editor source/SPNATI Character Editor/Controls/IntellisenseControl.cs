@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	public partial class IntellisenseControl : UserControl
+	public partial class IntellisenseControl : UserControl, ISkinControl
 	{
 		[DllImport("user32")]
 		private extern static int GetCaretPos(out Point p);
@@ -20,6 +21,7 @@ namespace SPNATI_Character_Editor.Controls
 		private IntellisenseContext _lastContext = new IntellisenseContext(ContextType.None, -1);
 
 		private List<string> _availableVars = new List<string>();
+		private List<string> _availableStyles = new List<string>();
 
 		public event EventHandler<InsertEventArgs> InsertSnippet;
 
@@ -56,8 +58,8 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			switch (code)
 			{
-				case Keys.Shift:
-				case Keys.ShiftKey:
+				//case Keys.Shift:
+				//case Keys.ShiftKey:
 				case Keys.Control:
 				case Keys.ControlKey:
 				case Keys.Alt:
@@ -85,7 +87,7 @@ namespace SPNATI_Character_Editor.Controls
 
 			if (_lastContext.Context != ContextType.None && keyCode != Keys.Back && keyCode != Keys.Delete && keyCode != Keys.None)
 			{
-				if (_lastContext.Context != ContextType.VariableName || _lastContext.VariableName != "")
+				if ((_lastContext.Context != ContextType.VariableName && _lastContext.Context != ContextType.StyleName) || _lastContext.VariableName != "")
 				{
 					char lastChar = _textBox.Text[_textBox.SelectionStart - 1];
 					switch (_lastContext.Context)
@@ -99,6 +101,14 @@ namespace SPNATI_Character_Editor.Controls
 								{
 									return;
 								}
+							}
+							break;
+						case ContextType.StyleName:
+							if (lastChar == ',' || lastChar == '?' || lastChar == ';' || 
+								lastChar == ' ' || lastChar == '}' || lastChar == '.' || lastChar == ',')
+							{
+								AutoComplete(lastChar);
+								return;
 							}
 							break;
 						case ContextType.FunctionName:
@@ -127,6 +137,9 @@ namespace SPNATI_Character_Editor.Controls
 					break;
 				case ContextType.VariableName:
 					UpdateVariableList(_lastContext.VariableName);
+					break;
+				case ContextType.StyleName:
+					UpdateStyleList(_lastContext.VariableName);
 					break;
 				case ContextType.FunctionName:
 					UpdateFunctionList(_lastContext.FunctionName);
@@ -179,6 +192,28 @@ namespace SPNATI_Character_Editor.Controls
 						else
 						{
 							endingChar = '~';
+						}
+						_lastContext.Context = ContextType.None;
+						InsertSnippet?.Invoke(this, new InsertEventArgs(insertionText, insertion, selectionLength));
+						UpdateIntellisense(Keys.None);
+						break;
+					case ContextType.StyleName:
+						StyleRule rule = StyleDatabase.Get(value, _character);
+						text = _lastContext.VariableName;
+						insertion += text.Length + 1;
+						insertionText = rule.ClassName.Substring(text.Length, rule.ClassName.Length - text.Length);
+						if (endingChar != '}')
+						{
+							insertionText += "}";
+						}
+						if (endingChar != '\0')
+						{
+							insertionText += endingChar;
+							selectionLength++;
+						}
+						else
+						{
+							endingChar = '}';
 						}
 						_lastContext.Context = ContextType.None;
 						InsertSnippet?.Invoke(this, new InsertEventArgs(insertionText, insertion, selectionLength));
@@ -242,7 +277,32 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				_availableVars.Add(v.Name);
 			}
+			foreach (TargetCondition condition in stageCase.Conditions)
+			{
+				if (!string.IsNullOrEmpty(condition.Variable))
+				{
+					_availableVars.Add(condition.Variable);
+				}
+			}
 			_availableVars.Sort();
+
+			_availableStyles.Clear();
+			foreach (StyleRule s in StyleDatabase.GlobalStyles)
+			{
+				_availableStyles.Add(s.ClassName);
+			}
+			if (_character != null)
+			{
+				CharacterStyleSheet sheet = _character.Styles;
+				if (sheet != null)
+				{
+					foreach (StyleRule rule in sheet.Rules)
+					{
+						_availableStyles.Add(rule.ClassName);
+					}
+				}
+			}
+			_availableStyles.Sort();
 		}
 
 		private void Display()
@@ -269,6 +329,24 @@ namespace SPNATI_Character_Editor.Controls
 			lstItems.DataSource = null;
 			List<string> options = _availableVars
 				.Where(var => string.IsNullOrEmpty(variable) || var.ToLower().StartsWith(variable.ToLower()))
+				.Select(var => var).ToList();
+
+			if (options.Count > 0)
+			{
+				lstItems.DataSource = options;
+				Display();
+			}
+			else
+			{
+				Hide();
+			}
+		}
+
+		private void UpdateStyleList(string style)
+		{
+			lstItems.DataSource = null;
+			List<string> options = _availableStyles
+				.Where(var => string.IsNullOrEmpty(style) || var.ToLower().StartsWith(style.ToLower()))
 				.Select(var => var).ToList();
 
 			if (options.Count > 0)
@@ -323,6 +401,14 @@ namespace SPNATI_Character_Editor.Controls
 					if (v != null)
 					{
 						lblTooltip.Text = v.Description;
+						lblTooltip.Links.Clear();
+					}
+					break;
+				case ContextType.StyleName:
+					StyleRule style = StyleDatabase.Get(value, _character);
+					if (style != null)
+					{
+						lblTooltip.Text = style.Description;
 						lblTooltip.Links.Clear();
 					}
 					break;
@@ -382,6 +468,11 @@ namespace SPNATI_Character_Editor.Controls
 		private void lstItems_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			DisplayTooltip();
+		}
+
+		public void OnUpdateSkin(Skin skin)
+		{
+			BackColor = skin.Surface.Normal;
 		}
 	}
 

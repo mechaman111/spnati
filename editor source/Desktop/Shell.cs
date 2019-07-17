@@ -1,4 +1,5 @@
 ﻿using Desktop.Messaging;
+using Desktop.Skinning;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Desktop
 {
-	public partial class Shell : Form
+	public partial class Shell : SkinnedForm
 	{
 		private static bool _busy = false;
 
@@ -151,6 +152,58 @@ namespace Desktop
 			AddToolbarSeparator();
 		}
 
+		#region Action bar
+		public ToolStripMenuItem AddActionMenu(Image icon, string tooltip)
+		{
+			ToolStripMenuItem menu = new ToolStripMenuItem();
+			menu.Image = icon;
+			menu.ToolTipText = tooltip;
+			actionStrip.Items.Add(menu);
+			return menu;
+		}
+
+		public ToolStripMenuItem AddActionItem(Image icon, string text, string tooltip, Action action, ToolStripMenuItem submenu)
+		{
+			ToolStripMenuItem menu = new ToolStripMenuItem();
+			menu.Image = icon;
+			if (submenu == null)
+			{
+				menu.ToolTipText = tooltip ?? text;
+				actionStrip.Items.Add(menu);
+			}
+			else
+			{
+				menu.Text = text;
+				menu.ToolTipText = tooltip;
+				submenu.DropDownItems.Add(menu);
+			}
+			menu.Tag = action;
+			menu.Click += Action_Click;
+			return menu;
+		}
+
+		public void AddActionSeparator() { AddActionSeparator(null); }
+		public void AddActionSeparator(ToolStripMenuItem submenu)
+		{
+			ToolStripSeparator separator = new ToolStripSeparator();
+			if (submenu == null)
+			{
+				actionStrip.Items.Add(separator);
+			}
+			else
+			{
+				submenu.DropDownItems.Add(separator);
+			}
+		}
+
+		private void Action_Click(object sender, EventArgs e)
+		{
+			ToolStripMenuItem ctl = sender as ToolStripMenuItem;
+			Action action = ctl.Tag as Action;
+			action?.Invoke();
+		}
+		#endregion
+
 		#region Toolbar
 		public ToolStripMenuItem AddToolbarSubmenu(string caption)
 		{
@@ -263,32 +316,12 @@ namespace Desktop
 		}
 		#endregion
 
-		private void tabWorkspaces_DrawItem(object sender, DrawItemEventArgs e)
+		private void stripActivities_CloseButtonClicked(object sender, EventArgs e)
 		{
-			IWorkspace ws = tabWorkspaces.TabPages[e.Index].Tag as IWorkspace;
+			IWorkspace ws = tabWorkspaces.TabPages[tabWorkspaces.SelectedIndex].Tag as IWorkspace;
 			if (!ws.IsDefault)
 			{
-				e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - CLOSE_AREA, e.Bounds.Top + 4);
-			}
-			e.Graphics.DrawString(tabWorkspaces.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + LEADING_SPACE, e.Bounds.Top + 4);
-			e.DrawFocusRectangle();
-		}
-
-		private void tabWorkspaces_MouseClick(object sender, MouseEventArgs e)
-		{
-			//See if an X on a tab was clicked
-			for (int i = 0; i < tabWorkspaces.TabPages.Count; i++)
-			{
-				Rectangle r = tabWorkspaces.GetTabRect(i);
-				Rectangle closeButton = new Rectangle(r.Right - CLOSE_AREA, r.Top, CLOSE_AREA, 20);
-				if (closeButton.Contains(e.Location))
-				{
-					IWorkspace ws = tabWorkspaces.TabPages[i].Tag as IWorkspace;
-					if (!ws.IsDefault)
-					{
-						CloseWorkspace(ws);
-					}
-				}
+				CloseWorkspace(ws);
 			}
 		}
 
@@ -303,7 +336,7 @@ namespace Desktop
 		{
 			bool changingWorkspace = ActiveWorkspace?.Record != (IRecord)record;
 
-			if (!changingWorkspace && ActiveActivity.GetType() == typeof(TActivity))
+			if (!changingWorkspace && ActiveActivity?.GetType() == typeof(TActivity))
 			{
 				//already active, so just pass new run parameters
 				ActiveActivity.UpdateParameters(parameters);
@@ -493,6 +526,7 @@ namespace Desktop
 			page.Text = ws.Caption;
 			page.Controls.Add(ctl);
 			tabWorkspaces.TabPages.Add(page);
+			tabWorkspaces.Visible = true;
 			_workspaces[ws] = ctl;
 			_tabs[ws] = page;
 
@@ -569,6 +603,10 @@ namespace Desktop
 			_tabs.Remove(ws);
 			_workspaces.Remove(ws);
 			tabWorkspaces.Controls.Remove(tab);
+			if (tabWorkspaces.TabPages.Count == 0)
+			{
+				tabWorkspaces.Visible = false;
+			}
 			tab.Dispose();
 		}
 
@@ -679,7 +717,10 @@ namespace Desktop
 				return;
 			IWorkspace ws = e.TabPage.Tag as IWorkspace;
 			if (!Activate(ws.ActiveActivity) || !Activate(ws.ActiveSidebarActivity))
+			{
+				stripActivities.Invalidate(true);
 				e.Cancel = true;
+			}
 		}
 
 		private void Shell_FormClosing(object sender, FormClosingEventArgs e)
@@ -713,15 +754,13 @@ namespace Desktop
 		/// <param name="maximize"></param>
 		public void Maximize(bool maximize)
 		{
-			const int TabHeight = 24;
 			if (maximize)
 			{
 				if (toolbar.Visible)
 				{
 					toolbar.Visible = false;
-					int height = tabWorkspaces.Height;
-					tabWorkspaces.Top = -TabHeight;
-					tabWorkspaces.Height = height + _workspaceTop + TabHeight;
+					actionStrip.Visible = false;
+					stripActivities.Visible = false;
 				}
 			}
 			else
@@ -729,9 +768,8 @@ namespace Desktop
 				if (!toolbar.Visible)
 				{
 					toolbar.Visible = true;
-					int height = tabWorkspaces.Height;
-					tabWorkspaces.Top = _workspaceTop;
-					tabWorkspaces.Height = height - _workspaceTop - TabHeight;
+					actionStrip.Visible = true;
+					stripActivities.Visible = true;
 				}
 			}
 		}
@@ -745,10 +783,11 @@ namespace Desktop
 				FrameUpdate.Invoke(this, EventArgs.Empty);
 		}
 
-		public string ShowOpenFileDialog(string initialDirectory, string filename)
+		public string ShowOpenFileDialog(string initialDirectory, string filename, string filter)
 		{
 			openFileDialog1.InitialDirectory = initialDirectory;
 			openFileDialog1.FileName = filename;
+			openFileDialog1.Filter = filter;
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
 				return openFileDialog1.FileName;

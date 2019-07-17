@@ -15,12 +15,24 @@ namespace SPNATI_Character_Editor
 		public const int MaxLayers = 8;
 		public const int ExtraStages = 3;
 
-		[XmlAttribute("lowercase")]
+		[XmlAttribute("name")]
+		public string Name;
+
+		[XmlAttribute("generic")]
 		public string GenericName;
+
+		/// <summary>
+		/// Deprecated
+		/// </summary>
+		[XmlAttribute("lowercase")]
+		public string LowercaseName;
 
 		[XmlAttribute("position")]
 		public string Position;
 
+		/// <summary>
+		/// Deprecated
+		/// </summary>
 		[XmlAttribute("formalName")]
 		public string FormalName;
 
@@ -41,16 +53,22 @@ namespace SPNATI_Character_Editor
 		{
 			Position = "upper";
 			Type = "major";
-			FormalName = "New item";
-			GenericName = "new item";
+			GenericName = "item";
+			Name = "new item";
 			Plural = false;
 		}
 
 		public void OnAfterDeserialize()
 		{
-			if (FormalName == null || FormalName == "New item")
+			if (string.IsNullOrEmpty(Name) || Name == "new item")
 			{
-				FormalName = ProperName;
+				Name = LowercaseName;
+				LowercaseName = null;
+			}
+			if (string.IsNullOrEmpty(GenericName) || GenericName == "item")
+			{
+				GenericName = FormalName ?? ProperName;
+				FormalName = null;
 				ProperName = null;
 			}
 		}
@@ -62,8 +80,10 @@ namespace SPNATI_Character_Editor
 				Position = Position,
 				Type = Type,
 				FormalName = FormalName,
-				GenericName = GenericName,
+				LowercaseName = LowercaseName,
 				ProperName = ProperName,
+				Name = Name,
+				GenericName = GenericName,
 				Plural = Plural,
 			};
 			return copy;
@@ -71,7 +91,7 @@ namespace SPNATI_Character_Editor
 
 		public override string ToString()
 		{
-			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(GenericName);
+			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Name);
 		}
 	}
 

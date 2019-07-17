@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.CommonControls;
+using System;
 
 namespace Desktop
 {
@@ -12,5 +13,6 @@ namespace Desktop
 		object CreateData();
 		object GetRecordContext();
 		Func<PropertyRecord, bool> GetRecordFilter(object data);
+		void AddSpeedButtons(PropertyTable table);
 	}
 }

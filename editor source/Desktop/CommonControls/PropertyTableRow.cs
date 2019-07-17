@@ -1,5 +1,4 @@
-﻿using Desktop.Providers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -46,6 +45,7 @@ namespace Desktop.CommonControls
 			{
 				_helpWidth = table.ColumnStyles[0].Width;
 				_allowHelp = value;
+				lblHelp.Visible = value;
 				if (!_allowHelp)
 				{
 					table.ColumnStyles[0].Width = 0;

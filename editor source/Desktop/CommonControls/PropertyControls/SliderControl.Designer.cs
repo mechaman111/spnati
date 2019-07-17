@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.slider = new System.Windows.Forms.TrackBar();
+			this.slider = new Desktop.Skinning.SkinnedSlider();
 			this.valValue = new Desktop.CommonControls.NumericField();
 			((System.ComponentModel.ISupportInitialize)(this.slider)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valValue)).BeginInit();
@@ -37,27 +37,46 @@
 			// slider
 			// 
 			this.slider.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.slider.AutoSize = false;
-			this.slider.LargeChange = 10;
+			this.slider.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.slider.Increment = 10;
 			this.slider.Location = new System.Drawing.Point(0, 0);
 			this.slider.Maximum = 100;
+			this.slider.Minimum = 0;
 			this.slider.Name = "slider";
 			this.slider.Size = new System.Drawing.Size(105, 20);
 			this.slider.TabIndex = 0;
-			this.slider.TickFrequency = 10;
+			this.slider.TickFrequency = 25;
+			this.slider.Value = 0;
 			// 
 			// valValue
 			// 
 			this.valValue.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.valValue.DecimalPlaces = 0;
 			this.valValue.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
 			this.valValue.Location = new System.Drawing.Point(111, 0);
+			this.valValue.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.valValue.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			this.valValue.Name = "valValue";
+			this.valValue.PlaceholderText = "";
 			this.valValue.Size = new System.Drawing.Size(39, 20);
 			this.valValue.TabIndex = 1;
+			this.valValue.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			// 
 			// SliderControl
 			// 
@@ -75,7 +94,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.TrackBar slider;
+		private Desktop.Skinning.SkinnedSlider slider;
 		private Desktop.CommonControls.NumericField valValue;
 	}
 }

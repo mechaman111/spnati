@@ -26,12 +26,22 @@ namespace Desktop.CommonControls
 		public List<string> Bindings = new List<string>();
 		private INotifyPropertyChanged _bindableData;
 		private INotifyPropertyChanged _bindablePreviewData;
-		private bool _selfUpdating;
+		public PropertyTable ParentTable;
 
 		public Type DataType { get { return _propertyInfo.GetDataType(); } }
 
 		public string Property { get; set; }
-		public int Index { get; set; }
+		private int _index;
+		public int Index
+		{
+			get { return _index; }
+			set
+			{
+				_index = value;
+				OnIndexChanged();
+			}
+		}
+		protected virtual void OnIndexChanged() { }
 
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
 		public event EventHandler<int> RequireHeight;
@@ -82,10 +92,18 @@ namespace Desktop.CommonControls
 
 		internal void RemoveFromList()
 		{
+			string old = ParentTable.ModifyingProperty;
+			ParentTable.ModifyingProperty = Property;
 			if (_list != null)
 			{
 				_list.RemoveAt(Index);
 			}
+			ParentTable.ModifyingProperty = old;
+		}
+
+		protected IList GetList()
+		{
+			return _list;
 		}
 
 		protected object GetValue()
@@ -129,7 +147,8 @@ namespace Desktop.CommonControls
 			}
 
 			//update the data either directly if no UndoManager is present, or through the UndoManager if one is
-			_selfUpdating = true;
+			string oldProp = ParentTable.ModifyingProperty;
+			ParentTable.ModifyingProperty = Property;
 			if (UndoManager != null)
 			{
 				SetValueCommand command = new SetValueCommand(Data, this, old, value);
@@ -139,7 +158,7 @@ namespace Desktop.CommonControls
 			{
 				SetValueDirectly(Data, value);
 			}
-			_selfUpdating = false;
+			ParentTable.ModifyingProperty = oldProp;
 		}
 		internal void SetValueDirectly(object data, object value)
 		{
@@ -223,8 +242,9 @@ namespace Desktop.CommonControls
 		/// </summary>
 		/// <param name="data"></param>
 		/// <param name="property"></param>
-		public void SetData(object data, string property, int index, object context, UndoManager undoManager, object previewData)
+		public void SetData(object data, string property, int index, object context, UndoManager undoManager, object previewData, PropertyTable table)
 		{
+			ParentTable = table;
 			SetBindableData(data, ref _bindableData);
 			SetBindableData(previewData, ref _bindablePreviewData);
 			UndoManager = undoManager;
@@ -246,11 +266,20 @@ namespace Desktop.CommonControls
 			UpdateBinding(false);
 		}
 
+		public virtual bool IsUpdating
+		{
+			get
+			{
+				return ParentTable.ModifyingProperty == Property;
+			}
+		}
+
 		/// <summary>
 		/// Called when the property behind this control is either first set or updated externally
 		/// </summary>
 		private void UpdateBinding(bool rebind)
 		{
+			if (IsUpdating) { return; }
 			if (rebind)
 			{
 				RemoveHandlers();
@@ -270,7 +299,7 @@ namespace Desktop.CommonControls
 
 		private void BindableData_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			if (_selfUpdating || e.PropertyName != Property)
+			if (IsUpdating || e.PropertyName != Property || _list != null) //auto-rebinding disabled for lists since the element's controls interfere with each other
 			{
 				return;
 			}
@@ -300,15 +329,29 @@ namespace Desktop.CommonControls
 			UpdateBinding(true);
 		}
 
+		public void Clear()
+		{
+			string old = ParentTable.ModifyingProperty;
+			ParentTable.ModifyingProperty = Property;
+			OnClear();
+			ParentTable.ModifyingProperty = old;
+		}
 		/// <summary>
 		/// Clears the backing field
 		/// </summary>
-		public virtual void Clear() { }
+		protected virtual void OnClear() { }
 
+		public void Save()
+		{
+			string old = ParentTable.ModifyingProperty;
+			ParentTable.ModifyingProperty = Property;
+			OnSave();
+			ParentTable.ModifyingProperty = old;
+		}
 		/// <summary>
 		/// Saves the current data
 		/// </summary>
-		public virtual void Save() { }
+		protected virtual void OnSave() { }
 
 		private class SetValueCommand : ICommand
 		{

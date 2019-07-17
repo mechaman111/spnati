@@ -82,6 +82,23 @@ namespace SPNATI_Character_Editor
 		[XmlElement("poses")]
 		public int Poses;
 
+		/// <summary>
+		/// Custom z-ordering
+		/// </summary>
+		[DefaultValue(0)]
+		[XmlElement("z-index")]
+		public int Z;
+
+		/// <summary>
+		/// Speech bubble position relative to image
+		/// </summary>
+		[DefaultValue(DialogueLayer.over)]
+		[XmlElement("dialogue-layer")]
+		public DialogueLayer BubblePosition;
+
+		[XmlAnyElement]
+		public List<System.Xml.XmlElement> ExtraXml;
+
 		public Metadata()
 		{
 		}
@@ -160,5 +177,11 @@ namespace SPNATI_Character_Editor
 
 		[XmlText]
 		public string Title;
+	}
+
+	public enum DialogueLayer
+	{
+		over,
+		under
 	}
 }

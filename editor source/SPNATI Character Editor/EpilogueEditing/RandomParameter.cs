@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Globalization;
 
 namespace SPNATI_Character_Editor.EpilogueEditing
 {
@@ -43,6 +44,18 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public static RandomParameter Create(string value, RandomParameter defaultParameter)
 		{
 			return Create(value, defaultParameter.Min, defaultParameter.Max);
+		}
+
+		public string Serialize()
+		{
+			if (Min == Max)
+			{
+				return Min.ToString(CultureInfo.InvariantCulture);
+			}
+			else
+			{
+				return $"{Min.ToString(CultureInfo.InvariantCulture)}:{Max.ToString(CultureInfo.InvariantCulture)}";
+			}
 		}
 	}
 
@@ -91,6 +104,18 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public static RandomColor Create(string value, RandomColor defaultParameter)
 		{
 			return Create(value, defaultParameter.Min, defaultParameter.Max);
+		}
+
+		public string Serialize()
+		{
+			if (Min == Max)
+			{
+				return Min.ToHexValue();
+			}
+			else
+			{
+				return $"{Min.ToHexValue()}:{Max.ToHexValue()}";
+			}
 		}
 	}
 

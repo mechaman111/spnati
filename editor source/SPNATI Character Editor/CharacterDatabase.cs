@@ -94,6 +94,7 @@ namespace SPNATI_Character_Editor
 
 		public static CharacterEditorData GetEditorData(Character character)
 		{
+			if (character == null) { return new CharacterEditorData(); }
 			return _editorData.GetOrAddDefault(character, () =>
 			{
 				CharacterEditorData data = new CharacterEditorData()
@@ -113,6 +114,16 @@ namespace SPNATI_Character_Editor
 		public static bool FilterHuman(IRecord record)
 		{
 			return record.Key != "human";
+		}
+
+		/// <summary>
+		/// Record select filter for keeping out the default
+		/// </summary>
+		/// <param name="record"></param>
+		/// <returns></returns>
+		public static bool FilterDefaultCostume(IRecord record)
+		{
+			return record.Key != "default";
 		}
 
 		public static void AddSkin(Costume skin)

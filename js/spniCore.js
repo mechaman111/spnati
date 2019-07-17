@@ -222,7 +222,7 @@ window.addEventListener('error', function (ev) {
  * Attempts to fetch a compressed version of the file first,
  * then fetches the uncompressed version of the file if that isn't found.
  */
-function fetchCompressedURL(baseUrl, successCb, errorCb) {
+function fetchCompressedURL(baseUrl) {
     /*
      * The usual Jquery AJAX request function doesn't play nice with
      * the binary-encoded data we'll get here, so we do the XHR manually.
@@ -231,19 +231,20 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
     var req = new XMLHttpRequest();
     req.open('GET', baseUrl+'.gz', true);
     req.responseType = 'arraybuffer';
+    var deferred = $.Deferred();
 
     req.onload = function(ev) {
         if (req.status < 400 && req.response) {
             var data = new Uint8Array(req.response);
             var decompressed = pako.inflate(data, { to: 'string' });
-            successCb(decompressed);
+            deferred.resolve(decompressed);
         } else if (req.status === 404) {
             $.ajax({
                 type: "GET",
         		url: baseUrl,
         		dataType: "text",
-                success: successCb,
-                error: errorCb,
+                success: deferred.resolve.bind(deferred),
+                error: deferred.reject.bind(deferred),
             });
         } else {
             errorCb();
@@ -255,12 +256,13 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
             type: "GET",
             url: baseUrl,
             dataType: "text",
-            success: successCb,
-            error: errorCb,
+            success: deferred.resolve.bind(deferred),
+            error: deferred.reject.bind(deferred),
         });
     }
 
     req.send(null);
+    return deferred.promise();
 }
 
 
@@ -818,12 +820,11 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
         return;
     }
 
-    fetchCompressedURL(
-		'opponents/' + this.id + "/behaviour.xml",
+    fetchCompressedURL('opponents/' + this.id + "/behaviour.xml")
 		/* Success callback.
          * 'this' is bound to the Opponent object.
          */
-		function(xml) {
+		.then(function(xml) {
             var $xml = $(xml);
 
             if (this.has_collectibles) {
@@ -919,13 +920,12 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             }
             
             return this.onSelected(individual);
-		}.bind(this),
+		}.bind(this))
 		/* Error callback. */
-        function(err) {
+        .fail(function(err) {
             console.log("Failed reading \""+this.id+"\" behaviour.xml");
             delete players[this.slot];
-        }.bind(this)
-	);
+        }.bind(this));
 }
 
 Player.prototype.getImagesForStage = function (stage) {
@@ -1015,9 +1015,7 @@ function initialSetup () {
             var index = document.styleSheets[2].cssRules.length;
             var rule = p.map(function(d) {
                 return ["select", "game"].map(function(s) {
-                    return ["before", "after"].map(function(r) {
-                        return '#'+s+'-bubble-'+i+'>.dialogue-bubble.arrow-'+d+'::'+r;
-                    }).join(', ');
+                    return '#'+s+'-bubble-'+i+'.arrow-'+d+'::before';
                 }).join(', ');
             }).join(', ') + ' {}';
             document.styleSheets[2].insertRule(rule, index);

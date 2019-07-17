@@ -21,7 +21,7 @@ namespace SPNATI_Character_Editor.Providers
 
 		public bool AllowsNew
 		{
-			get	{ return true; }
+			get { return true; }
 		}
 
 		public bool TrackRecent
@@ -42,8 +42,8 @@ namespace SPNATI_Character_Editor.Providers
 				c.Metadata.Writer = Config.UserName;
 
 				//Add in some barebones data to be at the minimal functional level
-				c.Wardrobe.Add(new Clothing() { FormalName = "Final Layer", GenericName = "final layer", Position = "lower", Type = "important" });
-				c.Wardrobe.Add(new Clothing() { FormalName = "First Layer", GenericName = "first layer", Position = "upper", Type = "important" });
+				c.Wardrobe.Add(new Clothing() { GenericName = "", Name = "final layer", Position = "lower", Type = "important" });
+				c.Wardrobe.Add(new Clothing() { GenericName = "", Name = "first layer", Position = "upper", Type = "important" });
 				c.Behavior.EnsureDefaults(c);
 
 				Serialization.ExportCharacter(c);
@@ -90,23 +90,72 @@ namespace SPNATI_Character_Editor.Providers
 
 		public void Sort(List<IRecord> list)
 		{
-			list.Sort((record1, record2) => record1.CompareTo(record2));	
+			list.Sort((record1, record2) => record1.CompareTo(record2));
 		}
 
 		public string[] GetColumns()
 		{
-			return new string[] { "Name", "Folder" };
+			return new string[] { "Name", "Folder", "Last Update", "Source" };
 		}
 
 		public ListViewItem FormatItem(IRecord record)
 		{
-			return new ListViewItem(new string[] { record.Name, record.Key });
+			OpponentStatus status = Listing.Instance.GetCharacterStatus(record.Key);
+			Character c = record as Character;
+			string lastUpdate = GetTimeSince(c.LastUpdate, DateTime.Now);
+			return new ListViewItem(new string[] { record.Name, record.Key, lastUpdate, status == OpponentStatus.Testing || status == OpponentStatus.Main ? "" : status.ToString() });
 		}
 
 		public void SetContext(object context)
 		{
 			_characterContext = context as Character;
 			_skinContext = context as Costume;
+		}
+
+		public static string GetTimeSince(DateTime date, DateTime since)
+		{
+			TimeSpan diff = date - since;
+			if (date <= since)
+			{
+				if (diff.Days <= -7)
+				{
+					int days = -diff.Days;
+					int weeks = days / 7;
+					int months = weeks / 4;
+					if (months >= 12)
+					{
+						return "Over a year ago";
+					}
+					else if (months == 0)
+					{
+						return $"{weeks} {(weeks == 1 ? "week" : "weeks")} ago";
+					}
+					return $"{months} {(months == 1 ? "month" : "months")} ago";
+				}
+				else
+				{
+					if (diff.Days < 0)
+					{
+						return $"{-diff.Days} {(diff.Days == -1 ? "day" : "days")} ago";
+					}
+					else
+					{
+						if (diff.Hours < 0)
+						{
+							return $"{-diff.Hours} {(diff.Hours == -1 ? "hour" : "hours")} ago";
+						}
+						else
+						{
+							if (diff.Minutes >= 0)
+							{
+								return "Just now";
+							}
+							return $"{-diff.Minutes} {(diff.Minutes == -1 ? "minute" : "minutes")} ago";
+						}
+					}
+				}
+			}
+			return "In the future";
 		}
 	}
 }

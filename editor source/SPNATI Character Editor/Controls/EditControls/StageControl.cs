@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
+using Desktop.Skinning;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -76,7 +77,7 @@ namespace SPNATI_Character_Editor
 			SetCombo(cboTo, max);
 		}
 
-		private void SetCombo(ComboBox box, string stage)
+		private void SetCombo(SkinnedComboBox box, string stage)
 		{
 			for (int i = 0; i < box.Items.Count; i++)
 			{
@@ -97,9 +98,6 @@ namespace SPNATI_Character_Editor
 
 		private void FillItems()
 		{
-			string from = cboFrom.Text;
-			string to = cboTo.Text;
-
 			Case selectedCase = Data as Case;
 
 			string key = _sourceMember.GetValue(Data)?.ToString();
@@ -189,22 +187,6 @@ namespace SPNATI_Character_Editor
 				}
 				cboFrom.DataSource = data;
 				cboTo.DataSource = data;
-				if (!string.IsNullOrEmpty(from))
-				{
-					cboFrom.Text = from;
-				}
-				else
-				{
-					cboFrom.Text = "";
-				}
-				if (!string.IsNullOrEmpty(to))
-				{
-					cboTo.Text = to;
-				}
-				else
-				{
-					cboTo.Text = "";
-				}
 			}
 		}
 
@@ -266,7 +248,7 @@ namespace SPNATI_Character_Editor
 			return character;
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			cboFrom.Text = "";
 			cboTo.Text = "";
@@ -290,13 +272,13 @@ namespace SPNATI_Character_Editor
 			return value;
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			string value = BuildValue();
 			SetValue(value);
 		}
 
-		private string ReadStage(ComboBox box)
+		private string ReadStage(SkinnedComboBox box)
 		{
 			if (string.IsNullOrEmpty(box.Text))
 			{

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -6,6 +7,12 @@ namespace SPNATI_Character_Editor.Controls
 	public partial class MarkerOptions : UserControl, IDialogueDropDownControl
 	{
 		public int RowIndex { get; private set; }
+
+		public SkinnedBackgroundType PanelType
+		{
+			get { return SkinnedBackgroundType.Background; }
+		}
+
 		private DialogueLine _line;
 
 		public event EventHandler DataUpdated;
@@ -13,10 +20,22 @@ namespace SPNATI_Character_Editor.Controls
 		public MarkerOptions()
 		{
 			InitializeComponent();
+			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 		}
 
-		public void SetData(int rowIndex, DialogueLine line)
+		public void OnUpdateSkin(Skin skin)
 		{
+			BackColor = skin.Background.Normal;
+			foreach (Control child in Controls)
+			{
+				SkinManager.Instance.ReskinControl(child, skin);
+			}
+			Invalidate(true);
+		}
+
+		public void SetData(int rowIndex, DialogueLine line, Character character)
+		{
+			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 			RowIndex = rowIndex;
 			_line = line;
 			string markerValue;

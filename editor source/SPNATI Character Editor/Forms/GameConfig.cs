@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class GameConfig : Form
+	public partial class GameConfig : SkinnedForm
 	{
 		public GameConfig()
 		{

@@ -33,11 +33,13 @@
 			// 
 			// wb
 			// 
-			this.wb.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.wb.Location = new System.Drawing.Point(0, 0);
+			this.wb.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.wb.Location = new System.Drawing.Point(1, 28);
 			this.wb.MinimumSize = new System.Drawing.Size(20, 20);
 			this.wb.Name = "wb";
-			this.wb.Size = new System.Drawing.Size(1226, 702);
+			this.wb.Size = new System.Drawing.Size(1223, 673);
 			this.wb.TabIndex = 0;
 			this.wb.Url = new System.Uri("", System.UriKind.Relative);
 			// 

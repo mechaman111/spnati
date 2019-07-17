@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
+using Desktop.Skinning;
 
 namespace SPNATI_Character_Editor.Activities
 {
@@ -104,7 +105,7 @@ namespace SPNATI_Character_Editor.Activities
 			viewPanel.Controls.Clear();
 			for (int i = 0; i < _availableViews.Length; i++)
 			{
-				RadioButton button = new RadioButton();
+				RadioButton button = new SkinnedRadioButton();
 				viewPanel.Controls.Add(button);
 				button.Text = _availableViews[i];
 				if (i == 0)
@@ -164,6 +165,11 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				return Order.CompareTo(other.Order);
 			}
+		}
+
+		protected override void OnSkinChanged(Skin skin)
+		{
+			base.OnSkinChanged(skin);
 		}
 	}
 

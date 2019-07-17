@@ -1,13 +1,15 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
+using Desktop.Skinning;
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	public partial class CaseControl : UserControl, IMacroEditor
+	public partial class CaseControl : UserControl, IMacroEditor, ISkinnedPanel, ISkinControl
 	{
 		private const string FavoriteConditionsSetting = "FavoritedConditions";
 
@@ -27,12 +29,18 @@ namespace SPNATI_Character_Editor.Controls
 			InitializeComponent();
 		}
 
+		public void OnUpdateSkin(Skin skin)
+		{
+			BackColor = skin.Background.GetColor(VisualState.Normal, false, Enabled);
+		}
+
 		private void CaseControl_Load(object sender, EventArgs e)
 		{
 			tableConditions.RecordFilter = FilterTargets;
 			lstAddTags.RecordType = typeof(Tag);
 			lstRemoveTags.RecordType = typeof(Tag);
-			//SetupMessageHandlers();
+			gridStages.CheckedChanged += Check_CheckedChanged;
+			gridStages.LayerSelected += GridStages_LayerSelected;
 			gridDialogue.TextUpdated += GridDialogue_TextUpdated;
 		}
 
@@ -50,15 +58,43 @@ namespace SPNATI_Character_Editor.Controls
 			CreateStageCheckboxes();
 		}
 
+		public Case GetCase()
+		{
+			return _selectedCase;
+		}
+
 		public void SetCase(Stage stage, Case workingCase)
 		{
+			if (_selectedCase != null)
+			{
+				_selectedCase.AlternativeConditions.CollectionChanged -= AlternativeConditions_CollectionChanged;
+				tabsConditions.Selected -= TabsConditions_Selected;
+				tabsConditions.SelectedIndexChanged -= tabsConditions_SelectedIndexChanged;
+				tabsConditions.SelectedIndex = 0;
+				for (int i = tabsConditions.TabPages.Count - 1; i > 0; i--)
+				{
+					tabsConditions.TabPages.RemoveAt(i);
+				}
+			}
 			_selectedStage = stage;
 			_selectedCase = workingCase;
 			if (_selectedCase != null)
 			{
-				grpConditions.Enabled = true;
+				_selectedCase.AlternativeConditions.CollectionChanged += AlternativeConditions_CollectionChanged;
+				tabConditions.Enabled = true;
+				foreach (Case alternative in _selectedCase.AlternativeConditions)
+				{
+					AddAlternateTab();
+				}
+				tabsConditions.SelectedIndexChanged += tabsConditions_SelectedIndexChanged;
+				tabsConditions.Selected += TabsConditions_Selected;
 			}
 			PopulateCase();
+		}
+
+		private void TabsConditions_Selected(object sender, TabControlEventArgs e)
+		{
+			
 		}
 
 		public void UpdateStages()
@@ -107,35 +143,28 @@ namespace SPNATI_Character_Editor.Controls
 			if (_populatingCase)
 				return;
 			_populatingCase = true;
-			UpdateCheckAllState();
-			gridDialogue.UpdateAvailableImagesForCase(GetSelectedStages(), true);
+			HashSet<int> stages = GetSelectedStages();
+			UpdatePreviewStage(stages, -1);
 			_populatingCase = false;
 		}
 
-		/// <summary>
-		/// Checks or unchecks all stages besides the current stage
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void chkSelectAll_CheckedChanged(object sender, EventArgs e)
+		private void GridStages_LayerSelected(object sender, int layer)
 		{
-			if (_populatingCase)
-				return;
-			int currentStage = _selectedStage == null ? 0 : _selectedStage.Id;
-			bool newState = chkSelectAll.Checked;
-			_populatingCase = true;
-			for (int i = 0; i < flowStageChecks.Controls.Count; i++)
+			UpdatePreviewStage(GetSelectedStages(), layer);
+		}
+
+		private void UpdatePreviewStage(HashSet<int> stages, int desiredStage)
+		{
+			if (_selectedStage != null && stages.Count > 0)
 			{
-				if (i == currentStage)
-					continue;
-				CheckBox box = flowStageChecks.Controls[i] as CheckBox;
-				if (box != null && box.Enabled)
+				if (desiredStage == -1)
 				{
-					box.Checked = newState;
+					desiredStage = stages.Min();
 				}
+				_selectedStage = new Stage(desiredStage);
+				gridDialogue.SetStage(_selectedStage, stages);
+				gridStages.SetPreviewStage(_selectedStage.Id);
 			}
-			_populatingCase = false;
-			gridDialogue.UpdateAvailableImagesForCase(GetSelectedStages(), true);
 		}
 
 		/// <summary>
@@ -228,24 +257,25 @@ namespace SPNATI_Character_Editor.Controls
 
 			PopulateStageCheckboxes();
 
-			int stageId = _selectedStage == null ? 0 : _selectedStage.Id;
 			Trigger caseTrigger = TriggerDatabase.GetTrigger(stageCase.Tag);
 
 			#region Case-wide settings
 			//Tag combo box
 			cboCaseTags.Items.Clear();
+			Trigger currentTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
 			if (_selectedStage != null)
 			{
 				Trigger selection = null;
 				foreach (string tag in TriggerDatabase.GetTags())
 				{
-					if (TriggerDatabase.UsedInStage(tag, _character, stageId))
+					Trigger t = TriggerDatabase.GetTrigger(tag);
+					if (currentTrigger.HasTarget && currentTrigger.HasTarget != t.HasTarget)
 					{
-						Trigger t = new Trigger(tag, TriggerDatabase.GetLabel(tag));
-						if (tag == _selectedCase.Tag)
-							selection = t;
-						cboCaseTags.Items.Add(t);
+						continue;
 					}
+					if (tag == _selectedCase.Tag)
+						selection = t;
+					cboCaseTags.Items.Add(t);
 				}
 				cboCaseTags.SelectedItem = selection;
 				cboCaseTags.Enabled = true;
@@ -273,6 +303,22 @@ namespace SPNATI_Character_Editor.Controls
 			#endregion
 
 			txtNotes.Text = _editorData.GetNote(_selectedCase);
+			CaseLabel label = _editorData.GetLabel(_selectedCase);
+			txtFolder.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			txtFolder.AutoCompleteSource = AutoCompleteSource.CustomSource;
+			txtFolder.AutoCompleteCustomSource = _editorData.Folders;
+			if (label == null)
+			{
+				txtLabel.Text = null;
+				txtFolder.Text = null;
+				SetColorButton(null);
+			}
+			else
+			{
+				txtLabel.Text = label.Text;
+				txtFolder.Text = label.Folder;
+				SetColorButton(label.ColorCode);
+			}
 
 			if (caseTrigger.HasTarget)
 			{
@@ -283,8 +329,7 @@ namespace SPNATI_Character_Editor.Controls
 				tableConditions.RecordFilter = FilterTargets;
 			}
 			bool firstPopulation = (tableConditions.Data == null);
-			tableConditions.Data = _selectedCase;
-			AddSpeedButtons();
+			PopulateConditionTable(_selectedCase);
 
 			if (firstPopulation)
 			{
@@ -308,57 +353,61 @@ namespace SPNATI_Character_Editor.Controls
 
 			var stages = GetSelectedStages();
 			gridDialogue.SetData(_character, _selectedStage, _selectedCase, stages, _imageLibrary);
-			GetSelectedStages();
 
 			PopulateTagsTab();
 
 			_populatingCase = false;
-			//HighlightRow(0);
 		}
 
-		private void AddSpeedButtons()
+		private void PopulateConditionTable(Case workingCase)
 		{
-			if (_selectedCase == null) { return; }
-			Trigger caseTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
-			tableConditions.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
-			tableConditions.AddSpeedButton("Game", "Inside/Outside", (data) => { return AddVariableTest("~background.location~", data); });
+			tableConditions.Data = workingCase;
+			AddSpeedButtons(tableConditions, workingCase?.Tag);
+		}
+
+		public static void AddSpeedButtons(PropertyTable table, string tag)
+		{
+			if (tag == null) { return; }
+			Trigger caseTrigger = TriggerDatabase.GetTrigger(tag);
+
+			//Game-wide
+			table.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
+			table.AddSpeedButton("Game", "Inside/Outside", (data) => { return AddVariableTest("~background.location~", data); });
+
+			//Player variables
+
+			table.AddSpeedButton("Player", "Collectible (+)", (data) => { return AddVariableTest("~_.collectible.*~", data); });
+			table.AddSpeedButton("Player", "Collectible (Counter) (+)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
+			table.AddSpeedButton("Player", "Costume (+)", (data) => { return AddVariableTest("~_.costume~", data); });
+			table.AddSpeedButton("Player", "Largest Lead (+)", (data) => { return AddVariableTest("~_.biggestlead~", data); });
+			table.AddSpeedButton("Player", "Layer Difference (+)", (data) => { return AddVariableTest("~_.diff~", data); });
+			table.AddSpeedButton("Player", "Marker (+)", (data) => { return AddVariableTest("~_.marker.*~", data); });
+			table.AddSpeedButton("Player", "Marker (Persistent) (+)", (data) => { return AddVariableTest("~_.persistent.*~", data); });
+			table.AddSpeedButton("Player", "Place (+)", (data) => { return AddVariableTest("~_.lead~", data); });
+			table.AddSpeedButton("Player", "Relative Position (+)", (data) => { return AddVariableTest("~_.position~", data); });
+			table.AddSpeedButton("Player", "Slot (+)", (data) => { return AddVariableTest("~_.slot~", data); });
+			table.AddSpeedButton("Player", "Stage (+)", (data) => { return AddVariableTest("~_.stage~", data); });
+			table.AddSpeedButton("Player", "Tag (+)", (data) => { return AddVariableTest("~_.tag.*~", data); });
+
+			//Table-wide
+			table.AddSpeedButton("Table", "Human Name", (data) => { return AddVariableTest("~player~", data); });
 			if (caseTrigger.AvailableVariables.Contains("cards"))
 			{
-				tableConditions.AddSpeedButton("Self", "Cards Exchanged", (data) => { return AddVariableTest("~cards~", data); });
+				table.AddSpeedButton("Self", "Cards Exchanged", (data) => { return AddVariableTest("~cards~", data); });
 			}
-			tableConditions.AddSpeedButton("Self", "Collectible", (data) => { return AddVariableTest("~collectible.*~", data); });
-			tableConditions.AddSpeedButton("Self", "Collectible (Counter)", (data) => { return AddVariableTest("~collectible.*.counter~", data); });
-			tableConditions.AddSpeedButton("Self", "Costume", (data) => { return AddVariableTest("~self.costume~", data); });
-			tableConditions.AddSpeedButton("Self", "Marker (Persistent) (+)", (data) => { return AddVariableTest("~persistent.*~", data); });
-			tableConditions.AddSpeedButton("Self", "Slot", (data) => { return AddVariableTest("~self.slot~", data); });
-			tableConditions.AddSpeedButton("Self", "Tag", (data) => { return AddVariableTest("~self.tag.*~", data); });
 			if (caseTrigger.HasTarget)
 			{
 				if (caseTrigger.AvailableVariables.Contains("clothing"))
 				{
-					tableConditions.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
-					tableConditions.AddSpeedButton("Clothing", "Clothing Type", (data) => { return AddVariableTest("~clothing.type~", data); });
+					table.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
+					table.AddSpeedButton("Clothing", "Clothing Type", (data) => { return AddVariableTest("~clothing.type~", data); });
 				}
-				tableConditions.AddSpeedButton("Target", "Collectible (+)", (data) => { return AddVariableTest("~target.collectible.*~", data); });
-				tableConditions.AddSpeedButton("Target", "Collectible (Counter) (+)", (data) => { return AddVariableTest("~target.collectible.*.counter~", data); });
-				tableConditions.AddSpeedButton("Target", "Costume", (data) => { return AddVariableTest("~target.costume~", data); });
-				tableConditions.AddSpeedButton("Target", "Gender", (data) => { return AddVariableTest("~target.gender~", data); });
-				tableConditions.AddSpeedButton("Target", "Marker (Persistent) (+)", (data) => { return AddVariableTest("~target.persistent.*~", data); });
-				tableConditions.AddSpeedButton("Target", "Position", (data) => { return AddVariableTest("~target.position~", data); });
-				tableConditions.AddSpeedButton("Target", "Size", (data) => { return AddVariableTest("~target.size~", data); });
-				tableConditions.AddSpeedButton("Target", "Slot", (data) => { return AddVariableTest("~target.slot~", data); });
-				tableConditions.AddSpeedButton("Target", "Tag (+)", (data) => { return AddVariableTest("~target.tag.*~", data); });
+				table.AddSpeedButton("Target", "Gender", (data) => { return AddVariableTest("~target.gender~", data); });
+				table.AddSpeedButton("Target", "Size", (data) => { return AddVariableTest("~target.size~", data); });
 			}
-			tableConditions.AddSpeedButton("Also Playing", "Collectible (+)", (data) => { return AddVariableTest("~_.collectible.*~", data); });
-			tableConditions.AddSpeedButton("Also Playing", "Collectible (Counter) (+)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
-			tableConditions.AddSpeedButton("Also Playing", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
-			tableConditions.AddSpeedButton("Also Playing", "Marker (Persistent) (+)", (data) => { return AddVariableTest("~_.persistent.*~", data); });
-			tableConditions.AddSpeedButton("Also Playing", "Position", (data) => { return AddVariableTest("~_.position~", data); });
-			tableConditions.AddSpeedButton("Also Playing", "Slot", (data) => { return AddVariableTest("~_.slot~", data); });
-			tableConditions.AddSpeedButton("Also Playing", "Tag (+)", (data) => { return AddVariableTest("~_.tag.*~", data); });
 		}
 
-		private string AddVariableTest(string variable, object data)
+		private static string AddVariableTest(string variable, object data)
 		{
 			Case theCase = data as Case;
 			theCase.Expressions.Add(new ExpressionTest(variable, ""));
@@ -378,10 +427,9 @@ namespace SPNATI_Character_Editor.Controls
 		private HashSet<int> GetSelectedStages()
 		{
 			HashSet<int> selectedStages = new HashSet<int>();
-			for (int i = 0; i < flowStageChecks.Controls.Count; i++)
+			for (int i = 0; i < _character.Layers + Clothing.ExtraStages; i++)
 			{
-				CheckBox box = flowStageChecks.Controls[i] as CheckBox;
-				if (box.Checked)
+				if (gridStages.GetChecked(i))
 				{
 					selectedStages.Add(i);
 				}
@@ -394,28 +442,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		private void CreateStageCheckboxes()
 		{
-			//Stage checkmarks
-			for (int i = 0; i < flowStageChecks.Controls.Count; i++)
-			{
-				CheckBox box = flowStageChecks.Controls[i] as CheckBox;
-				if (box != null)
-				{
-					box.CheckedChanged -= Check_CheckedChanged;
-				}
-			}
-			flowStageChecks.Controls.Clear();
-			int layers = _character.Layers + 3;
-			for (int i = 0; i < layers; i++)
-			{
-				StageName stage = _character.LayerToStageName(i);
-				CheckBox check = new CheckBox();
-				check.CheckedChanged += Check_CheckedChanged;
-				check.Tag = stage;
-				check.Text = string.Format("{0} ({1})", stage.DisplayName, stage.Id);
-				check.Width = 180;
-				check.Margin = new Padding(0);
-				flowStageChecks.Controls.Add(check);
-			}
+			gridStages.SetData(_character, null, -1);
 		}
 
 		private bool FilterTargets(PropertyRecord record)
@@ -436,36 +463,39 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="switchingCases">True when saving within the context of switching selected cases</param>
 		/// <returns>True if cases were changed in such a way that the dialogue tree needs to be regenerated</returns>
-		private bool SaveCase()
+		private void SaveCase()
 		{
 			if (_selectedCase == null)
-				return false;
+			{
+				return;
+			}
 
 			SaveNotes();
-			bool needRegeneration = false;
 			var c = _selectedCase;
 			if (c.Tag != Trigger.StartTrigger)
 			{
-				string newTag = GUIHelper.ReadComboBox(cboCaseTags);
-				if (newTag != c.Tag)
-					needRegeneration = true;
+				string newTag = "";
+				Trigger trigger = cboCaseTags.SelectedItem as Trigger;
+				if (trigger != null)
+				{
+					newTag = trigger.Tag;
+				}
 				c.Tag = newTag;
+				foreach (Case alternate in c.AlternativeConditions)
+				{
+					alternate.Tag = newTag;
+				}
 
 				//Figure out the stages
 				List<int> oldStages = new List<int>();
 				oldStages.AddRange(c.Stages);
 				c.Stages.Clear();
-				for (int i = 0; i < flowStageChecks.Controls.Count; i++)
+				for (int i = 0; i < _character.Layers + Clothing.ExtraStages; i++)
 				{
-					CheckBox box = flowStageChecks.Controls[i] as CheckBox;
-					if (box.Checked && TriggerDatabase.UsedInStage(newTag, _character, i))
+					if (gridStages.GetChecked(i) && TriggerDatabase.UsedInStage(newTag, _character, i))
 					{
 						c.Stages.Add(i);
-						if (!oldStages.Contains(i))
-							needRegeneration = true;
 					}
-					else if (oldStages.Contains(i))
-						needRegeneration = true;
 				}
 
 				tableConditions.Save();
@@ -479,8 +509,6 @@ namespace SPNATI_Character_Editor.Controls
 			SaveTagsTab();
 
 			_character.Behavior.ApplyChanges(_selectedCase);
-
-			return needRegeneration;
 		}
 
 		/// <summary>
@@ -488,44 +516,12 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		private void PopulateStageCheckboxes()
 		{
-			chkSelectAll.Enabled = (_selectedStage != null);
-			for (int i = 0; i < flowStageChecks.Controls.Count; i++)
+			int stageId = -1;
+			if (_selectedStage != null)
 			{
-				CheckBox box = flowStageChecks.Controls[i] as CheckBox;
-				if (_selectedCase != null)
-				{
-					box.Enabled = TriggerDatabase.UsedInStage(_selectedCase.Tag, _character, i);
-				}
-				box.Checked = _selectedCase == null ? false : _selectedCase.Stages.Contains(i);
+				stageId = _selectedStage.Id;
 			}
-			UpdateCheckAllState();
-		}
-
-		/// <summary>
-		/// Updates the Select All checkbox based on the individual stage checkboxes
-		/// </summary>
-		private void UpdateCheckAllState()
-		{
-			bool allChecked = true;
-			bool noneChecked = true;
-			for (int i = 0; i < flowStageChecks.Controls.Count; i++)
-			{
-				CheckBox box = flowStageChecks.Controls[i] as CheckBox;
-				if (_selectedStage != null && _selectedStage.Id != i && box.Enabled)
-				{
-					if (box.Checked)
-						noneChecked = false;
-					else allChecked = false;
-				}
-			}
-			if (chkSelectAll.Enabled)
-			{
-				chkSelectAll.CheckState = allChecked ? CheckState.Checked : noneChecked ? CheckState.Unchecked : CheckState.Indeterminate;
-			}
-			else
-			{
-				chkSelectAll.Checked = false;
-			}
+			gridStages.SetData(_character, _selectedCase, stageId);
 		}
 
 		private void SaveTagsTab()
@@ -562,6 +558,7 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			}
 			_editorData.SetNote(_selectedCase, txtNotes.Text);
+			_editorData.SetLabel(_selectedCase, txtLabel.Text, cmdColorCode.Tag?.ToString(), txtFolder.Text);
 		}
 
 		#region Macro editing
@@ -576,6 +573,11 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				return MacroManager.ShowMacroHelp;
 			}
+		}
+
+		public SkinnedBackgroundType PanelType
+		{
+			get { return SkinnedBackgroundType.Background; }
 		}
 
 		public string GetHelpText()
@@ -613,6 +615,97 @@ namespace SPNATI_Character_Editor.Controls
 		private void tableConditions_MacroChanged(object sender, MacroArgs e)
 		{
 			Config.SaveMacros("Case");
+		}
+
+		private void cboCaseTags_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			Trigger tag = cboCaseTags.SelectedItem as Trigger;
+			if (tag != null)
+			{
+				lblHelpText.Text = tag.HelpText;
+			}
+		}
+
+		public void AddSpeedButtons(PropertyTable table)
+		{
+			AddSpeedButtons(table, _selectedCase?.Tag);
+		}
+
+		private void cmdColorCode_Click(object sender, EventArgs e)
+		{
+			ColorCode color = RecordLookup.DoLookup(typeof(ColorCode), "", false, null) as ColorCode;
+			if (color != null)
+			{
+				SetColorButton(color.Key);
+			}
+		}
+
+		private void SetColorButton(string colorCode)
+		{
+			ColorCode code = Definitions.Instance.Get<ColorCode>(colorCode);
+			if (code == null)
+			{
+				cmdColorCode.BackColor = SkinManager.Instance.CurrentSkin.Background.Normal;
+				cmdColorCode.Tag = null;
+			}
+			else
+			{
+				cmdColorCode.BackColor = code.GetColor();
+				cmdColorCode.Tag = colorCode;
+			}
+		}
+
+		private void AlternativeConditions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		{
+			switch (e.Action)
+			{
+				case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+					AddAlternateTab();
+					break;
+				case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+					tabsConditions.TabPages.RemoveAt(e.OldStartingIndex + 1);
+					for (int i = e.OldStartingIndex + 1; i < tabsConditions.TabPages.Count; i++)
+					{
+						tabsConditions.TabPages[i].Text = "Set " + (i + 1);
+					}
+					break;
+			}
+		}
+
+		private void stripConditions_AddButtonClicked(object sender, EventArgs e)
+		{
+			if (_selectedCase == null) { return; }
+			Case alternate = new Case(_selectedCase.Tag);
+			_selectedCase.AlternativeConditions.Add(alternate);
+			tabsConditions.SelectedIndex = _selectedCase.AlternativeConditions.Count;
+		}
+
+		private void AddAlternateTab()
+		{
+			tabsConditions.TabPages.Add($"Set {(tabsConditions.TabPages.Count + 1)}");
+		}
+
+		private void stripConditions_CloseButtonClicked(object sender, EventArgs e)
+		{
+			if (_selectedCase == null) { return; }
+			int index = tabsConditions.SelectedIndex - 1;
+			if (index >= 0)
+			{
+				_selectedCase.AlternativeConditions.RemoveAt(index);
+				tabsConditions.SelectedIndex = index < tabsConditions.TabPages.Count - 1 ? index + 1 : index;
+			}
+		}
+
+		private void tabsConditions_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (_selectedCase == null) { return; }
+			int index = tabsConditions.SelectedIndex;
+			Case desiredCase = _selectedCase;
+			if (index > 0)
+			{
+				desiredCase = _selectedCase.AlternativeConditions[index - 1];
+			}
+			PopulateConditionTable(desiredCase);
 		}
 	}
 }

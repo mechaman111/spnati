@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
-	public partial class BulkReplaceTool : Form
+	public partial class BulkReplaceTool : SkinnedForm
 	{
 		private string _sourceTag;
 		public string SourceTag
@@ -49,8 +50,7 @@ namespace SPNATI_Character_Editor
 
 		private void PopulateComboBoxes()
 		{
-			cboSource.DataSource = TriggerDatabase.Triggers;
-			cboSource.BindingContext = new BindingContext();
+			cboSource.Items.AddRange(TriggerDatabase.Triggers);
 			DataGridViewComboBoxColumn column = gridDestinations.Columns[0] as DataGridViewComboBoxColumn;
 			column.Items.Add("");
 			foreach (Trigger trigger in TriggerDatabase.Triggers)

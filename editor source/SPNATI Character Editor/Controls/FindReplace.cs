@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
-	public partial class FindReplace : Form
+	public partial class FindReplace : SkinnedForm
 	{
 		public event EventHandler<FindArgs> Find;
 		public event EventHandler<FindArgs> Replace;

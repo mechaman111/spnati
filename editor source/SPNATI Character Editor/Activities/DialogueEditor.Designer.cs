@@ -33,11 +33,11 @@ namespace SPNATI_Character_Editor.Activities
 			this.components = new System.ComponentModel.Container();
 			this.triggerMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.cmdMakeResponse = new System.Windows.Forms.Button();
-			this.cmdCallOut = new System.Windows.Forms.Button();
-			this.splitDialogue = new System.Windows.Forms.SplitContainer();
-			this.treeDialogue = new SPNATI_Character_Editor.Controls.DialogueTree();
+			this.cmdMakeResponse = new Desktop.Skinning.SkinnedButton();
+			this.cmdCallOut = new Desktop.Skinning.SkinnedButton();
+			this.splitDialogue = new Desktop.Skinning.SkinnedSplitContainer();
 			this.panelCase = new System.Windows.Forms.Panel();
+			this.treeDialogue = new SPNATI_Character_Editor.Controls.DialogueTree();
 			this.caseControl = new SPNATI_Character_Editor.Controls.CaseControl();
 			((System.ComponentModel.ISupportInitialize)(this.splitDialogue)).BeginInit();
 			this.splitDialogue.Panel1.SuspendLayout();
@@ -55,11 +55,14 @@ namespace SPNATI_Character_Editor.Activities
 			// cmdMakeResponse
 			// 
 			this.cmdMakeResponse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdMakeResponse.Location = new System.Drawing.Point(508, 3);
+			this.cmdMakeResponse.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdMakeResponse.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdMakeResponse.Flat = false;
+			this.cmdMakeResponse.Location = new System.Drawing.Point(508, 2);
 			this.cmdMakeResponse.Name = "cmdMakeResponse";
 			this.cmdMakeResponse.Size = new System.Drawing.Size(104, 23);
 			this.cmdMakeResponse.TabIndex = 45;
-			this.cmdMakeResponse.Text = "Respond to This...";
+			this.cmdMakeResponse.Text = "Respond";
 			this.toolTip1.SetToolTip(this.cmdMakeResponse, "Creates a response to this case on another character");
 			this.cmdMakeResponse.UseVisualStyleBackColor = true;
 			this.cmdMakeResponse.Click += new System.EventHandler(this.cmdMakeResponse_Click);
@@ -67,11 +70,14 @@ namespace SPNATI_Character_Editor.Activities
 			// cmdCallOut
 			// 
 			this.cmdCallOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdCallOut.Location = new System.Drawing.Point(618, 3);
+			this.cmdCallOut.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdCallOut.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdCallOut.Flat = false;
+			this.cmdCallOut.Location = new System.Drawing.Point(618, 2);
 			this.cmdCallOut.Name = "cmdCallOut";
 			this.cmdCallOut.Size = new System.Drawing.Size(75, 23);
 			this.cmdCallOut.TabIndex = 44;
-			this.cmdCallOut.Text = "Call Out...";
+			this.cmdCallOut.Text = "Call Out";
 			this.toolTip1.SetToolTip(this.cmdCallOut, "Marks this situation as being \"noteworthy\" so it will appear in other character\'s" +
         " Writing Aids.");
 			this.cmdCallOut.UseVisualStyleBackColor = true;
@@ -91,21 +97,9 @@ namespace SPNATI_Character_Editor.Activities
 			// 
 			this.splitDialogue.Panel2.Controls.Add(this.panelCase);
 			this.splitDialogue.Size = new System.Drawing.Size(973, 671);
+			this.splitDialogue.SplitterColor = Desktop.Skinning.SkinnedBackgroundType.PrimaryLight;
 			this.splitDialogue.SplitterDistance = 266;
 			this.splitDialogue.TabIndex = 16;
-			// 
-			// treeDialogue
-			// 
-			this.treeDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.treeDialogue.Location = new System.Drawing.Point(3, 3);
-			this.treeDialogue.Name = "treeDialogue";
-			this.treeDialogue.Size = new System.Drawing.Size(259, 665);
-			this.treeDialogue.TabIndex = 40;
-			this.treeDialogue.SelectedNodeChanging += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseSelectionEventArgs>(this.tree_SelectedNodeChanging);
-			this.treeDialogue.SelectedNodeChanged += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseSelectionEventArgs>(this.tree_SelectedCaseChanged);
-			this.treeDialogue.CreatingCase += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseCreationEventArgs>(this.tree_CreatingCase);
 			// 
 			// panelCase
 			// 
@@ -122,10 +116,25 @@ namespace SPNATI_Character_Editor.Activities
 			this.panelCase.Size = new System.Drawing.Size(697, 668);
 			this.panelCase.TabIndex = 28;
 			// 
+			// treeDialogue
+			// 
+			this.treeDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.treeDialogue.Location = new System.Drawing.Point(0, 0);
+			this.treeDialogue.Margin = new System.Windows.Forms.Padding(0);
+			this.treeDialogue.Name = "treeDialogue";
+			this.treeDialogue.Size = new System.Drawing.Size(266, 665);
+			this.treeDialogue.TabIndex = 40;
+			this.treeDialogue.SelectedNodeChanging += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseSelectionEventArgs>(this.tree_SelectedNodeChanging);
+			this.treeDialogue.SelectedNodeChanged += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseSelectionEventArgs>(this.tree_SelectedCaseChanged);
+			this.treeDialogue.CreatingCase += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseCreationEventArgs>(this.tree_CreatingCase);
+			// 
 			// caseControl
 			// 
 			this.caseControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.caseControl.Location = new System.Drawing.Point(0, 0);
+			this.caseControl.Margin = new System.Windows.Forms.Padding(0);
 			this.caseControl.Name = "caseControl";
 			this.caseControl.Size = new System.Drawing.Size(697, 668);
 			this.caseControl.TabIndex = 46;
@@ -148,12 +157,12 @@ namespace SPNATI_Character_Editor.Activities
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitDialogue;
+		private Desktop.Skinning.SkinnedSplitContainer splitDialogue;
 		private System.Windows.Forms.Panel panelCase;
 		private System.Windows.Forms.ContextMenuStrip triggerMenu;
-		private System.Windows.Forms.Button cmdCallOut;
+		private Desktop.Skinning.SkinnedButton cmdCallOut;
 		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.Button cmdMakeResponse;
+		private Desktop.Skinning.SkinnedButton cmdMakeResponse;
 		private Controls.DialogueTree treeDialogue;
 		private CaseControl caseControl;
 	}

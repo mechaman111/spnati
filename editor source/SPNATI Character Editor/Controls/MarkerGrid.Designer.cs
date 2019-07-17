@@ -28,10 +28,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.gridMarkers = new System.Windows.Forms.DataGridView();
+			this.gridMarkers = new Desktop.Skinning.SkinnedDataGridView();
 			this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColScope = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.ColScope = new Desktop.Skinning.SkinnedDataGridViewComboBoxColumn();
 			this.ColDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColDelete = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridMarkers)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -42,13 +43,16 @@
 			this.gridMarkers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColName,
             this.ColScope,
-            this.ColDescription});
+            this.ColDescription,
+            this.ColDelete});
 			this.gridMarkers.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gridMarkers.Location = new System.Drawing.Point(0, 0);
 			this.gridMarkers.MultiSelect = false;
 			this.gridMarkers.Name = "gridMarkers";
 			this.gridMarkers.Size = new System.Drawing.Size(653, 362);
 			this.gridMarkers.TabIndex = 5;
+			this.gridMarkers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMarkers_CellContentClick);
+			this.gridMarkers.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.gridMarkers_CellPainting);
 			this.gridMarkers.SelectionChanged += new System.EventHandler(this.gridMarkers_SelectionChanged);
 			// 
 			// ColName
@@ -60,9 +64,6 @@
 			// ColScope
 			// 
 			this.ColScope.HeaderText = "Scope";
-			this.ColScope.Items.AddRange(new object[] {
-            "Private",
-            "Public"});
 			this.ColScope.Name = "ColScope";
 			this.ColScope.Width = 80;
 			// 
@@ -73,6 +74,12 @@
 			this.ColDescription.Name = "ColDescription";
 			this.ColDescription.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.ColDescription.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// ColDelete
+			// 
+			this.ColDelete.HeaderText = "";
+			this.ColDelete.Name = "ColDelete";
+			this.ColDelete.Width = 21;
 			// 
 			// MarkerGrid
 			// 
@@ -88,9 +95,10 @@
 
 		#endregion
 
-		private System.Windows.Forms.DataGridView gridMarkers;
+		private Desktop.Skinning.SkinnedDataGridView gridMarkers;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
-		private System.Windows.Forms.DataGridViewComboBoxColumn ColScope;
+		private Desktop.Skinning.SkinnedDataGridViewComboBoxColumn ColScope;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColDescription;
+		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColDelete;
 	}
 }

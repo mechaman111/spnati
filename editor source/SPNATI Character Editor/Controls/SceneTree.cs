@@ -86,6 +86,10 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				BuildKeyframeNode(dirNode, kf);
 			}
+			foreach (Choice c in directive.Choices)
+			{
+				BuildChoiceNode(dirNode, c);
+			}
 			return dirNode;
 		}
 
@@ -96,6 +100,15 @@ namespace SPNATI_Character_Editor.Controls
 			keyNode.Tag = kf;
 			dirNode.Nodes.Add(keyNode);
 			return keyNode;
+		}
+
+		private TreeNode BuildChoiceNode(TreeNode dirNode, Choice choice)
+		{
+			TreeNode choiceNode = new TreeNode(choice.ToString());
+			_nodes[choice] = choiceNode;
+			choiceNode.Tag = choice;
+			dirNode.Nodes.Add(choiceNode);
+			return choiceNode;
 		}
 
 		/// <summary>
@@ -129,6 +142,7 @@ namespace SPNATI_Character_Editor.Controls
 			Scene scene = node.Tag as Scene;
 			Directive directive = node.Tag as Directive;
 			Keyframe keyframe = node.Tag as Keyframe;
+			Choice choice = node.Tag as Choice;
 
 			if (scene != null)
 			{
@@ -139,9 +153,14 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				EnableMenu(tsAddDirective, true);
 				DirectiveDefinition def = Definitions.Instance.Get<DirectiveDefinition>(directive.DirectiveType);
-				EnableMenu(tsAddKeyframe, def != null && def.IsAnimatable);
+				EnableMenu(tsAddKeyframe, def != null && (def.IsAnimatable || directive.DirectiveType == "prompt"));
 			}
 			else if (keyframe != null)
+			{
+				EnableMenu(tsAddDirective, false);
+				EnableMenu(tsAddKeyframe, true);
+			}
+			else if (choice != null)
 			{
 				EnableMenu(tsAddDirective, false);
 				EnableMenu(tsAddKeyframe, true);
@@ -204,7 +223,24 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void TsAddKeyframe_Click(object sender, EventArgs e)
 		{
-			AddKeyframe();
+			TreeNode selectedNode = treeScenes.SelectedNode;
+			Directive directive = selectedNode?.Tag as Directive;
+			if (directive == null)
+			{
+				directive = selectedNode.Parent?.Tag as Directive;
+				if (directive == null)
+				{
+					return;
+				}
+			}
+			if (directive.DirectiveType == "prompt")
+			{
+				AddChoice();
+			}
+			else
+			{
+				AddKeyframe();
+			}
 		}
 
 		private void TsAddDirective_ButtonClick(object sender, EventArgs e)
@@ -218,7 +254,7 @@ namespace SPNATI_Character_Editor.Controls
 			string tag = ctl.Tag?.ToString();
 			if (!string.IsNullOrEmpty(tag))
 			{
-				AddDirective(tag);
+				AddDirective(tag, true);
 			}
 		}
 
@@ -231,7 +267,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			TreeNode node = treeScenes.SelectedNode;
 			if (node == null) { return; }
-			string nodeType = (node.Tag is Scene ? (((Scene)node.Tag).Transition ? "transition" : "scene") : node.Tag is Directive ? "directive" : "keyframe");
+			string nodeType = (node.Tag is Scene ? (((Scene)node.Tag).Transition ? "transition" : "scene") : node.Tag is Choice ? "choice" : node.Tag is Directive ? "directive" : "keyframe");
 			if (MessageBox.Show($"Are you sure you want to remove this {nodeType}?", $"Remove {nodeType}", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
 			{
 				return;
@@ -285,15 +321,18 @@ namespace SPNATI_Character_Editor.Controls
 			if (dragNode == null) { return; }
 			bool draggingDirective = dragNode.Tag is Directive;
 			bool draggingKeyframe = dragNode.Tag is Keyframe && !draggingDirective;
+			bool draggingChoice = dragNode.Tag is Choice;
 
 			Point targetPoint = treeScenes.PointToClient(new Point(e.X, e.Y));
 			TreeNode targetNode = treeScenes.GetNodeAt(targetPoint);
 			bool targetDirective = targetNode?.Tag is Directive;
 
 
-			if (targetNode == null || (draggingKeyframe && (targetNode == null || targetNode.Parent != dragNode.Parent)))
+			if (targetNode == null ||
+				(draggingKeyframe && (targetNode == null || targetNode.Parent != dragNode.Parent)) ||
+				 (draggingChoice && (targetNode == null || targetNode.Parent != dragNode.Parent)))
 			{
-				//keyframes can only be dragged within their original parent
+				//keyframes and choices can only be dragged within their original parent
 				e.Effect = DragDropEffects.None;
 				lblDragger.Visible = false;
 				return;
@@ -315,7 +354,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				//dragging a directive on top of a scene. always insert below
 				Point pt = lblDragger.Location;
-				pt.Y = targetNode.Bounds.Y + targetNode.Bounds.Height;
+				pt.Y = treeScenes.Top + targetNode.Bounds.Y + targetNode.Bounds.Height;
 				lblDragger.Location = pt;
 				lblDragger.Visible = true;
 			}
@@ -325,7 +364,7 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					//hovering on the upper half of a node
 					Point pt = lblDragger.Location;
-					pt.Y = targetNode.Bounds.Y;
+					pt.Y = treeScenes.Top + targetNode.Bounds.Y;
 					lblDragger.Location = pt;
 					lblDragger.Visible = true;
 				}
@@ -333,7 +372,7 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					//hovering on the lower half
 					Point pt = lblDragger.Location;
-					pt.Y = targetNode.Bounds.Y + targetNode.Bounds.Height;
+					pt.Y = treeScenes.Top + targetNode.Bounds.Y + targetNode.Bounds.Height;
 					lblDragger.Location = pt;
 					lblDragger.Visible = true;
 				}
@@ -351,12 +390,14 @@ namespace SPNATI_Character_Editor.Controls
 			if (dragNode == null) { return; }
 			bool draggingDirective = dragNode.Tag is Directive;
 			bool draggingKeyframe = dragNode.Tag is Keyframe && !draggingDirective;
+			bool draggingChoice = dragNode.Tag is Choice;
 
 			Point targetPoint = treeScenes.PointToClient(new Point(e.X, e.Y));
 			TreeNode targetNode = treeScenes.GetNodeAt(targetPoint);
 			if (targetNode == null) { return; }
 			bool targetDirective = targetNode.Tag is Directive;
 			bool targetKeyframe = targetNode.Tag is Keyframe && !targetDirective;
+			bool targetChoice = targetNode.Tag is Choice;
 
 			if (!dragNode.Equals(targetNode))
 			{
@@ -411,6 +452,21 @@ namespace SPNATI_Character_Editor.Controls
 						else
 						{
 							MoveKeyframeNode(dragNode, targetNode.Index + 1);
+						}
+					}
+				}
+				else if (draggingChoice)
+				{
+					//dragging a choice
+					if (targetChoice)
+					{
+						if (targetPoint.Y - targetNode.Bounds.Height / 2 < targetNode.Bounds.Y - 2)
+						{
+							MoveChoiceNode(dragNode, targetNode.Index);
+						}
+						else
+						{
+							MoveChoiceNode(dragNode, targetNode.Index + 1);
 						}
 					}
 				}
@@ -528,7 +584,39 @@ namespace SPNATI_Character_Editor.Controls
 			directive.Keyframes.Insert(index, frame);
 			dirNode.Nodes.Insert(index, node);
 
-			//auto-selectit
+			//auto-select it
+			treeScenes.SelectedNode = node;
+		}
+
+		/// <summary>
+		/// Moves a choice to a new position under its directive
+		/// </summary>
+		/// <param name="node"></param>
+		/// <param name="index"></param>
+		private void MoveChoiceNode(TreeNode node, int index)
+		{
+			TreeNode dirNode = node.Parent;
+			if (node.Index < index)
+			{
+				index--;
+			}
+
+			InsertChoice(node, index, dirNode);
+		}
+
+		private void InsertChoice(TreeNode node, int index, TreeNode dirNode)
+		{
+			//remove the node from its old position (which might be nowhere)
+			RemoveNode(node);
+			_nodes[node.Tag] = node;
+
+			Directive directive = dirNode.Tag as Directive;
+			Choice choice = node.Tag as Choice;
+			choice.Directive = directive;
+			directive.Choices.Insert(index, choice);
+			dirNode.Nodes.Insert(index, node);
+
+			//auto-select it
 			treeScenes.SelectedNode = node;
 		}
 
@@ -595,7 +683,7 @@ namespace SPNATI_Character_Editor.Controls
 			treeScenes.SelectedNode = node;
 		}
 
-		private void AddDirective(string type)
+		private void AddDirective(string type, bool autoSelect)
 		{
 			Scene scene = GetSelectedScene();
 			if (scene == null) { return; }
@@ -635,7 +723,15 @@ namespace SPNATI_Character_Editor.Controls
 					selected.Parent.Nodes.Insert(selected.Index + 1, node);
 				}
 
-				treeScenes.SelectedNode = node;
+				if (autoSelect)
+				{
+					treeScenes.SelectedNode = node;
+				}
+			}
+
+			if (Config.AutoPauseDirectives.Contains(type))
+			{
+				AddDirective("pause", false);
 			}
 		}
 
@@ -737,6 +833,37 @@ namespace SPNATI_Character_Editor.Controls
 			treeScenes.SelectedNode = node;
 		}
 
+		private void AddChoice()
+		{
+			TreeNode selectedNode = treeScenes.SelectedNode;
+			if (selectedNode == null || selectedNode.Tag is Scene) { return; }
+
+			Choice choice = new Choice();
+			choice.Caption = "Button Caption";
+			TreeNode node = new TreeNode(choice.ToString());
+			node.Tag = choice;
+			_nodes[choice] = node;
+
+			Directive directive = selectedNode.Tag as Directive;
+			if (directive != null)
+			{
+				//adding to a directive, so insert it at the bottom
+				node.Text = choice.ToString();
+				selectedNode.Nodes.Add(node);
+				directive.Choices.Add(choice);
+			}
+			else
+			{
+				//adding to a choice, so add next to it
+				node.Text = choice.ToString();
+				directive = selectedNode.Parent.Tag as Directive;
+				selectedNode.Parent.Nodes.Insert(selectedNode.Index + 1, node);
+				directive.Choices.Insert(selectedNode.Index + 1, choice);
+			}
+			choice.Directive = directive;
+
+			treeScenes.SelectedNode = node;
+		}
 
 		/// <summary>
 		/// Deletes a node
@@ -772,6 +899,15 @@ namespace SPNATI_Character_Editor.Controls
 				node.Parent.Nodes.Remove(node);
 				_nodes.Remove(kf);
 			}
+
+			Choice choice = node.Tag as Choice;
+			if (choice != null)
+			{
+				dir = node.Parent.Tag as Directive;
+				dir.Choices.Remove(choice);
+				node.Parent.Nodes.Remove(node);
+				_nodes.Remove(choice);
+			}
 		}
 
 		/// <summary>
@@ -806,6 +942,12 @@ namespace SPNATI_Character_Editor.Controls
 				MoveKeyframeNode(node, node.Index - 1);
 				return;
 			}
+
+			Choice choice = node.Tag as Choice;
+			if (choice != null)
+			{
+				MoveChoiceNode(node, node.Index - 1);
+			}
 		}
 
 		/// <summary>
@@ -838,6 +980,13 @@ namespace SPNATI_Character_Editor.Controls
 			if (keyframe != null)
 			{
 				MoveKeyframeNode(node, node.Index + 2);
+				return;
+			}
+
+			Choice choice = node.Tag as Choice;
+			if (choice != null)
+			{
+				MoveChoiceNode(node, node.Index + 2);
 				return;
 			}
 		}
@@ -885,13 +1034,16 @@ namespace SPNATI_Character_Editor.Controls
 			Scene pastedScene = obj as Scene;
 			Directive pastedDirective = obj as Directive;
 			Keyframe pastedFrame = obj as Keyframe;
+			Choice pastedChoice = obj as Choice;
 
 			Directive selectedDirective = node.Tag as Directive;
 			Keyframe selectedFrame = node.Tag as Keyframe;
+			Choice selectedChoice = node.Tag as Choice;
 
 			TreeNode sceneNode = null;
 			TreeNode dirNode = null;
 			TreeNode frameNode = null;
+			TreeNode choiceNode = null;
 
 			if (selectedDirective != null)
 			{
@@ -904,6 +1056,13 @@ namespace SPNATI_Character_Editor.Controls
 				sceneNode = node.Parent.Parent;
 				dirNode = node.Parent;
 				frameNode = node;
+			}
+			else if (selectedChoice != null)
+			{
+				selectedDirective = node.Parent.Tag as Directive;
+				sceneNode = node.Parent.Parent;
+				dirNode = node.Parent;
+				choiceNode = node;
 			}
 			else
 			{
@@ -923,6 +1082,10 @@ namespace SPNATI_Character_Editor.Controls
 			else if (pastedFrame != null && dirNode != null)
 			{
 				newNode = BuildKeyframeNode(dirNode, pastedFrame);
+			}
+			else if (pastedChoice != null && dirNode != null)
+			{
+				newNode = BuildChoiceNode(dirNode, pastedChoice);
 			}
 
 			//insert the node into the correct location
@@ -954,6 +1117,20 @@ namespace SPNATI_Character_Editor.Controls
 					else
 					{
 						InsertKeyframe(newNode, dirNode.Nodes.Count - 1, dirNode);
+					}
+				}
+			}
+			else if (pastedChoice != null)
+			{
+				if (dirNode != null)
+				{
+					if (choiceNode != null)
+					{
+						InsertChoice(newNode, choiceNode.Index + 1, dirNode);
+					}
+					else
+					{
+						InsertChoice(newNode, dirNode.Nodes.Count - 1, dirNode);
 					}
 				}
 			}
@@ -998,6 +1175,7 @@ namespace SPNATI_Character_Editor.Controls
 		public Scene Scene;
 		public Directive Directive;
 		public Keyframe Keyframe;
+		public Choice Choice;
 
 		public SceneTreeEventArgs(TreeNode node)
 		{
@@ -1012,6 +1190,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (Directive == null)
 				{
 					Keyframe = node.Tag as Keyframe;
+					Choice = node.Tag as Choice;
 					Directive = node.Parent.Tag as Directive;
 					Scene = node.Parent.Parent.Tag as Scene;
 				}

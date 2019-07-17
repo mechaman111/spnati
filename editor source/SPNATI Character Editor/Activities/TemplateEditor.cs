@@ -51,7 +51,7 @@ namespace SPNATI_Character_Editor.Activities
 			//pull back in the old values
 			if (template != null)
 			{
-				for (int i = 0; i < gridLayers.Rows.Count - 1 && i < template.Stages.Count; i++)
+				for (int i = 0; i < gridLayers.Rows.Count && i < template.Stages.Count; i++)
 				{
 					StageTemplate stageCode = template.Stages[i];
 					DataGridViewRow row = gridLayers.Rows[i];
@@ -270,7 +270,8 @@ namespace SPNATI_Character_Editor.Activities
 				}
 				else
 				{
-					MessageBox.Show("Preview generation failed. Is Kisekae running?");
+					FailedImport import = new FailedImport();
+					import.ShowDialog();
 				}
 			}
 			Enabled = true;

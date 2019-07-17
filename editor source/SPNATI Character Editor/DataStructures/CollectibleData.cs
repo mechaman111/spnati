@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor.DataStructures
@@ -9,6 +10,9 @@ namespace SPNATI_Character_Editor.DataStructures
 		[XmlElement("collectible")]
 		public List<Collectible> Collectibles = new List<Collectible>();
 
+		[XmlAnyElement]
+		public List<XmlElement> ExtraXml;
+
 		public int Count
 		{
 			get { return Collectibles.Count; }
@@ -17,7 +21,6 @@ namespace SPNATI_Character_Editor.DataStructures
 		public void Add(Collectible collectible)
 		{
 			Collectibles.Add(collectible);
-			Collectibles.Sort();
 		}
 
 		public void Remove(Collectible collectible)

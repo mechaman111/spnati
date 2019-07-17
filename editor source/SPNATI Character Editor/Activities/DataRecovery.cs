@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
+using Desktop.Skinning;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	public partial class DataRecovery : Form
+	public partial class DataRecovery : SkinnedForm
 	{
 		private Character _character;
 		public Character RecoveredCharacter { get; private set; }

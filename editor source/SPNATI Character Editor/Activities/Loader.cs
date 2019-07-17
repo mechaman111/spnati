@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
 using SPNATI_Character_Editor.Forms;
+using SPNATI_Character_Editor.Providers;
 
 namespace SPNATI_Character_Editor.Activities
 {
@@ -27,6 +28,7 @@ namespace SPNATI_Character_Editor.Activities
 			await LoadChunk("Tags", 0, () => TagDatabase.Load());
 			await LoadChunk("Variables", 1, () => VariableDatabase.Load());
 			await LoadChunk("Default Dialogue", 1, () => DialogueDatabase.Load());
+			await LoadChunk("Recipes", 1, () => RecipeProvider.Load());
 
 			string lastCharacter = Config.GetString(Settings.LastCharacter);
 
@@ -112,6 +114,11 @@ namespace SPNATI_Character_Editor.Activities
 								}
 							}
 							TagDatabase.AddTag(character.DisplayName, false);
+							for (int l = 0; l < character.Layers; l++)
+							{
+								Clothing layer = character.GetClothing(l);
+								ClothingDatabase.AddClothing(layer);
+							}
 						}
 						else
 						{
@@ -152,6 +159,12 @@ namespace SPNATI_Character_Editor.Activities
 					}
 				});
 			}
+
+			//add the default skin
+			Costume defaultCostume = new Costume() { Key = "default" };
+			defaultCostume.Folders.Add(new StageSpecificValue(0, "default"));
+			defaultCostume.Labels.Add(new StageSpecificValue(0, "Default Outfit"));
+			CharacterDatabase.AddSkin(defaultCostume);
 
 			progressBar.Visible = false;
 			//display What's New form if this is a new version

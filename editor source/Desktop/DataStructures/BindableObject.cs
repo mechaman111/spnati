@@ -82,9 +82,18 @@ namespace Desktop.DataStructures
 
 		private void RemoveHandlers<T>(T value, string propName)
 		{
-			//remove old CollectionChanged for collections
+			IList list = value as IList;
+			if (list != null)
+			{
+				//for lists, stop tracking changes to current items
+				foreach (object o in list)
+				{
+					UntrackListItem(propName, o);
+				}
+			}
 			if (_collectionHandlers.ContainsKey(propName))
 			{
+				//remove old CollectionChanged for collections
 				INotifyCollectionChanged col = value as INotifyCollectionChanged;
 				if (col != null)
 				{
@@ -109,10 +118,19 @@ namespace Desktop.DataStructures
 
 		private void AttachHandlers<T>(T value, string propName)
 		{
-			//attach CollectionChanged for collections
+			IList list = value as IList;
+			if (list != null)
+			{
+				//for lists, track changes to current items
+				foreach (object o in list)
+				{
+					TrackListItem(propName, o);
+				}
+			}
 			INotifyCollectionChanged collection = value as INotifyCollectionChanged;
 			if (collection != null)
 			{
+				//attach CollectionChanged for collections
 				NotifyCollectionChangedEventHandler handler = new NotifyCollectionChangedEventHandler((sender, e) =>
 				{
 					Collection_CollectionChanged(propName, sender, e);
@@ -163,16 +181,19 @@ namespace Desktop.DataStructures
 					}
 					break;
 				case NotifyCollectionChangedAction.Reset:
-					List<BindableObject> toRemove = new List<BindableObject>();
-					foreach (KeyValuePair<BindableObject, PropertyChangedEventHandler> kvp in _listItemHandlers[propName])
+					if (_listItemHandlers.ContainsPrimaryKey(propName))
 					{
-						toRemove.Add(kvp.Key);
+						List<BindableObject> toRemove = new List<BindableObject>();
+						foreach (KeyValuePair<BindableObject, PropertyChangedEventHandler> kvp in _listItemHandlers[propName])
+						{
+							toRemove.Add(kvp.Key);
+						}
+						foreach (BindableObject key in toRemove)
+						{
+							UntrackListItem(propName, key);
+						}
+						_listItemHandlers.Remove(propName);
 					}
-					foreach (BindableObject key in toRemove)
-					{
-						UntrackListItem(propName, key);
-					}
-					_listItemHandlers.Remove(propName);
 					break;
 			}
 			NotifyPropertyChanged(propName);

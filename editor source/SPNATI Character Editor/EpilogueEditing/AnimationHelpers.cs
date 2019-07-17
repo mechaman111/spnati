@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 
 namespace SPNATI_Character_Editor
 {
@@ -19,6 +20,18 @@ namespace SPNATI_Character_Editor
 			else if (type == typeof(string))
 			{
 				return t >= 1 ? nextValue : lastValue;
+			}
+			else if (type == typeof(Color))
+			{
+				Color lastLast = (Color)lastLastValue;
+				Color last = (Color)lastValue;
+				Color next = (Color)nextValue;
+				Color nextNext = (Color)nextNextValue;
+				int r = (int)Interpolate(last.R, next.R, interpolationMode, t, lastLast.R, nextNext.R);
+				int g = (int)Interpolate(last.G, next.G, interpolationMode, t, lastLast.G, nextNext.G);
+				int b = (int)Interpolate(last.B, next.B, interpolationMode, t, lastLast.B, nextNext.B);
+				int a = (int)Interpolate(last.A, next.A, interpolationMode, t, lastLast.A, nextNext.A);
+				return Color.FromArgb(a, r, g, b);
 			}
 			else
 			{
@@ -118,7 +131,11 @@ namespace SPNATI_Character_Editor
 
 			for (int i = 0; i < sorted.Count; i++)
 			{
-				list.Move(list.IndexOf(sorted[i]), i);
+				int oldIndex = list.IndexOf(sorted[i]);
+				if (oldIndex != i)
+				{
+					list.Move(oldIndex, i);
+				}
 			}
 		}
 	}

@@ -55,6 +55,7 @@ namespace KisekaeImporter
 				case "fe":
 				case "ff":
 				case "fg":
+				case "fk":
 				case "fi":
 				case "pa":
 				case "t":

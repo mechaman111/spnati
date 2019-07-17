@@ -4,6 +4,7 @@ using SPNATI_Character_Editor.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor.DataStructures
@@ -55,10 +56,13 @@ namespace SPNATI_Character_Editor.DataStructures
 		[XmlElement("hide-details")]
 		public bool HideDetails;
 
-		[Numeric(DisplayName = "Counter", GroupOrder = 60, Description = "If checked, collectible will not appear in the collectibles list at all until unlocked", Minimum = 0, Maximum = 1000)]
+		[Numeric(DisplayName = "Counter", GroupOrder = 60, Description = "If checked, a progress bar will be displayed and the collectible will not be unlocked until reaching this value", Minimum = 0, Maximum = 1000)]
 		[DefaultValue(0)]
 		[XmlElement("counter")]
 		public int Counter;
+
+		[XmlAnyElement]
+		public List<XmlElement> ExtraXml;
 
 		[XmlIgnore]
 		public Character Character;

@@ -30,7 +30,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.toolbar = new System.Windows.Forms.MenuStrip();
-			this.tabWorkspaces = new System.Windows.Forms.TabControl();
+			this.tabWorkspaces = new Desktop.Skinning.SkinnedTabControl();
 			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -38,15 +38,19 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tmrAutoTick = new System.Windows.Forms.Timer(this.components);
+			this.stripActivities = new Desktop.Skinning.SkinnedTabStrip();
+			this.actionStrip = new System.Windows.Forms.MenuStrip();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolbar
 			// 
-			this.toolbar.Location = new System.Drawing.Point(0, 0);
+			this.toolbar.Dock = System.Windows.Forms.DockStyle.None;
+			this.toolbar.Location = new System.Drawing.Point(27, 1);
 			this.toolbar.Name = "toolbar";
-			this.toolbar.Size = new System.Drawing.Size(1304, 24);
+			this.toolbar.Size = new System.Drawing.Size(202, 24);
 			this.toolbar.TabIndex = 0;
+			this.toolbar.Tag = "PrimaryDark";
 			this.toolbar.Text = "menuStrip1";
 			// 
 			// tabWorkspaces
@@ -54,16 +58,15 @@
 			this.tabWorkspaces.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tabWorkspaces.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-			this.tabWorkspaces.Location = new System.Drawing.Point(0, 27);
+			this.tabWorkspaces.Location = new System.Drawing.Point(1, 55);
+			this.tabWorkspaces.Margin = new System.Windows.Forms.Padding(0);
 			this.tabWorkspaces.Name = "tabWorkspaces";
 			this.tabWorkspaces.Padding = new System.Drawing.Point(21, 3);
 			this.tabWorkspaces.SelectedIndex = 0;
-			this.tabWorkspaces.Size = new System.Drawing.Size(1304, 732);
+			this.tabWorkspaces.Size = new System.Drawing.Size(1302, 706);
 			this.tabWorkspaces.TabIndex = 2;
-			this.tabWorkspaces.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabWorkspaces_DrawItem);
+			this.tabWorkspaces.Visible = false;
 			this.tabWorkspaces.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabWorkspaces_Selecting);
-			this.tabWorkspaces.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabWorkspaces_MouseClick);
 			// 
 			// timer1
 			// 
@@ -77,11 +80,16 @@
 			// 
 			// statusStrip1
 			// 
+			this.statusStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.statusStrip1.AutoSize = false;
+			this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 762);
+			this.statusStrip1.Location = new System.Drawing.Point(1, 761);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(1304, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(1302, 22);
+			this.statusStrip1.SizingGrip = false;
 			this.statusStrip1.TabIndex = 3;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -95,18 +103,55 @@
 			// 
 			this.tmrAutoTick.Tick += new System.EventHandler(this.tmrAutoTick_Tick);
 			// 
+			// stripActivities
+			// 
+			this.stripActivities.AddCaption = null;
+			this.stripActivities.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.stripActivities.Location = new System.Drawing.Point(1, 25);
+			this.stripActivities.Margin = new System.Windows.Forms.Padding(0);
+			this.stripActivities.Name = "stripActivities";
+			this.stripActivities.PanelType = Desktop.Skinning.SkinnedBackgroundType.Primary;
+			this.stripActivities.ShowAddButton = false;
+			this.stripActivities.ShowCloseButton = true;
+			this.stripActivities.Size = new System.Drawing.Size(1302, 30);
+			this.stripActivities.StartMargin = 103;
+			this.stripActivities.TabControl = this.tabWorkspaces;
+			this.stripActivities.TabIndex = 4;
+			this.stripActivities.TabMargin = 5;
+			this.stripActivities.TabPadding = 20;
+			this.stripActivities.TabSize = 100;
+			this.stripActivities.TabType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.stripActivities.Text = "skinnedTabStrip1";
+			this.stripActivities.Vertical = false;
+			this.stripActivities.CloseButtonClicked += new System.EventHandler(this.stripActivities_CloseButtonClicked);
+			// 
+			// actionStrip
+			// 
+			this.actionStrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.actionStrip.Dock = System.Windows.Forms.DockStyle.None;
+			this.actionStrip.Location = new System.Drawing.Point(1009, 1);
+			this.actionStrip.Name = "actionStrip";
+			this.actionStrip.ShowItemToolTips = true;
+			this.actionStrip.Size = new System.Drawing.Size(202, 24);
+			this.actionStrip.TabIndex = 5;
+			this.actionStrip.Tag = "PrimaryDark";
+			// 
 			// Shell
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(1304, 784);
+			this.Controls.Add(this.actionStrip);
+			this.Controls.Add(this.stripActivities);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.tabWorkspaces);
 			this.Controls.Add(this.toolbar);
 			this.KeyPreview = true;
 			this.MainMenuStrip = this.toolbar;
 			this.Name = "Shell";
+			this.ShowTitleBar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Shell";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Shell_FormClosing);
@@ -122,7 +167,7 @@
 		#endregion
 
 		private System.Windows.Forms.MenuStrip toolbar;
-		private System.Windows.Forms.TabControl tabWorkspaces;
+		private Desktop.Skinning.SkinnedTabControl tabWorkspaces;
 		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		private System.Windows.Forms.Timer timer1;
@@ -130,6 +175,8 @@
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripStatusLabel lblStatus;
 		private System.Windows.Forms.Timer tmrAutoTick;
+		private Skinning.SkinnedTabStrip stripActivities;
+		private System.Windows.Forms.MenuStrip actionStrip;
 	}
 }
 

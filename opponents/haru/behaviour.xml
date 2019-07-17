@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0b at 10:02:00 PM on July 04, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 5:33:52 PM on July 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.0b</version>
+    <version>v5.0</version>
     <first>Haru</first>
     <last>Okumura</last>
     <label>Haru</label>
@@ -48,13 +48,13 @@
     <start />
 
     <wardrobe>
-        <clothing lowercase="bra" position="upper" formalName="Bra" type="important" />
-        <clothing lowercase="panties" position="lower" formalName="Panties" type="important" />
-        <clothing lowercase="shirt" position="upper" formalName="Shirt" type="major" />
-        <clothing lowercase="skirt" position="lower" formalName="Skirt" type="major" />
-        <clothing lowercase="sweater" position="upper" formalName="Sweater" type="minor" />
-        <clothing lowercase="tights" position="lower" formalName="Tights" type="minor" plural="true" />
-        <clothing lowercase="shoes" position="other" formalName="shoes" type="extra" plural="true" />
+        <clothing name="bra" generic="Bra" position="upper" type="important" />
+        <clothing name="panties" generic="Panties" position="lower" type="important" />
+        <clothing name="shirt" generic="Shirt" position="upper" type="major" />
+        <clothing name="skirt" generic="Skirt" position="lower" type="major" />
+        <clothing name="sweater" generic="Sweater" position="upper" type="minor" />
+        <clothing name="tights" generic="Tights" position="lower" type="minor" plural="true" />
+        <clothing name="shoes" generic="shoes" position="other" type="extra" plural="true" />
     </wardrobe>
 
     <poses />
@@ -453,6 +453,9 @@
                 <test expr="~ini.costume~" value="flower_girl_ini" />
                 <state img="0-annoyed.png">You won't harm &lt;i&gt;anyone&lt;/i&gt; here, got it?</state>
             </case>
+            <case tag="must_strip" alsoPlaying="chiaki">
+                <state img="0-confused.png">Persona 5?</state>
+            </case>
             <case tag="must_strip" alsoPlaying="chihiro" alsoPlayingStage="6" saidMarker="chihiroreveal" notSaidMarker="chihiroreveal2">
                 <state img="0-murderous.png" marker="chihiroreveal2">Are we CLEAR?</state>
             </case>
@@ -562,6 +565,9 @@
             <case tag="must_strip_losing" hasHand="Two Pair">
                 <state img="0-murderous.png">HOW!?</state>
             </case>
+            <case tag="stripping" alsoPlaying="chiaki">
+                <state img="0-strip.png">&lt;i&gt;(Game? All-out attack? What is she talking about? How does she even know about our all-out attack?)&lt;/i&gt;</state>
+            </case>
             <case tag="stripping" alsoPlaying="coco">
                 <state img="0-strip.png">Yes, I have plenty in my life to be grateful for. My friends, for example!</state>
             </case>
@@ -589,6 +595,9 @@
             </case>
             <case tag="stripping" alsoPlaying="sakura" priority="115">
                 <state img="0-strip.png">Really? How so?</state>
+            </case>
+            <case tag="stripping" alsoPlaying="sayaka">
+                <state img="0-strip.png">I suppose you can say that...</state>
             </case>
             <case tag="stripping" alsoPlaying="sei">
                 <state img="0-strip.png">Really? I'm... I'd be delighted to get to know you better.</state>
@@ -635,6 +644,30 @@
                 <state img="0-strip.png">Let me just...</state>
                 <state img="0-strip.png">This is fine. N-Nothing indecent here.</state>
                 <state img="0-strip.png">I don't mind losing my shoes, I guess...</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="0-pleasant.png">Well ~player~?</state>
+                <state img="0-creepy.png">You did agree to join us, ~player~.</state>
+                <state img="0-perky.png">Don't be shy, dear.</state>
+                <state img="0-pleasant.png">Don't keep a lady waiting.</state>
+            </case>
+            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
+                <state img="0-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
+            </case>
+            <case tag="male_human_must_strip" notSaidMarker="player_dapperdate" priority="6">
+                <state img="0-aroused.png" marker="player_dapperdate">Oh! Right... ~name~ has to strip now...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStartingLayers="1" priority="995">
+                <state img="0-embarrassed.png">You don't mind, do you?</state>
+                <state img="0-aroused.png">Right. Stripping. Erm, you should get to it.</state>
+                <state img="0-perky.png">Good job, everyone else!</state>
+                <state img="0-joyful.png">Looks like I dodged a bullet there!</state>
+                <state img="0-confused.png">What an odd game.</state>
+                <state img="0-embarrassed.png">Maybe next time... &lt;i&gt;How is ~player~ so nonchalant about this?&lt;/i&gt;</state>
+                <state img="0-aroused.png">I can look away if this is too embarrassing...</state>
+            </case>
+            <case tag="male_human_must_strip" totalRounds="0" priority="999">
+                <state img="0-embarrassed.png">Who invented this game, if I may ask?</state>
             </case>
             <case tag="male_must_strip">
                 <state img="0-embarrassed.png">You don't mind, do you?</state>
@@ -817,30 +850,6 @@
             <case tag="tie">
                 <state img="0-shock.png">A tie!? What now?</state>
                 <state img="0-shock.png">Oh my!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="0-pleasant.png">Well ~player~?</state>
-                <state img="0-creepy.png">You did agree to join us, ~player~.</state>
-                <state img="0-perky.png">Don't be shy, dear.</state>
-                <state img="0-pleasant.png">Don't keep a lady waiting.</state>
-            </case>
-            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
-                <state img="0-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
-            </case>
-            <case tag="male_human_must_strip" notSaidMarker="player_dapperdate" priority="6">
-                <state img="0-aroused.png" marker="player_dapperdate">Oh! Right... ~name~ has to strip now...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStartingLayers="1" priority="995">
-                <state img="0-embarrassed.png">You don't mind, do you?</state>
-                <state img="0-aroused.png">Right. Stripping. Erm, you should get to it.</state>
-                <state img="0-perky.png">Good job, everyone else!</state>
-                <state img="0-joyful.png">Looks like I dodged a bullet there!</state>
-                <state img="0-confused.png">What an odd game.</state>
-                <state img="0-embarrassed.png">Maybe next time... &lt;i&gt;How is ~player~ so nonchalant about this?&lt;/i&gt;</state>
-                <state img="0-aroused.png">I can look away if this is too embarrassing...</state>
-            </case>
-            <case tag="male_human_must_strip" totalRounds="0" priority="999">
-                <state img="0-embarrassed.png">Who invented this game, if I may ask?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="0-calm.png">I guess that's fine.</state>
@@ -1047,7 +1056,7 @@
                 <state img="0-terrified.png">C-Cammy, why are they doing this to you!?</state>
             </case>
             <case tag="female_removed_accessory" target="chiaki" targetStage="2">
-                <state img="0-pleasant.png">&lt;i&gt;(In that case, my thief clothes should have a ribbon. Maybe on my hat?)&lt;/i&gt;</state>
+                <state img="0-joyful.png">Oh... &lt;i&gt;(Well, at least it's stylish! Maybe my thief outfit should have a ribbon on the hat.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory" target="croix" targetStage="1">
                 <state img="0-joyful.png">&lt;i&gt;Kind of reminds me of Joker too!&lt;/i&gt;</state>
@@ -1477,6 +1486,10 @@
                 <state img="0-embarrassed.png">Oh! That's a... very interesting outfit, Rarity.</state>
                 <state img="0-embarrassed.png">&lt;i&gt;Oh my... That's quite revealing.&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_major" target="rarity" targetStage="3" timeInStage="0-5">
+                <state img="0-embarrassed.png">Oh! That's a... very interesting outfit, Rarity.</state>
+                <state img="0-embarrassed.png">&lt;i&gt;Oh my... That's quite revealing.&lt;/i&gt;</state>
+            </case>
             <case tag="female_removed_major" target="rarity" targetStage="4">
                 <state img="0-perky.png">I believe this can also make for good swimwear if you prefer a more modest look!</state>
             </case>
@@ -1764,6 +1777,9 @@
             <case tag="opponent_lost" saidMarker="luckgods" notSaidMarker="luckgods2">
                 <state img="0-embarrassed.png" marker="luckgods2">...Would the luck gods even bless me in a game like this, though? Maybe I'm just generating my own luck.</state>
             </case>
+            <case tag="opponent_lost" target="caulifla" targetStage="4">
+                <state img="0-confused.png">I don't think you need superpowers for this game, Caulifla. I think it all boils down to luck.</state>
+            </case>
             <case tag="opponent_lost" target="chihiro" targetStage="4">
                 <state img="0-confused.png">Are you alright, Chihiro?</state>
             </case>
@@ -1820,6 +1836,12 @@
                 <condition count="0" filter="ann_takamaki" />
                 <state img="0-perky.png">We should introduce ourselves while ~name~ is stripping! My name is Haru Okumura. It's a pleasure to meet you!</state>
             </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="1">
+                <state img="0-shock.png">Is she... transforming? Into another form?</state>
+            </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="4">
+                <state img="0-sad.png">&lt;i&gt;(I'm SO sorry...)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripping" target="chihiro" targetStage="4">
                 <state img="0-shock.png">Wait!! Where are you going---!?</state>
             </case>
@@ -1875,6 +1897,9 @@
             </case>
             <case tag="opponent_stripped" target="amalia" targetStage="5">
                 <state img="0-shock.png">What are you---!?</state>
+            </case>
+            <case tag="opponent_stripped" target="caulifla" targetStage="2">
+                <state img="0-embarrassed.png">But &lt;i&gt;why?&lt;/i&gt; I-It's not like we're going to be fighting anything! If there was any danger, I would've at least bought an axe with me!</state>
             </case>
             <case tag="opponent_stripped" target="chihiro" targetStage="5">
                 <state img="0-confused.png">...Hello?</state>
@@ -2602,6 +2627,9 @@
             <case tag="stripped">
                 <state img="1-perky.png">Shall we move on?</state>
             </case>
+            <case tag="stripped" alsoPlaying="chiaki">
+                <state img="1-shock.png">H-Hang on, how do you know about our Personas? And our all-out attacks?</state>
+            </case>
             <case tag="stripped" alsoPlaying="chihiro" notSaidMarker="freehugs" alsoPlayingSaidMarker="filter_moe">
                 <state img="1-joyful.png" marker="freehugs">Oh, what if someone started a hugging business? I should write that down! I'm a good hugger myself.</state>
                 <state img="1-joyful.png" marker="freehugs">Can I hug you, Chihiro?</state>
@@ -2683,6 +2711,27 @@
                 <condition count="3-4" filter="phantom_thieves" />
                 <condition count="1" filter="dapper_date" />
                 <state img="1-aroused.png">&lt;i&gt;I'm just glad my friends are here, along with ~player~....&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="1-pleasant.png">Well ~player~?</state>
+                <state img="1-creepy.png">You did agree to join us, ~player~.</state>
+                <state img="1-perky.png">Don't be shy, dear.</state>
+                <state img="1-pleasant.png">Don't keep a lady waiting.</state>
+            </case>
+            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
+                <state img="1-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
+            </case>
+            <case tag="male_human_must_strip" notSaidMarker="player_dapperdate" priority="6">
+                <state img="1-aroused.png" marker="player_dapperdate">Oh! Right... ~name~ has to strip now...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStartingLayers="1" priority="995">
+                <state img="1-embarrassed.png">You don't mind, do you?</state>
+                <state img="1-aroused.png">Right. Stripping. Erm, you should get to it.</state>
+                <state img="1-perky.png">Good job, everyone else!</state>
+                <state img="1-joyful.png">Looks like I dodged a bullet there!</state>
+                <state img="1-confused.png">What an odd game.</state>
+                <state img="1-embarrassed.png">Maybe next time... &lt;i&gt;How is ~player~ so nonchalant about this?&lt;/i&gt;</state>
+                <state img="1-aroused.png">I can look away if this is too embarrassing...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="1-embarrassed.png">You don't mind, do you?</state>
@@ -2854,27 +2903,6 @@
             <case tag="tie">
                 <state img="1-shock.png">A tie!? What now?</state>
                 <state img="1-shock.png">Oh my!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="1-pleasant.png">Well ~player~?</state>
-                <state img="1-creepy.png">You did agree to join us, ~player~.</state>
-                <state img="1-perky.png">Don't be shy, dear.</state>
-                <state img="1-pleasant.png">Don't keep a lady waiting.</state>
-            </case>
-            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
-                <state img="1-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
-            </case>
-            <case tag="male_human_must_strip" notSaidMarker="player_dapperdate" priority="6">
-                <state img="1-aroused.png" marker="player_dapperdate">Oh! Right... ~name~ has to strip now...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStartingLayers="1" priority="995">
-                <state img="1-embarrassed.png">You don't mind, do you?</state>
-                <state img="1-aroused.png">Right. Stripping. Erm, you should get to it.</state>
-                <state img="1-perky.png">Good job, everyone else!</state>
-                <state img="1-joyful.png">Looks like I dodged a bullet there!</state>
-                <state img="1-confused.png">What an odd game.</state>
-                <state img="1-embarrassed.png">Maybe next time... &lt;i&gt;How is ~player~ so nonchalant about this?&lt;/i&gt;</state>
-                <state img="1-aroused.png">I can look away if this is too embarrassing...</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="1-calm.png">I guess that's fine.</state>
@@ -3071,7 +3099,7 @@
                 <state img="1-terrified.png">C-Cammy, why are they doing this to you!?</state>
             </case>
             <case tag="female_removed_accessory" target="chiaki" targetStage="2">
-                <state img="1-poststrip.png">&lt;i&gt;(In that case, my thief clothes should have a ribbon. Maybe on my hat?)&lt;/i&gt;</state>
+                <state img="1-joyful.png">Oh... &lt;i&gt;(Well, at least it's stylish! Maybe my thief outfit should have a ribbon on the hat.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory" target="croix" targetStage="1">
                 <state img="1-joyful.png">&lt;i&gt;Kind of reminds me of Joker too!&lt;/i&gt;</state>
@@ -3491,6 +3519,10 @@
                 <state img="1-embarrassed.png">Oh! That's a... very interesting outfit, Rarity.</state>
                 <state img="1-embarrassed.png">&lt;i&gt;Oh my... That's quite revealing.&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_major" target="rarity" targetStage="3" timeInStage="0-5">
+                <state img="1-embarrassed.png">Oh! That's a... very interesting outfit, Rarity.</state>
+                <state img="1-embarrassed.png">&lt;i&gt;Oh my... That's quite revealing.&lt;/i&gt;</state>
+            </case>
             <case tag="female_removed_major" target="rarity" targetStage="4">
                 <state img="1-perky.png">I believe this can also make for good swimwear if you prefer a more modest look!</state>
             </case>
@@ -3780,6 +3812,9 @@
             <case tag="opponent_lost" saidMarker="luckgods" notSaidMarker="luckgods2">
                 <state img="1-embarrassed.png" marker="luckgods2">...Would the luck gods even bless me in a game like this, though? Maybe I'm just generating my own luck.</state>
             </case>
+            <case tag="opponent_lost" target="caulifla" targetStage="4">
+                <state img="1-confused.png">I don't think you need superpowers for this game, Caulifla. I think it all boils down to luck.</state>
+            </case>
             <case tag="opponent_lost" target="chihiro" targetStage="4">
                 <state img="1-confused.png">Are you alright, Chihiro?</state>
             </case>
@@ -3836,6 +3871,12 @@
                 <condition count="0" filter="ann_takamaki" />
                 <state img="1-perky.png">We should introduce ourselves while ~name~ is stripping! My name is Haru Okumura. It's a pleasure to meet you!</state>
             </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="1">
+                <state img="1-shock.png">Is she... transforming? Into another form?</state>
+            </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="4">
+                <state img="1-sad.png">&lt;i&gt;(I'm SO sorry...)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripping" target="chihiro" targetStage="4">
                 <state img="1-shock.png">Wait!! Where are you going---!?</state>
             </case>
@@ -3887,6 +3928,9 @@
             </case>
             <case tag="opponent_stripped" target="amalia" targetStage="5">
                 <state img="1-shock.png">What are you---!?</state>
+            </case>
+            <case tag="opponent_stripped" target="caulifla" targetStage="2">
+                <state img="1-embarrassed.png">But &lt;i&gt;why?&lt;/i&gt; I-It's not like we're going to be fighting anything! If there was any danger, I would've at least bought an axe with me!</state>
             </case>
             <case tag="opponent_stripped" target="chihiro" targetStage="5">
                 <state img="1-confused.png">...Hello?</state>
@@ -4598,6 +4642,9 @@
                 <state img="2-sad.png">This floor is so cold...</state>
                 <state img="2-embarrassed.png">I'll try not to flash my panties.</state>
             </case>
+            <case tag="stripped" alsoPlaying="chiaki">
+                <state img="2-shock.png">Chiaki, this sweater is very important to me. I'm not going to discard it unless... Oh no, It's either my sweater or something more risqué!</state>
+            </case>
             <case tag="stripped" alsoPlaying="chihiro" notSaidMarker="freehugs" alsoPlayingSaidMarker="filter_moe">
                 <state img="2-joyful.png" marker="freehugs">Oh, what if someone started a hugging business? I should write that down! I'm a good hugger myself.</state>
                 <state img="2-joyful.png" marker="freehugs">Can I hug you, Chihiro?</state>
@@ -4688,6 +4735,27 @@
             </case>
             <case tag="stripped" saidMarker="dirtt">
                 <state img="2-pleasant.png" marker="stressrelief1">Right, I forgot to mention I do gardening in my spare time. It's one of my few methods of stress relief.</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="2-pleasant.png">Well ~player~?</state>
+                <state img="2-creepy.png">You did agree to join us, ~player~.</state>
+                <state img="2-perky.png">Don't be shy, dear.</state>
+                <state img="2-pleasant.png">Don't keep a lady waiting.</state>
+            </case>
+            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
+                <state img="2-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
+            </case>
+            <case tag="male_human_must_strip" notSaidMarker="player_dapperdate" priority="6">
+                <state img="2-aroused.png" marker="player_dapperdate">Oh! Right... ~name~ has to strip now...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStartingLayers="1" priority="995">
+                <state img="2-embarrassed.png">You don't mind, do you?</state>
+                <state img="2-aroused.png">Right. Stripping. Erm, you should get to it.</state>
+                <state img="2-perky.png">Good job, everyone else!</state>
+                <state img="2-joyful.png">Looks like I dodged a bullet there!</state>
+                <state img="2-confused.png">What an odd game.</state>
+                <state img="2-embarrassed.png">Maybe next time... &lt;i&gt;How is ~player~ so nonchalant about this?&lt;/i&gt;</state>
+                <state img="2-aroused.png">I can look away if this is too embarrassing...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="2-embarrassed.png">You don't mind, do you?</state>
@@ -4853,27 +4921,6 @@
             <case tag="tie">
                 <state img="2-shock.png">A tie!? What now?</state>
                 <state img="2-shock.png">Oh my!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="2-pleasant.png">Well ~player~?</state>
-                <state img="2-creepy.png">You did agree to join us, ~player~.</state>
-                <state img="2-perky.png">Don't be shy, dear.</state>
-                <state img="2-pleasant.png">Don't keep a lady waiting.</state>
-            </case>
-            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
-                <state img="2-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
-            </case>
-            <case tag="male_human_must_strip" notSaidMarker="player_dapperdate" priority="6">
-                <state img="2-aroused.png" marker="player_dapperdate">Oh! Right... ~name~ has to strip now...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStartingLayers="1" priority="995">
-                <state img="2-embarrassed.png">You don't mind, do you?</state>
-                <state img="2-aroused.png">Right. Stripping. Erm, you should get to it.</state>
-                <state img="2-perky.png">Good job, everyone else!</state>
-                <state img="2-joyful.png">Looks like I dodged a bullet there!</state>
-                <state img="2-confused.png">What an odd game.</state>
-                <state img="2-embarrassed.png">Maybe next time... &lt;i&gt;How is ~player~ so nonchalant about this?&lt;/i&gt;</state>
-                <state img="2-aroused.png">I can look away if this is too embarrassing...</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="2-calm.png">I guess that's fine.</state>
@@ -5070,7 +5117,7 @@
                 <state img="2-terrified.png">C-Cammy, why are they doing this to you!?</state>
             </case>
             <case tag="female_removed_accessory" target="chiaki" targetStage="2">
-                <state img="2-pleasant.png">&lt;i&gt;(In that case, my thief clothes should have a ribbon. Maybe on my hat?)&lt;/i&gt;</state>
+                <state img="2-joyful.png">Oh... &lt;i&gt;(Well, at least it's stylish! Maybe my thief outfit should have a ribbon on the hat.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory" target="croix" targetStage="1">
                 <state img="2-joyful.png">&lt;i&gt;Kind of reminds me of Joker too!&lt;/i&gt;</state>
@@ -5490,6 +5537,10 @@
                 <state img="2-embarrassed.png">Oh! That's a... very interesting outfit, Rarity.</state>
                 <state img="2-embarrassed.png">&lt;i&gt;Oh my... That's quite revealing.&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_major" target="rarity" targetStage="3" timeInStage="0-5">
+                <state img="2-embarrassed.png">Oh! That's a... very interesting outfit, Rarity.</state>
+                <state img="2-embarrassed.png">&lt;i&gt;Oh my... That's quite revealing.&lt;/i&gt;</state>
+            </case>
             <case tag="female_removed_major" target="rarity" targetStage="4">
                 <state img="2-perky.png">I believe this can also make for good swimwear if you prefer a more modest look!</state>
             </case>
@@ -5784,6 +5835,9 @@
             <case tag="opponent_lost" saidMarker="luckgods" notSaidMarker="luckgods2">
                 <state img="2-embarrassed.png" marker="luckgods2">...Would the luck gods even bless me in a game like this, though? Maybe I'm just generating my own luck.</state>
             </case>
+            <case tag="opponent_lost" target="caulifla" targetStage="4">
+                <state img="2-confused.png">I don't think you need superpowers for this game, Caulifla. I think it all boils down to luck.</state>
+            </case>
             <case tag="opponent_lost" target="chihiro" targetStage="4">
                 <state img="2-confused.png">Are you alright, Chihiro?</state>
             </case>
@@ -5840,6 +5894,12 @@
                 <condition count="0" filter="ann_takamaki" />
                 <state img="2-perky.png">We should introduce ourselves while ~name~ is stripping! My name is Haru Okumura. It's a pleasure to meet you!</state>
             </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="1">
+                <state img="2-shock.png">Is she... transforming? Into another form?</state>
+            </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="4">
+                <state img="2-sad.png">&lt;i&gt;(I'm SO sorry...)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripping" target="chihiro" targetStage="4">
                 <state img="2-shock.png">Wait!! Where are you going---!?</state>
             </case>
@@ -5888,6 +5948,9 @@
             </case>
             <case tag="opponent_stripped" target="amalia" targetStage="5">
                 <state img="2-shock.png">What are you---!?</state>
+            </case>
+            <case tag="opponent_stripped" target="caulifla" targetStage="2">
+                <state img="2-embarrassed.png">But &lt;i&gt;why?&lt;/i&gt; I-It's not like we're going to be fighting anything! If there was any danger, I would've at least bought an axe with me!</state>
             </case>
             <case tag="opponent_stripped" target="chihiro" targetStage="5">
                 <state img="2-confused.png">...Hello?</state>
@@ -6578,6 +6641,12 @@
                 <state img="3-poststrip.png">Please take good care of my sweater. It's very dear to me.</state>
                 <state img="3-poststrip.png">Someone special in my life gave me that sweater. Please don't lose it.</state>
             </case>
+            <case tag="stripped" alsoPlaying="alice_mgq">
+                <state img="3-confused.png">Well, my sweater is actually very loose around the chest area. It's very comfortable this way, and yet also very modest.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="chiaki">
+                <state img="3-shock.png">Err... It's actually very loose around the chest area. &lt;i&gt;(Or at least it was... It's getting a bit tighter nowadays, isn't it?)&lt;/i&gt;</state>
+            </case>
             <case tag="stripped" alsoPlaying="chihiro" notSaidMarker="freehugs" alsoPlayingSaidMarker="filter_moe">
                 <state img="3-joyful.png" marker="freehugs">Oh, what if someone started a hugging business? I should write that down! I'm a good hugger myself.</state>
                 <state img="3-joyful.png" marker="freehugs">Can I hug you, Chihiro?</state>
@@ -6674,6 +6743,27 @@
             <case tag="stripped" alsoPlaying="sei">
                 <condition count="1-3" filter="villain" />
                 <state img="3-murderous.png">&lt;i&gt;(Some people might. Some of the people at this table... I just can't trust them!)&lt;/i&gt;</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="3-pleasant.png">Well ~player~?</state>
+                <state img="3-creepy.png">You did agree to join us, ~player~.</state>
+                <state img="3-perky.png">Don't be shy, dear.</state>
+                <state img="3-pleasant.png">Don't keep a lady waiting.</state>
+            </case>
+            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
+                <state img="3-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
+            </case>
+            <case tag="male_human_must_strip" notSaidMarker="player_dapperdate" priority="6">
+                <state img="3-aroused.png" marker="player_dapperdate">Oh! Right... ~name~ has to strip now...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStartingLayers="1" priority="995">
+                <state img="3-embarrassed.png">You don't mind, do you?</state>
+                <state img="3-aroused.png">Right. Stripping. Erm, you should get to it.</state>
+                <state img="3-perky.png">Good job, everyone else!</state>
+                <state img="3-joyful.png">Looks like I dodged a bullet there!</state>
+                <state img="3-confused.png">What an odd game.</state>
+                <state img="3-embarrassed.png">Maybe next time... &lt;i&gt;How is ~player~ so nonchalant about this?&lt;/i&gt;</state>
+                <state img="3-aroused.png">I can look away if this is too embarrassing...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="3-embarrassed.png">You don't mind, do you?</state>
@@ -6836,27 +6926,6 @@
             <case tag="tie">
                 <state img="3-shock.png">A tie!? What now?</state>
                 <state img="3-shock.png">Oh my!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="3-pleasant.png">Well ~player~?</state>
-                <state img="3-creepy.png">You did agree to join us, ~player~.</state>
-                <state img="3-perky.png">Don't be shy, dear.</state>
-                <state img="3-pleasant.png">Don't keep a lady waiting.</state>
-            </case>
-            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
-                <state img="3-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
-            </case>
-            <case tag="male_human_must_strip" notSaidMarker="player_dapperdate" priority="6">
-                <state img="3-aroused.png" marker="player_dapperdate">Oh! Right... ~name~ has to strip now...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStartingLayers="1" priority="995">
-                <state img="3-embarrassed.png">You don't mind, do you?</state>
-                <state img="3-aroused.png">Right. Stripping. Erm, you should get to it.</state>
-                <state img="3-perky.png">Good job, everyone else!</state>
-                <state img="3-joyful.png">Looks like I dodged a bullet there!</state>
-                <state img="3-confused.png">What an odd game.</state>
-                <state img="3-embarrassed.png">Maybe next time... &lt;i&gt;How is ~player~ so nonchalant about this?&lt;/i&gt;</state>
-                <state img="3-aroused.png">I can look away if this is too embarrassing...</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="3-calm.png">I guess that's fine.</state>
@@ -7037,7 +7106,7 @@
                 <state img="3-terrified.png">C-Cammy, why are they doing this to you!?</state>
             </case>
             <case tag="female_removed_accessory" target="chiaki" targetStage="2">
-                <state img="3-pleasant.png">&lt;i&gt;(In that case, my thief clothes should have a ribbon. Maybe on my hat?)&lt;/i&gt;</state>
+                <state img="3-joyful.png">Oh... &lt;i&gt;(Well, at least it's stylish! Maybe my thief outfit should have a ribbon on the hat.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory" target="croix" targetStage="1">
                 <state img="3-joyful.png">&lt;i&gt;Kind of reminds me of Joker too!&lt;/i&gt;</state>
@@ -7437,6 +7506,10 @@
                 <state img="3-embarrassed.png">Oh! That's a... very interesting outfit, Rarity.</state>
                 <state img="3-embarrassed.png">&lt;i&gt;Oh my... That's quite revealing.&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_major" target="rarity" targetStage="3" timeInStage="0-5">
+                <state img="3-embarrassed.png">Oh! That's a... very interesting outfit, Rarity.</state>
+                <state img="3-embarrassed.png">&lt;i&gt;Oh my... That's quite revealing.&lt;/i&gt;</state>
+            </case>
             <case tag="female_removed_major" target="rarity" targetStage="4">
                 <state img="3-perky.png">I believe this can also make for good swimwear if you prefer a more modest look!</state>
             </case>
@@ -7719,6 +7792,9 @@
             <case tag="opponent_lost" saidMarker="luckgods" notSaidMarker="luckgods2">
                 <state img="3-embarrassed.png" marker="luckgods2">...Would the luck gods even bless me in a game like this, though? Maybe I'm just generating my own luck.</state>
             </case>
+            <case tag="opponent_lost" target="caulifla" targetStage="4">
+                <state img="3-confused.png">I don't think you need superpowers for this game, Caulifla. I think it all boils down to luck.</state>
+            </case>
             <case tag="opponent_lost" target="chihiro" targetStage="4">
                 <state img="3-confused.png">Are you alright, Chihiro?</state>
             </case>
@@ -7775,6 +7851,12 @@
                 <condition count="0" filter="ann_takamaki" />
                 <state img="3-perky.png">We should introduce ourselves while ~name~ is stripping! My name is Haru Okumura. It's a pleasure to meet you!</state>
             </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="1">
+                <state img="3-shock.png">Is she... transforming? Into another form?</state>
+            </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="4">
+                <state img="3-sad.png">&lt;i&gt;(I'm SO sorry...)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripping" target="chihiro" targetStage="4">
                 <state img="3-shock.png">Wait!! Where are you going---!?</state>
             </case>
@@ -7826,6 +7908,9 @@
             </case>
             <case tag="opponent_stripped" target="amalia" targetStage="5">
                 <state img="3-shock.png">What are you---!?</state>
+            </case>
+            <case tag="opponent_stripped" target="caulifla" targetStage="2">
+                <state img="3-embarrassed.png">But &lt;i&gt;why?&lt;/i&gt; I-It's not like we're going to be fighting anything! If there was any danger, I would've at least bought an axe with me!</state>
             </case>
             <case tag="opponent_stripped" target="chihiro" targetStage="5">
                 <state img="3-confused.png">...Hello?</state>
@@ -8501,6 +8586,9 @@
             <case tag="stripped">
                 <state img="4-poststrip_a.png">...</state>
             </case>
+            <case tag="stripped" alsoPlaying="chiaki">
+                <state img="4-poststrip_b.png">Y-Yes, that's right.</state>
+            </case>
             <case tag="stripped" alsoPlaying="futaba">
                 <state img="4-poststrip_a.png">Surely the sight of my bare thighs is enough?</state>
             </case>
@@ -8553,7 +8641,8 @@
                 <state img="4-poststrip_c.png">Everyone's exposed in some form, so... it's not as embarrassing as I expected it to be!</state>
             </case>
             <case tag="stripped" priority="115">
-                <condition count="1" status="not_decent" />
+                <condition count="1" status="not_chest_visible" />
+                <condition count="0" filter="phantom_thieves" role="opp" />
                 <state img="4-poststrip_a.png">Well... At least I'm not showing any nudity.</state>
                 <state img="4-poststrip_a.png">At least my chest is still covered. &lt;i&gt;(Can I even trust these strangers anymore?)&lt;/i&gt;</state>
             </case>
@@ -8564,6 +8653,23 @@
             <case tag="stripped" totalExposed="2-3" priority="115">
                 <state img="4-poststrip_c.png">&lt;i&gt;(This isn't so bad. I could get used to this.)&lt;/i&gt;</state>
                 <state img="4-poststrip_b.png">Alright... I suppose it's not too bad. At least I'm not showing any nudity.</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="4-creepy.png">Don't keep a lady waiting.</state>
+                <state img="4-pleasant.png">Well ~name~?</state>
+                <state img="4-pleasant.png">You did agree to join us, ~name~.</state>
+            </case>
+            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
+                <state img="4-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
+            </case>
+            <case tag="male_human_must_strip" notSaidMarker="player_dapperdate" priority="6">
+                <state img="4-aroused.png" marker="player_dapperdate">Oh! Right... ~name~ has to strip now...</state>
+            </case>
+            <case tag="male_human_must_strip" timeInStage="0-4" priority="999">
+                <state img="4-perky.png">Well, at least the rest of us are safe this round!</state>
+                <state img="4-joyful.png">Looks like I dodged a bullet there!</state>
+                <state img="4-confused.png">What an odd game.</state>
+                <state img="4-pleasant.png">What will it be this time?</state>
             </case>
             <case tag="male_must_strip">
                 <state img="4-pleasant.png">Well ~name~?</state>
@@ -8713,23 +8819,6 @@
                 <state img="4-shock.png">A tie!? What now?</state>
                 <state img="4-shock.png">Oh my!</state>
             </case>
-            <case tag="male_human_must_strip">
-                <state img="4-creepy.png">Don't keep a lady waiting.</state>
-                <state img="4-pleasant.png">Well ~name~?</state>
-                <state img="4-pleasant.png">You did agree to join us, ~name~.</state>
-            </case>
-            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
-                <state img="4-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
-            </case>
-            <case tag="male_human_must_strip" notSaidMarker="player_dapperdate" priority="6">
-                <state img="4-aroused.png" marker="player_dapperdate">Oh! Right... ~name~ has to strip now...</state>
-            </case>
-            <case tag="male_human_must_strip" timeInStage="0-4" priority="999">
-                <state img="4-perky.png">Well, at least the rest of us are safe this round!</state>
-                <state img="4-joyful.png">Looks like I dodged a bullet there!</state>
-                <state img="4-confused.png">What an odd game.</state>
-                <state img="4-pleasant.png">What will it be this time?</state>
-            </case>
             <case tag="male_removing_accessory">
                 <state img="4-calm.png">I guess that's fine.</state>
                 <state img="4-embarrassed.png">You'll run out of small items eventually though...</state>
@@ -8816,6 +8905,9 @@
             <case tag="female_removing_accessory" target="hanako" targetStage="0" priority="1002">
                 <state img="4-perky.png">We're happy to have you with us!</state>
             </case>
+            <case tag="female_removing_accessory" target="jura">
+                <state img="4-annoyed.png">...</state>
+            </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="4-perky.png">Interesting choice!</state>
             </case>
@@ -8824,6 +8916,9 @@
             </case>
             <case tag="female_removing_accessory" target="marinette" targetStage="0">
                 <state img="4-confused.png">No offense ~name~, but your weapon looks inefficient. Unless it can transform into something else?</state>
+            </case>
+            <case tag="female_removing_accessory" target="meia">
+                <state img="4-annoyed.png">...</state>
             </case>
             <case tag="female_removing_accessory" target="meia" targetStage="0" alsoPlaying="jura">
                 <state img="4-confused.png">Eh?</state>
@@ -8837,6 +8932,9 @@
             </case>
             <case tag="female_removing_accessory" target="pinkie_pie" targetStage="5" saidMarker="pinkareactfirst" notSaidMarker="pinkapanic" targetNotSaidMarker="pinka_end2" priority="9997">
                 <state img="4-terrified.png" marker="pinkapanic">Where's my axe? WHERE'S MY AXE!?</state>
+            </case>
+            <case tag="female_removing_accessory" target="revy">
+                <state img="4-annoyed.png">...</state>
             </case>
             <case tag="female_removing_accessory" target="revy" targetStage="1" alsoPlaying="launch" alsoPlayingStage="2-5">
                 <state img="4-calm.png">I honestly don't mind. People should be feel to speak however they like.</state>
@@ -8894,7 +8992,7 @@
                 <state img="4-terrified.png">C-Cammy, why are they doing this to you!?</state>
             </case>
             <case tag="female_removed_accessory" target="chiaki" targetStage="2">
-                <state img="4-pleasant.png">&lt;i&gt;(In that case, my thief clothes should have a ribbon. Maybe on my hat?)&lt;/i&gt;</state>
+                <state img="4-joyful.png">Oh... &lt;i&gt;(Well, at least it's stylish! Maybe my thief outfit should have a ribbon on the hat.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory" target="croix" targetStage="1">
                 <state img="4-joyful.png">&lt;i&gt;Kind of reminds me of Joker too!&lt;/i&gt;</state>
@@ -9233,7 +9331,7 @@
                 <state img="4-shock.png">Those aren't leggings?</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="5">
-                <state img="4-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd get banned.)&lt;/i&gt;</state>
+                <state img="4-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd probably scare off everyone else.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="6">
                 <state img="4-perky.png">Aww, you have such cute underwear!</state>
@@ -9260,10 +9358,6 @@
             </case>
             <case tag="female_removed_major" target="rarity" targetStage="3">
                 <state img="4-aroused.png">I think I like that outfit, Rarity.</state>
-            </case>
-            <case tag="female_removed_major" target="rarity" targetStage="3" timeInStage="0-5">
-                <state img="4-embarrassed.png">Oh! That's a... very interesting outfit, Rarity.</state>
-                <state img="4-embarrassed.png">&lt;i&gt;Oh my... That's quite revealing.&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_major" target="rarity" targetStage="3" timeInStage="6-99" priority="999">
                 <state img="4-aroused.png">I think I like that outfit, Rarity.</state>
@@ -9583,6 +9677,9 @@
             <case tag="opponent_lost" saidMarker="luckgods" notSaidMarker="luckgods2">
                 <state img="4-embarrassed.png" marker="luckgods2">...Would the luck gods even bless me in a game like this, though? Maybe I'm just generating my own luck.</state>
             </case>
+            <case tag="opponent_lost" target="caulifla" targetStage="4">
+                <state img="4-confused.png">I don't think you need superpowers for this game, Caulifla. I think it all boils down to luck.</state>
+            </case>
             <case tag="opponent_lost" target="chihiro" targetStage="4">
                 <state img="4-confused.png">Are you alright, Chihiro?</state>
             </case>
@@ -9636,6 +9733,12 @@
             <case tag="opponent_stripping" target="amalia" targetStage="4">
                 <state img="4-aroused.png">I appreciate you turning around for us as you're stripping.</state>
             </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="1">
+                <state img="4-shock.png">Is she... transforming? Into another form?</state>
+            </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="4">
+                <state img="4-aroused.png">&lt;i&gt;(I'm sorry...)&lt;/i&gt; Well, at least you won't be alone.</state>
+            </case>
             <case tag="opponent_stripping" target="chihiro" targetStage="4">
                 <state img="4-shock.png">Wait!! Where are you going---!?</state>
             </case>
@@ -9676,6 +9779,9 @@
             </case>
             <case tag="opponent_stripped" target="amalia" targetStage="5">
                 <state img="4-shock.png">What are you---!?</state>
+            </case>
+            <case tag="opponent_stripped" target="caulifla" targetStage="2">
+                <state img="4-embarrassed.png">But &lt;i&gt;why?&lt;/i&gt; I-It's not like we're going to be fighting anything! If there was any danger, I would've at least bought an axe with me!</state>
             </case>
             <case tag="opponent_stripped" target="chihiro" targetStage="5">
                 <state img="4-confused.png">...Hello?</state>
@@ -10166,6 +10272,9 @@
             <case tag="hand" alsoPlaying="saki_zls" alsoPlayingStage="6" saidMarker="sakura_reveal">
                 <state img="5-joyful.png">It all makes sense now, seeing as you're in the same idol group! Are all of you zombies? It's so fascinating, watching the undead create music for us!</state>
             </case>
+            <case tag="hand" alsoPlaying="sayaka" timeInStage="0" saidMarker="mommyharu" alsoPlayingNotSaidMarker="regretti">
+                <state img="5-embarrassed.png" marker="regretti">E-Eh!? No, that's not it at all! It's... It's something I thought the other players would enjoy. S-Some players like it when a girl calls herself "mommy". &lt;i&gt;(W-Why am I even doing this!?)&lt;/i&gt;</state>
+            </case>
             <case tag="hand" alsoPlaying="streaming-chan" notSaidMarker="rich3_response" alsoPlayingSaidMarker="haru_rich3" priority="9998">
                 <state img="5-perky.png" marker="rich3_response_continued">I think Morgana---my friend---is a very classy person! And he's a cat---a very classy cat!</state>
             </case>
@@ -10187,6 +10296,9 @@
             </case>
             <case tag="must_strip" alsoPlaying="chihiro" alsoPlayingStage="6" saidMarker="chihiroreveal" notSaidMarker="chihiroreveal2">
                 <state img="5-murderous.png" marker="chihiroreveal2">Are we CLEAR?</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="sayaka" timeInStage="0" saidMarker="regretti">
+                <state img="5-embarrassed.png">Well... You don't need to play along for me. Ignore me if this isn't your cup of tea. &lt;i&gt;(Just keep going, Haru. Too late to back out now.)&lt;/i&gt;</state>
             </case>
             <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="haru_dom1" priority="9995">
                 <state img="5-annoyed.png">Now why would you assume that?</state>
@@ -10331,6 +10443,15 @@
                 <condition count="1" filter="ryuji" />
                 <state img="5-annoyed.png">And what's &lt;i&gt;that&lt;/i&gt; supposed to mean?</state>
             </case>
+            <case tag="male_human_must_strip">
+                <state img="5-pleasant.png">Well ~player~?</state>
+                <state img="5-creepy.png">You did agree to join us, ~player~.</state>
+                <state img="5-perky.png">Don't be shy, dear.</state>
+                <state img="5-pleasant.png">Don't keep a lady waiting.</state>
+            </case>
+            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
+                <state img="5-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="5-pleasant.png">Well ~name~?</state>
                 <state img="5-creepy.png">Don't keep a lady waiting.</state>
@@ -10452,15 +10573,6 @@
                 <state img="5-shock.png">A tie!? What now?</state>
                 <state img="5-shock.png">Oh my!</state>
             </case>
-            <case tag="male_human_must_strip">
-                <state img="5-pleasant.png">Well ~player~?</state>
-                <state img="5-creepy.png">You did agree to join us, ~player~.</state>
-                <state img="5-perky.png">Don't be shy, dear.</state>
-                <state img="5-pleasant.png">Don't keep a lady waiting.</state>
-            </case>
-            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
-                <state img="5-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
-            </case>
             <case tag="male_removing_accessory">
                 <state img="5-sad.png">Oh...</state>
                 <state img="5-murderous.png">&lt;i&gt;Dammit!&lt;/i&gt;</state>
@@ -10530,6 +10642,9 @@
             <case tag="female_removing_accessory" target="hanako" targetStage="0" priority="1002">
                 <state img="5-perky.png">We're happy to have you with us!</state>
             </case>
+            <case tag="female_removing_accessory" target="jura">
+                <state img="5-annoyed.png">...</state>
+            </case>
             <case tag="female_removing_accessory" target="jura" targetStage="0">
                 <state img="5-perky.png">Interesting choice!</state>
             </case>
@@ -10538,6 +10653,9 @@
             </case>
             <case tag="female_removing_accessory" target="marinette" targetStage="0">
                 <state img="5-confused.png">No offense ~name~, but your weapon looks inefficient. Unless it can transform into something else?</state>
+            </case>
+            <case tag="female_removing_accessory" target="meia">
+                <state img="5-annoyed.png">...</state>
             </case>
             <case tag="female_removing_accessory" target="meia" targetStage="0" alsoPlaying="jura">
                 <state img="5-confused.png">Eh?</state>
@@ -10551,6 +10669,9 @@
             </case>
             <case tag="female_removing_accessory" target="pinkie_pie" targetStage="5" saidMarker="pinkareactfirst" notSaidMarker="pinkapanic" targetNotSaidMarker="pinka_end2" priority="9997">
                 <state img="5-terrified.png" marker="pinkapanic">Where's my axe? WHERE'S MY AXE!?</state>
+            </case>
+            <case tag="female_removing_accessory" target="revy">
+                <state img="5-annoyed.png">...</state>
             </case>
             <case tag="female_removing_accessory" target="revy" targetStage="1" alsoPlaying="launch" alsoPlayingStage="2-5">
                 <state img="5-calm.png">I honestly don't mind. People should be feel to speak however they like.</state>
@@ -10608,7 +10729,7 @@
                 <state img="5-terrified.png">C-Cammy, why are they doing this to you!?</state>
             </case>
             <case tag="female_removed_accessory" target="chiaki" targetStage="2">
-                <state img="5-pleasant.png">&lt;i&gt;(In that case, my thief clothes should have a ribbon. Maybe on my hat?)&lt;/i&gt;</state>
+                <state img="5-joyful.png">Oh... &lt;i&gt;(Well, at least it's stylish! Maybe my thief outfit should have a ribbon on the hat.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory" target="croix" targetStage="1">
                 <state img="5-joyful.png">&lt;i&gt;Kind of reminds me of Joker too!&lt;/i&gt;</state>
@@ -10924,7 +11045,7 @@
                 <state img="5-creepy.png">Oh, you're blushing. How adorable! I bet you'd look even cuter tied up and gagged!~</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="5">
-                <condition count="0" status="decent" />
+                <condition count="0" status="exposed" />
                 <state img="5-shock.png" marker="n_axe">Hopefully no one is brazen enough to attack us. I could defend everyone if I had my axe with me.</state>
             </case>
             <case tag="female_removed_major" target="aimee" targetStage="1">
@@ -10936,7 +11057,7 @@
                 <state img="5-shock.png">Those aren't leggings?</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="5">
-                <state img="5-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd get banned.)&lt;/i&gt;</state>
+                <state img="5-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd probably scare off everyone else.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="6">
                 <state img="5-perky.png">Aww, you have such cute underwear!</state>
@@ -11249,6 +11370,9 @@
             <case tag="opponent_lost" alsoPlaying="chihiro" alsoPlayingStage="6" saidMarker="chihiroreveal" notSaidMarker="chihiroreveal2">
                 <state img="5-murderous.png" marker="chihiroreveal2">Are we CLEAR?</state>
             </case>
+            <case tag="opponent_lost" alsoPlaying="sayaka" timeInStage="0" saidMarker="regretti" notSaidMarker="keepitrolling" priority="10000">
+                <state img="5-confused.png" marker="keepitrolling">Well... You don't need to play along for me. Ignore me if this isn't your cup of tea.</state>
+            </case>
             <case tag="opponent_lost" target="human" filter="blonde" targetStatus="not_lost_some" priority="505">
                 <condition count="1" filter="blonde" />
                 <state img="5-joyful.png">Oh wow... You're the third blonde person I ever met in my life, ~Player~!</state>
@@ -11266,6 +11390,9 @@
             </case>
             <case tag="opponent_lost" saidMarker="luckgods" notSaidMarker="luckgods2">
                 <state img="5-embarrassed.png" marker="luckgods2">...Would the luck gods even bless me in a game like this, though? Maybe I'm just generating my own luck.</state>
+            </case>
+            <case tag="opponent_lost" target="caulifla" targetStage="4">
+                <state img="5-confused.png">I don't think you need superpowers for this game, Caulifla. I think it all boils down to luck.</state>
             </case>
             <case tag="opponent_lost" target="chihiro" targetStage="4">
                 <state img="5-confused.png">Are you alright, Chihiro?</state>
@@ -11320,6 +11447,12 @@
             <case tag="opponent_stripping" target="amalia" targetStage="4">
                 <state img="5-aroused.png">I appreciate you turning around for us as you're stripping.</state>
             </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="1">
+                <state img="5-shock.png">Is she... transforming? Into another form?</state>
+            </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="4">
+                <state img="5-aroused.png">&lt;i&gt;(I'm sorry...)&lt;/i&gt; Well, at least you won't be alone.</state>
+            </case>
             <case tag="opponent_stripping" target="chihiro" targetStage="4">
                 <state img="5-shock.png">Wait!! Where are you going---!?</state>
             </case>
@@ -11358,6 +11491,9 @@
             </case>
             <case tag="opponent_stripped" target="amalia" targetStage="5">
                 <state img="5-shock.png">What are you---!?</state>
+            </case>
+            <case tag="opponent_stripped" target="caulifla" targetStage="2">
+                <state img="5-embarrassed.png">But &lt;i&gt;why?&lt;/i&gt; I-It's not like we're going to be fighting anything! If there was any danger, I would've at least bought an axe with me!</state>
             </case>
             <case tag="opponent_stripped" target="chihiro" targetStage="5">
                 <state img="5-confused.png">...Hello?</state>
@@ -12183,6 +12319,15 @@
             <case tag="stripped" alsoPlaying="streaming-chan" saidMarker="hobbies1_response" alsoPlayingSayingMarker="haru_ceo3" priority="9995">
                 <state img="6-murderous.png" marker="ceo3_response">Don't think I approve of this. &lt;i&gt;If me and my business go under thanks to your streaming, you WILL regret it...&lt;/i&gt;</state>
             </case>
+            <case tag="male_human_must_strip">
+                <state img="6-pleasant.png">Well ~player~?</state>
+                <state img="6-creepy.png">You did agree to join us, ~player~.</state>
+                <state img="6-perky.png">Don't be shy, dear.</state>
+                <state img="6-pleasant.png">Don't keep a lady waiting.</state>
+            </case>
+            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
+                <state img="6-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="6-creepy.png">If I can get indecent, so can you.</state>
                 <state img="6-creepy.png">Well, ~name~?</state>
@@ -12282,15 +12427,6 @@
                 <state img="6-shock.png">A tie!? What now?</state>
                 <state img="6-shock.png">Oh my!</state>
             </case>
-            <case tag="male_human_must_strip">
-                <state img="6-pleasant.png">Well ~player~?</state>
-                <state img="6-creepy.png">You did agree to join us, ~player~.</state>
-                <state img="6-perky.png">Don't be shy, dear.</state>
-                <state img="6-pleasant.png">Don't keep a lady waiting.</state>
-            </case>
-            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
-                <state img="6-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
-            </case>
             <case tag="male_removing_accessory">
                 <state img="6-sad.png">...</state>
                 <state img="6-sad.png">(&lt;i&gt;sigh&lt;/i&gt;)</state>
@@ -12377,11 +12513,17 @@
             <case tag="female_removing_accessory" target="human" priority="14">
                 <state img="6-shock.png">Your... ~clothing~?</state>
             </case>
+            <case tag="female_removing_accessory" target="jura">
+                <state img="6-annoyed.png">...</state>
+            </case>
             <case tag="female_removing_accessory" target="launch" targetStage="1">
                 <state img="6-shock.png">Eh!?</state>
             </case>
             <case tag="female_removing_accessory" target="marinette" targetStage="0">
                 <state img="6-confused.png">No offense ~name~, but your weapon looks inefficient. Unless it can transform into something else?</state>
+            </case>
+            <case tag="female_removing_accessory" target="meia">
+                <state img="6-annoyed.png">...</state>
             </case>
             <case tag="female_removing_accessory" target="meia" targetStage="0" alsoPlaying="jura">
                 <state img="6-confused.png">Eh?</state>
@@ -12395,6 +12537,9 @@
             </case>
             <case tag="female_removing_accessory" target="pinkie_pie" targetStage="5" saidMarker="pinkareactfirst" notSaidMarker="pinkapanic" targetNotSaidMarker="pinka_end2" priority="9997">
                 <state img="6-terrified.png" marker="pinkapanic">Where's my axe? WHERE'S MY AXE!?</state>
+            </case>
+            <case tag="female_removing_accessory" target="revy">
+                <state img="6-annoyed.png">...</state>
             </case>
             <case tag="female_removing_accessory" target="revy" targetStage="1" alsoPlaying="launch" alsoPlayingStage="2-5">
                 <state img="6-calm.png">I honestly don't mind. People should be feel to speak however they like.</state>
@@ -12452,7 +12597,7 @@
                 <state img="6-terrified.png">C-Cammy, why are they doing this to you!?</state>
             </case>
             <case tag="female_removed_accessory" target="chiaki" targetStage="2">
-                <state img="6-pleasant.png">&lt;i&gt;(In that case, my thief clothes should have a ribbon. Maybe on my hat?)&lt;/i&gt;</state>
+                <state img="6-joyful.png">Oh... &lt;i&gt;(Well, at least it's stylish! Maybe my thief outfit should have a ribbon on the hat.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory" target="croix" targetStage="1">
                 <state img="6-joyful.png">&lt;i&gt;Kind of reminds me of Joker too!&lt;/i&gt;</state>
@@ -12752,7 +12897,7 @@
                 <state img="6-creepy.png">Oh, you're blushing. How adorable! I bet you'd look even cuter tied up and gagged!~</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="5">
-                <condition count="0" status="decent" />
+                <condition count="0" status="exposed" />
                 <state img="6-shock.png" marker="n_axe">Hopefully no one is brazen enough to attack us. I could defend everyone if I had my axe with me.</state>
             </case>
             <case tag="female_removed_major" target="aimee" targetStage="1">
@@ -12764,7 +12909,7 @@
                 <state img="6-shock.png">Those aren't leggings?</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="5">
-                <state img="6-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd get banned.)&lt;/i&gt;</state>
+                <state img="6-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd probably scare off everyone else.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="6">
                 <state img="6-perky.png">Aww, you have such cute underwear!</state>
@@ -13094,6 +13239,9 @@
             <case tag="opponent_lost" saidMarker="luckgods" notSaidMarker="luckgods2">
                 <state img="6-embarrassed.png" marker="luckgods2">...Would the luck gods even bless me in a game like this, though? Maybe I'm just generating my own luck.</state>
             </case>
+            <case tag="opponent_lost" target="caulifla" targetStage="4">
+                <state img="6-confused.png">I don't think you need superpowers for this game, Caulifla. I think it all boils down to luck.</state>
+            </case>
             <case tag="opponent_lost" target="chihiro" targetStage="4">
                 <state img="6-confused.png">Are you alright, Chihiro?</state>
             </case>
@@ -13147,6 +13295,12 @@
             <case tag="opponent_stripping" target="amalia" targetStage="4">
                 <state img="6-aroused.png">I appreciate you turning around for us as you're stripping.</state>
             </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="1">
+                <state img="6-shock.png">Is she... transforming? Into another form?</state>
+            </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="4">
+                <state img="6-aroused.png">&lt;i&gt;(I'm sorry...)&lt;/i&gt; Well, at least you won't be alone.</state>
+            </case>
             <case tag="opponent_stripping" target="chihiro" targetStage="4">
                 <state img="6-shock.png">Wait!! Where are you going---!?</state>
             </case>
@@ -13185,6 +13339,9 @@
             </case>
             <case tag="opponent_stripped" target="amalia" targetStage="5">
                 <state img="6-shock.png">What are you---!?</state>
+            </case>
+            <case tag="opponent_stripped" target="caulifla" targetStage="2">
+                <state img="6-embarrassed.png">But &lt;i&gt;why?&lt;/i&gt; I-It's not like we're going to be fighting anything! If there was any danger, I would've at least bought an axe with me!</state>
             </case>
             <case tag="opponent_stripped" target="chihiro" targetStage="5">
                 <state img="6-confused.png">...Hello?</state>
@@ -13973,6 +14130,15 @@
                 <state img="7-aroused.png">I'd like to think you only bought me here to see me naked.</state>
                 <state img="7-creepy.png">Surely it's a bit unfair for me to expose my body without you doing the same.</state>
             </case>
+            <case tag="male_human_must_strip">
+                <state img="7-pleasant.png">Well ~player~?</state>
+                <state img="7-creepy.png">You did agree to join us, ~player~.</state>
+                <state img="7-perky.png">Don't be shy, dear.</state>
+                <state img="7-pleasant.png">Don't keep a lady waiting.</state>
+            </case>
+            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
+                <state img="7-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="7-creepy.png">If I can get indecent, so can you.</state>
                 <state img="7-creepy.png">Well, ~name~?</state>
@@ -14058,15 +14224,6 @@
             <case tag="tie">
                 <state img="7-shock.png">A tie!? What now?</state>
                 <state img="7-shock.png">Oh my!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="7-pleasant.png">Well ~player~?</state>
-                <state img="7-creepy.png">You did agree to join us, ~player~.</state>
-                <state img="7-perky.png">Don't be shy, dear.</state>
-                <state img="7-pleasant.png">Don't keep a lady waiting.</state>
-            </case>
-            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
-                <state img="7-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="7-sad.png">Oh...</state>
@@ -14271,7 +14428,7 @@
                 <state img="7-terrified.png">C-Cammy, why are they doing this to you!?</state>
             </case>
             <case tag="female_removed_accessory" target="chiaki" targetStage="2">
-                <state img="7-pleasant.png">&lt;i&gt;(In that case, my thief clothes should have a ribbon. Maybe on my hat?)&lt;/i&gt;</state>
+                <state img="7-joyful.png">Oh... &lt;i&gt;(Well, at least it's stylish! Maybe my thief outfit should have a ribbon on the hat.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory" target="croix" targetStage="1">
                 <state img="7-joyful.png">&lt;i&gt;Kind of reminds me of Joker too!&lt;/i&gt;</state>
@@ -14498,7 +14655,6 @@
             </case>
             <case tag="female_removed_minor" target="chiaki" targetStage="3">
                 <state img="7-pleasant.png">Maybe once the game is over, we can wear each other's outfits and compare. How does that sound, Chiaki?</state>
-                <state img="7-aroused.png">Hmm... How arousing would it be if I wore nothing &lt;i&gt;but&lt;/i&gt; my sweater?</state>
             </case>
             <case tag="female_removed_minor" target="croix">
                 <state img="7-creepy.png">I guess it just means we'll have to make you lose, Croix.</state>
@@ -14639,7 +14795,7 @@
                 <state img="7-creepy.png">Oh, you're blushing. How adorable! I bet you'd look even cuter tied up and gagged!~</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="5">
-                <condition count="0" status="decent" />
+                <condition count="0" status="exposed" />
                 <state img="7-shock.png" marker="n_axe">Hopefully no one is brazen enough to attack us. I could defend everyone if I had my axe with me.</state>
             </case>
             <case tag="female_removed_major" target="aimee" targetStage="1">
@@ -14651,7 +14807,7 @@
                 <state img="7-shock.png">Those aren't leggings?</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="5">
-                <state img="7-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd get banned.)&lt;/i&gt;</state>
+                <state img="7-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd probably scare off everyone else.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="6">
                 <state img="7-perky.png">Aww, you have such cute underwear!</state>
@@ -14988,6 +15144,9 @@
             <case tag="opponent_lost" saidMarker="luckgods" notSaidMarker="luckgods2">
                 <state img="7-embarrassed.png" marker="luckgods2">...Would the luck gods even bless me in a game like this, though? Maybe I'm just generating my own luck.</state>
             </case>
+            <case tag="opponent_lost" target="caulifla" targetStage="4">
+                <state img="7-confused.png">I don't think you need superpowers for this game, Caulifla. I think it all boils down to luck.</state>
+            </case>
             <case tag="opponent_lost" target="chihiro" targetStage="4">
                 <state img="7-confused.png">Are you alright, Chihiro?</state>
             </case>
@@ -15041,6 +15200,12 @@
             <case tag="opponent_stripping" target="amalia" targetStage="4">
                 <state img="7-aroused.png">I appreciate you turning around for us as you're stripping.</state>
             </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="1">
+                <state img="7-shock.png">Is she... transforming? Into another form?</state>
+            </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="4">
+                <state img="7-aroused.png">&lt;i&gt;(I'm sorry...)&lt;/i&gt; Well, at least you won't be alone.</state>
+            </case>
             <case tag="opponent_stripping" target="chihiro" targetStage="4">
                 <state img="7-shock.png">Wait!! Where are you going---!?</state>
             </case>
@@ -15079,6 +15244,9 @@
             </case>
             <case tag="opponent_stripped" target="amalia" targetStage="5">
                 <state img="7-shock.png">What are you---!?</state>
+            </case>
+            <case tag="opponent_stripped" target="caulifla" targetStage="2">
+                <state img="7-embarrassed.png">But &lt;i&gt;why?&lt;/i&gt; I-It's not like we're going to be fighting anything! If there was any danger, I would've at least bought an axe with me!</state>
             </case>
             <case tag="opponent_stripped" target="chihiro" targetStage="5">
                 <state img="7-confused.png">...Hello?</state>
@@ -15661,6 +15829,15 @@
         </stage>
 
         <stage id="8">
+            <case tag="male_human_must_strip">
+                <state img="8-pleasant.png">Well ~player~?</state>
+                <state img="8-creepy.png">You did agree to join us, ~player~.</state>
+                <state img="8-perky.png">Don't be shy, dear.</state>
+                <state img="8-pleasant.png">Don't keep a lady waiting.</state>
+            </case>
+            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
+                <state img="8-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="8-creepy.png">Well, ~name~?</state>
                 <state img="8-creepy.png">Would looking at me help?</state>
@@ -15731,15 +15908,6 @@
             <case tag="tie">
                 <state img="8-shock.png">A tie!? What now?</state>
                 <state img="8-shock.png">Oh my!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="8-pleasant.png">Well ~player~?</state>
-                <state img="8-creepy.png">You did agree to join us, ~player~.</state>
-                <state img="8-perky.png">Don't be shy, dear.</state>
-                <state img="8-pleasant.png">Don't keep a lady waiting.</state>
-            </case>
-            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
-                <state img="8-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="8-murderous.png">Poor show, ~name~. Taking off your ~clothing~ while I'm masturbating.</state>
@@ -15826,9 +15994,6 @@
             <case tag="female_removing_accessory" target="meia">
                 <state img="8-annoyed.png">...</state>
             </case>
-            <case tag="female_removing_accessory" target="nayru">
-                <state img="8-murderous.png">&lt;i&gt;Dammit!&lt;/i&gt;</state>
-            </case>
             <case tag="female_removing_accessory" target="pinkie_pie" targetStage="5" saidMarker="pinkareactfirst" notSaidMarker="pinkapanic" targetNotSaidMarker="pinka_end2" priority="9997">
                 <state img="8-terrified.png" marker="pinkapanic">Where's my axe? WHERE'S MY AXE!?</state>
             </case>
@@ -15895,7 +16060,7 @@
                 <state img="8-terrified.png">C-Cammy, why are they doing this to you!?</state>
             </case>
             <case tag="female_removed_accessory" target="chiaki" targetStage="2">
-                <state img="8-pleasant.png">&lt;i&gt;(In that case, my thief clothes should have a ribbon. Maybe on my hat?)&lt;/i&gt;</state>
+                <state img="8-joyful.png">Oh... &lt;i&gt;(Well, at least it's stylish! Maybe my thief outfit should have a ribbon on the hat.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory" target="croix" targetStage="1">
                 <state img="8-joyful.png">&lt;i&gt;Kind of reminds me of Joker too!&lt;/i&gt;</state>
@@ -16183,7 +16348,7 @@
                 <state img="8-creepy.png">Oh, you're blushing. How adorable! I bet you'd look even cuter tied up and gagged!~</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="5">
-                <condition count="0" status="decent" />
+                <condition count="0" status="exposed" />
                 <state img="8-shock.png" marker="n_axe">Hopefully no one is brazen enough to attack us. I could defend everyone if I had my axe with me.</state>
             </case>
             <case tag="female_removed_major" target="aimee" targetStage="1">
@@ -16195,7 +16360,7 @@
                 <state img="8-shock.png">Those aren't leggings?</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="5">
-                <state img="8-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd get banned.)&lt;/i&gt;</state>
+                <state img="8-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd probably scare off everyone else.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="6">
                 <state img="8-perky.png">Aww, you have such cute underwear!</state>
@@ -16495,6 +16660,9 @@
             <case tag="opponent_lost" filter="pale_eyes" targetStage="0" priority="506">
                 <state img="8-shock.png">I don't think I ever saw anyone with that sort of eye color before...</state>
             </case>
+            <case tag="opponent_lost" target="caulifla" targetStage="4">
+                <state img="8-confused.png">I don't think you need superpowers for this game, Caulifla. I think it all boils down to luck.</state>
+            </case>
             <case tag="opponent_lost" target="chihiro" targetStage="4">
                 <state img="8-sad.png">Are you alright, Chihiro?</state>
             </case>
@@ -16545,6 +16713,12 @@
             <case tag="opponent_stripping" target="amalia" targetStage="4">
                 <state img="8-aroused.png">I appreciate you turning around for us as you're stripping.</state>
             </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="1">
+                <state img="8-shock.png">Is she... transforming? Into another form?</state>
+            </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="4">
+                <state img="8-aroused.png">&lt;i&gt;(I'm sorry...)&lt;/i&gt; Well, at least you won't be alone.</state>
+            </case>
             <case tag="opponent_stripping" target="chihiro" targetStage="4">
                 <state img="8-shock.png">Wait!! Where are you going---!?</state>
             </case>
@@ -16583,6 +16757,9 @@
             </case>
             <case tag="opponent_stripped" target="amalia" targetStage="5">
                 <state img="8-shock.png">What are you---!?</state>
+            </case>
+            <case tag="opponent_stripped" target="caulifla" targetStage="2">
+                <state img="8-embarrassed.png">But &lt;i&gt;why?&lt;/i&gt; I-It's not like we're going to be fighting anything! If there was any danger, I would've at least bought an axe with me!</state>
             </case>
             <case tag="opponent_stripped" target="chihiro" targetStage="5">
                 <state img="8-shock.png">Oh! Hello there!</state>
@@ -17173,6 +17350,15 @@
         </stage>
 
         <stage id="9">
+            <case tag="male_human_must_strip">
+                <state img="9-pleasant.png">Well ~player~?</state>
+                <state img="9-creepy.png">You did agree to join us, ~player~.</state>
+                <state img="9-perky.png">Don't be shy, dear.</state>
+                <state img="9-pleasant.png">Don't keep a lady waiting.</state>
+            </case>
+            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
+                <state img="9-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="9-pleasant.png">Well ~name~?</state>
                 <state img="9-creepy.png">Don't keep a lady waiting.</state>
@@ -17240,15 +17426,6 @@
             <case tag="tie">
                 <state img="9-shock.png">A tie!? What now?</state>
                 <state img="9-shock.png">Oh my!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="9-pleasant.png">Well ~player~?</state>
-                <state img="9-creepy.png">You did agree to join us, ~player~.</state>
-                <state img="9-perky.png">Don't be shy, dear.</state>
-                <state img="9-pleasant.png">Don't keep a lady waiting.</state>
-            </case>
-            <case tag="male_human_must_strip" alsoPlaying="ryuji" notSaidMarker="dangerousgirl" alsoPlayingSaidMarker="woahtherebuddy">
-                <state img="9-joyful.png" marker="dangerousgirl">I know, right? Chopping shadows into little pieces is such a thrill!</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="9-pleasant.png">Oh?</state>
@@ -17338,23 +17515,11 @@
             <case tag="female_removing_accessory" target="human" priority="14">
                 <state img="9-shock.png">Your... ~clothing~?</state>
             </case>
-            <case tag="female_removing_accessory" target="jura">
-                <state img="9-annoyed.png">...</state>
-            </case>
             <case tag="female_removing_accessory" target="launch" targetStage="1">
                 <state img="9-shock.png">Eh!?</state>
             </case>
-            <case tag="female_removing_accessory" target="meia">
-                <state img="9-annoyed.png">...</state>
-            </case>
-            <case tag="female_removing_accessory" target="nayru">
-                <state img="9-murderous.png">&lt;i&gt;Dammit!&lt;/i&gt;</state>
-            </case>
             <case tag="female_removing_accessory" target="pinkie_pie" targetStage="5" saidMarker="pinkareactfirst" notSaidMarker="pinkapanic" targetNotSaidMarker="pinka_end2" priority="9997">
                 <state img="9-terrified.png" marker="pinkapanic">Where's my axe? WHERE'S MY AXE!?</state>
-            </case>
-            <case tag="female_removing_accessory" target="revy">
-                <state img="9-annoyed.png">...</state>
             </case>
             <case tag="female_removing_accessory" target="revy" targetStage="3">
                 <state img="9-pleasant.png">Thank you, Revy.</state>
@@ -17417,7 +17582,7 @@
                 <state img="9-terrified.png">C-Cammy, why are they doing this to you!?</state>
             </case>
             <case tag="female_removed_accessory" target="chiaki" targetStage="2">
-                <state img="9-pleasant.png">&lt;i&gt;(In that case, my thief clothes should have a ribbon. Maybe on my hat?)&lt;/i&gt;</state>
+                <state img="9-joyful.png">Oh... &lt;i&gt;(Well, at least it's stylish! Maybe my thief outfit should have a ribbon on the hat.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_accessory" target="croix" targetStage="1">
                 <state img="9-joyful.png">&lt;i&gt;Kind of reminds me of Joker too!&lt;/i&gt;</state>
@@ -17726,7 +17891,7 @@
                 <state img="9-creepy.png">Oh, you're blushing. How adorable! I bet you'd look even cuter tied up and gagged!~</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="5">
-                <condition count="0" status="decent" />
+                <condition count="0" status="exposed" />
                 <state img="9-shock.png" marker="n_axe">Hopefully no one is brazen enough to attack us. I could defend everyone if I had my axe with me.</state>
             </case>
             <case tag="female_removed_major" target="aimee" targetStage="1">
@@ -17738,7 +17903,7 @@
                 <state img="9-shock.png">Those aren't leggings?</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="5">
-                <state img="9-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd get banned.)&lt;/i&gt;</state>
+                <state img="9-confused.png">&lt;i&gt;(Perhaps I should've bought a weapon with me. Then again, I'd probably scare off everyone else.)&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_major" target="chiaki" targetStage="6">
                 <state img="9-perky.png">Aww, you have such cute underwear!</state>
@@ -18040,6 +18205,9 @@
             <case tag="opponent_lost" filter="pale_eyes" targetStage="0" priority="506">
                 <state img="9-shock.png">I don't think I ever saw anyone with that sort of eye color before...</state>
             </case>
+            <case tag="opponent_lost" target="caulifla" targetStage="4">
+                <state img="9-confused.png">I don't think you need superpowers for this game, Caulifla. I think it all boils down to luck.</state>
+            </case>
             <case tag="opponent_lost" target="chihiro" targetStage="4">
                 <state img="9-sad.png">Are you alright, Chihiro?</state>
             </case>
@@ -18090,6 +18258,12 @@
             <case tag="opponent_stripping" target="amalia" targetStage="4">
                 <state img="9-aroused.png">I appreciate you turning around for us as you're stripping.</state>
             </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="1">
+                <state img="9-shock.png">Is she... transforming? Into another form?</state>
+            </case>
+            <case tag="opponent_stripping" target="caulifla" targetStage="4">
+                <state img="9-aroused.png">&lt;i&gt;(I'm sorry...)&lt;/i&gt; Well, at least you won't be alone.</state>
+            </case>
             <case tag="opponent_stripping" target="chihiro" targetStage="4">
                 <state img="9-shock.png">Wait!! Where are you going---!?</state>
             </case>
@@ -18130,6 +18304,9 @@
             </case>
             <case tag="opponent_stripped" target="amalia" targetStage="5">
                 <state img="9-shock.png">What are you---!?</state>
+            </case>
+            <case tag="opponent_stripped" target="caulifla" targetStage="2">
+                <state img="9-embarrassed.png">But &lt;i&gt;why?&lt;/i&gt; I-It's not like we're going to be fighting anything! If there was any danger, I would've at least bought an axe with me!</state>
             </case>
             <case tag="opponent_stripped" target="chihiro" targetStage="5">
                 <state img="9-shock.png">Oh! Hello there!</state>

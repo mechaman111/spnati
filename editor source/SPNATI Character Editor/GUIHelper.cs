@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Desktop.Skinning;
+using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
@@ -94,41 +96,6 @@ namespace SPNATI_Character_Editor
 			return min + "-" + max;
 		}
 
-		/// <summary>
-		/// Attempts to set a combo box's value to the provided text
-		/// </summary>
-		/// <param name="box"></param>
-		/// <param name="text"></param>
-		public static void SetComboBox(ComboBox box, string text)
-		{
-			box.Text = text;
-		}
-
-		/// <summary>
-		/// Reads the value from a combo box
-		/// </summary>
-		/// <param name="box"></param>
-		/// <returns></returns>
-		public static string ReadComboBox(ComboBox box)
-		{
-			if (box.SelectedItem is Trigger)
-			{
-				return ((Trigger)box.SelectedItem).Tag;
-			}
-			else if (box.SelectedItem is Tag)
-			{
-				return TagDatabase.StringToTag(box.Text);
-			}
-			else if (box.SelectedItem is KeyValuePair<string, string>)
-			{
-				return (string)box.SelectedValue;
-			}
-			string value = box.Text;
-			if (value == "")
-				return null;
-			else return value;
-		}
-
 		public static void SetNumericBox(NumericUpDown box, string value)
 		{
 			if (string.IsNullOrEmpty(value))
@@ -160,6 +127,10 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public static string RangeToString(string range)
 		{
+			if (range == null)
+			{
+				return "";
+			}
 			string[] pieces = range.Split('-');
 			if (pieces.Length == 1 || pieces[0] == pieces[1])
 			{
@@ -210,6 +181,35 @@ namespace SPNATI_Character_Editor
 			{
 				return $"{min}-{max}";
 			}
+		}
+
+		/// <summary>
+		/// Converts a range string to an interval tuple
+		/// </summary>
+		/// <param name="range"></param>
+		/// <returns></returns>
+		public static Tuple<int, int> ToInterval(string range)
+		{
+			int min;
+			int max;
+			string[] pieces = range.Split('-');
+			if (!int.TryParse(pieces[0], out min))
+			{
+				min = 0;
+			}
+			if (pieces.Length > 1)
+			{
+				if (!int.TryParse(pieces[1], out max))
+				{
+					max = min;
+				}
+			}
+			else
+			{
+				max = min;
+			}
+			max = Math.Max(min, max);
+			return new Tuple<int, int>(min, max);
 		}
 	}
 }
