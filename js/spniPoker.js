@@ -442,7 +442,7 @@ Hand.prototype.describe = function(with_article) {
     case FOUR_OF_A_KIND:
         description = "four " + cardRankToString(this.value[0]); break;
     default:
-        description = handStrengthToString(this.strength).toLowercase();
+        description = handStrengthToString(this.strength).toLowerCase();
         use_article = true;
     }
     if (with_article && use_article) {
