@@ -980,8 +980,7 @@ Player.prototype.preloadStageImages = function (stage) {
  ************************************************************/
 function initialSetup () {
     /* start by creating the human player object */
-    humanPlayer = new Player('human'); //createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
-    humanPlayer = humanPlayer;
+    players[HUMAN_PLAYER] = humanPlayer = new Player('human'); //createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
     humanPlayer.slot = HUMAN_PLAYER;
 
 	/* enable table opacity */
