@@ -160,6 +160,7 @@ function loadGameScreen () {
     gameOver = false;
     $gamePlayerCardArea.show();
     $gamePlayerCountdown.hide();
+    $gamePlayerCountdown.removeClass('pulse');
     chosenDebug = -1;
     updateDebugState(showDebug);
     

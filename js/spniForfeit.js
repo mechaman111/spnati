@@ -98,24 +98,26 @@ function tickForfeitTimers () {
             $mainButton.attr('disabled', true);
             actualMainButtonState = true;
 
+            /* hide everyone else's dialogue bubble */
+            gameDisplays.forEach(function (d) {
+                if (d.slot != i) d.hideBubble();
+            });
+
             if (i == HUMAN_PLAYER) {
                 /* player's timer is up */
-                $gamePlayerCountdown.hide();
+                $gamePlayerCountdown.one('animationend', function() {
+                    $gamePlayerCountdown.hide();
+                    $gamePlayerCountdown.removeClass('explode');
+                    /* finish */
+                    finishMasturbation(i);
+                });
+                $gamePlayerCountdown.addClass('explode');
                 console.log(players[i].label+" is finishing!");
+                $gamePlayerCountdown.html('');
                 $gameClothingLabel.html("<b>You're 'Finished'</b>");
 
-                /* finish */
-                finishMasturbation(i);
             } else {
                 console.log(players[i].label+" is finishing!");
-
-                /* hide everyone else's dialogue bubble */
-                for (var j = 1; j < players.length; j++) {
-                    if (i != j) {
-                        $gameDialogues[j-1].html("");
-                        $gameBubbles[j-1].hide();
-                    }
-                }
 
                 /* let the player speak again */
                 players[i].forfeit = [PLAYER_FINISHING_MASTURBATING, CAN_SPEAK];
@@ -149,6 +151,7 @@ function tickForfeitTimers () {
 				$gamePlayerCountdown.html(players[i].timer);
                 if (players[i].timer <= 4) {
                     players[i].forfeit[0] = PLAYER_HEAVY_MASTURBATING;
+                    $gamePlayerCountdown.addClass('pulse');
                 }
 				masturbatingPlayers.push(i); // Double the chance of commenting on human player
 			} else {

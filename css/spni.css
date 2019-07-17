@@ -2836,6 +2836,23 @@ label {
 	box-sizing: border-box;
 }
 
+@keyframes pulse {
+    from { transform: none }
+    to   {
+	transform: scale(1.2);
+	background-color: rgb(255, 235, 235, 1.0);
+    }
+}
+
+@keyframes explode {
+    to {
+	transform: scale(100);
+	filter: blur(1em);
+	opacity: 0;
+	background-color: white;
+    }
+}
+
 #player-countdown {
     position: absolute;
     width: 4%;
@@ -2845,6 +2862,13 @@ label {
     text-align: center;
     font-size: 120%;
     background-color: rgba(240, 240, 240, 1.0);
+}
+.pulse {
+    animation: 0.5s infinite alternate pulse;
+}
+.explode {
+    animation: 1s explode;
+    border: none;
 }
 
 #player-game-clothing-area {
