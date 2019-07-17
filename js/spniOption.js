@@ -75,6 +75,7 @@ function showOptionsModal () {
     loadMasturbationTimer();
     setActiveOption('options-auto-fade', AUTO_FADE);
     setActiveOption('options-card-suggest', CARD_SUGGEST);
+    setActiveOption('options-explain-hands', EXPLAIN_ALL_HANDS);
     setActiveOption('options-ai-turn-time', GAME_DELAY);
     setActiveOption('options-deal-speed', ANIM_TIME);
     setActiveOption('options-auto-forfeit', FORFEIT_DELAY);
@@ -115,6 +116,10 @@ $('ul#options-auto-fade').on('click', 'a', function() {
 
 $('ul#options-card-suggest').on('click', 'a', function() {
     CARD_SUGGEST = $(this).attr('data-value') == "true";
+});
+
+$('ul#options-explain-hands').on('click', 'a', function() {
+    EXPLAIN_ALL_HANDS = $(this).attr('data-value') == "true";
 });
 
 $('ul#options-ai-turn-time').on('click', 'a', function() {

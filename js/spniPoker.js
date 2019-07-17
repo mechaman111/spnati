@@ -187,9 +187,11 @@ function displayCard (player, i, visible) {
 function showHand (player) {
     displayHand(player, true);
     if (player > 0) {
-        $gameOpponentAreas[player-1].attr('data-original-title', players[player].hand.describeFormal()).tooltip('show');
+        $gameOpponentAreas[player-1].attr('data-original-title', players[player].hand.describeFormal());
+        if (EXPLAIN_ALL_HANDS) $gameOpponentAreas[player-1].tooltip('show');
     } else {
-        $gamePlayerCardArea.attr('data-original-title', players[player].hand.describeFormal()).tooltip('show');
+        $gamePlayerCardArea.attr('data-original-title', players[player].hand.describeFormal());
+        if (EXPLAIN_ALL_HANDS) $gamePlayerCardArea.tooltip('show');
     }
 }
 

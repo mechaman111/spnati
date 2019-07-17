@@ -83,6 +83,7 @@ var ENDING_DELAY = null;
 var GAME_OVER_DELAY = 1000;
 var SHOW_ENDING_DELAY = 5000; //5 seconds
 var CARD_SUGGEST = false;
+var EXPLAIN_ALL_HANDS = true;
 var AUTO_FADE = true;
 var MINIMAL_UI = true;
 var DEBUG = false;
