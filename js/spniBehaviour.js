@@ -525,7 +525,7 @@ function expandDialogue (dialogue, self, target, bindings) {
         try {
             switch (variable.toLowerCase()) {
             case 'player':
-                substitution = expandNicknames(self, humanPlayer);
+                substitution = expandNicknames(self, players[HUMAN_PLAYER]);
                 break;
             case 'name':
                 substitution = expandNicknames(self, target);
@@ -1664,7 +1664,7 @@ function updateAllVolatileBehaviours () {
         var anyUpdated = false;
         
         players.forEach(function (p) {
-            if (p !== humanPlayer) {
+            if (p !== players[HUMAN_PLAYER]) {
                 anyUpdated = p.updateVolatileBehaviour() || anyUpdated;
             }
         });
@@ -1682,14 +1682,14 @@ function updateAllVolatileBehaviours () {
 function commitAllBehaviourUpdates () {
     /* Apply setLabel first so that ~name~ is the same for all players */
     players.forEach(function (p) {
-        if (p !== humanPlayer && p.chosenState && p.chosenState.setLabel) {
+        if (p !== players[HUMAN_PLAYER] && p.chosenState && p.chosenState.setLabel) {
             p.label = p.chosenState.setLabel;
             p.labelOverridden = true;
         }
     });
     
     players.forEach(function (p) {
-        if (p !== humanPlayer) {
+        if (p !== players[HUMAN_PLAYER]) {
             p.commitBehaviourUpdate();
         }
     });

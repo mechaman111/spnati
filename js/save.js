@@ -95,7 +95,7 @@ function Save() {
         'female': [ 'jacket', 'tank top', 'bra', 'belt', 'pants', 'panties', 'stockings', 'shoes' ],
     };
     this.loadPlayer = function() {
-        var gender = humanPlayer.gender;
+        var gender = players[HUMAN_PLAYER].gender;
         var profile = {};
         try {
             profile = JSON.parse(localStorage.getItem(prefix + gender)) || { };
@@ -110,20 +110,20 @@ function Save() {
         playerTagSelections = profile.tags || {};
     };
     this.savePlayer = function(){
-        localStorage.setItem(prefix + 'gender', humanPlayer.gender);
+        localStorage.setItem(prefix + 'gender', players[HUMAN_PLAYER].gender);
     /*  var tags = {};
         for (var key in playerTagSelections) {
             tags[key] = playerTagSelections[key];
         }*/
         var profile = {
             name: $nameField.val(),
-            size: humanPlayer.size,
+            size: players[HUMAN_PLAYER].size,
             tags: playerTagSelections,
-            clothing: clothingChoices[humanPlayer.gender].filter(function(item, ix) {
+            clothing: clothingChoices[players[HUMAN_PLAYER].gender].filter(function(item, ix) {
                 return selectedChoices[ix];
             }).map(function(item) { return item.name; }),
         };
-        localStorage.setItem(prefix + humanPlayer.gender, JSON.stringify(profile));
+        localStorage.setItem(prefix + players[HUMAN_PLAYER].gender, JSON.stringify(profile));
     };
     this.loadOptions = function(){
         try {
@@ -147,7 +147,7 @@ function Save() {
         }
         try {
             var settings = JSON.parse(localStorage.getItem(prefix + 'settings')) || {};
-            if ('stamina' in settings) humanPlayer.stamina = settings.stamina;
+            if ('stamina' in settings) players[HUMAN_PLAYER].stamina = settings.stamina;
             if ('background' in settings) setBackground(settings.background);
         } catch (ex) {
             console.error('Failed parsing settings from localStorage');
@@ -158,7 +158,7 @@ function Save() {
         }
         var gender = localStorage.getItem(prefix + 'gender');
         if (gender) {
-            humanPlayer.gender = gender;
+            players[HUMAN_PLAYER].gender = gender;
         }
     };
     this.saveUsageTracking = function() {
@@ -179,7 +179,7 @@ function Save() {
         localStorage.setItem(prefix + 'options', JSON.stringify(options));
     };
     this.saveSettings = function() {
-        var settings = { stamina: humanPlayer.stamina };
+        var settings = { stamina: players[HUMAN_PLAYER].stamina };
         if (selectedBackground != defaultBackground) {
             settings.background = selectedBackground;
         }

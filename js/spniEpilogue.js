@@ -273,7 +273,7 @@ function loadEpilogueData(player) {
     return [];
   }
 
-  var playerGender = humanPlayer.gender;
+  var playerGender = players[HUMAN_PLAYER].gender;
 
   //get the XML tree that relates to the epilogue, for the specific player gender
   //var epXML = $($.parseXML(xml)).find('epilogue[gender="'+playerGender+'"]'); //use parseXML() so that <image> tags come through properly //IE doesn't like this
@@ -296,7 +296,7 @@ function loadEpilogueData(player) {
     }
 
     var playerStartingLayers = parseInterval($(this).attr('playerStartingLayers'));
-    if (playerStartingLayers !== undefined && !inInterval(humanPlayer.startingLayers, playerStartingLayers)) {
+    if (playerStartingLayers !== undefined && !inInterval(players[HUMAN_PLAYER].startingLayers, playerStartingLayers)) {
       return false;
     }
 
@@ -850,7 +850,7 @@ function doEpilogueModal() {
   $epilogueAcceptButton.prop("disabled", true); //don't let the player accept an epilogue until they've chosen one
 
   //whether or not the human player won
-  var playerWon = !humanPlayer.out;
+  var playerWon = !players[HUMAN_PLAYER].out;
 
   if (EPILOGUES_ENABLED && playerWon) { //all the epilogues are for when the player wins, so don't allow them to choose one if they lost
     //load the epilogue data for each player
@@ -1717,7 +1717,7 @@ SceneView.prototype.removeText = function (directive, context) {
 }
 
 SceneView.prototype.applyTextDirective = function (directive, box) {
-  var content = expandDialogue(directive.text, null, humanPlayer);
+  var content = expandDialogue(directive.text, null, players[HUMAN_PLAYER]);
 
   box.html('<span>' + content + '</span>');
   box.addClass(directive.arrow)
