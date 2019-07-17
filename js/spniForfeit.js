@@ -147,6 +147,9 @@ function tickForfeitTimers () {
 				/* update the player label */
 				$gameClothingLabel.html("<b>'Finished' in "+players[i].timer+" phases</b>");
 				$gamePlayerCountdown.html(players[i].timer);
+                if (players[i].timer <= 4) {
+                    players[i].forfeit[0] = PLAYER_HEAVY_MASTURBATING;
+                }
 				masturbatingPlayers.push(i); // Double the chance of commenting on human player
 			} else {
 				/* AI player */
