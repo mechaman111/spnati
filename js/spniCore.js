@@ -555,7 +555,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.dialogue_layering = $metaXml.find('dialogue-layer').text();
     
     if (['over', 'under'].indexOf(this.dialogue_layering) < 0) {
-        this.dialogue_layering = 'over';
+        this.dialogue_layering = 'under';
     }
     
     this.selected_costume = null;
