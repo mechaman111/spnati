@@ -382,9 +382,9 @@ function findVariablePlayer(variable, self, target, bindings) {
     if (!variable) return null;
     if (variable == 'self') return self;
     if (variable == 'target') return target;
-    if (bindings && variable.toLowerCase() in bindings) return bindings[variable.toLowerCase()];
+    if (bindings && variable in bindings) return bindings[variable];
     if (players.some(function (p) {
-        if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
+        if (p.id.replace(/\W/g, '').toLowerCase() === variable) {
             player = p;
             return true;
         }
@@ -618,7 +618,7 @@ function expandDialogue (dialogue, self, target, bindings) {
             case 'target':
             case 'self':
             default:
-                var variablePlayer = findVariablePlayer(variable, self, target, bindings);
+                var variablePlayer = findVariablePlayer(variable.toLowerCase(), self, target, bindings);
                 if (variablePlayer) {
                     substitution = expandPlayerVariable(fn_parts, args, variablePlayer, self, target, bindings);
                 } else {
