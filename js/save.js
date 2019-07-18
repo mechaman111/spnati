@@ -130,6 +130,7 @@ function Save() {
             var options = JSON.parse(localStorage.getItem(prefix + 'options')) || { };
             if ('autoFade' in options && typeof options.autoFade == 'boolean') AUTO_FADE = options.autoFade;
             if ('cardSuggest' in options && typeof options.cardSuggest == 'boolean') CARD_SUGGEST = options.cardSuggest;
+            if ('explainHands' in options && typeof options.explainHands == 'boolean') EXPLAIN_ALL_HANDS = options.explainHands;
             if ('gameDelay' in options && typeof options.gameDelay == 'number') GAME_DELAY = options.gameDelay;
             if ('dealAnimation' in options && typeof options.dealAnimation == 'number') {
                 ANIM_TIME = options.dealAnimation;
@@ -170,6 +171,7 @@ function Save() {
         var options = {
             autoFade: AUTO_FADE,
             cardSuggest: CARD_SUGGEST,
+            explainHands: EXPLAIN_ALL_HANDS,
             gameDelay: GAME_DELAY,
             dealAnimation: ANIM_TIME,
             autoForfeit: FORFEIT_DELAY,

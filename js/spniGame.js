@@ -83,6 +83,7 @@ var ENDING_DELAY = null;
 var GAME_OVER_DELAY = 1000;
 var SHOW_ENDING_DELAY = 5000; //5 seconds
 var CARD_SUGGEST = false;
+var EXPLAIN_ALL_HANDS = true;
 var AUTO_FADE = true;
 var MINIMAL_UI = true;
 var DEBUG = false;
@@ -142,7 +143,7 @@ var rolledBackGamePhase = null;
  * screen.
  ************************************************************/
 function loadGameScreen () {
-    $('#game-screen [data-toggle="tooltip"]').tooltip();
+    $('#game-screen [data-toggle="tooltip"]').tooltip({ delay: { show: 200 }});
 
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
@@ -521,6 +522,7 @@ function completeRevealPhase () {
     for (var i = 0; i < players.length; i++) {
         if (players[i] && !players[i].out) {
             players[i].hand.determine();
+            players[i].hand.sort();
             showHand(i);
             
             if (i > 0) $gameOpponentAreas[i-1].addClass('opponent-revealed-cards');
