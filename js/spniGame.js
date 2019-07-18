@@ -239,7 +239,7 @@ function updateAllGameVisuals () {
  ************************************************************/
 function displayHumanPlayerClothing () {
     /* collect the images */
-    var clothingImages = players[HUMAN_PLAYER].clothing.map(function(c) {
+    var clothingImages = humanPlayer.clothing.map(function(c) {
 		return c.image;
 	});
     
@@ -361,7 +361,7 @@ function advanceTurn () {
         saveTranscriptEntries(updatedPlayers);
         
         /* human player's turn */
-        if (players[HUMAN_PLAYER].out) {
+        if (humanPlayer.out) {
 			allowProgression(eGamePhase.REVEAL);
 		} else {
             $gameScreen.addClass('prompt-exchange');
@@ -441,7 +441,7 @@ function checkDealLock () {
 		   player to exchange cards, and someone is masturbating, and
 		   the card animation speed is to great, we need a pause so
 		   that the masturbation talk can be read. */
-        if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STATUS_MASTURBATING) > 0 && ANIM_DELAY < 100) {
+        if (humanPlayer.out && getNumPlayersInStage(STATUS_MASTURBATING) > 0 && ANIM_DELAY < 100) {
             allowProgression();
         } else {
             continueDealPhase();
@@ -467,12 +467,12 @@ function continueDealPhase () {
     }
 
 	/* suggest cards to swap, if enabled */
-	if (CARD_SUGGEST && !players[HUMAN_PLAYER].out) {
-		determineAIAction(players[HUMAN_PLAYER]);
+	if (CARD_SUGGEST && !humanPlayer.out) {
+		determineAIAction(humanPlayer);
 		
 		/* dull the cards they are trading in */
-		for (var i = 0; i < players[HUMAN_PLAYER].hand.tradeIns.length; i++) {
-			if (players[HUMAN_PLAYER].hand.tradeIns[i]) {
+		for (var i = 0; i < humanPlayer.hand.tradeIns.length; i++) {
+			if (humanPlayer.hand.tradeIns[i]) {
 				dullCard(HUMAN_PLAYER, i);
 			}
 		}
@@ -737,9 +737,9 @@ function handleGameOver() {
  * The player selected one of their cards.
  ************************************************************/
 function selectCard (card) {
-	players[HUMAN_PLAYER].hand.tradeIns[card] = !players[HUMAN_PLAYER].hand.tradeIns[card];
+	humanPlayer.hand.tradeIns[card] = !humanPlayer.hand.tradeIns[card];
 	
-	if (players[HUMAN_PLAYER].hand.tradeIns[card]) {
+	if (humanPlayer.hand.tradeIns[card]) {
 		dullCard(HUMAN_PLAYER, card);
 	} else {
 		fillCard(HUMAN_PLAYER, card);
@@ -757,9 +757,9 @@ function allowProgression (nextPhase) {
 		nextPhase = gamePhase;
 	}
 	
-    if (FORFEIT_DELAY && nextPhase != eGamePhase.GAME_OVER && players[HUMAN_PLAYER].out && players[HUMAN_PLAYER].timer > 1) {
+    if (FORFEIT_DELAY && nextPhase != eGamePhase.GAME_OVER && humanPlayer.out && humanPlayer.timer > 1) {
         timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
-    } else if (ENDING_DELAY && nextPhase != eGamePhase.GAME_OVER && (players[HUMAN_PLAYER].finished || (!players[HUMAN_PLAYER].out && gameOver))) {
+    } else if (ENDING_DELAY && nextPhase != eGamePhase.GAME_OVER && (humanPlayer.finished || (!humanPlayer.out && gameOver))) {
         /* Human is finished or human is the winner */
         timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, ENDING_DELAY);
     } else {
@@ -767,7 +767,7 @@ function allowProgression (nextPhase) {
         actualMainButtonState = false;
     }
 
-	if (players[HUMAN_PLAYER].out && !players[HUMAN_PLAYER].finished && players[HUMAN_PLAYER].timer == 1 && gamePhase != eGamePhase.STRIP) {
+	if (humanPlayer.out && !humanPlayer.finished && humanPlayer.timer == 1 && gamePhase != eGamePhase.STRIP) {
 		$mainButton.html("Cum!");
 	} else if (nextPhase[0]) {
 		$mainButton.html(nextPhase[0]);

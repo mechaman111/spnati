@@ -185,7 +185,7 @@ function setBackground (choice) {
  * Loading the player masturbation timer.
  ************************************************************/
 function loadMasturbationTimer () {
-	$masturbationTimerBox.val(players[HUMAN_PLAYER].stamina);
+	$masturbationTimerBox.val(humanPlayer.stamina);
 	$masturbationWarningLabel.css("visibility", "hidden");
 }
  /************************************************************
@@ -196,7 +196,7 @@ $masturbationTimerBox.on('input', function() {
 	var newTime = Number(newTimerValue);
 	var isValidTimerValue = (newTime != "NaN") && (newTime > 0);
 	if (isValidTimerValue){
-		players[HUMAN_PLAYER].stamina = newTime;
+		humanPlayer.stamina = newTime;
 	}
 	$masturbationWarningLabel.css("visibility", isValidTimerValue ? "hidden" : "visible");
 });

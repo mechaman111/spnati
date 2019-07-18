@@ -56,6 +56,7 @@ var BLANK_PLAYER_IMAGE = "opponents/blank.png";
 
 /* player array */
 var players = Array(5);
+var humanPlayer;
 
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
 var timeoutID;
@@ -186,8 +187,8 @@ function compileBaseErrorReport(userDesc, bugType) {
         'circumstances': circumstances,
         'table': tableReports,
         'player': {
-            'gender': players[HUMAN_PLAYER].gender,
-            'size': players[HUMAN_PLAYER].size,
+            'gender': humanPlayer.gender,
+            'size': humanPlayer.size,
         },
         'jsErrors': jsErrors,
     };
@@ -979,9 +980,8 @@ Player.prototype.preloadStageImages = function (stage) {
  ************************************************************/
 function initialSetup () {
     /* start by creating the human player object */
-    var humanPlayer = new Player('human'); //createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
-    players[HUMAN_PLAYER] = humanPlayer;
-    players[HUMAN_PLAYER].slot = HUMAN_PLAYER;
+    players[HUMAN_PLAYER] = humanPlayer = new Player('human'); //createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
+    humanPlayer.slot = HUMAN_PLAYER;
 
 	/* enable table opacity */
 	tableOpacity = 1;
@@ -1715,7 +1715,7 @@ function showPlayerTagsModal () {
     $('#player-tags-confirm').one('click', function() {
         playerTagSelections = {};
         for (var choiceName in playerTagOptions) {
-            if (!('gender' in playerTagOptions[choiceName]) || playerTagOptions[choiceName].gender == players[HUMAN_PLAYER].gender) {
+            if (!('gender' in playerTagOptions[choiceName]) || playerTagOptions[choiceName].gender == humanPlayer.gender) {
                 var val = $('form#player-tags [name="'+choiceName+'"]').val();
                 if (val) {
                     playerTagSelections[choiceName] = val;
@@ -1803,16 +1803,18 @@ if (!String.prototype.startsWith) {
  * Counts the number of elements that evaluate as true, or,
  * if a function is provided, passes the test implemented by it.
  ************************************************************/
-Array.prototype.countTrue = function(func) {
-    var count = 0;
-    for (var i = 0; i < this.length; i++) {
-        if (i in this
-            && (func ? func(this[i], i, this) : this[i])) {
-            count++;
+Object.defineProperty(Array.prototype, 'countTrue', {
+    value: function(func) {
+        var count = 0;
+        for (var i = 0; i < this.length; i++) {
+            if (i in this
+                && (func ? func(this[i], i, this) : this[i])) {
+                count++;
+            }
         }
+        return count;
     }
-    return count;
-}
+});
 
 /************************************************************
  * Generate a random alphanumeric ID.
@@ -1859,11 +1861,6 @@ function autoResizeFont ()
 	}
 	/* set up future resizing */
 	window.onresize = autoResizeFont;
-}
-
-/* Get the number of players loaded, including the human player.*/
-function countLoadedOpponents() {
-    return players.reduce(function (a, v) { return a + (v ? 1 : 0); }, 0);
 }
 
 $('.modal').on('show.bs.modal', function() {
