@@ -876,16 +876,15 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             var targetedLines = {};
 
-            $xml.find('case[target]>state, case[alsoPlaying]>state').each(function() {
-                var $case = $(this.parentNode);
-                ['target', 'alsoPlaying'].forEach(function(attr) {
-                    var id = $case.attr(attr);
+            $xml.find('>behaviour').find('case[target], case[alsoPlaying], case:has(condition[character])').each(function() {
+                var $case = $(this);
+                $case.children('condition[character]').map(function() { return $(this).attr('character'); }).get()
+                    .concat([$case.attr('target'), $case.attr('alsoPlaying')]).forEach(function(id) {
                     if (id) {
-                        if (!(id in targetedLines)) { targetedLines[id] = { count: 0, seen: {} }; }
-                        if (!(this.textContent in targetedLines[id].seen)) {
-                            targetedLines[id].seen[this.textContent] = true;
-                            targetedLines[id].count++;
-                        }
+                        if (!(id in targetedLines)) { targetedLines[id] = { count: 0, seen: new Set() }; }
+                        $(this).children('state').each(function() {
+                            targetedLines[id].seen.add(this.textContent);
+                        });
                     }
                 }, this);
             });

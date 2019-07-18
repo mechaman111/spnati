@@ -1226,7 +1226,7 @@ function sortOpponentsByMostTargeted() {
 		counts = [opp1, opp2].map(function(opp) {
 			return players.reduce(function(sum, p) {
 				if (p && p.targetedLines && opp.id in p.targetedLines) {
-					sum += p.targetedLines[opp.id].count;
+					sum += p.targetedLines[opp.id].seen.size;
 				}
 				return sum;
 			}, 0);
