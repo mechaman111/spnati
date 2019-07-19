@@ -1072,57 +1072,57 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     }
     
     // target
-    if (opp && this.target) {
-        if (this.target !== opp.id) {
+    if (this.target) {
+        if (!opp || this.target !== opp.id) {
             return false; // failed "target" requirement
         }
     }
     
     // filter
-    if (opp && this.filter) {
-        if (!opp.hasTag(this.filter)) {
+    if (this.filter) {
+        if (!opp || !opp.hasTag(this.filter)) {
             return false; // failed "filter" requirement
         }
     }
 
     // targetStage
-    if (opp && this.targetStage) {
-        if(!inInterval(opp.stage, this.targetStage)) {
+    if (this.targetStage) {
+        if (!opp || !inInterval(opp.stage, this.targetStage)) {
             return false; // failed "targetStage" requirement
         }
     }
     
     // targetLayers
-    if (opp && this.targetLayers) {
-        if (!inInterval(opp.countLayers(), this.targetLayers)) {
+    if (this.targetLayers) {
+        if (!opp || !inInterval(opp.countLayers(), this.targetLayers)) {
             return false; 
         }
     }
     
     // targetStatus
-    if (opp && this.targetStatus) {
-        if (!opp.checkStatus(this.targetStatus)) {
+    if (this.targetStatus) {
+        if (!opp || !opp.checkStatus(this.targetStatus)) {
             return false;
         }
     }
 
     // targetStartingLayers
-    if (opp && this.targetStartingLayers) {
-        if (!inInterval(opp.startingLayers, this.targetStartingLayers)) {
+    if (this.targetStartingLayers) {
+        if (!opp || !inInterval(opp.startingLayers, this.targetStartingLayers)) {
             return false;
         }
     }
 
     // targetSaidMarker
-    if (opp && this.targetSaidMarker) {
-        if (!checkMarker(this.targetSaidMarker, opp, null)) {
+    if (this.targetSaidMarker) {
+        if (!opp || !checkMarker(this.targetSaidMarker, opp, null)) {
             return false;
         }
     }
     
     // targetNotSaidMarker
-    if (opp && this.targetNotSaidMarker) {
-        if (opp.markers[this.targetNotSaidMarker]) {
+    if (this.targetNotSaidMarker) {
+        if (!opp || opp.markers[this.targetNotSaidMarker]) {
             return false;
         }
     }
@@ -1142,16 +1142,16 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     }
 
     // oppHand
-    if (opp && this.oppHand) {
-        if (handStrengthToString(opp.hand.strength).toLowerCase() !== this.oppHand.toLowerCase()) {
+    if (this.oppHand) {
+        if (!opp || handStrengthToString(opp.hand.strength).toLowerCase() !== this.oppHand.toLowerCase()) {
             return false;
         }
     }
 
     // targetTimeInStage
-    if (opp && this.targetTimeInStage) {
-        if (!inInterval(opp.timeInStage == -1 ? 0 //allow post-strip time to count as 0
-                       : opp.timeInStage, this.targetTimeInStage)) {
+    if (this.targetTimeInStage) {
+        if (!opp || !inInterval(opp.timeInStage == -1 ? 0 //allow post-strip time to count as 0
+                                : opp.timeInStage, this.targetTimeInStage)) {
             return false; // failed "targetTimeInStage" requirement
         }
     }
