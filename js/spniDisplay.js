@@ -671,7 +671,7 @@ OpponentDisplay.prototype.update = function(player) {
     if (player.dialogue_layering === 'over') {
         this.bubble.css('z-index', player.z_index + 1);
     } else {
-        this.bubble.css('z-index', player.z_index - 1);
+        this.bubble.css('z-index', player.z_index);
     }
     
     if (showDebug && !inRollback()) {
