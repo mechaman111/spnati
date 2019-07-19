@@ -890,10 +890,11 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             var targetedLines = {};
 
-            $xml.find('>behaviour').find('case[target], case[alsoPlaying], case:has(condition[character])').each(function() {
+            $xml.find('>behaviour').find('case[target], case[alsoPlaying], case[filter], case:has(condition[character]), case:has(condition[filter])').each(function() {
                 var $case = $(this);
                 $case.children('condition[character]').map(function() { return $(this).attr('character'); }).get()
-                    .concat([$case.attr('target'), $case.attr('alsoPlaying')]).forEach(function(id) {
+                    .concat($case.children('condition[filter]').map(function() { return $(this).attr('filter'); }).get())
+                    .concat([$case.attr('target'), $case.attr('alsoPlaying'), $case.attr('filter')]).forEach(function(id) {
                     if (id) {
                         if (!(id in targetedLines)) { targetedLines[id] = { count: 0, seen: new Set() }; }
                         $(this).children('state').each(function() {
