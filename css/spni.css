@@ -21,6 +21,10 @@ body {
     overflow: hidden;
 }
 
+button, input {
+    pointer-events: auto;
+}
+
 /************************************************************
  * Bootstrap overrides.
  ************************************************************/
@@ -132,11 +136,12 @@ label {
 
 
 .screen {
-	position: absolute;
+    position: absolute;
     top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
     margin: 0.5%;
 }
 
@@ -868,13 +873,6 @@ label {
  * look the awesome way that they do.
  ************************************************************/
 
-.dialogue-bubble-row {
-    position: absolute;
-    width: 100%;
-    height: 20%;
-    top: 2%;
-}
-
 .dialogue-bubble {
     width: 100%;
     position: absolute;
@@ -891,12 +889,13 @@ label {
     text-align: center;
 }
 
-.dialogue-bubble-row .dialogue-bubble {
-    min-height: 90%;
+.screen .dialogue-bubble {
+    min-height: 18%;
+    top: 2%;
 }
 
-.dialogue-bubble-row .dialogue-bubble, .stats-box {
-    top: 0;
+.screen .dialogue-bubble, .stats-box {
+    top: 2%;
     width: 24.5%;
     margin: 0 0.25%;
 }
@@ -1106,17 +1105,12 @@ label {
  * Classes for opponent images.
  ************************************************************/
 
-.image-row {
+.opponent-image-area {
     position: absolute;
-    width: 100%;
+    width: 25%;
     height: 80%;
     bottom: 0;
-}
-
-.opponent-image-area {
-	position: absolute;
-    width: 50%;
-    height: 100%;
+    pointer-events: none;
 }
 
 .opponent-image {
@@ -1126,11 +1120,7 @@ label {
 	margin: auto;
 	bottom: 0;
 	left: 50%;
-    transform: translateX(-50%);
-}
-
-#game-screen .image-row {
-    pointer-events: none;
+	transform: translateX(-50%);
 }
 
 /************************************************************
@@ -1701,42 +1691,6 @@ label {
 
 #individual-more-info-button, #group-more-info-button {
     right: 2%;
-}
-
-.selection-image-area {
-	position: absolute;
-    width: 25%;
-    height: 100%;
-}
-
-.selection-image-area.farLeft {
-	left: 0;
-}
-
-.selection-image-area.almostLeft {
-	left: 25%;
-}
-
-.selection-image-area.farRight {
-	right: 0;
-}
-
-.selection-image-area.almostRight {
-	right: 25%;
-}
-
-.selection-image-area .opponent-image {
-	pointer-events: none;
-	position: absolute;
-	left: 50%;
-	transform: translateX(-50%);
-}
-
-.selection-image-area .custom-pose {
-	left: 0;
-	right: 0;
-	margin: 0 auto;
-	transform: none;
 }
 
 .opponent-suggestion-container {
@@ -2473,14 +2427,13 @@ label {
 }
 
 .stats-box {
-    display: table;
     position: absolute;
     background: #F5F5F5;
     padding: 1rem;
-    height: 88%;
+    min-height: 17.6%;
 }
 
-.stats-box .stats-section {
+.stats-box .stats-section, .stats-box .stats-section-large {
     display: table;
     position: relative;
     width: 100%;
@@ -2489,10 +2442,7 @@ label {
 }
 
 .stats-box .stats-section-large {
-    position: relative;
-    width: 100%;
-    height: 47%;
-    margin-bottom: 1%;
+    height: 3.6em;
 }
 
 .stats-box .stats-label {
@@ -2581,12 +2531,10 @@ label {
 }
 
 .wrap-text {
-    table-layout: fixed;
-    width: 100%;
-    word-wrap: break-word;
+    overflow-wrap: anywhere;
 }
 
-.selection-image-area .alt-costume-dropdown {
+.opponent-image-area .alt-costume-dropdown {
 	position: absolute;
 	left: 50%;
 	top: 60%;

@@ -721,10 +721,7 @@ GameScreenDisplay.prototype.reset = function (player) {
     
     if (player) {
         this.opponentArea.show();
-        this.imageArea.css({
-            'height': player.scale + '%',
-            'top': (100 - player.scale) + '%'
-        }).show();
+        this.imageArea.css('height', 0.8 * player.scale + '%').show();
         this.label.removeClass("current loser tied");
     } else {
         this.opponentArea.hide();
@@ -776,8 +773,9 @@ MainSelectScreenDisplay.prototype.update = function (player) {
     if (!player) {
         this.hideBubble();
         this.clearPose();
+        this.imageArea.css('z-index', '-100');
         this.label.html("Opponent " + this.slot);
-        
+
         /* change the button */
         this.selectButton.html("Select Opponent");
         this.selectButton.removeClass("smooth-button-red");
@@ -806,10 +804,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         } else {
             this.pose.onLoadComplete = function () {
                 this.bubble.show();
-                this.imageArea.css({
-                    'height': player.scale + '%',
-                    'top': (100 - player.scale) + '%'
-                }).show();
+                this.imageArea.css('height', 0.8 * player.scale + '%').show();
             }.bind(this);
         }
     }
