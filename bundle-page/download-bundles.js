@@ -23,7 +23,7 @@ function create_bundle_entry (manifest) {
         var title = capitalize(manifest.category) + ' Opponents #' + manifest.index;
 
         var includes_opponents = manifest.folders.reduce(function (acc, val) {
-            var opp = val.replace('opponents\\', '');
+            var opp = val.replace(/opponents[\\\/]/gi, '');
 
             if (acc.length > 0) acc += ', ';
             acc += capitalize(opp);
