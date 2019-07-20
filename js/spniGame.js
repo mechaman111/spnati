@@ -153,7 +153,7 @@ function loadGameScreen () {
             players[i].current = 0;
         }
     }
-    $gameLabels[HUMAN_PLAYER].removeClass("loser tied");
+    $gameLabels[HUMAN_PLAYER].removeClass("loser tied current");
     clearHand(HUMAN_PLAYER);
 
     recentLoser = -1;
