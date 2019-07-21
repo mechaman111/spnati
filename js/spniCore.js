@@ -1028,6 +1028,7 @@ function initialSetup () {
             $("body").addClass('focus-indicators-enabled');
         }
     });
+    $(document).keyup(groupSelectKeyToggle);
     $(document).mousedown(function(ev) {
         $("body").removeClass('focus-indicators-enabled');
     });
@@ -1262,6 +1263,7 @@ function resetPlayers () {
 function restartGame () {
 
     $(document).off('keyup');
+    $(document).keyup(groupSelectKeyToggle);
 
 	clearTimeout(timeoutID); // No error if undefined or no longer valid
 	timeoutID = autoForfeitTimeoutID = undefined;

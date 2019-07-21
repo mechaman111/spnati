@@ -194,6 +194,7 @@ var INCOMPLETE_STATUS_TOOLTIP = "This opponent is incomplete and currently not i
  * Loads all of the content required to display the title
  * screen.
  ************************************************************/
+
 function loadSelectScreen () {
     loadListingFile();
 
@@ -875,6 +876,23 @@ function changeGroupPage (skip, page) {
 	updateGroupSelectScreen();
     updateGroupCountStats();
 }
+
+
+function groupSelectKeyToggle(e)
+{
+    console.log(e)
+    if ($('#group-select-screen:visible').length > 0) {
+        if (e.keyCode == 37) { // left arrow
+            changeGroupPage(false, -1);
+        }
+        else if (e.keyCode == 39) { // right arrow
+            changeGroupPage(false, 1);
+        }
+        else if (e.keyCode == 13) { // enter key
+            selectGroup();
+        }
+    }
+} 
 
 /************************************************************
  * The player clicked on the back button on the individual or
