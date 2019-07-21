@@ -72,12 +72,12 @@ namespace Desktop.CommonControls.PropertyControls
 			Save();
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			chkEnabled.Checked = false;
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			bool enabled = chkEnabled.Checked;
 			if (PropertyType == typeof(bool))

@@ -31,6 +31,9 @@ namespace SPNATI_Character_Editor.Activities
 		public WritingAid()
 		{
 			InitializeComponent();
+
+			cboPriority.Items.AddRange(new string[] { "- All -", "Must Target", "Noteworthy", "FYI" });
+			cboPriority.SelectedIndex = 0;
 		}
 
 		public override string Caption
@@ -41,6 +44,7 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as Character;
+			ColJump.Flat = true;
 			_editorData = CharacterDatabase.GetEditorData(_character);
 			int suggestions = Config.GetInt(SuggestionPreference);
 			if (suggestions == 0)
@@ -70,6 +74,7 @@ namespace SPNATI_Character_Editor.Activities
 				CharacterEditorData editorData = CharacterDatabase.GetEditorData(c);
 				_maxSuggestions += editorData.NoteworthySituations.Count;
 			}
+			cboFilter.Sorted = true;
 			cboFilter.SelectedIndex = 0;
 		}
 
@@ -86,6 +91,14 @@ namespace SPNATI_Character_Editor.Activities
 		private void GenerateSuggestions()
 		{
 			Cursor.Current = Cursors.WaitCursor;
+
+			int pri = cboPriority.SelectedIndex;
+			if (pri < 0)
+			{
+				pri = 0;
+			}
+			SituationPriority priority = (SituationPriority)pri;
+
 			gridSituations.Rows.Clear();
 			int suggestionCount = (int)valSuggestions.Value;
 			int max = Math.Min(_maxSuggestions, suggestionCount);
@@ -120,7 +133,8 @@ namespace SPNATI_Character_Editor.Activities
 
 				editorData.Initialize();
 				Situation situation = editorData.NoteworthySituations.GetRandom();
-				if (suggestions.Contains(situation))
+				SituationPriority sitPriority = situation.Priority == SituationPriority.None ? SituationPriority.Noteworthy : situation.Priority;
+				if (suggestions.Contains(situation) || (priority != SituationPriority.None && priority != sitPriority))
 				{
 					continue;
 				}

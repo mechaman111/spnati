@@ -1,4 +1,5 @@
-﻿using SPNATI_Character_Editor.Activities;
+﻿using Desktop.Skinning;
+using SPNATI_Character_Editor.Activities;
 using SPNATI_Character_Editor.DataStructures;
 using System;
 using System.Drawing;
@@ -6,7 +7,7 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class TrophyForm : Form
+	public partial class TrophyForm : SkinnedForm
 	{
 		private Character _character;
 		private bool _abort;

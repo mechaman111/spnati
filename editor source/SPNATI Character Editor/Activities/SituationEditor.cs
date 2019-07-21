@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -13,10 +14,26 @@ namespace SPNATI_Character_Editor.Activities
 		private ImageLibrary _imageLibrary;
 		private Situation _selectedCase;
 
+		private static Dictionary<SituationPriority, string> _priorities;
+		private static Dictionary<string, SituationPriority> _prioritiesIndex;
+
+		static SituationEditor()
+		{
+			_priorities = new Dictionary<SituationPriority, string>();
+			_prioritiesIndex = new Dictionary<string, SituationPriority>();
+			_priorities.Add(SituationPriority.MustTarget, "Must Target");
+			_priorities.Add(SituationPriority.Noteworthy, "Noteworthy");
+			_priorities.Add(SituationPriority.FYI, "FYI");
+			foreach (KeyValuePair<SituationPriority, string> kvp in _priorities)
+			{
+				_prioritiesIndex[kvp.Value] = kvp.Key;
+			}
+		}
+
 		public SituationEditor()
 		{
 			InitializeComponent();
-
+			ColJump.Flat = ColDelete.Flat = true;
 			gridLines.ReadOnly = true;
 		}
 
@@ -29,6 +46,14 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			_character = Record as Character;
 			_editorData = CharacterDatabase.GetEditorData(_character);
+
+			foreach(SituationPriority priority in Enum.GetValues(typeof(SituationPriority)))
+			{
+				if (_priorities.ContainsKey(priority))
+				{
+					ColPriority.Items.Add(_priorities[priority]);
+				}
+			}
 		}
 
 		protected override void OnFirstActivate()
@@ -80,7 +105,17 @@ namespace SPNATI_Character_Editor.Activities
 
 		private DataGridViewRow BuildLine(Situation line)
 		{
-			DataGridViewRow row = gridCases.Rows[gridCases.Rows.Add(line.Name, line.Description, line.GetStageString(), line.LinkedCase.ToString())];
+			DataGridViewRow row = gridCases.Rows[gridCases.Rows.Add(line.Name, line.Description, "", line.GetStageString(), line.LinkedCase.ToString())];
+			SituationPriority priority = line.Priority;
+			if (priority == SituationPriority.None)
+			{
+				priority = SituationPriority.Noteworthy;
+			}
+			string value;
+			if (_priorities.TryGetValue(priority, out value))
+			{
+				row.Cells[nameof(ColPriority)].Value = value;
+			}
 			DataGridViewCell jumpButton = row.Cells["ColJump"];
 			if (line.Id == 0)
 			{
@@ -114,6 +149,12 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					line.Name = row.Cells["ColName"].Value?.ToString();
 					line.Description = row.Cells["ColDescription"].Value?.ToString();
+					string priority = row.Cells[ColPriority.Index].Value?.ToString();
+					SituationPriority p;
+					if (_prioritiesIndex.TryGetValue(priority, out p))
+					{
+						line.Priority = p;
+					}
 				}
 			}
 		}
@@ -168,11 +209,27 @@ namespace SPNATI_Character_Editor.Activities
 				e.Graphics.DrawImage(img, new Rectangle(x, y, w, h));
 				e.Handled = true;
 			}
+			else if (e.ColumnIndex == ColDelete.Index)
+			{
+				Image img = Properties.Resources.Delete;
+				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+				var w = img.Width;
+				var h = img.Height;
+				var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+				var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
+
+				e.Graphics.DrawImage(img, new Rectangle(x, y, w, h));
+				e.Handled = true;
+			}
 		}
 
 		private void gridCases_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (gridCases.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+			if (e.ColumnIndex < 0 || e.ColumnIndex >= gridCases.Columns.Count || e.RowIndex == gridCases.NewRowIndex || e.RowIndex < 0)
+			{
+				return;
+			}
+			if (e.ColumnIndex == ColJump.Index)
 			{
 				Situation situation = gridCases.Rows[e.RowIndex]?.Tag as Situation;
 				if (situation != null)
@@ -188,6 +245,16 @@ namespace SPNATI_Character_Editor.Activities
 						Shell.Instance.Launch<Character, DialogueEditor>(_character, new ValidationContext(new Stage(situation.LinkedCase.Stages[0]), situation.LinkedCase, null));
 					}
 				}
+			}
+			else if (e.ColumnIndex == ColDelete.Index)
+			{
+				DataGridViewRow row = gridCases.Rows[e.RowIndex];
+				Situation line = row.Tag as Situation;
+				if (line != null)
+				{
+					_editorData.NoteworthySituations.Remove(line);
+				}
+				gridCases.Rows.RemoveAt(e.RowIndex);
 			}
 		}
 	}

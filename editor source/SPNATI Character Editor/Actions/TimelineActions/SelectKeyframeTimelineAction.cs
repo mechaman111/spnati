@@ -9,17 +9,19 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 	public class SelectKeyframeTimelineAction : ITimelineAction
 	{
 		private Timeline _timeline;
-		private SpriteWidget _widget;
+		private KeyframedWidget _widget;
 		private ITimeCommand _command;
 		private LiveKeyframe _keyframe;
 		private string _property;
-		private LiveSprite _sprite;
+		private LiveAnimatedObject _data;
 		private bool _movable;
 		private bool _movingStart;
 		private float _startTime;
 		private bool _dragging;
+		private bool _copyOnMove;
+		private LiveKeyframe _originalFrame;
 
-		public SelectKeyframeTimelineAction(SpriteWidget widget, LiveKeyframe keyframe, string property)
+		public SelectKeyframeTimelineAction(KeyframedWidget widget, LiveKeyframe keyframe, string property)
 		{
 			_widget = widget;
 			_movable = (_widget.SelectedProperties.Count == 0 && property == null) || keyframe.Time != 0;
@@ -40,12 +42,13 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		public void Start(WidgetActionArgs args)
 		{
 			_timeline = args.Timeline;
-			_sprite = args.Widget.GetData() as LiveSprite;
+			_data = args.Widget.GetData() as LiveAnimatedObject;
+			_copyOnMove = args.Modifiers.HasFlag(Keys.Control) && _data.Keyframes.IndexOf(_keyframe) == _data.Keyframes.Count - 1;
 			_widget.SelectKeyframe(_keyframe, _property, args.Modifiers.HasFlag(Keys.Control));
-			_timeline.CurrentTime = _sprite.Start + _keyframe.Time;
+			_timeline.CurrentTime = _data.Start + _keyframe.Time;
 			_startTime = args.Time;
 
-			LiveKeyframe interpolation = _sprite.GetInterpolatedFrame(_keyframe.Time);
+			LiveKeyframe interpolation = _data.GetInterpolatedFrame(_keyframe.Time);
 			_timeline.SelectData(_keyframe, interpolation);
 		}
 
@@ -60,7 +63,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 			float snappedTime = snap ? args.SnapTime() : args.Time;
 			if (_widget.SelectedProperties.Count > 0 || _keyframe.Time > 0)
 			{
-				snappedTime -= _sprite.Start;
+				snappedTime -= _data.Start;
 			}
 			if (snap)
 			{
@@ -72,7 +75,12 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 			}
 			snappedTime = (float)Math.Round(snappedTime, 2);
 
-			LiveKeyframe frameAtTime = _sprite.Keyframes.Find(k => k.Time == snappedTime);
+			if (_originalFrame != null && snappedTime <= _originalFrame.Time)
+			{
+				return;
+			}
+
+			LiveKeyframe frameAtTime = _data.Keyframes.Find(k => k.Time == snappedTime);
 			if (_movingStart || frameAtTime == null || (_property != null && !frameAtTime.HasProperty(_property)))
 			{
 				if (_movingStart || _keyframe.Time != snappedTime)
@@ -81,12 +89,24 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 					{
 						if (_widget.SelectedProperties.Count == 0 && _keyframe.Time == 0)
 						{
-							_command = new MoveSpriteStartCommand(_sprite, _sprite.Start);
+							_command = new MoveSpriteStartCommand(_data, _data.Start);
 							_movingStart = true;
 						}
 						else
 						{
-							_command = new MoveKeyframeCommand(_sprite, _keyframe, _widget.SelectedProperties);
+							if (_copyOnMove && snappedTime > _keyframe.Time)
+							{
+								HashSet<string> props = new HashSet<string>();
+								foreach (string prop in _widget.SelectedProperties)
+								{
+									props.Add(prop);
+								}
+								_originalFrame = _keyframe;
+								LiveKeyframe copy = _data.CopyKeyframe(_keyframe, props);
+								_data.AddKeyframe(copy);
+								_keyframe = copy;
+							}
+							_command = new MoveKeyframeCommand(_data, _keyframe, _widget.SelectedProperties);
 							_command.Do();
 						}
 					}
@@ -125,7 +145,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 
 	public class MoveKeyframeCommand : ITimeCommand
 	{
-		private LiveSprite _sprite;
+		private LiveAnimatedObject _data;
 		private LiveKeyframe _keyframe;
 		private float _oldTime;
 		private bool _moveFrame;
@@ -135,10 +155,10 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 
 		public float Time;
 
-		public MoveKeyframeCommand(LiveSprite sprite, LiveKeyframe keyframe, List<string> properties)
+		public MoveKeyframeCommand(LiveAnimatedObject data, LiveKeyframe keyframe, List<string> properties)
 		{
 			Time = keyframe.Time;
-			_sprite = sprite;
+			_data = data;
 			_keyframe = keyframe;
 			_oldTime = _keyframe.Time;
 			_moveFrame = properties.Count == 0;
@@ -154,7 +174,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 			}
 			else
 			{
-				_newFrame = _sprite.MoveProperty(_keyframe, _properties, Time, NewKeyframe);
+				_newFrame = _data.MoveProperty(_keyframe, _properties, Time, NewKeyframe);
 			}
 		}
 
@@ -164,7 +184,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		/// <param name="time"></param>
 		public void Update(float time)
 		{
-			Time = time - _sprite.Start;
+			Time = time - _data.Start;
 			Time = (float)Math.Round(time, 2);
 			if (_moveFrame)
 			{
@@ -172,7 +192,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 			}
 			else
 			{
-				_newFrame = _sprite.MoveProperty(NewKeyframe, _properties, Time, null);
+				_newFrame = _data.MoveProperty(NewKeyframe, _properties, Time, null);
 			}
 		}
 
@@ -185,7 +205,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 			else
 			{
 				_keyframe.Time = _oldTime;
-				_sprite.MoveProperty(NewKeyframe, _properties, _oldTime, _keyframe);
+				_data.MoveProperty(NewKeyframe, _properties, _oldTime, _keyframe);
 			}
 		}
 	}

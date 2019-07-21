@@ -44,7 +44,7 @@ function setDevModeTarget (target) {
         $('#dev-select-button-'+target).addClass('active');
         
         players.forEach(function (p) {
-            if (p !== players[HUMAN_PLAYER] && !p.devModeInitialized) p.initDevMode();
+            if (p !== humanPlayer && !p.devModeInitialized) p.initDevMode();
         })
     }
     

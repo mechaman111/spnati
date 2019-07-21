@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.lstItems = new System.Windows.Forms.ListBox();
-			this.lblTooltip = new System.Windows.Forms.LinkLabel();
+			this.lstItems = new Desktop.Skinning.SkinnedListBox();
+			this.lblTooltip = new Desktop.Skinning.SkinnedLinkLabel();
 			this.SuspendLayout();
 			// 
 			// lstItems
@@ -75,7 +75,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.ListBox lstItems;
-		private System.Windows.Forms.LinkLabel lblTooltip;
+		private Desktop.Skinning.SkinnedListBox lstItems;
+		private Desktop.Skinning.SkinnedLinkLabel lblTooltip;
 	}
 }

@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.txtField = new System.Windows.Forms.TextBox();
+			this.txtField = new Desktop.Skinning.SkinnedTextBox();
 			this.lblPlaceholder = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
@@ -71,7 +71,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.TextBox txtField;
+		private Desktop.Skinning.SkinnedTextBox txtField;
 		private System.Windows.Forms.Label lblPlaceholder;
 	}
 }

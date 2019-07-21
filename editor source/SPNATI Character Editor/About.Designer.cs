@@ -28,14 +28,19 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.cmdOK = new System.Windows.Forms.Button();
-			this.lblVersion = new System.Windows.Forms.Label();
+			this.cmdOK = new Desktop.Skinning.SkinnedButton();
+			this.lblVersion = new Desktop.Skinning.SkinnedLabel();
+			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
+			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// cmdOK
 			// 
 			this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdOK.Location = new System.Drawing.Point(197, 35);
+			this.cmdOK.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdOK.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdOK.Flat = false;
+			this.cmdOK.Location = new System.Drawing.Point(206, 4);
 			this.cmdOK.Name = "cmdOK";
 			this.cmdOK.Size = new System.Drawing.Size(75, 23);
 			this.cmdOK.TabIndex = 0;
@@ -46,25 +51,38 @@
 			// lblVersion
 			// 
 			this.lblVersion.AutoSize = true;
-			this.lblVersion.Location = new System.Drawing.Point(13, 13);
+			this.lblVersion.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.lblVersion.Location = new System.Drawing.Point(12, 39);
 			this.lblVersion.Name = "lblVersion";
 			this.lblVersion.Size = new System.Drawing.Size(149, 13);
 			this.lblVersion.TabIndex = 1;
 			this.lblVersion.Text = "SPNATI Character Editor v1.0";
+			// 
+			// skinnedPanel1
+			// 
+			this.skinnedPanel1.Controls.Add(this.cmdOK);
+			this.skinnedPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.skinnedPanel1.Location = new System.Drawing.Point(0, 64);
+			this.skinnedPanel1.Name = "skinnedPanel1";
+			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
+			this.skinnedPanel1.Size = new System.Drawing.Size(284, 30);
+			this.skinnedPanel1.TabIndex = 2;
 			// 
 			// About
 			// 
 			this.AcceptButton = this.cmdOK;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(284, 70);
+			this.ClientSize = new System.Drawing.Size(284, 94);
+			this.ControlBox = false;
+			this.Controls.Add(this.skinnedPanel1);
 			this.Controls.Add(this.lblVersion);
-			this.Controls.Add(this.cmdOK);
 			this.Name = "About";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "About";
+			this.skinnedPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -72,7 +90,8 @@
 
 		#endregion
 
-		private System.Windows.Forms.Button cmdOK;
-		private System.Windows.Forms.Label lblVersion;
+		private Desktop.Skinning.SkinnedButton cmdOK;
+		private Desktop.Skinning.SkinnedLabel lblVersion;
+		private Desktop.Skinning.SkinnedPanel skinnedPanel1;
 	}
 }

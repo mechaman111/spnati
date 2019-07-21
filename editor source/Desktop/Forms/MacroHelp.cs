@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using Desktop.Skinning;
+using System;
 
 namespace Desktop.Forms
 {
-	public partial class MacroHelp : Form
+	public partial class MacroHelp : SkinnedForm
 	{
 		public MacroHelp()
 		{

@@ -40,11 +40,13 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsRecord = new System.Windows.Forms.ToolStripButton();
 			this.tsRight = new System.Windows.Forms.ToolStrip();
-			this.tsHelp = new System.Windows.Forms.ToolStripButton();
 			this.tsBackColor = new System.Windows.Forms.ToolStripButton();
+			this.tsHelp = new System.Windows.Forms.ToolStripButton();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
 			this.canvasStrip.SuspendLayout();
 			this.tsRight.SuspendLayout();
+			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// canvas
@@ -56,8 +58,10 @@
 			this.canvas.Location = new System.Drawing.Point(0, 25);
 			this.canvas.Margin = new System.Windows.Forms.Padding(0);
 			this.canvas.Name = "canvas";
+			this.canvas.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
 			this.canvas.Size = new System.Drawing.Size(851, 589);
 			this.canvas.TabIndex = 0;
+			this.canvas.TabSide = Desktop.Skinning.TabSide.None;
 			this.canvas.TabStop = true;
 			this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
 			this.canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDown);
@@ -83,6 +87,7 @@
 			this.canvasStrip.Name = "canvasStrip";
 			this.canvasStrip.Size = new System.Drawing.Size(207, 25);
 			this.canvasStrip.TabIndex = 19;
+			this.canvasStrip.Tag = "PrimaryLight";
 			// 
 			// cmdFit
 			// 
@@ -179,17 +184,7 @@
 			this.tsRight.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.tsRight.Size = new System.Drawing.Size(80, 25);
 			this.tsRight.TabIndex = 20;
-			// 
-			// tsHelp
-			// 
-			this.tsHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsHelp.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
-			this.tsHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsHelp.Name = "tsHelp";
-			this.tsHelp.Size = new System.Drawing.Size(23, 22);
-			this.tsHelp.Text = "Help";
-			this.tsHelp.ToolTipText = "Show Help...";
-			this.tsHelp.Click += new System.EventHandler(this.tsHelp_Click);
+			this.tsRight.Tag = "PrimaryLight";
 			// 
 			// tsBackColor
 			// 
@@ -202,12 +197,35 @@
 			this.tsBackColor.ToolTipText = "Set background color";
 			this.tsBackColor.Click += new System.EventHandler(this.tsBackColor_Click);
 			// 
+			// tsHelp
+			// 
+			this.tsHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsHelp.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.tsHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsHelp.Name = "tsHelp";
+			this.tsHelp.Size = new System.Drawing.Size(23, 22);
+			this.tsHelp.Text = "Help";
+			this.tsHelp.ToolTipText = "Show Help...";
+			this.tsHelp.Click += new System.EventHandler(this.tsHelp_Click);
+			// 
+			// skinnedPanel1
+			// 
+			this.skinnedPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedPanel1.Controls.Add(this.tsRight);
+			this.skinnedPanel1.Controls.Add(this.canvasStrip);
+			this.skinnedPanel1.Location = new System.Drawing.Point(0, 0);
+			this.skinnedPanel1.Name = "skinnedPanel1";
+			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryLight;
+			this.skinnedPanel1.Size = new System.Drawing.Size(851, 25);
+			this.skinnedPanel1.TabIndex = 21;
+			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
+			// 
 			// LiveCanvas
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.tsRight);
-			this.Controls.Add(this.canvasStrip);
+			this.Controls.Add(this.skinnedPanel1);
 			this.Controls.Add(this.canvas);
 			this.Name = "LiveCanvas";
 			this.Size = new System.Drawing.Size(851, 614);
@@ -215,8 +233,9 @@
 			this.canvasStrip.PerformLayout();
 			this.tsRight.ResumeLayout(false);
 			this.tsRight.PerformLayout();
+			this.skinnedPanel1.ResumeLayout(false);
+			this.skinnedPanel1.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -237,5 +256,6 @@
 		private System.Windows.Forms.ToolStripButton tsFilter;
 		private System.Windows.Forms.ToolStripButton tsBackColor;
 		private System.Windows.Forms.ColorDialog colorDialog1;
+		private Desktop.Skinning.SkinnedPanel skinnedPanel1;
 	}
 }

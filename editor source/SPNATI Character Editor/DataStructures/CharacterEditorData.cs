@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -43,6 +44,15 @@ namespace SPNATI_Character_Editor
 		public List<CaseNote> Notes = new List<CaseNote>();
 		private Dictionary<int, string> _notes = new Dictionary<int, string>();
 
+		[XmlArray("labels")]
+		[XmlArrayItem("label")]
+		public List<CaseLabel> Labels = new List<CaseLabel>();
+		private Dictionary<int, CaseLabel> _labels = new Dictionary<int, CaseLabel>();
+
+		[XmlArray("prefixes")]
+		[XmlArrayItem("prefix")]
+		public List<string> IgnoredPrefixes = new List<string>();
+
 		[XmlElement("nextId")]
 		/// <summary>
 		/// Next unique ID to assign
@@ -54,6 +64,21 @@ namespace SPNATI_Character_Editor
 		/// Cached information about what markers are set in this character's dialog
 		/// </summary>
 		public MarkerData Markers;
+
+		private HashSet<string> _usedFolders = new HashSet<string>();
+		[XmlIgnore]
+		public AutoCompleteStringCollection Folders
+		{
+			get
+			{
+				AutoCompleteStringCollection col = new AutoCompleteStringCollection();
+				foreach (string folder in _usedFolders)
+				{
+					col.Add(folder);
+				}
+				return col;
+			}
+		}
 
 		/// <summary>
 		/// Deferred initialization of things that aren't part of serialization and don't need to exist until the character's lines are being worked on
@@ -92,6 +117,29 @@ namespace SPNATI_Character_Editor
 			_character.Behavior.CaseRemoved += Behavior_CaseRemoved;
 		}
 
+		/// <summary>
+		/// Copies instances of editor data on a copied case
+		/// </summary>
+		/// <param name="copiedCase"></param>
+		public void Copy(Case copiedCase)
+		{
+			if (copiedCase.Id > 0)
+			{
+				string note = GetNote(copiedCase);
+				CaseLabel label = GetLabel(copiedCase);
+				copiedCase.Id = 0;
+				AssignId(copiedCase);
+				if (!string.IsNullOrEmpty(note))
+				{
+					SetNote(copiedCase, note);
+				}
+				if (label != null)
+				{
+					SetLabel(copiedCase, label.Text, label.ColorCode, label.Folder);
+				}
+			}
+		}
+
 		private void Behavior_CaseRemoved(object sender, Case deletedCase)
 		{
 			//delete anything using this case
@@ -116,6 +164,7 @@ namespace SPNATI_Character_Editor
 				}
 
 				_notes.Remove(deletedCase.Id);
+				_labels.Remove(deletedCase.Id);
 			}
 		}
 
@@ -141,6 +190,12 @@ namespace SPNATI_Character_Editor
 				CaseNote note = new CaseNote() { Id = kvp.Key, Text = kvp.Value };
 				Notes.Add(note);
 			}
+
+			Labels.Clear();
+			foreach (KeyValuePair<int, CaseLabel> kvp in _labels)
+			{
+				Labels.Add(kvp.Value);
+			}
 		}
 
 		public void OnAfterDeserialize()
@@ -153,6 +208,15 @@ namespace SPNATI_Character_Editor
 			foreach (CaseNote note in Notes)
 			{
 				_notes[note.Id] = note.Text;
+			}
+
+			foreach (CaseLabel label in Labels)
+			{
+				_labels[label.Id] = label;
+				if (!string.IsNullOrEmpty(label.Folder))
+				{
+					_usedFolders.Add(label.Folder);
+				}
 			}
 
 			Markers?.OnAfterDeserialize();
@@ -278,6 +342,39 @@ namespace SPNATI_Character_Editor
 			_notes.TryGetValue(workingCase.Id, out text);
 			return text;
 		}
+
+		public void SetLabel(Case workingCase, string text, string colorCode, string folder)
+		{
+			if (string.IsNullOrEmpty(text) && (colorCode == null || colorCode == "0") && string.IsNullOrEmpty(folder))
+			{
+				_labels.Remove(workingCase.Id);
+				return;
+			}
+			AssignId(workingCase);
+			CaseLabel label = new CaseLabel()
+			{
+				Id = workingCase.Id,
+				ColorCode = colorCode,
+				Text = text,
+				Folder = folder,
+			};
+			_labels[workingCase.Id] = label;
+			if (!string.IsNullOrEmpty(folder))
+			{
+				_usedFolders.Add(folder);
+			}
+		}
+
+		public CaseLabel GetLabel(Case workingCase)
+		{
+			if (workingCase.Id == 0)
+			{
+				return null;
+			}
+			CaseLabel label = null;
+			_labels.TryGetValue(workingCase.Id, out label);
+			return label;
+		}
 	}
 
 	public class Situation
@@ -294,6 +391,13 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("id")]
 		[DefaultValue(0)]
 		public int Id;
+
+		/// <summary>
+		/// Targeting priority
+		/// </summary>
+		[XmlAttribute("priority")]
+		[DefaultValue(SituationPriority.None)]
+		public SituationPriority Priority;
 
 		[XmlElement("trigger")]
 		public Case LegacyCase;
@@ -345,6 +449,14 @@ namespace SPNATI_Character_Editor
 				}
 			}
 		}
+	}
+
+	public enum SituationPriority
+	{
+		None = 0,
+		MustTarget = 1,
+		Noteworthy = 2,
+		FYI = 3
 	}
 
 	public class SituationResponse

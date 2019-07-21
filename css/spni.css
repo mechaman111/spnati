@@ -1125,8 +1125,8 @@ label {
 	height: 100%;
 	margin: auto;
 	bottom: 0;
-	left: 0;
-	right: 0;
+	left: 50%;
+    transform: translateX(-50%);
 }
 
 #game-screen .image-row {
@@ -1941,18 +1941,19 @@ label {
     font-size: 1.25rem;
 }
 
-.opponent-card:hover, .opponent-card:active {
+.selection-card:hover, .selection-card:active {
     background-color: rgba(221, 221, 221, 0.90);
     transition: background-color;
     transition-duration: 0.5s;
 }
 
-.opponent-card:hover .selection-card-footer .selection-card-label, .opponent-card:active .selection-card-footer .selection-card-label {
+.selection-card:hover .selection-card-footer .selection-card-label, .selection-card:active .selection-card-footer .selection-card-label {
     opacity: 1.0;
 
     transition-property: opacity;
     transition-duration: 0.5s;
 }
+
 
 /************************************************************
  * Classes for the sort / filter options row.
@@ -2748,7 +2749,6 @@ label {
 }
 
 .opponent-area .name-label {
-    height: 33%;
     text-align: center;
     background-color: #F5F5F5;
     margin-bottom: 0.2rem;
@@ -3013,7 +3013,7 @@ label {
     transition-duration: 0.25s;
 }
 
-.ui-minimal .opponent-name-label {
+.ui-minimal .opponent-area .name-label {
     text-align: left;
     display: inline;
     padding: 1% 5%;
@@ -3024,7 +3024,6 @@ label {
     background: none;
     left: 57%;
     bottom: 1%;
-    height: 15%;
     padding: 0;
 
     justify-content: center;
@@ -3032,12 +3031,14 @@ label {
 
     opacity: 0.50;
     transition-property: opacity;
+    transition-delay: 1s;
     transition-duration: 0.5s;
 }
 
 .ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active, .ui-minimal.prompt-exchange .player-card-area {
     opacity: 1.0;
     transition-property: opacity;
+    transition-delay: 0s;
     transition-duration: 0.25s;
 }
 
@@ -3050,12 +3051,20 @@ label {
 
     transition-property: width, height, margin, border-radius, border-width;
     transition-duration: 0.5s;
+    transition-delay: 1s;
 }
 
-.ui-minimal .opponent-area .name-label {
-    text-align: left;
-    display: inline;
-    padding: 1% 5%;
+.ui-minimal .player-card-area:hover .large-card-image,
+.ui-minimal .player-card-area:active .large-card-image,
+.ui-minimal.prompt-exchange .player-card-area .large-card-image {
+    height: 10rem;
+    width: 7.5rem;
+    border-radius: 0.65rem;
+    border-width: 0.2rem;
+    margin: 0 0.2rem;
+
+    transition-duration: 0.25s;
+    transition-delay: 0s;
 }
 
 #player-game-clothing-area-minimal {

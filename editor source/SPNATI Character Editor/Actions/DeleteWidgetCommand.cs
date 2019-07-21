@@ -5,11 +5,11 @@ namespace SPNATI_Character_Editor.Actions
 {
 	public class DeleteWidgetCommand : ICommand
 	{
-		private ITimelineWidget _widget;
+		private ITimelineObject _widget;
 		private ITimelineData _data;
 		private int _index;
 
-		public DeleteWidgetCommand(ITimelineData data, ITimelineWidget widget)
+		public DeleteWidgetCommand(ITimelineData data, ITimelineObject widget)
 		{
 			_widget = widget;
 			_data = data;

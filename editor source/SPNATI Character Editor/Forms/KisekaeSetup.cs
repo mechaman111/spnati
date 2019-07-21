@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.IO;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class KisekaeSetup : Form
+	public partial class KisekaeSetup : SkinnedForm
 	{
 		public KisekaeSetup()
 		{

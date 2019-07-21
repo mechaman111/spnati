@@ -57,6 +57,7 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public static bool ExportCharacter(Character character)
 		{
+			character.PrepareForEdit();
 			string dir = Config.GetRootDirectory(character);
 			if (!Directory.Exists(dir))
 			{
@@ -68,6 +69,13 @@ namespace SPNATI_Character_Editor
 				BackupAndExportXml(character, character.Metadata, "meta", timestamp) &&
 				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor", timestamp) &&
 				BackupAndExportXml(character, character.Collectibles, "collectibles", timestamp);
+
+			if (success && !string.IsNullOrEmpty(character.StyleSheetName))
+			{
+				CharacterStyleSheetSerializer.Save(character, character.Styles);
+			}
+
+			character.LastUpdate = DateTime.Now;
 
 			// clean up old files
 			DeleteFile(character, "markers.xml");
@@ -182,6 +190,8 @@ namespace SPNATI_Character_Editor
 				return null;
 			}
 
+			DateTime timestamp = File.GetLastWriteTime(filename);
+
 			if (string.IsNullOrEmpty(character.Version))
 			{
 				string contents = File.ReadAllText(filename);
@@ -223,6 +233,7 @@ namespace SPNATI_Character_Editor
 			{
 				character.Source = EditorSource.CharacterEditor;
 			}
+			character.LastUpdate = timestamp;
 
 			character.FolderName = Path.GetFileName(folderName);
 

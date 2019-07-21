@@ -1,4 +1,6 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.Controls.Reference;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor.Activities
 {
@@ -37,6 +39,7 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			SubscribeWorkspace<DialogueLine>(WorkspaceMessages.PreviewLine, UpdatePreview);
 			SubscribeWorkspace<CharacterImage>(WorkspaceMessages.UpdatePreviewImage, UpdatePreviewImage);
+			SubscribeWorkspace<List<string>>(WorkspaceMessages.UpdateMarkers, UpdateMarkers);
 			UpdateLineCount();
 		}
 
@@ -84,17 +87,18 @@ namespace SPNATI_Character_Editor.Activities
 			picPortrait.Destroy();
 		}
 
+		private void UpdateMarkers(List<string> markers)
+		{
+			picPortrait.SetMarkers(markers);
+		}
+
 		private void UpdatePreviewImage(CharacterImage image)
 		{
-			if (Config.GetBoolean(Settings.HideImages))
-				return;
 			picPortrait.SetImage(image);
 		}
 
 		private void UpdatePreview(DialogueLine line)
 		{
-			if (Config.GetBoolean(Settings.HideImages))
-				return;
 			picPortrait.SetText(line);
 		}
 
@@ -102,18 +106,17 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_character != null)
 			{
-				lblLinesOfDialogue.Text = _character.Behavior.UniqueLines.ToString();
+				lblLinesOfDialogue.Text = $"Unique lines: {(_character.Behavior.UniqueLines.ToString())}";
 			}
 			else
 			{
-				label4.Visible = false;
 				lblLinesOfDialogue.Visible = false;
 			}
 		}
 
 		private void cboSkin_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if (_character == null) { return; } 
+			if (_character == null) { return; }
 			SkinLink current = cboSkin.SelectedItem as SkinLink;
 			_character.CurrentSkin = current?.Costume;
 
@@ -128,6 +131,31 @@ namespace SPNATI_Character_Editor.Activities
 			bool preview = chkText.Checked;
 			Config.Set("PreviewText", preview);
 			picPortrait.ShowTextBox = preview;
+		}
+
+		private void cmdReference_Click(object sender, System.EventArgs e)
+		{
+			splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
+			cmdReference.Image = splitContainer1.Panel2Collapsed ? Properties.Resources.ChevronUp : Properties.Resources.ChevronDown;
+			splitContainer1.Panel1.Invalidate(true);
+			if (!splitContainer1.Panel2Collapsed && tabTags.Controls.Count == 0)
+			{
+				BuildReference();
+			}
+		}
+
+		private void BuildReference()
+		{
+			TagGuide guide = new TagGuide();
+			tabsReference.Width = splitContainer1.Panel2.Width;
+			tabsReference.Height = splitContainer1.Panel2.Height - stripReference.Height;
+			tabTags.Controls.Add(guide);
+			guide.Dock = System.Windows.Forms.DockStyle.Fill;
+		}
+
+		private void splitContainer1_Panel1_Resize(object sender, System.EventArgs e)
+		{
+			splitContainer1.Panel1.Invalidate(true);
 		}
 	}
 }

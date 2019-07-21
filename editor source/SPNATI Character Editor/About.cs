@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
@@ -6,7 +7,7 @@ namespace SPNATI_Character_Editor
 	/// <summary>
 	/// About form
 	/// </summary>
-	public partial class About : Form
+	public partial class About : SkinnedForm
 	{
 		public About()
 		{

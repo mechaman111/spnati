@@ -9,10 +9,11 @@ using SPNATI_Character_Editor.EpilogueEditing;
 using SPNATI_Character_Editor.Properties;
 using System.Globalization;
 using SPNATI_Character_Editor.Forms;
+using Desktop.Skinning;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	public partial class EpilogueCanvas : UserControl
+	public partial class EpilogueCanvas : UserControl, ISkinControl
 	{
 		/// <summary>
 		/// How many pixels the user has to click within to select a handle
@@ -29,8 +30,10 @@ namespace SPNATI_Character_Editor.Controls
 		private Scene _selectedScene;
 		private Directive _selectedDirective;
 		private Keyframe _selectedKeyframe;
+		private Choice _selectedChoice;
 		private SceneAnimation _selectedAnimation;
 		private List<PendedDirective> _pendingDirectives = new List<PendedDirective>();
+		private Directive _currentPrompt = null;
 
 		private bool _viewportLocked;
 		private Point _prelockOffset;
@@ -240,6 +243,28 @@ namespace SPNATI_Character_Editor.Controls
 					g.TranslateTransform(-_lastMouse.X, -_lastMouse.Y);
 					g.DrawImage(arrow, pt);
 					g.ResetTransform();
+				}
+			}
+
+			if (_currentPrompt != null)
+			{
+				const int Padding = 10;
+				SizeF measuredTitle = g.MeasureString(_currentPrompt.Title, _font);
+				int lineHeight = (int)measuredTitle.Height;
+				int promptHeight = lineHeight * (_currentPrompt.Choices.Count + 1) + Padding * (_currentPrompt.Choices.Count - 1) + Padding * 2;
+
+				int startY = canvas.Height / 2 - promptHeight / 2;
+				int promptWidth = canvas.Width - Padding * 2;
+				g.FillRectangle(Brushes.LightGray, Padding, startY, canvas.Width - Padding * 2, promptHeight);
+				g.DrawRectangle(Pens.Black, Padding, startY, promptWidth, promptHeight);
+				StringFormat sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+				g.DrawString(_currentPrompt.Title, _font, Brushes.Black, new Rectangle(Padding, startY, promptWidth, lineHeight), sf);
+				foreach (Choice choice in _currentPrompt.Choices)
+				{
+					startY += lineHeight + Padding;
+					g.FillRectangle(Brushes.SkyBlue, Padding + Padding, startY, promptWidth - Padding * 2, lineHeight);
+					g.DrawRectangle(Pens.Black, Padding + Padding, startY, promptWidth - Padding * 2, lineHeight);
+					g.DrawString(choice.Caption, _font, Brushes.Black, new Rectangle(Padding + Padding, startY, promptWidth - Padding * 2, lineHeight), sf);
 				}
 			}
 		}
@@ -747,11 +772,11 @@ namespace SPNATI_Character_Editor.Controls
 				((HandledMouseEventArgs)e).Handled = true;
 				if (e.Delta > 0 && sliderZoom.Value < sliderZoom.Maximum)
 				{
-					sliderZoom.Value += sliderZoom.SmallChange;
+					sliderZoom.Value += sliderZoom.Increment;
 				}
 				else if (e.Delta < 0 && sliderZoom.Value > sliderZoom.Minimum)
 				{
-					sliderZoom.Value -= sliderZoom.SmallChange;
+					sliderZoom.Value -= sliderZoom.Increment;
 				}
 			}
 		}
@@ -857,7 +882,40 @@ namespace SPNATI_Character_Editor.Controls
 				case EditMode.Playback:
 					if (e.Button == MouseButtons.Left)
 					{
-						AdvanceDirective();
+						if (_currentPrompt != null)
+						{
+							int y = e.Y;
+							using (Graphics g = Graphics.FromHwnd(canvas.Handle))
+							{
+								const int Padding = 10;
+								SizeF measuredTitle = g.MeasureString(_currentPrompt.Title, _font);
+								int lineHeight = (int)measuredTitle.Height;
+								int promptHeight = lineHeight * (_currentPrompt.Choices.Count + 1) + Padding * (_currentPrompt.Choices.Count - 1) + Padding * 2;
+
+								int startY = canvas.Height / 2 - promptHeight / 2;
+								int endY = startY + promptHeight;
+								startY += lineHeight + Padding; //skip past the title
+								if (y >= startY && y < endY)
+								{
+									y -= startY;
+									foreach (Choice choice in _currentPrompt.Choices)
+									{
+										if (y <= lineHeight)
+										{
+											//clicked this button
+											PerformUserAction(choice);
+											break;
+										}
+										y -= lineHeight + Padding;
+									}
+								}
+							}
+
+						}
+						else
+						{
+							AdvanceDirective();
+						}
 					}
 					break;
 			}
@@ -1584,6 +1642,7 @@ namespace SPNATI_Character_Editor.Controls
 			_selectedScene = e.Scene;
 			_selectedDirective = e.Directive;
 			_selectedKeyframe = e.Keyframe;
+			_selectedChoice = e.Choice;
 
 			propertyTable.Context = new EpilogueContext(_character, _epilogue, _selectedScene);
 
@@ -1591,11 +1650,19 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				propertyTable.RecordFilter = DirectiveFilter;
 				propertyTable.Data = e.Keyframe;
+				propertyTable.RunFilter(HideRow);
+			}
+			else if (e.Choice != null)
+			{
+				propertyTable.RecordFilter = null;
+				propertyTable.Data = e.Choice;
+				propertyTable.RunFilter(ChoiceFilter);
 			}
 			else if (e.Directive != null)
 			{
 				propertyTable.RecordFilter = DirectiveFilter;
 				propertyTable.Data = e.Directive;
+				propertyTable.RunFilter(HideRow);
 			}
 			else if (e.Scene != null)
 			{
@@ -1607,7 +1674,6 @@ namespace SPNATI_Character_Editor.Controls
 				propertyTable.RecordFilter = null;
 				propertyTable.Data = null;
 			}
-			propertyTable.RunFilter(HideRow);
 
 			BuildScene(false);
 			if (_selectedScene != oldScene)
@@ -1642,6 +1708,28 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 			return true;
+		}
+
+		private bool ChoiceFilter(PropertyRecord record, object data, object context)
+		{
+			if (_selectedChoice == null)
+			{
+				return true;
+			}
+			if (record.Key == "action" || record.Key == "text")
+			{
+				return true;
+			}
+
+			switch (_selectedChoice.Action)
+			{
+				case "jump":
+					return record.Key == "id";
+				case "marker":
+					return true;
+				default:
+					return false;
+			}
 		}
 
 		private static readonly string[] TransitionProperties = new string[] { "effect", "ease", "time" }; //hardcoding allowed properties for now since I don't expect this to change
@@ -1683,6 +1771,10 @@ namespace SPNATI_Character_Editor.Controls
 			if (e.PropertyName == "Id")
 			{
 				propertyTable.RunFilter(HideRow);
+			}
+			else if (e.PropertyName == "Action")
+			{
+				propertyTable.RunFilter(ChoiceFilter);
 			}
 		}
 
@@ -1818,22 +1910,48 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
+		private void PerformUserAction(Choice choice)
+		{
+			switch (choice.Action)
+			{
+				case "jump":
+					_directiveIndex = _selectedScene.Directives.Count;
+					AdvanceDirective();
+					break;
+				case "marker":
+					if (!string.IsNullOrEmpty(choice.Id))
+					{
+						string value = choice.Value ?? "1";
+						_scenePreview.Markers[choice.Id] = value;
+					}
+					AdvanceDirective();
+					break;
+				default:
+					AdvanceDirective();
+					break;
+			}
+		}
+
 		private void PerformDirective()
 		{
 			_directiveIndex++;
 			if (_directiveIndex < _selectedScene.Directives.Count)
 			{
 				Directive directive = _selectedScene.Directives[_directiveIndex];
-				if (!string.IsNullOrEmpty(directive.Delay) && directive.Delay != "0")
+
+				if (string.IsNullOrEmpty(directive.Marker) || Marker.CheckMarker(directive.Marker, _scenePreview.Markers))
 				{
-					float delay;
-					float.TryParse(directive.Delay, NumberStyles.Number, CultureInfo.InvariantCulture, out delay);
-					delay *= 1000;
-					PendDirective(directive, delay);
-				}
-				else if (!ApplyDirective(directive))
-				{
-					return;
+					if (!string.IsNullOrEmpty(directive.Delay) && directive.Delay != "0")
+					{
+						float delay;
+						float.TryParse(directive.Delay, NumberStyles.Number, CultureInfo.InvariantCulture, out delay);
+						delay *= 1000;
+						PendDirective(directive, delay);
+					}
+					else if (!ApplyDirective(directive))
+					{
+						return;
+					}
 				}
 				PerformDirective();
 			}
@@ -1845,6 +1963,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="directive"></param>
 		private bool ApplyDirective(Directive directive)
 		{
+			_currentPrompt = null;
 			SceneObject obj = null;
 			if (directive.Id != null)
 			{
@@ -2031,6 +2150,15 @@ namespace SPNATI_Character_Editor.Controls
 						}
 					}
 					break;
+				case "jump":
+					if (_mode == EditMode.Playback)
+					{
+						_directiveIndex = _selectedScene.Directives.Count;
+					}
+					return false;
+				case "prompt":
+					_currentPrompt = directive;
+					return false;
 			}
 
 			if (_mode == EditMode.Edit)
@@ -2422,6 +2550,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void AdvanceDirective()
 		{
+			_currentPrompt = null;
 			HaltAnimations(false);
 
 			if (_directiveIndex >= _selectedScene.Directives.Count)
@@ -2486,12 +2615,17 @@ namespace SPNATI_Character_Editor.Controls
 				BuildScene(false);
 			}
 		}
+
+		public void OnUpdateSkin(Skin skin)
+		{
+			
+		}
 	}
 
 	public class EpilogueContext : IAutoCompleteList, ICharacterContext
 	{
 		public ISkin Character { get; set; }
-		public CharacterContext Context { get; private set; }
+		public CharacterContext Context { get; set; }
 		public Epilogue Epilogue { get; set; }
 		public Scene Scene { get; set; }
 
@@ -2516,6 +2650,7 @@ namespace SPNATI_Character_Editor.Controls
 				return null;
 			}
 			HashSet<string> sourceType = new HashSet<string>();
+			HashSet<string> items = new HashSet<string>();
 			bool allowCamera = false;
 			bool allowFade = false;
 			if (dir.DirectiveType == "move" || dir.DirectiveType == "stop" || dir.DirectiveType == "remove" || dir.DirectiveType == "emit")
@@ -2533,12 +2668,18 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				sourceType.Add("text");
 			}
-			if (sourceType.Count == 0)
+			else if (dir.DirectiveType == "jump")
 			{
-				return null;
+				foreach (Scene s in Epilogue.Scenes)
+				{
+					string id = s.Id;
+					if (!string.IsNullOrEmpty(id))
+					{
+						items.Add(id);
+					}
+				}
 			}
-			HashSet<string> items = new HashSet<string>();
-			if (Scene != null)
+			if (sourceType.Count > 0 && Scene != null)
 			{
 				if (allowCamera)
 				{

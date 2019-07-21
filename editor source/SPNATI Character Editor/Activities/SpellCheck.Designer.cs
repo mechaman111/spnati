@@ -29,19 +29,19 @@
 		private void InitializeComponent()
 		{
 			this.txtLine = new System.Windows.Forms.RichTextBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.cmdIgnore = new System.Windows.Forms.Button();
-			this.cmdIgnoreAll = new System.Windows.Forms.Button();
-			this.cmdAdd = new System.Windows.Forms.Button();
-			this.label2 = new System.Windows.Forms.Label();
-			this.txtWord = new System.Windows.Forms.TextBox();
-			this.cmdChange = new System.Windows.Forms.Button();
-			this.cmdChangeAll = new System.Windows.Forms.Button();
-			this.lstSuggestions = new System.Windows.Forms.ListBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.lblGood = new System.Windows.Forms.Label();
-			this.panelFix = new System.Windows.Forms.Panel();
-			this.lblProgress = new System.Windows.Forms.Label();
+			this.label1 = new Desktop.Skinning.SkinnedLabel();
+			this.cmdIgnore = new Desktop.Skinning.SkinnedButton();
+			this.cmdIgnoreAll = new Desktop.Skinning.SkinnedButton();
+			this.cmdAdd = new Desktop.Skinning.SkinnedButton();
+			this.label2 = new Desktop.Skinning.SkinnedLabel();
+			this.txtWord = new Desktop.Skinning.SkinnedTextBox();
+			this.cmdChange = new Desktop.Skinning.SkinnedButton();
+			this.cmdChangeAll = new Desktop.Skinning.SkinnedButton();
+			this.lstSuggestions = new Desktop.Skinning.SkinnedListBox();
+			this.label3 = new Desktop.Skinning.SkinnedLabel();
+			this.lblGood = new Desktop.Skinning.SkinnedLabel();
+			this.panelFix = new Desktop.Skinning.SkinnedPanel();
+			this.lblProgress = new Desktop.Skinning.SkinnedLabel();
 			this.panelFix.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -58,6 +58,8 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
+			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label1.Location = new System.Drawing.Point(3, 146);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(46, 13);
@@ -66,9 +68,12 @@
 			// 
 			// cmdIgnore
 			// 
+			this.cmdIgnore.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdIgnore.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdIgnore.Flat = false;
 			this.cmdIgnore.Location = new System.Drawing.Point(378, 3);
 			this.cmdIgnore.Name = "cmdIgnore";
-			this.cmdIgnore.Size = new System.Drawing.Size(75, 23);
+			this.cmdIgnore.Size = new System.Drawing.Size(100, 23);
 			this.cmdIgnore.TabIndex = 2;
 			this.cmdIgnore.Text = "&Ignore Once";
 			this.cmdIgnore.UseVisualStyleBackColor = true;
@@ -76,9 +81,12 @@
 			// 
 			// cmdIgnoreAll
 			// 
+			this.cmdIgnoreAll.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdIgnoreAll.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdIgnoreAll.Flat = false;
 			this.cmdIgnoreAll.Location = new System.Drawing.Point(378, 32);
 			this.cmdIgnoreAll.Name = "cmdIgnoreAll";
-			this.cmdIgnoreAll.Size = new System.Drawing.Size(75, 23);
+			this.cmdIgnoreAll.Size = new System.Drawing.Size(100, 23);
 			this.cmdIgnoreAll.TabIndex = 3;
 			this.cmdIgnoreAll.Text = "I&gnore All";
 			this.cmdIgnoreAll.UseVisualStyleBackColor = true;
@@ -86,9 +94,12 @@
 			// 
 			// cmdAdd
 			// 
+			this.cmdAdd.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdAdd.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdAdd.Flat = false;
 			this.cmdAdd.Location = new System.Drawing.Point(378, 61);
 			this.cmdAdd.Name = "cmdAdd";
-			this.cmdAdd.Size = new System.Drawing.Size(75, 23);
+			this.cmdAdd.Size = new System.Drawing.Size(100, 23);
 			this.cmdAdd.TabIndex = 4;
 			this.cmdAdd.Text = "&Add";
 			this.cmdAdd.UseVisualStyleBackColor = true;
@@ -97,6 +108,8 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
+			this.label2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label2.Location = new System.Drawing.Point(3, 0);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(88, 13);
@@ -105,6 +118,9 @@
 			// 
 			// txtWord
 			// 
+			this.txtWord.BackColor = System.Drawing.Color.White;
+			this.txtWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.txtWord.ForeColor = System.Drawing.Color.Black;
 			this.txtWord.Location = new System.Drawing.Point(6, 16);
 			this.txtWord.Name = "txtWord";
 			this.txtWord.Size = new System.Drawing.Size(366, 20);
@@ -113,9 +129,12 @@
 			// 
 			// cmdChange
 			// 
+			this.cmdChange.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdChange.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdChange.Flat = false;
 			this.cmdChange.Location = new System.Drawing.Point(378, 90);
 			this.cmdChange.Name = "cmdChange";
-			this.cmdChange.Size = new System.Drawing.Size(75, 23);
+			this.cmdChange.Size = new System.Drawing.Size(100, 23);
 			this.cmdChange.TabIndex = 5;
 			this.cmdChange.Text = "&Change";
 			this.cmdChange.UseVisualStyleBackColor = true;
@@ -123,9 +142,12 @@
 			// 
 			// cmdChangeAll
 			// 
+			this.cmdChangeAll.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdChangeAll.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdChangeAll.Flat = false;
 			this.cmdChangeAll.Location = new System.Drawing.Point(378, 119);
 			this.cmdChangeAll.Name = "cmdChangeAll";
-			this.cmdChangeAll.Size = new System.Drawing.Size(75, 23);
+			this.cmdChangeAll.Size = new System.Drawing.Size(100, 23);
 			this.cmdChangeAll.TabIndex = 6;
 			this.cmdChangeAll.Text = "Change A&ll";
 			this.cmdChangeAll.UseVisualStyleBackColor = true;
@@ -133,6 +155,9 @@
 			// 
 			// lstSuggestions
 			// 
+			this.lstSuggestions.BackColor = System.Drawing.Color.White;
+			this.lstSuggestions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lstSuggestions.ForeColor = System.Drawing.Color.Black;
 			this.lstSuggestions.FormattingEnabled = true;
 			this.lstSuggestions.Location = new System.Drawing.Point(6, 61);
 			this.lstSuggestions.Name = "lstSuggestions";
@@ -142,6 +167,8 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
+			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label3.Location = new System.Drawing.Point(3, 42);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(68, 13);
@@ -152,14 +179,16 @@
 			// 
 			this.lblGood.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblGood.AutoSize = true;
-			this.lblGood.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblGood.Font = new System.Drawing.Font("Segoe UI", 28F);
 			this.lblGood.ForeColor = System.Drawing.Color.Green;
-			this.lblGood.Location = new System.Drawing.Point(47, 296);
+			this.lblGood.Highlight = Desktop.Skinning.SkinnedHighlight.Good;
+			this.lblGood.Level = Desktop.Skinning.SkinnedLabelLevel.Finished;
+			this.lblGood.Location = new System.Drawing.Point(3, 315);
 			this.lblGood.Name = "lblGood";
-			this.lblGood.Size = new System.Drawing.Size(625, 65);
+			this.lblGood.Size = new System.Drawing.Size(717, 51);
 			this.lblGood.TabIndex = 11;
 			this.lblGood.Text = "No Misspelled Words Found";
+			this.lblGood.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.lblGood.Visible = false;
 			// 
 			// panelFix
@@ -179,12 +208,15 @@
 			this.panelFix.Enabled = false;
 			this.panelFix.Location = new System.Drawing.Point(3, 3);
 			this.panelFix.Name = "panelFix";
+			this.panelFix.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
 			this.panelFix.Size = new System.Drawing.Size(603, 290);
 			this.panelFix.TabIndex = 12;
 			// 
 			// lblProgress
 			// 
 			this.lblProgress.AutoSize = true;
+			this.lblProgress.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.lblProgress.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.lblProgress.Location = new System.Drawing.Point(6, 231);
 			this.lblProgress.Name = "lblProgress";
 			this.lblProgress.Size = new System.Drawing.Size(34, 13);
@@ -202,25 +234,24 @@
 			this.panelFix.ResumeLayout(false);
 			this.panelFix.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
 		private System.Windows.Forms.RichTextBox txtLine;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button cmdIgnore;
-		private System.Windows.Forms.Button cmdIgnoreAll;
-		private System.Windows.Forms.Button cmdAdd;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox txtWord;
-		private System.Windows.Forms.Button cmdChange;
-		private System.Windows.Forms.Button cmdChangeAll;
-		private System.Windows.Forms.ListBox lstSuggestions;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label lblGood;
-		private System.Windows.Forms.Panel panelFix;
-		private System.Windows.Forms.Label lblProgress;
+		private Desktop.Skinning.SkinnedLabel label1;
+		private Desktop.Skinning.SkinnedButton cmdIgnore;
+		private Desktop.Skinning.SkinnedButton cmdIgnoreAll;
+		private Desktop.Skinning.SkinnedButton cmdAdd;
+		private Desktop.Skinning.SkinnedLabel label2;
+		private Desktop.Skinning.SkinnedTextBox txtWord;
+		private Desktop.Skinning.SkinnedButton cmdChange;
+		private Desktop.Skinning.SkinnedButton cmdChangeAll;
+		private Desktop.Skinning.SkinnedListBox lstSuggestions;
+		private Desktop.Skinning.SkinnedLabel label3;
+		private Desktop.Skinning.SkinnedLabel lblGood;
+		private Desktop.Skinning.SkinnedPanel panelFix;
+		private Desktop.Skinning.SkinnedLabel lblProgress;
 	}
 }

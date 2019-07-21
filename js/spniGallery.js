@@ -497,12 +497,11 @@ function doEpilogueFromGallery(){
 	
 	var player = chosenEpilogue.player;
 	
-	fetchCompressedURL(
-		'opponents/' + player.id + "/behaviour.xml",
+	fetchCompressedURL('opponents/' + player.id + "/behaviour.xml")
 		/* Success callback.
 		 * 'this' is bound to the Opponent object.
 		 */
-		function(xml) {
+		.then(function(xml) {
 			var $xml = $(xml);
 			
 			var endingElem = null;
@@ -514,12 +513,12 @@ function doEpilogueFromGallery(){
 			});
 			
 			if($nameField.val()){
-				players[HUMAN_PLAYER].label = $nameField.val();
+				humanPlayer.label = $nameField.val();
 			} else {
 				switch(chosenEpilogue.gender){
-					case "male": players[HUMAN_PLAYER].label = "Mister"; break;
-					case "female" : players[HUMAN_PLAYER].label = "Missy"; break;
-					default: players[HUMAN_PLAYER].label = (players[HUMAN_PLAYER].gender=="male")?"Mister":"Missy";
+					case "male": humanPlayer.label = "Mister"; break;
+					case "female" : humanPlayer.label = "Missy"; break;
+					default: humanPlayer.label = (humanPlayer.gender=="male")?"Mister":"Missy";
 				}
 			}
 			
@@ -557,6 +556,5 @@ function doEpilogueFromGallery(){
 			loadEpilogue(chosenEpilogue); //initialise buttons and text boxes
 			screenTransition($galleryScreen, $epilogueScreen);
 			$epilogueSelectionModal.modal("hide");
-		}
-	);
+		});
 }

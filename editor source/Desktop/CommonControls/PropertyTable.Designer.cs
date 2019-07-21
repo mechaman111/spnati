@@ -28,39 +28,13 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.recAdd = new Desktop.CommonControls.RecordField();
-			this.pnlRecords = new Desktop.CommonControls.DBPanel();
 			this.shortcuts = new System.Windows.Forms.MenuStrip();
 			this.focusOnAdd = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuSpeedButtons = new System.Windows.Forms.MenuStrip();
+			this.menuSpeedButtons = new Desktop.Skinning.SkinnedMenuStrip();
+			this.recAdd = new Desktop.CommonControls.RecordField();
+			this.pnlRecords = new Desktop.CommonControls.DBPanel();
 			this.shortcuts.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// recAdd
-			// 
-			this.recAdd.AllowCreate = false;
-			this.recAdd.Location = new System.Drawing.Point(3, 3);
-			this.recAdd.Name = "recAdd";
-			this.recAdd.PlaceholderText = null;
-			this.recAdd.Record = null;
-			this.recAdd.RecordContext = null;
-			this.recAdd.RecordKey = null;
-			this.recAdd.RecordType = null;
-			this.recAdd.Size = new System.Drawing.Size(138, 20);
-			this.recAdd.TabIndex = 0;
-			this.recAdd.UseAutoComplete = false;
-			this.recAdd.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recAdd_RecordChanged);
-			// 
-			// pnlRecords
-			// 
-			this.pnlRecords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.pnlRecords.AutoScroll = true;
-			this.pnlRecords.Location = new System.Drawing.Point(3, 27);
-			this.pnlRecords.Name = "pnlRecords";
-			this.pnlRecords.Size = new System.Drawing.Size(857, 120);
-			this.pnlRecords.TabIndex = 2;
 			// 
 			// shortcuts
 			// 
@@ -85,11 +59,41 @@
 			// menuSpeedButtons
 			// 
 			this.menuSpeedButtons.AutoSize = false;
+			this.menuSpeedButtons.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.menuSpeedButtons.Dock = System.Windows.Forms.DockStyle.None;
 			this.menuSpeedButtons.Location = new System.Drawing.Point(142, 0);
 			this.menuSpeedButtons.Name = "menuSpeedButtons";
 			this.menuSpeedButtons.Size = new System.Drawing.Size(721, 24);
 			this.menuSpeedButtons.TabIndex = 4;
+			this.menuSpeedButtons.Tag = "Surface";
+			// 
+			// recAdd
+			// 
+			this.recAdd.AllowCreate = false;
+			this.recAdd.Location = new System.Drawing.Point(3, 3);
+			this.recAdd.Name = "recAdd";
+			this.recAdd.PlaceholderText = null;
+			this.recAdd.Record = null;
+			this.recAdd.RecordContext = null;
+			this.recAdd.RecordFilter = null;
+			this.recAdd.RecordKey = null;
+			this.recAdd.RecordType = null;
+			this.recAdd.Size = new System.Drawing.Size(138, 20);
+			this.recAdd.TabIndex = 0;
+			this.recAdd.UseAutoComplete = false;
+			this.recAdd.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recAdd_RecordChanged);
+			// 
+			// pnlRecords
+			// 
+			this.pnlRecords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlRecords.AutoScroll = true;
+			this.pnlRecords.Location = new System.Drawing.Point(3, 27);
+			this.pnlRecords.Name = "pnlRecords";
+			this.pnlRecords.PanelType = Desktop.Skinning.SkinnedBackgroundType.Transparent;
+			this.pnlRecords.Size = new System.Drawing.Size(860, 120);
+			this.pnlRecords.TabIndex = 2;
 			// 
 			// PropertyTable
 			// 
@@ -114,6 +118,6 @@
 		private DBPanel pnlRecords;
 		private System.Windows.Forms.MenuStrip shortcuts;
 		private System.Windows.Forms.ToolStripMenuItem focusOnAdd;
-		private System.Windows.Forms.MenuStrip menuSpeedButtons;
+		private Desktop.Skinning.SkinnedMenuStrip menuSpeedButtons;
 	}
 }

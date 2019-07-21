@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.grid = new System.Windows.Forms.DataGridView();
+			this.grid = new Desktop.Skinning.SkinnedDataGridView();
 			this.ColValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
@@ -74,7 +74,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.DataGridView grid;
+		private Desktop.Skinning.SkinnedDataGridView grid;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColValue;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColStage;
 	}

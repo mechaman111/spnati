@@ -4,11 +4,14 @@ using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace SPNATI_Character_Editor
 {
 	public partial class ExpressionControl : PropertyEditControl
 	{
+		private static Dictionary<List<string>, Type> _subControlTypes;
+
 		private ExpressionTest _expression;
 		private string _currentVariable;
 
@@ -17,10 +20,11 @@ namespace SPNATI_Character_Editor
 		public ExpressionControl()
 		{
 			InitializeComponent();
-
+			cboOperator.DataSource = ExpressionTest.Operators;
 			cboExpression.Items.AddRange(new string[] {
 				"~background~",
 				"~background.location~",
+				"~background.time~",
 				"~cards~",
 				"~clothing~",
 				"~clothing.plural~",
@@ -38,6 +42,26 @@ namespace SPNATI_Character_Editor
 			});
 			cboExpression.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			cboExpression.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+			if (_subControlTypes == null)
+			{
+				_subControlTypes = new Dictionary<List<string>, Type>();
+				foreach (Type type in this.GetType().Assembly.GetTypes())
+				{
+					foreach (SubVariableAttribute attrib in type.GetCustomAttributes<SubVariableAttribute>())
+					{
+						_subControlTypes[attrib.Variables] = type;
+					}
+				}
+			}
+		}
+
+		protected override void OnIndexChanged()
+		{
+			if (_subcontrol != null)
+			{
+				_subcontrol.Index = Index;
+			}
 		}
 
 		public override void ApplyMacro(List<string> values)
@@ -169,66 +193,36 @@ namespace SPNATI_Character_Editor
 			DestroySubControl();
 
 			string variable = expression.Expression;
-			if (!string.IsNullOrEmpty(variable))
+			if (!string.IsNullOrEmpty(variable) && !variable.StartsWith("~clothing"))
 			{
-				if (variable.StartsWith("~collectible."))
+				Type bestMatch = null;
+				int bestCount = 0;
+				foreach (KeyValuePair<List<string>, Type> kvp in _subControlTypes)
 				{
-					if (variable.EndsWith(".counter~"))
+					for (int i = 0; i < kvp.Key.Count; i++)
 					{
-						//self collectible counter check
-						_subcontrol = new CollectibleCountControl();
-					}
-					else
-					{
-						//self collectible unlock check
-						_subcontrol = new CollectibleControl();
-					}
-				}
-				else if (variable.StartsWith("~target.collectible."))
-				{
-					if (variable.EndsWith(".counter~"))
-					{
-						//target collectible counter check
-						_subcontrol = new CollectibleCountControl();
-					}
-					else
-					{
-						//target collectible unlock check
-						_subcontrol = new CollectibleControl();
-					}
-				}
-				else if (variable.Contains(".collectible."))
-				{
-					if (variable.Contains(".counter~"))
-					{
-						//also playing collectible counter check
-						_subcontrol = new CharacterCollectibleCountControl();
-					}
-					else
-					{
-						//also playing collectible unlock check
-						_subcontrol = new CharacterCollectibleControl();
+						string variablePiece = kvp.Key[i];
+						if (variable.StartsWith("~" + variablePiece + "~") || variable.StartsWith("~" + variablePiece + "."))
+						{
+							variable = _expression.Expression = _expression.Expression.Insert(1, "self.");
+						}
+						if (variable.Contains("." + variablePiece))
+						{
+							if (i == kvp.Key.Count - 1 && bestCount < kvp.Key.Count)
+							{
+								bestCount = kvp.Key.Count;
+								bestMatch = kvp.Value;
+							}
+						}
+						else
+						{
+							break;
+						}
 					}
 				}
-				else if (variable.StartsWith("~self.tag.") || variable.StartsWith("~target.tag."))
+				if (bestMatch != null)
 				{
-					_subcontrol = new TagControl();
-				}
-				else if (variable.Contains(".tag."))
-				{
-					_subcontrol = new CharacterTagControl();
-				}
-				else if (variable.StartsWith("~persistent"))
-				{
-					_subcontrol = new PersistentMarkerControl();
-				}
-				else if (variable.StartsWith("~target.persistent."))
-				{
-					_subcontrol = new PersistentMarkerControl();
-				}
-				else if (variable.Contains(".persistent."))
-				{
-					_subcontrol = new CharacterPersistentMarkerControl();
+					_subcontrol = Activator.CreateInstance(bestMatch) as SubVariableControl;
 				}
 
 				if (_subcontrol != null)
@@ -238,12 +232,13 @@ namespace SPNATI_Character_Editor
 						ctl.Visible = false;
 					}
 
+					_subcontrol.ParentControl = this;
 					_subcontrol.Margin = new Padding(0);
 					_subcontrol.Left = 0;
 					_subcontrol.Top = 0;
 					_subcontrol.Dock = DockStyle.Fill;
 					_subcontrol.ChangeLabel += _subcontrol_ChangeLabel;
-					_subcontrol.SetData(Data, Property, Index, Context, UndoManager, PreviewData);
+					_subcontrol.SetData(Data, Property, Index, Context, UndoManager, PreviewData, ParentTable);
 					_subcontrol.RemoveEventHandlers(); //these'll be added back when this controls AddHandlers gets called, so this is a method to prevent double handlers
 					Controls.Add(_subcontrol);
 				}
@@ -300,7 +295,7 @@ namespace SPNATI_Character_Editor
 			Save();
 		}
 
-		public override void Clear()
+		protected override void OnClear()
 		{
 			if (_subcontrol != null)
 			{
@@ -315,7 +310,7 @@ namespace SPNATI_Character_Editor
 			Save();
 		}
 
-		public override void Save()
+		protected override void OnSave()
 		{
 			if (_subcontrol != null)
 			{
@@ -367,6 +362,9 @@ namespace SPNATI_Character_Editor
 						"5",
 					});
 					break;
+				case "~clothing~":
+					cboValue.Items.AddRange(ClothingDatabase.Items.Values);
+					break;
 				case "~clothing.position~":
 					cboValue.Items.AddRange(new string[] {
 						"upper",
@@ -400,6 +398,12 @@ namespace SPNATI_Character_Editor
 					cboValue.Items.AddRange(new string[] {
 						"indoors",
 						"outdoors",
+					});
+					break;
+				case "~background.time~":
+					cboValue.Items.AddRange(new string[] {
+						"day",
+						"night",
 					});
 					break;
 				case "~background~":
@@ -576,6 +580,8 @@ namespace SPNATI_Character_Editor
 
 	public class SubVariableControl : PropertyEditControl
 	{
+		public PropertyEditControl ParentControl;
+
 		public void UpdateBinding(string property)
 		{
 			OnBindingUpdated(property);
@@ -589,6 +595,74 @@ namespace SPNATI_Character_Editor
 		public void RemoveEventHandlers()
 		{
 			RemoveHandlers();
+		}
+
+		public override bool IsUpdating
+		{
+			get
+			{
+				return base.IsUpdating || ParentControl.IsUpdating;
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			Save();
+			ExpressionTest expression = GetValue() as ExpressionTest;
+			values.Add(expression.Expression);
+			values.Add(expression.Operator);
+			values.Add(expression.Value);
+		}
+
+		protected void ExtractExpressionPieces(out string targetType, out string variable)
+		{
+			ExpressionTest expression = GetValue() as ExpressionTest;
+			string expr = expression.Expression?.ToLower() ?? "";
+			expr = expr.Trim('~');
+			int period = expr.IndexOf('.');
+			targetType = "";
+			if (period >= 0)
+			{
+				targetType = expr.Substring(0, period);
+				if (expr.Length > period + 1)
+				{
+					expr = expr.Substring(period + 1);
+				}
+			}
+			else
+			{
+				targetType = expr;
+			}
+			if (targetType == "_")
+			{
+				//default to AlsoPlaying
+				Case data = Data as Case;
+				Character character = CharacterDatabase.Get(data.AlsoPlaying);
+				if (character != null)
+				{
+					string id = CharacterDatabase.GetId(character);
+					targetType = id;
+				}
+			}
+
+			variable = expr;
+		}
+	}
+
+	/// <summary>
+	/// Maps a control to a particular variable expression. If multiple variable pieces are supplied, then it's expected for all to appear in the same
+	/// express (ex. collectible + counter for an expression of ~x.collectible.y.counter~)
+	/// To map multiple distinct variables to the same control, use multiple of this atttribute
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+	public class SubVariableAttribute : Attribute
+	{
+		public List<string> Variables { get; set; }
+
+		public SubVariableAttribute(params string[] variablePieces)
+		{
+			Variables = new List<string>();
+			Variables.AddRange(variablePieces);
 		}
 	}
 }

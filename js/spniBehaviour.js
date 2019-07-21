@@ -382,9 +382,9 @@ function findVariablePlayer(variable, self, target, bindings) {
     if (!variable) return null;
     if (variable == 'self') return self;
     if (variable == 'target') return target;
-    if (bindings && variable.toLowerCase() in bindings) return bindings[variable.toLowerCase()];
+    if (bindings && variable in bindings) return bindings[variable];
     if (players.some(function (p) {
-        if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
+        if (p.id.replace(/\W/g, '').toLowerCase() === variable) {
             player = p;
             return true;
         }
@@ -417,19 +417,19 @@ function expandNicknames (self, target) {
 /************************************************************
  * Expands ~target.*~ and ~[player].*~ variables.
  ************************************************************/
-function expandPlayerVariable(split_fn, args, self, target, bindings) {
+function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     if (split_fn.length > 0) var fn = split_fn[0].toLowerCase();
     
     switch (fn) {
     case 'position':
-        if (target.slot === self.slot) return 'self';
-        return (target.slot < self.slot) ? 'left' : 'right';
+        if (player.slot === self.slot) return 'self';
+        return (player.slot < self.slot) ? 'left' : 'right';
     case 'slot':
-        return target.slot;
+        return player.slot;
     case 'collectible':
         var collectibleID = split_fn[1];
         if (collectibleID) {
-            var collectibles = target.collectibles.filter(function (c) { return c.id === collectibleID; });
+            var collectibles = player.collectibles.filter(function (c) { return c.id === collectibleID; });
             var targetCollectible = collectibles[0];
             
             if (split_fn[2] && split_fn[2] === 'counter') {
@@ -447,19 +447,19 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
         var markerName = split_fn[1];
         if (markerName) {
             var marker;
-            if (target) {
-                var targetedName = getTargetMarker(markerName, target);
+            if (player) {
+                var targetedName = getTargetMarker(markerName, player);
                 if (fn === 'persistent') {
-                    marker = save.getPersistentMarker(target, targetedName);
+                    marker = save.getPersistentMarker(player, targetedName);
                 } else {
-                    marker = target.markers[targetedName];
+                    marker = player.markers[targetedName];
                 }
             }
             if (!marker) {
                 if (fn === 'persistent') {
-                    marker = save.getPersistentMarker(target, markerName);
+                    marker = save.getPersistentMarker(player, markerName);
                 } else {
-                    marker = target.markers[markerName];
+                    marker = player.markers[markerName];
                 }
             }
             return marker || "";
@@ -467,44 +467,50 @@ function expandPlayerVariable(split_fn, args, self, target, bindings) {
             return fn; //didn't supply a marker name
         }
     case 'tag':
-        return target.hasTag(split_fn[1]) ? 'true' : 'false';
+        return player.hasTag(split_fn[1]) ? 'true' : 'false';
     case 'costume':
-        if (!target.alt_costume) return 'default';
-        return target.alt_costume.id;
+        if (!player.alt_costume) return 'default';
+        return player.alt_costume.id;
     case 'size':
-        return target.size;
+        return player.size;
     case 'gender':
-        return target.gender;
+        return player.gender;
     case 'place':
-        if (target.out) return players.countTrue() + 1 - target.outOrder;
-        return 1 + players.countTrue(function(p) { return p.countLayers() > target.countLayers(); });
+        if (player.out) return players.countTrue() + 1 - player.outOrder;
+        return 1 + players.countTrue(function(p) { return p.countLayers() > player.countLayers(); });
     case 'revplace':
-        if (target.out) return target.outOrder;
-        return 1 + players.countTrue(function(p) { return p.out || p.countLayers() < target.countLayers(); });
+        if (player.out) return player.outOrder;
+        return 1 + players.countTrue(function(p) { return p.out || p.countLayers() < player.countLayers(); });
     case 'biggestlead':
-        return target.biggestLead;
+        return player.biggestLead;
     case 'lead':
-        return target.countLayers() - players.reduce(function(max, p) {
-            if (p != target) {
+        return player.countLayers() - players.reduce(function(max, p) {
+            if (p != player) {
                 return Math.max(max, p.countLayers());
             } else return max;
         }, 0);
     case 'trail':
         return players.reduce(function(min, p) {
-            if (p != target && !p.out) {
+            if (p != player && !p.out) {
                 return Math.min(min, p.countLayers());
             } else return min;
-        }, 10) - target.countLayers();
+        }, 10) - player.countLayers();
     case 'diff':
         var other = (!args ? self : findVariablePlayer(args, self, target, bindings));
         if (other) {
-            return target.countLayers() - other.countLayers();
+            return player.countLayers() - other.countLayers();
         }
         return undefined;
     case 'stage':
-        return target.stage;
+        return player.stage;
+    case 'hand':
+        if (split_fn[1] == 'score') {
+            return player.hand.score();
+        } else if (split_fn[1] == 'noart' || split_fn[1] === undefined) {
+            return player.hand.describe(split_fn[1] == undefined);
+        }
     default:
-        return expandNicknames(self, target);
+        return expandNicknames(self, player);
     }
 }
 
@@ -525,7 +531,7 @@ function expandDialogue (dialogue, self, target, bindings) {
         try {
             switch (variable.toLowerCase()) {
             case 'player':
-                substitution = expandNicknames(self, players[HUMAN_PLAYER]);
+                substitution = expandNicknames(self, humanPlayer);
                 break;
             case 'name':
                 substitution = expandNicknames(self, target);
@@ -618,9 +624,9 @@ function expandDialogue (dialogue, self, target, bindings) {
             case 'target':
             case 'self':
             default:
-                var variablePlayer = findVariablePlayer(variable, self, target, bindings);
+                var variablePlayer = findVariablePlayer(variable.toLowerCase(), self, target, bindings);
                 if (variablePlayer) {
-                    substitution = expandPlayerVariable(fn_parts, args, self, variablePlayer, bindings);
+                    substitution = expandPlayerVariable(fn_parts, args, variablePlayer, self, target, bindings);
                 } else {
                     console.error("Unknown variable:", variable);
                 }
@@ -1043,50 +1049,50 @@ Case.prototype.checkConditions = function (self, opp) {
     }
     
     // target
-    if (opp && this.target) {
-        if (this.target !== opp.id) {
+    if (this.target) {
+        if (!opp || this.target !== opp.id) {
             return false; // failed "target" requirement
         }
     }
     
     // filter
-    if (opp && this.filter) {
-        if (!opp.hasTag(this.filter)) {
+    if (this.filter) {
+        if (!opp || !opp.hasTag(this.filter)) {
             return false; // failed "filter" requirement
         }
     }
 
     // targetStage
-    if (opp && this.targetStage) {
-        if(!inInterval(opp.stage, this.targetStage)) {
+    if (this.targetStage) {
+        if (!opp || !inInterval(opp.stage, this.targetStage)) {
             return false; // failed "targetStage" requirement
         }
     }
     
     // targetLayers
-    if (opp && this.targetLayers) {
-        if (!inInterval(opp.countLayers(), this.targetLayers)) {
+    if (this.targetLayers) {
+        if (!opp || !inInterval(opp.countLayers(), this.targetLayers)) {
             return false; 
         }
     }
     
     // targetStatus
-    if (opp && this.targetStatus) {
-        if (!opp.checkStatus(this.targetStatus)) {
+    if (this.targetStatus) {
+        if (!opp || !opp.checkStatus(this.targetStatus)) {
             return false;
         }
     }
 
     // targetStartingLayers
-    if (opp && this.targetStartingLayers) {
-        if (!inInterval(opp.startingLayers, this.targetStartingLayers)) {
+    if (this.targetStartingLayers) {
+        if (!opp || !inInterval(opp.startingLayers, this.targetStartingLayers)) {
             return false;
         }
     }
 
     // targetSaidMarker
-    if (opp && this.targetSaidMarker) {
-        if (checkMarker(this.targetSaidMarker, opp, null)) {
+    if (this.targetSaidMarker) {
+        if (opp && checkMarker(this.targetSaidMarker, opp, null)) {
             if (!checkMarker(this.targetSaidMarker, opp, null, false, true)) {
                 // Only matches pending marker changes; treat as volatile.
                 volatileDependencies.add(opp);
@@ -1097,9 +1103,9 @@ Case.prototype.checkConditions = function (self, opp) {
     }
     
     // targetNotSaidMarker
-    if (opp && this.targetNotSaidMarker) {
+    if (this.targetNotSaidMarker) {
         // Negated marker - false if true
-        if (!checkMarker(this.targetNotSaidMarker, opp, null)) {
+        if (opp && !checkMarker(this.targetNotSaidMarker, opp, null)) {
             if (checkMarker(this.targetNotSaidMarker, opp, null, false, true)) {
                 // Only matches pending marker changes; treat as volatile
                 volatileDependencies.add(opp);
@@ -1109,14 +1115,14 @@ Case.prototype.checkConditions = function (self, opp) {
         }
     }
 
-    if (opp && this.targetSayingMarker) {
-        if (!checkMarker(this.targetSayingMarker, opp, null, true)) {
+    if (this.targetSayingMarker) {
+        if (!opp || !checkMarker(this.targetSayingMarker, opp, null, true)) {
             return false;
         }
         volatileDependencies.add(opp);
     }
-    if (opp && this.targetSaying) {
-        if (!opp.chosenState || opp.updatePending) return false;
+    if (this.targetSaying) {
+        if (!opp || !opp.chosenState || opp.updatePending) return false;
         if (opp.chosenState.rawDialogue.toLowerCase().indexOf(this.targetSaying.toLowerCase()) < 0) return false;
         volatileDependencies.add(opp);
     }
@@ -1137,16 +1143,16 @@ Case.prototype.checkConditions = function (self, opp) {
     }
 
     // oppHand
-    if (opp && this.oppHand) {
-        if (handStrengthToString(opp.hand.strength).toLowerCase() !== this.oppHand.toLowerCase()) {
+    if (this.oppHand) {
+        if (!opp || handStrengthToString(opp.hand.strength).toLowerCase() !== this.oppHand.toLowerCase()) {
             return false;
         }
     }
 
     // targetTimeInStage
-    if (opp && this.targetTimeInStage) {
-        if (!inInterval(opp.timeInStage == -1 ? 0 //allow post-strip time to count as 0
-                       : opp.timeInStage, this.targetTimeInStage)) {
+    if (this.targetTimeInStage) {
+        if (!opp || !inInterval(opp.timeInStage == -1 ? 0 //allow post-strip time to count as 0
+                                : opp.timeInStage, this.targetTimeInStage)) {
             return false; // failed "targetTimeInStage" requirement
         }
     }
@@ -1706,7 +1712,7 @@ function updateAllVolatileBehaviours () {
         var anyUpdated = false;
         
         players.forEach(function (p) {
-            if (p !== players[HUMAN_PLAYER]) {
+            if (p !== humanPlayer) {
                 anyUpdated = p.updateVolatileBehaviour() || anyUpdated;
             }
         });
@@ -1724,14 +1730,14 @@ function updateAllVolatileBehaviours () {
 function commitAllBehaviourUpdates () {
     /* Apply setLabel first so that ~name~ is the same for all players */
     players.forEach(function (p) {
-        if (p !== players[HUMAN_PLAYER] && p.chosenState && p.chosenState.setLabel) {
+        if (p !== humanPlayer && p.chosenState && p.chosenState.setLabel) {
             p.label = p.chosenState.setLabel;
             p.labelOverridden = true;
         }
     });
     
     players.forEach(function (p) {
-        if (p !== players[HUMAN_PLAYER]) {
+        if (p !== humanPlayer) {
             p.commitBehaviourUpdate();
         }
     });

@@ -1,11 +1,13 @@
 ﻿using Desktop;
+using Desktop.CommonControls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
-	public class Tag : IRecord, IComparable<Tag>
+	public class Tag : IRecord, IComparable<Tag>, IGroupedItem, INotifyPropertyChanged
 	{
 		[XmlIgnore]
 		public string Name { get { return DisplayName; } }
@@ -38,6 +40,12 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public int Count;
 
+		public event PropertyChangedEventHandler PropertyChanged
+		{
+			add { }
+			remove { }
+		}
+
 		public string ToLookupString()
 		{
 			return Value;
@@ -45,7 +53,8 @@ namespace SPNATI_Character_Editor
 
 		public override string ToString()
 		{
-			return string.Format("{0} ({1})", DisplayName ?? Value, Count);
+			//return string.Format("{0} ({1})", DisplayName ?? Value, Count);
+			return DisplayName ?? Value;
 		}
 
 		public int CompareTo(Tag other)
@@ -56,6 +65,11 @@ namespace SPNATI_Character_Editor
 		public int CompareTo(IRecord other)
 		{
 			return Name.CompareTo(other.Name);
+		}
+
+		public string GetGroupKey()
+		{
+			return Group ?? "Misc";
 		}
 	}
 }

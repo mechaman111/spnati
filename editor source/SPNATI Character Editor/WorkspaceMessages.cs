@@ -36,5 +36,10 @@
 		/// Sent to inform the preview sidebar to update its text [DialogueLine: line information to display]
 		/// </summary>
 		public const int PreviewLine = 7;
+
+		/// <summary>
+		/// Sent to inform the preview sidebar to update its image [List&lt;string&gt;: markers that are set]
+		/// </summary>
+		public const int UpdateMarkers = 8;
 	}
 }

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Windows.Forms;
 
 namespace Desktop.CommonControls
 {
-	public class GroupRadioButton : RadioButton
+	public class GroupRadioButton : SkinnedRadioButton
 	{
 		public string GroupName { get; set; }
 

@@ -273,6 +273,28 @@ namespace SPNATI_Character_Editor
 				}
 			}
 		}
+
+		public bool FilterImage(Character character, string file)
+		{
+			string prefix = Config.PrefixFilter;
+			if (!string.IsNullOrEmpty(prefix) && file.StartsWith(prefix))
+			{
+				return true;
+			}
+
+			CharacterEditorData editorData = CharacterDatabase.GetEditorData(character);
+			if (editorData != null)
+			{
+				foreach (string p in editorData.IgnoredPrefixes)
+				{
+					if (file.StartsWith(p))
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
 	}
 
 	public class ImageReplacementArgs

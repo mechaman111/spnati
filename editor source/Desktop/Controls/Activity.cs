@@ -2,11 +2,12 @@
 using System.Windows.Forms;
 using System.ComponentModel;
 using Desktop.Messaging;
+using Desktop.Skinning;
 
 namespace Desktop
 {
 	[ToolboxItem(false)]
-	public partial class Activity : UserControl, IActivity
+	public partial class Activity : UserControl, IActivity, ISkinControl, ISkinnedPanel
 	{
 		public IWorkspace Workspace { get; set; }
 		public WorkspacePane Pane { get; set; }
@@ -28,6 +29,7 @@ namespace Desktop
 			_workspaceMailbox = ws.GetMailbox();
 			_desktopMailbox = Shell.Instance.PostOffice.GetMailbox();
 
+			SkinManager.UpdateSkin(this, SkinManager.Instance.CurrentSkin);
 			OnInitialize();
 		}
 		protected virtual void OnInitialize()
@@ -64,6 +66,11 @@ namespace Desktop
 		public bool IsActive
 		{
 			get { return Workspace.ActiveActivity == this; }
+		}
+
+		public SkinnedBackgroundType PanelType
+		{
+			get { return SkinnedBackgroundType.Background; }
 		}
 
 		protected virtual void OnFirstActivate()
@@ -126,6 +133,16 @@ namespace Desktop
 		protected void SubscribeWorkspace<T>(int message, Action<T> handler)
 		{
 			_workspaceMailbox.Subscribe(message, handler);
+		}
+
+		public void OnUpdateSkin(Skin skin)
+		{
+			BackColor = skin.Background.Normal;
+			OnSkinChanged(skin);
+		}
+
+		protected virtual void OnSkinChanged(Skin skin)
+		{
 		}
 	}
 }

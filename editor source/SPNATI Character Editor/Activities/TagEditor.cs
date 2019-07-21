@@ -79,15 +79,14 @@ namespace SPNATI_Character_Editor.Activities
 
 				if (string.IsNullOrEmpty(group.Gender) || group.Gender == gender)
 				{
-					TreeNode node = toc.Nodes.Add(group.Label);
-					node.Tag = group;
+					toc.Items.Add(group);
 				}
 			}
 			
 			PopulateData();
-			if (toc.Nodes.Count > 0)
+			if (toc.Items.Count > 0)
 			{
-				toc.SelectedNode = toc.Nodes[0];
+				toc.SelectedIndex = 0;
 			}
 		}
 
@@ -112,10 +111,9 @@ namespace SPNATI_Character_Editor.Activities
 			_bindings.SaveIntoCharacter();
 		}
 
-		private void toc_AfterSelect(object sender, TreeViewEventArgs e)
+		private void toc_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			TreeNode node = toc.SelectedNode;
-			TagGroup group = node.Tag as TagGroup;
+			TagGroup group = toc.SelectedItem as TagGroup;
 			tagGrid.SetGroup(group);
 			tagGrid.Visible = true;
 		}

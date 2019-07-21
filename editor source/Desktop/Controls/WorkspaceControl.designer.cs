@@ -28,10 +28,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tabActivities = new System.Windows.Forms.TabControl();
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.splitContainer1 = new Desktop.Skinning.SkinnedSplitContainer();
+			this.stripActivities = new Desktop.Skinning.SkinnedTabStrip();
+			this.tabActivities = new Desktop.Skinning.SkinnedTabControl();
 			this.sidebar = new Desktop.CommonControls.DBPanel();
-			this.tabSidebarActivities = new System.Windows.Forms.TabControl();
+			this.stripSidebar = new Desktop.Skinning.SkinnedTabStrip();
+			this.tabSidebarActivities = new Desktop.Skinning.SkinnedTabControl();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -39,56 +41,101 @@
 			this.sidebar.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// tabActivities
-			// 
-			this.tabActivities.Alignment = System.Windows.Forms.TabAlignment.Left;
-			this.tabActivities.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabActivities.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-			this.tabActivities.ItemSize = new System.Drawing.Size(25, 100);
-			this.tabActivities.Location = new System.Drawing.Point(0, 0);
-			this.tabActivities.Multiline = true;
-			this.tabActivities.Name = "tabActivities";
-			this.tabActivities.SelectedIndex = 0;
-			this.tabActivities.Size = new System.Drawing.Size(617, 540);
-			this.tabActivities.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-			this.tabActivities.TabIndex = 0;
-			this.tabActivities.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabActivities_DrawItem);
-			this.tabActivities.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.OnSelectingTab);
-			// 
 			// splitContainer1
 			// 
-			this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer1.Name = "splitContainer1";
 			// 
 			// splitContainer1.Panel1
 			// 
+			this.splitContainer1.Panel1.Controls.Add(this.stripActivities);
 			this.splitContainer1.Panel1.Controls.Add(this.tabActivities);
 			// 
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.sidebar);
 			this.splitContainer1.Size = new System.Drawing.Size(903, 544);
+			this.splitContainer1.SplitterColor = Desktop.Skinning.SkinnedBackgroundType.PrimaryLight;
 			this.splitContainer1.SplitterDistance = 621;
 			this.splitContainer1.TabIndex = 1;
 			// 
+			// stripActivities
+			// 
+			this.stripActivities.Dock = System.Windows.Forms.DockStyle.Left;
+			this.stripActivities.Location = new System.Drawing.Point(0, 0);
+			this.stripActivities.Margin = new System.Windows.Forms.Padding(0);
+			this.stripActivities.Name = "stripActivities";
+			this.stripActivities.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryLight;
+			this.stripActivities.ShowCloseButton = false;
+			this.stripActivities.Size = new System.Drawing.Size(100, 544);
+			this.stripActivities.StartMargin = 10;
+			this.stripActivities.TabControl = this.tabActivities;
+			this.stripActivities.TabIndex = 1;
+			this.stripActivities.TabMargin = 1;
+			this.stripActivities.TabPadding = 20;
+			this.stripActivities.TabSize = 25;
+			this.stripActivities.TabType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.stripActivities.Text = "skinnedTabStrip1";
+			this.stripActivities.Vertical = true;
+			// 
+			// tabActivities
+			// 
+			this.tabActivities.Alignment = System.Windows.Forms.TabAlignment.Left;
+			this.tabActivities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabActivities.ItemSize = new System.Drawing.Size(25, 100);
+			this.tabActivities.Location = new System.Drawing.Point(100, 0);
+			this.tabActivities.Margin = new System.Windows.Forms.Padding(0);
+			this.tabActivities.Multiline = true;
+			this.tabActivities.Name = "tabActivities";
+			this.tabActivities.SelectedIndex = 0;
+			this.tabActivities.Size = new System.Drawing.Size(521, 544);
+			this.tabActivities.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+			this.tabActivities.TabIndex = 0;
+			this.tabActivities.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.OnSelectingTab);
+			// 
 			// sidebar
 			// 
+			this.sidebar.Controls.Add(this.stripSidebar);
 			this.sidebar.Controls.Add(this.tabSidebarActivities);
 			this.sidebar.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.sidebar.Location = new System.Drawing.Point(0, 0);
 			this.sidebar.Name = "sidebar";
-			this.sidebar.Size = new System.Drawing.Size(274, 540);
+			this.sidebar.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.sidebar.Size = new System.Drawing.Size(278, 544);
 			this.sidebar.TabIndex = 0;
+			this.sidebar.TabSide = Desktop.Skinning.TabSide.None;
+			// 
+			// stripSidebar
+			// 
+			this.stripSidebar.Dock = System.Windows.Forms.DockStyle.Top;
+			this.stripSidebar.Location = new System.Drawing.Point(0, 0);
+			this.stripSidebar.Margin = new System.Windows.Forms.Padding(0);
+			this.stripSidebar.Name = "stripSidebar";
+			this.stripSidebar.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.stripSidebar.ShowCloseButton = false;
+			this.stripSidebar.Size = new System.Drawing.Size(278, 23);
+			this.stripSidebar.StartMargin = 20;
+			this.stripSidebar.TabControl = this.tabSidebarActivities;
+			this.stripSidebar.TabIndex = 1;
+			this.stripSidebar.TabMargin = 5;
+			this.stripSidebar.TabPadding = 20;
+			this.stripSidebar.TabSize = -1;
+			this.stripSidebar.TabType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.stripSidebar.Vertical = false;
 			// 
 			// tabSidebarActivities
 			// 
-			this.tabSidebarActivities.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabSidebarActivities.Location = new System.Drawing.Point(0, 0);
+			this.tabSidebarActivities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabSidebarActivities.Location = new System.Drawing.Point(0, 23);
+			this.tabSidebarActivities.Margin = new System.Windows.Forms.Padding(0);
 			this.tabSidebarActivities.Name = "tabSidebarActivities";
 			this.tabSidebarActivities.SelectedIndex = 0;
-			this.tabSidebarActivities.Size = new System.Drawing.Size(274, 540);
+			this.tabSidebarActivities.Size = new System.Drawing.Size(278, 521);
 			this.tabSidebarActivities.TabIndex = 0;
 			this.tabSidebarActivities.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.OnSelectingTab);
 			// 
@@ -110,9 +157,11 @@
 
 		#endregion
 
-		private System.Windows.Forms.TabControl tabActivities;
-		private System.Windows.Forms.SplitContainer splitContainer1;
+		private Desktop.Skinning.SkinnedTabControl tabActivities;
+		private Desktop.Skinning.SkinnedSplitContainer splitContainer1;
 		private CommonControls.DBPanel sidebar;
-		private System.Windows.Forms.TabControl tabSidebarActivities;
+		private Desktop.Skinning.SkinnedTabControl tabSidebarActivities;
+		private Skinning.SkinnedTabStrip stripActivities;
+		private Skinning.SkinnedTabStrip stripSidebar;
 	}
 }

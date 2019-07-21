@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.chkNegate = new System.Windows.Forms.CheckBox();
-			this.cboStatus = new System.Windows.Forms.ComboBox();
+			this.chkNegate = new Desktop.Skinning.SkinnedCheckBox();
+			this.cboStatus = new Desktop.Skinning.SkinnedComboBox();
 			this.SuspendLayout();
 			// 
 			// chkNegate
@@ -47,12 +47,18 @@
 			// 
 			this.cboStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.cboStatus.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-			this.cboStatus.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cboStatus.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+			this.cboStatus.BackColor = System.Drawing.Color.White;
 			this.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboStatus.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cboStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboStatus.FormattingEnabled = true;
 			this.cboStatus.Location = new System.Drawing.Point(52, 0);
 			this.cboStatus.Name = "cboStatus";
+			this.cboStatus.SelectedIndex = -1;
+			this.cboStatus.SelectedItem = null;
 			this.cboStatus.Size = new System.Drawing.Size(193, 21);
+			this.cboStatus.Sorted = false;
 			this.cboStatus.TabIndex = 34;
 			// 
 			// StatusControl
@@ -70,7 +76,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.CheckBox chkNegate;
-		private System.Windows.Forms.ComboBox cboStatus;
+		private Desktop.Skinning.SkinnedCheckBox chkNegate;
+		private Desktop.Skinning.SkinnedComboBox cboStatus;
 	}
 }

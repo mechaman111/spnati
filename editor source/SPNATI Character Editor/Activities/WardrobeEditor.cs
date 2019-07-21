@@ -17,6 +17,8 @@ namespace SPNATI_Character_Editor.Controls
 		public WardrobeEditor()
 		{
 			InitializeComponent();
+			ColType.Items.AddRange(new object[] { "extra", "minor", "major", "important"});
+			ColPosition.Items.AddRange(new object[] { "upper", "lower", "both", "head", "neck", "hands", "arms", "feet", "legs", "waist", "other"});
 			ColPlural.TrueValue = true;
 		}
 
@@ -56,7 +58,7 @@ namespace SPNATI_Character_Editor.Controls
 				Clothing c = _wardrobe.GetClothing(i);
 				try
 				{
-					DataGridViewRow row = gridWardrobe.Rows[gridWardrobe.Rows.Add(c.FormalName, c.GenericName, c.Plural, c.Type, c.Position)];
+					DataGridViewRow row = gridWardrobe.Rows[gridWardrobe.Rows.Add(c.GenericName, c.Name, c.Plural, c.Type, c.Position)];
 					row.Tag = c;
 					if (_restrictions.HasFlag(WardrobeRestrictions.LayerTypes))
 					{
@@ -72,6 +74,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (gridWardrobe.SelectedCells.Count > 0)
 			{
+				gridWardrobe.EndEdit();
 				SaveLayer(gridWardrobe.SelectedCells[0].OwningRow.Index);
 			}
 			ApplyWardrobeChanges();
@@ -89,15 +92,11 @@ namespace SPNATI_Character_Editor.Controls
 			Clothing layer = row.Tag as Clothing;
 			if (layer != null)
 			{
-				layer.FormalName = name;
-				layer.GenericName = lowercase;
+				layer.GenericName = name;
+				layer.Name = lowercase;
 				layer.Plural = plural;
 				layer.Type = type;
 				layer.Position = position;
-			}
-			else
-			{
-				
 			}
 		}
 

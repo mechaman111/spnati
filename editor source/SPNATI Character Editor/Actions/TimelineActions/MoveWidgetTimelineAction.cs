@@ -10,9 +10,8 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 	/// </summary>
 	public class MoveWidgetTimelineAction : ITimelineAction, ICommand
 	{
-		private ITimelineWidget _widget;
+		private ITimelineObject _widget;
 
-		public float Length;
 		private bool _moved;
 		private float _oldStart;
 		private float _startOffset;
@@ -22,6 +21,13 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		public int Track;
 		private ITimelineData _data;
 		private UndoManager _history;
+
+		private bool _allowTrackSwitch;
+
+		public MoveWidgetTimelineAction(bool allowTrackSwitch)
+		{
+			_allowTrackSwitch = allowTrackSwitch;
+		}
 
 		public Cursor GetHoverCursor()
 		{
@@ -48,15 +54,19 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		public void Update(WidgetActionArgs args)
 		{
 			int track = args.Track;
-			float start = Math.Max(0, args.SnapTime() - _startOffset);
-			if (start != _widget.GetStart() || track != Track)
+			float time = args.Modifiers.HasFlag(Keys.Shift) ? args.Time : args.SnapTime();
+			float start = Math.Max(0, time - _startOffset);
+			if (start != _widget.GetStart() || (_allowTrackSwitch && track != Track))
 			{
 				if (_moved)
 				{
 					Undo();
 				}
 				_moved = true;
-				Track = track;
+				if (_allowTrackSwitch)
+				{
+					Track = track;
+				}
 				Time = start;
 				Do();
 			}

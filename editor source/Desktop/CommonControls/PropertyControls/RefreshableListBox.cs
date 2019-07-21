@@ -1,17 +1,12 @@
-﻿using System.Windows.Forms;
+﻿using Desktop.Skinning;
 
 namespace Desktop.CommonControls
 {
-	public class RefreshableListBox : ListBox
+	public class RefreshableListBox : SkinnedListBox
 	{
 		public RefreshableListBox() : base()
 		{
 			DoubleBuffered = true;
-		}
-
-		public void RefreshListItems()
-		{
-			this.RefreshItems();
 		}
 	}
 }

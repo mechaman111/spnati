@@ -29,15 +29,19 @@
 		private void InitializeComponent()
 		{
 			this.txtValue = new Desktop.CommonControls.TextField();
-			this.cmdBrowse = new System.Windows.Forms.Button();
+			this.cmdBrowse = new Desktop.Skinning.SkinnedButton();
 			this.openFileDialog1 = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
 			this.SuspendLayout();
 			// 
 			// txtValue
 			// 
 			this.txtValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtValue.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.txtValue.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
 			this.txtValue.Location = new System.Drawing.Point(0, 0);
+			this.txtValue.Multiline = false;
 			this.txtValue.Name = "txtValue";
+			this.txtValue.PlaceholderText = "";
 			this.txtValue.ReadOnly = true;
 			this.txtValue.Size = new System.Drawing.Size(318, 20);
 			this.txtValue.TabIndex = 0;
@@ -45,6 +49,10 @@
 			// cmdBrowse
 			// 
 			this.cmdBrowse.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.cmdBrowse.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdBrowse.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cmdBrowse.Flat = false;
+			this.cmdBrowse.ForeColor = System.Drawing.Color.Blue;
 			this.cmdBrowse.Location = new System.Drawing.Point(324, -1);
 			this.cmdBrowse.Name = "cmdBrowse";
 			this.cmdBrowse.Size = new System.Drawing.Size(27, 22);
@@ -56,6 +64,8 @@
 			// openFileDialog1
 			// 
 			this.openFileDialog1.Filter = "";
+			this.openFileDialog1.IncludeOpponents = false;
+			this.openFileDialog1.UseAbsolutePaths = false;
 			// 
 			// ImageFileSelectControl
 			// 
@@ -66,14 +76,13 @@
 			this.Name = "ImageFileSelectControl";
 			this.Size = new System.Drawing.Size(351, 20);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
 		private Desktop.CommonControls.TextField txtValue;
-		private System.Windows.Forms.Button cmdBrowse;
+		private Desktop.Skinning.SkinnedButton cmdBrowse;
 		private CharacterImageDialog openFileDialog1;
 	}
 }

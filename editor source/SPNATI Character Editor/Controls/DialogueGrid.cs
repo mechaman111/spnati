@@ -1,14 +1,14 @@
-﻿using SPNATI_Character_Editor.Forms;
+﻿using Desktop.Skinning;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	public partial class DialogueGrid : UserControl
+	public partial class DialogueGrid : UserControl, ISkinControl
 	{
 		private Case _selectedCase;
 		private Stage _selectedStage;
@@ -20,6 +20,7 @@ namespace SPNATI_Character_Editor.Controls
 		private ToolStripDropDown _markerDropDown;
 		private IDialogueDropDownControl _lineCtl;
 		private ToolStripDropDown _lineDropDown;
+		private ToolStripDropDown _activeDropdown;
 
 		#region Events
 		public new event EventHandler<KeyEventArgs> KeyDown;
@@ -40,19 +41,13 @@ namespace SPNATI_Character_Editor.Controls
 				if (_readOnly)
 				{
 					gridDialogue.AllowUserToAddRows = false;
-					gridDialogue.AllowUserToDeleteRows = false;
-					gridDialogue.RowHeadersVisible = false;
 					gridDialogue.EditMode = DataGridViewEditMode.EditProgrammatically;
-					gridDialogue.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 					ColDelete.Visible = false;
 				}
 				else
 				{
 					gridDialogue.AllowUserToAddRows = true;
-					gridDialogue.AllowUserToDeleteRows = true;
-					gridDialogue.RowHeadersVisible = true;
 					gridDialogue.EditMode = DataGridViewEditMode.EditOnEnter;
-					gridDialogue.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
 					ColDelete.Visible = true;
 				}
 			}
@@ -61,6 +56,8 @@ namespace SPNATI_Character_Editor.Controls
 		public DialogueGrid()
 		{
 			InitializeComponent();
+
+			ColTrophy.Flat = ColDelete.Flat = ColMore.Flat = ColMarkerOptions.Flat = ColImageOptions.Flat = true;
 
 			_markerCtl = new MarkerOptions();
 			CreateDropdown(_markerCtl, out _markerDropDown);
@@ -75,6 +72,29 @@ namespace SPNATI_Character_Editor.Controls
 			Controls.Add(_intellisense);
 		}
 
+		protected override void OnCreateControl()
+		{
+			base.OnCreateControl();
+			foreach (Control ctl in Controls)
+			{
+				ctl.MouseDown += Ctl_MouseDown;
+			}
+		}
+
+		protected override void OnVisibleChanged(EventArgs e)
+		{
+			if (!Visible)
+			{
+				HideDropdown();
+			}
+			base.OnVisibleChanged(e);
+		}
+
+		private void Ctl_MouseDown(object sender, MouseEventArgs e)
+		{
+			HideDropdown();
+		}
+
 		private void CreateDropdown(IDialogueDropDownControl ctl, out ToolStripDropDown dropdown)
 		{
 			Control hostCtl = ctl as Control;
@@ -84,8 +104,15 @@ namespace SPNATI_Character_Editor.Controls
 			host.Margin = new Padding(0);
 			dropdown.Padding = new Padding(0);
 			dropdown.Items.Add(host);
-			dropdown.Closing += _markerDropDown_Closing;
+			dropdown.AutoClose = false;
+			dropdown.Closing += DropDownClosing;
 			ctl.DataUpdated += Ctl_DataUpdated;
+		}
+
+		public void SetStage(Stage stage, HashSet<int> stages)
+		{
+			_selectedStage = stage;
+			UpdateAvailableImagesForCase(stages, true);
 		}
 
 		public void SetData(Character character, Case c)
@@ -100,11 +127,17 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				stages.Add(s);
 			}
-			SetData(character, stage, c, stages, ImageLibrary.Get(character));
+			ImageLibrary library = null;
+			if (character != null)
+			{
+				library = ImageLibrary.Get(character);
+			}
+			SetData(character, stage, c, stages, library);
 		}
 
 		public void SetData(Character character, Stage stage, Case c, HashSet<int> selectedStages, ImageLibrary imageLibrary)
 		{
+			HideDropdown();
 			_character = character;
 			_selectedStage = stage;
 			_selectedCase = c;
@@ -120,7 +153,7 @@ namespace SPNATI_Character_Editor.Controls
 
 			//Populate lines
 			gridDialogue.Rows.Clear();
-			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger ? _character.StartingLines : _selectedCase.Lines);
+			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger && _character != null ? _character.StartingLines : _selectedCase.Lines);
 			foreach (DialogueLine line in lines)
 			{
 				AddLineToDialogueGrid(line, null);
@@ -132,10 +165,14 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void Save()
 		{
-			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger ? _character.StartingLines : _selectedCase.Lines);
-			foreach (DialogueLine line in lines)
+			HideDropdown();
+			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger && _character != null ? _character.StartingLines : _selectedCase.Lines);
+			if (_character != null)
 			{
-				_character.RemoveMarkerReference(line.Marker);
+				foreach (DialogueLine line in lines)
+				{
+					_character.RemoveMarkerReference(line.Marker);
+				}
 			}
 			lines.Clear();
 			for (int i = 0; i < gridDialogue.Rows.Count; i++)
@@ -144,7 +181,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (line != null)
 				{
 					lines.Add(line);
-					_character.CacheMarker(line.Marker);
+					_character?.CacheMarker(line.Marker);
 				}
 			}
 		}
@@ -171,9 +208,13 @@ namespace SPNATI_Character_Editor.Controls
 			bool perTarget;
 			string marker = Marker.ExtractPieces(taggedLine.Marker, out markerValue, out perTarget);
 			marker = row.Cells["ColMarker"].Value?.ToString();
-			if (string.IsNullOrEmpty(marker))
+			if (string.IsNullOrWhiteSpace(marker))
 			{
 				marker = null;
+			}
+			else
+			{
+				marker = marker.Trim();
 			}
 
 			if (text == "~silent~")
@@ -187,7 +228,7 @@ namespace SPNATI_Character_Editor.Controls
 				image = DialogueLine.GetDefaultImage(image);
 			}
 			DialogueLine line = new DialogueLine(image, text);
-
+			line.StageImages = taggedLine.StageImages;
 			line.IsMarkerPersistent = taggedLine.IsMarkerPersistent;
 			line.Direction = taggedLine.Direction;
 			line.Location = taggedLine.Location;
@@ -196,6 +237,7 @@ namespace SPNATI_Character_Editor.Controls
 			line.Intelligence = taggedLine.Intelligence;
 			line.Label = taggedLine.Label;
 			line.Gender = taggedLine.Gender;
+			line.OneShotId = taggedLine.OneShotId;
 
 			if (perTarget)
 			{
@@ -256,78 +298,96 @@ namespace SPNATI_Character_Editor.Controls
 			}
 
 			int stageId = _selectedStage == null ? 0 : _selectedStage.Id;
-			DataGridViewComboBoxColumn col = gridDialogue.Columns["ColImage"] as DataGridViewComboBoxColumn;
+			SkinnedDataGridViewComboBoxColumn col = gridDialogue.Columns["ColImage"] as SkinnedDataGridViewComboBoxColumn;
 			col.Items.Clear();
 			List<CharacterImage> images = new List<CharacterImage>();
-			if (_selectedStage == null)
+			if (_character != null)
 			{
-				images.AddRange(_imageLibrary.GetImages(0));
-				if (Config.UsePrefixlessImages)
+				if (_selectedStage == null)
 				{
-					string prefix = Config.PrefixFilter;
-					foreach (CharacterImage img in _imageLibrary.GetImages(-1))
+					images.AddRange(_imageLibrary.GetImages(0));
+					if (Config.UsePrefixlessImages)
 					{
-						string file = img.Name;
-						if (string.IsNullOrEmpty(prefix) || !file.StartsWith(prefix))
+						foreach (CharacterImage img in _imageLibrary.GetImages(-1))
 						{
-							images.Add(img);
+							string file = img.Name;
+							if (!_imageLibrary.FilterImage(_character, file))
+							{
+								images.Add(img);
+							}
 						}
 					}
-				}
-				foreach (var image in images)
-				{
-					col.Items.Add(image);
-				}
-			}
-			else
-			{
-				images.AddRange(_imageLibrary.GetImages(stageId));
-				if (Config.UsePrefixlessImages)
-				{
-					string prefix = Config.PrefixFilter;
-					foreach (CharacterImage img in _imageLibrary.GetImages(-1))
+					foreach (var image in images)
 					{
-						string file = img.Name;
-						if (string.IsNullOrEmpty(prefix) || !file.StartsWith(prefix))
-						{
-							images.Add(img);
-						}
+						col.Items.Add(image);
 					}
 				}
+				else
+				{
+					images.AddRange(_imageLibrary.GetImages(stageId));
+					if (Config.UsePrefixlessImages)
+					{
+						foreach (CharacterImage img in _imageLibrary.GetImages(-1))
+						{
+							string file = img.Name;
+							if (!_imageLibrary.FilterImage(_character, file))
+							{
+								images.Add(img);
+							}
+						}
+					}
 
-				foreach (var image in images)
-				{
-					string name = DialogueLine.GetDefaultImage(image.Name);
-					//Filter out the ones that don't appear in every selected stage
-					bool allExist = true;
-					if (!image.IsGeneric)
+					foreach (var image in images)
 					{
-						bool custom = name.StartsWith("custom:");
-						string nameWithoutStage = name;
-						if (custom)
+						string name = DialogueLine.GetDefaultImage(image.Name);
+						//Filter out the ones that don't appear in every selected stage, unless there are stage-specific images, which would result in a blank field
+						bool stageSpecific = _selectedCase.Lines.Find(l => l.StageImages.Count > 0) != null;
+						bool allExist = true;
+						if (!image.IsGeneric && !stageSpecific)
 						{
-							nameWithoutStage = DialogueLine.GetDefaultImage(image.Name.Substring(7));
-						}
-						foreach (int stage in selectedStages)
-						{
-							string key = stage + "-" + nameWithoutStage;
+							bool custom = name.StartsWith("custom:");
+							string nameWithoutStage = name;
 							if (custom)
 							{
-								key = "custom:" + key;
+								nameWithoutStage = DialogueLine.GetDefaultImage(image.Name.Substring(7));
 							}
-							if (_imageLibrary.Find(key) == null)
+							foreach (int stage in selectedStages)
 							{
-								allExist = false;
-								break;
+								string key = stage + "-" + nameWithoutStage;
+								if (custom)
+								{
+									key = "custom:" + key;
+								}
+								if (_imageLibrary.Find(key) == null)
+								{
+									allExist = false;
+									break;
+								}
 							}
-						}
 
+						}
+						if (allExist)
+						{
+							col.Items.Add(image);
+						}
 					}
-					if (allExist)
-						col.Items.Add(image);
 				}
 			}
 
+			foreach (DataGridViewRow row in gridDialogue.Rows)
+			{
+				SkinnedDataGridViewComboBoxCell cellCol = row.Cells[ColImage.Index] as SkinnedDataGridViewComboBoxCell;
+				if (cellCol != null)
+				{
+					object old = cellCol.Value;
+					cellCol.Items.Clear();
+					foreach (object item in col.Items)
+					{
+						cellCol.Items.Add(item);
+					}
+					cellCol.Value = old;
+				}
+			}
 			col.DisplayMember = "DefaultName";
 
 			if (retainValue)
@@ -378,7 +438,8 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void gridDialogue_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
 		{
-			if (e.ColumnIndex == ColDelete.Index || e.ColumnIndex == ColTrophy.Index || e.ColumnIndex == ColMarkerOptions.Index || e.ColumnIndex == ColMore.Index)
+			if (e.ColumnIndex == ColDelete.Index || e.ColumnIndex == ColTrophy.Index || e.ColumnIndex == ColMarkerOptions.Index || e.ColumnIndex == ColMore.Index
+				|| e.ColumnIndex == ColImageOptions.Index)
 			{
 				Image img = Properties.Resources.Delete;
 				if (e.ColumnIndex == ColTrophy.Index)
@@ -412,6 +473,10 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					img = Properties.Resources.Ellipsis;
 				}
+				else if (e.ColumnIndex == ColImageOptions.Index)
+				{
+					img = Properties.Resources.ChevronDown;
+				}
 				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
 				var w = img.Width;
 				var h = img.Height;
@@ -431,7 +496,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				if (e.Value != null)
 				{
-					DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)gridDialogue.Rows[e.RowIndex].Cells[e.ColumnIndex];
+					SkinnedDataGridViewComboBoxCell cell = (SkinnedDataGridViewComboBoxCell)gridDialogue.Rows[e.RowIndex].Cells[e.ColumnIndex];
 					foreach (object item in cell.Items)
 					{
 						if (((CharacterImage)item).DefaultName == e.Value.ToString())
@@ -468,12 +533,12 @@ namespace SPNATI_Character_Editor.Controls
 			if (_selectedCase == null || e.FormattedValue == null || _populatingCase || !Config.UseIntellisense)
 				return;
 
-			List<string> invalidVars = DialogueLine.GetInvalidVariables(_selectedCase.Tag, e.FormattedValue.ToString());
-			if (invalidVars.Count > 0)
-			{
-				MessageBox.Show(string.Format("The following variables are invalid for this line: {0}", string.Join(",", invalidVars)));
-				e.Cancel = true;
-			}
+			//List<string> invalidVars = DialogueLine.GetInvalidVariables(_selectedCase, e.FormattedValue.ToString());
+			//if (invalidVars.Count > 0)
+			//{
+			//	MessageBox.Show(string.Format("The following variables are invalid for this line: {0}", string.Join(",", invalidVars)));
+			//	e.Cancel = true;
+			//}
 		}
 
 		private void gridDialogue_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -504,6 +569,7 @@ namespace SPNATI_Character_Editor.Controls
 			row.Cells["ColTrophy"].ToolTipText = "Unlock collectible";
 			row.Cells[nameof(ColMore)].ToolTipText = "More options";
 			row.Cells[nameof(ColMarkerOptions)].ToolTipText = "Advanced marker options";
+			row.Cells[nameof(ColImageOptions)].ToolTipText = "Stage-specific images";
 		}
 
 		private void gridDialogue_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -529,21 +595,41 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				ShowDropdown(e.RowIndex, e.ColumnIndex, _lineCtl, _lineDropDown);
 			}
+			else if (col == ColImageOptions)
+			{
+				if (_character != null)
+				{
+					DialogueLine line = gridDialogue.Rows[e.RowIndex].Tag as DialogueLine;
+					StageImageSelection form = new StageImageSelection(_character, line, _selectedCase);
+					form.ShowDialog();
+				}
+			}
 		}
 
 		private void ShowDropdown(int rowIndex, int colIndex, IDialogueDropDownControl ctl, ToolStripDropDown dropdown)
 		{
 			DataGridViewRow row = gridDialogue.Rows[rowIndex];
 			DialogueLine line = ReadLineFromDialogueGrid(rowIndex);
-			ctl.SetData(rowIndex, line);
+			if (line == null) { return; }
+			ctl.SetData(rowIndex, line, _character);
 
 			Point pt = gridDialogue.PointToScreen(gridDialogue.GetCellDisplayRectangle(colIndex, rowIndex, false).Location);
 			Point screen = gridDialogue.PointToScreen(new Point(0, 0));
 			dropdown.Show(this, new Point(pt.X - screen.X + ColMore.Width, pt.Y - screen.Y + row.Height));
+			_activeDropdown = dropdown;
 		}
-		
-		private void _markerDropDown_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+
+		private void HideDropdown()
 		{
+			if (_activeDropdown != null)
+			{
+				_activeDropdown.Close();
+			}
+		}
+
+		private void DropDownClosing(object sender, ToolStripDropDownClosingEventArgs e)
+		{
+			_activeDropdown = null;
 			Control senderCtl = sender as Control;
 			IDialogueDropDownControl ctl = senderCtl.Tag as IDialogueDropDownControl;
 			DataGridViewRow row = gridDialogue.Rows[ctl.RowIndex];
@@ -640,7 +726,7 @@ namespace SPNATI_Character_Editor.Controls
 				row = gridDialogue.Rows[gridDialogue.Rows.Add()];
 			}
 			row.Tag = line;
-			DataGridViewComboBoxCell imageCell = row.Cells["ColImage"] as DataGridViewComboBoxCell;
+			SkinnedDataGridViewComboBoxCell imageCell = row.Cells["ColImage"] as SkinnedDataGridViewComboBoxCell;
 			SetImage(imageCell, imageKey);
 			DataGridViewCell textCell = row.Cells["ColText"];
 			textCell.Value = line.Text;
@@ -652,7 +738,19 @@ namespace SPNATI_Character_Editor.Controls
 			markerCell.Value = marker;
 			
 			row.Cells[nameof(ColTrophy)].Tag = new Tuple<string, string>(line.CollectibleId, line.CollectibleValue);
+			row.Cells[nameof(ColMarkerOptions)].ToolTipText = GetMarkerTooltip(line);
+		}
 
+		private string GetMarkerTooltip(DialogueLine line)
+		{
+			if (!line.HasAdvancedMarker)
+			{
+				return "Advanced marker options";
+			}
+			else
+			{
+				return line.Marker;
+			}
 		}
 
 		/// <summary>
@@ -660,7 +758,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="cell"></param>
 		/// <param name="key"></param>
-		private void SetImage(DataGridViewComboBoxCell cell, string key)
+		private void SetImage(SkinnedDataGridViewComboBoxCell cell, string key)
 		{
 			string defaultKey = DialogueLine.GetDefaultImage(key);
 			foreach (var item in cell.Items)
@@ -867,6 +965,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void ShowTrophyForm(int rowIndex)
 		{
+			if (_character == null) { return; }
 			if (_character.Collectibles.Count == 0)
 			{
 				MessageBox.Show("You haven't created any collectibles yet. Go to the Collectibles tab to create a collectible before attaching it to a dialogue line.");
@@ -886,6 +985,13 @@ namespace SPNATI_Character_Editor.Controls
 				data = new Tuple<string, string>(form.Id, form.Value);
 				cell.Tag = data;
 			}
+		}
+
+		public void OnUpdateSkin(Skin skin)
+		{
+			BackColor = skin.GetBackColor(SkinnedBackgroundType.Surface);
+			_markerCtl.OnUpdateSkin(skin);
+			_lineCtl.OnUpdateSkin(skin);
 		}
 	}
 }

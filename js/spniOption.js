@@ -75,6 +75,7 @@ function showOptionsModal () {
     loadMasturbationTimer();
     setActiveOption('options-auto-fade', AUTO_FADE);
     setActiveOption('options-card-suggest', CARD_SUGGEST);
+    setActiveOption('options-explain-hands', EXPLAIN_ALL_HANDS);
     setActiveOption('options-ai-turn-time', GAME_DELAY);
     setActiveOption('options-deal-speed', ANIM_TIME);
     setActiveOption('options-auto-forfeit', FORFEIT_DELAY);
@@ -115,6 +116,10 @@ $('ul#options-auto-fade').on('click', 'a', function() {
 
 $('ul#options-card-suggest').on('click', 'a', function() {
     CARD_SUGGEST = $(this).attr('data-value') == "true";
+});
+
+$('ul#options-explain-hands').on('click', 'a', function() {
+    EXPLAIN_ALL_HANDS = $(this).attr('data-value') == "true";
 });
 
 $('ul#options-ai-turn-time').on('click', 'a', function() {
@@ -180,7 +185,7 @@ function setBackground (choice) {
  * Loading the player masturbation timer.
  ************************************************************/
 function loadMasturbationTimer () {
-	$masturbationTimerBox.val(players[HUMAN_PLAYER].stamina);
+	$masturbationTimerBox.val(humanPlayer.stamina);
 	$masturbationWarningLabel.css("visibility", "hidden");
 }
  /************************************************************
@@ -191,7 +196,7 @@ $masturbationTimerBox.on('input', function() {
 	var newTime = Number(newTimerValue);
 	var isValidTimerValue = (newTime != "NaN") && (newTime > 0);
 	if (isValidTimerValue){
-		players[HUMAN_PLAYER].stamina = newTime;
+		humanPlayer.stamina = newTime;
 	}
 	$masturbationWarningLabel.css("visibility", isValidTimerValue ? "hidden" : "visible");
 });

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -7,6 +8,13 @@ namespace SPNATI_Character_Editor.Controls
 	public partial class DialogueAdvancedControl : UserControl, IDialogueDropDownControl
 	{
 		public int RowIndex { get; private set; }
+
+		public SkinnedBackgroundType PanelType
+		{
+			get { return SkinnedBackgroundType.Background; }
+		}
+
+		private Character _character;
 		private DialogueLine _line;
 
 		public event EventHandler DataUpdated;
@@ -14,19 +22,36 @@ namespace SPNATI_Character_Editor.Controls
 		public DialogueAdvancedControl()
 		{
 			InitializeComponent();
+			cboGender.Items.AddRange(new string[] { "", "female", "male" });
+			cboSize.Items.AddRange(new string[] { "", "small", "medium", "large" });
 			cboDirection.DataSource = DialogueLine.ArrowDirections;
+			cboAI.DataSource = DialogueLine.AILevels;
+			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 		}
 
-		public void SetData(int row, DialogueLine line)
+		public void OnUpdateSkin(Skin skin)
 		{
+			BackColor = skin.Background.Normal;
+			foreach (Control child in Controls)
+			{
+				SkinManager.Instance.ReskinControl(child, skin);
+			}
+			Invalidate(true);
+		}
+
+		public void SetData(int row, DialogueLine line, Character character)
+		{
+			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 			RowIndex = row;
 			_line = line;
+			_character = character;
 			cboDirection.Text = line.Direction ?? "";
 			
 			cboSize.Text = line.Size ?? "";
 			cboAI.Text = line.Intelligence ?? "";
 			cboGender.Text = line.Gender ?? "";
 			txtLabel.Text = line.Label;
+			chkOneShot.Checked = line.OneShotId > 0;
 
 			valWeight.Value = Math.Max(valWeight.Minimum, Math.Min(valWeight.Maximum, (decimal)line.Weight));
 
@@ -91,6 +116,18 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			_line.Label = label;
 
+			if (chkOneShot.Checked)
+			{
+				if (_line.OneShotId == 0)
+				{
+					_line.OneShotId = ++_character.Behavior.MaxStageId;
+				}
+			}
+			else
+			{
+				_line.OneShotId = 0;
+			}
+
 			return _line;
 		}
 
@@ -100,11 +137,11 @@ namespace SPNATI_Character_Editor.Controls
 		}
 	}
 
-	public interface IDialogueDropDownControl
+	public interface IDialogueDropDownControl : ISkinnedPanel, ISkinControl
 	{
 		event EventHandler DataUpdated;
 		int RowIndex { get; }
-		void SetData(int rowIndex, DialogueLine line);
+		void SetData(int rowIndex, DialogueLine line, Character character);
 		DialogueLine GetLine();
 	}
 }

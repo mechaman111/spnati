@@ -1,11 +1,14 @@
 ﻿using Desktop;
 using Desktop.Providers;
+using Desktop.Skinning;
 using System;
 using System.Windows.Forms;
+using Desktop.CommonControls;
+using SPNATI_Character_Editor.Controls;
 
 namespace SPNATI_Character_Editor.Forms
 {
-	public partial class MacroManager : Form, IMacroEditor
+	public partial class MacroManager : SkinnedForm, IMacroEditor
 	{
 		private Type _macroType;
 		private string _key;
@@ -133,6 +136,11 @@ namespace SPNATI_Character_Editor.Forms
 		private void lstMacros_DoubleClick(object sender, EventArgs e)
 		{
 			cmdEdit_Click(sender, e);
+		}
+
+		public void AddSpeedButtons(PropertyTable table)
+		{
+			CaseControl.AddSpeedButtons(table, "opponent_lost");
 		}
 	}
 }

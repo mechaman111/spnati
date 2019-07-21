@@ -27,18 +27,6 @@ var FOUR_OF_A_KIND	= 8;
 var STRAIGHT_FLUSH	= 9;
 var ROYAL_FLUSH 	= 10;
 
-/************************************************************
- * Stores information on a poker hand.
- ************************************************************/
-function createNewHand (cards, strength, value, tradeIns) {
-	var newHandObject = {cards:cards, 
-						 strength:strength, 
-						 value:value, 
-						 tradeIns:tradeIns};
-						  
-	return newHandObject;
-}
- 
 /**********************************************************************
  *****                      Poker UI Elements                     *****
  **********************************************************************/
@@ -198,6 +186,13 @@ function displayCard (player, i, visible) {
  ************************************************************/
 function showHand (player) {
     displayHand(player, true);
+    if (player > 0) {
+        $gameOpponentAreas[player-1].attr('data-original-title', players[player].hand.describeFormal());
+        if (EXPLAIN_ALL_HANDS) $gameOpponentAreas[player-1].tooltip('show');
+    } else {
+        $gamePlayerCardArea.attr('data-original-title', players[player].hand.describeFormal());
+        if (EXPLAIN_ALL_HANDS) $gamePlayerCardArea.tooltip('show');
+    }
 }
 
 /************************************************************
@@ -215,6 +210,11 @@ function displayHand (player, visible) {
 function clearHand (player) {
     for (var i = 0; i < CARDS_PER_HAND; i++) {
         clearCard(player, i);
+    }
+    if (player > 0) {
+        $gameOpponentAreas[player-1].attr('data-original-title', '').tooltip('hide');
+    } else {
+        $gamePlayerCardArea.attr('data-original-title', '').tooltip('hide');
     }
 }
 
@@ -399,19 +399,119 @@ function distance2d (x1, y1, x2, y2)
  ************************************************************/
 function handStrengthToString (number) {
 	switch (number) {
-		case NONE: 				return "Nothing";
-		case HIGH_CARD: 		return "High Card";
-		case PAIR: 				return "One Pair";
-		case TWO_PAIR: 			return "Two Pair";
-		case THREE_OF_A_KIND: 	return "Three of a Kind";
-		case STRAIGHT: 			return "Straight";
-		case FLUSH: 			return "Flush";
-		case FULL_HOUSE: 		return "Full House";
-		case FOUR_OF_A_KIND:	return "Four of a Kind";
-		case STRAIGHT_FLUSH: 	return "Straight Flush";
-		case ROYAL_FLUSH: 		return "Royal Flush";
+        case NONE:              return "Nothing";
+        case HIGH_CARD:         return "High card";
+        case PAIR:              return "One pair";
+        case TWO_PAIR:          return "Two pair";
+        case THREE_OF_A_KIND:   return "Three of a kind";
+        case STRAIGHT:          return "Straight";
+        case FLUSH:             return "Flush";
+        case FULL_HOUSE:        return "Full house";
+        case FOUR_OF_A_KIND:    return "Four of a kind";
+        case STRAIGHT_FLUSH:    return "Straight flush";
+        case ROYAL_FLUSH:       return "Royal flush";
 	}
 }
+
+function cardRankToString(rank, plural) {
+    var str = [ 'deuce', 'three', 'four', 'five', 'six',
+                'seven', 'eight', 'nine', 'ten',
+                'jack', 'queen', 'king', 'ace' ][rank - 2];
+    if (plural !== false) {
+        str += (rank == 6 ? 'es' : 's');
+    }
+    return str;
+}
+
+Hand.prototype.describe = function(with_article) {
+    var use_article = false;
+    var description;
+    switch (this.strength) {
+    case NONE:
+        break;
+    case HIGH_CARD:
+        description = cardRankToString(this.value[0]) + " high"; break;
+    case PAIR:
+        description = "pair of " + cardRankToString(this.value[0]);
+        use_article = true; break;
+    case TWO_PAIR:
+        description = "two pair of "
+            + cardRankToString(this.value[0]) + " and "
+            + cardRankToString(this.value[1]);
+        break;
+    case THREE_OF_A_KIND:
+        description = "three " + cardRankToString(this.value[0]); break;
+    case FOUR_OF_A_KIND:
+        description = "four " + cardRankToString(this.value[0]); break;
+    default:
+        description = handStrengthToString(this.strength).toLowerCase();
+        use_article = true;
+    }
+    if (with_article && use_article) {
+        return (description[0] == 'a' || description[0] == 'e' ? 'an ' : 'a ') + description;
+    } else return description;
+};
+
+Hand.prototype.describeFormal = function() {
+    var description = handStrengthToString(this.strength) + ', ';
+    switch (this.strength) {
+    case NONE:
+        description = undefined;
+    case HIGH_CARD:
+        description += cardRankToString(this.value[0], false); break;
+    case PAIR:
+        description += cardRankToString(this.value[0]); break;
+    case TWO_PAIR:
+        description += cardRankToString(this.value[0]) + " over "
+            + cardRankToString(this.value[1], true);
+        break;
+    case THREE_OF_A_KIND:
+        description += cardRankToString(this.value[0]); break;
+    case STRAIGHT:
+    case FLUSH:
+    case STRAIGHT_FLUSH:
+        description += cardRankToString(this.value[0], false) + ' high'; break;
+    case FULL_HOUSE:
+        description += cardRankToString(this.value[0]) + " full of "
+            + cardRankToString(this.value[1]); break;
+    case FOUR_OF_A_KIND:
+        description += cardRankToString(this.value[0]); break;
+    // Royal Flush needs no further description
+    }
+    return description;
+};
+
+Hand.prototype.score = function() {
+    return (this.strength - 1) * 100 + this.value[0];
+};
+
+// Sort the cards
+Hand.prototype.sort = function() {
+    switch (this.strength) {
+    case PAIR:
+    case TWO_PAIR:
+    case THREE_OF_A_KIND:
+    case FULL_HOUSE:
+    case FOUR_OF_A_KIND:
+        // Sort the cards such that the pair, triplet, etc. comes
+        // first, then the kickers. .value[] is sorted in the
+        // right order by .determine().
+        this.cards.sort(function(a, b) {
+            return this.value.indexOf(a.rank) - this.value.indexOf(b.rank);
+        }.bind(this));
+        break;
+    case HIGH_CARD:
+    case STRAIGHT:
+    case FLUSH:
+    case STRAIGHT_FLUSH:
+    case ROYAL_FLUSH:
+        // For straights, value[] only holds the high card. For
+        // flushes and high cards, the above algorithm works, but this
+        // is more efficient.
+        this.cards.sort(function(a, b) { return b.rank - a.rank; }.bind(this));
+        break;
+    }
+};
  
 /************************************************************
  * Returns the player number with the lowest hand.
@@ -506,20 +606,20 @@ Hand.prototype.determine = function() {
 	if (this.strength == NONE) {
 		if (have_three_kind && have_pair.length > 0) {
 			this.strength = FULL_HOUSE;
-			this.value = [have_three_kind];
+			this.value = [have_three_kind, have_pair[0]];
 		} else if (have_three_kind) {
 			this.strength = THREE_OF_A_KIND;
 			this.value = [have_three_kind];
 		} else if (have_pair.length > 0) {
 			this.strength = have_pair.length == 2 ? TWO_PAIR : PAIR;
 			this.value = have_pair;
-			
-			for (var i = this.ranks.length-1; i > 0; i--) {
-				if (this.ranks[i] == 1) {
-					this.value.push(i+1);
-				}
-			}
-		}
+        }
+
+        for (var i = this.ranks.length-1; i > 0; i--) {
+            if (this.ranks[i] == 1) {
+                this.value.push(i+1);
+            }
+        }
 	}
 	
 	/* look for straights and flushes */
