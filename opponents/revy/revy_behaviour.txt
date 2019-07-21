@@ -1,0 +1,1933 @@
+#required for behaviour.xml
+first=Revy
+last=
+label=Revy
+gender=female
+size=medium
+intelligence=average
+
+#Number of phases to "finish" masturbating
+timer=23
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=revy
+tag=black_lagoon
+tag=anime
+tag=manga
+tag=exotic_hair
+tag=medium_hair
+tag=ponytail
+tag=dark_eyes
+tag=athletic
+tag=hairy
+tag=medium_breasts
+tag=weapon
+tag=gun
+tag=bisexual
+tag=pirate
+tag=fighter
+tag=criminal
+tag=confident
+tag=aggressive
+tag=mean
+tag=sarcastic
+tag=slutty
+tag=dominant
+tag=fair_skinned
+tag=pink_hair
+tag=single
+tag=american
+tag=mixed_heritage
+
+#required for meta.xml
+#select screen image
+pic=0-start.png
+height=5'6"
+from=Black Lagoon
+writer=OSG
+artist=undeadclown99 & OSG
+description=Rebecca Lee (a.k.a Revy) is a highly skilled and deadly member of pirate/smuggling outfit Lagoon Company, based in the Thai city of Roanapur.
+
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+start=0-calm,My name's not important. The only thing that is important is how badly I'm about to beat you.
+start=0-calm,There better be rum here.
+start=0-calm,We're playing for money too, right?
+start=0-calm,Lagoon Company's on a contract in this city, but I got time for a distraction.
+start=0-annoyed,No smoking? Fuck yourself.
+start=0-sadistic,Oh yeah, don't mind the blood.
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=Gloves,gloves,extra,other
+clothes=Boots,boots,extra,other
+clothes=Holster,holster,extra,upper
+clothes=Guns,guns,extra,other
+clothes=Shorts,shorts,major,lower
+clothes=Tank top,tank top,important,upper
+clothes=Panties,panties,important,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#EXCHANGING CARDS
+#This is what a character says while they're exchanging cards.
+#The game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-specific lines that override the stage-generic ones
+swap_cards=calm,Dealer! ~cards~ cards!
+swap_cards=calm,Gimme ~cards~.
+swap_cards=calm,Gimme ~cards~ new cards.
+swap_cards=pissed,The fuck... ~cards~.
+swap_cards=annoyed,~cards~. Now.
+swap_cards=calm,~cards~ before I break a finger for each shitty card you dealt.
+swap_cards=annoyed,What the hell, these cards are stuck together... take 'em back.
+swap_cards=smug,That one's going away for later... now give me ~cards~.
+swap_cards=annoyed,~cards~, and you better not fuck it up.
+swap_cards=calm,~cards~ cards, preferably good ones.
+swap_cards=annoyed,Here. ~cards~ new ones.
+swap_cards=excited,These better be good...
+swap_cards=pissed,Stop staring at my tits and pass out the cards!
+swap_cards=sadistic,Do <i>not</i> fuck with me, Dealer. ~cards~.
+
+
+
+
+#HAND QUALITY
+#These lines appear each round when a character is commenting on how good or bad their hand is.
+#The lines written here are examples only and should be replaced.
+
+#fully clothed
+0-good_hand=smug,Damn I'm good.
+0-good_hand,alsoPlaying:spooky,totalRounds:1=laughing,Oh shit, if ghosts are real then that means everyone I killed is a ghost. Maybe I should stop... Nah, killin's just too much fun!
+0-good_hand,alsoPlaying:spooky,totalRounds:0=calm,A ghost. A fucking ghost. I'm not even surprised.
+0-good_hand,alsoPlaying:mia,totalRounds:0=pissed,What the fuck?! Who invited the fucking lawyer?!
+0-good_hand,alsoPlaying:leela,totalRounds:0=annoyed,What kind of mutant-infested hellhole did I fall into?
+0-good_hand,alsoPlaying:jasmine,totalRounds:0=smug,Who invited the fucking sack of potatoes?
+0-good_hand,alsoPlaying:evie,totalRounds:0=annoyed,Fuck. Evie the Ice Bitch is here? ~player~, if you put me at the bottom of the barrel, I will put you at the end of a barrel.
+0-good_hand,alsoPlaying:daria,totalRounds:0=smug,Fuck. I don't want to see any of you bitches naked.
+0-good_hand,totalRounds:0,count-princess:1=smug,We got royalty here? Hah! Jackpot.
+0-good_hand,alsoPlaying:lux,totalRounds:0=pissed,What kind of fuckaroo place is this where god damn <i>video games</i> come to life?
+0-okay_hand=annoyed,This ain't what I was looking for.
+0-okay_hand=pissed,Could've fuckin' been better...
+0-okay_hand,alsoPlaying:spooky,totalRounds:1=laughing,Oh shit, if ghosts are real then that means everyone I killed is a ghost. Maybe I should stop... Nah, killin's just too much fun!
+0-okay_hand,alsoPlaying:spooky,totalRounds:0=calm,A ghost. A fucking ghost. I'm not even surprised.
+0-okay_hand,totalRounds:0,count-princess:1=smug,We got royalty here? Hah! Jackpot.
+0-okay_hand,alsoPlaying:mia,totalRounds:0=pissed,What the fuck?! Who invited the fucking lawyer?!
+0-okay_hand,alsoPlaying:lux,totalRounds:0=pissed,What kind of fuckaroo place is this where god damn <i>video games</i> come to life?
+0-okay_hand,alsoPlaying:jasmine,totalRounds:0=smug,Who invited the fucking sack of potatoes?
+0-okay_hand,alsoPlaying:leela,totalRounds:0=annoyed,What kind of mutant-infested hellhole did I fall into?
+0-okay_hand,alsoPlaying:evie,totalRounds:0=annoyed,Fuck. Evie the Ice Bitch is here? ~player~, if you put me at the bottom of the barrel, I will put you at the end of a barrel.
+0-okay_hand,alsoPlaying:daria,totalRounds:0=smug,Fuck. I don't want to see any of you bitches naked.
+0-bad_hand=pissed,The fuck's this shit?!
+0-bad_hand=annoyed,This is a fucking embarrassment.
+0-bad_hand,alsoPlaying:mia,totalRounds:0=pissed,What the fuck?! Who invited the fucking lawyer?!
+0-bad_hand,alsoPlaying:lux,totalRounds:0=pissed,What kind of fuckaroo place is this where god damn <i>video games</i> come to life?
+0-bad_hand,alsoPlaying:daria,totalRounds:0=smug,Fuck. I don't want to see any of you bitches naked.
+0-bad_hand,alsoPlaying:evie,totalRounds:0=annoyed,Fuck. Evie the Ice Bitch is here? ~player~, if you put me at the bottom of the barrel, I will put you at the end of a barrel.
+0-bad_hand,alsoPlaying:leela,totalRounds:0=annoyed,What kind of mutant-infested hellhole did I fall into?
+0-bad_hand,alsoPlaying:spooky,totalRounds:1=laughing,Oh shit, if ghosts are real then that means everyone I killed is a ghost. Maybe I should stop... Nah, killin's just too much fun!
+0-bad_hand,alsoPlaying:jasmine,totalRounds:0=smug,Who invited the fucking sack of potatoes?
+0-bad_hand,alsoPlaying:spooky,totalRounds:0=calm,A ghost. A fucking ghost. I'm not even surprised.
+0-bad_hand,totalRounds:0,count-princess:1=smug,We got royalty here? Hah! Jackpot.
+
+
+#lost gloves
+1-good_hand=calm,That's more like it
+1-good_hand=calm,Dumb shits, no gloves makes it easier to hide cards.
+1-okay_hand=annoyed,I deserve better.
+1-bad_hand=pissed,Fuck.
+1-bad_hand=sadistic,Dealer, do you <i>want</i> me to shove these cards down your throat?
+1-bad_hand,alsoPlaying:twilight,alsoPlayingStage:0,priority:0=calm,If I hear one fuckin' neigh, I'm shooting the horse girl.
+
+
+#lost boots
+2-good_hand=calm,Alright, these'll do.
+2-good_hand=laughing,You might as well fold right now!
+2-okay_hand=annoyed,You trying to fuck me over, dealer?
+2-bad_hand=pissed,Give me a bad hand again, I fucking dare you.
+
+
+#lost holster
+3-good_hand=smug,These are packing some serious firepower. Just like me.
+3-okay_hand=calm,Could've fuckin' been better...
+3-bad_hand=pissed,SON OF A BITCH.
+3-bad_hand=shocked,You <i>can't</i> be serious.
+
+
+#lost guns
+4-good_hand=sadistic,Make peace with your God.
+4-good_hand=annoyed,You know what would go well with this hand? SOME FUCKING RUM!
+4-okay_hand=annoyed,I need better shit than this.
+4-bad_hand=laughing,You're all going to die.
+
+
+#lost shorts
+5-good_hand=calm,You aren't seeing my tits yet, shitheels.
+5-good_hand=annoyed,Where was this fucker last hand?
+5-okay_hand=annoyed,One of you better have a worse fucking hand.
+5-bad_hand=pissed,Which one of you GODDAMNED COCKSUCKERS IS DOING THIS?!
+
+
+#lost tank top
+6-good_hand=calm,I'll be keeping these panties on.
+6-okay_hand=annoyed,If I have to strip naked for you fuckheads...
+6-bad_hand=pissed,If I still had my guns, these cards would be dead.
+
+-3-good_hand=annoyed,Couldn't this shit have come any sooner?
+-3-okay_hand=pissed,I can win with this...
+-3-bad_hand=annoyed,You think I'm <i>afraid</i> of losing? I'll fucking show you losing if I have to!
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing gloves
+0-must_strip_winning=calm,Bullshit, I had a winning streak!
+0-must_strip_winning=annoyed,Just had to fuck up my perfect run, didn't you?
+0-must_strip_winning=smug,Wow, you <i>finally</i> beat me. Good job.
+0-must_strip_winning,totalRounds:0=calm,Bullshit. Why should I go first?
+0-must_strip_normal=annoyed,Shit, my turn?
+0-must_strip_losing=annoyed,Ah fuck, already?
+0-must_strip_losing=pissed,Horseshit!
+0-stripping=strip,Yeah, yeah, calm down.
+
+
+#losing boots
+1-stripped=stripped,Didn't want to get these covered in whore cum anyways.
+1-must_strip_winning=annoyed,No.
+1-must_strip_winning=calm,At least I'm not doing as bad as you dumbasses. Have you ever even played poker before?
+1-must_strip_normal=calm,...Whatever.
+1-must_strip_normal=annoyed,Piss.
+1-must_strip_losing=pissed,You motherfuckers are cheating, I know I saw an ace up your sleeve!
+1-stripping=strip,Fine, take my boots.
+
+
+#losing holster
+2-stripped=stripped,I was looking forward to shoving them up your ass, but that'll have to wait till next time.
+2-must_strip_winning=annoyed,Fuck off.
+2-must_strip_winning=smug,This ain't shit compared to all of you.
+2-must_strip_normal=annoyed,This is bullshit.
+2-must_strip_losing=annoyed,Today is not my fucking day...
+2-stripping=strip,Is there seriously not any goddamn Bacardi?!
+2-stripping=strip,Can't believe I can't get a fuckin' drink...
+
+
+#losing guns
+3-stripped=stripped,It's not like there's anyone underage here, right? Even if there is, do you know how young I was when I had my first drink? Buncha pussies.
+3-must_strip_winning=calm,Cheating can't win every hand. Yeah I'm cheating, fuck you gonna do about it? Cheat better than me? I'm Queen Bitch of poker cheats.
+3-must_strip_winning=shocked,Did I really just fuckin' lose to legitimate cards?
+3-must_strip_normal=smug,I know you've all been looking at my guns, and no, I don't mean my tits.
+3-must_strip_losing=pissed,Fuck!
+3-must_strip_losing=pissed,Cocksuckers.
+3-must_strip_losing=sadistic,You think getting rid of my guns will keep you safe, but that's the worst fuckin' thing you could've done.
+3-stripping=strip,Hands OFF, motherfucker!
+
+
+#losing shorts
+4-stripped=stripped,Try to touch 'em again and I will hurt you.
+4-must_strip_winning=calm,What the fuck ever, I was barely even wearing anything.
+4-must_strip_normal=annoyed,These cards are starting to piss me off.
+4-must_strip_normal=sadistic,You're starting to make me angry.
+4-must_strip_losing=pissed,Gotta be FUCKIN' KIDDING!
+4-stripping=strip,I'm not a goddamn pussy like the rest of you! I won't count my belt or cigarette like you assholes would!
+
+
+#losing tank top
+5-stripped=stripped,No, I didn't go commando today. Got a problem with that?
+5-must_strip_winning=calm,You guys suck if I'm just now getting my tits out.
+5-must_strip_normal=annoyed,I guess I'll have to show you what a real rack looks like.
+5-must_strip_losing=pissed,FUCK! FUCK! FUCK!
+5-must_strip_losing=sadistic,To whoever's loading the deck, you <i>best</i> not let me find you.
+5-stripping=strip,I don't give a flying fuck if I have to get naked...
+
+
+#lost all clothing
+6-stripped=stripped,BUT I CAN'T FUCKING STAND LOSING!
+6-must_strip_winning=annoyed,Damn, I wanted to just win already. I got a target to go after.
+6-must_strip_winning=smug,I got the best fucking cunt on the planet. I ain't afraid to show it.
+6-must_strip_normal=laughing,Roberta once got me naked and hadn't lost shit. Guess who won?
+6-must_strip_losing=sadistic,You're all about three seconds away from meeting the business end of my Berettas.
+6-stripping=strip,If any of you fuckers stare, I'm going to shoot the place up.
+
+-3-stripped=stripped,Yeah it's my pussy, big fuckin' deal. You're acting like you've never seen one before tonight, which you definitely haven't.
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#fully clothed
+0-male_human_must_strip=calm,Ya lost to the best, buddy. Now entertain a girl and do something extreme.
+0-male_human_must_strip=smug,The great Revy wins again, but you already knew that.
+0-male_must_strip=smug,The great Revy wins again, but you already knew that.
+0-female_human_must_strip=smug,Just isn't your day, is it cupcake? Let's see some skin.
+0-female_must_strip=calm,Just get your tits out.
+0-female_must_strip=calm,I'll give you ten bucks if you flash your pussy. Fifty to get naked right now.
+
+
+#lost gloves
+1-male_human_must_strip=calm,How's it feel being my bitch?
+1-male_must_strip=smug,I'm the best.
+1-female_human_must_strip=laughing,Spell it out, you are my B-I-T-C-H.
+1-female_must_strip=smug,You just can't stand up to me.
+1-female_must_strip=smug,Good. I was sick of waiting.
+
+
+#lost boots
+2-male_human_must_strip=heart,You're not doing so hot buddy, need a hand?
+2-male_must_strip=smug,Read 'em and weep.
+2-female_human_must_strip=heart,Aww, what's the matter sweetheart? Can't win a hand to save your life?
+2-female_must_strip=smug,Don't cry now.
+
+
+#lost holster
+3-male_human_must_strip=laughing,And you thought you had a chance!
+3-male_must_strip=smug,Oughta know by now not to fuck with me.
+3-female_human_must_strip=sadistic,Learn your goddamn place.
+3-female_must_strip=laughing,One more down!
+
+
+#lost guns
+4-male_human_must_strip=sadistic,Good boy. Don't fight me.
+4-male_must_strip=shocked,I can't believe you lost that easily.
+4-female_human_must_strip=sadistic,You better be scared of me.
+4-female_must_strip=shocked,How the hell do you give up that easily?
+
+
+#lost shorts
+5-male_human_must_strip=smug,Ya got played, boy.
+5-male_must_strip=smug,Let's see you drop something, fuck you very much.
+5-female_human_must_strip=smug,Can't step to the best, girly.
+5-female_must_strip=laughing,I got you right where I want you!
+
+
+#lost tank top
+6-male_human_must_strip=annoyed,'Bout time you lost, you bastard...
+6-male_must_strip=pissed,This should've been over already...
+6-female_human_must_strip=annoyed,'Bout time you lost, you bitch...
+6-female_must_strip=pissed,How the fuck did I lose my top to you...
+
+-3-male_human_must_strip=pissed,Quit fuckin' staring at me...
+-3-male_must_strip=pissed,Finally got you, you son of a bitch.
+-3-female_human_must_strip=laughing,Get naked, slut.
+-3-female_must_strip=pissed,I shouldn't be fucking naked...
+
+-2-male_human_must_strip=annoyed,S-Son of a fuck...
+-2-male_must_strip=annoyed,G-Goddammit...
+-2-female_human_must_strip=annoyed,W-Whore...
+-2-female_must_strip=pissed,F-Fuck...
+
+-1-male_human_must_strip=sadistic,There's gonna be a fucking price for beating me.
+-1-male_must_strip=pissed,What the fuck...
+-1-female_human_must_strip=sadistic,I'll be back for you, you little twat.
+-1-female_must_strip=annoyed,Goddammit...
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#fully clothed
+0-male_removing_accessory=calm,If you really want to impress me, you'd get naked right now. Not that it would, but it's the only shot you have.
+0-male_removing_accessory,target:ryu,targetStage:0=interested,Hey, aren't you one of the guys from Mortal Kombat?
+0-male_removing_accessory,target:link,targetStage:0=interested,I've heard elves are supposed to have huge cocks. What you got, Zelda?
+0-male_removing_accessory,target:ryu,targetStage:0=smug,There's a reason hand to hand fighting is going away, dumbass. Try to punch one of my bullets.
+0-male_removing_accessory,target:shaggy=annoyed,Oh great, if it isn't the friendly neighborhood pedophile come to give out candy and teach everyone how to talk to dogs.
+0-male_removing_accessory,target:caleb,targetStage:1=annoyed,What. In. The. Fuck. Are. You?
+0-male_removing_accessory,target:caleb,targetStage:0=interested,Is that tail real? Bet if I pull on it we'd find out.
+0-male_removing_accessory,target:fred,targetStage:0=laughing,That's the faggiest scarf I've ever seen!
+0-male_removed_accessory=pissed,Oh yeah that's real fuckin' brave of you.
+0-male_removed_accessory=calm,Exactly what I expected. Are you sure you've got balls?
+0-male_removed_accessory=smug,<i>cough</i>Pussy!<i>cough</i>
+0-female_removing_accessory=calm,Just get your tits out.
+0-female_removing_accessory=calm,I'll give you ten bucks if you flash your pussy. Fifty to get naked right now.
+0-female_removing_accessory,target:april,targetStage:0=sadistic,That yellow shirt makes you an easy target.
+0-female_removing_accessory,target:penny,targetStage:0=interested,Shy <i>and</i> a red head? You're the kind of girl I love breaking.
+0-female_removing_accessory,target:piper,targetStage:0=smug,So you're a reporter? I got your next headline, 'Badass beats bunch of losers and makes them her bitch.'
+0-female_removing_accessory,target:raven,targetStage:0=annoyed,Hey you skinny goth bitch, if you <i>really</i> want something to cry about, I'll be happy to oblige.
+0-female_removing_accessory,target:velma,targetStage:0=smug,You don't mind if I take your glasses, yeah? Nothing hotter than a blind bitch completely dependant on me.
+0-female_removing_accessory,target:alice,targetStage:1=calm,I've met a lot of chicks who were screwed in the head, but it takes a special kind of fucked to dream up talking rabbits and grinning cats.
+0-female_removing_accessory,target:rosalina,targetStage:0=annoyed,Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?
+0-female_removing_accessory,target:tracer,targetStage:0=interested,What's that thing on your chest, a tit enhancer? 'Cause let me tell you, it ain't working.
+0-female_removing_accessory,target:rosalina,targetStage:1=smug,That's a nice crown, princess, you mind if I look at it real quick?
+0-female_removing_accessory,target:alice,targetStage:0=laughing,Looks like someone forgot to lock the loonybin's doors!
+0-female_removing_accessory,target:ruby,targetStage:0=interested,A scythe that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.
+0-female_removing_accessory,target:daphne,targetStage:0=pissed,A woman who can't do shit for herself and waits till the men rescue her. You're the worst kind of cunt in distress.
+0-female_removing_accessory,target:tifa,targetStage:0=excited,You must use some kind of magic to get your tits like that, right? No fuckin' way those are natural.
+0-female_removing_accessory,target:ruby,targetStage:1=interested,That's a nice trick with the roses. Do they shoot out when you cum?
+0-female_removing_accessory,target:streaming-chan,targetStage:0=sadistic,If you want the <i>really</i> big views, we can turn this into a snuff film.
+0-female_removing_accessory,target:samus,targetStage:0=interested,I can literally see your pussy through that suit, Metroid. I think you and I are gonna have some fun.
+0-female_removing_accessory,target:seven,targetStage:0=sadistic,Look at me like that again, and I'll give that black eye a matching pair.
+0-female_removing_accessory,target:sonya,targetStage:1=smug,I'm a wanted international criminal. Are you gonna take me down? Try it and you'll be breathing through a tube.
+0-female_removing_accessory,target:shantae,targetStage:0=calm,I want those jewels.
+0-female_removing_accessory,target:shantae,targetStage:2=calm,So how much did you say those were worth?
+0-female_removing_accessory,target:shazza,targetStage:0=interested,How'd you like me to fuck you with a boomerang?
+0-female_removing_accessory,target:sonya,targetStage:0=annoyed,What the fuck, I know you! I play as you in Street Fighter!
+0-female_removing_accessory,target:zelda,targetStage:0=calm,I fuckin' love RPGs. Strip faster and I won't have to shoot you with one.
+0-female_removing_accessory,target:peach,targetStage:0=sadistic,You're a princess? Never heard of the Toadstool Kingdom, but if you really are a princess I see a big ransom in my future.
+0-female_removing_accessory,target:arwen,targetStage:0=shocked,I've never fucked anything with elf ears before. Not offering to, either.
+0-female_removing_accessory,target:zoey,targetStage:0=smug,So you like guns, huh? Challenge you to a shootout, loser has to suck off a zombie.
+0-female_removing_accessory,target:daisy,targetStage:3=interested,So is that crown real?
+0-female_removing_accessory,target:dawn,targetStage:0=smug,Sorry kid, none of your pets can match up to a Berettamon.
+0-female_removing_accessory,target:elaine,targetStage:0=pissed,Why don't we <i>all</i> just wear a fucking leaf on our heads? Oh, that's right, it's because we're not fucking dipshits.
+0-female_removing_accessory,target:daisy,targetStage:0=smug,How about that, a second-rate princess married to a knockoff Italian. Your relationship is doomed to be the pilot of a cancelled soap opera.
+0-female_removing_accessory,target:harley,targetStage:0=excited,I can <i>tell</i> you're gonna be a handful.
+0-female_removing_accessory,target:korra,targetStage:0=sadistic,So you can bend metal, huh? Can you bend a bullet before it blows your kneecap apart?
+0-female_removing_accessory,target:leela,targetStage:0=calm,Nope. Too easy. I have standards.
+0-female_removing_accessory,target:d.va,targetStage:0=interested,Korean, right? Can you ride a joystick and beat my highscore in Pacman?
+0-female_removing_accessory,target:lyn,targetStage:0=laughing,Hah! You think a fucking <i>sword's</i> gonna protect you from my bullets? You're an even dumber bitch than I thought.
+0-female_removing_accessory,target:pauling,targetStage:0=smug,So you do <i>anything</i> your boss wants you to do?
+0-female_removing_accessory,target:may,targetStage:0=sadistic,Bring out every digimon you got. I dare you.
+0-female_removing_accessory,target:sheena,targetStage:0=sadistic,You call yourself an assassin? Why don't we put the game on hold and see which one of us is the <i>real</i> killer?
+0-female_removing_accessory,target:blackrose,targetStage:0=smug,What the fuck do you mean you're an avatar? If that's not you than who is this? The fuck's going on?
+0-female_removing_accessory,targetStage:0,filter:shy=annoyed,Christ's sake, if you can't even take that shit off without getting embarrassed, this isn't the game for you.
+0-female_removing_accessory,target:meg,targetStage:0=laughing,If you're used to running, you may just be able to escape if I have to start shooting everyone in the building!
+0-female_removing_accessory,target:mercy,targetStage:0=sadistic,Your name's the only thing you'll be saying if you try to help me.
+0-female_removing_accessory,targetStage:1,filter:kind=annoyed,What the hell you being nice for? This is a game! You're supposed to beat the shit out of your opponent and rub their face in the dirt!
+0-female_removing_accessory,target:misty,targetStage:0=sadistic,Whatever these 'pokemon' are, I bet they can't take a bullet.
+0-female_removing_accessory,target:chara,targetStage:0=smug,Think you can sink that knife in me before I blow your brains out, bitch? Just fucking try me.
+0-female_removing_accessory,target:chara,targetStage:1=pissed,You stay the fuck away from me, bitch... or dick. I don't know which. Stay the fuck away!
+0-female_removing_accessory,target:nagisa,targetStage:0=calm,Kid, I don't know how the hell you got here but this isn't the kind of place for you. Go home.
+0-female_removing_accessory,target:nugi-chan,targetStage:0=smug,You're not the first maid I've fought, but from the looks of it you are the cuntiest.
+0-female_removed_accessory=annoyed,Thought as much.
+0-female_removed_accessory=laughing,You really think you're going to win, don't you?
+0-female_removed_accessory,target:elena,targetStage:1=pissed,Come over here and I'll show you where you can shove that scepter, princess.
+0-female_removed_accessory,target:jane,targetStage:1=smug,Your elbows are doing fuck-all for me, Plain Jane. Man up and show us your tits.
+0-female_removed_accessory,targetStage:1,filter:school_uniform,priority:0=shocked,What is this? High school? At least start with your tits, bitch.
+0-female_removed_accessory,target:blackrose,targetStage:1=interested,So if I finger you, do you feel it from wherever the fuck you actually are?
+
+
+#lost gloves
+1-male_removing_accessory=calm,I'm gonna polish my guns. If you don't want to eat them, you better do the same.
+1-male_removing_accessory,target:shaggy=annoyed,Oh great, if it isn't the friendly neighborhood pedophile come to give out candy and teach everyone how to talk to dogs.
+1-male_removing_accessory,target:caleb,targetStage:0=interested,Is that tail real? Bet if I pull on it we'd find out.
+1-male_removing_accessory,target:caleb,targetStage:1=annoyed,What. In. The. Fuck. Are. You?
+1-male_removing_accessory,target:ryu,targetStage:0=smug,There's a reason hand to hand fighting is going away, dumbass. Try to punch one of my bullets.
+1-male_removing_accessory,target:ryu,targetStage:0=interested,Hey, aren't you one of the guys from Mortal Kombat?
+1-male_removing_accessory,target:fred,targetStage:0=laughing,That's the faggiest scarf I've ever seen!
+1-male_removing_accessory,target:link,targetStage:0=interested,I've heard elves are supposed to have huge cocks. What you got, Zelda?
+1-male_removed_accessory=annoyed,You got a listening problem?
+1-female_removing_accessory=smug,We haven't even begun and your nipples are hard. You're a fucking slut, aren't you?
+1-female_removing_accessory=calm,You mind if I use that as an ashtray? Nah, you don't mind.
+1-female_removing_accessory,target:april,targetStage:0=sadistic,That yellow shirt makes you an easy target.
+1-female_removing_accessory,target:penny,targetStage:0=interested,Shy <i>and</i> a red head? You're the kind of girl I love breaking.
+1-female_removing_accessory,target:leela,targetStage:0=calm,Nope. Too easy. I have standards.
+1-female_removing_accessory,target:velma,targetStage:0=smug,You don't mind if I take your glasses, yeah? Nothing hotter than a blind bitch completely dependant on me.
+1-female_removing_accessory,target:d.va,targetStage:0=interested,Korean, right? Can you ride a joystick and beat my highscore in Pacman?
+1-female_removing_accessory,target:alice,targetStage:1=calm,I've met a lot of chicks who were screwed in the head, but it takes a special kind of fucked to dream up talking rabbits and grinning cats.
+1-female_removing_accessory,target:korra,targetStage:0=sadistic,So you can bend metal, huh? Can you bend a bullet before it blows your kneecap apart?
+1-female_removing_accessory,targetStage:1,filter:kind=annoyed,What the hell you being nice for? This is a game! You're supposed to beat the shit out of your opponent and rub their face in the dirt!
+1-female_removing_accessory,target:tracer,targetStage:0=interested,What's that thing on your chest, a tit enhancer? 'Cause let me tell you, it ain't working.
+1-female_removing_accessory,target:piper,targetStage:0=smug,So you're a reporter? I got your next headline, 'Badass beats bunch of losers and makes them her bitch.'
+1-female_removing_accessory,target:zelda,targetStage:0=calm,I fuckin' love RPGs. Strip faster and I won't have to shoot you with one.
+1-female_removing_accessory,target:peach,targetStage:0=sadistic,You're a princess? Never heard of the Toadstool Kingdom, but if you really are a princess I see a big ransom in my future.
+1-female_removing_accessory,target:rosalina,targetStage:0=annoyed,Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?
+1-female_removing_accessory,target:mercy,targetStage:0=sadistic,Your name's the only thing you'll be saying if you try to help me.
+1-female_removing_accessory,target:daphne,targetStage:0=pissed,A woman who can't do shit for herself and waits till the men rescue her. You're the worst kind of cunt in distress.
+1-female_removing_accessory,targetStage:0,filter:shy=annoyed,Christ's sake, if you can't even take that shit off without getting embarrassed, this isn't the game for you.
+1-female_removing_accessory,target:chara,targetStage:0=smug,Think you can sink that knife in me before I blow your brains out, bitch? Just fucking try me.
+1-female_removing_accessory,target:misty,targetStage:0=sadistic,Whatever these 'pokemon' are, I bet they can't take a bullet.
+1-female_removing_accessory,target:chara,targetStage:1=pissed,You stay the fuck away from me, bitch... or dick. I don't know which. Stay the fuck away!
+1-female_removing_accessory,target:arwen,targetStage:0=shocked,I've never fucked anything with elf ears before. Not offering to, either.
+1-female_removing_accessory,target:nagisa,targetStage:0=calm,Kid, I don't know how the hell you got here but this isn't the kind of place for you. Go home.
+1-female_removing_accessory,target:may,targetStage:0=sadistic,Bring out every digimon you got. I dare you.
+1-female_removing_accessory,target:blackrose,targetStage:0=smug,What the fuck do you mean you're an avatar? If that's not you than who is this? The fuck's going on?
+1-female_removing_accessory,target:zoey,targetStage:0=smug,So you like guns, huh? Challenge you to a shootout, loser has to suck off a zombie.
+1-female_removing_accessory,target:pauling,targetStage:0=smug,So you do <i>anything</i> your boss wants you to do?
+1-female_removing_accessory,target:lyn,targetStage:0=laughing,Hah! You think a fucking <i>sword's</i> gonna protect you from my bullets? You're an even dumber bitch than I thought.
+1-female_removing_accessory,target:sheena,targetStage:0=sadistic,You call yourself an assassin? Why don't we put the game on hold and see which one of us is the <i>real</i> killer?
+1-female_removing_accessory,target:nugi-chan,targetStage:0=smug,You're not the first maid I've fought, but from the looks of it you are the cuntiest.
+1-female_removing_accessory,target:harley,targetStage:0=excited,I can <i>tell</i> you're gonna be a handful.
+1-female_removing_accessory,target:raven,targetStage:0=annoyed,Hey you skinny goth bitch, if you <i>really</i> want something to cry about, I'll be happy to oblige.
+1-female_removing_accessory,target:rosalina,targetStage:1=smug,That's a nice crown, princess, you mind if I look at it real quick?
+1-female_removing_accessory,target:shazza,targetStage:0=interested,How'd you like me to fuck you with a boomerang?
+1-female_removing_accessory,target:sonya,targetStage:0=annoyed,What the fuck, I know you! I play as you in Street Fighter!
+1-female_removing_accessory,target:daisy,targetStage:3=interested,So is that crown real?
+1-female_removing_accessory,target:shantae,targetStage:2=calm,So how much did you say those were worth?
+1-female_removing_accessory,target:shantae,targetStage:0=calm,I want those jewels.
+1-female_removing_accessory,target:dawn,targetStage:0=smug,Sorry kid, none of your pets can match up to a Berettamon.
+1-female_removing_accessory,target:sonya,targetStage:1=smug,I'm a wanted international criminal. Are you gonna take me down? Try it and you'll be breathing through a tube.
+1-female_removing_accessory,target:samus,targetStage:0=interested,I can literally see your pussy through that suit, Metroid. I think you and I are gonna have some fun.
+1-female_removing_accessory,target:elaine,targetStage:0=pissed,Why don't we <i>all</i> just wear a fucking leaf on our heads? Oh, that's right, it's because we're not fucking dipshits.
+1-female_removing_accessory,target:streaming-chan,targetStage:0=sadistic,If you want the <i>really</i> big views, we can turn this into a snuff film.
+1-female_removing_accessory,target:seven,targetStage:0=sadistic,Look at me like that again, and I'll give that black eye a matching pair.
+1-female_removing_accessory,target:meg,targetStage:0=laughing,If you're used to running, you may just be able to escape if I have to start shooting everyone in the building!
+1-female_removing_accessory,target:alice,targetStage:0=laughing,Looks like someone forgot to lock the loonybin's doors!
+1-female_removing_accessory,target:tifa,targetStage:0=excited,You must use some kind of magic to get your tits like that, right? No fuckin' way those are natural.
+1-female_removing_accessory,target:ruby,targetStage:0=interested,A scythe that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.
+1-female_removing_accessory,target:ruby,targetStage:1=interested,That's a nice trick with the roses. Do they shoot out when you cum?
+1-female_removing_accessory,target:daisy,targetStage:0=smug,How about that, a second-rate princess married to a knockoff Italian. Your relationship is doomed to be the pilot of a cancelled soap opera.
+1-female_removed_accessory=interested,Let's hurry up and strip this bitch naked.
+1-female_removed_accessory,target:blackrose,targetStage:1=interested,So if I finger you, do you feel it from wherever the fuck you actually are?
+1-female_removed_accessory,target:elena,targetStage:1=pissed,Come over here and I'll show you where you can shove that scepter, princess.
+1-female_removed_accessory,target:jane,targetStage:1=smug,Your elbows are doing fuck-all for me, Plain Jane. Man up and show us your tits.
+
+
+#lost boots
+2-male_removing_accessory=annoyed,I have a very low tolerance for bullshit...
+2-male_removing_accessory,target:ryu,targetStage:0=smug,There's a reason hand to hand fighting is going away, dumbass. Try to punch one of my bullets.
+2-male_removing_accessory,target:shaggy=annoyed,Oh great, if it isn't the friendly neighborhood pedophile come to give out candy and teach everyone how to talk to dogs.
+2-male_removing_accessory,target:link,targetStage:0=interested,I've heard elves are supposed to have huge cocks. What you got, Zelda?
+2-male_removing_accessory,target:caleb,targetStage:1=annoyed,What. In. The. Fuck. Are. You?
+2-male_removing_accessory,target:caleb,targetStage:0=interested,Is that tail real? Bet if I pull on it we'd find out.
+2-male_removing_accessory,target:fred,targetStage:0=laughing,That's the faggiest scarf I've ever seen!
+2-male_removing_accessory,target:ryu,targetStage:0=interested,Hey, aren't you one of the guys from Mortal Kombat?
+2-male_removed_accessory=pissed,And you just crossed the line.
+2-female_removing_accessory=smug,I love when a girl thinks she has the upper hand...
+2-female_removing_accessory=heart,Every time I play there's a girl who pulls this cute stuff.
+2-female_removing_accessory,target:leela,targetStage:0=calm,Nope. Too easy. I have standards.
+2-female_removing_accessory,targetStage:1,filter:kind=annoyed,What the hell you being nice for? This is a game! You're supposed to beat the shit out of your opponent and rub their face in the dirt!
+2-female_removing_accessory,target:daisy,targetStage:3=interested,So is that crown real?
+2-female_removing_accessory,target:d.va,targetStage:0=interested,Korean, right? Can you ride a joystick and beat my highscore in Pacman?
+2-female_removing_accessory,target:chara,targetStage:1=pissed,You stay the fuck away from me, bitch... or dick. I don't know which. Stay the fuck away!
+2-female_removing_accessory,target:may,targetStage:0=sadistic,Bring out every digimon you got. I dare you.
+2-female_removing_accessory,target:daphne,targetStage:0=pissed,A woman who can't do shit for herself and waits till the men rescue her. You're the worst kind of cunt in distress.
+2-female_removing_accessory,target:dawn,targetStage:0=smug,Sorry kid, none of your pets can match up to a Berettamon.
+2-female_removing_accessory,targetStage:0,filter:shy=annoyed,Christ's sake, if you can't even take that shit off without getting embarrassed, this isn't the game for you.
+2-female_removing_accessory,target:lyn,targetStage:0=laughing,Hah! You think a fucking <i>sword's</i> gonna protect you from my bullets? You're an even dumber bitch than I thought.
+2-female_removing_accessory,target:korra,targetStage:0=sadistic,So you can bend metal, huh? Can you bend a bullet before it blows your kneecap apart?
+2-female_removing_accessory,target:daisy,targetStage:0=smug,How about that, a second-rate princess married to a knockoff Italian. Your relationship is doomed to be the pilot of a cancelled soap opera.
+2-female_removing_accessory,target:elaine,targetStage:0=pissed,Why don't we <i>all</i> just wear a fucking leaf on our heads? Oh, that's right, it's because we're not fucking dipshits.
+2-female_removing_accessory,target:shazza,targetStage:0=interested,How'd you like me to fuck you with a boomerang?
+2-female_removing_accessory,target:mercy,targetStage:0=sadistic,Your name's the only thing you'll be saying if you try to help me.
+2-female_removing_accessory,target:sheena,targetStage:0=sadistic,You call yourself an assassin? Why don't we put the game on hold and see which one of us is the <i>real</i> killer?
+2-female_removing_accessory,target:shantae,targetStage:2=calm,So how much did you say those were worth?
+2-female_removing_accessory,target:sonya,targetStage:0=annoyed,What the fuck, I know you! I play as you in Street Fighter!
+2-female_removing_accessory,target:shantae,targetStage:0=calm,I want those jewels.
+2-female_removing_accessory,target:seven,targetStage:0=sadistic,Look at me like that again, and I'll give that black eye a matching pair.
+2-female_removing_accessory,target:samus,targetStage:0=interested,I can literally see your pussy through that suit, Metroid. I think you and I are gonna have some fun.
+2-female_removing_accessory,target:sonya,targetStage:1=smug,I'm a wanted international criminal. Are you gonna take me down? Try it and you'll be breathing through a tube.
+2-female_removing_accessory,target:ruby,targetStage:1=interested,That's a nice trick with the roses. Do they shoot out when you cum?
+2-female_removing_accessory,target:streaming-chan,targetStage:0=sadistic,If you want the <i>really</i> big views, we can turn this into a snuff film.
+2-female_removing_accessory,target:ruby,targetStage:0=interested,A scythe that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.
+2-female_removing_accessory,target:alice,targetStage:0=laughing,Looks like someone forgot to lock the loonybin's doors!
+2-female_removing_accessory,target:tifa,targetStage:0=excited,You must use some kind of magic to get your tits like that, right? No fuckin' way those are natural.
+2-female_removing_accessory,target:rosalina,targetStage:0=annoyed,Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?
+2-female_removing_accessory,target:raven,targetStage:0=annoyed,Hey you skinny goth bitch, if you <i>really</i> want something to cry about, I'll be happy to oblige.
+2-female_removing_accessory,target:meg,targetStage:0=laughing,If you're used to running, you may just be able to escape if I have to start shooting everyone in the building!
+2-female_removing_accessory,target:tracer,targetStage:0=interested,What's that thing on your chest, a tit enhancer? 'Cause let me tell you, it ain't working.
+2-female_removing_accessory,target:piper,targetStage:0=smug,So you're a reporter? I got your next headline, 'Badass beats bunch of losers and makes them her bitch.'
+2-female_removing_accessory,target:chara,targetStage:0=smug,Think you can sink that knife in me before I blow your brains out, bitch? Just fucking try me.
+2-female_removing_accessory,target:misty,targetStage:0=sadistic,Whatever these 'pokemon' are, I bet they can't take a bullet.
+2-female_removing_accessory,target:nagisa,targetStage:0=calm,Kid, I don't know how the hell you got here but this isn't the kind of place for you. Go home.
+2-female_removing_accessory,target:zoey,targetStage:0=smug,So you like guns, huh? Challenge you to a shootout, loser has to suck off a zombie.
+2-female_removing_accessory,target:blackrose,targetStage:0=smug,What the fuck do you mean you're an avatar? If that's not you than who is this? The fuck's going on?
+2-female_removing_accessory,target:nugi-chan,targetStage:0=smug,You're not the first maid I've fought, but from the looks of it you are the cuntiest.
+2-female_removing_accessory,target:alice,targetStage:1=calm,I've met a lot of chicks who were screwed in the head, but it takes a special kind of fucked to dream up talking rabbits and grinning cats.
+2-female_removing_accessory,target:rosalina,targetStage:1=smug,That's a nice crown, princess, you mind if I look at it real quick?
+2-female_removing_accessory,target:pauling,targetStage:0=smug,So you do <i>anything</i> your boss wants you to do?
+2-female_removing_accessory,target:peach,targetStage:0=sadistic,You're a princess? Never heard of the Toadstool Kingdom, but if you really are a princess I see a big ransom in my future.
+2-female_removing_accessory,target:arwen,targetStage:0=shocked,I've never fucked anything with elf ears before. Not offering to, either.
+2-female_removing_accessory,target:velma,targetStage:0=smug,You don't mind if I take your glasses, yeah? Nothing hotter than a blind bitch completely dependant on me.
+2-female_removing_accessory,target:april,targetStage:0=sadistic,That yellow shirt makes you an easy target.
+2-female_removing_accessory,target:penny,targetStage:0=interested,Shy <i>and</i> a red head? You're the kind of girl I love breaking.
+2-female_removing_accessory,target:zelda,targetStage:0=calm,I fuckin' love RPGs. Strip faster and I won't have to shoot you with one.
+2-female_removed_accessory=sadistic,It makes fucking her all the better.
+2-female_removed_accessory,target:jane,targetStage:1=smug,Your elbows are doing fuck-all for me, Plain Jane. Man up and show us your tits.
+2-female_removed_accessory,target:blackrose,targetStage:1=interested,So if I finger you, do you feel it from wherever the fuck you actually are?
+2-female_removed_accessory,target:elena,targetStage:1=pissed,Come over here and I'll show you where you can shove that scepter, princess.
+
+
+#lost holster
+3-male_removing_accessory=laughing,You must think I'm on the ropes, huh?
+3-male_removing_accessory,target:shaggy=annoyed,Oh great, if it isn't the friendly neighborhood pedophile come to give out candy and teach everyone how to talk to dogs.
+3-male_removing_accessory,target:ryu,targetStage:0=interested,Hey, aren't you one of the guys from Mortal Kombat?
+3-male_removing_accessory,target:caleb,targetStage:1=annoyed,What. In. The. Fuck. Are. You?
+3-male_removing_accessory,target:caleb,targetStage:0=interested,Is that tail real? Bet if I pull on it we'd find out.
+3-male_removing_accessory,target:link,targetStage:0=interested,I've heard elves are supposed to have huge cocks. What you got, Zelda?
+3-male_removing_accessory,target:ryu,targetStage:0=smug,There's a reason hand to hand fighting is going away, dumbass. Try to punch one of my bullets.
+3-male_removing_accessory,target:fred,targetStage:0=laughing,That's the faggiest scarf I've ever seen!
+3-male_removed_accessory=sadistic,I'm about to show you you're dead fucking wrong.
+3-female_removing_accessory=calm,Well isn't that fucking pretty.
+3-female_removing_accessory,target:lyn,targetStage:0=laughing,Hah! You think a fucking <i>sword's</i> gonna protect you from my bullets? You're an even dumber bitch than I thought.
+3-female_removing_accessory,target:shantae,targetStage:2=calm,So how much did you say those were worth?
+3-female_removing_accessory,target:alice,targetStage:0=laughing,Looks like someone forgot to lock the loonybin's doors!
+3-female_removing_accessory,target:chara,targetStage:1=pissed,You stay the fuck away from me, bitch... or dick. I don't know which. Stay the fuck away!
+3-female_removing_accessory,target:may,targetStage:0=sadistic,Bring out every digimon you got. I dare you.
+3-female_removing_accessory,target:piper,targetStage:0=smug,So you're a reporter? I got your next headline, 'Badass beats bunch of losers and makes them her bitch.'
+3-female_removing_accessory,target:alice,targetStage:1=calm,I've met a lot of chicks who were screwed in the head, but it takes a special kind of fucked to dream up talking rabbits and grinning cats.
+3-female_removing_accessory,target:tifa,targetStage:0=excited,You must use some kind of magic to get your tits like that, right? No fuckin' way those are natural.
+3-female_removing_accessory,target:rosalina,targetStage:1=smug,That's a nice crown, princess, you mind if I look at it real quick?
+3-female_removing_accessory,target:meg,targetStage:0=laughing,If you're used to running, you may just be able to escape if I have to start shooting everyone in the building!
+3-female_removing_accessory,target:leela,targetStage:0=calm,Nope. Too easy. I have standards.
+3-female_removing_accessory,target:rosalina,targetStage:0=annoyed,Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?
+3-female_removing_accessory,target:shazza,targetStage:0=interested,How'd you like me to fuck you with a boomerang?
+3-female_removing_accessory,target:ruby,targetStage:1=interested,That's a nice trick with the roses. Do they shoot out when you cum?
+3-female_removing_accessory,target:nugi-chan,targetStage:0=smug,You're not the first maid I've fought, but from the looks of it you are the cuntiest.
+3-female_removing_accessory,target:mercy,targetStage:0=sadistic,Your name's the only thing you'll be saying if you try to help me.
+3-female_removing_accessory,targetStage:0,filter:shy=annoyed,Christ's sake, if you can't even take that shit off without getting embarrassed, this isn't the game for you.
+3-female_removing_accessory,target:zelda,targetStage:0=calm,I fuckin' love RPGs. Strip faster and I won't have to shoot you with one.
+3-female_removing_accessory,target:tracer,targetStage:0=interested,What's that thing on your chest, a tit enhancer? 'Cause let me tell you, it ain't working.
+3-female_removing_accessory,target:chara,targetStage:0=smug,Think you can sink that knife in me before I blow your brains out, bitch? Just fucking try me.
+3-female_removing_accessory,target:raven,targetStage:0=annoyed,Hey you skinny goth bitch, if you <i>really</i> want something to cry about, I'll be happy to oblige.
+3-female_removing_accessory,target:shantae,targetStage:0=calm,I want those jewels.
+3-female_removing_accessory,target:misty,targetStage:0=sadistic,Whatever these 'pokemon' are, I bet they can't take a bullet.
+3-female_removing_accessory,target:zoey,targetStage:0=smug,So you like guns, huh? Challenge you to a shootout, loser has to suck off a zombie.
+3-female_removing_accessory,target:blackrose,targetStage:0=smug,What the fuck do you mean you're an avatar? If that's not you than who is this? The fuck's going on?
+3-female_removing_accessory,target:pauling,targetStage:0=smug,So you do <i>anything</i> your boss wants you to do?
+3-female_removing_accessory,target:sheena,targetStage:0=sadistic,You call yourself an assassin? Why don't we put the game on hold and see which one of us is the <i>real</i> killer?
+3-female_removing_accessory,target:peach,targetStage:0=sadistic,You're a princess? Never heard of the Toadstool Kingdom, but if you really are a princess I see a big ransom in my future.
+3-female_removing_accessory,target:seven,targetStage:0=sadistic,Look at me like that again, and I'll give that black eye a matching pair.
+3-female_removing_accessory,targetStage:1,filter:kind=annoyed,What the hell you being nice for? This is a game! You're supposed to beat the shit out of your opponent and rub their face in the dirt!
+3-female_removing_accessory,target:streaming-chan,targetStage:0=sadistic,If you want the <i>really</i> big views, we can turn this into a snuff film.
+3-female_removing_accessory,target:arwen,targetStage:0=shocked,I've never fucked anything with elf ears before. Not offering to, either.
+3-female_removing_accessory,target:samus,targetStage:0=interested,I can literally see your pussy through that suit, Metroid. I think you and I are gonna have some fun.
+3-female_removing_accessory,target:ruby,targetStage:0=interested,A scythe that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.
+3-female_removing_accessory,target:elaine,targetStage:0=pissed,Why don't we <i>all</i> just wear a fucking leaf on our heads? Oh, that's right, it's because we're not fucking dipshits.
+3-female_removing_accessory,target:daphne,targetStage:0=pissed,A woman who can't do shit for herself and waits till the men rescue her. You're the worst kind of cunt in distress.
+3-female_removing_accessory,target:daisy,targetStage:3=interested,So is that crown real?
+3-female_removing_accessory,target:sonya,targetStage:1=smug,I'm a wanted international criminal. Are you gonna take me down? Try it and you'll be breathing through a tube.
+3-female_removing_accessory,target:velma,targetStage:0=smug,You don't mind if I take your glasses, yeah? Nothing hotter than a blind bitch completely dependant on me.
+3-female_removing_accessory,target:penny,targetStage:0=interested,Shy <i>and</i> a red head? You're the kind of girl I love breaking.
+3-female_removing_accessory,target:dawn,targetStage:0=smug,Sorry kid, none of your pets can match up to a Berettamon.
+3-female_removing_accessory,target:korra,targetStage:0=sadistic,So you can bend metal, huh? Can you bend a bullet before it blows your kneecap apart?
+3-female_removing_accessory,target:d.va,targetStage:0=interested,Korean, right? Can you ride a joystick and beat my highscore in Pacman?
+3-female_removing_accessory,target:daisy,targetStage:0=smug,How about that, a second-rate princess married to a knockoff Italian. Your relationship is doomed to be the pilot of a cancelled soap opera.
+3-female_removed_accessory=calm,<i>Might</i> just be worth stealing.
+3-female_removed_accessory,target:jane,targetStage:1=smug,Your elbows are doing fuck-all for me, Plain Jane. Man up and show us your tits.
+3-female_removed_accessory,target:elena,targetStage:1=pissed,Come over here and I'll show you where you can shove that scepter, princess.
+3-female_removed_accessory,target:blackrose,targetStage:1=interested,So if I finger you, do you feel it from wherever the fuck you actually are?
+
+
+#lost guns
+4-male_removing_accessory=annoyed,You must feel all fucking safe now that my guns are gone, huh? Feel all fucking macho?
+4-male_removing_accessory=pissed,Oh I just fucking <i>wonder</i> what you're gonna take off.
+4-male_removing_accessory=sadistic,I don't need a gun to make you hurt.
+4-male_removing_accessory,target:shaggy=annoyed,Oh great, if it isn't the friendly neighborhood pedophile come to give out candy and teach everyone how to talk to dogs.
+4-male_removing_accessory,target:fred,targetStage:0=laughing,That's the faggiest scarf I've ever seen!
+4-male_removing_accessory,target:ryu,targetStage:0=interested,Hey, aren't you one of the guys from Mortal Kombat?
+4-male_removing_accessory,target:link,targetStage:0=interested,I've heard elves are supposed to have huge cocks. What you got, Zelda?
+4-male_removing_accessory,target:ryu,targetStage:0=calm,Does your boyfriend Ken know you're here?
+4-male_removing_accessory,target:caleb,targetStage:1=annoyed,What. In. The. Fuck. Are. You?
+4-male_removing_accessory,target:caleb,targetStage:0=interested,Is that tail real? Bet if I pull on it we'd find out.
+4-male_removed_accessory=pissed,You're starting to piss me off.
+4-female_removing_accessory=pissed,I'd be a lot happier if you let me see your tits already.
+4-female_removing_accessory,target:pauling,targetStage:0=smug,So you do <i>anything</i> your boss wants you to do?
+4-female_removing_accessory,target:blackrose,targetStage:0=smug,What the fuck do you mean you're an avatar? If that's not you than who is this? The fuck's going on?
+4-female_removing_accessory,target:streaming-chan,targetStage:0=sadistic,If you want the <i>really</i> big views, we can turn this into a snuff film.
+4-female_removing_accessory,target:shantae,targetStage:2=calm,So how much did you say those were worth?
+4-female_removing_accessory,target:shantae,targetStage:0=calm,I want those jewels.
+4-female_removing_accessory,target:alice,targetStage:1=calm,I've met a lot of chicks who were screwed in the head, but it takes a special kind of fucked to dream up talking rabbits and grinning cats.
+4-female_removing_accessory,target:arwen,targetStage:0=shocked,I've never fucked anything with elf ears before. Not offering to, either.
+4-female_removing_accessory,target:penny,targetStage:0=interested,Shy <i>and</i> a red head? You're the kind of girl I love breaking.
+4-female_removing_accessory,target:peach,targetStage:0=sadistic,You're a princess? Never heard of the Toadstool Kingdom, but if you really are a princess I see a big ransom in my future.
+4-female_removing_accessory,target:nugi-chan,targetStage:0=smug,You're not the first maid I've fought, but from the looks of it you are the cuntiest.
+4-female_removing_accessory,targetStage:1,filter:kind=annoyed,What the hell you being nice for? This is a game! You're supposed to beat the shit out of your opponent and rub their face in the dirt!
+4-female_removing_accessory,target:tracer,targetStage:0=interested,What's that thing on your chest, a tit enhancer? 'Cause let me tell you, it ain't working.
+4-female_removing_accessory,target:shazza,targetStage:0=interested,How'd you like me to fuck you with a boomerang?
+4-female_removing_accessory,targetStage:0,filter:shy=annoyed,Christ's sake, if you can't even take that shit off without getting embarrassed, this isn't the game for you.
+4-female_removing_accessory,target:daisy,targetStage:3=interested,So is that crown real?
+4-female_removing_accessory,target:daphne,targetStage:0=pissed,A woman who can't do shit for herself and waits till the men rescue her. You're the worst kind of cunt in distress.
+4-female_removing_accessory,target:samus,targetStage:0=interested,I can literally see your pussy through that suit, Metroid. I think you and I are gonna have some fun.
+4-female_removing_accessory,target:seven,targetStage:0=sadistic,Look at me like that again, and I'll give that black eye a matching pair.
+4-female_removing_accessory,target:ruby,targetStage:0=interested,A scythe that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.
+4-female_removing_accessory,target:sheena,targetStage:0=sadistic,You call yourself an assassin? Why don't we put the game on hold and see which one of us is the <i>real</i> killer?
+4-female_removing_accessory,target:daisy,targetStage:0=smug,How about that, a second-rate princess married to a knockoff Italian. Your relationship is doomed to be the pilot of a cancelled soap opera.
+4-female_removing_accessory,target:elaine,targetStage:0=pissed,Why don't we <i>all</i> just wear a fucking leaf on our heads? Oh, that's right, it's because we're not fucking dipshits.
+4-female_removing_accessory,target:d.va,targetStage:0=interested,Korean, right? Can you ride a joystick and beat my highscore in Pacman?
+4-female_removing_accessory,target:sonya,targetStage:1=smug,I'm a wanted international criminal. Are you gonna take me down? Try it and you'll be breathing through a tube.
+4-female_removing_accessory,target:raven,targetStage:0=annoyed,Hey you skinny goth bitch, if you <i>really</i> want something to cry about, I'll be happy to oblige.
+4-female_removing_accessory,target:leela,targetStage:0=calm,Nope. Too easy. I have standards.
+4-female_removing_accessory,target:korra,targetStage:0=smug,Keep your elements. All I need is the element of a big ass gun.
+4-female_removing_accessory,target:rosalina,targetStage:1=smug,That's a nice crown, princess, you mind if I look at it real quick?
+4-female_removing_accessory,target:chara,targetStage:1=pissed,You stay the fuck away from me, bitch... or dick. I don't know which. Stay the fuck away!
+4-female_removing_accessory,target:may,targetStage:0=sadistic,Bring out every digimon you got. I dare you.
+4-female_removing_accessory,target:zelda,targetStage:0=calm,I fuckin' love RPGs. Strip faster and I won't have to shoot you with one.
+4-female_removing_accessory,target:alice,targetStage:0=laughing,Looks like someone forgot to lock the loonybin's doors!
+4-female_removing_accessory,target:tifa,targetStage:0=excited,You must use some kind of magic to get your tits like that, right? No fuckin' way those are natural.
+4-female_removing_accessory,target:rosalina,targetStage:0=annoyed,Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?
+4-female_removing_accessory,target:velma,targetStage:0=smug,You don't mind if I take your glasses, yeah? Nothing hotter than a blind bitch completely dependant on me.
+4-female_removing_accessory,target:meg,targetStage:0=laughing,If you're used to running, you may just be able to escape if I have to start shooting everyone in the building!
+4-female_removing_accessory,target:ruby,targetStage:1=interested,That's a nice trick with the roses. Do they shoot out when you cum?
+4-female_removing_accessory,target:chara,targetStage:0=smug,Think you can sink that knife in me before I blow your brains out, bitch? Just fucking try me.
+4-female_removing_accessory,target:mercy,targetStage:0=sadistic,Your name's the only thing you'll be saying if you try to help me.
+4-female_removed_accessory=excited,You're gonna make me use force, aren't you? Say you intend to make me use force.
+4-female_removed_accessory,target:jane,targetStage:1=smug,Your elbows are doing fuck-all for me, Plain Jane. Man up and show us your tits.
+4-female_removed_accessory,target:elena,targetStage:1=pissed,Come over here and I'll show you where you can shove that scepter, princess.
+4-female_removed_accessory,target:blackrose,targetStage:1=interested,So if I finger you, do you feel it from wherever the fuck you actually are?
+
+
+#lost shorts
+5-male_removing_accessory=annoyed,Dick.
+5-male_removing_accessory=pissed,Cocksucker.
+5-male_removing_accessory,target:fred,targetStage:0=laughing,That's the faggiest scarf I've ever seen!
+5-male_removing_accessory,target:ryu,targetStage:0=calm,Does your boyfriend Ken know you're here?
+5-male_removing_accessory,target:link,targetStage:0=interested,I've heard elves are supposed to have huge cocks. What you got, Zelda?
+5-male_removing_accessory,target:caleb,targetStage:0=interested,Is that tail real? Bet if I pull on it we'd find out.
+5-male_removing_accessory,target:ryu,targetStage:0=interested,Hey, aren't you one of the guys from Mortal Kombat?
+5-male_removing_accessory,target:caleb,targetStage:1=annoyed,What. In. The. Fuck. Are. You?
+5-male_removing_accessory,target:shaggy=annoyed,Oh great, if it isn't the friendly neighborhood pedophile come to give out candy and teach everyone how to talk to dogs.
+5-male_removed_accessory=pissed,You're <i>really</i> starting to piss me off.
+5-female_removing_accessory=annoyed,Get naked already!
+5-female_removing_accessory,target:pauling,targetStage:0=smug,So you do <i>anything</i> your boss wants you to do?
+5-female_removing_accessory,target:peach,targetStage:0=sadistic,You're a princess? Never heard of the Toadstool Kingdom, but if you really are a princess I see a big ransom in my future.
+5-female_removing_accessory,target:may,targetStage:0=sadistic,Bring out every digimon you got. I dare you.
+5-female_removing_accessory,target:chara,targetStage:1=pissed,You stay the fuck away from me, bitch... or dick. I don't know which. Stay the fuck away!
+5-female_removing_accessory,target:velma,targetStage:0=smug,You don't mind if I take your glasses, yeah? Nothing hotter than a blind bitch completely dependant on me.
+5-female_removing_accessory,target:tifa,targetStage:0=excited,You must use some kind of magic to get your tits like that, right? No fuckin' way those are natural.
+5-female_removing_accessory,target:rosalina,targetStage:1=smug,That's a nice crown, princess, you mind if I look at it real quick?
+5-female_removing_accessory,target:sonya,targetStage:1=smug,I'm a wanted international criminal. Are you gonna take me down? Try it and you'll be breathing through a tube.
+5-female_removing_accessory,target:leela,targetStage:0=calm,Nope. Too easy. I have standards.
+5-female_removing_accessory,target:d.va,targetStage:0=interested,Korean, right? Can you ride a joystick and beat my highscore in Pacman?
+5-female_removing_accessory,target:elaine,targetStage:0=pissed,Why don't we <i>all</i> just wear a fucking leaf on our heads? Oh, that's right, it's because we're not fucking dipshits.
+5-female_removing_accessory,target:seven,targetStage:0=sadistic,Look at me like that again, and I'll give that black eye a matching pair.
+5-female_removing_accessory,target:daisy,targetStage:0=smug,How about that, a second-rate princess married to a knockoff Italian. Your relationship is doomed to be the pilot of a cancelled soap opera.
+5-female_removing_accessory,target:sheena,targetStage:0=sadistic,You call yourself an assassin? Why don't we put the game on hold and see which one of us is the <i>real</i> killer?
+5-female_removing_accessory,target:ruby,targetStage:0=interested,A scythe that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.
+5-female_removing_accessory,target:daisy,targetStage:3=interested,So is that crown real?
+5-female_removing_accessory,target:daphne,targetStage:0=pissed,A woman who can't do shit for herself and waits till the men rescue her. You're the worst kind of cunt in distress.
+5-female_removing_accessory,targetStage:1,filter:kind=annoyed,What the hell you being nice for? This is a game! You're supposed to beat the shit out of your opponent and rub their face in the dirt!
+5-female_removing_accessory,target:shazza,targetStage:0=interested,How'd you like me to fuck you with a boomerang?
+5-female_removing_accessory,target:streaming-chan,targetStage:0=sadistic,If you want the <i>really</i> big views, we can turn this into a snuff film.
+5-female_removing_accessory,target:korra,targetStage:0=smug,Keep your elements. All I need is the element of a big ass gun.
+5-female_removing_accessory,target:ruby,targetStage:1=interested,That's a nice trick with the roses. Do they shoot out when you cum?
+5-female_removing_accessory,target:alice,targetStage:1=calm,I've met a lot of chicks who were screwed in the head, but it takes a special kind of fucked to dream up talking rabbits and grinning cats.
+5-female_removing_accessory,target:shantae,targetStage:2=calm,So how much did you say those were worth?
+5-female_removing_accessory,target:samus,targetStage:0=interested,I can literally see your pussy through that suit, Metroid. I think you and I are gonna have some fun.
+5-female_removing_accessory,target:arwen,targetStage:0=shocked,I've never fucked anything with elf ears before. Not offering to, either.
+5-female_removing_accessory,target:shantae,targetStage:0=calm,I want those jewels.
+5-female_removing_accessory,target:nugi-chan,targetStage:0=smug,You're not the first maid I've fought, but from the looks of it you are the cuntiest.
+5-female_removing_accessory,target:rosalina,targetStage:0=annoyed,Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?
+5-female_removing_accessory,target:blackrose,targetStage:0=smug,What the fuck do you mean you're an avatar? If that's not you than who is this? The fuck's going on?
+5-female_removing_accessory,target:tracer,targetStage:0=interested,What's that thing on your chest, a tit enhancer? 'Cause let me tell you, it ain't working.
+5-female_removing_accessory,targetStage:0,filter:shy=annoyed,Christ's sake, if you can't even take that shit off without getting embarrassed, this isn't the game for you.
+5-female_removing_accessory,target:zelda,targetStage:0=calm,I fuckin' love RPGs. Strip faster and I won't have to shoot you with one.
+5-female_removing_accessory,target:penny,targetStage:0=interested,Shy <i>and</i> a red head? You're the kind of girl I love breaking.
+5-female_removing_accessory,target:mercy,targetStage:0=sadistic,Your name's the only thing you'll be saying if you try to help me.
+5-female_removing_accessory,target:chara,targetStage:0=smug,Think you can sink that knife in me before I blow your brains out, bitch? Just fucking try me.
+5-female_removing_accessory,target:alice,targetStage:0=laughing,Looks like someone forgot to lock the loonybin's doors!
+5-female_removing_accessory,target:meg,targetStage:0=laughing,If you're used to running, you may just be able to escape if I have to start shooting everyone in the building!
+5-female_removing_accessory,target:raven,targetStage:0=annoyed,Hey you skinny goth bitch, if you <i>really</i> want something to cry about, I'll be happy to oblige.
+5-female_removed_accessory=pissed,You fucking whore...
+5-female_removed_accessory,target:blackrose,targetStage:1=interested,So if I finger you, do you feel it from wherever the fuck you actually are?
+5-female_removed_accessory,target:elena,targetStage:1=pissed,Come over here and I'll show you where you can shove that scepter, princess.
+5-female_removed_accessory,target:jane,targetStage:1=smug,Your elbows are doing fuck-all for me, Plain Jane. Man up and show us your tits.
+
+
+#lost tank top
+6-male_removing_accessory=pissed,Try pulling that bullshit with my tits out. I dare you, I fucking dare you.
+6-male_removing_accessory,target:link,targetStage:0=interested,I've heard elves are supposed to have huge cocks. What you got, Zelda?
+6-male_removing_accessory,target:caleb,targetStage:1=annoyed,What. In. The. Fuck. Are. You?
+6-male_removing_accessory,target:fred,targetStage:0=laughing,That's the faggiest scarf I've ever seen!
+6-male_removing_accessory,target:shaggy=annoyed,Oh great, if it isn't the friendly neighborhood pedophile come to give out candy and teach everyone how to talk to dogs.
+6-male_removing_accessory,target:ryu,targetStage:0=interested,Hey, aren't you one of the guys from Mortal Kombat?
+6-male_removing_accessory,target:caleb,targetStage:0=interested,Is that tail real? Bet if I pull on it we'd find out.
+6-male_removing_accessory,target:ryu,targetStage:0=calm,Does your boyfriend Ken know you're here?
+6-male_removed_accessory=sadistic,You <i>want</i> me to fuck you up, don't you?
+6-female_removing_accessory=excited,Oh, oh, let me guess, you're gonna take off some little girly piece of shit that doesn't cover up anything! If I I'm right I get to shove my foot up your ass!
+6-female_removing_accessory,target:seven,targetStage:0=sadistic,Look at me like that again, and I'll give that black eye a matching pair.
+6-female_removing_accessory,target:streaming-chan,targetStage:0=sadistic,If you want the <i>really</i> big views, we can turn this into a snuff film.
+6-female_removing_accessory,target:shantae,targetStage:0=calm,I want those jewels.
+6-female_removing_accessory,target:shantae,targetStage:2=calm,So how much did you say those were worth?
+6-female_removing_accessory,target:shazza,targetStage:0=interested,How'd you like me to fuck you with a boomerang?
+6-female_removing_accessory,target:sonya,targetStage:1=smug,I'm a wanted international criminal. Are you gonna take me down? Try it and you'll be breathing through a tube.
+6-female_removing_accessory,target:sheena,targetStage:0=sadistic,You call yourself an assassin? Why don't we put the game on hold and see which one of us is the <i>real</i> killer?
+6-female_removing_accessory,target:tifa,targetStage:0=excited,You must use some kind of magic to get your tits like that, right? No fuckin' way those are natural.
+6-female_removing_accessory,target:penny,targetStage:0=interested,Shy <i>and</i> a red head? You're the kind of girl I love breaking.
+6-female_removing_accessory,target:samus,targetStage:0=interested,I can literally see your pussy through that suit, Metroid. I think you and I are gonna have some fun.
+6-female_removing_accessory,target:pauling,targetStage:0=smug,So you do <i>anything</i> your boss wants you to do?
+6-female_removing_accessory,target:arwen,targetStage:0=shocked,I've never fucked anything with elf ears before. Not offering to, either.
+6-female_removing_accessory,target:nugi-chan,targetStage:0=smug,You're not the first maid I've fought, but from the looks of it you are the cuntiest.
+6-female_removing_accessory,target:blackrose,targetStage:0=smug,What the fuck do you mean you're an avatar? If that's not you than who is this? The fuck's going on?
+6-female_removing_accessory,targetStage:0,filter:shy=annoyed,Christ's sake, if you can't even take that shit off without getting embarrassed, this isn't the game for you.
+6-female_removing_accessory,target:mercy,targetStage:0=sadistic,Your name's the only thing you'll be saying if you try to help me.
+6-female_removing_accessory,target:chara,targetStage:0=smug,Think you can sink that knife in me before I blow your brains out, bitch? Just fucking try me.
+6-female_removing_accessory,target:meg,targetStage:0=laughing,If you're used to running, you may just be able to escape if I have to start shooting everyone in the building!
+6-female_removing_accessory,target:may,targetStage:0=sadistic,Bring out every digimon you got. I dare you.
+6-female_removing_accessory,target:chara,targetStage:1=pissed,You stay the fuck away from me, bitch... or dick. I don't know which. Stay the fuck away!
+6-female_removing_accessory,target:leela,targetStage:0=calm,Nope. Too easy. I have standards.
+6-female_removing_accessory,target:d.va,targetStage:0=interested,Korean, right? Can you ride a joystick and beat my highscore in Pacman?
+6-female_removing_accessory,target:elaine,targetStage:0=pissed,Why don't we <i>all</i> just wear a fucking leaf on our heads? Oh, that's right, it's because we're not fucking dipshits.
+6-female_removing_accessory,target:daisy,targetStage:0=smug,How about that, a second-rate princess married to a knockoff Italian. Your relationship is doomed to be the pilot of a cancelled soap opera.
+6-female_removing_accessory,target:daphne,targetStage:0=pissed,A woman who can't do shit for herself and waits till the men rescue her. You're the worst kind of cunt in distress.
+6-female_removing_accessory,target:peach,targetStage:0=sadistic,You're a princess? Never heard of the Toadstool Kingdom, but if you really are a princess I see a big ransom in my future.
+6-female_removing_accessory,target:korra,targetStage:0=smug,Keep your elements. All I need is the element of a big ass gun.
+6-female_removing_accessory,targetStage:1,filter:kind=annoyed,What the hell you being nice for? This is a game! You're supposed to beat the shit out of your opponent and rub their face in the dirt!
+6-female_removing_accessory,target:rosalina,targetStage:1=smug,That's a nice crown, princess, you mind if I look at it real quick?
+6-female_removing_accessory,target:ruby,targetStage:1=interested,That's a nice trick with the roses. Do they shoot out when you cum?
+6-female_removing_accessory,target:tracer,targetStage:0=interested,What's that thing on your chest, a tit enhancer? 'Cause let me tell you, it ain't working.
+6-female_removing_accessory,target:ruby,targetStage:0=interested,A scythe that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.
+6-female_removing_accessory,target:alice,targetStage:1=calm,I've met a lot of chicks who were screwed in the head, but it takes a special kind of fucked to dream up talking rabbits and grinning cats.
+6-female_removing_accessory,target:velma,targetStage:0=smug,You don't mind if I take your glasses, yeah? Nothing hotter than a blind bitch completely dependant on me.
+6-female_removing_accessory,target:rosalina,targetStage:0=annoyed,Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?
+6-female_removing_accessory,target:daisy,targetStage:3=interested,So is that crown real?
+6-female_removing_accessory,target:zelda,targetStage:0=calm,I fuckin' love RPGs. Strip faster and I won't have to shoot you with one.
+6-female_removing_accessory,target:alice,targetStage:0=laughing,Looks like someone forgot to lock the loonybin's doors!
+6-female_removing_accessory,target:raven,targetStage:0=annoyed,Hey you skinny goth bitch, if you <i>really</i> want something to cry about, I'll be happy to oblige.
+6-female_removed_accessory=sadistic,Bend over.
+6-female_removed_accessory=sadistic,If you ever try that ~clothing~ shit again, I'm going to shoot your balls off.
+6-female_removed_accessory,target:blackrose,targetStage:1=interested,So if I finger you, do you feel it from wherever the fuck you actually are?
+6-female_removed_accessory,target:jane,targetStage:1=smug,Your elbows are doing fuck-all for me, Plain Jane. Man up and show us your tits.
+6-female_removed_accessory,target:elena,targetStage:1=pissed,Come over here and I'll show you where you can shove that scepter, princess.
+
+-3-male_removing_accessory=pissed,Oh ho, so the cheating prick FINALLY loses a hand, huh? If you don't want to hang from the rafters by your ballsack you'll get naked RIGHT FUCKING NOW!
+-3-male_removing_accessory,target:ryu,targetStage:0=interested,Hey, aren't you one of the guys from Mortal Kombat?
+-3-male_removing_accessory,target:ryu,targetStage:0=calm,Does your boyfriend Ken know you're here?
+-3-male_removing_accessory,target:caleb,targetStage:0=interested,Is that tail real? Bet if I pull on it we'd find out.
+-3-male_removing_accessory,target:link,targetStage:0=interested,I've heard elves are supposed to have huge cocks. What you got, Zelda?
+-3-male_removing_accessory,target:fred,targetStage:0=laughing,That's the faggiest scarf I've ever seen!
+-3-male_removing_accessory,target:caleb,targetStage:1=annoyed,What. In. The. Fuck. Are. You?
+-3-male_removing_accessory,target:shaggy=annoyed,Oh great, if it isn't the friendly neighborhood pedophile come to give out candy and teach everyone how to talk to dogs.
+-3-male_removed_accessory=sadistic,You ever kill a helicopter with a boat? I have. I am <i>not</i> the kind of person you want to piss off with this kiddie shit.
+-3-male_removed_accessory=sadistic,Ever heard of Charles Whitman? You're about to get real familiar with him...
+-3-male_removed_accessory=sadistic,I could blow your brains out and no one would miss you.
+-3-female_removing_accessory=pissed,It's about goddamn time you took something off you cheating skank!
+-3-female_removing_accessory,target:korra,targetStage:0=smug,Keep your elements. All I need is the element of a big ass gun.
+-3-female_removing_accessory,targetStage:1,filter:kind=annoyed,What the hell you being nice for? This is a game! You're supposed to beat the shit out of your opponent and rub their face in the dirt!
+-3-female_removing_accessory,target:tifa,targetStage:0=excited,You must use some kind of magic to get your tits like that, right? No fuckin' way those are natural.
+-3-female_removing_accessory,target:sonya,targetStage:1=smug,I'm a wanted international criminal. Are you gonna take me down? Try it and you'll be breathing through a tube.
+-3-female_removing_accessory,target:velma,targetStage:0=smug,You don't mind if I take your glasses, yeah? Nothing hotter than a blind bitch completely dependant on me.
+-3-female_removing_accessory,targetStage:0,filter:shy=annoyed,Christ's sake, if you can't even take that shit off without getting embarrassed, this isn't the game for you.
+-3-female_removing_accessory,target:streaming-chan,targetStage:0=sadistic,If you want the <i>really</i> big views, we can turn this into a snuff film.
+-3-female_removing_accessory,target:tracer,targetStage:0=interested,What's that thing on your chest, a tit enhancer? 'Cause let me tell you, it ain't working.
+-3-female_removing_accessory,target:zelda,targetStage:0=calm,I fuckin' love RPGs. Strip faster and I won't have to shoot you with one.
+-3-female_removing_accessory,target:shantae,targetStage:0=calm,I want those jewels.
+-3-female_removing_accessory,target:nugi-chan,targetStage:0=smug,You're not the first maid I've fought, but from the looks of it you are the cuntiest.
+-3-female_removing_accessory,target:seven,targetStage:0=sadistic,Look at me like that again, and I'll give that black eye a matching pair.
+-3-female_removing_accessory,target:samus,targetStage:0=interested,I can literally see your pussy through that suit, Metroid. I think you and I are gonna have some fun.
+-3-female_removing_accessory,target:penny,targetStage:0=interested,Shy <i>and</i> a red head? You're the kind of girl I love breaking.
+-3-female_removing_accessory,target:meg,targetStage:0=laughing,If you're used to running, you may just be able to escape if I have to start shooting everyone in the building!
+-3-female_removing_accessory,target:ruby,targetStage:1=interested,That's a nice trick with the roses. Do they shoot out when you cum?
+-3-female_removing_accessory,target:mercy,targetStage:0=sadistic,Your name's the only thing you'll be saying if you try to help me.
+-3-female_removing_accessory,target:ruby,targetStage:0=interested,A scythe that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.
+-3-female_removing_accessory,target:may,targetStage:0=sadistic,Bring out every digimon you got. I dare you.
+-3-female_removing_accessory,target:blackrose,targetStage:0=smug,What the fuck do you mean you're an avatar? If that's not you than who is this? The fuck's going on?
+-3-female_removing_accessory,target:arwen,targetStage:0=shocked,I've never fucked anything with elf ears before. Not offering to, either.
+-3-female_removing_accessory,target:pauling,targetStage:0=smug,So you do <i>anything</i> your boss wants you to do?
+-3-female_removing_accessory,target:peach,targetStage:0=sadistic,You're a princess? Never heard of the Toadstool Kingdom, but if you really are a princess I see a big ransom in my future.
+-3-female_removing_accessory,target:rosalina,targetStage:0=annoyed,Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?
+-3-female_removing_accessory,target:alice,targetStage:0=laughing,Looks like someone forgot to lock the loonybin's doors!
+-3-female_removing_accessory,target:raven,targetStage:0=annoyed,Hey you skinny goth bitch, if you <i>really</i> want something to cry about, I'll be happy to oblige.
+-3-female_removing_accessory,target:alice,targetStage:1=calm,I've met a lot of chicks who were screwed in the head, but it takes a special kind of fucked to dream up talking rabbits and grinning cats.
+-3-female_removing_accessory,target:rosalina,targetStage:1=smug,That's a nice crown, princess, you mind if I look at it real quick?
+-3-female_removing_accessory,target:chara,targetStage:1=pissed,You stay the fuck away from me, bitch... or dick. I don't know which. Stay the fuck away!
+-3-female_removing_accessory,target:chara,targetStage:0=smug,Think you can sink that knife in me before I blow your brains out, bitch? Just fucking try me.
+-3-female_removing_accessory,target:shazza,targetStage:0=interested,How'd you like me to fuck you with a boomerang?
+-3-female_removing_accessory,target:d.va,targetStage:0=interested,Korean, right? Can you ride a joystick and beat my highscore in Pacman?
+-3-female_removing_accessory,target:daisy,targetStage:3=interested,So is that crown real?
+-3-female_removing_accessory,target:sheena,targetStage:0=sadistic,You call yourself an assassin? Why don't we put the game on hold and see which one of us is the <i>real</i> killer?
+-3-female_removing_accessory,target:daisy,targetStage:0=smug,How about that, a second-rate princess married to a knockoff Italian. Your relationship is doomed to be the pilot of a cancelled soap opera.
+-3-female_removing_accessory,target:daphne,targetStage:0=pissed,A woman who can't do shit for herself and waits till the men rescue her. You're the worst kind of cunt in distress.
+-3-female_removing_accessory,target:elaine,targetStage:0=pissed,Why don't we <i>all</i> just wear a fucking leaf on our heads? Oh, that's right, it's because we're not fucking dipshits.
+-3-female_removing_accessory,target:shantae,targetStage:2=calm,So how much did you say those were worth?
+-3-female_removed_accessory=sadistic,I'll strip you and rub your clit raw.
+-3-female_removed_accessory=sadistic,You <i>really</i> have no idea I am, do you? It's gonna be fun educating you.
+-3-female_removed_accessory,target:jane,targetStage:1=pissed,Your elbows are doing fuck-all for me, Plain Jane. Man up and show us your tits.
+-3-female_removed_accessory,target:blackrose,targetStage:1=interested,So if I finger you, do you feel it from wherever the fuck you actually are?
+-3-female_removed_accessory,target:elena,targetStage:1=pissed,Come over here and I'll show you where you can shove that scepter, princess.
+
+-2-male_removing_accessory=pissed,Y-You...fucking cheating...fuck...
+-2-male_removing_accessory=sadistic,I'll..shove tha-hah-t up your ass...
+-2-male_removing_accessory,target:caleb,targetStage:0=interested,Is that tail real? Bet if I pull on it we'd find out.
+-2-male_removing_accessory,target:ryu,targetStage:0=interested,Hey, aren't you one of the guys from Mortal Kombat?
+-2-male_removing_accessory,target:ryu,targetStage:0=calm,Does your boyfriend Ken know you're here?
+-2-male_removing_accessory,target:fred,targetStage:0=laughing,That's the faggiest scarf I've ever seen!
+-2-male_removing_accessory,target:shaggy=annoyed,Oh great, if it isn't the friendly neighborhood pedophile come to give out candy and teach everyone how to talk to dogs.
+-2-male_removing_accessory,target:link,targetStage:0=interested,I've heard elves are supposed to have huge cocks. What you got, Zelda?
+-2-male_removing_accessory,target:caleb,targetStage:1=annoyed,What. In. The. Fuck. Are. You?
+-2-male_removed_accessory=pissed,Put your head between my thighs...so I can squirt in your fucking eyes...
+-2-female_removing_accessory=pissed,B-Bitch... this was suppos...agh... supposed to be you...
+-2-female_removing_accessory,target:korra,targetStage:0=smug,Keep your elements. All I need is the element of a big ass gun.
+-2-female_removing_accessory,target:peach,targetStage:0=sadistic,You're a princess? Never heard of the Toadstool Kingdom, but if you really are a princess I see a big ransom in my future.
+-2-female_removing_accessory,target:alice,targetStage:1=calm,I've met a lot of chicks who were screwed in the head, but it takes a special kind of fucked to dream up talking rabbits and grinning cats.
+-2-female_removing_accessory,target:pauling,targetStage:0=smug,So you do <i>anything</i> your boss wants you to do?
+-2-female_removing_accessory,target:daisy,targetStage:3=interested,So is that crown real?
+-2-female_removing_accessory,target:blackrose,targetStage:0=smug,What the fuck do you mean you're an avatar? If that's not you than who is this? The fuck's going on?
+-2-female_removing_accessory,targetStage:1,filter:kind=annoyed,What the hell you being nice for? This is a game! You're supposed to beat the shit out of your opponent and rub their face in the dirt!
+-2-female_removing_accessory,target:nugi-chan,targetStage:0=smug,You're not the first maid I've fought, but from the looks of it you are the cuntiest.
+-2-female_removing_accessory,target:mercy,targetStage:0=sadistic,Your name's the only thing you'll be saying if you try to help me.
+-2-female_removing_accessory,target:daphne,targetStage:0=pissed,A woman who can't do shit for herself and waits till the men rescue her. You're the worst kind of cunt in distress.
+-2-female_removing_accessory,targetStage:0,filter:shy=annoyed,Christ's sake, if you can't even take that shit off without getting embarrassed, this isn't the game for you.
+-2-female_removing_accessory,target:daisy,targetStage:0=smug,How about that, a second-rate princess married to a knockoff Italian. Your relationship is doomed to be the pilot of a cancelled soap opera.
+-2-female_removing_accessory,target:meg,targetStage:0=laughing,If you're used to running, you may just be able to escape if I have to start shooting everyone in the building!
+-2-female_removing_accessory,target:chara,targetStage:0=smug,Think you can sink that knife in me before I blow your brains out, bitch? Just fucking try me.
+-2-female_removing_accessory,target:may,targetStage:0=sadistic,Bring out every digimon you got. I dare you.
+-2-female_removing_accessory,target:elaine,targetStage:0=pissed,Why don't we <i>all</i> just wear a fucking leaf on our heads? Oh, that's right, it's because we're not fucking dipshits.
+-2-female_removing_accessory,target:d.va,targetStage:0=interested,Korean, right? Can you ride a joystick and beat my highscore in Pacman?
+-2-female_removing_accessory,target:chara,targetStage:1=pissed,You stay the fuck away from me, bitch... or dick. I don't know which. Stay the fuck away!
+-2-female_removing_accessory,target:arwen,targetStage:0=shocked,I've never fucked anything with elf ears before. Not offering to, either.
+-2-female_removing_accessory,target:penny,targetStage:0=interested,Shy <i>and</i> a red head? You're the kind of girl I love breaking.
+-2-female_removing_accessory,target:sheena,targetStage:0=sadistic,You call yourself an assassin? Why don't we put the game on hold and see which one of us is the <i>real</i> killer?
+-2-female_removing_accessory,target:rosalina,targetStage:1=smug,That's a nice crown, princess, you mind if I look at it real quick?
+-2-female_removing_accessory,target:samus,targetStage:0=interested,I can literally see your pussy through that suit, Metroid. I think you and I are gonna have some fun.
+-2-female_removing_accessory,target:tifa,targetStage:0=excited,You must use some kind of magic to get your tits like that, right? No fuckin' way those are natural.
+-2-female_removing_accessory,target:sonya,targetStage:1=smug,I'm a wanted international criminal. Are you gonna take me down? Try it and you'll be breathing through a tube.
+-2-female_removing_accessory,target:tracer,targetStage:0=interested,What's that thing on your chest, a tit enhancer? 'Cause let me tell you, it ain't working.
+-2-female_removing_accessory,target:rosalina,targetStage:0=annoyed,Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?
+-2-female_removing_accessory,target:velma,targetStage:0=smug,You don't mind if I take your glasses, yeah? Nothing hotter than a blind bitch completely dependant on me.
+-2-female_removing_accessory,target:seven,targetStage:0=sadistic,Look at me like that again, and I'll give that black eye a matching pair.
+-2-female_removing_accessory,target:shantae,targetStage:0=calm,I want those jewels.
+-2-female_removing_accessory,target:ruby,targetStage:0=interested,A scythe that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.
+-2-female_removing_accessory,target:shazza,targetStage:0=interested,How'd you like me to fuck you with a boomerang?
+-2-female_removing_accessory,target:raven,targetStage:0=annoyed,Hey you skinny goth bitch, if you <i>really</i> want something to cry about, I'll be happy to oblige.
+-2-female_removing_accessory,target:alice,targetStage:0=laughing,Looks like someone forgot to lock the loonybin's doors!
+-2-female_removing_accessory,target:ruby,targetStage:1=interested,That's a nice trick with the roses. Do they shoot out when you cum?
+-2-female_removing_accessory,target:zelda,targetStage:0=calm,I fuckin' love RPGs. Strip faster and I won't have to shoot you with one.
+-2-female_removing_accessory,target:streaming-chan,targetStage:0=sadistic,If you want the <i>really</i> big views, we can turn this into a snuff film.
+-2-female_removing_accessory,target:shantae,targetStage:2=calm,So how much did you say those were worth?
+-2-female_removed_accessory=pissed,Kill... g-gonna fuckin' kill...
+-2-female_removed_accessory,target:blackrose,targetStage:1=interested,So if I finger you, do you feel it from wherever the fuck you actually are?
+-2-female_removed_accessory,target:jane,targetStage:1=pissed,Your elbows are doing fuck-all for me, Plain Jane. Man up and show us your tits.
+-2-female_removed_accessory,target:elena,targetStage:1=pissed,Come over here and I'll show you where you can shove that scepter, princess.
+
+-1-male_removing_accessory=laughing,Tell you what, once we're done here and your dick's fucking the barrel of my Barret M82, you can beg for forgiveness!
+-1-male_removing_accessory,target:caleb,targetStage:0=interested,Is that tail real? Bet if I pull on it we'd find out.
+-1-male_removing_accessory,target:link,targetStage:0=interested,I've heard elves are supposed to have huge cocks. What you got, Zelda?
+-1-male_removing_accessory,target:ryu,targetStage:0=calm,Does your boyfriend Ken know you're here?
+-1-male_removing_accessory,target:caleb,targetStage:1=annoyed,What. In. The. Fuck. Are. You?
+-1-male_removing_accessory,target:ryu,targetStage:0=interested,Hey, aren't you one of the guys from Mortal Kombat?
+-1-male_removing_accessory,target:fred,targetStage:0=laughing,That's the faggiest scarf I've ever seen!
+-1-male_removing_accessory,target:shaggy=annoyed,Oh great, if it isn't the friendly neighborhood pedophile come to give out candy and teach everyone how to talk to dogs.
+-1-male_removed_accessory=sadistic,I'm not gonna listen, but you can scream all you like.
+-1-female_removing_accessory=laughing,I love when a whore doesn't know her place!
+-1-female_removing_accessory,target:streaming-chan,targetStage:0=sadistic,If you want the <i>really</i> big views, we can turn this into a snuff film.
+-1-female_removing_accessory,target:chara,targetStage:1=pissed,You stay the fuck away from me, bitch... or dick. I don't know which. Stay the fuck away!
+-1-female_removing_accessory,target:shantae,targetStage:2=calm,So how much did you say those were worth?
+-1-female_removing_accessory,target:penny,targetStage:0=interested,Shy <i>and</i> a red head? You're the kind of girl I love breaking.
+-1-female_removing_accessory,target:shantae,targetStage:0=calm,I want those jewels.
+-1-female_removing_accessory,target:daphne,targetStage:0=pissed,A woman who can't do shit for herself and waits till the men rescue her. You're the worst kind of cunt in distress.
+-1-female_removing_accessory,target:sonya,targetStage:1=smug,I'm a wanted international criminal. Are you gonna take me down? Try it and you'll be breathing through a tube.
+-1-female_removing_accessory,target:daisy,targetStage:0=smug,How about that, a second-rate princess married to a knockoff Italian. Your relationship is doomed to be the pilot of a cancelled soap opera.
+-1-female_removing_accessory,target:daisy,targetStage:3=interested,So is that crown real?
+-1-female_removing_accessory,target:shazza,targetStage:0=interested,How'd you like me to fuck you with a boomerang?
+-1-female_removing_accessory,target:d.va,targetStage:0=interested,Korean, right? Can you ride a joystick and beat my highscore in Pacman?
+-1-female_removing_accessory,target:zelda,targetStage:0=calm,I fuckin' love RPGs. Strip faster and I won't have to shoot you with one.
+-1-female_removing_accessory,target:elaine,targetStage:0=pissed,Why don't we <i>all</i> just wear a fucking leaf on our heads? Oh, that's right, it's because we're not fucking dipshits.
+-1-female_removing_accessory,target:samus,targetStage:0=interested,I can literally see your pussy through that suit, Metroid. I think you and I are gonna have some fun.
+-1-female_removing_accessory,target:alice,targetStage:0=laughing,Looks like someone forgot to lock the loonybin's doors!
+-1-female_removing_accessory,target:alice,targetStage:1=calm,I've met a lot of chicks who were screwed in the head, but it takes a special kind of fucked to dream up talking rabbits and grinning cats.
+-1-female_removing_accessory,target:peach,targetStage:0=sadistic,You're a princess? Never heard of the Toadstool Kingdom, but if you really are a princess I see a big ransom in my future.
+-1-female_removing_accessory,target:seven,targetStage:0=sadistic,Look at me like that again, and I'll give that black eye a matching pair.
+-1-female_removing_accessory,target:raven,targetStage:0=annoyed,Hey you skinny goth bitch, if you <i>really</i> want something to cry about, I'll be happy to oblige.
+-1-female_removing_accessory,target:velma,targetStage:0=smug,You don't mind if I take your glasses, yeah? Nothing hotter than a blind bitch completely dependant on me.
+-1-female_removing_accessory,target:pauling,targetStage:0=smug,So you do <i>anything</i> your boss wants you to do?
+-1-female_removing_accessory,target:rosalina,targetStage:0=annoyed,Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?
+-1-female_removing_accessory,targetStage:1,filter:kind=annoyed,What the hell you being nice for? This is a game! You're supposed to beat the shit out of your opponent and rub their face in the dirt!
+-1-female_removing_accessory,target:nugi-chan,targetStage:0=smug,You're not the first maid I've fought, but from the looks of it you are the cuntiest.
+-1-female_removing_accessory,target:sheena,targetStage:0=sadistic,You call yourself an assassin? Why don't we put the game on hold and see which one of us is the <i>real</i> killer?
+-1-female_removing_accessory,target:arwen,targetStage:0=shocked,I've never fucked anything with elf ears before. Not offering to, either.
+-1-female_removing_accessory,target:rosalina,targetStage:1=smug,That's a nice crown, princess, you mind if I look at it real quick?
+-1-female_removing_accessory,target:korra,targetStage:0=smug,Keep your elements. All I need is the element of a big ass gun.
+-1-female_removing_accessory,target:chara,targetStage:0=smug,Think you can sink that knife in me before I blow your brains out, bitch? Just fucking try me.
+-1-female_removing_accessory,target:ruby,targetStage:1=interested,That's a nice trick with the roses. Do they shoot out when you cum?
+-1-female_removing_accessory,target:may,targetStage:0=sadistic,Bring out every digimon you got. I dare you.
+-1-female_removing_accessory,target:tracer,targetStage:0=interested,What's that thing on your chest, a tit enhancer? 'Cause let me tell you, it ain't working.
+-1-female_removing_accessory,target:blackrose,targetStage:0=smug,What the fuck do you mean you're an avatar? If that's not you than who is this? The fuck's going on?
+-1-female_removing_accessory,targetStage:0,filter:shy=annoyed,Christ's sake, if you can't even take that shit off without getting embarrassed, this isn't the game for you.
+-1-female_removing_accessory,target:ruby,targetStage:0=interested,A scythe that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.
+-1-female_removing_accessory,target:tifa,targetStage:0=excited,You must use some kind of magic to get your tits like that, right? No fuckin' way those are natural.
+-1-female_removing_accessory,target:meg,targetStage:0=laughing,If you're used to running, you may just be able to escape if I have to start shooting everyone in the building!
+-1-female_removed_accessory=sadistic,Breaking you will be the highlight of my night.
+-1-female_removed_accessory,target:jane,targetStage:1=pissed,Your elbows are doing fuck-all for me, Plain Jane. Man up and show us your tits.
+-1-female_removed_accessory,target:elena,targetStage:1=pissed,Come over here and I'll show you where you can shove that scepter, princess.
+-1-female_removed_accessory,target:blackrose,targetStage:1=interested,So if I finger you, do you feel it from wherever the fuck you actually are?
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#fully clothed
+0-male_removing_minor=calm,Ain't got any small shit left, do you?
+0-male_removing_minor,target:xander,targetStage:0=smug,I've fought things that'd make you shit your pants, kid. Leave the demon killing to me.
+0-male_removed_minor=smug,We're making progress.
+0-female_removing_minor=calm,Still waiting on those tits...
+0-female_removing_minor=calm,This is taking too long.
+0-female_removing_minor,target:buffy,targetStage:0=smug,You look like you've sucked off a few vampires. Tell me, do they enjoy getting sucked off as much they like sucking neck?
+0-female_removing_minor,target:asuna,targetStage:1=smug,I bet your boyfriend's fucking his way through however many whores you were stupid enough to leave with him in that video game.
+0-female_removing_minor,target:kim,targetStage:0=calm,So you're a cheerleader, huh? Getting all the guys? Getting railed in the locker room after the big game? You enjoy that.
+0-female_removing_minor,target:hermione,targetStage:0=sadistic,Who needs magic when all your problems can be solved with a gun?
+0-female_removing_minor,target:kim,targetStage:1=calm,I know spies, girly. You ain't a spy.
+0-female_removing_minor,target:lara,targetStage:0=excited,Hey, if you're looking for buried treasure in a cave, I got an idea where you can look!
+0-female_removing_minor,target:april,targetStage:1=smug,So how big <i>are</i> mutant turtle dicks? Do they smell like pizza and cum sewer water or some shit?
+0-female_removing_minor,target:chell,targetStage:0=smug,You don't talk, huh? Do you moan? Actually, don't answer that, I want to find out for myself.
+0-female_removing_minor,target:lilith,targetStage:0=interested,So you're a screamer, huh? I'll be putting that to the test.
+0-female_removing_minor,target:nagisa,targetStage:1=annoyed,Alright, I warned you. If you wanna play with the big girls you better be able to handle it. Just... don't cry. Please.
+0-female_removing_minor,target:asuna,targetStage:0=annoyed,You look like a scared little bitch who needs rescuing. I hate people like you.
+0-female_removing_minor,target:elizabeth,targetStage:1=annoyed,Oh no, the big bad man isn't here to save you anymore, how are you gonna win? I'll give you a hint. You're not.
+0-female_removed_minor=annoyed,...And I'm getting pretty fuckin' irritated.
+0-female_removed_minor,target:kyoko,targetStage:6=smug,What's up with your hands? Childhood trauma? Deep fryer accident? By all means stop me when I hit the nail on the head.
+
+
+#lost gloves
+1-male_removing_minor=calm,I lost the gloves, you lose...whatever it is you're gonna lose. Not your virginity, I'll tell you that right now.
+1-male_removing_minor,target:xander,targetStage:0=smug,I've fought things that'd make you shit your pants, kid. Leave the demon killing to me.
+1-male_removed_minor=calm,Dealer, pass the cards out.
+1-female_removing_minor=calm,Let's go, girly. Strip.
+1-female_removing_minor,target:elizabeth,targetStage:1=annoyed,Oh no, the big bad man isn't here to save you anymore, how are you gonna win? I'll give you a hint. You're not.
+1-female_removing_minor,target:buffy,targetStage:0=smug,You look like you've sucked off a few vampires. Tell me, do they enjoy getting sucked off as much they like sucking neck?
+1-female_removing_minor,target:hermione,targetStage:0=sadistic,Who needs magic when all your problems can be solved with a gun?
+1-female_removing_minor,target:asuna,targetStage:1=smug,I bet your boyfriend's fucking his way through however many whores you were stupid enough to leave with him in that video game.
+1-female_removing_minor,target:kim,targetStage:0=calm,So you're a cheerleader, huh? Getting all the guys? Getting railed in the locker room after the big game? You enjoy that.
+1-female_removing_minor,target:kim,targetStage:1=calm,I know spies, girly. You ain't a spy.
+1-female_removing_minor,target:lilith,targetStage:0=interested,So you're a screamer, huh? I'll be putting that to the test.
+1-female_removing_minor,target:asuna,targetStage:0=annoyed,You look like a scared little bitch who needs rescuing. I hate people like you.
+1-female_removing_minor,target:april,targetStage:1=smug,So how big <i>are</i> mutant turtle dicks? Do they smell like pizza and cum sewer water or some shit?
+1-female_removing_minor,target:chell,targetStage:0=smug,You don't talk, huh? Do you moan? Actually, don't answer that, I want to find out for myself.
+1-female_removing_minor,target:lara,targetStage:0=excited,Hey, if you're looking for buried treasure in a cave, I got an idea where you can look!
+1-female_removing_minor,target:nagisa,targetStage:1=annoyed,Alright, I warned you. If you wanna play with the big girls you better be able to handle it. Just... don't cry. Please.
+1-female_removed_minor=calm,Alright, let's keep moving. I got shit to do.
+1-female_removed_minor,target:kyoko,targetStage:6=smug,What's up with your hands? Childhood trauma? Deep fryer accident? By all means stop me when I hit the nail on the head.
+
+
+#lost boots
+2-male_removing_minor=calm,Lose that shit already.
+2-male_removing_minor,target:xander,targetStage:0=smug,I've fought things that'd make you shit your pants, kid. Leave the demon killing to me.
+2-male_removed_minor=annoyed,God this fucking floor's cold as shit.
+2-female_removing_minor=annoyed,You <i>still</i> have shit to lose?
+2-female_removing_minor,target:lara,targetStage:0=excited,Hey, if you're looking for buried treasure in a cave, I got an idea where you can look!
+2-female_removing_minor,target:buffy,targetStage:0=smug,You look like you've sucked off a few vampires. Tell me, do they enjoy getting sucked off as much they like sucking neck?
+2-female_removing_minor,target:asuna,targetStage:1=smug,I bet your boyfriend's fucking his way through however many whores you were stupid enough to leave with him in that video game.
+2-female_removing_minor,target:chell,targetStage:0=smug,You don't talk, huh? Do you moan? Actually, don't answer that, I want to find out for myself.
+2-female_removing_minor,target:nagisa,targetStage:1=annoyed,Alright, I warned you. If you wanna play with the big girls you better be able to handle it. Just... don't cry. Please.
+2-female_removing_minor,target:elizabeth,targetStage:1=annoyed,Oh no, the big bad man isn't here to save you anymore, how are you gonna win? I'll give you a hint. You're not.
+2-female_removing_minor,target:asuna,targetStage:0=annoyed,You look like a scared little bitch who needs rescuing. I hate people like you.
+2-female_removing_minor,target:april,targetStage:1=smug,So how big <i>are</i> mutant turtle dicks? Do they smell like pizza and cum sewer water or some shit?
+2-female_removing_minor,target:kim,targetStage:1=calm,I know spies, girly. You ain't a spy.
+2-female_removing_minor,target:hermione,targetStage:0=sadistic,Who needs magic when all your problems can be solved with a gun?
+2-female_removing_minor,target:kim,targetStage:0=calm,So you're a cheerleader, huh? Getting all the guys? Getting railed in the locker room after the big game? You enjoy that.
+2-female_removing_minor,target:lilith,targetStage:0=interested,So you're a screamer, huh? I'll be putting that to the test.
+2-female_removed_minor=heart,Guess I'll just have to beat it off you, and I'd be fine with either way.
+2-female_removed_minor,target:kyoko,targetStage:6=smug,What's up with your hands? Childhood trauma? Deep fryer accident? By all means stop me when I hit the nail on the head.
+
+
+#lost holster
+3-male_removing_minor=annoyed,If I could put my guns away I'd punch you.
+3-male_removing_minor,target:xander,targetStage:0=smug,I've fought things that'd make you shit your pants, kid. Leave the demon killing to me.
+3-male_removed_minor=laughing,Just kidding, pistol whipping is more fun!
+3-female_removing_minor=calm,Pussy. Now.
+3-female_removing_minor=heart,It's all up to you, but I'd prefer you to take everything off.
+3-female_removing_minor,target:hermione,targetStage:0=sadistic,Who needs magic when all your problems can be solved with a gun?
+3-female_removing_minor,target:chell,targetStage:0=smug,You don't talk, huh? Do you moan? Actually, don't answer that, I want to find out for myself.
+3-female_removing_minor,target:elizabeth,targetStage:1=annoyed,Oh no, the big bad man isn't here to save you anymore, how are you gonna win? I'll give you a hint. You're not.
+3-female_removing_minor,target:kim,targetStage:1=calm,I know spies, girly. You ain't a spy.
+3-female_removing_minor,target:lara,targetStage:0=excited,Hey, if you're looking for buried treasure in a cave, I got an idea where you can look!
+3-female_removing_minor,target:buffy,targetStage:0=smug,You look like you've sucked off a few vampires. Tell me, do they enjoy getting sucked off as much they like sucking neck?
+3-female_removing_minor,target:kim,targetStage:0=calm,So you're a cheerleader, huh? Getting all the guys? Getting railed in the locker room after the big game? You enjoy that.
+3-female_removing_minor,target:lilith,targetStage:0=interested,So you're a screamer, huh? I'll be putting that to the test.
+3-female_removing_minor,target:april,targetStage:1=smug,So how big <i>are</i> mutant turtle dicks? Do they smell like pizza and cum sewer water or some shit?
+3-female_removing_minor,target:asuna,targetStage:0=annoyed,You look like a scared little bitch who needs rescuing. I hate people like you.
+3-female_removing_minor,target:asuna,targetStage:1=smug,I bet your boyfriend's fucking his way through however many whores you were stupid enough to leave with him in that video game.
+3-female_removed_minor=annoyed,You obviously don't know how to follow orders.
+3-female_removed_minor,target:kyoko,targetStage:6=smug,What's up with your hands? Childhood trauma? Deep fryer accident? By all means stop me when I hit the nail on the head.
+
+
+#lost guns
+4-male_removing_minor=annoyed,Hey, if you're just gonna fuck around I'm heading out.
+4-male_removing_minor,target:xander,targetStage:0=smug,I've fought things that'd make you shit your pants, kid. Leave the demon killing to me.
+4-male_removed_minor=pissed,Cheeky cocksucker. I'll stay just to watch you lose like the bitch you are.
+4-female_removing_minor=interested,Time for the big question: Is she gonna humiliate herself and be my lapdog?
+4-female_removing_minor,target:kim,targetStage:1=calm,I know spies, girly. You ain't a spy.
+4-female_removing_minor,target:buffy,targetStage:0=smug,You look like you've sucked off a few vampires. Tell me, do they enjoy getting sucked off as much they like sucking neck?
+4-female_removing_minor,target:kim,targetStage:0=calm,So you're a cheerleader, huh? Getting all the guys? Getting railed in the locker room after the big game? You enjoy that.
+4-female_removing_minor,target:asuna,targetStage:1=smug,I bet your boyfriend's fucking his way through however many whores you were stupid enough to leave with him in that video game.
+4-female_removing_minor,target:lilith,targetStage:0=interested,So you're a screamer, huh? I'll be putting that to the test.
+4-female_removing_minor,target:lara,targetStage:0=excited,Hey, if you're looking for buried treasure in a cave, I got an idea where you can look!
+4-female_removing_minor,target:chell,targetStage:0=smug,You don't talk, huh? Do you moan? Actually, don't answer that, I want to find out for myself.
+4-female_removing_minor,target:asuna,targetStage:0=annoyed,You look like a scared little bitch who needs rescuing. I hate people like you.
+4-female_removing_minor,target:april,targetStage:1=smug,So how big <i>are</i> mutant turtle dicks? Do they smell like pizza and cum sewer water or some shit?
+4-female_removed_minor=annoyed,You ain't winning any favors with me right now.
+4-female_removed_minor,target:kyoko,targetStage:6=smug,What's up with your hands? Childhood trauma? Deep fryer accident? By all means stop me when I hit the nail on the head.
+
+
+#lost shorts
+5-male_removing_minor=pissed,Gawk at my panties one more time and I'll blast your cock with a glock.
+5-male_removing_minor,target:xander,targetStage:0=smug,I've fought things that'd make you shit your pants, kid. Leave the demon killing to me.
+5-male_removed_minor=annoyed,Can you believe this fuck?
+5-female_removing_minor=excited,Are you gonna redeem yourself and get naked?
+5-female_removing_minor=calm,Be a good girl and show your cunt.
+5-female_removing_minor,target:kim,targetStage:0=calm,So you're a cheerleader, huh? Getting all the guys? Getting railed in the locker room after the big game? You enjoy that.
+5-female_removing_minor,target:kim,targetStage:1=calm,I know spies, girly. You ain't a spy.
+5-female_removing_minor,target:lara,targetStage:0=excited,Hey, if you're looking for buried treasure in a cave, I got an idea where you can look!
+5-female_removing_minor,target:april,targetStage:1=smug,So how big <i>are</i> mutant turtle dicks? Do they smell like pizza and cum sewer water or some shit?
+5-female_removing_minor,target:lilith,targetStage:0=interested,So you're a screamer, huh? I'll be putting that to the test.
+5-female_removing_minor,target:chell,targetStage:0=smug,You don't talk, huh? Do you moan? Actually, don't answer that, I want to find out for myself.
+5-female_removing_minor,target:asuna,targetStage:0=annoyed,You look like a scared little bitch who needs rescuing. I hate people like you.
+5-female_removing_minor,target:asuna,targetStage:1=smug,I bet your boyfriend's fucking his way through however many whores you were stupid enough to leave with him in that video game.
+5-female_removing_minor,target:buffy,targetStage:0=smug,You look like you've sucked off a few vampires. Tell me, do they enjoy getting sucked off as much they like sucking neck?
+5-female_removed_minor=laughing,You just made the biggest mistake of your rapidly shortening life!
+5-female_removed_minor,target:kyoko,targetStage:6=smug,What's up with your hands? Childhood trauma? Deep fryer accident? By all means stop me when I hit the nail on the head.
+
+
+#lost tank top
+6-male_removing_minor=annoyed,I <i>will</i> poke your eyes out.
+6-male_removing_minor,target:xander,targetStage:0=smug,I've fought things that'd make you shit your pants, kid. Leave the demon killing to me.
+6-male_removed_minor=pissed,Especially when you're still dicking me around!
+6-female_removing_minor=annoyed,What are <i>you</i> looking at?
+6-female_removing_minor,target:chell,targetStage:0=smug,You don't talk, huh? Do you moan? Actually, don't answer that, I want to find out for myself.
+6-female_removing_minor,target:april,targetStage:1=smug,So how big <i>are</i> mutant turtle dicks? Do they smell like pizza and cum sewer water or some shit?
+6-female_removing_minor,target:buffy,targetStage:0=smug,You look like you've sucked off a few vampires. Tell me, do they enjoy getting sucked off as much they like sucking neck?
+6-female_removing_minor,target:kim,targetStage:0=calm,So you're a cheerleader, huh? Getting all the guys? Getting railed in the locker room after the big game? You enjoy that.
+6-female_removing_minor,target:asuna,targetStage:0=annoyed,You look like a scared little bitch who needs rescuing. I hate people like you.
+6-female_removing_minor,target:kim,targetStage:1=calm,I know spies, girly. You ain't a spy.
+6-female_removing_minor,target:lilith,targetStage:0=interested,So you're a screamer, huh? I'll be putting that to the test.
+6-female_removing_minor,target:asuna,targetStage:1=smug,I bet your boyfriend's fucking his way through however many whores you were stupid enough to leave with him in that video game.
+6-female_removing_minor,target:lara,targetStage:0=excited,Hey, if you're looking for buried treasure in a cave, I got an idea where you can look!
+6-female_removed_minor=smug,Curious about how real tits bounce?
+6-female_removed_minor,target:kyoko,targetStage:6=smug,What's up with your hands? Childhood trauma? Deep fryer accident? By all means stop me when I hit the nail on the head.
+
+-3-male_removing_minor=annoyed,You didn't do jack shit to deserve this view besides steal a few aces.
+-3-male_removing_minor,target:xander,targetStage:0=smug,I've fought things that'd make you shit your pants, kid. Leave the demon killing to me.
+-3-male_removed_minor=pissed,I'm begging to think you're the one who's been tampering with the cards.
+-3-male_removed_minor=pissed,And the only goddamn cheater allowed at this table is <i>me</i>.
+-3-female_removing_minor=annoyed,What, skank? Are you speechless at the sight of a woman being ogled?
+-3-female_removing_minor,target:chell,targetStage:0=smug,You don't talk, huh? Do you moan? Actually, don't answer that, I want to find out for myself.
+-3-female_removing_minor,target:kim,targetStage:1=calm,I know spies, girly. You ain't a spy.
+-3-female_removing_minor,target:lara,targetStage:0=excited,Hey, if you're looking for buried treasure in a cave, I got an idea where you can look!
+-3-female_removing_minor,target:buffy,targetStage:0=smug,You look like you've sucked off a few vampires. Tell me, do they enjoy getting sucked off as much they like sucking neck?
+-3-female_removing_minor,target:april,targetStage:1=smug,So how big <i>are</i> mutant turtle dicks? Do they smell like pizza and cum sewer water or some shit?
+-3-female_removing_minor,target:asuna,targetStage:0=annoyed,You look like a scared little bitch who needs rescuing. I hate people like you.
+-3-female_removing_minor,target:kim,targetStage:0=calm,So you're a cheerleader, huh? Getting all the guys? Getting railed in the locker room after the big game? You enjoy that.
+-3-female_removing_minor,target:asuna,targetStage:1=smug,I bet your boyfriend's fucking his way through however many whores you were stupid enough to leave with him in that video game.
+-3-female_removing_minor,target:lilith,targetStage:0=interested,So you're a screamer, huh? I'll be putting that to the test.
+-3-female_removed_minor=pissed,Maybe if you weren't such a stuck-up bitch, the boys would've paid more attention to you.
+-3-female_removed_minor,target:kyoko,targetStage:6=smug,What's up with your hands? Childhood trauma? Deep fryer accident? By all means stop me when I hit the nail on the head.
+
+-2-male_removing_minor=pissed,You're not... playing with...fffuck...a full deck if you're that goAAA-goddamn into this...
+-2-male_removing_minor=pissed,Just can't... FUCKING... look away, can you?
+-2-male_removing_minor,target:xander,targetStage:0=smug,I've fought things that'd make you shit your pants, kid. Leave the demon killing to me.
+-2-male_removed_minor=annoyed,Fucking virgin...
+-2-female_removing_minor=smug,W-What? Intimidated? Does it...nn...scare you to see how a real woman handles her...fffuck...her pussy?
+-2-female_removing_minor,target:buffy,targetStage:0=smug,You look like you've sucked off a few vampires. Tell me, do they enjoy getting sucked off as much they like sucking neck?
+-2-female_removing_minor,target:asuna,targetStage:1=smug,I bet your boyfriend's fucking his way through however many whores you were stupid enough to leave with him in that video game.
+-2-female_removing_minor,target:april,targetStage:1=smug,So how big <i>are</i> mutant turtle dicks? Do they smell like pizza and cum sewer water or some shit?
+-2-female_removing_minor,target:asuna,targetStage:0=annoyed,You look like a scared little bitch who needs rescuing. I hate people like you.
+-2-female_removing_minor,target:kim,targetStage:1=calm,I know spies, girly. You ain't a spy.
+-2-female_removing_minor,target:lara,targetStage:0=excited,Hey, if you're looking for buried treasure in a cave, I got an idea where you can look!
+-2-female_removing_minor,target:chell,targetStage:0=smug,You don't talk, huh? Do you moan? Actually, don't answer that, I want to find out for myself.
+-2-female_removing_minor,target:kim,targetStage:0=calm,So you're a cheerleader, huh? Getting all the guys? Getting railed in the locker room after the big game? You enjoy that.
+-2-female_removing_minor,target:lilith,targetStage:0=interested,So you're a screamer, huh? I'll be putting that to the test.
+-2-female_removed_minor=pissed,I-If you weren't, you'd ffffffUCK...fucking get naked already!
+-2-female_removed_minor,target:kyoko,targetStage:6=smug,What's up with your hands? Childhood trauma? Deep fryer accident? By all means stop me when I hit the nail on the head.
+
+-1-male_removing_minor=annoyed,There will be hell to pay for what just happened.
+-1-male_removing_minor,target:xander,targetStage:0=smug,I've fought things that'd make you shit your pants, kid. Leave the demon killing to me.
+-1-male_removed_minor=sadistic,And that doesn't come <i>close</i> to what you owe.
+-1-female_removing_minor=pissed,I fucking came, what more do you want?
+-1-female_removing_minor,target:lara,targetStage:0=excited,Hey, if you're looking for buried treasure in a cave, I got an idea where you can look!
+-1-female_removing_minor,target:april,targetStage:1=smug,So how big <i>are</i> mutant turtle dicks? Do they smell like pizza and cum sewer water or some shit?
+-1-female_removing_minor,target:kim,targetStage:0=calm,So you're a cheerleader, huh? Getting all the guys? Getting railed in the locker room after the big game? You enjoy that.
+-1-female_removing_minor,target:asuna,targetStage:0=annoyed,You look like a scared little bitch who needs rescuing. I hate people like you.
+-1-female_removing_minor,target:lilith,targetStage:0=interested,So you're a screamer, huh? I'll be putting that to the test.
+-1-female_removing_minor,target:kim,targetStage:1=calm,I know spies, girly. You ain't a spy.
+-1-female_removing_minor,target:asuna,targetStage:1=smug,I bet your boyfriend's fucking his way through however many whores you were stupid enough to leave with him in that video game.
+-1-female_removing_minor,target:buffy,targetStage:0=smug,You look like you've sucked off a few vampires. Tell me, do they enjoy getting sucked off as much they like sucking neck?
+-1-female_removing_minor,target:chell,targetStage:0=smug,You don't talk, huh? Do you moan? Actually, don't answer that, I want to find out for myself.
+-1-female_removed_minor=sadistic,Ohhh, you and I are gonna have a <i>fun</i> fucking time making up for this.
+-1-female_removed_minor,target:kyoko,targetStage:6=smug,What's up with your hands? Childhood trauma? Deep fryer accident? By all means stop me when I hit the nail on the head.
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#fully clothed
+0-male_removing_major=interested,Now we're getting somewhere.
+0-male_removed_major=smug,That's more like it. Feeling humiliated yet?
+0-female_removing_major=interested,Let's see if you're wearing anything under that.
+0-female_removing_major=laughing,I can see your nipples poking through that shirt and you're still acting like you don't want me to fuck you!
+0-female_removing_major,target:wiifitfemale,targetStage:0=annoyed,Bitch, you have gray skin, are you fuckin' decomposing or something?!
+0-female_removing_major,target:chell,targetStage:1=smug,Hey mutie, can you read lips? I'M. GONNA. MAKE. YOU. SUCK. MY. DICK.
+0-female_removing_major,target:wiifitfemale,targetStage:1=smug,I can think of a few things you can stretch for me.
+0-female_removed_major=calm,Damn. Whatever. I can beat you next hand, easy.
+0-female_removed_major=annoyed,You <i>would</i> be the kind of slut that plays hard to get.
+
+
+#lost gloves
+1-male_removing_major=interested,Give me something good and I might return the favor.
+1-male_removed_major=annoyed,Not good enough.
+1-female_removing_major=excited,Christ, I can <i>smell</i> your pussy from here. Do the right thing
+1-female_removing_major,target:chell,targetStage:1=smug,Hey mutie, can you read lips? I'M. GONNA. MAKE. YOU. SUCK. MY. DICK.
+1-female_removing_major,target:wiifitfemale,targetStage:1=smug,I can think of a few things you can stretch for me.
+1-female_removing_major,target:wiifitfemale,targetStage:0=annoyed,Bitch, you have gray skin, are you fuckin' decomposing or something?!
+1-female_removed_major=smug,Guess I'll just have to beat your ass and free it myself.
+
+
+#lost boots
+2-male_removing_major=heart,You're not doing so hot buddy, need a hand?
+2-male_removed_major=sadistic,Cause I've got plenty of cards in my shirt that you'll never beat.
+2-female_removing_major=excited,I'm willing to put all this behind us if you take your bra off.
+2-female_removing_major,target:wiifitfemale,targetStage:1=smug,I can think of a few things you can stretch for me.
+2-female_removing_major,target:chell,targetStage:1=smug,Hey mutie, can you read lips? I'M. GONNA. MAKE. YOU. SUCK. MY. DICK.
+2-female_removing_major,target:wiifitfemale,targetStage:0=annoyed,Bitch, you have gray skin, are you fuckin' decomposing or something?!
+2-female_removed_major=sadistic,I was hoping you'd do that.
+2-female_removed_major=laughing,Hard and painful way it is!
+
+
+#lost holster
+3-male_removing_major=smug,I have the upper hand guy, in terms of clothing and cards.
+3-male_removed_major=annoyed,And yet you won't roll over and die.
+3-female_removing_major=calm,Give up, it's over. You can't beat me.
+3-female_removing_major,target:chell,targetStage:1=smug,Hey mutie, can you read lips? I'M. GONNA. MAKE. YOU. SUCK. MY. DICK.
+3-female_removing_major,target:wiifitfemale,targetStage:1=smug,I can think of a few things you can stretch for me.
+3-female_removing_major,target:wiifitfemale,targetStage:0=annoyed,Bitch, you have gray skin, are you fuckin' decomposing or something?!
+3-female_removed_major=laughing,Alright, can't say I wasn't looking forward to a fight!
+
+
+#lost guns
+4-male_removing_major=laughing,You should be happy, the last time I played poker with a guy I still had my guns!
+4-male_removed_major=sadistic,Granted it was less poker and more mindless slaughter of enemy combatants with a sprinkling of innocent civilians, but the night's still young.
+4-female_removing_major=interested,Berettas for tits is a trade I can live with.
+4-female_removing_major,target:wiifitfemale,targetStage:1=smug,I can think of a few things you can stretch for me.
+4-female_removing_major,target:chell,targetStage:1=smug,Hey mutie, can you read lips? I'M. GONNA. MAKE. YOU. SUCK. MY. DICK.
+4-female_removing_major,target:wiifitfemale,targetStage:0=annoyed,Bitch, you have gray skin, are you fuckin' decomposing or something?!
+4-female_removed_major=annoyed,Which was a one time only deal, bitch.
+
+
+#lost shorts
+5-male_removing_major=annoyed,I hate this back and forth bullshit, just lose and accept your fate.
+5-male_removed_major=annoyed,Some assholes just have to play the hero.
+5-female_removing_major=heart,This reminds me of the last time Eda and I played poker.
+5-female_removing_major,target:chell,targetStage:1=smug,Hey mutie, can you read lips? I'M. GONNA. MAKE. YOU. SUCK. MY. DICK.
+5-female_removing_major,target:wiifitfemale,targetStage:0=annoyed,Bitch, you have gray skin, are you fuckin' decomposing or something?!
+5-female_removing_major,target:wiifitfemale,targetStage:1=smug,I can think of a few things you can stretch for me.
+5-female_removed_major=sadistic,The collateral damage alone cost more than Roanapur's GDP.
+
+
+#lost tank top
+6-male_removing_major=annoyed,I know you cheated to get me topless, so I cheated right the fuck back. Only had to move my cards into my panties.
+6-male_removed_major=sadistic,And I'm not stopping until your asshole's five times as wide.
+6-female_removing_major=heart,Let's compare underwear!
+6-female_removing_major=excited,If you just show your panties we can stop there.
+6-female_removing_major,target:wiifitfemale,targetStage:0=annoyed,Bitch, you have gray skin, are you fuckin' decomposing or something?!
+6-female_removing_major,target:wiifitfemale,targetStage:1=smug,I can think of a few things you can stretch for me.
+6-female_removing_major,target:chell,targetStage:1=smug,Hey mutie, can you read lips? I'M. GONNA. MAKE. YOU. SUCK. MY. DICK.
+6-female_removed_major=sadistic,Just fuckin' with you, if you think I'd do anything other than jam everything I can get my hands on inside every hole you've got, you're in for a hell of a lesson.
+
+-3-male_removing_major=interested,I won't kill you if you strip off everything.
+-3-male_removed_major=laughing,You're going to regret that!
+-3-female_removing_major=calm,A cunt for a cunt is a fair trade.
+-3-female_removing_major,target:chell,targetStage:1=smug,Hey mutie, can you read lips? I'M. GONNA. MAKE. YOU. SUCK. MY. DICK.
+-3-female_removing_major,target:wiifitfemale,targetStage:1=smug,I can think of a few things you can stretch for me.
+-3-female_removing_major,target:wiifitfemale,targetStage:0=annoyed,Bitch, you have gray skin, are you fuckin' decomposing or something?!
+-3-female_removed_major=pissed,Cunt.
+
+-2-male_removing_major=interested,G-Get that off and show me something...
+-2-male_removed_major=annoyed,Not...nearly...enough...
+-2-female_removing_major=annoyed,Tits...tits now...
+-2-female_removing_major,target:wiifitfemale,targetStage:0=annoyed,Bitch, you have gray skin, are you fuckin' decomposing or something?!
+-2-female_removing_major,target:wiifitfemale,targetStage:1=smug,I can think of a few things you can stretch for me.
+-2-female_removing_major,target:chell,targetStage:1=smug,Hey mutie, can you read lips? I'M. GONNA. MAKE. YOU. SUCK. MY. DICK.
+-2-female_removed_major=pissed,TEASING BITCH!
+
+-1-male_removing_major=pissed,How the fuck did I lose to a jackoff like you?!
+-1-male_removed_major=sadistic,Rematch? Loser sucks the winner's gun until it cums.
+-1-female_removing_major=pissed,You skank whore, you're not even showing anything!
+-1-female_removing_major,target:wiifitfemale,targetStage:0=annoyed,Bitch, you have gray skin, are you fuckin' decomposing or something?!
+-1-female_removing_major,target:chell,targetStage:1=smug,Hey mutie, can you read lips? I'M. GONNA. MAKE. YOU. SUCK. MY. DICK.
+-1-female_removing_major,target:wiifitfemale,targetStage:1=smug,I can think of a few things you can stretch for me.
+-1-female_removed_major=sadistic,Oh, that's it...
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#fully clothed
+0-male_chest_will_be_visible=calm,Okay, let's see if you're worth anything.
+0-male_chest_is_visible=interested,Alright, not bad.
+0-male_crotch_will_be_visible=smug,'Bout time your cock came out since you're obviously throwing this match.
+0-male_crotch_will_be_visible=annoyed,Jesus Christ, you fucking suck at cards. It's no fun loading the deck if you don't even try.
+0-male_crotch_will_be_visible=pissed,You some kind of pervert that gets off on being an absolute fucking waste of your parent's cum?
+0-male_small_crotch_is_visible=calm,Goddamn, you might as well just chop it off and call yourself a woman.
+0-male_small_crotch_is_visible=smug,You are fucking pathetic.
+0-male_small_crotch_is_visible=laughing,HAHAHAHA!
+0-male_small_crotch_is_visible=sadistic,That'll make some great target practice.
+0-male_small_crotch_is_visible=sadistic,I bet I could force you into the barrel of my gun.
+0-male_medium_crotch_is_visible=sadistic,I bet a stomp in the nuts would get you bigger.
+0-male_medium_crotch_is_visible=calm,I've seen better.
+0-male_medium_crotch_is_visible=smug,At least we know you're not another fucked up Hansel and Gretel situation.
+0-male_large_crotch_is_visible=shocked,Holy shit, I think you might be bigger than Rock...
+0-male_large_crotch_is_visible=horny,That...is something else.
+0-male_large_crotch_is_visible=excited,Alright, you're forgiven for losing on purpose. I mean, fuck, if I had that I'd be whipping it out for no reason too.
+0-male_large_crotch_is_visible=laughing,Try cock-slapping one of the whores; I bet you'd knock them out cold!
+0-female_chest_will_be_visible=smug,Fuckin' finally!
+0-female_chest_will_be_visible=interested,I like mine big. You better be big.
+0-female_chest_will_be_visible,filter:shy=interested,What the hell are you so shy about? I've got tits, you've got tits, every woman has tits. Unless you're actually some sick fuckin' guy in disguise.
+0-female_chest_will_be_visible,target:weiss=interested,Just shut up and show us how flat you are, bitch. I'll take your money later.
+0-female_chest_will_be_visible,filter:confident=interested,I always appreciate a slut who's practically begging to rip her shirt off!
+0-female_chest_will_be_visible,target:mileena=laughing,I'd make fun of you but you're already doing it yourself! Seriously, fucking look at yourself!
+0-female_small_chest_is_visible=laughing,You're a guy!
+0-female_small_chest_is_visible=pissed,Those. Aren't. Big.
+0-female_small_chest_is_visible=sadistic,I could bite all of that at once and make you yell my name.
+0-female_medium_chest_is_visible=interested,Okay, you ain't a slouch, but nothing I haven't seen.
+0-female_medium_chest_is_visible=calm,Eh.
+0-female_medium_chest_is_visible,target:zone-tan,totalFemales:4-5,totalExposed:1=smug,No bra? Fuck yes. You other sluts see this? Start taking notes.
+0-female_large_chest_is_visible=shocked,What in the fuck.
+0-female_large_chest_is_visible=excited,Girly, I'm gonna fuck your brains out after this.
+0-female_large_chest_is_visible=horny,That's the shit I'm talkin' about...
+0-female_crotch_will_be_visible=excited,You just could not wait to show your pussy off, could you?
+0-female_crotch_will_be_visible=sadistic,You got two seconds to slide those down before I rip 'em off.
+0-female_crotch_will_be_visible=horny,Let's see that cunt.
+0-female_crotch_will_be_visible=annoyed,You fucking suck at poker, if you didn't know. Hell, you probably don't if you were this goddamn terrible.
+0-female_crotch_will_be_visible,filter:blonde=interested,You got some gold hiding in your panties, blondie?
+0-female_crotch_will_be_visible,target:harley=interested,Did you make the carpets match the drapes?
+0-female_crotch_will_be_visible,target:dawn=horny,Spread your legs, blue hair.
+0-female_crotch_will_be_visible,target:lyn=smug,Fat load of good your fuckin' sword did you...
+0-female_crotch_is_visible=excited,I could do so many things to make you scream...
+0-female_crotch_is_visible=horny,I see you're wet, but how tight are you?
+0-female_crotch_is_visible,target:twilight=shocked,... You're either the biggest fuckwit here or... Nope, you're the biggest fuckwit here.
+0-female_crotch_is_visible,target:lux,targetStage:8=annoyed,You bitch, you don't have shit.
+
+
+#lost gloves
+1-male_chest_will_be_visible=annoyed,Cut the fucking fanfare and take your shirt off.
+1-male_chest_will_be_visible=pissed,I hate macho assholes who act like they're God's gift to the world.
+1-male_chest_is_visible=interested,Okay, <i>maybe</i> your shit talk was warranted.
+1-male_chest_is_visible=annoyed,It ain't even that great! I got better abs!
+1-male_crotch_will_be_visible=interested,There's something wrong with you if you lost this easily, but if you're packing heat I might let it slide.
+1-male_small_crotch_is_visible=calm,You poor motherfucker. Well, I take that back, you're never fucking anything but a hole in the ground, much less a mother. You poor holefucker.
+1-male_small_crotch_is_visible=annoyed,There are a lot of fucked up things in this world, but a man with a dick like that really drives home the fact that there's no justice or God.
+1-male_medium_crotch_is_visible=calm,You got some precum leaking out, buddy. I'm sure one of the sluts would be more than happy to clean it off.
+1-male_medium_crotch_is_visible=interested,Alright, you got the goods. How do you use it?
+1-male_large_crotch_is_visible=shocked,Ho. Lee. Shit.
+1-male_large_crotch_is_visible=shocked,Oh my fucking God.
+1-male_large_crotch_is_visible=interested,Serious question, do those dick enhancement pills actually work? You wouldn't believe how many vendors are hucking them back in Roanapur.
+1-female_chest_will_be_visible=annoyed,Enough, they're tits, every fuckin' woman's got 'em. This ain't some Earth-shattering discovery.
+1-female_chest_will_be_visible,target:weiss=interested,Just shut up and show us how flat you are, bitch. I'll take your money later.
+1-female_chest_will_be_visible,filter:shy=interested,Stop being so god damn coy. If you're gonna suck, own up to it, and show your tits.
+1-female_chest_will_be_visible,target:mileena=laughing,I'd make fun of you but you're already doing it yourself! Seriously, fucking look at yourself!
+1-female_chest_will_be_visible,filter:confident=interested,I always appreciate a slut who's practically begging to rip her shirt off!
+1-female_small_chest_is_visible=shocked,Fuck, maybe I was wrong. Guess not <i>every</i> woman's got them.
+1-female_medium_chest_is_visible=calm,Normal tits for a boring, normal slut.
+1-female_medium_chest_is_visible,target:zone-tan,totalFemales:4-5,totalExposed:1=smug,No bra? Fuck yes. You other sluts see this? Start taking notes.
+1-female_large_chest_is_visible=shocked,Jeeeeesus Christ!
+1-female_crotch_will_be_visible=interested,I can hear your pussy throbbing, begging for my tongue. Soon as you take those off you're gonna be dripping like a waterfall.
+1-female_crotch_will_be_visible,target:dawn=horny,Spread your legs, blue hair.
+1-female_crotch_will_be_visible,target:harley=interested,Did you make the carpets match the drapes?
+1-female_crotch_will_be_visible,filter:blonde=interested,You got some gold hiding in your panties, blondie?
+1-female_crotch_will_be_visible,target:lyn=smug,Fat load of good your fuckin' sword did you...
+1-female_crotch_is_visible=smug,What can I say? I'm the pussy whisperer. And licker, and fingerer, and fucker.
+1-female_crotch_is_visible=calm,I literally heard your panties land on the floor. They're more cum than cotton now.
+1-female_crotch_is_visible=excited,Who do you think would get drunk faster if I emptied a bottle of Bacardi in you and drank it out of your pussy?
+1-female_crotch_is_visible,target:twilight=shocked,... You're either the biggest fuckwit here or... Nope, you're the biggest fuckwit here.
+1-female_crotch_is_visible,target:lux,targetStage:8=annoyed,You bitch, you don't have shit.
+
+
+#lost boots
+2-male_chest_will_be_visible=interested,Now things are getting good.
+2-male_chest_is_visible=excited,Alright, keep this up and there might be hope for you yet!
+2-male_chest_is_visible=calm,Not bad, but you got nothing on my boss.
+2-male_crotch_will_be_visible=interested,Finally the fucking 'strip' part of the game actually means something.
+2-male_small_crotch_is_visible=smug,Never thought I'd see the day where I have a bigger dick than a guy.
+2-male_small_crotch_is_visible=laughing,I don't even have a cock and I feel better about myself, Christ!
+2-male_small_crotch_is_visible=sadistic,Miss, I think your tampon is hanging out. I'll just punt it back up there real quick.
+2-male_medium_crotch_is_visible=calm,At least you didn't fucking embarrass yourself.
+2-male_large_crotch_is_visible=shocked,Whoa whoa whoa, wait the hell up. How in the ever-loving piss can you carry <i>that</i> and not be thrown off balance?
+2-male_large_crotch_is_visible=excited,Yeah, I admit, you got my panties wet. Don't let it go to your head. Or is it too late for that?
+2-female_chest_will_be_visible=smug,Nothing left to hide behind, bitch.
+2-female_chest_will_be_visible,target:weiss=interested,Just shut up and show us how flat you are, bitch. I'll take your money later.
+2-female_chest_will_be_visible,target:mileena=laughing,I'd make fun of you but you're already doing it yourself! Seriously, fucking look at yourself!
+2-female_chest_will_be_visible,filter:shy=interested,I can't tell if you're blushing because you don't want to show off or because you don't have any tits.
+2-female_small_chest_is_visible=interested,What you lack in volume you make up for in perk.
+2-female_small_chest_is_visible=smug,Don't sweat it kid, not everyone can be perfect like me.
+2-female_medium_chest_is_visible=interested,Bringing everything to the table, eh? Y'know, I'll let you keep your panties for a thousand bucks.
+2-female_medium_chest_is_visible,target:zone-tan,totalFemales:4-5,totalExposed:1=smug,No bra? Fuck yes. You other sluts see this? Start taking notes.
+2-female_large_chest_is_visible=shocked,Sis is bigger but God <i>damn</i> is it close!
+2-female_crotch_will_be_visible=excited,How's it feel leaking all that cum into your panties? Can you feel how slick it is when you rub your thighs together? Do you shiver when they bunch up and rub your clit?
+2-female_crotch_will_be_visible,target:harley=interested,Did you make the carpets match the drapes?
+2-female_crotch_will_be_visible,target:lyn=smug,Fat load of good your fuckin' sword did you...
+2-female_crotch_will_be_visible,target:dawn=horny,Spread your legs, blue hair.
+2-female_crotch_will_be_visible,filter:blonde=interested,You got some gold hiding in your panties, blondie?
+2-female_crotch_is_visible=interested,Why don't you turn around and show us your tight little ass?
+2-female_crotch_is_visible=laughing,We finally got a drink up in this bitch! Non-alcoholic but I'll let it slide.
+2-female_crotch_is_visible=horny,Well isn't that the sluttiest slit that ever was.
+2-female_crotch_is_visible,target:lux,targetStage:8=annoyed,You bitch, you don't have shit.
+2-female_crotch_is_visible,target:twilight=shocked,... You're either the biggest fuckwit here or... Nope, you're the biggest fuckwit here.
+
+
+#lost holster
+3-male_chest_will_be_visible=smug,You lost to the best, now it's time to pay.
+3-male_chest_is_visible=excited,God damn that's nice.
+3-male_crotch_will_be_visible=interested,Your upper half's not too bad, now we gotta see if you're just compensating.
+3-male_small_crotch_is_visible=laughing,PFFFTT!
+3-male_small_crotch_is_visible=calm,That's the saddest fucking thing I've ever seen.
+3-male_small_crotch_is_visible=sadistic,You thought now was a good time to disappoint me?
+3-male_medium_crotch_is_visible=calm,A dick. Nothing less, nothing more.
+3-male_medium_crotch_is_visible=horny,Look at you, naked and hiding yourself. I love a man begging at my feet...
+3-male_medium_crotch_is_visible=interested,Pick up my holster and try to stick your dick in it. I think it'll fit but there's only one way to find out...
+3-male_large_crotch_is_visible=interested,Pick up my holster and try to stick your dick in it. I actually don't think it'll fit.
+3-male_large_crotch_is_visible=smug,Looks like coming here was worth my time after all.
+3-female_chest_will_be_visible=calm,I came to see tits.
+3-female_chest_will_be_visible,target:weiss=interested,Just shut up and show us how flat you are, bitch. I'll take your money later.
+3-female_chest_will_be_visible,filter:shy=interested,If you're so fucking shy why did you even agree to do this? I've seen more courage out of a rock.
+3-female_chest_will_be_visible,target:mileena=laughing,I'd make fun of you but you're already doing it yourself! Seriously, fucking look at yourself!
+3-female_small_chest_is_visible=laughing,Fucking Gretel has bigger tits! <i>Gretel</i>!
+3-female_small_chest_is_visible=sadistic,Dance, bitch. If those don't jiggle, you don't breathe.
+3-female_medium_chest_is_visible=smug,Yeah, okay. Get ready to show your pussy next hand.
+3-female_medium_chest_is_visible,target:zone-tan,totalFemales:4-5,totalExposed:1=smug,No bra? Fuck yes. You other sluts see this? Start taking notes.
+3-female_large_chest_is_visible=shocked,It takes a lot to impress me, and you just fucking impressed me.
+3-female_crotch_will_be_visible=smug,Of course you'd show your pussy before I lost my guns. Who do you think I am?
+3-female_crotch_will_be_visible=interested,Now we'll see if my guns excited you or not.
+3-female_crotch_will_be_visible,target:dawn=horny,Spread your legs, blue hair.
+3-female_crotch_will_be_visible,filter:blonde=interested,You got some gold hiding in your panties, blondie?
+3-female_crotch_will_be_visible,target:lyn=smug,Fat load of good your fuckin' sword did you...
+3-female_crotch_will_be_visible,target:harley=interested,Did you make the carpets match the drapes?
+3-female_crotch_is_visible=laughing,Got a problem with me sticking 'em up there? I need to clean them and you just so happen to have some lube.
+3-female_crotch_is_visible,target:lux,targetStage:8=annoyed,You bitch, you don't have shit.
+3-female_crotch_is_visible,target:twilight=shocked,... You're either the biggest fuckwit here or... Nope, you're the biggest fuckwit here.
+
+
+#lost guns
+4-male_chest_will_be_visible=calm,If I had to lose my guns to see this, then fine. Don't disappoint.
+4-male_chest_is_visible=pissed,Oh, you're fucking asking for it.
+4-male_chest_is_visible=interested,You get to live for another hand.
+4-male_crotch_will_be_visible=interested,Don't make me wish I could still shoot you.
+4-male_small_crotch_is_visible=sadistic,I could start a fire in your bush if that'll make it bigger.
+4-male_small_crotch_is_visible=sadistic,If I still had them I'd jam one up your dickhole. Yeah, I know you've got the physical development of a twelve year old.
+4-male_medium_crotch_is_visible=interested,One more hand and you'll have to show your vast experience with beating yourself off.
+4-male_large_crotch_is_visible=excited,Forget your old life. Your name's Cock now and you roll with me.
+4-male_large_crotch_is_visible=horny,Let me grab that. I need something in my hands.
+4-female_chest_will_be_visible=smug,Tit for tat, but in this care it's two tits for two guns.
+4-female_chest_will_be_visible,target:mileena=laughing,I'd make fun of you but you're already doing it yourself! Seriously, fucking look at yourself!
+4-female_chest_will_be_visible,filter:shy=interested,My hands are free. If you're not gonna show your tits, I'll do it for you.
+4-female_chest_will_be_visible,target:weiss=interested,Just shut up and show us how flat you are, bitch. I'll take your money later.
+4-female_small_chest_is_visible=pissed,I spent all this time for <i>that</i>!?
+4-female_small_chest_is_visible=sadistic,I could put my cigarette out on those and they'd double in size.
+4-female_medium_chest_is_visible=excited,I'm just gonna walk over there and feel you up real quick.
+4-female_medium_chest_is_visible=calm,Good, I get on edge when I'm not double handing anything.
+4-female_medium_chest_is_visible,target:zone-tan,totalFemales:4-5,totalExposed:1=smug,No bra? Fuck yes. You other sluts see this? Start taking notes.
+4-female_large_chest_is_visible=excited,Good fucking God.
+4-female_large_chest_is_visible=laughing,Yeah! That's more like it!
+4-female_crotch_will_be_visible=smug,I consider myself a pussy connoisseur, both for it and what comes out of it.
+4-female_crotch_will_be_visible,target:harley=interested,Did you make the carpets match the drapes?
+4-female_crotch_will_be_visible,target:dawn=horny,Spread your legs, blue hair.
+4-female_crotch_will_be_visible,target:lyn=smug,Fat load of good your fuckin' sword did you...
+4-female_crotch_will_be_visible,filter:blonde=interested,You got some gold hiding in your panties, blondie?
+4-female_crotch_is_visible=smug,It's real fucking good when it's been stewing in its own juices.
+4-female_crotch_is_visible=interested,Nice, that's vintage puss.
+4-female_crotch_is_visible=horny,I get shaky when I'm not fingering something, might go after you.
+4-female_crotch_is_visible=horny,Spread yourself open, I wanna see if you're worth fucking.
+4-female_crotch_is_visible,target:lux,targetStage:8=annoyed,You bitch, you don't have shit.
+
+
+#lost shorts
+5-male_chest_will_be_visible=pissed,Quit fucking looking at my panties. This is your only warning.
+5-male_chest_is_visible=interested,Now shut up while I stare at your chest.
+5-male_crotch_will_be_visible=smug,Man it sure is great not having to worry about getting a huge fucking boner in front of a crowd of assholes!
+5-male_small_crotch_is_visible=annoyed,If you're not gonna take this seriously, get the fuck out.
+5-male_small_crotch_is_visible=laughing,You... you gotta be fucking kidding! AHAHAHA!
+5-male_medium_crotch_is_visible=calm,Raw, uncut cock.
+5-male_medium_crotch_is_visible=excited,Alright, you're making me feel something.
+5-male_large_crotch_is_visible=shocked,IS THAT A FUCKING CRUISE MISSILE?!
+5-male_large_crotch_is_visible=horny,Mouth, ass, pussy: you can fucking bet I'll take that anywhere.
+5-female_chest_will_be_visible=interested,Well let's see 'em.
+5-female_chest_will_be_visible,target:weiss=interested,Just shut up and show us how flat you are, bitch. I'll take your money later.
+5-female_chest_will_be_visible,filter:shy=pissed,Listen, you blushing bitch, if I gotta stand here like this you can damn well take your fuckin tits out.
+5-female_chest_will_be_visible,target:mileena=interested,I'm pretty sure you're from that one game, Clay Fighter.
+5-female_small_chest_is_visible=calm,Pathetic.
+5-female_small_chest_is_visible=smug,Look at it this way, at least your father only molested your sister.
+5-female_medium_chest_is_visible=smug,I've got you beat.
+5-female_medium_chest_is_visible=excited,Not what I usually go after but I can make an exception.
+5-female_medium_chest_is_visible=sadistic,I'll bite your nipples and not let go.
+5-female_medium_chest_is_visible,target:zone-tan,totalFemales:4-5,totalExposed:1=smug,No bra? Fuck yes. You other sluts see this? Start taking notes.
+5-female_large_chest_is_visible=horny,Holy fuck you're getting me wet.
+5-female_crotch_will_be_visible=interested,We can already see the cum leaking down your legs.
+5-female_crotch_will_be_visible,target:dawn=horny,Spread your legs, blue hair.
+5-female_crotch_will_be_visible,target:harley=interested,Did you make the carpets match the drapes?
+5-female_crotch_will_be_visible,target:lyn=smug,Fat load of good your fuckin' sword did you...
+5-female_crotch_will_be_visible,filter:blonde=interested,You got some gold hiding in your panties, blondie?
+5-female_crotch_is_visible=excited,Hand me your panties. I want to wring them and see how much cum drips out.
+5-female_crotch_is_visible=horny,I'm two seconds away from tongue fucking you.
+5-female_crotch_is_visible=horny,Damn, haven't been this wet in a long time.
+5-female_crotch_is_visible,target:lux,targetStage:8=annoyed,You bitch, you don't have shit.
+
+
+#lost tank top
+6-male_chest_will_be_visible=interested,Take it off nice and slow.
+6-male_chest_is_visible=excited,At least you're not a fat fuck.
+6-male_chest_is_visible=horny,Not fuckin' bad!
+6-male_crotch_will_be_visible=smug,No cock, no pussy.
+6-male_small_crotch_is_visible=pissed,You did <i>not</i> just whip that out in front of me.
+6-male_small_crotch_is_visible=laughing,Are you hard? Seriously?!
+6-male_medium_crotch_is_visible=excited,Okay, we both brought a pair to the table.
+6-male_large_crotch_is_visible=horny,I'm gonna ride the fuck out of that.
+6-male_large_crotch_is_visible=shocked,Christ, I can see it throbbing from here.
+6-female_chest_will_be_visible=smug,Alright bitch, think you have what it takes to beat me?
+6-female_chest_will_be_visible,target:mileena=interested,I'm pretty sure you're from that one game, Clay Fighter.
+6-female_chest_will_be_visible,target:weiss=interested,Just shut up and show us how flat you are, bitch. I'll take your money later.
+6-female_chest_will_be_visible,filter:shy=annoyed,Don't even fuckin' think about not showing your tits when I already did. Be brave. Take a fuckin' chance for once in your life.
+6-female_small_chest_is_visible=smug,Take a look at me, then take a look at yourself and realize that all tits are not created equal.
+6-female_small_chest_is_visible=laughing,You've got a looong way to go before you get close to me!
+6-female_small_chest_is_visible=interested,Want to know what a real rack feels like? You can grab mine and I'll find out what a couple of overgrown bug bites are like.
+6-female_medium_chest_is_visible=annoyed,OH MY GOD YOU SHOWED YOUR TITS! YOUR TIIIIITS! That's how you reacted when I showed mine. Kinda fuckin' stupid, huh?
+6-female_medium_chest_is_visible=smug,Yeah it's close, but mine are bigger.
+6-female_medium_chest_is_visible,target:zone-tan=interested,Only bitches wear bras anyway. Bitches and ~player~.
+6-female_large_chest_is_visible=shocked,Okay, you win! Fuckin' hell.
+6-female_large_chest_is_visible=excited,I lost, now let me suck on those.
+6-female_crotch_will_be_visible=interested,You better spread wide open for me.
+6-female_crotch_will_be_visible,target:lyn=smug,Fat load of good your fuckin' sword did you...
+6-female_crotch_will_be_visible,filter:blonde=interested,You got some gold hiding in your panties, blondie?
+6-female_crotch_will_be_visible,target:harley=interested,Did you make the carpets match the drapes?
+6-female_crotch_will_be_visible,target:dawn=horny,Spread your legs, blue hair.
+6-female_crotch_is_visible=laughing,Holy shit I don't think I could get a grip on that! You're a fuckin' faucet!
+6-female_crotch_is_visible=smug,Your clit's begging to be teased.
+6-female_crotch_is_visible=horny,Yeah, I'm touching myself. No, I don't care if I still have my panties on.
+6-female_crotch_is_visible,target:lux,targetStage:8=annoyed,You bitch, you don't have shit.
+
+-3-male_chest_will_be_visible=annoyed,Motherfucker, just now losing that shit...
+-3-male_chest_is_visible=horny,Sit down, I'm gonna slide my pussy over your abs.
+-3-male_chest_is_visible=excited,Way to make me drip on the floor, dick.
+-3-male_crotch_will_be_visible=excited,My pussy's already clenching at the thought of your cock, don't let it down.
+-3-male_small_crotch_is_visible=annoyed,You just fucking dried me up.
+-3-male_small_crotch_is_visible=pissed,I'm going to shoot you after this.
+-3-male_medium_crotch_is_visible=excited,Not the biggest I've had, but I'm too in fucking heat to care.
+-3-male_medium_crotch_is_visible=horny,I'll make you cum harder than you ever have in your life.
+-3-male_large_crotch_is_visible=horny,You want my pussy to squeeze the tip? It can do that.
+-3-male_large_crotch_is_visible=shocked,Holy fuck, that would split me in half...
+-3-female_chest_will_be_visible=interested,Don't even think about not stripping, I'll rip it off for you. In fact, yeah, let's go with that.
+-3-female_chest_will_be_visible,filter:shy=annoyed,I'm over here trying to stay horny and you're fucking it up by not showing your tits! Fuckin' coward!
+-3-female_chest_will_be_visible,target:mileena=interested,I'm pretty sure you're from that one game, Clay Fighter.
+-3-female_chest_will_be_visible,target:weiss=interested,Just shut up and show us how flat you are, bitch. I'll take your money later.
+-3-female_chest_will_be_visible,filter:bi-curious=horny,You're wondering if my pussy tastes good or not. I can see it in your eyes. Let me fill you in: one lick of this and you'll be on cloud fuckin' nine.
+-3-female_small_chest_is_visible=laughing,I don't know who's flatter, you or Sawyer!
+-3-female_small_chest_is_visible=annoyed,How old are you? I don't touch kids.
+-3-female_medium_chest_is_visible=horny,You wanna press those against mine?
+-3-female_medium_chest_is_visible,target:zone-tan=interested,Only bitches wear bras anyway. Bitches and ~player~.
+-3-female_large_chest_is_visible=horny,Holy fuck that's getting me wet.
+-3-female_large_chest_is_visible=horny,You're a fucking monster.
+-3-female_crotch_will_be_visible=smug,I know you've been staring at my pussy. Let's see yours.
+-3-female_crotch_will_be_visible=heart,Let's see what kind of pussy you have!
+-3-female_crotch_will_be_visible,target:lyn=smug,Fat load of good your fuckin' sword did you...
+-3-female_crotch_will_be_visible,target:dawn=horny,Spread your legs, blue hair.
+-3-female_crotch_will_be_visible,target:harley=interested,Did you make the carpets match the drapes?
+-3-female_crotch_will_be_visible,filter:blonde=interested,You got some gold hiding in your panties, blondie?
+-3-female_crotch_is_visible=excited,I'll mash our pussies together till you can't breathe!
+-3-female_crotch_is_visible=horny,I'm gonna take my time with you.
+-3-female_crotch_is_visible=sadistic,The smell of fear is only slightly overpowered by the smell of a wet, fuckable cunt.
+-3-female_crotch_is_visible=excited,Turn around and show off your ass
+-3-female_crotch_is_visible=horny,Bend over, I'm gonna slam your ass like a guy.
+-3-female_crotch_is_visible,target:lux,targetStage:8=annoyed,You bitch, you don't have shit.
+-3-female_crotch_is_visible,target:lux,targetStage:8=annoyed,You bitch, you don't have shit.
+
+-2-male_chest_will_be_visible=excited,Take it off. Now.
+-2-male_chest_is_visible=horny,Fuck... that's a nice chest...
+-2-male_crotch_will_be_visible=horny,Dick out... I need something to suck.
+-2-male_crotch_will_be_visible,target:xander=horny,Let's see it, you vampire bitch.
+-2-male_crotch_will_be_visible,target:shaggy=horny,Oh you gotta be fuckin' kidding... Goddammit. Fine.
+-2-male_crotch_will_be_visible,target:fred=horny,Oh for Christ's sake, I gotta fuck you?! Jesus <i>fuckin'</i> Christ... Fine, get your dumb ass over here.
+-2-male_crotch_will_be_visible,target:caleb=horny,You're nowhere... near what I go for... but a dick's a dick...
+-2-male_crotch_will_be_visible,target:link,targetStage:0-4=horny,I don't know what the fuck you're spouting but stay quiet while I ride you...
+-2-male_small_crotch_is_visible=pissed,My fucking fingers are bigger.
+-2-male_medium_crotch_is_visible=horny,You like it when I lick the tip? Howw abouu ow?
+-2-male_large_crotch_is_visible=horny,You. Me. Fuck.
+-2-male_large_crotch_is_visible,target:ryu=horny,Holy fuck... finally a guy who isn't a complete embarrassment.
+-2-female_chest_will_be_visible=excited,Give me... some good tits....
+-2-female_chest_will_be_visible,target:weiss=interested,Just shut up and show us how flat you are, bitch. I'll take your money later.
+-2-female_chest_will_be_visible,target:mileena=interested,I'm pretty sure you're from that one game, Clay Fighter.
+-2-female_chest_will_be_visible,filter:bi-curious=horny,You're wondering if my pussy tastes good or not. I can see it in your eyes. Let me fill you in: one lick of this and you'll be on cloud fuckin' nine.
+-2-female_chest_will_be_visible,filter:shy=annoyed,I'm over here doing this and you're fucking it up by not showing your tits! Fuckin' coward!
+-2-female_small_chest_is_visible=pissed,That's bullshit...
+-2-female_small_chest_is_visible=horny,Fine...whatever...come over here....
+-2-female_medium_chest_is_visible=excited,Those...fucking nipples...mmgh.
+-2-female_medium_chest_is_visible,target:zone-tan=interested,If you're going to just watch me, you may as well come over so I can grab a tit.
+-2-female_large_chest_is_visible=excited,Holy...nn...shit....
+-2-female_crotch_will_be_visible=excited,C'mon...show your pussy.
+-2-female_crotch_will_be_visible=horny,Lost the next hand so I can fuck you already...
+-2-female_crotch_will_be_visible,target:ruby=horny,I gotta be honest, you made me horny the moment you pulled your gun out.
+-2-female_crotch_will_be_visible,target:spooky=horny,Alright, I don't know what my fuckin' life decisions were that led to me getting tongue fucked by a ghost, but let's go.
+-2-female_crotch_will_be_visible,target:rosalina=horny,You're fuckin' slutty for a princess, ya know that...?
+-2-female_crotch_will_be_visible,target:shantae=horny,Can your pubes whip too?
+-2-female_crotch_will_be_visible,target:shazza=horny,G'day cunt, why don't you cunting get over here and eat this cunt, cunt?
+-2-female_crotch_will_be_visible,target:sheena=horny,This game doesn't mean shit, I'm still the better killer...
+-2-female_crotch_will_be_visible,target:streaming-chan=horny,Those fucking virgins watching couldn't take me if I was deaf, blind and dumb...
+-2-female_crotch_will_be_visible,target:misty=horny,Yeah... you're a water type.
+-2-female_crotch_will_be_visible,target:tracer=horny,I'll make you rewind just so you can keep getting fucked by the fastest fingers you'll ever m...
+-2-female_crotch_will_be_visible,target:velma=horny,You won't have time to say anything but my name when I'm fuckin' you...
+-2-female_crotch_will_be_visible,target:wiifitfemale=horny,It's still fuckin' weird that you're gray, but fuck it, you're hot.
+-2-female_crotch_will_be_visible,target:zoey=horny,Fuckin' love a woman who can shoot...
+-2-female_crotch_will_be_visible,filter:blonde=interested,You got some gold hiding in your panties, blondie?
+-2-female_crotch_will_be_visible,target:raven=horny,Didn't even wear panties. What a slut...
+-2-female_crotch_will_be_visible,target:tifa=horny,You wanna go play slots after this...?
+-2-female_crotch_will_be_visible,target:piper=horny,I'll kill you if you take a picture!
+-2-female_crotch_will_be_visible,target:leela=horny,The only way... you're getting near this pussy is if you close that eye...
+-2-female_crotch_will_be_visible,target:asuna=horny,If you e-ever get attacked by tentacles, let me know and I'll come running...
+-2-female_crotch_will_be_visible,target:lyn=smug,Fat load of good your fuckin' sword did you...
+-2-female_crotch_will_be_visible,target:alice=horny,God damn...wouldn't mind seeing just far your... rabbit hole goes.
+-2-female_crotch_will_be_visible,target:april=horny,Open your sewer hole, you... bitch... God that sounded bad, even for me.
+-2-female_crotch_will_be_visible,target:blackrose=horny,I'm wondering... how does virtual pussy compare to real pussy?
+-2-female_crotch_will_be_visible,target:buffy=horny,If I said my pussy was a vampire... would it make you come slay it?
+-2-female_crotch_will_be_visible,target:chara=horny,If you p-promise not to fuckin' stab me...I'll let you suck the best pussy above and below ground.
+-2-female_crotch_will_be_visible,target:chell=horny,Yeah, you'll do... less talking means more eating...
+-2-female_crotch_will_be_visible,target:d.va=horny,Don't know what the fuck 'nerf' means... but my muff could use some help...
+-2-female_crotch_will_be_visible,target:daisy=interested,C'mon princess, pucker up for pussy.
+-2-female_crotch_will_be_visible,target:daphne=horny,Hey bitch, my pussy needs some rescuing. This is the first chance you've ever had to actually do something useful.
+-2-female_crotch_will_be_visible,target:harley=interested,Did you make the carpets match the drapes?
+-2-female_crotch_will_be_visible,target:jasmine=horny,You have the look of an extremely sheltered... bitch... I'll show you how real people have fun...
+-2-female_crotch_will_be_visible,target:kim=horny,You're a cheerslut, so you obviously have practice with girls... but I'm a whole different breed.
+-2-female_crotch_will_be_visible,target:elizabeth=horny,Hey ya fuckin' prude, I don't know how they do it back in the 1700s, but today you can eat me out and not get lynched or whatever.
+-2-female_crotch_will_be_visible,target:kyoko=horny,Your pussy better not be burnt to a crisp...
+-2-female_crotch_will_be_visible,target:kyoko=horny,I swear if you taste like fried chicken I'm outta here...
+-2-female_crotch_will_be_visible,target:peach=horny,C'mere so I can take a big fuckin' bite out of your peach...
+-2-female_crotch_will_be_visible,target:pauling=horny,Who do you think can spread more, Ms. Accountant?
+-2-female_crotch_will_be_visible,target:nugi-chan=horny,Why do I always attract the fucking maids...
+-2-female_crotch_will_be_visible,target:korra=horny,Hey, why don't you try bending this cum in your mouth?
+-2-female_crotch_will_be_visible,target:mileena=horny,I can't believe I'm going to ask a fucking monster to eat me out... but fuck it, ya only live once!
+-2-female_crotch_will_be_visible,target:penny=horny,Quit being so fucking shy and stick something inside yourself!
+-2-female_crotch_will_be_visible,target:may=horny,You got a monster that'll make me cum... or do I gotta use you?
+-2-female_crotch_will_be_visible,target:lux=horny,You're way too fuckin' happy for my tastes but pussy's pussy.
+-2-female_crotch_will_be_visible,target:lilith=horny,Fuck I wanna hear you scream...
+-2-female_crotch_will_be_visible,target:lara=horny,I got a tunnel you can spelunk in...
+-2-female_crotch_will_be_visible,target:meg=horny,I'm the sexiest fuckin' monster you'll ever meet...
+-2-female_crotch_will_be_visible,target:dawn=horny,Spread your legs, blue hair.
+-2-female_crotch_is_visible=excited,Hell yeah...s-spread those whore legs...
+-2-female_crotch_is_visible=horny,I'm about to bury my tongue inside you...
+-2-female_crotch_is_visible,target:mercy=horny,I'll make you scream your name...
+-2-female_crotch_is_visible,target:mia=horny,Damn, I love a woman who's got balls...
+-2-female_crotch_is_visible,target:lux,targetStage:8=annoyed,You bitch, you don't have shit.
+-2-female_crotch_is_visible,target:seven=horny,You ain't too bad for a space bitch...
+-2-female_crotch_is_visible,target:harley=horny,You really like that bat... I can think of way to use it on you that'd make you scream...
+-2-female_crotch_is_visible,filter:blonde=interested,H-Hey, you dumb blonde bimbo... come over here so I can dig for gold...
+
+-1-male_chest_will_be_visible=annoyed,Where the hell was this when I needed it?!
+-1-male_chest_is_visible=pissed,Goddammit!
+-1-male_crotch_will_be_visible=calm,Whatever, show your cock. I'm finished.
+-1-male_small_crotch_is_visible=laughing,Put it back in your pants and get the fuck out of here!
+-1-male_medium_crotch_is_visible=excited,You look in desperate need of a good pegging.
+-1-male_large_crotch_is_visible=horny,Oh, I can <i>definitely</i> go again...
+-1-female_chest_will_be_visible=interested,Tits out! Tits out! Tits out!
+-1-female_chest_will_be_visible,target:weiss=interested,Just shut up and show us how flat you are, bitch. I'll take your money later.
+-1-female_chest_will_be_visible,filter:bi-curious=horny,You're wondering if my pussy tastes good or not. I can see it in your eyes. Let me fill you in: one lick of this and you'll be on cloud fuckin' nine.
+-1-female_chest_will_be_visible,filter:shy=annoyed,Don't try to pull that shy shit. You just saw me go at it no fucking problem, and if I can do that you can take your damn tits out.
+-1-female_chest_will_be_visible,target:mileena=interested,I'm pretty sure you're from that one game, Clay Fighter.
+-1-female_small_chest_is_visible=laughing,Hahaha! What, did your mommy drop you here after school?
+-1-female_medium_chest_is_visible=excited,The janitor better not mind me spilling myself on the floor. Ah, you know what, fuck him. Wouldn't be the first business I destroyed.
+-1-female_medium_chest_is_visible,target:zone-tan=pissed,You're not half bad, purple bitch. There, I sweet-talked you. Now get naked.
+-1-female_large_chest_is_visible=shocked,If those are real, I'm getting your phone number before I leave.
+-1-female_crotch_will_be_visible=interested,Rip that shit down and show us your insides.
+-1-female_crotch_will_be_visible,target:penny=horny,Quit being so fucking shy and stick something inside yourself!
+-1-female_crotch_will_be_visible,target:dawn=horny,Spread your legs, blue hair.
+-1-female_crotch_will_be_visible,target:harley=interested,Did you make the carpets match the drapes?
+-1-female_crotch_will_be_visible,target:lyn=smug,Fat load of good your fuckin' sword did you...
+-1-female_crotch_will_be_visible,filter:blonde=interested,You got some gold hiding in your panties, blondie?
+-1-female_crotch_is_visible=horny,I already got off, but that slit... Ah fuck it, c'mere!
+-1-female_crotch_is_visible,target:lux,targetStage:8=annoyed,You bitch, you don't have shit.
+-1-female_crotch_is_visible,target:seven=horny,You ain't too bad for a space bitch...
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#fully clothed
+0-male_must_masturbate=calm,Just what every guy dreams of: jacking off in front of a bunch of whores.
+0-male_start_masturbating=interested,Never actually seen a guy do this before.
+0-male_masturbating=horny,Not bad, but you've still gotta finish.
+0-male_masturbating=sadistic,If you get punched in the balls, it feels better.
+0-male_finished_masturbating=shocked,Fucking hell that went far.
+0-male_finished_masturbating=laughing,Hah! You creamed these sluts!
+0-male_finished_masturbating=excited,
+0-female_must_masturbate=laughing,Get going, bitch!
+0-female_must_masturbate=excited,Judging by how much you're dripping on the floor, you've been waiting for this.
+0-female_must_masturbate=horny,What's the biggest thing you ever stuck in that?
+0-female_must_masturbate=heart,You lost big time, girly.
+0-female_must_masturbate,filter:innocent=excited,Time to lose your innocence, girly.
+0-female_start_masturbating=interested,I know all the tricks of the trade, bitch. You've got nothing I haven't seen.
+0-female_masturbating=horny,I could pinch your clit and never let go...
+0-female_masturbating=sadistic,Ever been fisted?
+0-female_masturbating,target:samus=horny,You might be the biggest slut I've ever seen. You didn't even wait until I took my fucking gloves off.
+0-female_masturbating,target:samus=horny,If you want I can shove these up there... I think you'd like it...
+0-female_masturbating,target:samus=horny,I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.
+0-female_masturbating,target:samus=horny,I can hear your fingers going in and out, slut.
+0-female_masturbating,target:samus=horny,Why didn't you just come naked if you were gonna fuck yourself so hard?
+0-female_finished_masturbating=horny,Fuck yeah...
+0-female_finished_masturbating=excited,We got a squirter!
+0-female_finished_masturbating=shocked,Did you seriously just hit me? I don't know if I should be pissed or impressed.
+
+
+#lost gloves
+1-male_must_masturbate=annoyed,Cum near me and I'll tear your balls off.
+1-male_start_masturbating=annoyed,Yeah, whatever, it's a dude jacking off. Don't look at him and he'll go away.
+1-male_masturbating=calm,Would you shut up?
+1-male_finished_masturbating=laughing,Hah! Right in that whore's face!
+1-female_must_masturbate=heart,Nice pussy, how well do you play with it?
+1-female_must_masturbate,filter:innocent=excited,Time to lose your innocence, girly.
+1-female_start_masturbating=excited,Pretty well. You do disgusting stuff behind closed doors, don't you?
+1-female_masturbating=interested,If you cum on the floor, I <i>will</i> make you clean it up.
+1-female_masturbating=interested,You got a lot spunk, both inside and out.
+1-female_masturbating,target:samus=horny,If you want I can shove these up there... I think you'd like it...
+1-female_masturbating,target:samus=horny,Why didn't you just come naked if you were gonna fuck yourself so hard?
+1-female_masturbating,target:samus=horny,I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.
+1-female_masturbating,target:samus=horny,I can hear your fingers going in and out, slut.
+1-female_finished_masturbating=laughing,Looks like a certain someone has to lap their juice up like a fucking dog!
+
+
+#lost boots
+2-male_must_masturbate=calm,I ain't giving you a footjob if that's what you're after.
+2-male_start_masturbating=smug,It's good to not be completely fuckin' terrible at poker.
+2-male_masturbating=pissed,Hey, shut the fuck up! I'm still trying to strip the rest of these cunts and you're ruining my concentration!
+2-male_finished_masturbating=annoyed,Finally, now clean it up. NO, I'm not fucking getting you a towel! Lick it up, fuck you think you have a tongue for?!
+2-female_must_masturbate=interested,I used to whip girls for a living. You need me, just shout.
+2-female_must_masturbate,filter:innocent=excited,Time to lose your innocence, girly.
+2-female_start_masturbating=sadistic,'Course, I might just hit you anyways.
+2-female_masturbating=excited,Niiiice view, but you can spread that even more.
+2-female_masturbating,target:samus=horny,I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.
+2-female_masturbating,target:samus=horny,I can hear your fingers going in and out, slut.
+2-female_masturbating,target:samus=horny,Why didn't you just come naked if you were gonna fuck yourself so hard?
+2-female_masturbating,target:samus=horny,If you want I can shove these up there... I think you'd like it...
+2-female_finished_masturbating=excited,If I tried to step on your pussy, I'd slide right off.
+2-female_finished_masturbating=sadistic,Ever heard the expression, 'shove my foot up your ass'? I'm about to teach you a variant.
+
+
+#lost holster
+3-male_must_masturbate=smug,Nothing left to holster your dick with, huh? Time to start pounding away.
+3-male_start_masturbating=excited,Nice form, you must do this a lot.
+3-male_masturbating=sadistic,I could squeeze your balls till they burst.
+3-male_masturbating=calm,Either cum or shut up, can't fuckin' hear myself think.
+3-male_finished_masturbating=pissed,You dead motherfucker, you were aiming for my guns, weren't you?
+3-female_must_masturbate=calm,I like my sluts to cum hard and fast.
+3-female_must_masturbate,filter:innocent=excited,Time to lose your innocence, girly.
+3-female_start_masturbating=interested,Let's see if you can match up.
+3-female_masturbating=excited,Not bad so far, bitch!
+3-female_masturbating,target:samus=horny,If you want I can shove these up there... I think you'd like it...
+3-female_masturbating,target:samus=horny,Why didn't you just come naked if you were gonna fuck yourself so hard?
+3-female_masturbating,target:samus=horny,I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.
+3-female_masturbating,target:samus=horny,I can hear your fingers going in and out, slut.
+3-female_finished_masturbating=horny,Yeah, I'll give you credit. That was hot.
+
+
+#lost guns
+4-male_must_masturbate=calm,Unfortunately for you and your need to be dominated by a woman packing heat, I lost my guns.
+4-male_start_masturbating=smug,You can try, but I know you won't get off without thinking about me squeezing your balls.
+4-male_masturbating=laughing,I still can't get over fucking stupid a dick is! It just fucking hangs there! Slap it around some!
+4-male_finished_masturbating=calm,Are you sluts just gonna let that cum sit there? Fuckin' lick it up!
+4-female_must_masturbate=heart,C'mon, play with that puss. It'll be cute.
+4-female_must_masturbate,filter:innocent=excited,Time to lose your innocence, girly.
+4-female_start_masturbating=smug,Be honest, you're just doing this to get my attention, aren'tcha?
+4-female_masturbating=interested,It's working. I wanna get a piece of that clit.
+4-female_masturbating,target:samus=horny,I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.
+4-female_masturbating,target:samus=horny,I can hear your fingers going in and out, slut.
+4-female_masturbating,target:samus=horny,Why didn't you just come naked if you were gonna fuck yourself so hard?
+4-female_finished_masturbating=excited,If you think that was good, just wait till I get my hands in you.
+4-female_finished_masturbating=shocked,I think you can squirt farther than me!
+4-female_finished_masturbating=horny,If you could just drip on my fingers for a sec, that'd be great.
+
+
+#lost shorts
+5-male_must_masturbate=calm,Yeah, fine, you can look at me. If you put on a good show, I might even spare your balls from a whipping.
+5-male_start_masturbating=interested,Come on, stroke harder.
+5-male_start_masturbating=sadistic,Watching just makes me want to pull on it as hard as possible.
+5-male_masturbating=laughing,You're moaning like a bitch!
+5-male_finished_masturbating=calm,Yeah I'm dripping, fucking who wouldn't after that?
+5-female_must_masturbate=laughing,Killed your final hand! Now dance for us!
+5-female_must_masturbate,filter:innocent=excited,Time to lose your innocence, girly.
+5-female_start_masturbating=smug,Get to it. You can imagine me naked, but that ain't gonna happen.
+5-female_masturbating=interested,If you're trying to get my panties wet, it's working.
+5-female_masturbating=excited,We're gonna need a fucking mop when you're finished.
+5-female_masturbating,target:samus=horny,I might just put my panties on your head. It's not any different from the kind of shit you usually fight.
+5-female_masturbating,target:samus=horny,I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.
+5-female_masturbating,target:samus=horny,I can hear your fingers going in and out, slut.
+5-female_finished_masturbating=horny,Your pussy can spasm like there's no fucking tomorrow!
+
+
+#lost tank top
+6-male_must_masturbate=interested,Well aren't you all fucking roaring and ready to go?
+6-male_start_masturbating=excited,I'm just gonna flick the tip of your dick.
+6-male_masturbating=excited,God, I can feel your veins pulsing. You're ready to cum, aren't you?
+6-male_masturbating=sadistic,If you're not doing it hard enough to rip your cock off, you're not jerking it.
+6-male_finished_masturbating=horny,You came all over my hands, you son of a bitch! Now I gotta fuckin' lick them clean...
+6-female_must_masturbate=calm,You look like the kind of slut who'd get off on me shoving my panties in your mouth.
+6-female_must_masturbate=smug,You wouldn't believe how experienced my fingers are.
+6-female_must_masturbate,filter:innocent=excited,Time to lose your innocence, girly.
+6-female_start_masturbating=interested,So tell you what, if you beat me next hand I'll shove 'em as far as they'll go.
+6-female_masturbating=smug,If you think I haven't seen that move you've got no idea what I'm capable of.
+6-female_masturbating=laughing,That's child's play compared to what it takes to get me off!
+6-female_masturbating,target:samus=horny,You must be real popular with those bird lookin' fucks.
+6-female_masturbating,target:samus=horny,I might just put my panties on your head. It's not any different from the kind of shit you usually fight.
+6-female_masturbating,target:samus=horny,I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.
+6-female_masturbating,target:samus=horny,I can hear your fingers going in and out, slut.
+6-female_finished_masturbating=excited,That pussy was opening and closing like it was winking at me!
+
+-3-male_must_masturbate=annoyed,I-I'm not staring, fuck off...
+-3-male_start_masturbating=interested,I just wanna see how you do it...
+-3-male_masturbating=excited,Goddamn...I want to fucking ride you...
+-3-male_finished_masturbating=horny,Like it when I play with it on my tongue you dirty fuck? How about when I swallow it?
+-3-female_must_masturbate=excited,It'd <i>almost</i> be worth losing to fuck you.
+-3-female_must_masturbate,filter:innocent=excited,Time to lose your innocence, girly.
+-3-female_start_masturbating=interested,You do any ass play?
+-3-female_masturbating=excited,I bet you could fit more than that, you slut!
+-3-female_masturbating=horny,If I lose, you better be ready for a fucking.
+-3-female_masturbating,target:samus=horny,I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.
+-3-female_masturbating,target:samus=horny,I can hear your fingers going in and out, slut.
+-3-female_masturbating,target:samus=horny,I've been listening to you all game, slut, and now I'm about to break your pussy.
+-3-female_finished_masturbating=horny,Fuckin' hell you're soaked... Wouldn't mind grinding pussies together...
+
+-2-male_must_masturbate=horny,Were you ex..expecting me to suck your cock? Cause that ain't happening... I'm gonna ride you till you cum, fucking virgin...
+-2-male_start_masturbating=sadistic,And if that prick over there says we can't fuck, I'll shoot his cock off...now get the fuck over here and lie down...
+-2-male_masturbating=excited,F-FUCK YEAH...!
+-2-male_masturbating=horny,You like me... slamming down on your cock, y-you fucking manwhore...?
+-2-male_masturbating=horny,You...better...cum...inside...me...
+-2-male_masturbating=calm,I've never clenched this fucking hard around a dick...I'm gonna cum...
+-2-male_masturbating=pissed,If you don't shoot cum inside me...I'll shoot lead in your brain...
+-2-male_finished_masturbating=horny,Fffffuck yeah...now stay down while I finish...
+-2-female_must_masturbate=horny,I killed the prick saying we can't fuck... so get the fuck over here...now.
+-2-female_must_masturbate=horny,Fuck the rules, I'm splitting your pussy wide open. Get the hell over here...
+-2-female_must_masturbate,filter:innocent=excited,Time to lose your innocence, girly.
+-2-female_must_masturbate,target:sonya=horny,I'm gonna eat you out. You better not rip my fucking head off or something...
+-2-female_start_masturbating=horny,I'm about to fuck you so good, your fingers will never satisfy you again...
+-2-female_start_masturbating=sadistic,If I had a d-dick I wouldn't stop fucking you till you passed out. I'm still gonna do tha-AH-t, j-just not with the dick...
+-2-female_start_masturbating,target:hermione=horny,Yo... don't be a selfish bitch. Share those with the rest of us...
+-2-female_masturbating=horny,Three in the pink, two in the stink, you like that? I'm not... called Two Hands for nothing...
+-2-female_masturbating=horny,You twitch when I lick right in here... oh yeah, I felt you jump.
+-2-female_masturbating=horny,God <i>damn</i> are you the tightest bitch I've ever fingered... it's like you've never been penetrated.
+-2-female_masturbating=horny,You like it when I tease your clit... yeah, you do.
+-2-female_masturbating,target:nagisa=horny,Fuck, I don't know what you're saying... but it's weirdly hot...
+-2-female_masturbating,target:samus=horny,Suck my fingers, bitch!
+-2-female_masturbating,target:samus=horny,So whose ship we going back to after this?
+-2-female_masturbating,target:samus=horny,I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.
+-2-female_masturbating,target:samus=horny,I can hear your fingers going in and out, slut.
+-2-female_masturbating,target:samus=horny,I've been listening to you all game, slut, and now I'm about to break your pussy.
+-2-female_finished_masturbating=horny,F-Fuck yeah, now finish me off...
+
+-1-male_must_masturbate=horny,Hold up... I ain't done yet.
+-1-male_start_masturbating=excited,That's right, this is a pussy, and the stuff coming out means your dick's about to explode. Now make like a corpse and drop.
+-1-male_masturbating=horny,F-Fuck!
+-1-male_masturbating=sadistic,Don't you fucking stop.
+-1-male_masturbating=horny,Fuck... your cock's goddamn hot... about to cum?
+-1-male_finished_masturbating=horny,Now which one of you sluts is gonna clean me up and swallow this shit?
+-1-female_must_masturbate=excited,Don't even move a muscle, I'll be over to fix you right up.
+-1-female_must_masturbate,filter:innocent=excited,Time to lose your innocence, girly.
+-1-female_start_masturbating=horny,How's it feel when I roll your clit between my fingers?
+-1-female_masturbating=excited,Fucking fuck you're tight...
+-1-female_masturbating=horny,You like how I fire off your pussy? My trigger finger's had a lot of practice.
+-1-female_masturbating,target:samus=horny,I've been listening to you all game, slut, and now I'm about to break your pussy.
+-1-female_masturbating,target:samus=horny,Suck my fingers, bitch!
+-1-female_masturbating,target:samus=horny,So whose ship we going back to after this?
+-1-female_masturbating,target:samus=horny,I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.
+-1-female_masturbating,target:samus=horny,I can hear your fingers going in and out, slut.
+-1-female_finished_masturbating=excited,Look at that cum string, you just don't know when to let go of my fingers, do you? At least you taste good.
+-1-female_finished_masturbating=horny,Hold on, let me wipe up some of my cum so it blasts your tongue.
+-1-female_finished_masturbating,target:nagisa=calm,Hey kid. Nagisa. Sorry if I called you a cunt.
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+-3-must_masturbate_first=loss_pissed,GET READY YOU FUCKING COCKSUCKERS, I'LL SHOW YOU HOW A REAL FUCKING WOMAN MAKES HERSELF CUM!
+-3-must_masturbate_first=loss_pissed,Better enjoy this, 'cause I'm fucking shooting this place up afterwards.
+-3-must_masturbate=loss,Loaded deck a-fucking-side, I'll give you assholes a show you won't ever forget.
+-3-must_masturbate=loss,Haven't jerked off in weeks anyways...
+-3-start_masturbating=masturbate,You better commit this to memory...
+-3-start_masturbating=horny,Fuck I'm horny...
+
+-2-masturbating=smug,Ain't it the best fuckin' pussy you've ever seen...?
+-2-masturbating=excited,Fuck this feels good...
+-2-masturbating=horny,Ahh...ahh...mmfff...
+-2-masturbating=horny,God <i>damn</i> I'm tight...
+-2-heavy_masturbating=excited,G-God... gonna cum...
+-2-heavy_masturbating=horny,Gonna cum...gonna cum...gonna cum...
+-2-finishing_masturbating=finishing,FUUUUUUUUCK YEEEEEEAH!
+-2-finishing_masturbating=finishing,MMMFFFFFFUUuuuuckkkk...
+
+-1-finished_masturbating=finished,RUM! NOW! ANYONE WHO KEEPS UP GETS TO FUCK WHICHEVER HOLE THEY WANT!
+-1-finished_masturbating=finished,Damn that was good. Always fun to splatter sluts with cum.
+-1-finished_masturbating=finished,Goddammit, this is my last cigarette. Fuck it, I need one after that.
+
+
+
+
+#GAME OVER VICTORY
+
+#stage-generic line that will be used for every individual stage that doesn't have a line written
+
+#fully clothed
+0-game_over_victory=annoyed,I oughta shoot all of you for being such shitty poker players.
+0-game_over_victory=annoyed,Great, I got to sit here and watch a bunch of dumbasses poke each other's holes. Woohoo.
+
+
+#lost gloves
+1-game_over_victory=smug,That's what happens when you fuck with the best.
+1-game_over_victory=annoyed,Stupid of me to think you'd put up a fight.
+
+
+#lost boots
+2-game_over_victory=pissed,Fuckin' pathetic.
+2-game_over_victory=excited,I'll be taking your clothes as payment.
+
+
+#lost holster
+3-game_over_victory=sadistic,Hey you. Whore. Swallow that cum before I kill you.
+3-game_over_victory=laughing,Easiest poker game of my life!
+
+
+#lost guns
+4-game_over_victory=sadistic,Where are my guns? I need to let off some steam if you pussies won't do it for me.
+4-game_over_victory=annoyed,If any of you came on my guns, I'll have your heads. Every. Single. One.
+
+
+#lost shorts
+5-game_over_victory=smug,If I wasn't in such a good mood you'd have never seen this much.
+5-game_over_victory=smug,Remember the time you saw the best pair of tits in the world, 'cause it sure as shit ain't happening again.
+
+
+#lost tank top
+6-game_over_victory=smug,And you were so close to seeing my pussy. If you beg like the dog you are I might give you a treat.
+6-game_over_victory=sadistic,If you want to live you'll give me all the money you have.
+
+-3-game_over_victory=laughing,Just like Roberta, when you think you got me cornered I make you my bitch!
+-3-game_over_victory=smug,Close but no cigar, shitheads. I'm just plain better than you.
+
+
+
+
+#GAME OVER DEFEAT
+game_over_defeat=sadistic,You can bet your ass you'll see me again.
+game_over_defeat=horny,Fuck, I haven't cummed like that in a while.
+game_over_defeat=pissed,Yeah you won, don't get fucking full of yourself.
+game_over_defeat=excited,Who's gonna clean my thighs up?
+game_over_defeat=laughing,You skanks know how to have a good time.
+game_over_defeat,target:weiss,targetSaidMarker:weiss_attempts_bribery=calm,So how much did you say I could ransom you for, bitch?
+game_over_defeat,target:daria=pissed,I'm sick of this Revenge of the Nerds shit. Where's my gun?
+
+#EPILOGUE/ENDING
