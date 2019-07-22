@@ -1640,7 +1640,7 @@ Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
  ************************************************************/
 function updateAllBehaviours (target, target_tags, other_tags) {
     for (var i = 1; i < players.length; i++) {
-        if (players[i] && (target === null || i != target)) {
+        if (players[i] && players[i].isLoaded() && (target === null || i != target)) {
             if (typeof other_tags === 'object') {
                 other_tags.some(function(t) {
                     return players[i].updateBehaviour(t, players[target]);
