@@ -1053,6 +1053,8 @@ function loadVersionInfo () {
 		success: function(xml) {
             versionInfo = $(xml);
             CURRENT_VERSION = versionInfo.find('current').attr('version');
+
+            if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
             
             $('.substitute-version').text('v'+CURRENT_VERSION);
             console.log("Running SPNATI version "+CURRENT_VERSION);
