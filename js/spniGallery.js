@@ -547,12 +547,12 @@ function doEpilogueFromGallery(){
 				if (SENTRY_INITIALIZED) {
 					Sentry.addBreadcrumb({
 						category: 'epilogue',
-						message: 'Starting ' + chosenEpilogue.player.id + ' epilogue: ' + chosenEpilogue.title,
+						message: 'Starting ' + epilogue.player.id + ' epilogue: ' + epilogue.title,
 						level: 'info'
 					});
 
-					Sentry.setTag("epilogue_player", chosenEpilogue.player.id);
-					Sentry.setTag("epilogue", chosenEpilogue.title);
+					Sentry.setTag("epilogue_player", epilogue.player.id);
+					Sentry.setTag("epilogue", epilogue.title);
 					Sentry.setTag("epilogue_gallery", true);
 					Sentry.setTag("screen", "epilogue");
 				}
