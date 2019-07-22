@@ -156,7 +156,6 @@ function Save() {
         var usageTracking = localStorage.getItem(prefix + 'usageTracking');
         if (usageTracking) {
             USAGE_TRACKING = (usageTracking == 'yes');
-            sentryInit();
         }
         var gender = localStorage.getItem(prefix + 'gender');
         if (gender) {

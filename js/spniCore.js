@@ -1006,9 +1006,18 @@ function initialSetup () {
     loadGeneralCollectibles();
     
 	/* Make sure that the config file is loaded before processing the
-	   opponent list, so that includedOpponentStatuses is populated. */
-    loadConfigFile().always(loadSelectScreen);
+     *  opponent list, so that includedOpponentStatuses is populated.
+     *
+     * Also ensure that the config file is loaded before initializing Sentry,
+     * which requires the commit SHA.
+     */
+
     save.load();
+    
+    loadConfigFile().always(loadSelectScreen, function() {
+        if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
+    });
+
     updateTitleGender();
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
