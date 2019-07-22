@@ -1657,7 +1657,8 @@ SceneView.prototype.addBackground = function (background) {
 
 SceneView.prototype.addImage = function (id, src, args) {
   var img = document.createElement("img");
-  img.src = this.assetMap[src].src;
+  if (src) img.src = this.assetMap[src].src;
+
   var obj = new SceneObject(id, img, this, args);
   obj.setImage(src);
   this.addSceneObject(obj);
@@ -2190,6 +2191,8 @@ SceneObject.prototype = {
   },
 
   setImage: function (src) {
+    if (!src) return;
+
     this.rotElement.src = this.view.assetMap[src].src;
     this.src = src;
   },
