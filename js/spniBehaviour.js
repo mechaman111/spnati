@@ -1670,7 +1670,7 @@ function updateAllVolatileBehaviours () {
         var anyUpdated = false;
         
         players.forEach(function (p) {
-            if (p !== humanPlayer) {
+            if (p !== humanPlayer && p.isLoaded()) {
                 anyUpdated = p.updateVolatileBehaviour() || anyUpdated;
             }
         });
