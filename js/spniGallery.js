@@ -573,7 +573,6 @@ function doEpilogueFromGallery(){
 		
 			loadEpilogue(epilogue); //initialise buttons and text boxes
 			screenTransition($galleryScreen, $epilogueScreen);
-			$epilogueSelectionModal.modal("hide");
             $galleryStartButton.attr('disabled', false);
         });
 }
