@@ -1457,7 +1457,7 @@ function sentryInit() {
     if (USAGE_TRACKING && !SENTRY_INITIALIZED) {
         console.log("Initializing Sentry...");
 
-        Sentry.init({
+        var sentry_opts = {
             dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
             release: VERSION_COMMIT,
             maxBreadcrumbs: 250,
@@ -1465,7 +1465,13 @@ function sentryInit() {
                 console: false,
                 dom: false
             })]
-        });
+        };
+
+        if (window.location.origin.indexOf('spnati.net') >= 0) {
+            sentry_opts.environment = 'production';
+        }
+
+        Sentry.init(sentry_opts);
 
         Sentry.setUser({
             'id': sessionID,

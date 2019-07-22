@@ -12,6 +12,8 @@ deploy_production:
         - bash ./prepare-online.sh
         - rsync -rltz --delete .public/ /opt/spnati
         - sentry-cli releases set-commits --auto $VERSION
+        - sentry-cli releases finalize $VERSION
+        - sentry-cli releases deploys $VERSION new -e production
     environment:
         name: production
         url: https://spnati.net/
