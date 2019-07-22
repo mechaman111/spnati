@@ -151,14 +151,21 @@ function loadGameScreen () {
         
         if (players[i]) {
             players[i].current = 0;
+
+            if (SENTRY_INITIALIZED) Sentry.setTag("slot-" + i, players[i].id);
+        } else if (SENTRY_INITIALIZED) {
+            Sentry.setTag("slot-" + i, undefined);
         }
     }
+
     $gameLabels[HUMAN_PLAYER].removeClass("loser tied");
     clearHand(HUMAN_PLAYER);
 
+    previousLoser = -1;
     recentLoser = -1;
     currentRound = -1;
     gameOver = false;
+
     $gamePlayerCardArea.show();
     $gamePlayerCountdown.hide();
     chosenDebug = -1;
@@ -316,7 +323,7 @@ function advanceTurn () {
 	currentTurn++;
 	if (currentTurn >= players.length) {
 		currentTurn = 0;
-	}
+    }
 
     if (players[currentTurn]) {
         /* highlight the player who's turn it is */
@@ -445,7 +452,8 @@ function checkDealLock () {
 	if (dealLock > 0) {
 		timeoutID = window.setTimeout(checkDealLock, 100);
 	} else {
-		gamePhase = eGamePhase.AITURN;
+        gamePhase = eGamePhase.AITURN;
+        
         /* Set up main button.  If there is not pause for the human
 		   player to exchange cards, and someone is masturbating, and
 		   the card animation speed is to great, we need a pause so
@@ -761,6 +769,13 @@ function selectCard (card) {
 	} else {
 		fillCard(HUMAN_PLAYER, card);
 	}
+}
+
+function getGamePhaseString(phase) {
+    var keys = Object.keys(eGamePhase);
+    for (var i=0;i<keys.length;i++) {
+        if (eGamePhase[keys[i]] === phase) return keys[i];
+    }
 }
 
 /************************************************************
@@ -1097,3 +1112,4 @@ function updateDebugState(show)
         }
     }
 }
+

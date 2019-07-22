@@ -39,6 +39,7 @@ var currentExtendedDialogue = null;
 var backgroundEffects = [];
 
 exports.extendedDialoguePhase = extendedDialoguePhase;
+root.eGamePhase.EXTENDED_DIALOGUE = extendedDialoguePhase;
 
 function display_dialogue (pose, dialogue) {
     var pl = monika.utils.get_monika_player();

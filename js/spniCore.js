@@ -1473,7 +1473,21 @@ function sentryInit() {
             integrations: [new Sentry.Integrations.Breadcrumbs({
                 console: false,
                 dom: false
-            })]
+            })],
+            beforeSend: function (event, hint) {
+                /* Inject additional game state data into event tags: */
+                if (inGame) {
+                    event.extra.recentLoser = recentLoser;
+                    event.extra.previousLoser = previousLoser;
+                    event.extra.gameOver = gameOver;
+                    event.extra.currentTurn = currentTurn;
+                    event.extra.currentRound = currentRound;
+                    event.tags.rollback = inRollback();
+                    event.tags.gamePhase = getGamePhaseString(gamePhase);
+                }
+
+                return event;
+            }
         };
 
         if (window.location.origin.indexOf('spnati.net') >= 0) {
