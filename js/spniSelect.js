@@ -878,6 +878,11 @@ function changeGroupPage (skip, page) {
 }
 
 
+/************************************************************
+ * Adds hotkey functionality to the group selection screen.
+ ************************************************************/
+
+
 function groupSelectKeyToggle(e)
 {
     console.log(e)
