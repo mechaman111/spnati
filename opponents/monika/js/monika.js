@@ -3,7 +3,7 @@ if(!monika) var monika = (function (root) {
 var exports = {};
 
 if (root.SENTRY_INITIALIZED) {
-    root.Sentry.setTag('monika-enabled', true);
+    root.Sentry.setTag('monika-loaded', true);
     root.Sentry.addBreadcrumb({
         category: 'monika',
         message: 'Initializing monika.js...',
