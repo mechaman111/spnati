@@ -1455,7 +1455,8 @@ function sentryInit() {
             release: VERSION_COMMIT,
             maxBreadcrumbs: 250,
             integrations: [new Sentry.Integrations.Breadcrumbs({
-                console: false
+                console: false,
+                dom: false
             })]
         });
 
