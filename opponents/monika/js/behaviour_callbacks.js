@@ -245,6 +245,10 @@ monika.registerBehaviourCallback('startJointMasturbation', function () {
         root.previousLoser = -1;
     }
     
+    if (root.recentLoser == sayori.slot) {
+        root.recentLoser = -1;
+    }
+
     setTimeout(function () {
         /* Make Sayori's player entry disappear for the time being. */
         
