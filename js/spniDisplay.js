@@ -599,6 +599,11 @@ OpponentDisplay.prototype.onResize = function () {
 }
 
 OpponentDisplay.prototype.updateText = function (player) {
+    if (!player.chosenState.dialogue) {
+        this.dialogue.empty();
+        return;
+    }
+
     var displayElems = parseStyleSpecifiers(player.chosenState.dialogue).map(function (comp) {
         /* {'text': 'foo', 'classes': 'cls1 cls2 cls3'} --> <span class="cls1 cls2 cls3">foo</span> */
         
