@@ -1451,7 +1451,11 @@ function sentryInit() {
 
         Sentry.init({
             dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
-            release: VERSION_COMMIT
+            release: VERSION_COMMIT,
+            maxBreadcrumbs: 250,
+            integrations: [new Sentry.Integrations.Breadcrumbs({
+                console: false
+            })]
         });
 
         Sentry.setUser({
