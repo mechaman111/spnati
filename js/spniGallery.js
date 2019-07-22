@@ -342,7 +342,7 @@ function loadGalleryEndings(){
 	}
 	
 	for(var i=0; i<loadedOpponents.length; i++){
-		if (loadedOpponents[i].ending) {
+		if (loadedOpponents[i] && loadedOpponents[i].ending) {
 			loadedOpponents[i].endings.each(function () {
 				var gending = new GEnding(loadedOpponents[i], this);
 				allEndings.push(gending);
