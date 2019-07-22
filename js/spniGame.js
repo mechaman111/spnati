@@ -199,6 +199,7 @@ function loadGameScreen () {
 	allowProgression(eGamePhase.DEAL);
 
     $(document).keyup(game_keyUp);
+    $(document).keyup(groupSelectKeyToggle);
 }
 
 /**********************************************************************
@@ -383,6 +384,14 @@ function advanceTurn () {
 function startDealPhase () {
     currentRound++;
     saveTranscriptMessage("Starting round "+(currentRound+1)+"...");
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: 'Starting round '+(currentRound+1)+'...',
+            level: 'info'
+        });
+    }
     
     /* dealing cards */
 	dealLock = getNumPlayersInStage(STATUS_ALIVE) * CARDS_PER_HAND;
@@ -685,6 +694,14 @@ function endRound () {
 		gameOver = true;
         codeImportEnabled = true;
 
+        if (SENTRY_INITIALIZED) {
+            Sentry.addBreadcrumb({
+                category: 'game',
+                message: 'Game ended with '+players[lastPlayer].id+' winning.',
+                level: 'info'
+            });
+        }
+
         for (var i = 0; i < players.length; i++) {
             if (HUMAN_PLAYER == i) {
                 $gamePlayerCardArea.hide();
@@ -869,6 +886,14 @@ RollbackPoint.prototype.load = function () {
         returnRollbackPoint = new RollbackPoint();
         allowProgression(eGamePhase.EXIT_ROLLBACK);
     }
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'ui',
+            message: 'Entering rollback.',
+            level: 'info'
+        });
+    }
     
     currentRound = this.currentRound;
     currentTurn = this.currentTurn;
@@ -895,6 +920,14 @@ function inRollback() {
 
 function exitRollback() {
     if (!inRollback()) return;
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'ui',
+            message: 'Exiting rollback.',
+            level: 'info'
+        });
+    }
     
     returnRollbackPoint.load();
     allowProgression(returnRollbackPoint.gamePhase);

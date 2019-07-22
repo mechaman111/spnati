@@ -2,6 +2,15 @@ if(!monika) var monika = (function (root) {
 
 var exports = {};
 
+if (root.SENTRY_INITIALIZED) {
+    root.Sentry.setTag('monika_enabled', true);
+    root.Sentry.addBreadcrumb({
+        category: 'monika',
+        message: 'Initializing monika.js...',
+        level: 'info'
+    });
+}
+
 exports.EFFECTS_ENABLED = true;
 exports.GLITCH_MODIFIER = 1.0;
 
@@ -41,6 +50,8 @@ function configureGlitchChance (mode) {
     $("#options-monika-glitches-2").removeClass("active");
     $("#options-monika-glitches-3").removeClass("active");
     
+    if (root.SENTRY_INITIALIZED) root.Sentry.setTag('monika_glitch_mode', mode);
+
     switch (mode) {
     /* Off */
     case 3:

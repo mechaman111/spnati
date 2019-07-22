@@ -624,6 +624,14 @@ function suggestionSelected(slot, quad) {
     for (var i=0; i<loadedOpponents.length; i++) {
         if (loadedOpponents[i].id === selectedID) {
             players[slot] = loadedOpponents[i];
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Loading suggested opponent ' + loadedOpponents[i].id,
+                    level: 'info'
+                });
+            }
             
         	updateSelectionVisuals();
 
@@ -751,7 +759,15 @@ function updateSelectableGroups(screen) {
  ************************************************************/
 function loadGroup (chosenGroup) {
 	clickedRemoveAllButton();
-	console.log(chosenGroup.title);
+    console.log(chosenGroup.title);
+    
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Loading group '+chosenGroup.title,
+            level: 'info'
+        });
+    }
 
     /* load the group members */
 	for (var i = 1; i < 5; i++) {
@@ -760,6 +776,15 @@ function loadGroup (chosenGroup) {
             if (players.some(function(p, j) { return i != j && p == member; })) {
                 member = member.clone();
             }
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Loading group opponent ' + member.id,
+                    level: 'info'
+                });
+            }
+
             member.loadBehaviour(i);
             players[i] = member;
         }
@@ -797,6 +822,14 @@ function clickedRandomFillButton (predicate) {
 		if (!(i in players)) {
 			/* select random opponent */
 			var randomOpponent = getRandomNumber(0, loadedOpponentsCopy.length);
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Loading random opponent ' + loadedOpponentsCopy[randomOpponent].id,
+                    level: 'info'
+                });
+            }
 
 			/* load opponent */
 			players[i] = loadedOpponentsCopy[randomOpponent];
@@ -919,6 +952,15 @@ function advanceSelectScreen () {
     gameID = generateRandomID();
 
     if (USAGE_TRACKING) {
+        if (SENTRY_INITIALIZED) {
+            Sentry.setTag("in_game", true);
+            Sentry.addBreadcrumb({
+                category: 'game',
+                message: 'Starting game.',
+                level: 'info'
+            });
+        }
+
         var usage_tracking_report = {
             'date': (new Date()).toISOString(),
 			'commit': VERSION_COMMIT,
@@ -934,6 +976,8 @@ function advanceSelectScreen () {
         for (let i=1;i<5;i++) {
             if (players[i]) {
                 usage_tracking_report.table[i] = players[i].id;
+
+                if (SENTRY_INITIALIZED) Sentry.setTag("character:" + players[i].id, true);
             }
         }
 

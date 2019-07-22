@@ -17,6 +17,7 @@ var EPILOGUE_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
 var USAGE_TRACKING = undefined;
+var SENTRY_INITIALIZED = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
@@ -796,6 +797,14 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
 
 /* Called prior to removing a character from the table. */
 Opponent.prototype.unloadOpponent = function () {
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Unloading opponent ' + this.id,
+            level: 'info'
+        });
+    }
+
     if (this.stylesheet) {
         /* Remove the <link> to this opponent's stylesheet. */
         $('link[href=\"'+this.stylesheet+'\"]').remove();
@@ -1261,6 +1270,13 @@ function resetPlayers () {
  * Restarts the game.
  ************************************************************/
 function restartGame () {
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'ui',
+            message: 'Returning to title screen.',
+            level: 'info'
+        });
+    }
 
     $(document).off('keyup');
     $(document).keyup(groupSelectKeyToggle);
@@ -1277,6 +1293,17 @@ function restartGame () {
     if (!MINIMAL_UI) $gamePlayerClothingArea.show();
     
     inGame = false;
+    if (SENTRY_INITIALIZED) {
+        Sentry.setTag("in_game", false);
+
+        for (let i = 1; i < 5; i++) {
+            if (players[i]) {
+                usage_tracking_report.table[i] = players[i].id;
+
+                if (SENTRY_INITIALIZED) Sentry.setTag("character:" + players[i].id, false);
+            }
+        }
+    }
 
 	/* trigger screen refreshes */
 	updateSelectionVisuals();
@@ -1410,11 +1437,31 @@ function showUsageTrackingModal() {
 function enableUsageTracking() {
     USAGE_TRACKING = true;
     save.saveUsageTracking();
+    sentryInit();
 }
 
 function disableUsageTracking() {
     USAGE_TRACKING = false;
     save.saveUsageTracking();
+}
+
+function sentryInit() {
+    if (USAGE_TRACKING && !SENTRY_INITIALIZED) {
+        console.log("Initializing Sentry...");
+
+        Sentry.init({
+            dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
+            release: VERSION_COMMIT
+        });
+
+        Sentry.setUser({
+            'id': sessionID
+        });
+
+        Sentry.setTag("game_version", CURRENT_VERSION);
+
+        SENTRY_INITIALIZED = true;
+    }
 }
 
 var SEMVER_RE = /[vV]?(\d+)\.(\d+)(?:\.(\d+))?(?:\-([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-])*))?(?:\+([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*))?/;

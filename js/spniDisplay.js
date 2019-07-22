@@ -955,6 +955,14 @@ OpponentDetailsDisplay.prototype.constructor = OpponentDetailsDisplay;
 OpponentDetailsDisplay.prototype.handleSelected = function (ev) {
     if (!this.opponent) return;
     
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Loading individual opponent ' + this.opponent.id,
+            level: 'info'
+        });
+    }
+
     players[selectedSlot] = this.opponent;
 	players[selectedSlot].loadBehaviour(selectedSlot, true);
     updateSelectionVisuals();

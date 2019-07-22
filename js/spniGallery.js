@@ -538,6 +538,18 @@ function doEpilogueFromGallery(){
 						'title': chosenEpilogue.title
 					}
 				};
+
+				if (SENTRY_INITIALIZED) {
+					Sentry.addBreadcrumb({
+						category: 'epilogue',
+						message: 'Starting ' + chosenEpilogue.player.id + ' epilogue: ' + chosenEpilogue.title,
+						level: 'info'
+					});
+
+					Sentry.setTag("epilogue_player", chosenEpilogue.player.id);
+					Sentry.setTag("epilogue", chosenEpilogue.title);
+					Sentry.setTag("epilogue_gallery", true);
+				}
 		
 				$.ajax({
 					url: USAGE_TRACKING_ENDPOINT,
