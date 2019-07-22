@@ -501,6 +501,7 @@ function doEpilogueFromGallery(){
 	}
 	
 	var player = chosenEpilogue.player;
+    $galleryStartButton.attr('disabled', true);
 	
 	fetchCompressedURL('opponents/' + player.id + "/behaviour.xml")
 		/* Success callback.
@@ -574,5 +575,6 @@ function doEpilogueFromGallery(){
 			loadEpilogue(chosenEpilogue); //initialise buttons and text boxes
 			screenTransition($galleryScreen, $epilogueScreen);
 			$epilogueSelectionModal.modal("hide");
-		});
+            $galleryStartButton.attr('disabled', false);
+        });
 }
