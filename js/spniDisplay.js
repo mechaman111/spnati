@@ -961,6 +961,7 @@ OpponentDetailsDisplay.prototype.handleSelected = function (ev) {
             message: 'Loading individual opponent ' + this.opponent.id,
             level: 'info'
         });
+        Sentry.setTag("screen", "select-main");
     }
 
     players[selectedSlot] = this.opponent;

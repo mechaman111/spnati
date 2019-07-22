@@ -1011,6 +1011,8 @@ function initialSetup () {
     save.load();
     updateTitleGender();
 
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
+
 	/* show the title screen */
 	$warningScreen.show();
 	$('#warning-start-button').focus();
@@ -1219,6 +1221,7 @@ function enterTitleScreen() {
     $warningScreen.hide();
     $titleScreen.show();
     $('#title-start-button').focus();
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
 }
 
 /************************************************************
@@ -1237,7 +1240,6 @@ function advanceToNextScreen (screen) {
     if (screen == $titleScreen) {
         /* advance to the select screen */
 		screenTransition($titleScreen, $selectScreen);
-
     } else if (screen == $selectScreen) {
         /* advance to the main game screen */
         $selectScreen.hide();
@@ -1278,6 +1280,11 @@ function restartGame () {
             message: 'Returning to title screen.',
             level: 'info'
         });
+
+        Sentry.setTag("screen", "title");
+        Sentry.setTag("epilogue_player", undefined);
+        Sentry.setTag("epilogue", undefined);
+        Sentry.setTag("epilogue_gallery", undefined);
     }
 
     $(document).off('keyup');
@@ -1318,7 +1325,7 @@ function restartGame () {
 	$gameScreen.hide();
 	$epilogueScreen.hide();
 	clearEpilogue();
-	$titleScreen.show();
+    $titleScreen.show();
 }
 
 /**********************************************************************
