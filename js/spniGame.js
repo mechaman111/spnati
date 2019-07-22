@@ -151,10 +151,6 @@ function loadGameScreen () {
         
         if (players[i]) {
             players[i].current = 0;
-
-            if (SENTRY_INITIALIZED) Sentry.setTag("slot-" + i, players[i].id);
-        } else if (SENTRY_INITIALIZED) {
-            Sentry.setTag("slot-" + i, undefined);
         }
     }
 

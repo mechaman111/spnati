@@ -985,8 +985,6 @@ function advanceSelectScreen () {
         for (let i=1;i<5;i++) {
             if (players[i]) {
                 usage_tracking_report.table[i] = players[i].id;
-
-                if (SENTRY_INITIALIZED) Sentry.setTag("character:" + players[i].id, true);
             }
         }
 

@@ -1314,12 +1314,6 @@ function restartGame () {
 
     if (SENTRY_INITIALIZED) {
         Sentry.setTag("in_game", false);
-
-        for (let i = 1; i < 5; i++) {
-            if (players[i]) {
-                Sentry.setTag("character:" + players[i].id, false);
-            }
-        }
     }
 
 	/* trigger screen refreshes */
@@ -1482,9 +1476,23 @@ function sentryInit() {
                     event.extra.gameOver = gameOver;
                     event.extra.currentTurn = currentTurn;
                     event.extra.currentRound = currentRound;
+
                     event.tags.rollback = inRollback();
                     event.tags.gamePhase = getGamePhaseString(gamePhase);
                 }
+
+                var n_players = 0;
+                for (var i=1;i<players.length;i++) {
+                    if (players[i]) {
+                        n_players += 1;
+                        event.tags["character:"+players[i].id] = true;
+                        Sentry.setTag("slot-" + i, players[i].id);
+                    } else {
+                        Sentry.setTag("slot-" + i, undefined);
+                    }
+                }
+
+                event.tags.n_players = n_players;
 
                 return event;
             }
