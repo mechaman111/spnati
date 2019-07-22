@@ -1293,14 +1293,13 @@ function restartGame () {
     if (!MINIMAL_UI) $gamePlayerClothingArea.show();
     
     inGame = false;
+
     if (SENTRY_INITIALIZED) {
         Sentry.setTag("in_game", false);
 
         for (let i = 1; i < 5; i++) {
             if (players[i]) {
-                usage_tracking_report.table[i] = players[i].id;
-
-                if (SENTRY_INITIALIZED) Sentry.setTag("character:" + players[i].id, false);
+                Sentry.setTag("character:" + players[i].id, false);
             }
         }
     }
