@@ -992,6 +992,9 @@ function initialSetup () {
     players[HUMAN_PLAYER] = humanPlayer = new Player('human'); //createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
     humanPlayer.slot = HUMAN_PLAYER;
 
+    /* Generate a random session ID. */
+    sessionID = generateRandomID();
+
 	/* enable table opacity */
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
@@ -1012,9 +1015,6 @@ function initialSetup () {
 	$warningScreen.show();
 	$('#warning-start-button').focus();
     autoResizeFont();
-
-    /* Generate a random session ID. */
-    sessionID = generateRandomID();
 
     /* Construct a CSS rule for every combination of arrow direction, screen, and pseudo-element */
     bubbleArrowOffsetRules = [];
@@ -1455,7 +1455,7 @@ function sentryInit() {
         });
 
         Sentry.setUser({
-            'id': sessionID
+            'id': sessionID,
         });
 
         Sentry.setTag("game_version", CURRENT_VERSION);
