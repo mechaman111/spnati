@@ -925,6 +925,7 @@ function doEpilogue() {
       Sentry.setTag("epilogue_player", chosenEpilogue.player.id);
       Sentry.setTag("epilogue", chosenEpilogue.title);
       Sentry.setTag("epilogue_gallery", false);
+      Sentry.setTag("screen", "epilogue");
     }
 
     for (let i = 1; i < 5; i++) {

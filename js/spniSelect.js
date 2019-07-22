@@ -668,6 +668,7 @@ function selectOpponentSlot (slot) {
 		updateIndividualSelectScreen();
 
         /* switch screens */
+        if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-individual");
 		screenTransition($selectScreen, $individualSelectScreen);
     } else {
         /* remove the opponent that's there */
@@ -684,7 +685,9 @@ function selectOpponentSlot (slot) {
  * The player clicked on the Preset Tables or Testing Tables button.
  ************************************************************/
 function clickedSelectGroupButton (screen) {
-    switchSelectGroupScreen(screen)
+    switchSelectGroupScreen(screen);
+
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-group");
 
 	/* switch screens */
 	screenTransition($selectScreen, $groupSelectScreen);
@@ -882,7 +885,9 @@ function changeGroupStats (target) {
  * group select screen.
  ************************************************************/
 function selectGroup () {
-	loadGroup(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]]);
+    loadGroup(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]]);
+
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
 
     /* switch screens */
 	screenTransition($groupSelectScreen, $selectScreen);
@@ -938,6 +943,8 @@ function groupSelectKeyToggle(e)
  ************************************************************/
 function backToSelect () {
     /* switch screens */
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
+
 	screenTransition($individualSelectScreen, $selectScreen);
 	screenTransition($groupSelectScreen, $selectScreen);
 }
@@ -954,6 +961,8 @@ function advanceSelectScreen () {
     if (USAGE_TRACKING) {
         if (SENTRY_INITIALIZED) {
             Sentry.setTag("in_game", true);
+            Sentry.setTag("screen", "game");
+
             Sentry.addBreadcrumb({
                 category: 'game',
                 message: 'Starting game.',
@@ -1006,6 +1015,7 @@ function advanceSelectScreen () {
  * screen.
  ************************************************************/
 function backSelectScreen () {
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
 	screenTransition($selectScreen, $titleScreen);
 }
 

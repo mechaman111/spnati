@@ -235,6 +235,8 @@ var GALLERY_GENDER = 'all';
 var playerCollectibles = {}; /* Indexed by player ID. */
 
 function goToEpiloguesScreen() {
+	if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-epilogues");
+
 	$galleryEndingsScreen.show();
 	$galleryCollectiblesScreen.hide();
 	loadGalleryEndings();
@@ -242,6 +244,8 @@ function goToEpiloguesScreen() {
 }
 
 function goToCollectiblesScreen() {
+	if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-collectibles");
+
 	$galleryCollectiblesScreen.show();
 	$galleryEndingsScreen.hide();
     loadAllCollectibles();
@@ -284,6 +288,7 @@ function loadGalleryScreen(){
 }
 
 function backGalleryScreen(){
+	if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
 	screenTransition($galleryScreen, $titleScreen);
 }
 
@@ -549,6 +554,7 @@ function doEpilogueFromGallery(){
 					Sentry.setTag("epilogue_player", chosenEpilogue.player.id);
 					Sentry.setTag("epilogue", chosenEpilogue.title);
 					Sentry.setTag("epilogue_gallery", true);
+					Sentry.setTag("screen", "epilogue");
 				}
 		
 				$.ajax({
