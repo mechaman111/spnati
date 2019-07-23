@@ -18,7 +18,7 @@ exports.ACTIVE_FORFEIT_EFFECT = null;
 exports.JOINT_FORFEIT_ACTIVE = false;
 exports.SAYORI_AFFECTIONS_GLITCH = false;
 
-function loadScript (scriptName, success) {
+function loadScript (scriptName) {
     console.log("[Monika] Loading module: "+scriptName);
 
     const script = document.createElement('script');
@@ -38,10 +38,12 @@ function loadScript (scriptName, success) {
 
 /* Load in other resources and scripts: */
 $('head').append('<link rel="stylesheet" type="text/css" href="opponents/monika/css/monika.css">');
+
 loadScript('opponents/monika/js/utils.js');
 loadScript('opponents/monika/js/effects.js');
 loadScript('opponents/monika/js/extended_dialogue.js');
 loadScript('opponents/monika/js/behaviour_callbacks.js');
+
 
 /* Add Options Modal settings: */
 var glitchOptionsContainer = $('<tr><td style="width:25%"><h4 class="modal-title modal-left">Monika Glitches</h4></td></tr>');
@@ -172,7 +174,11 @@ function hookWrapper (func_id) {
     
     var original_function = root[func_id];
     return function () {
-        if(!utils.monika_present()) { return original_function.apply(null, arguments); }
+        if (!players.some(function (p) {
+                return p.id === 'monika';
+        })) { 
+            return original_function.apply(null, arguments); 
+        }
         
         /* Prevent the original function from firing if any pre-hook
          * returns true.
