@@ -1858,19 +1858,34 @@ function forceTableVisibility(state) {
 function showImportModal() {
     $("#export-code").text(save.serializeLocalStorage());
     
+    $('#import-invalid-code').hide();
+
     if (codeImportEnabled) {
         $('#import-progress').prop('disabled', false);
-        $('.import-restriction-warning').hide();
+        $('#import-restriction-warning').hide();
     } else {
         $('#import-progress').prop('disabled', true);
-        $('.import-restriction-warning').show();
+        $('#import-restriction-warning').show();
     }
     
     $ioModal.modal('show');
 
     $('#import-progress').click(function() {
         var code = $("#export-code").val();
-        save.deserializeLocalStorage(code);
+
+        if (SENTRY_INITIALIZED) {
+            Sentry.addBreadcrumb({
+                category: 'ui',
+                message: 'Loading save code...',
+                level: 'info'
+            });
+        }
+
+        if (save.deserializeLocalStorage(code)) {
+            $ioModal.modal('hide');
+        } else {
+            $('#import-invalid-code').show();
+        }
     });
 }
 

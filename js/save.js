@@ -260,13 +260,27 @@ function Save() {
 
     /** Loads a base64-encoded JSON string into the localStorage */
     this.deserializeLocalStorage = function (code) {
-        var json = Base64.decode(code);
-        var data = JSON.parse(json);
+        try {
+            var json = Base64.decode(code);
+            console.log(json);
+            var data = JSON.parse(json);
+        } catch (e) {
+            if (e instanceof SyntaxError) {
+                /* JSON parse error */
+                return false;
+            } else {
+                /* re-raise everything else */
+                throw e;
+            }
+        }
+        
         localStorage.clear();
         for (var key in data) {
             localStorage.setItem(key, data[key]);
         }
         save.load();
+
+        return true;
     }
 }
 
