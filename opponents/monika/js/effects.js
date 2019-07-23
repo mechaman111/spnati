@@ -143,7 +143,7 @@ CanvasEffect.prototype.tile_filter = function (tile_src_images) {
                     sx_tile * tile_size, sy_tile * tile_size, // source pixel coords
                     tile_size, tile_size, // source rect size
                     col * tile_size, row * tile_size, // dest pixel coords
-                    tile_size, tile_size, // dest rect size
+                    tile_size, tile_size // dest rect size
                 );
             }
         }
