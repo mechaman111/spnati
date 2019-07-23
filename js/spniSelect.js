@@ -783,6 +783,12 @@ function loadGroup (chosenGroup) {
         });
     }
 
+    if (chosenGroup.background && backgrounds[chosenGroup.background]) {
+        backgrounds[chosenGroup.background].activateBackground();
+    } else {
+        optionsBackground.activateBackground();
+    }
+
     /* load the group members */
 	for (var i = 1; i < 5; i++) {
         var member = chosenGroup.opponents[i-1];
