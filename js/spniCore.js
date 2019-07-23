@@ -1473,6 +1473,8 @@ function sentryInit() {
             beforeSend: function (event, hint) {
                 /* Inject additional game state data into event tags: */
                 if (inGame) {
+                    if (!event.extra) event.extra = {};
+
                     event.extra.recentLoser = recentLoser;
                     event.extra.previousLoser = previousLoser;
                     event.extra.gameOver = gameOver;
@@ -1487,10 +1489,10 @@ function sentryInit() {
                 for (var i=1;i<players.length;i++) {
                     if (players[i]) {
                         n_players += 1;
-                        event.tags["character:"+players[i].id] = true;
-                        Sentry.setTag("slot-" + i, players[i].id);
+                        event.tags["character:" + players[i].id] = true;
+                        event.tags["slot-" + i] = players[i].id;
                     } else {
-                        Sentry.setTag("slot-" + i, undefined);
+                        event.tags["slot-" + i] = undefined;
                     }
                 }
 
