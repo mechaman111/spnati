@@ -1907,7 +1907,7 @@ String.prototype.initCap = function() {
 	return this.substr(0, 1).toUpperCase() + this.substr(1);
 }
 
-// Polyfill for IE
+// Polyfills for IE
 if (!String.prototype.startsWith) {
     Object.defineProperty(String.prototype, 'startsWith', {
         value: function(search, pos) {
@@ -1915,6 +1915,15 @@ if (!String.prototype.startsWith) {
             return this.substring(pos, pos + search.length) === search;
         }
     });
+}
+
+if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function (search, this_len) {
+        if (this_len === undefined || this_len > this.length) {
+            this_len = this.length;
+        }
+        return this.substring(this_len - search.length, this_len) === search;
+    };
 }
 
 /************************************************************
