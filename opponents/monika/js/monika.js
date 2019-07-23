@@ -20,9 +20,20 @@ exports.SAYORI_AFFECTIONS_GLITCH = false;
 
 function loadScript (scriptName, success) {
     console.log("[Monika] Loading module: "+scriptName);
-    return $.getScript(scriptName, success).fail(function( jqxhr, settings, exception ) {
-        console.error("[Monika] Error loading "+scriptName+": \n"+exception.toString());
-    })
+
+    const script = document.createElement('script');
+    script.src = scriptName;
+    script.async = false;
+
+    script.addEventListener('load', function () {
+        console.log("[Monika] Loaded module: " + scriptName);
+    });
+
+    script.addEventListener('error', function() {
+        console.error("[Monika] Error loading " + scriptName);
+    });
+
+    root.document.head.appendChild(script);
 }
 
 /* Load in other resources and scripts: */
