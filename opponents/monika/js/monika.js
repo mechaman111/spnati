@@ -359,7 +359,7 @@ registerHook('startDealPhase', 'pre', setupRoundGlitches);
  * These are one-shot effects that happen on a per-phase basis.
  */
 function setupTransientGlitches(player) {
-    if (!inGame || round_glitch_targets.indexOf(player) >= 0) return;
+    if (!inGame || round_glitch_targets.indexOf(player) >= 0 || !exports.EFFECTS_ENABLED) return;
     
     if (!players[player] || players[player].id === 'monika') return;
     if (Math.random() >= getCurrentGlitchChance()) return;
