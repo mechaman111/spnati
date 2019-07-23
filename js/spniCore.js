@@ -1095,7 +1095,9 @@ function loadVersionInfo () {
                 last_update_string =  n_days + (n_days === 1 ? ' day ago' : ' days ago');
             }
             
-            $('.substitute-version-time').text('(updated '+last_update_string+')')
+            $('.substitute-version-time').text('(updated '+last_update_string+')');
+
+            $('.version-button').click(showVersionModal);
         }
     });
 }
