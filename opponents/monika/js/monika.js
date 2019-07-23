@@ -2,6 +2,15 @@ if(!monika) var monika = (function (root) {
 
 var exports = {};
 
+if (root.SENTRY_INITIALIZED) {
+    root.Sentry.setTag('monika-loaded', true);
+    root.Sentry.addBreadcrumb({
+        category: 'monika',
+        message: 'Initializing monika.js...',
+        level: 'info'
+    });
+}
+
 exports.EFFECTS_ENABLED = true;
 exports.GLITCH_MODIFIER = 1.0;
 
@@ -11,9 +20,20 @@ exports.SAYORI_AFFECTIONS_GLITCH = false;
 
 function loadScript (scriptName, success) {
     console.log("[Monika] Loading module: "+scriptName);
-    return $.getScript(scriptName, success).fail(function( jqxhr, settings, exception ) {
-        console.error("[Monika] Error loading "+scriptName+": \n"+exception.toString());
-    })
+
+    const script = document.createElement('script');
+    script.src = scriptName;
+    script.async = false;
+
+    script.addEventListener('load', function () {
+        console.log("[Monika] Loaded module: " + scriptName);
+    });
+
+    script.addEventListener('error', function() {
+        console.error("[Monika] Error loading " + scriptName);
+    });
+
+    root.document.head.appendChild(script);
 }
 
 /* Load in other resources and scripts: */
@@ -41,6 +61,8 @@ function configureGlitchChance (mode) {
     $("#options-monika-glitches-2").removeClass("active");
     $("#options-monika-glitches-3").removeClass("active");
     
+    if (root.SENTRY_INITIALIZED) root.Sentry.setTag('monika-glitch-mode', mode);
+
     switch (mode) {
     /* Off */
     case 3:
@@ -68,7 +90,6 @@ function configureGlitchChance (mode) {
 exports.configureGlitchChance = configureGlitchChance;
 configureGlitchChance(1);
 
-
 function reportException(prefix, e) {
     console.log("[Monika] Exception swallowed "+prefix+": ");
     console.error(e);
@@ -89,6 +110,14 @@ function reportException(prefix, e) {
     }
 
     if (USAGE_TRACKING) {
+        if (SENTRY_INITIALIZED) {
+            Sentry.withScope(function (scope) {
+                scope.setTag("monika-error", true);
+                scope.setExtra("where", prefix);
+                Sentry.captureException(e);
+            });
+        }
+
         var report = compileBaseErrorReport('Exception caught from Monika code.', 'auto');
 
         $.ajax({

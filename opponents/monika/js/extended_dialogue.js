@@ -39,6 +39,7 @@ var currentExtendedDialogue = null;
 var backgroundEffects = [];
 
 exports.extendedDialoguePhase = extendedDialoguePhase;
+root.eGamePhase.EXTENDED_DIALOGUE = extendedDialoguePhase;
 
 function display_dialogue (pose, dialogue) {
     var pl = monika.utils.get_monika_player();
@@ -75,6 +76,16 @@ function extended_dialogue_start (id) {
     try {
         console.log("[Monika] Beginning extended dialogue with ID "+id);
         
+        if (root.SENTRY_INITIALIZED) {
+            root.Sentry.addBreadcrumb({
+                category: 'monika',
+                message: 'Beginning extended dialogue: '+id,
+                level: 'info'
+            });
+
+            root.Sentry.setTag("extended_dialogue", id);
+        }
+
         if (AUTO_FADE) forceTableVisibility(false);
         
         currentExtendedDialogue = {
@@ -107,6 +118,16 @@ function extended_dialogue_start (id) {
 monika.registerBehaviourCallback('extended_dialogue_start', extended_dialogue_start);
 
 function end_extended_dialogue() {
+    if (root.SENTRY_INITIALIZED) {
+        root.Sentry.addBreadcrumb({
+            category: 'monika',
+            message: 'Ending extended dialogue...',
+            level: 'info'
+        });
+
+        root.Sentry.setTag("extended_dialogue", null);
+    }
+
     allowProgression(previousGamePhase);
     currentExtendedDialogue = null;
     

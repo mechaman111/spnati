@@ -844,6 +844,13 @@ function selectEpilogue(epNumber) {
  * Show the modal for the player to choose an Epilogue, or restart the game.
  ************************************************************/
 function doEpilogueModal() {
+  if (SENTRY_INITIALIZED) {
+    Sentry.addBreadcrumb({
+      category: 'ui',
+      message: 'Showing epilogue modal.',
+      level: 'info'
+    });
+  }
 
   clearEpilogueList(); //remove any already loaded epilogues
   chosenEpilogue = null; //reset any currently-chosen epilogue
@@ -907,6 +914,19 @@ function doEpilogue() {
         'title': chosenEpilogue.title
       }
     };
+
+    if (SENTRY_INITIALIZED) {
+      Sentry.addBreadcrumb({
+        category: 'epilogue',
+        message: 'Starting '+chosenEpilogue.player.id+' epilogue: '+chosenEpilogue.title,
+        level: 'info'
+      });
+
+      Sentry.setTag("epilogue_player", chosenEpilogue.player.id);
+      Sentry.setTag("epilogue", chosenEpilogue.title);
+      Sentry.setTag("epilogue_gallery", false);
+      Sentry.setTag("screen", "epilogue");
+    }
 
     for (let i = 1; i < 5; i++) {
       if (players[i]) {
@@ -1637,7 +1657,8 @@ SceneView.prototype.addBackground = function (background) {
 
 SceneView.prototype.addImage = function (id, src, args) {
   var img = document.createElement("img");
-  img.src = this.assetMap[src].src;
+  if (src) img.src = this.assetMap[src].src;
+
   var obj = new SceneObject(id, img, this, args);
   obj.setImage(src);
   this.addSceneObject(obj);
@@ -2170,6 +2191,8 @@ SceneObject.prototype = {
   },
 
   setImage: function (src) {
+    if (!src) return;
+
     this.rotElement.src = this.view.assetMap[src].src;
     this.src = src;
   },

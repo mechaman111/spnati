@@ -156,9 +156,11 @@ function loadGameScreen () {
     $gameLabels[HUMAN_PLAYER].removeClass("loser tied current");
     clearHand(HUMAN_PLAYER);
 
+    previousLoser = -1;
     recentLoser = -1;
     currentRound = -1;
     gameOver = false;
+
     $gamePlayerCardArea.show();
     $gamePlayerCountdown.hide();
     chosenDebug = -1;
@@ -199,6 +201,7 @@ function loadGameScreen () {
 	allowProgression(eGamePhase.DEAL);
 
     $(document).keyup(game_keyUp);
+    $(document).keyup(groupSelectKeyToggle);
 }
 
 /**********************************************************************
@@ -315,7 +318,7 @@ function advanceTurn () {
 	currentTurn++;
 	if (currentTurn >= players.length) {
 		currentTurn = 0;
-	}
+    }
 
     if (players[currentTurn]) {
         /* highlight the player who's turn it is */
@@ -383,6 +386,14 @@ function advanceTurn () {
 function startDealPhase () {
     currentRound++;
     saveTranscriptMessage("Starting round "+(currentRound+1)+"...");
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: 'Starting round '+(currentRound+1)+'...',
+            level: 'info'
+        });
+    }
     
     /* dealing cards */
 	dealLock = getNumPlayersInStage(STATUS_ALIVE) * CARDS_PER_HAND;
@@ -436,7 +447,8 @@ function checkDealLock () {
 	if (dealLock > 0) {
 		timeoutID = window.setTimeout(checkDealLock, 100);
 	} else {
-		gamePhase = eGamePhase.AITURN;
+        gamePhase = eGamePhase.AITURN;
+        
         /* Set up main button.  If there is not pause for the human
 		   player to exchange cards, and someone is masturbating, and
 		   the card animation speed is to great, we need a pause so
@@ -685,6 +697,14 @@ function endRound () {
 		gameOver = true;
         codeImportEnabled = true;
 
+        if (SENTRY_INITIALIZED) {
+            Sentry.addBreadcrumb({
+                category: 'game',
+                message: 'Game ended with '+players[lastPlayer].id+' winning.',
+                level: 'info'
+            });
+        }
+
         for (var i = 0; i < players.length; i++) {
             if (HUMAN_PLAYER == i) {
                 $gamePlayerCardArea.hide();
@@ -744,6 +764,13 @@ function selectCard (card) {
 	} else {
 		fillCard(HUMAN_PLAYER, card);
 	}
+}
+
+function getGamePhaseString(phase) {
+    var keys = Object.keys(eGamePhase);
+    for (var i=0;i<keys.length;i++) {
+        if (eGamePhase[keys[i]] === phase) return keys[i];
+    }
 }
 
 /************************************************************
@@ -869,6 +896,14 @@ RollbackPoint.prototype.load = function () {
         returnRollbackPoint = new RollbackPoint();
         allowProgression(eGamePhase.EXIT_ROLLBACK);
     }
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'ui',
+            message: 'Entering rollback.',
+            level: 'info'
+        });
+    }
     
     currentRound = this.currentRound;
     currentTurn = this.currentTurn;
@@ -895,6 +930,14 @@ function inRollback() {
 
 function exitRollback() {
     if (!inRollback()) return;
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'ui',
+            message: 'Exiting rollback.',
+            level: 'info'
+        });
+    }
     
     returnRollbackPoint.load();
     allowProgression(returnRollbackPoint.gamePhase);
@@ -1064,3 +1107,4 @@ function updateDebugState(show)
         }
     }
 }
+

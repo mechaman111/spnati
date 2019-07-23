@@ -31,7 +31,7 @@
       <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
     </button>
 
-    <button id="title-version-button" class="bordered smooth-button red banner-flair" onclick="showVersionModal()">
+    <button id="warning-version-button" class="bordered smooth-button red banner-flair version-button">
       <div class="substitute-version">Unknown Version</div>
       <div class="substitute-version-time"></div>
     </button>
@@ -108,7 +108,7 @@
       <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
     </button>
 
-    <button id="title-version-button" class="bordered smooth-button red banner-flair" onclick="showVersionModal()">
+    <button id="title-version-button" class="bordered smooth-button red banner-flair version-button">
       <div class="substitute-version">Unknown Version</div>
       <div class="substitute-version-time"></div>
     </button>
@@ -928,9 +928,9 @@
             <div class="gallery-ending" onclick="selectEnding(19)"></div>
         </div>
         <div id="gallery-controls-block">
-            <button id="gallery-prev-page-button" class="bordered main-select-button smooth-button blue" onclick="galleryPrevPage()" disabled="true">prev</button>
-            <button id="gallery-next-page-button" class="bordered main-select-button smooth-button blue" onclick="galleryNextPage()">next</button>
-            <button id="gallery-start-ending-button" class="bordered main-select-button smooth-button green" onclick="doEpilogueFromGallery()" disabled="true" >Start</button>
+            <button id="gallery-prev-page-button" class="bordered main-select-button smooth-button blue" onclick="galleryPrevPage()" disabled="true">Prev</button>
+            <button id="gallery-next-page-button" class="bordered main-select-button smooth-button blue" onclick="galleryNextPage()">Next</button>
+            <button id="gallery-start-ending-button" class="bordered main-select-button smooth-button green" onclick="doEpilogueFromGallery()" disabled="true">Start</button>
         </div>
         <div id="gallery-selected-ending-block">
             <div id="selected-ending-previev"></div>
@@ -1696,6 +1696,46 @@
                   <p>Also, please do not use the bug reporter to role-play with the characters.  Again, you will be muted, and the reports are publically readable.  You will be mocked.</p>
                 </div>
             </div>
+            <div class="faq-question-container">
+                <h4 class="faq-question">Are there hotkeys for SPNATI?</h4>
+                <div class="faq-answer">
+                  <p>Yes, and they are as follows:</p>
+
+                  <h3>Game Hotkeys</h3>
+                  <p>
+                    <ul>
+                      <li>Space key: "Next"</li>
+                      <li>1: Select card 1</li>
+                      <li>2: Select card 2</li>
+                      <li>3: Select card 3</li>
+                      <li>4: Select card 4</li>
+                      <li>5: Select card 5</li>
+                      <li>Q: Open Debug Screen</li>
+                      <li>T: Show/Hide UI</li>
+                    </ul>
+                    <h4>When picking what to strip</h4>
+                    <ul>
+                      <li>Space key: Strip Selected</li>
+                      <li>1: Select item 1</li>
+                      <li>2: Select item 2</li>
+                      <li>3: Select item 3</li>
+                      <li>4: Select item 4</li>
+                      <li>5: Select item 5</li>
+                      <li>6: Select item 6</li>
+                      <li>7: Select item 7</li>
+                      <li>8: Select item 8</li>
+                    </ul>
+                  </p>
+                  <h3>Select Screen Hotkeys</h3>
+                  <p>
+                    <ul>
+                      <li>Left arrow: Back</li>
+                      <li>Right arrow: Next</li>
+                      <li>Enter Key: Select Group</li>
+                    </ul>
+                  </p>
+                </div>
+            </div>
         </div>
 
         <!-- Epilogue questions -->
@@ -2015,11 +2055,14 @@
                                     <textarea class="form-control" id='export-code' rows="15"></textarea>
                                 </form>
                                 <div class="modal-body-container" style="padding-top:4%;">
-                                  <div class="import-restriction-warning">
+                                  <div id="import-restriction-warning" class="import-error">
                                     Please play through at least one full game before loading a save code.
                                   </div>
+                                  <div id="import-invalid-code" class="import-error">
+                                    That code appears to be damaged or invalid.
+                                  </div>
                                     <button class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
-                                    <button id="import-progress" class="bordered smooth-button modal-button" data-dismiss="modal">Import</button>
+                                    <button id="import-progress" class="bordered smooth-button modal-button">Import</button>
                                 </div>
                             </div>
                         </div>
@@ -2386,6 +2429,8 @@
 <!-- End of Options Modal -->
 
 <!-- Third Party JavaScript -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=Promise%2CObject.assign%2CString.prototype.includes%2CNumber.isNaN"></script>
+<script src="js/sentry-5.5.0-bundle.min.js"></script>
 <script src="js/jquery-1.11.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/js.cookie.js"></script>

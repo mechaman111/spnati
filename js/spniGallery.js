@@ -235,6 +235,8 @@ var GALLERY_GENDER = 'all';
 var playerCollectibles = {}; /* Indexed by player ID. */
 
 function goToEpiloguesScreen() {
+	if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-epilogues");
+
 	$galleryEndingsScreen.show();
 	$galleryCollectiblesScreen.hide();
 	loadGalleryEndings();
@@ -242,6 +244,8 @@ function goToEpiloguesScreen() {
 }
 
 function goToCollectiblesScreen() {
+	if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-collectibles");
+
 	$galleryCollectiblesScreen.show();
 	$galleryEndingsScreen.hide();
     loadAllCollectibles();
@@ -284,6 +288,7 @@ function loadGalleryScreen(){
 }
 
 function backGalleryScreen(){
+	if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
 	screenTransition($galleryScreen, $titleScreen);
 }
 
@@ -337,7 +342,7 @@ function loadGalleryEndings(){
 	}
 	
 	for(var i=0; i<loadedOpponents.length; i++){
-		if (loadedOpponents[i].ending) {
+		if (loadedOpponents[i] && loadedOpponents[i].ending) {
 			loadedOpponents[i].endings.each(function () {
 				var gending = new GEnding(loadedOpponents[i], this);
 				allEndings.push(gending);
@@ -462,11 +467,9 @@ function selectEnding(i) {
 
 	if (ending.unlocked()) {
 		$galleryStartButton.attr('disabled', false);
-		chosenEpilogue = ending;
 		$selectedEndingLabels[0].html(ending.title);
 	} else {
 		$galleryStartButton.attr('disabled', true);
-		chosenEpilogue = -1;
 		$selectedEndingLabels[0].html('');
 	}
 	
@@ -491,11 +494,13 @@ function selectEnding(i) {
 }
 
 function doEpilogueFromGallery(){
-	if (!chosenEpilogue) {
-		return;
-	}
-	
-	var player = chosenEpilogue.player;
+    var epilogue;
+    if (!selectedEnding < 0 || !(epilogue = galleryEndings[selectedEnding])) {
+        return;
+    }
+
+    var player = epilogue.player;
+    $galleryStartButton.attr('disabled', true);
 	
 	fetchCompressedURL('opponents/' + player.id + "/behaviour.xml")
 		/* Success callback.
@@ -507,7 +512,7 @@ function doEpilogueFromGallery(){
 			var endingElem = null;
 			
 			$xml.find('epilogue').each(function () {
-				if ($(this).find('title').html() === chosenEpilogue.title && $(this).attr('gender') === chosenEpilogue.gender) {
+				if ($(this).find('title').html() === epilogue.title && $(this).attr('gender') === epilogue.gender) {
 					endingElem = this;
 				}
 			});
@@ -515,7 +520,7 @@ function doEpilogueFromGallery(){
 			if($nameField.val()){
 				humanPlayer.label = $nameField.val();
 			} else {
-				switch(chosenEpilogue.gender){
+				switch(epilogue.gender){
 					case "male": humanPlayer.label = "Mister"; break;
 					case "female" : humanPlayer.label = "Missy"; break;
 					default: humanPlayer.label = (humanPlayer.gender=="male")?"Mister":"Missy";
@@ -523,7 +528,7 @@ function doEpilogueFromGallery(){
 			}
 			
 			// function definition in spniEpilogue.js
-			chosenEpilogue = parseEpilogue(player, endingElem);
+			epilogue = parseEpilogue(player, endingElem);
 		
 			if (USAGE_TRACKING) {
 				var usage_tracking_report = {
@@ -534,10 +539,23 @@ function doEpilogueFromGallery(){
 					'userAgent': navigator.userAgent,
 					'origin': getReportedOrigin(),
 					'chosen': {
-						'id': chosenEpilogue.player.id,
-						'title': chosenEpilogue.title
+						'id': epilogue.player.id,
+						'title': epilogue.title
 					}
 				};
+
+				if (SENTRY_INITIALIZED) {
+					Sentry.addBreadcrumb({
+						category: 'epilogue',
+						message: 'Starting ' + epilogue.player.id + ' epilogue: ' + epilogue.title,
+						level: 'info'
+					});
+
+					Sentry.setTag("epilogue_player", epilogue.player.id);
+					Sentry.setTag("epilogue", epilogue.title);
+					Sentry.setTag("epilogue_gallery", true);
+					Sentry.setTag("screen", "epilogue");
+				}
 		
 				$.ajax({
 					url: USAGE_TRACKING_ENDPOINT,
@@ -553,8 +571,8 @@ function doEpilogueFromGallery(){
 			epilogueContainer.dataset.background = -1;
 			epilogueContainer.dataset.scene = -1;
 		
-			loadEpilogue(chosenEpilogue); //initialise buttons and text boxes
+			loadEpilogue(epilogue); //initialise buttons and text boxes
 			screenTransition($galleryScreen, $epilogueScreen);
-			$epilogueSelectionModal.modal("hide");
-		});
+            $galleryStartButton.attr('disabled', false);
+        });
 }
