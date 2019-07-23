@@ -19,33 +19,159 @@ function setLocalDayOrNight () {
  *****                    Background metadata                     *****
  **********************************************************************/
 var backgrounds = {
-    'inventory': { location: 'indoors' },
-    'beach': { location: 'outdoors', time: 'day' },
-    'classroom': { location: 'indoors' },
-    'brick': { location: 'indoors' },
-    'night': { location: 'outdoors', filter: 'brightness(0.8)', time: 'night' },
-    'roof': { location: 'outdoors', time: 'day' },
-    'seasonal': { location: 'indoors' },
-    'library': { location: 'indoors' },
-    'bathhouse': { location: 'indoors' },
-    'poolside': { location: 'outdoors', time: 'day' },
-    'hot spring': { location: 'outdoors', time: 'day' },
-    'mansion': { location: 'indoors', time: 'night' },
-    'purple room': { location: 'indoors' },
-    'showers': { location: 'indoors' },
-    'street': { location: 'outdoors', time: 'night' },
-    'green screen': { location: 'indoors' },
-    'arcade': { location: 'indoors' },
-    'club': { location: 'indoors' },
-    'bedroom': { location: 'indoors', time: 'night' },
-    'hall': { location: 'indoors' },
-    'locker room': { location: 'indoors' },
-    'haunted forest': { location: 'outdoors', filter: 'brightness(0.7) saturate(0.9)', time: 'night' },
-    'romantic': { location: 'indoors' },
-    'classic': { location: 'indoors' }
-};
-var defaultBackground = 'inventory';
-var selectedBackground = defaultBackground;
+    'inventory': new Background('inventory', 'img/backgrounds/inventory.png', {
+        name: "The Inventory",
+        author: "Zeuses-Swan-Song",
+        location: 'indoors'
+    }),
+    'beach': new Background('beach', 'img/backgrounds/beach.png', {
+        name: "Beach",
+        author: "u/SPNATI",
+        location: 'outdoors',
+        time: 'day'
+    }),
+    'classroom': new Background('classroom', 'img/backgrounds/classroom.png', {
+        name: "Classroom",
+        author: "u/SPNATI",
+        location: 'indoors'
+    }),
+    'roof': new Background('roof', 'img/backgrounds/roof.png', {
+        name: "Roof",
+        author: "u/SPNATI",
+        location: 'outdoors',
+        time: 'day'
+    }),
+    'poolside': new Background('poolside', 'img/backgrounds/poolside.png', {
+        name: "Poolside",
+        author: "u/SPNATI",
+        location: 'outdoors',
+        time: 'day'
+    }),
+    'hot spring': new Background('hot spring', 'img/backgrounds/hot_spring.png', {
+        name: "Hot Spring",
+        author: "u/SPNATI",
+        location: 'outdoors',
+        time: 'day'
+    }),
+    'mansion': new Background('mansion', 'img/backgrounds/mansion.png', {
+        name: "Mansion",
+        author: "u/SPNATI",
+        location: 'indoors',
+        time: 'night'
+    }),
+    'purple room': new Background('purple room', 'img/backgrounds/purple_room.png', {
+        name: "Purple Room",
+        author: "u/SPNATI",
+        location: 'indoors'
+    }),
+    'street': new Background('street', 'img/backgrounds/street.png', {
+        name: "Street",
+        author: "DrankeyKrang",
+        location: 'outdoors',
+        time: 'night'
+    }),
+    'bedroom': new Background('bedroom', 'img/backgrounds/bedroom.png', {
+        name: "Bedroom",
+        author: "XKokone-chanX (bed) & throwaway927263 (room)",
+        location: 'indoors',
+        time: 'night'
+    }),
+    'locker room': new Background('locker room', 'img/backgrounds/locker_room.png', {
+        name: "Locker Room",
+        location: 'indoors'
+    }),
+    'haunted forest': new Background('haunted forest','img/backgrounds/haunted_forest.png', {
+        name: "Haunted Forest",
+        location: 'outdoors',
+        time: 'night',
+        filter: 'brightness(0.7) saturate(0.9)'
+    }),
+    'romantic': new Background('romantic', 'img/backgrounds/romantic.png', {
+        name: "Romantic",
+        location: 'indoors'
+    }),
+    'classic': new Background('classic', 'img/backgrounds/classic.png', {
+        name: "Classic",
+        location: 'indoors'
+    })
+}
+
+var defaultBackground = backgrounds['inventory'];
+
+/* The currently displayed background */
+var activeBackground = defaultBackground;
+
+/* Background selected by the player in the options menu */
+var optionsBackground = defaultBackground;
+
+/**
+ * Constructor for game Background objects.
+ * 
+ * @constructor
+ * @this {Background}
+ * @param {string} id The internal ID for this background. 
+ *  `~background~` evaluates to this value.
+ * @param {string} src The path to the image for this background.
+ * @param {Object} metadata Metadata to associate with this background, 
+ *  such as `name`, `author`, `filter`, `tags`, etc.
+ */
+function Background (id, src, metadata) {
+    this.id = id;
+    this.src = src;
+
+    /** 
+     * @type {string}
+     * The human-friendly name for this background.
+     * Displayed in i.e. the Options menu.
+     */
+    this.name = metadata.name || id;
+
+    /** 
+     * @type {string}
+     * The author(s) of this background.
+     * Shown in the Options modal.
+     * Should not include 'by:' or similar phrases.
+     */
+    this.author = metadata.author || '';
+
+    /** 
+     * @type {string[]} 
+     * An array of string tags to associate with this background.
+     */
+    this.tags = metadata.tags || [];
+
+    /** 
+     * @type {string} 
+     * A CSS `filter` value to apply to all screens whenever this
+     * background is active.
+     */
+    this.filter = metadata.filter || '';
+
+    /** 
+     * @type {Object}
+     * Contains the raw metadata passed to the Background constructor.
+     */
+    this.metadata = metadata;
+}
+
+/**
+ * Sets this background to be displayed.
+ */
+Background.prototype.activateBackground = function () {
+    /* backgroundImage is defined in spniCore */
+    if (backgroundImage === undefined) {
+        backgroundImage = new Image();
+    }
+
+    backgroundImage.src = this.src;
+    backgroundImage.onload = function () {
+        $("body").css("background-image", "url(" + this.src + ")");
+        activeBackground = this;
+        
+        $('.screen').css('filter', this.filter || '');
+        autoResizeFont();
+    }.bind(this);
+}
 
 /**********************************************************************
  *****                      Option Functions                      *****
@@ -144,42 +270,55 @@ $('ul#options-minimal-ui').on('click', 'a', function() {
 });
 
 /************************************************************
- * The player clicked the options button. Shows the options modal.
+ * Push a selection image for the given background onto the
+ * background selection modal.
  ************************************************************/
-function showGameSettingsModal () {
-    setActiveOption('settings-background', selectedBackground);
-    $('#game-settings-modal').modal('show');
-}
-$('#game-settings-modal').on('shown.bs.modal', function() {
-	$('ul#settings-background>li.active>a').focus();
-	console.log($('.modal:visible'));
-});
+function pushBackgroundOption (background) {
+    var container = document.createElement("div");
+    $(container)
+        .css("background-image", "url("+background.src+")")
+        .addClass("background-option")
+        .attr("data-background", background.id)
+        .click(function () {
+            optionsBackground = background;
+            optionsBackground.activateBackground();
+            save.saveSettings();
+        });
 
-$('ul#settings-background').on('click', 'a', function() {
-    setBackground($(this).attr('data-value'));
-});
+    var title = document.createElement("span");
+    $(title)
+        .addClass("background-info background-title")
+        .text(background.name)
+        .appendTo(container);
+
+    if (background.author) {
+        var author = document.createElement("span");
+        $(author)
+            .addClass("background-info background-author")
+            .text(background.author)
+            .appendTo(container);
+    }
+    
+    $("#settings-background").append(container);
+}
 
 /************************************************************
- * The player changed the background.
+ * Shows the background selection modal.
  ************************************************************/
-function setBackground (choice) {
-	/* implement the option change */
-    if (!(choice in backgrounds)) {
-        console.error("Invalid background", choice);
-        return;
-    }
-    var filename = "img/backgrounds/"+choice.replace(/ /g, '_')+".png";
-    if (backgroundImage === undefined) {
-        backgroundImage = new Image();
-    }
-    backgroundImage.src = filename;
-    backgroundImage.onload = function() {
-        $("body").css("background-image", "url("+filename+")");
-        selectedBackground = choice;
-        $('.screen').css('filter', backgrounds[selectedBackground].filter || '');
-        autoResizeFont();
-    };
+function showGameSettingsModal () {
+    Object.keys(backgrounds).forEach(function (id) {
+        /* Push selection images for all backgrounds not already on the menu. */
+        if ($('#settings-background .background-option[data-background="'+id+'"]').length === 0) {
+            pushBackgroundOption(backgrounds[id]);
+        }
+    });
+
+    $('#game-settings-modal').modal('show');
 }
+
+$('#game-settings-modal').on('shown.bs.modal', function() {
+	console.log($('.modal:visible'));
+});
 
 /************************************************************
  * Loading the player masturbation timer.
