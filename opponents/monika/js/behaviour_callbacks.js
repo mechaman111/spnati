@@ -212,6 +212,8 @@ monika.registerBehaviourCallback('sayonikaNo', function () {
 var saved_sayori_player = null;
 
 monika.registerBehaviourCallback('startJointMasturbation', function () {
+    if (monika.JOINT_FORFEIT_ACTIVE) return;
+
     if (root.SENTRY_INITIALIZED) {
         root.Sentry.addBreadcrumb({
             category: 'monika',
@@ -261,6 +263,8 @@ monika.registerBehaviourCallback('startJointMasturbation', function () {
 });
 
 monika.registerBehaviourCallback('endJointMasturbation', function () {
+    if (!monika.JOINT_FORFEIT_ACTIVE) return;
+
     if (root.SENTRY_INITIALIZED) {
         root.Sentry.addBreadcrumb({
             category: 'monika',
