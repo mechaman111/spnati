@@ -1310,8 +1310,8 @@ function restartGame () {
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
     $gamePlayerCardArea.show();
-    if (!MINIMAL_UI) $gamePlayerClothingArea.show();
-    
+    $gamePlayerClothingArea.css('display', '');  /* Reset to default so as not to interfere with 
+                                                    switching between classic and minimal UI. */
     inGame = false;
 
     if (SENTRY_INITIALIZED) {

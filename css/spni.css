@@ -21,6 +21,14 @@ body {
     overflow: hidden;
 }
 
+button, input, select {
+    pointer-events: auto;
+}
+
+button>* {
+    pointer-events: none;
+}
+
 /************************************************************
  * Bootstrap overrides.
  ************************************************************/
@@ -132,12 +140,17 @@ label {
 
 
 .screen {
-	position: absolute;
+    position: absolute;
     top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
     margin: 0.5%;
+}
+
+.select-table>*, #game-table>*, #game-hidden-area>*, .table-bug-report-button, .hide-table-button {
+    z-index: 1000;
 }
 
 /**************************************************
@@ -199,20 +212,20 @@ label {
 	background-color: #55C0ff;
 }
 
-.smooth-button-red {
+.smooth-button.red {
 	background: linear-gradient(#BB3333, #9F1616);
 	background-color: #BB3333;
 }
-.smooth-button-red:hover {
+.smooth-button.red:hover {
 	background: linear-gradient(#F88888, #BB3333);
 	background-color: #F66666;
 }
 
-.smooth-button-green {
+.smooth-button.green {
 	background: linear-gradient(#33AA33, #168F16);
     background-color: #33AA33;
 }
-.smooth-button-green:hover {
+.smooth-button.green:hover {
 	background: linear-gradient(#80FF80, #33AA33);
 	background-color: #66FF66;
 }
@@ -220,6 +233,11 @@ label {
 	background: linear-gradient(#CCC, #AAA);
 	background-color: #BBB;
 	color: #333;
+}
+
+.smooth-button:active {
+    padding-left: 0.15em;
+    padding-right: 0.05em;
 }
 
 .center-dock-button {
@@ -237,9 +255,9 @@ label {
 
 .hide-table-button {
 	position: absolute;
-    width: 4%;
-    height: 5%;
-    left: 48%;
+    width: 3.25%;
+    height: 4.50%;
+    left: 48.375%;
     bottom: 22%;
     background-color: rgba(155, 155, 155, 0.5);
 }
@@ -256,7 +274,7 @@ label {
 	position: absolute;
     width: 3.25%;
     height: 4.50%;
-    left: 48.35%;
+    left: 48.375%;
     bottom: 17.4%;
 	background-color: rgba(155, 155, 155, 0.5);
 }
@@ -527,6 +545,10 @@ label {
 	width: 25%;
 	padding: 2%;
 	font-size: 120%;
+}
+.table-modal .modal-button:active, .edit-options-row button:active {
+    padding-left: calc(2% + 0.05em);
+    padding-right: calc(2% - 0.05em);
 }
 
 .pagination li a {
@@ -868,13 +890,6 @@ label {
  * look the awesome way that they do.
  ************************************************************/
 
-.dialogue-bubble-row {
-    position: absolute;
-    width: 100%;
-    height: 20%;
-    top: 2%;
-}
-
 .dialogue-bubble {
     width: 100%;
     position: absolute;
@@ -891,12 +906,13 @@ label {
     text-align: center;
 }
 
-.dialogue-bubble-row .dialogue-bubble {
-    min-height: 90%;
+.screen .dialogue-bubble {
+    min-height: 18%;
+    top: 2%;
 }
 
-.dialogue-bubble-row .dialogue-bubble, .stats-box {
-    top: 0;
+.screen .dialogue-bubble, .stats-box {
+    top: 2%;
     width: 24.5%;
     margin: 0 0.25%;
 }
@@ -964,9 +980,6 @@ label {
 .dev-select-button {
     position: absolute;
     right: 20%;
-    top: -40%;
-    width: 19%;
-    height: 35%;
 }
 
 .dev-select-button.active {
@@ -1066,6 +1079,10 @@ label {
     cursor: text;
 }
 
+#game-screen.dev-mode .dialogue-bubble {
+    z-index: 1000 !important;
+}
+
 .dialogue-bubble[data-editing="preview"] .dialogue-edit-status::after {
     content: " (Preview)";
 }
@@ -1106,17 +1123,12 @@ label {
  * Classes for opponent images.
  ************************************************************/
 
-.image-row {
+.opponent-image-area {
     position: absolute;
-    width: 100%;
+    width: 25%;
     height: 80%;
     bottom: 0;
-}
-
-.opponent-image-area {
-	position: absolute;
-    width: 50%;
-    height: 100%;
+    pointer-events: none;
 }
 
 .opponent-image {
@@ -1126,11 +1138,7 @@ label {
 	margin: auto;
 	bottom: 0;
 	left: 50%;
-    transform: translateX(-50%);
-}
-
-#game-screen .image-row {
-    pointer-events: none;
+	transform: translateX(-50%);
 }
 
 /************************************************************
@@ -1426,7 +1434,7 @@ label {
 }
 
 .centered-icon-image {
-	width: 55%;
+	width: 56%;
 	height: auto;
 }
 
@@ -1439,28 +1447,27 @@ label {
 .title-start-edge {
     width: 18rem;
     font-size: 200%;
-    padding: 0.5%;
+    padding: 0.25rem;
     background: linear-gradient(#222222, #111111);
 }
 
 .title-start-button {
-    padding-left: 2%;
-    padding-right: 3%;
     width: 100%;
 }
 
 .title-entrance-image {
-	margin-left: 4%;
-    margin-top: 4%;
-    width: 90%;
+    margin-left: 0.7rem;
+    margin-top: 0.6rem;
+    margin-right: 0.2rem;
+    width: 88.5%;
 }
 
 .title-gallery-edge {
-	width: 20%;
+    width: 20%;
     height: 80%;
 
-	font-size: 200%;
-	padding: 0.2%;
+    font-size: 200%;
+    padding: 0.1rem;
     background: linear-gradient(#222222, #111111);
 
     margin-right: 6.25%;
@@ -1469,20 +1476,14 @@ label {
 .title-gallery-button {
     width: 100%;
     height: 100%;
-
-	padding-top: 1%;
-	padding-bottom: 1%;
-    padding-left: 2%;
-    padding-right: 3%;
-    font-size: 200%;
 }
 
 .title-tags-edge {
     width: 20%;
     height: 80%;
 
-	font-size: 200%;
-	padding: 0.2%;
+    font-size: 200%;
+    padding: 0.1rem;
     background: linear-gradient(#222222, #111111);
 
     margin-left: 6.25%;
@@ -1491,9 +1492,6 @@ label {
 .title-tags-button {
     width: 100%;
     height: 100%;
-
-    padding-left: 3%;
-    padding-right: 2%;
     font-size: 100%;
 }
 
@@ -1575,7 +1573,7 @@ label {
  * Classes for the main select screen.
  ************************************************************/
 
-#main-select-area {
+.main-select-area {
     position: absolute;
     width: 90%;
     height: 12%;
@@ -1630,7 +1628,6 @@ label {
     right: 43%;
     bottom: -10%;
     font-size: 180%;
-    padding-bottom: 0.1%;
     text-align: center;
 }
 
@@ -1701,42 +1698,6 @@ label {
 
 #individual-more-info-button, #group-more-info-button {
     right: 2%;
-}
-
-.selection-image-area {
-	position: absolute;
-    width: 25%;
-    height: 100%;
-}
-
-.selection-image-area.farLeft {
-	left: 0;
-}
-
-.selection-image-area.almostLeft {
-	left: 25%;
-}
-
-.selection-image-area.farRight {
-	right: 0;
-}
-
-.selection-image-area.almostRight {
-	right: 25%;
-}
-
-.selection-image-area .opponent-image {
-	pointer-events: none;
-	position: absolute;
-	left: 50%;
-	transform: translateX(-50%);
-}
-
-.selection-image-area .custom-pose {
-	left: 0;
-	right: 0;
-	margin: 0 auto;
-	transform: none;
 }
 
 .opponent-suggestion-container {
@@ -2473,14 +2434,13 @@ label {
 }
 
 .stats-box {
-    display: table;
     position: absolute;
     background: #F5F5F5;
     padding: 1rem;
-    height: 88%;
+    min-height: 17.6%;
 }
 
-.stats-box .stats-section {
+.stats-box .stats-section, .stats-box .stats-section-large {
     display: table;
     position: relative;
     width: 100%;
@@ -2489,10 +2449,7 @@ label {
 }
 
 .stats-box .stats-section-large {
-    position: relative;
-    width: 100%;
-    height: 47%;
-    margin-bottom: 1%;
+    height: 3.6em;
 }
 
 .stats-box .stats-label {
@@ -2536,20 +2493,7 @@ label {
 }
 
 #group-hide-button {
-    position: absolute;
-    width: 4%;
-    height: 5%;
-    left: 48%;
     bottom: 36%;
-    background-color: rgba(155, 155, 155, 0.5);
-}
-
-#group-hide-button:hover {
-	background-color: rgba(155, 155, 155, 0.9);
-}
-
-#group-hide-button:active {
-    background-color: rgba(155, 155, 155, 0.75);
 }
 
 .badge-icon {
@@ -2581,12 +2525,10 @@ label {
 }
 
 .wrap-text {
-    table-layout: fixed;
-    width: 100%;
-    word-wrap: break-word;
+    overflow-wrap: anywhere;
 }
 
-.selection-image-area .alt-costume-dropdown {
+.opponent-image-area .alt-costume-dropdown {
 	position: absolute;
 	left: 50%;
 	top: 60%;
@@ -2750,7 +2692,6 @@ label {
 
 .opponent-area .name-label {
     text-align: center;
-    background-color: #F5F5F5;
     margin-bottom: 0.2rem;
 }
 
@@ -2877,9 +2818,15 @@ label {
 .name-label {
     text-align: center;
     background-color: #F5F5F5;
+    padding: 0.125em;
 }
 
-#player-game-clothing-area .name-label {
+.game-name-label-0 {
+    display: none;
+}
+
+#player-game-clothing-area .game-name-label-0 {
+    display: block;
     position: absolute;
     width: 65.5%;
     height: 24%;
@@ -3151,27 +3098,13 @@ label {
     display: inline-flex;
 }
 
-.player-name-label-container {
-    display: none;
-}
-
-.ui-minimal .player-name-label-container {
-    position: absolute;
-    left: 0;
-    right: 0;
+.ui-minimal .game-name-label-0 {
+    display: block;
     bottom: 1%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    pointer-events: none;
-}
-
-.ui-minimal .player-name-label-container .name-label {
+    position: absolute;
+    left: 50%;
     min-width: 12%;
-    padding-top: 0.125em;
-    padding-bottom: 0.125em;
+    transform: translateX(-50%);
 }
 
 .optional-bordered {
@@ -3716,17 +3649,29 @@ label {
  * Debug stuff
  ************************************************************/
 
-.debug-button {
+.debug-button, .dev-select-button {
     position: absolute;
-    right: 0%;
-    top: -40%;
-    width: 19%;
-    height: 35%;
+    width: 3em;
+    height: 2em;
+    background-color: #F5F5F5;
+}
+
+.opponent-area .debug-button, .opponent-area .dev-select-button {
+    top: -2.25em;
+}
+
+.opponent-area .debug-button {
+    right: 0;
+}
+
+#debug-button-0 {
+    left: 1.5%;
+    bottom: 14%;
 }
 
 .debug-button.active {
-	background: linear-gradient(#BB3333, #9F1616);
-	background-color: #BB3333;
+    background: linear-gradient(#BB3333, #9F1616);
+    background-color: #BB3333;
 }
 
 .collectible-button {
@@ -3759,19 +3704,6 @@ label {
     max-height: 100%;
 }
 
-.player-debug-button {
-    position: absolute;
-    left: 1.5%;
-    bottom: 14%;
-    width: 4%;
-    height: 4%;7
-}
-
-.player-debug-button.active {
-	background: linear-gradient(#BB3333, #9F1616);
-	background-color: #BB3333;
-}
-
 /************************************************************
  * Global override classes.
  ************************************************************/
@@ -3801,7 +3733,7 @@ label {
  * UX
  ************************************************************/
 
-.player-card-area, .player-card-area input, .opponent-card-area, .player-clothing-container, .image-row {
+.player-card-area, .player-card-area input, .opponent-card-area, .opponent-image-area, .player-clothing-container, .minimal-clothing-area-row {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */

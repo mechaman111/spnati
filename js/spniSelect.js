@@ -1322,20 +1322,6 @@ $sortingOptionsItems.on("click", function(e) {
 });
 
 /************************************************************
- * Word wrapping Functions
- ************************************************************/
-
-/**
- * Inserts a fixed-size HTML element with the specified text to allow the content
- * to be either word-wrapped (if the text is long and spaces are present)
- * or word-broken (if text is long and no spaces are present).
- */
-function wordWrapHtml(text) {
-    text = text || "&nbsp;";
-    return "<table class=\"wrap-text\"><tr><td>" + text + "</td></tr></table>";
-}
-
-/************************************************************
  * Dynamic dialogue and image counting functions
  ************************************************************/
 
