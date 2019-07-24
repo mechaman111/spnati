@@ -274,29 +274,29 @@ $('ul#options-minimal-ui').on('click', 'a', function() {
  * background selection modal.
  ************************************************************/
 function pushBackgroundOption (background) {
-    var container = document.createElement("div");
-    $(container)
-        .css("background-image", "url("+background.src+")")
-        .addClass("background-option")
-        .attr("data-background", background.id)
-        .click(function () {
+    var container = $('<div>', {
+        "class": "background-option",
+        "data-background": background.id,
+        "css": {"background-image": "url(" + background.src + ")"},
+        "click": function() {
             optionsBackground = background;
             optionsBackground.activateBackground();
             save.saveSettings();
-        });
+        }
+    });
 
-    var title = document.createElement("span");
-    $(title)
-        .addClass("background-info background-title")
-        .text(background.name)
-        .appendTo(container);
+    /* Create title element: */
+    $('<span>', {
+        "class": "background-info background-title",
+        "text": background.name
+    }).appendTo(container);
 
     if (background.author) {
-        var author = document.createElement("span");
-        $(author)
-            .addClass("background-info background-author")
-            .text(background.author)
-            .appendTo(container);
+        /* Create author element: */
+        $('<span>', {
+            "class": "background-info background-author",
+            "text": background.author
+        }).appendTo(container);
     }
     
     $("#settings-background").append(container);
