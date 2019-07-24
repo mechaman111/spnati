@@ -779,26 +779,69 @@ label {
     width: 100%;
 }
 
-#settings-background {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+.background-options-container {
+    overflow-y: auto;
+    max-height: 45rem;
 }
 
-#settings-background>li {
-    width: 19.5%;
-    margin: 0.25%;
+.background-option {
+    background-size: 100% 100%;
+    width:  24rem;
+    height: 18rem;
+
+    padding: 0.5rem;
+    border: 0.3rem solid #111111;
+    border-radius: 0.3rem;
+    
+    margin: 0.5rem;
+    vertical-align: top;
+
+    transition-property: border-color;
+    transition-duration: 0.5s;
+
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-#settings-background>li>a {
-    width: 100%;
-    white-space: nowrap;
-    padding: 0.5em 0;
+.background-option .background-info {
+    padding: 0.2rem 0.5rem;
+    text-align: center;
+    
+    border: 0.15rem solid #111111;
+    border-radius: 0.5rem;
+    
+    background-color: #FFFFFF;
+    opacity: 0.50;
+
+    font-size: 1.25rem;
+
+    transition-property: opacity;
+    transition-duration: 0.5s;
 }
 
-#settings-background>li:first-child>a, #settings-background>li:last-child>a {
-    margin-left: -0.1rem;
-    border-radius: 0px;
+.background-option .background-title {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.background-option .background-author::before {
+    content: "by: ";
+}
+
+.background-option:hover, .background-option:active {
+    border-color: #FFFFFF;
+
+    transition-property: border-color;
+    transition-duration: 0.5s;
+}
+
+.background-option:hover .background-info, .background-option:active .background-info {
+    opacity: 1.0;
+
+    transition-property: opacity;
+    transition-duration: 0.5s;
 }
 
 .background-credits-container {

@@ -149,7 +149,13 @@ function Save() {
         try {
             var settings = JSON.parse(localStorage.getItem(prefix + 'settings')) || {};
             if ('stamina' in settings) humanPlayer.stamina = settings.stamina;
-            if ('background' in settings) setBackground(settings.background);
+            if ('background' in settings) {
+                var bg_id = settings.background;
+                if (backgrounds[bg_id]) {
+                    optionsBackground = backgrounds[bg_id];
+                    optionsBackground.activateBackground();
+                }
+            };
         } catch (ex) {
             console.error('Failed parsing settings from localStorage');
         }
@@ -182,8 +188,10 @@ function Save() {
     };
     this.saveSettings = function() {
         var settings = { stamina: humanPlayer.stamina };
-        if (selectedBackground != defaultBackground) {
-            settings.background = selectedBackground;
+        if (optionsBackground.id !== defaultBackground.id) {
+            settings.background = optionsBackground.id;
+        } else {
+            delete settings.background;
         }
         localStorage.setItem(prefix + 'settings', JSON.stringify(settings));
     };
