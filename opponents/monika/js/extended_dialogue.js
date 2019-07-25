@@ -28,7 +28,17 @@ var extended_dialogues = {
         ["calm", "But <i>you</i> need to take the first step."],
         ["happy", "...anyway, that's my advice for right now."],
         ["calm", "Thanks for listening~"],
-    ]
+    ],
+    'legal-compliance': [
+        ["exasperated", "Ahem~!"],
+        ["writing-tip", "<i>SPNATI</i> is purely fan-made content and is completely unaffiliated with the official Doki Doki Literature Club, or with Team Salvato."],
+        ["horny", "Although I understand if you want to skip ahead and see, well, <i>all</i> of me, if you haven't played DDLC yet, you should do that first."],
+        ["happy", "Also, you can download DDLC at: {mono}<a href=\"https://ddlc.moe\">https://ddlc.moe</a>."],
+        ["happy", "And... I think that's it. Sorry about that."],
+        ["writing-tip", "I'm sure that was really boring, right? All that dry legalese..."],
+        ["exasperated", "But, well, it really wouldn't do for the Inventory to get shut down by an IP dispute, right?"],
+        ["writing-tip", "Anyways, I'm really glad you took the time to listen. Thanks~!"]
+    ],
 }
 
 exports.dialogues = extended_dialogues;

@@ -97,8 +97,13 @@
                 <state img="0-exasperated.png">Man, I didn't expect you to be playing this kind of game, ~player~.</state>
                 <state img="0-happy.png">I've never played this game before... but it's all just luck-based, right?</state>
                 <state img="0-writing-tip.png">Okay, everyone! It's time to start the game!</state>
-                <state img="0-calm.png">It's just a game, mostly.</state>
-                <state img="0-calm.png">This game is not suitable for children or those who are easily disturbed.</state>
+                <state img="0-writing-tip.png">It's just a game, mostly.</state>
+                <state img="0-exasperated.png">This game is not suitable for children... or, really, anyone under the age of 18. You know who you are, right?</state>
+            </case>
+            <case tag="game_start" priority="9999">
+                <test expr="~persistent.legal_compliance~" cmp="!=" value="1" />
+                <state img="0-questioning.png" marker="legal_compliance=1" persist-marker="true">Hmm... it looks like there's some legal stuff I need to get out of the way first.<br>It's kinda long, but if you want to listen to it, just click the little arrow here:<span class="glyphicon glyphicon-arrow-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('legal-compliance')"></span></state>
+                <state img="0-questioning.png" marker="legal_compliance=1" persist-marker="true">I think there <i>miiight</i> be some legal stuff I need to get out of the way first. It's kinda boring, but if you really want to listen to it, just click the little arrow here: <span class="glyphicon glyphicon-arrow-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('legal-compliance')"></span></state>
             </case>
             <case tag="swap_cards">
                 <state img="0-interested.png">I'm going to swap... ~cards~ cards.</state>
