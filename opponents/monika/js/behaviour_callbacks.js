@@ -235,6 +235,7 @@ monika.registerBehaviourCallback('startJointMasturbation', function () {
     monika_pl.markers['joint-masturbation'] = 1;
     sayori.markers['joint-masturbation'] = 1;
     monika_pl.addTag('tandem');
+    monika_pl.addTag('bondage_forfeit');
     monika_pl.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
     
     monika_pl.out = true;
@@ -281,6 +282,7 @@ monika.registerBehaviourCallback('endJointMasturbation', function () {
     
     monika.JOINT_FORFEIT_ACTIVE = false;
     monika_pl.removeTag('tandem');
+    monika_pl.removeTag('bondage_forfeit');
     
     setTimeout(function () {
         /* Put Sayori back in her slot. */
