@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0 at 3:47:59 AM on July 24, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 4:55:47 AM on July 24, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.0</version>
     <first>Ryuji</first>
@@ -98,17 +98,10 @@
             <case tag="opponent_selected" target="haru" targetSayingMarker="ryuji_arcade">
                 <state img="0-pumped.png">Hell yeah! Me and Joker like to hang out here!</state>
             </case>
-            <case tag="opponent_selected">
-                <test expr="~ryuji.costume~" value="summertime_ryuji" />
-                <state img="0-awkward.png">Wait... Strip poker? Again? Jeez, you must really like this game. Fine, I'll give it another go.</state>
-            </case>
             <case tag="game_start">
                 <state img="0-fingerguns.png">Let's get this show on the road!</state>
                 <state img="0-fingerguns.png">I'mma let you guys know: if Joker were here, he'd whoop all your asses no sweat!</state>
                 <state img="0-fingerguns.png">Wassup!!</state>
-            </case>
-            <case tag="game_start" alsoPlaying="akechi" priority="999">
-                <state img="0-thinking.png" marker="justincase">...</state>
             </case>
             <case tag="game_start" alsoPlaying="ann" priority="999">
                 <state img="0-fingerguns.png" marker="ptplaying">'Sup, Ann!</state>
@@ -125,7 +118,7 @@
             <case tag="game_start" alsoPlaying="haru" alsoPlayingSaidMarker="wrongpoker" priority="10">
                 <state img="0-awkward.png" marker="ptplaying">I... thought you knew.</state>
             </case>
-            <case tag="game_start" alsoPlaying="haru" totalAlive="3" priority="9999">
+            <case tag="game_start" alsoPlaying="haru" totalAlive="3" priority="9996">
                 <state img="0-fingerguns.png" marker="haruonly">♫ Give into temptatiiiiooooooon!! ♫</state>
             </case>
             <case tag="game_start" alsoPlaying="jin">
@@ -155,11 +148,11 @@
                 <condition count="1" filter="haru" />
                 <state img="0-pumped.png" marker="pt_table">Woohoo! A game with just the Phantom Thieves!!</state>
             </case>
-            <case tag="game_start" alsoPlaying="haru" priority="9999">
+            <case tag="game_start" alsoPlaying="haru" priority="9996">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="0-fingerguns.png" marker="ptplaying">Yooo, the gang's all here!</state>
             </case>
-            <case tag="game_start" alsoPlaying="haru" priority="9999">
+            <case tag="game_start" alsoPlaying="haru" priority="9998">
                 <condition count="3" filter="phantom_thieves" />
                 <test expr="~self.slot~" value="4" />
                 <state img="0-fingergunrev.png" marker="ptplaying">Yooo, the gang's all here!</state>
@@ -184,12 +177,12 @@
                 <test expr="~background~" value="mansion" />
                 <state img="0-thinking.png">...Fancy. Too bad I don't do fancy.</state>
             </case>
-            <case tag="game_start" priority="9999">
+            <case tag="game_start" priority="9998">
                 <test expr="~background~" value="roof" />
                 <state img="0-startled.png">What the---this ain't Shujin's rooftop! I already graduated from that school anyways!!</state>
             </case>
             <case tag="game_start" alsoPlaying="futaba" priority="698">
-                <test expr="~futaba.taba.position~" value="left" />
+                <test expr="~futaba.position~" value="left" />
                 <state img="0-cocky.png" marker="futabahasjoinedtheparty">You may be smarter, but can ya beat me at cards Futaba?</state>
                 <state img="0-fingergunrev.png" marker="futabahasjoinedtheparty">Glad to see you're out there bein' social! Was it Joker's idea?</state>
                 <state img="0-fingergunrev.png" marker="futabahasjoinedtheparty">Nice of ya to join us, Futaba!</state>
@@ -205,6 +198,10 @@
             <case tag="game_start">
                 <test expr="~player~" value="Kamoshida" />
                 <state img="0-threathen.png">Wha... You think this is some kinda joke, ~player~? &lt;i&gt;Do you!?&lt;/i&gt;</state>
+            </case>
+            <case tag="game_start" priority="9999">
+                <test expr="~ryuji.costume~" value="summertime_ryuji" />
+                <state img="0-awkward.png">Wait... Strip poker? Again? Jeez, you must really like this game. Fine, I'll give it another go.</state>
             </case>
             <case tag="game_start" alsoPlaying="ann" priority="999">
                 <test expr="~self.slot~" value="4" />
@@ -521,10 +518,6 @@
             </case>
             <case tag="okay_hand" totalMales="5-5" totalRounds="0-0">
                 <state img="0-cheerful.png">So it's just us guys here?</state>
-            </case>
-            <case tag="okay_hand" totalRounds="0-2" notSaidMarker="metaverse1" priority="6">
-                <state img="0-thinking.png" marker="metaverse1">This kinda reminds me of that casino Palace.</state>
-                <state img="0-cheerful.png" marker="metaverse1">I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.</state>
             </case>
             <case tag="bad_hand">
                 <state img="0-awkward.png" marker="badhand">I don't think this is good.</state>
@@ -1130,14 +1123,13 @@
             <case tag="male_must_strip" alsoPlaying="nayru" alsoPlayingStage="5-7" alsoPlayingNotSaidMarker="null_possess">
                 <state img="0-grumpy.png" marker="nayrupossess">Don't think I don't have my eye on you!</state>
             </case>
-            <case tag="male_must_strip" filter="hero" targetStage="0" totalRounds="0-5" priority="150">
+            <case tag="male_must_strip" filter="hero" targetStage="1" totalRounds="0-5" priority="150">
                 <condition count="0" filter="haru" />
                 <condition count="0" filter="futaba" />
                 <condition count="0" filter="ann_takamaki" />
                 <state img="0-pumped.png">Awesome!! You're a hero?</state>
-                <state img="0-pumped.png">You fight shitty people too?</state>
-                <state img="0-pumped.png">Maybe you should join the Phantom Thieves. We rid the world of shitty people too!</state>
-                <state img="0-pumped.png">Nice to see another vigilante!</state>
+                <state img="0-pumped.png">Maybe you should join the Phantom Thie---I mean, you'd make a great Phantom Thief!</state>
+                <state img="0-fingerguns.png">Nice to see another vigilante!</state>
             </case>
             <case tag="male_must_strip" filter="hero" targetStage="0" totalAlive="4-" totalRounds="0-5" priority="150">
                 <condition count="2-3" filter="phantom_thieves" />
@@ -2405,6 +2397,13 @@
                 <state img="0-startled.png">Wait, you got boobs too!?</state>
                 <state img="0-what.png">Woah...</state>
             </case>
+            <case tag="male_chest_is_visible">
+                <test expr="~background~" value="beach" />
+                <state img="0-fingerguns.png">Nice.</state>
+                <state img="0-fingerguns.png">Not too shabby. Think of it like a beach day, a'right?</state>
+                <state img="0-thinking.png">No biggie, right? Just pretend you're at the bea---wait, we &lt;i&gt;are&lt;/i&gt; at the beach.</state>
+                <state img="0-cheerful.png">Maybe we should jog together sometime. But somewhere else. Sand ain't good for joggin'.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="0-aroused.png">&lt;i&gt;I shouldn't be this excited but...&lt;/i&gt;</state>
                 <state img="0-awkward.png">Sorry, man.</state>
@@ -3521,10 +3520,6 @@
                 <state img="1-thinking.png" marker="phantomthieveeessss">Can we have the whole group play at some point? Joker might wanna play.</state>
                 <state img="1-thinking.png" marker="phantomthieveeessss">Yusuke would love this game. But does he know how to play Poker?</state>
                 <state img="1-cheerful.png" marker="phantomthieveeessss">So after the whole thing with the Casino palace, I've actually been learning how to play poker!</state>
-            </case>
-            <case tag="okay_hand" totalRounds="0-2" notSaidMarker="metaverse1" priority="6">
-                <state img="1-thinking.png" marker="metaverse1">This kinda reminds me of that casino Palace.</state>
-                <state img="1-cheerful.png" marker="metaverse1">I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.</state>
             </case>
             <case tag="bad_hand">
                 <state img="1-awkward.png" marker="badhand">I don't think this is good.</state>
@@ -5288,6 +5283,13 @@
                 <state img="1-startled.png">Wait, you got boobs too!?</state>
                 <state img="1-what.png">Woah...</state>
             </case>
+            <case tag="male_chest_is_visible">
+                <test expr="~background~" value="beach" />
+                <state img="1-fingerguns.png">Nice.</state>
+                <state img="1-fingerguns.png">Not too shabby. Think of it like a beach day, a'right?</state>
+                <state img="1-thinking.png">No biggie, right? Just pretend you're at the bea---wait, we &lt;i&gt;are&lt;/i&gt; at the beach.</state>
+                <state img="1-cheerful.png">Maybe we should jog together sometime. But somewhere else. Sand ain't good for joggin'.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="1-aroused.png">&lt;i&gt;I shouldn't be this excited but...&lt;/i&gt;</state>
                 <state img="1-awkward.png">Sorry, man.</state>
@@ -6340,10 +6342,6 @@
                 <state img="2-thinking.png" marker="phantomthieveeessss">Yusuke would love this game. But does he know how to play Poker?</state>
                 <state img="2-cheerful.png" marker="phantomthieveeessss">So after the whole thing with the Casino palace, I've actually been learning how to play poker!</state>
             </case>
-            <case tag="okay_hand" totalRounds="0-2" notSaidMarker="metaverse1" priority="6">
-                <state img="2-thinking.png" marker="metaverse1">This kinda reminds me of that casino Palace.</state>
-                <state img="2-cheerful.png" marker="metaverse1">I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.</state>
-            </case>
             <case tag="bad_hand">
                 <state img="2-awkward.png" marker="badhand">I don't think this is good.</state>
                 <state img="2-facepalm.png" marker="badhand">Shit!</state>
@@ -6816,15 +6814,19 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="2-wince.png">T'hell you even talkin' about?</state>
             </case>
-            <case tag="stripped" id="2-1" priority="115">
+            <case tag="stripped" id="2-1" priority="110">
                 <state img="2-wince.png" marker="wince">Ow... Shouldn't have done that.</state>
                 <state img="2-wince.png" marker="wince">Oww... Maybe I shouldn't have strained it.</state>
                 <state img="2-wince.png" marker="wince">Shit, maybe I strained it too much.</state>
             </case>
-            <case tag="stripped" priority="0">
+            <case tag="stripped" priority="117">
                 <test expr="~ryuji.costume~" value="summertime_ryuji" />
                 <state img="2-wince.png" marker="wince">&lt;i&gt;Oww!&lt;/i&gt; Why does that injury have'ta flare up &lt;i&gt;now!?&lt;/i&gt;</state>
                 <state img="2-wince.png" marker="wince">Oww... Dammit, I wasn't even strainin' it this time!</state>
+            </case>
+            <case tag="stripped" priority="120">
+                <test expr="~ryuji.costume~" value="summertime_ryuji" />
+                <state img="2-cheerful.png">Next round?</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="2-cocky.png">Sorry, man. You gotta play better than that.</state>
@@ -8067,6 +8069,13 @@
                 <state img="2-startled.png">Wait, you got boobs too!?</state>
                 <state img="2-what.png">Woah...</state>
             </case>
+            <case tag="male_chest_is_visible">
+                <test expr="~background~" value="beach" />
+                <state img="2-fingerguns.png">Nice.</state>
+                <state img="2-fingerguns.png">Not too shabby. Think of it like a beach day, a'right?</state>
+                <state img="2-thinking.png">No biggie, right? Just pretend you're at the bea---wait, we &lt;i&gt;are&lt;/i&gt; at the beach.</state>
+                <state img="2-cheerful.png">Maybe we should jog together sometime. But somewhere else. Sand ain't good for joggin'.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="2-aroused.png">&lt;i&gt;I shouldn't be this excited but...&lt;/i&gt;</state>
                 <state img="2-awkward.png">Sorry, man.</state>
@@ -9097,10 +9106,6 @@
                 <state img="3-thinking.png" marker="phantomthieveeessss">Can we have the whole group play at some point? Joker might wanna play.</state>
                 <state img="3-thinking.png" marker="phantomthieveeessss">Yusuke would love this game. But does he know how to play Poker?</state>
                 <state img="3-cheerful.png" marker="phantomthieveeessss">So after the whole thing with the Casino palace, I've actually been learning how to play poker!</state>
-            </case>
-            <case tag="okay_hand" totalRounds="0-2" notSaidMarker="metaverse1" priority="6">
-                <state img="3-thinking.png" marker="metaverse1">This kinda reminds me of that casino Palace.</state>
-                <state img="3-cheerful.png" marker="metaverse1">I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.</state>
             </case>
             <case tag="bad_hand">
                 <state img="3-awkward.png" marker="badhand">I don't think this is good.</state>
@@ -10766,6 +10771,13 @@
                 <state img="3-startled.png">Wait, you got boobs too!?</state>
                 <state img="3-what.png">Woah...</state>
             </case>
+            <case tag="male_chest_is_visible">
+                <test expr="~background~" value="beach" />
+                <state img="3-fingerguns.png">Nice.</state>
+                <state img="3-fingerguns.png">Not too shabby. Think of it like a beach day, a'right?</state>
+                <state img="3-thinking.png">No biggie, right? Just pretend you're at the bea---wait, we &lt;i&gt;are&lt;/i&gt; at the beach.</state>
+                <state img="3-cheerful.png">Maybe we should jog together sometime. But somewhere else. Sand ain't good for joggin'.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="3-aroused.png">&lt;i&gt;I shouldn't be this excited but...&lt;/i&gt;</state>
                 <state img="3-awkward.png">Sorry, man.</state>
@@ -11779,10 +11791,6 @@
                 <state img="4-thinking.png" marker="phantomthieveeessss">Can we have the whole group play at some point? Joker might wanna play.</state>
                 <state img="4-thinking.png" marker="phantomthieveeessss">Yusuke would love this game. But does he know how to play Poker?</state>
                 <state img="4-cheerful.png" marker="phantomthieveeessss">So after the whole thing with the Casino palace, I've actually been learning how to play poker!</state>
-            </case>
-            <case tag="okay_hand" totalRounds="0-2" notSaidMarker="metaverse1" priority="6">
-                <state img="4-thinking.png" marker="metaverse1">This kinda reminds me of that casino Palace.</state>
-                <state img="4-cheerful.png" marker="metaverse1">I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.</state>
             </case>
             <case tag="bad_hand">
                 <state img="4-awkward.png" marker="badhand">I don't think this is good.</state>
@@ -13363,6 +13371,13 @@
                 <state img="4-startled.png">Wait, you got boobs too!?</state>
                 <state img="4-what.png">Woah...</state>
             </case>
+            <case tag="male_chest_is_visible">
+                <test expr="~background~" value="beach" />
+                <state img="4-fingerguns.png">Nice.</state>
+                <state img="4-fingerguns.png">Not too shabby. Think of it like a beach day, a'right?</state>
+                <state img="4-thinking.png">No biggie, right? Just pretend you're at the bea---wait, we &lt;i&gt;are&lt;/i&gt; at the beach.</state>
+                <state img="4-cheerful.png">Maybe we should jog together sometime. But somewhere else. Sand ain't good for joggin'.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="4-aroused.png">&lt;i&gt;I shouldn't be this excited but...&lt;/i&gt;</state>
                 <state img="4-awkward.png">Sorry, man.</state>
@@ -14318,10 +14333,6 @@
                 <state img="5-sad.png" marker="bitter">&lt;i&gt;...USED to be an athlete.&lt;/i&gt;</state>
                 <state img="5-sad.png" marker="bitter">Then my leg got jacked up and everything went to shit.</state>
                 <state img="5-grumpy.png" marker="bitter">&lt;i&gt;...but then I got to settle for just bein' a damn personal trainer thanks to that asshole.&lt;/i&gt;</state>
-            </case>
-            <case tag="okay_hand" totalRounds="0-2" notSaidMarker="metaverse1" priority="6">
-                <state img="5-thinking.png" marker="metaverse1">This kinda reminds me of that casino Palace.</state>
-                <state img="5-cheerful.png" marker="metaverse1">I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.</state>
             </case>
             <case tag="bad_hand">
                 <state img="5-awkward.png" marker="badhand">I don't think this is good.</state>
@@ -15763,6 +15774,13 @@
             <case tag="male_chest_is_visible" target="mettaton">
                 <state img="5-startled.png">Wait, you got boobs too!?</state>
                 <state img="5-what.png">Woah...</state>
+            </case>
+            <case tag="male_chest_is_visible">
+                <test expr="~background~" value="beach" />
+                <state img="5-fingerguns.png">Nice.</state>
+                <state img="5-fingerguns.png">Not too shabby. Think of it like a beach day, a'right?</state>
+                <state img="5-thinking.png">No biggie, right? Just pretend you're at the bea---wait, we &lt;i&gt;are&lt;/i&gt; at the beach.</state>
+                <state img="5-cheerful.png">Maybe we should jog together sometime. But somewhere else. Sand ain't good for joggin'.</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="5-aroused.png">&lt;i&gt;I shouldn't be this excited but...&lt;/i&gt;</state>
@@ -20894,7 +20912,10 @@
                 <state img="7-awkward.png">Does it even matter if you're the first or last to finish?</state>
             </case>
             <case tag="must_masturbate_first">
-                <state img="7-loss.png">This is the character response when they lost their last hand and have to masturbate, and they're the first character who's required to masturbate.</state>
+                <state img="7-embarrassed.png">F-For real?</state>
+                <state img="7-startled.png">W-What the HELL, man!?</state>
+                <state img="7-startled.png">I-I have to WHAT!?</state>
+                <state img="7-embarrassed.png">For real!?</state>
             </case>
             <case tag="must_masturbate_first" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="7-disgusted.png">Alright, now you're just braggin'!</state>
@@ -20902,14 +20923,7 @@
             <case tag="must_masturbate_first" alsoPlaying="futaba" alsoPlayingStage="5-6">
                 <state img="7-disgusted.png">Chill out, the only thing I'm touchin' is myself.</state>
             </case>
-            <case tag="must_masturbate_first">
-                <test expr="~ryuji.costume~" cmp="!=" value="summertime_ryuji" />
-                <state img="7-embarrassed.png">F-For real?</state>
-                <state img="7-startled.png">W-What the HELL, man!?</state>
-                <state img="7-startled.png">I-I have to WHAT!?</state>
-                <state img="7-embarrassed.png">For real!?</state>
-            </case>
-            <case tag="must_masturbate_first">
+            <case tag="must_masturbate_first" priority="5">
                 <test expr="~ryuji.costume~" value="summertime_ryuji" />
                 <state img="7-embarrassed.png">S-Seriously, I'm first to masturbate!?</state>
                 <state img="7-awkward.png">Oh no... Shit, I &lt;i&gt;really&lt;/i&gt; messed up here.</state>
@@ -21887,7 +21901,10 @@
                 <state img="8-pissed.png">Like I give a shit!! I just wanna see you GONE!</state>
             </case>
             <case tag="female_large_chest_is_visible">
-                <state img="8-shocked.png">What the character says after the female character's chest is visible, and has a size value of "large".</state>
+                <state img="8-startled.png">Dude, DUDE!</state>
+                <state img="8-startled.png">Holy shit!</state>
+                <state img="8-awkward.png">You have great tits! ...I-I mean, sorry! I stepped outta' line there...</state>
+                <state img="8-cheerful.png">Did I die and go to heaven?</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <condition count="1" filter="exhibitionist" />
@@ -24282,7 +24299,7 @@
             <case tag="finished_masturbating" notSaidMarker="finished" priority="9993">
                 <state img="9-finished.png" marker="finished">&lt;i&gt;(Hff.... hffff....)&lt;/i&gt; Okay... Gonna... need a moment from that.</state>
             </case>
-            <case tag="finished_masturbating" notSaidMarker="finished" priority="9995">
+            <case tag="finished_masturbating" notSaidMarker="finishedleggy" priority="9995">
                 <state img="9-finished.png" marker="finishedleggy">&lt;i&gt;(Hff.... hffff....)&lt;/i&gt; Okay... It wasn't... &lt;i&gt;that long...&lt;/i&gt; &lt;i&gt;(hff...)&lt;/i&gt;</state>
             </case>
             <case tag="game_over_defeat">
