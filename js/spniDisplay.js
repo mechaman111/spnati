@@ -860,28 +860,7 @@ OpponentSelectionCard.prototype.update = function () {
         this.epilogueBadge.hide();
     }
 
-    if (this.opponent.status) {
-        var status_icon_img = 'img/testing-badge.png';
-        var status_tooltip = TESTING_STATUS_TOOLTIP;
-        
-        if (this.opponent.status === 'offline') {
-            status_icon_img = 'img/offline-badge.png';
-            status_tooltip = OFFLINE_STATUS_TOOLTIP;
-        } else if (this.opponent.status === 'incomplete') {
-            status_icon_img = 'img/incomplete-badge.png';
-            status_tooltip = INCOMPLETE_STATUS_TOOLTIP;
-        }
-    
-        this.statusIcon.attr({
-            'src': status_icon_img,
-            'title': status_tooltip,
-            'data-original-title': status_tooltip,
-        }).show().tooltip({
-            'placement': 'left'
-        });
-    } else {
-        this.statusIcon.removeAttr('title').removeAttr('data-original-title').hide();
-    }
+    updateStatusIcon(this.statusIcon, this.opponent.status);
 
     this.layerIcon.show().attr("src", "img/layers" + this.opponent.layers + ".png");
     this.genderIcon.show().attr("src", this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png');

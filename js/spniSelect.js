@@ -169,9 +169,11 @@ var shownSuggestions = [Array(4), Array(4), Array(4), Array(4)];
 var randomLock = false;
 
 /* Status icon tooltips */
-var TESTING_STATUS_TOOLTIP = "This opponent is currently in testing.";
-var OFFLINE_STATUS_TOOLTIP = "This opponent has been retired from the official version of the game.";
-var INCOMPLETE_STATUS_TOOLTIP = "This opponent is incomplete and currently not in development.";
+var statusTooltips = {
+    testing: "This opponent is currently in testing.",
+    offline: "This opponent has been retired from the official version of the game.",
+    incomplete: "This opponent is incomplete and currently not in development.",
+};
 
 /**********************************************************************
  *****               Opponent & Group Specification               *****
@@ -241,6 +243,8 @@ function loadListingFile () {
                 
                 var disp = new OpponentSelectionCard(opp);
                 opp.selectionCard = disp;
+                disp.statusIcon.tooltip({ delay: { show: 200 }, placement: 'bottom',
+                                          container: '#individual-select-screen .selection-cards-container' });
 			}
 			if (opp.id in opponentGroupMap) {
 				opponentGroupMap[opp.id].forEach(function(groupPos) {
@@ -356,29 +360,14 @@ function loadOpponentMeta (id, status, releaseNumber, onComplete) {
 }
 
 function updateStatusIcon(elem, status) {
-    var icon_img = 'img/testing-badge.png';
-    var tooltip = TESTING_STATUS_TOOLTIP;
-
-    if(!status) {
-        elem.removeAttr('title').removeAttr('data-original-title').hide();
-        return;
+    if (status) {
+        elem.attr({
+            'src': 'img/' + status + '-badge.png',
+            'data-original-title': statusTooltips[status],
+        }).show();
+    } else {
+        elem.removeAttr('data-original-title').hide();
     }
-
-    if (status === 'offline') {
-        icon_img = 'img/offline-badge.png';
-        tooltip = OFFLINE_STATUS_TOOLTIP;
-    } else if (status === 'incomplete') {
-        icon_img = 'img/incomplete-badge.png';
-        tooltip = INCOMPLETE_STATUS_TOOLTIP;
-    }
-
-    elem.attr({
-        'src': icon_img,
-        'title': tooltip,
-        'data-original-title': tooltip,
-    }).show().tooltip({
-        'placement': 'left'
-    });
 }
 
 
@@ -394,11 +383,12 @@ function getCostumeOption(alt_costume, selected_costume) {
  * Loads opponents onto the individual select screen.
  ************************************************************/
 function updateIndividualSelectScreen () {
-    $('#individual-select-screen .selection-cards-container')
-        .empty()
-        .append(selectableOpponents.map(function (opp) {
-            return opp.selectionCard.mainElem;
-        }));
+    $('#individual-select-screen .selection-cards-container .selection-card').hide();
+    selectableOpponents.forEach(function(opp) {
+        $('#individual-select-screen .selection-cards-container').append(opp.selectionCard.mainElem);
+        $(opp.selectionCard.mainElem).show();
+    });
+    return;
 }
 
 /************************************************************
@@ -512,22 +502,11 @@ function updateSuggestionQuad(slot, quad, opponent) {
     var label_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-label');
     var tooltip = null;
 
-    if (opponent.status === 'testing') {
-        tooltip = TESTING_STATUS_TOOLTIP;
-    } else if (opponent.status === 'offline') {
-        tooltip = OFFLINE_STATUS_TOOLTIP;
-    } else if (opponent.status === 'incomplete') {
-        tooltip = INCOMPLETE_STATUS_TOOLTIP;
-    }
-
     shownSuggestions[slot][quad] = opponent.id;
-
-    img_elem.attr({
-        'title': tooltip,
-        'data-original-title': tooltip,
-        'src': opponent.selection_image
-    }).tooltip();
-
+    img_elem.attr(
+        {'src': opponent.selection_image,
+         'data-original-title': statusTooltips[opponent.status] || null
+        }).show();
     label_elem.text(opponent.label);
 }
 
