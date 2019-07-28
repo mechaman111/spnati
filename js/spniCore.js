@@ -1678,19 +1678,21 @@ function showPlayerTagsModal () {
             var replace = (choiceName != 'skin_color' || selectionType === 'number');
             var $existing = $('form#player-tags [name="'+choiceName+'"]');
             if (!replace && $existing.length) continue;
-            var $select = $('<select>', { name: choiceName });
+            var $select = $('<select>', { name: choiceName, id: 'player-tag-choice-'+choiceName });
             $select.append('<option>', playerTagOptions[choiceName].values.map(function(opt) {
                 return $('<option>').val(opt.value).addClass(opt.gender).append(opt.text || opt.value.replace(/_/g, ' ').initCap());
             }));
             if ($existing.length) {
                 $existing.parent().replaceWith($select);
             } else {
-                var $label = $('<label class="player-tag-select">');
+                var $label = $('<div class="player-tag-select">');
+                $label.append($('<label>', { 'for': 'player-tag-choice-' + choiceName,
+                                             'text': 'Choose your ' + choiceName.replace(/_/g, ' ') + ':'}));
                 if (playerTagOptions[choiceName].gender) {
                     $select.addClass(playerTagOptions[choiceName].gender);
                     $label.addClass(playerTagOptions[choiceName].gender);
                 }
-                $label.append('Choose your ' + choiceName.replace(/_/g, ' ') + ':', $select);
+                $label.append($select);
                 $('form#player-tags').append($label);
             }
         }
