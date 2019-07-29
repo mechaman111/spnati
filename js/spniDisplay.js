@@ -841,7 +841,8 @@ function OpponentSelectionCard (opponent) {
     this.genderIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'gender-icon')));
     this.statusIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'status-icon')));
     
-    $(this.epilogueBadge).attr('src', "img/epilogue_icon.png");
+    $(this.epilogueBadge).attr({src: "img/epilogue_icon.png",
+                                alt: "SPNatI Epilogue available"});
     
     var footerElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-footer'));
     this.label = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-name')));
@@ -862,8 +863,14 @@ OpponentSelectionCard.prototype.update = function () {
 
     updateStatusIcon(this.statusIcon, this.opponent.status);
 
-    this.layerIcon.show().attr("src", "img/layers" + this.opponent.layers + ".png");
-    this.genderIcon.show().attr("src", this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png');
+    this.layerIcon.attr({
+        src: "img/layers" + this.opponent.layers + ".png",
+        alt: this.opponent.layers + " layers",
+    }).show() ;
+    this.genderIcon.attr({
+        src: this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png',
+        alt: this.opponent.gender.initCap(),
+    }).show();
     this.simpleImage.attr('src', this.opponent.selection_image).css('height', this.opponent.scale + '%').show();
     
     this.label.text(this.opponent.label);

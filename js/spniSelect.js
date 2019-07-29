@@ -363,6 +363,7 @@ function updateStatusIcon(elem, status) {
     if (status) {
         elem.attr({
             'src': 'img/' + status + '-badge.png',
+            'alt': status.initCap(),
             'data-original-title': statusTooltips[status],
         }).show();
     } else {
@@ -462,8 +463,10 @@ function updateGroupSelectScreen () {
 
                 updateStatusIcon($groupStatuses[i], opponent.status);
 
-                $groupLayers[i].show();
-                $groupLayers[i].attr("src", "img/layers" + opponent.layers + ".png");
+                $groupLayers[i].attr({
+                    src: "img/layers" + opponent.layers + ".png",
+                    alt: opponent.layers + ' layers',
+                }).show();
 
                 $groupImages[i].attr('src', opponent.selection_image);
                 $groupImages[i].css('height', opponent.scale + '%');
@@ -505,6 +508,7 @@ function updateSuggestionQuad(slot, quad, opponent) {
     shownSuggestions[slot][quad] = opponent.id;
     img_elem.attr(
         {'src': opponent.selection_image,
+         'alt': opponent.label,
          'data-original-title': statusTooltips[opponent.status] || null
         }).show();
     label_elem.text(opponent.label);

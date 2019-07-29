@@ -241,7 +241,8 @@ function updateAllGameVisuals () {
 function displayHumanPlayerClothing () {
     /* collect the images */
     var clothingImages = humanPlayer.clothing.map(function(c) {
-		return c.image;
+		return { src: c.image,
+                 alt: c.name.initCap() };
 	});
     
     /* display the remaining clothing items */
@@ -249,7 +250,7 @@ function displayHumanPlayerClothing () {
 	$gameClothingLabel.html("Your Clothing");
 	for (var i = 0; i < 8; i++) {
 		if (clothingImages[i]) {
-			$gameClothingCells[i].attr('src', clothingImages[i]);
+			$gameClothingCells[i].attr(clothingImages[i]);
 			$gameClothingCells[i].css({opacity: 1});
 		} else {
 			$gameClothingCells[i].css({opacity: 0});

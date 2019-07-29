@@ -11,8 +11,8 @@
 /* suit names */
 var SPADES   = "spade";
 var HEARTS   = "heart";
-var CLUBS    = "clubs";
 var DIAMONDS = "diamo";
+var CLUBS    = "clubs";
 
 /* hand strengths */
 var NONE			= 0;
@@ -51,7 +51,7 @@ var ANIM_TIME = 500;
 var CARDS_PER_HAND = 5;
  
 /* image constants */
-var BLANK_CARD_IMAGE = IMG + "blankcard.jpg";
+var BLANK_CARD_IMAGE = IMG + "blank.png";
 var UNKNOWN_CARD_IMAGE = IMG + "unknown.jpg";
  
 /* card decks */
@@ -74,8 +74,12 @@ function Card(suit, rank) {
 /* This toString() method means that using a card object in a URL
  * yields the same filename as before */
 Card.prototype.toString = function() {
-	return ["spade", "heart", "clubs", "diamo"][this.suit] + (this.rank == 14 ? 1 : this.rank);
-}
+	return ["spade", "heart", "diamo", "clubs"][this.suit] + (this.rank == 14 ? 1 : this.rank);
+};
+
+Card.prototype.altText = function() {
+	return (this.rank >= 11 ? "JQKA"[this.rank-11] : this.rank) + ["♠", "♡", "♢", "♣"][this.suit];
+};
 
 /************************************************************
  * Hand class
@@ -160,7 +164,7 @@ function dullCard (player, card) {
  ************************************************************/
 function clearCard (player, i) {
     $cardCells[player][i].css('visibility', 'hidden');
-    $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
+    $cardCells[player][i].attr({src: BLANK_CARD_IMAGE, alt: '-'});
 }
 
 /************************************************************
@@ -170,9 +174,11 @@ function clearCard (player, i) {
 function displayCard (player, i, visible) {
     if (players[player].hand.cards[i]) {
         if (visible) {
-            $cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
+            $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i] + ".jpg",
+                                         alt: players[player].hand.cards[i].altText() });
         } else {
-            $cardCells[player][i].attr('src', UNKNOWN_CARD_IMAGE);
+            $cardCells[player][i].attr({ src: UNKNOWN_CARD_IMAGE,
+                                         alt: '?'});
         }
         fillCard(player, i);
         $cardCells[player][i].css('visibility', '');
