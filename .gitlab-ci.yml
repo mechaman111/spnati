@@ -7,8 +7,13 @@ deploy_production:
     tags:
         - production
     script:
+        - export VERSION=$(sentry-cli releases propose-version)
+        - sentry-cli releases new -p spnati $VERSION
         - bash ./prepare-online.sh
         - rsync -rltz --delete .public/ /opt/spnati
+        - sentry-cli releases set-commits --auto $VERSION
+        - sentry-cli releases finalize $VERSION
+        - sentry-cli releases deploys $VERSION new -e production
     environment:
         name: production
         url: https://spnati.net/

@@ -17,6 +17,7 @@ var EPILOGUE_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
 var USAGE_TRACKING = undefined;
+var SENTRY_INITIALIZED = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
@@ -791,6 +792,14 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
 
 /* Called prior to removing a character from the table. */
 Opponent.prototype.unloadOpponent = function () {
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Unloading opponent ' + this.id,
+            level: 'info'
+        });
+    }
+
     if (this.stylesheet) {
         /* Remove the <link> to this opponent's stylesheet. */
         $('link[href=\"'+this.stylesheet+'\"]').remove();
@@ -978,6 +987,9 @@ function initialSetup () {
     players[HUMAN_PLAYER] = humanPlayer = new Player('human'); //createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
     humanPlayer.slot = HUMAN_PLAYER;
 
+    /* Generate a random session ID. */
+    sessionID = generateRandomID();
+
 	/* enable table opacity */
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
@@ -989,18 +1001,26 @@ function initialSetup () {
     loadGeneralCollectibles();
     
 	/* Make sure that the config file is loaded before processing the
-	   opponent list, so that includedOpponentStatuses is populated. */
-    loadConfigFile().always(loadSelectScreen);
+     *  opponent list, so that includedOpponentStatuses is populated.
+     *
+     * Also ensure that the config file is loaded before initializing Sentry,
+     * which requires the commit SHA.
+     */
+
     save.load();
+    
+    loadConfigFile().always(loadSelectScreen, function() {
+        if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
+    });
+
     updateTitleGender();
+
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
 
 	/* show the title screen */
 	$warningScreen.show();
 	$('#warning-start-button').focus();
     autoResizeFont();
-
-    /* Generate a random session ID. */
-    sessionID = generateRandomID();
 
     /* Construct a CSS rule for every combination of arrow direction, screen, and pseudo-element */
     bubbleArrowOffsetRules = [];
@@ -1039,6 +1059,8 @@ function loadVersionInfo () {
 		success: function(xml) {
             versionInfo = $(xml);
             CURRENT_VERSION = versionInfo.find('current').attr('version');
+
+            if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
             
             $('.substitute-version').text('v'+CURRENT_VERSION);
             console.log("Running SPNATI version "+CURRENT_VERSION);
@@ -1068,7 +1090,9 @@ function loadVersionInfo () {
                 last_update_string =  n_days + (n_days === 1 ? ' day ago' : ' days ago');
             }
             
-            $('.substitute-version-time').text('(updated '+last_update_string+')')
+            $('.substitute-version-time').text('(updated '+last_update_string+')');
+
+            $('.version-button').click(showVersionModal);
         }
     });
 }
@@ -1203,6 +1227,7 @@ function enterTitleScreen() {
     $warningScreen.hide();
     $titleScreen.show();
     $('#title-start-button').focus();
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
 }
 
 /************************************************************
@@ -1221,7 +1246,6 @@ function advanceToNextScreen (screen) {
     if (screen == $titleScreen) {
         /* advance to the select screen */
 		screenTransition($titleScreen, $selectScreen);
-
     } else if (screen == $selectScreen) {
         /* advance to the main game screen */
         $selectScreen.hide();
@@ -1256,6 +1280,18 @@ function resetPlayers () {
  * Restarts the game.
  ************************************************************/
 function restartGame () {
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'ui',
+            message: 'Returning to title screen.',
+            level: 'info'
+        });
+
+        Sentry.setTag("screen", "title");
+        Sentry.setTag("epilogue_player", undefined);
+        Sentry.setTag("epilogue", undefined);
+        Sentry.setTag("epilogue_gallery", undefined);
+    }
 
     $(document).off('keyup');
     $(document).keyup(groupSelectKeyToggle);
@@ -1269,9 +1305,13 @@ function restartGame () {
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
     $gamePlayerCardArea.show();
-    if (!MINIMAL_UI) $gamePlayerClothingArea.show();
-    
+    $gamePlayerClothingArea.css('display', '');  /* Reset to default so as not to interfere with 
+                                                    switching between classic and minimal UI. */
     inGame = false;
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.setTag("in_game", false);
+    }
 
 	/* trigger screen refreshes */
 	updateSelectionVisuals();
@@ -1285,7 +1325,7 @@ function restartGame () {
 	$gameScreen.hide();
 	$epilogueScreen.hide();
 	clearEpilogue();
-	$titleScreen.show();
+    $titleScreen.show();
 }
 
 /**********************************************************************
@@ -1405,11 +1445,72 @@ function showUsageTrackingModal() {
 function enableUsageTracking() {
     USAGE_TRACKING = true;
     save.saveUsageTracking();
+    sentryInit();
 }
 
 function disableUsageTracking() {
     USAGE_TRACKING = false;
     save.saveUsageTracking();
+}
+
+function sentryInit() {
+    if (USAGE_TRACKING && !SENTRY_INITIALIZED) {
+        console.log("Initializing Sentry...");
+
+        var sentry_opts = {
+            dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
+            release: VERSION_COMMIT,
+            maxBreadcrumbs: 250,
+            integrations: [new Sentry.Integrations.Breadcrumbs({
+                console: false,
+                dom: false
+            })],
+            beforeSend: function (event, hint) {
+                /* Inject additional game state data into event tags: */
+                if (inGame) {
+                    if (!event.extra) event.extra = {};
+
+                    event.extra.recentLoser = recentLoser;
+                    event.extra.previousLoser = previousLoser;
+                    event.extra.gameOver = gameOver;
+                    event.extra.currentTurn = currentTurn;
+                    event.extra.currentRound = currentRound;
+
+                    event.tags.rollback = inRollback();
+                    event.tags.gamePhase = getGamePhaseString(gamePhase);
+                }
+
+                var n_players = 0;
+                for (var i=1;i<players.length;i++) {
+                    if (players[i]) {
+                        n_players += 1;
+                        event.tags["character:" + players[i].id] = true;
+                        event.tags["slot-" + i] = players[i].id;
+                    } else {
+                        event.tags["slot-" + i] = undefined;
+                    }
+                }
+
+                event.tags.n_players = n_players;
+
+                return event;
+            }
+        };
+
+        if (window.location.origin.indexOf('spnati.net') >= 0) {
+            sentry_opts.environment = 'production';
+        }
+
+        Sentry.init(sentry_opts);
+
+        Sentry.setUser({
+            'id': sessionID,
+        });
+
+        Sentry.setTag("game_version", CURRENT_VERSION);
+
+        SENTRY_INITIALIZED = true;
+    }
 }
 
 var SEMVER_RE = /[vV]?(\d+)\.(\d+)(?:\.(\d+))?(?:\-([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-])*))?(?:\+([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*))?/;
@@ -1752,19 +1853,34 @@ function forceTableVisibility(state) {
 function showImportModal() {
     $("#export-code").text(save.serializeLocalStorage());
     
+    $('#import-invalid-code').hide();
+
     if (codeImportEnabled) {
         $('#import-progress').prop('disabled', false);
-        $('.import-restriction-warning').hide();
+        $('#import-restriction-warning').hide();
     } else {
         $('#import-progress').prop('disabled', true);
-        $('.import-restriction-warning').show();
+        $('#import-restriction-warning').show();
     }
     
     $ioModal.modal('show');
 
     $('#import-progress').click(function() {
         var code = $("#export-code").val();
-        save.deserializeLocalStorage(code);
+
+        if (SENTRY_INITIALIZED) {
+            Sentry.addBreadcrumb({
+                category: 'ui',
+                message: 'Loading save code...',
+                level: 'info'
+            });
+        }
+
+        if (save.deserializeLocalStorage(code)) {
+            $ioModal.modal('hide');
+        } else {
+            $('#import-invalid-code').show();
+        }
     });
 }
 
@@ -1786,7 +1902,7 @@ String.prototype.initCap = function() {
 	return this.substr(0, 1).toUpperCase() + this.substr(1);
 }
 
-// Polyfill for IE
+// Polyfills for IE
 if (!String.prototype.startsWith) {
     Object.defineProperty(String.prototype, 'startsWith', {
         value: function(search, pos) {
@@ -1794,6 +1910,15 @@ if (!String.prototype.startsWith) {
             return this.substring(pos, pos + search.length) === search;
         }
     });
+}
+
+if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function (search, this_len) {
+        if (this_len === undefined || this_len > this.length) {
+            this_len = this.length;
+        }
+        return this.substring(this_len - search.length, this_len) === search;
+    };
 }
 
 /************************************************************

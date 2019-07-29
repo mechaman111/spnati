@@ -2,6 +2,15 @@ if(!monika) var monika = (function (root) {
 
 var exports = {};
 
+if (root.SENTRY_INITIALIZED) {
+    root.Sentry.setTag('monika-loaded', true);
+    root.Sentry.addBreadcrumb({
+        category: 'monika',
+        message: 'Initializing monika.js...',
+        level: 'info'
+    });
+}
+
 exports.EFFECTS_ENABLED = true;
 exports.GLITCH_MODIFIER = 1.0;
 
@@ -9,19 +18,32 @@ exports.ACTIVE_FORFEIT_EFFECT = null;
 exports.JOINT_FORFEIT_ACTIVE = false;
 exports.SAYORI_AFFECTIONS_GLITCH = false;
 
-function loadScript (scriptName, success) {
+function loadScript (scriptName) {
     console.log("[Monika] Loading module: "+scriptName);
-    return $.getScript(scriptName, success).fail(function( jqxhr, settings, exception ) {
-        console.error("[Monika] Error loading "+scriptName+": \n"+exception.toString());
-    })
+
+    const script = document.createElement('script');
+    script.src = scriptName;
+    script.async = false;
+
+    script.addEventListener('load', function () {
+        console.log("[Monika] Loaded module: " + scriptName);
+    });
+
+    script.addEventListener('error', function() {
+        console.error("[Monika] Error loading " + scriptName);
+    });
+
+    root.document.head.appendChild(script);
 }
 
 /* Load in other resources and scripts: */
 $('head').append('<link rel="stylesheet" type="text/css" href="opponents/monika/css/monika.css">');
+
 loadScript('opponents/monika/js/utils.js');
 loadScript('opponents/monika/js/effects.js');
 loadScript('opponents/monika/js/extended_dialogue.js');
 loadScript('opponents/monika/js/behaviour_callbacks.js');
+
 
 /* Add Options Modal settings: */
 var glitchOptionsContainer = $('<tr><td style="width:25%"><h4 class="modal-title modal-left">Monika Glitches</h4></td></tr>');
@@ -41,6 +63,8 @@ function configureGlitchChance (mode) {
     $("#options-monika-glitches-2").removeClass("active");
     $("#options-monika-glitches-3").removeClass("active");
     
+    if (root.SENTRY_INITIALIZED) root.Sentry.setTag('monika-glitch-mode', mode);
+
     switch (mode) {
     /* Off */
     case 3:
@@ -68,7 +92,6 @@ function configureGlitchChance (mode) {
 exports.configureGlitchChance = configureGlitchChance;
 configureGlitchChance(1);
 
-
 function reportException(prefix, e) {
     console.log("[Monika] Exception swallowed "+prefix+": ");
     console.error(e);
@@ -89,6 +112,14 @@ function reportException(prefix, e) {
     }
 
     if (USAGE_TRACKING) {
+        if (SENTRY_INITIALIZED) {
+            Sentry.withScope(function (scope) {
+                scope.setTag("monika-error", true);
+                scope.setExtra("where", prefix);
+                Sentry.captureException(e);
+            });
+        }
+
         var report = compileBaseErrorReport('Exception caught from Monika code.', 'auto');
 
         $.ajax({
@@ -143,7 +174,11 @@ function hookWrapper (func_id) {
     
     var original_function = root[func_id];
     return function () {
-        if(!utils.monika_present()) { return original_function.apply(null, arguments); }
+        if (!players.some(function (p) {
+                return p.id === 'monika';
+        })) { 
+            return original_function.apply(null, arguments); 
+        }
         
         /* Prevent the original function from firing if any pre-hook
          * returns true.
@@ -324,7 +359,7 @@ registerHook('startDealPhase', 'pre', setupRoundGlitches);
  * These are one-shot effects that happen on a per-phase basis.
  */
 function setupTransientGlitches(player) {
-    if (!inGame || round_glitch_targets.indexOf(player) >= 0) return;
+    if (!inGame || round_glitch_targets.indexOf(player) >= 0 || !exports.EFFECTS_ENABLED) return;
     
     if (!players[player] || players[player].id === 'monika') return;
     if (Math.random() >= getCurrentGlitchChance()) return;

@@ -25,7 +25,7 @@ def main():
                 )
     
     with open('behaviour.xml', 'w', encoding='utf-8') as f:
-        f.write(root.serialize())
+        f.write(root.serialize(True, False))
 
 if __name__ == '__main__':
     main()

@@ -28,7 +28,17 @@ var extended_dialogues = {
         ["calm", "But <i>you</i> need to take the first step."],
         ["happy", "...anyway, that's my advice for right now."],
         ["calm", "Thanks for listening~"],
-    ]
+    ],
+    'legal-compliance': [
+        ["exasperated", "Ahem~!"],
+        ["writing-tip", "<i>SPNATI</i> is purely fan-made content and is completely unaffiliated with the official Doki Doki Literature Club, or with Team Salvato."],
+        ["horny", "Although I understand if you want to skip ahead and see, well, <i>all</i> of me, if you haven't played DDLC yet, you should do that first."],
+        ["happy", "Also, you can download DDLC at: {mono}<a href=\"https://ddlc.moe\">https://ddlc.moe</a>."],
+        ["happy", "And... I think that's it. Sorry about that."],
+        ["writing-tip", "I'm sure that was really boring, right? All that dry legalese..."],
+        ["exasperated", "But, well, it really wouldn't do for the Inventory to get shut down by an IP dispute, right?"],
+        ["writing-tip", "Anyways, I'm really glad you took the time to listen. Thanks~!"]
+    ],
 }
 
 exports.dialogues = extended_dialogues;
@@ -39,6 +49,7 @@ var currentExtendedDialogue = null;
 var backgroundEffects = [];
 
 exports.extendedDialoguePhase = extendedDialoguePhase;
+root.eGamePhase.EXTENDED_DIALOGUE = extendedDialoguePhase;
 
 function display_dialogue (pose, dialogue) {
     var pl = monika.utils.get_monika_player();
@@ -75,6 +86,16 @@ function extended_dialogue_start (id) {
     try {
         console.log("[Monika] Beginning extended dialogue with ID "+id);
         
+        if (root.SENTRY_INITIALIZED) {
+            root.Sentry.addBreadcrumb({
+                category: 'monika',
+                message: 'Beginning extended dialogue: '+id,
+                level: 'info'
+            });
+
+            root.Sentry.setTag("extended_dialogue", id);
+        }
+
         if (AUTO_FADE) forceTableVisibility(false);
         
         currentExtendedDialogue = {
@@ -107,6 +128,16 @@ function extended_dialogue_start (id) {
 monika.registerBehaviourCallback('extended_dialogue_start', extended_dialogue_start);
 
 function end_extended_dialogue() {
+    if (root.SENTRY_INITIALIZED) {
+        root.Sentry.addBreadcrumb({
+            category: 'monika',
+            message: 'Ending extended dialogue...',
+            level: 'info'
+        });
+
+        root.Sentry.setTag("extended_dialogue", null);
+    }
+
     allowProgression(previousGamePhase);
     currentExtendedDialogue = null;
     

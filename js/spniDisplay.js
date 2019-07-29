@@ -599,6 +599,11 @@ OpponentDisplay.prototype.onResize = function () {
 }
 
 OpponentDisplay.prototype.updateText = function (player) {
+    if (!player.chosenState.dialogue) {
+        this.dialogue.empty();
+        return;
+    }
+
     var displayElems = parseStyleSpecifiers(player.chosenState.dialogue).map(function (comp) {
         /* {'text': 'foo', 'classes': 'cls1 cls2 cls3'} --> <span class="cls1 cls2 cls3">foo</span> */
         
@@ -721,10 +726,7 @@ GameScreenDisplay.prototype.reset = function (player) {
     
     if (player) {
         this.opponentArea.show();
-        this.imageArea.css({
-            'height': player.scale + '%',
-            'top': (100 - player.scale) + '%'
-        }).show();
+        this.imageArea.css('height', 0.8 * player.scale + '%').show();
         this.label.removeClass("current loser tied");
     } else {
         this.opponentArea.hide();
@@ -776,8 +778,9 @@ MainSelectScreenDisplay.prototype.update = function (player) {
     if (!player) {
         this.hideBubble();
         this.clearPose();
+        this.imageArea.css('z-index', '-100');
         this.label.html("Opponent " + this.slot);
-        
+
         /* change the button */
         this.selectButton.html("Select Opponent");
         this.selectButton.removeClass("smooth-button-red");
@@ -806,10 +809,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         } else {
             this.pose.onLoadComplete = function () {
                 this.bubble.show();
-                this.imageArea.css({
-                    'height': player.scale + '%',
-                    'top': (100 - player.scale) + '%'
-                }).show();
+                this.imageArea.css('height', 0.8 * player.scale + '%').show();
             }.bind(this);
         }
     }
@@ -955,6 +955,15 @@ OpponentDetailsDisplay.prototype.constructor = OpponentDetailsDisplay;
 OpponentDetailsDisplay.prototype.handleSelected = function (ev) {
     if (!this.opponent) return;
     
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Loading individual opponent ' + this.opponent.id,
+            level: 'info'
+        });
+        Sentry.setTag("screen", "select-main");
+    }
+
     players[selectedSlot] = this.opponent;
 	players[selectedSlot].loadBehaviour(selectedSlot, true);
     updateSelectionVisuals();

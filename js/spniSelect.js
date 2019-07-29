@@ -3,19 +3,6 @@
  the game. The parsing functions for the opponent.xml file.
  ********************************************************************************/
 
-/**********************************************************************
- *****               Opponent & Group Specification               *****
- **********************************************************************/
-
-/**************************************************
- * Stores meta information about groups.
- **************************************************/
-function createNewGroup (title) {
-	var newGroupObject = {title:title,
-						  opponents:Array(4)};
-
-	return newGroupObject;
-}
 
 /**********************************************************************
  *****                  Select Screen UI Elements                 *****
@@ -187,6 +174,19 @@ var OFFLINE_STATUS_TOOLTIP = "This opponent has been retired from the official v
 var INCOMPLETE_STATUS_TOOLTIP = "This opponent is incomplete and currently not in development.";
 
 /**********************************************************************
+ *****               Opponent & Group Specification               *****
+ **********************************************************************/
+
+/**************************************************
+ * Stores meta information about groups.
+ **************************************************/
+function Group(title, background) {
+    this.title = title;
+    this.background = background;
+    this.opponents = Array(4);
+}
+
+/**********************************************************************
  *****                    Start Up Functions                      *****
  **********************************************************************/
 
@@ -288,7 +288,8 @@ function loadListingFile () {
             });
 
 			$xml.find('groups>group').each(function () {
-				var title = $(this).attr('title');
+                var title = $(this).attr('title');
+                var background = $(this).attr('background') || undefined;
 				var opp1 = $(this).attr('opp1');
 				var opp2 = $(this).attr('opp2');
 				var opp3 = $(this).attr('opp3');
@@ -297,7 +298,7 @@ function loadListingFile () {
                 var ids = [opp1, opp2, opp3, opp4];
                 if (!ids.every(function(id) { return available[id]; })) return;
 
-				var newGroup = createNewGroup(title);
+				var newGroup = new Group(title, background);
 				ids.forEach(function(id, idx) {
 					if (!(id in opponentGroupMap)) {
 						opponentGroupMap[id] = [];
@@ -417,76 +418,86 @@ function updateGroupSelectScreen () {
     $groupMaxPageIndicator.html("of "+selectableGroups[groupSelectScreen].length);
 
     /* create and load all of the individual opponents */
-	$groupButton.attr('disabled', false);
-	for (var i = 0; i < 4; i++) {
-		var opponent = selectableGroups[groupSelectScreen].length > 0 ?
-            selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i] :
-            undefined;
+    $groupButton.attr('disabled', false);
+    
+    var group = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]];
+    
+    if (group) {
+        $groupNameLabel.html(group.title);
 
-		if (opponent && typeof opponent == "object") {
-			shownGroup[i] = opponent;
+        if (group.background && backgrounds[group.background]) {
+            backgrounds[group.background].activateBackground();
+        } else {
+            optionsBackground.activateBackground();
+        }
 
-			$groupNameLabels[i].html(opponent.first + " " + opponent.last);
-			$groupPrefersLabels[i].html(opponent.label);
-			$groupSexLabels[i].html(opponent.gender);
-			$groupSourceLabels[i].html(opponent.source);
-			$groupWriterLabels[i].html(opponent.writer);
-			$groupArtistLabels[i].html(opponent.artist);
-			$groupDescriptionLabels[i].html(opponent.description);
+        for (var i = 0; i < 4; i++) {
+            var opponent = group.opponents[i];
 
-            if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
-                $groupBadges[i].show();
-            }
-            else {
+            if (opponent && typeof opponent == "object") {
+                shownGroup[i] = opponent;
+
+                $groupNameLabels[i].html(opponent.first + " " + opponent.last);
+                $groupPrefersLabels[i].html(opponent.label);
+                $groupSexLabels[i].html(opponent.gender);
+                $groupSourceLabels[i].html(opponent.source);
+                $groupWriterLabels[i].html(opponent.writer);
+                $groupArtistLabels[i].html(opponent.artist);
+                $groupDescriptionLabels[i].html(opponent.description);
+
+                if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
+                    $groupBadges[i].show();
+                } else {
+                    $groupBadges[i].hide();
+                }
+
+                $groupCostumeSelectors[i].hide();
+                if (ALT_COSTUMES_ENABLED) {
+                    if (
+                        (!FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 0) ||
+                        (FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 1)
+                    ) {
+                        if (!FORCE_ALT_COSTUME) {
+                            $groupCostumeSelectors[i].empty().append($('<option>', {
+                                val: '',
+                                text: 'Default Skin'
+                            }));
+                        }
+                        opponent.alternate_costumes.forEach(function (alt) {
+                            $groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
+                        });
+                        $groupCostumeSelectors[i].show();
+                    }
+                }
+
+                updateStatusIcon($groupStatuses[i], opponent.status);
+
+                $groupLayers[i].show();
+                $groupLayers[i].attr("src", "img/layers" + opponent.layers + ".png");
+
+                $groupImages[i].attr('src', opponent.selection_image);
+                $groupImages[i].css('height', opponent.scale + '%');
+                $groupImages[i].show();
+            } else {
+                delete shownGroup[i];
+
+                $groupNameLabels[i].html("");
+                $groupPrefersLabels[i].html("");
+                $groupSexLabels[i].html("");
+                $groupSourceLabels[i].html("");
+                $groupWriterLabels[i].html("");
+                $groupArtistLabels[i].html("");
+                $groupDescriptionLabels[i].html("");
                 $groupBadges[i].hide();
+                $groupStatuses[i].hide();
+                $groupLayers[i].hide();
+                $groupImages[i].hide();
+                $groupCostumeSelectors[i].hide();
+                $groupButton.attr('disabled', true);
             }
-			
-			$groupCostumeSelectors[i].hide();
-			if (ALT_COSTUMES_ENABLED) {
-				if (
-					(!FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 0) ||
-					(FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 1)
-				) {
-					if (!FORCE_ALT_COSTUME) {
-						$groupCostumeSelectors[i].empty().append($('<option>', {val: '', text: 'Default Skin'}));
-					}
-					opponent.alternate_costumes.forEach(function (alt) {
-						$groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
-					});
-					$groupCostumeSelectors[i].show();
-				}
-			}
-
-            updateStatusIcon($groupStatuses[i], opponent.status);
-
-            $groupLayers[i].show();
-            $groupLayers[i].attr("src", "img/layers" + opponent.layers + ".png");
-
-			$groupImages[i].attr('src', opponent.selection_image);
-			$groupImages[i].css('height', opponent.scale + '%');
-			$groupImages[i].show();
-		} else {
-			delete shownGroup[i];
-
-			$groupNameLabels[i].html("");
-			$groupPrefersLabels[i].html("");
-			$groupSexLabels[i].html("");
-			$groupSourceLabels[i].html("");
-			$groupWriterLabels[i].html("");
-			$groupArtistLabels[i].html("");
-			$groupDescriptionLabels[i].html("");
-            $groupBadges[i].hide();
-            $groupStatuses[i].hide();
-            $groupLayers[i].hide();
-			$groupImages[i].hide();
-			$groupCostumeSelectors[i].hide();
-			$groupButton.attr('disabled', true);
-		}
-    }
-    if (selectableGroups[groupSelectScreen].length == 0) {
+        }
+    } else if (selectableGroups[groupSelectScreen].length == 0) {
         $groupNameLabel.html("(No matches)");
-    } else {
-        $groupNameLabel.html(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].title);
     }
 }
 
@@ -624,6 +635,14 @@ function suggestionSelected(slot, quad) {
     for (var i=0; i<loadedOpponents.length; i++) {
         if (loadedOpponents[i].id === selectedID) {
             players[slot] = loadedOpponents[i];
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Loading suggested opponent ' + loadedOpponents[i].id,
+                    level: 'info'
+                });
+            }
             
         	updateSelectionVisuals();
 
@@ -660,6 +679,7 @@ function selectOpponentSlot (slot) {
 		updateIndividualSelectScreen();
 
         /* switch screens */
+        if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-individual");
 		screenTransition($selectScreen, $individualSelectScreen);
     } else {
         /* remove the opponent that's there */
@@ -676,7 +696,9 @@ function selectOpponentSlot (slot) {
  * The player clicked on the Preset Tables or Testing Tables button.
  ************************************************************/
 function clickedSelectGroupButton (screen) {
-    switchSelectGroupScreen(screen)
+    switchSelectGroupScreen(screen);
+
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-group");
 
 	/* switch screens */
 	screenTransition($selectScreen, $groupSelectScreen);
@@ -751,7 +773,21 @@ function updateSelectableGroups(screen) {
  ************************************************************/
 function loadGroup (chosenGroup) {
 	clickedRemoveAllButton();
-	console.log(chosenGroup.title);
+    console.log(chosenGroup.title);
+    
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Loading group '+chosenGroup.title,
+            level: 'info'
+        });
+    }
+
+    if (chosenGroup.background && backgrounds[chosenGroup.background]) {
+        backgrounds[chosenGroup.background].activateBackground();
+    } else {
+        optionsBackground.activateBackground();
+    }
 
     /* load the group members */
 	for (var i = 1; i < 5; i++) {
@@ -760,6 +796,15 @@ function loadGroup (chosenGroup) {
             if (players.some(function(p, j) { return i != j && p == member; })) {
                 member = member.clone();
             }
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Loading group opponent ' + member.id,
+                    level: 'info'
+                });
+            }
+
             member.loadBehaviour(i);
             players[i] = member;
         }
@@ -797,6 +842,14 @@ function clickedRandomFillButton (predicate) {
 		if (!(i in players)) {
 			/* select random opponent */
 			var randomOpponent = getRandomNumber(0, loadedOpponentsCopy.length);
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Loading random opponent ' + loadedOpponentsCopy[randomOpponent].id,
+                    level: 'info'
+                });
+            }
 
 			/* load opponent */
 			players[i] = loadedOpponentsCopy[randomOpponent];
@@ -849,7 +902,9 @@ function changeGroupStats (target) {
  * group select screen.
  ************************************************************/
 function selectGroup () {
-	loadGroup(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]]);
+    loadGroup(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]]);
+
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
 
     /* switch screens */
 	screenTransition($groupSelectScreen, $selectScreen);
@@ -878,6 +933,11 @@ function changeGroupPage (skip, page) {
 }
 
 
+/************************************************************
+ * Adds hotkey functionality to the group selection screen.
+ ************************************************************/
+
+
 function groupSelectKeyToggle(e)
 {
     console.log(e)
@@ -900,6 +960,10 @@ function groupSelectKeyToggle(e)
  ************************************************************/
 function backToSelect () {
     /* switch screens */
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
+
+    optionsBackground.activateBackground();
+
 	screenTransition($individualSelectScreen, $selectScreen);
 	screenTransition($groupSelectScreen, $selectScreen);
 }
@@ -914,6 +978,17 @@ function advanceSelectScreen () {
     gameID = generateRandomID();
 
     if (USAGE_TRACKING) {
+        if (SENTRY_INITIALIZED) {
+            Sentry.setTag("in_game", true);
+            Sentry.setTag("screen", "game");
+
+            Sentry.addBreadcrumb({
+                category: 'game',
+                message: 'Starting game.',
+                level: 'info'
+            });
+        }
+
         var usage_tracking_report = {
             'date': (new Date()).toISOString(),
 			'commit': VERSION_COMMIT,
@@ -957,6 +1032,7 @@ function advanceSelectScreen () {
  * screen.
  ************************************************************/
 function backSelectScreen () {
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
 	screenTransition($selectScreen, $titleScreen);
 }
 
@@ -1263,20 +1339,6 @@ function setSortingMode(mode) {
 $sortingOptionsItems.on("click", function(e) {
     setSortingMode($(this).find('a').html());
 });
-
-/************************************************************
- * Word wrapping Functions
- ************************************************************/
-
-/**
- * Inserts a fixed-size HTML element with the specified text to allow the content
- * to be either word-wrapped (if the text is long and spaces are present)
- * or word-broken (if text is long and no spaces are present).
- */
-function wordWrapHtml(text) {
-    text = text || "&nbsp;";
-    return "<table class=\"wrap-text\"><tr><td>" + text + "</td></tr></table>";
-}
 
 /************************************************************
  * Dynamic dialogue and image counting functions

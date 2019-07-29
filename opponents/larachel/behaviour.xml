@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0b at 6:44:40 PM on July 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 7:54:22 PM on July 25, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.0b</version>
+    <version>v5.0</version>
     <first>L'Arachel</first>
     <last />
     <label>L'Arachel</label>
@@ -46,12 +46,12 @@
     <start />
 
     <wardrobe>
-        <clothing lowercase="panties" position="lower" formalName="Panties" type="important" plural="true" />
-        <clothing lowercase="robe" position="both" formalName="robe" type="major" />
-        <clothing lowercase="gloves" position="hands" formalName="gloves" type="minor" plural="true" />
-        <clothing lowercase="boots" position="legs" formalName="boots" type="minor" plural="true" />
-        <clothing lowercase="staff" position="other" formalName="staff" type="extra" />
-        <clothing lowercase="shawl" position="upper" formalName="shawl" type="minor" />
+        <clothing name="panties" generic="Panties" position="lower" type="important" plural="true" />
+        <clothing name="robe" generic="robe" position="both" type="major" />
+        <clothing name="gloves" generic="gloves" position="hands" type="minor" plural="true" />
+        <clothing name="boots" generic="boots" position="legs" type="minor" plural="true" />
+        <clothing name="staff" generic="staff" position="other" type="extra" />
+        <clothing name="shawl" generic="shawl" position="upper" type="minor" />
     </wardrobe>
 
     <poses>
@@ -111,6 +111,10 @@
                 <state img="0-interested.png">Ah! ~Player~! I hadn't expected to meet you here. It must be divine providence! What's all this?</state>
                 <state img="0-smug.png">Servants of goodness and allies of righteousness! Take heart! The wandering beauty, L'Arachel herself, has arrived!</state>
                 <state img="0-confident.png">I, L'Arachel, strike in the name of righteousness, order, and Rausten!</state>
+            </case>
+            <case tag="selected">
+                <condition count="1" filter="summer_larachel" />
+                <state img="0-smug.png">Seekers of summer fun! Intrepid beach-goers! Be amazed as the dazzling L'Arachel joins you in your festivities! Feel lucky?</state>
             </case>
             <case tag="game_start">
                 <state img="0-smug.png">You may look upon me for now. Such peerless beauty is difficult to ignore, after all!</state>
@@ -200,6 +204,25 @@
                 <test expr="~self.slot~" value="4" />
                 <state img="0-confused.png">I would expect better from any imposter of mine. Do you truly think any will mistake you for me?</state>
             </case>
+            <case tag="game_start">
+                <condition count="1" filter="summer_larachel" />
+                <state img="0-interested.png">Pardon, but could one of you perhaps direct us toward a beach?</state>
+            </case>
+            <case tag="game_start">
+                <condition count="1" filter="summer_larachel" />
+                <test expr="~background~" value="beach" />
+                <state img="0-confident.png">Such a rare opportunity for us to go to the beach... ~player~, we mustn't let this chance slip away!</state>
+            </case>
+            <case tag="game_start">
+                <condition count="1" filter="summer_larachel" />
+                <test expr="~background~" value="inventory" />
+                <state img="0-awkward.png">Perhaps I took a wrong turn... I was meant to be going to the beach...</state>
+            </case>
+            <case tag="game_start">
+                <condition count="1" filter="summer_larachel" />
+                <test expr="~background~" value="poolside" />
+                <state img="0-happy.png">I was looking for the beach, but I suppose a stop at the pool suits me just as well!</state>
+            </case>
             <case tag="swap_cards">
                 <state img="0-dismissive.png">~cards~, quickly! Don't hold us up!</state>
                 <state img="0-boisterous.png">Your best ~cards~, at once!</state>
@@ -265,6 +288,12 @@
             </case>
             <case tag="hand" alsoPlaying="bi" timeInStage="0">
                 <state img="0-mad.png">...Is this a joke? It's not funny.</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
+                <state img="0-confused.png">I know not what you mean, but you look much like Chihiro. Perhaps I have been blessed with insight on her position?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="0-shocked.png">I-It's still there! So then Chihiro's... actually a male! To think, I was deceived this long!</state>
             </case>
             <case tag="hand" alsoPlaying="croix" timeInStage="0">
                 <state img="0-shocked.png">W-We're becoming surrounded already! What's the plan, ~player~?</state>
@@ -335,6 +364,14 @@
             <case tag="hand" alsoPlaying="spooky" timeInStage="0">
                 <state img="0-awkward.png">A phantom such as yourself cannot possibly hope to frighten me. I shall banish you into the next world personally!</state>
             </case>
+            <case tag="hand">
+                <condition count="1" filter="summer_larachel" />
+                <state img="0-confident.png" oneShotId="5">Rausten is a mountainous country, so I have no need for a swimsuit usually. This one I have adorned was recommended to me by Princess Tana. I look beautiful in it, don’t I?</state>
+                <state img="0-awkward.png" oneShotId="6">I am... unused to baring so much skin. However, I cannot practice my swimming otherwise.</state>
+                <state img="0-happy.png" oneShotId="9">Summer is a time for new experiences. I can do things like learn to fly a pegasus, or dabble in games like these.</state>
+                <state img="0-awkward.png" oneShotId="8">Keep an eye out, alright ~player~? A swimsuit offers protection from none but the harsh heat of Magvel.</state>
+                <state img="0-embarrassed.png" oneShotId="7">It's a pity Lord Ephraim and Lord Innes couldn't join. I'd love to see their legendary beach fights! ...N-No, it's entirely unrelated to them being in swimsuits!</state>
+            </case>
             <case tag="hand" priority="0">
                 <state img="0-calm.png" oneShotId="1" marker="faith">Perhaps some of you are interested in what I do as priestess? All followers of the goddess seek to help others. I happen to do so through my healing and light magic.</state>
                 <state img="0-confident.png" oneShotId="2">I assure you, my friends, that I am no idle priestess. I travel around Magvel, protecting those in danger of monster threats. By comparison, this game is nothing!</state>
@@ -403,6 +440,10 @@
             <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word1" priority="102">
                 <state img="0-awkward.png">Er, why? It's merely a name for a cat.</state>
             </case>
+            <case tag="must_strip">
+                <condition count="1" filter="summer_larachel" />
+                <state img="0-awkward.png">Wha-? Er, that is to say, I meant to do that! Yes!</state>
+            </case>
             <case tag="must_strip_winning">
                 <state img="0-shocked.png">What? I lost? Why, that hardly seems fair.</state>
                 <state img="0-awkward.png">I lost? Are you certain you're not mistaken? It hardly seems proper for a pr- oopsie! Almost revealed my secret identity!</state>
@@ -468,6 +509,15 @@
             <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word2" priority="102">
                 <state img="0-stripping.png">It seems harmless enough. ...Pussy?</state>
             </case>
+            <case tag="stripping">
+                <condition count="1" filter="summer_larachel" />
+                <state img="0-stripping.png">Out of the goodness of my heart, I shall remove my towel.</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="0-confident.png">Marvelous! What a bold strategy, ~player~! I'm excited to watch your plan unfold.</state>
+                <state img="0-smug.png">~Player~ doesn't simply lose without a plan in place. Don't think for a moment you've beaten him!</state>
+                <state img="0-interested.png">Don't be so careless, ~player~! Do you expect me to prevail &lt;i&gt;on my own?&lt;/i&gt;</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="0-boisterous.png">The light of L'Arachel shines ever brighter!</state>
                 <state img="0-smug.png">Didn't I warn you? One with my righteous favor cannot lose at something so base as gambling!</state>
@@ -489,11 +539,6 @@
             </case>
             <case tag="tie">
                 <state img="0-shocked.png">Impossible! There &lt;i&gt;must&lt;/i&gt; be a loser! I demand a do-over!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="0-confident.png">Marvelous! What a bold strategy, ~player~! I'm excited to watch your plan unfold.</state>
-                <state img="0-smug.png">~Player~ doesn't simply lose without a plan in place. Don't think for a moment you've beaten him!</state>
-                <state img="0-interested.png">Don't be so careless, ~player~! Do you expect me to prevail &lt;i&gt;on my own?&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="0-dismissive.png">Don't think for a moment I've forgotten the object of this game!</state>
@@ -812,6 +857,15 @@
             </case>
             <case tag="opponent_lost" target="catria" targetStage="0">
                 <state img="0-happy.png">Do tell me, what is a pegasus knight such as yourself doing in a location like this?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="0">
+                <state img="0-happy.png">My goodness, what a precious little bun we have here!</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="0-awkward.png">(She's beginning to panic... I must calm her down.)</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="0-happy.png">You've returned! I knew my charming personality would win you back.</state>
             </case>
             <case tag="opponent_lost" target="coco" targetStage="0">
                 <state img="0-mad.png">You there, suspicious girl! Remove that eyewear at once!</state>
@@ -1234,6 +1288,15 @@
             </case>
             <case tag="opponent_stripping" target="beatrix" targetStage="2">
                 <state img="0-awkward.png">Although the fact you've made it so far with only one useable arm says wonders...</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="0">
+                <state img="0-calm.png">You're exactly the type of civilian I wish to protect.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="0-interested.png">H-Hold it! You can do this! Wait-!</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="0-calm.png">Worry not. I will always be here to provide aid for when you need it. What troubles you?</state>
             </case>
             <case tag="opponent_stripping" target="felicia" targetStage="0">
                 <state img="0-interested.png">Just... what are you doing behind that curtain...?</state>
@@ -1743,6 +1806,15 @@
             </case>
             <case tag="opponent_stripped" target="beatrix" targetStage="3">
                 <state img="0-mad.png">Honestly... you need to take better care of yourself! Just... shaving doesn't excuse a lack of empathy for the rest of you!</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="1">
+                <state img="0-boisterous.png">Fear not! I, L'Arachel, shall see to it you come out of this safely! And ~player~ shall help, of course.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="0-shocked.png">Wh-What's this? Illusion magic?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="0-happy.png">...Eheh! I must be imagining things.</state>
             </case>
             <case tag="opponent_stripped" target="felicia" targetStage="1">
                 <state img="0-shocked.png">You actually shaved yourself, here and now? I-I should smack you for doing so when I was not prepared!</state>
@@ -2412,6 +2484,10 @@
                 <state img="0-boisterous.png">&lt;i&gt;Ha!&lt;/i&gt; Surely this is providence! I expected nothing less!</state>
                 <state img="0-calm.png">Excellent! I ought to wash myself after that... thrashing!</state>
             </case>
+            <case tag="game_over_victory">
+                <condition count="1" filter="summer_larachel" />
+                <state img="0-happy.png">A hard-won victory. Dress yourself, ~player~; we haven't even gone swimming yet!</state>
+            </case>
             <case tag="global" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed" priority="200">
                 <state img="0-shocked.png">Losing your &lt;i&gt;mask&lt;/i&gt; is what puts you over the edge?</state>
             </case>
@@ -2469,6 +2545,12 @@
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
                 <state img="1-mad.png">Th-This isn't fair! At least grow some for everyone! Most of all, me!</state>
             </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
+                <state img="1-confused.png">I know not what you mean, but you look much like Chihiro. Perhaps I have been blessed with insight on her position?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="1-shocked.png">I-It's still there! So then Chihiro's... actually a male! To think, I was deceived this long!</state>
+            </case>
             <case tag="hand" alsoPlaying="d.va" timeInStage="0" alsoPlayingSayingMarker="d.va_wager_set">
                 <state img="1-mad.png">Do you think yourself my better? What an absurd thought! Very well, I will beat you at your own game!</state>
             </case>
@@ -2520,6 +2602,14 @@
             <case tag="hand" alsoPlaying="sei" timeInStage="0" alsoPlayingSayingMarker="sei_anal">
                 <state img="1-shocked.png">You will cease this inappropriate discussion at once! ...And stop looking at me like that, ~player~!</state>
             </case>
+            <case tag="hand">
+                <condition count="1" filter="summer_larachel" />
+                <state img="1-confident.png" oneShotId="5">Rausten is a mountainous country, so I have no need for a swimsuit usually. This one I have adorned was recommended to me by Princess Tana. I look beautiful in it, don’t I?</state>
+                <state img="1-awkward.png" oneShotId="6">I am... unused to baring so much skin. However, I cannot practice my swimming otherwise.</state>
+                <state img="1-happy.png" oneShotId="9">Summer is a time for new experiences. I can do things like learn to fly a pegasus, or dabble in games like these.</state>
+                <state img="1-awkward.png" oneShotId="8">Keep an eye out, alright ~player~? A swimsuit offers protection from none but the harsh heat of Magvel.</state>
+                <state img="1-embarrassed.png" oneShotId="7">It's a pity Lord Ephraim and Lord Innes couldn't join. I'd love to see their legendary beach fights! ...N-No, it's entirely unrelated to them being in swimsuits!</state>
+            </case>
             <case tag="hand" priority="0">
                 <state img="1-calm.png" oneShotId="1" marker="faith">Perhaps some of you are interested in what I do as priestess? All followers of the goddess seek to help others. I happen to do so through my healing and light magic.</state>
                 <state img="1-confident.png" oneShotId="2">I assure you, my friends, that I am no idle priestess. I travel around Magvel, protecting those in danger of monster threats. By comparison, this game is nothing!</state>
@@ -2545,6 +2635,10 @@
             </case>
             <case tag="must_strip" alsoPlaying="remilia">
                 <state img="1-mad.png">Very well. If this is war, so be it! Face my judgment!</state>
+            </case>
+            <case tag="must_strip">
+                <condition count="1" filter="summer_larachel" />
+                <state img="1-mad.png">I thought this would be a &lt;i&gt;fun&lt;/i&gt; time, but you've forced my hand!</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="1-mad.png">I should think that's enough! Behold, you servants of the Demon King!</state>
@@ -2617,6 +2711,15 @@
             <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word3" priority="102">
                 <state img="1-happy.png">Indeed. You must have a lot of animal lovers in your audience.</state>
             </case>
+            <case tag="stripped">
+                <condition count="1" filter="summer_larachel" />
+                <state img="1-mad.png">And perhaps it was coming undone regardless. Do not complain!</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="1-confident.png">Marvelous! What a bold strategy, ~player~! I'm excited to watch your plan unfold.</state>
+                <state img="1-smug.png">~Player~ doesn't simply lose without a plan in place. Don't think for a moment you've beaten him!</state>
+                <state img="1-interested.png">Don't be so careless, ~player~! Do you expect me to prevail &lt;i&gt;on my own?&lt;/i&gt;</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="1-boisterous.png">The light of L'Arachel shines ever brighter!</state>
                 <state img="1-smug.png">Didn't I warn you? One with my righteous favor cannot lose at something so base as gambling!</state>
@@ -2638,11 +2741,6 @@
             </case>
             <case tag="tie">
                 <state img="1-shocked.png">Impossible! There &lt;i&gt;must&lt;/i&gt; be a loser! I demand a do-over!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="1-confident.png">Marvelous! What a bold strategy, ~player~! I'm excited to watch your plan unfold.</state>
-                <state img="1-smug.png">~Player~ doesn't simply lose without a plan in place. Don't think for a moment you've beaten him!</state>
-                <state img="1-interested.png">Don't be so careless, ~player~! Do you expect me to prevail &lt;i&gt;on my own?&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="1-dismissive.png">Don't think for a moment I've forgotten the object of this game!</state>
@@ -2955,6 +3053,15 @@
             </case>
             <case tag="opponent_lost" target="catria" targetStage="0">
                 <state img="1-happy.png">Do tell me, what is a pegasus knight such as yourself doing in a location like this?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="0">
+                <state img="1-happy.png">My goodness, what a precious little bun we have here!</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="1-awkward.png">(She's beginning to panic... I must calm her down.)</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="1-happy.png">You've returned! I knew my charming personality would win you back.</state>
             </case>
             <case tag="opponent_lost" target="coco" targetStage="0">
                 <state img="1-mad.png">You there, suspicious girl! Remove that eyewear at once!</state>
@@ -3377,6 +3484,15 @@
             </case>
             <case tag="opponent_stripping" target="beatrix" targetStage="2">
                 <state img="1-awkward.png">Although the fact you've made it so far with only one useable arm says wonders...</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="0">
+                <state img="1-calm.png">You're exactly the type of civilian I wish to protect.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="1-interested.png">H-Hold it! You can do this! Wait-!</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="1-calm.png">Worry not. I will always be here to provide aid for when you need it. What troubles you?</state>
             </case>
             <case tag="opponent_stripping" target="felicia" targetStage="0">
                 <state img="1-interested.png">Just... what are you doing behind that curtain...?</state>
@@ -3861,6 +3977,15 @@
             </case>
             <case tag="opponent_stripped" target="beatrix" targetStage="3">
                 <state img="1-mad.png">Honestly... you need to take better care of yourself! Just... shaving doesn't excuse a lack of empathy for the rest of you!</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="1">
+                <state img="1-boisterous.png">Fear not! I, L'Arachel, shall see to it you come out of this safely! And ~player~ shall help, of course.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="1-shocked.png">Wh-What's this? Illusion magic?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="1-happy.png">...Eheh! I must be imagining things.</state>
             </case>
             <case tag="opponent_stripped" target="felicia" targetStage="1">
                 <state img="1-shocked.png">You actually shaved yourself, here and now? I-I should smack you for doing so when I was not prepared!</state>
@@ -4527,6 +4652,10 @@
                 <state img="1-boisterous.png">&lt;i&gt;Ha!&lt;/i&gt; Surely this is providence! I expected nothing less!</state>
                 <state img="1-calm.png">Excellent! I ought to wash myself after that... thrashing!</state>
             </case>
+            <case tag="game_over_victory">
+                <condition count="1" filter="summer_larachel" />
+                <state img="1-happy.png">A hard-won victory. Dress yourself, ~player~; we haven't even gone swimming yet!</state>
+            </case>
             <case tag="global" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed" priority="200">
                 <state img="1-shocked.png">Losing your &lt;i&gt;mask&lt;/i&gt; is what puts you over the edge?</state>
             </case>
@@ -4580,6 +4709,12 @@
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
                 <state img="2-mad.png">Th-This isn't fair! At least grow some for everyone! Most of all, me!</state>
             </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
+                <state img="2-confused.png">I know not what you mean, but you look much like Chihiro. Perhaps I have been blessed with insight on her position?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="2-shocked.png">I-It's still there! So then Chihiro's... actually a male! To think, I was deceived this long!</state>
+            </case>
             <case tag="hand" alsoPlaying="d.va" timeInStage="0" alsoPlayingSayingMarker="d.va_wager_set">
                 <state img="2-mad.png">Do you think yourself my better? What an absurd thought! Very well, I will beat you at your own game!</state>
             </case>
@@ -4630,6 +4765,14 @@
             </case>
             <case tag="hand" alsoPlaying="sei" timeInStage="0" alsoPlayingSayingMarker="sei_anal">
                 <state img="2-shocked.png">You will cease this inappropriate discussion at once! ...And stop looking at me like that, ~player~!</state>
+            </case>
+            <case tag="hand">
+                <condition count="1" filter="summer_larachel" />
+                <state img="2-confident.png" oneShotId="5">Rausten is a mountainous country, so I have no need for a swimsuit usually. This one I have adorned was recommended to me by Princess Tana. I look beautiful in it, don’t I?</state>
+                <state img="2-awkward.png" oneShotId="6">I am... unused to baring so much skin. However, I cannot practice my swimming otherwise.</state>
+                <state img="2-happy.png" oneShotId="9">Summer is a time for new experiences. I can do things like learn to fly a pegasus, or dabble in games like these.</state>
+                <state img="2-awkward.png" oneShotId="8">Keep an eye out, alright ~player~? A swimsuit offers protection from none but the harsh heat of Magvel.</state>
+                <state img="2-embarrassed.png" oneShotId="7">It's a pity Lord Ephraim and Lord Innes couldn't join. I'd love to see their legendary beach fights! ...N-No, it's entirely unrelated to them being in swimsuits!</state>
             </case>
             <case tag="hand" priority="0">
                 <state img="2-calm.png" oneShotId="1" marker="faith">Perhaps some of you are interested in what I do as priestess? All followers of the goddess seek to help others. I happen to do so through my healing and light magic.</state>
@@ -4749,6 +4892,10 @@
             <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word2" priority="102">
                 <state img="2-stripping.png">It seems harmless enough. ...Pussy?</state>
             </case>
+            <case tag="stripping">
+                <condition count="1" filter="summer_larachel" />
+                <state img="2-stripping.png">These are surprisingly easy to remove.</state>
+            </case>
             <case tag="stripped">
                 <state img="2-embarrassed.png">Th-That was a valuable stave... very well! If I can't smite you with Rausten's holy light, then I shall make you regret this whole frivolous endeavor!</state>
                 <state img="2-mad.png">Thank the gods, for you've been spared Rausten's might! But I can still show you why gambling is a hopeless waste, weapon or otherwise!</state>
@@ -4775,6 +4922,15 @@
             <case tag="stripped" alsoPlaying="sakura">
                 <state img="2-smug.png">Oh, you needn't worry. I have plenty more in the convoy.</state>
             </case>
+            <case tag="stripped">
+                <condition count="1" filter="summer_larachel" />
+                <state img="2-calm.png">That was a mere fluke! And, even spent, it shall make a fantastic melon smasher later.</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="2-interested.png">Even as a princess, I know I shouldn't doubt your strategy, ~player~. Is this a part of it?</state>
+                <state img="2-dismissive.png">It's only fair that you can't summon better cards, ~player~. Especially if I can't!</state>
+                <state img="2-mad.png">Was that truly all that was given to you? I may need to have a word with this dealer!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="2-confident.png">Did you think you could beat someone of royal blood? A lady of Rausten, no less!</state>
                 <state img="2-smug.png">Of course you must face defeat, so that &lt;i&gt;I&lt;/i&gt; may grasp victory!</state>
@@ -4798,11 +4954,6 @@
             </case>
             <case tag="tie">
                 <state img="2-shocked.png">Impossible! There &lt;i&gt;must&lt;/i&gt; be a loser! I demand a do-over!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="2-interested.png">Even as a princess, I know I shouldn't doubt your strategy, ~player~. Is this a part of it?</state>
-                <state img="2-dismissive.png">It's only fair that you can't summon better cards, ~player~. Especially if I can't!</state>
-                <state img="2-mad.png">Was that truly all that was given to you? I may need to have a word with this dealer!</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="2-dismissive.png">Hurry and discard something! Quickly!</state>
@@ -5025,6 +5176,15 @@
             </case>
             <case tag="opponent_lost" target="catria" targetStage="0">
                 <state img="2-happy.png">Do tell me, what is a pegasus knight such as yourself doing in a location like this?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="0">
+                <state img="2-happy.png">My goodness, what a precious little bun we have here!</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="2-awkward.png">(She's beginning to panic... I must calm her down.)</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="2-happy.png">You've returned! I knew my charming personality would win you back.</state>
             </case>
             <case tag="opponent_lost" target="coco" targetStage="0">
                 <state img="2-mad.png">You there, suspicious girl! Remove that eyewear at once!</state>
@@ -5447,6 +5607,15 @@
             </case>
             <case tag="opponent_stripping" target="beatrix" targetStage="2">
                 <state img="2-awkward.png">Although the fact you've made it so far with only one useable arm says wonders...</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="0">
+                <state img="2-calm.png">You're exactly the type of civilian I wish to protect.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="2-interested.png">H-Hold it! You can do this! Wait-!</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="2-calm.png">Worry not. I will always be here to provide aid for when you need it. What troubles you?</state>
             </case>
             <case tag="opponent_stripping" target="felicia" targetStage="0">
                 <state img="2-interested.png">Just... what are you doing behind that curtain...?</state>
@@ -5931,6 +6100,15 @@
             </case>
             <case tag="opponent_stripped" target="beatrix" targetStage="3">
                 <state img="2-mad.png">Honestly... you need to take better care of yourself! Just... shaving doesn't excuse a lack of empathy for the rest of you!</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="1">
+                <state img="2-boisterous.png">Fear not! I, L'Arachel, shall see to it you come out of this safely! And ~player~ shall help, of course.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="2-shocked.png">Wh-What's this? Illusion magic?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="2-happy.png">...Eheh! I must be imagining things.</state>
             </case>
             <case tag="opponent_stripped" target="felicia" targetStage="1">
                 <state img="2-shocked.png">You actually shaved yourself, here and now? I-I should smack you for doing so when I was not prepared!</state>
@@ -6600,6 +6778,10 @@
                 <state img="2-boisterous.png">&lt;i&gt;Ha!&lt;/i&gt; Surely this is providence! I expected nothing less!</state>
                 <state img="2-calm.png">Excellent! I ought to wash myself after that... thrashing!</state>
             </case>
+            <case tag="game_over_victory">
+                <condition count="1" filter="summer_larachel" />
+                <state img="2-happy.png">A hard-won victory. Dress yourself, ~player~; we haven't even gone swimming yet!</state>
+            </case>
             <case tag="global" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed" priority="200">
                 <state img="2-shocked.png">Losing your &lt;i&gt;mask&lt;/i&gt; is what puts you over the edge?</state>
             </case>
@@ -6653,6 +6835,12 @@
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
                 <state img="3-mad.png">Th-This isn't fair! At least grow some for everyone! Most of all, me!</state>
             </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
+                <state img="3-confused.png">I know not what you mean, but you look much like Chihiro. Perhaps I have been blessed with insight on her position?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="3-shocked.png">I-It's still there! So then Chihiro's... actually a male! To think, I was deceived this long!</state>
+            </case>
             <case tag="hand" alsoPlaying="d.va" timeInStage="0" alsoPlayingSayingMarker="d.va_wager_set">
                 <state img="3-mad.png">Do you think yourself my better? What an absurd thought! Very well, I will beat you at your own game!</state>
             </case>
@@ -6703,6 +6891,14 @@
             </case>
             <case tag="hand" alsoPlaying="sei" timeInStage="0" alsoPlayingSayingMarker="sei_anal">
                 <state img="3-shocked.png">You will cease this inappropriate discussion at once! ...And stop looking at me like that, ~player~!</state>
+            </case>
+            <case tag="hand">
+                <condition count="1" filter="summer_larachel" />
+                <state img="3-confident.png" oneShotId="5">Rausten is a mountainous country, so I have no need for a swimsuit usually. This one I have adorned was recommended to me by Princess Tana. I look beautiful in it, don’t I?</state>
+                <state img="3-awkward.png" oneShotId="6">I am... unused to baring so much skin. However, I cannot practice my swimming otherwise.</state>
+                <state img="3-happy.png" oneShotId="9">Summer is a time for new experiences. I can do things like learn to fly a pegasus, or dabble in games like these.</state>
+                <state img="3-awkward.png" oneShotId="8">Keep an eye out, alright ~player~? A swimsuit offers protection from none but the harsh heat of Magvel.</state>
+                <state img="3-embarrassed.png" oneShotId="7">It's a pity Lord Ephraim and Lord Innes couldn't join. I'd love to see their legendary beach fights! ...N-No, it's entirely unrelated to them being in swimsuits!</state>
             </case>
             <case tag="hand" priority="0">
                 <state img="3-calm.png" oneShotId="1" marker="faith">Perhaps some of you are interested in what I do as priestess? All followers of the goddess seek to help others. I happen to do so through my healing and light magic.</state>
@@ -6777,7 +6973,7 @@
                 <state img="3-stripping.png">What kind of priestess do you take me for? The goddess would smite me herself were I to abandon her holy mission!</state>
             </case>
             <case tag="stripping" alsoPlaying="natsuki">
-                <state img="3-stripping.png">All I wished was to protect the protect the citizens from monsters, yet &lt;i&gt;I'm&lt;/i&gt; getting yelled at. (&lt;i&gt;Sniff...&lt;/i&gt;)</state>
+                <state img="3-stripping.png">All I wished was to protect the citizens from monsters, yet &lt;i&gt;I'm&lt;/i&gt; getting yelled at. (&lt;i&gt;Sniff...&lt;/i&gt;)</state>
             </case>
             <case tag="stripping" alsoPlaying="pit">
                 <state img="3-stripping.png">Indeed. It's a constant struggle with... everything going on.</state>
@@ -6808,6 +7004,10 @@
             </case>
             <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word2" priority="102">
                 <state img="3-stripping.png">It seems harmless enough. ...Pussy?</state>
+            </case>
+            <case tag="stripping">
+                <condition count="1" filter="summer_larachel" />
+                <state img="3-stripping.png">You seem confused.</state>
             </case>
             <case tag="stripping" saidMarker="weeping" notSaidMarker="weepin2">
                 <state img="3-stripping.png" marker="weepin2">No. A princess must remain strong. I will overcome! The might of Rausten shines within me!</state>
@@ -6862,6 +7062,21 @@
             <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word3" priority="102">
                 <state img="3-happy.png">Indeed. You must have a lot of animal lovers in your audience.</state>
             </case>
+            <case tag="stripped">
+                <condition count="1" filter="summer_larachel" />
+                <test expr="~background~" cmp="!=" value="beach" />
+                <state img="3-sad.png">What I wouldn't give to stand on some soft sand right now.</state>
+            </case>
+            <case tag="stripped">
+                <condition count="1" filter="summer_larachel" />
+                <test expr="~background~" value="beach" />
+                <state img="3-confident.png">It was nigh time I accustomed myself to the sand. This is still in my favor!</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="3-interested.png">Even as a princess, I know I shouldn't doubt your strategy, ~player~. Is this a part of it?</state>
+                <state img="3-dismissive.png">It's only fair that you can't summon better cards, ~player~. Especially if I can't!</state>
+                <state img="3-mad.png">Was that truly all that was given to you? I may need to have a word with this dealer!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="3-confident.png">Did you think you could beat someone of royal blood? A lady of Rausten, no less!</state>
                 <state img="3-smug.png">Of course you must face defeat, so that &lt;i&gt;I&lt;/i&gt; may grasp victory!</state>
@@ -6885,11 +7100,6 @@
             </case>
             <case tag="tie">
                 <state img="3-shocked.png">Impossible! There &lt;i&gt;must&lt;/i&gt; be a loser! I demand a do-over!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="3-interested.png">Even as a princess, I know I shouldn't doubt your strategy, ~player~. Is this a part of it?</state>
-                <state img="3-dismissive.png">It's only fair that you can't summon better cards, ~player~. Especially if I can't!</state>
-                <state img="3-mad.png">Was that truly all that was given to you? I may need to have a word with this dealer!</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="3-dismissive.png">Hurry and discard something! Quickly!</state>
@@ -7112,6 +7322,15 @@
             </case>
             <case tag="opponent_lost" target="catria" targetStage="0">
                 <state img="3-happy.png">Do tell me, what is a pegasus knight such as yourself doing in a location like this?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="0">
+                <state img="3-happy.png">My goodness, what a precious little bun we have here!</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="3-awkward.png">(She's beginning to panic... I must calm her down.)</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="3-happy.png">You've returned! I knew my charming personality would win you back.</state>
             </case>
             <case tag="opponent_lost" target="coco" targetStage="0">
                 <state img="3-mad.png">You there, suspicious girl! Remove that eyewear at once!</state>
@@ -7534,6 +7753,15 @@
             </case>
             <case tag="opponent_stripping" target="beatrix" targetStage="2">
                 <state img="3-awkward.png">Although the fact you've made it so far with only one useable arm says wonders...</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="0">
+                <state img="3-calm.png">You're exactly the type of civilian I wish to protect.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="3-interested.png">H-Hold it! You can do this! Wait-!</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="3-calm.png">Worry not. I will always be here to provide aid for when you need it. What troubles you?</state>
             </case>
             <case tag="opponent_stripping" target="felicia" targetStage="0">
                 <state img="3-interested.png">Just... what are you doing behind that curtain...?</state>
@@ -8018,6 +8246,15 @@
             </case>
             <case tag="opponent_stripped" target="beatrix" targetStage="3">
                 <state img="3-mad.png">Honestly... you need to take better care of yourself! Just... shaving doesn't excuse a lack of empathy for the rest of you!</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="1">
+                <state img="3-boisterous.png">Fear not! I, L'Arachel, shall see to it you come out of this safely! And ~player~ shall help, of course.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="3-shocked.png">Wh-What's this? Illusion magic?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="3-happy.png">...Eheh! I must be imagining things.</state>
             </case>
             <case tag="opponent_stripped" target="felicia" targetStage="1">
                 <state img="3-shocked.png">You actually shaved yourself, here and now? I-I should smack you for doing so when I was not prepared!</state>
@@ -8686,6 +8923,10 @@
                 <state img="3-boisterous.png">&lt;i&gt;Ha!&lt;/i&gt; Surely this is providence! I expected nothing less!</state>
                 <state img="3-calm.png">Excellent! I ought to wash myself after that... thrashing!</state>
             </case>
+            <case tag="game_over_victory">
+                <condition count="1" filter="summer_larachel" />
+                <state img="3-happy.png">A hard-won victory. Dress yourself, ~player~; we haven't even gone swimming yet!</state>
+            </case>
             <case tag="global" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed" priority="200">
                 <state img="3-shocked.png">Losing your &lt;i&gt;mask&lt;/i&gt; is what puts you over the edge?</state>
             </case>
@@ -8739,6 +8980,12 @@
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
                 <state img="4-mad.png">Th-This isn't fair! At least grow some for everyone! Most of all, me!</state>
             </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
+                <state img="4-confused.png">I know not what you mean, but you look much like Chihiro. Perhaps I have been blessed with insight on her position?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="4-shocked.png">I-It's still there! So then Chihiro's... actually a male! To think, I was deceived this long!</state>
+            </case>
             <case tag="hand" alsoPlaying="d.va" timeInStage="0" alsoPlayingSayingMarker="d.va_wager_set">
                 <state img="4-mad.png">Do you think yourself my better? What an absurd thought! Very well, I will beat you at your own game!</state>
             </case>
@@ -8790,6 +9037,14 @@
             <case tag="hand" alsoPlaying="sei" timeInStage="0" alsoPlayingSayingMarker="sei_anal">
                 <state img="4-shocked.png">You will cease this inappropriate discussion at once! ...And stop looking at me like that, ~player~!</state>
             </case>
+            <case tag="hand">
+                <condition count="1" filter="summer_larachel" />
+                <state img="4-confident.png" oneShotId="5">Rausten is a mountainous country, so I have no need for a swimsuit usually. This one I have adorned was recommended to me by Princess Tana. I look beautiful in it, don’t I?</state>
+                <state img="4-awkward.png" oneShotId="6">I am... unused to baring so much skin. However, I cannot practice my swimming otherwise.</state>
+                <state img="4-happy.png" oneShotId="9">Summer is a time for new experiences. I can do things like learn to fly a pegasus, or dabble in games like these.</state>
+                <state img="4-awkward.png" oneShotId="8">Keep an eye out, alright ~player~? A swimsuit offers protection from none but the harsh heat of Magvel.</state>
+                <state img="4-embarrassed.png" oneShotId="7">It's a pity Lord Ephraim and Lord Innes couldn't join. I'd love to see their legendary beach fights! ...N-No, it's entirely unrelated to them being in swimsuits!</state>
+            </case>
             <case tag="hand" priority="0">
                 <state img="4-calm.png" oneShotId="1" marker="faith">Perhaps some of you are interested in what I do as priestess? All followers of the goddess seek to help others. I happen to do so through my healing and light magic.</state>
                 <state img="4-confident.png" oneShotId="2">I assure you, my friends, that I am no idle priestess. I travel around Magvel, protecting those in danger of monster threats. By comparison, this game is nothing!</state>
@@ -8828,6 +9083,10 @@
             </case>
             <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word1" priority="102">
                 <state img="4-awkward.png">Er, why? It's merely a name for a cat.</state>
+            </case>
+            <case tag="must_strip">
+                <condition count="1" filter="summer_larachel" />
+                <state img="4-shocked.png">Again? This swimsuit must be cursed! Did Princess Tana trick me?</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="4-horny.png">I was hoping that I wouldn't be asked to join you all.</state>
@@ -8885,6 +9144,10 @@
             </case>
             <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word2" priority="102">
                 <state img="4-stripping.png">It seems harmless enough. ...Pussy?</state>
+            </case>
+            <case tag="stripping">
+                <condition count="1" filter="summer_larachel" />
+                <state img="4-stripping.png">Do you mind? A princess removing her entire swimsuit requires a &lt;i&gt;little&lt;/i&gt; more privacy!</state>
             </case>
             <case tag="stripping" saidMarker="abandoned" notSaidMarker="abandon2">
                 <state img="4-stripping.png">I don't know what manner of trick this is, but you won't break my will! I am Princess L'Arachel!</state>
@@ -8944,9 +9207,18 @@
             <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word3" priority="102">
                 <state img="4-happy.png">Indeed. You must have a lot of animal lovers in your audience.</state>
             </case>
+            <case tag="stripped">
+                <condition count="1" filter="summer_larachel" />
+                <state img="4-happy.png">Of course I wear gloves to the beach! Do you know how cumbersome it is to get sand beween your fingernails?</state>
+            </case>
             <case tag="stripped" totalNaked="0" totalMasturbating="0" totalFinished="0">
                 <state img="4-sad.png">~Player~, pay attention! I'm at the end of my rope, so I need your aid now more than ever!</state>
                 <state img="4-confused.png">~Player~, look at me! I can't bear another loss! You must help me protect my modesty.</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="4-interested.png">Even as a princess, I know I shouldn't doubt your strategy, ~player~. Is this a part of it?</state>
+                <state img="4-dismissive.png">It's only fair that you can't summon better cards, ~player~. Especially if I can't!</state>
+                <state img="4-mad.png">Was that truly all that was given to you? I may need to have a word with this dealer!</state>
             </case>
             <case tag="male_must_strip">
                 <state img="4-confident.png">Did you think you could beat someone of royal blood? A lady of Rausten, no less!</state>
@@ -8971,11 +9243,6 @@
             </case>
             <case tag="tie">
                 <state img="4-shocked.png">Impossible! There &lt;i&gt;must&lt;/i&gt; be a loser! I demand a do-over!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="4-interested.png">Even as a princess, I know I shouldn't doubt your strategy, ~player~. Is this a part of it?</state>
-                <state img="4-dismissive.png">It's only fair that you can't summon better cards, ~player~. Especially if I can't!</state>
-                <state img="4-mad.png">Was that truly all that was given to you? I may need to have a word with this dealer!</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="4-dismissive.png">Hurry and discard something! Quickly!</state>
@@ -9198,6 +9465,15 @@
             </case>
             <case tag="opponent_lost" target="catria" targetStage="0">
                 <state img="4-happy.png">Do tell me, what is a pegasus knight such as yourself doing in a location like this?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="0">
+                <state img="4-happy.png">My goodness, what a precious little bun we have here!</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="4-awkward.png">(She's beginning to panic... I must calm her down.)</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="4-happy.png">You've returned! I knew my charming personality would win you back.</state>
             </case>
             <case tag="opponent_lost" target="coco" targetStage="0">
                 <state img="4-mad.png">You there, suspicious girl! Remove that eyewear at once!</state>
@@ -9620,6 +9896,15 @@
             </case>
             <case tag="opponent_stripping" target="beatrix" targetStage="2">
                 <state img="4-awkward.png">Although the fact you've made it so far with only one useable arm says wonders...</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="0">
+                <state img="4-calm.png">You're exactly the type of civilian I wish to protect.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="4-interested.png">H-Hold it! You can do this! Wait-!</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="4-calm.png">Worry not. I will always be here to provide aid for when you need it. What troubles you?</state>
             </case>
             <case tag="opponent_stripping" target="felicia" targetStage="0">
                 <state img="4-interested.png">Just... what are you doing behind that curtain...?</state>
@@ -10104,6 +10389,15 @@
             </case>
             <case tag="opponent_stripped" target="beatrix" targetStage="3">
                 <state img="4-mad.png">Honestly... you need to take better care of yourself! Just... shaving doesn't excuse a lack of empathy for the rest of you!</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="1">
+                <state img="4-boisterous.png">Fear not! I, L'Arachel, shall see to it you come out of this safely! And ~player~ shall help, of course.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="4-shocked.png">Wh-What's this? Illusion magic?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="4-happy.png">...Eheh! I must be imagining things.</state>
             </case>
             <case tag="opponent_stripped" target="felicia" targetStage="1">
                 <state img="4-shocked.png">You actually shaved yourself, here and now? I-I should smack you for doing so when I was not prepared!</state>
@@ -10772,6 +11066,10 @@
                 <state img="4-boisterous.png">&lt;i&gt;Ha!&lt;/i&gt; Surely this is providence! I expected nothing less!</state>
                 <state img="4-calm.png">Excellent! I ought to wash myself after that... thrashing!</state>
             </case>
+            <case tag="game_over_victory">
+                <condition count="1" filter="summer_larachel" />
+                <state img="4-happy.png">A hard-won victory. Dress yourself, ~player~; we haven't even gone swimming yet!</state>
+            </case>
             <case tag="global" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed" priority="200">
                 <state img="4-shocked.png">Losing your &lt;i&gt;mask&lt;/i&gt; is what puts you over the edge?</state>
             </case>
@@ -10819,6 +11117,12 @@
             </case>
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
                 <state img="5-mad.png">Th-This isn't fair! At least grow some for everyone! Most of all, me!</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
+                <state img="5-confused.png">I know not what you mean, but you look much like Chihiro. Perhaps I have been blessed with insight on her position?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="5-shocked.png">I-It's still there! So then Chihiro's... actually a male! To think, I was deceived this long!</state>
             </case>
             <case tag="hand" alsoPlaying="d.va" timeInStage="0" alsoPlayingSayingMarker="d.va_wager_set">
                 <state img="5-mad.png">Do you think yourself my better? What an absurd thought! Very well, I will beat you at your own game!</state>
@@ -10871,6 +11175,24 @@
             <case tag="hand" alsoPlaying="sei" timeInStage="0" alsoPlayingSayingMarker="sei_anal">
                 <state img="5-shocked.png">You will cease this inappropriate discussion at once! ...And stop looking at me like that, ~player~!</state>
             </case>
+            <case tag="hand">
+                <condition count="1" filter="summer_larachel" />
+                <state img="5-confident.png" oneShotId="5">Rausten is a mountainous country, so I have no need for a swimsuit usually. This one I have adorned was recommended to me by Princess Tana. I look beautiful in it, don’t I?</state>
+                <state img="5-awkward.png" oneShotId="6">I am... unused to baring so much skin. However, I cannot practice my swimming otherwise.</state>
+                <state img="5-happy.png" oneShotId="9">Summer is a time for new experiences. I can do things like learn to fly a pegasus, or dabble in games like these.</state>
+                <state img="5-awkward.png" oneShotId="8">Keep an eye out, alright ~player~? A swimsuit offers protection from none but the harsh heat of Magvel.</state>
+                <state img="5-embarrassed.png" oneShotId="7">It's a pity Lord Ephraim and Lord Innes couldn't join. I'd love to see their legendary beach fights! ...N-No, it's entirely unrelated to them being in swimsuits!</state>
+            </case>
+            <case tag="hand">
+                <condition count="1" filter="summer_larachel" />
+                <test expr="~background~" cmp="!=" value="beach" />
+                <state img="5-calm.png" oneShotId="15">You'll return that top to me later, right? Relaxing on the beach in only half a suit would certainly make things more difficult.</state>
+            </case>
+            <case tag="hand">
+                <condition count="1" filter="summer_larachel" />
+                <test expr="~background~" value="beach" />
+                <state img="5-confused.png" oneShotId="10">Being recognized like this would be... less than ideal. ~Player~, do you think it would be simple to convince any passerby that I was a male?</state>
+            </case>
             <case tag="hand" priority="0">
                 <state img="5-calm.png" oneShotId="1" marker="faith">Perhaps some of you are interested in what I do as priestess? All followers of the goddess seek to help others. I happen to do so through my healing and light magic.</state>
                 <state img="5-confident.png" oneShotId="2">I assure you, my friends, that I am no idle priestess. I travel around Magvel, protecting those in danger of monster threats. By comparison, this game is nothing!</state>
@@ -10878,7 +11200,7 @@
                 <state img="5-confident.png" oneShotId="4">I needn't even look at my cards. As long as I have faith and righteousness on my side, I shan't lose!</state>
             </case>
             <case tag="must_strip" alsoPlaying="akko">
-                <state img="5-awkward.png">The only one being weird about this is you! And fr the last time, I am a priestess, not a witch!</state>
+                <state img="5-awkward.png">The only one being weird about this is you! And for the last time, I am a priestess, not a witch!</state>
             </case>
             <case tag="must_strip" alsoPlaying="pit">
                 <state img="5-confident.png">At least Pit's being a proper gentleman about this. The rest of you should follow his example.</state>
@@ -10916,6 +11238,10 @@
             <case tag="must_strip">
                 <condition count="1" status="not_naked" />
                 <state img="5-horny.png">&lt;i&gt;Last&lt;/i&gt; one naked does not spare me the shame of baring myself to strangers!</state>
+            </case>
+            <case tag="must_strip">
+                <condition count="1" filter="summer_larachel" />
+                <state img="5-embarrassed.png">This hasn't been relaxing at all!</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="5-mad.png">You couldn't just grant me this victory? Only to preserve what's left of my modesty?</state>
@@ -10977,6 +11303,10 @@
             <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word2" priority="102">
                 <state img="5-stripping.png">It seems harmless enough. ...Pussy?</state>
             </case>
+            <case tag="stripping">
+                <condition count="1" filter="summer_larachel" />
+                <state img="5-stripping.png">First I went out in such a daring ensemble, then I'm made to wear nothing whatsoever...!</state>
+            </case>
             <case tag="stripping" saidMarker="abandoned" notSaidMarker="abandon2">
                 <state img="5-stripping.png">I don't know what manner of trick this is, but you won't break my will! I am Princess L'Arachel!</state>
             </case>
@@ -11019,6 +11349,19 @@
             <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word3" priority="102">
                 <state img="5-happy.png">Indeed. You must have a lot of animal lovers in your audience.</state>
             </case>
+            <case tag="stripped">
+                <condition count="1" filter="summer_larachel" />
+                <state img="5-happy.png">Wait... huzzah! I remember now, this was a two-piece swimsuit! My luck averts yet another crisis!</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="5-calm.png">I-I expected more of a strategist of your caliber, ~player~.</state>
+                <state img="5-sad.png">Did you not have a plan prepared? &lt;i&gt;All this time?&lt;/i&gt;</state>
+                <state img="5-embarrassed.png">I... I think one of us should excuse ourselves, ~player~...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStatus="not_decent" priority="0">
+                <state img="5-dismissive.png">I wouldn't have asked for your help had I known you were as bad at this as... as me!</state>
+                <state img="5-horny.png">~Player~, you must...? W-well... I suppose you know the rules...</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="5-smug.png">My cause is just, and my purpose holy! Your defeat is certain!</state>
                 <state img="5-boisterous.png">I trust you can bear defeat. After all, this won't be the last time you taste it!</state>
@@ -11040,15 +11383,6 @@
             </case>
             <case tag="tie">
                 <state img="5-shocked.png">Impossible! There &lt;i&gt;must&lt;/i&gt; be a loser! I demand a do-over!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="5-calm.png">I-I expected more of a strategist of your caliber, ~player~.</state>
-                <state img="5-sad.png">Did you not have a plan prepared? &lt;i&gt;All this time?&lt;/i&gt;</state>
-                <state img="5-embarrassed.png">I... I think one of us should excuse ourselves, ~player~...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStatus="not_decent" priority="0">
-                <state img="5-dismissive.png">I wouldn't have asked for your help had I known you were as bad at this as... as me!</state>
-                <state img="5-horny.png">~Player~, you must...? W-well... I suppose you know the rules...</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="5-smug.png">Surely you didn't think you were invincible! Ha!</state>
@@ -11074,7 +11408,7 @@
                 <state img="5-awkward.png">Don't hold back now; do you not see my plight?</state>
             </case>
             <case tag="female_removed_accessory">
-                <state img="5-mad.png">Do my eyes deceive me? ~clothing.ifPlural(~clothing~|A ~clothing~)~?</state>
+                <state img="5-mad.png">Do my eyes deceive me? ~clothing.ifPlural(~Clothing~|A ~clothing~)~?</state>
                 <state img="5-sad.png">O-of course! Why, I expected nothing less from such a... a worthy opponent.</state>
                 <state img="5-confused.png">Why... don't believe for a moment that your ~clothing~ will bring you to victory.</state>
                 <state img="5-shocked.png">Oh! I... I didn't forget anything! I'm simply... taken aback at the tactics you use to ensure victory!</state>
@@ -11214,7 +11548,7 @@
             </case>
             <case tag="female_large_chest_is_visible">
                 <state img="5-shocked.png">What an impressive... &lt;i&gt;erm...&lt;/i&gt; I suppose it's commendable that you... gave up your support.</state>
-                <state img="5-calm.png">&lt;i&gt;Pah!&lt;/i&gt; There's more to a woman than simply a full and bountiful breast!</state>
+                <state img="5-calm.png">&lt;i&gt;Pah!&lt;/i&gt; There's more to a woman than simply a full and bountiful bosom!</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="5-horny.png">&lt;i&gt;Ooh,&lt;/i&gt; I couldn't wait -- I-I mean... I knew you'd get your just reward!</state>
@@ -11261,6 +11595,15 @@
             </case>
             <case tag="opponent_lost" target="catria" targetStage="0">
                 <state img="5-happy.png">Do tell me, what is a pegasus knight such as yourself doing in a location like this?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="0">
+                <state img="5-happy.png">My goodness, what a precious little bun we have here!</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="5-awkward.png">(She's beginning to panic... I must calm her down.)</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="5-happy.png">You've returned! I knew my charming personality would win you back.</state>
             </case>
             <case tag="opponent_lost" target="coco" targetStage="0">
                 <state img="5-mad.png">You there, suspicious girl! Remove that eyewear at once!</state>
@@ -11683,6 +12026,15 @@
             </case>
             <case tag="opponent_stripping" target="beatrix" targetStage="2">
                 <state img="5-awkward.png">Although the fact you've made it so far with only one useable arm says wonders...</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="0">
+                <state img="5-calm.png">You're exactly the type of civilian I wish to protect.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="5-interested.png">H-Hold it! You can do this! Wait-!</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="5-calm.png">Worry not. I will always be here to provide aid for when you need it. What troubles you?</state>
             </case>
             <case tag="opponent_stripping" target="felicia" targetStage="0">
                 <state img="5-interested.png">Just... what are you doing behind that curtain...?</state>
@@ -12167,6 +12519,15 @@
             </case>
             <case tag="opponent_stripped" target="beatrix" targetStage="3">
                 <state img="5-mad.png">Honestly... you need to take better care of yourself! Just... shaving doesn't excuse a lack of empathy for the rest of you!</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="1">
+                <state img="5-boisterous.png">Fear not! I, L'Arachel, shall see to it you come out of this safely! And ~player~ shall help, of course.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="5-shocked.png">Wh-What's this? Illusion magic?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="5-happy.png">...Eheh! I must be imagining things.</state>
             </case>
             <case tag="opponent_stripped" target="felicia" targetStage="1">
                 <state img="5-shocked.png">You actually shaved yourself, here and now? I-I should smack you for doing so when I was not prepared!</state>
@@ -12813,6 +13174,10 @@
                 <state img="5-calm.png">F-finally! &lt;i&gt;Goodness&lt;/i&gt;, I was afraid that would never end!</state>
                 <state img="5-mad.png">Don't look upon me! I'll take my clothes, now. And a towel for everyone!</state>
             </case>
+            <case tag="game_over_victory">
+                <condition count="1" filter="summer_larachel" />
+                <state img="5-happy.png">A hard-won victory. Dress yourself, ~player~; we haven't even gone swimming yet!</state>
+            </case>
             <case tag="global" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed" priority="200">
                 <state img="5-shocked.png">Losing your &lt;i&gt;mask&lt;/i&gt; is what puts you over the edge?</state>
             </case>
@@ -12860,6 +13225,12 @@
             </case>
             <case tag="hand" alsoPlaying="amalia" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
                 <state img="6-mad.png">Th-This isn't fair! At least grow some for everyone! Most of all, me!</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
+                <state img="6-confused.png">I know not what you mean, but you look much like Chihiro. Perhaps I have been blessed with insight on her position?</state>
+            </case>
+            <case tag="hand" alsoPlaying="chihiro" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="6-shocked.png">I-It's still there! So then Chihiro's... actually a male! To think, I was deceived this long!</state>
             </case>
             <case tag="hand" alsoPlaying="d.va" timeInStage="0" alsoPlayingSayingMarker="d.va_wager_set">
                 <state img="6-mad.png">Do you think yourself my better? What an absurd thought! Very well, I will beat you at your own game!</state>
@@ -12912,6 +13283,24 @@
             <case tag="hand" alsoPlaying="sei" timeInStage="0" alsoPlayingSayingMarker="sei_anal">
                 <state img="6-shocked.png">You will cease this inappropriate discussion at once! ...And stop looking at me like that, ~player~!</state>
             </case>
+            <case tag="hand">
+                <condition count="1" filter="summer_larachel" />
+                <state img="6-confident.png" oneShotId="5">Rausten is a mountainous country, so I have no need for a swimsuit usually. This one I have adorned was recommended to me by Princess Tana. I look beautiful in it, don’t I?</state>
+                <state img="6-awkward.png" oneShotId="6">I am... unused to baring so much skin. However, I cannot practice my swimming otherwise.</state>
+                <state img="6-happy.png" oneShotId="9">Summer is a time for new experiences. I can do things like learn to fly a pegasus, or dabble in games like these.</state>
+                <state img="6-awkward.png" oneShotId="8">Keep an eye out, alright ~player~? A swimsuit offers protection from none but the harsh heat of Magvel.</state>
+                <state img="6-embarrassed.png" oneShotId="7">It's a pity Lord Ephraim and Lord Innes couldn't join. I'd love to see their legendary beach fights! ...N-No, it's entirely unrelated to them being in swimsuits!</state>
+            </case>
+            <case tag="hand">
+                <condition count="1" filter="summer_larachel" />
+                <test expr="~background~" cmp="!=" value="beach" />
+                <state img="6-sad.png" oneShotId="17">B-By chance my swimsuit isn't returned... do you think the beach has a lax dress code? I ask that you check before we depart.</state>
+            </case>
+            <case tag="hand">
+                <condition count="1" filter="summer_larachel" />
+                <test expr="~background~" value="beach" />
+                <state img="6-sad.png" oneShotId="16">M-Make sure you take special care of that swimsuit. If word gets out that L'Arachel spent her day... in the nude... no, I refuse to even consider that possibility!</state>
+            </case>
             <case tag="hand" priority="0">
                 <state img="6-calm.png" oneShotId="1" marker="faith">Perhaps some of you are interested in what I do as priestess? All followers of the goddess seek to help others. I happen to do so through my healing and light magic.</state>
                 <state img="6-confident.png" oneShotId="2">I assure you, my friends, that I am no idle priestess. I travel around Magvel, protecting those in danger of monster threats. By comparison, this game is nothing!</state>
@@ -12962,6 +13351,25 @@
             <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="lrr_word3" priority="102">
                 <state img="6-happy.png">Indeed. You must have a lot of animal lovers in your audience.</state>
             </case>
+            <case tag="stripped">
+                <condition count="1" filter="summer_larachel" />
+                <test expr="~background~" cmp="!=" value="beach" />
+                <state img="6-embarrassed.png">I absolutely cannot show up like this! The scandal would ruin my reputation!</state>
+            </case>
+            <case tag="stripped">
+                <condition count="1" filter="summer_larachel" />
+                <test expr="~background~" value="beach" />
+                <state img="6-mad.png">I'm to get a sunburn for sure now. Do you feel proud of yourselves?</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="6-calm.png">I-I expected more of a strategist of your caliber, ~player~.</state>
+                <state img="6-sad.png">Did you not have a plan prepared? &lt;i&gt;All this time?&lt;/i&gt;</state>
+                <state img="6-embarrassed.png">I... I think one of us should excuse ourselves, ~player~...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStatus="not_decent" priority="0">
+                <state img="6-dismissive.png">I wouldn't have asked for your help had I known you were as bad at this as... as me!</state>
+                <state img="6-horny.png">~Player~, you must...? W-well... I suppose you know the rules...</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="6-smug.png">My cause is just, and my purpose holy! Your defeat is certain!</state>
                 <state img="6-boisterous.png">I trust you can bear defeat. After all, this won't be the last time you taste it!</state>
@@ -12983,15 +13391,6 @@
             </case>
             <case tag="tie">
                 <state img="6-shocked.png">Impossible! There &lt;i&gt;must&lt;/i&gt; be a loser! I demand a do-over!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="6-calm.png">I-I expected more of a strategist of your caliber, ~player~.</state>
-                <state img="6-sad.png">Did you not have a plan prepared? &lt;i&gt;All this time?&lt;/i&gt;</state>
-                <state img="6-embarrassed.png">I... I think one of us should excuse ourselves, ~player~...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStatus="not_decent" priority="0">
-                <state img="6-dismissive.png">I wouldn't have asked for your help had I known you were as bad at this as... as me!</state>
-                <state img="6-horny.png">~Player~, you must...? W-well... I suppose you know the rules...</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="6-smug.png">Surely you didn't think you were invincible! Ha!</state>
@@ -13017,7 +13416,7 @@
                 <state img="6-awkward.png">Don't hold back now; do you not see my plight?</state>
             </case>
             <case tag="female_removed_accessory">
-                <state img="6-mad.png">Do my eyes deceive me? ~clothing.ifPlural(~clothing~|A ~clothing~)~?</state>
+                <state img="6-mad.png">Do my eyes deceive me? ~clothing.ifPlural(~Clothing~|A ~clothing~)~?</state>
                 <state img="6-sad.png">O-of course! Why, I expected nothing less from such a... a worthy opponent.</state>
                 <state img="6-confused.png">Why... don't believe for a moment that your ~clothing~ will bring you to victory.</state>
                 <state img="6-shocked.png">Oh! I... I didn't forget anything! I'm simply... taken aback at the tactics you use to ensure victory!</state>
@@ -13157,7 +13556,7 @@
             </case>
             <case tag="female_large_chest_is_visible">
                 <state img="6-shocked.png">What an impressive... &lt;i&gt;erm...&lt;/i&gt; I suppose it's commendable that you... gave up your support.</state>
-                <state img="6-calm.png">&lt;i&gt;Pah!&lt;/i&gt; There's more to a woman than simply a full and bountiful breast!</state>
+                <state img="6-calm.png">&lt;i&gt;Pah!&lt;/i&gt; There's more to a woman than simply a full and bountiful bosom!</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="6-horny.png">&lt;i&gt;Ooh,&lt;/i&gt; I couldn't wait -- I-I mean... I knew you'd get your just reward!</state>
@@ -13209,6 +13608,15 @@
             </case>
             <case tag="opponent_lost" target="catria" targetStage="0">
                 <state img="6-happy.png">Do tell me, what is a pegasus knight such as yourself doing in a location like this?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="0">
+                <state img="6-happy.png">My goodness, what a precious little bun we have here!</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="6-awkward.png">(She's beginning to panic... I must calm her down.)</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="6-happy.png">You've returned! I knew my charming personality would win you back.</state>
             </case>
             <case tag="opponent_lost" target="coco" targetStage="0">
                 <state img="6-mad.png">You there, suspicious girl! Remove that eyewear at once!</state>
@@ -13631,6 +14039,15 @@
             </case>
             <case tag="opponent_stripping" target="beatrix" targetStage="2">
                 <state img="6-awkward.png">Although the fact you've made it so far with only one useable arm says wonders...</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="0">
+                <state img="6-calm.png">You're exactly the type of civilian I wish to protect.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="6-interested.png">H-Hold it! You can do this! Wait-!</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="6-calm.png">Worry not. I will always be here to provide aid for when you need it. What troubles you?</state>
             </case>
             <case tag="opponent_stripping" target="felicia" targetStage="0">
                 <state img="6-interested.png">Just... what are you doing behind that curtain...?</state>
@@ -14115,6 +14532,15 @@
             </case>
             <case tag="opponent_stripped" target="beatrix" targetStage="3">
                 <state img="6-mad.png">Honestly... you need to take better care of yourself! Just... shaving doesn't excuse a lack of empathy for the rest of you!</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="1">
+                <state img="6-boisterous.png">Fear not! I, L'Arachel, shall see to it you come out of this safely! And ~player~ shall help, of course.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="6-shocked.png">Wh-What's this? Illusion magic?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="6-happy.png">...Eheh! I must be imagining things.</state>
             </case>
             <case tag="opponent_stripped" target="felicia" targetStage="1">
                 <state img="6-shocked.png">You actually shaved yourself, here and now? I-I should smack you for doing so when I was not prepared!</state>
@@ -14761,9 +15187,18 @@
                 <state img="6-awkward.png" marker="forfeit">I suppose I'm out then. Do I... I must &lt;i&gt;what?&lt;/i&gt; ~Player~!</state>
                 <state img="6-embarrassed.png" marker="forfeit">Yet another defeat? What more can you... &lt;i&gt;What?&lt;/i&gt; You would ask &lt;i&gt;that&lt;/i&gt; of me?</state>
             </case>
+            <case tag="must_masturbate_first" alsoPlaying="tharja">
+                <state img="6-mad.png">Wh-What? This foul druid must have rewritten the rules. Must I really complete this?</state>
+            </case>
             <case tag="must_masturbate">
                 <state img="6-shocked.png">Hmm? That's not possible! Why, I'm already... meaning I must... ~Player~!</state>
                 <state img="6-embarrassed.png">What? N-no no, there must be some mistake!</state>
+            </case>
+            <case tag="must_masturbate" alsoPlaying="tharja" alsoPlayingStage="0-5">
+                <state img="6-mad.png">I will not allow this slight to go unchecked! ~Player~, tell her that I am a virtuous and honorable woman!</state>
+            </case>
+            <case tag="must_masturbate" alsoPlaying="tharja" alsoPlayingStage="6-7">
+                <state img="6-smug.png">Such vulgar words do not suit a woman like yourself, druid. After all, I'm merely following &lt;i&gt;your&lt;/i&gt; example.</state>
             </case>
             <case tag="start_masturbating">
                 <state img="6-sad.png">&lt;i&gt;Ha! Haah!&lt;/i&gt; ~Player~, I-I don't know if I can do this! Deep breaths, L'Arachel... deep breaths... If I could get this far...</state>
@@ -14775,6 +15210,10 @@
             <case tag="game_over_victory">
                 <state img="6-calm.png">F-finally! &lt;i&gt;Goodness&lt;/i&gt;, I was afraid that would never end!</state>
                 <state img="6-mad.png">Don't look upon me! I'll take my clothes, now. And a towel for everyone!</state>
+            </case>
+            <case tag="game_over_victory">
+                <condition count="1" filter="summer_larachel" />
+                <state img="6-happy.png">A hard-won victory. Dress yourself, ~player~; we haven't even gone swimming yet!</state>
             </case>
             <case tag="global" alsoPlaying="rainbow_mika" alsoPlayingSayingMarker="embarrassed" priority="200">
                 <state img="6-shocked.png">Losing your &lt;i&gt;mask&lt;/i&gt; is what puts you over the edge?</state>
@@ -14788,6 +15227,15 @@
         </stage>
 
         <stage id="7">
+            <case tag="male_human_must_strip">
+                <state img="7-calm.png">I-I expected more of a strategist of your caliber, ~player~.</state>
+                <state img="7-sad.png">Did you not have a plan prepared? &lt;i&gt;All this time?&lt;/i&gt;</state>
+                <state img="7-embarrassed.png">I... I think one of us should excuse ourselves, ~player~...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStatus="not_decent" priority="0">
+                <state img="7-dismissive.png">I wouldn't have asked for your help had I known you were as bad at this as... as me!</state>
+                <state img="7-horny.png">~Player~, you must...? W-well... I suppose you know the rules...</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="7-s_kneel.png" marker="forfeit_sit">(Oh, I'll be here all day at this rate...) Very well! I was already going to bathe after this...</state>
             </case>
@@ -14815,15 +15263,6 @@
             </case>
             <case tag="tie">
                 <state img="7-shocked.png">Impossible! There &lt;i&gt;must&lt;/i&gt; be a loser! I demand a do-over!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="7-calm.png">I-I expected more of a strategist of your caliber, ~player~.</state>
-                <state img="7-sad.png">Did you not have a plan prepared? &lt;i&gt;All this time?&lt;/i&gt;</state>
-                <state img="7-embarrassed.png">I... I think one of us should excuse ourselves, ~player~...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStatus="not_decent" priority="0">
-                <state img="7-dismissive.png">I wouldn't have asked for your help had I known you were as bad at this as... as me!</state>
-                <state img="7-horny.png">~Player~, you must...? W-well... I suppose you know the rules...</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="7-awkward.png">It's &lt;i&gt;hardly&lt;/i&gt; comforting that you're only just now losing.</state>
@@ -15007,6 +15446,15 @@
             </case>
             <case tag="opponent_lost" target="catria" targetStage="0">
                 <state img="7-happy.png">Do tell me, what is a pegasus knight such as yourself doing in a location like this?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="0">
+                <state img="7-happy.png">My goodness, what a precious little bun we have here!</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="7-awkward.png">(She's beginning to panic... I must calm her down.)</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="7-happy.png">You've returned! I knew my charming personality would win you back.</state>
             </case>
             <case tag="opponent_lost" target="coco" targetStage="0">
                 <state img="7-mad.png">You there, suspicious girl! Remove that eyewear at once!</state>
@@ -15429,6 +15877,15 @@
             </case>
             <case tag="opponent_stripping" target="beatrix" targetStage="2">
                 <state img="7-awkward.png">Although the fact you've made it so far with only one useable arm says wonders...</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="0">
+                <state img="7-calm.png">You're exactly the type of civilian I wish to protect.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="7-interested.png">H-Hold it! You can do this! Wait-!</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="7-calm.png">Worry not. I will always be here to provide aid for when you need it. What troubles you?</state>
             </case>
             <case tag="opponent_stripping" target="felicia" targetStage="0">
                 <state img="7-interested.png">Just... what are you doing behind that curtain...?</state>
@@ -15913,6 +16370,15 @@
             </case>
             <case tag="opponent_stripped" target="beatrix" targetStage="3">
                 <state img="7-mad.png">Honestly... you need to take better care of yourself! Just... shaving doesn't excuse a lack of empathy for the rest of you!</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="1">
+                <state img="7-boisterous.png">Fear not! I, L'Arachel, shall see to it you come out of this safely! And ~player~ shall help, of course.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="7-shocked.png">Wh-What's this? Illusion magic?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="7-happy.png">...Eheh! I must be imagining things.</state>
             </case>
             <case tag="opponent_stripped" target="felicia" targetStage="1">
                 <state img="7-shocked.png">You actually shaved yourself, here and now? I-I should smack you for doing so when I was not prepared!</state>
@@ -16598,6 +17064,15 @@
         </stage>
 
         <stage id="8">
+            <case tag="male_human_must_strip">
+                <state img="8-calm.png">I-I expected more of a strategist of your caliber, ~player~.</state>
+                <state img="8-sad.png">Did you not have a plan prepared? &lt;i&gt;All this time?&lt;/i&gt;</state>
+                <state img="8-embarrassed.png">I... I think one of us should excuse ourselves, ~player~...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStatus="not_decent" priority="0">
+                <state img="8-dismissive.png">I wouldn't have asked for your help had I known you were as bad at this as... as me!</state>
+                <state img="8-horny.png">~Player~, you must...? W-well... I suppose you know the rules...</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="8-dismissive.png">I wonder... That is, I have a perfectly normal curiosity about what might happen next! N-nothing untoward!</state>
                 <state img="8-confident.png">Ever closer to your just reward!</state>
@@ -16619,15 +17094,6 @@
             </case>
             <case tag="tie">
                 <state img="8-shocked.png">Impossible! There &lt;i&gt;must&lt;/i&gt; be a loser! I demand a do-over!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="8-calm.png">I-I expected more of a strategist of your caliber, ~player~.</state>
-                <state img="8-sad.png">Did you not have a plan prepared? &lt;i&gt;All this time?&lt;/i&gt;</state>
-                <state img="8-embarrassed.png">I... I think one of us should excuse ourselves, ~player~...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStatus="not_decent" priority="0">
-                <state img="8-dismissive.png">I wouldn't have asked for your help had I known you were as bad at this as... as me!</state>
-                <state img="8-horny.png">~Player~, you must...? W-well... I suppose you know the rules...</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="8-awkward.png">It's &lt;i&gt;hardly&lt;/i&gt; comforting that you're only just now losing.</state>
@@ -16802,6 +17268,15 @@
             </case>
             <case tag="opponent_lost" target="catria" targetStage="0">
                 <state img="8-happy.png">Do tell me, what is a pegasus knight such as yourself doing in a location like this?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="0">
+                <state img="8-happy.png">My goodness, what a precious little bun we have here!</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="8-awkward.png">(She's beginning to panic... I must calm her down.)</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="8-happy.png">You've returned! I knew my charming personality would win you back.</state>
             </case>
             <case tag="opponent_lost" target="coco" targetStage="0">
                 <state img="8-mad.png">You there, suspicious girl! Remove that eyewear at once!</state>
@@ -17224,6 +17699,15 @@
             </case>
             <case tag="opponent_stripping" target="beatrix" targetStage="2">
                 <state img="8-awkward.png">Although the fact you've made it so far with only one useable arm says wonders...</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="0">
+                <state img="8-calm.png">You're exactly the type of civilian I wish to protect.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="8-interested.png">H-Hold it! You can do this! Wait-!</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="8-calm.png">Worry not. I will always be here to provide aid for when you need it. What troubles you?</state>
             </case>
             <case tag="opponent_stripping" target="felicia" targetStage="0">
                 <state img="8-interested.png">Just... what are you doing behind that curtain...?</state>
@@ -17708,6 +18192,15 @@
             </case>
             <case tag="opponent_stripped" target="beatrix" targetStage="3">
                 <state img="8-mad.png">Honestly... you need to take better care of yourself! Just... shaving doesn't excuse a lack of empathy for the rest of you!</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="1">
+                <state img="8-boisterous.png">Fear not! I, L'Arachel, shall see to it you come out of this safely! And ~player~ shall help, of course.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="8-shocked.png">Wh-What's this? Illusion magic?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="8-happy.png">...Eheh! I must be imagining things.</state>
             </case>
             <case tag="opponent_stripped" target="felicia" targetStage="1">
                 <state img="8-shocked.png">You actually shaved yourself, here and now? I-I should smack you for doing so when I was not prepared!</state>
@@ -18309,6 +18802,10 @@
             <case tag="finished_masturbating">
                 <state img="8-finished.png">How utterly pitiable...</state>
             </case>
+            <case tag="finished_masturbating">
+                <condition count="1" filter="summer_larachel" />
+                <state img="8-finished.png">I've disgraced myself enough for one day, thank you. I just want to relax on the beach without further incident.</state>
+            </case>
             <case tag="finished_masturbating" timeInStage="0">
                 <state img="8-calm.png">For all you've seen of me, you have seen neither shame nor cowardice.</state>
             </case>
@@ -18326,6 +18823,13 @@
                 <state img="8-awkward.png">Once more! I will show you the error of your ways, or my name isn't L'Arachel, the beautiful banisher of darkness!</state>
                 <state img="8-embarrassed.png">Th-thank goodness that's over. I've never been so &lt;i&gt;exposed!&lt;/i&gt;</state>
                 <state img="8-mad.png">&lt;i&gt;Mmm!&lt;/i&gt; Don't think you've bested the glory of Rausten! This is only a minor setback!</state>
+            </case>
+            <case tag="game_over_defeat">
+                <condition count="1" filter="summer_larachel" />
+                <state img="8-sad.png">Is my swimsuit still okay?</state>
+                <state img="8-awkward.png">Surely, there could've been less... sinful games we could've tried.</state>
+                <state img="8-sad.png">That's one summer memory I don't believe I'll forget...</state>
+                <state img="8-calm.png">Setback or not, I intend on having more fun before the day is over. In exchange for seeing me like this, I expect you to spend your time with me, ~player~.</state>
             </case>
             <case tag="game_over_defeat" target="human">
                 <state img="8-boisterous.png">Wondrous! In the end, your strategy saw you to success!</state>

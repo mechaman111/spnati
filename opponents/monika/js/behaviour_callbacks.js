@@ -167,6 +167,16 @@ monika.registerBehaviourCallback('sayonikaYes', function () {
     monika.SAYORI_AFFECTIONS_GLITCH = true;
     
     transientGlitchEffect(sayori.slot, 500);
+
+    if (root.SENTRY_INITIALIZED) {
+        root.Sentry.addBreadcrumb({
+            category: 'monika',
+            message: 'Sayonika activated.',
+            level: 'info'
+        });
+
+        root.Sentry.setTag("sayonika", true);
+    }
     
     monika_pl.chosenState.dialogue = "W-Wait, really? I wasn't expecting you to answer-- whoops!";
     monika_pl.chosenState.image = '2-shocked.png';
@@ -183,6 +193,16 @@ monika.registerBehaviourCallback('sayonikaYes', function () {
 /* The player responded "No." to the Sayonika start prompt.*/
 monika.registerBehaviourCallback('sayonikaNo', function () {
     var monika_pl = monika.utils.get_monika_player();
+
+    if (root.SENTRY_INITIALIZED) {
+        root.Sentry.addBreadcrumb({
+            category: 'monika',
+            message: 'Sayonika disabled.',
+            level: 'info'
+        });
+
+        root.Sentry.setTag("sayonika", false);
+    }
     
     monika_pl.chosenState.dialogue = "S-Sorry about that... your answer kinda caught me by surprise. A-And, uhm, I think I just messed up something in the code...";
     monika_pl.chosenState.image = '2-awkward-question.png';
@@ -192,6 +212,18 @@ monika.registerBehaviourCallback('sayonikaNo', function () {
 var saved_sayori_player = null;
 
 monika.registerBehaviourCallback('startJointMasturbation', function () {
+    if (monika.JOINT_FORFEIT_ACTIVE) return;
+
+    if (root.SENTRY_INITIALIZED) {
+        root.Sentry.addBreadcrumb({
+            category: 'monika',
+            message: 'Beginning Sayonika forfeit...',
+            level: 'info'
+        });
+
+        root.Sentry.setTag("sayonika_forfeit", true);
+    }
+
     if (monika.ACTIVE_FORFEIT_EFFECT) {
         monika.ACTIVE_FORFEIT_EFFECT.revert();
         monika.ACTIVE_FORFEIT_EFFECT = null;
@@ -203,6 +235,7 @@ monika.registerBehaviourCallback('startJointMasturbation', function () {
     monika_pl.markers['joint-masturbation'] = 1;
     sayori.markers['joint-masturbation'] = 1;
     monika_pl.addTag('tandem');
+    monika_pl.addTag('bondage_forfeit');
     monika_pl.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
     
     monika_pl.out = true;
@@ -215,6 +248,10 @@ monika.registerBehaviourCallback('startJointMasturbation', function () {
         root.previousLoser = -1;
     }
     
+    if (root.recentLoser == sayori.slot) {
+        root.recentLoser = -1;
+    }
+
     setTimeout(function () {
         /* Make Sayori's player entry disappear for the time being. */
         
@@ -227,12 +264,25 @@ monika.registerBehaviourCallback('startJointMasturbation', function () {
 });
 
 monika.registerBehaviourCallback('endJointMasturbation', function () {
+    if (!monika.JOINT_FORFEIT_ACTIVE) return;
+
+    if (root.SENTRY_INITIALIZED) {
+        root.Sentry.addBreadcrumb({
+            category: 'monika',
+            message: 'Ending Sayonika forfeit...',
+            level: 'info'
+        });
+
+        root.Sentry.setTag("sayonika_forfeit", false);
+    }
+
     var monika_pl = monika.utils.get_monika_player();
     var sayori = saved_sayori_player;
     var sayori_slot = sayori.slot;
     
     monika.JOINT_FORFEIT_ACTIVE = false;
     monika_pl.removeTag('tandem');
+    monika_pl.removeTag('bondage_forfeit');
     
     setTimeout(function () {
         /* Put Sayori back in her slot. */
