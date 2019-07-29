@@ -416,10 +416,12 @@ function updateGroupSelectScreen () {
     if (group) {
         $groupNameLabel.html(group.title);
 
-        if (group.background && backgrounds[group.background]) {
-            backgrounds[group.background].activateBackground();
-        } else {
-            optionsBackground.activateBackground();
+        if (!optionsBackground) {
+            if (group.background && backgrounds[group.background]) {
+                backgrounds[group.background].activateBackground();
+            } else {
+                defaultBackground.activateBackground();
+            }
         }
 
         for (var i = 0; i < 4; i++) {
@@ -766,10 +768,12 @@ function loadGroup (chosenGroup) {
         });
     }
 
-    if (chosenGroup.background && backgrounds[chosenGroup.background]) {
-        backgrounds[chosenGroup.background].activateBackground();
-    } else {
-        optionsBackground.activateBackground();
+    if (!optionsBackground) {
+        if (chosenGroup.background && backgrounds[chosenGroup.background]) {
+            backgrounds[chosenGroup.background].activateBackground();
+        } else {
+            defaultBackground.activateBackground();
+        }
     }
 
     /* load the group members */
@@ -945,7 +949,7 @@ function backToSelect () {
     /* switch screens */
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
 
-    optionsBackground.activateBackground();
+    if (!optionsBackground) defaultBackground.activateBackground();
 
 	screenTransition($individualSelectScreen, $selectScreen);
 	screenTransition($groupSelectScreen, $selectScreen);

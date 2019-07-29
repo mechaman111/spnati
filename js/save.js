@@ -188,7 +188,7 @@ function Save() {
     };
     this.saveSettings = function() {
         var settings = { stamina: humanPlayer.stamina };
-        if (optionsBackground.id !== defaultBackground.id) {
+        if (optionsBackground) {
             settings.background = optionsBackground.id;
         } else {
             delete settings.background;
