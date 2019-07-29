@@ -1052,6 +1052,8 @@ function initialSetup () {
     $(document).mousedown(function(ev) {
         $("body").removeClass('focus-indicators-enabled');
     });
+
+    $('[data-toggle="tooltip"]').tooltip({ delay: { show: 200 } });
 }
 
 function loadVersionInfo () {
@@ -1425,7 +1427,6 @@ function showBugReportModal () {
         return $('<option value="'+t[0]+'">'+t[1]+'</option>');
     }));
 
-    $('#bug-report-modal span[data-toggle="tooltip"]').tooltip();
     updateBugReportOutput();
 
     $bugReportModal.modal('show');
