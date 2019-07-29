@@ -249,7 +249,7 @@ function fetchCompressedURL(baseUrl) {
                 error: deferred.reject.bind(deferred),
             });
         } else {
-            errorCb();
+            deferred.reject();
         }
     }
 
