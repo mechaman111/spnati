@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0 at 7:10:21 AM on July 24, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 8:03:26 AM on July 30, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.0</version>
     <first>Nugi-chan</first>
@@ -297,6 +297,11 @@
             </case>
             <case tag="must_strip" alsoPlaying="pit">
                 <test expr="~pit.position~" value="left" />
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-loss.png">I'm cosplaying as a bikini maid because my Webmaster likes it. And why are &lt;i&gt;you&lt;/i&gt; dressed as the boy of my dreams, Pit-sama?</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="pit">
+                <test expr="~pit.position~" value="left" />
                 <test expr="~weekday~" value="Monday" />
                 <state img="0-calm.png">It's a Monday, and I always cosplay as a maid on Mondays!</state>
             </case>
@@ -307,6 +312,11 @@
             <case tag="must_strip" alsoPlaying="sakura" alsoPlayingSaying="Are you a maid">
                 <test expr="~sakura.position~" value="left" />
                 <state img="0-loss.png" marker="nugi-chan_sakura_not_a_maid">I'm not really a maid. This is just one of the outfits my Webmaster bought me.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="sakura" alsoPlayingSaying="Are you a maid">
+                <test expr="~sakura.position~" value="left" />
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-loss.png" marker="nugi-chan_sakura_not_a_maid">I'm not really a maid. This is just a sexy maid bikini that my Webmaster bought me.</state>
             </case>
             <case tag="must_strip" timeInStage="10-">
                 <state img="0-loss.png">So I guess I &lt;i&gt;can't&lt;/i&gt; win them all...</state>
@@ -333,13 +343,27 @@
                 <test expr="~estelle.position~" value="left" />
                 <state img="0-strip.png">Don't worry, Estelle-hime. I've already mastered removing my shoes. Laces are for suckers!</state>
             </case>
+            <case tag="stripping" alsoPlaying="estelle" alsoPlayingSaying="already mastered your">
+                <test expr="~estelle.position~" value="left" />
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-strip.png">Don't worry, Estelle-hime. I've already mastered removing my sandals. No laces!</state>
+            </case>
             <case tag="stripping" alsoPlaying="pit">
                 <test expr="~pit.position~" value="left" />
                 <state img="0-strip.png">I don't know when he's watching, so I always have to be on my best behavior.</state>
             </case>
+            <case tag="stripping">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-strip.png">I hope my Webmaster doesn't notice that I'm not wearing my ribbons today.</state>
+            </case>
             <case tag="stripping" alsoPlaying="zoey">
                 <test expr="~zoey.position~" value="left" />
                 <state img="0-strip.png">My ribbons stay on unless my Webmaster says otherwise. It's not a BDSM thing, Zoey-sama...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="zoey">
+                <test expr="~zoey.position~" value="left" />
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-strip.png">Normally I wear hair ribbons unless my Webmaster says otherwise. It's not a BDSM thing, Zoey-sama...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="0-calm.png">If you wouldn't mind, ~name~.</state>
@@ -2321,6 +2345,10 @@
             <case tag="stripping">
                 <state img="2-strip.png">Mph. Okay, I'll take off my stockings.</state>
             </case>
+            <case tag="stripping">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="2-strip.png">Which lucky player is going to catch my garter?</state>
+            </case>
             <case tag="stripped">
                 <state img="2-stripped.png">Hope you're happy.</state>
             </case>
@@ -2370,7 +2398,6 @@
             <case tag="female_must_strip">
                 <state img="2-interested.png">Time to take off your panties, ~name~. You're taking requests, right?</state>
                 <state img="2-happy.png">Another layer bites the dust!</state>
-                <state img="2-calm.png">I'm happy to report that my adorable socks are remaining on. For now.</state>
                 <state img="2-calm.png">We'll keep doing this until only I'm left.</state>
                 <state img="2-calm.png">You have my shoes, but the rest of my maid outfit isn't going anywhere soon.</state>
             </case>
@@ -2493,6 +2520,10 @@
                 <test expr="~sakura.position~" value="left" />
                 <test expr="~background~" value="bedroom" />
                 <state img="2-loss.png" marker="nugi-chan_sakura_player_bedroom">We're in ~player~=sama's bedroom. You're brave to put bare feet on the floor, Sakura-sama!</state>
+            </case>
+            <case tag="female_must_strip" priority="0">
+                <test expr="~self.costume~" cmp="!=" value="nugi-chan_bikini" />
+                <state img="2-calm.png">I'm happy to report that my adorable socks are remaining on. For now.</state>
             </case>
             <case tag="female_must_strip" target="felicia" targetStage="1" alsoPlayingSaying="This is hardly fair">
                 <test expr="~target.position~" value="left" />
@@ -3310,8 +3341,16 @@
             <case tag="stripping">
                 <state img="3-strip.png">I... I'm not giving up! I'll take off my top...</state>
             </case>
+            <case tag="stripping">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="3-strip.png">I guess it's finally time I de-trayed..</state>
+            </case>
             <case tag="stripped">
                 <state img="3-stripped.png">Nobody touch them, they're expensive and I don't want them torn.</state>
+            </case>
+            <case tag="stripped">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="3-stripped.png">Find that for me after the game and maybe I'll do something special for you.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="3-calm.png">Would you like me to assist you in disrobing, ~name~?</state>
@@ -4241,8 +4280,16 @@
                 <test expr="~pit.position~" value="left" />
                 <state img="4-strip.png">It's... it's a web site about stripping games, Pit-sama. I know, I know. I should be doing a &lt;i&gt;lot&lt;/i&gt; better.</state>
             </case>
+            <case tag="stripping">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="4-strip.png">Okay, okay. Maybe I've teased you all enough by now.</state>
+            </case>
             <case tag="stripped">
                 <state img="4-stripped.png">At least I brought a nice bra.</state>
+            </case>
+            <case tag="stripped">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="4-stripped.png">So, what do you think of the &lt;i&gt;main&lt;/i&gt; dish?</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="4-mean.png">We're here to undress you, ~name~. Don't you forget that!</state>
@@ -5136,6 +5183,10 @@
             <case tag="stripping">
                 <state img="5-strip.png">I guess I... I'll take off my bra...</state>
                 <state img="5-stripped.png">I guess this is okay... I'm topless half the time in my web site's banner anyway...</state>
+            </case>
+            <case tag="stripping">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="5-strip.png">You're all insatiable, aren't you?</state>
             </case>
             <case tag="stripped">
                 <state img="5-stripped.png">I can see you staring at me.</state>
@@ -6046,6 +6097,31 @@
             <case tag="stripped">
                 <test expr="~background~" value="street" />
                 <state img="6-stripped_beta.png">You wouldn't make me take off my bandaids in front of all of these people, would you? It was worth a try...</state>
+            </case>
+            <case tag="stripped">
+                <test expr="~background~" value="street" />
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-stripped_beta.png">These spectators don't seem to appreciate a good swimsuit.</state>
+            </case>
+            <case tag="stripped">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-stripped.png">No more tricks. I think you've earned these.</state>
+            </case>
+            <case tag="stripped" consecutiveLosses="4-" priority="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-stripped_beta.png">Well, &lt;i&gt;I&lt;/i&gt; thought the tray was a good idea. I didn't know it was going to make you cheat to see these...</state>
+            </case>
+            <case tag="stripped" saidMarker="nugi-chan_sph">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-stripped_beta.png">Is ~player~'s little guy reacting to these? Wait... is it &lt;i&gt;shrinking&lt;/i&gt;?</state>
+            </case>
+            <case tag="stripped" totalExposed="0-1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-stripped.png">No mercy today, I guess...</state>
+            </case>
+            <case tag="stripped" totalFemales="1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-stripped_beta.png">So here they are. Boobs. Might be the only pair you guys see for a while.</state>
             </case>
             <case tag="stripped" totalExposed="0-1">
                 <state img="6-stripped_beta.png">No one else is topless, so you wouldn't mind if I kept these bandaids on, would you? Oh, you would?</state>
