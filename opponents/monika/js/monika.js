@@ -218,6 +218,7 @@ root.completeStripPhase = hookWrapper('completeStripPhase');
 root.completeRevealPhase = hookWrapper('completeRevealPhase');
 root.updateGameVisual = hookWrapper('updateGameVisual');
 root.advanceSelectScreen = hookWrapper('advanceSelectScreen');
+root.restartGame = hookWrapper('restartGame');
 
 function handleOptionsModal() {
     if(utils.monika_present()) {
@@ -229,9 +230,26 @@ function handleOptionsModal() {
 registerHook('showOptionsModal', 'pre', handleOptionsModal);
 
 /* Primary glitch control logic. */
+var active_effects = [];
+exports.active_effects = active_effects;
+
 var active_deletion_glitch = null;
 var active_repeat_visuals_glitch = null;
 var round_glitch_targets = [];
+
+function cleanupAllEffects() {
+    /* Copy the active_effects list before iterating over it */
+    var active_copy = active_effects.slice();
+    
+    active_copy.forEach(function (eff) {
+        try {
+            eff.revert();
+        } catch (e) {
+            reportException("while cleaning up "+eff.constructor.name, e);
+        }
+    });
+}
+registerHook('restartGame', 'post', cleanupAllEffects);
 
 function getCurrentGlitchChance () {
     /* Situation Score calculation:
