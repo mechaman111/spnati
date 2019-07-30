@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.3 at 11:22:17 AM on July 29, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 6:45:14 PM on July 30, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v4.3</version>
+    <version>v5.0</version>
     <first>Caulifla</first>
     <last />
     <label>Caulifla</label>
@@ -22,7 +22,8 @@
         <tag from="2" to="4">green_eyes</tag>
         <tag>fair-skinned</tag>
         <tag>athletic</tag>
-        <tag>shaved</tag>
+        <tag>hairy</tag>
+        <tag>pubic_hair</tag>
         <tag>medium_breasts</tag>
         <tag>alien</tag>
         <tag>no_bra</tag>
@@ -42,11 +43,11 @@
     <start />
 
     <wardrobe>
-        <clothing lowercase="panties" position="lower" formalName="panties" type="important" />
-        <clothing lowercase="tube top" position="upper" formalName="tube top" type="major" />
-        <clothing lowercase="boots" position="feet" formalName="boots" type="minor" plural="true" />
-        <clothing lowercase="leggings" position="lower" formalName="leggings" type="major" plural="true" />
-        <clothing lowercase="arm bands" position="arms" formalName="arm bands" type="extra" plural="true" />
+        <clothing name="panties" generic="panties" position="lower" type="important" />
+        <clothing name="tube top" generic="tube top" position="upper" type="major" />
+        <clothing name="boots" generic="boots" position="feet" type="minor" plural="true" />
+        <clothing name="leggings" generic="leggings" position="lower" type="major" plural="true" />
+        <clothing name="arm bands" generic="arm bands" position="arms" type="extra" plural="true" />
     </wardrobe>
 
     <poses>
@@ -650,19 +651,18 @@
                 <state img="0-Combat.png">Just don't throw the game or anything lame. A decent challenge makes winning all the sweeter.</state>
                 <state img="0-Laughing2.png">Ah screw it, I guess I'm game then. Let's do this thing!</state>
             </case>
-            <case tag="game_start" priority="60">
-                <condition count="2-4" filter="caulifla" />
-                <state img="0-Annoyed.png">The hell?! I'm facing a clone of me or something? Piss off! Ain't no cheap counterfeit Caulifla that can get the better of me!</state>
+            <case tag="game_start" priority="61">
+                <condition count="2" filter="caulifla" />
+                <state img="0-Annoyed.png">The hell?! I'm facing a clone of me or something? Piss off! Ain't no cheap counterfeit Caulifla gonna get the better of me!</state>
                 <state img="0-Angry.png">Are you secretly made of jello or something? Or voiced by Brian Drummond? Hey shut up, knowing who that is makes as much sense as this match does right here.</state>
                 <state img="0-Shocked.png">Okay then. Wasn't expecting no crazy mirror match when I woke up this morning.</state>
                 <state img="0-Shocked.png">Huh. Okay. So before tonight is out, I've either gotta beat myself, or beat&lt;i&gt;myself&lt;/i&gt;. Or watch &lt;i&gt;myself&lt;/i&gt; get myselves off a few times. Err...have I got that right?</state>
                 <state img="0-Annoyed.png">Huh? Is that &lt;i&gt;me&lt;/i&gt; over there? Is that me &lt;i&gt;stronger&lt;/i&gt; than me!?</state>
             </case>
-            <case tag="game_start" priority="61">
-                <condition count="2-4" filter="caulifla" />
-                <test expr="~self.slot~" value="1" />
-                <state img="0-Annoyed.png">The hell?! I'm facing a clone of me or something? Piss off! Ain't no cheap counterfeit Caulifla that can get the better of me!</state>
-                <state img="0-Angry.png">Are you secretly made of jello or something? Or voiced by Brian Drummond? Hey shut up, knowing who that is makes as much sense as this match does right here.</state>
+            <case tag="game_start" priority="60">
+                <condition count="3-4" filter="caulifla" />
+                <state img="0-Annoyed.png">The hell?! I'm facing some clones of me or something? Piss off! Ain't no cheap counterfeit Cauliflas gonna get the better of me!</state>
+                <state img="0-Angry.png">Are you all secretly made of jello or something? Or voiced by Brian Drummond? Hey shut up, knowing who that is makes as much sense as this match does right here.</state>
                 <state img="0-Shocked.png">Okay then. Wasn't expecting no crazy mirror match when I woke up this morning.</state>
                 <state img="0-Shocked.png">Huh. Okay. So before tonight is out, I've either gotta beat myself, or beat&lt;i&gt;myself&lt;/i&gt;. Or watch &lt;i&gt;myself&lt;/i&gt; get myselves off a few times. Err...have I got that right?</state>
                 <state img="0-Annoyed.png">Huh? Is that &lt;i&gt;me&lt;/i&gt; over there? Is that me &lt;i&gt;stronger&lt;/i&gt; than me!?</state>
@@ -686,11 +686,26 @@
                 <test expr="~background~" value="beach" />
                 <state img="0-Distracted.png">We doing this at a beach? Should've said so, I'd have put a costume on or something.</state>
                 <state img="0-Confident.png">Hmm. Nice. I could stand to come to beaches like this more often.</state>
+                <state img="0-Stretching.png">Aah. Nice to feel the sun on my body. Good to get away from the city every once in a while, y'know.</state>
             </case>
             <case tag="game_start">
                 <test expr="~background~" value="bedroom" />
                 <state img="0-Stretching.png">So, what's this, some girl's slumber party or something? Can't say I was the kinda girl who got into those things.</state>
                 <state img="0-Distracted.png">Whose bedroom is this? One of yours, or someone else's?</state>
+            </case>
+            <case tag="game_start">
+                <test expr="~background~" value="classic" />
+                <test expr="~background~" value="purple room" />
+                <test expr="~background~" value="romantic" />
+                <state img="0-Bored.png">Welll this room's horribly dull. Hope you guys are gonna offer some entertainment at least.</state>
+                <state img="0-Bored.png">Man. They really didn't try very hard with some of these rooms. Whatever they paid the designer, it was too much.</state>
+                <state img="0-Excited.png">Alright, not much to comment about this place. But I'm still looking forward to this. Do your worst, people!</state>
+            </case>
+            <case tag="game_start">
+                <test expr="~background~" value="classroom" />
+                <state img="0-Bored.png">What is this? Some kinda Earth schoolroom? &lt;i&gt;How rebellious.&lt;/i&gt;</state>
+                <state img="0-Combat.png">I tore up a few places like this in my youth. Hehehe.</state>
+                <state img="0-Happy.png">So. School huh? Sure had it's ups and downs. Never did my homework, made hell for the popular boys and girls. I made the best of it all in all.</state>
             </case>
             <case tag="game_start">
                 <test expr="~background~" value="haunted forest" />
@@ -706,6 +721,24 @@
                 <test expr="~background~" value="locker room" />
                 <state img="0-Annoyed.png">Really? Here? Perfectly good bathhouse the next room over.That'd be &lt;i&gt;way&lt;/i&gt; better.</state>
                 <state img="0-Happy.png">Well, I guess stripping makes a little more sense here then it would other places.</state>
+            </case>
+            <case tag="game_start">
+                <test expr="~background~" value="mansion" />
+                <state img="0-Combat.png">Hmm. Fancy looking stuff here. Better be nailed down, otherwise I'll be taking some souvenirs with me.</state>
+                <state img="0-Confident.png">Nice looking couch over there. Stuff like that is worth a lot, trust me on that.</state>
+                <state img="0-Happy.png">So, if anyone wants to help me smuggle some stuff outta here when we're leaving, more than happy to split the profits with them. Think it over.</state>
+            </case>
+            <case tag="game_start">
+                <test expr="~background~" value="poolside" />
+                <state img="0-Smug.png">Hmm? We planning on doing a bit of skinny dipping after this? Heh. Sure. If ya actually think you can beat me.</state>
+                <state img="0-Laughing2.png">We all gonna jump in that thing when we're done? I'm down for that, just don't get too touchy feely if ya know what's good for ya.</state>
+                <state img="0-Distracted.png">I take it someone here fancies a swim after? I'll admit, I can see how that would be fun. Sure.</state>
+            </case>
+            <case tag="game_start">
+                <test expr="~background~" value="roof" />
+                <state img="0-Bored.png">Why've we hoofed ourselves up here? Ain't exactly much of a view up here. It's just hills and buildings or some crap.</state>
+                <state img="0-Laughing2.png">Well, least it was easy getting up here. Feel sorry for anyone who has to take stairs! Eh not really, but it's still funny, haha.</state>
+                <state img="0-Distracted.png">The sights and smells of the city. Exactly what springs to mind whenever ya think about strip poker. Not.</state>
             </case>
             <case tag="game_start">
                 <test expr="~background~" value="street" />
@@ -737,7 +770,7 @@
             </case>
             <case tag="swap_cards" hasHand="Royal Flush" priority="20">
                 <state img="0-Excited.png">Oh...oh &lt;i&gt;heck&lt;/i&gt; yeah! You guys are toast this round!</state>
-                <state img="0-Laughing2.png">Wait...hold up, is this hand what I think it is!?</state>
+                <state>Wait...hold up, is this hand what I think it is!?</state>
                 <state img="0-Laughing.png">Okay, gimme...no, shit! Give me absolutely nothing at all! Almost missed what I got right here, what with your weird Earth cards and all.</state>
             </case>
             <case tag="good_hand">
@@ -929,6 +962,11 @@
                 <state img="0-Laughing.png">You nervous or something? Well, I bet having to drop ya clothes in front of me would be pretty nerve-racking, haha.</state>
                 <state img="0-Excited.png">Ha! Ya like that, huh?</state>
             </case>
+            <case tag="male_must_strip" target="jin" targetStage="0-4">
+                <state img="0-Confident.png">Huh. Here I'm just surprised to see a human with a full head of hair. Thought you were all a bunch of chrome domes.</state>
+                <state img="0-Happy.png">Man, that head of hair wouldn't be outta place on a Saiyan. I thought humans were bald. How about that.</state>
+                <state img="0-Confident.png">Huh. You have hair. Some humans beings have hair apparently. Learn something new every day.</state>
+            </case>
             <case tag="male_must_strip" target="jotaro" targetStage="0">
                 <state img="0-Smug.png">Well hello there, big, tall and mysterious. Got any surprises in store for little old me?</state>
                 <state img="0-Distracted.png">You've been pretty quiet so far. I ain't complaining, just stating a fact.</state>
@@ -989,12 +1027,13 @@
                 <state img="0-Laughing.png">You weren't gonna parry that hit away.</state>
             </case>
             <case tag="female_must_strip" target="erufuda" targetStage="0">
-                <state img="0-Annoyed.png">Hey. You ain't gonna start sprouting off about the power love and junk, are ya? The last girl I ran into who was your size was a real nut job.</state>
+                <state img="0-Annoyed.png">Hey. You ain't gonna start sprouting off about the power of love and junk, are ya? The last girl I ran into who was your size was nuts about that.</state>
                 <state img="0-Bored.png">Don't think anything of this, but your figure's making me remember someone I'd prefer to forget. &lt;i&gt;(Pretty Cannon...ugh, sends shivers down my spine.)&lt;/i&gt;</state>
                 <state img="0-Distracted.png">Well whatever ya do, don't start summoning magical love hearts or something like that. Would rather not see any of that crap today.</state>
                 <state img="0-Happy.png">Y'know I actually have met bigger girls than you before. Just don't ask me about that. Really, please don't.</state>
                 <state img="0-Confident.png">Hmm. You seem a little outta shape. I ain't gonna mince my words, you think I'm the type who cares about offending people?</state>
                 <state img="0-Combat.png">I take it you're looking to lose a few pounds. Well, I bet I could help ya there, if you can keep up. Think you can handle my kinda workout?</state>
+                <state img="0-Distracted.png">Pointy ears and a...robust constitution. You remind me of the Supreme Kai.</state>
             </case>
             <case tag="female_must_strip" target="florina" targetStage="0">
                 <state img="0-Distracted.png">Hey. You seem nervous. Like, really, &lt;really&gt; nervous.</state>
@@ -1096,6 +1135,11 @@
                 <state img="0-Angry.png">Ugh, jeez. You ain't gonna be going on and on about the power of love or some crap all night, are ya? I've had my fill of characters like that already.</state>
                 <state img="0-Angry.png">Oh I know your type, ~name~. It's all sunshine and rainbows and obnoxiously long transformations. You really think that crap has any place on the battlefield?</state>
             </case>
+            <case tag="tie">
+                <state img="0-Shocked.png">Wait...you've got...am I honestly seeing that right?</state>
+                <state img="0-Shocked.png">Say what? How the hell'd that happen?</state>
+                <state img="0-Shocked.png">Huh? What? Am I the only one seeing double right now?</state>
+            </case>
             <case tag="male_removing_accessory">
                 <state img="0-Confident.png">Ditch the trinkets then. Just don't be timid about it when you lose the next time.</state>
                 <state img="0-Distracted.png">You'd be surprised how many guys have something like that.</state>
@@ -1112,6 +1156,11 @@
                 <state img="0-Smug.png">Coat. Blindfold. Straps on your wrists and ankles. People can read into a look like that y'know.</state>
                 <state img="0-Smug.png">Hey, kid. Someone tell ya those clothes were some fearsome fighter's gear or something? 'Cause I think they pulled more than a &lt;i&gt;blindfold&lt;/i&gt; over your eyes when they told ya that.</state>
             </case>
+            <case tag="male_removing_accessory" target="jin" targetStage="1">
+                <state img="0-Bored.png">Gonna see that weapon of yours? Eh, whatever. Cool looking attacks are more my speed though.</state>
+                <state img="0-Distracted.png">If ya say so Jin. If ya say so.</state>
+                <state img="0-Bored.png">Hmph. I doubt it's as interesting as ya think.</state>
+            </case>
             <case tag="male_removing_accessory" target="jotaro" targetStage="0">
                 <state img="0-Shocked.png">What the hell!?</state>
                 <state img="0-Shocked.png">Woah, jeez!</state>
@@ -1119,8 +1168,8 @@
             </case>
             <case tag="male_removing_accessory" target="jotaro" targetStage="1">
                 <state img="0-Angry.png">. . .</state>
-                <state img="0-Confident.png">&lt;i&gt;(Okay, just watch real close and...there! Got it!)&lt;/i&gt;</state>
                 <state img="0-Confident.png">. . .</state>
+                <state img="0-Confident.png">&lt;i&gt;(Okay, just watch real close and...there! Got it!)&lt;/i&gt;</state>
                 <state img="0-Happy.png">&lt;i&gt;(Think he's onto me? Nah, not a chance.)&lt;/i&gt;</state>
             </case>
             <case tag="male_removed_accessory">
@@ -1141,6 +1190,11 @@
                 <state img="0-Angry.png">Hey wait, ain't that cheating if you've got some little doohickey giving ya clues about how to beat us?</state>
                 <state img="0-Laughing.png">Know what? Color me impressed. I took ya for a goodie two shoes who didn't have the balls to cheat.</state>
                 <state img="0-Distracted.png">Well seeing how trash you've been playing, maybe your clever gizmos ain't nothing compared to good old fashioned instinct.</state>
+            </case>
+            <case tag="male_removed_accessory" target="jin" targetStage="2">
+                <state img="0-Smug.png">Yeah. And I can punch anything I can see with my naked eye. 'Cause I can &lt;i&gt;see it&lt;/i&gt;, you idiot.</state>
+                <state img="0-Smug.png">Hmm. Cool. And I bet everything I own that I can stop it with just a finger.</state>
+                <state img="0-Distracted.png">Yeah. That was about as dull as I was expecting. You tried at least, buddy.</state>
             </case>
             <case tag="male_removed_accessory" target="jotaro" targetStage="1">
                 <state img="0-Angry.png">Wait...did...okay, buddy. I'm gonna have my eye &lt;i&gt;real&lt;/i&gt; close on you. I got an idea about you that'll be pretty crazy if it turns out true.</state>
@@ -1209,7 +1263,7 @@
             </case>
             <case tag="female_removing_accessory" target="meia" targetStage="0">
                 <state img="0-Distracted.png">Also, hold up, that a scouter you're wearing? Looks kinda beat up, any reason you ain't had it repaired?</state>
-                <state img="0-Laughing2.png">Oh hey, is that a scouter? Man, I ain't seen one of those in a while. Looks like a vintage model or something at that. Sweet!</state>
+                <state img="0-Laughing2.png">Oh hey, is that a scouter? Man, I ain't seen one of those in a while. Looks like a vintage model as well. Sweet!</state>
             </case>
             <case tag="female_removing_accessory" target="nagisa" targetStage="0">
                 <state img="0-Distracted.png">Hmm. Sticking around? Well, whatever. I'll be keeping an eye out for ya then. This ain't the sorta place someone like you should hang out.</state>
@@ -1241,6 +1295,11 @@
             <case tag="female_removing_accessory" target="shimakaze" targetStage="0">
                 <state img="0-Shocked.png">Err, little lady, your sleeves? Might wanna put that out real quick.</state>
                 <state img="0-Shocked.png">Wait, err, Shimi-something? You're kinda, sorta on fire.</state>
+            </case>
+            <case tag="female_removing_accessory" target="shimakaze" targetStage="1">
+                <state img="0-Confident.png">Huh, that's weird. Those can't be made of something soft if they're cracking like that all of a sudden.</state>
+                <state img="0-Smug.png">What's with all the grease monkey words ya keep throwing around anyway? You some sorta mechanic? Or a machine of some sort maybe? You're one confusing little lady.</state>
+                <state img="0-Bored.png">Hmm. This is fast becoming the loudest game of cards I've ever played. And I usually play with Saiyans.</state>
             </case>
             <case tag="female_removing_accessory" target="shimakaze" targetStage="3">
                 <state img="0-Bored.png">Glad that transport pods don't make as much as a racket as this "ship" does.</state>
@@ -1276,6 +1335,11 @@
                 <state img="0-Stretching.png">I don't get it. Your hair's changed, but ya don't feel any weaker. What's the point of a transformation like that?</state>
                 <state img="0-Annoyed.png">Huh? Why you acting like a total bore all of a sudden? What's up?</state>
             </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1">
+                <state img="0-Laughing.png">Well, ya never. You could be some kinda genius at this for all I know.</state>
+                <state img="0-Thinking.png">Stranger things have happened though Sometimes the most harmless looking people are actually the most dangerous.</state>
+                <state img="0-Combat.png">Still. I'm gonna keep my wits about me. Never know what an opponent has in store for ya.</state>
+            </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
                 <state img="0-Distracted.png">Oh, uhh, sentimental or something is it? I ain't gonna judge. They're just kinda common where I'm from is all.</state>
                 <state img="0-Stretching.png">You seem kinda precious about it, whatever the reason for that is. Don't worry lady, I won't pry. Not if you don't want me to.</state>
@@ -1291,6 +1355,11 @@
             <case tag="female_removed_accessory" target="shimakaze" targetStage="1">
                 <state img="0-Confident.png">Well it seems you're strong enough that it doesn't bother you, so, on with the game then?</state>
                 <state img="0-Laughing.png">Seems you're tougher than you look. Good, that's a relief. Can't sense your energy, so I didn't know if that was gonna harm ya or not.</state>
+            </case>
+            <case tag="female_removed_accessory" target="shimakaze" targetStage="2-3">
+                <state img="0-Smug.png">Funny gimmicks aside though, you're actually really cute. I bet a ton of people really like ya, girlie.</state>
+                <state img="0-Laughing.png">Aww, look atcha little legs. You must actually be good at moving fast though, you do seem to have the right kinda build for it.</state>
+                <state img="0-Happy.png">Well keep it up, little lady. It's kinda loud this routine of yours, but I'm enjoying it so far.</state>
             </case>
             <case tag="female_removed_accessory" target="shimakaze" targetStage="4">
                 <state img="0-Shocked.png">Hey, you need to take five? That time seemed like it did some actual hurt on ya.</state>
@@ -1363,7 +1432,7 @@
                 <state img="0-Combat.png">Hmm. Maybe you're for real...nah. Soon as I start thinking that you're gonna "switch back" and be all like, haha, told ya so. I'm harder to fool than that I'm afraid.</state>
             </case>
             <case tag="female_removing_minor" id="0-10" target="leggy" targetStage="2">
-                <state img="0-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, congrats, you've actually surprised me with that move.</state>
+                <state img="0-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, you've actually surprised me with that move.</state>
                 <state img="0-Thinking.png">Wait. Shaving? Oooh! Wait, I get it. You're gonna count that as a play.</state>
                 <state img="0-Bored.png">Oh. And here I thought I had ya knocked out. Seems you ain't ready to quit just yet.</state>
             </case>
@@ -1418,6 +1487,11 @@
                 <state img="0-Laughing.png">Oh, and has anyone told ya friend that she don't have to do this with ya? What's with that?</state>
                 <state img="0-Laughing.png">And she's slunk off somewhere again. Haha, your pal's a real card, ya know that?</state>
                 <state img="0-Smug.png">Looks like your number one fan Mako is still at it. That's worth a laugh at least.</state>
+            </case>
+            <case tag="female_removed_minor" target="shimakaze" targetStage="3-5">
+                <state img="0-Shocked.png">Wow check that out. You're making mine look prudish by comparison.</state>
+                <state img="0-Horny.png">Hmm. Well, guess you don't really need the support anyway.</state>
+                <state img="0-Smug.png">How about that. Pretty risque that little belt of yours.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="0-Combat.png">So then, what ya got for me this time?</state>
@@ -1539,11 +1613,7 @@
                 <state img="0-Laughing.png">Well...I guess that's a little better. Whatever, I'll let it pass.</state>
                 <state img="0-Laughing.png">Never seen a girl wearing &lt;i&gt;that&lt;/i&gt; much before. You tryin' to hide something or other?</state>
             </case>
-            <case tag="female_removed_major" target="shimakaze" targetStage="6-5">
-                <state img="0-Laughing.png">I've heard of a booby trap before. But what was that supposed to be, a booby bomb?</state>
-                <state img="0-Horny.png">Oh, fireworks aside, you've actually got a super-hot figure, ya little firework.</state>
-                <state img="0-Horny.png">&lt;i&gt;(Man, just look at the little firecracker's figure. Must be a whole ton of fun playing around with her.)&lt;/i&gt;</state>
-                <state img="0-Smug.png">So. I know I'm more of a thief, but I could stand to deal in a little piracy right know.</state>
+            <case tag="female_removed_major" target="shimakaze" targetStage="6">
                 <state img="0-Laughing.png">Ha! And you're certainly streamlined, that's for sure.</state>
                 <state img="0-Laughing.png">Good. Looks like you've got no space barnacles down there or whatever.</state>
                 <state img="0-Laughing.png">No leaks? Heh, you're certainly looking ship-shape down there.</state>
@@ -1657,11 +1727,11 @@
             <case tag="female_medium_chest_is_visible">
                 <state img="0-Smug.png">Good size. Fun to play with I'm sure.</state>
                 <state img="0-Happy.png">Perfect size, really. Bet you're proud of 'em.</state>
-                <state img="0-Laughing2.png">If you ain't proud of those, then get real lady!</state>
                 <state img="0-Smug.png">You've got the stuff, ~name~. Lot of potential mates would be eager to get a squeeze of those.</state>
                 <state img="0-Shocked.png">If boobs were power levels, yours would be A okay.</state>
                 <state img="0-Combat.png">Big enough for fun. Small enough that they won't slow you down.</state>
                 <state img="0-Laughing.png">Yup, those sure are boobs right there. Good ones to.</state>
+                <state img="0-Laughing2.png">If you ain't proud of those, then get real lady!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="amalia" targetStage="4" priority="380">
                 <condition count="0" />
@@ -1892,7 +1962,7 @@
             </case>
             <case tag="swap_cards" hasHand="Royal Flush" priority="20">
                 <state img="1-Excited.png">Oh...oh &lt;i&gt;heck&lt;/i&gt; yeah! You guys are toast this round!</state>
-                <state img="1-Laughing2.png">Wait...hold up, is this hand what I think it is!?</state>
+                <state>Wait...hold up, is this hand what I think it is!?</state>
                 <state img="1-Laughing.png">Okay, gimme...no, shit! Give me absolutely nothing at all! Almost missed what I got right here, what with your weird Earth cards and all.</state>
             </case>
             <case tag="good_hand">
@@ -2057,6 +2127,11 @@
                 <state img="1-Laughing.png">You nervous or something? Well, I bet having to drop ya clothes in front of me would be pretty nerve-racking, haha.</state>
                 <state img="1-Excited.png">Ha! Ya like that, huh?</state>
             </case>
+            <case tag="male_must_strip" target="jin" targetStage="0-4">
+                <state img="1-Confident.png">Huh. Here I'm just surprised to see a human with a full head of hair. Thought you were all a bunch of chrome domes.</state>
+                <state img="1-Happy.png">Man, that head of hair wouldn't be outta place on a Saiyan. I thought humans were bald. How about that.</state>
+                <state img="1-Confident.png">Huh. You have hair. Some humans beings have hair apparently. Learn something new every day.</state>
+            </case>
             <case tag="male_must_strip" target="jotaro" targetStage="0">
                 <state img="1-Smug.png">Well hello there, big, tall and mysterious. Got any surprises in store for little old me?</state>
                 <state img="1-Distracted.png">You've been pretty quiet so far. I ain't complaining, just stating a fact.</state>
@@ -2117,12 +2192,13 @@
                 <state img="1-Laughing.png">You weren't gonna parry that hit away.</state>
             </case>
             <case tag="female_must_strip" target="erufuda" targetStage="0">
-                <state img="1-Annoyed.png">Hey. You ain't gonna start sprouting off about the power love and junk, are ya? The last girl I ran into who was your size was a real nut job.</state>
+                <state img="1-Annoyed.png">Hey. You ain't gonna start sprouting off about the power of love and junk, are ya? The last girl I ran into who was your size was nuts about that.</state>
                 <state img="1-Bored.png">Don't think anything of this, but your figure's making me remember someone I'd prefer to forget. &lt;i&gt;(Pretty Cannon...ugh, sends shivers down my spine.)&lt;/i&gt;</state>
                 <state img="1-Distracted.png">Well whatever ya do, don't start summoning magical love hearts or something like that. Would rather not see any of that crap today.</state>
                 <state img="1-Happy.png">Y'know I actually have met bigger girls than you before. Just don't ask me about that. Really, please don't.</state>
                 <state img="1-Confident.png">Hmm. You seem a little outta shape. I ain't gonna mince my words, you think I'm the type who cares about offending people?</state>
                 <state img="1-Combat.png">I take it you're looking to lose a few pounds. Well, I bet I could help ya there, if you can keep up. Think you can handle my kinda workout?</state>
+                <state img="1-Distracted.png">Pointy ears and a...robust constitution. You remind me of the Supreme Kai.</state>
             </case>
             <case tag="female_must_strip" target="florina" targetStage="0">
                 <state img="1-Distracted.png">Hey. You seem nervous. Like, really, &lt;really&gt; nervous.</state>
@@ -2224,6 +2300,11 @@
                 <state img="1-Angry.png">Ugh, jeez. You ain't gonna be going on and on about the power of love or some crap all night, are ya? I've had my fill of characters like that already.</state>
                 <state img="1-Angry.png">Oh I know your type, ~name~. It's all sunshine and rainbows and obnoxiously long transformations. You really think that crap has any place on the battlefield?</state>
             </case>
+            <case tag="tie">
+                <state img="1-Shocked.png">Wait...you've got...am I honestly seeing that right?</state>
+                <state img="1-Shocked.png">Say what? How the hell'd that happen?</state>
+                <state img="1-Shocked.png">Huh? What? Am I the only one seeing double right now?</state>
+            </case>
             <case tag="male_removing_accessory">
                 <state img="1-Confident.png">Ditch the trinkets then. Just don't be timid about it when you lose the next time.</state>
                 <state img="1-Distracted.png">You'd be surprised how many guys have something like that.</state>
@@ -2240,6 +2321,11 @@
                 <state img="1-Smug.png">Coat. Blindfold. Straps on your wrists and ankles. People can read into a look like that y'know.</state>
                 <state img="1-Smug.png">Hey, kid. Someone tell ya those clothes were some fearsome fighter's gear or something? 'Cause I think they pulled more than a &lt;i&gt;blindfold&lt;/i&gt; over your eyes when they told ya that.</state>
             </case>
+            <case tag="male_removing_accessory" target="jin" targetStage="1">
+                <state img="1-Bored.png">Gonna see that weapon of yours? Eh, whatever. Cool looking attacks are more my speed though.</state>
+                <state img="1-Distracted.png">If ya say so Jin. If ya say so.</state>
+                <state img="1-Bored.png">Hmph. I doubt it's as interesting as ya think.</state>
+            </case>
             <case tag="male_removing_accessory" target="jotaro" targetStage="0">
                 <state img="1-Shocked.png">What the hell!?</state>
                 <state img="1-Shocked.png">Woah, jeez!</state>
@@ -2247,8 +2333,8 @@
             </case>
             <case tag="male_removing_accessory" target="jotaro" targetStage="1">
                 <state img="1-Angry.png">. . .</state>
-                <state img="1-Confident.png">&lt;i&gt;(Okay, just watch real close and...there! Got it!)&lt;/i&gt;</state>
                 <state img="1-Confident.png">. . .</state>
+                <state img="1-Confident.png">&lt;i&gt;(Okay, just watch real close and...there! Got it!)&lt;/i&gt;</state>
                 <state img="1-Happy.png">&lt;i&gt;(Think he's onto me? Nah, not a chance.)&lt;/i&gt;</state>
             </case>
             <case tag="male_removed_accessory">
@@ -2269,6 +2355,11 @@
                 <state img="1-Angry.png">Hey wait, ain't that cheating if you've got some little doohickey giving ya clues about how to beat us?</state>
                 <state img="1-Laughing.png">Know what? Color me impressed. I took ya for a goodie two shoes who didn't have the balls to cheat.</state>
                 <state img="1-Distracted.png">Well seeing how trash you've been playing, maybe your clever gizmos ain't nothing compared to good old fashioned instinct.</state>
+            </case>
+            <case tag="male_removed_accessory" target="jin" targetStage="2">
+                <state img="1-Smug.png">Yeah. And I can punch anything I can see with my naked eye. 'Cause I can &lt;i&gt;see it&lt;/i&gt;, you idiot.</state>
+                <state img="1-Smug.png">Hmm. Cool. And I bet everything I own that I can stop it with just a finger.</state>
+                <state img="1-Distracted.png">Yeah. That was about as dull as I was expecting. You tried at least, buddy.</state>
             </case>
             <case tag="male_removed_accessory" target="jotaro" targetStage="1">
                 <state img="1-Angry.png">Wait...did...okay, buddy. I'm gonna have my eye &lt;i&gt;real&lt;/i&gt; close on you. I got an idea about you that'll be pretty crazy if it turns out true.</state>
@@ -2337,7 +2428,7 @@
             </case>
             <case tag="female_removing_accessory" target="meia" targetStage="0">
                 <state img="1-Distracted.png">Also, hold up, that a scouter you're wearing? Looks kinda beat up, any reason you ain't had it repaired?</state>
-                <state img="1-Laughing2.png">Oh hey, is that a scouter? Man, I ain't seen one of those in a while. Looks like a vintage model or something at that. Sweet!</state>
+                <state img="1-Laughing2.png">Oh hey, is that a scouter? Man, I ain't seen one of those in a while. Looks like a vintage model as well. Sweet!</state>
             </case>
             <case tag="female_removing_accessory" target="nagisa" targetStage="0">
                 <state img="1-Distracted.png">Hmm. Sticking around? Well, whatever. I'll be keeping an eye out for ya then. This ain't the sorta place someone like you should hang out.</state>
@@ -2369,6 +2460,11 @@
             <case tag="female_removing_accessory" target="shimakaze" targetStage="0">
                 <state img="1-Shocked.png">Err, little lady, your sleeves? Might wanna put that out real quick.</state>
                 <state img="1-Shocked.png">Wait, err, Shimi-something? You're kinda, sorta on fire.</state>
+            </case>
+            <case tag="female_removing_accessory" target="shimakaze" targetStage="1">
+                <state img="1-Confident.png">Huh, that's weird. Those can't be made of something soft if they're cracking like that all of a sudden.</state>
+                <state img="1-Smug.png">What's with all the grease monkey words ya keep throwing around anyway? You some sorta mechanic? Or a machine of some sort maybe? You're one confusing little lady.</state>
+                <state img="1-Bored.png">Hmm. This is fast becoming the loudest game of cards I've ever played. And I usually play with Saiyans.</state>
             </case>
             <case tag="female_removing_accessory" target="shimakaze" targetStage="3">
                 <state img="1-Bored.png">Glad that transport pods don't make as much as a racket as this "ship" does.</state>
@@ -2404,6 +2500,11 @@
                 <state img="1-Stretching.png">I don't get it. Your hair's changed, but ya don't feel any weaker. What's the point of a transformation like that?</state>
                 <state img="1-Annoyed.png">Huh? Why you acting like a total bore all of a sudden? What's up?</state>
             </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1">
+                <state img="1-Laughing.png">Well, ya never. You could be some kinda genius at this for all I know.</state>
+                <state img="1-Thinking.png">Stranger things have happened though Sometimes the most harmless looking people are actually the most dangerous.</state>
+                <state img="1-Combat.png">Still. I'm gonna keep my wits about me. Never know what an opponent has in store for ya.</state>
+            </case>
             <case tag="female_removed_accessory" target="meia" targetStage="1">
                 <state img="1-Distracted.png">Oh, uhh, sentimental or something is it? I ain't gonna judge. They're just kinda common where I'm from is all.</state>
                 <state img="1-Stretching.png">You seem kinda precious about it, whatever the reason for that is. Don't worry lady, I won't pry. Not if you don't want me to.</state>
@@ -2419,6 +2520,11 @@
             <case tag="female_removed_accessory" target="shimakaze" targetStage="1">
                 <state img="1-Confident.png">Well it seems you're strong enough that it doesn't bother you, so, on with the game then?</state>
                 <state img="1-Laughing.png">Seems you're tougher than you look. Good, that's a relief. Can't sense your energy, so I didn't know if that was gonna harm ya or not.</state>
+            </case>
+            <case tag="female_removed_accessory" target="shimakaze" targetStage="2-3">
+                <state img="1-Smug.png">Funny gimmicks aside though, you're actually really cute. I bet a ton of people really like ya, girlie.</state>
+                <state img="1-Laughing.png">Aww, look atcha little legs. You must actually be good at moving fast though, you do seem to have the right kinda build for it.</state>
+                <state img="1-Happy.png">Well keep it up, little lady. It's kinda loud this routine of yours, but I'm enjoying it so far.</state>
             </case>
             <case tag="female_removed_accessory" target="shimakaze" targetStage="4">
                 <state img="1-Shocked.png">Hey, you need to take five? That time seemed like it did some actual hurt on ya.</state>
@@ -2491,7 +2597,7 @@
                 <state img="1-Combat.png">Hmm. Maybe you're for real...nah. Soon as I start thinking that you're gonna "switch back" and be all like, haha, told ya so. I'm harder to fool than that I'm afraid.</state>
             </case>
             <case tag="female_removing_minor" id="1-10" target="leggy" targetStage="2">
-                <state img="1-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, congrats, you've actually surprised me with that move.</state>
+                <state img="1-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, you've actually surprised me with that move.</state>
                 <state img="1-Thinking.png">Wait. Shaving? Oooh! Wait, I get it. You're gonna count that as a play.</state>
                 <state img="1-Bored.png">Oh. And here I thought I had ya knocked out. Seems you ain't ready to quit just yet.</state>
             </case>
@@ -2546,6 +2652,11 @@
                 <state img="1-Laughing.png">Oh, and has anyone told ya friend that she don't have to do this with ya? What's with that?</state>
                 <state img="1-Laughing.png">And she's slunk off somewhere again. Haha, your pal's a real card, ya know that?</state>
                 <state img="1-Smug.png">Looks like your number one fan Mako is still at it. That's worth a laugh at least.</state>
+            </case>
+            <case tag="female_removed_minor" target="shimakaze" targetStage="3-5">
+                <state img="1-Shocked.png">Wow check that out. You're making mine look prudish by comparison.</state>
+                <state img="1-Horny.png">Hmm. Well, guess you don't really need the support anyway.</state>
+                <state img="1-Smug.png">How about that. Pretty risque that little belt of yours.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="1-Combat.png">So then, what ya got for me this time?</state>
@@ -2667,11 +2778,7 @@
                 <state img="1-Laughing.png">Well...I guess that's a little better. Whatever, I'll let it pass.</state>
                 <state img="1-Laughing.png">Never seen a girl wearing &lt;i&gt;that&lt;/i&gt; much before. You tryin' to hide something or other?</state>
             </case>
-            <case tag="female_removed_major" target="shimakaze" targetStage="6-5">
-                <state img="1-Laughing.png">I've heard of a booby trap before. But what was that supposed to be, a booby bomb?</state>
-                <state img="1-Horny.png">Oh, fireworks aside, you've actually got a super-hot figure, ya little firework.</state>
-                <state img="1-Horny.png">&lt;i&gt;(Man, just look at the little firecracker's figure. Must be a whole ton of fun playing around with her.)&lt;/i&gt;</state>
-                <state img="1-Smug.png">So. I know I'm more of a thief, but I could stand to deal in a little piracy right know.</state>
+            <case tag="female_removed_major" target="shimakaze" targetStage="6">
                 <state img="1-Laughing.png">Ha! And you're certainly streamlined, that's for sure.</state>
                 <state img="1-Laughing.png">Good. Looks like you've got no space barnacles down there or whatever.</state>
                 <state img="1-Laughing.png">No leaks? Heh, you're certainly looking ship-shape down there.</state>
@@ -2785,11 +2892,11 @@
             <case tag="female_medium_chest_is_visible">
                 <state img="1-Smug.png">Good size. Fun to play with I'm sure.</state>
                 <state img="1-Happy.png">Perfect size, really. Bet you're proud of 'em.</state>
-                <state img="1-Laughing2.png">If you ain't proud of those, then get real lady!</state>
                 <state img="1-Smug.png">You've got the stuff, ~name~. Lot of potential mates would be eager to get a squeeze of those.</state>
                 <state img="1-Shocked.png">If boobs were power levels, yours would be A okay.</state>
                 <state img="1-Combat.png">Big enough for fun. Small enough that they won't slow you down.</state>
                 <state img="1-Laughing.png">Yup, those sure are boobs right there. Good ones to.</state>
+                <state img="1-Laughing2.png">If you ain't proud of those, then get real lady!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="amalia" targetStage="4" priority="380">
                 <condition count="0" />
@@ -3001,23 +3108,13 @@
 
         <stage id="2">
             <case tag="swap_cards">
-                <state img="2-Stretching.png">Alright then, send ~cards~ my way.</state>
-                <state img="2-Stretching.png">Come on, come on. I ain't got all night!</state>
-                <state img="2-Confident.png">~cards~. Better give me what I want, given I've gone to the trouble of powering up and all.</state>
-                <state img="2-Happy.png">I'm feeling ~cards~ right now.</state>
-                <state img="2-Distracted.png">Psh. No point keeping these ~cards~ around.</state>
-                <state img="2-Confident.png">Alright ~cards~ should do me.</state>
-                <state img="2-Confident.png">Gimme ~cards~ and we'll be golden. Wait did I just...eh, whatever.</state>
-                <state img="2-Distracted.png">Tch. ~cards~. Better be what I need.</state>
-                <state img="2-Confident.png">I'll have ~cards~. That usually gets results.</state>
-                <state img="2-Excited.png">Come on, ~cards~, hit me!</state>
-                <state img="2-Happy.png">I thought you moved your ass slow before dealer. Seem painfully slow now that I've gone Super Saiyan.</state>
-                <state img="2-Confident.png">Gonna trust my instincts on this. Gimme ~cards~, dealer.</state>
-                <state img="2-Happy.png">Okay, ~cards~ then. I'd say please, but I don't feel like it.</state>
-                <state img="2-Angry.png">You expecting a please and thank you out of me? No chance!</state>
-                <state img="2-Angry.png">Hey, come &lt;i&gt;on&lt;/i&gt; already! I ain't got all day here!</state>
-                <state img="2-Angry.png">I ain't standing here for the good of my health. Hit me!</state>
-                <state img="2-Bored.png">Come on, I'm stood twiddling my thumbs over here. Those cards ready yet?</state>
+                <state img="2-Confident.png">I'll take ~cards~ of 'em.</state>
+                <state img="2-Confident.png">Yeah, ~cards~ of 'em.</state>
+            </case>
+            <case tag="swap_cards" hasHand="Royal Flush" priority="20">
+                <state img="2-Excited.png">Oh...oh &lt;i&gt;heck&lt;/i&gt; yeah! You guys are toast this round!</state>
+                <state>Wait...hold up, is this hand what I think it is!?</state>
+                <state img="2-Laughing.png">Okay, gimme...no, shit! Give me absolutely nothing at all! Almost missed what I got right here, what with your weird Earth cards and all.</state>
             </case>
             <case tag="swap_cards" notSaidMarker="aura up">
                 <state img="custom:SSJ">Alright then, send ~cards~ my way.</state>
@@ -3037,6 +3134,25 @@
                 <state img="custom:SSJ">Hey, come &lt;i&gt;on&lt;/i&gt; already! I ain't got all day here!</state>
                 <state img="custom:SSJ">I ain't standing here for the good of my health. Hit me!</state>
                 <state img="custom:SSJ">Come on, I'm stood twiddling my thumbs over here. Those cards ready yet?</state>
+            </case>
+            <case tag="swap_cards" saidMarker="aura up">
+                <state img="2-Stretching.png">Alright then, send ~cards~ my way.</state>
+                <state img="2-Stretching.png">Come on, come on. I ain't got all night!</state>
+                <state img="2-Confident.png">~cards~. Better give me what I want, given I've gone to the trouble of powering up and all.</state>
+                <state img="2-Happy.png">I'm feeling ~cards~ right now.</state>
+                <state img="2-Distracted.png">Psh. No point keeping these ~cards~ around.</state>
+                <state img="2-Confident.png">Alright ~cards~ should do me.</state>
+                <state img="2-Confident.png">Gimme ~cards~ and we'll be golden. Wait did I just...eh, whatever.</state>
+                <state img="2-Distracted.png">Tch. ~cards~. Better be what I need.</state>
+                <state img="2-Confident.png">I'll have ~cards~. That usually gets results.</state>
+                <state img="2-Excited.png">Come on, ~cards~, hit me!</state>
+                <state img="2-Happy.png">I thought you moved your ass slow before dealer. Seem painfully slow now that I've gone Super Saiyan.</state>
+                <state img="2-Confident.png">Gonna trust my instincts on this. Gimme ~cards~, dealer.</state>
+                <state img="2-Happy.png">Okay, ~cards~ then. I'd say please, but I don't feel like it.</state>
+                <state img="2-Angry.png">You expecting a please and thank you out of me? No chance!</state>
+                <state img="2-Angry.png">Hey, come &lt;i&gt;on&lt;/i&gt; already! I ain't got all day here!</state>
+                <state img="2-Angry.png">I ain't standing here for the good of my health. Hit me!</state>
+                <state img="2-Bored.png">Come on, I'm stood twiddling my thumbs over here. Those cards ready yet?</state>
             </case>
             <case tag="good_hand" priority="0">
                 <state img="2-Confident.png">Ain't got nothing to worry about.</state>
@@ -3121,7 +3237,7 @@
                 <state img="2-Thinking.png">Did someone wish you back to life wrong or something? I mean, I've died to, sorta. Don't see me looking like you do right now.</state>
                 <state img="2-Happy.png">Huh. So, you've died before? Guess that makes two of us. Can't keep badasses ladies like us down!</state>
             </case>
-            <case tag="hand" notSaidMarker="aura fade" priority="100">
+            <case tag="hand" totalRounds="0" priority="100">
                 <state img="custom:SSJ Rnd 1">So. You ready? Nah, ain't no way you could be ready for all of what I am right here.</state>
                 <state img="custom:SSJ Rnd 1">Alright, I'm feeling good about my chances now. Think you'll be able to tangle with a Super Saiyan?</state>
                 <state img="custom:SSJ Rnd 1">Like I was saying, going Super Saiyan really sharpens up my instincts. I reckon that should apply to card playing.</state>
@@ -3210,6 +3326,11 @@
                 <state img="2-Smug.png">One mistake, and I'll be on ya in a flash. Don't you forget it.</state>
                 <state img="2-Excited.png">You're hearin' it here first buddy, I'm gonna knock you out!</state>
             </case>
+            <case tag="male_must_strip" target="jin" targetStage="0-4">
+                <state img="2-Confident.png">Huh. Here I'm just surprised to see a human with a full head of hair. Thought you were all a bunch of chrome domes.</state>
+                <state img="2-Happy.png">Man, that head of hair wouldn't be outta place on a Saiyan. I thought humans were bald. How about that.</state>
+                <state img="2-Confident.png">Huh. You have hair. Some humans beings have hair apparently. Learn something new every day.</state>
+            </case>
             <case tag="male_must_strip" target="jotaro" targetStage="0">
                 <state img="2-Smug.png">Well hello there, big, tall and mysterious. Got any surprises in store for little old me?</state>
                 <state img="2-Distracted.png">You've been pretty quiet so far. I ain't complaining, just stating a fact.</state>
@@ -3265,12 +3386,13 @@
                 <state img="2-Laughing.png">You weren't gonna parry that hit away.</state>
             </case>
             <case tag="female_must_strip" target="erufuda" targetStage="0">
-                <state img="2-Annoyed.png">Hey. You ain't gonna start sprouting off about the power love and junk, are ya? The last girl I ran into who was your size was a real nut job.</state>
+                <state img="2-Annoyed.png">Hey. You ain't gonna start sprouting off about the power of love and junk, are ya? The last girl I ran into who was your size was nuts about that.</state>
                 <state img="2-Bored.png">Don't think anything of this, but your figure's making me remember someone I'd prefer to forget. &lt;i&gt;(Pretty Cannon...ugh, sends shivers down my spine.)&lt;/i&gt;</state>
                 <state img="2-Distracted.png">Well whatever ya do, don't start summoning magical love hearts or something like that. Would rather not see any of that crap today.</state>
                 <state img="2-Happy.png">Y'know I actually have met bigger girls than you before. Just don't ask me about that. Really, please don't.</state>
                 <state img="2-Confident.png">Hmm. You seem a little outta shape. I ain't gonna mince my words, you think I'm the type who cares about offending people?</state>
                 <state img="2-Combat.png">I take it you're looking to lose a few pounds. Well, I bet I could help ya there, if you can keep up. Think you can handle my kinda workout?</state>
+                <state img="2-Distracted.png">Pointy ears and a...robust constitution. You remind me of the Supreme Kai.</state>
             </case>
             <case tag="female_must_strip" target="florina" targetStage="0">
                 <state img="2-Distracted.png">Hey. You seem nervous. Like, really, &lt;really&gt; nervous.</state>
@@ -3372,6 +3494,11 @@
                 <state img="2-Angry.png">Ugh, jeez. You ain't gonna be going on and on about the power of love or some crap all night, are ya? I've had my fill of characters like that already.</state>
                 <state img="2-Angry.png">Oh I know your type, ~name~. It's all sunshine and rainbows and obnoxiously long transformations. You really think that crap has any place on the battlefield?</state>
             </case>
+            <case tag="tie">
+                <state img="2-Shocked.png">Wait...you've got...am I honestly seeing that right?</state>
+                <state img="2-Shocked.png">Say what? How the hell'd that happen?</state>
+                <state img="2-Shocked.png">Huh? What? Am I the only one seeing double right now?</state>
+            </case>
             <case tag="male_removing_accessory">
                 <state img="2-Distracted.png">Okay. Seems like you're making &lt;i&gt;me&lt;/i&gt; work to see something good. That's a surprise.</state>
                 <state img="2-Annoyed.png">Still got crap like that to spare? Ugh, what a pain.</state>
@@ -3386,6 +3513,11 @@
                 <state img="2-Bored.png">I don't care in the least if you're trying to show off. Besides, It ain't like you're gonna upstage me or anything.</state>
                 <state img="2-Bored.png">So you act like you're all sincere and honest. But you're dressed like you've got more kinks than I've got wins under my belt. You're giving off mixed signals here, pal.</state>
             </case>
+            <case tag="male_removing_accessory" target="jin" targetStage="1">
+                <state img="2-Bored.png">Gonna see that weapon of yours? Eh, whatever. Cool looking attacks are more my speed though.</state>
+                <state img="2-Distracted.png">If ya say so Jin. If ya say so.</state>
+                <state img="2-Bored.png">Hmph. I doubt it's as interesting as ya think.</state>
+            </case>
             <case tag="male_removing_accessory" target="jotaro" targetStage="0">
                 <state img="2-Shocked.png">What the hell!?</state>
                 <state img="2-Shocked.png">Woah, jeez!</state>
@@ -3393,8 +3525,8 @@
             </case>
             <case tag="male_removing_accessory" target="jotaro" targetStage="1">
                 <state img="2-Angry.png">. . .</state>
-                <state img="2-Confident.png">&lt;i&gt;(Okay, just watch real close and...there! Got it!)&lt;/i&gt;</state>
                 <state img="2-Confident.png">. . .</state>
+                <state img="2-Confident.png">&lt;i&gt;(Okay, just watch real close and...there! Got it!)&lt;/i&gt;</state>
                 <state img="2-Happy.png">&lt;i&gt;(Think he's onto me? Nah, not a chance.)&lt;/i&gt;</state>
             </case>
             <case tag="male_removed_accessory">
@@ -3416,6 +3548,11 @@
                 <state img="2-Angry.png">Hey wait, ain't that cheating if you've got some little doohickey giving ya clues about how to beat us?</state>
                 <state img="2-Laughing.png">Know what? Color me impressed. I took ya for a goodie two shoes who didn't have the balls to cheat.</state>
                 <state img="2-Distracted.png">Well seeing how trash you've been playing, maybe your clever gizmos ain't nothing compared to good old fashioned instinct.</state>
+            </case>
+            <case tag="male_removed_accessory" target="jin" targetStage="2">
+                <state img="2-Smug.png">Yeah. And I can punch anything I can see with my naked eye. 'Cause I can &lt;i&gt;see it&lt;/i&gt;, you idiot.</state>
+                <state img="2-Smug.png">Hmm. Cool. And I bet everything I own that I can stop it with just a finger.</state>
+                <state img="2-Distracted.png">Yeah. That was about as dull as I was expecting. You tried at least, buddy.</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="2-Distracted.png">To think I came here to have fun. Ain't gonna have it with you making plays like this.</state>
@@ -3485,6 +3622,11 @@
                 <state img="2-Shocked.png">Woah, where'd she come from? Need to put a bell on that girl or something.</state>
                 <state img="2-Laughing.png">Oh hey, your ditsy friend's back and...pfft! Ha! I didn't see that coming. Guess she didn't either, haha.</state>
             </case>
+            <case tag="female_removing_accessory" target="shimakaze" targetStage="1">
+                <state img="2-Confident.png">Huh, that's weird. Those can't be made of something soft if they're cracking like that all of a sudden.</state>
+                <state img="2-Smug.png">What's with all the grease monkey words ya keep throwing around anyway? You some sorta mechanic? Or a machine of some sort maybe? You're one confusing little lady.</state>
+                <state img="2-Bored.png">Hmm. This is fast becoming the loudest game of cards I've ever played. And I usually play with Saiyans.</state>
+            </case>
             <case tag="female_removing_accessory" target="shimakaze" targetStage="3">
                 <state img="2-Bored.png">Glad that transport pods don't make as much as a racket as this "ship" does.</state>
                 <state img="2-Bored.png">Hmm. Was that one more of a pop or a pow? Ugh, that sounds like something Goku would say. Or one of the Zenos.</state>
@@ -3511,6 +3653,11 @@
                 <state img="2-Stretching.png">I don't get it. Your hair's changed, but ya don't feel any weaker. What's the point of a transformation like that?</state>
                 <state img="2-Annoyed.png">Huh? Why you acting like a total bore all of a sudden? What's up?</state>
             </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1">
+                <state img="2-Laughing.png">Well, ya never. You could be some kinda genius at this for all I know.</state>
+                <state img="2-Thinking.png">Stranger things have happened though Sometimes the most harmless looking people are actually the most dangerous.</state>
+                <state img="2-Combat.png">Still. I'm gonna keep my wits about me. Never know what an opponent has in store for ya.</state>
+            </case>
             <case tag="female_removed_accessory" target="moon" targetStage="2">
                 <state img="2-Bored.png">Jeez. You're completely gaga, ain't ya.</state>
             </case>
@@ -3518,6 +3665,11 @@
                 <state img="2-Laughing.png">Ah she'll be alright, ~name~. Gonna have a pretty good headache when she wakes up though.</state>
                 <state img="2-Thinking.png">Hmm. Yeah, she'll be okay. I've knocked around enough people to know what'll cause lasting damage.</state>
                 <state img="2-Happy.png">Did she have anything in that noggin' of hers to damage in the first place?</state>
+            </case>
+            <case tag="female_removed_accessory" target="shimakaze" targetStage="2-3">
+                <state img="2-Smug.png">Funny gimmicks aside though, you're actually really cute. I bet a ton of people really like ya, girlie.</state>
+                <state img="2-Laughing.png">Aww, look atcha little legs. You must actually be good at moving fast though, you do seem to have the right kinda build for it.</state>
+                <state img="2-Happy.png">Well keep it up, little lady. It's kinda loud this routine of yours, but I'm enjoying it so far.</state>
             </case>
             <case tag="female_removed_accessory" target="shimakaze" targetStage="4">
                 <state img="2-Shocked.png">Hey, you need to take five? That time seemed like it did some actual hurt on ya.</state>
@@ -3594,7 +3746,7 @@
                 <state img="2-Combat.png">Hmm. Maybe you're for real...nah. Soon as I start thinking that you're gonna "switch back" and be all like, haha, told ya so. I'm harder to fool than that I'm afraid.</state>
             </case>
             <case tag="female_removing_minor" id="2-10" target="leggy" targetStage="2">
-                <state img="2-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, congrats, you've actually surprised me with that move.</state>
+                <state img="2-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, you've actually surprised me with that move.</state>
                 <state img="2-Thinking.png">Wait. Shaving? Oooh! Wait, I get it. You're gonna count that as a play.</state>
                 <state img="2-Bored.png">Oh. And here I thought I had ya knocked out. Seems you ain't ready to quit just yet.</state>
             </case>
@@ -3648,6 +3800,11 @@
                 <state img="2-Laughing.png">Oh, and has anyone told ya friend that she don't have to do this with ya? What's with that?</state>
                 <state img="2-Laughing.png">And she's slunk off somewhere again. Haha, your pal's a real card, ya know that?</state>
                 <state img="2-Smug.png">Looks like your number one fan Mako is still at it. That's worth a laugh at least.</state>
+            </case>
+            <case tag="female_removed_minor" target="shimakaze" targetStage="3-5">
+                <state img="2-Shocked.png">Wow check that out. You're making mine look prudish by comparison.</state>
+                <state img="2-Horny.png">Hmm. Well, guess you don't really need the support anyway.</state>
+                <state img="2-Smug.png">How about that. Pretty risque that little belt of yours.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="2-Confident.png">Oh now we're talking, finally.</state>
@@ -3728,8 +3885,8 @@
                 <state img="2-Confident.png">See? I knew you had it in ya.</state>
             </case>
             <case tag="female_removed_major" target="amalia" targetStage="2">
-                <state img="2-Happy.png">Yup! You're real adorable. I bet Cabba would be tongue-tied the second he catches sight of ya.</state>
                 <state img="2-Confident.png">Just let me know if you're ever in the market for it, nature girl.</state>
+                <state img="2-Happy.png">Yup! You're real adorable. I bet Cabba would be tongue-tied the second he catches sight of ya.</state>
             </case>
             <case tag="female_removed_major" target="erufuda" targetStage="3">
                 <state img="2-Laughing.png">Hahaha-haa! Oh man, you are one hell of a treat! I can't believe that happened just now!</state>
@@ -3764,11 +3921,7 @@
                 <state img="2-Laughing.png">Well...I guess that's a little better. Whatever, I'll let it pass.</state>
                 <state img="2-Laughing.png">Never seen a girl wearing &lt;i&gt;that&lt;/i&gt; much before. You tryin' to hide something or other?</state>
             </case>
-            <case tag="female_removed_major" target="shimakaze" targetStage="6-5">
-                <state img="2-Laughing.png">I've heard of a booby trap before. But what was that supposed to be, a booby bomb?</state>
-                <state img="2-Horny.png">Oh, fireworks aside, you've actually got a super-hot figure, ya little firework.</state>
-                <state img="2-Horny.png">&lt;i&gt;(Man, just look at the little firecracker's figure. Must be a whole ton of fun playing around with her.)&lt;/i&gt;</state>
-                <state img="2-Smug.png">So. I know I'm more of a thief, but I could stand to deal in a little piracy right know.</state>
+            <case tag="female_removed_major" target="shimakaze" targetStage="6">
                 <state img="2-Laughing.png">Ha! And you're certainly streamlined, that's for sure.</state>
                 <state img="2-Laughing.png">Good. Looks like you've got no space barnacles down there or whatever.</state>
                 <state img="2-Laughing.png">No leaks? Heh, you're certainly looking ship-shape down there.</state>
@@ -3831,12 +3984,12 @@
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="2-Shocked.png">Waa...a-ohh...o-ohh...</state>
-                <state img="2-Shocked.png">You some kinda mutant or something ~name~?</state>
                 <state img="2-Horny.png">&lt;i&gt;(Good grief. Just smell the &lt;i&gt;musk&lt;/i&gt; coming from him. It's terrific!)&lt;/i&gt;</state>
                 <state img="2-Shocked.png">Does it...err...does it take some special technique to get that big, or is that natural? Either way, whoa. Color me impressed.</state>
                 <state img="2-Shocked.png">You sure kept quiet about that!</state>
                 <state img="2-Shocked.png">You could wreck a girl with that thing! Seriously, lots of people wouldn't be able to handle it.</state>
                 <state img="2-Shocked.png">You've exceeded my expectations. Wow.</state>
+                <state img="2-Shocked.png">You some kinda mutant or something ~name~?</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="2-Confident.png">Think I'm the kind of Saiyan who frets over showing off some boob? Get real.</state>
@@ -3864,8 +4017,8 @@
                 <state img="2-Shocked.png">Man. Glad I didn't get wished back in as sorry a state as that. That sure would've sucked.</state>
             </case>
             <case tag="female_small_chest_is_visible">
-                <state img="2-Thinking.png">I think that "French" girl said something about agility and performing. Kinda hard to tell, she sure stuttered a lot.</state>
                 <state img="2-Confident.png">Don't feel bad. To be honest I always wondered how &lt;i&gt;bigger&lt;/i&gt; girls manage with theirs in a fight.</state>
+                <state img="2-Thinking.png">I think that "French" girl said something about agility and performing. Kinda hard to tell, she sure stuttered a lot.</state>
                 <state img="2-Confident.png">Look at is this way, you'll run rings around a &lt;i&gt;larger&lt;/i&gt; opponent.</state>
                 <state img="2-Happy.png">Hey you look good! If someone gives you crap for them being small, then they're full of it!</state>
                 <state img="2-Flying.png">Listen, ~name~. I give people enough stick as is. I'm not going to shame you about your body, that's just low.</state>
@@ -3880,10 +4033,10 @@
                 <state img="2-Smug.png">Betcha glad we ain't playing this on a hill or something.</state>
             </case>
             <case tag="female_medium_chest_is_visible">
+                <state img="2-Flying.png">If you ain't proud of those, then get real lady!</state>
                 <state img="2-Happy.png">Nice honkers. Could have a fine old time with those I bet.</state>
                 <state img="2-Horny.png">Guys would look at you and see a good potential mate. More to a girl than than a nice rack obviously, but its a nice perk all the same.</state>
                 <state img="2-Stretching.png">About my size I reckon. So perfect in other words, hah!</state>
-                <state img="2-Flying.png">If you ain't proud of those, then get real lady!</state>
                 <state img="2-Confident.png">Those are great. What else do I need to say?</state>
                 <state img="2-Horny.png">Those boobs would please anyone I'm sure.</state>
                 <state img="2-Laughing.png">Nice pair. Pft! Lame I know, but someone had to say it.</state>
@@ -3909,12 +4062,12 @@
             <case tag="female_large_chest_is_visible">
                 <state img="2-Shocked.png">Gotta be a little tricky lugging around those all day, right?</state>
                 <state img="2-Stretching.png">Those must feel like training weights. They look sexy, but I don't envy you.</state>
-                <state img="2-Flying.png">Unless you're hiding your true power right now, those must be killer to lug around.</state>
                 <state img="2-Thinking.png">You must get a lot of attention from guys. Too much probably, no one needs that kind of attention from worthless pervs.</state>
                 <state img="2-Excited.png">Yeah! That's what I'm talking about, ~name~!</state>
                 <state img="2-Horny.png">More to a girl than a big pair of boobs, but damn! Those are something.</state>
                 <state img="2-Laughing.png">Hee hee, Saiyan ladies can be kinda superficial. They'd be staring &lt;i&gt;daggers&lt;/i&gt; at'cha if you strode into a room.</state>
                 <state img="2-Flying.png">You're really something else, you know that ~name~?</state>
+                <state img="2-Flying.png">Unless you're hiding your true power right now, those must be killer to lug around.</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <test expr="~target.tag.huge_breasts~" value="true" />
@@ -4200,6 +4353,19 @@
 
         <stage id="3">
             <case tag="swap_cards">
+                <state img="3-Confident.png">I'll take ~cards~ of 'em.</state>
+                <state img="3-Confident.png">Yeah, ~cards~ of 'em.</state>
+            </case>
+            <case tag="swap_cards" hasHand="Royal Flush">
+                <state img="3-Flying.png">Wanna know what I'm saying? I'm saying that my god damned hand's just gone Super Saiyan! That's what!</state>
+                <state img="3-Flying.png">Oh crap! YES! I've gone Super Saiyan, and my hand's just followed suit! Ha haa!</state>
+            </case>
+            <case tag="swap_cards" hasHand="Royal Flush" priority="20">
+                <state img="3-Excited.png">Oh...oh &lt;i&gt;heck&lt;/i&gt; yeah! You guys are toast this round!</state>
+                <state>Wait...hold up, is this hand what I think it is!?</state>
+                <state img="3-Laughing.png">Okay, gimme...no, shit! Give me absolutely nothing at all! Almost missed what I got right here, what with your weird Earth cards and all.</state>
+            </case>
+            <case tag="swap_cards" saidMarker="aura up">
                 <state img="3-Stretching.png">Alright then, send ~cards~ my way.</state>
                 <state img="3-Stretching.png">Come on, come on. I ain't got all night!</state>
                 <state img="3-Confident.png">~cards~. Better give me what I want, given I've gone to the trouble of powering up and all.</state>
@@ -4217,29 +4383,6 @@
                 <state img="3-Angry.png">Hey, come &lt;i&gt;on&lt;/i&gt; already! I ain't got all day here!</state>
                 <state img="3-Angry.png">I ain't standing here for the good of my health. Hit me!</state>
                 <state img="3-Bored.png">Come on, I'm stood twiddling my thumbs over here. Those cards ready yet?</state>
-            </case>
-            <case tag="swap_cards" hasHand="Royal Flush">
-                <state img="3-Flying.png">Wanna know what I'm saying? I'm saying that my god damned hand's just gone Super Saiyan! That's what!</state>
-                <state img="3-Flying.png">Oh crap! YES! I've gone Super Saiyan, and my hand's just followed suit! Ha haa!</state>
-            </case>
-            <case tag="swap_cards" notSaidMarker="aura up">
-                <state img="custom:SSJ">Alright then, send ~cards~ my way.</state>
-                <state img="custom:SSJ">Come on, come on. I ain't got all night!</state>
-                <state img="custom:SSJ">~cards~. Better give me what I want, given I've gone to the trouble of powering up and all.</state>
-                <state img="custom:SSJ">I'm feeling ~cards~ right now.</state>
-                <state img="custom:SSJ">Psh. No point keeping these ~cards~ around.</state>
-                <state img="custom:SSJ">Alright ~cards~ should do me.</state>
-                <state img="custom:SSJ">Gimme ~cards~ and we'll be golden. Wait did I just...eh, whatever.</state>
-                <state img="custom:SSJ">Tch. ~cards~. Better be what I need.</state>
-                <state img="custom:SSJ">I'll have ~cards~. That usually gets results.</state>
-                <state img="custom:SSJ">Come on, ~cards~, hit me!</state>
-                <state img="custom:SSJ">I thought you moved your ass slow before dealer. Seem painfully slow now that I've gone Super Saiyan.</state>
-                <state img="custom:SSJ">Gonna trust my instincts on this. Gimme ~cards~, dealer.</state>
-                <state img="custom:SSJ">Okay, ~cards~ then. I'd say please, but I don't feel like it.</state>
-                <state img="custom:SSJ">You expecting a please and thank you out of me? No chance!</state>
-                <state img="custom:SSJ">Hey, come &lt;i&gt;on&lt;/i&gt; already! I ain't got all day here!</state>
-                <state img="custom:SSJ">I ain't standing here for the good of my health. Hit me!</state>
-                <state img="custom:SSJ">Come on, I'm stood twiddling my thumbs over here. Those cards ready yet?</state>
             </case>
             <case tag="good_hand" priority="0">
                 <state img="3-Confident.png">Ain't got nothing to worry about.</state>
@@ -4397,6 +4540,11 @@
                 <state img="3-Smug.png">One mistake, and I'll be on ya in a flash. Don't you forget it.</state>
                 <state img="3-Excited.png">You're hearin' it here first buddy, I'm gonna knock you out!</state>
             </case>
+            <case tag="male_must_strip" target="jin" targetStage="0-4">
+                <state img="3-Confident.png">Huh. Here I'm just surprised to see a human with a full head of hair. Thought you were all a bunch of chrome domes.</state>
+                <state img="3-Happy.png">Man, that head of hair wouldn't be outta place on a Saiyan. I thought humans were bald. How about that.</state>
+                <state img="3-Confident.png">Huh. You have hair. Some humans beings have hair apparently. Learn something new every day.</state>
+            </case>
             <case tag="male_must_strip" target="jotaro" targetStage="0">
                 <state img="3-Smug.png">Well hello there, big, tall and mysterious. Got any surprises in store for little old me?</state>
                 <state img="3-Distracted.png">You've been pretty quiet so far. I ain't complaining, just stating a fact.</state>
@@ -4452,12 +4600,13 @@
                 <state img="3-Laughing.png">You weren't gonna parry that hit away.</state>
             </case>
             <case tag="female_must_strip" target="erufuda" targetStage="0">
-                <state img="3-Annoyed.png">Hey. You ain't gonna start sprouting off about the power love and junk, are ya? The last girl I ran into who was your size was a real nut job.</state>
+                <state img="3-Annoyed.png">Hey. You ain't gonna start sprouting off about the power of love and junk, are ya? The last girl I ran into who was your size was nuts about that.</state>
                 <state img="3-Bored.png">Don't think anything of this, but your figure's making me remember someone I'd prefer to forget. &lt;i&gt;(Pretty Cannon...ugh, sends shivers down my spine.)&lt;/i&gt;</state>
                 <state img="3-Distracted.png">Well whatever ya do, don't start summoning magical love hearts or something like that. Would rather not see any of that crap today.</state>
                 <state img="3-Happy.png">Y'know I actually have met bigger girls than you before. Just don't ask me about that. Really, please don't.</state>
                 <state img="3-Confident.png">Hmm. You seem a little outta shape. I ain't gonna mince my words, you think I'm the type who cares about offending people?</state>
                 <state img="3-Combat.png">I take it you're looking to lose a few pounds. Well, I bet I could help ya there, if you can keep up. Think you can handle my kinda workout?</state>
+                <state img="3-Distracted.png">Pointy ears and a...robust constitution. You remind me of the Supreme Kai.</state>
             </case>
             <case tag="female_must_strip" target="florina" targetStage="0">
                 <state img="3-Distracted.png">Hey. You seem nervous. Like, really, &lt;really&gt; nervous.</state>
@@ -4559,6 +4708,11 @@
                 <state img="3-Angry.png">Ugh, jeez. You ain't gonna be going on and on about the power of love or some crap all night, are ya? I've had my fill of characters like that already.</state>
                 <state img="3-Angry.png">Oh I know your type, ~name~. It's all sunshine and rainbows and obnoxiously long transformations. You really think that crap has any place on the battlefield?</state>
             </case>
+            <case tag="tie">
+                <state img="3-Shocked.png">Wait...you've got...am I honestly seeing that right?</state>
+                <state img="3-Shocked.png">Say what? How the hell'd that happen?</state>
+                <state img="3-Shocked.png">Huh? What? Am I the only one seeing double right now?</state>
+            </case>
             <case tag="male_removing_accessory">
                 <state img="3-Distracted.png">Okay. Seems like you're making &lt;i&gt;me&lt;/i&gt; work to see something good. That's a surprise.</state>
                 <state img="3-Annoyed.png">Still got crap like that to spare? Ugh, what a pain.</state>
@@ -4573,6 +4727,11 @@
                 <state img="3-Bored.png">I don't care in the least if you're trying to show off. Besides, It ain't like you're gonna upstage me or anything.</state>
                 <state img="3-Bored.png">So you act like you're all sincere and honest. But you're dressed like you've got more kinks than I've got wins under my belt. You're giving off mixed signals here, pal.</state>
             </case>
+            <case tag="male_removing_accessory" target="jin" targetStage="1">
+                <state img="3-Bored.png">Gonna see that weapon of yours? Eh, whatever. Cool looking attacks are more my speed though.</state>
+                <state img="3-Distracted.png">If ya say so Jin. If ya say so.</state>
+                <state img="3-Bored.png">Hmph. I doubt it's as interesting as ya think.</state>
+            </case>
             <case tag="male_removing_accessory" target="jotaro" targetStage="0">
                 <state img="3-Shocked.png">What the hell!?</state>
                 <state img="3-Shocked.png">Woah, jeez!</state>
@@ -4580,8 +4739,8 @@
             </case>
             <case tag="male_removing_accessory" target="jotaro" targetStage="1">
                 <state img="3-Angry.png">. . .</state>
-                <state img="3-Confident.png">&lt;i&gt;(Okay, just watch real close and...there! Got it!)&lt;/i&gt;</state>
                 <state img="3-Confident.png">. . .</state>
+                <state img="3-Confident.png">&lt;i&gt;(Okay, just watch real close and...there! Got it!)&lt;/i&gt;</state>
                 <state img="3-Happy.png">&lt;i&gt;(Think he's onto me? Nah, not a chance.)&lt;/i&gt;</state>
             </case>
             <case tag="male_removed_accessory">
@@ -4603,6 +4762,11 @@
                 <state img="3-Angry.png">Hey wait, ain't that cheating if you've got some little doohickey giving ya clues about how to beat us?</state>
                 <state img="3-Laughing.png">Know what? Color me impressed. I took ya for a goodie two shoes who didn't have the balls to cheat.</state>
                 <state img="3-Distracted.png">Well seeing how trash you've been playing, maybe your clever gizmos ain't nothing compared to good old fashioned instinct.</state>
+            </case>
+            <case tag="male_removed_accessory" target="jin" targetStage="2">
+                <state img="3-Smug.png">Yeah. And I can punch anything I can see with my naked eye. 'Cause I can &lt;i&gt;see it&lt;/i&gt;, you idiot.</state>
+                <state img="3-Smug.png">Hmm. Cool. And I bet everything I own that I can stop it with just a finger.</state>
+                <state img="3-Distracted.png">Yeah. That was about as dull as I was expecting. You tried at least, buddy.</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="3-Distracted.png">To think I came here to have fun. Ain't gonna have it with you making plays like this.</state>
@@ -4672,6 +4836,11 @@
                 <state img="3-Shocked.png">Woah, where'd she come from? Need to put a bell on that girl or something.</state>
                 <state img="3-Laughing.png">Oh hey, your ditsy friend's back and...pfft! Ha! I didn't see that coming. Guess she didn't either, haha.</state>
             </case>
+            <case tag="female_removing_accessory" target="shimakaze" targetStage="1">
+                <state img="3-Confident.png">Huh, that's weird. Those can't be made of something soft if they're cracking like that all of a sudden.</state>
+                <state img="3-Smug.png">What's with all the grease monkey words ya keep throwing around anyway? You some sorta mechanic? Or a machine of some sort maybe? You're one confusing little lady.</state>
+                <state img="3-Bored.png">Hmm. This is fast becoming the loudest game of cards I've ever played. And I usually play with Saiyans.</state>
+            </case>
             <case tag="female_removing_accessory" target="shimakaze" targetStage="3">
                 <state img="3-Bored.png">Glad that transport pods don't make as much as a racket as this "ship" does.</state>
                 <state img="3-Bored.png">Hmm. Was that one more of a pop or a pow? Ugh, that sounds like something Goku would say. Or one of the Zenos.</state>
@@ -4698,6 +4867,11 @@
                 <state img="3-Stretching.png">I don't get it. Your hair's changed, but ya don't feel any weaker. What's the point of a transformation like that?</state>
                 <state img="3-Annoyed.png">Huh? Why you acting like a total bore all of a sudden? What's up?</state>
             </case>
+            <case tag="female_removed_accessory" target="leggy" targetStage="1">
+                <state img="3-Laughing.png">Well, ya never. You could be some kinda genius at this for all I know.</state>
+                <state img="3-Thinking.png">Stranger things have happened though Sometimes the most harmless looking people are actually the most dangerous.</state>
+                <state img="3-Combat.png">Still. I'm gonna keep my wits about me. Never know what an opponent has in store for ya.</state>
+            </case>
             <case tag="female_removed_accessory" target="moon" targetStage="2">
                 <state img="3-Bored.png">Jeez. You're completely gaga, ain't ya.</state>
             </case>
@@ -4705,6 +4879,11 @@
                 <state img="3-Laughing.png">Ah she'll be alright, ~name~. Gonna have a pretty good headache when she wakes up though.</state>
                 <state img="3-Thinking.png">Hmm. Yeah, she'll be okay. I've knocked around enough people to know what'll cause lasting damage.</state>
                 <state img="3-Happy.png">Did she have anything in that noggin' of hers to damage in the first place?</state>
+            </case>
+            <case tag="female_removed_accessory" target="shimakaze" targetStage="2-3">
+                <state img="3-Smug.png">Funny gimmicks aside though, you're actually really cute. I bet a ton of people really like ya, girlie.</state>
+                <state img="3-Laughing.png">Aww, look atcha little legs. You must actually be good at moving fast though, you do seem to have the right kinda build for it.</state>
+                <state img="3-Happy.png">Well keep it up, little lady. It's kinda loud this routine of yours, but I'm enjoying it so far.</state>
             </case>
             <case tag="female_removed_accessory" target="shimakaze" targetStage="4">
                 <state img="3-Shocked.png">Hey, you need to take five? That time seemed like it did some actual hurt on ya.</state>
@@ -4781,7 +4960,7 @@
                 <state img="3-Combat.png">Hmm. Maybe you're for real...nah. Soon as I start thinking that you're gonna "switch back" and be all like, haha, told ya so. I'm harder to fool than that I'm afraid.</state>
             </case>
             <case tag="female_removing_minor" id="3-10" target="leggy" targetStage="2">
-                <state img="3-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, congrats, you've actually surprised me with that move.</state>
+                <state img="3-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, you've actually surprised me with that move.</state>
                 <state img="3-Thinking.png">Wait. Shaving? Oooh! Wait, I get it. You're gonna count that as a play.</state>
                 <state img="3-Bored.png">Oh. And here I thought I had ya knocked out. Seems you ain't ready to quit just yet.</state>
             </case>
@@ -4835,6 +5014,11 @@
                 <state img="3-Laughing.png">Oh, and has anyone told ya friend that she don't have to do this with ya? What's with that?</state>
                 <state img="3-Laughing.png">And she's slunk off somewhere again. Haha, your pal's a real card, ya know that?</state>
                 <state img="3-Smug.png">Looks like your number one fan Mako is still at it. That's worth a laugh at least.</state>
+            </case>
+            <case tag="female_removed_minor" target="shimakaze" targetStage="3-5">
+                <state img="3-Shocked.png">Wow check that out. You're making mine look prudish by comparison.</state>
+                <state img="3-Horny.png">Hmm. Well, guess you don't really need the support anyway.</state>
+                <state img="3-Smug.png">How about that. Pretty risque that little belt of yours.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="3-Confident.png">Oh now we're talking, finally.</state>
@@ -4915,8 +5099,8 @@
                 <state img="3-Confident.png">See? I knew you had it in ya.</state>
             </case>
             <case tag="female_removed_major" target="amalia" targetStage="2">
-                <state img="3-Happy.png">Yup! You're real adorable. I bet Cabba would be tongue-tied the second he catches sight of ya.</state>
                 <state img="3-Confident.png">Just let me know if you're ever in the market for it, nature girl.</state>
+                <state img="3-Happy.png">Yup! You're real adorable. I bet Cabba would be tongue-tied the second he catches sight of ya.</state>
             </case>
             <case tag="female_removed_major" target="erufuda" targetStage="3">
                 <state img="3-Laughing.png">Hahaha-haa! Oh man, you are one hell of a treat! I can't believe that happened just now!</state>
@@ -4951,11 +5135,7 @@
                 <state img="3-Laughing.png">Well...I guess that's a little better. Whatever, I'll let it pass.</state>
                 <state img="3-Laughing.png">Never seen a girl wearing &lt;i&gt;that&lt;/i&gt; much before. You tryin' to hide something or other?</state>
             </case>
-            <case tag="female_removed_major" target="shimakaze" targetStage="6-5">
-                <state img="3-Laughing.png">I've heard of a booby trap before. But what was that supposed to be, a booby bomb?</state>
-                <state img="3-Horny.png">Oh, fireworks aside, you've actually got a super-hot figure, ya little firework.</state>
-                <state img="3-Horny.png">&lt;i&gt;(Man, just look at the little firecracker's figure. Must be a whole ton of fun playing around with her.)&lt;/i&gt;</state>
-                <state img="3-Smug.png">So. I know I'm more of a thief, but I could stand to deal in a little piracy right know.</state>
+            <case tag="female_removed_major" target="shimakaze" targetStage="6">
                 <state img="3-Laughing.png">Ha! And you're certainly streamlined, that's for sure.</state>
                 <state img="3-Laughing.png">Good. Looks like you've got no space barnacles down there or whatever.</state>
                 <state img="3-Laughing.png">No leaks? Heh, you're certainly looking ship-shape down there.</state>
@@ -5018,12 +5198,12 @@
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="3-Shocked.png">Waa...a-ohh...o-ohh...</state>
-                <state img="3-Shocked.png">You some kinda mutant or something ~name~?</state>
                 <state img="3-Horny.png">&lt;i&gt;(Good grief. Just smell the &lt;i&gt;musk&lt;/i&gt; coming from him. It's terrific!)&lt;/i&gt;</state>
                 <state img="3-Shocked.png">Does it...err...does it take some special technique to get that big, or is that natural? Either way, whoa. Color me impressed.</state>
                 <state img="3-Shocked.png">You sure kept quiet about that!</state>
                 <state img="3-Shocked.png">You could wreck a girl with that thing! Seriously, lots of people wouldn't be able to handle it.</state>
                 <state img="3-Shocked.png">You've exceeded my expectations. Wow.</state>
+                <state img="3-Shocked.png">You some kinda mutant or something ~name~?</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="3-Confident.png">Think I'm the kind of Saiyan who frets over showing off some boob? Get real.</state>
@@ -5051,8 +5231,8 @@
                 <state img="3-Shocked.png">Man. Glad I didn't get wished back in as sorry a state as that. That sure would've sucked.</state>
             </case>
             <case tag="female_small_chest_is_visible">
-                <state img="3-Thinking.png">I think that "French" girl said something about agility and performing. Kinda hard to tell, she sure stuttered a lot.</state>
                 <state img="3-Confident.png">Don't feel bad. To be honest I always wondered how &lt;i&gt;bigger&lt;/i&gt; girls manage with theirs in a fight.</state>
+                <state img="3-Thinking.png">I think that "French" girl said something about agility and performing. Kinda hard to tell, she sure stuttered a lot.</state>
                 <state img="3-Confident.png">Look at is this way, you'll run rings around a &lt;i&gt;larger&lt;/i&gt; opponent.</state>
                 <state img="3-Happy.png">Hey you look good! If someone gives you crap for them being small, then they're full of it!</state>
                 <state img="3-Flying.png">Listen, ~name~. I give people enough stick as is. I'm not going to shame you about your body, that's just low.</state>
@@ -5067,10 +5247,10 @@
                 <state img="3-Smug.png">Betcha glad we ain't playing this on a hill or something.</state>
             </case>
             <case tag="female_medium_chest_is_visible">
+                <state img="3-Flying.png">If you ain't proud of those, then get real lady!</state>
                 <state img="3-Happy.png">Nice honkers. Could have a fine old time with those I bet.</state>
                 <state img="3-Horny.png">Guys would look at you and see a good potential mate. More to a girl than than a nice rack obviously, but its a nice perk all the same.</state>
                 <state img="3-Stretching.png">About my size I reckon. So perfect in other words, hah!</state>
-                <state img="3-Flying.png">If you ain't proud of those, then get real lady!</state>
                 <state img="3-Confident.png">Those are great. What else do I need to say?</state>
                 <state img="3-Horny.png">Those boobs would please anyone I'm sure.</state>
                 <state img="3-Laughing.png">Nice pair. Pft! Lame I know, but someone had to say it.</state>
@@ -5096,12 +5276,12 @@
             <case tag="female_large_chest_is_visible">
                 <state img="3-Shocked.png">Gotta be a little tricky lugging around those all day, right?</state>
                 <state img="3-Stretching.png">Those must feel like training weights. They look sexy, but I don't envy you.</state>
-                <state img="3-Flying.png">Unless you're hiding your true power right now, those must be killer to lug around.</state>
                 <state img="3-Thinking.png">You must get a lot of attention from guys. Too much probably, no one needs that kind of attention from worthless pervs.</state>
                 <state img="3-Excited.png">Yeah! That's what I'm talking about, ~name~!</state>
                 <state img="3-Horny.png">More to a girl than a big pair of boobs, but damn! Those are something.</state>
                 <state img="3-Laughing.png">Hee hee, Saiyan ladies can be kinda superficial. They'd be staring &lt;i&gt;daggers&lt;/i&gt; at'cha if you strode into a room.</state>
                 <state img="3-Flying.png">You're really something else, you know that ~name~?</state>
+                <state img="3-Flying.png">Unless you're hiding your true power right now, those must be killer to lug around.</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <test expr="~target.tag.huge_breasts~" value="true" />
@@ -5404,6 +5584,11 @@
                 <state img="4-Excited.png">Oh crap...oh crap...yes! This is exactly what I need right now!</state>
                 <state img="4-Shocked.png">Wow. My hand's just gone Ultra Instinct or something.</state>
             </case>
+            <case tag="swap_cards" hasHand="Royal Flush" priority="20">
+                <state img="4-Excited.png">Oh...oh &lt;i&gt;heck&lt;/i&gt; yeah! You guys are toast this round!</state>
+                <state>Wait...hold up, is this hand what I think it is!?</state>
+                <state img="4-Laughing.png">Okay, gimme...no, shit! Give me absolutely nothing at all! Almost missed what I got right here, what with your weird Earth cards and all.</state>
+            </case>
             <case tag="good_hand">
                 <state img="4-Happy.png">Phew! Keep me safe for another hand at least.</state>
                 <state img="4-Happy.png">Gotta guardian angel looking out for me it seems, finally.</state>
@@ -5568,12 +5753,13 @@
                 <state img="4-Confident.png">Alright. Happy to see ya take some damage.</state>
             </case>
             <case tag="female_must_strip" target="erufuda" targetStage="0">
-                <state img="4-Annoyed.png">Hey. You ain't gonna start sprouting off about the power love and junk, are ya? The last girl I ran into who was your size was a real nut job.</state>
+                <state img="4-Annoyed.png">Hey. You ain't gonna start sprouting off about the power of love and junk, are ya? The last girl I ran into who was your size was nuts about that.</state>
                 <state img="4-Bored.png">Don't think anything of this, but your figure's making me remember someone I'd prefer to forget. &lt;i&gt;(Pretty Cannon...ugh, sends shivers down my spine.)&lt;/i&gt;</state>
                 <state img="4-Distracted.png">Well whatever ya do, don't start summoning magical love hearts or something like that. Would rather not see any of that crap today.</state>
                 <state img="4-Happy.png">Y'know I actually have met bigger girls than you before. Just don't ask me about that. Really, please don't.</state>
                 <state img="4-Confident.png">Hmm. You seem a little outta shape. I ain't gonna mince my words, you think I'm the type who cares about offending people?</state>
                 <state img="4-Combat.png">I take it you're looking to lose a few pounds. Well, I bet I could help ya there, if you can keep up. Think you can handle my kinda workout?</state>
+                <state img="4-Distracted.png">Pointy ears and a...robust constitution. You remind me of the Supreme Kai.</state>
             </case>
             <case tag="female_must_strip" target="launch" targetStage="3">
                 <state img="4-Thinking.png">Wait, is that why humans shave their heads? Stops them from becoming complete pushovers when they sneeze? Ain't gonna change ya character if you've got no hair to change color.</state>
@@ -5612,6 +5798,11 @@
                 <state img="4-Smug.png">Steamy situation we've got ourselves in over here.</state>
                 <state img="4-Confident.png">Hey, what do ya call it, your sensu thingie? Whatever it's name is, it seems angry for some reason.</state>
             </case>
+            <case tag="tie">
+                <state img="4-Shocked.png">Wait...you've got...am I honestly seeing that right?</state>
+                <state img="4-Shocked.png">Say what? How the hell'd that happen?</state>
+                <state img="4-Shocked.png">Huh? What? Am I the only one seeing double right now?</state>
+            </case>
             <case tag="male_removing_accessory">
                 <state img="4-Annoyed.png">...</state>
                 <state img="4-Angry.png">Come on ya bastard, is that all you're gonna show? When I'm standing here like this?</state>
@@ -5621,6 +5812,11 @@
                 <state img="4-Bored.png">Ugh. There's teasing, and then there's this crap.</state>
                 <state img="4-Bored.png">You drive a hard bargain. Way too hard, making me lose complete interest here.</state>
             </case>
+            <case tag="male_removing_accessory" target="jin" targetStage="1">
+                <state img="4-Bored.png">Gonna see that weapon of yours? Eh, whatever. Cool looking attacks are more my speed though.</state>
+                <state img="4-Distracted.png">If ya say so Jin. If ya say so.</state>
+                <state img="4-Bored.png">Hmph. I doubt it's as interesting as ya think.</state>
+            </case>
             <case tag="male_removed_accessory">
                 <state img="4-Angry.png">If you're trying to upset me. then I've got news for ya. It ain't a good idea to upset me.</state>
                 <state img="4-Bored.png">Can't wait to see you strip again. Think you'll be as disappointing the next time around?</state>
@@ -5629,6 +5825,11 @@
                 <state img="4-Annoyed.png">Trying to tease like that is having the opposite effect of getting me interested ~name~.</state>
                 <state img="4-Bored.png">Wow. I'm just &lt;i&gt;blown away&lt;/i&gt;.</state>
                 <state img="4-Embarassed.png">&lt;i&gt;Damn game. Damn ~name~. Damn it all.&lt;/i&gt;</state>
+            </case>
+            <case tag="male_removed_accessory" target="jin" targetStage="2">
+                <state img="4-Smug.png">Yeah. And I can punch anything I can see with my naked eye. 'Cause I can &lt;i&gt;see it&lt;/i&gt;, you idiot.</state>
+                <state img="4-Smug.png">Hmm. Cool. And I bet everything I own that I can stop it with just a finger.</state>
+                <state img="4-Distracted.png">Yeah. That was about as dull as I was expecting. You tried at least, buddy.</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="4-Bored.png">Oh. Cute. Of all your options, you pick the most boring.</state>
@@ -5685,6 +5886,11 @@
                 <state img="4-Thinking.png">Hmm. Yeah, she'll be okay. I've knocked around enough people to know what'll cause lasting damage.</state>
                 <state img="4-Happy.png">Did she have anything in that noggin' of hers to damage in the first place?</state>
             </case>
+            <case tag="female_removed_accessory" target="shimakaze" targetStage="2-3">
+                <state img="4-Smug.png">Funny gimmicks aside though, you're actually really cute. I bet a ton of people really like ya, girlie.</state>
+                <state img="4-Laughing.png">Aww, look atcha little legs. You must actually be good at moving fast though, you do seem to have the right kinda build for it.</state>
+                <state img="4-Happy.png">Well keep it up, little lady. It's kinda loud this routine of yours, but I'm enjoying it so far.</state>
+            </case>
             <case tag="female_removed_accessory" target="shimakaze" targetStage="4">
                 <state img="4-Shocked.png">Hey, you need to take five? That time seemed like it did some actual hurt on ya.</state>
                 <state img="4-Shocked.png">Woah, careful there Shimie-girl. You're looking like your bell's been rung pretty hard there.</state>
@@ -5737,7 +5943,7 @@
                 <state img="4-Combat.png">Hmm. Maybe you're for real...nah. Soon as I start thinking that you're gonna "switch back" and be all like, haha, told ya so. I'm harder to fool than that I'm afraid.</state>
             </case>
             <case tag="female_removing_minor" id="4-10" target="leggy" targetStage="2">
-                <state img="4-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, congrats, you've actually surprised me with that move.</state>
+                <state img="4-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, you've actually surprised me with that move.</state>
                 <state img="4-Thinking.png">Wait. Shaving? Oooh! Wait, I get it. You're gonna count that as a play.</state>
                 <state img="4-Bored.png">Oh. And here I thought I had ya knocked out. Seems you ain't ready to quit just yet.</state>
             </case>
@@ -5778,6 +5984,11 @@
                 <state img="4-Laughing.png">Oh, and has anyone told ya friend that she don't have to do this with ya? What's with that?</state>
                 <state img="4-Laughing.png">And she's slunk off somewhere again. Haha, your pal's a real card, ya know that?</state>
                 <state img="4-Smug.png">Looks like your number one fan Mako is still at it. That's worth a laugh at least.</state>
+            </case>
+            <case tag="female_removed_minor" target="shimakaze" targetStage="3-5">
+                <state img="4-Shocked.png">Wow check that out. You're making mine look prudish by comparison.</state>
+                <state img="4-Horny.png">Hmm. Well, guess you don't really need the support anyway.</state>
+                <state img="4-Smug.png">How about that. Pretty risque that little belt of yours.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="4-Happy.png">Alright, not gonna complain this time at least. Complain plenty about being nude obviously, but that's a different thing.</state>
@@ -5879,11 +6090,7 @@
                 <state img="4-Laughing.png">Well...I guess that's a little better. Whatever, I'll let it pass.</state>
                 <state img="4-Laughing.png">Never seen a girl wearing &lt;i&gt;that&lt;/i&gt; much before. You tryin' to hide something or other?</state>
             </case>
-            <case tag="female_removed_major" target="shimakaze" targetStage="6-5">
-                <state img="4-Laughing.png">I've heard of a booby trap before. But what was that supposed to be, a booby bomb?</state>
-                <state img="4-Horny.png">Oh, fireworks aside, you've actually got a super-hot figure, ya little firework.</state>
-                <state img="4-Horny.png">&lt;i&gt;(Man, just look at the little firecracker's figure. Must be a whole ton of fun playing around with her.)&lt;/i&gt;</state>
-                <state img="4-Smug.png">So. I know I'm more of a thief, but I could stand to deal in a little piracy right know.</state>
+            <case tag="female_removed_major" target="shimakaze" targetStage="6">
                 <state img="4-Laughing.png">Ha! And you're certainly streamlined, that's for sure.</state>
                 <state img="4-Laughing.png">Good. Looks like you've got no space barnacles down there or whatever.</state>
                 <state img="4-Laughing.png">No leaks? Heh, you're certainly looking ship-shape down there.</state>
@@ -5935,9 +6142,9 @@
                 <state img="4-Confident.png">There, ya did it. Hope you're finding some confidence through all this. Nice piece by the way.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
+                <state img="4-Thinking.png">You some kinda mutant or something ~name~?</state>
                 <state img="4-Shocked.png">Wow. So that's where &lt;i&gt;you&lt;/i&gt; focus all your energy, huh.</state>
                 <state img="4-Shocked.png">O-kay. Okay then. Jeez.</state>
-                <state img="4-Thinking.png">You some kinda mutant or something ~name~?</state>
                 <state img="4-Smug.png">Hell of a Rod of Destruction you've got there.</state>
                 <state img="4-Horny.png">If word got around on Sadala that you were packing that, you sure wouldn't struggle to find love.</state>
                 <state img="4-Thinking.png">Hey can you, uh can ya warn us if ever you decide to turn around? I don't want that thing slapping my thighs.</state>
@@ -6305,6 +6512,11 @@
                 <state img="5-Excited.png">Oh crap...oh crap...yes! This is exactly what I need right now!</state>
                 <state img="5-Shocked.png">Wow. My hand's just gone Ultra Instinct or something.</state>
             </case>
+            <case tag="swap_cards" hasHand="Royal Flush" priority="20">
+                <state img="5-Excited.png">Oh...oh &lt;i&gt;heck&lt;/i&gt; yeah! You guys are toast this round!</state>
+                <state>Wait...hold up, is this hand what I think it is!?</state>
+                <state img="5-Laughing.png">Okay, gimme...no, shit! Give me absolutely nothing at all! Almost missed what I got right here, what with your weird Earth cards and all.</state>
+            </case>
             <case tag="good_hand">
                 <state img="5-Happy.png">Phew! Keep me safe for another hand at least.</state>
                 <state img="5-Happy.png">Gotta guardian angel looking out for me it seems, finally.</state>
@@ -6411,12 +6623,13 @@
                 <state img="5-Confident.png">Alright. Happy to see ya take some damage.</state>
             </case>
             <case tag="female_must_strip" target="erufuda" targetStage="0">
-                <state img="5-Annoyed.png">Hey. You ain't gonna start sprouting off about the power love and junk, are ya? The last girl I ran into who was your size was a real nut job.</state>
+                <state img="5-Annoyed.png">Hey. You ain't gonna start sprouting off about the power of love and junk, are ya? The last girl I ran into who was your size was nuts about that.</state>
                 <state img="5-Bored.png">Don't think anything of this, but your figure's making me remember someone I'd prefer to forget. &lt;i&gt;(Pretty Cannon...ugh, sends shivers down my spine.)&lt;/i&gt;</state>
                 <state img="5-Distracted.png">Well whatever ya do, don't start summoning magical love hearts or something like that. Would rather not see any of that crap today.</state>
                 <state img="5-Happy.png">Y'know I actually have met bigger girls than you before. Just don't ask me about that. Really, please don't.</state>
                 <state img="5-Confident.png">Hmm. You seem a little outta shape. I ain't gonna mince my words, you think I'm the type who cares about offending people?</state>
                 <state img="5-Combat.png">I take it you're looking to lose a few pounds. Well, I bet I could help ya there, if you can keep up. Think you can handle my kinda workout?</state>
+                <state img="5-Distracted.png">Pointy ears and a...robust constitution. You remind me of the Supreme Kai.</state>
             </case>
             <case tag="female_must_strip" target="launch" targetStage="3">
                 <state img="5-Thinking.png">Wait, is that why humans shave their heads? Stops them from becoming complete pushovers when they sneeze? Ain't gonna change ya character if you've got no hair to change color.</state>
@@ -6455,6 +6668,11 @@
                 <state img="5-Smug.png">Steamy situation we've got ourselves in over here.</state>
                 <state img="5-Confident.png">Hey, what do ya call it, your sensu thingie? Whatever it's name is, it seems angry for some reason.</state>
             </case>
+            <case tag="tie">
+                <state img="5-Shocked.png">Wait...you've got...am I honestly seeing that right?</state>
+                <state img="5-Shocked.png">Say what? How the hell'd that happen?</state>
+                <state img="5-Shocked.png">Huh? What? Am I the only one seeing double right now?</state>
+            </case>
             <case tag="male_removing_accessory">
                 <state img="5-Annoyed.png">...</state>
                 <state img="5-Angry.png">Come on ya bastard, is that all you're gonna show? When I'm standing here like this?</state>
@@ -6464,6 +6682,11 @@
                 <state img="5-Bored.png">Ugh. There's teasing, and then there's this crap.</state>
                 <state img="5-Bored.png">You drive a hard bargain. Way too hard, making me lose complete interest here.</state>
             </case>
+            <case tag="male_removing_accessory" target="jin" targetStage="1">
+                <state img="5-Bored.png">Gonna see that weapon of yours? Eh, whatever. Cool looking attacks are more my speed though.</state>
+                <state img="5-Distracted.png">If ya say so Jin. If ya say so.</state>
+                <state img="5-Bored.png">Hmph. I doubt it's as interesting as ya think.</state>
+            </case>
             <case tag="male_removed_accessory">
                 <state img="5-Angry.png">If you're trying to upset me. then I've got news for ya. It ain't a good idea to upset me.</state>
                 <state img="5-Bored.png">Can't wait to see you strip again. Think you'll be as disappointing the next time around?</state>
@@ -6472,6 +6695,11 @@
                 <state img="5-Annoyed.png">Trying to tease like that is having the opposite effect of getting me interested ~name~.</state>
                 <state img="5-Bored.png">Wow. I'm just &lt;i&gt;blown away&lt;/i&gt;.</state>
                 <state img="5-Embarassed.png">&lt;i&gt;Damn game. Damn ~name~. Damn it all.&lt;/i&gt;</state>
+            </case>
+            <case tag="male_removed_accessory" target="jin" targetStage="2">
+                <state img="5-Smug.png">Yeah. And I can punch anything I can see with my naked eye. 'Cause I can &lt;i&gt;see it&lt;/i&gt;, you idiot.</state>
+                <state img="5-Smug.png">Hmm. Cool. And I bet everything I own that I can stop it with just a finger.</state>
+                <state img="5-Distracted.png">Yeah. That was about as dull as I was expecting. You tried at least, buddy.</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="5-Bored.png">Oh. Cute. Of all your options, you pick the most boring.</state>
@@ -6522,6 +6750,11 @@
                 <state img="5-Laughing.png">Ah she'll be alright, ~name~. Gonna have a pretty good headache when she wakes up though.</state>
                 <state img="5-Thinking.png">Hmm. Yeah, she'll be okay. I've knocked around enough people to know what'll cause lasting damage.</state>
                 <state img="5-Happy.png">Did she have anything in that noggin' of hers to damage in the first place?</state>
+            </case>
+            <case tag="female_removed_accessory" target="shimakaze" targetStage="2-3">
+                <state img="5-Smug.png">Funny gimmicks aside though, you're actually really cute. I bet a ton of people really like ya, girlie.</state>
+                <state img="5-Laughing.png">Aww, look atcha little legs. You must actually be good at moving fast though, you do seem to have the right kinda build for it.</state>
+                <state img="5-Happy.png">Well keep it up, little lady. It's kinda loud this routine of yours, but I'm enjoying it so far.</state>
             </case>
             <case tag="female_removed_accessory" target="shimakaze" targetStage="4">
                 <state img="5-Shocked.png">Hey, you need to take five? That time seemed like it did some actual hurt on ya.</state>
@@ -6575,7 +6808,7 @@
                 <state img="5-Combat.png">Hmm. Maybe you're for real...nah. Soon as I start thinking that you're gonna "switch back" and be all like, haha, told ya so. I'm harder to fool than that I'm afraid.</state>
             </case>
             <case tag="female_removing_minor" id="5-10" target="leggy" targetStage="2">
-                <state img="5-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, congrats, you've actually surprised me with that move.</state>
+                <state img="5-Shocked.png">Hey, wait, Those are &lt;i&gt;shears&lt;/i&gt;!? Wow, you've actually surprised me with that move.</state>
                 <state img="5-Thinking.png">Wait. Shaving? Oooh! Wait, I get it. You're gonna count that as a play.</state>
                 <state img="5-Bored.png">Oh. And here I thought I had ya knocked out. Seems you ain't ready to quit just yet.</state>
             </case>
@@ -6616,6 +6849,11 @@
                 <state img="5-Laughing.png">Oh, and has anyone told ya friend that she don't have to do this with ya? What's with that?</state>
                 <state img="5-Laughing.png">And she's slunk off somewhere again. Haha, your pal's a real card, ya know that?</state>
                 <state img="5-Smug.png">Looks like your number one fan Mako is still at it. That's worth a laugh at least.</state>
+            </case>
+            <case tag="female_removed_minor" target="shimakaze" targetStage="3-5">
+                <state img="5-Shocked.png">Wow check that out. You're making mine look prudish by comparison.</state>
+                <state img="5-Horny.png">Hmm. Well, guess you don't really need the support anyway.</state>
+                <state img="5-Smug.png">How about that. Pretty risque that little belt of yours.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="5-Happy.png">Alright, not gonna complain this time at least. Complain plenty about being nude obviously, but that's a different thing.</state>
@@ -6717,11 +6955,7 @@
                 <state img="5-Laughing.png">Well...I guess that's a little better. Whatever, I'll let it pass.</state>
                 <state img="5-Laughing.png">Never seen a girl wearing &lt;i&gt;that&lt;/i&gt; much before. You tryin' to hide something or other?</state>
             </case>
-            <case tag="female_removed_major" target="shimakaze" targetStage="6-5">
-                <state img="5-Laughing.png">I've heard of a booby trap before. But what was that supposed to be, a booby bomb?</state>
-                <state img="5-Horny.png">Oh, fireworks aside, you've actually got a super-hot figure, ya little firework.</state>
-                <state img="5-Horny.png">&lt;i&gt;(Man, just look at the little firecracker's figure. Must be a whole ton of fun playing around with her.)&lt;/i&gt;</state>
-                <state img="5-Smug.png">So. I know I'm more of a thief, but I could stand to deal in a little piracy right know.</state>
+            <case tag="female_removed_major" target="shimakaze" targetStage="6">
                 <state img="5-Laughing.png">Ha! And you're certainly streamlined, that's for sure.</state>
                 <state img="5-Laughing.png">Good. Looks like you've got no space barnacles down there or whatever.</state>
                 <state img="5-Laughing.png">No leaks? Heh, you're certainly looking ship-shape down there.</state>
@@ -6773,9 +7007,9 @@
                 <state img="5-Confident.png">There, ya did it. Hope you're finding some confidence through all this. Nice piece by the way.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
+                <state img="5-Thinking.png">You some kinda mutant or something ~name~?</state>
                 <state img="5-Shocked.png">Wow. So that's where &lt;i&gt;you&lt;/i&gt; focus all your energy, huh.</state>
                 <state img="5-Shocked.png">O-kay. Okay then. Jeez.</state>
-                <state img="5-Thinking.png">You some kinda mutant or something ~name~?</state>
                 <state img="5-Smug.png">Hell of a Rod of Destruction you've got there.</state>
                 <state img="5-Horny.png">If word got around on Sadala that you were packing that, you sure wouldn't struggle to find love.</state>
                 <state img="5-Thinking.png">Hey can you, uh can ya warn us if ever you decide to turn around? I don't want that thing slapping my thighs.</state>
@@ -7167,6 +7401,11 @@
                 <state img="6-Confident.png">In some need of inspiration here, doll-face. Don't want to leave me hanging now, do ya?</state>
                 <state img="6-Smug.png">You know how this works. You get to see me, and I get to see you. We clear on that?</state>
                 <state img="6-Annoyed.png">Think you can make this worth my while?</state>
+            </case>
+            <case tag="tie">
+                <state img="6-Shocked.png">Wait...you've got...am I honestly seeing that right?</state>
+                <state img="6-Shocked.png">Say what? How the hell'd that happen?</state>
+                <state img="6-Shocked.png">Huh? What? Am I the only one seeing double right now?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="6-Annoyed.png">Where's that hand of yours moving? Better not be your ~clothing~.</state>
@@ -7645,6 +7884,11 @@
                 <state img="7-Distracted.png">Way ahead of you here, ~name~. And it ain't &lt;i&gt;as&lt;/i&gt; bad as you'd think.</state>
                 <state img="7-Annoyed.png">Yeah, whatever. Just get on with it.</state>
             </case>
+            <case tag="tie">
+                <state img="7-Shocked.png">Wait...you've got...am I honestly seeing that right?</state>
+                <state img="7-Shocked.png">Say what? How the hell'd that happen?</state>
+                <state img="7-Shocked.png">Huh? What? Am I the only one seeing double right now?</state>
+            </case>
             <case tag="male_removing_accessory">
                 <state img="7-Bored.png">Can't say I'm emotionally invested in what you take off now. So...whatever.</state>
                 <state img="7-Distracted.png">So is that important to you, or...not that I really care, but it &lt;i&gt;might&lt;/i&gt; be interesting.</state>
@@ -7769,7 +8013,7 @@
                 <state img="7-Laughing.png">Well...I guess that's a little better. Whatever, I'll let it pass.</state>
                 <state img="7-Laughing.png">Never seen a girl wearing &lt;i&gt;that&lt;/i&gt; much before. You tryin' to hide something or other?</state>
             </case>
-            <case tag="female_removed_major" target="shimakaze" targetStage="6-5">
+            <case tag="female_removed_major" target="shimakaze" targetStage="6">
                 <state img="7-Laughing.png">Ha! And you're certainly streamlined, that's for sure.</state>
                 <state img="7-Laughing.png">Good. Looks like you've got no space barnacles down there or whatever.</state>
                 <state img="7-Laughing.png">No leaks? Heh, you're certainly looking ship-shape down there.</state>
@@ -7881,10 +8125,10 @@
                 <state img="7-Smug.png">So, are you two a package deal? Gotta say, that'd make for a pretty good delivery if that's the case.</state>
             </case>
             <case tag="female_large_chest_is_visible">
+                <state img="7-Shocked.png">Unless you're hiding your true power right now, those must be killer to lug around.</state>
                 <state img="7-Laughing.png">Oh I'm sure those are gonna get someone or other going.</state>
                 <state img="7-Distracted.png">Hmm. To be honest I'd probably look weird with honkers big as that. Not all girls suit 'em.</state>
                 <state img="7-Laughing.png">Hey funny story, but I know a way to make mine as big as yours are over there.</state>
-                <state img="7-Shocked.png">Unless you're hiding your true power right now, those must be killer to lug around.</state>
                 <state img="7-Shocked.png">Wow you're a total knockout! Bet you could &lt;i&gt;literally&lt;/i&gt; knock someone out with those, come to think of it.</state>
                 <state img="7-Shocked.png">Yo, ~name~, is it even easy to move around with those?</state>
                 <state img="7-Smug.png">Okay, be honest with us ~name~. I bet you have a fine old time playing with those.</state>
@@ -8183,4 +8427,5 @@
         </stage>
 
     </behaviour>
+    <nicknames />
 </opponent>
