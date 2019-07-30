@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0 at 4:55:47 AM on July 24, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 8:29:44 PM on July 29, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.0</version>
     <first>Ryuji</first>
@@ -48,7 +48,7 @@
 
     <wardrobe>
         <clothing name="underwear" generic="Underwear" position="lower" type="important" />
-        <clothing name="pants" generic="pants" position="lower" type="major" />
+        <clothing name="pants" generic="pants" position="lower" type="major" plural="true" />
         <clothing name="shirt" generic="shirt" position="upper" type="major" />
         <clothing name="belt" generic="Belt" position="lower" type="extra" />
         <clothing name="socks" generic="Socks" position="other" type="extra" plural="true" />
@@ -197,7 +197,7 @@
             </case>
             <case tag="game_start">
                 <test expr="~player~" value="Kamoshida" />
-                <state img="0-threathen.png">Wha... You think this is some kinda joke, ~player~? &lt;i&gt;Do you!?&lt;/i&gt;</state>
+                <state img="0-threathen.png">Wha... Kamoshida? &lt;i&gt;Kamoshida!?&lt;/i&gt; I know that actually ain't your name! You think this is some kinda joke, Player? &lt;i&gt;Do you!?&lt;/i&gt;</state>
             </case>
             <case tag="game_start" priority="9999">
                 <test expr="~ryuji.costume~" value="summertime_ryuji" />
@@ -693,9 +693,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="0-grumpy.png" marker="shimakaze_boatgirls2">I'm so confused right now.</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="0-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="0-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" totalRounds="0" priority="495">
                 <condition count="1" filter="undead" />
@@ -2857,6 +2857,10 @@
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="0-cheerful.png">Next round, guys?</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="0-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="0-awkward.png">Tough luck, dude.</state>
                 <state img="0-disgusted.png">This game is weird.</state>
@@ -3279,10 +3283,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="0-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="0-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="0-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -3663,9 +3663,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="1-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="1-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="1-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -5730,6 +5730,10 @@
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="1-cheerful.png">Next round, guys?</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="1-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="1-awkward.png">Tough luck, dude.</state>
                 <state img="1-disgusted.png">This game is weird.</state>
@@ -6128,10 +6132,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="1-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="1-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="1-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -6481,9 +6481,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="2-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="2-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="2-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -8513,6 +8513,10 @@
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="2-cheerful.png">Next round, guys?</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="2-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="2-awkward.png">Tough luck, dude.</state>
                 <state img="2-disgusted.png">This game is weird.</state>
@@ -8912,10 +8916,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="2-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="2-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="2-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -9238,9 +9238,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="3-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="3-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="3-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -11216,6 +11216,10 @@
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="3-cheerful.png">Next round, guys?</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="3-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="3-awkward.png">Tough luck, dude.</state>
                 <state img="3-disgusted.png">This game is weird.</state>
@@ -11610,10 +11614,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="3-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="3-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="3-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -11916,9 +11916,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="4-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="4-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="4-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -13810,6 +13810,10 @@
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="4-cheerful.png">Next round, guys?</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="4-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="4-awkward.png">Tough luck, dude.</state>
                 <state img="4-disgusted.png">This game is weird.</state>
@@ -14204,10 +14208,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="4-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="4-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="4-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -14455,9 +14455,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="5-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="5-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="5-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -16225,6 +16225,10 @@
             <case tag="opponent_stripped" target="pinkie_pie" notSaidMarker="pinka_startt2" targetSaidMarker="pinka_start">
                 <state img="5-threathen.png" marker="pinka_startt2">You wanna know a better weapon to use? &lt;i&gt;The bat I could be swingin' at your head!&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="5-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="5-awkward.png">Tough luck, dude.</state>
                 <state img="5-disgusted.png">This game is weird.</state>
@@ -16607,10 +16611,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="5-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="5-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="5-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -16819,9 +16819,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="6-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="6-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="6-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -18464,6 +18464,10 @@
             <case tag="opponent_stripped" target="pinkie_pie" notSaidMarker="pinka_startt2" targetSaidMarker="pinka_start">
                 <state img="6-threathen.png" marker="pinka_startt2">You wanna know a better weapon to use? &lt;i&gt;The bat I could be swingin' at your head!&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="6-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="6-awkward.png">Tough luck, dude.</state>
                 <state img="6-disgusted.png">This game is weird.</state>
@@ -18838,10 +18842,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="6-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="6-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="6-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -19064,9 +19064,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="7-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="7-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="7-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -20554,6 +20554,10 @@
             <case tag="opponent_stripped" target="pinkie_pie" notSaidMarker="pinka_startt2" targetSaidMarker="pinka_start">
                 <state img="7-threathen.png" marker="pinka_startt2">You wanna know a better weapon to use? &lt;i&gt;The bat I could be swingin' at your head!&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="7-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="7-awkward.png">Tough luck, dude.</state>
                 <state img="7-disgusted.png">This game is weird.</state>
@@ -20983,10 +20987,6 @@
                 <state img="7-awkward.png">At least I didn't have to jerk off in front of everyone.</state>
                 <state img="7-embarrassed.png">Is it still a victory if you're nude, though. I mean...</state>
                 <state img="7-awkward.png">I mean... I &lt;i&gt;guess&lt;/i&gt; a victory's a victory?</state>
-            </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="7-startled.png" marker="winner">...Did I just win!?</state>
             </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1a">
                 <condition count="1" status="alive" />
