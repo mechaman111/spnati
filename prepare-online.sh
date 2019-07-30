@@ -11,6 +11,9 @@ cp opponents/general_collectibles.xml .public/opponents
 # Include *.js and *.css to accomodate Monika.
 find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" -o -iname "*.woff" -o -iname "*.woff2" | tar -cT - | tar -C .public -x
 
+# Rename JS and core game CSS for cache-busting purposes.
+python3 cache_bust.py .public/
+
 python3 opponents/fill_linecount_metadata.py .public/opponents
 python opponents/gzip_dialogue.py .public/opponents/*/behaviour.xml
 python opponents/analyze_image_space.py .public/opponents
