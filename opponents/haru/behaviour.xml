@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0 at 11:18:29 PM on July 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 8:20:43 PM on July 29, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.0</version>
     <first>Haru</first>
@@ -49,7 +49,7 @@
 
     <wardrobe>
         <clothing name="bra" generic="Bra" position="upper" type="important" />
-        <clothing name="panties" generic="Panties" position="lower" type="important" />
+        <clothing name="panties" generic="panties" position="lower" type="important" plural="true" />
         <clothing name="shirt" generic="Shirt" position="upper" type="major" />
         <clothing name="skirt" generic="Skirt" position="lower" type="major" />
         <clothing name="sweater" generic="Sweater" position="upper" type="minor" />
@@ -162,6 +162,10 @@
             <case tag="game_start">
                 <test expr="~background~" value="mansion" />
                 <state img="0-WHAT.png">&lt;i&gt;(...This isn't my mansion!)&lt;/i&gt;</state>
+            </case>
+            <case tag="game_start">
+                <test expr="~player~" value="Sugimura" />
+                <state img="0-murderous.png">Using &lt;i&gt;his&lt;/i&gt; name, out of anything you could have put as a name!? &lt;i&gt;For your sake, I hope you're joking, Player!&lt;/i&gt;</state>
             </case>
             <case tag="swap_cards">
                 <state img="0-calm.png">I'll exchange ~cards~ cards, please.</state>
@@ -1963,6 +1967,12 @@
             </case>
             <case tag="opponent_chest_is_visible" target="human" filter="athletic" alsoPlaying="ryuji" priority="552">
                 <state img="0-joyful.png">~player~ looks like someone who's physically active! Maybe the two of you can train together, Ryuji!</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" priority="552">
+                <state img="0-joyful.png">~player~ looks like someone who's physically active! Do you enjoy sparring, by any chance?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="muscular">
+                <state img="0-shock.png">&lt;i&gt;(Such a powerful body! Just looking at it makes me envious!)&lt;/i&gt;</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="0-embarrassed.png">I'm so sorry.</state>
@@ -4018,6 +4028,15 @@
                 <test expr="~target.gender~" value="male" />
                 <state img="1-sad.png" marker="player_pale">&lt;i&gt;(~player~ looks so pale... Does he get enough sunlight?)&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" alsoPlaying="ryuji" priority="552">
+                <state img="1-joyful.png">~player~ looks like someone who's physically active! Maybe the two of you can train together, Ryuji!</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" priority="552">
+                <state img="1-joyful.png">~player~ looks like someone who's physically active! Do you enjoy sparring, by any chance?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="muscular">
+                <state img="1-shock.png">&lt;i&gt;(Such a powerful body! Just looking at it makes me envious!)&lt;/i&gt;</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="1-embarrassed.png">I'm so sorry.</state>
                 <state img="1-embarrassed.png">I won't look if it helps...</state>
@@ -6062,6 +6081,15 @@
                 <test expr="~target.gender~" value="male" />
                 <state img="2-sad.png" marker="player_pale">&lt;i&gt;(~player~ looks so pale... Does he get enough sunlight?)&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" alsoPlaying="ryuji" priority="552">
+                <state img="2-joyful.png">~player~ looks like someone who's physically active! Maybe the two of you can train together, Ryuji!</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" priority="552">
+                <state img="2-joyful.png">~player~ looks like someone who's physically active! Do you enjoy sparring, by any chance?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="muscular">
+                <state img="2-shock.png">&lt;i&gt;(Such a powerful body! Just looking at it makes me envious!)&lt;/i&gt;</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="2-embarrassed.png">I'm so sorry.</state>
                 <state img="2-embarrassed.png">I won't look if it helps...</state>
@@ -8042,6 +8070,15 @@
                 <test expr="~target.gender~" value="male" />
                 <state img="3-sad.png" marker="player_pale">&lt;i&gt;(~player~ looks so pale... Does he get enough sunlight?)&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" alsoPlaying="ryuji" priority="552">
+                <state img="3-joyful.png">~player~ looks like someone who's physically active! Maybe the two of you can train together, Ryuji!</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" priority="552">
+                <state img="3-joyful.png">~player~ looks like someone who's physically active! Do you enjoy sparring, by any chance?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="muscular">
+                <state img="3-shock.png">&lt;i&gt;(Such a powerful body! Just looking at it makes me envious!)&lt;/i&gt;</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="3-embarrassed.png">I'm so sorry.</state>
                 <state img="3-embarrassed.png">I won't look if it helps...</state>
@@ -8741,8 +8778,8 @@
                 <state img="4-murderous.png" marker="ceo3_response">Don't think I approve of this. &lt;i&gt;If me and my business go under thanks to your streaming, you WILL regret it...&lt;/i&gt;</state>
             </case>
             <case tag="stripped" priority="115">
-                <condition count="0" status="not_decent" />
-                <state img="4-poststrip_c.png">I suppose it's not &lt;i&gt;too&lt;/i&gt; bad!I mean, we're all indecent, aren't we?</state>
+                <condition count="0" status="not_decent" role="opp" />
+                <state img="4-poststrip_c.png">I suppose it's not &lt;i&gt;too&lt;/i&gt; bad! I mean, we're all indecent, aren't we?</state>
                 <state img="4-poststrip_c.png">Everyone's exposed in some form, so... it's not as embarrassing as I expected it to be!</state>
             </case>
             <case tag="stripped" priority="115">
@@ -9903,10 +9940,6 @@
             <case tag="opponent_stripped" target="chihiro" targetStage="6">
                 <state img="4-shock.png">Chihiro...</state>
             </case>
-            <case tag="opponent_stripped" target="human" filter="chubby" targetStatus="naked">
-                <state img="4-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
-                <state img="4-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
-            </case>
             <case tag="opponent_stripped" target="leggy" targetStage="1" priority="560">
                 <state img="4-joyful.png">Can we be friends at least?</state>
             </case>
@@ -9932,6 +9965,19 @@
             <case tag="opponent_stripped" target="human" filter="pale-skinned" targetStatus="topless" priority="500">
                 <test expr="~target.gender~" value="male" />
                 <state img="4-sad.png" marker="player_pale">&lt;i&gt;(~player~ looks so pale... Does he get enough sunlight?)&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_chest_is_visible" filter="chubby">
+                <state img="4-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
+                <state img="4-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" alsoPlaying="ryuji" priority="552">
+                <state img="4-joyful.png">~player~ looks like someone who's physically active! Maybe the two of you can train together, Ryuji!</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" priority="552">
+                <state img="4-joyful.png">~player~ looks like someone who's physically active! Do you enjoy sparring, by any chance?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="muscular">
+                <state img="4-shock.png">&lt;i&gt;(Such a powerful body! Just looking at it makes me envious!)&lt;/i&gt;</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="4-perky.png">If it helps, I'm not too far behind you.</state>
@@ -11627,10 +11673,6 @@
             <case tag="opponent_stripped" target="chihiro" targetStage="6">
                 <state img="5-shock.png">Chihiro...</state>
             </case>
-            <case tag="opponent_stripped" target="human" filter="chubby" targetStatus="naked">
-                <state img="5-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
-                <state img="5-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
-            </case>
             <case tag="opponent_stripped" target="leggy" targetStage="1" priority="560">
                 <state img="5-joyful.png">Can we be friends at least?</state>
             </case>
@@ -11656,6 +11698,19 @@
             <case tag="opponent_stripped" target="human" filter="pale-skinned" targetStatus="topless" priority="500">
                 <test expr="~target.gender~" value="male" />
                 <state img="5-sad.png" marker="player_pale">&lt;i&gt;(~player~ looks so pale... Does he get enough sunlight?)&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_chest_is_visible" filter="chubby">
+                <state img="5-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
+                <state img="5-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" alsoPlaying="ryuji" priority="552">
+                <state img="5-joyful.png">~player~ looks like someone who's physically active! Maybe the two of you can train together, Ryuji!</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" priority="552">
+                <state img="5-creepy.png">~player~ looks like someone who's physically active! ...I wonder how much punishment can you take?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="muscular">
+                <state img="5-shock.png">&lt;i&gt;(Such a powerful body! Just looking at it makes me envious!)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_heavy_masturbating" notSaidMarker="edging">
                 <condition count="0" filter="uses_toy" />
@@ -13495,10 +13550,6 @@
             <case tag="opponent_stripped" target="chihiro" targetStage="6">
                 <state img="6-shock.png">Chihiro...</state>
             </case>
-            <case tag="opponent_stripped" target="human" filter="chubby" targetStatus="naked">
-                <state img="6-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
-                <state img="6-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
-            </case>
             <case tag="opponent_stripped" target="leggy" targetStage="1" priority="560">
                 <state img="6-joyful.png">Can we be friends at least?</state>
             </case>
@@ -13524,6 +13575,19 @@
             <case tag="opponent_stripped" target="human" filter="pale-skinned" targetStatus="topless" priority="500">
                 <test expr="~target.gender~" value="male" />
                 <state img="6-sad.png" marker="player_pale">&lt;i&gt;(~player~ looks so pale... Does he get enough sunlight?)&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_chest_is_visible" filter="chubby">
+                <state img="6-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
+                <state img="6-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" alsoPlaying="ryuji" priority="552">
+                <state img="6-joyful.png">~player~ looks like someone who's physically active! Maybe the two of you can train together, Ryuji!</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" priority="552">
+                <state img="6-creepy.png">~player~ looks like someone who's physically active! ...I wonder how much punishment can you take?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="muscular">
+                <state img="6-shock.png">&lt;i&gt;(Such a powerful body! Just looking at it makes me envious!)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_heavy_masturbating" notSaidMarker="edging">
                 <condition count="0" filter="uses_toy" />
@@ -15423,10 +15487,6 @@
             <case tag="opponent_stripped" target="chihiro" targetStage="6">
                 <state img="7-shock.png">Chihiro...</state>
             </case>
-            <case tag="opponent_stripped" target="human" filter="chubby" targetStatus="naked">
-                <state img="7-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
-                <state img="7-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
-            </case>
             <case tag="opponent_stripped" target="leggy" targetStage="1" priority="560">
                 <state img="7-joyful.png">Can we be friends at least?</state>
             </case>
@@ -15452,6 +15512,19 @@
             <case tag="opponent_stripped" target="human" filter="pale-skinned" targetStatus="topless" priority="500">
                 <test expr="~target.gender~" value="male" />
                 <state img="7-sad.png" marker="player_pale">&lt;i&gt;(~player~ looks so pale... Does he get enough sunlight?)&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_chest_is_visible" filter="chubby">
+                <state img="7-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
+                <state img="7-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" alsoPlaying="ryuji" priority="552">
+                <state img="7-joyful.png">~player~ looks like someone who's physically active! Maybe the two of you can train together, Ryuji!</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" priority="552">
+                <state img="7-creepy.png">~player~ looks like someone who's physically active! ...I wonder how much punishment can you take?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="muscular">
+                <state img="7-shock.png">&lt;i&gt;(Such a powerful body! Just looking at it makes me envious!)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_heavy_masturbating" notSaidMarker="edging">
                 <condition count="0" filter="uses_toy" />
@@ -16953,10 +17026,6 @@
             <case tag="opponent_stripped" target="chihiro" targetStage="6">
                 <state img="8-shock.png">Chihiro...</state>
             </case>
-            <case tag="opponent_stripped" target="human" filter="chubby" targetStatus="naked">
-                <state img="8-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
-                <state img="8-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
-            </case>
             <case tag="opponent_stripped" target="leggy" targetStage="1" priority="560">
                 <state img="8-joyful.png">Can we be friends at least?</state>
             </case>
@@ -16982,6 +17051,19 @@
             <case tag="opponent_stripped" target="human" filter="pale-skinned" targetStatus="topless" priority="500">
                 <test expr="~target.gender~" value="male" />
                 <state img="8-sad.png" marker="player_pale">&lt;i&gt;(~player~ looks so pale... Does he get enough sunlight?)&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_chest_is_visible" filter="chubby">
+                <state img="8-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
+                <state img="8-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" alsoPlaying="ryuji" priority="552">
+                <state img="8-joyful.png">~player~ looks like someone who's physically active! Maybe the two of you can train together, Ryuji!</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" priority="552">
+                <state img="8-creepy.png">~player~ looks like someone who's physically active! ...I wonder how much punishment can you take?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="muscular">
+                <state img="8-shock.png">&lt;i&gt;(Such a powerful body! Just looking at it makes me envious!)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_heavy_masturbating" notSaidMarker="edging">
                 <condition count="0" filter="uses_toy" />
@@ -18506,10 +18588,6 @@
             <case tag="opponent_stripped" target="chihiro" targetStage="6">
                 <state img="9-shock.png">Chihiro...</state>
             </case>
-            <case tag="opponent_stripped" target="human" filter="chubby" targetStatus="naked">
-                <state img="9-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
-                <state img="9-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
-            </case>
             <case tag="opponent_stripped" target="leggy" targetStage="1" priority="560">
                 <state img="9-joyful.png">Can we be friends at least?</state>
             </case>
@@ -18535,6 +18613,19 @@
             <case tag="opponent_stripped" target="human" filter="pale-skinned" targetStatus="topless" priority="500">
                 <test expr="~target.gender~" value="male" />
                 <state img="9-sad.png" marker="player_pale">&lt;i&gt;(~player~ looks so pale... Does he get enough sunlight?)&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_chest_is_visible" filter="chubby">
+                <state img="9-joyful.png">&lt;i&gt;(~player~ looks... so huggable!)&lt;/i&gt;</state>
+                <state img="9-aroused.png">More width means more to love of ~player~. Don't you agree?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" alsoPlaying="ryuji" priority="552">
+                <state img="9-joyful.png">~player~ looks like someone who's physically active! Maybe the two of you can train together, Ryuji!</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="athletic" priority="552">
+                <state img="9-creepy.png">~player~ looks like someone who's physically active! ...I wonder how much punishment can you take?</state>
+            </case>
+            <case tag="opponent_chest_is_visible" target="human" filter="muscular">
+                <state img="9-shock.png">&lt;i&gt;(Such a powerful body! Just looking at it makes me envious!)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_heavy_masturbating" notSaidMarker="edging">
                 <condition count="0" filter="uses_toy" />
@@ -19063,12 +19154,12 @@
                 <state img="9-aroused.png">Did you enjoy the show, ~player~?</state>
                 <state img="9-creepy.png">Well? What do you think?</state>
                 <state img="9-aroused.png">And you all thought I was a naive little girl, didn't you?</state>
-                <state img="9-pleasant.png">Next time, don't judge a book by it's cover.</state>
+                <state img="9-pleasant.png">Next time, don't judge a book by its cover.</state>
                 <state img="9-creepy.png">Well, ~player~? What do you think of me now?</state>
             </case>
             <case tag="finished_masturbating" alsoPlaying="jolyne" totalRounds="1" saidMarker="finished">
-                <state img="9-pleasant.png">You liked that side of me. Don't deny it.</state>
-                <state img="9-creepy.png">Don't judge a book by it's cover. Those who do wind up regretting it.</state>
+                <state img="9-creepy.png">You liked that side of me. Don't deny it.</state>
+                <state img="9-pleasant.png">Don't judge a book by its cover. Those who do wind up regretting it.</state>
             </case>
             <case tag="finished_masturbating" alsoPlaying="natsuki" alsoPlayingStage="0-6" totalFinished="1" notSaidMarker="natsuki_finished1" priority="9998">
                 <state img="9-finished.png" marker="natsuki_finished1">Ah... So you never saw a girl climax either?</state>
