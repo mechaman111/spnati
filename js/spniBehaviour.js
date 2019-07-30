@@ -668,6 +668,8 @@ var fixupDialogueSubstitutions = { // Order matters
 var fixupDialogueRE = new RegExp(Object.keys(fixupDialogueSubstitutions).map(escapeRegExp).join('|'), 'gi');
 
 function fixupDialogue (str) {
+    if (str === undefined || str === null) return null;
+
     return str.split(/(<script>.*?<\/script>|<[^>]+>)/i).map(function(part, idx) {
         // Odd parts will be script tags with content, or other tags;
         // leave them alone and do substitutions on the rest
