@@ -5,7 +5,7 @@ from pathlib import Path
 
 # Filename globs to apply cache busting to.
 PATHS = [
-    "css/spni.css",
+    "css/spni*.css",
     "js/player.js",
     "js/save.js",
     "js/table.js",
