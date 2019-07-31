@@ -710,10 +710,12 @@ function parseStyleSpecifiers (str) {
 function parseInterval (str) {
     if (!str) return undefined;
     var pieces = str.split("-");
+    if (pieces.length > 2) return null;
     var min = pieces[0].trim() == "" ? null : parseInt(pieces[0], 10);
-    if (pieces.length == 1 && isNaN(min)) return null;
+    if (isNaN(min)) return null;
     var max = pieces.length == 1 ? min
     : pieces[1].trim() == "" ? null : parseInt(pieces[1], 10);
+    if (isNaN(max)) return null;
     return { min : min, max : max };
 }
 
