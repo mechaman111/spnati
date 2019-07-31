@@ -34,7 +34,7 @@ $gameOpponentAreas = [$("#game-opponent-area-1"),
                       $("#game-opponent-area-3"),
                       $("#game-opponent-area-4")];
 $gamePlayerCountdown = $("#player-countdown");
-$gamePlayerClothingArea = $("#player-game-clothing-area");
+$gamePlayerClothingArea = $("#player-game-clothing-area, #player-name-label-minimal");
 $gamePlayerCardArea = $("#player-game-card-area");
 
 /* dock UI elements */
