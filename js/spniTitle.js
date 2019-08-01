@@ -170,10 +170,10 @@ var CANDY_LIST = [
     "zizou/1-excited.png",
     "zizou/2-happy.png",
     "zizou/3-interested.png",
-    "zone-tan/0-calm.png",
-    "zone-tan/1-interested.png",
-    "zone-tan/1-serene2.png",
-    "zone-tan/2-wink.png",
+    "zone-tan/0-pleased.png",
+    "zone-tan/1-explain.png",
+    "zone-tan/1-smirk.png",
+    "zone-tan/2-stroking.png",
 ];
 
 var clothingChoices = [];
