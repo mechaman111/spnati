@@ -149,13 +149,22 @@ function Save() {
         try {
             var settings = JSON.parse(localStorage.getItem(prefix + 'settings')) || {};
             if ('stamina' in settings) humanPlayer.stamina = settings.stamina;
+
+            optionsBackground = defaultBackground;
             if ('background' in settings) {
                 var bg_id = settings.background;
                 if (backgrounds[bg_id]) {
                     optionsBackground = backgrounds[bg_id];
-                    optionsBackground.activateBackground();
                 }
+
+                optionsBackground.activateBackground();
             };
+
+            if ('useGroupBackgrounds' in settings) {
+                useGroupBackgrounds = !!settings.useGroupBackgrounds;
+            } else {
+                useGroupBackgrounds = true;
+            }
         } catch (ex) {
             console.error('Failed parsing settings from localStorage');
         }
@@ -187,8 +196,12 @@ function Save() {
         localStorage.setItem(prefix + 'options', JSON.stringify(options));
     };
     this.saveSettings = function() {
-        var settings = { stamina: humanPlayer.stamina };
-        if (optionsBackground) {
+        var settings = {
+            stamina: humanPlayer.stamina,
+            useGroupBackgrounds: useGroupBackgrounds
+        };
+
+        if (optionsBackground && optionsBackground.id !== defaultBackground.id) {
             settings.background = optionsBackground.id;
         } else {
             delete settings.background;

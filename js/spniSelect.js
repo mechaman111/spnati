@@ -86,6 +86,8 @@ $groupImages = [$("#group-image-1"), $("#group-image-2"), $("#group-image-3"), $
 $groupNameLabel = $("#group-name-label");
 $groupButton = $("#group-button");
 
+$groupBackgroundToggle = $('#group-enable-preset-backgrounds');
+
 $groupPageIndicator = $("#group-page-indicator");
 $groupMaxPageIndicator = $("#group-max-page-indicator");
 
@@ -416,11 +418,34 @@ function updateGroupSelectScreen () {
     if (group) {
         $groupNameLabel.html(group.title);
 
-        if (!optionsBackground) {
-            if (group.background && backgrounds[group.background]) {
-                backgrounds[group.background].activateBackground();
-            } else {
-                defaultBackground.activateBackground();
+        if (group.background && backgrounds[group.background]) {
+            var bg = backgrounds[group.background];
+
+            $('.group-preset-background-row').show();
+            $('#group-preset-background-label').text(bg.name);
+
+            $groupBackgroundToggle.prop('checked', useGroupBackgrounds).off('change');
+            $groupBackgroundToggle.on('change', function () {
+                /* The user toggled the preset background checkbox. */
+                useGroupBackgrounds = $groupBackgroundToggle.is(':checked');
+
+                if (useGroupBackgrounds) {
+                    bg.activateBackground();
+                } else {
+                    optionsBackground.activateBackground();
+                }
+
+                save.saveSettings();
+            });
+
+            if (useGroupBackgrounds) {
+                bg.activateBackground();
+            }
+        } else {
+            $('.group-preset-background-row').hide();
+
+            if (useGroupBackgrounds && activeBackground.id !== optionsBackground.id) {
+                optionsBackground.activateBackground();
             }
         }
 
@@ -768,11 +793,11 @@ function loadGroup (chosenGroup) {
         });
     }
 
-    if (!optionsBackground) {
+    if (useGroupBackgrounds) {
         if (chosenGroup.background && backgrounds[chosenGroup.background]) {
             backgrounds[chosenGroup.background].activateBackground();
         } else {
-            defaultBackground.activateBackground();
+            optionsBackground.activateBackground();
         }
     }
 
@@ -949,7 +974,7 @@ function backToSelect () {
     /* switch screens */
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
 
-    if (!optionsBackground) defaultBackground.activateBackground();
+    if (useGroupBackgrounds) optionsBackground.activateBackground();
 
 	screenTransition($individualSelectScreen, $selectScreen);
 	screenTransition($groupSelectScreen, $selectScreen);

@@ -102,7 +102,9 @@ var defaultBackground = backgrounds['inventory'];
 var activeBackground = defaultBackground;
 
 /* Background selected by the player in the options menu */
-var optionsBackground = null;
+var optionsBackground = defaultBackground;
+
+var useGroupBackgrounds = true;
 
 /**
  * Constructor for game Background objects.
@@ -307,35 +309,6 @@ function pushBackgroundOption (background) {
  * Shows the background selection modal.
  ************************************************************/
 function showGameSettingsModal () {
-    if ($('#settings-background .background-option').length === 0) {
-        /* Create default option */
-        var default_opt = $('<div>', {
-            "class": "background-option",
-            "data-background": '',
-            "css": {
-                "background-image": "url(" + defaultBackground.src + ")"
-            },
-            "click": function () {
-                optionsBackground = null;
-                defaultBackground.activateBackground();
-                save.saveSettings();
-                $('#game-settings-modal').modal('hide');
-            }
-        });
-
-        $('<span>', {
-            "class": "background-info background-title",
-            "text": 'Dynamic Backgrounds'
-        }).appendTo(default_opt);
-
-        $('<span>', {
-            "class": "background-info",
-            "text": 'Use Game-Suggested Backgrounds (Recommended)'
-        }).appendTo(default_opt);
-
-        $("#settings-background").append(default_opt);
-    }
-
     Object.keys(backgrounds).forEach(function (id) {
         /* Push selection images for all backgrounds not already on the menu. */
         if ($('#settings-background .background-option[data-background="'+id+'"]').length === 0) {
