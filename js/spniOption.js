@@ -24,9 +24,15 @@ var backgrounds = {
         author: "Zeuses-Swan-Song",
         location: 'indoors'
     }),
+	'tiki bar': new Background('tiki bar', 'img/backgrounds/tiki_bar.png', {
+        name: "Tiki Bar",
+        author: "Zeuses-Swan-Song",
+        location: 'outdoors',
+        time: 'day'
+    }),
     'beach': new Background('beach', 'img/backgrounds/beach.png', {
         name: "Beach",
-        author: "u/SPNATI",
+        author: "u/SPNATI & Patisdom",
         location: 'outdoors',
         time: 'day'
     }),
@@ -55,7 +61,7 @@ var backgrounds = {
     }),
     'mansion': new Background('mansion', 'img/backgrounds/mansion.png', {
         name: "Mansion",
-        author: "u/SPNATI",
+        author: "Anymouse-68",
         location: 'indoors',
         time: 'night'
     }),
@@ -82,12 +88,14 @@ var backgrounds = {
     }),
     'haunted forest': new Background('haunted forest','img/backgrounds/haunted_forest.png', {
         name: "Haunted Forest",
+        author: "UnderscorM3",
         location: 'outdoors',
         time: 'night',
         filter: 'brightness(0.7) saturate(0.9)'
     }),
     'romantic': new Background('romantic', 'img/backgrounds/romantic.png', {
         name: "Romantic",
+        author: "Patisdom",
         location: 'indoors'
     }),
     'classic': new Background('classic', 'img/backgrounds/classic.png', {
