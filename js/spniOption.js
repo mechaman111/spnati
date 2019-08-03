@@ -104,7 +104,7 @@ var backgrounds = {
     })
 }
 
-var defaultBackground = backgrounds['inventory'];
+var defaultBackground = backgrounds['tiki bar'];
 
 /* The currently displayed background */
 var activeBackground = defaultBackground;
