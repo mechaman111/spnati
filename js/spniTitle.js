@@ -223,10 +223,10 @@ var playerTagOptions = {
         values: [
             { value: 'black_hair' }, { value: 'white_hair' },
             { value: 'brunette' }, { value: 'ginger' }, { value: 'blonde' },
-            { value: 'green_hair', extraTags: ['exotic_hair'] },
-            { value: 'blue_hair', extraTags: ['exotic_hair'] },
-            { value: 'purple_hair', extraTags: ['exotic_hair'] },
-            { value: 'pink_hair', extraTags: ['exotic_hair'] },
+            { value: 'green_hair' },
+            { value: 'blue_hair' },
+            { value: 'purple_hair' },
+            { value: 'pink_hair' },
         ],
     },
     'eye_color': {
@@ -252,14 +252,14 @@ var playerTagOptions = {
             { value: 'short_hair', text: 'Short Hair - Does Not Pass Jawline'},
             { value: 'medium_hair', text: 'Medium Hair - Reaches Between Jawline and Shoulders'},
             { value: 'long_hair', text: 'Long Hair - Reaches Beyond Shoulders'},
-            { value: 'very_long_hair', extraTags: ['long_hair'], text: 'Very Long Hair - Reaches the Thighs or Beyond'},
+            { value: 'very_long_hair', text: 'Very Long Hair - Reaches the Thighs or Beyond'},
         ],
     },
     'physical_build': {
         values: [
             { value: 'chubby' },
             { value: 'athletic' },
-            { value: 'muscular', extraTags: ['athletic'] },
+            { value: 'muscular' },
         ],
     },
     'height': {
@@ -441,7 +441,6 @@ function setPlayerTags () {
     for (category in playerTagSelections) {
         var sel = playerTagSelections[category];
         if (!(category in playerTagOptions)) continue;
-        var extraTags = [];
         playerTagOptions[category].values.some(function (choice) {
             if (playerTagOptions[category].type == 'range') {
                 if (sel > choice.to) return false;
@@ -449,12 +448,8 @@ function setPlayerTags () {
                 if (sel != choice.value) return false;
             }
             playerTagList.push(choice.value);
-            if (choice.extraTags) {
-                extraTags = choice.extraTags;
-            }
             return true;
         });
-        extraTags.forEach(function(t) { playerTagList.push(t); });
     }
     /* applies tags to the player*/
     console.log(playerTagList);
