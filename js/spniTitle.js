@@ -22,6 +22,44 @@ $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
  **********************************************************************/
 
 var CANDY_LIST = [
+    "reskins/juri_summer/0-calm.png",
+    "reskins/juri_summer/0-horny.png",
+    "reskins/juri_summer/1-excited.png",
+    "reskins/juri_summer/2-interested.png",
+
+    "reskins/monika_stirring_mermaid/0-writing-tip.png",
+    "reskins/monika_stirring_mermaid/1-interested.png",
+    "reskins/monika_stirring_mermaid/2-happy.png",
+    "reskins/monika_stirring_mermaid/3-shy-happy.png",
+
+    "reskins/summertime_ryuji/0-cocky.png",
+    "reskins/summertime_ryuji/1-cheerful.png",
+    "reskins/summertime_ryuji/2-startled.png",
+    "reskins/summertime_ryuji/3-awkward.png",
+
+    "reskins/summertime_sayaka/0-happy.png",
+    "reskins/summertime_sayaka/1-calm.png",
+    "reskins/summertime_sayaka/2-bored.png",
+    "reskins/summertime_sayaka/3-awkward.png",
+
+    "reskins/swimsuit_sheena/0-calm.png",
+    "reskins/swimsuit_sheena/1-excited.png",
+    "reskins/swimsuit_sheena/2-interested.png",
+    "reskins/swimsuit_sheena/3-sulky.png",
+
+    "reskins/summer_larachel/0-calm.png",
+    "reskins/summer_larachel/1-confident.png",
+    "reskins/summer_larachel/2-calm.png",
+    "reskins/summer_larachel/3-confident.png",
+
+    "reskins/nugi-chan_bikini/0-select.png",
+    "reskins/nugi-chan_bikini/1-loss.png",
+    "reskins/nugi-chan_bikini/2-embarrassed.png",
+    "reskins/nugi-chan_bikini/3-interested.png",
+];
+
+/*
+var CANDY_LIST = [
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -175,6 +213,7 @@ var CANDY_LIST = [
     "zone-tan/1-smirk.png",
     "zone-tan/2-stroking.png",
 ];
+*/
 
 var clothingChoices = [];
 var selectedChoices;
