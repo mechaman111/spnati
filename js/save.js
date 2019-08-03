@@ -156,9 +156,9 @@ function Save() {
                 if (backgrounds[bg_id]) {
                     optionsBackground = backgrounds[bg_id];
                 }
-
-                optionsBackground.activateBackground();
             };
+
+            optionsBackground.activateBackground();
 
             if ('useGroupBackgrounds' in settings) {
                 useGroupBackgrounds = !!settings.useGroupBackgrounds;
