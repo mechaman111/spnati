@@ -25,7 +25,7 @@ var CANDY_LIST = [
     "reskins/juri_summer/0-calm.png",
     "reskins/juri_summer/0-horny.png",
     "reskins/juri_summer/1-excited.png",
-    "reskins/juri_summer/2-interested.png",
+    "reskins/juri_summer/1-interested.png",
 
     "reskins/monika_stirring_mermaid/0-writing-tip.png",
     "reskins/monika_stirring_mermaid/1-interested.png",
