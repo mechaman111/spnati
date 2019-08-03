@@ -101,7 +101,7 @@ function getClothingTrigger (player, clothing, removed) {
 	if (type == IMPORTANT_ARTICLE || type == MAJOR_ARTICLE) {
 		if (pos == FULL_ARTICLE) {
 			if (!player.clothing.some(function(c) {
-				return c.position == LOWER_ARTICLE && c !== clothing;
+				return c.position == LOWER_ARTICLE && c !== clothing && [IMPORTANT_ARTICLE, MAJOR_ARTICLE].indexOf(c.position) >= 0;
 			})) {
 				// If removing this article exposes the crotch,
 				// pretend that it's an lower body article, even if it
