@@ -575,6 +575,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
      */
     this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
     this.updateTags();
+    this.searchTags = this.baseTags.slice();
     
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;

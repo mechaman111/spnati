@@ -586,7 +586,7 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by tag
-        if (tag && !opp.hasTag(tag)) {
+        if (tag && !(opp.searchTags && opp.searchTags.indexOf(canonicalizeTag(tag)) >= 0)) {
             return false;
         }
         
@@ -760,7 +760,7 @@ function updateSelectableGroups(screen) {
         })) return false;
 
         if (tag && !group.opponents.some(function(opp) {
-            return opp.hasTag(tag);
+            return opp.searchTags && opp.searchTags.indexOf(canonicalizeTag(tag)) >= 0;
         })) return false;
 
         if ((chosenGroupGender == 2 || chosenGroupGender == 3)
