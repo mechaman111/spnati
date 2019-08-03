@@ -21,6 +21,7 @@ monika.registerBehaviourCallback('delete_blazer', function () {
     setTimeout(function () { effect.execute(); }, 750);
 });
 
+
 monika.registerBehaviourCallback('delete_glasses', function () {
     var slot = monika.utils.monika_slot();
     var effect = new monika.effects.GlitchPoseChange(slot, '2-removed-glasses.png', 250, 400, 776 - 400);
