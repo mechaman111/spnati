@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.4b at 11:09:40 PM on August 02, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 10:00:24 PM on August 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v4.4b</version>
+    <version>v5.0</version>
     <first>Sayaka</first>
     <last>Miki</last>
     <label>Sayaka</label>
@@ -46,17 +46,18 @@
         <tag>sayaka</tag>
         <tag>madoka_magica</tag>
     </tags>
+    <nicknames />
 
     <start />
 
     <wardrobe>
-        <clothing lowercase="panties" position="lower" formalName="panties" type="important" plural="true" />
-        <clothing lowercase="cape" position="other" formalName="cape" type="major" />
-        <clothing lowercase="skirt" position="lower" formalName="skirt" type="major" />
-        <clothing lowercase="corset" position="upper" formalName="corset" type="major" />
-        <clothing lowercase="gloves" position="upper" formalName="gloves" type="minor" plural="true" />
-        <clothing lowercase="stockings" position="lower" formalName="stockings" type="minor" plural="true" />
-        <clothing lowercase="shoes" position="other" formalName="shoes" type="extra" plural="true" />
+        <clothing name="panties" generic="panties" position="lower" type="important" plural="true" />
+        <clothing name="cape" generic="cape" position="other" type="major" />
+        <clothing name="skirt" generic="skirt" position="lower" type="major" />
+        <clothing name="corset" generic="corset" position="upper" type="major" />
+        <clothing name="gloves" generic="gloves" position="upper" type="minor" plural="true" />
+        <clothing name="stockings" generic="stockings" position="lower" type="minor" plural="true" />
+        <clothing name="shoes" generic="shoes" position="other" type="extra" plural="true" />
     </wardrobe>
 
     <poses />
@@ -91,7 +92,7 @@
             </case>
             <case tag="selected">
                 <test expr="~self.costume~" value="summertime_sayaka" />
-                <state img="0-happy.png">So this witch thinks she can ruin this beautiful summer day, does she? Than I guess she hasn't met Magical Girl Sayaka Miki then!</state>
+                <state img="0-happy.png">So this witch thinks she can ruin this beautiful summer day, does she? Then I guess she hasn't met me, Magical Girl Sayaka Miki!</state>
             </case>
             <case tag="selected" alsoPlaying="sheena">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -295,6 +296,10 @@
             <case tag="game_start">
                 <condition count="2-4" filter="witch" />
                 <state img="0-happy.png" collectible="soulgem">Wow that’s a lot of witches. Thankfully, It doesn’t look like I'm gonna need my sword here.</state>
+            </case>
+            <case tag="game_start" alsoPlaying="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-awkward.png">You're working here? Did the witch hire you as a maid? Doesn't seem like something I'd expect them to do... &lt;i&gt;Then again, neither is this.&lt;/i&gt;</state>
             </case>
             <case tag="swap_cards">
                 <state img="0-calm.png">I'll exchange ~cards~ cards.</state>
@@ -1310,6 +1315,10 @@
             <case tag="female_removing_accessory" target="twilight" targetStage="4">
                 <state img="0-happy.png">I'm curious, did you have to make a contract with Kyubey, or is magic just an innate ability of people in your world?</state>
             </case>
+            <case tag="female_removing_accessory" target="nugi-chan" targetStage="0">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-awkward.png">Alcohol and &lt;i&gt;nudity&lt;/i&gt;, this is truly a place of debauchery...</state>
+            </case>
             <case tag="female_removing_accessory" target="sheena" targetStage="0">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="0-horny.png">N-not a bad move considering that you've got so much skin exposed already.</state>
@@ -1406,11 +1415,11 @@
             <case tag="female_removed_accessory" target="nami" targetStage="1">
                 <state img="0-awkward.png">It can grow to 15 feet in length... Oh right, you took off your belt.</state>
             </case>
-            <case tag="female_removed_accessory" id="0-15" target="nami" targetStage="1" targetSayingMarker="pirate">
-                <state img="0-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
-            </case>
             <case tag="female_removed_accessory" target="nami" targetStage="2">
                 <state img="0-happy.png">I would never steal your posessions! The witch on the other hand...</state>
+            </case>
+            <case tag="female_removed_accessory" id="0-15" target="nami" targetStage="3" targetSayingMarker="pirate">
+                <state img="0-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="1">
                 <state img="0-happy.png">My Kyoko would never swear like that. She's a nice girl.</state>
@@ -1451,6 +1460,10 @@
             <case tag="female_removed_accessory" target="zizou" targetStage="1">
                 <state img="0-thinking.png">Huh, your clothes are made of butterflies?</state>
                 <state img="0-shocked.png">How did your clothes turn into butterflies? Were they made of butterflies this whole time?</state>
+            </case>
+            <case tag="female_removed_accessory" target="nugi-chan" targetStage="1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-happy.png">If the witch chose you as her personal servant, than you must be pretty strong. I'm not underestimating a maid, no siree.</state>
             </case>
             <case tag="female_removed_accessory" target="sheena" targetStage="1">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -1562,6 +1575,10 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="0-horny.png">Showing off your &lt;i&gt;pussy&lt;/i&gt; already?</state>
             </case>
+            <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-awkward.png">I can only imagine what that "something special" might be...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="0-happy.png">You look good without your ~clothing~.</state>
                 <state img="0-calm.png">Not great by itself, but a step towards something greater.</state>
@@ -1626,6 +1643,10 @@
             <case tag="female_removed_minor" target="juri" targetStage="2">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="0-interested.png">You do realize that this isn't a nudist beach, right? &lt;i&gt;Not yet it isn't...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-horny.png">Knowing this witch, it's probably something &lt;i&gt;sexual in nature.&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="sheena" targetStage="3">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -1752,6 +1773,14 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="0-shocked.png">Is that jacket leather? No wonder you're taking it off first...</state>
             </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-thinking.png">Wouldn't it have made more sense to save that for after your binkni is gone?</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-interested.png">Taking off the apron now? That's the last symbol of you being a maid...</state>
+            </case>
             <case tag="female_removed_major">
                 <state img="0-interested.png">I like it. Like that it's gone that is...</state>
                 <state img="0-awkward.png">Hey ~name~, I don’t like this either, but it’s a necessary evil in order to save you.</state>
@@ -1850,9 +1879,17 @@
             <case tag="female_removed_major" target="sei" targetStage="6">
                 <state img="0-awkward.png">Now you can't even hold your drinks in their glass. That's as good a sign as any that you should stop.</state>
             </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="5">
+                <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
+                <state img="0-brave.png">And it goes in favor of a nice white and black binini!</state>
+            </case>
             <case tag="female_removed_major" target="juri" targetStage="1">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="0-awkward.png">You must be sweating up a storm. Hope you got something to drink...</state>
+            </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-happy.png">The &lt;i&gt;main&lt;/i&gt; dish looks lovely. Wonder what else you serve here...</state>
             </case>
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -1961,6 +1998,10 @@
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="0-shocked.png">D-did I hear you say that you used to be a HORSE!?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-awkward.png">Don't blame me, the witch is the insatiable one...</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="0-horny.png">Erm... that's one way to solve that problem I guess.</state>
@@ -2053,6 +2094,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="sakura">
                 <state img="0-awkward.png">Well, your breasts look good. For a zombie that is. N-not that zombies can't be sexy.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="0-thinking.png">Isn't there some joke that has people serve drinks on those? You'd be a perfect fit for that.</state>
             </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -3486,6 +3531,10 @@
             <case tag="female_removing_accessory" target="twilight" targetStage="4">
                 <state img="1-happy.png">I'm curious, did you have to make a contract with Kyubey, or is magic just an innate ability of people in your world?</state>
             </case>
+            <case tag="female_removing_accessory" target="nugi-chan" targetStage="0">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="1-awkward.png">Alcohol and &lt;i&gt;nudity&lt;/i&gt;, this is truly a place of debauchery...</state>
+            </case>
             <case tag="female_removing_accessory" target="sheena" targetStage="0">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="1-horny.png">N-not a bad move considering that you've got so much skin exposed already.</state>
@@ -3581,11 +3630,11 @@
             <case tag="female_removed_accessory" target="nami" targetStage="1">
                 <state img="1-awkward.png">It can grow to 15 feet in length... Oh right, you took off your belt.</state>
             </case>
-            <case tag="female_removed_accessory" id="1-15" target="nami" targetStage="1" targetSayingMarker="pirate">
-                <state img="1-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
-            </case>
             <case tag="female_removed_accessory" target="nami" targetStage="2">
                 <state img="1-happy.png">I would never steal your posessions! The witch on the other hand...</state>
+            </case>
+            <case tag="female_removed_accessory" id="1-15" target="nami" targetStage="3" targetSayingMarker="pirate">
+                <state img="1-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="1">
                 <state img="1-happy.png">My Kyoko would never swear like that. She's a nice girl.</state>
@@ -3626,6 +3675,10 @@
             <case tag="female_removed_accessory" target="zizou" targetStage="1">
                 <state img="1-thinking.png">Huh, your clothes are made of butterflies?</state>
                 <state img="1-shocked.png">How did your clothes turn into butterflies? Were they made of butterflies this whole time?</state>
+            </case>
+            <case tag="female_removed_accessory" target="nugi-chan" targetStage="1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="1-happy.png">If the witch chose you as her personal servant, than you must be pretty strong. I'm not underestimating a maid, no siree.</state>
             </case>
             <case tag="female_removed_accessory" target="sheena" targetStage="1">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -3737,6 +3790,10 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="1-horny.png">Showing off your &lt;i&gt;pussy&lt;/i&gt; already?</state>
             </case>
+            <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="1-awkward.png">I can only imagine what that "something special" might be...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="1-happy.png">You look good without your ~clothing~.</state>
                 <state img="1-calm.png">Not great by itself, but a step towards something greater.</state>
@@ -3801,6 +3858,10 @@
             <case tag="female_removed_minor" target="juri" targetStage="2">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="1-interested.png">You do realize that this isn't a nudist beach, right? &lt;i&gt;Not yet it isn't...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="1-horny.png">Knowing this witch, it's probably something &lt;i&gt;sexual in nature.&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="sheena" targetStage="3">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -3869,6 +3930,7 @@
             </case>
             <case tag="female_removing_major" target="marinette" targetStage="4">
                 <state img="1-happy.png">Hopefully your bra is as cute as I believe mine will be.</state>
+                <state img="1-happy.png">Hopefully your bra is as cute as I believe mine will be.</state>
             </case>
             <case tag="female_removing_major" target="marinette" targetStage="5">
                 <state img="1-awkward.png">Looks like you’re down to just your underwear. Sorry about that, Marinette.</state>
@@ -3925,6 +3987,14 @@
             <case tag="female_removing_major" target="juri" targetStage="0">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="1-shocked.png">Is that jacket leather? No wonder you're taking it off first...</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="1-thinking.png">Wouldn't it have made more sense to save that for after your binkni is gone?</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="1-interested.png">Taking off the apron now? That's the last symbol of you being a maid...</state>
             </case>
             <case tag="female_removed_major">
                 <state img="1-interested.png">I like it. Like that it's gone that is...</state>
@@ -4024,9 +4094,17 @@
             <case tag="female_removed_major" target="sei" targetStage="6">
                 <state img="1-awkward.png">Now you can't even hold your drinks in their glass. That's as good a sign as any that you should stop.</state>
             </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="5">
+                <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
+                <state img="1-brave.png">And it goes in favor of a nice white and black binini!</state>
+            </case>
             <case tag="female_removed_major" target="juri" targetStage="1">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="1-awkward.png">You must be sweating up a storm. Hope you got something to drink...</state>
+            </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="1-happy.png">The &lt;i&gt;main&lt;/i&gt; dish looks lovely. Wonder what else you serve here...</state>
             </case>
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -4138,6 +4216,10 @@
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="1-shocked.png">D-did I hear you say that you used to be a HORSE!?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="1-awkward.png">Don't blame me, the witch is the insatiable one...</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="1-horny.png">Erm... that's one way to solve that problem I guess.</state>
@@ -4230,6 +4312,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="sakura">
                 <state img="1-awkward.png">Well, your breasts look good. For a zombie that is. N-not that zombies can't be sexy.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="1-thinking.png">Isn't there some joke that has people serve drinks on those? You'd be a perfect fit for that.</state>
             </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -5657,6 +5743,10 @@
             <case tag="female_removing_accessory" target="twilight" targetStage="4">
                 <state img="2-happy.png">I'm curious, did you have to make a contract with Kyubey, or is magic just an innate ability of people in your world?</state>
             </case>
+            <case tag="female_removing_accessory" target="nugi-chan" targetStage="0">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="2-awkward.png">Alcohol and &lt;i&gt;nudity&lt;/i&gt;, this is truly a place of debauchery...</state>
+            </case>
             <case tag="female_removing_accessory" target="sheena" targetStage="0">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="2-horny.png">N-not a bad move considering that you've got so much skin exposed already.</state>
@@ -5752,11 +5842,11 @@
             <case tag="female_removed_accessory" target="nami" targetStage="1">
                 <state img="2-awkward.png">It can grow to 15 feet in length... Oh right, you took off your belt.</state>
             </case>
-            <case tag="female_removed_accessory" id="2-15" target="nami" targetStage="1" targetSayingMarker="pirate">
-                <state img="2-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
-            </case>
             <case tag="female_removed_accessory" target="nami" targetStage="2">
                 <state img="2-happy.png">I would never steal your posessions! The witch on the other hand...</state>
+            </case>
+            <case tag="female_removed_accessory" id="2-15" target="nami" targetStage="3" targetSayingMarker="pirate">
+                <state img="2-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="1">
                 <state img="2-happy.png">My Kyoko would never swear like that. She's a nice girl.</state>
@@ -5797,6 +5887,10 @@
             <case tag="female_removed_accessory" target="zizou" targetStage="1">
                 <state img="2-thinking.png">Huh, your clothes are made of butterflies?</state>
                 <state img="2-shocked.png">How did your clothes turn into butterflies? Were they made of butterflies this whole time?</state>
+            </case>
+            <case tag="female_removed_accessory" target="nugi-chan" targetStage="1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="2-happy.png">If the witch chose you as her personal servant, than you must be pretty strong. I'm not underestimating a maid, no siree.</state>
             </case>
             <case tag="female_removed_accessory" target="sheena" targetStage="1">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -5908,6 +6002,10 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="2-horny.png">Showing off your &lt;i&gt;pussy&lt;/i&gt; already?</state>
             </case>
+            <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="2-awkward.png">I can only imagine what that "something special" might be...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="2-happy.png">You look good without your ~clothing~.</state>
                 <state img="2-calm.png">Not great by itself, but a step towards something greater.</state>
@@ -5972,6 +6070,10 @@
             <case tag="female_removed_minor" target="juri" targetStage="2">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="2-interested.png">You do realize that this isn't a nudist beach, right? &lt;i&gt;Not yet it isn't...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="2-horny.png">Knowing this witch, it's probably something &lt;i&gt;sexual in nature.&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="sheena" targetStage="3">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -6040,6 +6142,7 @@
             </case>
             <case tag="female_removing_major" target="marinette" targetStage="4">
                 <state img="2-happy.png">Hopefully your bra is as cute as I believe mine will be.</state>
+                <state img="2-happy.png">Hopefully your bra is as cute as I believe mine will be.</state>
             </case>
             <case tag="female_removing_major" target="marinette" targetStage="5">
                 <state img="2-awkward.png">Looks like you’re down to just your underwear. Sorry about that, Marinette.</state>
@@ -6096,6 +6199,14 @@
             <case tag="female_removing_major" target="juri" targetStage="0">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="2-shocked.png">Is that jacket leather? No wonder you're taking it off first...</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="2-thinking.png">Wouldn't it have made more sense to save that for after your binkni is gone?</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="2-interested.png">Taking off the apron now? That's the last symbol of you being a maid...</state>
             </case>
             <case tag="female_removed_major">
                 <state img="2-interested.png">I like it. Like that it's gone that is...</state>
@@ -6195,9 +6306,17 @@
             <case tag="female_removed_major" target="sei" targetStage="6">
                 <state img="2-awkward.png">Now you can't even hold your drinks in their glass. That's as good a sign as any that you should stop.</state>
             </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="5">
+                <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
+                <state img="2-brave.png">And it goes in favor of a nice white and black binini!</state>
+            </case>
             <case tag="female_removed_major" target="juri" targetStage="1">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="2-awkward.png">You must be sweating up a storm. Hope you got something to drink...</state>
+            </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="2-happy.png">The &lt;i&gt;main&lt;/i&gt; dish looks lovely. Wonder what else you serve here...</state>
             </case>
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -6309,6 +6428,10 @@
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="2-shocked.png">D-did I hear you say that you used to be a HORSE!?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="2-awkward.png">Don't blame me, the witch is the insatiable one...</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="2-horny.png">Erm... that's one way to solve that problem I guess.</state>
@@ -6401,6 +6524,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="sakura">
                 <state img="2-awkward.png">Well, your breasts look good. For a zombie that is. N-not that zombies can't be sexy.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="2-thinking.png">Isn't there some joke that has people serve drinks on those? You'd be a perfect fit for that.</state>
             </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -7776,6 +7903,10 @@
             <case tag="female_removing_accessory" target="twilight" targetStage="4">
                 <state img="3-happy.png">I'm curious, did you have to make a contract with Kyubey, or is magic just an innate ability of people in your world?</state>
             </case>
+            <case tag="female_removing_accessory" target="nugi-chan" targetStage="0">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="3-awkward.png">Alcohol and &lt;i&gt;nudity&lt;/i&gt;, this is truly a place of debauchery...</state>
+            </case>
             <case tag="female_removing_accessory" target="sheena" targetStage="0">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="3-horny.png">N-not a bad move considering that you've got so much skin exposed already.</state>
@@ -7871,11 +8002,11 @@
             <case tag="female_removed_accessory" target="nami" targetStage="1">
                 <state img="3-awkward.png">It can grow to 15 feet in length... Oh right, you took off your belt.</state>
             </case>
-            <case tag="female_removed_accessory" id="3-15" target="nami" targetStage="1" targetSayingMarker="pirate">
-                <state img="3-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
-            </case>
             <case tag="female_removed_accessory" target="nami" targetStage="2">
                 <state img="3-happy.png">I would never steal your posessions! The witch on the other hand...</state>
+            </case>
+            <case tag="female_removed_accessory" id="3-15" target="nami" targetStage="3" targetSayingMarker="pirate">
+                <state img="3-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="1">
                 <state img="3-happy.png">My Kyoko would never swear like that. She's a nice girl.</state>
@@ -7916,6 +8047,10 @@
             <case tag="female_removed_accessory" target="zizou" targetStage="1">
                 <state img="3-thinking.png">Huh, your clothes are made of butterflies?</state>
                 <state img="3-shocked.png">How did your clothes turn into butterflies? Were they made of butterflies this whole time?</state>
+            </case>
+            <case tag="female_removed_accessory" target="nugi-chan" targetStage="1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="3-happy.png">If the witch chose you as her personal servant, than you must be pretty strong. I'm not underestimating a maid, no siree.</state>
             </case>
             <case tag="female_removed_accessory" target="sheena" targetStage="1">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -8027,6 +8162,10 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="3-horny.png">Showing off your &lt;i&gt;pussy&lt;/i&gt; already?</state>
             </case>
+            <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="3-awkward.png">I can only imagine what that "something special" might be...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="3-happy.png">You look good without your ~clothing~.</state>
                 <state img="3-calm.png">Not great by itself, but a step towards something greater.</state>
@@ -8091,6 +8230,10 @@
             <case tag="female_removed_minor" target="juri" targetStage="2">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="3-interested.png">You do realize that this isn't a nudist beach, right? &lt;i&gt;Not yet it isn't...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="3-horny.png">Knowing this witch, it's probably something &lt;i&gt;sexual in nature.&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="sheena" targetStage="3">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -8159,6 +8302,7 @@
             </case>
             <case tag="female_removing_major" target="marinette" targetStage="4">
                 <state img="3-happy.png">Hopefully your bra is as cute as I believe mine will be.</state>
+                <state img="3-happy.png">Hopefully your bra is as cute as I believe mine will be.</state>
             </case>
             <case tag="female_removing_major" target="marinette" targetStage="5">
                 <state img="3-awkward.png">Looks like you’re down to just your underwear. Sorry about that, Marinette.</state>
@@ -8215,6 +8359,14 @@
             <case tag="female_removing_major" target="juri" targetStage="0">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="3-shocked.png">Is that jacket leather? No wonder you're taking it off first...</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="3-thinking.png">Wouldn't it have made more sense to save that for after your binkni is gone?</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="3-interested.png">Taking off the apron now? That's the last symbol of you being a maid...</state>
             </case>
             <case tag="female_removed_major">
                 <state img="3-interested.png">I like it. Like that it's gone that is...</state>
@@ -8314,9 +8466,17 @@
             <case tag="female_removed_major" target="sei" targetStage="6">
                 <state img="3-awkward.png">Now you can't even hold your drinks in their glass. That's as good a sign as any that you should stop.</state>
             </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="5">
+                <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
+                <state img="3-brave.png">And it goes in favor of a nice white and black binini!</state>
+            </case>
             <case tag="female_removed_major" target="juri" targetStage="1">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="3-awkward.png">You must be sweating up a storm. Hope you got something to drink...</state>
+            </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="3-happy.png">The &lt;i&gt;main&lt;/i&gt; dish looks lovely. Wonder what else you serve here...</state>
             </case>
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -8428,6 +8588,10 @@
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="3-shocked.png">D-did I hear you say that you used to be a HORSE!?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="3-awkward.png">Don't blame me, the witch is the insatiable one...</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="3-horny.png">Erm... that's one way to solve that problem I guess.</state>
@@ -8520,6 +8684,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="sakura">
                 <state img="3-awkward.png">Well, your breasts look good. For a zombie that is. N-not that zombies can't be sexy.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="3-thinking.png">Isn't there some joke that has people serve drinks on those? You'd be a perfect fit for that.</state>
             </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -9813,6 +9981,10 @@
             <case tag="female_removing_accessory" target="twilight" targetStage="4">
                 <state img="4-happy.png">I'm curious, did you have to make a contract with Kyubey, or is magic just an innate ability of people in your world?</state>
             </case>
+            <case tag="female_removing_accessory" target="nugi-chan" targetStage="0">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="4-awkward.png">Alcohol and &lt;i&gt;nudity&lt;/i&gt;, this is truly a place of debauchery...</state>
+            </case>
             <case tag="female_removing_accessory" target="sheena" targetStage="0">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="4-horny.png">N-not a bad move considering that you've got so much skin exposed already.</state>
@@ -9911,11 +10083,11 @@
             <case tag="female_removed_accessory" target="nami" targetStage="1">
                 <state img="4-awkward.png">It can grow to 15 feet in length... Oh right, you took off your belt.</state>
             </case>
-            <case tag="female_removed_accessory" id="4-15" target="nami" targetStage="1" targetSayingMarker="pirate">
-                <state img="4-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
-            </case>
             <case tag="female_removed_accessory" target="nami" targetStage="2">
                 <state img="4-happy.png">I would never steal your posessions! The witch on the other hand...</state>
+            </case>
+            <case tag="female_removed_accessory" id="4-15" target="nami" targetStage="3" targetSayingMarker="pirate">
+                <state img="4-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="1">
                 <state img="4-happy.png">My Kyoko would never swear like that. She's a nice girl.</state>
@@ -9956,6 +10128,10 @@
             <case tag="female_removed_accessory" target="zizou" targetStage="1">
                 <state img="4-thinking.png">Huh, your clothes are made of butterflies?</state>
                 <state img="4-shocked.png">How did your clothes turn into butterflies? Were they made of butterflies this whole time?</state>
+            </case>
+            <case tag="female_removed_accessory" target="nugi-chan" targetStage="1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="4-happy.png">If the witch chose you as her personal servant, than you must be pretty strong. I'm not underestimating a maid, no siree.</state>
             </case>
             <case tag="female_removed_accessory" target="sheena" targetStage="1">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -10070,6 +10246,10 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="4-horny.png">Showing off your &lt;i&gt;pussy&lt;/i&gt; already?</state>
             </case>
+            <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="4-awkward.png">I can only imagine what that "something special" might be...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="4-happy.png">You look good without your ~clothing~.</state>
                 <state img="4-calm.png">Not great by itself, but a step towards something greater.</state>
@@ -10134,6 +10314,10 @@
             <case tag="female_removed_minor" target="juri" targetStage="2">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="4-interested.png">You do realize that this isn't a nudist beach, right? &lt;i&gt;Not yet it isn't...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="4-horny.png">Knowing this witch, it's probably something &lt;i&gt;sexual in nature.&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="sheena" targetStage="3">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -10260,6 +10444,14 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="4-shocked.png">Is that jacket leather? No wonder you're taking it off first...</state>
             </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="4-thinking.png">Wouldn't it have made more sense to save that for after your binkni is gone?</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="4-interested.png">Taking off the apron now? That's the last symbol of you being a maid...</state>
+            </case>
             <case tag="female_removed_major">
                 <state img="4-interested.png">I like it. Like that it's gone that is...</state>
                 <state img="4-awkward.png">Hey ~name~, I don’t like this either, but it’s a necessary evil in order to save you.</state>
@@ -10358,9 +10550,17 @@
             <case tag="female_removed_major" target="sei" targetStage="6">
                 <state img="4-awkward.png">Now you can't even hold your drinks in their glass. That's as good a sign as any that you should stop.</state>
             </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="5">
+                <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
+                <state img="4-brave.png">And it goes in favor of a nice white and black binini!</state>
+            </case>
             <case tag="female_removed_major" target="juri" targetStage="1">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="4-awkward.png">You must be sweating up a storm. Hope you got something to drink...</state>
+            </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="4-happy.png">The &lt;i&gt;main&lt;/i&gt; dish looks lovely. Wonder what else you serve here...</state>
             </case>
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -10483,6 +10683,10 @@
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="4-shocked.png">D-did I hear you say that you used to be a HORSE!?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="4-awkward.png">Don't blame me, the witch is the insatiable one...</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="4-horny.png">Erm... that's one way to solve that problem I guess.</state>
@@ -10589,6 +10793,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="sakura">
                 <state img="4-awkward.png">Well, your breasts look good. For a zombie that is. N-not that zombies can't be sexy.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="4-thinking.png">Isn't there some joke that has people serve drinks on those? You'd be a perfect fit for that.</state>
             </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -11885,6 +12093,10 @@
             <case tag="female_removing_accessory" target="twilight" targetStage="4">
                 <state img="5-happy.png">I'm curious, did you have to make a contract with Kyubey, or is magic just an innate ability of people in your world?</state>
             </case>
+            <case tag="female_removing_accessory" target="nugi-chan" targetStage="0">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="5-awkward.png">Alcohol and &lt;i&gt;nudity&lt;/i&gt;, this is truly a place of debauchery...</state>
+            </case>
             <case tag="female_removing_accessory" target="sheena" targetStage="0">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="5-horny.png">N-not a bad move considering that you've got so much skin exposed already.</state>
@@ -11983,11 +12195,11 @@
             <case tag="female_removed_accessory" target="nami" targetStage="1">
                 <state img="5-awkward.png">It can grow to 15 feet in length... Oh right, you took off your belt.</state>
             </case>
-            <case tag="female_removed_accessory" id="5-15" target="nami" targetStage="1" targetSayingMarker="pirate">
-                <state img="5-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
-            </case>
             <case tag="female_removed_accessory" target="nami" targetStage="2">
                 <state img="5-happy.png">I would never steal your posessions! The witch on the other hand...</state>
+            </case>
+            <case tag="female_removed_accessory" id="5-15" target="nami" targetStage="3" targetSayingMarker="pirate">
+                <state img="5-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="1">
                 <state img="5-happy.png">My Kyoko would never swear like that. She's a nice girl.</state>
@@ -12028,6 +12240,10 @@
             <case tag="female_removed_accessory" target="zizou" targetStage="1">
                 <state img="5-thinking.png">Huh, your clothes are made of butterflies?</state>
                 <state img="5-shocked.png">How did your clothes turn into butterflies? Were they made of butterflies this whole time?</state>
+            </case>
+            <case tag="female_removed_accessory" target="nugi-chan" targetStage="1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="5-happy.png">If the witch chose you as her personal servant, than you must be pretty strong. I'm not underestimating a maid, no siree.</state>
             </case>
             <case tag="female_removed_accessory" target="sheena" targetStage="1">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -12142,6 +12358,10 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="5-horny.png">Showing off your &lt;i&gt;pussy&lt;/i&gt; already?</state>
             </case>
+            <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="5-awkward.png">I can only imagine what that "something special" might be...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="5-happy.png">You look good without your ~clothing~.</state>
                 <state img="5-calm.png">Not great by itself, but a step towards something greater.</state>
@@ -12206,6 +12426,10 @@
             <case tag="female_removed_minor" target="juri" targetStage="2">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="5-interested.png">You do realize that this isn't a nudist beach, right? &lt;i&gt;Not yet it isn't...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="5-horny.png">Knowing this witch, it's probably something &lt;i&gt;sexual in nature.&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="sheena" targetStage="3">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -12332,6 +12556,14 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="5-shocked.png">Is that jacket leather? No wonder you're taking it off first...</state>
             </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="5-thinking.png">Wouldn't it have made more sense to save that for after your binkni is gone?</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="5-interested.png">Taking off the apron now? That's the last symbol of you being a maid...</state>
+            </case>
             <case tag="female_removed_major">
                 <state img="5-interested.png">I like it. Like that it's gone that is...</state>
                 <state img="5-awkward.png">Hey ~name~, I don’t like this either, but it’s a necessary evil in order to save you.</state>
@@ -12430,9 +12662,17 @@
             <case tag="female_removed_major" target="sei" targetStage="6">
                 <state img="5-awkward.png">Now you can't even hold your drinks in their glass. That's as good a sign as any that you should stop.</state>
             </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="5">
+                <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
+                <state img="5-brave.png">And it goes in favor of a nice white and black binini!</state>
+            </case>
             <case tag="female_removed_major" target="juri" targetStage="1">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="5-awkward.png">You must be sweating up a storm. Hope you got something to drink...</state>
+            </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="5-happy.png">The &lt;i&gt;main&lt;/i&gt; dish looks lovely. Wonder what else you serve here...</state>
             </case>
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -12556,6 +12796,10 @@
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="5-shocked.png">D-did I hear you say that you used to be a HORSE!?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="5-awkward.png">Don't blame me, the witch is the insatiable one...</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="5-horny.png">Erm... that's one way to solve that problem I guess.</state>
@@ -12662,6 +12906,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="sakura">
                 <state img="5-awkward.png">Well, your breasts look good. For a zombie that is. N-not that zombies can't be sexy.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="5-thinking.png">Isn't there some joke that has people serve drinks on those? You'd be a perfect fit for that.</state>
             </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -13966,6 +14214,10 @@
             <case tag="female_removing_accessory" target="twilight" targetStage="4">
                 <state img="6-happy.png">I'm curious, did you have to make a contract with Kyubey, or is magic just an innate ability of people in your world?</state>
             </case>
+            <case tag="female_removing_accessory" target="nugi-chan" targetStage="0">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-awkward.png">Alcohol and &lt;i&gt;nudity&lt;/i&gt;, this is truly a place of debauchery...</state>
+            </case>
             <case tag="female_removing_accessory" target="sheena" targetStage="0">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="6-horny.png">N-not a bad move considering that you've got so much skin exposed already.</state>
@@ -14065,11 +14317,11 @@
             <case tag="female_removed_accessory" target="nami" targetStage="1">
                 <state img="6-awkward.png">It can grow to 15 feet in length... Oh right, you took off your belt.</state>
             </case>
-            <case tag="female_removed_accessory" id="6-15" target="nami" targetStage="1" targetSayingMarker="pirate">
-                <state img="6-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
-            </case>
             <case tag="female_removed_accessory" target="nami" targetStage="2">
                 <state img="6-happy.png">I would never steal your posessions! The witch on the other hand...</state>
+            </case>
+            <case tag="female_removed_accessory" id="6-15" target="nami" targetStage="3" targetSayingMarker="pirate">
+                <state img="6-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="1">
                 <state img="6-happy.png">My Kyoko would never swear like that. She's a nice girl.</state>
@@ -14110,6 +14362,10 @@
             <case tag="female_removed_accessory" target="zizou" targetStage="1">
                 <state img="6-thinking.png">Huh, your clothes are made of butterflies?</state>
                 <state img="6-shocked.png">How did your clothes turn into butterflies? Were they made of butterflies this whole time?</state>
+            </case>
+            <case tag="female_removed_accessory" target="nugi-chan" targetStage="1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-happy.png">If the witch chose you as her personal servant, than you must be pretty strong. I'm not underestimating a maid, no siree.</state>
             </case>
             <case tag="female_removed_accessory" target="sheena" targetStage="1">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -14224,6 +14480,10 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="6-horny.png">Showing off your &lt;i&gt;pussy&lt;/i&gt; already?</state>
             </case>
+            <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-awkward.png">I can only imagine what that "something special" might be...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="6-happy.png">You look good without your ~clothing~.</state>
                 <state img="6-calm.png">Not great by itself, but a step towards something greater.</state>
@@ -14288,6 +14548,10 @@
             <case tag="female_removed_minor" target="juri" targetStage="2">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="6-interested.png">You do realize that this isn't a nudist beach, right? &lt;i&gt;Not yet it isn't...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-horny.png">Knowing this witch, it's probably something &lt;i&gt;sexual in nature.&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="sheena" targetStage="3">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -14414,6 +14678,14 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="6-shocked.png">Is that jacket leather? No wonder you're taking it off first...</state>
             </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-thinking.png">Wouldn't it have made more sense to save that for after your binkni is gone?</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-interested.png">Taking off the apron now? That's the last symbol of you being a maid...</state>
+            </case>
             <case tag="female_removed_major">
                 <state img="6-interested.png">I like it. Like that it's gone that is...</state>
                 <state img="6-awkward.png">Hey ~name~, I don’t like this either, but it’s a necessary evil in order to save you.</state>
@@ -14512,9 +14784,17 @@
             <case tag="female_removed_major" target="sei" targetStage="6">
                 <state img="6-awkward.png">Now you can't even hold your drinks in their glass. That's as good a sign as any that you should stop.</state>
             </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="5">
+                <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
+                <state img="6-brave.png">And it goes in favor of a nice white and black binini!</state>
+            </case>
             <case tag="female_removed_major" target="juri" targetStage="1">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="6-awkward.png">You must be sweating up a storm. Hope you got something to drink...</state>
+            </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-happy.png">The &lt;i&gt;main&lt;/i&gt; dish looks lovely. Wonder what else you serve here...</state>
             </case>
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -14638,6 +14918,10 @@
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="6-shocked.png">D-did I hear you say that you used to be a HORSE!?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-awkward.png">Don't blame me, the witch is the insatiable one...</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="6-horny.png">Erm... that's one way to solve that problem I guess.</state>
@@ -14744,6 +15028,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="sakura">
                 <state img="6-awkward.png">Well, your breasts look good. For a zombie that is. N-not that zombies can't be sexy.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="6-thinking.png">Isn't there some joke that has people serve drinks on those? You'd be a perfect fit for that.</state>
             </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -15910,6 +16198,10 @@
             <case tag="female_removing_accessory" target="twilight" targetStage="4">
                 <state img="7-happy.png">I'm curious, did you have to make a contract with Kyubey, or is magic just an innate ability of people in your world?</state>
             </case>
+            <case tag="female_removing_accessory" target="nugi-chan" targetStage="0">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="7-awkward.png">Alcohol and &lt;i&gt;nudity&lt;/i&gt;, this is truly a place of debauchery...</state>
+            </case>
             <case tag="female_removing_accessory" target="sheena" targetStage="0">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="7-horny.png">N-not a bad move considering that you've got so much skin exposed already.</state>
@@ -15999,11 +16291,11 @@
             <case tag="female_removed_accessory" target="nami" targetStage="1">
                 <state img="7-awkward.png">It can grow to 15 feet in length... Oh right, you took off your belt.</state>
             </case>
-            <case tag="female_removed_accessory" id="7-15" target="nami" targetStage="1" targetSayingMarker="pirate">
-                <state img="7-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
-            </case>
             <case tag="female_removed_accessory" target="nami" targetStage="2">
                 <state img="7-happy.png">I would never steal your posessions! The witch on the other hand...</state>
+            </case>
+            <case tag="female_removed_accessory" id="7-15" target="nami" targetStage="3" targetSayingMarker="pirate">
+                <state img="7-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="1">
                 <state img="7-happy.png">My Kyoko would never swear like that. She's a nice girl.</state>
@@ -16044,6 +16336,10 @@
             <case tag="female_removed_accessory" target="zizou" targetStage="1">
                 <state img="7-thinking.png">Huh, your clothes are made of butterflies?</state>
                 <state img="7-shocked.png">How did your clothes turn into butterflies? Were they made of butterflies this whole time?</state>
+            </case>
+            <case tag="female_removed_accessory" target="nugi-chan" targetStage="1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="7-happy.png">If the witch chose you as her personal servant, than you must be pretty strong. I'm not underestimating a maid, no siree.</state>
             </case>
             <case tag="female_removed_accessory" target="sheena" targetStage="1">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -16157,6 +16453,10 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="7-horny.png">Showing off your &lt;i&gt;pussy&lt;/i&gt; already?</state>
             </case>
+            <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="7-awkward.png">I can only imagine what that "something special" might be...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="7-happy.png">You look good without your ~clothing~.</state>
                 <state img="7-calm.png">Not great by itself, but a step towards something greater.</state>
@@ -16221,6 +16521,10 @@
             <case tag="female_removed_minor" target="juri" targetStage="2">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="7-interested.png">You do realize that this isn't a nudist beach, right? &lt;i&gt;Not yet it isn't...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="7-horny.png">Knowing this witch, it's probably something &lt;i&gt;sexual in nature.&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="sheena" targetStage="3">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -16347,6 +16651,14 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="7-shocked.png">Is that jacket leather? No wonder you're taking it off first...</state>
             </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="7-thinking.png">Wouldn't it have made more sense to save that for after your binkni is gone?</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="7-interested.png">Taking off the apron now? That's the last symbol of you being a maid...</state>
+            </case>
             <case tag="female_removed_major">
                 <state img="7-interested.png">I like it. Like that it's gone that is...</state>
                 <state img="7-awkward.png">Hey ~name~, I don’t like this either, but it’s a necessary evil in order to save you.</state>
@@ -16445,9 +16757,17 @@
             <case tag="female_removed_major" target="sei" targetStage="6">
                 <state img="7-awkward.png">Now you can't even hold your drinks in their glass. That's as good a sign as any that you should stop.</state>
             </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="5">
+                <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
+                <state img="7-brave.png">And it goes in favor of a nice white and black binini!</state>
+            </case>
             <case tag="female_removed_major" target="juri" targetStage="1">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="7-awkward.png">You must be sweating up a storm. Hope you got something to drink...</state>
+            </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="7-happy.png">The &lt;i&gt;main&lt;/i&gt; dish looks lovely. Wonder what else you serve here...</state>
             </case>
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -16564,6 +16884,10 @@
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="7-shocked.png">D-did I hear you say that you used to be a HORSE!?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="7-awkward.png">Don't blame me, the witch is the insatiable one...</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="7-horny.png">Erm... that's one way to solve that problem I guess.</state>
@@ -16669,6 +16993,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="sakura">
                 <state img="7-awkward.png">Well, your breasts look good. For a zombie that is. N-not that zombies can't be sexy.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="7-thinking.png">Isn't there some joke that has people serve drinks on those? You'd be a perfect fit for that.</state>
             </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -17589,6 +17917,10 @@
             <case tag="female_removing_accessory" target="twilight" targetStage="4">
                 <state img="8-happy.png">I'm curious, did you have to make a contract with Kyubey, or is magic just an innate ability of people in your world?</state>
             </case>
+            <case tag="female_removing_accessory" target="nugi-chan" targetStage="0">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="8-awkward.png">Alcohol and &lt;i&gt;nudity&lt;/i&gt;, this is truly a place of debauchery...</state>
+            </case>
             <case tag="female_removing_accessory" target="sheena" targetStage="0">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="8-horny.png">N-not a bad move considering that you've got so much skin exposed already.</state>
@@ -17677,11 +18009,11 @@
             <case tag="female_removed_accessory" target="nami" targetStage="1">
                 <state img="8-awkward.png">It can grow to 15 feet in length... Oh right, you took off your belt.</state>
             </case>
-            <case tag="female_removed_accessory" id="8-15" target="nami" targetStage="1" targetSayingMarker="pirate">
-                <state img="8-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
-            </case>
             <case tag="female_removed_accessory" target="nami" targetStage="2">
                 <state img="8-happy.png">I would never steal your posessions! The witch on the other hand...</state>
+            </case>
+            <case tag="female_removed_accessory" id="8-15" target="nami" targetStage="3" targetSayingMarker="pirate">
+                <state img="8-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="1">
                 <state img="8-happy.png">My Kyoko would never swear like that. She's a nice girl.</state>
@@ -17722,6 +18054,10 @@
             <case tag="female_removed_accessory" target="zizou" targetStage="1">
                 <state img="8-thinking.png">Huh, your clothes are made of butterflies?</state>
                 <state img="8-shocked.png">How did your clothes turn into butterflies? Were they made of butterflies this whole time?</state>
+            </case>
+            <case tag="female_removed_accessory" target="nugi-chan" targetStage="1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="8-happy.png">If the witch chose you as her personal servant, than you must be pretty strong. I'm not underestimating a maid, no siree.</state>
             </case>
             <case tag="female_removed_accessory" target="sheena" targetStage="1">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -17826,6 +18162,10 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="8-horny.png">Showing off your &lt;i&gt;pussy&lt;/i&gt; already?</state>
             </case>
+            <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="8-awkward.png">I can only imagine what that "something special" might be...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="8-happy.png">You look good without your ~clothing~.</state>
                 <state img="8-calm.png">Not great by itself, but a step towards something greater.</state>
@@ -17890,6 +18230,10 @@
             <case tag="female_removed_minor" target="juri" targetStage="2">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="8-interested.png">You do realize that this isn't a nudist beach, right? &lt;i&gt;Not yet it isn't...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="8-horny.png">Knowing this witch, it's probably something &lt;i&gt;sexual in nature.&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="sheena" targetStage="3">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -18006,6 +18350,14 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="8-shocked.png">Is that jacket leather? No wonder you're taking it off first...</state>
             </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="8-thinking.png">Wouldn't it have made more sense to save that for after your binkni is gone?</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="8-interested.png">Taking off the apron now? That's the last symbol of you being a maid...</state>
+            </case>
             <case tag="female_removed_major">
                 <state img="8-interested.png">I like it. Like that it's gone that is...</state>
                 <state img="8-awkward.png">Hey ~name~, I don’t like this either, but it’s a necessary evil in order to save you.</state>
@@ -18106,9 +18458,17 @@
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <state img="8-sad.png">Assassin’s underwear?! &lt;i&gt;Will the witch have you kill me after the game is over?&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="5">
+                <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
+                <state img="8-brave.png">And it goes in favor of a nice white and black binini!</state>
+            </case>
             <case tag="female_removed_major" target="juri" targetStage="1">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="8-awkward.png">You must be sweating up a storm. Hope you got something to drink...</state>
+            </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="8-happy.png">The &lt;i&gt;main&lt;/i&gt; dish looks lovely. Wonder what else you serve here...</state>
             </case>
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -18218,6 +18578,10 @@
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="8-shocked.png">D-did I hear you say that you used to be a HORSE!?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="8-awkward.png">Don't blame me, the witch is the insatiable one...</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="8-horny.png">Erm... that's one way to solve that problem I guess.</state>
@@ -18305,6 +18669,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="sakura">
                 <state img="8-awkward.png">Well, your breasts look good. For a zombie that is. N-not that zombies can't be sexy.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="8-thinking.png">Isn't there some joke that has people serve drinks on those? You'd be a perfect fit for that.</state>
             </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -19139,6 +19507,10 @@
             <case tag="female_removing_accessory" target="twilight" targetStage="4">
                 <state img="9-happy.png">I'm curious, did you have to make a contract with Kyubey, or is magic just an innate ability of people in your world?</state>
             </case>
+            <case tag="female_removing_accessory" target="nugi-chan" targetStage="0">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="9-awkward.png">Alcohol and &lt;i&gt;nudity&lt;/i&gt;, this is truly a place of debauchery...</state>
+            </case>
             <case tag="female_removing_accessory" target="sheena" targetStage="0">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="9-horny.png">N-not a bad move considering that you've got so much skin exposed already.</state>
@@ -19225,11 +19597,11 @@
             <case tag="female_removed_accessory" target="nami" targetStage="1">
                 <state img="9-awkward.png">It can grow to 15 feet in length... Oh right, you took off your belt.</state>
             </case>
-            <case tag="female_removed_accessory" id="9-15" target="nami" targetStage="1" targetSayingMarker="pirate">
-                <state img="9-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
-            </case>
             <case tag="female_removed_accessory" target="nami" targetStage="2">
                 <state img="9-happy.png">I would never steal your posessions! The witch on the other hand...</state>
+            </case>
+            <case tag="female_removed_accessory" id="9-15" target="nami" targetStage="3" targetSayingMarker="pirate">
+                <state img="9-sad.png">You're a criminal? Liars and thieves are evil, but even they don't deserve to be eaten by a witch...</state>
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="1">
                 <state img="9-happy.png">My Kyoko would never swear like that. She's a nice girl.</state>
@@ -19270,6 +19642,10 @@
             <case tag="female_removed_accessory" target="zizou" targetStage="1">
                 <state img="9-thinking.png">Huh, your clothes are made of butterflies?</state>
                 <state img="9-shocked.png">How did your clothes turn into butterflies? Were they made of butterflies this whole time?</state>
+            </case>
+            <case tag="female_removed_accessory" target="nugi-chan" targetStage="1">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="9-happy.png">If the witch chose you as her personal servant, than you must be pretty strong. I'm not underestimating a maid, no siree.</state>
             </case>
             <case tag="female_removed_accessory" target="sheena" targetStage="1">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -19372,6 +19748,10 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="9-horny.png">Showing off your &lt;i&gt;pussy&lt;/i&gt; already?</state>
             </case>
+            <case tag="female_removing_minor" target="nugi-chan" targetStage="2">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="9-awkward.png">I can only imagine what that "something special" might be...</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="9-happy.png">You look good without your ~clothing~.</state>
                 <state img="9-calm.png">Not great by itself, but a step towards something greater.</state>
@@ -19436,6 +19816,10 @@
             <case tag="female_removed_minor" target="juri" targetStage="2">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="9-interested.png">You do realize that this isn't a nudist beach, right? &lt;i&gt;Not yet it isn't...&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="9-horny.png">Knowing this witch, it's probably something &lt;i&gt;sexual in nature.&lt;/i&gt;</state>
             </case>
             <case tag="female_removed_minor" target="sheena" targetStage="3">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -19552,6 +19936,14 @@
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="9-shocked.png">Is that jacket leather? No wonder you're taking it off first...</state>
             </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="3">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="9-thinking.png">Wouldn't it have made more sense to save that for after your binkni is gone?</state>
+            </case>
+            <case tag="female_removing_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="9-interested.png">Taking off the apron now? That's the last symbol of you being a maid...</state>
+            </case>
             <case tag="female_removed_major">
                 <state img="9-interested.png">I like it. Like that it's gone that is...</state>
                 <state img="9-awkward.png">Hey ~name~, I don’t like this either, but it’s a necessary evil in order to save you.</state>
@@ -19652,9 +20044,17 @@
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <state img="9-sad.png">Assassin’s underwear?! &lt;i&gt;Will the witch have you kill me after the game is over?&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="5">
+                <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
+                <state img="9-brave.png">And it goes in favor of a nice white and black binini!</state>
+            </case>
             <case tag="female_removed_major" target="juri" targetStage="1">
                 <test expr="~self.costume~" value="juri_summer" />
                 <state img="9-awkward.png">You must be sweating up a storm. Hope you got something to drink...</state>
+            </case>
+            <case tag="female_removed_major" target="nugi-chan" targetStage="4">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="9-happy.png">The &lt;i&gt;main&lt;/i&gt; dish looks lovely. Wonder what else you serve here...</state>
             </case>
             <case tag="female_removed_major" target="sheena" targetStage="4">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -19765,6 +20165,10 @@
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="9-shocked.png">D-did I hear you say that you used to be a HORSE!?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="9-awkward.png">Don't blame me, the witch is the insatiable one...</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="9-horny.png">Erm... that's one way to solve that problem I guess.</state>
@@ -19852,6 +20256,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="sakura">
                 <state img="9-awkward.png">Well, your breasts look good. For a zombie that is. N-not that zombies can't be sexy.</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="9-thinking.png">Isn't there some joke that has people serve drinks on those? You'd be a perfect fit for that.</state>
             </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~self.costume~" value="swimsuit_sheena" />
@@ -20366,8 +20774,11 @@
                 <test expr="~self.costume~" value="swimsuit_sheena" />
                 <state img="9-happy.png">Erm, sure, Sheena. Skinny dipping is more Kyoko's thing, but I wouldn't mind doing it with you.</state>
             </case>
+            <case tag="game_over_defeat" alsoPlaying="nugi-chan">
+                <test expr="~self.costume~" value="nugi-chan_bikini" />
+                <state img="9-finished3.png">I highly doubt the witch would mind if you served everyone in the nude...</state>
+            </case>
         </stage>
 
     </behaviour>
-    <nicknames />
 </opponent>
