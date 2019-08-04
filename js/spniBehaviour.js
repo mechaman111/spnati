@@ -32,6 +32,7 @@ var PLAYER_MASTURBATING = "masturbating";
 var PLAYER_HEAVY_MASTURBATING = "heavy_masturbating";
 var PLAYER_FINISHING_MASTURBATING = "finishing_masturbating";
 var PLAYER_FINISHED_MASTURBATING = "finished_masturbating";
+var PLAYER_AFTER_MASTURBATING = "after_masturbating";
 
 var OPPONENT_LOST = "opponent_lost";
 var OPPONENT_STRIPPING = "opponent_stripping";
@@ -1402,7 +1403,9 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
         /* their is restricted to this only */
         tags = [this.forfeit[0]];
     }
-    
+    if (Array.isArray(tags) && Array.isArray(tags[0])) {
+        return tags.some(function(t) { return this.updateBehaviour(t, opp) }, this);
+    }
     if (!Array.isArray(tags)) {
         tags = [tags];
     }
@@ -1653,13 +1656,7 @@ Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
 function updateAllBehaviours (target, target_tags, other_tags) {
     for (var i = 1; i < players.length; i++) {
         if (players[i] && players[i].isLoaded() && (target === null || i != target)) {
-            if (typeof other_tags === 'object') {
-                other_tags.some(function(t) {
-                    return players[i].updateBehaviour(t, players[target]);
-                });
-            } else {
-                    players[i].updateBehaviour(other_tags, players[target]);
-            }
+            players[i].updateBehaviour(other_tags, players[target]);
         }
     }
     

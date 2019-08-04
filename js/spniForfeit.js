@@ -200,7 +200,7 @@ function finishMasturbation (player) {
 	// HARD SET STAGE
 	players[player].stage += 1;
 	players[player].finished = true;
-    players[player].forfeit = [PLAYER_FINISHED_MASTURBATING, CAN_SPEAK];
+    players[player].forfeit = [[[PLAYER_AFTER_MASTURBATING], [PLAYER_FINISHED_MASTURBATING]], CAN_SPEAK];
 	players[player].stageChangeUpdate();
     
 	/* update player dialogue */
