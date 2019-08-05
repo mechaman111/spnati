@@ -711,6 +711,20 @@ function parseStyleSpecifiers (str) {
     return styledComponents;
 }
 
+/* Strip all formatting instructions (HTML tags and style specifiers) from a
+ * string, and lowercase the entire string.
+ * 
+ * Used for *sayingText conditions.
+ */
+function normalizeConditionText (str) {
+    return str.toLowerCase().split(/(<script>.*?<\/script>|<[^>]+>)/i)
+            .map(function (part, idx) {
+                if (part.length === 0 || part[0] === '<') return '';
+
+                return part.replace(/&lt;.+?&gt;/gi, '').replace(styleSpecifierRE, '');
+            }).join('');
+}
+
 /************************************************************
  * Given a string containing a number or two numbers 
  * separated by a dash, returns an array with the same number 
@@ -1136,7 +1150,7 @@ Case.prototype.checkConditions = function (self, opp) {
     }
     if (this.targetSaying) {
         if (!opp || !opp.chosenState || opp.updatePending) return false;
-        if (opp.chosenState.rawDialogue.toLowerCase().indexOf(this.targetSaying.toLowerCase()) < 0) return false;
+        if (normalizeConditionText(opp.chosenState.rawDialogue).indexOf(normalizeConditionText(this.targetSaying)) < 0) return false;
         volatileDependencies.add(opp);
     }
     
@@ -1234,7 +1248,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 volatileDependencies.add(ap);
             }
             if (this.alsoPlayingSaying) {
-                if (ap.updatePending || !ap.chosenState || ap.chosenState.rawDialogue.toLowerCase().indexOf(this.alsoPlayingSaying.toLowerCase()) < 0) {
+                if (ap.updatePending || !ap.chosenState || normalizeConditionText(ap.chosenState.rawDialogue).indexOf(normalizeConditionText(this.alsoPlayingSaying)) < 0) {
                     return false;
                 }
                 volatileDependencies.add(ap);
@@ -1363,7 +1377,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 }
             }
             if (ctr.saying !== undefined) {
-                if (!p.updatePending && p.chosenState && p.chosenState.rawDialogue.toLowerCase().indexOf(ctr.saying.toLowerCase()) >= 0) {
+                if (!p.updatePending && p.chosenState && normalizeConditionText(p.chosenState.rawDialogue).indexOf(normalizeConditionText(ctr.saying)) >= 0) {
                     volatileDependencies.add(p);
                 } else {
                     if (hasUpperBound) {

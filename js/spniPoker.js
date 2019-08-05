@@ -278,6 +278,7 @@ function dealHand (player, numPlayers, playersBefore) {
 	/* deal the new cards */
 	var drawnCard;
 	for (var i = 0; i < CARDS_PER_HAND; i++) {
+		players[player].hand.tradeIns[i] = false;
 		drawnCard = getRandomNumber(0, inDeck.length);
 		players[player].hand.cards[i] = inDeck[drawnCard];
 		inDeck.splice(drawnCard, 1);
@@ -310,7 +311,6 @@ function exchangeCards (player) {
 		if (players[player].hand.tradeIns[i] && players[player].hand.cards[i]) {
 			outDeck.push(players[player].hand.cards[i]);
 			delete players[player].hand.cards[i];
-			players[player].hand.tradeIns[i] = false;
 		}
 	}
 
