@@ -643,6 +643,14 @@ Opponent.prototype.onSelected = function(individual) {
             $('head').append(link_elem);
         }
     }
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Load completed for ' + this.id,
+            level: 'info'
+        });
+    }
     
     this.preloadStageImages(-1);
     if (individual) {
@@ -710,6 +718,14 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
         dataType: "text",
         success: function (xml) {
             var $xml = $(xml);
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Initializing alternate costume for ' + this.id + ': ' + this.selected_costume,
+                    level: 'info'
+                });
+            }
 
             this.alt_costume = {
                 id: $xml.find('id').text(),
@@ -837,6 +853,14 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
          */
 		.then(function(xml) {
             var $xml = $(xml);
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Fetched and parsed opponent ' + this.id + ', initializing...',
+                    level: 'info'
+                });
+            }
 
             if (this.has_collectibles) {
                 this.loadCollectibles();
@@ -1493,6 +1517,10 @@ function sentryInit() {
                         n_players += 1;
                         event.tags["character:" + players[i].id] = true;
                         event.tags["slot-" + i] = players[i].id;
+
+                        if (players[i].alt_costume) {
+                            event.tags[players[i].id+":alt-costume"] = players[i].alt_costume.id;
+                        }
                     } else {
                         event.tags["slot-" + i] = undefined;
                     }
