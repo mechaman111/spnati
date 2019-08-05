@@ -34,7 +34,7 @@ $gameOpponentAreas = [$("#game-opponent-area-1"),
                       $("#game-opponent-area-3"),
                       $("#game-opponent-area-4")];
 $gamePlayerCountdown = $("#player-countdown");
-$gamePlayerClothingArea = $("#player-game-clothing-area");
+$gamePlayerClothingArea = $("#player-game-clothing-area, #player-name-label-minimal");
 $gamePlayerCardArea = $("#player-game-card-area");
 
 /* dock UI elements */
@@ -143,8 +143,6 @@ var rolledBackGamePhase = null;
  * screen.
  ************************************************************/
 function loadGameScreen () {
-    $('#game-screen [data-toggle="tooltip"]').tooltip({ delay: { show: 200 }});
-
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
         gameDisplays[i-1].reset(players[i]);
@@ -243,7 +241,8 @@ function updateAllGameVisuals () {
 function displayHumanPlayerClothing () {
     /* collect the images */
     var clothingImages = humanPlayer.clothing.map(function(c) {
-		return c.image;
+		return { src: c.image,
+                 alt: c.name.initCap() };
 	});
     
     /* display the remaining clothing items */
@@ -251,7 +250,7 @@ function displayHumanPlayerClothing () {
 	$gameClothingLabel.html("Your Clothing");
 	for (var i = 0; i < 8; i++) {
 		if (clothingImages[i]) {
-			$gameClothingCells[i].attr('src', clothingImages[i]);
+			$gameClothingCells[i].attr(clothingImages[i]);
 			$gameClothingCells[i].css({opacity: 1});
 		} else {
 			$gameClothingCells[i].css({opacity: 0});
@@ -336,6 +335,7 @@ function advanceTurn () {
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
             players[currentTurn].updateBehaviour(players[currentTurn].forfeit[0]);
+            players[currentTurn].updateVolatileBehaviour();
             players[currentTurn].commitBehaviourUpdate();
             updateGameVisual(currentTurn);
             

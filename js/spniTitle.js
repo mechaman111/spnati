@@ -22,6 +22,44 @@ $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
  **********************************************************************/
 
 var CANDY_LIST = [
+    "reskins/juri_summer/0-calm.png",
+    "reskins/juri_summer/0-horny.png",
+    "reskins/juri_summer/1-excited.png",
+    "reskins/juri_summer/1-interested.png",
+
+    "reskins/monika_stirring_mermaid/0-writing-tip.png",
+    "reskins/monika_stirring_mermaid/1-interested.png",
+    "reskins/monika_stirring_mermaid/2-happy.png",
+    "reskins/monika_stirring_mermaid/3-shy-happy.png",
+
+    "reskins/summertime_ryuji/0-cocky.png",
+    "reskins/summertime_ryuji/1-cheerful.png",
+    "reskins/summertime_ryuji/2-startled.png",
+    "reskins/summertime_ryuji/3-awkward.png",
+
+    "reskins/summertime_sayaka/0-happy.png",
+    "reskins/summertime_sayaka/1-calm.png",
+    "reskins/summertime_sayaka/2-bored.png",
+    "reskins/summertime_sayaka/3-awkward.png",
+
+    "reskins/swimsuit_sheena/0-calm.png",
+    "reskins/swimsuit_sheena/1-excited.png",
+    "reskins/swimsuit_sheena/2-interested.png",
+    "reskins/swimsuit_sheena/3-sulky.png",
+
+    "reskins/summer_larachel/0-calm.png",
+    "reskins/summer_larachel/1-confident.png",
+    "reskins/summer_larachel/2-calm.png",
+    "reskins/summer_larachel/3-confident.png",
+
+    "reskins/nugi-chan_bikini/0-select.png",
+    "reskins/nugi-chan_bikini/1-loss.png",
+    "reskins/nugi-chan_bikini/2-embarrassed.png",
+    "reskins/nugi-chan_bikini/3-interested.png",
+];
+
+/*
+var CANDY_LIST = [
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -170,11 +208,12 @@ var CANDY_LIST = [
     "zizou/1-excited.png",
     "zizou/2-happy.png",
     "zizou/3-interested.png",
-    "zone-tan/0-calm.png",
-    "zone-tan/1-interested.png",
-    "zone-tan/1-serene2.png",
-    "zone-tan/2-wink.png",
+    "zone-tan/0-pleased.png",
+    "zone-tan/1-explain.png",
+    "zone-tan/1-smirk.png",
+    "zone-tan/2-stroking.png",
 ];
+*/
 
 var clothingChoices = [];
 var selectedChoices;
@@ -184,10 +223,10 @@ var playerTagOptions = {
         values: [
             { value: 'black_hair' }, { value: 'white_hair' },
             { value: 'brunette' }, { value: 'ginger' }, { value: 'blonde' },
-            { value: 'green_hair', extraTags: ['exotic_hair'] },
-            { value: 'blue_hair', extraTags: ['exotic_hair'] },
-            { value: 'purple_hair', extraTags: ['exotic_hair'] },
-            { value: 'pink_hair', extraTags: ['exotic_hair'] },
+            { value: 'green_hair' },
+            { value: 'blue_hair' },
+            { value: 'purple_hair' },
+            { value: 'pink_hair' },
         ],
     },
     'eye_color': {
@@ -213,14 +252,14 @@ var playerTagOptions = {
             { value: 'short_hair', text: 'Short Hair - Does Not Pass Jawline'},
             { value: 'medium_hair', text: 'Medium Hair - Reaches Between Jawline and Shoulders'},
             { value: 'long_hair', text: 'Long Hair - Reaches Beyond Shoulders'},
-            { value: 'very_long_hair', extraTags: ['long_hair'], text: 'Very Long Hair - Reaches the Thighs or Beyond'},
+            { value: 'very_long_hair', text: 'Very Long Hair - Reaches the Thighs or Beyond'},
         ],
     },
     'physical_build': {
         values: [
             { value: 'chubby' },
             { value: 'athletic' },
-            { value: 'muscular', extraTags: ['athletic'] },
+            { value: 'muscular' },
         ],
     },
     'height': {
@@ -402,7 +441,6 @@ function setPlayerTags () {
     for (category in playerTagSelections) {
         var sel = playerTagSelections[category];
         if (!(category in playerTagOptions)) continue;
-        var extraTags = [];
         playerTagOptions[category].values.some(function (choice) {
             if (playerTagOptions[category].type == 'range') {
                 if (sel > choice.to) return false;
@@ -410,12 +448,8 @@ function setPlayerTags () {
                 if (sel != choice.value) return false;
             }
             playerTagList.push(choice.value);
-            if (choice.extraTags) {
-                extraTags = choice.extraTags;
-            }
             return true;
         });
-        extraTags.forEach(function(t) { playerTagList.push(t); });
     }
     /* applies tags to the player*/
     console.log(playerTagList);

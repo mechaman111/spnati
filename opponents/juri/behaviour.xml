@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0 at 4:08:46  on julio 26, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 2:45:07  on agosto 02, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.0</version>
     <first>Juri</first>
@@ -331,6 +331,12 @@
                 <state img="0-calm.png">Oh, my favorite cop is here! But also that blonde moron... Not everything can be perfect I guess.</state>
                 <state img="0-calm.png">Well look who's here tonight! The woman with the most gorgeous legs in the whole world. Oh, and also that blonde idiot who never shuts up...</state>
             </case>
+            <case tag="hand" oneShotId="1" totalRounds="0-">
+                <test expr="~self.costume~" value="juri_summer" />
+                <state img="0-excited.png">You like my summer outfit, ~player~? I gotta dress right considering how hot it is. But it's gonna get even hotter once I take it off.</state>
+                <state img="0-excited.png">Yes, this is how I dress in the summer, ~player~ . But don't get too attached to this outfit, I don't plan on wearing it for much longer.</state>
+                <state img="0-excited.png">I notice you looking at my summer outfit, ~player~. Or are you more interested in what's underneath?</state>
+            </case>
             <case tag="hand" timeInStage="7">
                 <state img="0-disappointed.png">It's been several rounds and I haven't lost once. Are you even trying?</state>
                 <state img="0-disappointed.png">You know I still have all my clothes, right? What the difference between this and regular poker?</state>
@@ -436,12 +442,29 @@
                 <state img="0-loss.png">Oh, it's my turn. Are you girls as excited as I am?</state>
                 <state img="0-loss.png">Looks like it's my turn. Here I go, girls.</state>
             </case>
+            <case tag="must_strip" priority="250">
+                <condition count="2-4" filter="street_fighter" />
+                <test expr="~juri.costume~" value="juri_summer" />
+                <state img="0-horny.png">Are you girls jealous of my summer outfit? You should get one too. The skimpier, the better.</state>
+            </case>
             <case tag="must_strip" hasHand="One Pair" priority="0">
                 <state img="0-loss.png">Ohhh, you beat my pair. Nice, I value your effort.</state>
                 <state img="0-loss.png">Ho ho, even this pair I had wasn't enough to stand in the way. Interesting.</state>
                 <state img="0-loss.png">I lost with a pair, huh? Am I supposed to cry? I don't feel like it. Far from it, in fact.</state>
                 <state img="0-loss.png">Even with a pair I lost? Heh, I guess when it has to happen, it has to happen.</state>
                 <state img="0-loss.png">Making me lose with a pair, huh? Boy, you really want to see me naked.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="cammy_white" priority="200">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <state img="0-interested.png">Did you forget &lt;i&gt;your&lt;/i&gt; pants, kitty?</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="chun-li" priority="200">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <state img="0-excited.png">It's my swimsuit, detective. Don't you like it? You should wear one too, and show that toned, steaming body.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="rainbow_mika">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <state img="0-angry.png">This is just for the summer, moron. What is it you said about my clothes?</state>
             </case>
             <case tag="must_strip" timeInStage="7-99">
                 <state img="0-loss.png">About time you beat me.</state>
@@ -531,6 +554,12 @@
                 <condition count="1" filter="r_mika" />
                 <state img="0-stripping.png">I'm so excited to show my body to my favorite girls. This will be a night to remember.</state>
                 <state img="0-stripping.png">I hope you girls are excited too. I have so much to show you...</state>
+            </case>
+            <case tag="stripping">
+                <test expr="~self.costume~" value="juri_summer" />
+                <state img="0-stripping.png">Let's start with my jacket. I have to show you my full bikini before I take it off, after all.</state>
+                <state img="0-stripping.png">Wanna see my full swimsuit, darling? Your wish is my wish too.</state>
+                <state img="0-stripping.png">Ufff, it's way too hot in here to wear this jacket. Let me make myself comfortable and give you something more to look at.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="0-happy.png">Ha ha ha ha, stupid!</state>
@@ -2837,6 +2866,12 @@
                 <state img="1-horny.png">There's that ass! Why don't you follow the muscle head's example and slap it? I wonder how much it would jiggle...</state>
                 <state img="1-excited.png">Look at that gorgeous ass! Seeing the airhead here makes me wonder how much it would jiggle if you slap it...</state>
             </case>
+            <case tag="hand" timeInStage="0-">
+                <test expr="~self.costume~" value="juri_summer" />
+                <state img="1-happy.png">What do you think of my pink hair, ~player~? I'm thinking of having it like this all the time.</state>
+                <state img="1-happy.png">You're looking too much at my body, ~player~. Don't get me wrong, I love it. But have you noticed I changed my hair?</state>
+                <state img="1-happy.png">I'm trying something new with my hair. I haven't heard you comment on it yet, ~player~. You're so inconsiderate, is my body all you care about?</state>
+            </case>
             <case tag="hand" timeInStage="7">
                 <state img="1-disappointed.png">I've been wearing the same clothes for several rounds now. It's getting boring, don't you agree?</state>
                 <state img="1-disappointed.png">Isn't it disappointing that I still haven't shown much? Then try harder.</state>
@@ -2971,6 +3006,12 @@
             <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="juri_weak1" alsoPlayingNotSaidMarker="juri_weak2" alsoPlayingSayingMarker="juri_weak2" priority="600">
                 <state img="1-stripping.png">Does getting asked stupid questions count? They make my blood boil.</state>
             </case>
+            <case tag="stripping" priority="150">
+                <test expr="~self.costume~" value="juri_summer" />
+                <state img="1-stripping.png">My swimsuit is getting in the way. You don't mind if I take it off, right? Of course you don't.</state>
+                <state img="1-stripping.png">I'm gonna take my bottoms off. Or would you prefer my top? Either way, enjoy.</state>
+                <state img="1-stripping.png">I'm still feeling hot. I guess I'll take off the other pieces of fabric I have.</state>
+            </case>
             <case tag="stripped">
                 <state img="1-stripped.png">If you want to see more of me, you'll have to defeat me.</state>
                 <state img="1-stripped.png">I'm not sure you'll be able to handle what comes next.</state>
@@ -3042,6 +3083,12 @@
                 <condition count="1" filter="r_mika" />
                 <state img="1-stripped.png">Hey! Are you two looking at me? Only the airhead is paying attention to me. Is this hell?</state>
                 <state img="1-stripped.png">Hey, girls! Look over here! Why is only the airhead paying attention to me? How cruel can you two be?</state>
+            </case>
+            <case tag="stripped">
+                <test expr="~self.costume~" value="juri_summer" />
+                <state img="1-stripped.png">So, what do you think? I could be a bikini model, right?</state>
+                <state img="1-stripped.png">Do you think you can resist these curves? Bring it on!</state>
+                <state img="1-stripped.png">Who doesn't love the summer when it comes with a view like this one?</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="1-win.png">Now comes the fun part...</state>
@@ -5455,6 +5502,12 @@
                 <state img="2-stripping.png">I guess you two can't consider me your friend unless you've seen my boobs, right?</state>
                 <state img="2-stripping.png">So we can't be friends until we've seen each others boobs, right? Well here are mine...</state>
             </case>
+            <case tag="stripping">
+                <test expr="~self.costume~" value="juri_summer" />
+                <state img="2-stripping.png">My feet or my boobs? Feet or boobs... My boobs it is.</state>
+                <state img="2-stripping.png">I'm on a roll. I can't not show my boobs at this point.</state>
+                <state img="2-stripping.png">There's something bothering me about wearing only half my swimsuit. We need to fix that right away.</state>
+            </case>
             <case tag="stripped">
                 <state img="2-stripped.png">Next time will be a lot more interesting. I promise.</state>
                 <state img="2-stripped.png">If you want me to strip more, ~player~, why don't you take off my clothes for me? I won't resist.</state>
@@ -5506,6 +5559,12 @@
             </case>
             <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="juri_weak2" alsoPlayingNotSaidMarker="juri_weak3" alsoPlayingSayingMarker="juri_weak3" priority="400">
                 <state img="2-interested.png">Oh, that's what those geeks think, huh? I'm only soft in the right places.</state>
+            </case>
+            <case tag="stripped" priority="150">
+                <test expr="~self.costume~" value="juri_summer" />
+                <state img="2-stripped.png">Oh, did you want me to take off my boots instead, you freak? Too bad, you'll have to settle for my pussy.</state>
+                <state img="2-stripped.png">I hope I didn't disappoint you for keeping my boots on. I thought you might be more interested in seeing my other parts first.</state>
+                <state img="2-stripped.png">I know you love my feet, ~player~. But you'll have to try harder to get there.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="2-win.png">Now is your chance to get me excited, because with what I've seen so far I'm not impressed.</state>
@@ -7650,8 +7709,16 @@
                 <state img="3-calm.png">Sorry to disappoint my people, but I'm not losing this round.</state>
                 <state img="3-calm.png">All those that want to see my bottom half will have to wait a little longer.</state>
             </case>
+            <case tag="good_hand">
+                <test expr="~self.costume~" value="juri_summer" />
+                <state img="3-calm.png">Alright then, who wants to go next?</state>
+                <state img="3-excited.png">Oh, that's too bad. Just when I was getting excited about showing &lt;i&gt;everything&lt;/i&gt;.</state>
+                <state img="3-calm.png">It seems I'll be keeping my bootss this time. But there's always next round...</state>
+                <state img="3-calm.png">Sorry to disappoint my people, but I'm not losing this round.</state>
+                <state img="3-calm.png">All those that want to see my feet will have to wait a little longer.</state>
+            </case>
             <case tag="okay_hand">
-                <state img="3-horny.png">&lt;i&gt;sigh&lt;/i&gt; This game is too damn slow. What would it take to make it faster?</state>
+                <state img="3-disappointed.png">&lt;i&gt;sigh&lt;/i&gt; This game is too damn slow. What would it take to make it faster?</state>
                 <state img="3-interested.png">Choose carefully. Perhaps you can still beat me this round.</state>
                 <state img="3-excited.png">Let's see if you have what it takes to get me fully naked. Wouldn't that be something?</state>
                 <state img="3-happy.png">My heart pumps with excitement! Anyone wanna feel it?</state>
@@ -7661,6 +7728,13 @@
                 <state img="3-interested.png">Have you been wondering what my lower half looks like?</state>
                 <state img="3-excited.png">Everyone's gonna see me completely naked! How exciting...</state>
                 <state img="3-horny.png">It seems all your wildest dreams are about to come true. And mine too.</state>
+            </case>
+            <case tag="bad_hand">
+                <test expr="~self.costume~" value="juri_summer" />
+                <state img="3-horny.png">So what if I lose? No big deal.</state>
+                <state img="3-interested.png">Have you been wondering what my feet look like?</state>
+                <state img="3-excited.png">It might not be too exciting for everyone to take off my boots after I've shown the rest, but it has to be done.</state>
+                <state img="3-horny.png">I'm just enjoying the game. I don't care if I lose or win.</state>
             </case>
             <case tag="hand" alsoPlaying="cammy_white" alsoPlayingStage="1" alsoPlayingTimeInStage="0" alsoPlayingSaidMarker="forfeit" priority="50">
                 <state img="3-happy.png">(She thinks the holsters don't count? Haha, idiot. This will be so easy.)</state>
@@ -7856,6 +7930,11 @@
                 <state img="3-loss.png">Even with a pair I lost? Heh, I guess when it has to happen, it has to happen.</state>
                 <state img="3-loss.png">Making me lose with a pair, huh? Boy, you really want to see me naked.</state>
             </case>
+            <case tag="must_strip">
+                <test expr="~self.costume~" value="juri_summer" />
+                <state img="3-loss.png">Ah, I'll finally have to take off my boots. You foot fetishist must be happy.</state>
+                <state img="3-loss.png">I'm already pretty much naked, but I'll take off my boots if you want to look at my feet.</state>
+            </case>
             <case tag="must_strip" timeInStage="0">
                 <state img="3-loss.png">Losing again so soon? OK, then.</state>
                 <state img="3-loss.png">I lost again already? Man, it's almost like I'm trying to get naked.</state>
@@ -7943,6 +8022,11 @@
                 <state img="3-stripping.png">Look all you want, officer. You too, kitten.</state>
                 <state img="3-stripping.png">Here it is, you girls have my permission to look all you want.</state>
             </case>
+            <case tag="stripping">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <state img="3-stripping.png">How do I take off these boots again? Oh, right...</state>
+                <state img="3-stripping.png">Give me a second while I remove these boots. In the meantime, you're welcome to enjoy the view.</state>
+            </case>
             <case tag="stripped">
                 <state img="3-stripped.png">How about it, ~player~? Are they exactly what you were expecting?</state>
                 <state img="3-stripped.png">Hmmm, my nipples are so hard. You wanna touch them?</state>
@@ -7995,6 +8079,12 @@
                 <condition count="1" filter="cammy_white" />
                 <state img="3-stripped.png">Ta-da! Are you gonna make fun of me because my breasts are the smallest out of the three of us?</state>
                 <state img="3-stripped.png">How about it. then? Don't make fun of me because my tits are the smallest between the three of us.</state>
+            </case>
+            <case tag="stripped">
+                <test expr="~self.costume~" value="juri_summer" />
+                <state img="3-stripped.png">Isn't this a cute look for me? I don't have to take anything else off to have fun. I'm good to go.</state>
+                <state img="3-stripped.png">Now that I'm functionally naked, I can feel the excitement running through my veins. How about you, ~player~?</state>
+                <state img="3-stripped.png">With all my important parts on plain sight, do you feel like jumping on me yet, ~player~? I don't really feel like resisting if you do...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="3-win.png">If you want to see more of mine, you have to show me some of yours.</state>
@@ -10233,7 +10323,7 @@
                 <condition count="0" filter="cammy_white" />
                 <state img="4-butt.png" marker="butt">Want to look at my butt, ~player~? You too, detective. Why don't you show yours too? I'm sure everyone would enjoy it.</state>
                 <state img="4-butt.png" marker="butt">Look at my ass, ~player~ What do you think? And you, detective? You should show it too, ~player~ would enjoy it..</state>
-                <state img="4-butt.png" marker="butt">Do you like my ass, ~player~? I'm sure you would the officer's even more. If only she would show it...</state>
+                <state img="4-butt.png" marker="butt">Do you like my ass, ~player~? I'm sure you would like the officer's even more. If only she would show it...</state>
             </case>
             <case tag="hand" alsoPlaying="florina" alsoPlayingSayingMarker="bee">
                 <condition count="1" filter="cammy_white" />
@@ -10385,6 +10475,11 @@
             </case>
             <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="juri_weak2" alsoPlayingNotSaidMarker="juri_weak3" alsoPlayingSayingMarker="juri_weak3" priority="400">
                 <state img="4-interested.png">Oh, that's what those geeks think, huh? I'm only soft in the right places.</state>
+            </case>
+            <case tag="stripped">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <state img="4-stripped.png">To be completely honest, this is my real favorite summer outfit.</state>
+                <state img="4-stripped.png">Here I am, completely naked for real. Feast your eyes, baby.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="4-win.png">That wasn't even a challenge. Are you sure you're not losing on purpose?</state>
@@ -16840,6 +16935,11 @@
                 <state img="6-finished.png" marker="finished" collectible="collectible#2">That should keep me going for like an hour.</state>
                 <state img="6-finished.png" marker="finished" collectible="collectible#2">Look at how much I'm dripping. Someone better get a mop.</state>
                 <state img="6-finished.png" marker="finished" collectible="collectible#2">That was amazing, I was only holding back a little.</state>
+            </case>
+            <case tag="finished_masturbating" notSaidMarker="finished" priority="2">
+                <state img="6-finished.png" marker="finished">Did you like the show? I think it was &lt;i&gt;delicious&lt;/i&gt;. I'm gonna let my hair down, if you don't mind.</state>
+                <state img="6-finished.png" marker="finished">How would you rate my performance, ~player~? Don't lie, I could feel your eyes on me the whole time. Let me undo this ponytail.</state>
+                <state img="6-finished.png" marker="finished">Hmmm, tasty. As a reward for being such a good audience, I'll let you see me with my hair down, ~player~.</state>
             </case>
             <case tag="game_over_defeat">
                 <state img="6-horny.png">You can all leave if you want. I'll just stay here until I've cum a few more times.</state>

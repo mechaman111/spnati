@@ -841,7 +841,8 @@ function OpponentSelectionCard (opponent) {
     this.genderIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'gender-icon')));
     this.statusIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'status-icon')));
     
-    $(this.epilogueBadge).attr('src', "img/epilogue_icon.png");
+    $(this.epilogueBadge).attr({src: "img/epilogue_icon.png",
+                                alt: "SPNatI Epilogue available"});
     
     var footerElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-footer'));
     this.label = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-name')));
@@ -860,31 +861,16 @@ OpponentSelectionCard.prototype.update = function () {
         this.epilogueBadge.hide();
     }
 
-    if (this.opponent.status) {
-        var status_icon_img = 'img/testing-badge.png';
-        var status_tooltip = TESTING_STATUS_TOOLTIP;
-        
-        if (this.opponent.status === 'offline') {
-            status_icon_img = 'img/offline-badge.png';
-            status_tooltip = OFFLINE_STATUS_TOOLTIP;
-        } else if (this.opponent.status === 'incomplete') {
-            status_icon_img = 'img/incomplete-badge.png';
-            status_tooltip = INCOMPLETE_STATUS_TOOLTIP;
-        }
-    
-        this.statusIcon.attr({
-            'src': status_icon_img,
-            'title': status_tooltip,
-            'data-original-title': status_tooltip,
-        }).show().tooltip({
-            'placement': 'left'
-        });
-    } else {
-        this.statusIcon.removeAttr('title').removeAttr('data-original-title').hide();
-    }
+    updateStatusIcon(this.statusIcon, this.opponent.status);
 
-    this.layerIcon.show().attr("src", "img/layers" + this.opponent.layers + ".png");
-    this.genderIcon.show().attr("src", this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png');
+    this.layerIcon.attr({
+        src: "img/layers" + this.opponent.layers + ".png",
+        alt: this.opponent.layers + " layers",
+    }).show() ;
+    this.genderIcon.attr({
+        src: this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png',
+        alt: this.opponent.gender.initCap(),
+    }).show();
     this.simpleImage.attr('src', this.opponent.selection_image).css('height', this.opponent.scale + '%').show();
     
     this.label.text(this.opponent.label);

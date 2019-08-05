@@ -32,6 +32,7 @@ var PLAYER_MASTURBATING = "masturbating";
 var PLAYER_HEAVY_MASTURBATING = "heavy_masturbating";
 var PLAYER_FINISHING_MASTURBATING = "finishing_masturbating";
 var PLAYER_FINISHED_MASTURBATING = "finished_masturbating";
+var PLAYER_AFTER_MASTURBATING = "after_masturbating";
 
 var OPPONENT_LOST = "opponent_lost";
 var OPPONENT_STRIPPING = "opponent_stripping";
@@ -110,7 +111,15 @@ var TAG_ALIASES = {
 /* Tag implications list, mapping tags to lists of implied tags. */
 var TAG_IMPLICATIONS = {
     // Add tag implications as follows:
-    // 'child_tag': ['implied_tag', ...],
+    'huge_breasts': ['large_breasts'],
+    'muscular': ['athletic'],
+    'very_long_hair': ['long_hair'],
+    'blue_hair': ['exotic_hair'],
+    'green_hair': ['exotic_hair'],
+    'pink_hair': ['exotic_hair'],
+    'purple_hair': ['exotic_hair'],
+    'hairy': ['pubic_hair'],
+    'trimmed': ['pubic_hair'],
 };
 
 
@@ -668,6 +677,8 @@ var fixupDialogueSubstitutions = { // Order matters
 var fixupDialogueRE = new RegExp(Object.keys(fixupDialogueSubstitutions).map(escapeRegExp).join('|'), 'gi');
 
 function fixupDialogue (str) {
+    if (str === undefined || str === null) return null;
+
     return str.split(/(<script>.*?<\/script>|<[^>]+>)/i).map(function(part, idx) {
         // Odd parts will be script tags with content, or other tags;
         // leave them alone and do substitutions on the rest
@@ -708,10 +719,12 @@ function parseStyleSpecifiers (str) {
 function parseInterval (str) {
     if (!str) return undefined;
     var pieces = str.split("-");
+    if (pieces.length > 2) return null;
     var min = pieces[0].trim() == "" ? null : parseInt(pieces[0], 10);
-    if (pieces.length == 1 && isNaN(min)) return null;
+    if (isNaN(min)) return null;
     var max = pieces.length == 1 ? min
     : pieces[1].trim() == "" ? null : parseInt(pieces[1], 10);
+    if (isNaN(max)) return null;
     return { min : min, max : max };
 }
 
@@ -1333,7 +1346,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
                 && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, consecutiveLosses));
         });
-        var hasUpperBound = (ctr.count.max !== null && ctr.count.max <= countLoadedOpponents());
+        var hasUpperBound = (ctr.count.max !== null && ctr.count.max <= players.countTrue());
         matches = matches.filter(function(p) {
             if (ctr.sayingMarker !== undefined) {
                 if (checkMarker(ctr.sayingMarker, p, ctr.role == "other" ? opp : null, true)) {
@@ -1550,6 +1563,9 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
         tags = [this.forfeit[0]];
     }
 
+    if (Array.isArray(tags) && Array.isArray(tags[0])) {
+        return tags.some(function(t) { return this.updateBehaviour(t, opp) }, this);
+    }
     if (!Array.isArray(tags)) {
         tags = [tags];
     }
@@ -1684,13 +1700,7 @@ function updateAllBehaviours (target, target_tags, other_tags) {
     for (var i = 1; i < players.length; i++) {
         if (!players[i] || !players[i].isLoaded()) continue;
         if (target === null || i != target) {
-            if (typeof other_tags === 'object') {
-                other_tags.some(function(t) {
-                    return players[i].updateBehaviour(t, players[target]);
-                });
-            } else {
-                players[i].updateBehaviour(other_tags, players[target]);
-            }
+            players[i].updateBehaviour(other_tags, players[target]);
         } else if (i == target && target_tags !== null) {
             players[i].updateBehaviour(target_tags, null);
         }

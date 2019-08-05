@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0 at 4:55:47 AM on July 24, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 6:38:31 PM on August 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.0</version>
     <first>Ryuji</first>
@@ -43,12 +43,13 @@
         <tag>persona_5</tag>
         <tag>hero</tag>
     </tags>
+    <stylesheet>styles.css</stylesheet>
 
     <start />
 
     <wardrobe>
         <clothing name="underwear" generic="Underwear" position="lower" type="important" />
-        <clothing name="pants" generic="pants" position="lower" type="major" />
+        <clothing name="pants" generic="pants" position="lower" type="major" plural="true" />
         <clothing name="shirt" generic="shirt" position="upper" type="major" />
         <clothing name="belt" generic="Belt" position="lower" type="extra" />
         <clothing name="socks" generic="Socks" position="other" type="extra" plural="true" />
@@ -59,16 +60,24 @@
     <poses>
         <pose id="this is just for a shitpost jesus">
             <sprite id="im so fresh you can succ my nuts" src="ryuji/im so fresh you can succ my nuts.png" x="0" y="-25" />
-            <sprite id="im so fresh you can succ my nuts2" src="ryuji/im so fresh you can succ my nuts2.png" y="-25" />
-            <directive type="animation" id="im so fresh you can succ my nuts" loop="true" interpolation="none">
+            <sprite id="im so fresh you can succ my nuts2" src="ryuji/im so fresh you can succ my nuts2.png" x="100000" y="-25" />
+            <directive type="animation" id="im so fresh you can succ my nuts" loop="true" ease="linear" interpolation="none">
                 <keyframe time="0" x="0" />
                 <keyframe time="0.5" x="100000" />
                 <keyframe time="1" x="0" />
             </directive>
-            <directive type="animation" id="im so fresh you can succ my nuts2" delay="0" loop="true" interpolation="none">
+            <directive type="animation" id="im so fresh you can succ my nuts2" loop="true" ease="linear" interpolation="none">
                 <keyframe time="0" x="100000" />
                 <keyframe time="0.5" x="0" />
                 <keyframe time="1" x="100000" />
+            </directive>
+        </pose>
+        <pose id="transitition_cocky-what">
+            <sprite id="cocky" src="ryuji/1-cocky.png" x="0" y="0" alpha="100" />
+            <sprite id="what" delay="1.38" src="ryuji/1-what.png" x="0" y="0" />
+            <directive type="animation" id="cocky" ease="linear" interpolation="none">
+                <keyframe time="0" src="ryuji/1-cocky.png" alpha="100" />
+                <keyframe time="1.38" alpha="0" />
             </directive>
         </pose>
     </poses>
@@ -197,7 +206,7 @@
             </case>
             <case tag="game_start">
                 <test expr="~player~" value="Kamoshida" />
-                <state img="0-threathen.png">Wha... You think this is some kinda joke, ~player~? &lt;i&gt;Do you!?&lt;/i&gt;</state>
+                <state img="0-threathen.png">Wha... Kamoshida? &lt;i&gt;Kamoshida!?&lt;/i&gt; I know that actually ain't your name! You think this is some kinda joke, Player? &lt;i&gt;Do you!?&lt;/i&gt;</state>
             </case>
             <case tag="game_start" priority="9999">
                 <test expr="~ryuji.costume~" value="summertime_ryuji" />
@@ -656,6 +665,9 @@
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinka_threathen" alsoPlayingSaidMarker="pinka_start">
                 <state img="0-startled.png" marker="pinka_threathen">Wait... The hell!? Whatdaya mean I can't kick her ass!?</state>
             </case>
+            <case tag="hand" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="0-startled.png">Say what!?</state>
+            </case>
             <case tag="hand">
                 <condition count="2" status="alive" />
                 <state img="0-cocky.png">Looks like it's just you and me...</state>
@@ -693,9 +705,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="0-grumpy.png" marker="shimakaze_boatgirls2">I'm so confused right now.</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="0-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="0-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" totalRounds="0" priority="495">
                 <condition count="1" filter="undead" />
@@ -736,6 +748,9 @@
             </case>
             <case tag="must_strip" alsoPlaying="ryuko" alsoPlayingStage="0-7">
                 <state img="0-strip.png">....The hell you talkin' about?</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="saki_zls">
+                <state img="0-cheerful.png">Well I &lt;i&gt;am&lt;/i&gt; a total badass.</state>
             </case>
             <case tag="must_strip" alsoPlaying="sakura" priority="154">
                 <state img="0-what.png">Huh?</state>
@@ -996,6 +1011,9 @@
             </case>
             <case tag="stripping" alsoPlaying="nayru" alsoPlayingStage="5-7" alsoPlayingNotSaidMarker="null_possess" priority="88">
                 <state img="0-strip.png" marker="nayrupossess">...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="saki_zls">
+                <state img="0-strip.png">Please, I know how to kick ass in a fight. Plus, no way in hell you can beat me in a race!</state>
             </case>
             <case tag="stripping" alsoPlaying="shimakaze" totalRounds="0-1">
                 <state img="0-strip.png">...?</state>
@@ -2214,6 +2232,12 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="0-startled.png">WHAT THE HELL!?</state>
             </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5">
+                <state img="0-disgusted.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't cou---!</state>
+            </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="0-what.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't---ohhh...</state>
+            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="0-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
@@ -2347,6 +2371,12 @@
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="0-thinking.png">&lt;i&gt;Actually, that ain't too different from how we thieves normally transform.&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6">
+                <state img="0-disgusted.png">...Seriously!?</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="0-grumpy.png">I stand corrected.</state>
             </case>
             <case tag="female_removed_major" target="sakura" targetStage="5">
                 <state img="0-pumped.png">Yeah, you got this!</state>
@@ -2857,6 +2887,10 @@
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="0-cheerful.png">Next round, guys?</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="0-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="0-awkward.png">Tough luck, dude.</state>
                 <state img="0-disgusted.png">This game is weird.</state>
@@ -3279,10 +3313,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="0-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="0-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="0-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -3619,6 +3649,9 @@
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinka_threathen" alsoPlayingSaidMarker="pinka_start">
                 <state img="1-startled.png" marker="pinka_threathen">Wait... The hell!? Whatdaya mean I can't kick her ass!?</state>
             </case>
+            <case tag="hand" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="1-startled.png">Say what!?</state>
+            </case>
             <case tag="hand" alsoPlaying="shimakaze" timeInStage="0" priority="995">
                 <state img="1-sad.png">&lt;i&gt;Or at least I used to...&lt;/i&gt;</state>
             </case>
@@ -3663,9 +3696,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="1-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="1-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="1-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -3675,6 +3708,9 @@
             </case>
             <case tag="must_strip" alsoPlaying="pinkie_pie" notSaidMarker="pinka_threathen2" alsoPlayingSaidMarker="pinka_start">
                 <state img="1-threathen.png" marker="pinka_threathen2">Fine. FINE. But once this game's over, I'm gonna make sure she doesn't come back here!</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="saki_zls">
+                <state img="1-awkward.png">...Yeah, I was the star of my high school's track team. &lt;i&gt;(...{b}Was{b} the star of the track...)&lt;/i&gt;</state>
             </case>
             <case tag="must_strip" alsoPlaying="sakura" priority="155">
                 <state img="1-pumped.png">Aw, sweet! I'm done for any new recommendations! Your group got any rock songs?</state>
@@ -3844,6 +3880,9 @@
             <case tag="stripping" alsoPlaying="revy" alsoPlayingStage="0-7">
                 <state img="1-strip.png">Trust me, Revy. Japan's a shitty place. You got all these selfish assholes who make their success off other people's suffering, and most people can't do jack-shit 'bout it.</state>
             </case>
+            <case tag="stripping" alsoPlaying="saki_zls">
+                <state img="1-strip.png">Hey, no fair! I don't even know how to drive a car, let alone ride a motorcycle.</state>
+            </case>
             <case tag="stripping" alsoPlaying="shimakaze">
                 <state img="1-strip.png">Ermm... Yeah. I do sprints.</state>
             </case>
@@ -3957,6 +3996,9 @@
             </case>
             <case tag="stripped" alsoPlaying="ryuko" alsoPlayingStage="3" notSaidMarker="lame_stripping">
                 <state img="1-thinking.png" marker="lame_stripping">Trust me, this would be cooler if we were in the Metaverse... Wait, you probably don't know 'bout that.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="saki_zls">
+                <state img="custom:transitition_cocky-what">Alright, hot shit, you may think you're fast, but---wait, you mean like with motorcycles and shit?</state>
             </case>
             <case tag="stripped" alsoPlaying="sakura" priority="154">
                 <state img="1-startled.png">Wha---? I never said that!</state>
@@ -5100,6 +5142,12 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="1-startled.png">WHAT THE HELL!?</state>
             </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5">
+                <state img="1-disgusted.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't cou---!</state>
+            </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="1-what.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't---ohhh...</state>
+            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="1-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
@@ -5233,6 +5281,12 @@
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="1-thinking.png">&lt;i&gt;Actually, that ain't too different from how we thieves normally transform.&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6">
+                <state img="1-disgusted.png">...Seriously!?</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="1-grumpy.png">I stand corrected.</state>
             </case>
             <case tag="female_removed_major" target="sakura" targetStage="5">
                 <state img="1-pumped.png">Yeah, you got this!</state>
@@ -5730,6 +5784,10 @@
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="1-cheerful.png">Next round, guys?</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="1-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="1-awkward.png">Tough luck, dude.</state>
                 <state img="1-disgusted.png">This game is weird.</state>
@@ -6128,10 +6186,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="1-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="1-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="1-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -6437,6 +6491,9 @@
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinka_threathen" alsoPlayingSaidMarker="pinka_start">
                 <state img="2-startled.png" marker="pinka_threathen">Wait... The hell!? Whatdaya mean I can't kick her ass!?</state>
             </case>
+            <case tag="hand" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="2-startled.png">Say what!?</state>
+            </case>
             <case tag="hand" alsoPlaying="sakura" alsoPlayingSayingMarker="ryuji_song_recs">
                 <state img="2-cocky.png">Hear me out; &lt;i&gt;River in the Deserts.&lt;/i&gt; The most badass song you'll ever hear.</state>
             </case>
@@ -6481,9 +6538,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="2-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="2-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="2-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -6768,6 +6825,9 @@
             </case>
             <case tag="stripped" alsoPlaying="ryuko" alsoPlayingStage="3" notSaidMarker="lame_stripping">
                 <state img="2-thinking.png" marker="lame_stripping">Trust me, this would be cooler if we were in the Metaverse... Wait, you probably don't know 'bout that.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="saki_zls">
+                <state img="2-pissed.png">You don't need to rub it in! And what the hell is with that stupid nickname anyways!?</state>
             </case>
             <case tag="stripped" alsoPlaying="sakura" priority="155">
                 <state img="2-wince.png" marker="wince">Oww... N-Nah, I'm good. Thanks.</state>
@@ -7889,6 +7949,12 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="2-startled.png">WHAT THE HELL!?</state>
             </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5">
+                <state img="2-disgusted.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't cou---!</state>
+            </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="2-what.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't---ohhh...</state>
+            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="2-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
@@ -8019,6 +8085,12 @@
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="2-thinking.png">&lt;i&gt;Actually, that ain't too different from how we thieves normally transform.&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6">
+                <state img="2-disgusted.png">...Seriously!?</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="2-grumpy.png">I stand corrected.</state>
             </case>
             <case tag="female_removed_major" target="sakura" targetStage="5">
                 <state img="2-pumped.png">Yeah, you got this!</state>
@@ -8513,6 +8585,10 @@
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="2-cheerful.png">Next round, guys?</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="2-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="2-awkward.png">Tough luck, dude.</state>
                 <state img="2-disgusted.png">This game is weird.</state>
@@ -8912,10 +8988,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="2-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="2-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="2-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -9206,6 +9278,9 @@
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinka_threathen" alsoPlayingSaidMarker="pinka_start">
                 <state img="3-startled.png" marker="pinka_threathen">Wait... The hell!? Whatdaya mean I can't kick her ass!?</state>
             </case>
+            <case tag="hand" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="3-startled.png">Say what!?</state>
+            </case>
             <case tag="hand">
                 <condition count="2" status="alive" />
                 <state img="3-cocky.png">Looks like it's just you and me...</state>
@@ -9238,9 +9313,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="3-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="3-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="3-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -10591,6 +10666,12 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="3-startled.png">WHAT THE HELL!?</state>
             </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5">
+                <state img="3-disgusted.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't cou---!</state>
+            </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="3-what.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't---ohhh...</state>
+            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="3-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
@@ -10721,6 +10802,12 @@
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="3-thinking.png">&lt;i&gt;Actually, that ain't too different from how we thieves normally transform.&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6">
+                <state img="3-disgusted.png">...Seriously!?</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="3-grumpy.png">I stand corrected.</state>
             </case>
             <case tag="female_removed_major" target="sakura" targetStage="5">
                 <state img="3-pumped.png">Yeah, you got this!</state>
@@ -11216,6 +11303,10 @@
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="3-cheerful.png">Next round, guys?</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="3-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="3-awkward.png">Tough luck, dude.</state>
                 <state img="3-disgusted.png">This game is weird.</state>
@@ -11610,10 +11701,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="3-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="3-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="3-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -11884,6 +11971,9 @@
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinka_threathen" alsoPlayingSaidMarker="pinka_start">
                 <state img="4-startled.png" marker="pinka_threathen">Wait... The hell!? Whatdaya mean I can't kick her ass!?</state>
             </case>
+            <case tag="hand" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="4-startled.png">Say what!?</state>
+            </case>
             <case tag="hand">
                 <condition count="2" status="alive" />
                 <state img="4-cocky.png">Looks like it's just you and me...</state>
@@ -11916,9 +12006,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="4-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="4-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="4-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -13191,6 +13281,12 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="4-startled.png">WHAT THE HELL!?</state>
             </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5">
+                <state img="4-disgusted.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't cou---!</state>
+            </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="4-what.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't---ohhh...</state>
+            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="4-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
@@ -13321,6 +13417,12 @@
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="4-thinking.png">&lt;i&gt;Actually, that ain't too different from how we thieves normally transform.&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6">
+                <state img="4-disgusted.png">...Seriously!?</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="4-grumpy.png">I stand corrected.</state>
             </case>
             <case tag="female_removed_major" target="sakura" targetStage="5">
                 <state img="4-pumped.png">Yeah, you got this!</state>
@@ -13810,6 +13912,10 @@
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="4-cheerful.png">Next round, guys?</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="4-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="4-awkward.png">Tough luck, dude.</state>
                 <state img="4-disgusted.png">This game is weird.</state>
@@ -14204,10 +14310,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="4-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="4-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="4-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -14430,6 +14532,9 @@
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinka_threathen" alsoPlayingSaidMarker="pinka_start">
                 <state img="5-startled.png" marker="pinka_threathen">Wait... The hell!? Whatdaya mean I can't kick her ass!?</state>
             </case>
+            <case tag="hand" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="5-startled.png">Say what!?</state>
+            </case>
             <case tag="hand">
                 <condition count="2" status="alive" />
                 <state img="5-cocky.png">Looks like it's just you and me...</state>
@@ -14455,9 +14560,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="5-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="5-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="5-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -15601,6 +15706,12 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="5-startled.png">WHAT THE HELL!?</state>
             </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5">
+                <state img="5-disgusted.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't cou---!</state>
+            </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="5-what.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't---ohhh...</state>
+            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="5-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
@@ -15728,6 +15839,12 @@
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="5-thinking.png">&lt;i&gt;Actually, that ain't too different from how we thieves normally transform.&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6">
+                <state img="5-disgusted.png">...Seriously!?</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="5-grumpy.png">I stand corrected.</state>
             </case>
             <case tag="female_removed_major" target="sakura" targetStage="5">
                 <state img="5-pumped.png">Yeah, you got this!</state>
@@ -16225,6 +16342,10 @@
             <case tag="opponent_stripped" target="pinkie_pie" notSaidMarker="pinka_startt2" targetSaidMarker="pinka_start">
                 <state img="5-threathen.png" marker="pinka_startt2">You wanna know a better weapon to use? &lt;i&gt;The bat I could be swingin' at your head!&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="5-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="5-awkward.png">Tough luck, dude.</state>
                 <state img="5-disgusted.png">This game is weird.</state>
@@ -16607,10 +16728,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="5-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="5-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="5-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -16791,6 +16908,9 @@
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinka_threathen" alsoPlayingSaidMarker="pinka_start">
                 <state img="6-startled.png" marker="pinka_threathen">Wait... The hell!? Whatdaya mean I can't kick her ass!?</state>
             </case>
+            <case tag="hand" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="6-startled.png">Say what!?</state>
+            </case>
             <case tag="hand">
                 <condition count="2" status="not_alive" />
                 <condition count="1" gender="female" status="decent" />
@@ -16819,9 +16939,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="6-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="6-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="6-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -17870,6 +17990,12 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="6-startled.png">WHAT THE HELL!?</state>
             </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5">
+                <state img="6-disgusted.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't cou---!</state>
+            </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="6-what.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't---ohhh...</state>
+            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="6-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
@@ -17995,6 +18121,12 @@
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="6-thinking.png">&lt;i&gt;Actually, that ain't too different from how we thieves normally transform.&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6">
+                <state img="6-disgusted.png">...Seriously!?</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="6-grumpy.png">I stand corrected.</state>
             </case>
             <case tag="female_removed_major" target="shimakaze" targetStage="6" alsoPlaying="futaba">
                 <state img="6-awkward.png">I know she's supposed'ta be a ship, but she's... uh... still a girl?</state>
@@ -18464,6 +18596,10 @@
             <case tag="opponent_stripped" target="pinkie_pie" notSaidMarker="pinka_startt2" targetSaidMarker="pinka_start">
                 <state img="6-threathen.png" marker="pinka_startt2">You wanna know a better weapon to use? &lt;i&gt;The bat I could be swingin' at your head!&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="6-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="6-awkward.png">Tough luck, dude.</state>
                 <state img="6-disgusted.png">This game is weird.</state>
@@ -18838,10 +18974,6 @@
             <case tag="game_over_victory" alsoPlaying="ini">
                 <state img="6-cocky.png">What'd I tell ya?</state>
             </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="6-startled.png" marker="winner">...Did I just win!?</state>
-            </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1" priority="10000">
                 <condition count="1" status="alive" />
                 <state img="6-pumped.png" marker="winner1">HELL YEAH, I won!!</state>
@@ -19027,6 +19159,9 @@
             <case tag="hand" alsoPlaying="pit" timeInStage="0">
                 <state img="7-poststrip.png" marker="dyedhair_pit">And don't look at me while you're at it! Sheesh, I just want this damn game to be over with!</state>
             </case>
+            <case tag="hand" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+                <state img="7-startled.png">Say what!?</state>
+            </case>
             <case tag="hand" timeInStage="0">
                 <condition count="2" status="alive" />
                 <condition count="1" status="decent" />
@@ -19064,9 +19199,9 @@
                 <condition count="1" filter="shimakaze" />
                 <state img="7-pumped.png" marker="shimakaze_hype">I mean, Shimakaze is really sick too! Seriously, &lt;i&gt;fifteen torpedo tubes!!&lt;/i&gt; You can't say that ain't sick!</state>
             </case>
-            <case tag="hand">
-                <condition count="1" filter="tall" gender="female" />
-                <state img="7-cheerful.png">Tall girls are awesome! Joker has some shitty taste to think otherwise!</state>
+            <case tag="hand" oneShotId="1">
+                <condition count="1-4" filter="tall" gender="female" />
+                <state img="7-cheerful.png">&lt;i&gt;(Man, tall girls are awesome! Joker has some shitty taste to think otherwise!)&lt;/i&gt;</state>
             </case>
             <case tag="hand" notSaidMarker="villain">
                 <condition count="1-3" filter="villain" />
@@ -19140,6 +19275,9 @@
             <case tag="stripped" alsoPlaying="pit">
                 <state img="7-pissed.png">Do you &lt;i&gt;seriously&lt;/i&gt; gotta comment on my pubes!?</state>
                 <state img="7-disgusted.png">Wha---dude, my hair is &lt;i&gt;dyed&lt;/i&gt;. I used bleach to get it that color. But like hell I'm doin' the same to my pubes.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="saki_zls">
+                <state img="7-awkward.png">...Ever heard of japanese deliquents?</state>
             </case>
             <case tag="stripped" alsoPlaying="sakura">
                 <state img="7-awkward.png">Jeez...</state>
@@ -19965,6 +20103,12 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="7-startled.png">WHAT THE HELL!?</state>
             </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5">
+                <state img="7-disgusted.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't cou---!</state>
+            </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="7-what.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't---ohhh...</state>
+            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="7-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
@@ -20078,6 +20222,12 @@
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="7-thinking.png">&lt;i&gt;Actually, that ain't too different from how we thieves normally transform.&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6">
+                <state img="7-disgusted.png">...Seriously!?</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="7-grumpy.png">I stand corrected.</state>
             </case>
             <case tag="female_removed_major" target="shimakaze" targetStage="6" alsoPlaying="futaba">
                 <state img="7-awkward.png">I know she's supposed'ta be a ship, but she's... uh... still a girl?</state>
@@ -20554,6 +20704,10 @@
             <case tag="opponent_stripped" target="pinkie_pie" notSaidMarker="pinka_startt2" targetSaidMarker="pinka_start">
                 <state img="7-threathen.png" marker="pinka_startt2">You wanna know a better weapon to use? &lt;i&gt;The bat I could be swingin' at your head!&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
+                <condition count="1" status="alive" />
+                <state img="7-startled.png" marker="winner">...Did I just win!?</state>
+            </case>
             <case tag="male_must_masturbate">
                 <state img="7-awkward.png">Tough luck, dude.</state>
                 <state img="7-disgusted.png">This game is weird.</state>
@@ -20983,10 +21137,6 @@
                 <state img="7-awkward.png">At least I didn't have to jerk off in front of everyone.</state>
                 <state img="7-embarrassed.png">Is it still a victory if you're nude, though. I mean...</state>
                 <state img="7-awkward.png">I mean... I &lt;i&gt;guess&lt;/i&gt; a victory's a victory?</state>
-            </case>
-            <case tag="global" notSaidMarker="winner" priority="10000">
-                <condition count="1" status="alive" />
-                <state img="7-startled.png" marker="winner">...Did I just win!?</state>
             </case>
             <case tag="global" saidMarker="winner" notSaidMarker="winner1a">
                 <condition count="1" status="alive" />
@@ -21629,6 +21779,12 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="8-startled.png">WHAT THE HELL!?</state>
             </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5">
+                <state img="8-disgusted.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't cou---!</state>
+            </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="8-what.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't---ohhh...</state>
+            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="8-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
@@ -21713,6 +21869,12 @@
             <case tag="female_removed_major" target="raven" targetStage="3">
                 <state img="8-cheerful.png">I gotta say, you look a lot better without that hood!</state>
                 <state img="8-cheerful.png">I get you wanna go with the whole "mysterious dark girl" shtick, but I think you look better without the hood.</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6">
+                <state img="8-disgusted.png">...Seriously!?</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="8-grumpy.png">I stand corrected.</state>
             </case>
             <case tag="female_removed_major" target="shimakaze" targetStage="6" alsoPlaying="futaba">
                 <state img="8-awkward.png">I know she's supposed'ta be a ship, but she's... uh... still a girl?</state>
@@ -22464,7 +22626,7 @@
                 <state img="8-masturbate_a.png">I d-dunno how long this is g-gonna take, but...</state>
                 <state img="8-masturbate_e.png">...</state>
                 <state img="8-masturbate_f.png">Mmm...</state>
-                <state img="8-masturbate_f.png">Ummmffff....!!</state>
+                <state img="8-masturbate_b.png">Ummmffff....!!</state>
                 <state img="8-masturbate_e.png">&lt;i&gt;I shouldn't find this so hot...&lt;/i&gt;</state>
                 <state img="8-masturbate.png">&lt;i&gt;Somethin' about this turns me on... The hell is wrong with me!?&lt;/i&gt;</state>
             </case>
@@ -23321,6 +23483,12 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="9-startled.png">WHAT THE HELL!?</state>
             </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5">
+                <state img="9-disgusted.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't cou---!</state>
+            </case>
+            <case tag="female_removing_major" target="saki_zls" targetStage="5" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="9-what.png">Makeup? You can't remove &lt;i&gt;makeup!&lt;/i&gt; That doesn't---ohhh...</state>
+            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="9-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
@@ -23433,6 +23601,12 @@
             </case>
             <case tag="female_removed_major" target="ryuko" targetStage="3">
                 <state img="9-thinking.png">&lt;i&gt;Actually, that ain't too different from how we thieves normally transform.&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6">
+                <state img="9-disgusted.png">...Seriously!?</state>
+            </case>
+            <case tag="female_removed_major" target="saki_zls" targetStage="6" alsoPlaying="sakura" alsoPlayingStage="3-9">
+                <state img="9-grumpy.png">I stand corrected.</state>
             </case>
             <case tag="female_removed_major" target="shimakaze" targetStage="6" alsoPlaying="futaba">
                 <state img="9-awkward.png">I know she's supposed'ta be a ship, but she's... uh... still a girl?</state>

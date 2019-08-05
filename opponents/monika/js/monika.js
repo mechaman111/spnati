@@ -1,5 +1,46 @@
 if(!monika) var monika = (function (root) {
 
+/* Polyfill String.prototype.repeat */
+if (!String.prototype.repeat) {
+    String.prototype.repeat = function (count) {
+        'use strict';
+        if (this == null)
+            throw new TypeError('can\'t convert ' + this + ' to object');
+
+        var str = '' + this;
+        // To convert string to integer.
+        count = +count;
+        // Check NaN
+        if (count != count)
+            count = 0;
+
+        if (count < 0)
+            throw new RangeError('repeat count must be non-negative');
+
+        if (count == Infinity)
+            throw new RangeError('repeat count must be less than infinity');
+
+        count = Math.floor(count);
+        if (str.length == 0 || count == 0)
+            return '';
+
+        // Ensuring count is a 31-bit integer allows us to heavily optimize the
+        // main part. But anyway, most current (August 2014) browsers can't handle
+        // strings 1 << 28 chars or longer, so:
+        if (str.length * count >= 1 << 28)
+            throw new RangeError('repeat count must not overflow maximum string size');
+
+        var maxCount = str.length * count;
+        count = Math.floor(Math.log(count) / Math.log(2));
+        while (count) {
+            str += str;
+            count--;
+        }
+        str += str.substring(0, maxCount - str.length);
+        return str;
+    }
+}
+
 var exports = {};
 
 if (root.SENTRY_INITIALIZED) {
@@ -218,6 +259,7 @@ root.completeStripPhase = hookWrapper('completeStripPhase');
 root.completeRevealPhase = hookWrapper('completeRevealPhase');
 root.updateGameVisual = hookWrapper('updateGameVisual');
 root.advanceSelectScreen = hookWrapper('advanceSelectScreen');
+root.restartGame = hookWrapper('restartGame');
 
 function handleOptionsModal() {
     if(utils.monika_present()) {
@@ -229,9 +271,26 @@ function handleOptionsModal() {
 registerHook('showOptionsModal', 'pre', handleOptionsModal);
 
 /* Primary glitch control logic. */
+var active_effects = [];
+exports.active_effects = active_effects;
+
 var active_deletion_glitch = null;
 var active_repeat_visuals_glitch = null;
 var round_glitch_targets = [];
+
+function cleanupAllEffects() {
+    /* Copy the active_effects list before iterating over it */
+    var active_copy = active_effects.slice();
+    
+    active_copy.forEach(function (eff) {
+        try {
+            eff.revert();
+        } catch (e) {
+            reportException("while cleaning up "+eff.constructor.name, e);
+        }
+    });
+}
+registerHook('restartGame', 'post', cleanupAllEffects);
 
 function getCurrentGlitchChance () {
     /* Situation Score calculation:

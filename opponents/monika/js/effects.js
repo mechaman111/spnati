@@ -15,16 +15,31 @@
 var exports = {};
 
 /* Effect - base class for all effects. */
-function Effect (id) {}
+function Effect (id) {
+    this.active = false;
+}
 
 Effect.prototype.execute = function (on_finished) {
-    on_finished();
+    this.active = true;
+    if (monika.active_effects.indexOf(this) < 0) {
+        monika.active_effects.push(this);
+    }
+    
+    if(on_finished) on_finished();
 };
 
 Effect.prototype.revert = function (on_finished) {
-    on_finished();
+    this.active = false;
+    
+    var idx = monika.active_effects.indexOf(this);
+    if (idx >= 0) {
+        monika.active_effects.splice(idx, 1);
+    }
+    
+    if(on_finished) on_finished();
 };
 
+Effect.prototype.constructor = Effect;
 exports.Effect = Effect;
 
 /* CanvasEffect - an Effect that uses a Canvas for image processing.
@@ -78,6 +93,8 @@ CanvasEffect.prototype.constructor = CanvasEffect;
 exports.CanvasEffect = CanvasEffect;
 
 CanvasEffect.prototype.execute = function (on_finished) {
+    Effect.prototype.execute.call(this);
+    
     this.source = this.dest_elem.attr('src');
     
     this.on_finished = on_finished;
@@ -85,17 +102,21 @@ CanvasEffect.prototype.execute = function (on_finished) {
 }
 
 CanvasEffect.prototype.revert = function (on_finished) {
-    if(this.dest_elem && this.data_url && this.source) {
-        // the element's displayed image might have changed in the meantime (game advancing, pose changes, etc.)
-        // don't mess with images that weren't set by us.
-        if (this.dest_elem[0].src === this.data_url) {
-            this.dest_elem[0].src = this.source;
+    if (this.active) {
+        Effect.prototype.revert.call(this);
+
+        if(this.dest_elem && this.data_url && this.source) {
+            // the element's displayed image might have changed in the meantime (game advancing, pose changes, etc.)
+            // don't mess with images that weren't set by us.
+            if (this.dest_elem[0].src === this.data_url) {
+                this.dest_elem[0].src = this.source;
+            }
+            
+            this.data_url = null;
         }
-        
-        this.data_url = null;
     }
     
-    on_finished();
+    if (on_finished) on_finished();
 }
 
 /* Canvas effect filters... */
@@ -298,6 +319,8 @@ CollectionEffect.prototype.remove = function (effect) {
 }
 
 CollectionEffect.prototype.execute = function (on_finished) {
+    Effect.prototype.execute.call(this);
+
     var n_completed = 0;
     var complete = false;
     
@@ -314,19 +337,25 @@ CollectionEffect.prototype.execute = function (on_finished) {
 }
 
 CollectionEffect.prototype.revert = function (on_finished) {
-    var n_completed = 0;
-    var complete = false;
-    
-    this.subeffects.forEach(function (effect) {
-        effect.revert(function () {
-            n_completed += 1;
-            
-            if (!complete && n_completed >= this.subeffects.length && on_finished) {
-                complete = true;
-                on_finished();
-            } 
+    if (this.active) {
+        Effect.prototype.revert.call(this);
+
+        var n_completed = 0;
+        var complete = false;
+        
+        this.subeffects.forEach(function (effect) {
+            effect.revert(function () {
+                n_completed += 1;
+                
+                if (!complete && n_completed >= this.subeffects.length && on_finished) {
+                    complete = true;
+                    on_finished();
+                } 
+            }.bind(this));
         }.bind(this));
-    }.bind(this));
+    } else if (on_finished) {
+        return on_finished();
+    }
 }
 
 
@@ -375,7 +404,8 @@ exports.VisualGlitchEffect = VisualGlitchEffect;
  * That repeatedly applies a visual glitch.
  */
 function RepeatingVisualGlitchEffect (target_slot, glitchTime, normalTime) {
-    VisualGlitchEffect.call(this, target_slot);
+    Effect.call(this);
+    this.visual_glitch_effect = new VisualGlitchEffect(target_slot);
     
     this.glitchTime = glitchTime;
     this.normalTime = normalTime;
@@ -384,25 +414,27 @@ function RepeatingVisualGlitchEffect (target_slot, glitchTime, normalTime) {
     this.currentTimerID = null;
 }
 
-RepeatingVisualGlitchEffect.prototype = Object.create(VisualGlitchEffect.prototype);
+RepeatingVisualGlitchEffect.prototype = Object.create(Effect.prototype);
 RepeatingVisualGlitchEffect.prototype.constructor = RepeatingVisualGlitchEffect;
 exports.RepeatingVisualGlitchEffect = RepeatingVisualGlitchEffect;
 
 RepeatingVisualGlitchEffect.prototype.glitchOn = function () {
     if (this.cancelled) { return; }
-    VisualGlitchEffect.prototype.execute.call(this, function () {
+    this.visual_glitch_effect.execute(function () {
         this.currentTimerID = setTimeout(this.glitchOff.bind(this), this.glitchTime);
     }.bind(this));
 }
 
 RepeatingVisualGlitchEffect.prototype.glitchOff = function () {
     if (this.cancelled) { return; }
-    VisualGlitchEffect.prototype.revert.call(this, function () {
+    this.visual_glitch_effect.revert(function () {
         this.currentTimerID = setTimeout(this.glitchOn.bind(this), this.normalTime);
     }.bind(this));
 }
 
 RepeatingVisualGlitchEffect.prototype.execute = function (on_finished) {
+    Effect.prototype.execute.call(this);
+    
     this.cancelled = false;
     this.glitchOn();
     
@@ -410,9 +442,15 @@ RepeatingVisualGlitchEffect.prototype.execute = function (on_finished) {
 }
 
 RepeatingVisualGlitchEffect.prototype.revert = function (on_finished) {
-    this.cancelled = true;
-    clearTimeout(this.currentTimerID);
-    VisualGlitchEffect.prototype.revert.call(this, on_finished);
+    if (this.active) {
+        Effect.prototype.revert.call(this);
+        
+        this.cancelled = true;
+        clearTimeout(this.currentTimerID);
+        this.visual_glitch_effect.revert(on_finished);
+    } else if (on_finished) {
+        return on_finished();
+    }
 }
 
 
@@ -469,17 +507,21 @@ GlitchPoseChange.prototype.execute = function (on_finished) {
 }
 
 GlitchPoseChange.prototype.revert = function (on_finished) {
-    try {
-        if (this.original_pose) {
-            this.target_display.drawPose(this.original_pose);
-        } else {
-            this.target_display.clearPose();
+    if (this.active) {
+        try {
+            if (this.original_pose) {
+                this.target_display.drawPose(this.original_pose);
+            } else {
+                this.target_display.clearPose();
+            }
+        } catch (e) {
+            monika.reportException('in glitch pose reverting', e);
+        } finally {
+            Effect.prototype.revert.call(this);
         }
-    } catch (e) {
-        monika.reportException('in glitch pose reverting', e);
-    } finally {
-        if (on_finished) return on_finished();
     }
+    
+    if (on_finished) return on_finished();
 }
 
 
@@ -499,6 +541,8 @@ DialogueContentEffect.prototype.constructor = DialogueContentEffect;
 exports.DialogueContentEffect = DialogueContentEffect;
 
 DialogueContentEffect.prototype.execute = function (on_finished) {
+    Effect.prototype.execute.call(this);
+
     this.original = this.target_display.dialogue.html();
     
     if (typeof this.replacement === 'function') {
@@ -518,7 +562,12 @@ DialogueContentEffect.prototype.execute = function (on_finished) {
 }
 
 DialogueContentEffect.prototype.revert = function (on_finished) {
-    this.target_display.dialogue.html(this.original);
+    if (this.active) {
+        Effect.prototype.revert.call(this);
+        
+        this.target_display.dialogue.html(this.original);
+    }
+    
     if (on_finished) on_finished();
 }
 
@@ -539,6 +588,8 @@ DialogueStyleEffect.prototype.constructor = DialogueStyleEffect;
 exports.DialogueStyleEffect = DialogueStyleEffect;
 
 DialogueStyleEffect.prototype.execute = function (on_finished) {
+    Effect.prototype.execute.call(this);
+    
     if (this.textStyle) this.target_display.dialogue.addClass(this.textStyle);
     if (this.bubbleStyle) this.target_display.bubble.addClass(this.bubbleStyle);
     
@@ -546,8 +597,12 @@ DialogueStyleEffect.prototype.execute = function (on_finished) {
 }
 
 DialogueStyleEffect.prototype.revert = function (on_finished) {
-    if (this.textStyle) this.target_display.dialogue.removeClass(this.textStyle);
-    if (this.bubbleStyle) this.target_display.bubble.removeClass(this.bubbleStyle);
+    if (this.active) {
+        Effect.prototype.revert.call(this);
+        
+        if (this.textStyle) this.target_display.dialogue.removeClass(this.textStyle);
+        if (this.bubbleStyle) this.target_display.bubble.removeClass(this.bubbleStyle);
+    }
     
     if (on_finished) on_finished();
 }
@@ -557,6 +612,8 @@ DialogueStyleEffect.prototype.revert = function (on_finished) {
  * overflow the box. Also applies some styling.
  */
 function DialogueOverflowEffect (target_slot) {
+    Effect.call(this);
+    
     this.content_effect = new DialogueContentEffect(target_slot, this.doReplacement.bind(this));
     this.style_effect = new DialogueStyleEffect(target_slot, null, 'monika-overflow-bubble');
 }
@@ -596,6 +653,8 @@ DialogueOverflowEffect.prototype.doReplacement = function (original, target_disp
 }
 
 DialogueOverflowEffect.prototype.execute = function (on_finished) {
+    Effect.prototype.execute.call(this);
+    
     this.content_effect.execute();
     this.style_effect.execute();
     
@@ -603,8 +662,12 @@ DialogueOverflowEffect.prototype.execute = function (on_finished) {
 }
 
 DialogueOverflowEffect.prototype.revert = function (on_finished) {
-    this.content_effect.revert();
-    this.style_effect.revert();
+    if (this.active) {
+        Effect.prototype.revert.call(this);
+        
+        this.content_effect.revert();
+        this.style_effect.revert();
+    }
     
     if (on_finished) on_finished();
 }
@@ -838,8 +901,12 @@ FakeDeleteCharacter.prototype.execute = function (on_finished) {
 }
 
 FakeDeleteCharacter.prototype.revert = function (on_finished) {
-    this.target_display.label.html(this.original_label);
-    CollectionEffect.prototype.revert.call(this, on_finished);
+    if (this.active) {
+        this.target_display.label.html(this.original_label);
+        CollectionEffect.prototype.revert.call(this, on_finished);
+    } else if (on_finished) {
+        return on_finished();
+    }
 }
 
 function CharacterDisplacementEffect (slot, dest_slot) {
@@ -861,6 +928,8 @@ CharacterDisplacementEffect.prototype.constructor = CharacterDisplacementEffect;
 exports.CharacterDisplacementEffect = CharacterDisplacementEffect;
 
 CharacterDisplacementEffect.prototype.execute = function (on_finished) {
+    Effect.prototype.execute.call(this);
+    
     this.clone_img = this.target_display.imageArea.clone();
     this.prev_pose = this.target_display.pose;
     
@@ -880,15 +949,21 @@ CharacterDisplacementEffect.prototype.execute = function (on_finished) {
 }
 
 CharacterDisplacementEffect.prototype.revert = function (on_finished) {
-    if (this.clone_img) this.clone_img.remove();
-    if (this.prev_pose) this.target_display.drawPose(this.prev_pose);
-    if (this.revertHook) monika.unregisterHook('updateGameVisual', 'pre', this.revertHook);
+    if (this.active) {
+        Effect.prototype.revert.call(this);
+
+        if (this.clone_img) this.clone_img.remove();
+        if (this.prev_pose) this.target_display.drawPose(this.prev_pose);
+        if (this.revertHook) monika.unregisterHook('updateGameVisual', 'pre', this.revertHook);
+    }
     
     if (on_finished) on_finished();
 }
 
 
 function GlitchMasturbationEffect (target_slot) {
+    Effect.call(this);
+    
     this.glitchEffect = new VisualGlitchEffect(target_slot);
     this.target_display = gameDisplays[target_slot-1];
     this.target_slot = target_slot;
@@ -934,14 +1009,14 @@ GlitchMasturbationEffect.prototype.doTransition = function (after) {
     var nextImage = this.images.pop();
     
     //console.log("doing transition from " + this.target_display.pose);
-    if (monika.JOINT_FORFEIT_ACTIVE) return;
+    if (monika.JOINT_FORFEIT_ACTIVE || !this.active) return;
     
     setTimeout(function () {
-        if (monika.JOINT_FORFEIT_ACTIVE) return;
+        if (monika.JOINT_FORFEIT_ACTIVE || !this.active) return;
         
         this.glitchEffect.execute(function () {
             setTimeout(function () {
-                if (monika.JOINT_FORFEIT_ACTIVE) return;
+                if (monika.JOINT_FORFEIT_ACTIVE || !this.active) return;
                 
                 this.target_display.simpleImage.attr('src', nextImage);
                 if (after) after();
@@ -967,6 +1042,8 @@ GlitchMasturbationEffect.prototype.updateGameVisualHook = function (player) {
 }
 
 GlitchMasturbationEffect.prototype.execute = function (on_finished) {
+    Effect.prototype.execute.call(this);
+    
     this.doTransition();
     this.intervalID = setInterval(this.doTransition.bind(this), 5000);
     this.hookHandle = monika.registerHook('updateGameVisual', 'post', this.updateGameVisualHook.bind(this));
@@ -975,9 +1052,13 @@ GlitchMasturbationEffect.prototype.execute = function (on_finished) {
 }
 
 GlitchMasturbationEffect.prototype.revert = function (on_finished) {
-    clearInterval(this.intervalID);
-    this.glitchEffect.revert(on_finished);
-    monika.unregisterHook('updateGameVisual', 'post', this.hookHandle);
+    if (this.active) {
+        Effect.prototype.revert.call(this);
+        
+        clearInterval(this.intervalID);
+        this.glitchEffect.revert(on_finished);
+        monika.unregisterHook('updateGameVisual', 'post', this.hookHandle);
+    }
     
     if (on_finished) on_finished();
 }

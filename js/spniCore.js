@@ -249,7 +249,7 @@ function fetchCompressedURL(baseUrl) {
                 error: deferred.reject.bind(deferred),
             });
         } else {
-            errorCb();
+            deferred.reject();
         }
     }
 
@@ -570,6 +570,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
      */
     this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
     this.updateTags();
+    this.searchTags = this.baseTags.slice();
     
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;
@@ -636,6 +637,14 @@ Opponent.prototype.onSelected = function(individual) {
             
             $('head').append(link_elem);
         }
+    }
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Load completed for ' + this.id,
+            level: 'info'
+        });
     }
     
     this.preloadStageImages(-1);
@@ -705,6 +714,14 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
         success: function (xml) {
             var $xml = $(xml);
 
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Initializing alternate costume for ' + this.id + ': ' + this.selected_costume,
+                    level: 'info'
+                });
+            }
+
             this.alt_costume = {
                 id: $xml.find('id').text(),
                 labels: $xml.find('label'),
@@ -729,7 +746,7 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
                 var newTags = [];
                 tagMods.find('tag').each(function (idx, elem) {
                     var $elem = $(elem);
-                    var tag = canonicalizeTag(tag);
+                    var tag = canonicalizeTag($elem.text());
                     var removed = $elem.attr('remove') || '';
                     var fromStage = $elem.attr('from');
                     var toStage = $elem.attr('to');
@@ -831,6 +848,14 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
          */
 		.then(function(xml) {
             var $xml = $(xml);
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Fetched and parsed opponent ' + this.id + ', initializing...',
+                    level: 'info'
+                });
+            }
 
             if (this.has_collectibles) {
                 this.loadCollectibles();
@@ -1047,6 +1072,8 @@ function initialSetup () {
     $(document).mousedown(function(ev) {
         $("body").removeClass('focus-indicators-enabled');
     });
+
+    $('[data-toggle="tooltip"]').tooltip({ delay: { show: 200 } });
 }
 
 function loadVersionInfo () {
@@ -1420,7 +1447,6 @@ function showBugReportModal () {
         return $('<option value="'+t[0]+'">'+t[1]+'</option>');
     }));
 
-    $('#bug-report-modal span[data-toggle="tooltip"]').tooltip();
     updateBugReportOutput();
 
     $bugReportModal.modal('show');
@@ -1486,6 +1512,10 @@ function sentryInit() {
                         n_players += 1;
                         event.tags["character:" + players[i].id] = true;
                         event.tags["slot-" + i] = players[i].id;
+
+                        if (players[i].alt_costume) {
+                            event.tags[players[i].id+":alt-costume"] = players[i].alt_costume.id;
+                        }
                     } else {
                         event.tags["slot-" + i] = undefined;
                     }
@@ -1672,19 +1702,21 @@ function showPlayerTagsModal () {
             var replace = (choiceName != 'skin_color' || selectionType === 'number');
             var $existing = $('form#player-tags [name="'+choiceName+'"]');
             if (!replace && $existing.length) continue;
-            var $select = $('<select>', { name: choiceName });
+            var $select = $('<select>', { name: choiceName, id: 'player-tag-choice-'+choiceName });
             $select.append('<option>', playerTagOptions[choiceName].values.map(function(opt) {
                 return $('<option>').val(opt.value).addClass(opt.gender).append(opt.text || opt.value.replace(/_/g, ' ').initCap());
             }));
             if ($existing.length) {
                 $existing.parent().replaceWith($select);
             } else {
-                var $label = $('<label class="player-tag-select">');
+                var $label = $('<div class="player-tag-select">');
+                $label.append($('<label>', { 'for': 'player-tag-choice-' + choiceName,
+                                             'text': 'Choose your ' + choiceName.replace(/_/g, ' ') + ':'}));
                 if (playerTagOptions[choiceName].gender) {
                     $select.addClass(playerTagOptions[choiceName].gender);
                     $label.addClass(playerTagOptions[choiceName].gender);
                 }
-                $label.append('Choose your ' + choiceName.replace(/_/g, ' ') + ':', $select);
+                $label.append($select);
                 $('form#player-tags').append($label);
             }
         }

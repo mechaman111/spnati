@@ -1197,6 +1197,7 @@ EpiloguePlayer.prototype.advanceDirective = function () {
 
 EpiloguePlayer.prototype.performDirective = function () {
   if (this.sceneIndex >= this.epilogue.scenes.length) { return; }
+  
   this.directiveIndex++;
   if (this.directiveIndex < this.activeScene.directives.length) {
     var view = this.activeScene.view;
@@ -1245,12 +1246,18 @@ EpiloguePlayer.prototype.revertDirective = function () {
       directive.action.revert(directive, directive.action.context);
     }
     if (i < currentIndex - 1 && directive.type === "pause") {
+
+      if (this.sceneIndex >= this.epilogue.scenes.length
+          && this.activeScene === this.epilogue.scenes[this.epilogue.scenes.length-1]
+      ) {
+        /* Reverting to a directive on the last scene, so reset sceneIndex */
+        this.sceneIndex = this.epilogue.scenes.length-1;
+      }
       return;
     }
   }
 
   //reached the start of the scene, so time to back up an entire scene
-
   if (this.sceneIndex >= this.epilogue.scenes.length) {
     this.sceneIndex--; //the last scene had finished, so back up an extra time to move past that scene
   }
@@ -1258,6 +1265,7 @@ EpiloguePlayer.prototype.revertDirective = function () {
   //it would be better to make scene setup/teardown an undoable action, but for a quick and dirty method for now, just fast forward the whole scene to its last pause
   this.sceneIndex--;
   this.setupScene(this.sceneIndex, true);
+
   if (!this.activeTransition) {
     var pauseIndex;
     for (pauseIndex = this.activeScene.directives.length - 1; pauseIndex >= 0; pauseIndex--) {
