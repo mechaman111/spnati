@@ -735,7 +735,7 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
                 var newTags = [];
                 tagMods.find('tag').each(function (idx, elem) {
                     var $elem = $(elem);
-                    var tag = canonicalizeTag(tag);
+                    var tag = canonicalizeTag($elem.text());
                     var removed = $elem.attr('remove') || '';
                     var fromStage = $elem.attr('from');
                     var toStage = $elem.attr('to');
