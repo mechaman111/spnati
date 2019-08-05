@@ -3,13 +3,26 @@ import csv
 import sys
 
 modifications = {
+    # Belly Button
     'ca': {
-        7: 25,
-        11: 60
+        9: 1,
     },
+    
+    # ???
+    'da': {
+        2: 0,
+    },
+    
+    # Dick
     'qa': {
-        3: 40,
-        4: 45
+        0: 6,
+        3: 25,
+        4: 50,
+    },
+    
+    # Balls
+    'qb': {
+        1: 50
     }
 }
 
