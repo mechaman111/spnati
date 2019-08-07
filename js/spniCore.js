@@ -1025,6 +1025,7 @@ function initialSetup () {
 	$gameTable.css({opacity:1});
 
     /* load the all content */
+    loadBackgrounds();
     loadTitleScreen();
     selectTitleCandy();
     loadVersionInfo();
