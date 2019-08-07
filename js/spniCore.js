@@ -1491,16 +1491,16 @@ function sentryInit() {
         var sentry_opts = {
             dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
             release: VERSION_COMMIT,
-            maxBreadcrumbs: 250,
+            maxBreadcrumbs: 100,
             integrations: [new Sentry.Integrations.Breadcrumbs({
                 console: false,
                 dom: false
             })],
             beforeSend: function (event, hint) {
                 /* Inject additional game state data into event tags: */
-                if (inGame) {
-                    if (!event.extra) event.extra = {};
+                if (!event.extra) event.extra = {};
 
+                if (inGame && !epiloguePlayer) {
                     event.extra.recentLoser = recentLoser;
                     event.extra.previousLoser = previousLoser;
                     event.extra.gameOver = gameOver;
@@ -1509,6 +1509,17 @@ function sentryInit() {
 
                     event.tags.rollback = inRollback();
                     event.tags.gamePhase = getGamePhaseString(gamePhase);
+                }
+
+                if (epiloguePlayer) {
+                    event.tags.epilogue = epiloguePlayer.epilogue.title;
+                    event.tags.epilogue_player = epiloguePlayer.epilogue.player.id;
+                    event.tags.epilogue_gender = epiloguePlayer.epilogue.gender;
+
+                    event.extra.loaded = epiloguePlayer.loaded;
+                    event.extra.directiveIndex = epiloguePlayer.directiveIndex;
+                    event.extra.sceneIndex = epiloguePlayer.sceneIndex;
+                    event.extra.viewIndex = epiloguePlayer.viewIndex;
                 }
 
                 var n_players = 0;

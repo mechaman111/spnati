@@ -551,8 +551,6 @@ function doEpilogueFromGallery(){
 						level: 'info'
 					});
 
-					Sentry.setTag("epilogue_player", epilogue.player.id);
-					Sentry.setTag("epilogue", epilogue.title);
 					Sentry.setTag("epilogue_gallery", true);
 					Sentry.setTag("screen", "epilogue");
 				}

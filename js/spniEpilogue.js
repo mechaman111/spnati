@@ -467,10 +467,12 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
 
   var $epilogue = $(rawEpilogue);
   var title = $epilogue.find("title").html().trim();
+  var gender = $epilogue.attr("gender") || 'any';
 
   var epilogue = {
     title: title,
     player: player,
+    gender: gender,
     scenes: [],
   };
   var scenes = epilogue.scenes;
@@ -925,8 +927,6 @@ function doEpilogue() {
         level: 'info'
       });
 
-      Sentry.setTag("epilogue_player", chosenEpilogue.player.id);
-      Sentry.setTag("epilogue", chosenEpilogue.title);
       Sentry.setTag("epilogue_gallery", false);
       Sentry.setTag("screen", "epilogue");
     }
@@ -969,6 +969,14 @@ function loadEpilogue(epilogue) {
 
 function moveEpilogueForward() {
   if (epiloguePlayer && epiloguePlayer.loaded) {
+    if (SENTRY_INITIALIZED) {
+      Sentry.addBreadcrumb({
+        category: 'epilogue',
+        message: 'Advancing epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
+        level: 'info'
+      });
+    }
+
     epiloguePlayer.advanceDirective();
     updateEpilogueButtons();
   }
@@ -976,6 +984,14 @@ function moveEpilogueForward() {
 
 function moveEpilogueBack() {
   if (epiloguePlayer && epiloguePlayer.loaded) {
+    if (SENTRY_INITIALIZED) {
+      Sentry.addBreadcrumb({
+        category: 'epilogue',
+        message: 'Reverting epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
+        level: 'info'
+      });
+    }
+
     epiloguePlayer.revertDirective();
     updateEpilogueButtons();
   }
@@ -1193,6 +1209,7 @@ EpiloguePlayer.prototype.resizeViewport = function () {
 
 EpiloguePlayer.prototype.advanceDirective = function () {
   if (this.activeTransition) { return; } //prevent advancing during a scene transition
+
   this.waitingForAnims = false;
   this.activeScene.view.haltAnimations(false);
   this.performDirective();
