@@ -166,6 +166,49 @@ function Background (id, src, metadata) {
 }
 
 /**
+ * Load background information from an XML element.
+ * 
+ * Direct children of the given element will be converted to metadata
+ * for the background.
+ * 
+ * Any <tags> element, if found, will be searched for child <tag>
+ * elements, which will be pushed to the background's `tags` attribute.
+ * 
+ * The newly-constructed Background object will also be added to the
+ * global Backgrounds mapping.
+ * 
+ * @param {Object} $xml The XML object to load information from. 
+ * 
+ * @returns {Background} The loaded Background object.
+ */
+function loadBackgroundFromXml($xml) {
+    var id = $xml.attr('id').text();
+    var src = $xml.children('src').text();
+    var metadata = {};
+
+    $xml.children().each(function () {
+        var $elem = $(this);
+        var tagName = $elem.prop('tagName').toLowerCase();
+
+        if (tagName === 'tags') {
+            if (!metadata.tags) metadata.tags = [];
+
+            $elem.children('tag').each(function() {
+                var tag = $(this).text() || '';
+                metadata.tags.push(fixupTagFormatting(tag));
+            });
+        } else {
+            metadata[tagName] = $elem.text();
+        }
+    });
+
+    var bg = new Background(id, src, metadata);
+    backgrounds[id] = bg;
+
+    return bg;
+}
+
+/**
  * Sets this background to be displayed.
  */
 Background.prototype.activateBackground = function () {
