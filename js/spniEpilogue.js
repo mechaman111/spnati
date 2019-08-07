@@ -1665,7 +1665,11 @@ SceneView.prototype.addBackground = function (background) {
 
 SceneView.prototype.addImage = function (id, src, args) {
   var img = document.createElement("img");
-  if (src) img.src = this.assetMap[src].src;
+  if (src) {
+    img.src = this.assetMap[src].src;
+    args.naturalWidth = args.naturalWidth || this.assetMap[src].naturalWidth;
+    args.naturalHeight = args.naturalHeight || this.assetMap[src].naturalHeight;
+  }
 
   var obj = new SceneObject(id, img, this, args);
   obj.setImage(src);
@@ -2118,8 +2122,8 @@ function SceneObject(id, element, view, args) {
 
     var width = args.width;
     var height = args.height;
-    var naturalWidth = element.naturalWidth || 100;
-    var naturalHeight = element.naturalHeight || 100;
+    var naturalWidth = args.naturalWidth || element.naturalWidth || 100;
+    var naturalHeight = args.naturalHeight || element.naturalHeight || 100;
 
     if (width) {
       if (width.endsWith("%")) {
