@@ -899,6 +899,9 @@ function doEpilogueModal() {
 function doEpilogue() {
   save.addEnding(chosenEpilogue.player.id, chosenEpilogue.title);
 
+  /* Prevent players from trying to load an epilogue twice. */
+  $epilogueAcceptButton.prop("disabled", true);
+
   if (USAGE_TRACKING) {
     var usage_tracking_report = {
       'date': (new Date()).toISOString(),
