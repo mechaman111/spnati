@@ -32,30 +32,30 @@ var backgrounds = {
     }),
     'beach': new Background('beach', 'img/backgrounds/beach.png', {
         name: "Beach",
-        author: "u/SPNATI & Patisdom",
+        author: "ANDRW & Patisdom",
         location: 'outdoors',
         time: 'day'
     }),
     'classroom': new Background('classroom', 'img/backgrounds/classroom.png', {
         name: "Classroom",
-        author: "u/SPNATI",
+        author: "ANDRW",
         location: 'indoors'
     }),
     'roof': new Background('roof', 'img/backgrounds/roof.png', {
         name: "Roof",
-        author: "u/SPNATI",
+        author: "ANDRW",
         location: 'outdoors',
         time: 'day'
     }),
     'poolside': new Background('poolside', 'img/backgrounds/poolside.png', {
         name: "Poolside",
-        author: "u/SPNATI",
+        author: "ANDRW",
         location: 'outdoors',
         time: 'day'
     }),
     'hot spring': new Background('hot spring', 'img/backgrounds/hot_spring.png', {
         name: "Hot Spring",
-        author: "u/SPNATI",
+        author: "ANDRW",
         location: 'outdoors',
         time: 'day'
     }),
@@ -67,7 +67,7 @@ var backgrounds = {
     }),
     'purple room': new Background('purple room', 'img/backgrounds/purple_room.png', {
         name: "Purple Room",
-        author: "u/SPNATI",
+        author: "ANDRW",
         location: 'indoors'
     }),
     'street': new Background('street', 'img/backgrounds/street.png', {
