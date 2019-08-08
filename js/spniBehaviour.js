@@ -202,7 +202,19 @@ function expandTagsList(input_tags) {
  *****                  State Object Specification                *****
  **********************************************************************/
 
-function State($xml, parentCase) {
+function State($xml_or_state, parentCase) {
+    if ($xml_or_state instanceof State) {
+        /* Shallow-copy the state: */
+        for (var prop in $xml_or_state) {
+            if (!$xml_or_state.hasOwnProperty(prop)) continue;
+            this[prop] = $xml_or_state[prop];
+        }
+
+        return;
+    }
+
+    var $xml = $xml_or_state;
+
     this.parentCase = parentCase;
     this.id = $xml.attr('dev-id') || null;
     this.image = $xml.attr('img');

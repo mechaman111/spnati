@@ -88,7 +88,13 @@ var AUTO_FADE = true;
 var MINIMAL_UI = true;
 var DEBUG = false;
 
-/* game state */
+/* game state
+ * 
+ * First element: text to display on main button to begin the phase
+ * Second element: function to call when main button is clicked
+ * Third element (optional): whether to automatically hide/show the table (if AUTO_FADE is set)
+ * Fourth element (optional): whether to call tickForfeitTimers on main button click. 
+ */
 var eGamePhase = {
 	DEAL:      [ "Deal", function() { startDealPhase(); }, true ],
 	AITURN:    [ "Next", function() { continueDealPhase(); } ],
@@ -100,7 +106,7 @@ var eGamePhase = {
 	END_LOOP:  [ undefined, function() { handleGameOver(); } ],
 	GAME_OVER: [ "Ending?", function() { actualMainButtonState = false; doEpilogueModal(); } ],
 	END_FORFEIT: [ "Continue..." ], // Specially handled; not a real phase. tickForfeitTimers() will always return true in this state.
-    EXIT_ROLLBACK: ['Return', function () { exitRollback(); }],
+    EXIT_ROLLBACK: ['Return', function () { exitRollback(); }, undefined, false],
 };
 
 /* Masturbation Previous State Variables */
@@ -820,7 +826,7 @@ function advanceGame () {
     autoForfeitTimeoutID = undefined;
     
     /* lower the timers of everyone who is forfeiting */
-    if (gamePhase !== eGamePhase.EXIT_ROLLBACK && tickForfeitTimers()) return;
+    if (gamePhase[3] !== false && tickForfeitTimers()) return;
 
 	if (AUTO_FADE && gamePhase[2] !== undefined) {
 		forceTableVisibility(gamePhase[2]);
@@ -864,7 +870,7 @@ function RollbackPoint (logPlayers) {
             data.markers[marker] = p.markers[marker];
         }
         
-        data.chosenState = p.chosenState;
+        if (p.chosenState) data.chosenState = new State(p.chosenState);
         
         this.playerData.push(data);
     }.bind(this));
