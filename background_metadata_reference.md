@@ -28,7 +28,7 @@ A background's `location` is also automatically added as a background tag.
 | Value      | Description 
 | ---------- | ------------
 | `indoors`  | The background depicts an indoors location.
-| `outdoors` | The background depicts an ourdoors location.
+| `outdoors` | The background depicts an outdoors location.
 
 
 ## Location Type (`location_type`)
