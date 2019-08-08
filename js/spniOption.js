@@ -83,7 +83,7 @@ function Background (id, src, metadata) {
      * @type {string}
      * The online / offline / etc. status of this background.
      */
-    this.status = metadata.status || 'online';
+    this.status = metadata.status || '';
 
     /** 
      * @type {Object}
@@ -335,8 +335,15 @@ function pushBackgroundOption (background) {
  * Shows the background selection modal.
  ************************************************************/
 function showGameSettingsModal () {
+    /* Push selection images for all backgrounds not already on the menu. */
     Object.keys(backgrounds).forEach(function (id) {
-        /* Push selection images for all backgrounds not already on the menu. */
+        var bg = backgrounds[id];
+
+        /* If the background has a listed status, check to ensure it's
+         * available with the current configuration.
+         */
+        if (bg.status && !includedOpponentStatuses[bg.status]) return;
+
         if ($('#settings-background .background-option[data-background="'+id+'"]').length === 0) {
             pushBackgroundOption(backgrounds[id]);
         }

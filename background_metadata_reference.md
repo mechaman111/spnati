@@ -1,5 +1,19 @@
 # Background Metadata
 
+## Status (`status`)
+
+This metadata value is used to indicate whether this background should
+be available in the online version or not.
+
+If a background does not have a defined `status`, it is assumed to be
+available online and offline, similarly to opponent statuses.
+
+### Possible Values
+| Value       | Description 
+| ----------- | ------------
+| (no value)  | The background should be available online and offline.
+| `offline`   | The background should only be available offline.
+
 
 ## Location (`location`)
 
@@ -42,7 +56,6 @@ corresponding tag.
  - **School:**
    - Classroom
    - Locker Room
-   - Roof
  - **Homes:**
    - Bedroom
    - Mansion
@@ -97,6 +110,21 @@ background.
 This is a boolean value; it will either be `true` or completely undefined.
 
 Backgrounds with this set will also be automatically tagged with the `water` tag.
+
+### Examples
+ - Hot Spring
+ - Poolside
+ - Beach
+
+ 
+## Bathing Location (`bathe`)
+
+This metadata value indicates whether this is a location where people
+are expected to get naked for bathing.
+
+This is a boolean value; it will either be `true` or completely undefined.
+
+Backgrounds with this set will also be automatically tagged with the `bathe` tag.
 
 ### Examples
  - Hot Spring
