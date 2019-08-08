@@ -1701,6 +1701,9 @@ SceneView.prototype.addSprite = function (directive) {
 }
 
 SceneView.prototype.addSceneObject = function (obj) {
+  /* Don't make duplicate scene objects */
+  if (this.sceneObjects[obj.id]) return;
+    
   this.sceneObjects[obj.id] = obj;
   if (obj.element) {
     this.$canvas.append(obj.element);
@@ -1709,6 +1712,9 @@ SceneView.prototype.addSceneObject = function (obj) {
 }
 
 SceneView.prototype.removeSceneObject = function (directive) {
+  /* If this object has already been deleted, our work here is done */
+  if (!this.sceneObjects[directive.id]) return;
+
   this.sceneObjects[directive.id].destroy();
   delete this.sceneObjects[directive.id];
 }
