@@ -636,10 +636,10 @@ function expandDialogue (dialogue, self, target, bindings) {
                 } else if (fn === 'tag') {
                     var bg_tag = fixupTagFormatting(fn_parts[1]);
                     substitution = !!activeBackground.tags && (activeBackground.tags.indexOf(bg_tag) >= 0);
-                } else if (fn in activeBackground.metadata && args === undefined) {
-                    substitution = activeBackground.metadata[fn];
-                } else if (fn == 'time' && args === undefined) {
-                    substitution = localDayOrNight;            
+                } else if (fn == 'time' && !('time' in activeBackground.metadata) && args === undefined) {
+                    substitution = localDayOrNight;
+                } else if (args === undefined) {
+                    substitution = activeBackground.metadata[fn] || '';
                 }
                 break;
             case 'weekday':
