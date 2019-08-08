@@ -48,6 +48,7 @@ corresponding tag.
 | `bar`     | This background depicts a bar of some form.
 | `school`  | This background depicts part of a school.
 | `home`    | This background depicts a home.
+| `forest`  | This background depicts a forested area.
 
 ### Examples
  - **Bars:**
