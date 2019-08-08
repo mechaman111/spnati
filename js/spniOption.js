@@ -55,7 +55,7 @@ var backgrounds = {
     }),
     'hot spring': new Background('hot spring', 'img/backgrounds/hot_spring.png', {
         name: "Hot Spring",
-        author: "ANDRW",
+        author: "Gon-san & Patisdom",
         location: 'outdoors',
         time: 'day'
     }),
@@ -84,6 +84,7 @@ var backgrounds = {
     }),
     'locker room': new Background('locker room', 'img/backgrounds/locker_room.png', {
         name: "Locker Room",
+        author: "UnderscorM3",
         location: 'indoors'
     }),
     'haunted forest': new Background('haunted forest','img/backgrounds/haunted_forest.png', {
