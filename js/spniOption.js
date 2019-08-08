@@ -178,7 +178,7 @@ function loadBackgrounds () {
                     var $key = $(this);
                     var key_name = $key.text();
                     
-                    if ($key.attr('boolean') !== undefined) {
+                    if ($key.attr('type') === 'boolean') {
                         auto_tag_metadata[key_name] = 'boolean';
                     } else {
                         auto_tag_metadata[key_name] = 'value';
