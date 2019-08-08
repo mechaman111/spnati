@@ -544,16 +544,14 @@ DialogueContentEffect.prototype.execute = function (on_finished) {
     Effect.prototype.execute.call(this);
 
     this.original = this.target_display.dialogue.html();
-    
+
+    /* Avoid accidentally causing multiple script invocations due to replacements. */
+    this.original = this.original.replace(/<script>.+<\/script>/gi, '');
+
     if (typeof this.replacement === 'function') {
         var modified = this.replacement(this.original, this.target_display);
     } else {
         var modified = this.replacement
-    }
-    
-    /* Avoid accidentally causing multiple script invocations due to replacements. */
-    if (players[this.target_slot].id === 'monika') {
-        modified = modified.replace(/<script>.+<\/script>/gi, '');
     }
     
     this.target_display.dialogue.html(modified);
