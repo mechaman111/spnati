@@ -1814,6 +1814,8 @@ SceneView.prototype.applyTextDirective = function (directive, box) {
 SceneView.prototype.clearAllText = function (directive, context) {
   var $this = this;
   context = context || {};
+  context.boxes = context.boxes || [];
+  
   for (var box in this.textObjects) {
     this.clearText({ id: this.textObjects[box].data("id") }, context, true);
   }
