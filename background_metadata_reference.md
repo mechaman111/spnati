@@ -55,10 +55,13 @@ corresponding tag.
    - Tiki Bar
  - **School:**
    - Classroom
-   - Locker Room
+   - Hall (offline)
  - **Homes:**
    - Bedroom
    - Mansion
+ - **Forests:**
+   - Haunted Forest
+   - Night (offline)
 
 
 ## Time of Day (`time`)
@@ -100,6 +103,7 @@ Backgrounds with a defined `temperature` are automatically given a corresponding
    - Hot Springs
  - **Cold:**
    - Haunted Forest
+   - Seasonal (offline)
 
 
 ## Water (`water`)
@@ -161,6 +165,7 @@ Backgrounds with this set will also be automatically tagged with the `voyeur` ta
 ### Examples
  - Street
  - Haunted Forest
+ - Locker Room (look carefully)
 
 
 ## Exhibitionism (`exhibition`)
@@ -173,6 +178,8 @@ Backgrounds with this set will also be automatically tagged with the `exhibition
 
 ### Examples
  - Street
+ - Club (offline)
+ - Green Screen (offline)
 
 
 ## Gender-Segregated Area (`gendered`)
@@ -186,6 +193,7 @@ Backgrounds with this set will also be automatically tagged with the `gendered` 
 ### Example
  - Hot Spring _(Note: this is debatable-- feedback is welcome)_
  - Locker Room
+ - Showers (offline)
 
 
 ## Dark Setting (`dark`)
@@ -199,3 +207,4 @@ Backgrounds with this set will also be automatically tagged with the `dark` tag.
 ### Example
  - Haunted Forest
  - Purple Room
+ - Night (offline)
