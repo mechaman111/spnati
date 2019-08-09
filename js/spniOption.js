@@ -19,7 +19,7 @@ function setLocalDayOrNight () {
  *****                    Background metadata                     *****
  **********************************************************************/
 var backgrounds = {}
-var BACKGROUND_CONFIG_FILE = '/backgrounds.xml';
+var BACKGROUND_CONFIG_FILE = 'backgrounds.xml';
 
 /* Placeholder default value just in case we fail to load backgrounds.xml. */
 var defaultBackground = new Background('default', 'img/backgrounds/inventory.png', {
