@@ -26,6 +26,7 @@ var defaultBackground = new Background('default', 'img/backgrounds/inventory.png
     name: "The Inventory",
     author: "Zeuses-Swan-Song",
 });
+var defaultBackgroundID = 'inventory';
 
 /* The currently displayed background */
 var activeBackground = defaultBackground;
@@ -94,6 +95,9 @@ function Background (id, src, metadata) {
 
 /**
  * Sets this background to be displayed.
+ * 
+ * @returns {Deferred} A jQuery Deferred that settles once this background
+ * loads.
  */
 Background.prototype.activateBackground = function () {
     /* backgroundImage is defined in spniCore */
@@ -101,14 +105,26 @@ Background.prototype.activateBackground = function () {
         backgroundImage = new Image();
     }
 
-    backgroundImage.src = this.src;
+    console.log("Activating background: " + this.id);
+    var deferred = $.Deferred();
+
     backgroundImage.onload = function () {
         $("body").css("background-image", "url(" + this.src + ")");
         activeBackground = this;
 
         $('.screen').css('filter', this.filter || '');
         autoResizeFont();
+
+        deferred.resolve(this);
     }.bind(this);
+
+    backgroundImage.onerror = function () {
+        deferred.reject();
+    }
+
+    backgroundImage.src = this.src;
+
+    return deferred.promise();
 }
 
 /**
@@ -160,8 +176,16 @@ function loadBackgroundFromXml($xml, auto_tag_values) {
     return new Background(id, src, metadata);
 }
 
-function loadBackgrounds () {
-    $.ajax({
+/**
+ * Load information for all game backgrounds from BACKGROUND_CONFIG_FILE.
+ * 
+ * Must be called _after_ loadConfigFile(), to ensure the default
+ * background ID is properly set.
+ */
+function loadBackgrounds() {
+    console.log("Loading backgrounds...");
+
+    return $.ajax({
         type: "GET",
         url: BACKGROUND_CONFIG_FILE,
         dataType: "text",
@@ -171,7 +195,7 @@ function loadBackgrounds () {
             var auto_tag_metadata = {};
 
             /* Find metadata keys to automatically tag. */
-            $xml.children('auto-tag-metadata').each(function() {
+            $xml.children('auto-tag-metadata').each(function () {
                 var $elem = $(this);
 
                 $elem.children('key').each(function () {
@@ -191,14 +215,14 @@ function loadBackgrounds () {
                 backgrounds[bg.id] = bg;
             });
 
-            var defaultBackgroundID = $xml.children('default').text();
-            if (backgrounds[defaultBackgroundID]) {
+            if (defaultBackgroundID && backgrounds[defaultBackgroundID]) {
                 defaultBackground = backgrounds[defaultBackgroundID];
             }
-
-            save.loadOptionsBackground();
         }
-    });
+    }).then(
+        save.loadOptionsBackground.bind(save, undefined),
+        save.loadOptionsBackground.bind(save, undefined)
+    );
 }
 
 /**********************************************************************

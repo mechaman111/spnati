@@ -183,7 +183,7 @@ function Save() {
             }
         };
 
-        optionsBackground.activateBackground();
+        return optionsBackground.activateBackground();
     }
     this.saveUsageTracking = function() {
         if (USAGE_TRACKING !== undefined) {

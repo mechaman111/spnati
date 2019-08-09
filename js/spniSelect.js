@@ -200,9 +200,10 @@ function Group(title, background) {
  ************************************************************/
 
 function loadSelectScreen () {
-    loadListingFile();
-
-	updateSelectionVisuals();
+    var deferred = loadListingFile();
+    updateSelectionVisuals();
+    
+    return deferred;
 }
 
 function splitCreatorField (field) {
@@ -276,7 +277,7 @@ function loadListingFile () {
 	}
 
 	/* grab and parse the opponent listing file */
-	$.ajax({
+	return $.ajax({
         type: "GET",
 		url: listingFile,
 		dataType: "text",
