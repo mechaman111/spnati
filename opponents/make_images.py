@@ -16,7 +16,7 @@ if not getattr(__builtins__, "WindowsError", None):
 #open image file that kkl has made, waiting until it exists and can be opened properly
 def open_image_file(filename):
     retry_time_limit = 10 #try for at most 10 seconds before saying there's a problem
-    retry_interval = 0.2 #re-check for the existance of the image every 200 milliseconds
+    retry_interval = 0.2 #re-check for the existence of the image every 200 milliseconds
     retry_limit = retry_time_limit / retry_interval #try 50 times
     retry = 0 #number of times we've retried
     while True:
