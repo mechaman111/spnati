@@ -10,7 +10,8 @@ sed "s/__CI_COMMIT_SHA/${CI_COMMIT_SHA}/g" prod-config.xml > .public/config.xml
 cp opponents/listing.xml .public/opponents
 cp opponents/general_collectibles.xml .public/opponents
 
-# Copy online background images.
+# Copy online background images and set initial background to display during
+# loading.
 python3 deploy-scripts/copy_backgrounds.py .public/
 
 # tar may be the easiest way to copy an arbitrary
