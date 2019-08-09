@@ -31,15 +31,15 @@ A background's `location` is also automatically added as a background tag.
 | `outdoors` | The background depicts an outdoors location.
 
 
-## Location Type (`location_type`)
+## Location Category (`category`)
 
 This metadata value is used for some backgrounds to further categorize
 what kind of location is depicted.
 
-Not every background has a defined `location_type`, such as the
+Not every background has a defined `category`, such as the
 'propless' backgrounds (Classic, Romantic, Purple Room, etc).
 
-Backgrounds with a defined `location_type` are automatically given a
+Backgrounds with a defined `category` are automatically given a
 corresponding tag.
 
 ### Current Possible Values
@@ -122,14 +122,14 @@ Backgrounds with this set will also be automatically tagged with the `water` tag
  - Beach
 
  
-## Bathing Location (`bathe`)
+## Bathing Location (`bathing`)
 
 This metadata value indicates whether this is a location where people
 are expected to get naked for bathing.
 
 This is a boolean value; it will either be `true` or completely undefined.
 
-Backgrounds with this set will also be automatically tagged with the `bathe` tag.
+Backgrounds with this set will also be automatically tagged with the `bathing` tag.
 
 ### Examples
  - Hot Spring
