@@ -107,6 +107,31 @@ Backgrounds with a defined `temperature` are automatically given a corresponding
    - Seasonal (offline)
 
 
+## Location Privacy (`privacy`)
+
+This metadata value indicates how private the background's setting is.
+
+Backgrounds with a defined `privacy` level are automatically given a corresponding tag.
+
+### Current Possible Values
+| Value     | Description
+| --------- | -----------
+| `private` | This background's setting depicts a venue assumed to be set aside specifcally for strip poker or that is otherwise not open to the general public.
+| `public`  | This background's setting depicts any location that could be open to any passerby or general patron of the venue, as well as outdoor areas.
+
+### Examples
+ - **Private:**
+   - Inventory
+   - Beach _(note: this could go either way depending on how you headcanon it)_
+   - Tiki Bar
+   - Bedroom
+ - **Public:**
+   - Classroom
+   - Poolside
+   - Street
+   - Haunted Forest 
+
+
 ## Water (`water`)
 
 This metadata value indicates whether there is a nearby body of water in the
