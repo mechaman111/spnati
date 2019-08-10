@@ -17,6 +17,8 @@ import re
 import sys
 import time
 
+import numpy as np
+from scipy import ndimage
 from PIL import Image
 
 
@@ -143,7 +145,7 @@ class KisekaeCharacter(object):
             idx = None
             
             for i, sc in enumerate(self.subcodes):
-                if sc.id == key:
+                if sc.prefix == key:
                     idx = i
                     break
             else:
@@ -158,7 +160,7 @@ class KisekaeCharacter(object):
             idx = None
             
             for i, sc in enumerate(self.subcodes):
-                if sc.id == key:
+                if sc.prefix == key:
                     idx = i
                     break
             else:
@@ -203,7 +205,7 @@ class KisekaeCode(object):
             characters (list of KisekaeCharacter): List of characters contained in the code.
         """
         
-        self.version = 68
+        self.version = 92
         self.characters = []
         self.scene = None
         
@@ -309,7 +311,7 @@ def close_character_vagina(character):
     
     try:
         character['dc'][5] = '0'
-    except KeyError:
+    except (KeyError, IndexError):
         pass
     
     return character
@@ -355,8 +357,7 @@ def _get_wine_kkl_directory():
     wine_path = Path.home() / '.wine' / 'drive_c' / 'users' / username / 'Application Data' / "kkl" / "Local Store"
     
     return wine_path
-    
-    
+
 def get_kkl_directory():
     """
     Retrieve the path to the main KisekaeLocal application directory.
@@ -468,20 +469,43 @@ def auto_crop_box(image, margin_y=15):
         A cropping box as a 4-tuple, suitable to be passed to Image.crop().    
     """
     
-    left, top, right, bottom = image.getbbox()
+    arr = np.array(image)
+    intensity = np.sum(arr, axis=2)
+    nonzero = np.greater(intensity, 0).T
     
-    out_width = (right - left) + 2
-    if out_width < 600:
-        out_width = 600
+    centroid = ndimage.measurements.center_of_mass(nonzero)
+    
+    left, top, right, bottom = image.getbbox()
     
     out_height = bottom - top
     if out_height < 1400:
         out_height = 1400
         
+    com_x = centroid[0]
     center_x = int((right + left) / 2)
+    shift_x = int(center_x-com_x)   # negative:right, positive:left
     
-    crop_left = int(center_x - (out_width // 2))
-    crop_right = int(center_x + (out_width // 2))
+    out_width = (right - left) + 2
+    if out_width < 600:
+        out_width = 600
+    
+    crop_left = int(com_x - (out_width // 2))
+    crop_right = int(com_x + (out_width // 2))
+    
+    if shift_x < 0:
+        # Add extra space to the left side
+        crop_left -= shift_x
+    elif shift_x > 0:
+        crop_right += shift_x
+
+    if crop_left > left:
+        crop_left = left - 1
+        crop_right = crop_left + out_width
+    
+    if crop_right < right:
+        crop_right = right + 1
+        crop_left = crop_right - out_width 
+
     crop_top = (bottom + margin_y) - out_height
     crop_bottom = bottom + margin_y
     
@@ -518,8 +542,20 @@ def import_and_unlink(import_code, scene_name='temp'):
     """
     
     output_path = process_kkl_code(import_code, scene_name)
-    output_path.unlink()
-    
+
+    retry_time_limit = 10 #  try for at most 10 seconds before saying there's a problem
+    retry_interval = 0.2  #  re-check for the existance of the image every 200 milliseconds
+    retry_limit = int(retry_time_limit // retry_interval) # try 50 times
+
+    for retry in range(retry_limit):
+        try:
+            output_path.unlink()
+            break
+        except PermissionError:
+            if retry >= retry_limit-1:
+                raise
+            time.sleep(retry_interval)
+
     sys.stdout.write("done.\n")
     sys.stdout.flush()
 
@@ -603,6 +639,8 @@ def process_single(code, dest, **kwargs):
     process_code = preprocess_character_code(code, **kwargs)
     kkl_output = import_character(process_code, dest_filename.stem)
     
+    #kkl_output.save(str(dest_filename.parent.joinpath(dest_filename.stem + '.debug.png')))
+
     if dest_filename.is_file():
         dest_filename.unlink()
     
@@ -639,15 +677,24 @@ def process_csv(infile, dest_dir, **kwargs):
     with infile.open('r', encoding='utf-8', newline='') as f:
         reader = csv.DictReader(f, restval='')
         for row in reader:
-            if len(row['stage']) <= 0 or len(row['code']) <= 0:
+            if 'enabled' in row and row['enabled'].strip().lower() == "false":
                 continue
+             
+            if 'stage' not in row or 'code' not in row or 'pose' not in row:
+                continue
+             
+            if len(row['stage']) <= 0 or len(row['code']) <= 0 or len(row['pose']) <= 0:
+                continue
+                
+            # normalize pose name:
+            row['pose'] = re.sub(r"[^\w\-\_]", '', row['pose']).lower().strip()
                 
             stage = int(row['stage'])
             
             if kwargs['stage'] is not None and len(kwargs['stage']) > 0 and stage not in kwargs['stage']:
                 continue
             
-            if kwargs['pose'] is not None and len(kwargs['stage']) > 0 and row['pose'] not in kwargs['pose']:
+            if kwargs['pose'] is not None and len(kwargs['pose']) > 0 and row['pose'] not in kwargs['pose']:
                 continue
                 
             pose_name = '{:d}-{:s}'.format(stage, row['pose'])
@@ -722,6 +769,7 @@ if __name__ == '__main__':
     if args.csv is not None:
         process_csv(Path(args.csv), dest_dir, **kwargs)
     elif args.file is not None:
+        del kwargs['code']
         process_file(Path(args.file), dest_dir, **kwargs)
     elif args.code is not None:
         code = args['code']
