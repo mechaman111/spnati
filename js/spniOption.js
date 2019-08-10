@@ -32,18 +32,15 @@ var backgrounds = {
     }),
     'beach': new Background('beach', 'img/backgrounds/beach.png', {
         name: "Beach",
-        author: "ANDRW & Patisdom",
         location: 'outdoors',
         time: 'day'
     }),
     'classroom': new Background('classroom', 'img/backgrounds/classroom.png', {
         name: "Classroom",
-        author: "ANDRW",
         location: 'indoors'
     }),
     'roof': new Background('roof', 'img/backgrounds/roof.png', {
         name: "Roof",
-        author: "ANDRW",
         location: 'outdoors',
         time: 'day'
     }),
@@ -67,7 +64,7 @@ var backgrounds = {
     }),
     'purple room': new Background('purple room', 'img/backgrounds/purple_room.png', {
         name: "Purple Room",
-        author: "ANDRW",
+        author: "AshenSorrow",
         location: 'indoors'
     }),
     'street': new Background('street', 'img/backgrounds/street.png', {
