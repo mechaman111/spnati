@@ -1,5 +1,34 @@
 # Background Metadata
 
+## How to use Background Metadata
+
+Background metadata can be used in dialogue in one of two ways:
+ - By directly testing the background metadata value
+ - By using background tags generated from the background metadata
+
+With the first method, you use a Variable Test to directly check the background metadata value:
+```
+~background.location~ == indoors
+~background.category~ == bar
+~background.privacy~ == private
+~background.water~ == true
+```
+
+With the second method, you use a Variable Test to check if a the background has an associated tag:
+```
+~background.tag.indoors~ == true
+~background.tag.bar~ == true
+~background.tag.private~ == true
+~background.tag.water~ == true
+```
+
+These two methods produce _identical_ results.
+Which one you use is up to preference.
+
+(If the metadata you're testing is a simple boolean value, though, directly
+testing the metadata value involves a bit less typing!)
+
+
 ## Status (`status`)
 
 This metadata value is used to indicate whether this background should
