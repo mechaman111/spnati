@@ -18,91 +18,15 @@ function setLocalDayOrNight () {
 /**********************************************************************
  *****                    Background metadata                     *****
  **********************************************************************/
-var backgrounds = {
-    'inventory': new Background('inventory', 'img/backgrounds/inventory.png', {
-        name: "The Inventory",
-        author: "Zeuses-Swan-Song",
-        location: 'indoors'
-    }),
-	'tiki bar': new Background('tiki bar', 'img/backgrounds/tiki_bar.png', {
-        name: "Tiki Bar",
-        author: "Zeuses-Swan-Song",
-        location: 'outdoors',
-        time: 'day'
-    }),
-    'beach': new Background('beach', 'img/backgrounds/beach.png', {
-        name: "Beach",
-        location: 'outdoors',
-        time: 'day'
-    }),
-    'classroom': new Background('classroom', 'img/backgrounds/classroom.png', {
-        name: "Classroom",
-        location: 'indoors'
-    }),
-    'roof': new Background('roof', 'img/backgrounds/roof.png', {
-        name: "Roof",
-        location: 'outdoors',
-        time: 'day'
-    }),
-    'poolside': new Background('poolside', 'img/backgrounds/poolside.png', {
-        name: "Poolside",
-        author: "ANDRW",
-        location: 'outdoors',
-        time: 'day'
-    }),
-    'hot spring': new Background('hot spring', 'img/backgrounds/hot_spring.png', {
-        name: "Hot Spring",
-        author: "Gon-san & Patisdom",
-        location: 'outdoors',
-        time: 'day'
-    }),
-    'mansion': new Background('mansion', 'img/backgrounds/mansion.png', {
-        name: "Mansion",
-        author: "Anymouse-68",
-        location: 'indoors',
-        time: 'night'
-    }),
-    'purple room': new Background('purple room', 'img/backgrounds/purple_room.png', {
-        name: "Purple Room",
-        author: "AshenSorrow",
-        location: 'indoors'
-    }),
-    'street': new Background('street', 'img/backgrounds/street.png', {
-        name: "Street",
-        author: "DrankeyKrang",
-        location: 'outdoors',
-        time: 'night'
-    }),
-    'bedroom': new Background('bedroom', 'img/backgrounds/bedroom.png', {
-        name: "Bedroom",
-        author: "XKokone-chanX (bed) & throwaway927263 (room)",
-        location: 'indoors',
-        time: 'night'
-    }),
-    'locker room': new Background('locker room', 'img/backgrounds/locker_room.png', {
-        name: "Locker Room",
-        author: "UnderscorM3",
-        location: 'indoors'
-    }),
-    'haunted forest': new Background('haunted forest','img/backgrounds/haunted_forest.png', {
-        name: "Haunted Forest",
-        author: "UnderscorM3",
-        location: 'outdoors',
-        time: 'night',
-        filter: 'brightness(0.7) saturate(0.9)'
-    }),
-    'romantic': new Background('romantic', 'img/backgrounds/romantic.png', {
-        name: "Romantic",
-        author: "Patisdom",
-        location: 'indoors'
-    }),
-    'classic': new Background('classic', 'img/backgrounds/classic.png', {
-        name: "Classic",
-        location: 'indoors'
-    })
-}
+var backgrounds = {}
+var BACKGROUND_CONFIG_FILE = 'backgrounds.xml';
 
-var defaultBackground = backgrounds['tiki bar'];
+/* Placeholder default value just in case we fail to load backgrounds.xml. */
+var defaultBackground = new Background('default', 'img/backgrounds/inventory.png', {
+    name: "The Inventory",
+    author: "Zeuses-Swan-Song",
+});
+var defaultBackgroundID = 'inventory';
 
 /* The currently displayed background */
 var activeBackground = defaultBackground;
@@ -111,6 +35,7 @@ var activeBackground = defaultBackground;
 var optionsBackground = defaultBackground;
 
 var useGroupBackgrounds = true;
+
 
 /**
  * Constructor for game Background objects.
@@ -156,6 +81,12 @@ function Background (id, src, metadata) {
     this.filter = metadata.filter || '';
 
     /** 
+     * @type {string}
+     * The online / offline / etc. status of this background.
+     */
+    this.status = metadata.status || '';
+
+    /** 
      * @type {Object}
      * Contains the raw metadata passed to the Background constructor.
      */
@@ -164,6 +95,9 @@ function Background (id, src, metadata) {
 
 /**
  * Sets this background to be displayed.
+ * 
+ * @returns {Deferred} A jQuery Deferred that settles once this background
+ * loads.
  */
 Background.prototype.activateBackground = function () {
     /* backgroundImage is defined in spniCore */
@@ -171,14 +105,124 @@ Background.prototype.activateBackground = function () {
         backgroundImage = new Image();
     }
 
-    backgroundImage.src = this.src;
+    console.log("Activating background: " + this.id);
+    var deferred = $.Deferred();
+
     backgroundImage.onload = function () {
         $("body").css("background-image", "url(" + this.src + ")");
         activeBackground = this;
-        
+
         $('.screen').css('filter', this.filter || '');
         autoResizeFont();
+
+        deferred.resolve(this);
     }.bind(this);
+
+    backgroundImage.onerror = function () {
+        deferred.reject();
+    }
+
+    backgroundImage.src = this.src;
+
+    return deferred.promise();
+}
+
+/**
+ * Load background information from an XML element.
+ * 
+ * Direct children of the given element will be converted to metadata
+ * for the background.
+ * 
+ * Any <tags> element, if found, will be searched for child <tag>
+ * elements, which will be pushed to the background's `tags` attribute.
+ * 
+ * @param {Object} $xml The XML object to load information from.
+ * @param {Object} auto_tag_values If provided, a mapping of metadata
+ * keys to automatically create tags from.
+ * 
+ * @returns {Background} The loaded Background object.
+ */
+function loadBackgroundFromXml($xml, auto_tag_values) {
+    var id = $xml.attr('id');
+    var src = $xml.children('src').text();
+    var metadata = {
+        tags: []
+    };
+
+    $xml.children().each(function () {
+        var $elem = $(this);
+        var tagName = $elem.prop('tagName').toLowerCase();
+
+        if (tagName === 'tags') {
+            $elem.children('tag').each(function() {
+                var tag = $(this).text() || '';
+                metadata.tags.push(fixupTagFormatting(tag));
+            });
+        } else {
+            var val = $elem.text() || true;
+
+            if (auto_tag_values) {
+                if (auto_tag_values[tagName] === 'boolean') {
+                    metadata.tags.push(fixupTagFormatting(tagName));
+                } else if (auto_tag_values[tagName]) {
+                    metadata.tags.push(fixupTagFormatting(val));
+                }
+            }
+
+            metadata[tagName] = val;
+        }
+    });
+
+    return new Background(id, src, metadata);
+}
+
+/**
+ * Load information for all game backgrounds from BACKGROUND_CONFIG_FILE.
+ * 
+ * Must be called _after_ loadConfigFile(), to ensure the default
+ * background ID is properly set.
+ */
+function loadBackgrounds() {
+    console.log("Loading backgrounds...");
+
+    return $.ajax({
+        type: "GET",
+        url: BACKGROUND_CONFIG_FILE,
+        dataType: "text",
+        success: function (xml) {
+            var $xml = $(xml);
+
+            var auto_tag_metadata = {};
+
+            /* Find metadata keys to automatically tag. */
+            $xml.children('auto-tag-metadata').each(function () {
+                var $elem = $(this);
+
+                $elem.children('key').each(function () {
+                    var $key = $(this);
+                    var key_name = $key.text();
+                    
+                    if ($key.attr('type') === 'boolean') {
+                        auto_tag_metadata[key_name] = 'boolean';
+                    } else {
+                        auto_tag_metadata[key_name] = 'value';
+                    }
+                });
+            });
+
+            $xml.children('background').each(function () {
+                var bg = loadBackgroundFromXml($(this), auto_tag_metadata);
+                backgrounds[bg.id] = bg;
+            });
+
+            if (defaultBackgroundID && backgrounds[defaultBackgroundID]) {
+                defaultBackground = backgrounds[defaultBackgroundID];
+            }
+        }
+    }).then(
+        save.loadOptionsBackground.bind(save, undefined),
+        save.loadOptionsBackground.bind(save, undefined)
+    );
 }
 
 /**********************************************************************
@@ -315,8 +359,15 @@ function pushBackgroundOption (background) {
  * Shows the background selection modal.
  ************************************************************/
 function showGameSettingsModal () {
+    /* Push selection images for all backgrounds not already on the menu. */
     Object.keys(backgrounds).forEach(function (id) {
-        /* Push selection images for all backgrounds not already on the menu. */
+        var bg = backgrounds[id];
+
+        /* If the background has a listed status, check to ensure it's
+         * available with the current configuration.
+         */
+        if (bg.status && !includedOpponentStatuses[bg.status]) return;
+
         if ($('#settings-background .background-option[data-background="'+id+'"]').length === 0) {
             pushBackgroundOption(backgrounds[id]);
         }

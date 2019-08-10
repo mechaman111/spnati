@@ -1024,26 +1024,33 @@ function initialSetup () {
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
 
-    /* load the all content */
+    /* Load title screen info first, since that's fast and synchronous */
     loadTitleScreen();
     selectTitleCandy();
-    loadVersionInfo();
-    loadGeneralCollectibles();
-    
-	/* Make sure that the config file is loaded before processing the
+
+    /* Make sure that the config file is loaded before processing the
      *  opponent list, so that includedOpponentStatuses is populated.
      *
      * Also ensure that the config file is loaded before initializing Sentry,
      * which requires the commit SHA.
+     * 
+     * Also: .done() and .always() do not chain like .then() does.
      */
-
-    save.load();
-    
-    loadConfigFile().always(loadSelectScreen, function() {
-        if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
-    });
-
-    updateTitleGender();
+    loadConfigFile().then(loadBackgrounds, loadBackgrounds).always(
+        loadVersionInfo,
+        loadGeneralCollectibles,
+        loadSelectScreen,
+        function () {
+            /* Make sure that save data is loaded before updateTitleGender(),
+             * since the latter uses selectedClothing.
+             */
+            save.load();
+            updateTitleGender();
+        },
+        function () {
+            if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
+        }
+    );
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
 
@@ -1182,6 +1189,15 @@ function loadConfigFile () {
                 console.log("Could not find currently deployed Git commit!");
             }
 
+            var _default_bg = $(xml).find('default-background').text();
+            if (_default_bg) {
+                defaultBackgroundID = _default_bg;
+                console.log("Using default background: "+defaultBackgroundID);
+            } else {
+                defaultBackgroundID = 'inventory';
+                console.log("No default background ID set, defaulting to 'inventory'...");
+            }
+
             var _alts = $(xml).find('alternate-costumes').text();
 
             if(_alts === "true") {
@@ -1238,7 +1254,7 @@ function loadConfigFile () {
 }
 
 function loadGeneralCollectibles () {
-    $.ajax({
+    return $.ajax({
 		type: "GET",
 		url: 'opponents/general_collectibles.xml',
 		dataType: "text",
