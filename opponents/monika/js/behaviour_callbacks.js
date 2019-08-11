@@ -253,8 +253,9 @@
         monika_pl.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
 
         monika_pl.out = true;
-        monika_pl.timer = 25;
+        monika_pl.timer = 35;
         monika_pl.stage = 8;
+        monika_pl.timeInStage = -1;
 
         monika.JOINT_FORFEIT_ACTIVE = true;
 
