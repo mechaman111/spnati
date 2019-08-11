@@ -256,6 +256,7 @@
         monika_pl.timer = 35;
         monika_pl.stage = 8;
         monika_pl.timeInStage = -1;
+        monika_pl.finished = false;
 
         monika.JOINT_FORFEIT_ACTIVE = true;
 
