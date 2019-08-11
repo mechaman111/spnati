@@ -17,6 +17,7 @@ var EPILOGUE_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
 var USAGE_TRACKING = undefined;
+var SENTRY_INITIALIZED = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
@@ -56,6 +57,7 @@ var BLANK_PLAYER_IMAGE = "opponents/blank.png";
 
 /* player array */
 var players = Array(5);
+var humanPlayer;
 
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
 var timeoutID;
@@ -186,8 +188,8 @@ function compileBaseErrorReport(userDesc, bugType) {
         'circumstances': circumstances,
         'table': tableReports,
         'player': {
-            'gender': players[HUMAN_PLAYER].gender,
-            'size': players[HUMAN_PLAYER].size,
+            'gender': humanPlayer.gender,
+            'size': humanPlayer.size,
         },
         'jsErrors': jsErrors,
     };
@@ -247,7 +249,7 @@ function fetchCompressedURL(baseUrl) {
                 error: deferred.reject.bind(deferred),
             });
         } else {
-            errorCb();
+            deferred.reject();
         }
     }
 
@@ -555,7 +557,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.dialogue_layering = $metaXml.find('dialogue-layer').text();
     
     if (['over', 'under'].indexOf(this.dialogue_layering) < 0) {
-        this.dialogue_layering = 'over';
+        this.dialogue_layering = 'under';
     }
     
     this.selected_costume = null;
@@ -573,6 +575,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
      */
     this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
     this.updateTags();
+    this.searchTags = this.baseTags.slice();
     
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;
@@ -639,6 +642,14 @@ Opponent.prototype.onSelected = function(individual) {
             
             $('head').append(link_elem);
         }
+    }
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Load completed for ' + this.id,
+            level: 'info'
+        });
     }
     
     this.preloadStageImages(-1);
@@ -708,6 +719,14 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
         success: function (xml) {
             var $xml = $(xml);
 
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Initializing alternate costume for ' + this.id + ': ' + this.selected_costume,
+                    level: 'info'
+                });
+            }
+
             this.alt_costume = {
                 id: $xml.find('id').text(),
                 labels: $xml.find('label'),
@@ -732,7 +751,7 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
                 var newTags = [];
                 tagMods.find('tag').each(function (idx, elem) {
                     var $elem = $(elem);
-                    var tag = canonicalizeTag(tag);
+                    var tag = canonicalizeTag($elem.text());
                     var removed = $elem.attr('remove') || '';
                     var fromStage = $elem.attr('from');
                     var toStage = $elem.attr('to');
@@ -795,6 +814,14 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
 
 /* Called prior to removing a character from the table. */
 Opponent.prototype.unloadOpponent = function () {
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Unloading opponent ' + this.id,
+            level: 'info'
+        });
+    }
+
     if (this.stylesheet) {
         /* Remove the <link> to this opponent's stylesheet. */
         $('link[href=\"'+this.stylesheet+'\"]').remove();
@@ -826,6 +853,14 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
          */
 		.then(function(xml) {
             var $xml = $(xml);
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Fetched and parsed opponent ' + this.id + ', initializing...',
+                    level: 'info'
+                });
+            }
 
             if (this.has_collectibles) {
                 this.loadCollectibles();
@@ -889,16 +924,16 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             var targetedLines = {};
 
-            $xml.find('case[target]>state, case[alsoPlaying]>state').each(function() {
-                var $case = $(this.parentNode);
-                ['target', 'alsoPlaying'].forEach(function(attr) {
-                    var id = $case.attr(attr);
+            $xml.find('>behaviour').find('case[target], case[alsoPlaying], case[filter], case:has(condition[character]), case:has(condition[filter])').each(function() {
+                var $case = $(this);
+                $case.children('condition[character]').map(function() { return $(this).attr('character'); }).get()
+                    .concat($case.children('condition[filter]').map(function() { return $(this).attr('filter'); }).get())
+                    .concat([$case.attr('target'), $case.attr('alsoPlaying'), $case.attr('filter')]).forEach(function(id) {
                     if (id) {
-                        if (!(id in targetedLines)) { targetedLines[id] = { count: 0, seen: {} }; }
-                        if (!(this.textContent in targetedLines[id].seen)) {
-                            targetedLines[id].seen[this.textContent] = true;
-                            targetedLines[id].count++;
-                        }
+                        if (!(id in targetedLines)) { targetedLines[id] = { count: 0, seen: new Set() }; }
+                        $(this).children('state').each(function() {
+                            targetedLines[id].seen.add(this.textContent);
+                        });
                     }
                 }, this);
             });
@@ -984,33 +1019,50 @@ Player.prototype.preloadStageImages = function (stage) {
  ************************************************************/
 function initialSetup () {
     /* start by creating the human player object */
-    var humanPlayer = new Player('human'); //createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
-    players[HUMAN_PLAYER] = humanPlayer;
-    players[HUMAN_PLAYER].slot = HUMAN_PLAYER;
+    players[HUMAN_PLAYER] = humanPlayer = new Player('human'); //createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
+    humanPlayer.slot = HUMAN_PLAYER;
+
+    /* Generate a random session ID. */
+    sessionID = generateRandomID();
 
 	/* enable table opacity */
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
 
-    /* load the all content */
+    /* Load title screen info first, since that's fast and synchronous */
     loadTitleScreen();
     selectTitleCandy();
-    loadVersionInfo();
-    loadGeneralCollectibles();
-    
-	/* Make sure that the config file is loaded before processing the
-	   opponent list, so that includedOpponentStatuses is populated. */
-    loadConfigFile().always(loadSelectScreen);
-    save.load();
-    updateTitleGender();
+
+    /* Make sure that the config file is loaded before processing the
+     *  opponent list, so that includedOpponentStatuses is populated.
+     *
+     * Also ensure that the config file is loaded before initializing Sentry,
+     * which requires the commit SHA.
+     * 
+     * Also: .done() and .always() do not chain like .then() does.
+     */
+    loadConfigFile().then(loadBackgrounds, loadBackgrounds).always(
+        loadVersionInfo,
+        loadGeneralCollectibles,
+        loadSelectScreen,
+        function () {
+            /* Make sure that save data is loaded before updateTitleGender(),
+             * since the latter uses selectedClothing.
+             */
+            save.load();
+            updateTitleGender();
+        },
+        function () {
+            if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
+        }
+    );
+
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
 
 	/* show the title screen */
 	$warningScreen.show();
 	$('#warning-start-button').focus();
     autoResizeFont();
-
-    /* Generate a random session ID. */
-    sessionID = generateRandomID();
 
     /* Construct a CSS rule for every combination of arrow direction, screen, and pseudo-element */
     bubbleArrowOffsetRules = [];
@@ -1020,9 +1072,7 @@ function initialSetup () {
             var index = document.styleSheets[2].cssRules.length;
             var rule = p.map(function(d) {
                 return ["select", "game"].map(function(s) {
-                    return ["before", "after"].map(function(r) {
-                        return '#'+s+'-bubble-'+i+'>.dialogue-bubble.arrow-'+d+'::'+r;
-                    }).join(', ');
+                    return '#'+s+'-bubble-'+i+'.arrow-'+d+'::before';
                 }).join(', ');
             }).join(', ') + ' {}';
             document.styleSheets[2].insertRule(rule, index);
@@ -1035,9 +1085,12 @@ function initialSetup () {
             $("body").addClass('focus-indicators-enabled');
         }
     });
+    $(document).keyup(groupSelectKeyToggle);
     $(document).mousedown(function(ev) {
         $("body").removeClass('focus-indicators-enabled');
     });
+
+    $('[data-toggle="tooltip"]').tooltip({ delay: { show: 200 } });
 }
 
 function loadVersionInfo () {
@@ -1050,6 +1103,8 @@ function loadVersionInfo () {
 		success: function(xml) {
             versionInfo = $(xml);
             CURRENT_VERSION = versionInfo.find('current').attr('version');
+
+            if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
             
             $('.substitute-version').text('v'+CURRENT_VERSION);
             console.log("Running SPNATI version "+CURRENT_VERSION);
@@ -1079,7 +1134,9 @@ function loadVersionInfo () {
                 last_update_string =  n_days + (n_days === 1 ? ' day ago' : ' days ago');
             }
             
-            $('.substitute-version-time').text('(updated '+last_update_string+')')
+            $('.substitute-version-time').text('(updated '+last_update_string+')');
+
+            $('.version-button').click(showVersionModal);
         }
     });
 }
@@ -1135,6 +1192,15 @@ function loadConfigFile () {
                 console.log("Running SPNATI commit "+VERSION_COMMIT+'.');
             } else {
                 console.log("Could not find currently deployed Git commit!");
+            }
+
+            var _default_bg = $(xml).find('default-background').text();
+            if (_default_bg) {
+                defaultBackgroundID = _default_bg;
+                console.log("Using default background: "+defaultBackgroundID);
+            } else {
+                defaultBackgroundID = 'inventory';
+                console.log("No default background ID set, defaulting to 'inventory'...");
             }
 
             var _alts = $(xml).find('alternate-costumes').text();
@@ -1193,7 +1259,7 @@ function loadConfigFile () {
 }
 
 function loadGeneralCollectibles () {
-    $.ajax({
+    return $.ajax({
 		type: "GET",
 		url: 'opponents/general_collectibles.xml',
 		dataType: "text",
@@ -1214,6 +1280,7 @@ function enterTitleScreen() {
     $warningScreen.hide();
     $titleScreen.show();
     $('#title-start-button').focus();
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
 }
 
 /************************************************************
@@ -1232,7 +1299,6 @@ function advanceToNextScreen (screen) {
     if (screen == $titleScreen) {
         /* advance to the select screen */
 		screenTransition($titleScreen, $selectScreen);
-
     } else if (screen == $selectScreen) {
         /* advance to the main game screen */
         $selectScreen.hide();
@@ -1267,8 +1333,21 @@ function resetPlayers () {
  * Restarts the game.
  ************************************************************/
 function restartGame () {
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'ui',
+            message: 'Returning to title screen.',
+            level: 'info'
+        });
+
+        Sentry.setTag("screen", "title");
+        Sentry.setTag("epilogue_player", undefined);
+        Sentry.setTag("epilogue", undefined);
+        Sentry.setTag("epilogue_gallery", undefined);
+    }
 
     $(document).off('keyup');
+    $(document).keyup(groupSelectKeyToggle);
 
 	clearTimeout(timeoutID); // No error if undefined or no longer valid
 	timeoutID = autoForfeitTimeoutID = undefined;
@@ -1279,9 +1358,13 @@ function restartGame () {
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
     $gamePlayerCardArea.show();
-    if (!MINIMAL_UI) $gamePlayerClothingArea.show();
-    
+    $gamePlayerClothingArea.css('display', '');  /* Reset to default so as not to interfere with 
+                                                    switching between classic and minimal UI. */
     inGame = false;
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.setTag("in_game", false);
+    }
 
 	/* trigger screen refreshes */
 	updateSelectionVisuals();
@@ -1295,7 +1378,7 @@ function restartGame () {
 	$gameScreen.hide();
 	$epilogueScreen.hide();
 	clearEpilogue();
-	$titleScreen.show();
+    $titleScreen.show();
 }
 
 /**********************************************************************
@@ -1390,7 +1473,6 @@ function showBugReportModal () {
         return $('<option value="'+t[0]+'">'+t[1]+'</option>');
     }));
 
-    $('#bug-report-modal span[data-toggle="tooltip"]').tooltip();
     updateBugReportOutput();
 
     $bugReportModal.modal('show');
@@ -1415,11 +1497,87 @@ function showUsageTrackingModal() {
 function enableUsageTracking() {
     USAGE_TRACKING = true;
     save.saveUsageTracking();
+    sentryInit();
 }
 
 function disableUsageTracking() {
     USAGE_TRACKING = false;
     save.saveUsageTracking();
+}
+
+function sentryInit() {
+    if (USAGE_TRACKING && !SENTRY_INITIALIZED) {
+        console.log("Initializing Sentry...");
+
+        var sentry_opts = {
+            dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
+            release: VERSION_COMMIT,
+            maxBreadcrumbs: 100,
+            integrations: [new Sentry.Integrations.Breadcrumbs({
+                console: false,
+                dom: false
+            })],
+            beforeSend: function (event, hint) {
+                /* Inject additional game state data into event tags: */
+                if (!event.extra) event.extra = {};
+
+                if (inGame && !epiloguePlayer) {
+                    event.extra.recentLoser = recentLoser;
+                    event.extra.previousLoser = previousLoser;
+                    event.extra.gameOver = gameOver;
+                    event.extra.currentTurn = currentTurn;
+                    event.extra.currentRound = currentRound;
+
+                    event.tags.rollback = inRollback();
+                    event.tags.gamePhase = getGamePhaseString(gamePhase);
+                }
+
+                if (epiloguePlayer) {
+                    event.tags.epilogue = epiloguePlayer.epilogue.title;
+                    event.tags.epilogue_player = epiloguePlayer.epilogue.player.id;
+                    event.tags.epilogue_gender = epiloguePlayer.epilogue.gender;
+
+                    event.extra.loaded = epiloguePlayer.loaded;
+                    event.extra.directiveIndex = epiloguePlayer.directiveIndex;
+                    event.extra.sceneIndex = epiloguePlayer.sceneIndex;
+                    event.extra.viewIndex = epiloguePlayer.viewIndex;
+                }
+
+                var n_players = 0;
+                for (var i=1;i<players.length;i++) {
+                    if (players[i]) {
+                        n_players += 1;
+                        event.tags["character:" + players[i].id] = true;
+                        event.tags["slot-" + i] = players[i].id;
+
+                        if (players[i].alt_costume) {
+                            event.tags[players[i].id+":alt-costume"] = players[i].alt_costume.id;
+                        }
+                    } else {
+                        event.tags["slot-" + i] = undefined;
+                    }
+                }
+
+                event.tags.n_players = n_players;
+
+                return event;
+            }
+        };
+
+        if (window.location.origin.indexOf('spnati.net') >= 0) {
+            sentry_opts.environment = 'production';
+        }
+
+        Sentry.init(sentry_opts);
+
+        Sentry.setUser({
+            'id': sessionID,
+        });
+
+        Sentry.setTag("game_version", CURRENT_VERSION);
+
+        SENTRY_INITIALIZED = true;
+    }
 }
 
 var SEMVER_RE = /[vV]?(\d+)\.(\d+)(?:\.(\d+))?(?:\-([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-])*))?(?:\+([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*))?/;
@@ -1581,19 +1739,21 @@ function showPlayerTagsModal () {
             var replace = (choiceName != 'skin_color' || selectionType === 'number');
             var $existing = $('form#player-tags [name="'+choiceName+'"]');
             if (!replace && $existing.length) continue;
-            var $select = $('<select>', { name: choiceName });
+            var $select = $('<select>', { name: choiceName, id: 'player-tag-choice-'+choiceName });
             $select.append('<option>', playerTagOptions[choiceName].values.map(function(opt) {
                 return $('<option>').val(opt.value).addClass(opt.gender).append(opt.text || opt.value.replace(/_/g, ' ').initCap());
             }));
             if ($existing.length) {
                 $existing.parent().replaceWith($select);
             } else {
-                var $label = $('<label class="player-tag-select">');
+                var $label = $('<div class="player-tag-select">');
+                $label.append($('<label>', { 'for': 'player-tag-choice-' + choiceName,
+                                             'text': 'Choose your ' + choiceName.replace(/_/g, ' ') + ':'}));
                 if (playerTagOptions[choiceName].gender) {
                     $select.addClass(playerTagOptions[choiceName].gender);
                     $label.addClass(playerTagOptions[choiceName].gender);
                 }
-                $label.append('Choose your ' + choiceName.replace(/_/g, ' ') + ':', $select);
+                $label.append($select);
                 $('form#player-tags').append($label);
             }
         }
@@ -1722,7 +1882,7 @@ function showPlayerTagsModal () {
     $('#player-tags-confirm').one('click', function() {
         playerTagSelections = {};
         for (var choiceName in playerTagOptions) {
-            if (!('gender' in playerTagOptions[choiceName]) || playerTagOptions[choiceName].gender == players[HUMAN_PLAYER].gender) {
+            if (!('gender' in playerTagOptions[choiceName]) || playerTagOptions[choiceName].gender == humanPlayer.gender) {
                 var val = $('form#player-tags [name="'+choiceName+'"]').val();
                 if (val) {
                     playerTagSelections[choiceName] = val;
@@ -1762,19 +1922,34 @@ function forceTableVisibility(state) {
 function showImportModal() {
     $("#export-code").text(save.serializeLocalStorage());
     
+    $('#import-invalid-code').hide();
+
     if (codeImportEnabled) {
         $('#import-progress').prop('disabled', false);
-        $('.import-restriction-warning').hide();
+        $('#import-restriction-warning').hide();
     } else {
         $('#import-progress').prop('disabled', true);
-        $('.import-restriction-warning').show();
+        $('#import-restriction-warning').show();
     }
     
     $ioModal.modal('show');
 
     $('#import-progress').click(function() {
         var code = $("#export-code").val();
-        save.deserializeLocalStorage(code);
+
+        if (SENTRY_INITIALIZED) {
+            Sentry.addBreadcrumb({
+                category: 'ui',
+                message: 'Loading save code...',
+                level: 'info'
+            });
+        }
+
+        if (save.deserializeLocalStorage(code)) {
+            $ioModal.modal('hide');
+        } else {
+            $('#import-invalid-code').show();
+        }
     });
 }
 
@@ -1796,7 +1971,7 @@ String.prototype.initCap = function() {
 	return this.substr(0, 1).toUpperCase() + this.substr(1);
 }
 
-// Polyfill for IE
+// Polyfills for IE
 if (!String.prototype.startsWith) {
     Object.defineProperty(String.prototype, 'startsWith', {
         value: function(search, pos) {
@@ -1806,20 +1981,31 @@ if (!String.prototype.startsWith) {
     });
 }
 
+if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function (search, this_len) {
+        if (this_len === undefined || this_len > this.length) {
+            this_len = this.length;
+        }
+        return this.substring(this_len - search.length, this_len) === search;
+    };
+}
+
 /************************************************************
  * Counts the number of elements that evaluate as true, or,
  * if a function is provided, passes the test implemented by it.
  ************************************************************/
-Array.prototype.countTrue = function(func) {
-    var count = 0;
-    for (var i = 0; i < this.length; i++) {
-        if (i in this
-            && (func ? func(this[i], i, this) : this[i])) {
-            count++;
+Object.defineProperty(Array.prototype, 'countTrue', {
+    value: function(func) {
+        var count = 0;
+        for (var i = 0; i < this.length; i++) {
+            if (i in this
+                && (func ? func(this[i], i, this) : this[i])) {
+                count++;
+            }
         }
+        return count;
     }
-    return count;
-}
+});
 
 /************************************************************
  * Generate a random alphanumeric ID.
@@ -1866,11 +2052,6 @@ function autoResizeFont ()
 	}
 	/* set up future resizing */
 	window.onresize = autoResizeFont;
-}
-
-/* Get the number of players loaded, including the human player.*/
-function countLoadedOpponents() {
-    return players.reduce(function (a, v) { return a + (v ? 1 : 0); }, 0);
 }
 
 $('.modal').on('show.bs.modal', function() {

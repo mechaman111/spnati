@@ -599,6 +599,11 @@ OpponentDisplay.prototype.onResize = function () {
 }
 
 OpponentDisplay.prototype.updateText = function (player) {
+    if (!player.chosenState.dialogue) {
+        this.dialogue.empty();
+        return;
+    }
+
     var displayElems = parseStyleSpecifiers(player.chosenState.dialogue).map(function (comp) {
         /* {'text': 'foo', 'classes': 'cls1 cls2 cls3'} --> <span class="cls1 cls2 cls3">foo</span> */
         
@@ -671,7 +676,7 @@ OpponentDisplay.prototype.update = function(player) {
     if (player.dialogue_layering === 'over') {
         this.bubble.css('z-index', player.z_index + 1);
     } else {
-        this.bubble.css('z-index', player.z_index - 1);
+        this.bubble.css('z-index', player.z_index);
     }
     
     if (showDebug && !inRollback()) {
@@ -721,10 +726,7 @@ GameScreenDisplay.prototype.reset = function (player) {
     
     if (player) {
         this.opponentArea.show();
-        this.imageArea.css({
-            'height': player.scale + '%',
-            'top': (100 - player.scale) + '%'
-        }).show();
+        this.imageArea.css('height', 0.8 * player.scale + '%').show();
         this.label.removeClass("current loser tied");
     } else {
         this.opponentArea.hide();
@@ -776,8 +778,9 @@ MainSelectScreenDisplay.prototype.update = function (player) {
     if (!player) {
         this.hideBubble();
         this.clearPose();
+        this.imageArea.css('z-index', '-100');
         this.label.html("Opponent " + this.slot);
-        
+
         /* change the button */
         this.selectButton.html("Select Opponent");
         this.selectButton.removeClass("smooth-button-red");
@@ -806,10 +809,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         } else {
             this.pose.onLoadComplete = function () {
                 this.bubble.show();
-                this.imageArea.css({
-                    'height': player.scale + '%',
-                    'top': (100 - player.scale) + '%'
-                }).show();
+                this.imageArea.css('height', 0.8 * player.scale + '%').show();
             }.bind(this);
         }
     }
@@ -841,7 +841,8 @@ function OpponentSelectionCard (opponent) {
     this.genderIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'gender-icon')));
     this.statusIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'status-icon')));
     
-    $(this.epilogueBadge).attr('src', "img/epilogue_icon.png");
+    $(this.epilogueBadge).attr({src: "img/epilogue_icon.png",
+                                alt: "SPNatI Epilogue available"});
     
     var footerElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-footer'));
     this.label = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-name')));
@@ -860,31 +861,16 @@ OpponentSelectionCard.prototype.update = function () {
         this.epilogueBadge.hide();
     }
 
-    if (this.opponent.status) {
-        var status_icon_img = 'img/testing-badge.png';
-        var status_tooltip = TESTING_STATUS_TOOLTIP;
-        
-        if (this.opponent.status === 'offline') {
-            status_icon_img = 'img/offline-badge.png';
-            status_tooltip = OFFLINE_STATUS_TOOLTIP;
-        } else if (this.opponent.status === 'incomplete') {
-            status_icon_img = 'img/incomplete-badge.png';
-            status_tooltip = INCOMPLETE_STATUS_TOOLTIP;
-        }
-    
-        this.statusIcon.attr({
-            'src': status_icon_img,
-            'title': status_tooltip,
-            'data-original-title': status_tooltip,
-        }).show().tooltip({
-            'placement': 'left'
-        });
-    } else {
-        this.statusIcon.removeAttr('title').removeAttr('data-original-title').hide();
-    }
+    updateStatusIcon(this.statusIcon, this.opponent.status);
 
-    this.layerIcon.show().attr("src", "img/layers" + this.opponent.layers + ".png");
-    this.genderIcon.show().attr("src", this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png');
+    this.layerIcon.attr({
+        src: "img/layers" + this.opponent.layers + ".png",
+        alt: this.opponent.layers + " layers",
+    }).show() ;
+    this.genderIcon.attr({
+        src: this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png',
+        alt: this.opponent.gender.initCap(),
+    }).show();
     this.simpleImage.attr('src', this.opponent.selection_image).css('height', this.opponent.scale + '%').show();
     
     this.label.text(this.opponent.label);
@@ -955,6 +941,15 @@ OpponentDetailsDisplay.prototype.constructor = OpponentDetailsDisplay;
 OpponentDetailsDisplay.prototype.handleSelected = function (ev) {
     if (!this.opponent) return;
     
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Loading individual opponent ' + this.opponent.id,
+            level: 'info'
+        });
+        Sentry.setTag("screen", "select-main");
+    }
+
     players[selectedSlot] = this.opponent;
 	players[selectedSlot].loadBehaviour(selectedSlot, true);
     updateSelectionVisuals();
@@ -1211,9 +1206,9 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         if (endingGenders.male && endingGenders.female) {
             epilogueAvailable = true;
         } else if (endingGenders.male) {
-            epilogueAvailable = (players[HUMAN_PLAYER].gender === 'male');
+            epilogueAvailable = (humanPlayer.gender === 'male');
         } else if (endingGenders.female) {
-            epilogueAvailable = (players[HUMAN_PLAYER].gender === 'female');
+            epilogueAvailable = (humanPlayer.gender === 'female');
         }
         
         if (epilogueAvailable) {

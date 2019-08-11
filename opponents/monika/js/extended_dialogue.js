@@ -11,126 +11,186 @@
         root.monika.ext_dialogue = root.monika_ext_dialogue;
     }
 }(this, function (root, monika) {
-var exports = {};
+    var exports = {};
 
-var extended_dialogues = {
-    'psa1': [
-        ["happy", "Thanks, ~player~! That really means a lot to me. I promise it won't take too long!"],
-        ["awkward-question", "So, um... I know there are a lot of, um... other people... that you might want to see here at the Inventory!"],
-        ["writing-tip", "And that's great! I know everyone working, um, <i>behind the scenes</i> here would love to see more people join us!"],
-        ["writing-tip", "But we can't do it alone. We've all got so many other characters and things we're already working on..."],
-        ["exasperated", "And we have lives of our own, as well!"],
-        ["exasperated", "So if you just throw your ideas out there and walk away, we're probably not going to pay any attention to them at all!"],
-        ["writing-tip", "So, if you really, really want to see a character here at the Inventory..."],
-        ["writing-tip", "...then you should try making them yourself, first!"],
-        ["exasperated", "And, yeah, it can be kind of difficult and daunting, especially at first..."],
-        ["writing-tip", "But, there are a lot of people working here, behind the scenes, that would be more than willing to help you out!"],
-        ["calm", "But <i>you</i> need to take the first step."],
-        ["happy", "...anyway, that's my advice for right now."],
-        ["calm", "Thanks for listening~"],
-    ]
-}
+    var extended_dialogues = {
+        'psa1': [
+            ["happy", "Thanks, ~player~! That really means a lot to me. I promise it won't take too long!"],
+            ["awkward-question", "So, um... I know there are a lot of, um... other people... that you might want to see here at the Inventory!"],
+            ["writing-tip", "And that's great! I know everyone working, um, <i>behind the scenes</i> here would love to see more people join us!"],
+            ["writing-tip", "But we can't do it alone. We've all got so many other characters and things we're already working on..."],
+            ["exasperated", "And we have lives of our own, as well!"],
+            ["exasperated", "So if you just throw your ideas out there and walk away, we're probably not going to pay any attention to them at all!"],
+            ["writing-tip", "So, if you really, really want to see a character here at the Inventory..."],
+            ["writing-tip", "...then you should try making them yourself, first!"],
+            ["exasperated", "And, yeah, it can be kind of difficult and daunting, especially at first..."],
+            ["writing-tip", "But, there are a lot of people working here, behind the scenes, that would be more than willing to help you out!"],
+            ["calm", "But <i>you</i> need to take the first step."],
+            ["happy", "...anyway, that's my advice for right now."],
+            ["calm", "Thanks for listening~"],
+        ],
+        'legal-compliance': [
+            ["exasperated", "Ahem~!"],
+            ["writing-tip", "<i>SPNATI</i> is purely fan-made content and is completely unaffiliated with the official Doki Doki Literature Club, or with Team Salvato."],
+            ["horny", "Although I understand if you want to skip ahead and see, well, <i>all</i> of me, if you haven't played DDLC yet, you should do that first."],
+            ["happy", "Also, you can download DDLC at: {mono}<a href=\"https://ddlc.moe\">https://ddlc.moe</a>."],
+            ["happy", "And... I think that's it. Sorry about that."],
+            ["writing-tip", "I'm sure that was really boring, right? All that dry legalese..."],
+            ["exasperated", "But, well, it really wouldn't do for the Inventory to get shut down by an IP dispute, right?"],
+            ["writing-tip", "Anyways, I'm really glad you took the time to listen. Thanks~!"]
+        ],
+    }
 
-exports.dialogues = extended_dialogues;
+    exports.dialogues = extended_dialogues;
 
-var extendedDialoguePhase = [ "Talking...", function() { monika.ext_dialogue.continue_extended_dialogue(); }, false ];
-var previousGamePhase = null;
-var currentExtendedDialogue = null;
-var backgroundEffects = [];
+    var extendedDialoguePhase = ["Talking...", function () {
+        monika.ext_dialogue.continue_extended_dialogue();
+    }, false, false];
+    var previousGamePhase = null;
+    var backgroundEffects = Array(4);
 
-exports.extendedDialoguePhase = extendedDialoguePhase;
+    exports.extendedDialoguePhase = extendedDialoguePhase;
+    root.eGamePhase.EXTENDED_DIALOGUE = extendedDialoguePhase;
 
-function display_dialogue (pose, dialogue) {
-    var pl = monika.utils.get_monika_player();
-    var img = pl.stage + '-' + pose + '.png';
-    
-    pl.chosenState.dialogue = expandDialogue(dialogue, pl, pl.currentTarget, null);
-    pl.chosenState.image = img;
-    
-    gameDisplays[pl.slot-1].update(pl);
-}
+    function handleRollbackGlitchEffects(slot) {
+        var pl = monika.utils.get_monika_player();
+        if (slot === pl.slot) return;
 
-function continue_extended_dialogue () {
-    var curr_info = currentExtendedDialogue;
-    
-    try {
-        var next_line = extended_dialogues[curr_info.id][curr_info.line];
-        display_dialogue(next_line[0], next_line[1]);
-        curr_info.line++;
-    } catch (e) {
-        monika.reportException('in extended dialogue', e);
-    } finally {
-        if(curr_info.line >= extended_dialogues[curr_info.id].length) {
-            end_extended_dialogue();
-        } else {
-            allowProgression(extendedDialoguePhase);
+        if (inRollback() && rolledBackGamePhase === extendedDialoguePhase) {
+            if (players[slot] && $gameBubbles[slot - 1]) {
+                $gameBubbles[slot - 1].hide();
+            }
+
+            if (!backgroundEffects[slot - 1]) {
+                backgroundEffects[slot - 1] = new monika.effects.VisualGlitchEffect(slot);
+                backgroundEffects[slot - 1].execute();
+            }
         }
     }
-}
-exports.continue_extended_dialogue = continue_extended_dialogue;
+    monika.registerHook('updateGameVisual', 'post', handleRollbackGlitchEffects);
 
-function extended_dialogue_start (id) {
-    var slot = monika.utils.monika_slot();
-    
-    try {
-        console.log("[Monika] Beginning extended dialogue with ID "+id);
-        
-        if (AUTO_FADE) forceTableVisibility(false);
-        
-        currentExtendedDialogue = {
-            'id': id,
-            'line': 0,
+    function cleanupBackgroundEffects() {
+        players.forEach(function (player, i) {
+            try {
+                if (player && $gameBubbles[i - 1]) {
+                    $gameBubbles[i - 1].show();
+                }
+            } catch (e) {
+                monika.reportException('when re-showing bubbles in cleanupBackgroundEffects', e);
+            }
+        });
+
+        backgroundEffects.forEach(function (eff, idx) {
+            try {
+                if (eff) eff.revert();
+                delete backgroundEffects[idx];
+            } catch (e) {
+                monika.reportException('when reverting extended dialogue background effects', e);
+            }
+        });
+    }
+    monika.registerHook('exitRollback', 'post', cleanupBackgroundEffects);
+
+    function display_dialogue(pose, dialogue) {
+        var pl = monika.utils.get_monika_player();
+        var img = pl.stage + '-' + pose + '.png';
+
+        pl.chosenState.dialogue = expandDialogue(dialogue, pl, pl.currentTarget, null);
+        pl.chosenState.image = img;
+
+        gameDisplays[pl.slot - 1].update(pl);
+        saveSingleTranscriptEntry(pl.slot);
+    }
+
+    function continue_extended_dialogue() {
+        var pl = monika.utils.get_monika_player();
+        var curr_id = pl.markers['extended-dialogue-id'];
+        var curr_line = parseInt(pl.markers['extended-dialogue-line'], 10);
+
+        try {
+            if (extended_dialogues[curr_id] && extended_dialogues[curr_id][curr_line]) {
+                var next_line = extended_dialogues[curr_id][curr_line];
+                display_dialogue(next_line[0], next_line[1]);
+
+                pl.markers['extended-dialogue-line'] = curr_line + 1;
+                allowProgression(extendedDialoguePhase);
+            } else {
+                end_extended_dialogue();
+            }
+        } catch (e) {
+            monika.reportException('in extended dialogue', e);
+            end_extended_dialogue();
         }
+    }
+    exports.continue_extended_dialogue = continue_extended_dialogue;
 
-        for(var i=1;i<players.length;i++) {
-            if(players[i] && i !== slot) {
-                try {
-                    $gameBubbles[i-1].hide();
-                    
-                    var eff = new monika.effects.VisualGlitchEffect(i);
-                    eff.execute();
-                    backgroundEffects.push(eff);
-                } catch (e) {
-                    monika.reportException('when starting BG effects in extended_dialogue_start', e);
+    function extended_dialogue_start(id) {
+        var pl = monika.utils.get_monika_player();
+
+        try {
+            console.log("[Monika] Beginning extended dialogue with ID " + id);
+
+            if (root.SENTRY_INITIALIZED) {
+                root.Sentry.addBreadcrumb({
+                    category: 'monika',
+                    message: 'Beginning extended dialogue: ' + id,
+                    level: 'info'
+                });
+
+                root.Sentry.setTag("extended_dialogue", id);
+            }
+
+            if (AUTO_FADE) forceTableVisibility(false);
+
+            pl.markers['extended-dialogue-id'] = id;
+            pl.markers['extended-dialogue-line'] = 0;
+
+            backgroundEffects = Array(4);
+            for (var i = 1; i < players.length; i++) {
+                if (players[i] && i !== pl.slot) {
+                    try {
+                        $gameBubbles[i - 1].hide();
+
+                        backgroundEffects[i - 1] = new monika.effects.VisualGlitchEffect(i);
+                        backgroundEffects[i - 1].execute();
+                    } catch (e) {
+                        monika.reportException('when starting BG effects in extended_dialogue_start', e);
+                    }
                 }
             }
-        }
-    } catch(e) {
-        monika.reportException('in extended_dialogue_start', e);
-    } finally {
-        previousGamePhase = gamePhase;
-        $gameBubbles[slot-1].show();
-        
-        continue_extended_dialogue();
-    }
-}
-monika.registerBehaviourCallback('extended_dialogue_start', extended_dialogue_start);
-
-function end_extended_dialogue() {
-    allowProgression(previousGamePhase);
-    currentExtendedDialogue = null;
-    
-    for(var i=1;i<players.length;i++) {
-        if(players[i]) {
-            try {
-                $gameBubbles[i-1].show();
-            } catch (e) {
-                monika.reportException('when re-showing bubbles in end_extended_dialogue', e);
-            }
-        }
-    }
-    
-    backgroundEffects.forEach(function (eff) {
-        try {
-            eff.revert();    
         } catch (e) {
-            monika.reportException('when reverting effects in end_extended_dialogue', e);
-        }
-    });
-    backgroundEffects = [];
-    
-    if (AUTO_FADE) forceTableVisibility(true);
-}
+            monika.reportException('in extended_dialogue_start', e);
+        } finally {
+            previousGamePhase = gamePhase;
+            $gameBubbles[pl.slot - 1].show();
 
-return exports;
+            continue_extended_dialogue();
+        }
+    }
+    monika.registerBehaviourCallback('extended_dialogue_start', extended_dialogue_start);
+
+    function end_extended_dialogue() {
+        var pl = monika.utils.get_monika_player();
+
+        if (root.SENTRY_INITIALIZED) {
+            root.Sentry.addBreadcrumb({
+                category: 'monika',
+                message: 'Ending extended dialogue...',
+                level: 'info'
+            });
+
+            root.Sentry.setTag("extended_dialogue", null);
+        }
+
+        allowProgression(previousGamePhase);
+
+        delete pl.markers['extended-dialogue-id'];
+        delete pl.markers['extended-dialogue-line'];
+
+        cleanupBackgroundEffects();
+
+        if (AUTO_FADE) forceTableVisibility(true);
+    }
+
+    return exports;
 }));

@@ -13,6 +13,15 @@ ATTR_ESCAPES = {
 }
 ATTR_ESCAPE_RE = re.compile('|'.join(ATTR_ESCAPES.keys()))
 
+ATTR_UNESCAPES = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&#10;': '\n',
+}
+ATTR_UNESCAPE_RE = re.compile('|'.join(ATTR_UNESCAPES.keys()))
+
 TEXT_ESCAPES = {
     '<': 'lt',
     '>': 'gt',
@@ -75,8 +84,13 @@ class OrderedXMLElement(object):
             if child.type == find_tag:
                 yield child
 
-    def __serialize(self, level=0, escape_text=True):
-        attr_string = " ".join(["{:s}=\"{:s}\"".format(k, XMLEscape(str(v), ATTR_ESCAPES, ATTR_ESCAPE_RE)) for k,v in self.attributes.items()])
+    def __serialize(self, level=0, escape_text=True, escape_attrs=True):
+        if escape_attrs:
+            attr_string = " ".join(["{:s}=\"{:s}\"".format(
+                k, XMLEscape(XMLUnescape(str(v), ATTR_UNESCAPE_RE, ATTR_UNESCAPE_RE), ATTR_ESCAPES, ATTR_ESCAPE_RE)
+            ) for k,v in self.attributes.items()])
+        else:
+            attr_string = " ".join(["{:s}=\"{:s}\"".format(k, str(v)) for k,v in self.attributes.items()])
         
         if len(attr_string) > 0:
             attr_string = ' '+attr_string
@@ -100,7 +114,7 @@ class OrderedXMLElement(object):
             for child in self.children:
                 if child.blank_before and (len(l) == 0 or l[-1] != ''):
                     l.append('')
-                for line in child.__serialize(level + 1, escape_text):
+                for line in child.__serialize(level + 1, escape_text, escape_attrs):
                     l.append((INDENT+line).rstrip())
                 if child.blank_after:
                     l.append('')
@@ -110,8 +124,8 @@ class OrderedXMLElement(object):
         else:
             raise NotImplementedError("OrderedXMLElements do not support having both child elements and text.")
             
-    def serialize(self, escape_text=True):
-        return '\n'.join(["<?xml version='1.0' encoding='UTF-8'?>"] + self.__serialize(0, escape_text)) + '\n'
+    def serialize(self, escape_text=True, escape_attrs=True):
+        return '\n'.join(["<?xml version='1.0' encoding='UTF-8'?>"] + self.__serialize(0, escape_text, escape_attrs)) + '\n'
 
 # This is similar to how ElementTree does it, except we just set the tag to None to signify a comment.
 def Comment(text):

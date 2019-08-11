@@ -46,6 +46,33 @@ function Clothing (name, generic, type, position, image, plural, id) {
     this.id = id;
 }
 
+/*************************************************************
+ * Check if the player has major articles covering both the upper and
+ * lower body.  Currently only used to determine whether the human
+ * player is "decent".
+ *************************************************************/
+Player.prototype.isDecent = function() {
+    return !(this.exposed.upper || this.exposed.lower)
+        && this.clothing.some(function(c) {
+            return (c.position == UPPER_ARTICLE || c.position == FULL_ARTICLE) && c.type == MAJOR_ARTICLE;
+        }) && this.clothing.some(function(c) {
+            return (c.position == LOWER_ARTICLE || c.position == FULL_ARTICLE) && c.type == MAJOR_ARTICLE;
+        });
+};
+
+/*************************************************************
+ * Check if the player chest and/or crotch is covered (not exposed).
+ *************************************************************/
+Player.prototype.isCovered = function(position) {
+    if (position == FULL_ARTICLE || position === undefined) {
+        return [UPPER_ARTICLE, LOWER_ARTICLE].every(Player.prototype.isCovered, this);
+    }
+    return this.clothing.some(function(c) {
+		return (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE)
+            && (c.position == position || c.position == FULL_ARTICLE);
+	});
+};
+
 /**********************************************************************
  *****                    Stripping Variables                     *****
  **********************************************************************/
@@ -74,7 +101,7 @@ function getClothingTrigger (player, clothing, removed) {
 	if (type == IMPORTANT_ARTICLE || type == MAJOR_ARTICLE) {
 		if (pos == FULL_ARTICLE) {
 			if (!player.clothing.some(function(c) {
-				return c.position == LOWER_ARTICLE && c !== clothing;
+				return c.position == LOWER_ARTICLE && c !== clothing && [IMPORTANT_ARTICLE, MAJOR_ARTICLE].indexOf(c.type) >= 0;
 			})) {
 				// If removing this article exposes the crotch,
 				// pretend that it's an lower body article, even if it
@@ -223,8 +250,8 @@ function playerMustStrip (player) {
 		/* the player has clothes and will strip */
 		if (player == HUMAN_PLAYER) {
 			var trigger;
-			if (clothing.length == 1 && clothing[0].type == IMPORTANT_ARTICLE) {
-				if (players[HUMAN_PLAYER].gender == eGender.MALE) {
+			if (clothing.length == 1 && (clothing[0].type == IMPORTANT_ARTICLE || clothing[0].type == MAJOR_ARTICLE)) {
+				if (humanPlayer.gender == eGender.MALE) {
 					if (clothing[0].position == LOWER_ARTICLE) {
 						trigger = [[MALE_CROTCH_WILL_BE_VISIBLE, OPPONENT_CROTCH_WILL_BE_VISIBLE]];
 					} else {
@@ -237,9 +264,9 @@ function playerMustStrip (player) {
 						trigger = [[FEMALE_CHEST_WILL_BE_VISIBLE, OPPONENT_CHEST_WILL_BE_VISIBLE]];
 					}
 				}
-				players[HUMAN_PLAYER].removedClothing = clothing[0];
+				humanPlayer.removedClothing = clothing[0];
 			} else {
-				if (players[HUMAN_PLAYER].gender == eGender.MALE) {
+				if (humanPlayer.gender == eGender.MALE) {
 				    trigger = [[MALE_HUMAN_MUST_STRIP, OPPONENT_LOST], [MALE_MUST_STRIP, OPPONENT_LOST]];
 				} else {
 				    trigger = [[FEMALE_HUMAN_MUST_STRIP, OPPONENT_LOST], [FEMALE_MUST_STRIP, OPPONENT_LOST]];
@@ -285,7 +312,7 @@ function prepareToStripPlayer (player) {
 		updateAllBehaviours(
 			player,
 			null,
-			players[HUMAN_PLAYER].gender == eGender.MALE ? MALE_HUMAN_MUST_STRIP : FEMALE_HUMAN_MUST_STRIP
+			humanPlayer.gender == eGender.MALE ? MALE_HUMAN_MUST_STRIP : FEMALE_HUMAN_MUST_STRIP
 		);
     } else {
         var toBeRemovedClothing = players[player].clothing[players[player].clothing.length - 1];
@@ -315,10 +342,10 @@ function showStrippingModal () {
   $stripClothing.html("");
 
   /* load the player's clothing into the modal */
-  for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
+  for (var i = 0; i < humanPlayer.clothing.length; i++) {
     var clothingCard =
       "<div class='clothing-modal-container'><input type='image' class='bordered modal-clothing-image' src="+
-      players[HUMAN_PLAYER].clothing[i].image+" onclick='selectClothingToStrip.bind(this)("+i+")'/></div>";
+      humanPlayer.clothing[i].image+" onclick='selectClothingToStrip.bind(this)("+i+")'/></div>";
 
     $stripClothing.append(clothingCard);
   }
@@ -340,8 +367,8 @@ function showStrippingModal () {
  ************************************************************/
 function selectClothingToStrip (id) {
   console.log(id);
-  if (players[HUMAN_PLAYER].clothing.length <= id) {
-    console.error('Error: Attempted to select clothing out of bounds', id, players[HUMAN_PLAYER].clothing);
+  if (humanPlayer.clothing.length <= id) {
+    console.error('Error: Attempted to select clothing out of bounds', id, humanPlayer.clothing);
     return;
   }
 
@@ -361,7 +388,7 @@ function clothing_keyUp(e) {
         && $('.modal-clothing-image:focus').not('.modal-selected-clothing-image').length == 0) {
 		$stripButton.click();
         e.preventDefault();
-    } else if (e.keyCode >= 49 && e.keyCode < 49 + players[HUMAN_PLAYER].clothing.length) { // A number key
+    } else if (e.keyCode >= 49 && e.keyCode < 49 + humanPlayer.clothing.length) { // A number key
         $('.clothing-modal-container:nth-child('+(e.keyCode - 48)+') > .modal-clothing-image').focus().click();
     }
 }
@@ -377,57 +404,45 @@ function closeStrippingModal (id) {
 		$stripClothing.html("");
 				
         /* grab the removed article of clothing */
-        var removedClothing = players[HUMAN_PLAYER].clothing[id];
+        var removedClothing = humanPlayer.clothing[id];
+        var origClothingType = removedClothing.type;
 
-        players[HUMAN_PLAYER].clothing.splice(id, 1);
-        players[HUMAN_PLAYER].timeInStage = -1;
-        players[HUMAN_PLAYER].removedClothing = removedClothing;
+        humanPlayer.clothing.splice(id, 1);
+        humanPlayer.timeInStage = -1;
+        humanPlayer.removedClothing = removedClothing;
 
         /* figure out if it should be important */
         if ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(removedClothing.position) >= 0
-            && (removedClothing.type == IMPORTANT_ARTICLE || removedClothing.type == MAJOR_ARTICLE)) {
-            var otherClothing;
-            for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
-                if (players[HUMAN_PLAYER].clothing[i].position === removedClothing.position
-                    && players[HUMAN_PLAYER].clothing[i].type != MINOR_ARTICLE) {
-                    console.log(players[HUMAN_PLAYER].clothing[i]);
-                    otherClothing = players[HUMAN_PLAYER].clothing[i];
-                    break;
+            && ([IMPORTANT_ARTICLE, MAJOR_ARTICLE].indexOf(removedClothing.type) >= 0)) {
+            for (position in humanPlayer.exposed) {
+			    if (!humanPlayer.isCovered(position)) {
+				    humanPlayer.exposed[position] = true;
+			    } else if ((removedClothing.type == IMPORTANT_ARTICLE && removedClothing.position == position)) {
+                    removedClothing.type = MAJOR_ARTICLE;
                 }
             }
-            console.log(otherClothing);
-            if (!otherClothing) {
-                removedClothing.type = IMPORTANT_ARTICLE;
-            } else if (removedClothing.type == IMPORTANT_ARTICLE) {
+            // For the future; there are no human clothes with position = both, especially no important ones.
+            if (removedClothing.position == FULL_ARTICLE && removedClothing.type == IMPORTANT_ARTICLE && humanPlayer.isCovered()) {
                 removedClothing.type = MAJOR_ARTICLE;
-                /* Just make any other remaining article important instead,
-                   so that, if it is the last one, it's considered as such by
-                   playerMustStrip() */
-                otherClothing.type = IMPORTANT_ARTICLE;
             }
         }
         if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
-            players[HUMAN_PLAYER].mostlyClothed = false;
+            humanPlayer.mostlyClothed = false;
         }
-        if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE].indexOf(removedClothing.type) >= 0
-			&& [UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(removedClothing.position) >= 0) {
-            players[HUMAN_PLAYER].decent = false;
-        }
-        if (removedClothing.type == IMPORTANT_ARTICLE) {
-            players[HUMAN_PLAYER].exposed[removedClothing.position] = true;
-        }
+        humanPlayer.decent = humanPlayer.isDecent();
         
         /* determine its dialogue trigger */
-        var dialogueTrigger = getClothingTrigger(players[HUMAN_PLAYER], removedClothing, true);
+        var dialogueTrigger = getClothingTrigger(humanPlayer, removedClothing, true);
         console.log(removedClothing);
+        removedClothing.type = origClothingType;
         /* display the remaining clothing */
         displayHumanPlayerClothing();
         
         /* count the clothing the player has remaining */
-        players[HUMAN_PLAYER].stage++
+        humanPlayer.stage++
         
         /* update label */
-        if (players[HUMAN_PLAYER].clothing.length > 0) {
+        if (humanPlayer.clothing.length > 0) {
             $gameClothingLabel.html("Your Remaining Clothing");
         } else {
             $gameClothingLabel.html("You're Naked");
@@ -460,22 +475,18 @@ function stripAIPlayer (player) {
 	/* grab the removed article of clothing and determine its dialogue trigger */
 	var removedClothing = players[player].clothing.pop();
 	players[player].removedClothing = removedClothing;
-	if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
-		players[player].mostlyClothed = false;
-	}
-	if (removedClothing.type === IMPORTANT_ARTICLE) {
-	    players[player].exposed[removedClothing.position] = true;
-	    players[player].decent = false;
-	} else if (removedClothing.type === MAJOR_ARTICLE) {
-		for (position in players[player].exposed) {
-			if (!players[player].clothing.some(function(c) {
-				return (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE) && (c.position == position || c.position == FULL_ARTICLE);
-			})) {
-				players[player].exposed[position] = true;
-			}
-		}
-	    players[player].decent = false;
-	}
+    if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
+        players[player].mostlyClothed = false;
+    }
+    if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
+        for (position in players[player].exposed) {
+            if ((removedClothing.type == IMPORTANT_ARTICLE && position == removedClothing.position)
+                || !players[player].isCovered(position)) {
+                players[player].exposed[position] = true;
+            }
+        }
+        players[player].decent = false;
+    }
 	var dialogueTrigger = getClothingTrigger(players[player], removedClothing, true);
 
 	players[player].stage++;

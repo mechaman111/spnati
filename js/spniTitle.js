@@ -22,6 +22,44 @@ $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
  **********************************************************************/
 
 var CANDY_LIST = [
+    "reskins/juri_summer/0-calm.png",
+    "reskins/juri_summer/0-horny.png",
+    "reskins/juri_summer/1-excited.png",
+    "reskins/juri_summer/1-interested.png",
+
+    "reskins/monika_stirring_mermaid/0-writing-tip.png",
+    "reskins/monika_stirring_mermaid/1-interested.png",
+    "reskins/monika_stirring_mermaid/2-happy.png",
+    "reskins/monika_stirring_mermaid/3-shy-happy.png",
+
+    "reskins/summertime_ryuji/0-cocky.png",
+    "reskins/summertime_ryuji/1-cheerful.png",
+    "reskins/summertime_ryuji/2-startled.png",
+    "reskins/summertime_ryuji/3-awkward.png",
+
+    "reskins/summertime_sayaka/0-happy.png",
+    "reskins/summertime_sayaka/1-calm.png",
+    "reskins/summertime_sayaka/2-bored.png",
+    "reskins/summertime_sayaka/3-awkward.png",
+
+    "reskins/swimsuit_sheena/0-calm.png",
+    "reskins/swimsuit_sheena/1-excited.png",
+    "reskins/swimsuit_sheena/2-interested.png",
+    "reskins/swimsuit_sheena/3-sulky.png",
+
+    "reskins/summer_larachel/0-calm.png",
+    "reskins/summer_larachel/1-confident.png",
+    "reskins/summer_larachel/2-calm.png",
+    "reskins/summer_larachel/3-confident.png",
+
+    "reskins/nugi-chan_bikini/0-select.png",
+    "reskins/nugi-chan_bikini/1-loss.png",
+    "reskins/nugi-chan_bikini/2-embarrassed.png",
+    "reskins/nugi-chan_bikini/3-interested.png",
+];
+
+/*
+var CANDY_LIST = [
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -170,11 +208,12 @@ var CANDY_LIST = [
     "zizou/1-excited.png",
     "zizou/2-happy.png",
     "zizou/3-interested.png",
-    "zone-tan/0-calm.png",
-    "zone-tan/1-interested.png",
-    "zone-tan/1-serene2.png",
-    "zone-tan/2-wink.png",
+    "zone-tan/0-pleased.png",
+    "zone-tan/1-explain.png",
+    "zone-tan/1-smirk.png",
+    "zone-tan/2-stroking.png",
 ];
+*/
 
 var clothingChoices = [];
 var selectedChoices;
@@ -184,10 +223,10 @@ var playerTagOptions = {
         values: [
             { value: 'black_hair' }, { value: 'white_hair' },
             { value: 'brunette' }, { value: 'ginger' }, { value: 'blonde' },
-            { value: 'green_hair', extraTags: ['exotic_hair'] },
-            { value: 'blue_hair', extraTags: ['exotic_hair'] },
-            { value: 'purple_hair', extraTags: ['exotic_hair'] },
-            { value: 'pink_hair', extraTags: ['exotic_hair'] },
+            { value: 'green_hair' },
+            { value: 'blue_hair' },
+            { value: 'purple_hair' },
+            { value: 'pink_hair' },
         ],
     },
     'eye_color': {
@@ -213,14 +252,14 @@ var playerTagOptions = {
             { value: 'short_hair', text: 'Short Hair - Does Not Pass Jawline'},
             { value: 'medium_hair', text: 'Medium Hair - Reaches Between Jawline and Shoulders'},
             { value: 'long_hair', text: 'Long Hair - Reaches Beyond Shoulders'},
-            { value: 'very_long_hair', extraTags: ['long_hair'], text: 'Very Long Hair - Reaches the Thighs or Beyond'},
+            { value: 'very_long_hair', text: 'Very Long Hair - Reaches the Thighs or Beyond'},
         ],
     },
     'physical_build': {
         values: [
             { value: 'chubby' },
             { value: 'athletic' },
-            { value: 'muscular', extraTags: ['athletic'] },
+            { value: 'muscular' },
         ],
     },
     'height': {
@@ -325,19 +364,19 @@ function loadClothing () {
  * Updates the clothing on the title screen.
  ************************************************************/
 function updateTitleClothing () {
-	if (players[HUMAN_PLAYER].gender == eGender.MALE) {
+	if (humanPlayer.gender == eGender.MALE) {
 		$('#female-clothing-container').hide();
 		$('#male-clothing-container').show();
-	} else if (players[HUMAN_PLAYER].gender == eGender.FEMALE) {
+	} else if (humanPlayer.gender == eGender.FEMALE) {
 		$('#male-clothing-container').hide();
 		$('#female-clothing-container').show();
 	}
 
 	for (var i = 0; i < selectedChoices.length; i++) {
 		if (selectedChoices[i]) {
-			$('#'+players[HUMAN_PLAYER].gender+'-clothing-option-'+i).css('opacity', '1');
+			$('#'+humanPlayer.gender+'-clothing-option-'+i).css('opacity', '1');
 		} else {
-			$('#'+players[HUMAN_PLAYER].gender+'-clothing-option-'+i).css('opacity', '0.4');
+			$('#'+humanPlayer.gender+'-clothing-option-'+i).css('opacity', '0.4');
 		}
 	}
 	//$warningLabel.html("");
@@ -353,7 +392,7 @@ function updateTitleClothing () {
  ************************************************************/
 function changePlayerGender (gender) {
 	save.savePlayer();
-	players[HUMAN_PLAYER].gender = gender;
+	humanPlayer.gender = gender;
 	save.loadPlayer();
 	updateTitleGender();
 }
@@ -362,8 +401,8 @@ function changePlayerGender (gender) {
  * Updates the gender dependent controls on the title screen.
  ************************************************************/
 function updateTitleGender() {
-    $titleContainer.removeClass('male female').addClass(players[HUMAN_PLAYER].gender);
-    $playerTagsModal.removeClass('male female').addClass(players[HUMAN_PLAYER].gender);
+    $titleContainer.removeClass('male female').addClass(humanPlayer.gender);
+    $playerTagsModal.removeClass('male female').addClass(humanPlayer.gender);
 
 	updateTitleClothing();
 }
@@ -373,7 +412,7 @@ function updateTitleGender() {
  * screen, or this was called by an internal source.
  ************************************************************/
 function changePlayerSize (size) {
-	players[HUMAN_PLAYER].size = size;
+	humanPlayer.size = size;
 
     $sizeBlocks.removeClass(eSize.SMALL + ' ' + eSize.MEDIUM + ' ' + eSize.LARGE).addClass(size).attr('data-size', size);
 }
@@ -396,13 +435,12 @@ function selectClothing (id) {
  * dialog and the size.
  **************************************************************/
 function setPlayerTags () {
-    var playerTagList = ['human', 'human_' + players[HUMAN_PLAYER].gender,
-                         players[HUMAN_PLAYER].size + (players[HUMAN_PLAYER].gender == 'male' ? '_penis' : '_breasts')];
+    var playerTagList = ['human', 'human_' + humanPlayer.gender,
+                         humanPlayer.size + (humanPlayer.gender == 'male' ? '_penis' : '_breasts')];
 
     for (category in playerTagSelections) {
         var sel = playerTagSelections[category];
         if (!(category in playerTagOptions)) continue;
-        var extraTags = [];
         playerTagOptions[category].values.some(function (choice) {
             if (playerTagOptions[category].type == 'range') {
                 if (sel > choice.to) return false;
@@ -410,17 +448,13 @@ function setPlayerTags () {
                 if (sel != choice.value) return false;
             }
             playerTagList.push(choice.value);
-            if (choice.extraTags) {
-                extraTags = choice.extraTags;
-            }
             return true;
         });
-        extraTags.forEach(function(t) { playerTagList.push(t); });
     }
     /* applies tags to the player*/
     console.log(playerTagList);
-    players[HUMAN_PLAYER].baseTags = playerTagList.map(canonicalizeTag);
-    players[HUMAN_PLAYER].updateTags();
+    humanPlayer.baseTags = playerTagList.map(canonicalizeTag);
+    humanPlayer.updateTags();
 }
 
 /************************************************************
@@ -433,23 +467,23 @@ function validateTitleScreen () {
     
 	if ($nameField.val() != "") {
         playerName = $nameField.val();
-	} else if (players[HUMAN_PLAYER].gender == "male") {
+	} else if (humanPlayer.gender == "male") {
         playerName = "Mister";
-	} else if (players[HUMAN_PLAYER].gender == "female") {
+	} else if (humanPlayer.gender == "female") {
         playerName = 'Missy';
 	}
     
     // Nuke all angle-brackets
     playerName = playerName.replace(/<|>/g, '');
     
-    players[HUMAN_PLAYER].first = playerName;
-    players[HUMAN_PLAYER].label = playerName;
+    humanPlayer.first = playerName;
+    humanPlayer.label = playerName;
     
-	$gameLabels[HUMAN_PLAYER].html(players[HUMAN_PLAYER].label);
+	$gameLabels[HUMAN_PLAYER].html(humanPlayer.label);
 
 	/* count clothing */
 	var clothingCount = [0, 0, 0, 0];
-	var genderClothingChoices = clothingChoices[players[HUMAN_PLAYER].gender];
+	var genderClothingChoices = clothingChoices[humanPlayer.gender];
 	for (i = 0; i < genderClothingChoices.length; i++) {
 		if (selectedChoices[i]) {
 			if (genderClothingChoices[i].position == UPPER_ARTICLE) {
@@ -477,6 +511,7 @@ function validateTitleScreen () {
     save.savePlayer();
     console.log(players[0]);
 
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
     screenTransition($titleScreen, $selectScreen);
 
     if (USAGE_TRACKING === undefined) {
@@ -495,7 +530,7 @@ function validateTitleScreen () {
 function wearClothing () {
 	var position = [[], [], []];
 	var importantWorn = [false, false];
-    var genderClothingChoices = clothingChoices[players[HUMAN_PLAYER].gender];
+    var genderClothingChoices = clothingChoices[humanPlayer.gender];
 
     /* sort the clothing by position */
     for (var i = genderClothingChoices.length - 1; i >= 0; i--) {
@@ -511,27 +546,27 @@ function wearClothing () {
     }
 
 	/* clear player clothing array */
-	players[HUMAN_PLAYER].clothing = [];
+	humanPlayer.clothing = [];
 
 	/* wear the clothing is sorted order */
 	for (var i = 0; i < position[0].length || i < position[1].length; i++) {
 		/* wear a lower article, if any remain */
 		if (i < position[1].length) {
-			players[HUMAN_PLAYER].clothing.push(position[1][i]);
+			humanPlayer.clothing.push(position[1][i]);
 		}
 
 		/* wear an upper article, if any remain */
 		if (i < position[0].length) {
-			players[HUMAN_PLAYER].clothing.push(position[0][i]);
+			humanPlayer.clothing.push(position[0][i]);
 		}
 	}
 
 	/* wear any other clothing */
 	for (var i = 0; i < position[2].length; i++) {
-		players[HUMAN_PLAYER].clothing.push(position[2][i]);
+		humanPlayer.clothing.push(position[2][i]);
 	}
 
-	players[HUMAN_PLAYER].initClothingStatus();
+	humanPlayer.initClothingStatus();
 
 	/* update the visuals */
     displayHumanPlayerClothing();

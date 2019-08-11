@@ -145,7 +145,7 @@ class KisekaeCharacter(object):
             idx = None
             
             for i, sc in enumerate(self.subcodes):
-                if sc.id == key:
+                if sc.prefix == key:
                     idx = i
                     break
             else:
@@ -160,7 +160,7 @@ class KisekaeCharacter(object):
             idx = None
             
             for i, sc in enumerate(self.subcodes):
-                if sc.id == key:
+                if sc.prefix == key:
                     idx = i
                     break
             else:
@@ -205,7 +205,7 @@ class KisekaeCode(object):
             characters (list of KisekaeCharacter): List of characters contained in the code.
         """
         
-        self.version = 85
+        self.version = 92
         self.characters = []
         self.scene = None
         
@@ -498,6 +498,14 @@ def auto_crop_box(image, margin_y=15):
     elif shift_x > 0:
         crop_right += shift_x
 
+    if crop_left > left:
+        crop_left = left - 1
+        crop_right = crop_left + out_width
+    
+    if crop_right < right:
+        crop_right = right + 1
+        crop_left = crop_right - out_width 
+
     crop_top = (bottom + margin_y) - out_height
     crop_bottom = bottom + margin_y
     
@@ -534,8 +542,20 @@ def import_and_unlink(import_code, scene_name='temp'):
     """
     
     output_path = process_kkl_code(import_code, scene_name)
-    output_path.unlink()
-    
+
+    retry_time_limit = 10 #  try for at most 10 seconds before saying there's a problem
+    retry_interval = 0.2  #  re-check for the existance of the image every 200 milliseconds
+    retry_limit = int(retry_time_limit // retry_interval) # try 50 times
+
+    for i in range(retry_limit):
+        try:
+            output_path.unlink()
+            break
+        except PermissionError:
+            if retry >= retry_limit-1:
+                raise
+            time.sleep(retry_interval)
+
     sys.stdout.write("done.\n")
     sys.stdout.flush()
 
@@ -619,6 +639,8 @@ def process_single(code, dest, **kwargs):
     process_code = preprocess_character_code(code, **kwargs)
     kkl_output = import_character(process_code, dest_filename.stem)
     
+    #kkl_output.save(str(dest_filename.parent.joinpath(dest_filename.stem + '.debug.png')))
+
     if dest_filename.is_file():
         dest_filename.unlink()
     

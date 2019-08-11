@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.2 at 9:47:50 PM on May 11, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 12:20:27 PM on August 08, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v4.2</version>
+    <version>v5.0</version>
     <first>YorHa Scanner Type</first>
     <last>Model No. 9</last>
     <label>9S</label>
@@ -50,12 +50,12 @@
     <start />
 
     <wardrobe>
-        <clothing lowercase="blindfold" position="lower" formalName="Blindfold" type="extra" />
-        <clothing lowercase="boxers" position="lower" formalName="Boxers" type="important" plural="true" />
-        <clothing lowercase="shorts" position="lower" formalName="Shorts" type="major" plural="true" />
-        <clothing lowercase="coat" position="upper" formalName="Coat" type="major" />
-        <clothing lowercase="boots" position="lower" formalName="Boots" type="minor" plural="true" />
-        <clothing lowercase="gloves" position="other" formalName="gloves" type="extra" plural="true" />
+        <clothing name="blindfold" generic="Blindfold" position="lower" type="extra" />
+        <clothing name="boxers" generic="Boxers" position="lower" type="important" plural="true" />
+        <clothing name="shorts" generic="Shorts" position="lower" type="major" plural="true" />
+        <clothing name="coat" generic="Coat" position="upper" type="major" />
+        <clothing name="boots" generic="Boots" position="lower" type="minor" plural="true" />
+        <clothing name="gloves" generic="gloves" position="other" type="extra" plural="true" />
     </wardrobe>
 
     <poses>
@@ -378,6 +378,51 @@
             </case>
             <case tag="stripping" alsoPlaying="uravity">
                 <state img="0-stripping.png">The real villains are the Machine Lifeforms and the aliens that threaten humanity, Ochako "Uravity" Uraraka.</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="0-interested.png">What are you going to take off, ~name~?</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="0-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="0-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="0-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="0-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="0-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="0-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="0-clever.png">Looks like you’re falling behind, ~name~. You going to keep up with me?</state>
+                <state img="0-confident.png">Looks like we’re cracking ~name~’s firewall. I wonder what countermeasures he’s got in store?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
+                <state img="0-clever.png">Looks like you’re falling behind, ~name~. I won't pretend that first play was impressive.</state>
+                <state img="0-confident.png">Looks like we’re cracking ~name~’s firewall. I wonder what countermeasures he’s got in store? Hopefully something adaptive. That was a weak hand he lost with.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3">
+                <state img="0-calm.png">My lead’s growing, ~name~.</state>
+                <state img="0-happy.png">Okay, I think I’m starting to get ~name~’s playstyle. No hacking needed, just observation.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
+                <state img="0-calm.png">My lead’s growing, ~name~. You going to, uh, pick a better hand next round?</state>
+                <state img="0-happy.png">Okay, I think I’m starting to get ~name~’s playstyle. No hacking needed, just observation. I might not even need to swap cards after winning with &lt;i&gt;this&lt;/i&gt;.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6">
+                <state img="0-confident.png">Too easy.</state>
+                <state img="0-frustrated.png">Really, ~name~? Are you trying &lt;i&gt;at all&lt;/i&gt;?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
+                <state img="0-confident.png">Too easy. Seriously? Winning with a high card?</state>
+                <state img="0-frustrated.png">Really, ~name~? Are you trying &lt;i&gt;at all&lt;/i&gt;? You should've beaten this hand.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="0-confident.png">This is it for ~name~, right? No more tricks!</state>
+                <state img="0-happy.png">Here comes the best part of the simulation!</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
+                <state img="0-frustrated.png">This is it for ~name~, right? No more tricks? I can't believe you lost to this hand... are you that excited to lose?</state>
+                <state img="0-happy.png">~Name~, did you just... lose to a high card? Really?</state>
             </case>
             <case tag="male_must_strip">
                 <state img="0-rage.png">What’s this? I can’t scan ~name~? Hrm. &lt;i&gt;Pod,&lt;/i&gt; reboot to more context sensitive data.</state>
@@ -1115,51 +1160,6 @@
             <case tag="female_must_strip" targetStage="7">
                 <state img="0-interested.png">This is it!</state>
                 <state img="0-happy.png">~name~’s last item. I’m not thrilled I didn’t generate good data, but I’m still enjoying the rush of a clean win.</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="0-interested.png">What are you going to take off, ~name~?</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="0-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="0-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="0-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="0-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="0-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="0-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="0-clever.png">Looks like you’re falling behind, ~name~. You going to keep up with me?</state>
-                <state img="0-confident.png">Looks like we’re cracking ~name~’s firewall. I wonder what countermeasures he’s got in store?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
-                <state img="0-clever.png">Looks like you’re falling behind, ~name~. I won't pretend that first play was impressive.</state>
-                <state img="0-confident.png">Looks like we’re cracking ~name~’s firewall. I wonder what countermeasures he’s got in store? Hopefully something adaptive. That was a weak hand he lost with.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3">
-                <state img="0-calm.png">My lead’s growing, ~name~.</state>
-                <state img="0-happy.png">Okay, I think I’m starting to get ~name~’s playstyle. No hacking needed, just observation.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
-                <state img="0-calm.png">My lead’s growing, ~name~. You going to, uh, pick a better hand next round?</state>
-                <state img="0-happy.png">Okay, I think I’m starting to get ~name~’s playstyle. No hacking needed, just observation. I might not even need to swap cards after winning with &lt;i&gt;this&lt;/i&gt;.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6">
-                <state img="0-confident.png">Too easy.</state>
-                <state img="0-frustrated.png">Really, ~name~? Are you trying &lt;i&gt;at all&lt;/i&gt;?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
-                <state img="0-confident.png">Too easy. Seriously? Winning with a high card?</state>
-                <state img="0-frustrated.png">Really, ~name~? Are you trying &lt;i&gt;at all&lt;/i&gt;? You should've beaten this hand.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="0-confident.png">This is it for ~name~, right? No more tricks!</state>
-                <state img="0-happy.png">Here comes the best part of the simulation!</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
-                <state img="0-frustrated.png">This is it for ~name~, right? No more tricks? I can't believe you lost to this hand... are you that excited to lose?</state>
-                <state img="0-happy.png">~Name~, did you just... lose to a high card? Really?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="0-happy.png">This is kinda fun, playing without the algorithm.</state>
@@ -3042,9 +3042,6 @@
             <case tag="female_crotch_will_be_visible" target="cammy">
                 <state img="0-interested.png">I suppose this adds a lot of variety. Her getting... uh... "help."</state>
             </case>
-            <case tag="female_crotch_will_be_visible" target="chihiro">
-                <state img="0-clever.png">...And now for a twist in programming...</state>
-            </case>
             <case tag="female_crotch_will_be_visible" target="corrin_f">
                 <state img="0-interested.png">You just look &lt;i&gt;so&lt;/i&gt; much like another member of YorHa! But I know you aren’t! It makes me feel… Well, interested and confused.</state>
             </case>
@@ -3129,9 +3126,6 @@
             </case>
             <case tag="female_crotch_is_visible" target="cammy">
                 <state img="0-clever.png">Oh, I get it. So they'll come back next round too, right? I think with the game setup the way it is...</state>
-            </case>
-            <case tag="female_crotch_is_visible" id="0-4" target="chihiro">
-                <state img="0-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="female_crotch_is_visible" target="corrin_f">
                 <state img="0-happy.png">Oh. Okay. Way less confused and &lt;i&gt;way&lt;/i&gt; more engaged now. Um. Too much information?</state>
@@ -3294,6 +3288,12 @@
             </case>
             <case tag="opponent_stripped" target="sei" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sei_jill2" alsoPlayingNotSaidMarker="sei_jill3" alsoPlayingSayingMarker="sei_jill3">
                 <state img="0-happy.png">Hm… it’s always interesting to see what kind of personalities can exist in a situation like this.</state>
+            </case>
+            <case tag="opponent_crotch_will_be_visible" target="chihiro">
+                <state img="0-clever.png">...And now for a twist in programming...</state>
+            </case>
+            <case tag="opponent_crotch_is_visible" id="0-4" target="chihiro">
+                <state img="0-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="0-happy.png">Flawless.</state>
@@ -3744,6 +3744,51 @@
             <case tag="stripped" alsoPlaying="pit">
                 <condition count="1" filter="futaba" />
                 <state img="1-happy.png">It's a designation, Pit, something I was made with. But of course, I do really like Nines!</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="1-interested.png">What are you going to take off, ~name~?</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="1-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="1-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="1-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="1-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="1-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="1-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="1-happy.png">There we go. Thanks for giving me time to get my strategy together, but I'm not going to go easy on you now.</state>
+                <state img="1-clever.png">Time to even up the score. And some people thought I'd need to hack in here.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
+                <state img="1-happy.png">There we go. Thanks for giving me time to get my strategy together, but I'm not going to go easy on you now. Especially with that last hand. Not impressive.</state>
+                <state img="1-clever.png">Time to even up the score. And some people thought I'd need to hack to win. I just need to not have worse cards than ~name~.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3">
+                <state img="1-frustrated.png">Aw, come on. ~name~, are you even trying?</state>
+                <state img="1-interested.png">&lt;i&gt;Pod&lt;/i&gt;, load ~name~’s emotive scan to my visor. I’m wondering if he’s playing the long game. Or just playing around.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
+                <state img="1-frustrated.png">Aw, come on. ~name~, are you even trying? I had &lt;i&gt;one&lt;/i&gt; good card.</state>
+                <state img="1-clever.png">&lt;i&gt;Pod&lt;/i&gt;, load ~name~’s emotive scan to my visor. I’m wondering if he’s playing the long game. Or just... deliberately throwing.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6">
+                <state img="1-frustrated.png">I might report you to the Commander. This is not what I signed up for, ~name~.</state>
+                <state img="1-interested.png">So, ~name~, am I good at cards or what?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
+                <state img="1-frustrated.png">I might report you to the Commander. This is not what I signed up for, ~name~. Throwing your hand like that?</state>
+                <state img="1-interested.png">So, ~name~, am I good at cards or what? I wasn't supposed to win without even a pair...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="1-confident.png">You know, I can't help but feel ~name~’s last item might be his most satisfying.</state>
+                <state img="1-clever.png">That's the last of ~name~’s apparel. It should be pretty easy from here...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
+                <state img="1-confident.png">You know, I can't help but feel ~name~’s last item might be his most satisfying. Considering how little effort I spent on that hand...</state>
+                <state img="1-clever.png">That's the last of ~name~’s apparel. The others should be a bit more of a challenge, right?</state>
             </case>
             <case tag="male_must_strip">
                 <state img="1-rage.png">What’s this? I can’t scan ~name~? Hrm. &lt;i&gt;Pod,&lt;/i&gt; reboot to more context sensitive data.</state>
@@ -4481,51 +4526,6 @@
             <case tag="female_must_strip" targetStage="7">
                 <state img="1-excited.png">Well, the gloves came off, and now ~name~’s getting naked. Great combat data and easy on the eyes.</state>
                 <state img="1-clever.png">Hm. ~name~’s last item. &lt;i&gt;Pod&lt;/i&gt;, sync behavior to the model.</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="1-interested.png">What are you going to take off, ~name~?</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="1-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="1-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="1-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="1-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="1-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="1-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="1-happy.png">There we go. Thanks for giving me time to get my strategy together, but I'm not going to go easy on you now.</state>
-                <state img="1-clever.png">Time to even up the score. And some people thought I'd need to hack in here.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
-                <state img="1-happy.png">There we go. Thanks for giving me time to get my strategy together, but I'm not going to go easy on you now. Especially with that last hand. Not impressive.</state>
-                <state img="1-clever.png">Time to even up the score. And some people thought I'd need to hack to win. I just need to not have worse cards than ~name~.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3">
-                <state img="1-frustrated.png">Aw, come on. ~name~, are you even trying?</state>
-                <state img="1-interested.png">&lt;i&gt;Pod&lt;/i&gt;, load ~name~’s emotive scan to my visor. I’m wondering if he’s playing the long game. Or just playing around.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
-                <state img="1-frustrated.png">Aw, come on. ~name~, are you even trying? I had &lt;i&gt;one&lt;/i&gt; good card.</state>
-                <state img="1-clever.png">&lt;i&gt;Pod&lt;/i&gt;, load ~name~’s emotive scan to my visor. I’m wondering if he’s playing the long game. Or just... deliberately throwing.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6">
-                <state img="1-frustrated.png">I might report you to the Commander. This is not what I signed up for, ~name~.</state>
-                <state img="1-interested.png">So, ~name~, am I good at cards or what?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
-                <state img="1-frustrated.png">I might report you to the Commander. This is not what I signed up for, ~name~. Throwing your hand like that?</state>
-                <state img="1-interested.png">So, ~name~, am I good at cards or what? I wasn't supposed to win without even a pair...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="1-confident.png">You know, I can't help but feel ~name~’s last item might be his most satisfying.</state>
-                <state img="1-clever.png">That's the last of ~name~’s apparel. It should be pretty easy from here...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
-                <state img="1-confident.png">You know, I can't help but feel ~name~’s last item might be his most satisfying. Considering how little effort I spent on that hand...</state>
-                <state img="1-clever.png">That's the last of ~name~’s apparel. The others should be a bit more of a challenge, right?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="1-happy.png">This is kinda fun, playing without the algorithm.</state>
@@ -6405,9 +6405,6 @@
             <case tag="female_crotch_will_be_visible" target="cammy">
                 <state img="1-interested.png">I suppose this adds a lot of variety. Her getting... uh... "help."</state>
             </case>
-            <case tag="female_crotch_will_be_visible" target="chihiro">
-                <state img="1-clever.png">...And now for a twist in programming...</state>
-            </case>
             <case tag="female_crotch_will_be_visible" target="corrin_f">
                 <state img="1-interested.png">You just look &lt;i&gt;so&lt;/i&gt; much like another member of YorHa! But I know you aren’t! It makes me feel… Well, interested and confused.</state>
             </case>
@@ -6492,9 +6489,6 @@
             </case>
             <case tag="female_crotch_is_visible" target="cammy">
                 <state img="1-clever.png">Oh, I get it. So they'll come back next round too, right? I think with the game setup the way it is...</state>
-            </case>
-            <case tag="female_crotch_is_visible" id="1-4" target="chihiro">
-                <state img="1-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="female_crotch_is_visible" target="corrin_f">
                 <state img="1-happy.png">Oh. Okay. Way less confused and &lt;i&gt;way&lt;/i&gt; more engaged now. Um. Too much information?</state>
@@ -6657,6 +6651,12 @@
             </case>
             <case tag="opponent_stripped" target="sei" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sei_jill2" alsoPlayingNotSaidMarker="sei_jill3" alsoPlayingSayingMarker="sei_jill3">
                 <state img="1-happy.png">Hm… it’s always interesting to see what kind of personalities can exist in a situation like this.</state>
+            </case>
+            <case tag="opponent_crotch_will_be_visible" target="chihiro">
+                <state img="1-clever.png">...And now for a twist in programming...</state>
+            </case>
+            <case tag="opponent_crotch_is_visible" id="1-4" target="chihiro">
+                <state img="1-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="1-happy.png">Flawless.</state>
@@ -7085,6 +7085,51 @@
             <case tag="stripped" alsoPlaying="pit">
                 <condition count="1" filter="futaba" />
                 <state img="2-stripped.png">Oh, it's after my sword. Cruel Oath. Also, you now, someone that keeps their promises, lives up to their duty, and so on. Very important stuff for a soldier, Pit.</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="2-interested.png">What are you going to take off, ~name~?</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="2-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="2-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="2-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="2-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="2-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="2-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="2-happy.png">Time to catch up, ~name~.</state>
+                <state img="2-excited.png">Finally. I was worried you’d manage to keep your win streak going.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
+                <state img="2-happy.png">Time to catch up, ~name~. Luck can't keep you untouched forever.</state>
+                <state img="2-excited.png">Finally. I was worried you’d manage to keep your win streak going. But, like the model predicted, it was probably a fluke.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3">
+                <state img="2-clever.png">What’ve you got for us &lt;i&gt;this&lt;/i&gt; time, ~name~?</state>
+                <state img="2-calm.png">You’re looking cold, ~name~. I guess this is the opposite of what you’d call a hot streak, huh?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
+                <state img="2-clever.png">What’ve you got for us &lt;i&gt;this&lt;/i&gt; time, ~name~? Besides no playable cards.</state>
+                <state img="2-calm.png">You’re looking cold, ~name~. I guess this is the opposite of what you’d call a hot streak, huh...? Your hand was unnaturally awful.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6">
+                <state img="2-rage.png">You know, ~name~, male YorHa models are supposed to be the advanced ones. You’re not really doing a lot for humanity or male androids if you’re playing so poorly.</state>
+                <state img="2-clever.png">Huh. Most men tend to run out of countermeasures by now.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
+                <state img="2-rage.png">You know, ~name~, male YorHa models are supposed to be the advanced ones. You’re not really doing a lot for humanity or male androids if you’re playing so poorly. Is that your best? For me to win with &lt;i&gt;this&lt;/i&gt;?</state>
+                <state img="2-clever.png">Huh. Most men tend to run out of countermeasures by now. Are you just trying to finish up and watch us?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="2-clever.png">~name~ is almost done. Without countermeasures he shouldn’t try risky plays like that.</state>
+                <state img="2-confident.png">This is it. ~name~ is officially out of defenses now.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
+                <state img="2-clever.png">~name~ is almost done. No countermeasures could've helped with that play, either.</state>
+                <state img="2-confident.png">This is it. ~name~ is officially out of defenses now. And to be taken down by a single card...? Humbling.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="2-rage.png">What’s this? I can’t scan ~name~? Hrm. &lt;i&gt;Pod,&lt;/i&gt; reboot to more context sensitive data.</state>
@@ -7822,51 +7867,6 @@
             <case tag="female_must_strip" targetStage="7">
                 <state img="2-clever.png">They say No.2 and No.9 units tend to be compatible as field partners. It’s a shame our item summary is surpassing nine. Okay, this is a contrived joke, but you’re starting to seem stressed, ~name~.</state>
                 <state img="2-calm.png">I’m not finished yet either, ~name~, but I’ve got a lot further to go. Thanks for the analysis.</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="2-interested.png">What are you going to take off, ~name~?</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="2-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="2-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="2-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="2-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="2-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="2-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="2-happy.png">Time to catch up, ~name~.</state>
-                <state img="2-excited.png">Finally. I was worried you’d manage to keep your win streak going.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
-                <state img="2-happy.png">Time to catch up, ~name~. Luck can't keep you untouched forever.</state>
-                <state img="2-excited.png">Finally. I was worried you’d manage to keep your win streak going. But, like the model predicted, it was probably a fluke.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3">
-                <state img="2-clever.png">What’ve you got for us &lt;i&gt;this&lt;/i&gt; time, ~name~?</state>
-                <state img="2-calm.png">You’re looking cold, ~name~. I guess this is the opposite of what you’d call a hot streak, huh?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
-                <state img="2-clever.png">What’ve you got for us &lt;i&gt;this&lt;/i&gt; time, ~name~? Besides no playable cards.</state>
-                <state img="2-calm.png">You’re looking cold, ~name~. I guess this is the opposite of what you’d call a hot streak, huh...? Your hand was unnaturally awful.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6">
-                <state img="2-rage.png">You know, ~name~, male YorHa models are supposed to be the advanced ones. You’re not really doing a lot for humanity or male androids if you’re playing so poorly.</state>
-                <state img="2-clever.png">Huh. Most men tend to run out of countermeasures by now.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
-                <state img="2-rage.png">You know, ~name~, male YorHa models are supposed to be the advanced ones. You’re not really doing a lot for humanity or male androids if you’re playing so poorly. Is that your best? For me to win with &lt;i&gt;this&lt;/i&gt;?</state>
-                <state img="2-clever.png">Huh. Most men tend to run out of countermeasures by now. Are you just trying to finish up and watch us?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="2-clever.png">~name~ is almost done. Without countermeasures he shouldn’t try risky plays like that.</state>
-                <state img="2-confident.png">This is it. ~name~ is officially out of defenses now.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
-                <state img="2-clever.png">~name~ is almost done. No countermeasures could've helped with that play, either.</state>
-                <state img="2-confident.png">This is it. ~name~ is officially out of defenses now. And to be taken down by a single card...? Humbling.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="2-happy.png">This is kinda fun, playing without the algorithm.</state>
@@ -9746,9 +9746,6 @@
             <case tag="female_crotch_will_be_visible" target="cammy">
                 <state img="2-interested.png">I suppose this adds a lot of variety. Her getting... uh... "help."</state>
             </case>
-            <case tag="female_crotch_will_be_visible" target="chihiro">
-                <state img="2-clever.png">...And now for a twist in programming...</state>
-            </case>
             <case tag="female_crotch_will_be_visible" target="corrin_f">
                 <state img="2-interested.png">You just look &lt;i&gt;so&lt;/i&gt; much like another member of YorHa! But I know you aren’t! It makes me feel… Well, interested and confused.</state>
             </case>
@@ -9833,9 +9830,6 @@
             </case>
             <case tag="female_crotch_is_visible" target="cammy">
                 <state img="2-clever.png">Oh, I get it. So they'll come back next round too, right? I think with the game setup the way it is...</state>
-            </case>
-            <case tag="female_crotch_is_visible" id="2-4" target="chihiro">
-                <state img="2-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="female_crotch_is_visible" target="corrin_f">
                 <state img="2-happy.png">Oh. Okay. Way less confused and &lt;i&gt;way&lt;/i&gt; more engaged now. Um. Too much information?</state>
@@ -9998,6 +9992,12 @@
             </case>
             <case tag="opponent_stripped" target="sei" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sei_jill2" alsoPlayingNotSaidMarker="sei_jill3" alsoPlayingSayingMarker="sei_jill3">
                 <state img="2-happy.png">Hm… it’s always interesting to see what kind of personalities can exist in a situation like this.</state>
+            </case>
+            <case tag="opponent_crotch_will_be_visible" target="chihiro">
+                <state img="2-clever.png">...And now for a twist in programming...</state>
+            </case>
+            <case tag="opponent_crotch_is_visible" id="2-4" target="chihiro">
+                <state img="2-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="2-happy.png">Flawless.</state>
@@ -10441,6 +10441,51 @@
             </case>
             <case tag="stripped" alsoPlaying="uravity">
                 <state img="3-stripped.png">I think most humans seem to find this unusual about my body.</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="3-interested.png">What are you going to take off, ~name~?</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="3-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="3-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="3-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="3-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="3-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="3-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="3-interested.png">Just starting now, ~name~?</state>
+                <state img="3-calm.png">You managed to hold out until now? Good play, ~name~.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
+                <state img="3-interested.png">Just starting now, ~name~? You probably could've gotten better cards.</state>
+                <state img="3-calm.png">You managed to hold out until now, only to blow your streak on &lt;i&gt;that&lt;/i&gt;?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3">
+                <state img="3-happy.png">Here I was, getting worried you’d put up your shields.</state>
+                <state img="3-clever.png">It’s a shame you’re human, ~name~, or I’d let you borrow some of my chipsets. I have one just for recovery.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
+                <state img="3-happy.png">Here I was, getting worried you’d put up your shields. Guess even you can make bad plays.</state>
+                <state img="3-clever.png">It’s a shame you’re human, ~name~, or I’d let you borrow some of my chipsets. I have one just for recovery. You must be desperate if I won with this hand.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6">
+                <state img="3-confident.png">I’m not too far ahead, but this tactical simulation doesn’t preclude a come from behind victory...</state>
+                <state img="3-interested.png">I’ll admit, I’m more interested to see what you look like unarmored more than getting data, ~name~.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
+                <state img="3-confident.png">I’m not too far ahead, but this tactical simulation doesn’t preclude a come from behind victory... especially if you play like that for another hand or two.</state>
+                <state img="3-interested.png">I’ll admit, I’m more interested to see what you look like unarmored more than getting data, ~name~. Thanks for tossing out that hand, I think.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="3-happy.png">That’s No.8. Not like the YorHa model, but… You know, I’m just going to enjoy this.</state>
+                <state img="3-calm.png">Hope you didn’t stash any Reset chips on you, ~name~.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
+                <state img="3-happy.png">That’s No.8. Not like the YorHa model, but… your hand wasn't exactly very good either.</state>
+                <state img="3-calm.png">Hope you didn’t stash any Reset chips on you, ~name~. It'd be brutal to lose those, given that hand.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="3-rage.png">What’s this? I can’t scan ~name~? Hrm. &lt;i&gt;Pod,&lt;/i&gt; reboot to more context sensitive data.</state>
@@ -11178,51 +11223,6 @@
             <case tag="female_must_strip" targetStage="7">
                 <state img="3-happy.png">Well, time for ~name~ to take a bow.</state>
                 <state img="3-interested.png">That’s it for ~name~! I hope you can appreciate what I’m showing. I have a feeling I’m about to.</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="3-interested.png">What are you going to take off, ~name~?</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="3-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="3-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="3-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="3-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="3-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="3-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="3-interested.png">Just starting now, ~name~?</state>
-                <state img="3-calm.png">You managed to hold out until now? Good play, ~name~.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
-                <state img="3-interested.png">Just starting now, ~name~? You probably could've gotten better cards.</state>
-                <state img="3-calm.png">You managed to hold out until now, only to blow your streak on &lt;i&gt;that&lt;/i&gt;?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3">
-                <state img="3-happy.png">Here I was, getting worried you’d put up your shields.</state>
-                <state img="3-clever.png">It’s a shame you’re human, ~name~, or I’d let you borrow some of my chipsets. I have one just for recovery.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
-                <state img="3-happy.png">Here I was, getting worried you’d put up your shields. Guess even you can make bad plays.</state>
-                <state img="3-clever.png">It’s a shame you’re human, ~name~, or I’d let you borrow some of my chipsets. I have one just for recovery. You must be desperate if I won with this hand.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6">
-                <state img="3-confident.png">I’m not too far ahead, but this tactical simulation doesn’t preclude a come from behind victory...</state>
-                <state img="3-interested.png">I’ll admit, I’m more interested to see what you look like unarmored more than getting data, ~name~.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
-                <state img="3-confident.png">I’m not too far ahead, but this tactical simulation doesn’t preclude a come from behind victory... especially if you play like that for another hand or two.</state>
-                <state img="3-interested.png">I’ll admit, I’m more interested to see what you look like unarmored more than getting data, ~name~. Thanks for tossing out that hand, I think.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="3-happy.png">That’s No.8. Not like the YorHa model, but… You know, I’m just going to enjoy this.</state>
-                <state img="3-calm.png">Hope you didn’t stash any Reset chips on you, ~name~.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
-                <state img="3-happy.png">That’s No.8. Not like the YorHa model, but… your hand wasn't exactly very good either.</state>
-                <state img="3-calm.png">Hope you didn’t stash any Reset chips on you, ~name~. It'd be brutal to lose those, given that hand.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="3-happy.png">This is kinda fun, playing without the algorithm.</state>
@@ -13102,9 +13102,6 @@
             <case tag="female_crotch_will_be_visible" target="cammy">
                 <state img="3-interested.png">I suppose this adds a lot of variety. Her getting... uh... "help."</state>
             </case>
-            <case tag="female_crotch_will_be_visible" target="chihiro">
-                <state img="3-clever.png">...And now for a twist in programming...</state>
-            </case>
             <case tag="female_crotch_will_be_visible" target="corrin_f">
                 <state img="3-interested.png">You just look &lt;i&gt;so&lt;/i&gt; much like another member of YorHa! But I know you aren’t! It makes me feel… Well, interested and confused.</state>
             </case>
@@ -13189,9 +13186,6 @@
             </case>
             <case tag="female_crotch_is_visible" target="cammy">
                 <state img="3-clever.png">Oh, I get it. So they'll come back next round too, right? I think with the game setup the way it is...</state>
-            </case>
-            <case tag="female_crotch_is_visible" id="3-4" target="chihiro">
-                <state img="3-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="female_crotch_is_visible" target="corrin_f">
                 <state img="3-happy.png">Oh. Okay. Way less confused and &lt;i&gt;way&lt;/i&gt; more engaged now. Um. Too much information?</state>
@@ -13354,6 +13348,12 @@
             </case>
             <case tag="opponent_stripped" target="sei" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sei_jill2" alsoPlayingNotSaidMarker="sei_jill3" alsoPlayingSayingMarker="sei_jill3">
                 <state img="3-happy.png">Hm… it’s always interesting to see what kind of personalities can exist in a situation like this.</state>
+            </case>
+            <case tag="opponent_crotch_will_be_visible" target="chihiro">
+                <state img="3-clever.png">...And now for a twist in programming...</state>
+            </case>
+            <case tag="opponent_crotch_is_visible" id="3-4" target="chihiro">
+                <state img="3-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="3-clever.png">This was well worth three losses.</state>
@@ -13764,6 +13764,51 @@
             <case tag="stripped" alsoPlaying="rinkah">
                 <condition count="1" filter="futaba" />
                 <state img="4-confident.png">Codenames, no codenames, this has been kinda... fun!</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="4-interested.png">What are you going to take off, ~name~?</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="4-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="4-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="4-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="4-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="4-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="4-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="4-frustrated.png">Wait a second, have I missed the fact you haven’t lost &lt;i&gt;anything&lt;/i&gt; so far?</state>
+                <state img="4-excited.png">You’re really great at this, ~name~. The combat data you’ve generated has been really interesting.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
+                <state img="4-frustrated.png">Wait a second, have I missed the fact you haven’t lost &lt;i&gt;anything&lt;/i&gt; so far? And you &lt;i&gt;just&lt;/i&gt; played that?</state>
+                <state img="4-excited.png">You’re really great at this, ~name~. The combat data you’ve generated has been really interesting. But, has your luck run out? I probably should've lost with this hand.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3">
+                <state img="4-calm.png">Hm. What’s next for you, ~name~?</state>
+                <state img="4-interested.png">So I’m down to my shorts, what are you going to be taking off, ~name~?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
+                <state img="4-calm.png">Hm. What’s next for you, ~name~? Hopefully a better, more interesting hand.</state>
+                <state img="4-interested.png">So I’m down to my shorts, what are you going to be taking off, ~name~? Hopefully not your pride. That wasn't the best play, huh?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6">
+                <state img="4-happy.png">You’re keeping even with me, ~name~.</state>
+                <state img="4-interested.png">Oh! ~name~, you’re just about finished, right? Could this be it, or are you hiding something?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
+                <state img="4-happy.png">You’re keeping even with me, ~name~. Well, you would be, if you didn't make sloppy plays like losing to a high card.</state>
+                <state img="4-interested.png">Oh! ~name~, you’re just about finished, right? Could this be it, or are you hiding something? That play's unlike the others you've done...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="4-calm.png">This is your last round, ~name~. &lt;i&gt;Pod&lt;/i&gt;, check vitals to make sure his encounter data is accurate.</state>
+                <state img="4-interested.png">Whew, you played well! This is your last countermeasure, right?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
+                <state img="4-calm.png">This is your last round, ~name~. &lt;i&gt;Pod&lt;/i&gt;, check vitals to make sure his encounter data is accurate. I'd hate for him to lose on a technicality.</state>
+                <state img="4-interested.png">Whew, you played well! This is your last countermeasure, right? It's interesting. I'd rather have won with a better hand... I guess some risks pay off, right?</state>
             </case>
             <case tag="male_must_strip">
                 <state img="4-rage.png">What’s this? I can’t scan ~name~? Hrm. &lt;i&gt;Pod,&lt;/i&gt; reboot to more context sensitive data.</state>
@@ -14501,51 +14546,6 @@
             <case tag="female_must_strip" targetStage="7">
                 <state img="4-confident.png">This is it! ~name~’s lost her last countermeasure!</state>
                 <state img="4-interested.png">That has to be it for you, right?</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="4-interested.png">What are you going to take off, ~name~?</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="4-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="4-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="4-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="4-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="4-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="4-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="4-frustrated.png">Wait a second, have I missed the fact you haven’t lost &lt;i&gt;anything&lt;/i&gt; so far?</state>
-                <state img="4-excited.png">You’re really great at this, ~name~. The combat data you’ve generated has been really interesting.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
-                <state img="4-frustrated.png">Wait a second, have I missed the fact you haven’t lost &lt;i&gt;anything&lt;/i&gt; so far? And you &lt;i&gt;just&lt;/i&gt; played that?</state>
-                <state img="4-excited.png">You’re really great at this, ~name~. The combat data you’ve generated has been really interesting. But, has your luck run out? I probably should've lost with this hand.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3">
-                <state img="4-calm.png">Hm. What’s next for you, ~name~?</state>
-                <state img="4-interested.png">So I’m down to my shorts, what are you going to be taking off, ~name~?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
-                <state img="4-calm.png">Hm. What’s next for you, ~name~? Hopefully a better, more interesting hand.</state>
-                <state img="4-interested.png">So I’m down to my shorts, what are you going to be taking off, ~name~? Hopefully not your pride. That wasn't the best play, huh?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6">
-                <state img="4-happy.png">You’re keeping even with me, ~name~.</state>
-                <state img="4-interested.png">Oh! ~name~, you’re just about finished, right? Could this be it, or are you hiding something?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
-                <state img="4-happy.png">You’re keeping even with me, ~name~. Well, you would be, if you didn't make sloppy plays like losing to a high card.</state>
-                <state img="4-interested.png">Oh! ~name~, you’re just about finished, right? Could this be it, or are you hiding something? That play's unlike the others you've done...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="4-calm.png">This is your last round, ~name~. &lt;i&gt;Pod&lt;/i&gt;, check vitals to make sure his encounter data is accurate.</state>
-                <state img="4-interested.png">Whew, you played well! This is your last countermeasure, right?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
-                <state img="4-calm.png">This is your last round, ~name~. &lt;i&gt;Pod&lt;/i&gt;, check vitals to make sure his encounter data is accurate. I'd hate for him to lose on a technicality.</state>
-                <state img="4-interested.png">Whew, you played well! This is your last countermeasure, right? It's interesting. I'd rather have won with a better hand... I guess some risks pay off, right?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="4-happy.png">This is kinda fun, playing without the algorithm.</state>
@@ -16425,9 +16425,6 @@
             <case tag="female_crotch_will_be_visible" target="cammy">
                 <state img="4-interested.png">I suppose this adds a lot of variety. Her getting... uh... "help."</state>
             </case>
-            <case tag="female_crotch_will_be_visible" target="chihiro">
-                <state img="4-clever.png">...And now for a twist in programming...</state>
-            </case>
             <case tag="female_crotch_will_be_visible" target="corrin_f">
                 <state img="4-interested.png">You just look &lt;i&gt;so&lt;/i&gt; much like another member of YorHa! But I know you aren’t! It makes me feel… Well, interested and confused.</state>
             </case>
@@ -16512,9 +16509,6 @@
             </case>
             <case tag="female_crotch_is_visible" target="cammy">
                 <state img="4-clever.png">Oh, I get it. So they'll come back next round too, right? I think with the game setup the way it is...</state>
-            </case>
-            <case tag="female_crotch_is_visible" id="4-4" target="chihiro">
-                <state img="4-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="female_crotch_is_visible" target="corrin_f">
                 <state img="4-happy.png">Oh. Okay. Way less confused and &lt;i&gt;way&lt;/i&gt; more engaged now. Um. Too much information?</state>
@@ -16677,6 +16671,12 @@
             </case>
             <case tag="opponent_stripped" target="sei" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sei_jill2" alsoPlayingNotSaidMarker="sei_jill3" alsoPlayingSayingMarker="sei_jill3">
                 <state img="4-happy.png">Hm… it’s always interesting to see what kind of personalities can exist in a situation like this.</state>
+            </case>
+            <case tag="opponent_crotch_will_be_visible" target="chihiro">
+                <state img="4-clever.png">...And now for a twist in programming...</state>
+            </case>
+            <case tag="opponent_crotch_is_visible" id="4-4" target="chihiro">
+                <state img="4-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="4-clever.png">This was well worth three losses.</state>
@@ -17138,6 +17138,51 @@
             <case tag="stripped" alsoPlaying="pit">
                 <condition count="1" filter="futaba" />
                 <state img="5-confident.png">We certainly are an trio, aren't we? After this, maybe we should... &lt;i&gt;Pod&lt;/i&gt; what's the euphemism? Oh! Get to know each other!</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="5-interested.png">What are you going to take off, ~name~?</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="5-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="5-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="5-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="5-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="5-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="5-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0">
+                <state img="5-calm.png">Oh, I haven’t forgotten about you, ~name~. You’ve been doing really well!</state>
+                <state img="5-frustrated.png">I thought I’d be doing a little better than you, ~name~. I can admit that I’m wrong. You know, when I’m actually wrong.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
+                <state img="5-calm.png">Oh, I haven’t forgotten about you, ~name~. You were doing really well. Until this hand. Really, I bet you with this?</state>
+                <state img="5-frustrated.png">I thought I’d be doing a little better than you, ~name~. I can admit that I’m wrong. But you seem more interested in playing bad hands...</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3">
+                <state img="5-clever.png">Let’s get you caught up, ~name~.</state>
+                <state img="5-interested.png">I’m feeling a twinge of something, ~name~. I don’t think it’s jealousy… But it feels kind of like that?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
+                <state img="5-clever.png">Let’s get you caught up, ~name~. Maybe next hand'll be a bit more generous to you.</state>
+                <state img="5-interested.png">I’m feeling a twinge of something, ~name~. I don’t think it’s jealousy… hard to be too put out by winning against a hand like that.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6">
+                <state img="5-confident.png">It’s been fun, ~name~, but you should know I don’t give up when I’m backed into a corner.</state>
+                <state img="5-clever.png">Hm. Do you fold under pressure, ~name~?</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
+                <state img="5-confident.png">It’s been fun, ~name~, but you should know I don’t give up when I’m backed into a corner. Look, I even won with &lt;i&gt;this&lt;/i&gt; awful hand.</state>
+                <state img="5-clever.png">Hm. Do you fold under pressure, ~name~? Looks like it, if I'm winning with garbage plays like this.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7">
+                <state img="5-happy.png">This has been fun, ~name~. But what’s next is your...</state>
+                <state img="5-interested.png">Phew. Close match, ~name~.</state>
+            </case>
+            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
+                <state img="5-happy.png">This has been fun, ~name~. More for me, considering what you just lost with...</state>
+                <state img="5-interested.png">Phew. Close match, ~name~. I can't believe that was the last hand before you forfeit.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="5-rage.png">What’s this? I can’t scan ~name~? Hrm. &lt;i&gt;Pod,&lt;/i&gt; reboot to more context sensitive data.</state>
@@ -17875,51 +17920,6 @@
             <case tag="female_must_strip" targetStage="7">
                 <state img="5-happy.png">This is it!</state>
                 <state img="5-confident.png">That’s your last piece, right?</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="5-interested.png">What are you going to take off, ~name~?</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="5-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="5-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="5-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="5-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="5-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="5-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0">
-                <state img="5-calm.png">Oh, I haven’t forgotten about you, ~name~. You’ve been doing really well!</state>
-                <state img="5-frustrated.png">I thought I’d be doing a little better than you, ~name~. I can admit that I’m wrong. You know, when I’m actually wrong.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="0" hasHand="High Card">
-                <state img="5-calm.png">Oh, I haven’t forgotten about you, ~name~. You were doing really well. Until this hand. Really, I bet you with this?</state>
-                <state img="5-frustrated.png">I thought I’d be doing a little better than you, ~name~. I can admit that I’m wrong. But you seem more interested in playing bad hands...</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3">
-                <state img="5-clever.png">Let’s get you caught up, ~name~.</state>
-                <state img="5-interested.png">I’m feeling a twinge of something, ~name~. I don’t think it’s jealousy… But it feels kind of like that?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="1-3" hasHand="High Card">
-                <state img="5-clever.png">Let’s get you caught up, ~name~. Maybe next hand'll be a bit more generous to you.</state>
-                <state img="5-interested.png">I’m feeling a twinge of something, ~name~. I don’t think it’s jealousy… hard to be too put out by winning against a hand like that.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6">
-                <state img="5-confident.png">It’s been fun, ~name~, but you should know I don’t give up when I’m backed into a corner.</state>
-                <state img="5-clever.png">Hm. Do you fold under pressure, ~name~?</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="4-6" hasHand="High Card">
-                <state img="5-confident.png">It’s been fun, ~name~, but you should know I don’t give up when I’m backed into a corner. Look, I even won with &lt;i&gt;this&lt;/i&gt; awful hand.</state>
-                <state img="5-clever.png">Hm. Do you fold under pressure, ~name~? Looks like it, if I'm winning with garbage plays like this.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7">
-                <state img="5-happy.png">This has been fun, ~name~. But what’s next is your...</state>
-                <state img="5-interested.png">Phew. Close match, ~name~.</state>
-            </case>
-            <case tag="male_human_must_strip" targetStage="7" hasHand="High Card">
-                <state img="5-happy.png">This has been fun, ~name~. More for me, considering what you just lost with...</state>
-                <state img="5-interested.png">Phew. Close match, ~name~. I can't believe that was the last hand before you forfeit.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="5-happy.png">This is kinda fun, playing without the algorithm.</state>
@@ -19799,9 +19799,6 @@
             <case tag="female_crotch_will_be_visible" target="cammy">
                 <state img="5-interested.png">I suppose this adds a lot of variety. Her getting... uh... "help."</state>
             </case>
-            <case tag="female_crotch_will_be_visible" target="chihiro">
-                <state img="5-clever.png">...And now for a twist in programming...</state>
-            </case>
             <case tag="female_crotch_will_be_visible" target="corrin_f">
                 <state img="5-interested.png">You just look &lt;i&gt;so&lt;/i&gt; much like another member of YorHa! But I know you aren’t! It makes me feel… Well, interested and confused.</state>
             </case>
@@ -19886,9 +19883,6 @@
             </case>
             <case tag="female_crotch_is_visible" target="cammy">
                 <state img="5-clever.png">Oh, I get it. So they'll come back next round too, right? I think with the game setup the way it is...</state>
-            </case>
-            <case tag="female_crotch_is_visible" id="5-4" target="chihiro">
-                <state img="5-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="female_crotch_is_visible" target="corrin_f">
                 <state img="5-happy.png">Oh. Okay. Way less confused and &lt;i&gt;way&lt;/i&gt; more engaged now. Um. Too much information?</state>
@@ -20051,6 +20045,12 @@
             </case>
             <case tag="opponent_stripped" target="sei" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sei_jill2" alsoPlayingNotSaidMarker="sei_jill3" alsoPlayingSayingMarker="sei_jill3">
                 <state img="5-happy.png">Hm… it’s always interesting to see what kind of personalities can exist in a situation like this.</state>
+            </case>
+            <case tag="opponent_crotch_will_be_visible" target="chihiro">
+                <state img="5-clever.png">...And now for a twist in programming...</state>
+            </case>
+            <case tag="opponent_crotch_is_visible" id="5-4" target="chihiro">
+                <state img="5-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="5-clever.png">I’m not too far behind you, ~name~.</state>
@@ -20365,6 +20365,21 @@
             <case tag="stripped" alsoPlaying="pit">
                 <condition count="1" filter="futaba" />
                 <state img="6-happy.png">I think we all get along really well, Pit! Thanks for great combat data, both of you.</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="6-interested.png">Hm. ~name~, do you want help with your...</state>
+                <state img="6-calm.png">I don’t need tactical data to let me know that this is supposed to be fun. And ~name~’s doing a great job of making it so.</state>
+                <state img="6-happy.png">~name~, this part never really gets old.</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="6-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="6-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="6-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="6-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="6-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="6-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="6-interested.png">Hm. ~name~, do you want help with your...</state>
@@ -21046,21 +21061,6 @@
             </case>
             <case tag="female_must_strip" target="zizou" targetStage="2">
                 <state img="6-interested.png">Hm... You know, Zizou, I bet you could use those Tres crystals kind of like a blackbox.</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="6-interested.png">Hm. ~name~, do you want help with your...</state>
-                <state img="6-calm.png">I don’t need tactical data to let me know that this is supposed to be fun. And ~name~’s doing a great job of making it so.</state>
-                <state img="6-happy.png">~name~, this part never really gets old.</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="6-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="6-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="6-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="6-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="6-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="6-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="6-clever.png">Your ~clothing~? That’s a pretty common accessory, right?</state>
@@ -22751,9 +22751,6 @@
             <case tag="female_crotch_will_be_visible" target="cammy">
                 <state img="6-interested.png">I suppose this adds a lot of variety. Her getting... uh... "help."</state>
             </case>
-            <case tag="female_crotch_will_be_visible" target="chihiro">
-                <state img="6-clever.png">...And now for a twist in programming...</state>
-            </case>
             <case tag="female_crotch_will_be_visible" target="corrin_f">
                 <state img="6-interested.png">You just look &lt;i&gt;so&lt;/i&gt; much like another member of YorHa! But I know you aren’t! It makes me feel… Well, interested and confused.</state>
             </case>
@@ -22838,9 +22835,6 @@
             </case>
             <case tag="female_crotch_is_visible" target="cammy">
                 <state img="6-clever.png">Oh, I get it. So they'll come back next round too, right? I think with the game setup the way it is...</state>
-            </case>
-            <case tag="female_crotch_is_visible" id="6-4" target="chihiro">
-                <state img="6-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="female_crotch_is_visible" target="corrin_f">
                 <state img="6-happy.png">Oh. Okay. Way less confused and &lt;i&gt;way&lt;/i&gt; more engaged now. Um. Too much information?</state>
@@ -23000,6 +22994,12 @@
             </case>
             <case tag="opponent_stripped" target="sei" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sei_jill2" alsoPlayingNotSaidMarker="sei_jill3" alsoPlayingSayingMarker="sei_jill3">
                 <state img="6-happy.png">Hm… it’s always interesting to see what kind of personalities can exist in a situation like this.</state>
+            </case>
+            <case tag="opponent_crotch_will_be_visible" target="chihiro">
+                <state img="6-clever.png">...And now for a twist in programming...</state>
+            </case>
+            <case tag="opponent_crotch_is_visible" id="6-4" target="chihiro">
+                <state img="6-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="6-clever.png">Phew. I’m glad I’m not out just yet.</state>
@@ -23183,6 +23183,21 @@
         </stage>
 
         <stage id="7">
+            <case tag="male_human_must_strip">
+                <state img="7-interested.png">Pick something good, ~name~!</state>
+                <state img="7-clever.png">Heh, I was hoping it’d be you, ~name~!</state>
+                <state img="7-calm.png">Ah, this should be good!</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="7-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="7-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="7-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="7-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="7-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="7-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="7-interested.png">Pick something good, ~name~!</state>
                 <state img="7-clever.png">Heh, I was hoping it’d be you, ~name~!</state>
@@ -23860,21 +23875,6 @@
             </case>
             <case tag="female_must_strip" target="zizou" targetStage="2">
                 <state img="7-interested.png">Hm... You know, Zizou, I bet you could use those Tres crystals kind of like a blackbox.</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="7-interested.png">Pick something good, ~name~!</state>
-                <state img="7-clever.png">Heh, I was hoping it’d be you, ~name~!</state>
-                <state img="7-calm.png">Ah, this should be good!</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="7-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="7-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="7-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="7-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="7-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="7-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="7-interested.png">Well, it’s one step closer to getting you fully exposed, ~name~.</state>
@@ -25565,9 +25565,6 @@
             <case tag="female_crotch_will_be_visible" target="cammy">
                 <state img="7-interested.png">I suppose this adds a lot of variety. Her getting... uh... "help."</state>
             </case>
-            <case tag="female_crotch_will_be_visible" target="chihiro">
-                <state img="7-clever.png">...And now for a twist in programming...</state>
-            </case>
             <case tag="female_crotch_will_be_visible" target="corrin_f">
                 <state img="7-interested.png">You just look &lt;i&gt;so&lt;/i&gt; much like another member of YorHa! But I know you aren’t! It makes me feel… Well, interested and confused.</state>
             </case>
@@ -25652,9 +25649,6 @@
             </case>
             <case tag="female_crotch_is_visible" target="cammy">
                 <state img="7-clever.png">Oh, I get it. So they'll come back next round too, right? I think with the game setup the way it is...</state>
-            </case>
-            <case tag="female_crotch_is_visible" id="7-4" target="chihiro">
-                <state img="7-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="female_crotch_is_visible" target="corrin_f">
                 <state img="7-happy.png">Oh. Okay. Way less confused and &lt;i&gt;way&lt;/i&gt; more engaged now. Um. Too much information?</state>
@@ -25814,6 +25808,12 @@
             </case>
             <case tag="opponent_stripped" target="sei" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sei_jill2" alsoPlayingNotSaidMarker="sei_jill3" alsoPlayingSayingMarker="sei_jill3">
                 <state img="7-happy.png">Hm… it’s always interesting to see what kind of personalities can exist in a situation like this.</state>
+            </case>
+            <case tag="opponent_crotch_will_be_visible" target="chihiro">
+                <state img="7-clever.png">...And now for a twist in programming...</state>
+            </case>
+            <case tag="opponent_crotch_is_visible" id="7-4" target="chihiro">
+                <state img="7-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="7-clever.png">Looks like this is going to turn into a cooperative exercise.</state>
@@ -25991,6 +25991,21 @@
         </stage>
 
         <stage id="8">
+            <case tag="male_human_must_strip">
+                <state img="8-clever.png">Hm. ~name~, if you appreciated the show, you should take off something big, right?</state>
+                <state img="8-excited.png">~name~! This’ll be good.</state>
+                <state img="8-interested.png">~name~, you may have beaten me, but the game’s not over yet, huh?</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="8-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="8-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="8-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
+            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
+                <state img="8-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
+                <state img="8-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
+                <state img="8-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="8-clever.png">Hm. ~name~, if you appreciated the show, you should take off something big, right?</state>
                 <state img="8-excited.png">~name~! This’ll be good.</state>
@@ -26668,21 +26683,6 @@
             </case>
             <case tag="female_must_strip" target="zizou" targetStage="2">
                 <state img="8-interested.png">Hm... You know, Zizou, I bet you could use those Tres crystals kind of like a blackbox.</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="8-clever.png">Hm. ~name~, if you appreciated the show, you should take off something big, right?</state>
-                <state img="8-excited.png">~name~! This’ll be good.</state>
-                <state img="8-interested.png">~name~, you may have beaten me, but the game’s not over yet, huh?</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="8-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="8-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="8-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
-            </case>
-            <case tag="male_human_must_strip" hasHand="Straight Flush" saidMarker="great_hands&lt;3" priority="90">
-                <state img="8-happy.png" marker="great_hands">Interesting, ~name~, but you lost when I had a really good hand.</state>
-                <state img="8-confident.png" marker="great_hands">Hard to fault android number crunching with a hand like this.</state>
-                <state img="8-clever.png" marker="great_hands">Close, ~name~. But not close enough.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="8-happy.png">~Clothing~ from ~name~? Hmm.</state>
@@ -28373,9 +28373,6 @@
             <case tag="female_crotch_will_be_visible" target="cammy">
                 <state img="8-interested.png">I suppose this adds a lot of variety. Her getting... uh... "help."</state>
             </case>
-            <case tag="female_crotch_will_be_visible" target="chihiro">
-                <state img="8-clever.png">...And now for a twist in programming...</state>
-            </case>
             <case tag="female_crotch_will_be_visible" target="corrin_f">
                 <state img="8-interested.png">You just look &lt;i&gt;so&lt;/i&gt; much like another member of YorHa! But I know you aren’t! It makes me feel… Well, interested and confused.</state>
             </case>
@@ -28460,9 +28457,6 @@
             </case>
             <case tag="female_crotch_is_visible" target="cammy">
                 <state img="8-clever.png">Oh, I get it. So they'll come back next round too, right? I think with the game setup the way it is...</state>
-            </case>
-            <case tag="female_crotch_is_visible" id="8-4" target="chihiro">
-                <state img="8-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="female_crotch_is_visible" target="corrin_f">
                 <state img="8-happy.png">Oh. Okay. Way less confused and &lt;i&gt;way&lt;/i&gt; more engaged now. Um. Too much information?</state>
@@ -28622,6 +28616,12 @@
             </case>
             <case tag="opponent_stripped" target="sei" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sei_jill2" alsoPlayingNotSaidMarker="sei_jill3" alsoPlayingSayingMarker="sei_jill3">
                 <state img="8-happy.png">Hm… it’s always interesting to see what kind of personalities can exist in a situation like this.</state>
+            </case>
+            <case tag="opponent_crotch_will_be_visible" target="chihiro">
+                <state img="8-clever.png">...And now for a twist in programming...</state>
+            </case>
+            <case tag="opponent_crotch_is_visible" id="8-4" target="chihiro">
+                <state img="8-frustrated.png">I kept the secret the whole game, Chihiro. Isn't this a victory, as far as sticking around?</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="8-calm.png">I may be finished, but it’s almost as fun to watch!</state>
@@ -28803,4 +28803,5 @@
         </stage>
 
     </behaviour>
+    <nicknames />
 </opponent>

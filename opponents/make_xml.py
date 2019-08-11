@@ -173,7 +173,7 @@ def get_cases(player_dictionary, situation):
 	
 	return out_list
 
-#add a single emenent (initially used so I can add a tag named "tag")
+#add a single element (initially used so I can add a tag named "tag")
 #now it also handles targets, which are optional
 #now it takes a series of lines for a particular stage, and adds all the <case> and <state> elements for the given list of lines
 def create_case_xml(base_element, lines):
@@ -597,7 +597,7 @@ def handle_ending_string(key, content, ending, d):
 	
 		#make sure we have a screen ready, because the other tags are specific to a screen
 		if screen is None:
-			print("Error - using tag \"%s\" with value \"%s\", without a screen varaible - use the \"%s\" tag first to put this information on that screen." % (key, content, screen_tag))
+			print("Error - using tag \"%s\" with value \"%s\", without a screen variable - use the \"%s\" tag first to put this information on that screen." % (key, content, screen_tag))
 			return
 	
 		text_boxes = screen["text_boxes"]
@@ -876,7 +876,7 @@ def read_player_file(filename):
 			else:
 				d[key] = [capitalizeDialogue(text)]
 
-		#this tag relates to an ending squence
+		#this tag relates to an ending sequence
 		#use a different function, because it's quite complicated
 		elif key in ending_tags:
 			handle_ending_string(key, text, ending, d)
