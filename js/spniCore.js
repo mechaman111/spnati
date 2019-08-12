@@ -136,7 +136,9 @@ function compileBaseErrorReport(userDesc, bugType) {
 
             if (players[i].chosenState) {
                 playerData.currentLine    = players[i].chosenState.rawDialogue;
-                playerData.currentImage   = players[i].folder + players[i].chosenState.image;
+                if (players[i].chosenState.image) {
+                    playerData.currentImage   = players[i].folder + players[i].chosenState.image.replace('#', players[i].stage);
+                }
             }
 
             tableReports[i-1] = playerData;
