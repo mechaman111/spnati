@@ -156,6 +156,7 @@ function getRelevantStagesForTrigger(tag, layers) {
     case PLAYER_FINISHING_MASTURBATING:
         return { min: layers + 1, max: layers + 1 };
     case PLAYER_FINISHED_MASTURBATING:
+    case PLAYER_AFTER_MASTURBATING:
     case GAME_OVER_DEFEAT:
         return { min: layers + 2, max: layers + 2 };
     default:
