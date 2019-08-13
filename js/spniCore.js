@@ -136,7 +136,9 @@ function compileBaseErrorReport(userDesc, bugType) {
 
             if (players[i].chosenState) {
                 playerData.currentLine    = players[i].chosenState.rawDialogue;
-                playerData.currentImage   = players[i].folder + players[i].chosenState.image;
+                if (players[i].chosenState.image) {
+                    playerData.currentImage   = players[i].folder + players[i].chosenState.image.replace('#', players[i].stage);
+                }
             }
 
             tableReports[i-1] = playerData;
@@ -969,10 +971,14 @@ Player.prototype.getImagesForStage = function (stage) {
     var imageSet = {};
     var folder = this.folders ? this.getByStage(this.folders, stage) : this.folder;
     var advPoses = this.poses;
-    var selector = (stage == -1 ? 'start, stage[id=1] case[tag=game_start]'
-                    : 'stage[id='+stage+'] case');
+    var layers = this.startingLayers;
+    var selector = (stage == -1 ? 'start, stage[id=1]>case[tag=game_start]'
+                    : 'stage[id='+stage+']>case, trigger>case');
                     
-    this.xml.find(selector).each(function () {
+    this.xml.find(selector).filter(function() {
+        return inInterval(stage, getRelevantStagesForTrigger($(this).parent('trigger').attr('id'), layers))
+            && checkStage(stage, $(this).attr('stage'));
+    }).each(function () {
         var target = $(this).attr('target'), alsoPlaying = $(this).attr('alsoPlaying'),
             filter = canonicalizeTag($(this).attr('filter'));
         // Skip cases requiring a character that isn't present
@@ -983,12 +989,13 @@ Player.prototype.getImagesForStage = function (stage) {
             $(this).children('state').each(function (i, e) {
                 var poseName = $(e).attr('img');
                 if (!poseName) return;
+                poseName = poseName.replace('#', stage);
                 
                 if (poseName.startsWith('custom:')) {
                     var key = poseName.split(':', 2)[1];
                     var pose = advPoses[key];
                     if (pose) pose.getUsedImages().forEach(function (img) {
-                        imageSet[img] = true;
+                        imageSet[img.replace('#', stage)] = true;
                     });
                 } else {
                     imageSet[folder+poseName] = true;

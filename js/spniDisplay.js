@@ -41,7 +41,7 @@ function PoseSprite(id, src, onload, pose, args) {
         onload(this);
         this.draw();
     }.bind(this);
-    this.img.src = this.src;
+    this.img.src = this.src.replace('#', this.player.stage);
     
     this.pivot.appendChild(this.img);
     
@@ -624,7 +624,7 @@ OpponentDisplay.prototype.updateImage = function(player) {
     if (!chosenState.image) {
         this.clearPose();
     } else if (chosenState.image.startsWith('custom:')) {
-        var key = chosenState.image.split(':', 2)[1];
+        var key = chosenState.image.split(':', 2)[1].replace('#', player.stage);
         var poseDef = player.poses[key];
         if (poseDef) {
             this.drawPose(new Pose(poseDef, this));
@@ -632,7 +632,7 @@ OpponentDisplay.prototype.updateImage = function(player) {
             this.clearPose();
         }
     } else {
-        this.drawPose(player.folder + chosenState.image);
+        this.drawPose(player.folder + chosenState.image.replace('#', player.stage));
     }
 }
 

@@ -1450,6 +1450,7 @@ function countLinesImages(xml) {
     var poses = {};
     
     var matched = $(xml).find('state').get();
+    var layers = $(xml).find('wardrobe>clothing').length;
     var deferred = $.Deferred();
     
     /* Avoid blocking the UI by breaking the work into smaller chunks. */
@@ -1459,7 +1460,7 @@ function countLinesImages(xml) {
         if (DEBUG) console.log("Processing: "+matched.length+" states to go");
         do {
             data = matched.shift();
-
+            
             numTotalLines++;
             
         	// count only unique lines of dialogue
@@ -1469,8 +1470,28 @@ function countLinesImages(xml) {
         	// count unique number of poses used in dialogue
         	// note that this number may differ from actual image count if some images
         	// are never used, or if images that don't exist are used in the dialogue
-        	if (poses[data.getAttribute("img")] === undefined) numUniqueUsedPoses++;
-            poses[data.getAttribute("img")] = 1;
+            var img = $(data).attr("img");
+            if (img.indexOf('#') >= 0) {
+                // Expand # to the relevant stages
+                var $case = $(data).parent();
+                var $trigger = $case.parent();
+                var stageInterval = getRelevantStagesForTrigger($trigger.attr('id'), layers);
+
+                for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
+                    if (checkStage(stage, $case.attr('stage'))) {
+                        var stageImg = img.replace('#', stage);
+                        if (!(stageImg in poses)) {
+                            numUniqueUsedPoses++;
+                            poses[stageImg] = 1;
+                        }
+                    }
+                }
+            } else {
+                if (!(img in poses)) {
+                    numUniqueUsedPoses++;
+                    poses[img] = 1;
+                }
+            }
         } while (Date.now() - startTs < 50 && matched.length > 0);
         
         if (matched.length > 0) {

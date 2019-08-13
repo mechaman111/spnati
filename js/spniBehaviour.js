@@ -127,6 +127,43 @@ function fixupTagFormatting(tag) {
     return tag.replace(/\s/g, '').toLowerCase();
 }
 
+function getRelevantStagesForTrigger(tag, layers) {
+    switch (tag) {
+    case SELECTED:
+    case GAME_START:
+        return { min: 0, max: 0 };
+    case SWAP_CARDS:
+    case GOOD_HAND:
+    case OKAY_HAND:
+    case BAD_HAND:
+    case ANY_HAND:
+    case GAME_OVER_VICTORY:
+        return { min: 0, max: layers };
+    case PLAYER_MUST_STRIP_WINNING:
+    case PLAYER_MUST_STRIP_NORMAL:
+    case PLAYER_MUST_STRIP_LOSING:
+    case PLAYER_MUST_STRIP:
+    case PLAYER_STRIPPING:
+        return { min: 0, max: layers - 1 };
+    case PLAYER_STRIPPED:
+        return { min: 1, max: layers };
+    case PLAYER_MUST_MASTURBATE_FIRST:
+    case PLAYER_MUST_MASTURBATE:
+    case PLAYER_START_MASTURBATING:
+        return { min: layers, max: layers };
+    case PLAYER_MASTURBATING:
+    case PLAYER_HEAVY_MASTURBATING:
+    case PLAYER_FINISHING_MASTURBATING:
+        return { min: layers + 1, max: layers + 1 };
+    case PLAYER_FINISHED_MASTURBATING:
+    case PLAYER_AFTER_MASTURBATING:
+    case GAME_OVER_DEFEAT:
+        return { min: layers + 2, max: layers + 2 };
+    default:
+        return { min: 0, max: layers + 2 };
+    }
+}
+
 /**********************************************************************
  * Convert a tag to its 'canonical' form:
  * - Remove all whitespace characters
@@ -763,6 +800,16 @@ function inInterval (value, interval) {
         && (interval.max === null || value <= interval.max);
 }
 
+/************************************************************
+ * Special function to check stage conditions, which can contain a
+ * space-separated list of intervals.
+ ************************************************************/
+function checkStage(curStage, stageStr) {
+    return stageStr === undefined
+        || stageStr.split(/\s+/).some(function(s) {
+        return inInterval(curStage, parseInterval(s));
+    });
+}
 
 /************************************************************
  * Check to see if a given marker predicate string is fulfilled
@@ -840,15 +887,8 @@ function checkMarker(predicate, self, target, currentOnly) {
  *****                  Case Object Specification                 *****
  **********************************************************************/
 
-function Case($xml, stage) {
-    if (typeof stage === "number") {
-        this.stage = {min: stage, max: stage};
-    } else if (stage) {
-        this.stage = parseInterval(stage);
-    } else {
-        this.stage = parseInterval($xml.attr('stage'));
-    }
-    
+function Case($xml) {
+    this.stage =                    $xml.attr('stage');
     this.tag =                      $xml.attr('tag');
     this.target =                   $xml.attr("target");
     this.filter =                   $xml.attr("filter");
@@ -1107,8 +1147,8 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     }
 
     // stage
-    if (this.stage) {
-        if (!inInterval(self.stage, this.stage)) {
+    if (this.stage !== undefined) {
+        if (!checkStage(self.stage, this.stage)) {
             return false; // failed "stage" requirement
         }
     }
@@ -1443,27 +1483,21 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     /* get the AI stage */
     var stageNum = this.stage;
 
-    /* try to find the stage */
-    var stage = null;
-    this.xml.find('behaviour').find('stage').each(function () {
-       if (Number($(this).attr('id')) == stageNum) {
-           stage = $(this);
-       }
-    });
-
-    /* quick check to see if the stage exists */
-    if (!stage) {
-        console.log("Error: couldn't find stage for player "+this.slot+" on stage number "+stageNum+" for tags "+tags);
-        return;
-    }
-
-    /* try to find the tag */
-    var cases = [];
-    $(stage).find('case').each(function () {
-        if (tags.indexOf($(this).attr('tag')) >= 0) {
-            cases.push($(this));
-        }
-    });
+    /* try to find the tags/stage.
+	   .get() returns a simple array with the matched
+	   elements. .map($) converts the individual elements back to
+	   jQuery objects. */
+	var cases = [];
+    var $stage = this.xml.find('behaviour>stage[id=' + stageNum + ']');
+    if ($stage.length) {
+        cases = $stage.children('case').filter(function() {
+            return tags.indexOf($(this).attr('tag')) >= 0;
+        }).get().map($);
+    } else {
+        cases = this.xml.find('behaviour>trigger').filter(function() {
+            return tags.indexOf($(this).attr('id')) >= 0;
+        }).children('case').get().map($);
+	}
 
     /* quick check to see if the tag exists */
     if (cases.length <= 0) {
@@ -1473,11 +1507,11 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     
     /* Find the best match, as well as potential volatile matches. */
     var bestMatch = [];
-    var bestMatchPriority = -1;
+    var bestMatchPriority = -1000;
     var volatileMatches = [];
     
     for (var i = 0; i < cases.length; i++) {
-        var curCase = new Case(cases[i], stageNum);
+        var curCase = new Case(cases[i]);
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             curCase.basicRequirementsMet(this, opp)) 
