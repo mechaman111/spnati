@@ -103,8 +103,8 @@ def get_cases(player_dictionary, situation):
 		else:
 			return stage
 
-        first_stage = adjust_stage(situation['start'])
-        last_stage = adjust_stage(situation['end'])
+	first_stage = adjust_stage(situation['start'])
+	last_stage = adjust_stage(situation['end'])
 
 	def is_generic_line(line_data):
 		for target_type in all_targets + ['tests', 'conditions']:
@@ -163,14 +163,14 @@ def get_cases(player_dictionary, situation):
 		
 		#if the image name doesn't include a stage, prepend the current stage
 		if not image[0].isdigit():
-                        # Try not to use # as placeholder unnecessarily
-                        if "stage" in line_data:
-                                image = "%s-%s" % (line_data["stage"], image)
-                        elif first_stage == last_stage:
-                                image = "%d-%s" % (first_stage, image)
-                        else:
-			        image = "#-%s" % (image)
-		
+			# Try not to use # as placeholder unnecessarily
+			if "stage" in line_data:
+				image = "%s-%s" % (line_data["stage"], image)
+			elif first_stage == last_stage:
+				image = "%d-%s" % (first_stage, image)
+			else:
+				image = "#-%s" % (image)
+
 		if not "stage" in line_data and is_generic_line(line_data):
 			line_data["stage"] = merge_intervals(stages_left)
 			if line_data["stage"] == "":
@@ -203,10 +203,10 @@ def create_case_xml(base_element, lines):
 	#this means that once the case changes, we know that the script won't see that case again
 	#give them a key to define an order
 	for line_data in lines:
-                if "stage" in line_data:
-		        sort_key = str(line_data["stage"])
-                else:
-                        sort_key = '-'
+		if "stage" in line_data:
+			sort_key = line_data["stage"]
+		else:
+			sort_key = '-'
 
 		if "conditions" in line_data:
 			for condition in line_data["conditions"]:
@@ -237,8 +237,8 @@ def create_case_xml(base_element, lines):
 			
 			#make a new <case> element in the xml
 			tag_list = OrderedDict()
-                        if "stage" in line_data:
-                                tag_list["stage"] = str(line_data["stage"])
+			if "stage" in line_data:
+				tag_list["stage"] = str(line_data["stage"])
 			
 			for target_type in one_word_targets:
 				if target_type in line_data:
@@ -330,10 +330,10 @@ def write_xml(data, filename):
 	clothes_count = len(clothes)
 	for i in range(clothes_count - 1, -1, -1):
 		pname, lname, tp, pos, num = (clothes[i] + ",").split(",")[:5]
-                generic = None
-                if pname[0].lower() == pname[0]:
-                        generic = lname
-                        lname = pname
+		generic = None
+		if pname[0].lower() == pname[0]:
+			generic = lname
+			lname = pname
 		clothesattr = OrderedDict([("name", lname), ("generic", generic), ("position", pos), ("type", tp)])
 		if num=="plural":
 			clothesattr["plural"] = "true"
@@ -343,11 +343,11 @@ def write_xml(data, filename):
 	bh = o.subElement("behaviour", blank_after=True)
 	for situation in situations:
 		contents = get_cases(data, situation)
-                if len(contents):
-                        trig = bh.subElement("trigger", None, {'id': situation['key']})
-		        #add the target values, if any
-		        create_case_xml(trig, contents) #add the case element to the XML tree
-        
+		if len(contents):
+			trig = bh.subElement("trigger", None, {'id': situation['key']})
+			#add the target values, if any
+			create_case_xml(trig, contents) #add the case element to the XML tree
+
 	#endings
 	if "endings" in data:
 		#for each ending
