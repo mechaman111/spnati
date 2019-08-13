@@ -799,6 +799,16 @@ function inInterval (value, interval) {
         && (interval.max === null || value <= interval.max);
 }
 
+/************************************************************
+ * Special function to check stage conditions, which can contain a
+ * space-separated list of intervals.
+ ************************************************************/
+function checkStage(curStage, stageStr) {
+    return stageStr === undefined
+        || stageStr.split(/\s+/).some(function(s) {
+        return inInterval(curStage, parseInterval(s));
+    });
+}
 
 /************************************************************
  * Check to see if a given marker predicate string is fulfilled
@@ -952,7 +962,6 @@ function Case($xml) {
         this.priority = this.customPriority;
     } else {
     	this.priority = 0;
-        if (!this.stage)                   this.priority -= 1000;
     	if (this.target)                   this.priority += 300;
     	if (this.filter)                   this.priority += 150;
     	if (this.targetStage)              this.priority += 80;
@@ -1137,7 +1146,7 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     }
 
     // stage
-    if (this.stage) {
+    if (this.stage !== undefined) {
         if (!checkStage(self.stage, this.stage)) {
             return false; // failed "stage" requirement
         }
@@ -1451,13 +1460,6 @@ Case.prototype.applyOneShot = function (player) {
 /**********************************************************************
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
-
-function checkStage(curStage, stageStr) {
-    return stageStr === undefined
-        || stageStr.split(/\s+/).some(function(s) {
-        return inInterval(curStage, parseInterval(s));
-    });
-}
 
 /************************************************************
  * Updates the behaviour of the given player based on the 

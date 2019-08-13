@@ -75,6 +75,20 @@ def get_situations_from_xml():
 		})
 	situations.sort(key=lambda x: (x['group'], x['order']))
 
+def merge_intervals(items):
+	ret = []
+	i = 0
+	while i < len(items):
+		j = i + 1
+		while j < len(items) and items[j] == items[j - 1] + 1:
+			j = j + 1
+		if j > i + 1:
+			ret.append('%d-%d' % (items[i], items[j - 1]))
+		else:
+			ret.append(str(items[i]))
+		i = j
+	return ' '.join(ret)
+
 #get a set of cases from the dictionaries. First try stage-specific from the character's data, then general entries from the character's data, then stage-specific from the default data, then general cases from the default data.
 def get_cases(player_dictionary, situation):
 	image_formats = ["png", "jpg", "jpeg", "gif", "gifv"] #image file format extensions
@@ -105,20 +119,23 @@ def get_cases(player_dictionary, situation):
 		return False
 	
 	need_default = False
+	stages_left = list(range(first_stage, last_stage + 1))
 
-        for stage in range(first_stage, last_stage + 1):
-	        full_key = "%d-%s" % (stage, key)
-        
-	        #check character's data
-	        if full_key in player_dictionary:
-		        result_list += player_dictionary[full_key]
-		
-		        #check if whe have a line that doesn't have any targets or filters
-		        #because we need at least one line that doesn't have one
-		        if not have_generic_line(player_dictionary[full_key]):
-			        need_default = True
-                else:
-                        need_default = True
+	for stage in range(first_stage, last_stage + 1):
+		full_key = "%d-%s" % (stage, key)
+
+		#check character's data
+		if full_key in player_dictionary:
+			result_list += player_dictionary[full_key]
+
+			#check if whe have a line that doesn't have any targets or filters
+			#because we need at least one line that doesn't have one
+			if have_generic_line(player_dictionary[full_key]):
+				stages_left.remove(stage)
+			else:
+				need_default = True
+		else:
+			need_default = True
 
 	if key in player_dictionary:
 		result_list += player_dictionary[key]
@@ -138,9 +155,6 @@ def get_cases(player_dictionary, situation):
 		#because if we copy it then changing the stage number for images (below) for lines that don't have stage numbers
 		#will use the first stage number that doesn't have a stage-specific version for all the stages where the generic line is used
 
-                if first_stage == last_stage and "stage" in line_data:
-                        del line_data["stage"]
-
 		image = line_data["image"]
 		text = line_data["text"]
 		if len(image) <= 0:
@@ -157,6 +171,11 @@ def get_cases(player_dictionary, situation):
                         else:
 			        image = "#-%s" % (image)
 		
+		if not "stage" in line_data and is_generic_line(line_data):
+			line_data["stage"] = merge_intervals(stages_left)
+			if line_data["stage"] == "":
+				print("Warning: Unused generic %s line" % key)
+
 		#if no file extension, assume .png
 		if "." not in image:
 			image += ".png"
@@ -204,7 +223,7 @@ def create_case_xml(base_element, lines):
 	lines.sort(key=lambda l: l["sort_key"])
 	
 	#step 2: iterate through the list of lines
-	current_sort = "" #which case combination we're currently looking at. initially nothing
+	current_sort = None #which case combination we're currently looking at. initially nothing
 	case_xml_element = None #current XML element, add states to this
 
 	possible_statuses = [ 'alive', 'lost_some', 'mostly_clothed', 'decent', 'exposed',
@@ -777,16 +796,16 @@ def read_player_file(filename):
 			#if it starts with a * use the current stage
 			if stg[0] == '*':
 				key = "%d-%s" % (stage, part_key)
-                                line_data["stage"] = stage
-			
+				line_data["stage"] = str(stage)
+
 			#negative numbers count from the end. -1 is finished, -2 is masturbating, -3 is nude. -4 is the last layer of clothing, and so on.
 			#using negative numbers assumes that they are after all the clothes entries
 			elif stg[0] == '-' and stg[1:].isdigit():
 				key = "%d-%s" % (stage + 4 + int(stg), part_key)
-                                line_data["stage"] = stage + 4 + int(stg)
-                        else:
-                                line_data["stage"] = stg
-                                
+				line_data["stage"] = str(stage + 4 + int(stg))
+			else:
+				line_data["stage"] = str(stg)
+
 		else:
 			part_key = key
 		
