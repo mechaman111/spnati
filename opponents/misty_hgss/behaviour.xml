@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0 at 11:44:21 PM on August 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 12:15:38 AM on August 13, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.0</version>
     <first>Misty</first>
@@ -58,6 +58,10 @@
                 <state img="0-neutral.png">Hey there! I'm Misty, the Kanto Water-type specialist!</state>
                 <state img="0-neutral.png">I'm Misty! The tomboyish mermaid! At least, that's what people call me.</state>
                 <state img="0-neutral.png">Misty here! You'd better not take me too lightly. I'm pretty tough!</state>
+            </case>
+            <case tag="selected">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="0-neutral.png">Hey everyone! I came wearing an older outfit today! What do you all think?</state>
             </case>
             <case tag="game_start">
                 <state img="0-pleased.png">Ah, ~player~! Thanks for inviting me! I like the looks of the guys you've brought along.</state>
@@ -130,7 +134,13 @@
                 <state img="0-happy.png">Quite a good hand. I only need one new card, please!</state>
                 <state img="0-neutral.png">Just one new card will do.</state>
             </case>
-            <case tag="good_hand">
+            <case tag="good_hand" priority="1">
+                <condition count="0" gender="male" />
+                <state img="0-back.png" marker="turned_around=1">(I wonder if there are any guys around here that'd like to join in.)</state>
+                <state img="0-back.png" marker="turned_around=1">(I hope there are some guys watching us.)</state>
+                <state img="0-back.png" marker="turned_around=1">(Let's see if we've caught anyone's attention.)</state>
+            </case>
+            <case tag="good_hand" priority="1">
                 <state img="0-excited.png">This hand is gonna sweep through all of you!</state>
                 <state img="0-pleased.png">Looks like I'm keeping what I still have on for now.</state>
                 <state img="0-thinking.png">It'll be smooth sailing with these cards. Well, I guess it would be more like smooth swimming for me.</state>
@@ -138,17 +148,11 @@
                 <state img="0-excited.png">This hand is like the equivalent of a Critical Hit!</state>
                 <state img="0-excited.png">I've got this one, for sure!</state>
             </case>
-            <case tag="good_hand" priority="0">
-                <condition count="0" gender="male" />
-                <state img="0-back.png" marker="turned_around=1">(I wonder if there are any guys around here that'd like to join in.)</state>
-                <state img="0-back.png" marker="turned_around=1">(I hope there are some guys watching us.)</state>
-                <state img="0-back.png" marker="turned_around=1">(Let's see if we've caught anyone's attention.)</state>
-            </case>
-            <case tag="good_hand" saidMarker="player_male==1" priority="0">
+            <case tag="good_hand" saidMarker="player_male==1" priority="1">
                 <state img="0-happy.png">Hmm, this hand is looking good. Almost as good as you, ~player~.</state>
                 <state img="0-pleased.png">I managed to meet ~player~ tonight, and I got a hand this good? Maybe my luck is starting to turn around.</state>
             </case>
-            <case tag="okay_hand">
+            <case tag="okay_hand" priority="1">
                 <state img="0-embarrassed.png" marker="misty_badwithdates">This could work. Then again, that's what I think about all of my dates too...</state>
                 <state img="0-embarrassed.png" marker="misty_badwithdates">This is already going better than most of the dates I go on.</state>
                 <state img="0-pleased.png">If you're good enough, you may get me out of something this round.</state>
@@ -156,11 +160,11 @@
                 <state img="0-thinking.png">This is basically a Normal type hand. Not many weaknesses, but not any strengths either.</state>
                 <state img="0-thinking.png">This, could work? I hope.</state>
             </case>
-            <case tag="okay_hand" saidMarker="player_male" priority="0">
+            <case tag="okay_hand" saidMarker="player_male" priority="1">
                 <state img="0-embarrassed.png">So, uh, ~player~, do you come here often? This is my first time here. Maybe you could show me around when the game is done?</state>
                 <state img="0-pleased.png">What are you doing after this, ~player~? I was thinking about going swimming. You can come with me if you want.</state>
             </case>
-            <case tag="bad_hand">
+            <case tag="bad_hand" priority="1">
                 <state img="0-irritated.png">This Wonder Trade didn't go so well...</state>
                 <state img="0-embarrassed.png">I might as well start stripping now.</state>
                 <state img="0-embarrassed.png" marker="misty_badwithdates">Maybe I have just as much bad luck with poker as I do with dating?</state>
@@ -234,11 +238,15 @@
                 <state img="0-thinking.png">That's a strange question to suddenly bring up. Especially since I have no experience with that kind of thing.</state>
                 <state img="0-thinking.png">To answer your question, Sei: I've never done that before. Why do you want to know?</state>
             </case>
-            <case tag="must_strip">
-                <state img="0-thinking.png">Hmm, should I start with my jacket or my sandals?</state>
-                <state img="0-neutral.png">Looks like I lost, but I wasn't expecting to leave here without taking anything off.</state>
-                <state img="0-thinking.png">There's my first loss. Now what should I take off?</state>
-                <state img="0-neutral.png" marker="misty_notembarressed">Looks like it's my turn.....No, I'm not upset. Why would I even be playing this game if I wasn't prepared to strip naked?</state>
+            <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="1" saidMarker="player_male" alsoPlayingSaying="dream">
+                <state img="0-disappointed.png">If it was in your dreams, then it has nothing to do with the real world, Tharja.</state>
+            </case>
+            <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="2" saidMarker="player_male" alsoPlayingSaying="dream">
+                <state img="0-disappointed.png">You're completely delusional, Tharja.</state>
+            </case>
+            <case tag="hand" alsoPlaying="zone-tan" alsoPlayingSayingMarker="greetfap">
+                <state img="0-embarrassed.png">That's a rather weird way of saying it, Zone, but I guess that &lt;i&gt;is&lt;/i&gt; what the winner gets to do.</state>
+                <state img="0-excited.png">If that's your way of declaring that you're gonna win, Zone, then you should know that we're not gonna make it easy for you!</state>
             </case>
             <case tag="must_strip" alsoPlaying="chiaki" alsoPlayingSayingMarker="pokemon">
                 <state img="0-thinking.png">I...don't really understand what you're talking about, Chiaki.</state>
@@ -285,23 +293,30 @@
                 <state img="0-shocked.png" marker="turned_around=0">Huh? What? I lost!? But I had such a good hand!</state>
                 <state img="0-shocked.png" marker="turned_around=0">Wait! I wasn't paying attention! How'd I lose!?</state>
             </case>
+            <case tag="must_strip" priority="1">
+                <test expr="~self.costume~" value="default" />
+                <state img="0-thinking.png">Hmm, should I start with my jacket or my sandals?</state>
+                <state img="0-neutral.png">Looks like I lost, but I wasn't expecting to leave here without taking anything off.</state>
+                <state img="0-thinking.png">There's my first loss. Now what should I take off?</state>
+                <state img="0-neutral.png" marker="misty_notembarressed">Looks like it's my turn.....No, I'm not upset. Why would I even be playing this game if I wasn't prepared to strip naked?</state>
+            </case>
+            <case tag="must_strip" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="0-thinking.png">Hmm, what should I start with?</state>
+                <state img="0-neutral.png">Looks like I lost, but I wasn't expecting to leave here without taking anything off.</state>
+                <state img="0-thinking.png">There's my first loss. Now what should I take off?</state>
+                <state img="0-neutral.png" marker="misty_notembarressed">Looks like it's my turn.....No, I'm not upset. Why would I even be playing this game if I wasn't prepared to strip naked?</state>
+            </case>
             <case tag="must_strip" totalRounds="0">
                 <state img="0-thinking.png">I'm first to lose, huh? With my luck, that seems about right.</state>
                 <state img="0-happy.png">I guess I'm first. Let's get things going!</state>
             </case>
-            <case tag="must_strip_winning">
+            <case tag="must_strip_winning" priority="1">
                 <state img="0-happy.png">This loss is no big deal.</state>
                 <state img="0-neutral.png">Despite this loss, I'm still doing pretty good.</state>
                 <state img="0-excited.png">I'm still in the lead. Don't get too cocky!</state>
                 <state img="0-neutral.png">I'm not worried. I've still got this.</state>
                 <state img="0-neutral.png">I may have lost, but at least I'm not losing.</state>
-            </case>
-            <case tag="must_strip_normal">
-                <state img="0-embarrassed.png">I guess this was coming eventually.</state>
-                <state img="0-happy.png">I need to strip? No problem. As a swimmer, I'm more comfortable wearing less.</state>
-                <state img="0-excited.png">I'm not done yet! I'm still in the game!</state>
-                <state img="0-thinking.png">I'll have to step things up if I want to win.</state>
-                <state img="0-embarrassed.png">At least I'm not in last.</state>
             </case>
             <case tag="must_strip_normal" alsoPlaying="sakura" alsoPlayingSaying="burning">
                 <state img="0-happy.png">Thanks, Sakura! It's all the exercise I do. It keeps me looking nice.</state>
@@ -309,12 +324,12 @@
             <case tag="must_strip_normal" alsoPlaying="sakura" alsoPlayingSaying="fantastic">
                 <state img="0-happy.png">Thanks, Sakura! It's all the exercise I do. It keeps me looking nice.</state>
             </case>
-            <case tag="must_strip_losing">
-                <state img="0-irritated.png">Jeez. And I don't have many clothes to begin with.</state>
-                <state img="0-disappointed.png">As a Gym Leader, I've kinda gotten used to just always losing.</state>
-                <state img="0-disappointed.png">I can do better than this.</state>
-                <state img="0-irritated.png">I'm not upset about having to strip. I'm upset about losing.</state>
-                <state img="0-disappointed.png">I honestly don't care if I have to get naked, but I still want to win.</state>
+            <case tag="must_strip_normal" priority="1">
+                <state img="0-embarrassed.png">I guess this was coming eventually.</state>
+                <state img="0-happy.png">I need to strip? No problem. As a swimmer, I'm more comfortable wearing less.</state>
+                <state img="0-excited.png">I'm not done yet! I'm still in the game!</state>
+                <state img="0-thinking.png">I'll have to step things up if I want to win.</state>
+                <state img="0-embarrassed.png">At least I'm not in last.</state>
             </case>
             <case tag="must_strip_losing" alsoPlaying="monika" alsoPlayingSaying="messy">
                 <state img="0-disappointed.png">No, Monika. I just go swimming alot, and don't really care enough to style it.</state>
@@ -323,18 +338,37 @@
                 <state img="0-happy.png">I don't care much for foot races, but if it's a swimming race, then I'm game, Rin!</state>
                 <state img="0-happy.png">I don't care much for running, but I doubt they'd be able to beat me at swimming, Rin!</state>
             </case>
+            <case tag="must_strip_losing" priority="1">
+                <state img="0-irritated.png">Jeez. And I don't have many clothes to begin with.</state>
+                <state img="0-disappointed.png">As a Gym Leader, I've kinda gotten used to just always losing.</state>
+                <state img="0-disappointed.png">I can do better than this.</state>
+                <state img="0-irritated.png">I'm not upset about having to strip. I'm upset about losing.</state>
+                <state img="0-disappointed.png">I honestly don't care if I have to get naked, but I still want to win.</state>
+            </case>
             <case tag="stripping">
-                <state img="0-strip.png">I'll start with the jacket. I take it off whenever I go swimming anyway.</state>
-                <state img="0-strip.png">I'll take off my jacket. It's getting too hot in here anyway. Or maybe it's just me?</state>
-                <state img="0-strip.png">I'll take this off first. All it's really covering is my arms.</state>
-                <state img="0-strip.png">Off comes the jacket! I don't really need it right now anyway.</state>
-                <state img="0-strip.png">I'll start with something big. My jacket is the biggest thing I can take off right now.</state>
+                <state img="0-neutral.png">This should not appear. Please report bug.</state>
             </case>
             <case tag="stripping" alsoPlaying="chihiro" alsoPlayingSayingMarker="filter_confident">
                 <state img="0-strip.png">Well, it's easy to do when you work hard to take care of your body, Chihiro.</state>
             </case>
             <case tag="stripping" alsoPlaying="chihiro" alsoPlayingSayingMarker="filter_kind">
                 <state img="0-strip.png">Thanks Chihiro. I try,</state>
+            </case>
+            <case tag="stripping" priority="1">
+                <test expr="~self.costume~" value="default" />
+                <state img="0-strip.png">I'll start with the jacket. I take it off whenever I go swimming anyway.</state>
+                <state img="0-strip.png">I'll take off my jacket. It's getting too hot in here anyway. Or maybe it's just me?</state>
+                <state img="0-strip.png">I'll take this off first. All it's really covering is my arms.</state>
+                <state img="0-strip.png">Off comes the jacket! I don't really need it right now anyway.</state>
+                <state img="0-strip.png">I'll start with something big. My jacket is the biggest thing I can take off right now.</state>
+            </case>
+            <case tag="stripping" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="0-strip.png">I'll do something special for you all, I'll take off my suspenders and shorts!</state>
+                <state img="0-strip.png">Let me just slip off my suspenders, and I'll slip out of my shorts too.</state>
+                <state img="0-strip.png">I'll take off my shorts first. Of course, my suspenders are going with them.</state>
+                <state img="0-strip.png">These suspenders and shorts are kind of tight, so I'll start with them.</state>
+                <state img="0-strip.png">I'll start with something big. My suspenders &lt;i&gt;and&lt;/i&gt; my shorts!</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="corrin_f" alsoPlayingSayingMarker="playsafer">
                 <state img="0-disappointed.png">(How exactly are you supposed to "play safe" in strip poker?)</state>
@@ -345,13 +379,6 @@
                 <state img="0-excited.png">I hope you weren't expecting me to go easy on you!</state>
                 <state img="0-excited.png">Misty's number one! Ha, HA!</state>
                 <state img="0-happy.png">Alright ~name~! It's time for you to show us what you're made of!</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="0-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
-                <state img="0-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
-                <state img="0-excited.png">Your turn ~name~. Be bold about it!</state>
-                <state img="0-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
-                <state img="0-excited.png">You're gonna have to try harder if you wanna beat me!</state>
             </case>
             <case tag="female_must_strip" alsoPlaying="dark_magician_girl" alsoPlayingSayingMarker="ATK">
                 <state img="0-shocked.png">Wait, you do? Is it even possible to get an Attack stat as high as that?</state>
@@ -367,6 +394,13 @@
             </case>
             <case tag="female_must_strip" filter="very_long_hair" notSaidMarker="seen_verylonghair">
                 <state img="0-thinking.png" marker="seen_verylonghair">So, I've been meaning to say this for awhile, but ~name~, don't you think you should get a haircut? Hair that long is gonna cause a ton of problems while swimming.</state>
+            </case>
+            <case tag="female_must_strip" priority="1">
+                <state img="0-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
+                <state img="0-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
+                <state img="0-excited.png">Your turn ~name~. Be bold about it!</state>
+                <state img="0-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
+                <state img="0-excited.png">You're gonna have to try harder if you wanna beat me!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="0-embarrassed.png">Uh, Aimee? What are you doing with that gun?</state>
@@ -461,14 +495,43 @@
                 <state img="0-shocked.png">Wait, you're an actual ghost!? How is that possible? Why are you even here!?</state>
                 <state img="0-shocked.png">A real ghost girl!? I've heard stories from all sorts of places, but I never thought I'd actually see one!</state>
             </case>
-            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
-                <state img="0-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
-                <state img="0-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            <case tag="female_must_strip" target="tharja" notSaidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="0-embarrassed.png">You seem really fixated on ~player~, Tharja. Do you two have some histoory together?</state>
+                <state img="0-embarrassed.png">Tharja? You seem to be rather...obsessed.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="0-thinking.png">(This girl seems really obsessive. I can't tell whether or not ~player~ likes it or not, though.)</state>
+                <state img="0-thinking.png">(Tharja is being really aggressive. I can't tell if ~player~ likes it, or if he's creeped out.)</state>
+                <state img="0-thinking.png">(Tharja is trying really hard to get ~player~'s attention. I can't let myself lose to her!)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow10">
+                <state img="0-thinking.png">Years ago? Have you been stalking ~player~, Tharja?</state>
+                <state img="0-disappointed.png">Are you doing all this just because of some dream you had years ago, Tharja?</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow13">
+                <state img="0-disappointed.png">Stop being weird and just take it off already, Tharja.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow4">
+                <state img="0-thinking.png">(A spell?! I've got a bad feeling about this.)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow7">
+                <state img="0-neutral.png">Too bad your sandals don't seem to be catching ~player~'s interest very much, Tharja. But I guess they had to go eventually.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" targetSayingMarker="cheating1">
+                <state img="0-disappointed.png">Did you just admit to cheating, Tharja?</state>
+                <state img="0-disappointed.png">Are you really cheating, Tharja? Please don't. That's no fun.</state>
             </case>
             <case tag="female_must_strip" oneShotId="4" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="default" />
                 <state img="0-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
                 <state img="0-neutral.png">I like that look, Juri. It's a lot like my outfit. That wasn't on purpose, was it?</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="11" target="juri">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="0-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
+                <state img="0-neutral.png">I like that look, Juri. It's a lot like my usual outfit. That wasn't on purpose, was it?</state>
             </case>
             <case tag="female_must_strip" oneShotId="7" target="monika">
                 <test expr="~monika.costume~" value="monika_stirring_mermaid" />
@@ -478,6 +541,16 @@
                 <test expr="~sayaka.costume~" value="summertime_sayaka" />
                 <state img="0-embarrassed.png">Is that an inner tube? Do you not know how to swim, Sayaka? I could teach you if you want.</state>
                 <state img="0-thinking.png">Sayaka, do you know how to swim? If not, I can help you out.</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="default" />
+                <state img="0-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="0-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="10" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="0-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="0-pleased.png">I like your summertime look, Zizou! It's pretty similar to what I usually wear!</state>
             </case>
             <case tag="female_must_strip" oneShotId="6" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
@@ -721,6 +794,17 @@
             <case tag="female_removing_minor" target="sakura" targetStage="3">
                 <state img="0-shocked.png">GAH! YOUR HEAD!?!</state>
             </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow2">
+                <state img="0-thinking.png">(I hope that ~player~ garners more interest in me than he does in her.)</state>
+                <state img="0-thinking.png">(Hopefully my personality and fit body will make me more appealing to ~player~ than her.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow8">
+                <state img="0-irritated.png">(As much as I hate to admit it, that was a really good line. I wonder if ~player~ got worked up over it.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" targetSayingMarker="cheating2">
+                <state img="0-irritated.png">It doesn't sound like you intend on stopping, Tharja.</state>
+                <state img="0-irritated.png">Even if you keep cheating, Tharja, we'll make sure that you don't win.</state>
+            </case>
             <case tag="female_removing_minor" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
                 <state img="0-neutral.png">Your boots are all you have left, so time to take 'em off!</state>
@@ -790,6 +874,14 @@
             </case>
             <case tag="female_removed_minor" target="sonya" targetStage="6">
                 <state img="0-disappointed.png">Um, was there really any reason for the face paint?</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow3">
+                <state img="0-pleased.png">Well isn't that a shame, Tharja. Maybe he was distracted by someone he finds to be a little more appealing?</state>
+                <state img="0-pleased.png">Well that's too bad, Tharja. I guess he isn't as interested in you as you had hoped.</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow9">
+                <state img="0-neutral.png">If that's what you want, then maybe you should just lose on purpose, Tharja.</state>
+                <state img="0-neutral.png">If that's your goal, Tharja, then why don't you just throw the game?</state>
             </case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
                 <test expr="~_.costume~" value="nugi-chan_bikini" />
@@ -892,6 +984,9 @@
             <case tag="female_removing_major" target="pinkie_pie" targetStage="1">
                 <state img="0-excited.png">You started with your shirt, and you're doing your skirt second? Glad to know that I'm playing with someone who knows how to have fun!</state>
                 <state img="0-excited.png">Now your skirt? You really know how to get things going, huh Pinkie?</state>
+            </case>
+            <case tag="female_removing_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow5">
+                <state img="0-shocked.png">(What is she doing!?)</state>
             </case>
             <case tag="female_removing_major" target="vriska" targetStage="4-5">
                 <state img="0-irritated.png">Again with the light?</state>
@@ -1021,6 +1116,10 @@
             <case tag="female_removed_major" target="sayla" targetStage="4">
                 <state img="0-excited.png">Oh hey! You're wearing a swimsuit too? Nice! Let's go swimming together sometime!</state>
             </case>
+            <case tag="female_removed_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow6">
+                <state img="0-neutral.png">(Oh. She just took off her bodysuit. I was afraid she was going to mess with ~player~'s mind.)</state>
+                <state img="0-neutral.png">(Oh. That wasn't nearly as bad as I was afraid it would be.)</state>
+            </case>
             <case tag="female_removed_major" target="vriska" targetStage="5-6">
                 <state img="0-excited.png">Now we're getting somewhere!</state>
                 <state img="0-excited.png">It's about time you showed some skin, Vriska.</state>
@@ -1149,6 +1248,10 @@
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <state img="0-excited.png">Whoa! That's a neat trick Sheena! You've gotta teach me how to do that!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow11">
+                <state img="0-thinking.png">(Do guys like it when you tell them your fantasies like that? ~Player~ seems to be excited by it.)</state>
+                <state img="0-thinking.png">(I wonder if ~player~ is excited at the thought of that.)</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="0-shocked.png">You're taking off your bra next!? Before you even take off your shirt!?</state>
             </case>
@@ -1212,6 +1315,9 @@
                 <state img="0-excited.png">Not so condescending now that you've got nothing but your panties left, Palutena!</state>
                 <state img="0-excited.png">This is what you get for stalling for so long, Palutena!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow12">
+                <state img="0-thinking.png">"Take care of your tits"? What does that even mean?</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
                 <state img="0-pleased.png">This is what you get for trying to count something as small as string earlier.</state>
@@ -1261,6 +1367,10 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="pinkie_pie" targetStage="3" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="0-embarrassed.png">Uhh, Pinkie, I think you should be a little more careful with that knife...</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow14">
+                <state img="0-thinking.png">That's extremely weird, Tharja. And a little gross.</state>
+                <state img="0-disappointed.png">I think we all could've gone on living without knowing that, Tharja.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="0">
                 <state img="0-thinking.png">You're &lt;i&gt;starting&lt;/i&gt; with your panties!? This'll be an interesting game.</state>
@@ -1315,6 +1425,9 @@
             <case tag="female_crotch_is_visible" target="palutena">
                 <state img="0-pleased.png">If you weren't prepared to get naked then you shouldn't have chosen to play, Palutena.</state>
                 <state img="0-pleased.png">If you're not comfortable being naked, then maybe you shouldn't play this game, Palutena.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow15">
+                <state img="0-thinking.png">(~Player~ seems really excited by what she said just now, hopefully I still  have a chance.)</state>
             </case>
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="0-embarrassed.png">I guess that's one way to get people's attention. (Maybe I should try that the next time I come here.)</state>
@@ -1563,7 +1676,13 @@
                 <state img="1-happy.png">Quite a good hand. I only need one new card, please!</state>
                 <state img="1-neutral.png">Just one new card will do.</state>
             </case>
-            <case tag="good_hand">
+            <case tag="good_hand" priority="1">
+                <condition count="0" gender="male" />
+                <state img="1-back.png" marker="turned_around=1">(I wonder if there are any guys around here that'd like to join in.)</state>
+                <state img="1-back.png" marker="turned_around=1">(I hope there are some guys watching us.)</state>
+                <state img="1-back.png" marker="turned_around=1">(Let's see if we've caught anyone's attention.)</state>
+            </case>
+            <case tag="good_hand" priority="1">
                 <state img="1-excited.png">This hand is gonna sweep through all of you!</state>
                 <state img="1-pleased.png">Looks like I'm keeping what I still have on for now.</state>
                 <state img="1-thinking.png">It'll be smooth sailing with these cards. Well, I guess it would be more like smooth swimming for me.</state>
@@ -1571,17 +1690,11 @@
                 <state img="1-excited.png">This hand is like the equivalent of a Critical Hit!</state>
                 <state img="1-excited.png">I've got this one, for sure!</state>
             </case>
-            <case tag="good_hand" priority="0">
-                <condition count="0" gender="male" />
-                <state img="1-back.png" marker="turned_around=1">(I wonder if there are any guys around here that'd like to join in.)</state>
-                <state img="1-back.png" marker="turned_around=1">(I hope there are some guys watching us.)</state>
-                <state img="1-back.png" marker="turned_around=1">(Let's see if we've caught anyone's attention.)</state>
-            </case>
-            <case tag="good_hand" saidMarker="player_male==1" priority="0">
+            <case tag="good_hand" saidMarker="player_male==1" priority="1">
                 <state img="1-happy.png">Hmm, this hand is looking good. Almost as good as you, ~player~.</state>
                 <state img="1-pleased.png">I managed to meet ~player~ tonight, and I got a hand this good? Maybe my luck is starting to turn around.</state>
             </case>
-            <case tag="okay_hand">
+            <case tag="okay_hand" priority="1">
                 <state img="1-embarrassed.png" marker="misty_badwithdates">This could work. Then again, that's what I think about all of my dates too...</state>
                 <state img="1-embarrassed.png" marker="misty_badwithdates">This is already going better than most of the dates I go on.</state>
                 <state img="1-pleased.png">If you're good enough, you may get me out of something this round.</state>
@@ -1589,11 +1702,11 @@
                 <state img="1-thinking.png">This is basically a Normal type hand. Not many weaknesses, but not any strengths either.</state>
                 <state img="1-thinking.png">This, could work? I hope.</state>
             </case>
-            <case tag="okay_hand" saidMarker="player_male" priority="0">
+            <case tag="okay_hand" saidMarker="player_male" priority="1">
                 <state img="1-embarrassed.png">So, uh, ~player~, do you come here often? This is my first time here. Maybe you could show me around when the game is done?</state>
                 <state img="1-pleased.png">What are you doing after this, ~player~? I was thinking about going swimming. You can come with me if you want.</state>
             </case>
-            <case tag="bad_hand">
+            <case tag="bad_hand" priority="1">
                 <state img="1-irritated.png">This Wonder Trade didn't go so well...</state>
                 <state img="1-embarrassed.png">I might as well start stripping now.</state>
                 <state img="1-embarrassed.png" marker="misty_badwithdates">Maybe I have just as much bad luck with poker as I do with dating?</state>
@@ -1667,15 +1780,11 @@
                 <state img="1-thinking.png">That's a strange question to suddenly bring up. Especially since I have no experience with that kind of thing.</state>
                 <state img="1-thinking.png">To answer your question, Sei: I've never done that before. Why do you want to know?</state>
             </case>
-            <case tag="must_strip">
-                <state img="1-thinking.png">Hmm, should I start with my jacket or my sandals?</state>
-                <state img="1-neutral.png">Looks like I lost, but I wasn't expecting to leave here without taking anything off.</state>
-                <state img="1-thinking.png">There's my first loss. Now what should I take off?</state>
-                <state img="1-neutral.png" marker="misty_notembarressed">Looks like it's my turn.....No, I'm not upset. Why would I even be playing this game if I wasn't prepared to strip naked?</state>
-                <state img="1-embarrassed.png">Looks like the sandals are coming off now.</state>
-                <state img="1-embarrassed.png">Well, there goes my footwear.</state>
-                <state img="1-neutral.png">Let me just slip out of my sandals.</state>
-                <state img="1-neutral.png">That's my second loss. Let me just kick off these sandals.</state>
+            <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="1" saidMarker="player_male" alsoPlayingSaying="dream">
+                <state img="1-disappointed.png">If it was in your dreams, then it has nothing to do with the real world, Tharja.</state>
+            </case>
+            <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="2" saidMarker="player_male" alsoPlayingSaying="dream">
+                <state img="1-disappointed.png">You're completely delusional, Tharja.</state>
             </case>
             <case tag="must_strip" alsoPlaying="chiaki" alsoPlayingSayingMarker="pokemon">
                 <state img="1-thinking.png">I...don't really understand what you're talking about, Chiaki.</state>
@@ -1722,19 +1831,26 @@
                 <state img="1-shocked.png" marker="turned_around=0">Huh? What? I lost!? But I had such a good hand!</state>
                 <state img="1-shocked.png" marker="turned_around=0">Wait! I wasn't paying attention! How'd I lose!?</state>
             </case>
-            <case tag="must_strip_winning">
+            <case tag="must_strip" priority="1">
+                <test expr="~self.costume~" value="default" />
+                <state img="1-embarrassed.png">Looks like the sandals are coming off now.</state>
+                <state img="1-embarrassed.png">Well, there goes my footwear.</state>
+                <state img="1-neutral.png">Let me just slip out of my sandals.</state>
+                <state img="1-neutral.png">That's my second loss. Let me just kick off these sandals.</state>
+            </case>
+            <case tag="must_strip" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="1-embarrassed.png">Looks like the shoes are coming off now.</state>
+                <state img="1-embarrassed.png">Well, there goes my footwear.</state>
+                <state img="1-neutral.png">Let me just slip out of my shoes.</state>
+                <state img="1-neutral.png">That's my second loss. Let me just kick off these shoes.</state>
+            </case>
+            <case tag="must_strip_winning" priority="1">
                 <state img="1-happy.png">This loss is no big deal.</state>
                 <state img="1-neutral.png">Despite this loss, I'm still doing pretty good.</state>
                 <state img="1-excited.png">I'm still in the lead. Don't get too cocky!</state>
                 <state img="1-neutral.png">I'm not worried. I've still got this.</state>
                 <state img="1-neutral.png">I may have lost, but at least I'm not losing.</state>
-            </case>
-            <case tag="must_strip_normal">
-                <state img="1-embarrassed.png">I guess this was coming eventually.</state>
-                <state img="1-happy.png">I need to strip? No problem. As a swimmer, I'm more comfortable wearing less.</state>
-                <state img="1-excited.png">I'm not done yet! I'm still in the game!</state>
-                <state img="1-thinking.png">I'll have to step things up if I want to win.</state>
-                <state img="1-embarrassed.png">At least I'm not in last.</state>
             </case>
             <case tag="must_strip_normal" alsoPlaying="sakura" alsoPlayingSaying="burning">
                 <state img="1-happy.png">Thanks, Sakura! It's all the exercise I do. It keeps me looking nice.</state>
@@ -1742,12 +1858,12 @@
             <case tag="must_strip_normal" alsoPlaying="sakura" alsoPlayingSaying="fantastic">
                 <state img="1-happy.png">Thanks, Sakura! It's all the exercise I do. It keeps me looking nice.</state>
             </case>
-            <case tag="must_strip_losing">
-                <state img="1-irritated.png">Jeez. And I don't have many clothes to begin with.</state>
-                <state img="1-disappointed.png">As a Gym Leader, I've kinda gotten used to just always losing.</state>
-                <state img="1-disappointed.png">I can do better than this.</state>
-                <state img="1-irritated.png">I'm not upset about having to strip. I'm upset about losing.</state>
-                <state img="1-disappointed.png">I honestly don't care if I have to get naked, but I still want to win.</state>
+            <case tag="must_strip_normal" priority="1">
+                <state img="1-embarrassed.png">I guess this was coming eventually.</state>
+                <state img="1-happy.png">I need to strip? No problem. As a swimmer, I'm more comfortable wearing less.</state>
+                <state img="1-excited.png">I'm not done yet! I'm still in the game!</state>
+                <state img="1-thinking.png">I'll have to step things up if I want to win.</state>
+                <state img="1-embarrassed.png">At least I'm not in last.</state>
             </case>
             <case tag="must_strip_losing" alsoPlaying="monika" alsoPlayingSaying="messy">
                 <state img="1-disappointed.png">No, Monika. I just go swimming alot, and don't really care enough to style it.</state>
@@ -1756,11 +1872,12 @@
                 <state img="1-happy.png">I don't care much for foot races, but if it's a swimming race, then I'm game, Rin!</state>
                 <state img="1-happy.png">I don't care much for running, but I doubt they'd be able to beat me at swimming, Rin!</state>
             </case>
-            <case tag="stripping">
-                <state img="1-strip.png">I had to take these off eventually. Might as well do it now.</state>
-                <state img="1-strip.png">Don't get upset! I had to get rid of them at some point!</state>
-                <state img="1-strip.png">I feel more comfortable barefoot anyway.</state>
-                <state img="1-strip.png">Don't look at me like that! You would do the same thing!</state>
+            <case tag="must_strip_losing" priority="1">
+                <state img="1-irritated.png">Jeez. And I don't have many clothes to begin with.</state>
+                <state img="1-disappointed.png">As a Gym Leader, I've kinda gotten used to just always losing.</state>
+                <state img="1-disappointed.png">I can do better than this.</state>
+                <state img="1-irritated.png">I'm not upset about having to strip. I'm upset about losing.</state>
+                <state img="1-disappointed.png">I honestly don't care if I have to get naked, but I still want to win.</state>
             </case>
             <case tag="stripping" alsoPlaying="chihiro" alsoPlayingSayingMarker="filter_confident">
                 <state img="1-strip.png">Well, it's easy to do when you work hard to take care of your body, Chihiro.</state>
@@ -1772,11 +1889,28 @@
                 <state img="1-strip.png">You're the last person I want to hear complaining, Palutena. How many accessories did you bring again?</state>
                 <state img="1-strip.png">I don't want to hear anything from you, Palutena. You brought way too many accessories.</state>
             </case>
+            <case tag="stripping" priority="1">
+                <state img="1-strip.png">I had to take these off eventually. Might as well do it now.</state>
+                <state img="1-strip.png">Don't get upset! I had to get rid of them at some point!</state>
+                <state img="1-strip.png">I feel more comfortable barefoot anyway.</state>
+                <state img="1-strip.png">Don't look at me like that! You would do the same thing!</state>
+            </case>
             <case tag="stripped">
+                <state img="1-neutral.png">This should not appear. Please report bug.</state>
+            </case>
+            <case tag="stripped" priority="1">
+                <test expr="~self.costume~" value="default" />
                 <state img="1-after.png">You can get a better view of my figure without the jacket. Well? What do you think?</state>
                 <state img="1-after.png">This swimsuit is skin tight. What do you think of my figure?</state>
                 <state img="1-after.png">I personally think I look even better without the jacket.</state>
                 <state img="1-after.png">Now you can see just how well toned my body is. What do you think?</state>
+            </case>
+            <case tag="stripped" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="1-after.png">I got this bikini bottom from a friend from Hoenn. Isn't it cute?</state>
+                <state img="1-after.png">Now you can get a better look at my abs. What do you think?</state>
+                <state img="1-after.png">I personally think I look better the more skin I'm showing.</state>
+                <state img="1-after.png">Now you can see just how well toned my core is. What do you think?</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="corrin_f" alsoPlayingSayingMarker="playsafer">
                 <state img="1-disappointed.png">(How exactly are you supposed to "play safe" in strip poker?)</state>
@@ -1787,13 +1921,6 @@
                 <state img="1-excited.png">I hope you weren't expecting me to go easy on you!</state>
                 <state img="1-excited.png">Misty's number one! Ha, HA!</state>
                 <state img="1-happy.png">Alright ~name~! It's time for you to show us what you're made of!</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="1-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
-                <state img="1-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
-                <state img="1-excited.png">Your turn ~name~. Be bold about it!</state>
-                <state img="1-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
-                <state img="1-excited.png">You're gonna have to try harder if you wanna beat me!</state>
             </case>
             <case tag="female_must_strip" alsoPlaying="dark_magician_girl" alsoPlayingSayingMarker="ATK">
                 <state img="1-shocked.png">Wait, you do? Is it even possible to get an Attack stat as high as that?</state>
@@ -1809,6 +1936,13 @@
             </case>
             <case tag="female_must_strip" filter="very_long_hair" notSaidMarker="seen_verylonghair">
                 <state img="1-thinking.png" marker="seen_verylonghair">So, I've been meaning to say this for awhile, but ~name~, don't you think you should get a haircut? Hair that long is gonna cause a ton of problems while swimming.</state>
+            </case>
+            <case tag="female_must_strip" priority="1">
+                <state img="1-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
+                <state img="1-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
+                <state img="1-excited.png">Your turn ~name~. Be bold about it!</state>
+                <state img="1-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
+                <state img="1-excited.png">You're gonna have to try harder if you wanna beat me!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="1-embarrassed.png">Uh, Aimee? What are you doing with that gun?</state>
@@ -1900,14 +2034,39 @@
                 <state img="1-shocked.png">Wait, you're an actual ghost!? How is that possible? Why are you even here!?</state>
                 <state img="1-shocked.png">A real ghost girl!? I've heard stories from all sorts of places, but I never thought I'd actually see one!</state>
             </case>
-            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
-                <state img="1-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
-                <state img="1-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            <case tag="female_must_strip" target="tharja" notSaidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="1-embarrassed.png">You seem really fixated on ~player~, Tharja. Do you two have some histoory together?</state>
+                <state img="1-embarrassed.png">Tharja? You seem to be rather...obsessed.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="1-thinking.png">(This girl seems really obsessive. I can't tell whether or not ~player~ likes it or not, though.)</state>
+                <state img="1-thinking.png">(Tharja is being really aggressive. I can't tell if ~player~ likes it, or if he's creeped out.)</state>
+                <state img="1-thinking.png">(Tharja is trying really hard to get ~player~'s attention. I can't let myself lose to her!)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow10">
+                <state img="1-thinking.png">Years ago? Have you been stalking ~player~, Tharja?</state>
+                <state img="1-disappointed.png">Are you doing all this just because of some dream you had years ago, Tharja?</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow13">
+                <state img="1-disappointed.png">Stop being weird and just take it off already, Tharja.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow4">
+                <state img="1-thinking.png">(A spell?! I've got a bad feeling about this.)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow7">
+                <state img="1-neutral.png">Too bad your sandals don't seem to be catching ~player~'s interest very much, Tharja. But I guess they had to go eventually.</state>
             </case>
             <case tag="female_must_strip" oneShotId="4" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="default" />
                 <state img="1-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
                 <state img="1-neutral.png">I like that look, Juri. It's a lot like my outfit. That wasn't on purpose, was it?</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="11" target="juri">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="1-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
+                <state img="1-neutral.png">I like that look, Juri. It's a lot like my usual outfit. That wasn't on purpose, was it?</state>
             </case>
             <case tag="female_must_strip" oneShotId="7" target="monika">
                 <test expr="~monika.costume~" value="monika_stirring_mermaid" />
@@ -1917,6 +2076,16 @@
                 <test expr="~sayaka.costume~" value="summertime_sayaka" />
                 <state img="1-embarrassed.png">Is that an inner tube? Do you not know how to swim, Sayaka? I could teach you if you want.</state>
                 <state img="1-thinking.png">Sayaka, do you know how to swim? If not, I can help you out.</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="default" />
+                <state img="1-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="1-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="10" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="1-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="1-pleased.png">I like your summertime look, Zizou! It's pretty similar to what I usually wear!</state>
             </case>
             <case tag="female_must_strip" oneShotId="6" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
@@ -2168,6 +2337,17 @@
             <case tag="female_removing_minor" target="sakura" targetStage="3">
                 <state img="1-shocked.png">GAH! YOUR HEAD!?!</state>
             </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow2">
+                <state img="1-thinking.png">(I hope that ~player~ garners more interest in me than he does in her.)</state>
+                <state img="1-thinking.png">(Hopefully my personality and fit body will make me more appealing to ~player~ than her.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow8">
+                <state img="1-irritated.png">(As much as I hate to admit it, that was a really good line. I wonder if ~player~ got worked up over it.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" targetSayingMarker="cheating2">
+                <state img="1-irritated.png">It doesn't sound like you intend on stopping, Tharja.</state>
+                <state img="1-irritated.png">Even if you keep cheating, Tharja, we'll make sure that you don't win.</state>
+            </case>
             <case tag="female_removing_minor" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
                 <state img="1-neutral.png">Your boots are all you have left, so time to take 'em off!</state>
@@ -2237,6 +2417,14 @@
             </case>
             <case tag="female_removed_minor" target="sonya" targetStage="6">
                 <state img="1-disappointed.png">Um, was there really any reason for the face paint?</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow3">
+                <state img="1-pleased.png">Well isn't that a shame, Tharja. Maybe he was distracted by someone he finds to be a little more appealing?</state>
+                <state img="1-pleased.png">Well that's too bad, Tharja. I guess he isn't as interested in you as you had hoped.</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow9">
+                <state img="1-neutral.png">If that's what you want, then maybe you should just lose on purpose, Tharja.</state>
+                <state img="1-neutral.png">If that's your goal, Tharja, then why don't you just throw the game?</state>
             </case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
                 <test expr="~_.costume~" value="nugi-chan_bikini" />
@@ -2339,6 +2527,9 @@
             <case tag="female_removing_major" target="pinkie_pie" targetStage="1">
                 <state img="1-excited.png">You started with your shirt, and you're doing your skirt second? Glad to know that I'm playing with someone who knows how to have fun!</state>
                 <state img="1-excited.png">Now your skirt? You really know how to get things going, huh Pinkie?</state>
+            </case>
+            <case tag="female_removing_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow5">
+                <state img="1-shocked.png">(What is she doing!?)</state>
             </case>
             <case tag="female_removing_major" target="vriska" targetStage="4-5">
                 <state img="1-irritated.png">Again with the light?</state>
@@ -2473,6 +2664,10 @@
             <case tag="female_removed_major" target="sayla" targetStage="4">
                 <state img="1-excited.png">Oh hey! You're wearing a swimsuit too? Nice! Let's go swimming together sometime!</state>
             </case>
+            <case tag="female_removed_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow6">
+                <state img="1-neutral.png">(Oh. She just took off her bodysuit. I was afraid she was going to mess with ~player~'s mind.)</state>
+                <state img="1-neutral.png">(Oh. That wasn't nearly as bad as I was afraid it would be.)</state>
+            </case>
             <case tag="female_removed_major" target="vriska" targetStage="5-6">
                 <state img="1-excited.png">Now we're getting somewhere!</state>
                 <state img="1-excited.png">It's about time you showed some skin, Vriska.</state>
@@ -2601,6 +2796,10 @@
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <state img="1-excited.png">Whoa! That's a neat trick Sheena! You've gotta teach me how to do that!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow11">
+                <state img="1-thinking.png">(Do guys like it when you tell them your fantasies like that? ~Player~ seems to be excited by it.)</state>
+                <state img="1-thinking.png">(I wonder if ~player~ is excited at the thought of that.)</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="1-shocked.png">You're taking off your bra next!? Before you even take off your shirt!?</state>
             </case>
@@ -2664,6 +2863,9 @@
                 <state img="1-excited.png">Not so condescending now that you've got nothing but your panties left, Palutena!</state>
                 <state img="1-excited.png">This is what you get for stalling for so long, Palutena!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow12">
+                <state img="1-thinking.png">"Take care of your tits"? What does that even mean?</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
                 <state img="1-pleased.png">This is what you get for trying to count something as small as string earlier.</state>
@@ -2713,6 +2915,10 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="pinkie_pie" targetStage="3" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="1-embarrassed.png">Uhh, Pinkie, I think you should be a little more careful with that knife...</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow14">
+                <state img="1-thinking.png">That's extremely weird, Tharja. And a little gross.</state>
+                <state img="1-disappointed.png">I think we all could've gone on living without knowing that, Tharja.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="0">
                 <state img="1-thinking.png">You're &lt;i&gt;starting&lt;/i&gt; with your panties!? This'll be an interesting game.</state>
@@ -2767,6 +2973,9 @@
             <case tag="female_crotch_is_visible" target="palutena">
                 <state img="1-pleased.png">If you weren't prepared to get naked then you shouldn't have chosen to play, Palutena.</state>
                 <state img="1-pleased.png">If you're not comfortable being naked, then maybe you shouldn't play this game, Palutena.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow15">
+                <state img="1-thinking.png">(~Player~ seems really excited by what she said just now, hopefully I still  have a chance.)</state>
             </case>
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="1-embarrassed.png">I guess that's one way to get people's attention. (Maybe I should try that the next time I come here.)</state>
@@ -3016,38 +3225,62 @@
                 <state img="2-neutral.png">Just one new card will do.</state>
             </case>
             <case tag="good_hand">
+                <state img="2-happy.png">This should not appear. Please report bug.</state>
+            </case>
+            <case tag="good_hand" priority="1">
+                <condition count="0" gender="male" />
+                <state img="2-back.png" marker="turned_around=1">(I wonder if there are any guys around here that'd like to join in.)</state>
+                <state img="2-back.png" marker="turned_around=1">(I hope there are some guys watching us.)</state>
+                <state img="2-back.png" marker="turned_around=1">(Let's see if we've caught anyone's attention.)</state>
+            </case>
+            <case tag="good_hand" saidMarker="player_male" priority="1">
+                <state img="2-back.png" marker="turned_around=1">I look pretty good from the back too, don't I?</state>
+            </case>
+            <case tag="good_hand" saidMarker="player_male==1" priority="1">
+                <state img="2-happy.png">Hmm, this hand is looking good. Almost as good as you, ~player~.</state>
+                <state img="2-pleased.png">I managed to meet ~player~ tonight, and I got a hand this good? Maybe my luck is starting to turn around.</state>
+            </case>
+            <case tag="good_hand" priority="1">
+                <test expr="~self.costume~" value="default" />
                 <state img="2-excited.png">I'm not losing my swimsuit yet!</state>
                 <state img="2-excited.png">I can still make a comeback!</state>
                 <state img="2-excited.png">These cards will keep me in my swimsuit.</state>
                 <state img="2-excited.png">This hand is Super Effective!</state>
                 <state img="2-excited.png">I got this!</state>
             </case>
-            <case tag="good_hand" priority="0">
-                <condition count="0" gender="male" />
-                <state img="2-back.png" marker="turned_around=1">(I wonder if there are any guys around here that'd like to join in.)</state>
-                <state img="2-back.png" marker="turned_around=1">(I hope there are some guys watching us.)</state>
-                <state img="2-back.png" marker="turned_around=1">(Let's see if we've caught anyone's attention.)</state>
+            <case tag="good_hand" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="2-excited.png">I'm not gonna lose anything this time!</state>
+                <state img="2-excited.png">I can still make a comeback!</state>
+                <state img="2-excited.png">These cards will keep my clothes on me.</state>
+                <state img="2-excited.png">This hand is Super Effective!</state>
+                <state img="2-excited.png">I got this!</state>
             </case>
-            <case tag="good_hand" saidMarker="player_male" priority="0">
-                <state img="2-back.png" marker="turned_around=1">I look pretty good from the back too, don't I?</state>
-            </case>
-            <case tag="good_hand" saidMarker="player_male==1" priority="0">
-                <state img="2-happy.png">Hmm, this hand is looking good. Almost as good as you, ~player~.</state>
-                <state img="2-pleased.png">I managed to meet ~player~ tonight, and I got a hand this good? Maybe my luck is starting to turn around.</state>
-            </case>
-            <case tag="okay_hand">
+            <case tag="okay_hand" priority="1">
                 <state img="2-thinking.png">This should be enough.</state>
                 <state img="2-thinking.png">Will this work? I can only hope so.</state>
                 <state img="2-neutral.png">Well, let's just see how this plays out.</state>
                 <state img="2-thinking.png">This hand isn't bad, but it's nothing spectacular either.</state>
                 <state img="2-thinking.png">Maybe this will do?</state>
             </case>
-            <case tag="okay_hand" saidMarker="player_male" priority="0">
+            <case tag="okay_hand" saidMarker="player_male" priority="1">
                 <state img="2-embarrassed.png">Say, ~player~, are you single? Because I am, and I was just wondering if, maybe we're both here for the same reason.</state>
                 <state img="2-embarrassed.png">Are you a busy person ~player~? Or do you have a pretty open schedule? For instance, do you think you'd be able to fit a date into the next few days?</state>
             </case>
             <case tag="bad_hand">
+                <state img="2-neutral.png">This should not appear. Please report bug.</state>
+            </case>
+            <case tag="bad_hand" priority="1">
+                <test expr="~self.costume~" value="default" />
                 <state img="2-disappointed.png">I may lose my swimsuit this time.</state>
+                <state img="2-embarrassed.png">This...this is not good.</state>
+                <state img="2-disappointed.png">This game is sink or swim, and it looks like I've sunk.</state>
+                <state img="2-embarrassed.png">This hand....it's not very effective.</state>
+                <state img="2-embarrassed.png">I must have messed up somewhere.</state>
+            </case>
+            <case tag="bad_hand" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="2-disappointed.png">I may lose some clothes this time.</state>
                 <state img="2-embarrassed.png">This...this is not good.</state>
                 <state img="2-disappointed.png">This game is sink or swim, and it looks like I've sunk.</state>
                 <state img="2-embarrassed.png">This hand....it's not very effective.</state>
@@ -3119,15 +3352,11 @@
                 <state img="2-thinking.png">That's a strange question to suddenly bring up. Especially since I have no experience with that kind of thing.</state>
                 <state img="2-thinking.png">To answer your question, Sei: I've never done that before. Why do you want to know?</state>
             </case>
-            <case tag="must_strip">
-                <state img="2-thinking.png">Hmm, should I start with my jacket or my sandals?</state>
-                <state img="2-neutral.png">Looks like I lost, but I wasn't expecting to leave here without taking anything off.</state>
-                <state img="2-thinking.png">There's my first loss. Now what should I take off?</state>
-                <state img="2-neutral.png" marker="misty_notembarressed">Looks like it's my turn.....No, I'm not upset. Why would I even be playing this game if I wasn't prepared to strip naked?</state>
-                <state img="2-happy.png">I guess my swimsuit is next, but I'm not going to show you everything at once!</state>
-                <state img="2-pleased.png">All that's left is my swimsuit, but I'm not gonna take it all off at once.</state>
-                <state img="2-happy.png">Looks like I have to strip again, but I'm not getting naked just yet.</state>
-                <state img="2-happy.png">I lost again? Well, time to take off the swimsuit, but not all of it.</state>
+            <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="1" saidMarker="player_male" alsoPlayingSaying="dream">
+                <state img="2-disappointed.png">If it was in your dreams, then it has nothing to do with the real world, Tharja.</state>
+            </case>
+            <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="2" saidMarker="player_male" alsoPlayingSaying="dream">
+                <state img="2-disappointed.png">You're completely delusional, Tharja.</state>
             </case>
             <case tag="must_strip" alsoPlaying="chiaki" alsoPlayingSayingMarker="pokemon">
                 <state img="2-thinking.png">I...don't really understand what you're talking about, Chiaki.</state>
@@ -3174,19 +3403,26 @@
                 <state img="2-shocked.png" marker="turned_around=0">Huh? What? I lost!? But I had such a good hand!</state>
                 <state img="2-shocked.png" marker="turned_around=0">Wait! I wasn't paying attention! How'd I lose!?</state>
             </case>
-            <case tag="must_strip_winning">
+            <case tag="must_strip" priority="1">
+                <test expr="~self.costume~" value="default" />
+                <state img="2-happy.png">I guess my swimsuit is next, but I'm not going to show you everything at once!</state>
+                <state img="2-pleased.png">All that's left is my swimsuit, but I'm not gonna take it all off at once.</state>
+                <state img="2-happy.png">Looks like I have to strip again, but I'm not getting naked just yet.</state>
+                <state img="2-happy.png">I lost again? Well, time to take off the swimsuit, but not all of it.</state>
+            </case>
+            <case tag="must_strip" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="2-happy.png">Looks like my top is next. You guys are pretty good!</state>
+                <state img="2-pleased.png">I'm down to my bare essentials. Things get good starting now.</state>
+                <state img="2-happy.png">Looks like I have to strip again, hope you all enjoy the view.</state>
+                <state img="2-happy.png">I lost again? Well, time to take off my top.</state>
+            </case>
+            <case tag="must_strip_winning" priority="1">
                 <state img="2-happy.png">This loss is no big deal.</state>
                 <state img="2-neutral.png">Despite this loss, I'm still doing pretty good.</state>
                 <state img="2-excited.png">I'm still in the lead. Don't get too cocky!</state>
                 <state img="2-neutral.png">I'm not worried. I've still got this.</state>
                 <state img="2-neutral.png">I may have lost, but at least I'm not losing.</state>
-            </case>
-            <case tag="must_strip_normal">
-                <state img="2-embarrassed.png">I guess this was coming eventually.</state>
-                <state img="2-happy.png">I need to strip? No problem. As a swimmer, I'm more comfortable wearing less.</state>
-                <state img="2-excited.png">I'm not done yet! I'm still in the game!</state>
-                <state img="2-thinking.png">I'll have to step things up if I want to win.</state>
-                <state img="2-embarrassed.png">At least I'm not in last.</state>
             </case>
             <case tag="must_strip_normal" alsoPlaying="sakura" alsoPlayingSaying="burning">
                 <state img="2-happy.png">Thanks, Sakura! It's all the exercise I do. It keeps me looking nice.</state>
@@ -3194,12 +3430,12 @@
             <case tag="must_strip_normal" alsoPlaying="sakura" alsoPlayingSaying="fantastic">
                 <state img="2-happy.png">Thanks, Sakura! It's all the exercise I do. It keeps me looking nice.</state>
             </case>
-            <case tag="must_strip_losing">
-                <state img="2-irritated.png">Jeez. And I don't have many clothes to begin with.</state>
-                <state img="2-disappointed.png">As a Gym Leader, I've kinda gotten used to just always losing.</state>
-                <state img="2-disappointed.png">I can do better than this.</state>
-                <state img="2-irritated.png">I'm not upset about having to strip. I'm upset about losing.</state>
-                <state img="2-disappointed.png">I honestly don't care if I have to get naked, but I still want to win.</state>
+            <case tag="must_strip_normal" priority="1">
+                <state img="2-embarrassed.png">I guess this was coming eventually.</state>
+                <state img="2-happy.png">I need to strip? No problem. As a swimmer, I'm more comfortable wearing less.</state>
+                <state img="2-excited.png">I'm not done yet! I'm still in the game!</state>
+                <state img="2-thinking.png">I'll have to step things up if I want to win.</state>
+                <state img="2-embarrassed.png">At least I'm not in last.</state>
             </case>
             <case tag="must_strip_losing" alsoPlaying="monika" alsoPlayingSaying="messy">
                 <state img="2-disappointed.png">No, Monika. I just go swimming alot, and don't really care enough to style it.</state>
@@ -3208,11 +3444,15 @@
                 <state img="2-happy.png">I don't care much for foot races, but if it's a swimming race, then I'm game, Rin!</state>
                 <state img="2-happy.png">I don't care much for running, but I doubt they'd be able to beat me at swimming, Rin!</state>
             </case>
+            <case tag="must_strip_losing" priority="1">
+                <state img="2-irritated.png">Jeez. And I don't have many clothes to begin with.</state>
+                <state img="2-disappointed.png">As a Gym Leader, I've kinda gotten used to just always losing.</state>
+                <state img="2-disappointed.png">I can do better than this.</state>
+                <state img="2-irritated.png">I'm not upset about having to strip. I'm upset about losing.</state>
+                <state img="2-disappointed.png">I honestly don't care if I have to get naked, but I still want to win.</state>
+            </case>
             <case tag="stripping">
-                <state img="2-strip1.png">I'll just slip off the shoulder straps for now. You'll have to work a little harder if you want to see everything.</state>
-                <state img="2-strip0.png">I'll let you see my boobs for now. You'll have to beat me again to get me naked.</state>
-                <state img="2-strip1.png">I'll take off the top of it for now. If I lose again, then I'll take off the whole thing.</state>
-                <state img="2-strip1.png">I'm gonna count my swimsuit as two pieces. I'll undo the top of it as one piece.</state>
+                <state img="2-neutral.png">This should not appear. Please report bug.</state>
             </case>
             <case tag="stripping" alsoPlaying="chihiro" alsoPlayingSayingMarker="filter_confident">
                 <state img="2-strip1.png">Well, it's easy when you work hard to take care of your body, Chihiro.</state>
@@ -3220,11 +3460,30 @@
             <case tag="stripping" alsoPlaying="chihiro" alsoPlayingSayingMarker="filter_kind">
                 <state img="2-strip1.png">Thanks Chihiro. I try,</state>
             </case>
+            <case tag="stripping" alsoPlaying="tharja" saidMarker="player_male" alsoPlayingSaying="one piece">
+                <state img="2-strip0.png">Why's that, Tharja? Are you afraid that ~player~ will choose me over you?</state>
+                <state img="2-strip0.png">But if ~player~ likes them, and you hurt me, then that would make ~player~ sad. You wouldn't want to make him sad, would you, Tharja?</state>
+            </case>
+            <case tag="stripping" alsoPlaying="tharja" saidMarker="player_male" alsoPlayingSaying="sluts">
+                <state img="2-strip0.png">Really? Well then you'd better not lose, Tharja, or else you'll be a slut too.</state>
+                <state img="2-strip0.png">If that's true, and you also end up losing, then that'll make you a slut too, Tharja.</state>
+            </case>
+            <case tag="stripping" priority="1">
+                <test expr="~self.costume~" value="default" />
+                <state img="2-strip1.png">I'll just slip off the shoulder straps for now. You'll have to work a little harder if you want to see everything.</state>
+                <state img="2-strip0.png">I'll let you see my boobs for now. You'll have to beat me again to get me naked.</state>
+                <state img="2-strip1.png">I'll take off the top of it for now. If I lose again, then I'll take off the whole thing.</state>
+                <state img="2-strip1.png">I'm gonna count my swimsuit as two pieces. I'll undo the top of it as one piece.</state>
+            </case>
+            <case tag="stripping" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="2-strip1.png">Off comes the top. One more loss, and you'll get to see everything.</state>
+                <state img="2-strip0.png">I'll let you see my boobs for now. You'll have to beat me again to get me naked.</state>
+                <state img="2-strip1.png">I'll take off the top of it for now. Sorry if you were expecting me to go bottoms first.</state>
+                <state img="2-strip1.png">I'll take off my shirt. You'll be happy to know that I'm not wearing a bra.</state>
+            </case>
             <case tag="stripped">
-                <state img="2-after.png">This is getting pretty risky. Maybe I should be a little more serious?</state>
-                <state img="2-after.png">Looks like I'm down to my swimsuit... But I'm not gonna make it too easy for you. You have to give it your best if you want to see me naked.</state>
-                <state img="2-after.png">My swimsuit's all I have left, but I'm not finished yet.</state>
-                <state img="2-thinking.png">Don't count me out yet. I still have a few tricks up my...uh....swimsuit?</state>
+                <state img="2-neutral.png">This should not appear. Please report bug.</state>
             </case>
             <case tag="stripped" alsoPlaying="emi" alsoPlayingSaying="capable">
                 <state img="2-after.png">I mostly swim, Emi. But I run sometimes too.</state>
@@ -3244,6 +3503,20 @@
             <case tag="stripped" alsoPlaying="sakura" alsoPlayingSaying="falter">
                 <state img="2-after.png">You got it, Sakura! I'll make sure you go all the way!</state>
             </case>
+            <case tag="stripped" priority="1">
+                <test expr="~self.costume~" value="default" />
+                <state img="2-after.png">This is getting pretty risky. Maybe I should be a little more serious?</state>
+                <state img="2-after.png">Looks like I'm down to my swimsuit... But I'm not gonna make it too easy for you. You have to give it your best if you want to see me naked.</state>
+                <state img="2-after.png">My swimsuit's all I have left, but I'm not finished yet.</state>
+                <state img="2-thinking.png">Don't count me out yet. I still have a few tricks up my...uh....swimsuit?</state>
+            </case>
+            <case tag="stripped" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="2-after.png">This is getting pretty risky. Maybe I should be a little more serious?</state>
+                <state img="2-after.png">Looks like I'm down to my bare essentials. Are you all getting excited?</state>
+                <state img="2-after.png">I've only got two pieces of clothing left, but I'm not finished yet.</state>
+                <state img="2-after.png">Don't count me out yet. I still have a few tricks up my sleeve.</state>
+            </case>
             <case tag="male_human_must_strip" alsoPlaying="corrin_f" alsoPlayingSayingMarker="playsafer">
                 <state img="2-disappointed.png">(How exactly are you supposed to "play safe" in strip poker?)</state>
             </case>
@@ -3253,13 +3526,6 @@
                 <state img="2-excited.png">I hope you weren't expecting me to go easy on you!</state>
                 <state img="2-excited.png">Misty's number one! Ha, HA!</state>
                 <state img="2-happy.png">Alright ~name~! It's time for you to show us what you're made of!</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="2-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
-                <state img="2-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
-                <state img="2-excited.png">Your turn ~name~. Be bold about it!</state>
-                <state img="2-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
-                <state img="2-excited.png">You're gonna have to try harder if you wanna beat me!</state>
             </case>
             <case tag="female_must_strip" alsoPlaying="dark_magician_girl" alsoPlayingSayingMarker="ATK">
                 <state img="2-shocked.png">Wait, you do? Is it even possible to get an Attack stat as high as that?</state>
@@ -3275,6 +3541,13 @@
             </case>
             <case tag="female_must_strip" filter="very_long_hair" notSaidMarker="seen_verylonghair">
                 <state img="2-thinking.png" marker="seen_verylonghair">So, I've been meaning to say this for awhile, but ~name~, don't you think you should get a haircut? Hair that long is gonna cause a ton of problems while swimming.</state>
+            </case>
+            <case tag="female_must_strip" priority="1">
+                <state img="2-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
+                <state img="2-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
+                <state img="2-excited.png">Your turn ~name~. Be bold about it!</state>
+                <state img="2-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
+                <state img="2-excited.png">You're gonna have to try harder if you wanna beat me!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="2-embarrassed.png">Uh, Aimee? What are you doing with that gun?</state>
@@ -3366,14 +3639,39 @@
                 <state img="2-shocked.png">Wait, you're an actual ghost!? How is that possible? Why are you even here!?</state>
                 <state img="2-shocked.png">A real ghost girl!? I've heard stories from all sorts of places, but I never thought I'd actually see one!</state>
             </case>
-            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
-                <state img="2-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
-                <state img="2-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            <case tag="female_must_strip" target="tharja" notSaidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="2-embarrassed.png">You seem really fixated on ~player~, Tharja. Do you two have some histoory together?</state>
+                <state img="2-embarrassed.png">Tharja? You seem to be rather...obsessed.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="2-thinking.png">(This girl seems really obsessive. I can't tell whether or not ~player~ likes it or not, though.)</state>
+                <state img="2-thinking.png">(Tharja is being really aggressive. I can't tell if ~player~ likes it, or if he's creeped out.)</state>
+                <state img="2-thinking.png">(Tharja is trying really hard to get ~player~'s attention. I can't let myself lose to her!)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow10">
+                <state img="2-thinking.png">Years ago? Have you been stalking ~player~, Tharja?</state>
+                <state img="2-disappointed.png">Are you doing all this just because of some dream you had years ago, Tharja?</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow13">
+                <state img="2-disappointed.png">Stop being weird and just take it off already, Tharja.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow4">
+                <state img="2-thinking.png">(A spell?! I've got a bad feeling about this.)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow7">
+                <state img="2-neutral.png">Too bad your sandals don't seem to be catching ~player~'s interest very much, Tharja. But I guess they had to go eventually.</state>
             </case>
             <case tag="female_must_strip" oneShotId="4" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="default" />
                 <state img="2-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
                 <state img="2-neutral.png">I like that look, Juri. It's a lot like my outfit. That wasn't on purpose, was it?</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="11" target="juri">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="2-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
+                <state img="2-neutral.png">I like that look, Juri. It's a lot like my usual outfit. That wasn't on purpose, was it?</state>
             </case>
             <case tag="female_must_strip" oneShotId="7" target="monika">
                 <test expr="~monika.costume~" value="monika_stirring_mermaid" />
@@ -3383,6 +3681,16 @@
                 <test expr="~sayaka.costume~" value="summertime_sayaka" />
                 <state img="2-embarrassed.png">Is that an inner tube? Do you not know how to swim, Sayaka? I could teach you if you want.</state>
                 <state img="2-thinking.png">Sayaka, do you know how to swim? If not, I can help you out.</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="default" />
+                <state img="2-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="2-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="10" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="2-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="2-pleased.png">I like your summertime look, Zizou! It's pretty similar to what I usually wear!</state>
             </case>
             <case tag="female_must_strip" oneShotId="6" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
@@ -3634,6 +3942,17 @@
             <case tag="female_removing_minor" target="sakura" targetStage="3">
                 <state img="2-shocked.png">GAH! YOUR HEAD!?!</state>
             </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow2">
+                <state img="2-thinking.png">(I hope that ~player~ garners more interest in me than he does in her.)</state>
+                <state img="2-thinking.png">(Hopefully my personality and fit body will make me more appealing to ~player~ than her.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow8">
+                <state img="2-irritated.png">(As much as I hate to admit it, that was a really good line. I wonder if ~player~ got worked up over it.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" targetSayingMarker="cheating2">
+                <state img="2-irritated.png">It doesn't sound like you intend on stopping, Tharja.</state>
+                <state img="2-irritated.png">Even if you keep cheating, Tharja, we'll make sure that you don't win.</state>
+            </case>
             <case tag="female_removing_minor" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
                 <state img="2-neutral.png">Your boots are all you have left, so time to take 'em off!</state>
@@ -3703,6 +4022,14 @@
             </case>
             <case tag="female_removed_minor" target="sonya" targetStage="6">
                 <state img="2-disappointed.png">Um, was there really any reason for the face paint?</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow3">
+                <state img="2-pleased.png">Well isn't that a shame, Tharja. Maybe he was distracted by someone he finds to be a little more appealing?</state>
+                <state img="2-pleased.png">Well that's too bad, Tharja. I guess he isn't as interested in you as you had hoped.</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow9">
+                <state img="2-neutral.png">If that's what you want, then maybe you should just lose on purpose, Tharja.</state>
+                <state img="2-neutral.png">If that's your goal, Tharja, then why don't you just throw the game?</state>
             </case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
                 <test expr="~_.costume~" value="nugi-chan_bikini" />
@@ -3805,6 +4132,9 @@
             <case tag="female_removing_major" target="pinkie_pie" targetStage="1">
                 <state img="2-excited.png">You started with your shirt, and you're doing your skirt second? Glad to know that I'm playing with someone who knows how to have fun!</state>
                 <state img="2-excited.png">Now your skirt? You really know how to get things going, huh Pinkie?</state>
+            </case>
+            <case tag="female_removing_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow5">
+                <state img="2-shocked.png">(What is she doing!?)</state>
             </case>
             <case tag="female_removing_major" target="vriska" targetStage="4-5">
                 <state img="2-irritated.png">Again with the light?</state>
@@ -3939,6 +4269,10 @@
             <case tag="female_removed_major" target="sayla" targetStage="4">
                 <state img="2-excited.png">Oh hey! You're wearing a swimsuit too? Nice! Let's go swimming together sometime!</state>
             </case>
+            <case tag="female_removed_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow6">
+                <state img="2-neutral.png">(Oh. She just took off her bodysuit. I was afraid she was going to mess with ~player~'s mind.)</state>
+                <state img="2-neutral.png">(Oh. That wasn't nearly as bad as I was afraid it would be.)</state>
+            </case>
             <case tag="female_removed_major" target="vriska" targetStage="5-6">
                 <state img="2-excited.png">Now we're getting somewhere!</state>
                 <state img="2-excited.png">It's about time you showed some skin, Vriska.</state>
@@ -4067,6 +4401,10 @@
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <state img="2-excited.png">Whoa! That's a neat trick Sheena! You've gotta teach me how to do that!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow11">
+                <state img="2-thinking.png">(Do guys like it when you tell them your fantasies like that? ~Player~ seems to be excited by it.)</state>
+                <state img="2-thinking.png">(I wonder if ~player~ is excited at the thought of that.)</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="2-shocked.png">You're taking off your bra next!? Before you even take off your shirt!?</state>
             </case>
@@ -4130,6 +4468,9 @@
                 <state img="2-excited.png">Not so condescending now that you've got nothing but your panties left, Palutena!</state>
                 <state img="2-excited.png">This is what you get for stalling for so long, Palutena!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow12">
+                <state img="2-thinking.png">"Take care of your tits"? What does that even mean?</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
                 <state img="2-pleased.png">This is what you get for trying to count something as small as string earlier.</state>
@@ -4179,6 +4520,10 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="pinkie_pie" targetStage="3" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="2-embarrassed.png">Uhh, Pinkie, I think you should be a little more careful with that knife...</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow14">
+                <state img="2-thinking.png">That's extremely weird, Tharja. And a little gross.</state>
+                <state img="2-disappointed.png">I think we all could've gone on living without knowing that, Tharja.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="0">
                 <state img="2-thinking.png">You're &lt;i&gt;starting&lt;/i&gt; with your panties!? This'll be an interesting game.</state>
@@ -4233,6 +4578,9 @@
             <case tag="female_crotch_is_visible" target="palutena">
                 <state img="2-pleased.png">If you weren't prepared to get naked then you shouldn't have chosen to play, Palutena.</state>
                 <state img="2-pleased.png">If you're not comfortable being naked, then maybe you shouldn't play this game, Palutena.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow15">
+                <state img="2-thinking.png">(~Player~ seems really excited by what she said just now, hopefully I still  have a chance.)</state>
             </case>
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="2-embarrassed.png">I guess that's one way to get people's attention. (Maybe I should try that the next time I come here.)</state>
@@ -4482,38 +4830,62 @@
                 <state img="3-neutral.png">Just one new card will do.</state>
             </case>
             <case tag="good_hand">
+                <state img="3-happy.png">This should not appear. Please report bug.</state>
+            </case>
+            <case tag="good_hand" priority="1">
+                <condition count="0" gender="male" />
+                <state img="3-back.png" marker="turned_around=1">(I wonder if there are any guys around here that'd like to join in.)</state>
+                <state img="3-back.png" marker="turned_around=1">(I hope there are some guys watching us.)</state>
+                <state img="3-back.png" marker="turned_around=1">(Let's see if we've caught anyone's attention.)</state>
+            </case>
+            <case tag="good_hand" saidMarker="player_male" priority="1">
+                <state img="3-back.png" marker="turned_around=1">I look pretty good from the back too, don't I?</state>
+            </case>
+            <case tag="good_hand" saidMarker="player_male==1" priority="1">
+                <state img="3-happy.png">Hmm, this hand is looking good. Almost as good as you, ~player~.</state>
+                <state img="3-pleased.png">I managed to meet ~player~ tonight, and I got a hand this good? Maybe my luck is starting to turn around.</state>
+            </case>
+            <case tag="good_hand" priority="1">
+                <test expr="~self.costume~" value="default" />
                 <state img="3-excited.png">I'm not losing my swimsuit yet!</state>
                 <state img="3-excited.png">I can still make a comeback!</state>
                 <state img="3-excited.png">These cards will keep me in my swimsuit.</state>
                 <state img="3-excited.png">This hand is Super Effective!</state>
                 <state img="3-excited.png">I got this!</state>
             </case>
-            <case tag="good_hand" priority="0">
-                <condition count="0" gender="male" />
-                <state img="3-back.png" marker="turned_around=1">(I wonder if there are any guys around here that'd like to join in.)</state>
-                <state img="3-back.png" marker="turned_around=1">(I hope there are some guys watching us.)</state>
-                <state img="3-back.png" marker="turned_around=1">(Let's see if we've caught anyone's attention.)</state>
+            <case tag="good_hand" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="3-excited.png">I'm not gonna lose anything this time!</state>
+                <state img="3-excited.png">I can still make a comeback!</state>
+                <state img="3-excited.png">These cards will keep my clothes on me.</state>
+                <state img="3-excited.png">This hand is Super Effective!</state>
+                <state img="3-excited.png">I got this!</state>
             </case>
-            <case tag="good_hand" saidMarker="player_male" priority="0">
-                <state img="3-back.png" marker="turned_around=1">I look pretty good from the back too, don't I?</state>
-            </case>
-            <case tag="good_hand" saidMarker="player_male==1" priority="0">
-                <state img="3-happy.png">Hmm, this hand is looking good. Almost as good as you, ~player~.</state>
-                <state img="3-pleased.png">I managed to meet ~player~ tonight, and I got a hand this good? Maybe my luck is starting to turn around.</state>
-            </case>
-            <case tag="okay_hand">
+            <case tag="okay_hand" priority="1">
                 <state img="3-thinking.png">This should be enough.</state>
                 <state img="3-thinking.png">Will this work? I can only hope so.</state>
                 <state img="3-neutral.png">Well, let's just see how this plays out.</state>
                 <state img="3-thinking.png">This hand isn't bad, but it's nothing spectacular either.</state>
                 <state img="3-thinking.png">Maybe this will do?</state>
             </case>
-            <case tag="okay_hand" saidMarker="player_male" priority="0">
+            <case tag="okay_hand" saidMarker="player_male" priority="1">
                 <state img="3-embarrassed.png">Say, ~player~, are you single? Because I am, and I was just wondering if, maybe we're both here for the same reason.</state>
                 <state img="3-embarrassed.png">Are you a busy person ~player~? Or do you have a pretty open schedule? For instance, do you think you'd be able to fit a date into the next few days?</state>
             </case>
             <case tag="bad_hand">
+                <state img="3-neutral.png">This should not appear. Please report bug.</state>
+            </case>
+            <case tag="bad_hand" priority="1">
+                <test expr="~self.costume~" value="default" />
                 <state img="3-disappointed.png">I may lose my swimsuit this time.</state>
+                <state img="3-embarrassed.png">This...this is not good.</state>
+                <state img="3-disappointed.png">This game is sink or swim, and it looks like I've sunk.</state>
+                <state img="3-embarrassed.png">This hand....it's not very effective.</state>
+                <state img="3-embarrassed.png">I must have messed up somewhere.</state>
+            </case>
+            <case tag="bad_hand" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="3-disappointed.png">I may lose some clothes this time.</state>
                 <state img="3-embarrassed.png">This...this is not good.</state>
                 <state img="3-disappointed.png">This game is sink or swim, and it looks like I've sunk.</state>
                 <state img="3-embarrassed.png">This hand....it's not very effective.</state>
@@ -4585,11 +4957,11 @@
                 <state img="3-thinking.png">That's a strange question to suddenly bring up. Especially since I have no experience with that kind of thing.</state>
                 <state img="3-thinking.png">To answer your question, Sei: I've never done that before. Why do you want to know?</state>
             </case>
-            <case tag="must_strip">
-                <state img="3-thinking.png">Hmm, should I start with my jacket or my sandals?</state>
-                <state img="3-neutral.png">Looks like I lost, but I wasn't expecting to leave here without taking anything off.</state>
-                <state img="3-thinking.png">There's my first loss. Now what should I take off?</state>
-                <state img="3-neutral.png" marker="misty_notembarressed">Looks like it's my turn.....No, I'm not upset. Why would I even be playing this game if I wasn't prepared to strip naked?</state>
+            <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="1" saidMarker="player_male" alsoPlayingSaying="dream">
+                <state img="3-disappointed.png">If it was in your dreams, then it has nothing to do with the real world, Tharja.</state>
+            </case>
+            <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="2" saidMarker="player_male" alsoPlayingSaying="dream">
+                <state img="3-disappointed.png">You're completely delusional, Tharja.</state>
             </case>
             <case tag="must_strip" alsoPlaying="chiaki" alsoPlayingSayingMarker="pokemon">
                 <state img="3-thinking.png">I...don't really understand what you're talking about, Chiaki.</state>
@@ -4636,19 +5008,12 @@
                 <state img="3-shocked.png" marker="turned_around=0">Huh? What? I lost!? But I had such a good hand!</state>
                 <state img="3-shocked.png" marker="turned_around=0">Wait! I wasn't paying attention! How'd I lose!?</state>
             </case>
-            <case tag="must_strip_winning">
+            <case tag="must_strip_winning" priority="1">
                 <state img="3-happy.png">This loss is no big deal.</state>
                 <state img="3-neutral.png">Despite this loss, I'm still doing pretty good.</state>
                 <state img="3-excited.png">I'm still in the lead. Don't get too cocky!</state>
                 <state img="3-neutral.png">I'm not worried. I've still got this.</state>
                 <state img="3-neutral.png">I may have lost, but at least I'm not losing.</state>
-            </case>
-            <case tag="must_strip_normal">
-                <state img="3-embarrassed.png">I guess this was coming eventually.</state>
-                <state img="3-happy.png">I need to strip? No problem. As a swimmer, I'm more comfortable wearing less.</state>
-                <state img="3-excited.png">I'm not done yet! I'm still in the game!</state>
-                <state img="3-thinking.png">I'll have to step things up if I want to win.</state>
-                <state img="3-embarrassed.png">At least I'm not in last.</state>
             </case>
             <case tag="must_strip_normal" alsoPlaying="sakura" alsoPlayingSaying="burning">
                 <state img="3-happy.png">Thanks, Sakura! It's all the exercise I do. It keeps me looking nice.</state>
@@ -4656,12 +5021,12 @@
             <case tag="must_strip_normal" alsoPlaying="sakura" alsoPlayingSaying="fantastic">
                 <state img="3-happy.png">Thanks, Sakura! It's all the exercise I do. It keeps me looking nice.</state>
             </case>
-            <case tag="must_strip_losing">
-                <state img="3-irritated.png">Jeez. And I don't have many clothes to begin with.</state>
-                <state img="3-disappointed.png">As a Gym Leader, I've kinda gotten used to just always losing.</state>
-                <state img="3-disappointed.png">I can do better than this.</state>
-                <state img="3-irritated.png">I'm not upset about having to strip. I'm upset about losing.</state>
-                <state img="3-disappointed.png">I honestly don't care if I have to get naked, but I still want to win.</state>
+            <case tag="must_strip_normal" priority="1">
+                <state img="3-embarrassed.png">I guess this was coming eventually.</state>
+                <state img="3-happy.png">I need to strip? No problem. As a swimmer, I'm more comfortable wearing less.</state>
+                <state img="3-excited.png">I'm not done yet! I'm still in the game!</state>
+                <state img="3-thinking.png">I'll have to step things up if I want to win.</state>
+                <state img="3-embarrassed.png">At least I'm not in last.</state>
             </case>
             <case tag="must_strip_losing" alsoPlaying="monika" alsoPlayingSaying="messy">
                 <state img="3-disappointed.png">No, Monika. I just go swimming alot, and don't really care enough to style it.</state>
@@ -4670,11 +5035,12 @@
                 <state img="3-happy.png">I don't care much for foot races, but if it's a swimming race, then I'm game, Rin!</state>
                 <state img="3-happy.png">I don't care much for running, but I doubt they'd be able to beat me at swimming, Rin!</state>
             </case>
-            <case tag="stripping">
-                <state img="3-strip.png">Time for you to see all of my beautiful body. I put a lot of work into staying in shape, so I'm very proud of it.</state>
-                <state img="3-strip.png">Congratulations. Now you get to see all of me.</state>
-                <state img="3-strip.png">Now you all get to see the body that I'm so proud of.</state>
-                <state img="3-strip.png">Take a good look. You've all earned it.</state>
+            <case tag="must_strip_losing" priority="1">
+                <state img="3-irritated.png">Jeez. And I don't have many clothes to begin with.</state>
+                <state img="3-disappointed.png">As a Gym Leader, I've kinda gotten used to just always losing.</state>
+                <state img="3-disappointed.png">I can do better than this.</state>
+                <state img="3-irritated.png">I'm not upset about having to strip. I'm upset about losing.</state>
+                <state img="3-disappointed.png">I honestly don't care if I have to get naked, but I still want to win.</state>
             </case>
             <case tag="stripping" alsoPlaying="chihiro" alsoPlayingSayingMarker="filter_confident">
                 <state img="3-strip.png">Well, it's easy to do when you work hard to take care of your body, Chihiro.</state>
@@ -4682,13 +5048,33 @@
             <case tag="stripping" alsoPlaying="chihiro" alsoPlayingSayingMarker="filter_kind">
                 <state img="3-strip.png">Thanks Chihiro. I try,</state>
             </case>
+            <case tag="stripping" priority="1">
+                <state img="3-strip.png">Time for you to see all of my beautiful body. I put a lot of work into staying in shape, so I'm very proud of it.</state>
+                <state img="3-strip.png">Congratulations. Now you get to see all of me.</state>
+                <state img="3-strip.png">Now you all get to see the body that I'm so proud of.</state>
+                <state img="3-strip.png">Take a good look. You've all earned it.</state>
+            </case>
             <case tag="stripped">
+                <state img="3-neutral.png">This should not appear. Please report bug.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="croix">
+                <state img="3-after.png">Um, no. I'm not interested, Croix.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="tharja" saidMarker="player_male" alsoPlayingSaying="flaunting">
+                <state img="3-after.png">I'll flaunt them as much as I want to, Tharja. And if ~player~ enjoys it, then you just have to deal with it.</state>
+                <state img="3-after.png">And what if I am, Tharja?</state>
+            </case>
+            <case tag="stripped" priority="1">
+                <test expr="~self.costume~" value="default" />
                 <state img="3-after.png">This swimsuit is pretty much my underwear, so I think it's fair to count it as two items, right?</state>
                 <state img="3-after.png">I didn't have very many clothes to begin with, and this swimsuit covers everything important, so I think that this is fair.</state>
                 <state img="3-after.png">I'm not wearing anything underneath this swimsuit, so I think it's fine to take it off in two parts like this.</state>
             </case>
-            <case tag="stripped" alsoPlaying="croix">
-                <state img="3-after.png">Um, no. I'm not interested, Croix.</state>
+            <case tag="stripped" priority="1">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="3-after.png">I look pretty good in only a bikini bottom, don't I?</state>
+                <state img="3-after.png">I think that this is a pretty good look for me.</state>
+                <state img="3-after.png">I think that my breasts are a nice size. Any bigger, and they might become a burden.</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="corrin_f" alsoPlayingSayingMarker="playsafer">
                 <state img="3-disappointed.png">(How exactly are you supposed to "play safe" in strip poker?)</state>
@@ -4699,13 +5085,6 @@
                 <state img="3-excited.png">I hope you weren't expecting me to go easy on you!</state>
                 <state img="3-excited.png">Misty's number one! Ha, HA!</state>
                 <state img="3-happy.png">Alright ~name~! It's time for you to show us what you're made of!</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="3-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
-                <state img="3-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
-                <state img="3-excited.png">Your turn ~name~. Be bold about it!</state>
-                <state img="3-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
-                <state img="3-excited.png">You're gonna have to try harder if you wanna beat me!</state>
             </case>
             <case tag="female_must_strip" alsoPlaying="dark_magician_girl" alsoPlayingSayingMarker="ATK">
                 <state img="3-shocked.png">Wait, you do? Is it even possible to get an Attack stat as high as that?</state>
@@ -4721,6 +5100,13 @@
             </case>
             <case tag="female_must_strip" filter="very_long_hair" notSaidMarker="seen_verylonghair">
                 <state img="3-thinking.png" marker="seen_verylonghair">So, I've been meaning to say this for awhile, but ~name~, don't you think you should get a haircut? Hair that long is gonna cause a ton of problems while swimming.</state>
+            </case>
+            <case tag="female_must_strip" priority="1">
+                <state img="3-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
+                <state img="3-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
+                <state img="3-excited.png">Your turn ~name~. Be bold about it!</state>
+                <state img="3-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
+                <state img="3-excited.png">You're gonna have to try harder if you wanna beat me!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="3-embarrassed.png">Uh, Aimee? What are you doing with that gun?</state>
@@ -4812,14 +5198,39 @@
                 <state img="3-shocked.png">Wait, you're an actual ghost!? How is that possible? Why are you even here!?</state>
                 <state img="3-shocked.png">A real ghost girl!? I've heard stories from all sorts of places, but I never thought I'd actually see one!</state>
             </case>
-            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
-                <state img="3-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
-                <state img="3-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            <case tag="female_must_strip" target="tharja" notSaidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="3-embarrassed.png">You seem really fixated on ~player~, Tharja. Do you two have some histoory together?</state>
+                <state img="3-embarrassed.png">Tharja? You seem to be rather...obsessed.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="3-thinking.png">(This girl seems really obsessive. I can't tell whether or not ~player~ likes it or not, though.)</state>
+                <state img="3-thinking.png">(Tharja is being really aggressive. I can't tell if ~player~ likes it, or if he's creeped out.)</state>
+                <state img="3-thinking.png">(Tharja is trying really hard to get ~player~'s attention. I can't let myself lose to her!)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow10">
+                <state img="3-thinking.png">Years ago? Have you been stalking ~player~, Tharja?</state>
+                <state img="3-disappointed.png">Are you doing all this just because of some dream you had years ago, Tharja?</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow13">
+                <state img="3-disappointed.png">Stop being weird and just take it off already, Tharja.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow4">
+                <state img="3-thinking.png">(A spell?! I've got a bad feeling about this.)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow7">
+                <state img="3-neutral.png">Too bad your sandals don't seem to be catching ~player~'s interest very much, Tharja. But I guess they had to go eventually.</state>
             </case>
             <case tag="female_must_strip" oneShotId="4" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="default" />
                 <state img="3-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
                 <state img="3-neutral.png">I like that look, Juri. It's a lot like my outfit. That wasn't on purpose, was it?</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="11" target="juri">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="3-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
+                <state img="3-neutral.png">I like that look, Juri. It's a lot like my usual outfit. That wasn't on purpose, was it?</state>
             </case>
             <case tag="female_must_strip" oneShotId="7" target="monika">
                 <test expr="~monika.costume~" value="monika_stirring_mermaid" />
@@ -4829,6 +5240,16 @@
                 <test expr="~sayaka.costume~" value="summertime_sayaka" />
                 <state img="3-embarrassed.png">Is that an inner tube? Do you not know how to swim, Sayaka? I could teach you if you want.</state>
                 <state img="3-thinking.png">Sayaka, do you know how to swim? If not, I can help you out.</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="default" />
+                <state img="3-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="3-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="10" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="3-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="3-pleased.png">I like your summertime look, Zizou! It's pretty similar to what I usually wear!</state>
             </case>
             <case tag="female_must_strip" oneShotId="6" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
@@ -5080,6 +5501,17 @@
             <case tag="female_removing_minor" target="sakura" targetStage="3">
                 <state img="3-shocked.png">GAH! YOUR HEAD!?!</state>
             </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow2">
+                <state img="3-thinking.png">(I hope that ~player~ garners more interest in me than he does in her.)</state>
+                <state img="3-thinking.png">(Hopefully my personality and fit body will make me more appealing to ~player~ than her.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow8">
+                <state img="3-irritated.png">(As much as I hate to admit it, that was a really good line. I wonder if ~player~ got worked up over it.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" targetSayingMarker="cheating2">
+                <state img="3-irritated.png">It doesn't sound like you intend on stopping, Tharja.</state>
+                <state img="3-irritated.png">Even if you keep cheating, Tharja, we'll make sure that you don't win.</state>
+            </case>
             <case tag="female_removing_minor" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
                 <state img="3-neutral.png">Your boots are all you have left, so time to take 'em off!</state>
@@ -5149,6 +5581,14 @@
             </case>
             <case tag="female_removed_minor" target="sonya" targetStage="6">
                 <state img="3-disappointed.png">Um, was there really any reason for the face paint?</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow3">
+                <state img="3-pleased.png">Well isn't that a shame, Tharja. Maybe he was distracted by someone he finds to be a little more appealing?</state>
+                <state img="3-pleased.png">Well that's too bad, Tharja. I guess he isn't as interested in you as you had hoped.</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow9">
+                <state img="3-neutral.png">If that's what you want, then maybe you should just lose on purpose, Tharja.</state>
+                <state img="3-neutral.png">If that's your goal, Tharja, then why don't you just throw the game?</state>
             </case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
                 <test expr="~_.costume~" value="nugi-chan_bikini" />
@@ -5254,6 +5694,9 @@
             <case tag="female_removing_major" target="pinkie_pie" targetStage="1">
                 <state img="3-excited.png">You started with your shirt, and you're doing your skirt second? Glad to know that I'm playing with someone who knows how to have fun!</state>
                 <state img="3-excited.png">Now your skirt? You really know how to get things going, huh Pinkie?</state>
+            </case>
+            <case tag="female_removing_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow5">
+                <state img="3-shocked.png">(What is she doing!?)</state>
             </case>
             <case tag="female_removing_major" target="vriska" targetStage="4-5">
                 <state img="3-irritated.png">Again with the light?</state>
@@ -5389,6 +5832,10 @@
             <case tag="female_removed_major" target="sayla" targetStage="4">
                 <state img="3-excited.png">Oh hey! You're wearing a swimsuit too? Nice! Let's go swimming together sometime!</state>
             </case>
+            <case tag="female_removed_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow6">
+                <state img="3-neutral.png">(Oh. She just took off her bodysuit. I was afraid she was going to mess with ~player~'s mind.)</state>
+                <state img="3-neutral.png">(Oh. That wasn't nearly as bad as I was afraid it would be.)</state>
+            </case>
             <case tag="female_removed_major" target="vriska" targetStage="5-6">
                 <state img="3-excited.png">Now we're getting somewhere!</state>
                 <state img="3-excited.png">It's about time you showed some skin, Vriska.</state>
@@ -5520,6 +5967,10 @@
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <state img="3-excited.png">Whoa! That's a neat trick Sheena! You've gotta teach me how to do that!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow11">
+                <state img="3-thinking.png">(Do guys like it when you tell them your fantasies like that? ~Player~ seems to be excited by it.)</state>
+                <state img="3-thinking.png">(I wonder if ~player~ is excited at the thought of that.)</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="3-shocked.png">You're taking off your bra next!? Before you even take off your shirt!?</state>
             </case>
@@ -5583,6 +6034,9 @@
                 <state img="3-excited.png">Not so condescending now that you've got nothing but your panties left, Palutena!</state>
                 <state img="3-excited.png">This is what you get for stalling for so long, Palutena!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow12">
+                <state img="3-thinking.png">"Take care of your tits"? What does that even mean?</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
                 <state img="3-pleased.png">This is what you get for trying to count something as small as string earlier.</state>
@@ -5632,6 +6086,10 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="pinkie_pie" targetStage="3" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="3-embarrassed.png">Uhh, Pinkie, I think you should be a little more careful with that knife...</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow14">
+                <state img="3-thinking.png">That's extremely weird, Tharja. And a little gross.</state>
+                <state img="3-disappointed.png">I think we all could've gone on living without knowing that, Tharja.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="0">
                 <state img="3-thinking.png">You're &lt;i&gt;starting&lt;/i&gt; with your panties!? This'll be an interesting game.</state>
@@ -5686,6 +6144,9 @@
             <case tag="female_crotch_is_visible" target="palutena">
                 <state img="3-pleased.png">If you weren't prepared to get naked then you shouldn't have chosen to play, Palutena.</state>
                 <state img="3-pleased.png">If you're not comfortable being naked, then maybe you shouldn't play this game, Palutena.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow15">
+                <state img="3-thinking.png">(~Player~ seems really excited by what she said just now, hopefully I still  have a chance.)</state>
             </case>
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="3-embarrassed.png">I guess that's one way to get people's attention. (Maybe I should try that the next time I come here.)</state>
@@ -5934,32 +6395,32 @@
                 <state img="4-happy.png">Quite a good hand. I only need one new card, please!</state>
                 <state img="4-neutral.png">Just one new card will do.</state>
             </case>
-            <case tag="good_hand">
-                <state img="4-excited.png">It looks like I'm still in the game.</state>
-                <state img="4-excited.png">I haven't lost yet!</state>
-                <state img="4-excited.png">I can still win this!</state>
-                <state img="4-happy.png">If you think I'm done for, you should think again.</state>
-            </case>
-            <case tag="good_hand" priority="0">
+            <case tag="good_hand" priority="1">
                 <condition count="0" gender="male" />
                 <state img="4-back.png" marker="turned_around=1">(I wonder if there are any guys around here that'd like to join in.)</state>
                 <state img="4-back.png" marker="turned_around=1">(I hope there are some guys watching us.)</state>
                 <state img="4-back.png" marker="turned_around=1">(Let's see if we've caught anyone's attention.)</state>
             </case>
-            <case tag="good_hand" saidMarker="player_male" priority="0">
+            <case tag="good_hand" priority="1">
+                <state img="4-excited.png">It looks like I'm still in the game.</state>
+                <state img="4-excited.png">I haven't lost yet!</state>
+                <state img="4-excited.png">I can still win this!</state>
+                <state img="4-happy.png">If you think I'm done for, you should think again.</state>
+            </case>
+            <case tag="good_hand" saidMarker="player_male" priority="1">
                 <state img="4-back.png" marker="turned_around=1">I look pretty good from the back too, don't I?</state>
             </case>
-            <case tag="good_hand" saidMarker="player_male==1" priority="0">
+            <case tag="good_hand" saidMarker="player_male==1" priority="1">
                 <state img="4-happy.png">Hmm, this hand is looking good. Almost as good as you, ~player~.</state>
                 <state img="4-pleased.png">I managed to meet ~player~ tonight, and I got a hand this good? Maybe my luck is starting to turn around.</state>
             </case>
-            <case tag="okay_hand">
+            <case tag="okay_hand" priority="1">
                 <state img="4-embarrassed.png">I might have to get ready for that forfeit.</state>
                 <state img="4-thinking.png">Now's not the time to be getting "okay" hands.</state>
                 <state img="4-thinking.png">I hope this is enough.</state>
                 <state img="4-embarrassed.png">This hand reminds me of Metronome. Because it could cause things to go either way.</state>
             </case>
-            <case tag="bad_hand">
+            <case tag="bad_hand" priority="1">
                 <state img="4-embarrassed.png">This might be it for me.</state>
                 <state img="4-embarrassed.png">Looks like I'm really gonna have to masturbate in front of all of you.</state>
                 <state img="4-disappointed.png">This is not good.</state>
@@ -6031,14 +6492,14 @@
                 <state img="4-thinking.png">That's a strange question to suddenly bring up. Especially since I have no experience with that kind of thing.</state>
                 <state img="4-thinking.png">To answer your question, Sei: I've never done that before. Why do you want to know?</state>
             </case>
-            <case tag="hand" saidMarker="player_male" notSaidMarker="found_date" priority="0">
-                <state img="4-embarrassed.png" marker="askfor_number">Hey, ~player~. Do you... Can we...maybe exchange numbers? So I can call you again later?</state>
+            <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="1" saidMarker="player_male" alsoPlayingSaying="dream">
+                <state img="4-disappointed.png">If it was in your dreams, then it has nothing to do with the real world, Tharja.</state>
             </case>
-            <case tag="stripped">
-                <state img="4-after.png">The swimsuit helps if you want to swim fast, but if you're just doing it for fun, then nothing beats skinny dipping!</state>
-                <state img="4-after.png">So, what do you think of my bare naked body? Isn't it alluring?</state>
-                <state img="4-after.png">&lt;i&gt;ooooooo!&lt;/i&gt; There's a slight breeze here! It feels very nice.</state>
-                <state img="4-after.png">This is the body I work so hard to maintain. Feel free to take a good look.</state>
+            <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="2" saidMarker="player_male" alsoPlayingSaying="dream">
+                <state img="4-disappointed.png">You're completely delusional, Tharja.</state>
+            </case>
+            <case tag="hand" saidMarker="player_male" notSaidMarker="found_date" priority="1">
+                <state img="4-embarrassed.png" marker="askfor_number">Hey, ~player~. Do you... Can we...maybe exchange numbers? So I can call you again later?</state>
             </case>
             <case tag="stripped" alsoPlaying="ami" alsoPlayingSayingMarker="ami_suggests_scissoring">
                 <state img="4-after.png">Um, no. And I don't really ever intend to, Ami.</state>
@@ -6079,6 +6540,12 @@
             <case tag="stripped" alsoPlaying="zizou" alsoPlayingSaying="wax">
                 <state img="4-after.png" marker="misty_waxing">I wax it, Zizou. It's the most effective method.</state>
             </case>
+            <case tag="stripped" priority="1">
+                <state img="4-after.png">The swimsuit helps if you want to swim fast, but if you're just doing it for fun, then nothing beats skinny dipping!</state>
+                <state img="4-after.png">So, what do you think of my bare naked body? Isn't it alluring?</state>
+                <state img="4-after.png">&lt;i&gt;ooooooo!&lt;/i&gt; There's a slight breeze here! It feels very nice.</state>
+                <state img="4-after.png">This is the body I work so hard to maintain. Feel free to take a good look.</state>
+            </case>
             <case tag="male_human_must_strip" alsoPlaying="corrin_f" alsoPlayingSayingMarker="playsafer">
                 <state img="4-disappointed.png">(How exactly are you supposed to "play safe" in strip poker?)</state>
             </case>
@@ -6088,13 +6555,6 @@
                 <state img="4-excited.png">I hope you weren't expecting me to go easy on you!</state>
                 <state img="4-excited.png">Misty's number one! Ha, HA!</state>
                 <state img="4-happy.png">Alright ~name~! It's time for you to show us what you're made of!</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="4-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
-                <state img="4-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
-                <state img="4-excited.png">Your turn ~name~. Be bold about it!</state>
-                <state img="4-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
-                <state img="4-excited.png">You're gonna have to try harder if you wanna beat me!</state>
             </case>
             <case tag="female_must_strip" alsoPlaying="dark_magician_girl" alsoPlayingSayingMarker="ATK">
                 <state img="4-shocked.png">Wait, you do? Is it even possible to get an Attack stat as high as that?</state>
@@ -6110,6 +6570,13 @@
             </case>
             <case tag="female_must_strip" filter="very_long_hair" notSaidMarker="seen_verylonghair">
                 <state img="4-thinking.png" marker="seen_verylonghair">So, I've been meaning to say this for awhile, but ~name~, don't you think you should get a haircut? Hair that long is gonna cause a ton of problems while swimming.</state>
+            </case>
+            <case tag="female_must_strip" priority="1">
+                <state img="4-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
+                <state img="4-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
+                <state img="4-excited.png">Your turn ~name~. Be bold about it!</state>
+                <state img="4-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
+                <state img="4-excited.png">You're gonna have to try harder if you wanna beat me!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="4-embarrassed.png">Uh, Aimee? What are you doing with that gun?</state>
@@ -6201,14 +6668,35 @@
                 <state img="4-shocked.png">Wait, you're an actual ghost!? How is that possible? Why are you even here!?</state>
                 <state img="4-shocked.png">A real ghost girl!? I've heard stories from all sorts of places, but I never thought I'd actually see one!</state>
             </case>
-            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
-                <state img="4-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
-                <state img="4-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            <case tag="female_must_strip" target="tharja" notSaidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="4-embarrassed.png">You seem really fixated on ~player~, Tharja. Do you two have some histoory together?</state>
+                <state img="4-embarrassed.png">Tharja? You seem to be rather...obsessed.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="4-thinking.png">(This girl seems really obsessive. I can't tell whether or not ~player~ likes it or not, though.)</state>
+                <state img="4-thinking.png">(Tharja is being really aggressive. I can't tell if ~player~ likes it, or if he's creeped out.)</state>
+                <state img="4-thinking.png">(Tharja is trying really hard to get ~player~'s attention. I can't let myself lose to her!)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow13">
+                <state img="4-disappointed.png">Stop being weird and just take it off already, Tharja.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow4">
+                <state img="4-thinking.png">(A spell?! I've got a bad feeling about this.)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow7">
+                <state img="4-neutral.png">Too bad your sandals don't seem to be catching ~player~'s interest very much, Tharja. But I guess they had to go eventually.</state>
             </case>
             <case tag="female_must_strip" oneShotId="4" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="default" />
                 <state img="4-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
                 <state img="4-neutral.png">I like that look, Juri. It's a lot like my outfit. That wasn't on purpose, was it?</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="11" target="juri">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="4-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
+                <state img="4-neutral.png">I like that look, Juri. It's a lot like my usual outfit. That wasn't on purpose, was it?</state>
             </case>
             <case tag="female_must_strip" oneShotId="7" target="monika">
                 <test expr="~monika.costume~" value="monika_stirring_mermaid" />
@@ -6218,6 +6706,16 @@
                 <test expr="~sayaka.costume~" value="summertime_sayaka" />
                 <state img="4-embarrassed.png">Is that an inner tube? Do you not know how to swim, Sayaka? I could teach you if you want.</state>
                 <state img="4-thinking.png">Sayaka, do you know how to swim? If not, I can help you out.</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="default" />
+                <state img="4-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="4-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="10" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="4-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="4-pleased.png">I like your summertime look, Zizou! It's pretty similar to what I usually wear!</state>
             </case>
             <case tag="female_must_strip" oneShotId="6" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
@@ -6481,6 +6979,17 @@
             <case tag="female_removing_minor" target="sakura" targetStage="3">
                 <state img="4-shocked.png">GAH! YOUR HEAD!?!</state>
             </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow2">
+                <state img="4-thinking.png">(I hope that ~player~ garners more interest in me than he does in her.)</state>
+                <state img="4-thinking.png">(Hopefully my personality and fit body will make me more appealing to ~player~ than her.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow8">
+                <state img="4-irritated.png">(As much as I hate to admit it, that was a really good line. I wonder if ~player~ got worked up over it.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" targetSayingMarker="cheating2">
+                <state img="4-irritated.png">It doesn't sound like you intend on stopping, Tharja.</state>
+                <state img="4-irritated.png">Even if you keep cheating, Tharja, we'll make sure that you don't win.</state>
+            </case>
             <case tag="female_removing_minor" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
                 <state img="4-neutral.png">Your boots are all you have left, so time to take 'em off!</state>
@@ -6550,6 +7059,14 @@
             </case>
             <case tag="female_removed_minor" target="sonya" targetStage="6">
                 <state img="4-disappointed.png">Um, was there really any reason for the face paint?</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow3">
+                <state img="4-pleased.png">Well isn't that a shame, Tharja. Maybe he was distracted by someone he finds to be a little more appealing?</state>
+                <state img="4-pleased.png">Well that's too bad, Tharja. I guess he isn't as interested in you as you had hoped.</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow9">
+                <state img="4-neutral.png">Too bad no matter how much of yourself you expose, your body won't stack up to mine, Tharja.</state>
+                <state img="4-neutral.png">Even if you do get to expose more of yourself, I'm pretty sure that ~player~ is already more interested in me, Tharja.</state>
             </case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
                 <test expr="~_.costume~" value="nugi-chan_bikini" />
@@ -6649,6 +7166,9 @@
             <case tag="female_removing_major" target="pinkie_pie" targetStage="1">
                 <state img="4-excited.png">You started with your shirt, and you're doing your skirt second? Glad to know that I'm playing with someone who knows how to have fun!</state>
                 <state img="4-excited.png">Now your skirt? You really know how to get things going, huh Pinkie?</state>
+            </case>
+            <case tag="female_removing_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow5">
+                <state img="4-shocked.png">(What is she doing!?)</state>
             </case>
             <case tag="female_removing_major" target="vriska" targetStage="4-5">
                 <state img="4-irritated.png">Again with the light?</state>
@@ -6784,6 +7304,10 @@
             <case tag="female_removed_major" target="sayla" targetStage="4">
                 <state img="4-excited.png">Oh hey! You're wearing a swimsuit too? Nice! Let's go swimming together sometime!</state>
             </case>
+            <case tag="female_removed_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow6">
+                <state img="4-neutral.png">(Oh. She just took off her bodysuit. I was afraid she was going to mess with ~player~'s mind.)</state>
+                <state img="4-neutral.png">(Oh. That wasn't nearly as bad as I was afraid it would be.)</state>
+            </case>
             <case tag="female_removed_major" target="vriska" targetStage="5-6">
                 <state img="4-excited.png">Now we're getting somewhere!</state>
                 <state img="4-excited.png">It's about time you showed some skin, Vriska.</state>
@@ -6916,6 +7440,10 @@
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <state img="4-excited.png">Whoa! That's a neat trick Sheena! You've gotta teach me how to do that!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow11">
+                <state img="4-thinking.png">(Do guys like it when you tell them your fantasies like that? ~Player~ seems to be excited by it.)</state>
+                <state img="4-thinking.png">(I wonder if ~player~ is excited at the thought of that.)</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="4-shocked.png">You're taking off your bra next!? Before you even take off your shirt!?</state>
             </case>
@@ -6979,6 +7507,9 @@
                 <state img="4-excited.png">Not so condescending now that you've got nothing but your panties left, Palutena!</state>
                 <state img="4-excited.png">This is what you get for stalling for so long, Palutena!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow12">
+                <state img="4-thinking.png">"Take care of your tits"? What does that even mean?</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
                 <state img="4-pleased.png">This is what you get for trying to count something as small as string earlier.</state>
@@ -7029,6 +7560,10 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="pinkie_pie" targetStage="3" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="4-embarrassed.png">Uhh, Pinkie, I think you should be a little more careful with that knife...</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow14">
+                <state img="4-thinking.png">That's extremely weird, Tharja. And a little gross.</state>
+                <state img="4-disappointed.png">I think we all could've gone on living without knowing that, Tharja.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="0">
                 <state img="4-thinking.png">You're &lt;i&gt;starting&lt;/i&gt; with your panties!? This'll be an interesting game.</state>
@@ -7083,6 +7618,9 @@
             <case tag="female_crotch_is_visible" target="palutena">
                 <state img="4-pleased.png">If you weren't prepared to get naked then you shouldn't have chosen to play, Palutena.</state>
                 <state img="4-pleased.png">If you're not comfortable being naked, then maybe you shouldn't play this game, Palutena.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow15">
+                <state img="4-thinking.png">(~Player~ seems really excited by what she said just now, hopefully I still  have a chance.)</state>
             </case>
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="4-embarrassed.png">I guess that's one way to get people's attention. (Maybe I should try that the next time I come here.)</state>
@@ -7469,14 +8007,35 @@
                 <state img="5-shocked.png">Wait, you're an actual ghost!? How is that possible? Why are you even here!?</state>
                 <state img="5-shocked.png">A real ghost girl!? I've heard stories from all sorts of places, but I never thought I'd actually see one!</state>
             </case>
-            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
-                <state img="5-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
-                <state img="5-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            <case tag="female_must_strip" target="tharja" notSaidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="5-embarrassed.png">You seem really fixated on ~player~, Tharja. Do you two have some histoory together?</state>
+                <state img="5-embarrassed.png">Tharja? You seem to be rather...obsessed.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="5-thinking.png">(This girl seems really obsessive. I can't tell whether or not ~player~ likes it or not, though.)</state>
+                <state img="5-thinking.png">(Tharja is being really aggressive. I can't tell if ~player~ likes it, or if he's creeped out.)</state>
+                <state img="5-thinking.png">(Tharja is trying really hard to get ~player~'s attention. I can't let myself lose to her!)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow13">
+                <state img="5-disappointed.png">Stop being weird and just take it off already, Tharja.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow4">
+                <state img="5-thinking.png">(A spell?! I've got a bad feeling about this.)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow7">
+                <state img="5-neutral.png">Too bad your sandals don't seem to be catching ~player~'s interest very much, Tharja. But I guess they had to go eventually.</state>
             </case>
             <case tag="female_must_strip" oneShotId="4" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="default" />
                 <state img="5-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
                 <state img="5-neutral.png">I like that look, Juri. It's a lot like my outfit. That wasn't on purpose, was it?</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="11" target="juri">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="5-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
+                <state img="5-neutral.png">I like that look, Juri. It's a lot like my usual outfit. That wasn't on purpose, was it?</state>
             </case>
             <case tag="female_must_strip" oneShotId="7" target="monika">
                 <test expr="~monika.costume~" value="monika_stirring_mermaid" />
@@ -7486,6 +8045,16 @@
                 <test expr="~sayaka.costume~" value="summertime_sayaka" />
                 <state img="5-embarrassed.png">Is that an inner tube? Do you not know how to swim, Sayaka? I could teach you if you want.</state>
                 <state img="5-thinking.png">Sayaka, do you know how to swim? If not, I can help you out.</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="default" />
+                <state img="5-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="5-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="10" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="5-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="5-pleased.png">I like your summertime look, Zizou! It's pretty similar to what I usually wear!</state>
             </case>
             <case tag="female_must_strip" oneShotId="6" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
@@ -7725,6 +8294,17 @@
             <case tag="female_removing_minor" target="sakura" targetStage="3">
                 <state img="5-shocked.png">GAH! YOUR HEAD!?!</state>
             </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow2">
+                <state img="5-thinking.png">(I hope that ~player~ garners more interest in me than he does in her.)</state>
+                <state img="5-thinking.png">(Hopefully my personality and fit body will make me more appealing to ~player~ than her.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow8">
+                <state img="5-irritated.png">(As much as I hate to admit it, that was a really good line. I wonder if ~player~ got worked up over it.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" targetSayingMarker="cheating2">
+                <state img="5-irritated.png">It doesn't sound like you intend on stopping, Tharja.</state>
+                <state img="5-irritated.png">Even if you keep cheating, Tharja, we'll make sure that you don't win.</state>
+            </case>
             <case tag="female_removing_minor" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
                 <state img="5-neutral.png">Your boots are all you have left, so time to take 'em off!</state>
@@ -7794,6 +8374,14 @@
             </case>
             <case tag="female_removed_minor" target="sonya" targetStage="6">
                 <state img="5-disappointed.png">Um, was there really any reason for the face paint?</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow3">
+                <state img="5-pleased.png">Well isn't that a shame, Tharja. Maybe he was distracted by someone he finds to be a little more appealing?</state>
+                <state img="5-pleased.png">Well that's too bad, Tharja. I guess he isn't as interested in you as you had hoped.</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow9">
+                <state img="5-neutral.png">Too bad no matter how much of yourself you expose, your body won't stack up to mine, Tharja.</state>
+                <state img="5-neutral.png">Even if you do get to expose more of yourself, I'm pretty sure that ~player~ is already more interested in me, Tharja.</state>
             </case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
                 <test expr="~_.costume~" value="nugi-chan_bikini" />
@@ -7889,6 +8477,9 @@
             <case tag="female_removing_major" target="pinkie_pie" targetStage="1">
                 <state img="5-excited.png">You started with your shirt, and you're doing your skirt second? Glad to know that I'm playing with someone who knows how to have fun!</state>
                 <state img="5-excited.png">Now your skirt? You really know how to get things going, huh Pinkie?</state>
+            </case>
+            <case tag="female_removing_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow5">
+                <state img="5-shocked.png">(What is she doing!?)</state>
             </case>
             <case tag="female_removing_major" target="vriska" targetStage="4-5">
                 <state img="5-irritated.png">Again with the light?</state>
@@ -8013,6 +8604,10 @@
             <case tag="female_removed_major" target="sayla" targetStage="4">
                 <state img="5-excited.png">Oh hey! You're wearing a swimsuit too? Nice! Let's go swimming together sometime!</state>
             </case>
+            <case tag="female_removed_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow6">
+                <state img="5-neutral.png">(Oh. She just took off her bodysuit. I was afraid she was going to mess with ~player~'s mind.)</state>
+                <state img="5-neutral.png">(Oh. That wasn't nearly as bad as I was afraid it would be.)</state>
+            </case>
             <case tag="female_removed_major" target="vriska" targetStage="5-6">
                 <state img="5-excited.png">Now we're getting somewhere!</state>
                 <state img="5-excited.png">It's about time you showed some skin, Vriska.</state>
@@ -8125,6 +8720,10 @@
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <state img="5-excited.png">Whoa! That's a neat trick Sheena! You've gotta teach me how to do that!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow11">
+                <state img="5-thinking.png">(Do guys like it when you tell them your fantasies like that? ~Player~ seems to be excited by it.)</state>
+                <state img="5-thinking.png">(I wonder if ~player~ is excited at the thought of that.)</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="5-shocked.png">You're taking off your bra next!? Before you even take off your shirt!?</state>
             </case>
@@ -8188,6 +8787,9 @@
                 <state img="5-excited.png">Not so condescending now that you've got nothing but your panties left, Palutena!</state>
                 <state img="5-excited.png">This is what you get for stalling for so long, Palutena!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow12">
+                <state img="5-thinking.png">"Take care of your tits"? What does that even mean?</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
                 <state img="5-pleased.png">This is what you get for trying to count something as small as string earlier.</state>
@@ -8235,6 +8837,10 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="pinkie_pie" targetStage="3" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="5-embarrassed.png">Uhh, Pinkie, I think you should be a little more careful with that knife...</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow14">
+                <state img="5-thinking.png">That's extremely weird, Tharja. And a little gross.</state>
+                <state img="5-disappointed.png">I think we all could've gone on living without knowing that, Tharja.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="0">
                 <state img="5-thinking.png">You're &lt;i&gt;starting&lt;/i&gt; with your panties!? This'll be an interesting game.</state>
@@ -8289,6 +8895,9 @@
             <case tag="female_crotch_is_visible" target="palutena">
                 <state img="5-pleased.png">If you weren't prepared to get naked then you shouldn't have chosen to play, Palutena.</state>
                 <state img="5-pleased.png">If you're not comfortable being naked, then maybe you shouldn't play this game, Palutena.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow15">
+                <state img="5-thinking.png">(~Player~ seems really excited by what she said just now, hopefully I still  have a chance.)</state>
             </case>
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="5-embarrassed.png">I guess that's one way to get people's attention. (Maybe I should try that the next time I come here.)</state>
@@ -8616,14 +9225,35 @@
                 <state img="6-shocked.png">Wait, you're an actual ghost!? How is that possible? Why are you even here!?</state>
                 <state img="6-shocked.png">A real ghost girl!? I've heard stories from all sorts of places, but I never thought I'd actually see one!</state>
             </case>
-            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
-                <state img="6-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
-                <state img="6-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            <case tag="female_must_strip" target="tharja" notSaidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="6-embarrassed.png">You seem really fixated on ~player~, Tharja. Do you two have some histoory together?</state>
+                <state img="6-embarrassed.png">Tharja? You seem to be rather...obsessed.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow1">
+                <state img="6-thinking.png">(This girl seems really obsessive. I can't tell whether or not ~player~ likes it or not, though.)</state>
+                <state img="6-thinking.png">(Tharja is being really aggressive. I can't tell if ~player~ likes it, or if he's creeped out.)</state>
+                <state img="6-thinking.png">(Tharja is trying really hard to get ~player~'s attention. I can't let myself lose to her!)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow13">
+                <state img="6-disappointed.png">Stop being weird and just take it off already, Tharja.</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow4">
+                <state img="6-thinking.png">(A spell?! I've got a bad feeling about this.)</state>
+            </case>
+            <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow7">
+                <state img="6-neutral.png">Too bad your sandals don't seem to be catching ~player~'s interest very much, Tharja. But I guess they had to go eventually.</state>
             </case>
             <case tag="female_must_strip" oneShotId="4" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="default" />
                 <state img="6-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
                 <state img="6-neutral.png">I like that look, Juri. It's a lot like my outfit. That wasn't on purpose, was it?</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="11" target="juri">
+                <test expr="~juri.costume~" value="juri_summer" />
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="6-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
+                <state img="6-neutral.png">I like that look, Juri. It's a lot like my usual outfit. That wasn't on purpose, was it?</state>
             </case>
             <case tag="female_must_strip" oneShotId="7" target="monika">
                 <test expr="~monika.costume~" value="monika_stirring_mermaid" />
@@ -8633,6 +9263,16 @@
                 <test expr="~sayaka.costume~" value="summertime_sayaka" />
                 <state img="6-embarrassed.png">Is that an inner tube? Do you not know how to swim, Sayaka? I could teach you if you want.</state>
                 <state img="6-thinking.png">Sayaka, do you know how to swim? If not, I can help you out.</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="2" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="default" />
+                <state img="6-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="6-pleased.png">I like your summertime look, Zizou! It's pretty similar to mine!</state>
+            </case>
+            <case tag="female_must_strip" oneShotId="10" target="zizou" filter="zizou_summer">
+                <test expr="~self.costume~" value="nostalgia_misty" />
+                <state img="6-pleased.png">Hmmm, a swimsuit, a jacket, and sandals? Not bad, Zizou!</state>
+                <state img="6-pleased.png">I like your summertime look, Zizou! It's pretty similar to what I usually wear!</state>
             </case>
             <case tag="female_must_strip" oneShotId="6" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
@@ -8879,6 +9519,17 @@
             <case tag="female_removing_minor" target="sakura" targetStage="3">
                 <state img="6-shocked.png">GAH! YOUR HEAD!?!</state>
             </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow2">
+                <state img="6-thinking.png">(I hope that ~player~ garners more interest in me than he does in her.)</state>
+                <state img="6-thinking.png">(Hopefully my personality and fit body will make me more appealing to ~player~ than her.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow8">
+                <state img="6-irritated.png">(As much as I hate to admit it, that was a really good line. I wonder if ~player~ got worked up over it.)</state>
+            </case>
+            <case tag="female_removing_minor" target="tharja" targetSayingMarker="cheating2">
+                <state img="6-irritated.png">It doesn't sound like you intend on stopping, Tharja.</state>
+                <state img="6-irritated.png">Even if you keep cheating, Tharja, we'll make sure that you don't win.</state>
+            </case>
             <case tag="female_removing_minor" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
                 <state img="6-neutral.png">Your boots are all you have left, so time to take 'em off!</state>
@@ -8948,6 +9599,14 @@
             </case>
             <case tag="female_removed_minor" target="sonya" targetStage="6">
                 <state img="6-disappointed.png">Um, was there really any reason for the face paint?</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow3">
+                <state img="6-pleased.png">Well isn't that a shame, Tharja. Maybe he was distracted by someone he finds to be a little more appealing?</state>
+                <state img="6-pleased.png">Well that's too bad, Tharja. I guess he isn't as interested in you as you had hoped.</state>
+            </case>
+            <case tag="female_removed_minor" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow9">
+                <state img="6-neutral.png">Too bad no matter how much of yourself you expose, your body won't stack up to mine, Tharja.</state>
+                <state img="6-neutral.png">Even if you do get to expose more of yourself, I'm pretty sure that ~player~ is already more interested in me, Tharja.</state>
             </case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="3">
                 <test expr="~_.costume~" value="nugi-chan_bikini" />
@@ -9047,6 +9706,9 @@
             <case tag="female_removing_major" target="pinkie_pie" targetStage="1">
                 <state img="6-excited.png">You started with your shirt, and you're doing your skirt second? Glad to know that I'm playing with someone who knows how to have fun!</state>
                 <state img="6-excited.png">Now your skirt? You really know how to get things going, huh Pinkie?</state>
+            </case>
+            <case tag="female_removing_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow5">
+                <state img="6-shocked.png">(What is she doing!?)</state>
             </case>
             <case tag="female_removing_major" target="vriska" targetStage="4-5">
                 <state img="6-irritated.png">Again with the light?</state>
@@ -9177,6 +9839,10 @@
             </case>
             <case tag="female_removed_major" target="sayla" targetStage="4">
                 <state img="6-excited.png">Oh hey! You're wearing a swimsuit too? Nice! Let's go swimming together sometime!</state>
+            </case>
+            <case tag="female_removed_major" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow6">
+                <state img="6-neutral.png">(Oh. She just took off her bodysuit. I was afraid she was going to mess with ~player~'s mind.)</state>
+                <state img="6-neutral.png">(Oh. That wasn't nearly as bad as I was afraid it would be.)</state>
             </case>
             <case tag="female_removed_major" target="vriska" targetStage="5-6">
                 <state img="6-excited.png">Now we're getting somewhere!</state>
@@ -9310,6 +9976,10 @@
             <case tag="female_chest_will_be_visible" target="sheena" targetSaidMarker="undine">
                 <state img="6-excited.png">Whoa! That's a neat trick Sheena! You've gotta teach me how to do that!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow11">
+                <state img="6-thinking.png">(Do guys like it when you tell them your fantasies like that? ~Player~ seems to be excited by it.)</state>
+                <state img="6-thinking.png">(I wonder if ~player~ is excited at the thought of that.)</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="twilight" targetStage="1">
                 <state img="6-shocked.png">You're taking off your bra next!? Before you even take off your shirt!?</state>
             </case>
@@ -9373,6 +10043,9 @@
                 <state img="6-excited.png">Not so condescending now that you've got nothing but your panties left, Palutena!</state>
                 <state img="6-excited.png">This is what you get for stalling for so long, Palutena!</state>
             </case>
+            <case tag="female_large_chest_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow12">
+                <state img="6-thinking.png">"Take care of your tits"? What does that even mean?</state>
+            </case>
             <case tag="female_large_chest_is_visible" target="sheena">
                 <test expr="~sheena.costume~" value="swimsuit_sheena" />
                 <state img="6-pleased.png">This is what you get for trying to count something as small as string earlier.</state>
@@ -9423,6 +10096,10 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="pinkie_pie" targetStage="3" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="6-embarrassed.png">Uhh, Pinkie, I think you should be a little more careful with that knife...</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow14">
+                <state img="6-thinking.png">That's extremely weird, Tharja. And a little gross.</state>
+                <state img="6-disappointed.png">I think we all could've gone on living without knowing that, Tharja.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="twilight" targetStage="0">
                 <state img="6-thinking.png">You're &lt;i&gt;starting&lt;/i&gt; with your panties!? This'll be an interesting game.</state>
@@ -9477,6 +10154,9 @@
             <case tag="female_crotch_is_visible" target="palutena">
                 <state img="6-pleased.png">If you weren't prepared to get naked then you shouldn't have chosen to play, Palutena.</state>
                 <state img="6-pleased.png">If you're not comfortable being naked, then maybe you shouldn't play this game, Palutena.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow15">
+                <state img="6-thinking.png">(~Player~ seems really excited by what she said just now, hopefully I still  have a chance.)</state>
             </case>
             <case tag="female_crotch_is_visible" target="twilight" targetStage="1">
                 <state img="6-embarrassed.png">I guess that's one way to get people's attention. (Maybe I should try that the next time I come here.)</state>
