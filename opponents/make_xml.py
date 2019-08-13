@@ -171,10 +171,13 @@ def get_cases(player_dictionary, situation):
 			else:
 				image = "#-%s" % (image)
 
-		if not "stage" in line_data and is_generic_line(line_data):
-			line_data["stage"] = merge_intervals(stages_left)
-			if line_data["stage"] == "":
-				print("Warning: Unused generic %s line" % key)
+		if not "stage" in line_data:
+			if is_generic_line(line_data):
+				line_data["stage"] = merge_intervals(stages_left)
+				if line_data["stage"] == "":
+					print("Warning: Unused generic %s line" % key)
+			else:
+				line_data["stage"] = merge_intervals(list(range(first_stage, last_stage + 1)))
 
 		#if no file extension, assume .png
 		if "." not in image:
