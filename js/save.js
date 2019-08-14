@@ -150,15 +150,7 @@ function Save() {
             var settings = JSON.parse(localStorage.getItem(prefix + 'settings')) || {};
             if ('stamina' in settings) humanPlayer.stamina = settings.stamina;
 
-            optionsBackground = defaultBackground;
-            if ('background' in settings) {
-                var bg_id = settings.background;
-                if (backgrounds[bg_id]) {
-                    optionsBackground = backgrounds[bg_id];
-                }
-            };
-
-            optionsBackground.activateBackground();
+            this.loadOptionsBackground(settings);
 
             if ('useGroupBackgrounds' in settings) {
                 useGroupBackgrounds = !!settings.useGroupBackgrounds;
@@ -177,6 +169,22 @@ function Save() {
             humanPlayer.gender = gender;
         }
     };
+    this.loadOptionsBackground = function (settings) {
+        if (!settings) {
+            settings = JSON.parse(localStorage.getItem(prefix + 'settings')) || {};
+        }
+
+        optionsBackground = defaultBackground;
+
+        if ('background' in settings) {
+            var bg_id = settings.background;
+            if (backgrounds[bg_id]) {
+                optionsBackground = backgrounds[bg_id];
+            }
+        };
+
+        return optionsBackground.activateBackground();
+    }
     this.saveUsageTracking = function() {
         if (USAGE_TRACKING !== undefined) {
             localStorage.setItem(prefix + 'usageTracking', USAGE_TRACKING ? 'yes' : 'no');

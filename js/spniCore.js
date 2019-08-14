@@ -136,7 +136,9 @@ function compileBaseErrorReport(userDesc, bugType) {
 
             if (players[i].chosenState) {
                 playerData.currentLine    = players[i].chosenState.rawDialogue;
-                playerData.currentImage   = players[i].folder + players[i].chosenState.image;
+                if (players[i].chosenState.image) {
+                    playerData.currentImage   = players[i].folder + players[i].chosenState.image.replace('#', players[i].stage);
+                }
             }
 
             tableReports[i-1] = playerData;
@@ -964,10 +966,14 @@ Player.prototype.getImagesForStage = function (stage) {
     var imageSet = {};
     var folder = this.folders ? this.getByStage(this.folders, stage) : this.folder;
     var advPoses = this.poses;
-    var selector = (stage == -1 ? 'start, stage[id=1] case[tag=game_start]'
-                    : 'stage[id='+stage+'] case');
+    var layers = this.startingLayers;
+    var selector = (stage == -1 ? 'start, stage[id=1]>case[tag=game_start]'
+                    : 'stage[id='+stage+']>case, trigger>case');
                     
-    this.xml.find(selector).each(function () {
+    this.xml.find(selector).filter(function() {
+        return inInterval(stage, getRelevantStagesForTrigger($(this).parent('trigger').attr('id'), layers))
+            && checkStage(stage, $(this).attr('stage'));
+    }).each(function () {
         var target = $(this).attr('target'), alsoPlaying = $(this).attr('alsoPlaying'),
             filter = canonicalizeTag($(this).attr('filter'));
         // Skip cases requiring a character that isn't present
@@ -978,12 +984,13 @@ Player.prototype.getImagesForStage = function (stage) {
             $(this).children('state').each(function (i, e) {
                 var poseName = $(e).attr('img');
                 if (!poseName) return;
+                poseName = poseName.replace('#', stage);
                 
                 if (poseName.startsWith('custom:')) {
                     var key = poseName.split(':', 2)[1];
                     var pose = advPoses[key];
                     if (pose) pose.getUsedImages().forEach(function (img) {
-                        imageSet[img] = true;
+                        imageSet[img.replace('#', stage)] = true;
                     });
                 } else {
                     imageSet[folder+poseName] = true;
@@ -1019,26 +1026,33 @@ function initialSetup () {
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
 
-    /* load the all content */
+    /* Load title screen info first, since that's fast and synchronous */
     loadTitleScreen();
     selectTitleCandy();
-    loadVersionInfo();
-    loadGeneralCollectibles();
-    
-	/* Make sure that the config file is loaded before processing the
+
+    /* Make sure that the config file is loaded before processing the
      *  opponent list, so that includedOpponentStatuses is populated.
      *
      * Also ensure that the config file is loaded before initializing Sentry,
      * which requires the commit SHA.
+     * 
+     * Also: .done() and .always() do not chain like .then() does.
      */
-
-    save.load();
-    
-    loadConfigFile().always(loadSelectScreen, function() {
-        if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
-    });
-
-    updateTitleGender();
+    loadConfigFile().then(loadBackgrounds, loadBackgrounds).always(
+        loadVersionInfo,
+        loadGeneralCollectibles,
+        loadSelectScreen,
+        function () {
+            /* Make sure that save data is loaded before updateTitleGender(),
+             * since the latter uses selectedClothing.
+             */
+            save.load();
+            updateTitleGender();
+        },
+        function () {
+            if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
+        }
+    );
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
 
@@ -1177,6 +1191,15 @@ function loadConfigFile () {
                 console.log("Could not find currently deployed Git commit!");
             }
 
+            var _default_bg = $(xml).find('default-background').text();
+            if (_default_bg) {
+                defaultBackgroundID = _default_bg;
+                console.log("Using default background: "+defaultBackgroundID);
+            } else {
+                defaultBackgroundID = 'inventory';
+                console.log("No default background ID set, defaulting to 'inventory'...");
+            }
+
             var _alts = $(xml).find('alternate-costumes').text();
 
             if(_alts === "true") {
@@ -1233,7 +1256,7 @@ function loadConfigFile () {
 }
 
 function loadGeneralCollectibles () {
-    $.ajax({
+    return $.ajax({
 		type: "GET",
 		url: 'opponents/general_collectibles.xml',
 		dataType: "text",
@@ -1486,16 +1509,16 @@ function sentryInit() {
         var sentry_opts = {
             dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
             release: VERSION_COMMIT,
-            maxBreadcrumbs: 250,
+            maxBreadcrumbs: 100,
             integrations: [new Sentry.Integrations.Breadcrumbs({
                 console: false,
                 dom: false
             })],
             beforeSend: function (event, hint) {
                 /* Inject additional game state data into event tags: */
-                if (inGame) {
-                    if (!event.extra) event.extra = {};
+                if (!event.extra) event.extra = {};
 
+                if (inGame && !epiloguePlayer) {
                     event.extra.recentLoser = recentLoser;
                     event.extra.previousLoser = previousLoser;
                     event.extra.gameOver = gameOver;
@@ -1504,6 +1527,17 @@ function sentryInit() {
 
                     event.tags.rollback = inRollback();
                     event.tags.gamePhase = getGamePhaseString(gamePhase);
+                }
+
+                if (epiloguePlayer) {
+                    event.tags.epilogue = epiloguePlayer.epilogue.title;
+                    event.tags.epilogue_player = epiloguePlayer.epilogue.player.id;
+                    event.tags.epilogue_gender = epiloguePlayer.epilogue.gender;
+
+                    event.extra.loaded = epiloguePlayer.loaded;
+                    event.extra.directiveIndex = epiloguePlayer.directiveIndex;
+                    event.extra.sceneIndex = epiloguePlayer.sceneIndex;
+                    event.extra.viewIndex = epiloguePlayer.viewIndex;
                 }
 
                 var n_players = 0;

@@ -467,10 +467,12 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
 
   var $epilogue = $(rawEpilogue);
   var title = $epilogue.find("title").html().trim();
+  var gender = $epilogue.attr("gender") || 'any';
 
   var epilogue = {
     title: title,
     player: player,
+    gender: gender,
     scenes: [],
   };
   var scenes = epilogue.scenes;
@@ -899,6 +901,9 @@ function doEpilogueModal() {
 function doEpilogue() {
   save.addEnding(chosenEpilogue.player.id, chosenEpilogue.title);
 
+  /* Prevent players from trying to load an epilogue twice. */
+  $epilogueAcceptButton.prop("disabled", true);
+
   if (USAGE_TRACKING) {
     var usage_tracking_report = {
       'date': (new Date()).toISOString(),
@@ -922,8 +927,6 @@ function doEpilogue() {
         level: 'info'
       });
 
-      Sentry.setTag("epilogue_player", chosenEpilogue.player.id);
-      Sentry.setTag("epilogue", chosenEpilogue.title);
       Sentry.setTag("epilogue_gallery", false);
       Sentry.setTag("screen", "epilogue");
     }
@@ -966,6 +969,14 @@ function loadEpilogue(epilogue) {
 
 function moveEpilogueForward() {
   if (epiloguePlayer && epiloguePlayer.loaded) {
+    if (SENTRY_INITIALIZED) {
+      Sentry.addBreadcrumb({
+        category: 'epilogue',
+        message: 'Advancing epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
+        level: 'info'
+      });
+    }
+
     epiloguePlayer.advanceDirective();
     updateEpilogueButtons();
   }
@@ -973,6 +984,14 @@ function moveEpilogueForward() {
 
 function moveEpilogueBack() {
   if (epiloguePlayer && epiloguePlayer.loaded) {
+    if (SENTRY_INITIALIZED) {
+      Sentry.addBreadcrumb({
+        category: 'epilogue',
+        message: 'Reverting epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
+        level: 'info'
+      });
+    }
+
     epiloguePlayer.revertDirective();
     updateEpilogueButtons();
   }
@@ -1190,6 +1209,7 @@ EpiloguePlayer.prototype.resizeViewport = function () {
 
 EpiloguePlayer.prototype.advanceDirective = function () {
   if (this.activeTransition) { return; } //prevent advancing during a scene transition
+
   this.waitingForAnims = false;
   this.activeScene.view.haltAnimations(false);
   this.performDirective();
@@ -1665,7 +1685,11 @@ SceneView.prototype.addBackground = function (background) {
 
 SceneView.prototype.addImage = function (id, src, args) {
   var img = document.createElement("img");
-  if (src) img.src = this.assetMap[src].src;
+  if (src) {
+    img.src = this.assetMap[src].src;
+    args.naturalWidth = args.naturalWidth || this.assetMap[src].naturalWidth;
+    args.naturalHeight = args.naturalHeight || this.assetMap[src].naturalHeight;
+  }
 
   var obj = new SceneObject(id, img, this, args);
   obj.setImage(src);
@@ -1677,6 +1701,9 @@ SceneView.prototype.addSprite = function (directive) {
 }
 
 SceneView.prototype.addSceneObject = function (obj) {
+  /* Don't make duplicate scene objects */
+  if (this.sceneObjects[obj.id]) return;
+    
   this.sceneObjects[obj.id] = obj;
   if (obj.element) {
     this.$canvas.append(obj.element);
@@ -1685,6 +1712,9 @@ SceneView.prototype.addSceneObject = function (obj) {
 }
 
 SceneView.prototype.removeSceneObject = function (directive) {
+  /* If this object has already been deleted, our work here is done */
+  if (!this.sceneObjects[directive.id]) return;
+
   this.sceneObjects[directive.id].destroy();
   delete this.sceneObjects[directive.id];
 }
@@ -1790,6 +1820,8 @@ SceneView.prototype.applyTextDirective = function (directive, box) {
 SceneView.prototype.clearAllText = function (directive, context) {
   var $this = this;
   context = context || {};
+  context.boxes = context.boxes || [];
+  
   for (var box in this.textObjects) {
     this.clearText({ id: this.textObjects[box].data("id") }, context, true);
   }
@@ -2118,8 +2150,8 @@ function SceneObject(id, element, view, args) {
 
     var width = args.width;
     var height = args.height;
-    var naturalWidth = element.naturalWidth || 100;
-    var naturalHeight = element.naturalHeight || 100;
+    var naturalWidth = args.naturalWidth || element.naturalWidth || 100;
+    var naturalHeight = args.naturalHeight || element.naturalHeight || 100;
 
     if (width) {
       if (width.endsWith("%")) {

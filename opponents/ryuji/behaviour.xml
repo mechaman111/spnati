@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0 at 6:38:31 PM on August 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 3:23:47 AM on August 07, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.0</version>
     <first>Ryuji</first>
@@ -1056,15 +1056,20 @@
             <case tag="stripping" hasHand="One Pair">
                 <state img="0-strip.png">Whatever.</state>
             </case>
-            <case tag="stripping" priority="555">
-                <test expr="~ryuji.costume~" value="summertime_ryuji" />
-                <state img="0-strip.png">Startin' small this time with my skull necklace. Don't lose it.</state>
-                <state img="0-strip.png">Alright, my necklace should be good 'nough. It's just the start of the game.</state>
-            </case>
             <case tag="stripping" totalRounds="9" priority="555">
                 <test expr="~ryuji.costume~" value="summertime_ryuji" />
                 <state img="0-strip.png">Sorry, but I'm startin' off small here.</state>
                 <state img="0-strip.png">I'll just take off my necklace.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="sayaka">
+                <test expr="~sayaka.costume~" value="summertime_sayaka" />
+                <test expr="~ryuji.costume~" value="summertime_ryuji" />
+                <state img="0-strip.png">Damn right! ...Say, does this tan make me seem more American?</state>
+            </case>
+            <case tag="stripping" priority="555">
+                <test expr="~self.costume~" value="summertime_ryuji" />
+                <state img="0-strip.png">Startin' small this time with my skull necklace. Don't lose it.</state>
+                <state img="0-strip.png">Alright, my necklace should be good 'nough. It's just the start of the game.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="0-cocky.png">Sorry, man. You gotta play better than that.</state>
@@ -1496,6 +1501,14 @@
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="0-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
+            <case tag="female_must_strip" target="larachel" targetStage="0">
+                <test expr="~larachel.costume~" value="summer_larachel" />
+                <state img="0-awkward.png">That is one frilly swimsuit ya got there.</state>
+            </case>
+            <case tag="female_must_strip" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="0-cocky.png">Heh, should've secured your swimsuit better---</state>
+            </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
                 <state img="0-pumped.png">AWESOME! What kind?</state>
                 <state img="0-pumped.png" marker="punny">I guess you can say you're &lt;i&gt;all fired up!&lt;/i&gt;</state>
@@ -1698,6 +1711,9 @@
             </case>
             <case tag="female_removing_accessory" target="meia" targetStage="0" alsoPlaying="jura">
                 <state img="0-what.png">What's wrong with Meia takin' off her eyepiece?</state>
+            </case>
+            <case tag="female_removing_accessory" target="monika">
+                <state img="0-thinking.png">Yeah, I would've done the same. I mean, I can't just keep this necklace and bracelet on the whole game!</state>
             </case>
             <case tag="female_removing_accessory" target="monika" targetStage="5">
                 <state img="0-awkward.png">Your last stand?</state>
@@ -2036,6 +2052,14 @@
             <case tag="female_removing_minor" target="shimakaze">
                 <state img="0-neutral.png">Hey, is your Persona gonna help you with cards?</state>
                 <state img="0-thinking.png">Hold up, how can ya summon a Persona here and I can't?</state>
+            </case>
+            <case tag="female_removing_minor" target="larachel" targetSayingMarker="panic">
+                <test expr="~ryuji.costume~" cmp="!=" value="summertime_ryuji" />
+                <state img="0-strip.png">Hey, &lt;i&gt;hey&lt;/i&gt;, chill out for a moment! It's just a blazer. All you're gonna see is my arms.</state>
+            </case>
+            <case tag="female_removing_minor" target="larachel" targetSayingMarker="panic">
+                <test expr="~ryuji.costume~" value="summertime_ryuji" />
+                <state img="0-strip.png">Hey, &lt;i&gt;hey&lt;/i&gt;, chill out for a moment! It's just some jewelry. Not like I'm whippin' out my dick right away.</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="0-cocky.png">Whatever, man.</state>
@@ -2542,6 +2566,10 @@
             <case tag="female_chest_will_be_visible" target="pinkie_pie" targetSaidMarker="pinka_start">
                 <state img="0-startled.png">P-Pinkie? Did she possess you?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="0-startled.png">What the---fish!? Where the hell did they come from?</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="0-awkward.png">W-Whatever, man! Size doesn't matter.</state>
                 <state img="0-awkward.png">T-They're still great tits! Don't worry 'bout it!</state>
@@ -2630,6 +2658,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="haru" targetSayingMarker="mulanduel_answer">
                 <state img="0-startled.png">Say what!? H-Hey, why didn't you invite the guys too!?</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="0-awkward.png">&lt;i&gt;(That... wasn't a Persona, was it?)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="0-aroused.png">&lt;i&gt;Oh shit, here it comes!&lt;/i&gt;</state>
@@ -2848,6 +2880,10 @@
             <case tag="opponent_stripping" target="pinkie_pie" notSaidMarker="pinka_startt" targetSaidMarker="pinka_start">
                 <state img="0-pissed.png" marker="pinka_startt">&lt;i&gt;Who the hell are you and what have you done with her!?&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="4">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="0-awkward.png">&lt;i&gt;(Is she...?)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripped" alsoPlaying="sakura" notSaidMarker="river3" alsoPlayingSaidMarker="ryuji_river1">
                 <state img="0-pumped.png" marker="river3">♪ When a cool drop's all I need... Gotta clear my head of anger and greed! A place to refreeesh!♪ Yo, where's a drumset when ya need it?</state>
             </case>
@@ -2886,6 +2922,10 @@
             </case>
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="0-cheerful.png">Next round, guys?</state>
+            </case>
+            <case tag="opponent_stripped" alsoPlaying="nugi-chan">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="0-sigh.png">&lt;i&gt;(Damn... Naked apron would be hot.)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
                 <condition count="1" status="alive" />
@@ -3934,6 +3974,11 @@
                 <test expr="~ryuji.costume~" value="summertime_ryuji" />
                 <state img="1-strip.png">It's better if I kneel here...</state>
             </case>
+            <case tag="stripping" alsoPlaying="sayaka">
+                <test expr="~sayaka.costume~" value="summertime_sayaka" />
+                <test expr="~ryuji.costume~" value="summertime_ryuji" />
+                <state img="1-strip.png">I mean, it's hard to run in sandals, ain't it?</state>
+            </case>
             <case tag="stripped">
                 <state img="1-poststrip.png">Whatever, man!</state>
                 <state img="1-poststrip.png">Alright, let's move on!</state>
@@ -4058,6 +4103,11 @@
                 <state img="1-poststrip.png">...Screw it, I'll throw in my bracelet too. Don't lose that either. I took off &lt;i&gt;two&lt;/i&gt;, so nobody should be complainin' now.</state>
                 <state img="1-poststrip.png">&lt;i&gt;And&lt;/i&gt; so none of ya complain, I'll even throw in my bracelet. That's &lt;i&gt;two&lt;/i&gt; accessories I'm takin' off. I'm pretty much bein' generous here.</state>
                 <state img="1-poststrip.png">Alright, alright, I'll take off my bracelet too. I could've just saved that thing to stall even further, but I ain't &lt;i&gt;that&lt;/i&gt; much of a dick.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="sayaka">
+                <test expr="~sayaka.costume~" value="summertime_sayaka" />
+                <test expr="~ryuji.costume~" value="summertime_ryuji" />
+                <state img="1-grumpy.png">Tannin' butter sounds like something you use to &lt;i&gt;cook&lt;/i&gt; humans, ain't it? ...Ugh, I made myself sick.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="1-cocky.png">Sorry, man. You gotta play better than that.</state>
@@ -4431,6 +4481,15 @@
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="1-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
+            <case tag="female_must_strip" target="larachel" targetStage="0">
+                <test expr="~larachel.costume~" value="summer_larachel" />
+                <state img="1-awkward.png">That is one frilly swimsuit ya got there.</state>
+            </case>
+            <case tag="female_must_strip" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="1-cocky.png">Heh, should've secured your swimsuit better---</state>
+                <state img="1-thinking.png">I mean, I can't complain... But c'mon, you could've at &lt;i&gt;least&lt;/i&gt; taken off a second thing like I did. Like that thing on your ankle or somethin'.</state>
+            </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
                 <state img="1-pumped.png">AWESOME! What kind?</state>
                 <state img="1-pumped.png" marker="punny">I guess you can say you're &lt;i&gt;all fired up!&lt;/i&gt;</state>
@@ -4673,6 +4732,16 @@
                 <state img="1-startled.png">T-That wasn't me!</state>
                 <state img="1-startled.png">W-What!? I was lookin' up your skirt!?</state>
                 <state img="1-pissed.png">The game JUST started, what the &lt;i&gt;hell!?&lt;/i&gt;</state>
+            </case>
+            <case tag="female_removing_accessory" target="monika">
+                <test expr="~monika.costume~" value="monika_stirring_mermaid" />
+                <test expr="~monika.position~" value="left" />
+                <state img="1-fingergunrev.png">Usin' the same strategy, I see!</state>
+            </case>
+            <case tag="female_removing_accessory" target="monika">
+                <test expr="~monika.costume~" value="monika_stirring_mermaid" />
+                <test expr="~monika.position~" value="right" />
+                <state img="1-fingerguns.png">Usin' the same strategy, I see!</state>
             </case>
             <case tag="female_removing_accessory">
                 <test expr="~target.position~" value="left" />
@@ -5455,6 +5524,10 @@
             <case tag="female_chest_will_be_visible" target="pinkie_pie" targetSaidMarker="pinka_start">
                 <state img="1-startled.png">P-Pinkie? Did she possess you?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="1-startled.png">What the---fish!? Where the hell did they come from?</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="1-awkward.png">W-Whatever, man! Size doesn't matter.</state>
                 <state img="1-awkward.png">T-They're still great tits! Don't worry 'bout it!</state>
@@ -5547,6 +5620,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="haru" targetSayingMarker="mulanduel_answer">
                 <state img="1-startled.png">Say what!? H-Hey, why didn't you invite the guys too!?</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="1-awkward.png">&lt;i&gt;(That... wasn't a Persona, was it?)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="1-aroused.png">&lt;i&gt;Oh shit, here it comes!&lt;/i&gt;</state>
@@ -5748,6 +5825,10 @@
             <case tag="opponent_stripping" target="pinkie_pie" notSaidMarker="pinka_startt" targetSaidMarker="pinka_start">
                 <state img="1-pissed.png" marker="pinka_startt">&lt;i&gt;Who the hell are you and what have you done with her!?&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="4">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="1-awkward.png">&lt;i&gt;(Is she...?)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripped" alsoPlaying="sakura" notSaidMarker="river3" alsoPlayingSaidMarker="ryuji_river1">
                 <state img="1-pumped.png" marker="river3">♪ When a cool drop's all I need... Gotta clear my head of anger and greed! A place to refreeesh!♪ Yo, where's a drumset when ya need it?</state>
             </case>
@@ -5783,6 +5864,10 @@
             </case>
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="1-cheerful.png">Next round, guys?</state>
+            </case>
+            <case tag="opponent_stripped" alsoPlaying="nugi-chan">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="1-thinking.png">&lt;i&gt;(Damn... Naked apron would be hot. Oh well.)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
                 <condition count="1" status="alive" />
@@ -6796,6 +6881,11 @@
                 <state img="2-strip.png">What if I just...</state>
                 <state img="2-strip.png">Lemme try somethin' here. If I just focus, annnnnd...</state>
             </case>
+            <case tag="stripping" alsoPlaying="sayaka">
+                <test expr="~sayaka.costume~" value="summertime_sayaka" />
+                <test expr="~ryuji.costume~" value="summertime_ryuji" />
+                <state img="2-strip.png">Amen to &lt;i&gt;that&lt;/i&gt;! Wet socks are the friggin' worse!</state>
+            </case>
             <case tag="stripped" alsoPlaying="daria">
                 <state img="2-grumpy.png">Is it impossible for you to NOT be a dick for two seconds, Daria?</state>
             </case>
@@ -6887,6 +6977,11 @@
             <case tag="stripped" priority="120">
                 <test expr="~ryuji.costume~" value="summertime_ryuji" />
                 <state img="2-cheerful.png">Next round?</state>
+            </case>
+            <case tag="stripped" alsoPlaying="sayaka">
+                <test expr="~sayaka.costume~" value="summertime_sayaka" />
+                <test expr="~ryuji.costume~" value="summertime_ryuji" />
+                <state img="2-thinking.png">But you'd just get sand in them easier and it's just... It's uncomfortable as hell! Either I wear sneakers to the beach or I just go barefoot.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="2-cocky.png">Sorry, man. You gotta play better than that.</state>
@@ -7248,6 +7343,14 @@
             </case>
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="2-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
+            </case>
+            <case tag="female_must_strip" target="larachel" targetStage="0">
+                <test expr="~larachel.costume~" value="summer_larachel" />
+                <state img="2-awkward.png">That is one frilly swimsuit ya got there.</state>
+            </case>
+            <case tag="female_must_strip" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="2-cocky.png">Heh, should've secured your swimsuit better---</state>
             </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
                 <state img="2-pumped.png">AWESOME! What kind?</state>
@@ -8259,6 +8362,10 @@
             <case tag="female_chest_will_be_visible" target="pinkie_pie" targetSaidMarker="pinka_start">
                 <state img="2-startled.png">P-Pinkie? Did she possess you?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="2-startled.png">What the---fish!? Where the hell did they come from?</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="2-awkward.png">W-Whatever, man! Size doesn't matter.</state>
                 <state img="2-awkward.png">T-They're still great tits! Don't worry 'bout it!</state>
@@ -8348,6 +8455,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="haru" targetSayingMarker="mulanduel_answer">
                 <state img="2-startled.png">Say what!? H-Hey, why didn't you invite the guys too!?</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="2-awkward.png">&lt;i&gt;(That... wasn't a Persona, was it?)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="2-aroused.png">&lt;i&gt;Oh shit, here it comes!&lt;/i&gt;</state>
@@ -8549,6 +8660,10 @@
             <case tag="opponent_stripping" target="pinkie_pie" notSaidMarker="pinka_startt" targetSaidMarker="pinka_start">
                 <state img="2-pissed.png" marker="pinka_startt">&lt;i&gt;Who the hell are you and what have you done with her!?&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="4">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="2-awkward.png">&lt;i&gt;(Is she...?)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripped" alsoPlaying="sakura" notSaidMarker="river3" alsoPlayingSaidMarker="ryuji_river1">
                 <state img="2-pumped.png" marker="river3">♪ When a cool drop's all I need... Gotta clear my head of anger and greed! A place to refreeesh!♪ Yo, where's a drumset when ya need it?</state>
             </case>
@@ -8584,6 +8699,10 @@
             </case>
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="2-cheerful.png">Next round, guys?</state>
+            </case>
+            <case tag="opponent_stripped" alsoPlaying="nugi-chan">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="2-thinking.png">&lt;i&gt;(Damn... Naked apron would be hot. Oh well.)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
                 <condition count="1" status="alive" />
@@ -9618,6 +9737,11 @@
                 <state img="3-cheerful.png">Hah! Got it!</state>
                 <state img="3-cheerful.png">Alright, socks removed! Clever, ain't it?</state>
             </case>
+            <case tag="stripped" alsoPlaying="sayaka">
+                <test expr="~sayaka.costume~" value="summertime_sayaka" />
+                <test expr="~ryuji.costume~" value="summertime_ryuji" />
+                <state img="3-thinking.png">I haven't bought my swim trunks... Aw shit, I should've sworn trunks underneath my clothes.</state>
+            </case>
             <case tag="male_human_must_strip">
                 <state img="3-cocky.png">Sorry, man. You gotta play better than that.</state>
                 <state img="3-cheerful.png">You alright there?</state>
@@ -9974,6 +10098,14 @@
             </case>
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="3-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
+            </case>
+            <case tag="female_must_strip" target="larachel" targetStage="0">
+                <test expr="~larachel.costume~" value="summer_larachel" />
+                <state img="3-awkward.png">That is one frilly swimsuit ya got there.</state>
+            </case>
+            <case tag="female_must_strip" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="3-cocky.png">Heh, should've secured your swimsuit better---</state>
             </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
                 <state img="3-pumped.png">AWESOME! What kind?</state>
@@ -10976,6 +11108,10 @@
             <case tag="female_chest_will_be_visible" target="pinkie_pie" targetSaidMarker="pinka_start">
                 <state img="3-startled.png">P-Pinkie? Did she possess you?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="3-startled.png">What the---fish!? Where the hell did they come from?</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="3-awkward.png">W-Whatever, man! Size doesn't matter.</state>
                 <state img="3-awkward.png">T-They're still great tits! Don't worry 'bout it!</state>
@@ -11064,6 +11200,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="haru" targetSayingMarker="mulanduel_answer">
                 <state img="3-startled.png">Say what!? H-Hey, why didn't you invite the guys too!?</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="3-awkward.png">&lt;i&gt;(That... wasn't a Persona, was it?)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="3-aroused.png">&lt;i&gt;Oh shit, here it comes!&lt;/i&gt;</state>
@@ -11267,6 +11407,10 @@
             <case tag="opponent_stripping" target="pinkie_pie" targetSaidMarker="pinka_start" priority="115">
                 <state img="3-disgusted.png">....</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="4">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="3-awkward.png">&lt;i&gt;(Is she...?)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripped" alsoPlaying="sakura" notSaidMarker="river3" alsoPlayingSaidMarker="ryuji_river1">
                 <state img="3-pumped.png" marker="river3">♪ When a cool drop's all I need... Gotta clear my head of anger and greed! A place to refreeesh!♪ Yo, where's a drumset when ya need it?</state>
             </case>
@@ -11302,6 +11446,10 @@
             </case>
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="3-cheerful.png">Next round, guys?</state>
+            </case>
+            <case tag="opponent_stripped" alsoPlaying="nugi-chan">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="3-thinking.png">&lt;i&gt;(Damn... Naked apron would be hot. Oh well.)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
                 <condition count="1" status="alive" />
@@ -12250,6 +12398,11 @@
                 <state img="4-cocky.png">Deal the next hand.</state>
                 <state img="4-cocky.png">Yo, I'm ready. Give me a new hand!</state>
             </case>
+            <case tag="stripped" alsoPlaying="sayaka">
+                <test expr="~sayaka.costume~" value="summertime_sayaka" />
+                <test expr="~ryuji.costume~" value="summertime_ryuji" />
+                <state img="4-startled.png">Woah... Are backwards caps still in fashion? I gotta ask that one kid who always hangs at the arcade with that "Get Smoked" cap!</state>
+            </case>
             <case tag="male_human_must_strip">
                 <state img="4-cocky.png">Sorry, man. You gotta play better than that.</state>
                 <state img="4-cheerful.png">You alright there?</state>
@@ -12595,6 +12748,14 @@
             </case>
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="4-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
+            </case>
+            <case tag="female_must_strip" target="larachel" targetStage="0">
+                <test expr="~larachel.costume~" value="summer_larachel" />
+                <state img="4-awkward.png">That is one frilly swimsuit ya got there.</state>
+            </case>
+            <case tag="female_must_strip" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="4-cocky.png">Heh, should've secured your swimsuit better---</state>
             </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
                 <state img="4-pumped.png">AWESOME! What kind?</state>
@@ -13591,6 +13752,10 @@
             <case tag="female_chest_will_be_visible" target="pinkie_pie" targetSaidMarker="pinka_start">
                 <state img="4-startled.png">P-Pinkie? Did she possess you?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="4-startled.png">What the---fish!? Where the hell did they come from?</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="4-awkward.png">W-Whatever, man! Size doesn't matter.</state>
                 <state img="4-awkward.png">T-They're still great tits! Don't worry 'bout it!</state>
@@ -13679,6 +13844,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="haru" targetSayingMarker="mulanduel_answer">
                 <state img="4-startled.png">Say what!? H-Hey, why didn't you invite the guys too!?</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="4-awkward.png">&lt;i&gt;(That... wasn't a Persona, was it?)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="4-aroused.png">&lt;i&gt;Oh shit, here it comes!&lt;/i&gt;</state>
@@ -13879,6 +14048,10 @@
             <case tag="opponent_stripping" target="pinkie_pie" notSaidMarker="pinka_startt" targetSaidMarker="pinka_start">
                 <state img="4-pissed.png" marker="pinka_startt">&lt;i&gt;Who the hell are you and what have you done with her!?&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="4">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="4-awkward.png">&lt;i&gt;(Is she...?)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripped" alsoPlaying="sakura" notSaidMarker="river3" alsoPlayingSaidMarker="ryuji_river1">
                 <state img="4-pumped.png" marker="river3">♪ When a cool drop's all I need... Gotta clear my head of anger and greed! A place to refreeesh!♪ Yo, where's a drumset when ya need it?</state>
             </case>
@@ -13911,6 +14084,10 @@
             </case>
             <case tag="opponent_stripped" targetStatus="decent" totalExposed="0" totalMasturbating="0">
                 <state img="4-cheerful.png">Next round, guys?</state>
+            </case>
+            <case tag="opponent_stripped" alsoPlaying="nugi-chan">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="4-thinking.png">&lt;i&gt;(Damn... Naked apron would be hot. Oh well.)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
                 <condition count="1" status="alive" />
@@ -15069,6 +15246,14 @@
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="5-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
+            <case tag="female_must_strip" target="larachel" targetStage="0">
+                <test expr="~larachel.costume~" value="summer_larachel" />
+                <state img="5-awkward.png">That is one frilly swimsuit ya got there.</state>
+            </case>
+            <case tag="female_must_strip" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="5-cocky.png">Heh, should've secured your swimsuit better---</state>
+            </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
                 <state img="5-pumped.png">AWESOME! What kind?</state>
                 <state img="5-pumped.png" marker="punny">I guess you can say you're &lt;i&gt;all fired up!&lt;/i&gt;</state>
@@ -15284,6 +15469,10 @@
             </case>
             <case tag="female_removing_accessory" target="shimakaze" targetStage="1">
                 <state img="5-awkward.png" marker="shimatrackteam">Heh, you'd be a good contender for the track team. They're always lookin' for fast runners.</state>
+            </case>
+            <case tag="female_removing_accessory" target="monika">
+                <test expr="~monika.costume~" value="monika_stirring_mermaid" />
+                <state img="5-disgusted.png">Hmmmmmmmmmphhh!!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="5-grumpy.png">I'm trying REALLY goddamn hard not to be angry at you right now.</state>
@@ -16010,6 +16199,10 @@
             <case tag="female_chest_will_be_visible" target="pinkie_pie" targetSaidMarker="pinka_start">
                 <state img="5-startled.png">P-Pinkie? Did she possess you?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="5-startled.png">What the---fish!? Where the hell did they come from?</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="5-awkward.png">W-Whatever, man! Size doesn't matter.</state>
                 <state img="5-awkward.png">T-They're still great tits! Don't worry 'bout it!</state>
@@ -16098,6 +16291,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="haru" targetSayingMarker="mulanduel_answer">
                 <state img="5-startled.png">Say what!? H-Hey, why didn't you invite the guys too!?</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="5-awkward.png">&lt;i&gt;(That... wasn't a Persona, was it?)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="5-aroused.png">&lt;i&gt;Oh shit, here it comes!&lt;/i&gt;</state>
@@ -16309,6 +16506,10 @@
             <case tag="opponent_stripping" target="pinkie_pie" notSaidMarker="pinka_startt" targetSaidMarker="pinka_start">
                 <state img="5-pissed.png" marker="pinka_startt">&lt;i&gt;Who the hell are you and what have you done with her!?&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="4">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="5-awkward.png">&lt;i&gt;(Is she...?)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripped">
                 <state img="5-awkward.png">Jeez...</state>
             </case>
@@ -16341,6 +16542,10 @@
             </case>
             <case tag="opponent_stripped" target="pinkie_pie" notSaidMarker="pinka_startt2" targetSaidMarker="pinka_start">
                 <state img="5-threathen.png" marker="pinka_startt2">You wanna know a better weapon to use? &lt;i&gt;The bat I could be swingin' at your head!&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_stripped" alsoPlaying="nugi-chan">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="5-thinking.png">&lt;i&gt;(Damn... Naked apron would be hot. Oh well.)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
                 <condition count="1" status="alive" />
@@ -17371,6 +17576,14 @@
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="6-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
+            <case tag="female_must_strip" target="larachel" targetStage="0">
+                <test expr="~larachel.costume~" value="summer_larachel" />
+                <state img="6-awkward.png">That is one frilly swimsuit ya got there.</state>
+            </case>
+            <case tag="female_must_strip" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="6-cocky.png">Heh, should've secured your swimsuit better---</state>
+            </case>
             <case tag="tie">
                 <state img="6-startled.png">Wait, what the hell happened!? Did they just...</state>
             </case>
@@ -17570,6 +17783,10 @@
             </case>
             <case tag="female_removing_accessory" targetStatus="not_decent" priority="9999">
                 <state img="6-what.png">Wait, why couldn't ya just... taken that off before?</state>
+            </case>
+            <case tag="female_removing_accessory" target="monika">
+                <test expr="~monika.costume~" value="monika_stirring_mermaid" />
+                <state img="6-disgusted.png">Hmmmmmmmmmphhh!!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="6-disgusted.png">I'm trying REALLY goddamn hard not to be angry at you right now.</state>
@@ -18278,6 +18495,10 @@
             <case tag="female_chest_will_be_visible" target="pinkie_pie" targetSaidMarker="pinka_start">
                 <state img="6-startled.png">P-Pinkie? Did she possess you?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="6-startled.png">What the---fish!? Where the hell did they come from?</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="6-awkward.png">W-Whatever, man! Size doesn't matter.</state>
                 <state img="6-awkward.png">T-They're still great tits! Don't worry 'bout it!</state>
@@ -18366,6 +18587,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="haru" targetSayingMarker="mulanduel_answer">
                 <state img="6-startled.png">Say what!? H-Hey, why didn't you invite the guys too!?</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="6-awkward.png">&lt;i&gt;(That... wasn't a Persona, was it?)&lt;/i&gt;</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="6-aroused.png">&lt;i&gt;Oh shit, here it comes!&lt;/i&gt;</state>
@@ -18566,6 +18791,10 @@
             <case tag="opponent_stripping" target="pinkie_pie" notSaidMarker="pinka_startt" targetSaidMarker="pinka_start">
                 <state img="6-pissed.png" marker="pinka_startt">&lt;i&gt;Who the hell are you and what have you done with her!?&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="4">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="6-awkward.png">&lt;i&gt;(Is she...?)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripped">
                 <state img="6-awkward.png">Jeez...</state>
             </case>
@@ -18595,6 +18824,10 @@
             </case>
             <case tag="opponent_stripped" target="pinkie_pie" notSaidMarker="pinka_startt2" targetSaidMarker="pinka_start">
                 <state img="6-threathen.png" marker="pinka_startt2">You wanna know a better weapon to use? &lt;i&gt;The bat I could be swingin' at your head!&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_stripped" alsoPlaying="nugi-chan">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="6-thinking.png">&lt;i&gt;(Damn... Naked apron would be hot. Oh well.)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
                 <condition count="1" status="alive" />
@@ -19319,6 +19552,11 @@
                 <state img="7-embarrassed.png">Uhhh... Thanks?</state>
                 <state img="7-aroused.png">Wow, girls are actually checking me out!</state>
             </case>
+            <case tag="stripped" alsoPlaying="sayaka">
+                <test expr="~sayaka.costume~" value="summertime_sayaka" />
+                <test expr="~ryuji.costume~" value="summertime_ryuji" />
+                <state img="7-awkward.png">I mean, almost everyone's gonna be naked at &lt;i&gt;some&lt;/i&gt; point? M-Maybe we can go skinny-dipping together?</state>
+            </case>
             <case tag="male_human_must_strip">
                 <state img="7-pumped.png">Make it good!</state>
                 <state img="7-pumped.png">I'm still in it!</state>
@@ -19510,6 +19748,14 @@
             </case>
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="7-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
+            </case>
+            <case tag="female_must_strip" target="larachel" targetStage="0">
+                <test expr="~larachel.costume~" value="summer_larachel" />
+                <state img="7-awkward.png">That is one frilly swimsuit ya got there.</state>
+            </case>
+            <case tag="female_must_strip" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="7-cocky.png">Heh, should've secured your swimsuit better---</state>
             </case>
             <case tag="tie">
                 <state img="7-startled.png">Wait, what the hell happened!? Did they just...</state>
@@ -19704,6 +19950,10 @@
             </case>
             <case tag="female_removing_accessory" targetStatus="not_decent" priority="9999">
                 <state img="7-what.png">Wait, why couldn't ya just... taken that off before?</state>
+            </case>
+            <case tag="female_removing_accessory" target="monika">
+                <test expr="~monika.costume~" value="monika_stirring_mermaid" />
+                <state img="7-disgusted.png">Hmmmmmmmmmphhh!!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="7-disgusted.png">I'm trying REALLY goddamn hard not to be angry at you right now.</state>
@@ -20380,6 +20630,10 @@
             <case tag="female_chest_will_be_visible" target="pinkie_pie" targetSaidMarker="pinka_start">
                 <state img="7-startled.png">P-Pinkie? Did she possess you?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="7-startled.png">What the---fish!? Where the hell did they come from?</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="7-awkward.png">W-Whatever, man! Size doesn't matter.</state>
                 <state img="7-awkward.png">T-They're still great tits! Don't worry 'bout it!</state>
@@ -20468,6 +20722,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="haru" targetSayingMarker="mulanduel_answer">
                 <state img="7-startled.png">Say what!? H-Hey, why didn't you invite the guys too!?</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="7-pissed.png">Hey, no fair! It's not like I can summon Captain Kidd to---I mean, not like I can... summon somethin'... like that... Anyways, give us a warnin' next time!</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="7-aroused.png">&lt;i&gt;Oh shit, here it comes!&lt;/i&gt;</state>
@@ -20677,6 +20935,10 @@
             <case tag="opponent_stripping" target="pinkie_pie" notSaidMarker="pinka_startt" targetSaidMarker="pinka_start">
                 <state img="7-pissed.png" marker="pinka_startt">&lt;i&gt;Who the hell are you and what have you done with her!?&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="4">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="7-awkward.png">&lt;i&gt;(Is she...?)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripped">
                 <state img="7-awkward.png">Jeez...</state>
             </case>
@@ -20703,6 +20965,10 @@
             </case>
             <case tag="opponent_stripped" target="pinkie_pie" notSaidMarker="pinka_startt2" targetSaidMarker="pinka_start">
                 <state img="7-threathen.png" marker="pinka_startt2">You wanna know a better weapon to use? &lt;i&gt;The bat I could be swingin' at your head!&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_stripped" alsoPlaying="nugi-chan">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="7-thinking.png">&lt;i&gt;(Damn... Naked apron would be hot. Oh well.)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_masturbating" notSaidMarker="winner" priority="9999">
                 <condition count="1" status="alive" />
@@ -21304,6 +21570,14 @@
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="8-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
+            <case tag="female_must_strip" target="larachel" targetStage="0">
+                <test expr="~larachel.costume~" value="summer_larachel" />
+                <state img="8-awkward.png">That is one frilly swimsuit ya got there.</state>
+            </case>
+            <case tag="female_must_strip" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="8-cocky.png">Heh, should've secured your swimsuit better---</state>
+            </case>
             <case tag="tie">
                 <state img="8-startled.png">Wait, what the hell happened!? Did they just...</state>
             </case>
@@ -21445,6 +21719,10 @@
             </case>
             <case tag="female_removing_accessory" targetStatus="not_decent" priority="9999">
                 <state img="8-what.png">Wait, why couldn't ya just... taken that off before?</state>
+            </case>
+            <case tag="female_removing_accessory" target="monika">
+                <test expr="~monika.costume~" value="monika_stirring_mermaid" />
+                <state img="8-disgusted.png">Hmmmmmmmmmphhh!!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="8-disgusted.png">I'm trying REALLY goddamn hard not to be angry at you right now.</state>
@@ -22012,6 +22290,10 @@
             <case tag="female_chest_will_be_visible" target="pinkie_pie" targetSaidMarker="pinka_start">
                 <state img="8-startled.png">P-Pinkie? Did she possess you?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="8-startled.png">What the---fish!? Where the hell did they come from?</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="8-awkward.png">W-Whatever, man! Size doesn't matter.</state>
                 <state img="8-awkward.png">T-They're still great tits! Don't worry 'bout it!</state>
@@ -22083,6 +22365,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="haru" targetSayingMarker="mulanduel_answer">
                 <state img="8-startled.png">Say what!? H-Hey, why didn't you invite the guys too!?</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="8-pissed.png">Hey, no fair! It's not like I can summon Captain Kidd to---I mean, not like I can... summon somethin'... like that... Anyways, give us a warnin' next time!</state>
             </case>
             <case tag="female_large_chest_is_visible" timeInStage="16-26">
                 <state img="8-masturbate_d.png">&lt;i&gt;Oh fuck, dude!&lt;/i&gt;</state>
@@ -22261,6 +22547,10 @@
             <case tag="opponent_stripping" target="pinkie_pie" notSaidMarker="pinka_startt" targetSaidMarker="pinka_start">
                 <state img="8-pissed.png" marker="pinka_startt">&lt;i&gt;Who the hell are you and what have you done with her!?&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="4">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="8-awkward.png">&lt;i&gt;(Is she...?)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripped">
                 <state img="8-awkward.png">Jeez...</state>
             </case>
@@ -22287,6 +22577,11 @@
             </case>
             <case tag="opponent_stripped" target="pinkie_pie" notSaidMarker="pinka_startt2" targetSaidMarker="pinka_start">
                 <state img="8-threathen.png" marker="pinka_startt2">You wanna know a better weapon to use? &lt;i&gt;The bat I could be swingin' at your head!&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_stripped" alsoPlaying="nugi-chan">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="8-sigh.png">&lt;i&gt;(Damn... Naked apron would be hot.)&lt;/i&gt;</state>
+                <state img="8-thinking.png">&lt;i&gt;(Damn... Naked apron would be hot. Oh well.)&lt;/i&gt;</state>
             </case>
             <case tag="opponent_masturbating" filter="uses_toy" timeInStage="4-" notSaidMarker="usestoy">
                 <state img="8-sigh.png" marker="usestoy">&lt;i&gt;(Man, I should probably get a toy for myself.)&lt;/i&gt;</state>
@@ -22976,6 +23271,14 @@
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="9-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
+            <case tag="female_must_strip" target="larachel" targetStage="0">
+                <test expr="~larachel.costume~" value="summer_larachel" />
+                <state img="9-awkward.png">That is one frilly swimsuit ya got there.</state>
+            </case>
+            <case tag="female_must_strip" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="9-cocky.png">Heh, should've secured your swimsuit better---</state>
+            </case>
             <case tag="tie">
                 <state img="9-startled.png">Wait, what the hell happened!? Did they just...</state>
             </case>
@@ -23132,6 +23435,10 @@
             </case>
             <case tag="female_removing_accessory" targetStatus="not_decent" priority="9999">
                 <state img="9-what.png">Wait, why couldn't ya just... taken that off before?</state>
+            </case>
+            <case tag="female_removing_accessory" target="monika">
+                <test expr="~monika.costume~" value="monika_stirring_mermaid" />
+                <state img="9-disgusted.png">Hmmmmmmmmmphhh!!</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="9-disgusted.png">I'm trying REALLY goddamn hard not to be angry at you right now.</state>
@@ -23751,6 +24058,10 @@
             <case tag="female_chest_will_be_visible" target="pinkie_pie" targetSaidMarker="pinka_start">
                 <state img="9-startled.png">P-Pinkie? Did she possess you?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="9-startled.png">What the---fish!? Where the hell did they come from?</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="9-awkward.png">W-Whatever, man! Size doesn't matter.</state>
                 <state img="9-awkward.png">T-They're still great tits! Don't worry 'bout it!</state>
@@ -23833,6 +24144,10 @@
             </case>
             <case tag="female_large_chest_is_visible" target="haru" targetSayingMarker="mulanduel_answer">
                 <state img="9-startled.png">Say what!? H-Hey, why didn't you invite the guys too!?</state>
+            </case>
+            <case tag="female_large_chest_is_visible" target="sheena">
+                <test expr="~sheena.costume~" value="swimsuit_sheena" />
+                <state img="9-pissed.png">Hey, no fair! It's not like I can summon Captain Kidd to---I mean, not like I can... summon somethin'... like that... Anyways, give us a warnin' next time!</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="9-awkward.png">S-Sorry, but them's the rules.</state>
@@ -24026,6 +24341,10 @@
             <case tag="opponent_stripping" target="pinkie_pie" notSaidMarker="pinka_startt" targetSaidMarker="pinka_start">
                 <state img="9-pissed.png" marker="pinka_startt">&lt;i&gt;Who the hell are you and what have you done with her!?&lt;/i&gt;</state>
             </case>
+            <case tag="opponent_stripping" target="nugi-chan" targetStage="4">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="9-awkward.png">&lt;i&gt;(Is she...?)&lt;/i&gt;</state>
+            </case>
             <case tag="opponent_stripped">
                 <state img="9-awkward.png">Jeez...</state>
             </case>
@@ -24052,6 +24371,10 @@
             </case>
             <case tag="opponent_stripped" target="pinkie_pie" notSaidMarker="pinka_startt2" targetSaidMarker="pinka_start">
                 <state img="9-threathen.png" marker="pinka_startt2">You wanna know a better weapon to use? &lt;i&gt;The bat I could be swingin' at your head!&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_stripped" alsoPlaying="nugi-chan">
+                <test expr="~_.costume~" value="nugi-chan_bikini" />
+                <state img="9-sigh.png">&lt;i&gt;(Damn... Naked apron would be hot.)&lt;/i&gt;</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="9-facepalm.png">I did my part, dude. Now do yours.</state>
@@ -24441,6 +24764,9 @@
                 <state img="9-aroused.png">&lt;i&gt;(I ain't gonna admit it out loud... but that was kinda fun...)&lt;/i&gt;</state>
                 <state img="9-embarrassed.png">Did I seriously nut in front of everyone!? Please tell me this is some kinda crazy dream!</state>
                 <state img="9-facepalm.png">Hope you're all happy 'cause that's the &lt;i&gt;last&lt;/i&gt; time I'll ever be doin' this.</state>
+            </case>
+            <case tag="finished_masturbating" alsoPlaying="caulifla" alsoPlayingStage="0-3" priority="10000">
+                <state img="9-finished.png">Ghh... Are you...  freakin' kidding me!?</state>
             </case>
             <case tag="finished_masturbating" alsoPlaying="haru" alsoPlayingSayingMarker="lap_nap" priority="1111">
                 <state img="9-awkward.png" marker="lapss">Umm... Is that a good idea? Considering some of us already... y'know...</state>
