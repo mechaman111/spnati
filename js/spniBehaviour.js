@@ -835,7 +835,7 @@ function evalOperator (val, op, cmpVal) {
  * markers only. If neither is true, the committed state combined with
  * the current state marker.
  ************************************************************/
-function checkMarker(predicate, self, target, currentOnly, committedOnly) {
+function checkMarker(predicate, self, target, currentOnly) {
     var match = predicate.match(/^([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(.+))?\s*$/);
     
     var name;
@@ -865,15 +865,14 @@ function checkMarker(predicate, self, target, currentOnly, committedOnly) {
         }
     }
     
-    if (!committedOnly
-        && !self.updatePending
-        && self.chosenState
-        && self.chosenState.marker
-        && self.chosenState.marker.name === name
-        && ((perTarget && target) || !self.chosenState.marker.perTarget)) {
-        return evalOperator(self.chosenState.evaluateMarker(self, target), op, cmpVal);
+    if (currentOnly) {
+        return !self.updatePending
+            && self.chosenState
+            && self.chosenState.marker
+            && self.chosenState.marker.name === name
+            && ((perTarget && target) || !self.chosenState.marker.perTarget)
+            && evalOperator(self.chosenState.evaluateMarker(self, target), op, cmpVal);
     }
-    if (currentOnly) return false;
     if (perTarget && target) {
         val = self.markers[getTargetMarker(name, target)];
     }
@@ -1174,25 +1173,14 @@ Case.prototype.checkConditions = function (self, opp) {
 
     // targetSaidMarker
     if (this.targetSaidMarker) {
-        if (opp && checkMarker(this.targetSaidMarker, opp, null)) {
-            if (!checkMarker(this.targetSaidMarker, opp, null, false, true)) {
-                // Only matches pending marker changes; treat as volatile.
-                volatileDependencies.add(opp);
-            }
-        } else {
+        if (!opp || !checkMarker(this.targetSaidMarker, opp, null)) {
             return false;
         }
     }
     
     // targetNotSaidMarker
     if (this.targetNotSaidMarker) {
-        // Negated marker - false if true
-        if (opp && !checkMarker(this.targetNotSaidMarker, opp, null)) {
-            if (checkMarker(this.targetNotSaidMarker, opp, null, false, true)) {
-                // Only matches pending marker changes; treat as volatile
-                volatileDependencies.add(opp);
-            }
-        } else {
+        if (!opp || checkMarker(this.targetSaidMarker, opp, null)) {
             return false;
         }
     }
@@ -1274,25 +1262,15 @@ Case.prototype.checkConditions = function (self, opp) {
                     
             // marker checks have very low priority as they're mainly intended to be used with other target types
             if (this.alsoPlayingSaidMarker) {
-                if (checkMarker(this.alsoPlayingSaidMarker, ap, opp)) {
-                    if (!checkMarker(this.alsoPlayingSaidMarker, ap, opp, false, true)) {
-                        // Matches pending marker changes; treat as volatile
-                        volatileDependencies.add(ap);
-                    }
-                } else {
+                if (!checkMarker(this.alsoPlayingSaidMarker, ap, opp)) {
                     return false;
                 }
             }
                     
             if (this.alsoPlayingNotSaidMarker) {
                 // Negated marker condition - false if it matches
-                if (checkMarker(this.alsoPlayingNotSaidMarker, ap, opp)) {
-                    if (!checkMarker(this.alsoPlayingNotSaidMarker, ap, opp, false, true)) {
-                        // Matches pending marker changes; treat as volatile
-                        volatileDependencies.add(ap);
-                    } else {
-                        return false;
-                    }
+                if (checkMarker(this.alsoPlayingSaidMarker, ap, opp)) {
+                    return false;
                 }
             }
 
@@ -1385,13 +1363,13 @@ Case.prototype.checkConditions = function (self, opp) {
 
     // self marker checks
     if (this.saidMarker) {
-        if (!checkMarker(this.saidMarker, self, opp, false, true)) {
+        if (!checkMarker(this.saidMarker, self, opp)) {
             return false;
         }
     }
     
     if (this.notSaidMarker) {
-        if (checkMarker(this.notSaidMarker, self, opp, false, true)) {
+        if (checkMarker(this.notSaidMarker, self, opp)) {
             return false;
         }
     }
@@ -1442,35 +1420,12 @@ Case.prototype.checkConditions = function (self, opp) {
                 }
             }
             if (ctr.saidMarker !== undefined) {
-                /* after is the truth value with volatile marker applications, which is what we test. 
-                   before is the truth value without volatile marker applications. If the condition is 
-                   true only with volatile marker applications, we treat the saidMarker as a sayingMarker. 
-                   If the marker was said, but is being unsaid, we have to depend on the character not 
-                   changing their state if there's an upper limit to the count. */
-                var before = checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null, false, true),
-                    after = checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null);
-                if (after) {
-                    if (!before) {
-                        volatileDependencies.add(p);
-                    }
-                } else {
-                    if (before && hasUpperBound) {
-                        volatileDependencies.add(p);
-                    }
+                if (!checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null)) {
                     return false;
                 }
             }
             if (ctr.notSaidMarker !== undefined) {
-                var before = !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null, false, true),
-                    after = !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null);
-                if (after) {
-                    if (!before) {
-                        volatileDependencies.add(p);
-                    }
-                } else {
-                    if (before && hasUpperBound) {
-                        volatileDependencies.add(p);
-                    }
+                if (checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null)) {
                     return false;
                 }
             }
