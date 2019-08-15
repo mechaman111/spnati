@@ -1414,7 +1414,7 @@ Case.prototype.checkConditions = function (self, opp) {
                     volatileDependencies.add(p);
                 } else {
                     if (hasUpperBound) {
-                        antiMatches.push(p);
+                        volatileDependencies.add(p);
                     }
                     return false;
                 }
