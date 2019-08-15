@@ -26,7 +26,7 @@ bundle_packages:
         - production
     script:
         - mkdir -p ./bundle-page/dl
-        - python3 ./opponents/bundle.py ./ ./bundle-page/dl generate
+        - python3 ./deploy-scripts/bundle.py ./ ./bundle-page/dl generate
         - rsync -rltz --delete ./bundle-page/ /opt/spnati-bundles
     only:
         - master@spnati/spnati

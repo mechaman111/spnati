@@ -137,14 +137,13 @@ def add_bundle_core_files(zf):
     for core_dir in CORE_DIRS:
         p = SPNATI_BASE_DIR.joinpath(core_dir)
         add_folder_to_zipfile(p, zf)
-
-    zf.write(osp.join(SPNATI_BASE_DIR, 'opponents', 'listing.xml'), 'opponents/listing.xml')
-    
-    for child in SPNATI_BASE_DIR.iterdir():
-        if not child.is_file():
-            continue
-
-        zf.write(str(child), str(child.relative_to(SPNATI_BASE_DIR)))
+        
+    for d in [SPNATI_BASE_DIR.joinpath('opponents'), SPNATI_BASE_DIR]:
+        for child in d.iterdir():
+            if not child.is_file():
+                continue
+                
+            zf.write(str(child), str(child.relative_to(SPNATI_BASE_DIR)))
 
 
 def generate_single_bundle(category, bundle_idx, bundle_folders, include_core=True, description=None):
