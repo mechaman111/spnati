@@ -63,7 +63,7 @@ namespace SPNATI_Character_Editor
 		public List<Screen> Screens = new List<Screen>();
 
 		[XmlElement("background")]
-		public List<Background> Backgrounds = new List<Background>();
+		public List<LegacyBackground> Backgrounds = new List<LegacyBackground>();
 		#endregion
 
 		/// <summary>

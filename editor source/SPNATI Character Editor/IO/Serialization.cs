@@ -1,7 +1,9 @@
 ﻿using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.IO;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
@@ -64,6 +66,12 @@ namespace SPNATI_Character_Editor
 				Directory.CreateDirectory(dir);
 			}
 
+			bool backupEnabled = Config.BackupEnabled;
+			if (backupEnabled)
+			{
+				CleanUpBackups(character);
+			}
+
 			string timestamp = GetTimeStamp();
 			bool success = BackupAndExportXml(character, character, "behaviour", timestamp) &&
 				BackupAndExportXml(character, character.Metadata, "meta", timestamp) &&
@@ -85,6 +93,49 @@ namespace SPNATI_Character_Editor
 			DeleteFile(character, "editor.edit.bak");
 
 			return success;
+		}
+
+		private static void CleanUpBackups(Character character)
+		{
+			string dir = Config.GetBackupDirectory(character);
+			DateTime now = DateTime.Now;
+			int minAge = Config.BackupPeriod;
+			int maxAge = Config.BackupLifeTime * 1440;
+			string oldestRecentFile = null;
+			double oldestAge = 0.0;
+			if (Directory.Exists(dir))
+			{
+				List<string> obsoleteFiles = Directory.EnumerateFiles(dir, "*.bak", SearchOption.TopDirectoryOnly).Where(delegate (string file)
+				{
+					DateTime writeTime = File.GetLastWriteTime(file);
+					TimeSpan age = now - writeTime;
+					bool result = false;
+					if (age.TotalMinutes > maxAge || age.TotalMinutes < minAge)
+					{
+						if (age.TotalMinutes < minAge && age.TotalMinutes > oldestAge)
+						{
+							oldestRecentFile = file;
+							oldestAge = age.TotalMinutes;
+						}
+						result = true;
+					}
+					return result;
+				}).ToList();
+				foreach (string file in obsoleteFiles)
+				{
+					if (oldestRecentFile != file)
+					{
+						try
+						{
+							File.Delete(file);
+						}
+						catch (Exception e)
+						{
+							ErrorLog.LogError(e.Message);
+						}
+					}
+				}
+			}
 		}
 
 		private static void DeleteFile(Character character, string file)
@@ -133,22 +184,26 @@ namespace SPNATI_Character_Editor
 			string filename = Path.Combine(dir, name + ".xml");
 			if (ExportXml(data, filename))
 			{
-				string backup = Config.GetBackupDirectory(character);
-				if (!Directory.Exists(backup))
+				bool backupEnabled = Config.BackupEnabled;
+				if (backupEnabled)
 				{
-					Directory.CreateDirectory(backup);
-				}
-				string backupFilename = Path.Combine(backup, $"{name}-{timestamp}.bak");
-				try
-				{
-					if (File.Exists(backupFilename))
+					string backup = Config.GetBackupDirectory(character);
+					if (!Directory.Exists(backup))
 					{
-						File.Delete(backupFilename);
+						Directory.CreateDirectory(backup);
 					}
+					string backupFilename = Path.Combine(backup, $"{name}-{timestamp}.bak");
+					try
+					{
+						if (File.Exists(backupFilename))
+						{
+							File.Delete(backupFilename);
+						}
 
-					File.Copy(filename, backupFilename);
+						File.Copy(filename, backupFilename);
+					}
+					catch { }
 				}
-				catch { }
 				return true;
 			}
 			return false;
@@ -423,6 +478,29 @@ namespace SPNATI_Character_Editor
 			return null;
 		}
 
+		public static BackgroundList ImportBackgrounds()
+		{
+			string filename = Path.Combine(Config.SpnatiDirectory, "backgrounds.xml");
+			if (File.Exists(filename))
+			{
+				TextReader reader = null;
+				try
+				{
+					XmlSerializer serializer = new XmlSerializer(typeof(BackgroundList), "");
+					reader = new StreamReader(filename);
+					return serializer.Deserialize(reader) as BackgroundList;
+				}
+				finally
+				{
+					if (reader != null)
+					{
+						reader.Close();
+					}
+				}
+			}
+			return null;
+		}
+
 		private static MarkerData ImportMarkerData(string folderName)
 		{
 			string folder = Config.GetRootDirectory(folderName);
@@ -470,7 +548,7 @@ namespace SPNATI_Character_Editor
 
 		public static TagDictionary ImportTags()
 		{
-			string filename = "tag_dictionary.xml";
+			string filename = Path.Combine(Config.ExecutableDirectory, "tag_dictionary.xml");
 			if (File.Exists(filename))
 			{
 				TextReader reader = null;

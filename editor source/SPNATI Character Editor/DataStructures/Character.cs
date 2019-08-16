@@ -96,6 +96,10 @@ namespace SPNATI_Character_Editor
 		[XmlArrayItem("tag")]
 		public List<CharacterTag> Tags;
 
+		[XmlArray("nicknames")]
+		[XmlArrayItem("nickname")]
+		public List<Nickname> Nicknames = new List<Nickname>();
+
 		[XmlElement("stylesheet")]
 		public string StyleSheetName;
 
@@ -131,10 +135,6 @@ namespace SPNATI_Character_Editor
 		[XmlNewLine(XmlNewLinePosition.Both)]
 		[XmlElement("behaviour")]
 		public Behaviour Behavior = new Behaviour();
-
-		[XmlArray("nicknames")]
-		[XmlArrayItem("nickname")]
-		public List<Nickname> Nicknames = new List<Nickname>();
 
 		[XmlNewLine(XmlNewLinePosition.After)]
 		[XmlElement("epilogue")]
@@ -578,42 +578,60 @@ namespace SPNATI_Character_Editor
 			int count = 0;
 			HashSet<string> poses = new HashSet<string>();
 			HashSet<string> lines = new HashSet<string>();
-			List<Stage> stages = Behavior.Stages;
-			foreach (var stage in stages)
+			if (Behavior.Triggers.Count > 0)
 			{
-				foreach (var stageCase in stage.Cases)
+				List<Trigger> triggers = Behavior.Triggers;
+				foreach (Trigger trigger in triggers)
 				{
-					if (!string.IsNullOrEmpty(stageCase.Hidden))
+					foreach (Case triggerCase in trigger.Cases)
 					{
-						continue;
+						AddLines(poses, lines, triggerCase, filters, ref poseCount, ref count);
 					}
-					bool targeted = stageCase.HasTargetedConditions;
-					bool special = stageCase.HasStageConditions;
-					bool generic = !stageCase.HasConditions;
-					bool filter = stageCase.HasFilters;
-
-					if ((filters == LineFilter.None) ||
-						(filters & LineFilter.Generic) > 0 && generic ||
-						(filters & LineFilter.Targeted) > 0 && targeted ||
-						(filters & LineFilter.Special) > 0 && special ||
-						(filters & LineFilter.Filter) > 0 && filter)
+				}
+			}
+			else
+			{
+				foreach (Stage stage in Behavior.Stages)
+				{
+					foreach (Case stageCase in stage.Cases)
 					{
-						foreach (var line in stageCase.Lines)
-						{
-							if (!poses.Contains(line.Image))
-							{
-								poses.Add(line.Image);
-								poseCount++;
-							}
-							if (lines.Contains(line.Text))
-								continue;
-							count++;
-							lines.Add(line.Text);
-						}
+						AddLines(poses, lines, stageCase, filters, ref poseCount, ref count);
 					}
 				}
 			}
 			return count;
+		}
+
+		private void AddLines(HashSet<string> poses, HashSet<string> lines, Case theCase, LineFilter filters, ref int poseCount, ref int count)
+		{
+			if (!string.IsNullOrEmpty(theCase.Hidden))
+			{
+				return;
+			}
+			bool targeted = theCase.HasTargetedConditions;
+			bool special = theCase.HasStageConditions;
+			bool generic = !theCase.HasConditions;
+			bool filter = theCase.HasFilters;
+
+			if ((filters == LineFilter.None) ||
+				(filters & LineFilter.Generic) > 0 && generic ||
+				(filters & LineFilter.Targeted) > 0 && targeted ||
+				(filters & LineFilter.Special) > 0 && special ||
+				(filters & LineFilter.Filter) > 0 && filter)
+			{
+				foreach (var line in theCase.Lines)
+				{
+					if (!poses.Contains(line.Image))
+					{
+						poses.Add(line.Image);
+						poseCount++;
+					}
+					if (lines.Contains(line.Text))
+						continue;
+					count++;
+					lines.Add(line.Text);
+				}
+			}
 		}
 
 		[Flags]

@@ -22,13 +22,20 @@ namespace SPNATI_Character_Editor
 			chkHidePrefixlessImages.Checked = Config.UsePrefixlessImages;
 			txtFilter.Text = Config.PrefixFilter;
 			chkAutoBanter.Checked = Config.AutoLoadBanterWizard;
-			chkAutoBackup.Checked = Config.AutoBackupEnabled;
+			chkAutoBackup.Checked = Config.BackupEnabled;
 			chkInitialAdd.Checked = Config.AutoOpenConditions;
 			chkDefaults.Checked = !Config.SuppressDefaults;
 			chkCaseTree.Checked = !Config.UseSimpleTree;
 			chkHideImages.Checked = Config.GetBoolean(Settings.HideImages);
 			chkColorTargets.Checked = Config.ColorTargetedLines;
 			chkWorkflowTracer.Checked = !Config.DisableWorkflowTracer;
+			chkEmptyCases.Checked = !Config.HideEmptyCases;
+			cboImportMethod.Items.Add("Locally (kkl.exe must be running)");
+			cboImportMethod.Items.Add("Remotely (Internet connection required)");
+			cboImportMethod.SelectedIndex = Config.ImportMethod;
+			valFrequency.Value = Config.BackupPeriod;
+			valLifetime.Value = Config.BackupLifeTime;
+			panelSnapshot.Enabled = Config.BackupEnabled;
 
 			HashSet<string> pauses = Config.AutoPauseDirectives;
 			foreach (DirectiveDefinition def in Definitions.Instance.Get<DirectiveDefinition>())
@@ -104,7 +111,7 @@ namespace SPNATI_Character_Editor
 			Config.UsePrefixlessImages = chkHidePrefixlessImages.Checked;
 			Config.PrefixFilter = txtFilter.Text;
 			Config.AutoLoadBanterWizard = chkAutoBanter.Checked;
-			Config.AutoBackupEnabled = chkAutoBackup.Checked;
+			Config.BackupEnabled = chkAutoBackup.Checked;
 			Config.AutoOpenConditions = chkInitialAdd.Checked;
 			if (txtKisekae.Text != Config.KisekaeDirectory)
 			{
@@ -118,6 +125,11 @@ namespace SPNATI_Character_Editor
 			Config.UseSimpleTree = !chkCaseTree.Checked;
 			Config.ColorTargetedLines = chkColorTargets.Checked;
 			Config.DisableWorkflowTracer = !chkWorkflowTracer.Checked;
+			Config.HideEmptyCases = !this.chkEmptyCases.Checked;
+			Config.ImportMethod = cboImportMethod.SelectedIndex;
+			CharacterGenerator.SetConverter(Config.ImportMethod);
+			Config.BackupPeriod = (int)valFrequency.Value;
+			Config.BackupLifeTime = (int)valLifetime.Value;
 
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)

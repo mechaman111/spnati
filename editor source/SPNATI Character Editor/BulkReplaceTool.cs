@@ -14,7 +14,7 @@ namespace SPNATI_Character_Editor
 			set
 			{
 				_sourceTag = value;
-				Trigger trigger = TriggerDatabase.GetTrigger(value);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(value);
 				cboSource.SelectedItem = trigger;
 				PrefillDestination(trigger);
 			}
@@ -31,13 +31,13 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// Prefills the destination box based on what it thinks would be useful for the source
 		/// </summary>
-		private void PrefillDestination(Trigger source)
+		private void PrefillDestination(TriggerDefinition source)
 		{
 			if (source.BulkPairs != null)
 			{
 				foreach (string tag in source.BulkPairs)
 				{
-					Trigger t = TriggerDatabase.GetTrigger(tag);
+					TriggerDefinition t = TriggerDatabase.GetTrigger(tag);
 					if (t != null)
 					{
 						DataGridViewRow row = gridDestinations.Rows[gridDestinations.Rows.Add()];
@@ -53,7 +53,7 @@ namespace SPNATI_Character_Editor
 			cboSource.Items.AddRange(TriggerDatabase.Triggers);
 			DataGridViewComboBoxColumn column = gridDestinations.Columns[0] as DataGridViewComboBoxColumn;
 			column.Items.Add("");
-			foreach (Trigger trigger in TriggerDatabase.Triggers)
+			foreach (TriggerDefinition trigger in TriggerDatabase.Triggers)
 			{
 				column.Items.Add(trigger.Label);
 			}
@@ -64,7 +64,7 @@ namespace SPNATI_Character_Editor
 			if (MessageBox.Show("Are you sure you want to replace all non-targeted dialogue in the selected cases?", "Bulk Replace", MessageBoxButtons.YesNo) == DialogResult.Yes)
 			{
 				DialogResult = DialogResult.OK;
-				Trigger source = cboSource.SelectedItem as Trigger;
+				TriggerDefinition source = cboSource.SelectedItem as TriggerDefinition;
 				_sourceTag = source?.Tag;
 				DestinationTags.Clear();
 				foreach (DataGridViewRow row in gridDestinations.Rows)
@@ -73,7 +73,7 @@ namespace SPNATI_Character_Editor
 					if (value == null)
 						continue;
 					string label = value.ToString();
-					Trigger trigger = TriggerDatabase.Triggers.Find(t => t.Label == label);
+					TriggerDefinition trigger = TriggerDatabase.Triggers.Find(t => t.Label == label);
 					if (trigger == null)
 						continue;
 					if (trigger.Tag == _sourceTag)

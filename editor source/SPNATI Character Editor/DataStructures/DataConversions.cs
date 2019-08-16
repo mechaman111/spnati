@@ -109,7 +109,7 @@ namespace SPNATI_Character_Editor
 		private static void ConvertBackgroundSceneBased(Character character, Epilogue ending)
 		{
 			ending.Scenes.Clear();
-			foreach (Background bg in ending.Backgrounds)
+			foreach (LegacyBackground bg in ending.Backgrounds)
 			{
 				string image = bg.Image;
 

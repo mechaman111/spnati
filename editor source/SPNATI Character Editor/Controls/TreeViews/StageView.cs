@@ -338,7 +338,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		public bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger)
+		public bool IsTriggerValid(DialogueNode selectedNode, TriggerDefinition trigger)
 		{
 			Stage stage = selectedNode?.Stage;
 			if (stage == null)

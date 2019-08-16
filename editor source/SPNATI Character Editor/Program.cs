@@ -32,7 +32,7 @@ namespace SPNATI_Character_Editor
 			}
 
 			Shell shell = new Shell("SPNATI Character Editor", Properties.Resources.editor);
-			SkinManager.Instance.LoadSkins(Path.Combine("Resources", "Skins"));
+			SkinManager.Instance.LoadSkins(Path.Combine(Config.ExecutableDirectory, "Resources", "Skins"));
 			string skinName = Config.Skin;
 			Skin skin = SkinManager.Instance.AvailableSkins.Find(s => s.Name == skinName);
 			if (skin == null)

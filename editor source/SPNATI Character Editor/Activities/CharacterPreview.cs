@@ -1,6 +1,8 @@
 ﻿using Desktop;
+using Desktop.Skinning;
 using SPNATI_Character_Editor.Controls.Reference;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
@@ -146,11 +148,15 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void BuildReference()
 		{
-			TagGuide guide = new TagGuide();
 			tabsReference.Width = splitContainer1.Panel2.Width;
 			tabsReference.Height = splitContainer1.Panel2.Height - stripReference.Height;
+			TagGuide guide = new TagGuide();
 			tabTags.Controls.Add(guide);
 			guide.Dock = System.Windows.Forms.DockStyle.Fill;
+			TargetReport report = new TargetReport(this._character);
+			tabTargets.Controls.Add(report);
+			report.Dock = DockStyle.Fill;
+			SkinManager.UpdateSkin(report, SkinManager.Instance.CurrentSkin);
 		}
 
 		private void splitContainer1_Panel1_Resize(object sender, System.EventArgs e)

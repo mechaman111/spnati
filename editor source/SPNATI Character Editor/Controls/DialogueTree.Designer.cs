@@ -41,6 +41,7 @@
 			this.recTag = new Desktop.CommonControls.RecordField();
 			this.label40 = new Desktop.Skinning.SkinnedLabel();
 			this.recTreeTarget = new Desktop.CommonControls.RecordField();
+			this.tsCollapse = new System.Windows.Forms.ToolStripButton();
 			this.tstrDialogue.SuspendLayout();
 			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
@@ -58,7 +59,8 @@
             this.toolStripSeparator2,
             this.tsbtnSplit,
             this.tsbtnRemoveDialogue,
-            this.tsConfig});
+            this.tsConfig,
+            this.tsCollapse});
 			this.tstrDialogue.Location = new System.Drawing.Point(0, 0);
 			this.tstrDialogue.Name = "tstrDialogue";
 			this.tstrDialogue.Padding = new System.Windows.Forms.Padding(2, 2, 3, 2);
@@ -333,6 +335,16 @@
 			this.recTreeTarget.UseAutoComplete = true;
 			this.recTreeTarget.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recTreeTarget_RecordChanged);
 			// 
+			// tsCollapse
+			// 
+			this.tsCollapse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsCollapse.Image = global::SPNATI_Character_Editor.Properties.Resources.CollapseAll;
+			this.tsCollapse.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsCollapse.Name = "tsCollapse";
+			this.tsCollapse.Size = new System.Drawing.Size(23, 23);
+			this.tsCollapse.Text = "Collapse all";
+			this.tsCollapse.Click += new System.EventHandler(this.tsCollapse_Click);
+			// 
 			// DialogueTree
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -385,5 +397,6 @@
 		private System.Windows.Forms.ToolStripButton tsRefresh;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripButton tsCollapse;
 	}
 }

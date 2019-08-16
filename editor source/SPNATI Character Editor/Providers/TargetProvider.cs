@@ -77,7 +77,8 @@ namespace SPNATI_Character_Editor.Providers
 
 			foreach (Character record in CharacterDatabase.Characters)
 			{
-				if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text))
+				string id = CharacterDatabase.GetId(record);
+				if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text) || id.ToLower().Contains(text))
 				{
 					//partial match
 					list.Add(new TargetId(CharacterDatabase.GetId(record), record.Name, "Characters", "Looks at " + record.FirstName + "'s information if they are in the game"));

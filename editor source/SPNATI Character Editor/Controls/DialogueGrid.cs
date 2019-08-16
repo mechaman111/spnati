@@ -153,7 +153,7 @@ namespace SPNATI_Character_Editor.Controls
 
 			//Populate lines
 			gridDialogue.Rows.Clear();
-			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger && _character != null ? _character.StartingLines : _selectedCase.Lines);
+			List<DialogueLine> lines = (_selectedCase.Tag == TriggerDefinition.StartTrigger && _character != null ? _character.StartingLines : _selectedCase.Lines);
 			foreach (DialogueLine line in lines)
 			{
 				AddLineToDialogueGrid(line, null);
@@ -166,7 +166,7 @@ namespace SPNATI_Character_Editor.Controls
 		public void Save()
 		{
 			HideDropdown();
-			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger && _character != null ? _character.StartingLines : _selectedCase.Lines);
+			List<DialogueLine> lines = (_selectedCase.Tag == TriggerDefinition.StartTrigger && _character != null ? _character.StartingLines : _selectedCase.Lines);
 			if (_character != null)
 			{
 				foreach (DialogueLine line in lines)

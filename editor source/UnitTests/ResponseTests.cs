@@ -25,17 +25,17 @@ namespace UnitTests
 
 			_female = new Character() { Gender = "female", FolderName = "female" };
 			_male = new Character() { Gender = "male", FolderName = "male" };
-			_bifemale = new Character() { Gender = "female", FolderName = "female" };
-			_bimale = new Character() { Gender = "male", FolderName = "male" };
-			_femaleMajor = new Character() { Gender = "female", FolderName = "female" };
-			_maleMajor = new Character() { Gender = "male", FolderName = "male" };
-			_bifemaleMajor = new Character() { Gender = "female", FolderName = "female" };
-			_bimaleMajor = new Character() { Gender = "male", FolderName = "male" };
+			_bifemale = new Character() { Gender = "female", FolderName = "nifemale" };
+			_bimale = new Character() { Gender = "male", FolderName = "nimale" };
+			_femaleMajor = new Character() { Gender = "female", FolderName = "femaleMajor" };
+			_maleMajor = new Character() { Gender = "male", FolderName = "maleMajor" };
+			_bifemaleMajor = new Character() { Gender = "female", FolderName = "bifemaleMajor" };
+			_bimaleMajor = new Character() { Gender = "male", FolderName = "bimaleMajor" };
 			foreach (Character c in new Character[] { _female, _male, _bifemale, _bimale })
 			{
 				c.AddLayer(new Clothing() { Type = "extra" });
 				c.AddLayer(new Clothing() { Type = "minor" });
-				c.AddLayer(new Clothing() { Type = "major" });
+				c.AddLayer(new Clothing() { Type = "major", Position = "legs" });
 				c.AddLayer(new Clothing() { Type = "important", Position = "upper" });
 				c.AddLayer(new Clothing() { Type = "important", Position = "lower" });
 			}
@@ -51,6 +51,21 @@ namespace UnitTests
 			_bifemale.Metadata.CrossGender = true;
 			_bimaleMajor.Metadata.CrossGender = true;
 			_bifemaleMajor.Metadata.CrossGender = true;
+			CharacterDatabase.Add(_female);
+			CharacterDatabase.Add(_male);
+			CharacterDatabase.Add(_bifemale);
+			CharacterDatabase.Add(_bimale);
+			CharacterDatabase.Add(_femaleMajor);
+			ExpressionTests.AddVariableFunction("costume");
+			ExpressionTests.AddVariableFunction("marker");
+		}
+
+		[TestCleanup]
+		public void CleanUp()
+		{
+			TriggerDatabase.Clear();
+			VariableDatabase.Clear();
+			CharacterDatabase.Clear();
 		}
 
 		[TestMethod]
@@ -569,6 +584,13 @@ namespace UnitTests
 		{
 			Case c = new Case("finished_masturbating");
 			Assert.AreEqual("female_finished_masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void After_Masturbating_Female()
+		{
+			Case c = new Case("after_masturbating");
+			Assert.AreEqual("hand", c.GetResponseTag(_female, _male));
 		}
 
 		[TestMethod]
@@ -1750,5 +1772,142 @@ namespace UnitTests
 			Assert.AreEqual(c.AlsoPlayingTimeInStage, response.TimeInStage);
 		}
 		#endregion
+
+		[TestMethod]
+		public void ExpressionTest_Self()
+		{
+			Case response = new Case("hand")
+			{
+				Expressions =
+				{
+					new ExpressionTest("self.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("male.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_ImplicitSelf()
+		{
+			Case response = new Case("hand")
+			{
+				Expressions =
+				{
+					new ExpressionTest("costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("male.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_SelfToTarget()
+		{
+			Case response = new Case("must_strip_normal")
+			{
+				Expressions =
+				{
+					new ExpressionTest("self.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("target.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_ImplicitSelfToTarget()
+		{
+			Case response = new Case("must_strip_normal")
+			{
+				Expressions =
+				{
+					new ExpressionTest("costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("target.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_Target()
+		{
+			Case response = new Case("opponent_lost")
+			{
+				Target = _female.FolderName,
+				Expressions =
+				{
+					new ExpressionTest("target.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("self.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_OtherTarget()
+		{
+			Case response = new Case("opponent_lost")
+			{
+				Target = _bifemale.FolderName,
+				Expressions =
+				{
+					new ExpressionTest("target.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("target.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_AlsoPlaying()
+		{
+			Case response = new Case("hand")
+			{
+				Expressions =
+				{
+					new ExpressionTest("bimale.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("bimale.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_AlsoPlayingSelf()
+		{
+			Case response = new Case("hand")
+			{
+				Expressions =
+				{
+					new ExpressionTest("female.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("self.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_Misc()
+		{
+			Case response = new Case("hand")
+			{
+				Expressions =
+				{
+					new ExpressionTest("background", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("background", test.Expression);
+		}
 	}
 }

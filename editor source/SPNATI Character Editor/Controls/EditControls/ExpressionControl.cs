@@ -23,8 +23,6 @@ namespace SPNATI_Character_Editor
 			cboOperator.DataSource = ExpressionTest.Operators;
 			cboExpression.Items.AddRange(new string[] {
 				"~background~",
-				"~background.location~",
-				"~background.time~",
 				"~cards~",
 				"~clothing~",
 				"~clothing.plural~",
@@ -40,6 +38,12 @@ namespace SPNATI_Character_Editor
 				"~target.slot~",
 				"~weekday~",
 			});
+			foreach (BackgroundTag tag in Definitions.Instance.Get<BackgroundTag>())
+			{
+				if (tag.Name == "name") { continue; }
+				cboExpression.Items.Add(string.Format("~background.{0}~", tag.Name));
+			}
+			cboExpression.SortItems();
 			cboExpression.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			cboExpression.AutoCompleteSource = AutoCompleteSource.ListItems;
 
@@ -407,32 +411,11 @@ namespace SPNATI_Character_Editor
 					});
 					break;
 				case "~background~":
-					cboValue.Items.AddRange(new string[] {
-						"inventory",
-						"beach",
-						"classroom",
-						"brick",
-						"night",
-						"roof",
-						"seasonal",
-						"library",
-						"bathhouse",
-						"poolside",
-						"hot spring",
-						"mansion",
-						"purple room",
-						"showers",
-						"street",
-						"green screen",
-						"arcade",
-						"club",
-						"bedroom",
-						"hall",
-						"locker room",
-						"haunted forest",
-						"romantic",
-						"classic",
-					});
+					BackgroundTag bkgNames = Definitions.Instance.Get<BackgroundTag>("name");
+					if (bkgNames != null)
+					{
+						cboValue.Items.AddRange(bkgNames.Values);
+					}
 					break;
 				case "~weekday~":
 					cboValue.Items.AddRange(new string[] {
@@ -524,6 +507,25 @@ namespace SPNATI_Character_Editor
 					});
 					break;
 			}
+
+			if (_currentVariable.StartsWith("~background."))
+			{
+				int start = "~background.".Length;
+				string property = _currentVariable.Substring(start, _currentVariable.Length - 1 - start);
+				BackgroundTag bkg = Definitions.Instance.Get<BackgroundTag>(property);
+				if (bkg != null)
+				{
+					if (bkg.Values.Count == 0)
+					{
+						cboValue.Items.Add("true");
+					}
+					else
+					{
+						cboValue.Items.AddRange(bkg.Values);
+					}
+				}
+			}
+
 			Character characterVar = CharacterDatabase.GetById(key);
 			if (characterVar != null || key == "_")
 			{

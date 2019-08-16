@@ -38,7 +38,7 @@ namespace SPNATI_Character_Editor.Forms
 					if (!lineImage.IsGenericImage)
 					{
 						SkinnedDataGridViewComboBoxCell cell = row.Cells[nameof(ColImage)] as SkinnedDataGridViewComboBoxCell;
-						imageKey = DialogueLine.GetStageImage(stage, imageKey);
+						imageKey = DialogueLine.GetStageImage(stage.ToString(), imageKey);
 						SetImage(cell, imageKey);
 					}
 				}

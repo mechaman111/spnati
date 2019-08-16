@@ -40,11 +40,13 @@ namespace SPNATI_Character_Editor
 			_backupTimer.Start();
 
 			Config.LoadMacros<Case>("Case");
+
+			CharacterGenerator.SetConverter(Config.ImportMethod);
 		}
 
 		private static void _backupTimer_Tick(object sender, EventArgs e)
 		{
-			if (!Config.AutoBackupEnabled) { return; }
+			if (!Config.BackupEnabled) { return; }
 			Cursor cursor = Cursor.Current;
 			Cursor.Current = Cursors.WaitCursor;
 			foreach (IWorkspace ws in Shell.Instance.Workspaces)
@@ -284,7 +286,7 @@ namespace SPNATI_Character_Editor
 
 		private static void BuildDataSlicers()
 		{
-			SlicerProvider.AddSlicer("Case Type", "Groups by case type", () => new RecordSlicer(typeof(Trigger), "Tag", "Case Type", true, false));
+			SlicerProvider.AddSlicer("Case Type", "Groups by case type", () => new RecordSlicer(typeof(TriggerDefinition), "Tag", "Case Type", true, false));
 			SlicerProvider.AddSlicer("Target", "Groups by target", () => new RecordSlicer(typeof(Character), "Target", "Target", true, true));
 			SlicerProvider.AddSlicer("Target Hand", "Groups by self hand", () => new ComboSlicer(typeof(Case), "TargetHand", "Target Hand"));
 			SlicerProvider.AddSlicer("Target Stage", "Groups by target stage", () => new IntervalSlicer("TargetStage", "Target Stage", 0, 10));

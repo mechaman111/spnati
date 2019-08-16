@@ -31,11 +31,16 @@ namespace SPNATI_Character_Editor
 			set { if (_tag != value) { _tag = value; NotifyPropertyChanged(nameof(Tag)); } }
 		}
 
+		[DefaultValue(0)]
+		[XmlOrder(1)]
+		[XmlAttribute("set")]
+		public int TriggerSet;
+
 		/// <summary>
 		/// Unique case identifier in the format Stage-Id. Unused by the game, but important for the editor
 		/// </summary>
 		[DefaultValue(null)]
-		[XmlOrder(1)]
+		[XmlOrder(2)]
 		[XmlAttribute("id")]
 		public string StageId;
 
@@ -554,6 +559,20 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		[DefaultValue("")]
+		[XmlAttribute("stage")]
+		public string StageRange
+		{
+			get
+			{
+				return GUIHelper.ListToString(Stages);
+			}
+			set
+			{
+				Stages = GUIHelper.StringToList(value);
+			}
+		}
+
 		/// <summary>
 		/// Whether this case is considered the "default" for its tag
 		/// </summary>
@@ -763,6 +782,10 @@ namespace SPNATI_Character_Editor
 			Case copy = new Case();
 			foreach (MemberInfo field in this.GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance))
 			{
+				if (field.Name == "StageRange")
+				{
+					continue;
+				}
 				if (field.MemberType == MemberTypes.Field || field.MemberType == MemberTypes.Property)
 				{
 					if (field.GetDataType() == typeof(string) || field.GetDataType() == typeof(int))
@@ -810,6 +833,10 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (MemberInfo field in this.GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance))
 			{
+				if (field.Name == "StageRange")
+				{
+					continue;
+				}
 				if (field.MemberType == MemberTypes.Field || field.MemberType == MemberTypes.Property)
 				{
 					if (field.GetDataType() == typeof(string) && (string)field.GetValue(this) == "")
@@ -1163,8 +1190,23 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				return !string.IsNullOrEmpty(Filter) ||
-					Conditions.Any(c => !string.IsNullOrEmpty(c.FilterId));
+				if (!string.IsNullOrEmpty(Filter))
+				{
+					if (CharacterDatabase.GetById(Filter) == null)
+					{
+						return true;
+					}
+				}
+				return Conditions.Any(c =>
+				{
+					bool result = false;
+					if (!string.IsNullOrEmpty(c.FilterId))
+					{
+						Character character = CharacterDatabase.GetById(c.FilterId);
+						result = (character == null);
+					}
+					return result;
+				});
 			}
 		}
 
@@ -1175,8 +1217,19 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				return !string.IsNullOrEmpty(Target) ||
-					 !string.IsNullOrEmpty(AlsoPlaying);
+				bool targeted = !string.IsNullOrEmpty(Target) || !string.IsNullOrEmpty(AlsoPlaying) || (!string.IsNullOrEmpty(Filter) && CharacterDatabase.GetById(Filter) != null);
+				if (!targeted)
+				{
+					foreach (TargetCondition condition in Conditions)
+					{
+						if (!string.IsNullOrEmpty(condition.FilterId))
+						{
+							targeted = true;
+							break;
+						}
+					}
+				}
+				return targeted;
 			}
 		}
 
@@ -1443,8 +1496,19 @@ namespace SPNATI_Character_Editor
 				return null; //if I computed the truth table correctly, this should never happen
 			}
 
+			string otherId = CharacterDatabase.GetId(responder);
+			foreach (ExpressionTest test in Expressions)
+			{
+				if (test.GetTarget() == otherId)
+				{
+					ExpressionTest copy = test.Copy();
+					copy.ChangeTarget("self");
+					response.Expressions.Add(copy);
+				}
+			}
+
 			//if no stages have been set, apply it to all
-			Trigger trigger = TriggerDatabase.GetTrigger(response.Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(response.Tag);
 			if (response.Stages.Count == 0)
 			{
 				for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
@@ -1465,7 +1529,13 @@ namespace SPNATI_Character_Editor
 					response.Conditions.Add(cond);
 				}
 			}
-			response.Expressions.AddRange(Expressions);
+			foreach (ExpressionTest test in Expressions)
+			{
+				if (!test.RefersTo(speaker, speaker, Target) && !test.RefersTo(responder, speaker, Target))
+				{
+					response.Expressions.Add(test);
+				}
+			}
 			response.ConsecutiveLosses = ConsecutiveLosses;
 			response.TotalFemales = TotalFemales;
 			response.TotalMales = TotalMales;
@@ -1561,7 +1631,7 @@ namespace SPNATI_Character_Editor
 				string position = Tag.Contains("chest") ? "upper" : "lower";
 
 				//all stages
-				Trigger trigger = TriggerDatabase.GetTrigger(other.Tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(other.Tag);
 				for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
 				{
 					int standardStage = TriggerDatabase.ToStandardStage(responder, i);
@@ -1598,6 +1668,15 @@ namespace SPNATI_Character_Editor
 			other.SaidMarker = TargetSaidMarker;
 			other.NotSaidMarker = TargetNotSaidMarker;
 			other.TimeInStage = TargetTimeInStage;
+			foreach (ExpressionTest test in Expressions)
+			{
+				if (test.GetTarget() == "target")
+				{
+					ExpressionTest copy = test.Copy();
+					copy.ChangeTarget("self");
+					other.Expressions.Add(copy);
+				}
+			}
 		}
 
 		/// <summary>
@@ -1630,7 +1709,7 @@ namespace SPNATI_Character_Editor
 				min = Stages.Min(stage => stage);
 				max = Stages.Max(stage => stage);
 			}
-			Trigger trigger = TriggerDatabase.GetTrigger(Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(Tag);
 			if (TriggerDatabase.ToStandardStage(speaker, min) == trigger.StartStage && TriggerDatabase.ToStandardStage(speaker, max) == trigger.EndStage)
 			{
 				speakerStageRange = null;
@@ -1678,6 +1757,17 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+
+			string id = CharacterDatabase.GetId(speaker);
+			foreach (ExpressionTest test in Expressions)
+			{
+				if (test.GetTarget() == "self")
+				{
+					ExpressionTest copy = test.Copy();
+					copy.ChangeTarget(id);
+					other.Expressions.Add(copy);
+				}
+			}
 		}
 
 		/// <summary>
@@ -1698,7 +1788,7 @@ namespace SPNATI_Character_Editor
 			else
 			{
 				//all stages
-				Trigger trigger = TriggerDatabase.GetTrigger(other.Tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(other.Tag);
 				for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
 				{
 					int stage = TriggerDatabase.ToStandardStage(responder, i);
@@ -1728,7 +1818,7 @@ namespace SPNATI_Character_Editor
 				min = Stages.Min(stage => stage);
 				max = Stages.Max(stage => stage);
 			}
-			Trigger trigger = TriggerDatabase.GetTrigger(Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(Tag);
 			if (TriggerDatabase.ToStandardStage(speaker, min) == trigger.StartStage && TriggerDatabase.ToStandardStage(speaker, max) == trigger.EndStage)
 			{
 				speakerStageRange = null;
@@ -1787,6 +1877,16 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+
+			foreach (ExpressionTest test in Expressions)
+			{
+				if (test.GetTarget() == "self")
+				{
+					ExpressionTest copy = test.Copy();
+					copy.ChangeTarget("target");
+					other.Expressions.Add(copy);
+				}
+			}
 		}
 
 		/// <summary>
@@ -1800,7 +1900,7 @@ namespace SPNATI_Character_Editor
 		{
 			Clothing layer = speaker.Wardrobe[speaker.Layers - stage - 1];
 			string layerType = layer.Type;
-			if (layer.Type == "major" && layer.Position != "both")
+			if (layer.Type == "major" && (string.IsNullOrEmpty(layer.Position) || layer.Position == "upper" || layer.Position == "lower"))
 			{
 				//if this is the last major and there are no importants, treat as important
 				bool foundImportant = false;
@@ -1932,9 +2032,9 @@ namespace SPNATI_Character_Editor
 			{
 				return "game_over_defeat";
 			}
-			else if (Tag == "finishing_masturbating")
+			else if (Tag == "after_masturbating")
 			{
-				return null;
+				return "hand";
 			}
 
 			string tag = Tag;
@@ -2198,7 +2298,7 @@ namespace SPNATI_Character_Editor
 		private bool FilterTargetByCase(IRecord record)
 		{
 			Character character = record as Character;
-			Trigger trigger = TriggerDatabase.GetTrigger(Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(Tag);
 
 			if (character.Key == "human")
 			{

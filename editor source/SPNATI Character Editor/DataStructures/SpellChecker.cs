@@ -29,8 +29,9 @@ namespace SPNATI_Character_Editor
 
 		private SpellChecker()
 		{
-			_spellchecker = new Hunspell("Resources/en_US.aff", "Resources/en_US.dic");
-			LoadDictionary("Resources/words.txt", false);
+			string path = Config.ExecutableDirectory;
+			_spellchecker = new Hunspell(Path.Combine(path, "Resources/en_US.aff"), Path.Combine(path, "Resources/en_US.dic"));
+			LoadDictionary(Path.Combine(path, "Resources/words.txt"), false);
 			LoadDictionary(GetUserDictionaryPath(), true);
 		}
 

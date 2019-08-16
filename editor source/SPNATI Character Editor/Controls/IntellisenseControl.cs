@@ -268,7 +268,7 @@ namespace SPNATI_Character_Editor.Controls
 			_character = character;
 			_case = stageCase;
 			_availableVars.Clear();
-			Trigger trigger = TriggerDatabase.GetTrigger(_case.Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(_case.Tag);
 			if (trigger != null)
 			{
 				_availableVars.AddRange(trigger.AvailableVariables);

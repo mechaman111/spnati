@@ -103,8 +103,11 @@ namespace SPNATI_Character_Editor.Controls
 			foreach (string tag in TriggerDatabase.GetTags())
 			{
 				if (tag == "-") { continue; }
-				Trigger trigger = TriggerDatabase.GetTrigger(tag);
-				_model.AddGroup(trigger.Tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
+				if (!Config.HideEmptyCases || !trigger.Optional)
+				{
+					_model.AddGroup(trigger.Tag);
+				}
 			}
 
 			//Add working cases to the right grouper
@@ -301,7 +304,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		public bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger)
+		public bool IsTriggerValid(DialogueNode selectedNode, TriggerDefinition trigger)
 		{
 			return true;
 		}
@@ -396,7 +399,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private Color GetGroupColor(string key, int index)
 		{
-			Trigger trigger = TriggerDatabase.GetTrigger(key);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(key);
 			if (string.IsNullOrEmpty(trigger.Label))
 			{
 				return index % 2 == 0 ? SkinManager.Instance.CurrentSkin.PrimaryForeColor : SkinManager.Instance.CurrentSkin.SecondaryForeColor;
@@ -408,7 +411,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			args.Font = _font;
 			args.ForeColor = GetGroupColor(args.Group.Key, args.Group.Index);
-			Trigger trigger = TriggerDatabase.GetTrigger(args.Group.Key);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(args.Group.Key);
 			if (!string.IsNullOrEmpty(trigger.Label))
 			{
 				args.Label = trigger.Label;

@@ -78,7 +78,7 @@ namespace SPNATI_Character_Editor
 			{
 				return true;
 			}
-			Trigger trigger = TriggerDatabase.GetTrigger(workingCase.Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(workingCase.Tag);
 			return trigger.HasTarget;
 
 		}

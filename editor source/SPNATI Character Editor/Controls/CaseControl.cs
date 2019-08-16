@@ -257,18 +257,18 @@ namespace SPNATI_Character_Editor.Controls
 
 			PopulateStageCheckboxes();
 
-			Trigger caseTrigger = TriggerDatabase.GetTrigger(stageCase.Tag);
+			TriggerDefinition caseTrigger = TriggerDatabase.GetTrigger(stageCase.Tag);
 
 			#region Case-wide settings
 			//Tag combo box
 			cboCaseTags.Items.Clear();
-			Trigger currentTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
+			TriggerDefinition currentTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
 			if (_selectedStage != null)
 			{
-				Trigger selection = null;
+				TriggerDefinition selection = null;
 				foreach (string tag in TriggerDatabase.GetTags())
 				{
-					Trigger t = TriggerDatabase.GetTrigger(tag);
+					TriggerDefinition t = TriggerDatabase.GetTrigger(tag);
 					if (currentTrigger.HasTarget && currentTrigger.HasTarget != t.HasTarget)
 					{
 						continue;
@@ -368,11 +368,10 @@ namespace SPNATI_Character_Editor.Controls
 		public static void AddSpeedButtons(PropertyTable table, string tag)
 		{
 			if (tag == null) { return; }
-			Trigger caseTrigger = TriggerDatabase.GetTrigger(tag);
+			TriggerDefinition caseTrigger = TriggerDatabase.GetTrigger(tag);
 
 			//Game-wide
 			table.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
-			table.AddSpeedButton("Game", "Inside/Outside", (data) => { return AddVariableTest("~background.location~", data); });
 
 			//Player variables
 
@@ -472,10 +471,10 @@ namespace SPNATI_Character_Editor.Controls
 
 			SaveNotes();
 			var c = _selectedCase;
-			if (c.Tag != Trigger.StartTrigger)
+			if (c.Tag != TriggerDefinition.StartTrigger)
 			{
 				string newTag = "";
-				Trigger trigger = cboCaseTags.SelectedItem as Trigger;
+				TriggerDefinition trigger = cboCaseTags.SelectedItem as TriggerDefinition;
 				if (trigger != null)
 				{
 					newTag = trigger.Tag;
@@ -600,7 +599,7 @@ namespace SPNATI_Character_Editor.Controls
 		public Func<PropertyRecord, bool> GetRecordFilter(object data)
 		{
 			Case tag = data as Case;
-			Trigger trigger = TriggerDatabase.GetTrigger(tag.Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag.Tag);
 			if (trigger.HasTarget)
 			{
 				return FilterTargets;
@@ -619,7 +618,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void cboCaseTags_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Trigger tag = cboCaseTags.SelectedItem as Trigger;
+			TriggerDefinition tag = cboCaseTags.SelectedItem as TriggerDefinition;
 			if (tag != null)
 			{
 				lblHelpText.Text = tag.HelpText;

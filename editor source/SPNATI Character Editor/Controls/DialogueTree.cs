@@ -97,12 +97,12 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void PopulateTriggerMenu()
 		{
-			List<Trigger> triggers = TriggerDatabase.Triggers;
+			List<TriggerDefinition> triggers = TriggerDatabase.Triggers;
 			triggers.Sort((a, b) => a.Group == b.Group ? a.GroupOrder - b.GroupOrder : a.Group - b.Group);
 			int curGroup = -1;
 			ContextMenuStrip curGroupMenu = null;
 
-			foreach (Trigger t in triggers)
+			foreach (TriggerDefinition t in triggers)
 			{
 				if (t.StartStage < 0) continue;
 				if (t.Group != curGroup)
@@ -138,7 +138,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			Case newCase = new Case(tag);
 			int startStage;
-			Trigger trigger = TriggerDatabase.GetTrigger(tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
 			startStage = trigger.StartStage;
 			int currentStage = _selectedNode?.Stage?.Id ?? startStage;
 
@@ -260,7 +260,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				_view.SetFilter((Case workingCase) =>
 				{
-					return !workingCase.HasConditions;
+					return !workingCase.HasTargetedConditions;
 				});
 			}
 			else
@@ -457,7 +457,7 @@ namespace SPNATI_Character_Editor.Controls
 				int visibleCount = 0;
 				foreach (ToolStripMenuItem item in group.DropDownItems)
 				{
-					Trigger t = item.Tag as Trigger;
+					TriggerDefinition t = item.Tag as TriggerDefinition;
 					if (_view.IsTriggerValid(node, t))
 					{
 						visibleCount++;
@@ -568,6 +568,11 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				SkinManager.Instance.ReskinControl(tsbtnSplit.DropDown, skin);
 			}
+		}
+
+		private void tsCollapse_Click(object sender, EventArgs e)
+		{
+			lstDialogue.CollapseAll();
 		}
 	}
 

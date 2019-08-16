@@ -1,6 +1,8 @@
 ﻿using Desktop.Skinning;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
@@ -210,6 +212,74 @@ namespace SPNATI_Character_Editor
 			}
 			max = Math.Max(min, max);
 			return new Tuple<int, int>(min, max);
+		}
+
+		public static string ListToString(ObservableCollection<int> list)
+		{
+			string result;
+			if (list.Count == 0)
+			{
+				result = "";
+			}
+			else
+			{
+				list.Sort();
+				StringBuilder sb = new StringBuilder();
+				int last = list[0];
+				int startRange = last;
+				for (int i = 1; i < list.Count; i++)
+				{
+					int stage = list[i];
+					if (stage - 1 > last)
+					{
+						if (startRange == last)
+						{
+							sb.Append(startRange.ToString() + " ");
+						}
+						else
+						{
+							sb.Append(string.Format("{0}-{1} ", startRange, last));
+						}
+						startRange = stage;
+					}
+					last = stage;
+				}
+				if (startRange == last)
+				{
+					sb.Append(startRange.ToString());
+				}
+				else
+				{
+					sb.Append(string.Format("{0}-{1}", startRange, last));
+				}
+				result = sb.ToString();
+			}
+			return result;
+		}
+
+		public static ObservableCollection<int> StringToList(string input)
+		{
+			ObservableCollection<int> list = new ObservableCollection<int>();
+			string[] ranges = input.Split(' ');
+			foreach (string range in ranges)
+			{
+				string[] bounds = range.Split('-');
+				int min;
+				if (int.TryParse(bounds[0], out min))
+				{
+					int max;
+					if (bounds.Length < 2 || !int.TryParse(bounds[1], out max))
+					{
+						max = min;
+					}
+					for (int i = min; i <= max; i++)
+					{
+						list.Add(i);
+					}
+				}
+			}
+			list.Sort();
+			return list;
 		}
 	}
 }

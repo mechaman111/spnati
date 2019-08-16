@@ -208,8 +208,8 @@ namespace SPNATI_Character_Editor
 			cases.Sort((c1, c2) =>
 			{
 				//1st key: group
-				Trigger t1 = TriggerDatabase.GetTrigger(c1.Tag);
-				Trigger t2 = TriggerDatabase.GetTrigger(c2.Tag);
+				TriggerDefinition t1 = TriggerDatabase.GetTrigger(c1.Tag);
+				TriggerDefinition t2 = TriggerDatabase.GetTrigger(c2.Tag);
 				int compare = t1.Group.CompareTo(t2.Group);
 				if (compare == 0)
 				{
@@ -257,7 +257,7 @@ namespace SPNATI_Character_Editor
 				if (outputCase.IsDefault)
 					stageId = -9;
 				string tag = outputCase.Tag;
-				Trigger trigger = TriggerDatabase.GetTrigger(tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
 				int group = trigger.Group;
 				bool needSpacer = (lastGroup != group || lastStage != stageId);
 				if (needSpacer)
@@ -1300,7 +1300,7 @@ namespace SPNATI_Character_Editor
 			string[] kvp = data.Split(new char[] { ':' }, 2);
 			if (kvp.Length == 2)
 			{
-				Trigger trigger = TriggerDatabase.GetTrigger(lineCase.Tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(lineCase.Tag);
 				string key = kvp[0].ToLower();
 				string value = kvp[1];
 				//Targets

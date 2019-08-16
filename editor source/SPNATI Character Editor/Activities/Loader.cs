@@ -25,6 +25,7 @@ namespace SPNATI_Character_Editor.Activities
 		private async void LoadData()
 		{
 			await LoadChunk("Triggers", 0, () => TriggerDatabase.Load());
+			await LoadChunk("Backgrounds", 0, () => BackgroundDatabase.Load());
 			await LoadChunk("Tags", 0, () => TagDatabase.Load());
 			await LoadChunk("Variables", 1, () => VariableDatabase.Load());
 			await LoadChunk("Default Dialogue", 1, () => DialogueDatabase.Load());

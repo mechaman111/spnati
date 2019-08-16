@@ -75,7 +75,7 @@ namespace SPNATI_Character_Editor
 					HashSet<string> stageImages = usedPoses.GetOrAddDefault(stage.Id, () => new HashSet<string>());
 					ValidationContext context = new ValidationContext(stage, stageCase, null);
 
-					Trigger trigger = TriggerDatabase.GetTrigger(stageCase.Tag);
+					TriggerDefinition trigger = TriggerDatabase.GetTrigger(stageCase.Tag);
 					if (trigger == null || trigger.Unrecognized)
 					{
 						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case \"{0}\" is an unknown case. (stage {1})", stageCase.Tag, stage.Id), context));
@@ -345,11 +345,11 @@ namespace SPNATI_Character_Editor
 						}
 
 						//Validate variables
-						List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase, line.Text);
-						if (invalidVars.Count > 0)
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
-						}
+						//List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase, line.Text);
+						//if (invalidVars.Count > 0)
+						//{
+						//	warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
+						//}
 
 						//Make sure it's not a placeholder
 						if (defaultLine.Equals(line.Text))

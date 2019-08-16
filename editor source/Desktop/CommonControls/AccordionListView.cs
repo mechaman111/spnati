@@ -339,6 +339,20 @@ namespace Desktop.CommonControls
 			_source?.ExpandAll();
 		}
 
+		public void CollapseAll()
+		{
+			GroupedListItem item = null;
+			if (view.SelectedIndices.Count > 0)
+			{
+				item = _source.GetItem(this.view.SelectedIndices[0]);
+			}
+			_source?.CollapseAll();
+			if (item != null)
+			{
+				SelectedItem = item.Group;
+			}
+		}
+
 		private void View_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
 		{
 			Skin skin = SkinManager.Instance.CurrentSkin;

@@ -160,7 +160,7 @@ namespace SPNATI_Character_Editor.Activities
 					{
 						row.Cells["ColStage"].Value = data.Case.Stages[0] + "-" + data.Case.Stages[data.Case.Stages.Count - 1];
 					}
-					Trigger trigger = TriggerDatabase.GetTrigger(data.Case.Tag);
+					TriggerDefinition trigger = TriggerDatabase.GetTrigger(data.Case.Tag);
 					row.Cells["ColCase"].Value = GetCaseLabel(data.Case, trigger);
 				}
 			}
@@ -169,7 +169,7 @@ namespace SPNATI_Character_Editor.Activities
 			lblNoMatches.Visible = (lines.Count == 0);
 		}
 
-		private string GetCaseLabel(Case targetedCase, Trigger trigger)
+		private string GetCaseLabel(Case targetedCase, TriggerDefinition trigger)
 		{
 			Character target = _character;
 			if (targetedCase.Target != null)
@@ -229,7 +229,7 @@ namespace SPNATI_Character_Editor.Activities
 				DialogueLine line = row.Cells["ColText"].Tag as DialogueLine;
 				if (line != null)
 				{
-					string image = DialogueLine.GetStageImage(data.Case.Stages[0], line.Image);
+					string image = DialogueLine.GetStageImage(data.Case.Stages[0].ToString(), line.Image);
 					CharacterImage img = library.Find(image);
 					if (img != null)
 					{

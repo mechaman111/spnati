@@ -44,7 +44,7 @@ namespace SPNATI_Character_Editor.Activities
 		private void ReloadTable()
 		{
 			tableConditions.Data = null;
-			Trigger trigger = TriggerDatabase.GetTrigger(_recipe.Case.Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(_recipe.Case.Tag);
 			if (trigger == null || trigger.HasTarget)
 			{
 				tableConditions.RecordFilter = null;
@@ -86,7 +86,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void cboTag_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			Trigger trigger = cboTag.SelectedItem as Trigger;
+			TriggerDefinition trigger = cboTag.SelectedItem as TriggerDefinition;
 			if (_recipe.Case.Tag == trigger.Tag) { return; }
 			tableConditions.Save();
 			_recipe.Case.Tag = trigger.Tag;

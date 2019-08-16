@@ -172,7 +172,7 @@ namespace SPNATI_Character_Editor
 			{
 				string prefix = image.Substring(0, hyphen);
 				int value;
-				if (int.TryParse(prefix, out value))
+				if (int.TryParse(prefix, out value) || prefix == "#")
 				{
 					string reduced = Path.GetFileNameWithoutExtension(image.Substring(hyphen + 1));
 					if (custom)
@@ -190,13 +190,23 @@ namespace SPNATI_Character_Editor
 			return path;
 		}
 
+		public static string GetPlaceholderImage(string name)
+		{
+			return GetStageImage("#", name);
+		}
+
+		public static string GetStageImage(int stage, string name)
+		{
+			return GetStageImage(stage.ToString(), name);
+		}
+
 		/// <summary>
 		/// Converts a generic image name into a stage-specific one (ex. shy to 0-shy)
 		/// </summary>
 		/// <param name="stage"></param>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		public static string GetStageImage(int stage, string name)
+		public static string GetStageImage(string stage, string name)
 		{
 			if (string.IsNullOrEmpty(name))
 			{
@@ -239,7 +249,7 @@ namespace SPNATI_Character_Editor
 			foreach (var match in matches)
 			{
 				string variable = match.ToString().Trim('~');
-				if (!TriggerDatabase.IsVariableAvailable(tag, variable))
+				if (!TriggerDatabase.IsVariableAvailable(tag, variable) && variable != "~name~")
 				{
 					//check filters for variables
 					TargetCondition filter = dialogueCase.Conditions.Find(c => c.Variable == variable);
