@@ -619,12 +619,27 @@ namespace SPNATI_Character_Editor
 				(filters & LineFilter.Special) > 0 && special ||
 				(filters & LineFilter.Filter) > 0 && filter)
 			{
-				foreach (var line in theCase.Lines)
+				foreach (DialogueLine line in theCase.Lines)
 				{
-					if (!poses.Contains(line.Image))
+					List<string> images = new List<string>();
+					if (line.Image.Contains("#"))
 					{
-						poses.Add(line.Image);
-						poseCount++;
+						foreach (int stage in theCase.Stages)
+						{
+							images.Add(line.Image.Replace("#", stage.ToString()));
+						}
+					}
+					else
+					{
+						images.Add(line.Image);
+					}
+					foreach (string img in images)
+					{
+						if (!poses.Contains(img))
+						{
+							poses.Add(img);
+							poseCount++;
+						}
 					}
 					if (lines.Contains(line.Text))
 						continue;
