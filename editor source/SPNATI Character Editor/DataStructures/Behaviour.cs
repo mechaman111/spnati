@@ -37,6 +37,8 @@ namespace SPNATI_Character_Editor
 		public int MaxCaseId { get; set; }
 		[XmlIgnore]
 		public int MaxStageId { get; set; }
+		[XmlIgnore]
+		private int _nextSetId { get; set; }
 
 		private bool _temporary;
 
@@ -298,7 +300,11 @@ namespace SPNATI_Character_Editor
 		{
 			string tag1 = c1.Tag;
 			string tag2 = c2.Tag;
-			int comparison = TriggerDatabase.Compare(tag1, tag2);
+			int comparison = 0;
+			if (!string.IsNullOrEmpty(tag1) && !string.IsNullOrEmpty(tag2))
+			{
+				comparison = TriggerDatabase.Compare(tag1, tag2);
+			}
 			if (comparison == 0)
 			{
 				comparison = c1.CompareTo(c2);
@@ -348,13 +354,11 @@ namespace SPNATI_Character_Editor
 		{
 			Dictionary<string, Trigger> triggers = new Dictionary<string, Trigger>();
 			Triggers.Clear();
-			int caseNum = 0;
-			using (IEnumerator<Case> enumerator = this.GetWorkingCases().GetEnumerator())
+			using (IEnumerator<Case> enumerator = GetWorkingCases().GetEnumerator())
 			{
 				while (enumerator.MoveNext())
 				{
 					Case workingCase = enumerator.Current;
-					caseNum++;
 					Trigger trigger = triggers.GetOrAddDefault(workingCase.Tag, () => new Trigger(workingCase.Tag));
 					List<Case> sets = new List<Case>();
 					sets.Add(workingCase);
@@ -364,13 +368,9 @@ namespace SPNATI_Character_Editor
 					}
 					Dictionary<int, DialogueLine> lines = new Dictionary<int, DialogueLine>();
 					Dictionary<int, List<int>> lineStages = new Dictionary<int, List<int>>();
-					List<Case> stageCases = new List<Case>();
 					Dictionary<int, int> earliestStage = new Dictionary<int, int>();
 					foreach (int stage in workingCase.Stages)
 					{
-						Case stageCase = new Case(workingCase.Tag);
-						stageCase.Stages.Add(stage);
-						stageCases.Add(stageCase);
 						foreach (DialogueLine line in workingCase.Lines)
 						{
 							DialogueLine stageLine = CreateStageSpecificLine(line, stage, character);
@@ -403,6 +403,7 @@ namespace SPNATI_Character_Editor
 						Case c = splitCases.GetOrAddDefault(stageHash, delegate
 						{
 							Case newCase = new Case(workingCase.Tag);
+							newCase.TriggerSet = workingCase.TriggerSet;
 							newCase.Stages.AddRange(stages);
 							return newCase;
 						});
@@ -420,16 +421,22 @@ namespace SPNATI_Character_Editor
 							copy.Tag = null;
 							copy.Lines = lineSet.Lines;
 							copy.Stages = lineSet.Stages;
-							copy.TriggerSet = caseNum;
+							if (copy.TriggerSet == 0)
+							{
+								copy.TriggerSet = ++_nextSetId;
+							}
 							trigger.Cases.Add(copy);
 						}
 					}
 				}
 			}
-			foreach (Trigger trigger2 in triggers.Values)
+			foreach (Trigger trigger in triggers.Values)
 			{
-				Triggers.Add(trigger2);
+				Triggers.Add(trigger);
+				trigger.Cases.Sort();
 			}
+
+			Triggers.Sort();
 		}
 
 		private int ToHash(List<int> stages)
@@ -585,6 +592,7 @@ namespace SPNATI_Character_Editor
 					if (existingCase == null)
 					{
 						existingCase = triggerCase.CopyConditions();
+						_nextSetId = Math.Max(_nextSetId, existingCase.TriggerSet);
 						cases.Add(existingCase);
 						if (rootCase == null)
 						{
@@ -611,7 +619,7 @@ namespace SPNATI_Character_Editor
 						}
 						foreach (DialogueLine line in triggerCase.Lines)
 						{
-							DialogueLine defaultLine = Behaviour.CreateDefaultLine(line);
+							DialogueLine defaultLine = CreateDefaultLine(line);
 							int code = line.GetHashCodeWithoutImage();
 							bool foundMatch = false;
 							foreach (DialogueLine rootLine in rootCase.Lines)

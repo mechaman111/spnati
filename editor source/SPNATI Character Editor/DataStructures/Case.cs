@@ -1311,7 +1311,11 @@ namespace SPNATI_Character_Editor
 
 		public int CompareTo(Case other)
 		{
-			int comparison = Tag.CompareTo(other.Tag);
+			int comparison = 0;
+			if (!string.IsNullOrEmpty(Tag) && !string.IsNullOrEmpty(other.Tag))
+			{
+				comparison = Tag.CompareTo(other.Tag);
+			}
 			if (comparison == 0)
 				comparison = other.GetPriority().CompareTo(GetPriority());
 			if (comparison == 0)
