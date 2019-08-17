@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
@@ -92,6 +93,7 @@ namespace SPNATI_Character_Editor
 			{
 				if (workingCase.Id > 0)
 				{
+					NextId = Math.Max(workingCase.Id, NextId);
 					Situation situation = NoteworthySituations.Find(s => s.Id == workingCase.Id);
 					if (situation != null)
 					{
