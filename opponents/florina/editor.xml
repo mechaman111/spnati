@@ -4,13 +4,13 @@
     <noteworthy>
         <case name="Ran away from men" min="0" max="0">
             <description>Florina has run away from the room after losing for the first time, but only if there is a man present (she's terrified of men)</description>
-            <trigger tag="stripping" saidMarker="fled">
+            <trigger tag="stripping" stage="0" saidMarker="fled">
                 <state img="hide_belt.png"></state>
             </trigger>
         </case>
         <case name="Attempted to flee" min="4" max="4">
             <description>When Florina has to remove her tunic, she tries to run away, but Lyn stops her</description>
-            <trigger tag="stripping" alsoPlaying="lyn" alsoPlayingStage="1-8">
+            <trigger tag="stripping" stage="4" alsoPlaying="lyn" alsoPlayingStage="1-8">
                 <state img="run_lyn_1.png">Ahhh! L-Lyn!!!</state>
                 <state img="run_lyn_1.png">L-Lady Lyndis!!!</state>
                 <state img="run_lyn_1.png">Come on, Florina. You can't always run off like that.</state>
@@ -19,21 +19,21 @@
         </case>
         <case name="Bee attack 1" min="4" max="4">
             <description>A bee flies in front of Florina, causing her to panic and rip off her tunic to shoo it away.</description>
-            <trigger tag="stripping" saidMarker="bee" notSaidMarker="bee_stop">
+            <trigger tag="stripping" stage="4" saidMarker="bee" notSaidMarker="bee_stop">
                 <state img="stripping_bee.png" marker="bee2">S-s-somebody, get it off! &lt;i&gt;Get it off me!&lt;/i&gt;</state>
                 <state img="stripping_bee.png" marker="bee2">H-hurry, get off of me!</state>
             </trigger>
         </case>
         <case name="Bee attack 2" min="6" max="6">
             <description>The bee makes a return, and Florina pulls off her bra in a panic.</description>
-            <trigger tag="stripping" saidMarker="bee2">
+            <trigger tag="stripping" stage="6" saidMarker="bee2">
                 <state img="stripping_bee.png" marker="bee3">&lt;i&gt;Eek!&lt;/i&gt; The bee's back! G-g-get away!</state>
                 <state img="stripping_bee.png" marker="bee3">&lt;i&gt;Aaaiiiaaeee!!!&lt;/i&gt; It's back! Off, y-you!</state>
             </trigger>
         </case>
         <case name="Singing finish" min="9" max="9">
             <description>Florina is singing a song to herself while masturbating to distract herself from what she's doing in front of everyone</description>
-            <trigger tag="masturbating">
+            <trigger tag="masturbating" stage="9">
                 <state img="nervous.png">Um...I think I'm singing it too fast.</state>
                 <state img="happy.png">Now what? I'm going to outlast my song.</state>
                 <state img="interested.png">Wait, the song is almost done but I'm not. I'd better slow down...</state>
@@ -41,7 +41,7 @@
         </case>
         <case name="Butt pose" min="8" max="8">
             <description>Florina just took off her panties facing backwards, and will play the next hand like that.</description>
-            <trigger tag="stripped" saidMarker="panties_butt" priority="80">
+            <trigger tag="stripped" stage="8" saidMarker="panties_butt" priority="80">
                 <state img="stripped.png" marker="butt">I th-think I'm just going to face this way from now on.</state>
                 <state img="stripped.png" marker="butt">You don't mind if I play backwards, do you?</state>
                 <state img="stripped.png" marker="butt">Phew, I did it. But... my b-butt, huh.</state>
@@ -60,6 +60,8 @@
         <response id="3" opponent="lucina" opponentId="1" />
     </responses>
     <notes />
+    <labels />
+    <prefixes />
     <nextId>3</nextId>
     <markers>
         <marker scope="Public" name="2corrins">Comment about both Corrins playing</marker>
