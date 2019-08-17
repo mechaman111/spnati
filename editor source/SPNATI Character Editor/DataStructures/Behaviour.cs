@@ -577,6 +577,34 @@ namespace SPNATI_Character_Editor
 			SortWorking();
 		}
 
+		private void PerformChecksum()
+		{
+			if (Stages.Count == 0) { return; }
+			List<Case> original = new List<Case>();
+			original.AddRange(_workingCases);
+			_workingCases.Clear();
+			BuildLegacyWorkingCases();
+			int count = UniqueLines;
+			SortWorking();
+			List<Case> old = new List<Case>();
+			old.AddRange(_workingCases);
+			BuildTriggers(_character);
+			_workingCases.Clear();
+			BuildWorkingCasesFromTriggers();
+			int newCount = UniqueLines;
+			SortWorking();
+			for (int i = 0; i < Math.Min(_workingCases.Count, old.Count); i++)
+			{
+				Case oldCase = old[i];
+				Case newCase = _workingCases[i];
+				if (oldCase.Tag != newCase.Tag || !oldCase.MatchesConditions(newCase) || !oldCase.MatchesNonConditions(newCase) || !oldCase.MatchesStages(newCase, true))
+				{
+					//cases don't match
+				}
+			}
+			_workingCases = original;
+		}
+
 		private void BuildWorkingCasesFromTriggers()
 		{
 			foreach (Trigger trigger in Triggers)
