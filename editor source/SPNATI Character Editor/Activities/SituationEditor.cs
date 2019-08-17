@@ -169,7 +169,8 @@ namespace SPNATI_Character_Editor.Activities
 				if (line == null) { return; }
 				HashSet<int> selectedStages = new HashSet<int>();
 				selectedStages.Add(line.MinStage);
-				gridLines.SetData(_character, _character.Behavior.Stages[line.MinStage], line.LinkedCase, selectedStages, _imageLibrary);
+				Stage stage = new Stage(line.MinStage);
+				gridLines.SetData(_character, stage, line.LinkedCase, selectedStages, _imageLibrary);
 			}
 		}
 

@@ -387,7 +387,8 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				gridResponse.Visible = true;
 				ctlResponse.Visible = false;
-				gridResponse.SetData(_character, _character.Behavior.Stages.Find(s => s.Id == response.Stages[0]), response, selectedStages, _imageLibrary);
+				Stage stage = new Stage(response.Stages[0]);
+				gridResponse.SetData(_character, stage, response, selectedStages, _imageLibrary);
 			}			
 			
 			grpResponse.Text = $"Response from {_character}";

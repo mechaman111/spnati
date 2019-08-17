@@ -578,26 +578,9 @@ namespace SPNATI_Character_Editor
 			int count = 0;
 			HashSet<string> poses = new HashSet<string>();
 			HashSet<string> lines = new HashSet<string>();
-			if (Behavior.Triggers.Count > 0)
+			foreach (Case stageCase in Behavior.EnumerateSourceCases())
 			{
-				List<Trigger> triggers = Behavior.Triggers;
-				foreach (Trigger trigger in triggers)
-				{
-					foreach (Case triggerCase in trigger.Cases)
-					{
-						AddLines(poses, lines, triggerCase, filters, ref poseCount, ref count);
-					}
-				}
-			}
-			else
-			{
-				foreach (Stage stage in Behavior.Stages)
-				{
-					foreach (Case stageCase in stage.Cases)
-					{
-						AddLines(poses, lines, stageCase, filters, ref poseCount, ref count);
-					}
-				}
+				AddLines(poses, lines, stageCase, filters, ref poseCount, ref count);
 			}
 			return count;
 		}
@@ -690,20 +673,11 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public IEnumerable<Case> GetCasesTargetedAtCharacter(Character character, TargetType targetTypes)
 		{
-			List<Stage> stages = Behavior.Stages;
-			foreach (var stage in stages)
+			foreach (var stageCase in Behavior.EnumerateSourceCases())
 			{
-				foreach (var stageCase in stage.Cases)
+				if (IsCaseTargetedAtCharacter(stageCase, character, targetTypes))
 				{
-					if (IsCaseTargetedAtCharacter(stageCase, character, targetTypes))
-					{
-						bool addStage = !stageCase.Stages.Contains(stage.Id);
-						if (addStage)
-							stageCase.Stages.Add(stage.Id);
-						yield return stageCase;
-						if (addStage)
-							stageCase.Stages.Remove(stage.Id);
-					}
+					yield return stageCase;
 				}
 			}
 		}
@@ -770,27 +744,23 @@ namespace SPNATI_Character_Editor
 		{
 			int count = 0;
 			HashSet<string> lines = new HashSet<string>();
-			List<Stage> stages = Behavior.Stages;
-			foreach (var stage in stages)
+			foreach (var stageCase in Behavior.EnumerateSourceCases())
 			{
-				foreach (var stageCase in stage.Cases)
+				if (targetGender != "" && !stageCase.Tag.StartsWith(targetGender))
+					continue;
+				bool usesTag = (stageCase.Filter == tag);
+				if (!usesTag)
 				{
-					if (targetGender != "" && !stageCase.Tag.StartsWith(targetGender))
-						continue;
-					bool usesTag = (stageCase.Filter == tag);
-					if (!usesTag)
+					usesTag = stageCase.Conditions.Find(c => c.FilterTag == tag) != null;
+				}
+				if (usesTag)
+				{
+					foreach (var line in stageCase.Lines)
 					{
-						usesTag = stageCase.Conditions.Find(c => c.FilterTag == tag) != null;
-					}
-					if (usesTag)
-					{
-						foreach (var line in stageCase.Lines)
-						{
-							if (lines.Contains(line.Text))
-								continue;
-							count++;
-							lines.Add(line.Text);
-						}
+						if (lines.Contains(line.Text))
+							continue;
+						count++;
+						lines.Add(line.Text);
 					}
 				}
 			}

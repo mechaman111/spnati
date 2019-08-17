@@ -115,7 +115,7 @@ namespace SPNATI_Character_Editor.Activities
 				else if (parameters[0] is Case)
 				{
 					Case jumpCase = parameters[0] as Case;
-					Stage stage = _character.Behavior.Stages[jumpCase.Stages[0]];
+					Stage stage = new Stage(jumpCase.Stages[0]);
 					JumpToLine(stage, jumpCase, null);
 				}
 			}

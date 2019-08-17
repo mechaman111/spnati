@@ -838,20 +838,13 @@ namespace SPNATI_Character_Editor
 			if (other != null)
 			{
 				bool found = false;
-				foreach (Stage stage in other.Behavior.Stages)
+				foreach (Case stageCase in other.Behavior.EnumerateSourceCases())
 				{
-					foreach (Case stageCase in stage.Cases)
+					foreach (DialogueLine line in stageCase.Lines)
 					{
-						foreach (DialogueLine line in stageCase.Lines)
+						if (line.Text.Contains(text))
 						{
-							if (line.Text.Contains(text))
-							{
-								found = true;
-								break;
-							}
-						}
-						if (found)
-						{
+							found = true;
 							break;
 						}
 					}

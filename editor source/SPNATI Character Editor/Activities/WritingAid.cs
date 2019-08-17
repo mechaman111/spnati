@@ -208,7 +208,7 @@ namespace SPNATI_Character_Editor.Activities
 
 			_activeCharacter = character;
 			_activeSituation = situation;
-			Stage stage = character.Behavior.Stages[situation.MinStage];
+			Stage stage = new Stage(situation.MinStage);
 			gridActiveSituation.SetData(character, stage, situation.LinkedCase, new HashSet<int>(), ImageLibrary.Get(character));
 		}
 
@@ -291,7 +291,7 @@ namespace SPNATI_Character_Editor.Activities
 
 			splitContainer1.Panel1.Enabled = false;
 			splitContainer1.Panel2Collapsed = false;
-			Stage stage = _character.Behavior.Stages.Find(s => s.Id == _response.Stages[0]);
+			Stage stage = new Stage(_response.Stages[0]);
 			HashSet<int> stages = new HashSet<int>();
 			foreach (int i in _response.Stages)
 			{

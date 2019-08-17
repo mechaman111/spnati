@@ -87,17 +87,50 @@ namespace SPNATI_Character_Editor
 			_character = character;
 			foreach (Stage stage in Stages)
 			{
-				foreach (Case stageCase in stage.Cases)
+				PostProcessCases(stage.Cases);
+			}
+			foreach (Trigger trigger in Triggers)
+			{
+				PostProcessCases(trigger.Cases);
+			}
+		}
+
+		public IEnumerable<Case> EnumerateSourceCases()
+		{
+			if (Triggers.Count > 0)
+			{
+				foreach (Trigger trigger in Triggers)
 				{
-					foreach (DialogueLine line in stageCase.Lines)
+					foreach (Case theCase in trigger.Cases)
 					{
-						line.Text = XMLHelper.DecodeEntityReferences(line.Text);
-						if (string.IsNullOrEmpty(line.Marker))
-						{
-							line.Marker = null;
-						}
-						character.CacheMarker(line.Marker);
+						yield return theCase;
 					}
+				}
+			}
+			else
+			{
+				foreach (Stage stage in Stages)
+				{
+					foreach (Case theCase in stage.Cases)
+					{
+						yield return theCase;
+					}
+				}
+			}
+		}
+
+		private void PostProcessCases(List<Case> cases)
+		{
+			foreach (Case stageCase in cases)
+			{
+				foreach (DialogueLine line in stageCase.Lines)
+				{
+					line.Text = XMLHelper.DecodeEntityReferences(line.Text);
+					if (string.IsNullOrEmpty(line.Marker))
+					{
+						line.Marker = null;
+					}
+					_character.CacheMarker(line.Marker);
 				}
 			}
 		}
