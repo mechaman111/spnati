@@ -267,7 +267,7 @@ namespace SPNATI_Character_Editor
 		/// Gives a case a unique ID
 		/// </summary>
 		/// <param name="c"></param>
-		private void AssignId(Case c)
+		public void AssignId(Case c)
 		{
 			if (c.Id > 0) { return; }
 			c.Id = ++NextId;

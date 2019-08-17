@@ -31,6 +31,9 @@ namespace SPNATI_Character_Editor
 			set { if (_tag != value) { _tag = value; NotifyPropertyChanged(nameof(Tag)); } }
 		}
 
+		/// <summary>
+		/// This was only used in the preview. StageId is used now, so once characters using it get saved again, this can be deleted later
+		/// </summary>
 		[DefaultValue(0)]
 		[XmlOrder(1)]
 		[XmlAttribute("set")]
