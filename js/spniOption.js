@@ -88,6 +88,12 @@ function Background (id, src, metadata) {
 
     /** 
      * @type {Object}
+     * The top and bottom coordinates to be matched with the top and bottom of the play area.
+     */
+    this.viewport = metadata.viewport;
+
+    /** 
+     * @type {Object}
      * Contains the raw metadata passed to the Background constructor.
      */
     this.metadata = metadata;
@@ -158,6 +164,8 @@ function loadBackgroundFromXml($xml, auto_tag_values) {
                 var tag = $(this).text() || '';
                 metadata.tags.push(fixupTagFormatting(tag));
             });
+        } else if (tagName === 'viewport') {
+            metadata.viewport = { top: $elem.attr('top'), bottom: $elem.attr('bottom') };
         } else {
             var val = $elem.text() || true;
 
