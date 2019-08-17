@@ -358,6 +358,7 @@ namespace SPNATI_Character_Editor
 				while (enumerator.MoveNext())
 				{
 					Case workingCase = enumerator.Current;
+					workingCase.TriggerSet = 0;
 					Trigger trigger = triggers.GetOrAddDefault(workingCase.Tag, () => new Trigger(workingCase.Tag));
 					List<Case> sets = new List<Case>();
 					sets.Add(workingCase);
