@@ -358,7 +358,6 @@ namespace SPNATI_Character_Editor
 				while (enumerator.MoveNext())
 				{
 					Case workingCase = enumerator.Current;
-					workingCase.TriggerSet = 0;
 					Trigger trigger = triggers.GetOrAddDefault(workingCase.Tag, () => new Trigger(workingCase.Tag));
 					List<Case> sets = new List<Case>();
 					sets.Add(workingCase);
@@ -419,6 +418,7 @@ namespace SPNATI_Character_Editor
 					}
 					foreach (Case set in sets)
 					{
+						set.TriggerSet = 0;
 						foreach (Case lineSet in splitCases.Values)
 						{
 							Case copy = set.CopyConditions();
