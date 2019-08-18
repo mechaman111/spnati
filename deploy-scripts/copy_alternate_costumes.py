@@ -30,7 +30,7 @@ def main():
             if alts:
                 # find any costumes in the specified event set
                 for costume in alts.iter('costume'):
-                    if costume.get('set', None) == event_set:
+                    if event_set == 'all' or costume.get('set', None) == event_set:
                         event_costumes.append((opp.text, costume.get('folder')))
                         delete_stages[opp.text] = list(range(n_stages))
                         opp_stage_counts[opp.text] = n_stages
