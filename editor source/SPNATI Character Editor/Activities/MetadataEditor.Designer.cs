@@ -38,8 +38,6 @@
 			this.lblIncomplete = new Desktop.Skinning.SkinnedLabel();
 			this.lblOffline = new Desktop.Skinning.SkinnedLabel();
 			this.gridAI = new Desktop.Skinning.SkinnedDataGridView();
-			this.ColAIStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColDifficulty = new Desktop.Skinning.SkinnedDataGridViewComboBoxColumn();
 			this.label7 = new Desktop.Skinning.SkinnedLabel();
 			this.label22 = new Desktop.Skinning.SkinnedLabel();
 			this.txtDescription = new Desktop.Skinning.SkinnedTextBox();
@@ -66,6 +64,8 @@
 			this.skinnedGroupBox1 = new Desktop.Skinning.SkinnedGroupBox();
 			this.skinnedGroupBox2 = new Desktop.Skinning.SkinnedGroupBox();
 			this.skinnedGroupBox3 = new Desktop.Skinning.SkinnedGroupBox();
+			this.ColAIStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColDifficulty = new Desktop.Skinning.SkinnedDataGridViewComboBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridAI)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valRounds)).BeginInit();
 			this.skinnedGroupBox1.SuspendLayout();
@@ -193,24 +193,6 @@
 			this.gridAI.RowHeadersVisible = false;
 			this.gridAI.Size = new System.Drawing.Size(212, 101);
 			this.gridAI.TabIndex = 16;
-			// 
-			// ColAIStage
-			// 
-			this.ColAIStage.HeaderText = "Stage";
-			this.ColAIStage.MinimumWidth = 50;
-			this.ColAIStage.Name = "ColAIStage";
-			this.ColAIStage.Width = 50;
-			// 
-			// ColDifficulty
-			// 
-			this.ColDifficulty.AutoComplete = false;
-			this.ColDifficulty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColDifficulty.DisplayMember = null;
-			this.ColDifficulty.HeaderText = "Intelligence";
-			this.ColDifficulty.Name = "ColDifficulty";
-			this.ColDifficulty.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.ColDifficulty.Sorted = false;
-			this.ColDifficulty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 			// 
 			// label7
 			// 
@@ -563,6 +545,26 @@
 			this.skinnedGroupBox3.TabStop = false;
 			this.skinnedGroupBox3.Text = "Gameplay";
 			// 
+			// ColAIStage
+			// 
+			this.ColAIStage.DataPropertyName = "Stage";
+			this.ColAIStage.HeaderText = "Stage";
+			this.ColAIStage.MinimumWidth = 50;
+			this.ColAIStage.Name = "ColAIStage";
+			this.ColAIStage.Width = 50;
+			// 
+			// ColDifficulty
+			// 
+			this.ColDifficulty.AutoComplete = false;
+			this.ColDifficulty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ColDifficulty.DataPropertyName = "Value";
+			this.ColDifficulty.DisplayMember = null;
+			this.ColDifficulty.HeaderText = "Intelligence";
+			this.ColDifficulty.Name = "ColDifficulty";
+			this.ColDifficulty.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColDifficulty.Sorted = false;
+			this.ColDifficulty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			// 
 			// MetadataEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -623,10 +625,10 @@
 		private Desktop.Skinning.SkinnedLabel label10;
 		private Desktop.Skinning.SkinnedLabel lblSize;
 		private Desktop.Skinning.SkinnedComboBox cboGender;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColAIStage;
-		private Desktop.Skinning.SkinnedDataGridViewComboBoxColumn ColDifficulty;
 		private Desktop.Skinning.SkinnedGroupBox skinnedGroupBox1;
 		private Desktop.Skinning.SkinnedGroupBox skinnedGroupBox2;
 		private Desktop.Skinning.SkinnedGroupBox skinnedGroupBox3;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColAIStage;
+		private Desktop.Skinning.SkinnedDataGridViewComboBoxColumn ColDifficulty;
 	}
 }

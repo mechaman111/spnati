@@ -804,6 +804,22 @@ namespace Desktop
 		{
 			AutoTick?.Invoke(this, EventArgs.Empty);
 		}
+
+		public void SetDirty(IWorkspace ws, bool dirty)
+		{
+			TabPage page;
+			if (_tabs.TryGetValue(ws, out page))
+			{
+				if (dirty && !page.Text.EndsWith("*"))
+				{
+					page.Text += "*";
+				}
+				else if (!dirty && page.Text.EndsWith("*"))
+				{
+					page.Text = page.Text.Substring(0, page.Text.Length - 1);
+				}
+			}
+		}
 	}
 
 	public enum WorkspacePane

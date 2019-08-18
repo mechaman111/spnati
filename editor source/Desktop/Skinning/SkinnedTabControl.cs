@@ -5,6 +5,8 @@ namespace Desktop.Skinning
 {
 	public class SkinnedTabControl : TabControl, ISkinControl
 	{
+		public new event EventHandler TextChanged;
+
 		/// <summary>
 		/// Hide the tabs since we'll draw our own
 		/// </summary>
@@ -20,9 +22,15 @@ namespace Desktop.Skinning
 			TabPage page = e.Control as TabPage;
 			if (page != null)
 			{
+				page.TextChanged += Page_TextChanged;
 				page.BackColor = SkinManager.Instance.CurrentSkin.Background.Normal;
 			}
 			base.OnControlAdded(e);
+		}
+
+		private void Page_TextChanged(object sender, EventArgs e)
+		{
+			TextChanged?.Invoke(this, e);
 		}
 
 		public void OnUpdateSkin(Skin skin)

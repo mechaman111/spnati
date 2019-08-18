@@ -53,7 +53,7 @@ namespace SPNATI_Character_Editor.Activities
 				portrait = portrait.Replace("@@@", "custom:");
 				cboDefaultPic.SelectedItem = _imageLibrary.Find(portrait);
 			}
-			LoadIntelligence();
+			gridAI.Data = _character.Intelligence;
 
 			OpponentStatus status = Listing.Instance.GetCharacterStatus(_character.FolderName);
 			lblIncomplete.Visible = (status == OpponentStatus.Incomplete);
@@ -91,20 +91,6 @@ namespace SPNATI_Character_Editor.Activities
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, _imageLibrary.Find(_character.Metadata.Portrait));
 		}
 
-		/// <summary>
-		/// Populates the intelligence grid
-		/// </summary>
-		private void LoadIntelligence()
-		{
-			gridAI.Rows.Clear();
-			foreach (StageSpecificValue i in _character.Intelligence)
-			{
-				DataGridViewRow row = gridAI.Rows[gridAI.Rows.Add()];
-				row.Cells["ColAIStage"].Value = i.Stage;
-				row.Cells["ColDifficulty"].Value = i.Value;
-			}
-		}
-
 		public override void Save()
 		{
 			_character.Label = txtLabel.Text;
@@ -118,26 +104,7 @@ namespace SPNATI_Character_Editor.Activities
 			_character.Metadata.Source = txtSource.Text;
 			_character.Metadata.Writer = txtWriter.Text;
 			_character.Metadata.Artist = txtArtist.Text;
-			SaveIntelligence();
-		}
-
-		private void SaveIntelligence()
-		{
-			_character.Intelligence.Clear();
-			for (int i = 0; i < gridAI.Rows.Count; i++)
-			{
-				DataGridViewRow row = gridAI.Rows[i];
-				string level = row.Cells["ColDifficulty"].Value?.ToString();
-				string stageString = row.Cells["ColAIStage"].Value?.ToString();
-				if (string.IsNullOrEmpty(level))
-					continue;
-				stageString = stageString ?? (i == 0 ? "0" : string.Empty);
-				int stage;
-				if (int.TryParse(stageString, out stage))
-				{
-					_character.Intelligence.Add(new StageSpecificValue(stage, level));
-				}
-			}
+			gridAI.Save(ColAIStage);
 		}
 
 		private void cboDefaultPic_SelectedIndexChanged(object sender, System.EventArgs e)

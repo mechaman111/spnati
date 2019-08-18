@@ -9,7 +9,25 @@ namespace Desktop
 		public WorkspaceControl Control { get; set; }
 
 		public int Id { get; set; }
-		public IRecord Record { get; set; }
+		private IRecord _record;
+		public IRecord Record
+		{
+			get { return _record; }
+			set
+			{
+				_record = value;
+				if (_record is IDirtiable)
+				{
+					((_record as IDirtiable).OnDirtyChanged) += Workspace_OnDirtyChanged;
+				}
+			}
+		}
+
+		private void Workspace_OnDirtyChanged(object sender, bool dirty)
+		{
+			Shell.Instance.SetDirty(this, dirty);
+		}
+
 		public bool IsDefault { get; set; }
 
 		private PostOffice _postOffice = new PostOffice();
@@ -102,7 +120,10 @@ namespace Desktop
 
 		public bool CanQuit(CloseReason reason)
 		{
-			Dictionary<IActivity, bool> saveData = new Dictionary<IActivity, bool>();
+			//Save data
+			ActiveActivity?.Save();
+			ActiveSidebarActivity?.Save();
+
 			foreach (KeyValuePair<WorkspacePane, List<IActivity>> kvp in Activities)
 			{
 				foreach (var activity in kvp.Value)
@@ -110,21 +131,12 @@ namespace Desktop
 					CloseArgs args = new CloseArgs(reason);
 					if (!activity.CanQuit(args))
 						return false;
-					saveData[activity] = args.SaveData;
 				}
 			}
 
 			if (!OnCanQuit(reason))
 				return false;
-
-			//Save data
-			ActiveActivity?.Save();
-			ActiveSidebarActivity?.Save();
-			//foreach (var kvp in saveData)
-			//{
-			//	if (kvp.Value)
-			//		kvp.Key.Save();
-			//}
+			
 			return true;
 		}
 		protected virtual bool OnCanQuit(CloseReason reason)

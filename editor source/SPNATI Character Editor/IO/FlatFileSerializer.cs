@@ -908,7 +908,11 @@ namespace SPNATI_Character_Editor
 						}
 						break;
 					case "dialogue-layer":
-						Enum.TryParse(value, out character.Metadata.BubblePosition);
+						DialogueLayer pos;
+						if (Enum.TryParse(value, out pos))
+						{
+							character.Metadata.BubblePosition = pos;
+						}
 						break;
 					case "start":
 						Case temp = MakeLine(key, value, character, true);

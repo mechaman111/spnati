@@ -367,7 +367,7 @@ namespace SPNATI_Character_Editor.IO
 		}
 	}
 
-	[AttributeUsage(AttributeTargets.Field)]
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class XmlNewLineAttribute : Attribute
 	{
 		public XmlNewLinePosition Position { get; set; }

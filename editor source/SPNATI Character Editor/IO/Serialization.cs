@@ -92,6 +92,10 @@ namespace SPNATI_Character_Editor
 			DeleteFile(character, "markers.edit.bak");
 			DeleteFile(character, "editor.edit.bak");
 
+			if (success)
+			{
+				character.IsDirty = false;
+			}
 			return success;
 		}
 

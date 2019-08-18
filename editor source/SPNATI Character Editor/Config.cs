@@ -53,6 +53,16 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// Gets whether a setting has any value
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public static bool HasValue(string key)
+		{
+			return _settings.ContainsKey(key.ToLower());
+		}
+
+		/// <summary>
 		/// Gets a string configuration setting
 		/// </summary>
 		/// <param name="key"></param>

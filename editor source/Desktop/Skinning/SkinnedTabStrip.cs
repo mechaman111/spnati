@@ -137,6 +137,10 @@ namespace Desktop.Skinning
 				{
 					OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 				};
+				_tabControl.TextChanged += delegate
+				{
+					Invalidate();
+				};
 			}
 		}
 

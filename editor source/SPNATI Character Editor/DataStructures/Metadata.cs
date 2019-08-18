@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Desktop.DataStructures;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -11,99 +12,169 @@ namespace SPNATI_Character_Editor
 	/// PROPERTY ORDER IS IMPORTANT - Order determines attribute order in generated XML files
 	/// </remarks>
 	[XmlRoot("opponent")]
-	public class Metadata : IHookSerialization
+	public class Metadata : BindableObject, IHookSerialization
 	{
 		[XmlElement("enabled")]
-		public bool Enabled;
+		public bool Enabled
+		{
+			get { return Get<bool>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("first")]
-		public string FirstName;
+		public string FirstName
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("last")]
-		public string LastName;
+		public string LastName
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("label")]
-		public string Label;
+		public string Label
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("pic")]
-		public string Portrait;
+		public string Portrait
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("gender")]
-		public string Gender;
+		public string Gender
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("height")]
-		public string Height;
+		public string Height
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("from")]
-		public string Source;
+		public string Source
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("writer")]
-		public string Writer;
+		public string Writer
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("artist")]
-		public string Artist;
+		public string Artist
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("description")]
-		public string Description;
+		public string Description
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[DefaultValue(false)]
 		[XmlElement("crossGender")]
-		public bool CrossGender;
+		public bool CrossGender
+		{
+			get { return Get<bool>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("scale")]
 		[DefaultValue(100.0f)]
-		public float Scale = 100.0f;
+		public float Scale
+		{
+			get { return Get<float>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("epilogue")]
-		public List<EpilogueMeta> Endings;
+		public List<EpilogueMeta> Endings { get; set; }
 
 		[XmlElement("layers")]
-		public int Layers;
+		public int Layers
+		{
+			get { return Get<int>(); }
+			set { Set(value); }
+		}
 
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
-		public List<CharacterTag> Tags;
+		public List<CharacterTag> Tags { get; set; }
 
 		[XmlElement("alternates")]
-		public List<AlternateSkin> AlternateSkins = new List<AlternateSkin>();
+		public List<AlternateSkin> AlternateSkins { get; set; }
 
 		[XmlElement("has_collectibles")]
-		public bool HasCollectibles;
+		public bool HasCollectibles
+		{
+			get { return Get<bool>(); }
+			set { Set(value); }
+		}
 
 		/// <summary>
 		/// Count of unique text across all lines
 		/// </summary>
 		[XmlElement("lines")]
-		public int Lines;
+		public int Lines { get; set; }
 
 		/// <summary>
 		/// Count of unique poses used across all lines
 		/// </summary>
 		[XmlElement("poses")]
-		public int Poses;
+		public int Poses { get; set; }
 
 		/// <summary>
 		/// Custom z-ordering
 		/// </summary>
 		[DefaultValue(0)]
 		[XmlElement("z-index")]
-		public int Z;
+		public int Z
+		{
+			get { return Get<int>(); }
+			set { Set(value); }
+		}
 
 		/// <summary>
 		/// Speech bubble position relative to image
 		/// </summary>
 		[DefaultValue(DialogueLayer.over)]
 		[XmlElement("dialogue-layer")]
-		public DialogueLayer BubblePosition;
+		public DialogueLayer BubblePosition
+		{
+			get { return Get<DialogueLayer>(); }
+			set { Set(value); }
+		}
 
 		[XmlAnyElement]
-		public List<System.Xml.XmlElement> ExtraXml;
+		public List<System.Xml.XmlElement> ExtraXml { get; set; }
 
 		public Metadata()
 		{
+			Scale = 100.0f;
+			AlternateSkins = new List<AlternateSkin>();
 		}
 
-		public Metadata(Character c)
+		public Metadata(Character c) : this()
 		{
 			PopulateFromCharacter(c);
 		}
@@ -139,7 +210,10 @@ namespace SPNATI_Character_Editor
 			});
 			Tags = c.Tags;
 			HasCollectibles = c.Collectibles.Count > 0;
-			c.GetUniqueLineAndPoseCount(out Lines, out Poses);
+			int lines, poses;
+			c.GetUniqueLineAndPoseCount(out lines, out poses);
+			Lines = lines;
+			Poses = poses;
 		}
 
 		public void OnBeforeSerialize()

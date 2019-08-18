@@ -1,8 +1,10 @@
 ﻿using Desktop;
+using Desktop.DataStructures;
 using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Xml;
@@ -18,15 +20,27 @@ namespace SPNATI_Character_Editor
 	/// </remarks>
 	[XmlRoot("opponent", Namespace = "")]
 	[XmlHeader("This file was machine generated using the Character Editor {Version} at {Time} on {Date}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.")]
-	public class Character : IHookSerialization, IRecord, IWardrobe, ISkin
+	public class Character : BindableObject, IHookSerialization, IRecord, IWardrobe, ISkin, IDirtiable
 	{
 		[XmlElement("version")]
 		/// <summary>
 		/// What version of the editor this was last saved under. Used for performing one-time data conversions when necessary.
 		/// </summary>
-		public string Version;
+		public string Version { get; set; }
 		[XmlIgnore]
 		public EditorSource Source;
+
+		private bool _dirty;
+		[XmlIgnore]
+		public bool IsDirty
+		{
+			get { return _dirty; }
+			set
+			{
+				_dirty = value;
+				OnDirtyChanged?.Invoke(this, _dirty);
+			}
+		}
 
 		[XmlIgnore]
 		public string Group { get; }
@@ -38,7 +52,11 @@ namespace SPNATI_Character_Editor
 		/// Where did this character come from?
 		/// </summary>
 		[XmlIgnore]
-		public Metadata Metadata;
+		public Metadata Metadata
+		{
+			get { return Get<Metadata>(); }
+			set { Set(value); }
+		}
 
 		/// <summary>
 		/// Cached information about what markers are set in this character's dialog
@@ -47,16 +65,32 @@ namespace SPNATI_Character_Editor
 		public MarkerData Markers;
 
 		[XmlIgnore]
-		public string FolderName;
+		public string FolderName
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("first")]
-		public string FirstName;
+		public string FirstName
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("last")]
-		public string LastName;
+		public string LastName
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("label")]
-		public List<StageSpecificValue> Labels;
+		public ObservableCollection<StageSpecificValue> Labels
+		{
+			get { return Get<ObservableCollection<StageSpecificValue>>(); }
+			set { Set(value); }
+		}
 
 		[XmlIgnore]
 		public string Label // Compatibility property
@@ -80,17 +114,33 @@ namespace SPNATI_Character_Editor
 		}
 
 		[XmlElement("gender")]
-		public string Gender;
+		public string Gender
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("size")]
-		public string Size;
+		public string Size
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("timer")]
-		public int Stamina;
+		public int Stamina
+		{
+			get { return Get<int>(); }
+			set { Set(value); }
+		}
 
 		[XmlNewLine(Position = XmlNewLinePosition.After)]
 		[XmlElement("intelligence")]
-		public List<StageSpecificValue> Intelligence;
+		public ObservableCollection<StageSpecificValue> Intelligence
+		{
+			get { return Get<ObservableCollection<StageSpecificValue>>(); }
+			set { Set(value); }
+		}
 
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
@@ -101,7 +151,11 @@ namespace SPNATI_Character_Editor
 		public List<Nickname> Nicknames = new List<Nickname>();
 
 		[XmlElement("stylesheet")]
-		public string StyleSheetName;
+		public string StyleSheetName
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		private CharacterStyleSheet _styles;
 		[XmlIgnore]
@@ -148,6 +202,8 @@ namespace SPNATI_Character_Editor
 
 		private bool _built;
 
+		public event EventHandler<bool> OnDirtyChanged;
+
 		[XmlIgnore]
 		public string Name
 		{
@@ -181,10 +237,10 @@ namespace SPNATI_Character_Editor
 		{
 			FirstName = "New";
 			LastName = "Character";
-			Labels = new List<StageSpecificValue>();
+			Labels = new ObservableCollection<StageSpecificValue>();
 			Gender = "female";
 			Size = "medium";
-			Intelligence = new List<StageSpecificValue>();
+			Intelligence = new ObservableCollection<StageSpecificValue>();
 			Stamina = 15;
 			Tags = new List<CharacterTag>();
 			Metadata = new Metadata();
@@ -197,7 +253,7 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// Clears all data from this character
 		/// </summary>
-		public void Clear()
+		public new void Clear()
 		{
 			FirstName = "";
 			LastName = "";
@@ -205,7 +261,7 @@ namespace SPNATI_Character_Editor
 			Gender = "";
 			Size = "";
 			Behavior = new Behaviour();
-			Intelligence = new List<StageSpecificValue>();
+			Intelligence = new ObservableCollection<StageSpecificValue>();
 			Stamina = 15;
 			Tags.Clear();
 			Metadata = new Metadata();
@@ -514,7 +570,14 @@ namespace SPNATI_Character_Editor
 			if (_built)
 				return;
 			Behavior.PrepareForEdit(this);
+			IsDirty = false;
+			PropertyChanged += Character_PropertyChanged;
 			_built = true;
+		}
+
+		private void Character_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			IsDirty = true;
 		}
 
 		/// <summary>
@@ -851,20 +914,28 @@ namespace SPNATI_Character_Editor
 		MoveDown
 	}
 
-	public class StageSpecificValue
+	public class StageSpecificValue : BindableObject
 	{
 		/// <summary>
 		/// Stages this intelligence begins at
 		/// </summary>
 		[XmlAttribute("stage")]
 		[DefaultValue(0)]
-		public int Stage;
+		public int Stage
+		{
+			get { return Get<int>(); }
+			set { Set(value); }
+		}
 
 		/// <summary>
 		/// Intelligence level
 		/// </summary>
 		[XmlText]
-		public string Value;
+		public string Value
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		public StageSpecificValue()
 		{

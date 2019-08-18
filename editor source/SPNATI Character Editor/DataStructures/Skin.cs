@@ -38,6 +38,9 @@ namespace SPNATI_Character_Editor
 		public List<StageSpecificValue> Folders = new List<StageSpecificValue>();
 
 		[XmlIgnore]
+		public bool IsDirty { get; set; }
+
+		[XmlIgnore]
 		public string Folder
 		{
 			get

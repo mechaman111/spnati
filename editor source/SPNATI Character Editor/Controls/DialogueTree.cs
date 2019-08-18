@@ -60,7 +60,11 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			_character = character;
 			_editorData = CharacterDatabase.GetEditorData(_character);
-			int view = Config.GetInt(LastViewSetting);
+			int view = 1;
+			if (Config.HasValue(LastViewSetting))
+			{
+				view = Config.GetInt(LastViewSetting);
+			}
 			cboView.SelectedIndex = view;
 			cboView.SelectedIndexChanged += cboView_SelectedIndexChanged;
 			if (_view == null)

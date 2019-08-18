@@ -206,7 +206,7 @@ namespace SPNATI_Character_Editor.Activities
 		/// <returns></returns>
 		private bool PromptToSave()
 		{
-			if (_character == null)
+			if (_character == null || !_character.IsDirty)
 				return true;
 			DialogResult result = MessageBox.Show(string.Format("Do you wish to save {0} first?", _character), "Save changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 			if (result == DialogResult.Yes)
