@@ -144,6 +144,12 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			_populatingCase = true;
 			HashSet<int> stages = GetSelectedStages();
+			_selectedCase.Stages.Clear();
+			foreach (int stage in stages)
+			{
+				_selectedCase.Stages.Add(stage);
+			}
+			_selectedCase.Stages.Sort();
 			UpdatePreviewStage(stages, -1);
 			_populatingCase = false;
 		}

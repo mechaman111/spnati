@@ -228,7 +228,11 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			int x = e.X / CellSize;
 			int y = (e.Y - _headerHeight) / CellSize;
-			if (x >= 0 && x < _layerCount && y == 0)
+			if (e.X >= 18 && e.X <= 70 && e.Y >= 18 && e.Y <= 35)
+			{
+				chkSelectAll.Checked = !chkSelectAll.Checked;
+			}
+			else if (x >= 0 && x < _layerCount && y == 0)
 			{
 				if (!IsStageEnabled(x)) { return; }
 				if (e.Button == MouseButtons.Left)
