@@ -867,8 +867,6 @@ MainSelectScreenDisplay.prototype.altCostumeSelected = function () {
         opponent.unloadAlternateCostume();
         opponent.onSelected(true);
     }
-    
-    opponent.selectionCard.update();
 }
 
 function createElementWithClass (elemType, className) {
@@ -1046,7 +1044,6 @@ OpponentDetailsDisplay.prototype.handleCostumeChange = function () {
 	
     this.opponent.selectAlternateCostume(costumeDesc);
     this.simpleImage.attr('src', this.opponent.selection_image);
-    this.opponent.selectionCard.update();
 }
 
 OpponentDetailsDisplay.prototype.clear = function () {
