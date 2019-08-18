@@ -538,7 +538,13 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.status = status;
     this.first = $metaXml.find('first').text();
     this.last = $metaXml.find('last').text();
-    this.label = $metaXml.find('label').text();
+    
+    /* selectLabel shouldn't change due to e.g. alt costumes selected on
+     * the main select screen.
+     */
+    this.selectLabel = $metaXml.find('label').text();
+    this.label = this.selectLabel;
+
     this.image = $metaXml.find('pic').text();
     this.gender = $metaXml.find('gender').text();
     this.height = $metaXml.find('height').text();
