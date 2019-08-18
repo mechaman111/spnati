@@ -21,6 +21,14 @@ body {
     overflow: hidden;
 }
 
+button, input, select {
+    pointer-events: auto;
+}
+
+button>* {
+    pointer-events: none;
+}
+
 /************************************************************
  * Bootstrap overrides.
  ************************************************************/
@@ -132,12 +140,17 @@ label {
 
 
 .screen {
-	position: absolute;
+    position: absolute;
     top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
     margin: 0.5%;
+}
+
+.select-table>*, #game-table>*, #game-hidden-area>*, .table-bug-report-button, .hide-table-button {
+    z-index: 1000;
 }
 
 /**************************************************
@@ -194,25 +207,25 @@ label {
 	color: black;
 	padding: 0.1em;
 }
-.smooth-button:hover {
+.smooth-button:hover:not(:disabled) {
 	background: linear-gradient(#80d5ff, #0088CC);
 	background-color: #55C0ff;
 }
 
-.smooth-button-red {
+.smooth-button.red {
 	background: linear-gradient(#BB3333, #9F1616);
 	background-color: #BB3333;
 }
-.smooth-button-red:hover {
+.smooth-button.red:hover:not(:disabled) {
 	background: linear-gradient(#F88888, #BB3333);
 	background-color: #F66666;
 }
 
-.smooth-button-green {
+.smooth-button.green {
 	background: linear-gradient(#33AA33, #168F16);
     background-color: #33AA33;
 }
-.smooth-button-green:hover {
+.smooth-button.green:hover:not(:disabled) {
 	background: linear-gradient(#80FF80, #33AA33);
 	background-color: #66FF66;
 }
@@ -220,6 +233,11 @@ label {
 	background: linear-gradient(#CCC, #AAA);
 	background-color: #BBB;
 	color: #333;
+}
+
+.smooth-button:active:not(:disabled) {
+    padding-left: 0.15em;
+    padding-right: 0.05em;
 }
 
 .center-dock-button {
@@ -237,9 +255,9 @@ label {
 
 .hide-table-button {
 	position: absolute;
-    width: 4%;
-    height: 5%;
-    left: 48%;
+    width: 3.25%;
+    height: 4.50%;
+    left: 48.375%;
     bottom: 22%;
     background-color: rgba(155, 155, 155, 0.5);
 }
@@ -256,7 +274,7 @@ label {
 	position: absolute;
     width: 3.25%;
     height: 4.50%;
-    left: 48.35%;
+    left: 48.375%;
     bottom: 17.4%;
 	background-color: rgba(155, 155, 155, 0.5);
 }
@@ -279,10 +297,6 @@ label {
 
 .table-bug-report-button-highlight:active {
 	background-color: rgba(169, 68, 66, 0.75);
-}
-
-.group-bug-report-button {
-	bottom: 31%;
 }
 
 .select-slot-button {
@@ -412,7 +426,7 @@ label {
 .table-modal .modal-dialog-surface {
 	width: 100%;
 	padding: 0.5%;
-	background: radient-gradient(#888888, #666666);
+	background: radial-gradient(#888888, #666666);
 	background-color: #777777;
 	box-sizing: border-box;
     font-size: 100%;
@@ -527,6 +541,10 @@ label {
 	width: 25%;
 	padding: 2%;
 	font-size: 120%;
+}
+.table-modal .modal-button:active, .edit-options-row button:active {
+    padding-left: calc(2% + 0.05em);
+    padding-right: calc(2% - 0.05em);
 }
 
 .pagination li a {
@@ -757,26 +775,63 @@ label {
     width: 100%;
 }
 
-#settings-background {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+.background-options-container {
+    overflow-y: auto;
+    max-height: 45rem;
 }
 
-#settings-background>li {
-    width: 19.5%;
-    margin: 0.25%;
+.background-option {
+    background-size: 100% 100%;
+    width:  24rem;
+    height: 18rem;
+
+    padding: 0.5rem;
+    border: 0.3rem solid #111111;
+    border-radius: 0.3rem;
+    
+    margin: 0.5rem;
+    vertical-align: top;
+
+    transition-property: border-color;
+    transition-duration: 0.5s;
+
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-#settings-background>li>a {
-    width: 100%;
-    white-space: nowrap;
-    padding: 0.5em 0;
+.background-option .background-info {
+    padding: 0.2rem 0.5rem;
+    text-align: center;
+    
+    border: 0.15rem solid #111111;
+    border-radius: 0.5rem;
+    
+    background-color: #FFFFFF;
+    opacity: 0.50;
+
+    font-size: 1.25rem;
+
+    transition-property: opacity;
+    transition-duration: 0.5s;
 }
 
-#settings-background>li:first-child>a, #settings-background>li:last-child>a {
-    margin-left: -0.1rem;
-    border-radius: 0px;
+.background-option .background-title {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.background-option .background-author::before {
+    content: "by: ";
+}
+
+.background-option:hover, .background-option:active {
+    border-color: #FFFFFF;
+}
+
+.background-option:hover .background-info, .background-option:active .background-info {
+    opacity: 1.0;
 }
 
 .background-credits-container {
@@ -788,7 +843,7 @@ label {
     max-height: 75vh;
 }
 
-.import-restriction-warning {
+.import-error {
     font-size: 125%;
     margin-bottom: 2%;
     color: firebrick;
@@ -800,7 +855,7 @@ label {
 #log-container {
 	width: 100%;
 	overflow-y: scroll;
-	max-height: 65vh;
+	max-height: 40rem;
 }
 
 .log-entry-container {
@@ -868,13 +923,6 @@ label {
  * look the awesome way that they do.
  ************************************************************/
 
-.dialogue-bubble-row {
-    position: absolute;
-    width: 100%;
-    height: 20%;
-    top: 2%;
-}
-
 .dialogue-bubble {
     width: 100%;
     position: absolute;
@@ -891,12 +939,13 @@ label {
     text-align: center;
 }
 
-.dialogue-bubble-row .dialogue-bubble {
-    min-height: 90%;
+.screen .dialogue-bubble {
+    min-height: 18%;
+    top: 2%;
 }
 
-.dialogue-bubble-row .dialogue-bubble, .stats-box {
-    top: 0;
+.screen .dialogue-bubble, .stats-box {
+    top: 2%;
     width: 24.5%;
     margin: 0 0.25%;
 }
@@ -964,9 +1013,6 @@ label {
 .dev-select-button {
     position: absolute;
     right: 20%;
-    top: -40%;
-    width: 19%;
-    height: 35%;
 }
 
 .dev-select-button.active {
@@ -1066,6 +1112,10 @@ label {
     cursor: text;
 }
 
+#game-screen.dev-mode .dialogue-bubble {
+    z-index: 1000 !important;
+}
+
 .dialogue-bubble[data-editing="preview"] .dialogue-edit-status::after {
     content: " (Preview)";
 }
@@ -1106,17 +1156,11 @@ label {
  * Classes for opponent images.
  ************************************************************/
 
-.image-row {
+.opponent-image-area {
     position: absolute;
-    width: 100%;
+    width: 25%;
     height: 80%;
     bottom: 0;
-}
-
-.opponent-image-area {
-	position: absolute;
-    width: 50%;
-    height: 100%;
 }
 
 .opponent-image {
@@ -1126,10 +1170,11 @@ label {
 	margin: auto;
 	bottom: 0;
 	left: 50%;
-    transform: translateX(-50%);
+	transform: translateX(-50%);
+    pointer-events: none;
 }
 
-#game-screen .image-row {
+#game-screen .opponent-image-area {
     pointer-events: none;
 }
 
@@ -1160,21 +1205,17 @@ label {
 		0.1rem 0.1rem 0 #000;
 }
 
-#title-version-button {
+.version-button {
     position: absolute;
     width: 16.5%;
     height: 5%;
     top: 17%;
     right: 17%;
-    padding-top: 0.15%;
-}
-
-#title-version-button > .substitute-version {
+    padding-top: 0.35em;
     line-height: 85%;
-    margin-top: 0.35em;
 }
 
-#title-version-button > .substitute-version-time {
+.version-button > .substitute-version-time {
     font-size: 80%;
     white-space: nowrap;
 }
@@ -1188,7 +1229,7 @@ label {
     padding-top: 0.15%;
 }
 
-#title-help-button {
+.title-help-button {
     position: absolute;
     width: 15.5%;
     height: 6.5%;
@@ -1202,13 +1243,13 @@ label {
     background-color: #f34141;
 }
 
-#title-help-button:hover {
+.title-help-button:hover {
     background: linear-gradient(#F88888, #BB3333);
 
     background-color: #F66666;
 }
 
-#title-load-button {
+.title-load-button {
     position: absolute;
     padding-top: 0.15%;
     width: 3.65%;
@@ -1426,7 +1467,7 @@ label {
 }
 
 .centered-icon-image {
-	width: 55%;
+	width: 56%;
 	height: auto;
 }
 
@@ -1439,28 +1480,27 @@ label {
 .title-start-edge {
     width: 18rem;
     font-size: 200%;
-    padding: 0.5%;
+    padding: 0.25rem;
     background: linear-gradient(#222222, #111111);
 }
 
 .title-start-button {
-    padding-left: 2%;
-    padding-right: 3%;
     width: 100%;
 }
 
 .title-entrance-image {
-	margin-left: 4%;
-    margin-top: 4%;
-    width: 90%;
+    margin-left: 0.7rem;
+    margin-top: 0.6rem;
+    margin-right: 0.2rem;
+    width: 88.5%;
 }
 
 .title-gallery-edge {
-	width: 20%;
+    width: 20%;
     height: 80%;
 
-	font-size: 200%;
-	padding: 0.2%;
+    font-size: 200%;
+    padding: 0.1rem;
     background: linear-gradient(#222222, #111111);
 
     margin-right: 6.25%;
@@ -1469,20 +1509,14 @@ label {
 .title-gallery-button {
     width: 100%;
     height: 100%;
-
-	padding-top: 1%;
-	padding-bottom: 1%;
-    padding-left: 2%;
-    padding-right: 3%;
-    font-size: 200%;
 }
 
 .title-tags-edge {
     width: 20%;
     height: 80%;
 
-	font-size: 200%;
-	padding: 0.2%;
+    font-size: 200%;
+    padding: 0.1rem;
     background: linear-gradient(#222222, #111111);
 
     margin-left: 6.25%;
@@ -1491,9 +1525,6 @@ label {
 .title-tags-button {
     width: 100%;
     height: 100%;
-
-    padding-left: 3%;
-    padding-right: 2%;
     font-size: 100%;
 }
 
@@ -1537,7 +1568,7 @@ label {
     height: 100%;
 }
 
-#title-settings-button {
+.title-settings-button {
     position: absolute;
     width: 6%;
     height: 7%;
@@ -1545,7 +1576,7 @@ label {
     top: 17%;
 }
 
-#title-settings-button > span {
+.title-settings-button > span {
     font-size: 1.75em;
 }
 
@@ -1575,7 +1606,7 @@ label {
  * Classes for the main select screen.
  ************************************************************/
 
-#main-select-area {
+.main-select-area {
     position: absolute;
     width: 90%;
     height: 12%;
@@ -1630,7 +1661,6 @@ label {
     right: 43%;
     bottom: -10%;
     font-size: 180%;
-    padding-bottom: 0.1%;
     text-align: center;
 }
 
@@ -1701,42 +1731,6 @@ label {
 
 #individual-more-info-button, #group-more-info-button {
     right: 2%;
-}
-
-.selection-image-area {
-	position: absolute;
-    width: 25%;
-    height: 100%;
-}
-
-.selection-image-area.farLeft {
-	left: 0;
-}
-
-.selection-image-area.almostLeft {
-	left: 25%;
-}
-
-.selection-image-area.farRight {
-	right: 0;
-}
-
-.selection-image-area.almostRight {
-	right: 25%;
-}
-
-.selection-image-area .opponent-image {
-	pointer-events: none;
-	position: absolute;
-	left: 50%;
-	transform: translateX(-50%);
-}
-
-.selection-image-area .custom-pose {
-	left: 0;
-	right: 0;
-	margin: 0 auto;
-	transform: none;
 }
 
 .opponent-suggestion-container {
@@ -1811,7 +1805,9 @@ label {
 }
 
 .selection-card {
+    vertical-align: top;
     display: inline-block;
+
     width: 19.5%;
     height: 44%;
 
@@ -2082,6 +2078,10 @@ label {
     margin-left: 0;
     padding: 0.1rem 0.5em;
     flex: 1;
+}
+.smooth-button.select-back-btn:active {
+    padding-left: 0.55em;
+    padding-right: 0.45em;
 }
 
 #gender-sort-column {
@@ -2473,14 +2473,13 @@ label {
 }
 
 .stats-box {
-    display: table;
     position: absolute;
     background: #F5F5F5;
     padding: 1rem;
-    height: 88%;
+    min-height: 17.6%;
 }
 
-.stats-box .stats-section {
+.stats-box .stats-section, .stats-box .stats-section-large {
     display: table;
     position: relative;
     width: 100%;
@@ -2489,10 +2488,7 @@ label {
 }
 
 .stats-box .stats-section-large {
-    position: relative;
-    width: 100%;
-    height: 47%;
-    margin-bottom: 1%;
+    height: 3.6em;
 }
 
 .stats-box .stats-label {
@@ -2533,23 +2529,49 @@ label {
 #group-select-area {
     position: absolute;
     left: 37.5%;
+    bottom: 17%;
 }
 
-#group-hide-button {
-    position: absolute;
-    width: 4%;
-    height: 5%;
-    left: 48%;
-    bottom: 36%;
-    background-color: rgba(155, 155, 155, 0.5);
+.group-preset-background-row {
+    width: 100%;
+    padding: 0.2rem 0.4rem;
+    margin-top: 0.2rem;
+    
+    background: #F5F5F5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#group-hide-button:hover {
-	background-color: rgba(155, 155, 155, 0.9);
+#group-preset-background-label::before {
+    content: "BG: ";
+    font-weight: 500;
 }
 
-#group-hide-button:active {
-    background-color: rgba(155, 155, 155, 0.75);
+#group-preset-background-label {
+    vertical-align: middle;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-left: 0.5rem;
+}
+
+#group-enable-preset-backgrounds {
+    margin: 0;
+}
+
+.group-dock-button-row {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.group-dock-button-row .hide-table-button, .group-dock-button-row .group-bug-report-button {
+    position: static;
+    display: inline-block;
+
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
 }
 
 .badge-icon {
@@ -2581,15 +2603,13 @@ label {
 }
 
 .wrap-text {
-    table-layout: fixed;
-    width: 100%;
-    word-wrap: break-word;
+    overflow-wrap: anywhere;
 }
 
-.selection-image-area .alt-costume-dropdown {
+.opponent-image-area .alt-costume-dropdown {
 	position: absolute;
 	left: 50%;
-	top: 60%;
+	top: 50%;
 	-webkit-transform: translateX(-50%);
 	-moz-transform: translateX(-50%);
 	transform: translateX(-50%);
@@ -2750,7 +2770,6 @@ label {
 
 .opponent-area .name-label {
     text-align: center;
-    background-color: #F5F5F5;
     margin-bottom: 0.2rem;
 }
 
@@ -2762,7 +2781,7 @@ label {
 .small-card-image {
     height: 5.44rem;
     width: 4.08rem;
-    background-color: #F5F5F5;
+    background-color: white;
 }
 .small-card-image + .small-card-image {
     margin-left: 0.2rem; /* not needed if space-between works. */
@@ -2901,9 +2920,15 @@ label {
 .name-label {
     text-align: center;
     background-color: #F5F5F5;
+    padding: 0.125em;
 }
 
-#player-game-clothing-area .name-label {
+.game-name-label-0 {
+    display: none;
+}
+
+#player-game-clothing-area .game-name-label-0 {
+    display: block;
     position: absolute;
     width: 65.5%;
     height: 24%;
@@ -2927,7 +2952,7 @@ label {
     width: 7.5rem;
     border-radius: 0.65rem;
     border-width: 0.2rem;
-    background-color: #F5F5F5;
+    background-color: white;
 }
 
 .large-card-image + .large-card-image {
@@ -3048,7 +3073,6 @@ label {
     background: none;
     left: 57%;
     bottom: 1%;
-    height: 15%;
     padding: 0;
 
     justify-content: center;
@@ -3056,12 +3080,14 @@ label {
 
     opacity: 0.50;
     transition-property: opacity;
+    transition-delay: 1s;
     transition-duration: 0.5s;
 }
 
 .ui-minimal .player-card-area:hover, .ui-minimal .player-card-area:active, .ui-minimal.prompt-exchange .player-card-area {
     opacity: 1.0;
     transition-property: opacity;
+    transition-delay: 0s;
     transition-duration: 0.25s;
 }
 
@@ -3074,6 +3100,7 @@ label {
 
     transition-property: width, height, margin, border-radius, border-width;
     transition-duration: 0.5s;
+    transition-delay: 1s;
 }
 
 .ui-minimal .player-card-area:hover .large-card-image,
@@ -3085,8 +3112,8 @@ label {
     border-width: 0.2rem;
     margin: 0 0.2rem;
 
-    transition-property: width, height, margin, border-radius, border-width;
     transition-duration: 0.25s;
+    transition-delay: 0s;
 }
 
 #player-game-clothing-area-minimal {
@@ -3173,27 +3200,13 @@ label {
     display: inline-flex;
 }
 
-.player-name-label-container {
-    display: none;
-}
-
-.ui-minimal .player-name-label-container {
-    position: absolute;
-    left: 0;
-    right: 0;
+.ui-minimal .game-name-label-0 {
+    display: block;
     bottom: 1%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    pointer-events: none;
-}
-
-.ui-minimal .player-name-label-container .name-label {
+    position: absolute;
+    left: 50%;
     min-width: 12%;
-    padding-top: 0.125em;
-    padding-bottom: 0.125em;
+    transform: translateX(-50%);
 }
 
 .optional-bordered {
@@ -3425,7 +3438,7 @@ label {
  * Classes for the Gallery screens.
  ************************************************************/
 
-#gallery-select-block {
+.gallery-select-block {
 	position: absolute;
 	width: 30%;
 	height: 10%;
@@ -3738,17 +3751,29 @@ label {
  * Debug stuff
  ************************************************************/
 
-.debug-button {
+.debug-button, .dev-select-button {
     position: absolute;
-    right: 0%;
-    top: -40%;
-    width: 19%;
-    height: 35%;
+    width: 3em;
+    height: 2em;
+    background-color: #F5F5F5;
+}
+
+.opponent-area .debug-button, .opponent-area .dev-select-button {
+    top: -2.25em;
+}
+
+.opponent-area .debug-button {
+    right: 0;
+}
+
+#debug-button-0 {
+    left: 1.5%;
+    bottom: 14%;
 }
 
 .debug-button.active {
-	background: linear-gradient(#BB3333, #9F1616);
-	background-color: #BB3333;
+    background: linear-gradient(#BB3333, #9F1616);
+    background-color: #BB3333;
 }
 
 .collectible-button {
@@ -3781,19 +3806,6 @@ label {
     max-height: 100%;
 }
 
-.player-debug-button {
-    position: absolute;
-    left: 1.5%;
-    bottom: 14%;
-    width: 4%;
-    height: 4%;7
-}
-
-.player-debug-button.active {
-	background: linear-gradient(#BB3333, #9F1616);
-	background-color: #BB3333;
-}
-
 /************************************************************
  * Global override classes.
  ************************************************************/
@@ -3823,7 +3835,7 @@ label {
  * UX
  ************************************************************/
 
-.player-card-area, .player-card-area input, .opponent-card-area, .player-clothing-container, .image-row {
+.player-card-area, .player-card-area input, .opponent-card-area, .opponent-image-area, .player-clothing-container, .minimal-clothing-area-row {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */

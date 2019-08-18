@@ -273,7 +273,7 @@ function loadEpilogueData(player) {
     return [];
   }
 
-  var playerGender = players[HUMAN_PLAYER].gender;
+  var playerGender = humanPlayer.gender;
 
   //get the XML tree that relates to the epilogue, for the specific player gender
   //var epXML = $($.parseXML(xml)).find('epilogue[gender="'+playerGender+'"]'); //use parseXML() so that <image> tags come through properly //IE doesn't like this
@@ -296,7 +296,7 @@ function loadEpilogueData(player) {
     }
 
     var playerStartingLayers = parseInterval($(this).attr('playerStartingLayers'));
-    if (playerStartingLayers !== undefined && !inInterval(players[HUMAN_PLAYER].startingLayers, playerStartingLayers)) {
+    if (playerStartingLayers !== undefined && !inInterval(humanPlayer.startingLayers, playerStartingLayers)) {
       return false;
     }
 
@@ -467,10 +467,12 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
 
   var $epilogue = $(rawEpilogue);
   var title = $epilogue.find("title").html().trim();
+  var gender = $epilogue.attr("gender") || 'any';
 
   var epilogue = {
     title: title,
     player: player,
+    gender: gender,
     scenes: [],
   };
   var scenes = epilogue.scenes;
@@ -844,13 +846,20 @@ function selectEpilogue(epNumber) {
  * Show the modal for the player to choose an Epilogue, or restart the game.
  ************************************************************/
 function doEpilogueModal() {
+  if (SENTRY_INITIALIZED) {
+    Sentry.addBreadcrumb({
+      category: 'ui',
+      message: 'Showing epilogue modal.',
+      level: 'info'
+    });
+  }
 
   clearEpilogueList(); //remove any already loaded epilogues
   chosenEpilogue = null; //reset any currently-chosen epilogue
   $epilogueAcceptButton.prop("disabled", true); //don't let the player accept an epilogue until they've chosen one
 
   //whether or not the human player won
-  var playerWon = !players[HUMAN_PLAYER].out;
+  var playerWon = !humanPlayer.out;
 
   if (EPILOGUES_ENABLED && playerWon) { //all the epilogues are for when the player wins, so don't allow them to choose one if they lost
     //load the epilogue data for each player
@@ -892,6 +901,9 @@ function doEpilogueModal() {
 function doEpilogue() {
   save.addEnding(chosenEpilogue.player.id, chosenEpilogue.title);
 
+  /* Prevent players from trying to load an epilogue twice. */
+  $epilogueAcceptButton.prop("disabled", true);
+
   if (USAGE_TRACKING) {
     var usage_tracking_report = {
       'date': (new Date()).toISOString(),
@@ -907,6 +919,17 @@ function doEpilogue() {
         'title': chosenEpilogue.title
       }
     };
+
+    if (SENTRY_INITIALIZED) {
+      Sentry.addBreadcrumb({
+        category: 'epilogue',
+        message: 'Starting '+chosenEpilogue.player.id+' epilogue: '+chosenEpilogue.title,
+        level: 'info'
+      });
+
+      Sentry.setTag("epilogue_gallery", false);
+      Sentry.setTag("screen", "epilogue");
+    }
 
     for (let i = 1; i < 5; i++) {
       if (players[i]) {
@@ -946,6 +969,14 @@ function loadEpilogue(epilogue) {
 
 function moveEpilogueForward() {
   if (epiloguePlayer && epiloguePlayer.loaded) {
+    if (SENTRY_INITIALIZED) {
+      Sentry.addBreadcrumb({
+        category: 'epilogue',
+        message: 'Advancing epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
+        level: 'info'
+      });
+    }
+
     epiloguePlayer.advanceDirective();
     updateEpilogueButtons();
   }
@@ -953,6 +984,14 @@ function moveEpilogueForward() {
 
 function moveEpilogueBack() {
   if (epiloguePlayer && epiloguePlayer.loaded) {
+    if (SENTRY_INITIALIZED) {
+      Sentry.addBreadcrumb({
+        category: 'epilogue',
+        message: 'Reverting epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
+        level: 'info'
+      });
+    }
+
     epiloguePlayer.revertDirective();
     updateEpilogueButtons();
   }
@@ -1170,6 +1209,7 @@ EpiloguePlayer.prototype.resizeViewport = function () {
 
 EpiloguePlayer.prototype.advanceDirective = function () {
   if (this.activeTransition) { return; } //prevent advancing during a scene transition
+
   this.waitingForAnims = false;
   this.activeScene.view.haltAnimations(false);
   this.performDirective();
@@ -1177,6 +1217,7 @@ EpiloguePlayer.prototype.advanceDirective = function () {
 
 EpiloguePlayer.prototype.performDirective = function () {
   if (this.sceneIndex >= this.epilogue.scenes.length) { return; }
+  
   this.directiveIndex++;
   if (this.directiveIndex < this.activeScene.directives.length) {
     var view = this.activeScene.view;
@@ -1225,12 +1266,18 @@ EpiloguePlayer.prototype.revertDirective = function () {
       directive.action.revert(directive, directive.action.context);
     }
     if (i < currentIndex - 1 && directive.type === "pause") {
+
+      if (this.sceneIndex >= this.epilogue.scenes.length
+          && this.activeScene === this.epilogue.scenes[this.epilogue.scenes.length-1]
+      ) {
+        /* Reverting to a directive on the last scene, so reset sceneIndex */
+        this.sceneIndex = this.epilogue.scenes.length-1;
+      }
       return;
     }
   }
 
   //reached the start of the scene, so time to back up an entire scene
-
   if (this.sceneIndex >= this.epilogue.scenes.length) {
     this.sceneIndex--; //the last scene had finished, so back up an extra time to move past that scene
   }
@@ -1238,6 +1285,7 @@ EpiloguePlayer.prototype.revertDirective = function () {
   //it would be better to make scene setup/teardown an undoable action, but for a quick and dirty method for now, just fast forward the whole scene to its last pause
   this.sceneIndex--;
   this.setupScene(this.sceneIndex, true);
+
   if (!this.activeTransition) {
     var pauseIndex;
     for (pauseIndex = this.activeScene.directives.length - 1; pauseIndex >= 0; pauseIndex--) {
@@ -1637,7 +1685,12 @@ SceneView.prototype.addBackground = function (background) {
 
 SceneView.prototype.addImage = function (id, src, args) {
   var img = document.createElement("img");
-  img.src = this.assetMap[src].src;
+  if (src) {
+    img.src = this.assetMap[src].src;
+    args.naturalWidth = args.naturalWidth || this.assetMap[src].naturalWidth;
+    args.naturalHeight = args.naturalHeight || this.assetMap[src].naturalHeight;
+  }
+
   var obj = new SceneObject(id, img, this, args);
   obj.setImage(src);
   this.addSceneObject(obj);
@@ -1648,6 +1701,9 @@ SceneView.prototype.addSprite = function (directive) {
 }
 
 SceneView.prototype.addSceneObject = function (obj) {
+  /* Don't make duplicate scene objects */
+  if (this.sceneObjects[obj.id]) return;
+    
   this.sceneObjects[obj.id] = obj;
   if (obj.element) {
     this.$canvas.append(obj.element);
@@ -1656,6 +1712,9 @@ SceneView.prototype.addSceneObject = function (obj) {
 }
 
 SceneView.prototype.removeSceneObject = function (directive) {
+  /* If this object has already been deleted, our work here is done */
+  if (!this.sceneObjects[directive.id]) return;
+
   this.sceneObjects[directive.id].destroy();
   delete this.sceneObjects[directive.id];
 }
@@ -1717,7 +1776,7 @@ SceneView.prototype.removeText = function (directive, context) {
 }
 
 SceneView.prototype.applyTextDirective = function (directive, box) {
-  var content = expandDialogue(directive.text, null, players[HUMAN_PLAYER]);
+  var content = expandDialogue(directive.text, null, humanPlayer);
 
   box.html('<span>' + content + '</span>');
   box.addClass(directive.arrow)
@@ -1761,6 +1820,8 @@ SceneView.prototype.applyTextDirective = function (directive, box) {
 SceneView.prototype.clearAllText = function (directive, context) {
   var $this = this;
   context = context || {};
+  context.boxes = context.boxes || [];
+  
   for (var box in this.textObjects) {
     this.clearText({ id: this.textObjects[box].data("id") }, context, true);
   }
@@ -2089,8 +2150,8 @@ function SceneObject(id, element, view, args) {
 
     var width = args.width;
     var height = args.height;
-    var naturalWidth = element.naturalWidth || 100;
-    var naturalHeight = element.naturalHeight || 100;
+    var naturalWidth = args.naturalWidth || element.naturalWidth || 100;
+    var naturalHeight = args.naturalHeight || element.naturalHeight || 100;
 
     if (width) {
       if (width.endsWith("%")) {
@@ -2170,6 +2231,8 @@ SceneObject.prototype = {
   },
 
   setImage: function (src) {
+    if (!src) return;
+
     this.rotElement.src = this.view.assetMap[src].src;
     this.src = src;
   },

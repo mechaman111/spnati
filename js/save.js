@@ -95,7 +95,7 @@ function Save() {
         'female': [ 'jacket', 'tank top', 'bra', 'belt', 'pants', 'panties', 'stockings', 'shoes' ],
     };
     this.loadPlayer = function() {
-        var gender = players[HUMAN_PLAYER].gender;
+        var gender = humanPlayer.gender;
         var profile = {};
         try {
             profile = JSON.parse(localStorage.getItem(prefix + gender)) || { };
@@ -110,26 +110,27 @@ function Save() {
         playerTagSelections = profile.tags || {};
     };
     this.savePlayer = function(){
-        localStorage.setItem(prefix + 'gender', players[HUMAN_PLAYER].gender);
+        localStorage.setItem(prefix + 'gender', humanPlayer.gender);
     /*  var tags = {};
         for (var key in playerTagSelections) {
             tags[key] = playerTagSelections[key];
         }*/
         var profile = {
             name: $nameField.val(),
-            size: players[HUMAN_PLAYER].size,
+            size: humanPlayer.size,
             tags: playerTagSelections,
-            clothing: clothingChoices[players[HUMAN_PLAYER].gender].filter(function(item, ix) {
+            clothing: clothingChoices[humanPlayer.gender].filter(function(item, ix) {
                 return selectedChoices[ix];
             }).map(function(item) { return item.name; }),
         };
-        localStorage.setItem(prefix + players[HUMAN_PLAYER].gender, JSON.stringify(profile));
+        localStorage.setItem(prefix + humanPlayer.gender, JSON.stringify(profile));
     };
     this.loadOptions = function(){
         try {
             var options = JSON.parse(localStorage.getItem(prefix + 'options')) || { };
             if ('autoFade' in options && typeof options.autoFade == 'boolean') AUTO_FADE = options.autoFade;
             if ('cardSuggest' in options && typeof options.cardSuggest == 'boolean') CARD_SUGGEST = options.cardSuggest;
+            if ('explainHands' in options && typeof options.explainHands == 'boolean') EXPLAIN_ALL_HANDS = options.explainHands;
             if ('gameDelay' in options && typeof options.gameDelay == 'number') GAME_DELAY = options.gameDelay;
             if ('dealAnimation' in options && typeof options.dealAnimation == 'number') {
                 ANIM_TIME = options.dealAnimation;
@@ -147,8 +148,15 @@ function Save() {
         }
         try {
             var settings = JSON.parse(localStorage.getItem(prefix + 'settings')) || {};
-            if ('stamina' in settings) players[HUMAN_PLAYER].stamina = settings.stamina;
-            if ('background' in settings) setBackground(settings.background);
+            if ('stamina' in settings) humanPlayer.stamina = settings.stamina;
+
+            this.loadOptionsBackground(settings);
+
+            if ('useGroupBackgrounds' in settings) {
+                useGroupBackgrounds = !!settings.useGroupBackgrounds;
+            } else {
+                useGroupBackgrounds = true;
+            }
         } catch (ex) {
             console.error('Failed parsing settings from localStorage');
         }
@@ -158,9 +166,25 @@ function Save() {
         }
         var gender = localStorage.getItem(prefix + 'gender');
         if (gender) {
-            players[HUMAN_PLAYER].gender = gender;
+            humanPlayer.gender = gender;
         }
     };
+    this.loadOptionsBackground = function (settings) {
+        if (!settings) {
+            settings = JSON.parse(localStorage.getItem(prefix + 'settings')) || {};
+        }
+
+        optionsBackground = defaultBackground;
+
+        if ('background' in settings) {
+            var bg_id = settings.background;
+            if (backgrounds[bg_id]) {
+                optionsBackground = backgrounds[bg_id];
+            }
+        };
+
+        return optionsBackground.activateBackground();
+    }
     this.saveUsageTracking = function() {
         if (USAGE_TRACKING !== undefined) {
             localStorage.setItem(prefix + 'usageTracking', USAGE_TRACKING ? 'yes' : 'no');
@@ -170,6 +194,7 @@ function Save() {
         var options = {
             autoFade: AUTO_FADE,
             cardSuggest: CARD_SUGGEST,
+            explainHands: EXPLAIN_ALL_HANDS,
             gameDelay: GAME_DELAY,
             dealAnimation: ANIM_TIME,
             autoForfeit: FORFEIT_DELAY,
@@ -179,9 +204,15 @@ function Save() {
         localStorage.setItem(prefix + 'options', JSON.stringify(options));
     };
     this.saveSettings = function() {
-        var settings = { stamina: players[HUMAN_PLAYER].stamina };
-        if (selectedBackground != defaultBackground) {
-            settings.background = selectedBackground;
+        var settings = {
+            stamina: humanPlayer.stamina,
+            useGroupBackgrounds: useGroupBackgrounds
+        };
+
+        if (optionsBackground && optionsBackground.id !== defaultBackground.id) {
+            settings.background = optionsBackground.id;
+        } else {
+            delete settings.background;
         }
         localStorage.setItem(prefix + 'settings', JSON.stringify(settings));
     };
@@ -258,13 +289,27 @@ function Save() {
 
     /** Loads a base64-encoded JSON string into the localStorage */
     this.deserializeLocalStorage = function (code) {
-        var json = Base64.decode(code);
-        var data = JSON.parse(json);
+        try {
+            var json = Base64.decode(code);
+            console.log(json);
+            var data = JSON.parse(json);
+        } catch (e) {
+            if (e instanceof SyntaxError) {
+                /* JSON parse error */
+                return false;
+            } else {
+                /* re-raise everything else */
+                throw e;
+            }
+        }
+        
         localStorage.clear();
         for (var key in data) {
             localStorage.setItem(key, data[key]);
         }
         save.load();
+
+        return true;
     }
 }
 

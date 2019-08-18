@@ -66,7 +66,7 @@ function startMasturbation (player) {
     
     if (player == HUMAN_PLAYER) {
         $gameClothingLabel.html("You're Masturbating...");
-        $gamePlayerCountdown.html(players[HUMAN_PLAYER].timer);
+        $gamePlayerCountdown.html(humanPlayer.timer);
         $gamePlayerCountdown.show();
     }
     
@@ -177,7 +177,7 @@ function tickForfeitTimers () {
     }
     // Show a player masturbating while dealing or after the game, if there is one available
     if (masturbatingPlayers.length > 0
-        && ((gamePhase == eGamePhase.DEAL && players[HUMAN_PLAYER].out) || gamePhase == eGamePhase.EXCHANGE || gamePhase == eGamePhase.END_LOOP)) {
+        && ((gamePhase == eGamePhase.DEAL && humanPlayer.out) || gamePhase == eGamePhase.EXCHANGE || gamePhase == eGamePhase.END_LOOP)) {
         var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)]
         var others_tags = [[players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING, OPPONENT_MASTURBATING]];
         if (players[playerToShow].forfeit[0] == PLAYER_HEAVY_MASTURBATING) {
@@ -206,7 +206,7 @@ function finishMasturbation (player) {
 	// HARD SET STAGE
 	players[player].stage += 1;
 	players[player].finished = true;
-    players[player].forfeit = [PLAYER_FINISHED_MASTURBATING, CAN_SPEAK];
+    players[player].forfeit = [[[PLAYER_AFTER_MASTURBATING], [PLAYER_FINISHED_MASTURBATING]], CAN_SPEAK];
 	players[player].stageChangeUpdate();
     
 	/* update player dialogue */

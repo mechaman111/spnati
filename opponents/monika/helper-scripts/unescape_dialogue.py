@@ -24,8 +24,16 @@ def main():
                     state_elem.text
                 )
     
+    for trigger_elem in root.find('behaviour').iter('trigger'):
+        for case_elem in trigger_elem.iter('case'):
+            for state_elem in case_elem.iter('state'):
+                state_elem.text = TEXT_UNESCAPE_RE.sub(
+                    lambda m: TEXT_UNESCAPES[m.group(0)],
+                    state_elem.text
+                )
+    
     with open('behaviour.xml', 'w', encoding='utf-8') as f:
-        f.write(root.serialize(False))
+        f.write(root.serialize(False, False))
 
 if __name__ == '__main__':
     main()

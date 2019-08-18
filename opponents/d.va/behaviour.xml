@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.3 at 2:11:04 AM on May 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 2:51:10 AM on August 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v4.3</version>
+    <version>v5.0</version>
     <first>D.Va</first>
     <last />
     <label>D.Va</label>
@@ -12,38 +12,38 @@
     <intelligence>average</intelligence>
 
     <tags>
-        <tag>overwatch</tag>
-        <tag>overwatch_franchise</tag>
-        <tag>video_game</tag>
-        <tag>future</tag>
-        <tag>sci-fi</tag>
-        <tag>bodysuit</tag>
         <tag>brunette</tag>
-        <tag>korean</tag>
         <tag>long_hair</tag>
         <tag>dark_eyes</tag>
-        <tag>medium_breasts</tag>
         <tag>shaved</tag>
-        <tag>confident</tag>
+        <tag>medium_breasts</tag>
+        <tag from="0" to="3">bodysuit</tag>
         <tag>cheerful</tag>
+        <tag>confident</tag>
         <tag>fashionable</tag>
-        <tag>military</tag>
-        <tag>mech_pilot</tag>
-        <tag>hero</tag>
-        <tag>gamer</tag>
+        <tag>korean</tag>
+        <tag>overwatch</tag>
+        <tag>future</tag>
+        <tag>sci-fi</tag>
+        <tag>video_game</tag>
+        <tag>overwatch_franchise</tag>
         <tag>celebrity</tag>
+        <tag>gamer</tag>
         <tag>fighter</tag>
+        <tag>mech_pilot</tag>
+        <tag>military</tag>
+        <tag>hero</tag>
     </tags>
 
     <start />
 
     <wardrobe>
-        <clothing lowercase="panties" position="lower" formalName="Panties" type="important" plural="true" />
-        <clothing lowercase="bra" position="upper" formalName="Bra" type="important" />
-        <clothing lowercase="suit" position="both" formalName="Suit" type="major" />
-        <clothing lowercase="headphones" position="other" formalName="Headphones" type="extra" plural="true" />
-        <clothing lowercase="boots" position="other" formalName="Boots" type="extra" plural="true" />
-        <clothing lowercase="gloves" position="other" formalName="Gloves" type="extra" plural="true" />
+        <clothing name="panties" generic="Panties" position="lower" type="important" plural="true" />
+        <clothing name="bra" generic="Bra" position="upper" type="important" />
+        <clothing name="suit" generic="suit" position="both" type="major" />
+        <clothing name="headphones" generic="headphones" position="head" type="extra" plural="true" />
+        <clothing name="boots" generic="boots" position="feet" type="extra" plural="true" />
+        <clothing name="gloves" generic="gloves" position="hands" type="extra" plural="true" />
     </wardrobe>
 
     <poses />
@@ -62,9 +62,16 @@
             <case tag="selected" alsoPlaying="zone-tan">
                 <state img="0-awkward.png">Wow! Zone-tan is playing too! I know you from... Um. Let's all introduce ourselves first.</state>
             </case>
-            <case tag="selected">
+            <case tag="selected" id="0-10">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="0-peaceside.png">What's happenin', Daddio?</state>
+            </case>
+            <case tag="opponent_selected" oneShotId="4" filter="video_game">
+                <condition count="1" filter="fighter" role="target" />
+                <state img="0-calm.png">Look who it is! I know you're good in a fight.</state>
+            </case>
+            <case tag="opponent_selected" oneShotId="3" filter="video_game">
+                <state img="0-shocked.png">~Name~, you're real?! I'm such a huge fan!</state>
             </case>
             <case tag="game_start">
                 <state img="0-calm.png">Wow, nice comp. This is gonna be easy!</state>
@@ -74,11 +81,11 @@
                 <state img="0-warpaint.png">Makeup whiskers? Nuh-uh! This is &lt;i&gt;warpaint&lt;/i&gt;!</state>
                 <state img="0-warpaint.png">Makeup? Nuh-uh! This is &lt;i&gt;warpaint&lt;/i&gt;!</state>
                 <state img="0-winking.png">Oh, is this like Fighters of the Storm 2? Because I used to main Garrosh.</state>
-				</case>
+            </case>
             <case tag="game_start" alsoPlaying="natsuki">
                 <state img="0-excited.png">Everyone here is so cute! I'm obviously in the right room.</state>
             </case>
-            <case tag="game_start" priority="0">
+            <case tag="game_start" id="0-11" priority="0">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="0-riveting_cruiser.png">I can do it!</state>
             </case>
@@ -109,7 +116,7 @@
             <case tag="good_hand" totalRounds="4">
                 <state img="0-heart.png">If you ever see anyone else get MVP, that's just the system being broken!</state>
             </case>
-            <case tag="good_hand" totalRounds="5">
+            <case tag="good_hand" id="0-42" oneShotId="2" totalRounds="5-">
                 <state img="0-winking.png" marker="d.va_wager_set">Who wants to raise the stakes? The first person to lose has to do anything the winner says. And I mean &lt;i&gt;anything&lt;/i&gt;!</state>
             </case>
             <case tag="okay_hand">
@@ -154,9 +161,9 @@
                 <condition count="4" filter="overwatch" />
                 <state img="0-winking.png">Aw yeah, the whole team is here! And it looks like we got a new recruit.</state>
             </case>
-            <case tag="hand" alsoPlaying="raven" alsoPlayingStage="2" notSaidMarker="d.va_raven_now_entering" alsoPlayingSaying="in Jump City">
+            <case tag="hand" oneShotId="6" alsoPlaying="raven" alsoPlayingStage="2" alsoPlayingSaying="in Jump City">
                 <test expr="~raven.position~" value="left" />
-                <state img="0-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~background~&lt;/i&gt; when you loaded in?</state>
+                <state img="0-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~Background~&lt;/i&gt; when you loaded in?</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="0-peace.png">You guys are losing and I'm only &lt;i&gt;now&lt;/i&gt; losing my gloves.</state>
@@ -165,7 +172,7 @@
             <case tag="must_strip_winning" alsoPlaying="mei" alsoPlayingStage="1">
                 <state img="0-angry.png">I don't want Snowball to freeze me again. He is so rude!</state>
             </case>
-            <case tag="must_strip_winning" priority="0">
+            <case tag="must_strip_winning" id="0-12" priority="0">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="0-prestrip_cruiser.png">You guys are losing and I'm only &lt;i&gt;now&lt;/i&gt; losing my bangles.</state>
             </case>
@@ -176,7 +183,7 @@
             <case tag="must_strip_normal" alsoPlaying="mei" alsoPlayingStage="1">
                 <state img="0-angry.png">I don't want Snowball to freeze me again. He is so rude!</state>
             </case>
-            <case tag="must_strip_normal">
+            <case tag="must_strip_normal" id="0-36">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="0-prestrip_cruiser.png">I guess it's time to lose these snazzy bangles.</state>
             </case>
@@ -186,7 +193,7 @@
             <case tag="must_strip_losing" alsoPlaying="mei" alsoPlayingStage="1">
                 <state img="0-angry.png">I don't want Snowball to freeze me again. He is so rude!</state>
             </case>
-            <case tag="must_strip_losing">
+            <case tag="must_strip_losing" id="0-35">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="0-prestrip_cruiser.png">Aw, no fair. I should've been able to wear my mech as an extra layer.</state>
             </case>
@@ -196,18 +203,22 @@
             <case tag="stripping" alsoPlaying="streaming-chan">
                 <state img="0-heart.png">Quick shoutout to my fans: Thanks for all the love and support!</state>
             </case>
-            <case tag="stripping" priority="0">
+            <case tag="stripping" id="0-4" priority="0">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="0-strip.png">Tell you what, I'll take the ascot off, too.</state>
                 <state img="0-strip.png">I've got places to be, so how about I take this thing off, too?</state>
             </case>
+            <case tag="male_human_must_strip">
+                <state img="0-winking.png" marker="male_human_first_piece">Hey there, ~name~!</state>
+                <state img="0-calm.png" marker="male_human_first_piece">Are you really that easy to beat? That's surprising!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="0-stripped.png">I won again! I just hope I won't get nerfed...</state>
             </case>
-            <case tag="male_must_strip" oppHand="two pair">
+            <case tag="male_must_strip" oppHand="Two Pair">
                 <state img="0-shocked.png">You lost with two pair? Damn, that's cruel!</state>
             </case>
-            <case tag="male_must_strip" oppHand="two pair">
+            <case tag="male_must_strip" id="0-30" oppHand="Two Pair">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="0-shocked.png">You lost with two pair? Dang, that's cruel!</state>
             </case>
@@ -221,15 +232,12 @@
                 <state img="0-saluting.png">~Name~ strip sequence initiated.</state>
                 <state img="0-peaceside.png">I already like this game!</state>
                 <state img="0-calm.png">Ooh, I'm curious what you'll take off...</state>
+                <state img="0-calm.png" marker="d.va_saki_academy">You're Saki, right? You remind me of when I was at the Academy. Are you also in the pilot program?</state>
             </case>
             <case tag="female_must_strip" filter="overwatch" totalRounds="0">
                 <state img="0-heart.png">Hey, my favorite teammate! Picked off already?</state>
             </case>
-            <case tag="female_must_strip" filter="video_game" targetStage="0">
-                <state img="0-calm.png">Look who it is! I know you're good in a fight.</state>
-                <state img="0-shocked.png">~Name~, you're real?! I'm such a huge fan!</state>
-            </case>
-            <case tag="female_must_strip" oppHand="two pair">
+            <case tag="female_must_strip" oppHand="Two Pair">
                 <state img="0-shocked.png">You lost with two pair? Damn, that's cruel!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
@@ -322,6 +330,9 @@
             <case tag="female_must_strip" target="revy">
                 <state img="0-shocked.png">How did you sneak those guns in?! I had to leave my cute pistol in my mech...</state>
             </case>
+            <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
+                <state img="0-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
+            </case>
             <case tag="female_must_strip" target="terezi" targetStage="3">
                 <state img="0-peace.png">This is too easy, Terezi!</state>
             </case>
@@ -338,16 +349,12 @@
                 <test expr="~raven.position~" value="left" />
                 <state img="0-excited.png">Of course you're first! No mercy for red team!</state>
             </case>
-            <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
-                <state img="0-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
-            </case>
-            <case tag="female_must_strip" oppHand="two pair">
+            <case tag="female_must_strip" id="0-29" oppHand="Two Pair">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="0-shocked.png">You lost with two pair? Dang, that's cruel!</state>
             </case>
-            <case tag="male_human_must_strip">
-                <state img="0-winking.png" marker="male_human_first_piece">Hey there, ~name~!</state>
-                <state img="0-calm.png" marker="male_human_first_piece">Are you really that easy to beat? That's surprising!</state>
+            <case tag="tie">
+                <state img="0-shocked.png">Should we flip a coin to see who loses?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="0-peace.png">Seems like I'm standing untouched for another round.</state>
@@ -621,7 +628,7 @@
             <case tag="female_crotch_is_visible" target="nugi-chan">
                 <state img="0-peace.png">Nugi-chan, you're a maid, so I guess I won't need to explain to you what "teabagging" is.</state>
             </case>
-            <case tag="female_crotch_is_visible" notSaidMarker="d.va_black_cat_kitty_joke">
+            <case tag="female_crotch_is_visible" id="0-20" notSaidMarker="d.va_black_cat_kitty_joke">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="0-horny.png" marker="d.va_black_cat_kitty_joke">Isn't &lt;i&gt;that&lt;/i&gt; a pretty kitty?</state>
             </case>
@@ -643,6 +650,10 @@
             <case tag="female_must_masturbate">
                 <state img="0-excited.png">Looks like another victory. Just a little longer!</state>
             </case>
+            <case tag="female_must_masturbate" filter="uses_toy">
+                <state img="0-winking.png" oneShotId="1">Time to get out the hardware!</state>
+                <state img="0-excited.png" oneShotId="2">Get ready to rumble!</state>
+            </case>
             <case tag="female_must_masturbate" target="elizabeth" totalMasturbating="0" totalFinished="0" saidMarker="d.va_wager_set">
                 <state img="0-winking.png">Don't forget our little side bet, Lizzie. You have to do &lt;i&gt;anything&lt;/i&gt; the winner wants. If you're &lt;i&gt;woman&lt;/i&gt; enough, that is.</state>
             </case>
@@ -660,6 +671,10 @@
             </case>
             <case tag="female_must_masturbate" target="natsuki">
                 <state img="0-winking.png">You're as cute as a button, Natsuki. But now it's time to button mash!</state>
+            </case>
+            <case tag="female_must_masturbate" id="0-45" oneShotId="5" priority="0">
+                <test expr="~self.costume~" value="d.va_cruiser" />
+                <state img="0-excited.png">Time for some back seat bingo, ~name~.</state>
             </case>
             <case tag="female_start_masturbating">
                 <state img="0-serene.png">I can call my mech to help you with that, if you want... That thing can feel great!</state>
@@ -686,11 +701,11 @@
                 <state img="0-stripped.png">I already have four golds in this match.</state>
                 <state img="0-horny.png">Uggghh, I really wanna do this...</state>
             </case>
+            <case tag="female_finished_masturbating" filter="cheater">
+                <state img="0-angry.png">I don't normally cheat, but I had to teach you a lesson! Now I'll start playing for real.</state>
+            </case>
             <case tag="female_finished_masturbating" target="mercy">
                 <state img="0-horny.png">I love your new ult, Mercy...</state>
-            </case>
-            <case tag="female_finished_masturbating" target="nugi-chan">
-                <state img="0-angry.png">I don't normally cheat, but I had to teach you a lesson! Now I'll start playing for real.</state>
             </case>
             <case tag="female_finished_masturbating" target="tracer">
                 <state img="0-hornier.png">Awesome! Tracer, how about you Recall and do that all again?</state>
@@ -739,9 +754,13 @@
                 <state img="1-angry.png">I have much better cards on the PTR.</state>
                 <state img="1-shy.png">Let's just press the reset button, now that we're still in early-game...</state>
             </case>
-            <case tag="hand" alsoPlaying="raven" alsoPlayingStage="2" notSaidMarker="d.va_raven_now_entering" alsoPlayingSaying="in Jump City">
+            <case tag="hand" oneShotId="6" alsoPlaying="raven" alsoPlayingStage="2" alsoPlayingSaying="in Jump City">
                 <test expr="~raven.position~" value="left" />
-                <state img="1-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~background~&lt;/i&gt; when you loaded in?</state>
+                <state img="1-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~Background~&lt;/i&gt; when you loaded in?</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="saki">
+                <test expr="~saki.position~" value="left" />
+                <state img="1-winking.png">What's on your mind, Saki?</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="1-peace.png" marker="d.va_noobs">I'm owning all you noobs anyway.</state>
@@ -752,7 +771,7 @@
             <case tag="must_strip_losing">
                 <state img="1-angry.png">Damn it!</state>
             </case>
-            <case tag="must_strip_losing">
+            <case tag="must_strip_losing" id="1-34">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="1-angry.png">Dang it!</state>
             </case>
@@ -766,20 +785,27 @@
             <case tag="stripping" alsoPlaying="marinette" alsoPlayingStage="3-10" alsoPlayingSaidMarker="d.va_competition">
                 <state img="1-strip.png">If you can't hold your own, get out of the game, Marinette. I don't play for charity.</state>
             </case>
+            <case tag="stripping" alsoPlaying="saki">
+                <state img="1-strip.png">Thanks for the support!</state>
+            </case>
             <case tag="stripped">
                 <state img="1-stripped.png">I'm back in the fight!</state>
             </case>
-            <case tag="stripped">
+            <case tag="stripped" id="1-33">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="1-stripped.png">Guess this kitty's claws are finally coming out!</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="1-heart.png" marker="male_human_first_piece">I hope you know this is the whole reason we came today, ~name~.</state>
+                <state img="1-excited.png" marker="male_human_first_piece">Let me know if you need help choosing something to take off, ~name~.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="1-stripped.png">Stop stalling, get to it!</state>
             </case>
-            <case tag="male_must_strip" oppHand="two pair">
+            <case tag="male_must_strip" oppHand="Two Pair">
                 <state img="1-shocked.png">You lost with two pair? Damn, that's cruel!</state>
             </case>
-            <case tag="male_must_strip" oppHand="two pair">
+            <case tag="male_must_strip" id="1-30" oppHand="Two Pair">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="1-shocked.png">You lost with two pair? Dang, that's cruel!</state>
             </case>
@@ -787,11 +813,12 @@
                 <state img="1-heart.png" marker="female_human_first_piece">Time to take something off!</state>
             </case>
             <case tag="female_must_strip">
+                <state img="1-calm.png" marker="d.va_saki_academy">You're Saki, right? You remind me of when I was at the Academy. Are you also in the pilot program?</state>
                 <state img="1-peace.png">Viva D.Va!</state>
                 <state img="1-winking.png">Yeah! Now, show us some good stuff, ~name~!</state>
                 <state img="1-calm.png">Practice makes perfect.</state>
             </case>
-            <case tag="female_must_strip" oppHand="two pair">
+            <case tag="female_must_strip" oppHand="Two Pair">
                 <state img="1-shocked.png">You lost with two pair? Damn, that's cruel!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
@@ -851,22 +878,18 @@
             <case tag="female_must_strip" target="revy">
                 <state img="1-shocked.png">How did you sneak those guns in?! I had to leave my cute pistol in my mech...</state>
             </case>
+            <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
+                <state img="1-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
+            </case>
             <case tag="female_must_strip" target="tracer" targetStage="0">
                 <state img="1-peaceside.png">Hiya, Tracer! Are you ready for action?</state>
             </case>
             <case tag="female_must_strip" target="zoey" targetStage="3">
                 <state img="1-calm.png">Zoey, you seem cool enough. Maybe just not mech-from-the-sky cool.</state>
             </case>
-            <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
-                <state img="1-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
-            </case>
-            <case tag="female_must_strip" oppHand="two pair">
+            <case tag="female_must_strip" id="1-29" oppHand="Two Pair">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="1-shocked.png">You lost with two pair? Dang, that's cruel!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="1-heart.png" marker="male_human_first_piece">I hope you know this is the whole reason we came today, ~name~.</state>
-                <state img="1-excited.png" marker="male_human_first_piece">Let me know if you need help choosing something to take off, ~name~.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="1-sad.png">Just your ~clothing~? How long does this game last?</state>
@@ -1081,7 +1104,7 @@
             <case tag="female_medium_chest_is_visible" target="zoey">
                 <state img="1-heart.png">Be confident! You just proved that you're brave and amazing!</state>
             </case>
-            <case tag="female_medium_chest_is_visible">
+            <case tag="female_medium_chest_is_visible" id="1-21">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="1-horny.png">Whoah, mama!</state>
             </case>
@@ -1133,7 +1156,7 @@
             <case tag="female_crotch_is_visible" target="nugi-chan">
                 <state img="1-peace.png">Nugi-chan, you're a maid, so I guess I won't need to explain to you what "teabagging" is.</state>
             </case>
-            <case tag="female_crotch_is_visible" notSaidMarker="d.va_black_cat_kitty_joke">
+            <case tag="female_crotch_is_visible" id="1-20" notSaidMarker="d.va_black_cat_kitty_joke">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="1-horny.png" marker="d.va_black_cat_kitty_joke">Isn't &lt;i&gt;that&lt;/i&gt; a pretty kitty?</state>
             </case>
@@ -1147,7 +1170,7 @@
                 <state img="1-horny.png">I'd love to help, but I just took off my gloves.</state>
                 <state img="1-hornier.png">Give it a whirl, and entertain this girl!</state>
             </case>
-            <case tag="male_start_masturbating">
+            <case tag="male_start_masturbating" id="1-17">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="1-horny.png">I'd love to help, but I'm a little busy playing to win here.</state>
             </case>
@@ -1159,6 +1182,10 @@
             </case>
             <case tag="female_must_masturbate">
                 <state img="1-heart.png">You're ready to go &lt;i&gt;hole&lt;/i&gt;-hog!</state>
+            </case>
+            <case tag="female_must_masturbate" filter="uses_toy">
+                <state img="1-winking.png" oneShotId="1">Time to get out the hardware!</state>
+                <state img="1-excited.png" oneShotId="2">Get ready to rumble!</state>
             </case>
             <case tag="female_must_masturbate" target="elizabeth" totalMasturbating="0" totalFinished="0" saidMarker="d.va_wager_set">
                 <state img="1-winking.png">Don't forget our little side bet, Lizzie. You have to do &lt;i&gt;anything&lt;/i&gt; the winner wants. If you're &lt;i&gt;woman&lt;/i&gt; enough, that is.</state>
@@ -1177,6 +1204,10 @@
             </case>
             <case tag="female_must_masturbate" target="natsuki">
                 <state img="1-winking.png">You're as cute as a button, Natsuki. But now it's time to button mash!</state>
+            </case>
+            <case tag="female_must_masturbate" id="1-45" oneShotId="5" priority="0">
+                <test expr="~self.costume~" value="d.va_cruiser" />
+                <state img="1-excited.png">Time for some back seat bingo, ~name~.</state>
             </case>
             <case tag="female_start_masturbating">
                 <state img="1-stripped.png">I bet you got tons of tricks!</state>
@@ -1202,14 +1233,14 @@
             <case tag="female_finished_masturbating">
                 <state img="1-shy.png">~Name~, I think you just unlocked a new spray!</state>
             </case>
+            <case tag="female_finished_masturbating" filter="cheater">
+                <state img="1-angry.png">I don't normally cheat, but I had to teach you a lesson! Now I'll start playing for real.</state>
+            </case>
             <case tag="female_finished_masturbating" target="mercy">
                 <state img="1-horny.png">I love your new ult, Mercy...</state>
             </case>
             <case tag="female_finished_masturbating" target="mia">
                 <state img="1-calm.png">The first part of the game is over and Mia is already out. I'm not surprised.</state>
-            </case>
-            <case tag="female_finished_masturbating" target="nugi-chan">
-                <state img="1-angry.png">I don't normally cheat, but I had to teach you a lesson! Now I'll start playing for real.</state>
             </case>
             <case tag="female_finished_masturbating" target="tracer">
                 <state img="1-hornier.png">Awesome! Tracer, how about you Recall and do that all again?</state>
@@ -1255,25 +1286,25 @@
                 <state img="2-winking.png">Oh, okay, question from Streaming-chan's chat: Where do all the MEKA you detonate come from? Great question, CrypticSpoon. No idea, but thanks for asking!</state>
                 <state img="2-stripped.png">I've got some leet skills! Streaming-chan, send me the replay later.</state>
             </case>
-            <case tag="good_hand" priority="0">
+            <case tag="good_hand" id="2-41" priority="0">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="2-winking.png">Hot dog!</state>
+            </case>
+            <case tag="okay_hand" oneShotId="1">
+                <state img="2-awkward.png" marker="d.va_lucio_playing">I heard that Lucio's playing a set at Inner City Spectacle tonight. Oh... I hope they let me in.</state>
             </case>
             <case tag="okay_hand">
                 <state img="2-calm.png">This isn't the best defense I've seen, but it should be enough.</state>
                 <state img="2-calm.png">No problem.</state>
-            </case>
-            <case tag="okay_hand" notSaidMarker="d.va_lucio_playing">
-                <state img="2-awkward.png" marker="d.va_lucio_playing">I heard that Lucio's playing a set at Inner City Spectacle tonight. Oh... I hope they let me in.</state>
             </case>
             <case tag="bad_hand">
                 <state img="2-excited.png">Is it too late to just spectate this match?</state>
                 <state img="2-loss.png">Uggh, this is what I call a hard counter.</state>
                 <state img="2-angry.png">Ugh... This is worse than when they nerfed my mech.</state>
             </case>
-            <case tag="hand" alsoPlaying="raven" alsoPlayingStage="2" notSaidMarker="d.va_raven_now_entering" alsoPlayingSaying="in Jump City">
+            <case tag="hand" oneShotId="6" alsoPlaying="raven" alsoPlayingStage="2" alsoPlayingSaying="in Jump City">
                 <test expr="~raven.position~" value="left" />
-                <state img="2-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~background~&lt;/i&gt; when you loaded in?</state>
+                <state img="2-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~Background~&lt;/i&gt; when you loaded in?</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="2-serene.png">I'm just getting warmed up.</state>
@@ -1283,7 +1314,7 @@
                 <state img="2-strip.png">But my favorite podcast is on!</state>
                 <state img="2-excited.png">Aw, you must like me!</state>
             </case>
-            <case tag="must_strip_normal">
+            <case tag="must_strip_normal" id="2-37">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="2-excited.png">Could you hold on to my collar, ~player~?</state>
             </case>
@@ -1298,7 +1329,7 @@
             <case tag="stripping" alsoPlaying="xander">
                 <state img="2-strip.png">They're just headphones...</state>
             </case>
-            <case tag="stripping">
+            <case tag="stripping" id="2-5">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="2-strip.png">Without my collar, I guess one of you'll just &lt;i&gt;have&lt;/i&gt; to take me home now, right?</state>
                 <state img="2-strip.png">I'd normally take my headphones off around now, but...</state>
@@ -1308,10 +1339,10 @@
                 <state img="2-stripped.png" marker="d.va_kicks_butt_without_shoes">I don't need shoes to kick your butt.</state>
             </case>
             <case tag="stripped" alsoPlaying="buffy">
-                <state img="2-stripped.png">I don't need shoes to kick your butt.</state>
+                <state img="2-stripped.png" marker="d.va_kicks_butt_without_shoes">I don't need shoes to kick your butt.</state>
             </case>
             <case tag="stripped" alsoPlaying="kim">
-                <state img="2-stripped.png">I don't need shoes to kick your butt.</state>
+                <state img="2-stripped.png" marker="d.va_kicks_butt_without_shoes">I don't need shoes to kick your butt.</state>
             </case>
             <case tag="stripped" alsoPlaying="marinette" alsoPlayingStage="0-1" alsoPlayingSaidMarker="d.va_competition">
                 <state img="2-angry.png">Damn it. Just because you're ahead now doesn't mean you'll win!</state>
@@ -1322,16 +1353,27 @@
             <case tag="stripped" alsoPlaying="marinette" alsoPlayingStage="3-10" alsoPlayingSaidMarker="d.va_competition">
                 <state img="2-peace.png">I should've bet you more than an autograph, Marinette, if you're willing to lose so quickly for just that!</state>
             </case>
+            <case tag="stripped" alsoPlaying="saki">
+                <state img="2-heart.png" marker="nickname*=3Ki_Yo1Da">Thanks for watching my streams, Saki!</state>
+            </case>
             <case tag="stripped" alsoPlaying="xander">
-                <state img="2-stripped.png">I don't need shoes to kick your butt.</state>
+                <state img="2-stripped.png" marker="d.va_kicks_butt_without_shoes">I don't need shoes to kick your butt.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="saki">
+                <test expr="~saki.position~" value="left" />
+                <state img="2-heart.png" marker="nickname*=3Ki_Yo1Da">You're "3Ki_Yo1Da"? Awesome! Nice to meet one of best supporters!</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="2-excited.png" marker="male_human_first_piece">Take it off!</state>
+                <state img="2-stripped.png" marker="male_human_first_piece">Whose turn is it to strip now? Not mine, that's who!</state>
             </case>
             <case tag="male_must_strip">
                 <state img="2-winking.png">Got you, ~name~!</state>
             </case>
-            <case tag="male_must_strip" oppHand="two pair">
+            <case tag="male_must_strip" oppHand="Two Pair">
                 <state img="2-shocked.png">You lost with two pair? Damn, that's cruel!</state>
             </case>
-            <case tag="male_must_strip" oppHand="two pair">
+            <case tag="male_must_strip" id="2-30" oppHand="Two Pair">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="2-shocked.png">You lost with two pair? Dang, that's cruel!</state>
             </case>
@@ -1339,10 +1381,11 @@
                 <state img="2-winking.png" marker="female_human_first_piece">Take it off!</state>
             </case>
             <case tag="female_must_strip">
+                <state img="2-calm.png" marker="d.va_saki_academy">You're Saki, right? You remind me of when I was at the Academy. Are you also in the pilot program?</state>
                 <state img="2-winking.png">Got you, ~name~!</state>
                 <state img="2-stripped.png">Oh yeah! I'm the winner again!</state>
             </case>
-            <case tag="female_must_strip" oppHand="two pair">
+            <case tag="female_must_strip" oppHand="Two Pair">
                 <state img="2-shocked.png">You lost with two pair? Damn, that's cruel!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
@@ -1390,6 +1433,9 @@
             <case tag="female_must_strip" target="orendi" targetStage="1">
                 <state img="2-calm.png">Orendi, is it true that you operate the Orisa suit from the &lt;i&gt;inside&lt;/i&gt;?</state>
             </case>
+            <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
+                <state img="2-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
+            </case>
             <case tag="female_must_strip" target="tracer" targetStage="0">
                 <state img="2-peaceside.png">Hiya, Tracer! Are you ready for action?</state>
             </case>
@@ -1399,16 +1445,9 @@
             <case tag="female_must_strip" target="zone-tan">
                 <state img="2-winking.png">It's your go, Zo!</state>
             </case>
-            <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
-                <state img="2-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
-            </case>
-            <case tag="female_must_strip" oppHand="two pair">
+            <case tag="female_must_strip" id="2-29" oppHand="Two Pair">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="2-shocked.png">You lost with two pair? Dang, that's cruel!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="2-excited.png" marker="male_human_first_piece">Take it off!</state>
-                <state img="2-stripped.png" marker="male_human_first_piece">Whose turn is it to strip now? Not mine, that's who!</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="2-peaceside.png">I figured you'd do this. Removing your ~clothing~ IS the dominant strategy, after all...</state>
@@ -1670,7 +1709,7 @@
             <case tag="female_crotch_is_visible" target="nugi-chan">
                 <state img="2-peace.png">Nugi-chan, you're a maid, so I guess I won't need to explain to you what "teabagging" is.</state>
             </case>
-            <case tag="female_crotch_is_visible" notSaidMarker="d.va_black_cat_kitty_joke">
+            <case tag="female_crotch_is_visible" id="2-20" notSaidMarker="d.va_black_cat_kitty_joke">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="2-horny.png" marker="d.va_black_cat_kitty_joke">Isn't &lt;i&gt;that&lt;/i&gt; a pretty kitty?</state>
             </case>
@@ -1693,6 +1732,10 @@
             <case tag="female_must_masturbate">
                 <state img="2-winking.png">Time to "pass into the iris", ~name~!</state>
             </case>
+            <case tag="female_must_masturbate" filter="uses_toy">
+                <state img="2-winking.png" oneShotId="1">Time to get out the hardware!</state>
+                <state img="2-excited.png" oneShotId="2">Get ready to rumble!</state>
+            </case>
             <case tag="female_must_masturbate" target="elizabeth" totalMasturbating="0" totalFinished="0" saidMarker="d.va_wager_set">
                 <state img="2-winking.png">Don't forget our little side bet, Lizzie. You have to do &lt;i&gt;anything&lt;/i&gt; the winner wants. If you're &lt;i&gt;woman&lt;/i&gt; enough, that is.</state>
             </case>
@@ -1710,6 +1753,10 @@
             </case>
             <case tag="female_must_masturbate" target="natsuki">
                 <state img="2-winking.png">You're as cute as a button, Natsuki. But now it's time to button mash!</state>
+            </case>
+            <case tag="female_must_masturbate" id="2-45" oneShotId="5" priority="0">
+                <test expr="~self.costume~" value="d.va_cruiser" />
+                <state img="2-excited.png">Time for some back seat bingo, ~name~.</state>
             </case>
             <case tag="female_start_masturbating">
                 <state img="2-saluting.png">I'd like to Watch Over you as you're doing this!</state>
@@ -1735,14 +1782,14 @@
             <case tag="female_finished_masturbating">
                 <state img="2-shocked.png">~Name~ eliminated!</state>
             </case>
+            <case tag="female_finished_masturbating" filter="cheater">
+                <state img="2-angry.png">I don't normally cheat, but I had to teach you a lesson! Now I'll start playing for real.</state>
+            </case>
             <case tag="female_finished_masturbating" target="mercy">
                 <state img="2-horny.png">I love your new ult, Mercy...</state>
             </case>
             <case tag="female_finished_masturbating" target="mia">
                 <state img="2-calm.png">The first part of the game is over and Mia is already out. I'm not surprised.</state>
-            </case>
-            <case tag="female_finished_masturbating" target="nugi-chan">
-                <state img="2-angry.png">I don't normally cheat, but I had to teach you a lesson! Now I'll start playing for real.</state>
             </case>
             <case tag="female_finished_masturbating" target="tracer">
                 <state img="2-hornier.png">Awesome! Tracer, how about you Recall and do that all again?</state>
@@ -1793,9 +1840,9 @@
             <case tag="bad_hand" totalRounds="3">
                 <state img="3-shocked.png">This is so crazy!</state>
             </case>
-            <case tag="hand" alsoPlaying="raven" alsoPlayingStage="2" notSaidMarker="d.va_raven_now_entering" alsoPlayingSaying="in Jump City">
+            <case tag="hand" oneShotId="6" alsoPlaying="raven" alsoPlayingStage="2" alsoPlayingSaying="in Jump City">
                 <test expr="~raven.position~" value="left" />
-                <state img="3-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~background~&lt;/i&gt; when you loaded in?</state>
+                <state img="3-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~Background~&lt;/i&gt; when you loaded in?</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="3-excited.png">There goes my winning streak...</state>
@@ -1805,11 +1852,11 @@
                 <state img="3-awkward.png">My suit took too much damage. Bailing out!</state>
                 <state img="3-excited.png">I was hoping I'd get the chance to show off!</state>
             </case>
-            <case tag="must_strip_normal" priority="0">
+            <case tag="must_strip_normal" id="3-38" priority="0">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="3-awkward.png">My dress took too much damage. Bailing out!</state>
             </case>
-            <case tag="must_strip_normal" priority="0">
+            <case tag="must_strip_normal" id="3-39" priority="0">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="3-prestrip_cruiser.png">My outfit took too much damage. Bailing out!</state>
             </case>
@@ -1820,11 +1867,11 @@
             <case tag="stripping">
                 <state img="3-strip.png">Suiting down...</state>
             </case>
-            <case tag="stripping">
+            <case tag="stripping" id="3-7">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="3-strip.png">Guess there's really only one way to see a cat's... skin? The analogy is less erotic than I'd like.</state>
             </case>
-            <case tag="stripping">
+            <case tag="stripping" id="3-8">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="3-strip.png">Yeah, I've got a stream to get to, so this round's a twofer.</state>
             </case>
@@ -1835,6 +1882,16 @@
             </case>
             <case tag="stripped" alsoPlaying="kim">
                 <state img="3-stripped.png">Time to get serious!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="saki">
+                <state img="3-peaceside.png" marker="d,va_saki_invite">You should come over to the MEKA base, 3Ki_Yo1Da. I have a lot of downtime.</state>
+            </case>
+            <case tag="stripped" alsoPlaying="saki">
+                <test expr="~saki.position~" value="left" />
+                <state img="3-winking.png" marker="d,va_saki_invite">Sure thing, 3Ki_Yo1Da! What games to you like to play? How about Fighters of the Storm 2?</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="3-stripped.png" marker="male_human_first_piece">I showed you my ears. I think the guy equivalent is bare chest at minimum.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="3-excited.png">Sweet!</state>
@@ -1847,6 +1904,7 @@
                 <state img="3-peace.png" marker="female_human_first_piece">Another victory for the blue team!</state>
             </case>
             <case tag="female_must_strip">
+                <state img="3-calm.png" marker="d.va_saki_academy">You're Saki, right? You remind me of when I was at the Academy. Are you also in the pilot program?</state>
                 <state img="3-peaceside.png">All right!</state>
                 <state img="3-calm.png">Time to take something off, ~name~!</state>
             </case>
@@ -1886,14 +1944,11 @@
             <case tag="female_must_strip" target="orendi" targetStage="1">
                 <state img="3-calm.png">Orendi, is it true that you operate the Orisa suit from the &lt;i&gt;inside&lt;/i&gt;?</state>
             </case>
-            <case tag="female_must_strip" target="zoey" targetStage="3">
-                <state img="3-calm.png">Zoey, you seem cool enough. Maybe just not mech-from-the-sky cool.</state>
-            </case>
             <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
                 <state img="3-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
             </case>
-            <case tag="male_human_must_strip">
-                <state img="3-stripped.png" marker="male_human_first_piece">I showed you my ears. I think the guy equivalent is bare chest at minimum.</state>
+            <case tag="female_must_strip" target="zoey" targetStage="3">
+                <state img="3-calm.png">Zoey, you seem cool enough. Maybe just not mech-from-the-sky cool.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="3-serene.png">At least I'll be able to hear you guys better now without my headphones on.</state>
@@ -2151,7 +2206,7 @@
             <case tag="female_crotch_is_visible" target="mia">
                 <state img="3-shocked.png">Oh, that's so bold!</state>
             </case>
-            <case tag="female_crotch_is_visible" notSaidMarker="d.va_black_cat_kitty_joke">
+            <case tag="female_crotch_is_visible" id="3-20" notSaidMarker="d.va_black_cat_kitty_joke">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="3-horny.png" marker="d.va_black_cat_kitty_joke">Isn't &lt;i&gt;that&lt;/i&gt; a pretty kitty?</state>
             </case>
@@ -2161,14 +2216,14 @@
             <case tag="male_must_masturbate" target="pit" totalMasturbating="0" totalFinished="0" saidMarker="d.va_wager_set">
                 <state img="3-horny.png">Don't forget our little side bet, Pit. You have to do &lt;i&gt;anything&lt;/i&gt; the winner wants. And if I win... let's just say you'll never play "Halo" again.</state>
             </case>
-            <case tag="male_must_masturbate">
+            <case tag="male_must_masturbate" id="3-19">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="3-excited.png">These ears actually have a strategic advantage too, y'know?</state>
             </case>
             <case tag="male_start_masturbating">
                 <state img="3-stripped.png">Come on, you can try harder than that!</state>
             </case>
-            <case tag="male_start_masturbating">
+            <case tag="male_start_masturbating" id="3-18">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="3-stripped.png">They can pick up &lt;i&gt;every&lt;/i&gt; little sound you make, so don't try and hide it!</state>
             </case>
@@ -2180,6 +2235,10 @@
             </case>
             <case tag="female_must_masturbate">
                 <state img="3-excited.png">Time for your "escort mission", ~name~!</state>
+            </case>
+            <case tag="female_must_masturbate" filter="uses_toy">
+                <state img="3-winking.png" oneShotId="1">Time to get out the hardware!</state>
+                <state img="3-excited.png" oneShotId="2">Get ready to rumble!</state>
             </case>
             <case tag="female_must_masturbate" target="elizabeth" totalMasturbating="0" totalFinished="0" saidMarker="d.va_wager_set">
                 <state img="3-winking.png">Don't forget our little side bet, Lizzie. You have to do &lt;i&gt;anything&lt;/i&gt; the winner wants. If you're &lt;i&gt;woman&lt;/i&gt; enough, that is.</state>
@@ -2198,6 +2257,10 @@
             </case>
             <case tag="female_must_masturbate" target="natsuki">
                 <state img="3-winking.png">You're as cute as a button, Natsuki. But now it's time to button mash!</state>
+            </case>
+            <case tag="female_must_masturbate" id="3-45" oneShotId="5" priority="0">
+                <test expr="~self.costume~" value="d.va_cruiser" />
+                <state img="3-excited.png">Time for some back seat bingo, ~name~.</state>
             </case>
             <case tag="female_start_masturbating">
                 <state img="3-awkward.png">Don't be shy! I may look young, but I've seen enough camgirls do this!</state>
@@ -2272,7 +2335,7 @@
             <case tag="good_hand" alsoPlaying="xander" alsoPlayingHand="high card">
                 <state img="4-winking.png">Xander, you're too normal to join Overwatch. If you want in, steal a high-tech weapon and fake your own death!</state>
             </case>
-            <case tag="good_hand" alsoPlaying="zoey" alsoPlayingStage="6" alsoPlayingHand="high card">
+            <case tag="good_hand" alsoPlaying="zoey" alsoPlayingStage="6">
                 <state img="4-excited.png">I hope you like surprises, Zoey!</state>
             </case>
             <case tag="okay_hand">
@@ -2290,9 +2353,9 @@
             <case tag="bad_hand" notSaidMarker="male_human_first_piece">
                 <state img="4-shocked.png">~Player~, so OP!</state>
             </case>
-            <case tag="hand" alsoPlaying="raven" alsoPlayingStage="2" notSaidMarker="d.va_raven_now_entering" alsoPlayingSaying="in Jump City">
+            <case tag="hand" oneShotId="6" alsoPlaying="raven" alsoPlayingStage="2" alsoPlayingSaying="in Jump City">
                 <test expr="~raven.position~" value="left" />
-                <state img="4-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~background~&lt;/i&gt; when you loaded in?</state>
+                <state img="4-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~Background~&lt;/i&gt; when you loaded in?</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="4-heart.png">This one's for my fans!</state>
@@ -2321,6 +2384,20 @@
             <case tag="stripped" alsoPlaying="xander">
                 <state img="4-stripped.png" marker="d.va_needs_a_hug">I could really use a hug right now.</state>
             </case>
+            <case tag="male_human_must_strip">
+                <state img="4-stripped.png" marker="male_human_first_piece">You got me out of my suit, so I'm hoping for a lot here!</state>
+            </case>
+            <case tag="male_human_must_strip" target="human" targetStage="0">
+                <state img="4-awkward.png" marker="male_human_first_piece">Wow, you're pretty good... Are you a pro at this?</state>
+            </case>
+            <case tag="male_human_must_strip" id="4-31">
+                <test expr="~self.costume~" value="d.va_black_cat" />
+                <state img="4-stripped.png" marker="male_human_first_piece">You got me out of my dress, so I'm hoping for a lot here!</state>
+            </case>
+            <case tag="male_human_must_strip" id="4-32">
+                <test expr="~self.costume~" value="d.va_cruiser" />
+                <state img="4-stripped.png" marker="male_human_first_piece">You got me out of my clothes, so I'm hoping for a lot here!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="4-loss.png">Believe me that this is more than a fair trade!</state>
             </case>
@@ -2330,15 +2407,16 @@
             <case tag="female_human_must_strip">
                 <state img="4-winking.png" marker="female_human_first_piece">Why not take off two things? I had to take off my whole suit in one go.</state>
             </case>
-            <case tag="female_human_must_strip">
+            <case tag="female_human_must_strip" id="4-27">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="4-winking.png" marker="female_human_first_piece">Why not take off two things? My dress must have had, like, at &lt;i&gt;least&lt;/i&gt; seven or eight different parts!</state>
             </case>
-            <case tag="female_human_must_strip">
+            <case tag="female_human_must_strip" id="4-28">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="4-winking.png" marker="female_human_first_piece">Why not take off two things? It's only fair.</state>
             </case>
             <case tag="female_must_strip">
+                <state img="4-calm.png" marker="d.va_saki_academy">You're Saki, right? You remind me of when I was at the Academy. Are you also in the pilot program?</state>
                 <state img="4-heart.png">Configuration: Celebratory!</state>
                 <state img="4-calm.png">The huntress lays a trap for her prey...</state>
                 <state img="4-winking.png">Ding!</state>
@@ -2383,28 +2461,14 @@
             <case tag="female_must_strip" target="orendi" targetStage="1">
                 <state img="4-calm.png">Orendi, is it true that you operate the Orisa suit from the &lt;i&gt;inside&lt;/i&gt;?</state>
             </case>
+            <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
+                <state img="4-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
+            </case>
             <case tag="female_must_strip" target="terezi" targetStage="0">
                 <state img="4-sad.png">You're not making this easy for us, Terezi!</state>
             </case>
             <case tag="female_must_strip" target="zoey" targetStage="2">
                 <state img="4-calm.png">Are you &lt;i&gt;finally&lt;/i&gt; going to unzip that jacket?</state>
-            </case>
-            <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
-                <state img="4-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="4-stripped.png" marker="male_human_first_piece">You got me out of my suit, so I'm hoping for a lot here!</state>
-            </case>
-            <case tag="male_human_must_strip" target="human" targetStage="0">
-                <state img="4-awkward.png" marker="male_human_first_piece">Wow, you're pretty good... Are you a pro at this?</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <test expr="~self.costume~" value="d.va_black_cat" />
-                <state img="4-stripped.png" marker="male_human_first_piece">You got me out of my dress, so I'm hoping for a lot here!</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <test expr="~self.costume~" value="d.va_cruiser" />
-                <state img="4-stripped.png" marker="male_human_first_piece">You got me out of my clothes, so I'm hoping for a lot here!</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="4-loss.png">Pffft, this is so much cheese.</state>
@@ -2515,7 +2579,7 @@
             <case tag="female_removed_minor" target="sakura" targetStage="4">
                 <state img="4-awkward.png" marker="d.va_sakura_omnic">Are... are you an omnic, Sakura?</state>
             </case>
-            <case tag="female_removed_minor">
+            <case tag="female_removed_minor" id="4-24">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="4-shy.png">I took off that big, puffy dress! You could at least take off something a little bigger than your ~clothing~!</state>
             </case>
@@ -2523,7 +2587,7 @@
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="4-winking.png" marker="d.va_sakura_halloween_skin">Don't feel embarrassed. I wore my Halloween skin today too just because it's good fanservice!</state>
             </case>
-            <case tag="female_removed_minor">
+            <case tag="female_removed_minor" id="4-25">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="4-shy.png">I took off my my shirt &lt;i&gt;and&lt;/i&gt; pants! You could at least take off something a little bigger than your ~clothing~!</state>
                 <state img="4-sad.png">You know I'm in a rush, right?</state>
@@ -2675,7 +2739,7 @@
             <case tag="female_crotch_is_visible" target="mia">
                 <state img="4-horny.png">Maybe I should follow your lead...</state>
             </case>
-            <case tag="female_crotch_is_visible" notSaidMarker="d.va_black_cat_kitty_joke">
+            <case tag="female_crotch_is_visible" id="4-20" notSaidMarker="d.va_black_cat_kitty_joke">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="4-horny.png" marker="d.va_black_cat_kitty_joke">Isn't &lt;i&gt;that&lt;/i&gt; a pretty kitty?</state>
             </case>
@@ -2699,6 +2763,10 @@
             <case tag="female_must_masturbate">
                 <state img="4-excited.png">Time to dive in, ~name~!</state>
             </case>
+            <case tag="female_must_masturbate" filter="uses_toy">
+                <state img="4-winking.png" oneShotId="1">Time to get out the hardware!</state>
+                <state img="4-excited.png" oneShotId="2">Get ready to rumble!</state>
+            </case>
             <case tag="female_must_masturbate" target="elizabeth" totalMasturbating="0" totalFinished="0" saidMarker="d.va_wager_set">
                 <state img="4-winking.png">Don't forget our little side bet, Lizzie. You have to do &lt;i&gt;anything&lt;/i&gt; the winner wants. If you're &lt;i&gt;woman&lt;/i&gt; enough, that is.</state>
             </case>
@@ -2716,6 +2784,10 @@
             </case>
             <case tag="female_must_masturbate" target="natsuki">
                 <state img="4-winking.png">You're as cute as a button, Natsuki. But now it's time to button mash!</state>
+            </case>
+            <case tag="female_must_masturbate" id="4-45" oneShotId="5" priority="0">
+                <test expr="~self.costume~" value="d.va_cruiser" />
+                <state img="4-excited.png">Time for some back seat bingo, ~name~.</state>
             </case>
             <case tag="female_start_masturbating">
                 <state img="4-hornier.png">Yeah! Just get right in there!</state>
@@ -2789,9 +2861,9 @@
                 <state img="5-stripped.png">Retry! Retry! Retry!</state>
                 <state img="5-sad.png">I'm not a good loser.</state>
             </case>
-            <case tag="hand" alsoPlaying="raven" alsoPlayingStage="2" notSaidMarker="d.va_raven_now_entering" alsoPlayingSaying="in Jump City">
+            <case tag="hand" oneShotId="6" alsoPlaying="raven" alsoPlayingStage="2" alsoPlayingSaying="in Jump City">
                 <test expr="~raven.position~" value="left" />
-                <state img="5-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~background~&lt;/i&gt; when you loaded in?</state>
+                <state img="5-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~Background~&lt;/i&gt; when you loaded in?</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="5-handsonhips.png">Time for me to get "buffed"!</state>
@@ -2803,7 +2875,7 @@
                 <state img="5-sad.png">I lost? No fair!</state>
             </case>
             <case tag="must_strip_losing" priority="0">
-                <condition count="0" filter="d.va_cruiser" />
+                <test expr="~self.costume~" cmp="!=" value="d.va_cruiser" />
                 <state img="5-stripped.png">Damn it!</state>
             </case>
             <case tag="must_strip_losing" totalFemales="1-5" priority="0">
@@ -2817,14 +2889,25 @@
             <case tag="stripping" alsoPlaying="xander">
                 <state img="5-strip.png">Oh man, if my fans saw me like this... Hmm... That would actually be kinda hot.</state>
             </case>
-            <case tag="stripping">
+            <case tag="stripping" id="5-2">
+                <test expr="~self.costume~" value="d.va_black_cat" />
+                <state img="5-handsonhips.png">Pussy time...</state>
+            </case>
+            <case tag="stripping" id="5-6">
                 <test expr="~self.costume~" value="d.va_cruiser" />
-                <state img="5-handsonhips.png">Now I'll bare it all.</state>
+                <state img="5-handsonhips.png">Can this kitten join in?</state>
+            </case>
+            <case tag="stripping" id="5-3" totalNaked="0">
+                <test expr="~self.costume~" value="d.va_cruiser" />
+                <state img="5-handsonhips.png">I guess we really &lt;i&gt;are&lt;/i&gt; "going for pinks".</state>
             </case>
             <case tag="stripped">
                 <state img="5-stripped.png">I wish I could call down my mech right about now.</state>
                 <state img="5-stripped.png">I hope I don't get banned for this!</state>
                 <state img="5-peace.png">Who wants to be in my selfie?</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="5-heart.png">Show me something interesting and I might give you a long look at these.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="5-peace.png">Time to strip, ~name~.</state>
@@ -2836,6 +2919,7 @@
                 <state img="5-peaceside.png">I give this game a ten out of ten!</state>
             </case>
             <case tag="female_must_strip">
+                <state img="5-calm.png" marker="d.va_saki_academy">You're Saki, right? You remind me of when I was at the Academy. Are you also in the pilot program?</state>
                 <state img="5-horny.png">Hey, if we both lose, we could play something else together after this...</state>
                 <state img="5-winking.png">You lost! Now, what are you gonna take off, ~name~?</state>
             </case>
@@ -2878,14 +2962,11 @@
             <case tag="female_must_strip" target="orendi" targetStage="1">
                 <state img="5-calm.png">Orendi, is it true that you operate the Orisa suit from the &lt;i&gt;inside&lt;/i&gt;?</state>
             </case>
-            <case tag="female_must_strip" target="zoey" targetStage="2">
-                <state img="5-calm.png">Are you &lt;i&gt;finally&lt;/i&gt; going to unzip that jacket?</state>
-            </case>
             <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
                 <state img="5-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
             </case>
-            <case tag="male_human_must_strip">
-                <state img="5-heart.png">Show me something interesting and I might give you a long look at these.</state>
+            <case tag="female_must_strip" target="zoey" targetStage="2">
+                <state img="5-calm.png">Are you &lt;i&gt;finally&lt;/i&gt; going to unzip that jacket?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="5-angry.png">You're gonna remove accessories now!?</state>
@@ -3135,7 +3216,7 @@
             <case tag="female_crotch_is_visible" target="mia">
                 <state img="5-stripped.png">Panties first? You're making me look bad...</state>
             </case>
-            <case tag="female_crotch_is_visible" notSaidMarker="d.va_black_cat_kitty_joke">
+            <case tag="female_crotch_is_visible" id="5-20" notSaidMarker="d.va_black_cat_kitty_joke">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="5-horny.png" marker="d.va_black_cat_kitty_joke">Isn't &lt;i&gt;that&lt;/i&gt; a pretty kitty?</state>
             </case>
@@ -3159,6 +3240,10 @@
             <case tag="female_must_masturbate">
                 <state img="5-winking.png">You're gonna go for the finger strats? I usually like using some extra tools, instead.</state>
             </case>
+            <case tag="female_must_masturbate" filter="uses_toy">
+                <state img="5-winking.png" oneShotId="1">Time to get out the hardware!</state>
+                <state img="5-excited.png" oneShotId="2">Get ready to rumble!</state>
+            </case>
             <case tag="female_must_masturbate" target="elizabeth" totalMasturbating="0" totalFinished="0" saidMarker="d.va_wager_set">
                 <state img="5-winking.png">Don't forget our little side bet, Lizzie. You have to do &lt;i&gt;anything&lt;/i&gt; the winner wants. If you're &lt;i&gt;woman&lt;/i&gt; enough, that is.</state>
             </case>
@@ -3176,6 +3261,10 @@
             </case>
             <case tag="female_must_masturbate" target="natsuki">
                 <state img="5-winking.png">You're as cute as a button, Natsuki. But now it's time to button mash!</state>
+            </case>
+            <case tag="female_must_masturbate" id="5-45" oneShotId="5" priority="0">
+                <test expr="~self.costume~" value="d.va_cruiser" />
+                <state img="5-excited.png">Time for some back seat bingo, ~name~.</state>
             </case>
             <case tag="female_start_masturbating">
                 <state img="5-excited.png">I love this part!</state>
@@ -3260,15 +3349,19 @@
             <case tag="bad_hand" totalMasturbating="0" totalFinished="0" saidMarker="d.va_wager_set" notSaidMarker="d.va_wager_regret">
                 <state img="6-dismayed.png" marker="d.va_wager_regret">Remember how I raised the stakes earlier? I'm starting to regret that...</state>
             </case>
-            <case tag="hand" alsoPlaying="raven" alsoPlayingStage="2" notSaidMarker="d.va_raven_now_entering" alsoPlayingSaying="in Jump City">
+            <case tag="hand" oneShotId="6" alsoPlaying="raven" alsoPlayingStage="2" alsoPlayingSaying="in Jump City">
                 <test expr="~raven.position~" value="left" />
-                <state img="6-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~background~&lt;/i&gt; when you loaded in?</state>
+                <state img="6-calm.png" marker="d.va_raven_now_entering">Raven, didn't you heard the annoucer say &lt;i&gt;Now entering: ~Background~&lt;/i&gt; when you loaded in?</state>
             </case>
             <case tag="stripped">
                 <state img="6-dismayed.png">I feel more exposed now than when I'm out of my mech.</state>
                 <state img="6-saluting.png">Activating Self-Destruct Sequence...</state>
                 <state img="6-excited.png">D.Va one, clothing zero...</state>
                 <state img="6-peace.png">You're looking at a copyrighted clit, ~player~!</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="6-winking.png">This would be a perfect opportunity to take it all off, ~name~.</state>
+                <state img="6-excited.png">Ooh, yeah! I'm a sucker for this stuff!</state>
             </case>
             <case tag="male_must_strip">
                 <state img="6-peace.png">This is a small price for you to pay to see a star like me nude!</state>
@@ -3280,6 +3373,7 @@
                 <state img="6-shocked.png">This game is tense!</state>
             </case>
             <case tag="female_must_strip">
+                <state img="6-calm.png" marker="d.va_saki_academy">You're Saki, right? You remind me of when I was at the Academy. Are you also in the pilot program?</state>
                 <state img="6-calm.png">How can someone say no to this smile?</state>
                 <state img="6-horny.png">I didn't lose...?! Err... That's a relief, I guess...</state>
             </case>
@@ -3322,15 +3416,11 @@
             <case tag="female_must_strip" target="nugi-chan" targetStage="2">
                 <state img="6-loss.png">I'd bet anything that my next event outfit will be a maid's costume. Unless they give it to Mercy instead...</state>
             </case>
-            <case tag="female_must_strip" target="zoey" targetStage="2">
-                <state img="6-loss.png">Are you &lt;i&gt;finally&lt;/i&gt; going to unzip that jacket?</state>
-            </case>
             <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
                 <state img="6-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
             </case>
-            <case tag="male_human_must_strip">
-                <state img="6-winking.png">This would be a perfect opportunity to take it all off, ~name~.</state>
-                <state img="6-excited.png">Ooh, yeah! I'm a sucker for this stuff!</state>
+            <case tag="female_must_strip" target="zoey" targetStage="2">
+                <state img="6-loss.png">Are you &lt;i&gt;finally&lt;/i&gt; going to unzip that jacket?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="6-sad.png">Are you even trying?</state>
@@ -3587,7 +3677,7 @@
             <case tag="female_crotch_is_visible" target="mia">
                 <state img="6-peace.png">You sure catch up quick!</state>
             </case>
-            <case tag="female_crotch_is_visible" notSaidMarker="d.va_black_cat_kitty_joke">
+            <case tag="female_crotch_is_visible" id="6-20" notSaidMarker="d.va_black_cat_kitty_joke">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="6-horny.png" marker="d.va_black_cat_kitty_joke">Isn't &lt;i&gt;that&lt;/i&gt; a pretty kitty?</state>
             </case>
@@ -3611,6 +3701,10 @@
             </case>
             <case tag="female_must_masturbate">
                 <state img="6-excited.png">Ah, this won't be too hard for you, right?</state>
+            </case>
+            <case tag="female_must_masturbate" filter="uses_toy">
+                <state img="6-winking.png" oneShotId="1">Time to get out the hardware!</state>
+                <state img="6-excited.png" oneShotId="2">Get ready to rumble!</state>
             </case>
             <case tag="female_must_masturbate" target="elizabeth" totalMasturbating="0" totalFinished="0" saidMarker="d.va_wager_set">
                 <state img="6-winking.png">Don't forget our little side bet, Lizzie. You have to do &lt;i&gt;anything&lt;/i&gt; the winner wants. If you're &lt;i&gt;woman&lt;/i&gt; enough, that is.</state>
@@ -3711,6 +3805,10 @@
         </stage>
 
         <stage id="7">
+            <case tag="male_human_must_strip">
+                <state img="7-winking.png">Yes! Show us more!</state>
+                <state img="7-winking.png">Some more skin would really boost me up...!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="7-excited.png">Oooh yeah! Take off as much as you want!</state>
             </case>
@@ -3718,6 +3816,7 @@
                 <state img="7-peace.png">T-that's one for my highlight reel!</state>
             </case>
             <case tag="female_must_strip">
+                <state img="7-calm.png" marker="d.va_saki_academy">You're Saki, right? You remind me of when I was at the Academy. Are you also in the pilot program?</state>
                 <state img="7-peaceside.png">Looks like you're finally catching up!</state>
                 <state img="7-winking.png">We could make out while you're stripping...</state>
             </case>
@@ -3748,15 +3847,11 @@
             <case tag="female_must_strip" target="marinette" targetStage="3">
                 <state img="7-angry.png" marker="d.va_mari_art">You're some kind of art student? Well, you must have all the time in the world to practice to be winning like this!</state>
             </case>
-            <case tag="female_must_strip" target="zoey" targetStage="2">
-                <state img="7-loss.png">Are you &lt;i&gt;finally&lt;/i&gt; going to unzip that jacket?</state>
-            </case>
             <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
                 <state img="7-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
             </case>
-            <case tag="male_human_must_strip">
-                <state img="7-winking.png">Yes! Show us more!</state>
-                <state img="7-winking.png">Some more skin would really boost me up...!</state>
+            <case tag="female_must_strip" target="zoey" targetStage="2">
+                <state img="7-loss.png">Are you &lt;i&gt;finally&lt;/i&gt; going to unzip that jacket?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="7-shy.png">This is hardly a striptease...</state>
@@ -3805,7 +3900,7 @@
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="7-loss.png">Sure, just throw your guns on the ground. Plenty more where those came from, edgelord.</state>
             </case>
-            <case tag="female_removed_accessory">
+            <case tag="female_removed_accessory" id="7-26">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="7-angry.png">I honestly hope the rest of your clothing gets hooked to point 2 of Ilios, right the heck now.</state>
             </case>
@@ -3887,7 +3982,7 @@
                 <test expr="~akko.position~" value="left" />
                 <state img="7-winking.png" marker="d.va_akko_mech">Have you tried piloting an awesome mech? That always gets &lt;i&gt;me&lt;/i&gt; the attention I deserve!</state>
             </case>
-            <case tag="female_removed_major">
+            <case tag="female_removed_major" id="7-23">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="7-horny.png">Jeez, I love this...</state>
             </case>
@@ -3935,7 +4030,7 @@
             <case tag="female_small_chest_is_visible" target="meg">
                 <state img="7-excited.png">I get extra turned on when I picture my male fans watching this... so thanks!</state>
             </case>
-            <case tag="female_small_chest_is_visible">
+            <case tag="female_small_chest_is_visible" id="7-22">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="7-heart.png">I don't care about the size, those are cute as heck!</state>
             </case>
@@ -3986,7 +4081,7 @@
             <case tag="female_crotch_is_visible" target="mia">
                 <state img="7-excited.png">Thanks for skipping ahead!</state>
             </case>
-            <case tag="female_crotch_is_visible" notSaidMarker="d.va_black_cat_kitty_joke">
+            <case tag="female_crotch_is_visible" id="7-20" notSaidMarker="d.va_black_cat_kitty_joke">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="7-horny.png" marker="d.va_black_cat_kitty_joke">Isn't &lt;i&gt;that&lt;/i&gt; a pretty kitty?</state>
             </case>
@@ -4005,13 +4100,17 @@
                 <state img="7-shocked.png">Wait up! Let's not trickle in...</state>
                 <state img="7-peaceblush.png">Holy fuck, dude, this is 10/10!</state>
             </case>
-            <case tag="male_finished_masturbating">
+            <case tag="male_finished_masturbating" id="7-16">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="7-peaceblush.png">Aw, jeez, dude, this is 10/10!</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="7-winking.png">Should I help you with that? It will go a lot faster if we team up!</state>
                 <state img="7-hornier.png">Group up here!</state>
+            </case>
+            <case tag="female_must_masturbate" filter="uses_toy">
+                <state img="7-winking.png" oneShotId="1">Time to get out the hardware!</state>
+                <state img="7-excited.png" oneShotId="2">Get ready to rumble!</state>
             </case>
             <case tag="female_must_masturbate" target="jane">
                 <state img="7-heart.png">Time for the Play of the Jane!</state>
@@ -4039,7 +4138,7 @@
             <case tag="female_start_masturbating" target="zone-tan">
                 <state img="7-finishing.png">Ohhh, that video was &lt;i&gt;so&lt;/i&gt; hot... Seeing your cute body like that... was... &lt;i&gt;ahhhh&lt;/i&gt;...</state>
             </case>
-            <case tag="female_start_masturbating" target="tifa">
+            <case tag="female_start_masturbating" id="7-40" target="tifa">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="7-hornier.png">Pleasuring myself together with Tifa Lockhart? This really is my final fantasy! G-gosh...!</state>
             </case>
@@ -4075,7 +4174,7 @@
                 <state img="7-shocked.png">O-oooh fuck! This is s-sooo much better with an audience...!</state>
                 <state img="7-excited.png">I'm a masturbation enthusiast!</state>
             </case>
-            <case tag="masturbating" priority="0">
+            <case tag="masturbating" id="7-15" priority="0">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="7-shocked.png">O-oooh jeez! This is s-sooo much better with an audience...!</state>
             </case>
@@ -4084,7 +4183,7 @@
                 <state img="7-horny.png">G-getting ready to BLOW!</state>
                 <state img="7-horny.png">S-SO much... Stimulation!!!</state>
             </case>
-            <case tag="heavy_masturbating" priority="0">
+            <case tag="heavy_masturbating" id="7-14" priority="0">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="7-horny.png">F-Firing up!</state>
                 <state img="7-horny.png">...Running on full cylinders!</state>
@@ -4095,6 +4194,10 @@
         </stage>
 
         <stage id="8">
+            <case tag="male_human_must_strip">
+                <state img="8-horny.png">I basically won this game. I have a front row ticket to a super hot strip show!</state>
+                <state img="8-winking.png">Winky face!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="8-excited.png">I won't be satisfied until I see all of you, ~name~.</state>
             </case>
@@ -4102,6 +4205,7 @@
                 <state img="8-calm.png">Is this a bonus game? I like it!</state>
             </case>
             <case tag="female_must_strip">
+                <state img="8-calm.png" marker="d.va_saki_academy">You're Saki, right? You remind me of when I was at the Academy. Are you also in the pilot program?</state>
                 <state img="8-winking.png">You know, I can play both sides, if you know what I mean...</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
@@ -4131,15 +4235,11 @@
             <case tag="female_must_strip" target="marinette" targetStage="3">
                 <state img="8-angry.png" marker="d.va_mari_art">You're some kind of art student? Well, you must have all the time in the world to practice to be winning like this!</state>
             </case>
-            <case tag="female_must_strip" target="zoey" targetStage="2">
-                <state img="8-loss.png">Are you &lt;i&gt;finally&lt;/i&gt; going to unzip that jacket?</state>
-            </case>
             <case tag="female_must_strip" target="sakura" targetSaying="Was I standing out">
                 <state img="8-winking.png" marker="d.va_sakura_stand_out">If you stand out, you're going to get run down! That's just how the game works, Sakura!</state>
             </case>
-            <case tag="male_human_must_strip">
-                <state img="8-horny.png">I basically won this game. I have a front row ticket to a super hot strip show!</state>
-                <state img="8-winking.png">Winky face!</state>
+            <case tag="female_must_strip" target="zoey" targetStage="2">
+                <state img="8-loss.png">Are you &lt;i&gt;finally&lt;/i&gt; going to unzip that jacket?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="8-shocked.png">~Name~... are you a bot?</state>
@@ -4372,7 +4472,7 @@
             <case tag="female_crotch_is_visible" target="mia">
                 <state img="8-excited.png">So I guess that answers that question of if were going to get your panties off! And a turn early, too!</state>
             </case>
-            <case tag="female_crotch_is_visible" notSaidMarker="d.va_black_cat_kitty_joke">
+            <case tag="female_crotch_is_visible" id="8-20" notSaidMarker="d.va_black_cat_kitty_joke">
                 <test expr="~self.costume~" value="d.va_black_cat" />
                 <state img="8-horny.png" marker="d.va_black_cat_kitty_joke">Isn't &lt;i&gt;that&lt;/i&gt; a pretty kitty?</state>
             </case>
@@ -4387,7 +4487,7 @@
                 <state img="8-loss.png">Would I ever sleep with a fan? I haven't before, but if I did, all my doors and windows would have to be open.</state>
                 <state img="8-hornier.png">Point yourself this way, ~name~! I'm gonna grab myself some gamer fuel!</state>
             </case>
-            <case tag="male_masturbating" totalRounds="100-110">
+            <case tag="male_masturbating" totalRounds="100">
                 <state img="8-shy.png">Uh, ~name~, all these clicks don't count as raising your APM, y'know...</state>
             </case>
             <case tag="male_finished_masturbating">
@@ -4396,6 +4496,10 @@
             <case tag="female_must_masturbate">
                 <state img="8-peace.png">~Name~: Now playable.</state>
                 <state img="8-winking.png">Revenge is sweet!</state>
+            </case>
+            <case tag="female_must_masturbate" filter="uses_toy">
+                <state img="8-winking.png" oneShotId="1">Time to get out the hardware!</state>
+                <state img="8-excited.png" oneShotId="2">Get ready to rumble!</state>
             </case>
             <case tag="female_must_masturbate" target="jane">
                 <state img="8-winking.png">Time for the Play of the Jane!</state>
@@ -4464,6 +4568,9 @@
                 <state img="8-winking.png">Wow, that's what I call a team kill! What do you say, girls? Has ~player~ earned a little treat?</state>
                 <state img="8-awkward.png">The other Overwatch girls didn't stand a chance against you! I could've won if I wanted to, just so you know...</state>
             </case>
+            <case tag="game_over_defeat" id="8-43" hidden="1">
+                <state img="8-calm.png" collectible="dva_panties">I think you've earned these.</state>
+            </case>
             <case tag="game_over_defeat" saidMarker="d.va_wager_loss">
                 <state img="8-peace.png">I'm a girl of my word, ~name~. I'll do &lt;i&gt;anything&lt;/i&gt; you say... for the next ten minutes.</state>
             </case>
@@ -4513,13 +4620,14 @@
             <case tag="game_over_defeat" target="zoey">
                 <state img="8-winking.png">Zoey, you really left us for dead!</state>
             </case>
-            <case tag="game_over_defeat" priority="0">
+            <case tag="game_over_defeat" id="8-13" priority="0">
                 <test expr="~self.costume~" value="d.va_cruiser" />
                 <state img="8-excited.png">Just wait 'til you try and beat me in a game of Starcraft. I will &lt;i&gt;annihilate&lt;/i&gt; you!</state>
             </case>
         </stage>
 
     </behaviour>
+    <nicknames />
     <epilogue gender="any" img="dvaending1.jpg">
         <title>Cam Show</title>
         <scene background="dvaending1.jpg" width="1361" height="657">

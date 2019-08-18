@@ -42,6 +42,9 @@ base_tag_spec = {
         'behaviour': {
             'stage': {
                 'case': { 'priority': None, 'condition': None, 'test': None, 'state': None }
+            },
+            'trigger': {
+                'case': { 'condition': None, 'test': None, 'state': None }
             }
         },
         'epilogue': {
@@ -56,7 +59,8 @@ base_tag_spec = {
                     'content': None,
                 }
             }
-        }
+        },
+        'nicknames': { 'nickname': None }
     }
 } 
 

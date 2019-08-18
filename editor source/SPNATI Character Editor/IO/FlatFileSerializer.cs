@@ -116,7 +116,7 @@ namespace SPNATI_Character_Editor
 			lines.Add("");
 			lines.Add("#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/");
 			lines.Add("#Here is an example line (note that targeted lines must have a stage number):");
-			lines.Add("#0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!");
+			lines.Add("#0-female_must_strip,target:hermione=happy,Looks like your magic doesn't help with poker!");
 			#endregion
 			List<Case> cases = new List<Case>();
 

@@ -3,19 +3,6 @@
  the game. The parsing functions for the opponent.xml file.
  ********************************************************************************/
 
-/**********************************************************************
- *****               Opponent & Group Specification               *****
- **********************************************************************/
-
-/**************************************************
- * Stores meta information about groups.
- **************************************************/
-function createNewGroup (title) {
-	var newGroupObject = {title:title,
-						  opponents:Array(4)};
-
-	return newGroupObject;
-}
 
 /**********************************************************************
  *****                  Select Screen UI Elements                 *****
@@ -98,6 +85,8 @@ $groupCostumeSelectors = [$("#group-costume-select-1"), $("#group-costume-select
 $groupImages = [$("#group-image-1"), $("#group-image-2"), $("#group-image-3"), $("#group-image-4")];
 $groupNameLabel = $("#group-name-label");
 $groupButton = $("#group-button");
+
+$groupBackgroundToggle = $('#group-enable-preset-backgrounds');
 
 $groupPageIndicator = $("#group-page-indicator");
 $groupMaxPageIndicator = $("#group-max-page-indicator");
@@ -182,9 +171,24 @@ var shownSuggestions = [Array(4), Array(4), Array(4), Array(4)];
 var randomLock = false;
 
 /* Status icon tooltips */
-var TESTING_STATUS_TOOLTIP = "This opponent is currently in testing.";
-var OFFLINE_STATUS_TOOLTIP = "This opponent has been retired from the official version of the game.";
-var INCOMPLETE_STATUS_TOOLTIP = "This opponent is incomplete and currently not in development.";
+var statusTooltips = {
+    testing: "This opponent is currently in testing.",
+    offline: "This opponent has been retired from the official version of the game.",
+    incomplete: "This opponent is incomplete and currently not in development.",
+};
+
+/**********************************************************************
+ *****               Opponent & Group Specification               *****
+ **********************************************************************/
+
+/**************************************************
+ * Stores meta information about groups.
+ **************************************************/
+function Group(title, background) {
+    this.title = title;
+    this.background = background;
+    this.opponents = Array(4);
+}
 
 /**********************************************************************
  *****                    Start Up Functions                      *****
@@ -194,10 +198,12 @@ var INCOMPLETE_STATUS_TOOLTIP = "This opponent is incomplete and currently not i
  * Loads all of the content required to display the title
  * screen.
  ************************************************************/
-function loadSelectScreen () {
-    loadListingFile();
 
-	updateSelectionVisuals();
+function loadSelectScreen () {
+    var deferred = loadListingFile();
+    updateSelectionVisuals();
+    
+    return deferred;
 }
 
 function splitCreatorField (field) {
@@ -240,6 +246,8 @@ function loadListingFile () {
                 
                 var disp = new OpponentSelectionCard(opp);
                 opp.selectionCard = disp;
+                disp.statusIcon.tooltip({ delay: { show: 200 }, placement: 'bottom',
+                                          container: '#individual-select-screen .selection-cards-container' });
 			}
 			if (opp.id in opponentGroupMap) {
 				opponentGroupMap[opp.id].forEach(function(groupPos) {
@@ -269,7 +277,7 @@ function loadListingFile () {
 	}
 
 	/* grab and parse the opponent listing file */
-	$.ajax({
+	return $.ajax({
         type: "GET",
 		url: listingFile,
 		dataType: "text",
@@ -287,7 +295,8 @@ function loadListingFile () {
             });
 
 			$xml.find('groups>group').each(function () {
-				var title = $(this).attr('title');
+                var title = $(this).attr('title');
+                var background = $(this).attr('background') || undefined;
 				var opp1 = $(this).attr('opp1');
 				var opp2 = $(this).attr('opp2');
 				var opp3 = $(this).attr('opp3');
@@ -296,7 +305,7 @@ function loadListingFile () {
                 var ids = [opp1, opp2, opp3, opp4];
                 if (!ids.every(function(id) { return available[id]; })) return;
 
-				var newGroup = createNewGroup(title);
+				var newGroup = new Group(title, background);
 				ids.forEach(function(id, idx) {
 					if (!(id in opponentGroupMap)) {
 						opponentGroupMap[id] = [];
@@ -354,29 +363,15 @@ function loadOpponentMeta (id, status, releaseNumber, onComplete) {
 }
 
 function updateStatusIcon(elem, status) {
-    var icon_img = 'img/testing-badge.png';
-    var tooltip = TESTING_STATUS_TOOLTIP;
-
-    if(!status) {
-        elem.removeAttr('title').removeAttr('data-original-title').hide();
-        return;
+    if (status) {
+        elem.attr({
+            'src': 'img/' + status + '-badge.png',
+            'alt': status.initCap(),
+            'data-original-title': statusTooltips[status],
+        }).show();
+    } else {
+        elem.removeAttr('data-original-title').hide();
     }
-
-    if (status === 'offline') {
-        icon_img = 'img/offline-badge.png';
-        tooltip = OFFLINE_STATUS_TOOLTIP;
-    } else if (status === 'incomplete') {
-        icon_img = 'img/incomplete-badge.png';
-        tooltip = INCOMPLETE_STATUS_TOOLTIP;
-    }
-
-    elem.attr({
-        'src': icon_img,
-        'title': tooltip,
-        'data-original-title': tooltip,
-    }).show().tooltip({
-        'placement': 'left'
-    });
 }
 
 
@@ -392,11 +387,12 @@ function getCostumeOption(alt_costume, selected_costume) {
  * Loads opponents onto the individual select screen.
  ************************************************************/
 function updateIndividualSelectScreen () {
-    $('#individual-select-screen .selection-cards-container')
-        .empty()
-        .append(selectableOpponents.map(function (opp) {
-            return opp.selectionCard.mainElem;
-        }));
+    $('#individual-select-screen .selection-cards-container .selection-card').hide();
+    selectableOpponents.forEach(function(opp) {
+        $('#individual-select-screen .selection-cards-container').append(opp.selectionCard.mainElem);
+        $(opp.selectionCard.mainElem).show();
+    });
+    return;
 }
 
 /************************************************************
@@ -416,76 +412,113 @@ function updateGroupSelectScreen () {
     $groupMaxPageIndicator.html("of "+selectableGroups[groupSelectScreen].length);
 
     /* create and load all of the individual opponents */
-	$groupButton.attr('disabled', false);
-	for (var i = 0; i < 4; i++) {
-		var opponent = selectableGroups[groupSelectScreen].length > 0 ?
-            selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i] :
-            undefined;
+    $groupButton.attr('disabled', false);
+    
+    var group = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]];
+    
+    if (group) {
+        $groupNameLabel.html(group.title);
 
-		if (opponent && typeof opponent == "object") {
-			shownGroup[i] = opponent;
+        if (group.background && backgrounds[group.background]) {
+            var bg = backgrounds[group.background];
 
-			$groupNameLabels[i].html(opponent.first + " " + opponent.last);
-			$groupPrefersLabels[i].html(opponent.label);
-			$groupSexLabels[i].html(opponent.gender);
-			$groupSourceLabels[i].html(opponent.source);
-			$groupWriterLabels[i].html(opponent.writer);
-			$groupArtistLabels[i].html(opponent.artist);
-			$groupDescriptionLabels[i].html(opponent.description);
+            $('.group-preset-background-row').show();
+            $('#group-preset-background-label').text(bg.name);
 
-            if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
-                $groupBadges[i].show();
+            $groupBackgroundToggle.prop('checked', useGroupBackgrounds).off('change');
+            $groupBackgroundToggle.on('change', function () {
+                /* The user toggled the preset background checkbox. */
+                useGroupBackgrounds = $groupBackgroundToggle.is(':checked');
+
+                if (useGroupBackgrounds) {
+                    bg.activateBackground();
+                } else {
+                    optionsBackground.activateBackground();
+                }
+
+                save.saveSettings();
+            });
+
+            if (useGroupBackgrounds) {
+                bg.activateBackground();
             }
-            else {
+        } else {
+            $('.group-preset-background-row').hide();
+
+            if (useGroupBackgrounds && activeBackground.id !== optionsBackground.id) {
+                optionsBackground.activateBackground();
+            }
+        }
+
+        for (var i = 0; i < 4; i++) {
+            var opponent = group.opponents[i];
+
+            if (opponent && typeof opponent == "object") {
+                shownGroup[i] = opponent;
+
+                $groupNameLabels[i].html(opponent.first + " " + opponent.last);
+                $groupPrefersLabels[i].html(opponent.label);
+                $groupSexLabels[i].html(opponent.gender);
+                $groupSourceLabels[i].html(opponent.source);
+                $groupWriterLabels[i].html(opponent.writer);
+                $groupArtistLabels[i].html(opponent.artist);
+                $groupDescriptionLabels[i].html(opponent.description);
+
+                if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
+                    $groupBadges[i].show();
+                } else {
+                    $groupBadges[i].hide();
+                }
+
+                $groupCostumeSelectors[i].hide();
+                if (ALT_COSTUMES_ENABLED) {
+                    if (
+                        (!FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 0) ||
+                        (FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 1)
+                    ) {
+                        if (!FORCE_ALT_COSTUME) {
+                            $groupCostumeSelectors[i].empty().append($('<option>', {
+                                val: '',
+                                text: 'Default Skin'
+                            }));
+                        }
+                        opponent.alternate_costumes.forEach(function (alt) {
+                            $groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
+                        });
+                        $groupCostumeSelectors[i].show();
+                    }
+                }
+
+                updateStatusIcon($groupStatuses[i], opponent.status);
+
+                $groupLayers[i].attr({
+                    src: "img/layers" + opponent.layers + ".png",
+                    alt: opponent.layers + ' layers',
+                }).show();
+
+                $groupImages[i].attr('src', opponent.selection_image);
+                $groupImages[i].css('height', opponent.scale + '%');
+                $groupImages[i].show();
+            } else {
+                delete shownGroup[i];
+
+                $groupNameLabels[i].html("");
+                $groupPrefersLabels[i].html("");
+                $groupSexLabels[i].html("");
+                $groupSourceLabels[i].html("");
+                $groupWriterLabels[i].html("");
+                $groupArtistLabels[i].html("");
+                $groupDescriptionLabels[i].html("");
                 $groupBadges[i].hide();
+                $groupStatuses[i].hide();
+                $groupLayers[i].hide();
+                $groupImages[i].hide();
+                $groupCostumeSelectors[i].hide();
+                $groupButton.attr('disabled', true);
             }
-			
-			$groupCostumeSelectors[i].hide();
-			if (ALT_COSTUMES_ENABLED) {
-				if (
-					(!FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 0) ||
-					(FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 1)
-				) {
-					if (!FORCE_ALT_COSTUME) {
-						$groupCostumeSelectors[i].empty().append($('<option>', {val: '', text: 'Default Skin'}));
-					}
-					opponent.alternate_costumes.forEach(function (alt) {
-						$groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
-					});
-					$groupCostumeSelectors[i].show();
-				}
-			}
-
-            updateStatusIcon($groupStatuses[i], opponent.status);
-
-            $groupLayers[i].show();
-            $groupLayers[i].attr("src", "img/layers" + opponent.layers + ".png");
-
-			$groupImages[i].attr('src', opponent.selection_image);
-			$groupImages[i].css('height', opponent.scale + '%');
-			$groupImages[i].show();
-		} else {
-			delete shownGroup[i];
-
-			$groupNameLabels[i].html("");
-			$groupPrefersLabels[i].html("");
-			$groupSexLabels[i].html("");
-			$groupSourceLabels[i].html("");
-			$groupWriterLabels[i].html("");
-			$groupArtistLabels[i].html("");
-			$groupDescriptionLabels[i].html("");
-            $groupBadges[i].hide();
-            $groupStatuses[i].hide();
-            $groupLayers[i].hide();
-			$groupImages[i].hide();
-			$groupCostumeSelectors[i].hide();
-			$groupButton.attr('disabled', true);
-		}
-    }
-    if (selectableGroups[groupSelectScreen].length == 0) {
+        }
+    } else if (selectableGroups[groupSelectScreen].length == 0) {
         $groupNameLabel.html("(No matches)");
-    } else {
-        $groupNameLabel.html(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].title);
     }
 }
 
@@ -500,22 +533,12 @@ function updateSuggestionQuad(slot, quad, opponent) {
     var label_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-label');
     var tooltip = null;
 
-    if (opponent.status === 'testing') {
-        tooltip = TESTING_STATUS_TOOLTIP;
-    } else if (opponent.status === 'offline') {
-        tooltip = OFFLINE_STATUS_TOOLTIP;
-    } else if (opponent.status === 'incomplete') {
-        tooltip = INCOMPLETE_STATUS_TOOLTIP;
-    }
-
     shownSuggestions[slot][quad] = opponent.id;
-
-    img_elem.attr({
-        'title': tooltip,
-        'data-original-title': tooltip,
-        'src': opponent.selection_image
-    }).tooltip();
-
+    img_elem.attr(
+        {'src': opponent.selection_image,
+         'alt': opponent.label,
+         'data-original-title': statusTooltips[opponent.status] || null
+        }).show();
     label_elem.text(opponent.label);
 }
 
@@ -564,7 +587,7 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by tag
-        if (tag && !opp.hasTag(tag)) {
+        if (tag && !(opp.searchTags && opp.searchTags.indexOf(canonicalizeTag(tag)) >= 0)) {
             return false;
         }
         
@@ -623,6 +646,14 @@ function suggestionSelected(slot, quad) {
     for (var i=0; i<loadedOpponents.length; i++) {
         if (loadedOpponents[i].id === selectedID) {
             players[slot] = loadedOpponents[i];
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Loading suggested opponent ' + loadedOpponents[i].id,
+                    level: 'info'
+                });
+            }
             
         	updateSelectionVisuals();
 
@@ -647,8 +678,7 @@ function selectOpponentSlot (slot) {
         /* Make sure the user doesn't have target-count sorting set if
          * the amount of loaded opponents drops to 0. */
         if (sortingMode === "Targeted most by selected") {
-            var player_count = countLoadedOpponents();
-            if (player_count <= 1) {
+            if (players.countTrue() <= 1) {
                 setSortingMode("Featured");
             }
         }
@@ -660,6 +690,7 @@ function selectOpponentSlot (slot) {
 		updateIndividualSelectScreen();
 
         /* switch screens */
+        if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-individual");
 		screenTransition($selectScreen, $individualSelectScreen);
     } else {
         /* remove the opponent that's there */
@@ -676,7 +707,9 @@ function selectOpponentSlot (slot) {
  * The player clicked on the Preset Tables or Testing Tables button.
  ************************************************************/
 function clickedSelectGroupButton (screen) {
-    switchSelectGroupScreen(screen)
+    switchSelectGroupScreen(screen);
+
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-group");
 
 	/* switch screens */
 	screenTransition($selectScreen, $groupSelectScreen);
@@ -728,7 +761,7 @@ function updateSelectableGroups(screen) {
         })) return false;
 
         if (tag && !group.opponents.some(function(opp) {
-            return opp.hasTag(tag);
+            return opp.searchTags && opp.searchTags.indexOf(canonicalizeTag(tag)) >= 0;
         })) return false;
 
         if ((chosenGroupGender == 2 || chosenGroupGender == 3)
@@ -751,7 +784,23 @@ function updateSelectableGroups(screen) {
  ************************************************************/
 function loadGroup (chosenGroup) {
 	clickedRemoveAllButton();
-	console.log(chosenGroup.title);
+    console.log(chosenGroup.title);
+    
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Loading group '+chosenGroup.title,
+            level: 'info'
+        });
+    }
+
+    if (useGroupBackgrounds) {
+        if (chosenGroup.background && backgrounds[chosenGroup.background]) {
+            backgrounds[chosenGroup.background].activateBackground();
+        } else {
+            optionsBackground.activateBackground();
+        }
+    }
 
     /* load the group members */
 	for (var i = 1; i < 5; i++) {
@@ -760,6 +809,15 @@ function loadGroup (chosenGroup) {
             if (players.some(function(p, j) { return i != j && p == member; })) {
                 member = member.clone();
             }
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Loading group opponent ' + member.id,
+                    level: 'info'
+                });
+            }
+
             member.loadBehaviour(i);
             players[i] = member;
         }
@@ -797,6 +855,14 @@ function clickedRandomFillButton (predicate) {
 		if (!(i in players)) {
 			/* select random opponent */
 			var randomOpponent = getRandomNumber(0, loadedOpponentsCopy.length);
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'select',
+                    message: 'Loading random opponent ' + loadedOpponentsCopy[randomOpponent].id,
+                    level: 'info'
+                });
+            }
 
 			/* load opponent */
 			players[i] = loadedOpponentsCopy[randomOpponent];
@@ -849,7 +915,9 @@ function changeGroupStats (target) {
  * group select screen.
  ************************************************************/
 function selectGroup () {
-	loadGroup(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]]);
+    loadGroup(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]]);
+
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
 
     /* switch screens */
 	screenTransition($groupSelectScreen, $selectScreen);
@@ -877,12 +945,38 @@ function changeGroupPage (skip, page) {
     updateGroupCountStats();
 }
 
+
+/************************************************************
+ * Adds hotkey functionality to the group selection screen.
+ ************************************************************/
+
+
+function groupSelectKeyToggle(e)
+{
+    console.log(e)
+    if ($('#group-select-screen:visible').length > 0) {
+        if (e.keyCode == 37) { // left arrow
+            changeGroupPage(false, -1);
+        }
+        else if (e.keyCode == 39) { // right arrow
+            changeGroupPage(false, 1);
+        }
+        else if (e.keyCode == 13) { // enter key
+            selectGroup();
+        }
+    }
+} 
+
 /************************************************************
  * The player clicked on the back button on the individual or
  * group select screen.
  ************************************************************/
 function backToSelect () {
     /* switch screens */
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
+
+    if (useGroupBackgrounds) optionsBackground.activateBackground();
+
 	screenTransition($individualSelectScreen, $selectScreen);
 	screenTransition($groupSelectScreen, $selectScreen);
 }
@@ -897,6 +991,17 @@ function advanceSelectScreen () {
     gameID = generateRandomID();
 
     if (USAGE_TRACKING) {
+        if (SENTRY_INITIALIZED) {
+            Sentry.setTag("in_game", true);
+            Sentry.setTag("screen", "game");
+
+            Sentry.addBreadcrumb({
+                category: 'game',
+                message: 'Starting game.',
+                level: 'info'
+            });
+        }
+
         var usage_tracking_report = {
             'date': (new Date()).toISOString(),
 			'commit': VERSION_COMMIT,
@@ -906,7 +1011,7 @@ function advanceSelectScreen () {
             'userAgent': navigator.userAgent,
             'origin': getReportedOrigin(),
             'table': {},
-			'tags': players[HUMAN_PLAYER].tags
+			'tags': humanPlayer.tags
         };
 
         for (let i=1;i<5;i++) {
@@ -940,6 +1045,7 @@ function advanceSelectScreen () {
  * screen.
  ************************************************************/
 function backSelectScreen () {
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
 	screenTransition($selectScreen, $titleScreen);
 }
 
@@ -1008,9 +1114,7 @@ function updateSelectionVisuals () {
     $groupButton.attr('disabled', loaded < filled);
 
     /* Update suggestions images. */
-    var current_player_count = countLoadedOpponents();
-
-    if (current_player_count >= 3) {
+    if (players.countTrue() >= 3) {
         var suggested_opponents = loadedOpponents.filter(function(opp) {
             /* hide selected opponents */
             if (players.some(function(p) { return p && p.id == opp.id; })) {
@@ -1226,7 +1330,7 @@ function sortOpponentsByMostTargeted() {
 		counts = [opp1, opp2].map(function(opp) {
 			return players.reduce(function(sum, p) {
 				if (p && p.targetedLines && opp.id in p.targetedLines) {
-					sum += p.targetedLines[opp.id].count;
+					sum += p.targetedLines[opp.id].seen.size;
 				}
 				return sum;
 			}, 0);
@@ -1248,20 +1352,6 @@ function setSortingMode(mode) {
 $sortingOptionsItems.on("click", function(e) {
     setSortingMode($(this).find('a').html());
 });
-
-/************************************************************
- * Word wrapping Functions
- ************************************************************/
-
-/**
- * Inserts a fixed-size HTML element with the specified text to allow the content
- * to be either word-wrapped (if the text is long and spaces are present)
- * or word-broken (if text is long and no spaces are present).
- */
-function wordWrapHtml(text) {
-    text = text || "&nbsp;";
-    return "<table class=\"wrap-text\"><tr><td>" + text + "</td></tr></table>";
-}
 
 /************************************************************
  * Dynamic dialogue and image counting functions
@@ -1360,6 +1450,7 @@ function countLinesImages(xml) {
     var poses = {};
     
     var matched = $(xml).find('state').get();
+    var layers = $(xml).find('wardrobe>clothing').length;
     var deferred = $.Deferred();
     
     /* Avoid blocking the UI by breaking the work into smaller chunks. */
@@ -1369,7 +1460,7 @@ function countLinesImages(xml) {
         if (DEBUG) console.log("Processing: "+matched.length+" states to go");
         do {
             data = matched.shift();
-
+            
             numTotalLines++;
             
         	// count only unique lines of dialogue
@@ -1379,8 +1470,28 @@ function countLinesImages(xml) {
         	// count unique number of poses used in dialogue
         	// note that this number may differ from actual image count if some images
         	// are never used, or if images that don't exist are used in the dialogue
-        	if (poses[data.getAttribute("img")] === undefined) numUniqueUsedPoses++;
-            poses[data.getAttribute("img")] = 1;
+            var img = $(data).attr("img");
+            if (img.indexOf('#') >= 0) {
+                // Expand # to the relevant stages
+                var $case = $(data).parent();
+                var $trigger = $case.parent();
+                var stageInterval = getRelevantStagesForTrigger($trigger.attr('id'), layers);
+
+                for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
+                    if (checkStage(stage, $case.attr('stage'))) {
+                        var stageImg = img.replace('#', stage);
+                        if (!(stageImg in poses)) {
+                            numUniqueUsedPoses++;
+                            poses[stageImg] = 1;
+                        }
+                    }
+                }
+            } else {
+                if (!(img in poses)) {
+                    numUniqueUsedPoses++;
+                    poses[img] = 1;
+                }
+            }
         } while (Date.now() - startTs < 50 && matched.length > 0);
         
         if (matched.length > 0) {

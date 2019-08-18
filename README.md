@@ -1,14 +1,10 @@
 **How do I play the game?**
 
-Strip Poker Night at the Inventory is an online game currently hosted at https://spnati.gitlab.io/. If you ever forget where it is, you can always follow the link on the subreddit sidebar.
+Strip Poker Night at the Inventory is an online game currently hosted at https://spnati.net/. If you ever forget where it is, you can always follow the link on the subreddit sidebar.
 
 **Can I play the game offline?**
 
-Yes! You can download the game from https://gitlab.com/spnati/spnati.gitlab.io. After downloading, simply open the index.html file with a web browser - we recommend Firefox.
-
-**Why can't I select characters when I play offline?**
-
-Some browsers seem to have problems with the game when playing offline, notably Chrome. We recommend playing with Firefox for that reason.
+Yes! You can download the game from https://gitgud.com/spnati/spnati. After downloading, simply run `start_offline.exe` (or `start_offline.sh` on Linux / Mac OSX).
 
 **How do I get endings?**
 
@@ -17,6 +13,8 @@ To see one of the character endings, you need to:
 2) Play against at least one opponent who has an epilogue. 
 
 Sadly, most opponents don't have endings. It's not that hard to make one, though - if your favorite character doesn't have one, why not make it?
+
+Some opponents also have special requirements for viewing their epilogues-- check their selection screen entries for more info on those.
 
 **How do I add the characters I see posted on Reddit?**
 
@@ -42,7 +40,7 @@ There's a walkthrough here: https://old.reddit.com/r/spnati/comments/89g9v8/stri
 
 **I can't do art. Can I still make a character?**
 
-Yes. We use a program called **kisekae** to make characters. Kisekae is the Japanese for 'paper doll,' and the program lets you make characters, dress them and pose them to your heart's content. 
+Yes. We use a program called **Kisekae** to make characters. Kisekae is the Japanese for 'paper doll,' and the program lets you make characters, dress them and pose them to your heart's content. 
 
 **I can't code. Can I still make a character?**
 
