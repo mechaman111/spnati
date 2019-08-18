@@ -143,6 +143,7 @@ function Save() {
                 && (typeof options.autoEnding == 'number' || options.autoEnding === null))
                 ENDING_DELAY = options.autoEnding;
             if ('minimalUI' in options && typeof options.minimalUI == 'boolean') setUIMode(options.minimalUI);
+            if ('playerFinishingEffect' in options && typeof options.playerFinishingEffect == 'boolean') PLAYER_FINISHING_EFFECT = options.cardSuggest;
         } catch (ex) {
             console.error('Failed parsing options from localStorage');
         }
@@ -200,6 +201,7 @@ function Save() {
             autoForfeit: FORFEIT_DELAY,
             autoEnding: ENDING_DELAY,
             minimalUI: MINIMAL_UI,
+            playerFinishingEffect: PLAYER_FINISHING_EFFECT,
         };
         localStorage.setItem(prefix + 'options', JSON.stringify(options));
     };
