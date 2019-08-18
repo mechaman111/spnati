@@ -23,7 +23,7 @@ def main():
     for opp in listing_xml.find('individuals').iter('opponent'):
         if 'status' not in opp.attrib or opp.attrib['status'] == "testing":
             meta_xml = ET.parse(osp.join(base_dir, 'opponents',  opp.text, 'meta.xml'))
-            for alts in meta_xml.iter('alternates'):
+            for alts in meta_xml.iter('alternates'):               
                 n_stages = int(meta_xml.find('layers').text) + 2
                 
                 # find any costumes in the specified event set
@@ -66,11 +66,14 @@ def main():
     
     # Copy over all event costumes.
     for opp_id, costume_folder in costumes:
-        src = osp.join(copyfrom_src, costume_folder)
-        dst = osp.join(base_dir, costume_folder)
-        print("Copying: {} --> {}".format(src, dst))
-        
-        sh.copytree(src, dst)
+        try:
+            src = osp.join(copyfrom_src, costume_folder)
+            dst = osp.join(base_dir, costume_folder)
+            print("Copying: {} --> {}".format(src, dst))
+            
+            sh.copytree(src, dst)
+        except FileNotFoundError:
+            print("Could not copy: {}".format(src))
 
     # Delete previously-determined stages in base folders:
     #for opp_id, stages in delete_stages.items():

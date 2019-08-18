@@ -20,7 +20,7 @@ python3 deploy-scripts/copy_backgrounds.py .public/
 find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" -o -iname "*.woff" -o -iname "*.woff2" | tar -cT - | tar -C .public -x
 
 # Copy alternate costume files for deployment.
-python deploy-scripts/copy_alternate_costumes.py .public/ ./ all
+python3 deploy-scripts/copy_alternate_costumes.py .public/ ./ all
 
 # Rename JS and core game CSS for cache-busting purposes.
 python3 deploy-scripts/cache_bust.py .public/
