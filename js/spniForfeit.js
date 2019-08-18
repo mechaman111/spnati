@@ -105,13 +105,18 @@ function tickForfeitTimers () {
 
             if (i == HUMAN_PLAYER) {
                 /* player's timer is up */
-                $gamePlayerCountdown.one('animationend', function() {
+                if (PLAYER_FINISHING_EFFECT) {
+                    $gamePlayerCountdown.one('animationend', function() {
+                        $gamePlayerCountdown.hide();
+                        $gamePlayerCountdown.removeClass('explode');
+                        /* finish */
+                        finishMasturbation(i);
+                    });
+                    $gamePlayerCountdown.addClass('explode');
+                } else {
                     $gamePlayerCountdown.hide();
-                    $gamePlayerCountdown.removeClass('explode');
-                    /* finish */
                     finishMasturbation(i);
-                });
-                $gamePlayerCountdown.addClass('explode');
+                }
                 console.log(players[i].label+" is finishing!");
                 $gamePlayerCountdown.html('');
                 $gameClothingLabel.html("<b>You're 'Finished'</b>");
