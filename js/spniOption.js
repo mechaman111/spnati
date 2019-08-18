@@ -398,7 +398,7 @@ $('#game-settings-modal').on('shown.bs.modal', function() {
  ************************************************************/
 function loadMasturbationTimer () {
 	$masturbationTimerBox.val(humanPlayer.stamina);
-	$masturbationWarningLabel.css("visibility", "hidden");
+	$masturbationWarningLabel.css("display", "none");
 }
  /************************************************************
  * The player changed their masturbation timer.
@@ -410,5 +410,5 @@ $masturbationTimerBox.on('input', function() {
 	if (isValidTimerValue){
 		humanPlayer.stamina = newTime;
 	}
-	$masturbationWarningLabel.css("visibility", isValidTimerValue ? "hidden" : "visible");
+	$masturbationWarningLabel.css("display", isValidTimerValue ? "none" : "table-row");
 });
