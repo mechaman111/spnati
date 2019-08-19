@@ -198,7 +198,7 @@ function loadBackgrounds() {
         url: BACKGROUND_CONFIG_FILE,
         dataType: "text",
         success: function (xml) {
-            var $xml = $(xml);
+            var $xml = (new XMLData(xml)).$xml
 
             var auto_tag_metadata = {};
 

@@ -282,7 +282,7 @@ function loadListingFile () {
 		url: listingFile,
 		dataType: "text",
 		success: function(xml) {
-            var $xml = $(xml);
+            var $xml = (new XMLData(xml)).$xml;
 			var available = {};
 
             /* start by checking which characters will be loaded and available */
@@ -348,9 +348,8 @@ function loadOpponentMeta (id, status, releaseNumber, onComplete) {
 		url: 'opponents/' + id + '/' + metaFile,
 		dataType: "text",
 		success: function(xml) {
-            var $xml = $(xml);
-
-			var opponent = new Opponent(id, $xml, status, releaseNumber);
+            var data = new XMLData(xml);
+			var opponent = new Opponent(id, data, status, releaseNumber);
 
 			/* add the opponent to the list */
             onComplete(opponent);

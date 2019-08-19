@@ -507,7 +507,7 @@ function doEpilogueFromGallery(){
 		 * 'this' is bound to the Opponent object.
 		 */
 		.then(function(xml) {
-			var $xml = $(xml);
+			var $xml = (new XMLData(xml)).$xml;
 			
 			var endingElem = null;
 			

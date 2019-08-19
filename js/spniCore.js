@@ -269,6 +269,62 @@ function fetchCompressedURL(baseUrl) {
     return deferred.promise();
 }
 
+/*
+ * A simple helper class for accessing data within XML documents.
+ */
+function XMLData(str) {
+    var parser = new DOMParser();
+    this.doc = parser.parseFromString(str, 'text/html');
+    this.$xml = $(this.doc.documentElement);
+}
+
+/**
+ * Get the first child element in this document with the given tag name,
+ * or null if no such child exists.
+ * 
+ * @param {string} tag_name The tag name to find in this document.
+ * @returns {HTMLElement | null} The found HTML element, or null if it
+ * does not exist.
+ */
+XMLData.prototype.getChild = function (tag_name) {
+    var elems = this.doc.documentElement.getElementsByTagNameNS(
+        this.doc.documentElement.namespaceURI,
+        tag_name
+    );
+
+    if (elems.length === 0) return null;
+    return elems.item(0);
+}
+
+/**
+ * Get the text contents of the first child of this document with the
+ * given tag name, or an empty string if no such child could be found.
+ * 
+ * @param {string} tag_name The tag name to find in this document.
+ * @returns {string | null} The found HTML element's innerText, or
+ * an empty string if no such child could be found.
+ */
+XMLData.prototype.getChildText = function (tag_name) {
+    var child = this.getChild(tag_name);
+
+    if (!child || child.childNodes.length > 1) return '';
+    return child.innerText;
+}
+
+/**
+ * Get the raw HTML contents of the first child of this document with the
+ * given tag name, or an empty string if no such child could be found.
+ * 
+ * @param {string} tag_name The tag name to find in this document.
+ * @returns {string | null} The found HTML element's innerHTML, or
+ * an empty string if no such child could be found.
+ */
+XMLData.prototype.getChildHTML = function (tag_name) {
+    var child = this.getChild(tag_name);
+
+    if (!child || child.childNodes.length > 1) return '';
+    return child.innerHTML;
+}
 
 /**********************************************************************
  *****                Player Object Specification                 *****
@@ -526,42 +582,49 @@ Player.prototype.checkStatus = function(status) {
 	}
 }
 
-/*****************************************************************************
+
+/**
  * Subclass of Player for AI-controlled players.
- ****************************************************************************/
-function Opponent (id, $metaXml, status, releaseNumber) {
+ * 
+ * @param {string} id 
+ * @param {XMLData} metaData 
+ * @param {string} status 
+ * @param {Number} releaseNumber 
+ */
+function Opponent (id, metaData, status, releaseNumber) {
+    var $metaXml = metaData.$xml;
+
     this.id = id;
     this.folder = 'opponents/'+id+'/';
     this.base_folder = 'opponents/'+id+'/';
-    this.metaXml = $metaXml;
 
     this.status = status;
-    this.first = $metaXml.find('first').text();
-    this.last = $metaXml.find('last').text();
-    this.label = $metaXml.find('label').text();
-    this.image = $metaXml.find('pic').text();
-    this.gender = $metaXml.find('gender').text();
-    this.height = $metaXml.find('height').text();
-    this.source = $metaXml.find('from').text();
-    this.artist = $metaXml.find('artist').text();
-    this.writer = $metaXml.find('writer').text();
-    this.description = fixupDialogue($metaXml.find('description').html());
+    this.first = metaData.getChildText('first');
+    this.last = metaData.getChildText('last');
+    this.label = metaData.getChildText('label');
+    this.image = metaData.getChildText('pic');
+    this.gender = metaData.getChildText('gender');
+    this.height = metaData.getChildText('height');
+    this.source = metaData.getChildText('from');
+    this.artist = metaData.getChildText('artist');
+    this.writer = metaData.getChildText('writer');
+    this.description = fixupDialogue(metaData.getChildHTML('description'));
     this.endings = $metaXml.find('epilogue');
-    this.ending = this.endings.length > 0 || $metaXml.find('has_ending').text() === "true";
-    this.has_collectibles = $metaXml.find('has_collectibles').text() === "true";
+    this.ending = this.endings.length > 0 || metaData.getChildText('has_ending') === "true";
+    this.has_collectibles = metaData.getChildText('has_collectibles') === "true";
     this.collectibles = null;
-    this.layers = parseInt($metaXml.find('layers').text(), 10);
-    this.scale = Number($metaXml.find('scale').text()) || 100.0;
+    this.layers = parseInt(metaData.getChildText('layers'), 10);
+    this.scale = Number(metaData.getChildText('scale')) || 100.0;
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
-    this.uniqueLineCount = parseInt($metaXml.find('lines').text(), 10) || undefined;
-    this.posesImageCount = parseInt($metaXml.find('poses').text(), 10) || undefined;
-    this.z_index = parseInt($metaXml.find('z-index').text(), 10) || 0;
-    this.dialogue_layering = $metaXml.find('dialogue-layer').text();
+    this.uniqueLineCount = parseInt(metaData.getChildText('lines'), 10) || undefined;
+    this.posesImageCount = parseInt(metaData.getChildText('poses'), 10) || undefined;
+    this.z_index = parseInt(metaData.getChildText('z-index'), 10) || 0;
+    this.dialogue_layering = metaData.getChildText('dialogue-layer');
     
     if (['over', 'under'].indexOf(this.dialogue_layering) < 0) {
         this.dialogue_layering = 'under';
     }
-    
+
     this.selected_costume = null;
     this.alt_costume = null;
     this.default_costume = null;
@@ -719,7 +782,8 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
         url: this.selected_costume+'costume.xml',
         dataType: "text",
         success: function (xml) {
-            var $xml = $(xml);
+            var metaData = new XMLData(xml);
+            var $xml = metaData.$xml;
 
             if (SENTRY_INITIALIZED) {
                 Sentry.addBreadcrumb({
@@ -854,7 +918,8 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
          * 'this' is bound to the Opponent object.
          */
 		.then(function(xml) {
-            var $xml = $(xml);
+            var doc = new XMLData(xml);
+            var $xml = doc.$xml
 
             if (SENTRY_INITIALIZED) {
                 Sentry.addBreadcrumb({
@@ -869,13 +934,13 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             }
 
             this.xml = $xml;
-            this.size = $xml.find('size').text();
-            this.stamina = Number($xml.find('timer').text());
+            this.size = doc.getChildText('size');
+            this.stamina = Number(doc.getChildText('timer'));
             this.intelligence = $xml.find('intelligence');
 
             this.stylesheet = null;
             
-            var stylesheet = $xml.find('stylesheet').text();
+            var stylesheet = doc.getChildText('stylesheet');
             if (stylesheet) {
                 var m = stylesheet.match(/[a-zA-Z0-9()~!*:@,;\-.\/]+\.css/i);
                 if (m) {
@@ -888,7 +953,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
              * So assume behaviour.xml holds the 'definitive' starting gender
              * for the character.
              */
-            var startGender = $xml.find('gender').text();
+            var startGender = doc.getChildText('gender');
             if (startGender) {
                 this.gender = startGender;    
             }
@@ -1103,7 +1168,7 @@ function loadVersionInfo () {
 		url: "version-info.xml",
 		dataType: "text",
 		success: function(xml) {
-            versionInfo = $(xml);
+            versionInfo = (new XMLData(xml)).$xml;
             CURRENT_VERSION = versionInfo.find('current').attr('version');
 
             if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
