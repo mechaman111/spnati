@@ -1391,7 +1391,9 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.startingLayers === undefined || inInterval(p.startingLayers, ctr.startingLayers))
                 && (ctr.timeInStage === undefined || inInterval(p.timeInStage, ctr.timeInStage))
                 && (ctr.hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
-                && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, consecutiveLosses));
+                && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, consecutiveLosses))
+                && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null))
+                && (ctr.notSaidMarker === undefined || !checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null));
         });
         var hasUpperBound = (ctr.count.max !== null && ctr.count.max <= players.countTrue());
         matches = matches.filter(function(p) {
@@ -1416,16 +1418,6 @@ Case.prototype.checkConditions = function (self, opp) {
                     if (hasUpperBound) {
                         volatileDependencies.add(p);
                     }
-                    return false;
-                }
-            }
-            if (ctr.saidMarker !== undefined) {
-                if (!checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null)) {
-                    return false;
-                }
-            }
-            if (ctr.notSaidMarker !== undefined) {
-                if (checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null)) {
                     return false;
                 }
             }
