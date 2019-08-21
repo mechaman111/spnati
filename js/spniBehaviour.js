@@ -1614,7 +1614,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
 Opponent.prototype.updateVolatileBehaviour = function () {
     if (players.some(function(p) {
         if (p !== players[HUMAN_PLAYER]
-            && !p.pendingUpdate && p.chosenState && p.chosenState.parentCase) {
+            && !p.updatePending && p.chosenState && p.chosenState.parentCase) {
             var dependencies = p.chosenState.parentCase.volatileDependencies;
             return dependencies && dependencies.has(this);
         } else return false;
