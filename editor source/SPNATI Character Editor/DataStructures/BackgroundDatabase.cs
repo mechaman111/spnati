@@ -10,7 +10,7 @@ namespace SPNATI_Character_Editor
 
 		public static void Load()
 		{
-			BackgroundDatabase._list = Serialization.ImportBackgrounds();
+			_list = Serialization.ImportBackgrounds();
 			BackgroundTag nameTag = new BackgroundTag("name");
 			Definitions.Instance.Add(nameTag);
 			if (_list != null)
@@ -38,6 +38,27 @@ namespace SPNATI_Character_Editor
 							tag.AddValue(el.InnerText);
 						}
 					}
+				}
+
+				foreach (BackgroundKey key in _list.AutoTagMetadata)
+				{
+					BackgroundTag tag = Definitions.Instance.Get<BackgroundTag>(key.Name);
+					if (tag != null)
+					{
+						tag.Description = key.Description;
+					}
+				}
+
+				//hardcoded descriptions
+				BackgroundTag hardcodedTag = Definitions.Instance.Get<BackgroundTag>("status");
+				if (hardcodedTag != null && string.IsNullOrEmpty(hardcodedTag.Description))
+				{
+					hardcodedTag.Description = "Whether the background is available online or not";
+				}
+				hardcodedTag = Definitions.Instance.Get<BackgroundTag>("name");
+				if (hardcodedTag != null && string.IsNullOrEmpty(hardcodedTag.Description))
+				{
+					hardcodedTag.Description = "Background's display name";
 				}
 			}
 		}
@@ -84,6 +105,9 @@ namespace SPNATI_Character_Editor
 
 		[XmlText]
 		public string Name;
+
+		[XmlAttribute("description")]
+		public string Description;
 
 		public bool IsBoolean
 		{

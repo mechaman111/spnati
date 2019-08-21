@@ -4,6 +4,11 @@ namespace SPNATI_Character_Editor
 {
 	public class BackgroundProvider : DefinitionProvider<BackgroundTag>
 	{
+		public BackgroundProvider()
+		{
+			SearchDescription = true;
+		}
+
 		public override void ApplyDefaults(BackgroundTag definition)
 		{
 		}
