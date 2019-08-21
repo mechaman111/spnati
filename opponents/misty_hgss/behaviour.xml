@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0 at 11:15:43 PM on August 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 4:26:22 PM on August 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.0</version>
     <first>Misty</first>
@@ -9,9 +9,9 @@
     <gender>female</gender>
     <size>medium</size>
     <timer>28</timer>
-    <intelligence>good</intelligence>
+    <intelligence>average</intelligence>
 
-    <intelligence stage="2">good</intelligence>
+    <intelligence stage="1">good</intelligence>
 
     <intelligence stage="3">best</intelligence>
 
@@ -89,19 +89,19 @@
             <case tag="game_start">
                 <condition count="1" filter="human_male" />
                 <test expr="~background~" value="beach" />
-                <state img="0-excited.png" marker="player_male=3">The beach? Perfect! After the game, I can show off my swimming skills</state>
+                <state img="0-excited.png" marker="player_male=3">The beach? Perfect! After the game, I can show off my swimming skills.</state>
             </case>
-            <case tag="game_start">
+            <case tag="game_start" id="0-1">
                 <condition count="1" filter="human_male" />
                 <test expr="~background~" value="hot spring" />
                 <state img="0-thinking.png" marker="player_male">If we're in a hot spring, then why are any of us still wearing clothes?</state>
             </case>
-            <case tag="game_start">
+            <case tag="game_start" id="0-2">
                 <condition count="1" filter="human_male" />
                 <test expr="~background~" value="poolside" />
                 <state img="0-excited.png" marker="player_male=8">Strip poker by the pool! After we all get naked, we can enjoy some skinny dipping!</state>
             </case>
-            <case tag="game_start">
+            <case tag="game_start" id="0-3">
                 <condition count="0" gender="male" />
                 <state img="0-irritated.png" marker="misty_noguys">So this is the game? Wait! ~player~! You said there would be guys here too!</state>
             </case>
@@ -270,6 +270,10 @@
             <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="2" saidMarker="player_male" alsoPlayingSaying="dream">
                 <state img="0-disappointed.png">You're completely delusional, Tharja.</state>
             </case>
+            <case tag="hand" alsoPlaying="uravity" alsoPlayingSayingMarker="quirk_talk2">
+                <state img="0-thinking.png">Is that kinda like Magnet Rise, Ochako? Or maybe Telekinesis?</state>
+                <state img="0-thinking.png">That's cool and all, Ochako, but how is it relevant to the game we're playing?</state>
+            </case>
             <case tag="hand" alsoPlaying="wiifitfemale" alsoPlayingSayingMarker="carpal">
                 <state img="0-shocked.png">I am? How is that possible, Trainer?</state>
             </case>
@@ -428,11 +432,12 @@
                 <state img="0-thinking.png" marker="seen_verylonghair">So, I've been meaning to say this for awhile, but ~name~, don't you think you should get a haircut? Hair that long is gonna cause a ton of problems while swimming.</state>
             </case>
             <case tag="female_must_strip" priority="1">
-                <state img="0-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
                 <state img="0-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
-                <state img="0-excited.png">Your turn ~name~. Be bold about it!</state>
                 <state img="0-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
                 <state img="0-excited.png">You're gonna have to try harder if you wanna beat me!</state>
+                <state img="0-happy.png">It's not over! Don't give up, ~name~!</state>
+                <state img="0-excited.png">Show us what you've got, ~name~!</state>
+                <state img="0-excited.png">It's your time to shine, ~name~!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="0-embarrassed.png">Uh, Aimee? What are you doing with that gun?</state>
@@ -552,6 +557,10 @@
             <case tag="female_must_strip" target="tharja" targetSayingMarker="cheating1">
                 <state img="0-disappointed.png">Did you just admit to cheating, Tharja?</state>
                 <state img="0-disappointed.png">Are you really cheating, Tharja? Please don't. That's no fun.</state>
+            </case>
+            <case tag="female_must_strip" target="uravity" targetSayingMarker="art_class">
+                <state img="0-thinking.png">What kind of art class do you have, Ochako?</state>
+                <state img="0-thinking.png">Sounds like one heck of an art class, Ochako.</state>
             </case>
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0">
                 <state img="0-happy.png">A trainer? A different kind than I'm used to, but I think we can still get along.</state>
@@ -1515,6 +1524,16 @@
                 <state img="0-happy.png">There goes your swimsuit, Sheena.</state>
                 <state img="0-neutral.png">Better be careful, Sheena. You're only one loss away from being out.</state>
             </case>
+            <case tag="opponent_lost" consecutiveLosses="2">
+                <state img="0-neutral.png">Twice in a row? Talk about bad luck, ~name~.</state>
+                <state img="0-neutral.png">Twice? In a row? Your luck doesn't seem to be very good, ~name~.</state>
+                <state img="0-embarrassed.png">I know it's a game of luck, but twice in a row is still unfortunate, ~name~.</state>
+            </case>
+            <case tag="opponent_lost" consecutiveLosses="3">
+                <state img="0-embarrassed.png">Three times? Your luck is terrible, name!</state>
+                <state img="0-shocked.png">Three times in a row? Are you throwing or something, ~name~?</state>
+                <state img="0-embarrassed.png">Three times in a row? If you had an Ability, ~name~, it definitely wouldn't be Super Luck.</state>
+            </case>
             <case tag="opponent_lost" filter="blade" notSaidMarker="seen_blade">
                 <state img="0-shocked.png" marker="seen_blade">Wait, do you have a blade!? Why would you bring that to a poker game!?</state>
             </case>
@@ -1677,6 +1696,9 @@
                 <state img="0-happy.png">Don't forget about your clit, ~name~.</state>
                 <state img="0-excited.png">Faster! Harder! Push yourself as far as you can, ~name~!</state>
             </case>
+            <case tag="female_masturbating" alsoPlaying="uravity" alsoPlayingSayingMarker="facesitting">
+                <state img="0-neutral.png">You say "someone", Ochako, but is ther anyone in particular you have in mind?</state>
+            </case>
             <case tag="female_masturbating" target="croix">
                 <state img="0-embarrassed.png">You, uh, you doing good, Croix?</state>
                 <state img="0-embarrassed.png">You really seem to be enjoying yourself, Croix.</state>
@@ -1711,6 +1733,9 @@
             </case>
             <case tag="female_finished_masturbating" target="black_canary">
                 <state img="0-shocked.png">Did someone just set off a Boomburst!? That was loud!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="uravity" targetSayingMarker="plop">
+                <state img="0-embarrassed.png">You okay, Ochako? It looked like you hit the ground pretty hard there.</state>
             </case>
             <case tag="game_over_victory">
                 <state img="0-excited.png">Now, is anyone up for some skinny dipping?</state>
@@ -1860,6 +1885,10 @@
             </case>
             <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="2" saidMarker="player_male" alsoPlayingSaying="dream">
                 <state img="1-disappointed.png">You're completely delusional, Tharja.</state>
+            </case>
+            <case tag="hand" alsoPlaying="uravity" alsoPlayingSayingMarker="quirk_talk2">
+                <state img="1-thinking.png">Is that kinda like Magnet Rise, Ochako? Or maybe Telekinesis?</state>
+                <state img="1-thinking.png">That's cool and all, Ochako, but how is it relevant to the game we're playing?</state>
             </case>
             <case tag="hand" alsoPlaying="wiifitfemale" alsoPlayingSayingMarker="carpal">
                 <state img="1-shocked.png">I am? How is that possible, Trainer?</state>
@@ -2019,11 +2048,12 @@
                 <state img="1-thinking.png" marker="seen_verylonghair">So, I've been meaning to say this for awhile, but ~name~, don't you think you should get a haircut? Hair that long is gonna cause a ton of problems while swimming.</state>
             </case>
             <case tag="female_must_strip" priority="1">
-                <state img="1-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
                 <state img="1-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
-                <state img="1-excited.png">Your turn ~name~. Be bold about it!</state>
                 <state img="1-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
                 <state img="1-excited.png">You're gonna have to try harder if you wanna beat me!</state>
+                <state img="1-happy.png">It's not over! Don't give up, ~name~!</state>
+                <state img="1-excited.png">Show us what you've got, ~name~!</state>
+                <state img="1-excited.png">It's your time to shine, ~name~!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="1-embarrassed.png">Uh, Aimee? What are you doing with that gun?</state>
@@ -2136,6 +2166,10 @@
             </case>
             <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow7">
                 <state img="1-neutral.png">Too bad your sandals don't seem to be catching ~player~'s interest very much, Tharja. But I guess they had to go eventually.</state>
+            </case>
+            <case tag="female_must_strip" target="uravity" targetSayingMarker="art_class">
+                <state img="1-thinking.png">What kind of art class do you have, Ochako?</state>
+                <state img="1-thinking.png">Sounds like one heck of an art class, Ochako.</state>
             </case>
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0">
                 <state img="1-happy.png">A trainer? A different kind than I'm used to, but I think we can still get along.</state>
@@ -3112,6 +3146,16 @@
                 <state img="1-happy.png">There goes your swimsuit, Sheena.</state>
                 <state img="1-neutral.png">Better be careful, Sheena. You're only one loss away from being out.</state>
             </case>
+            <case tag="opponent_lost" consecutiveLosses="2">
+                <state img="1-neutral.png">Twice in a row? Talk about bad luck, ~name~.</state>
+                <state img="1-neutral.png">Twice? In a row? Your luck doesn't seem to be very good, ~name~.</state>
+                <state img="1-embarrassed.png">I know it's a game of luck, but twice in a row is still unfortunate, ~name~.</state>
+            </case>
+            <case tag="opponent_lost" consecutiveLosses="3">
+                <state img="1-embarrassed.png">Three times? Your luck is terrible, name!</state>
+                <state img="1-shocked.png">Three times in a row? Are you throwing or something, ~name~?</state>
+                <state img="1-embarrassed.png">Three times in a row? If you had an Ability, ~name~, it definitely wouldn't be Super Luck.</state>
+            </case>
             <case tag="opponent_lost" filter="blade" notSaidMarker="seen_blade">
                 <state img="1-shocked.png" marker="seen_blade">Wait, do you have a blade!? Why would you bring that to a poker game!?</state>
             </case>
@@ -3274,6 +3318,9 @@
                 <state img="1-happy.png">Don't forget about your clit, ~name~.</state>
                 <state img="1-excited.png">Faster! Harder! Push yourself as far as you can, ~name~!</state>
             </case>
+            <case tag="female_masturbating" alsoPlaying="uravity" alsoPlayingSayingMarker="facesitting">
+                <state img="1-neutral.png">You say "someone", Ochako, but is ther anyone in particular you have in mind?</state>
+            </case>
             <case tag="female_masturbating" target="croix">
                 <state img="1-embarrassed.png">You, uh, you doing good, Croix?</state>
                 <state img="1-embarrassed.png">You really seem to be enjoying yourself, Croix.</state>
@@ -3308,6 +3355,9 @@
             </case>
             <case tag="female_finished_masturbating" target="black_canary">
                 <state img="1-shocked.png">Did someone just set off a Boomburst!? That was loud!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="uravity" targetSayingMarker="plop">
+                <state img="1-embarrassed.png">You okay, Ochako? It looked like you hit the ground pretty hard there.</state>
             </case>
             <case tag="game_over_victory">
                 <state img="1-excited.png">Now, is anyone up for some skinny dipping?</state>
@@ -3477,6 +3527,10 @@
             </case>
             <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="2" saidMarker="player_male" alsoPlayingSaying="dream">
                 <state img="2-disappointed.png">You're completely delusional, Tharja.</state>
+            </case>
+            <case tag="hand" alsoPlaying="uravity" alsoPlayingSayingMarker="quirk_talk2">
+                <state img="2-thinking.png">Is that kinda like Magnet Rise, Ochako? Or maybe Telekinesis?</state>
+                <state img="2-thinking.png">That's cool and all, Ochako, but how is it relevant to the game we're playing?</state>
             </case>
             <case tag="hand" alsoPlaying="wiifitfemale" alsoPlayingSayingMarker="carpal">
                 <state img="2-shocked.png">I am? How is that possible, Trainer?</state>
@@ -3669,11 +3723,12 @@
                 <state img="2-thinking.png" marker="seen_verylonghair">So, I've been meaning to say this for awhile, but ~name~, don't you think you should get a haircut? Hair that long is gonna cause a ton of problems while swimming.</state>
             </case>
             <case tag="female_must_strip" priority="1">
-                <state img="2-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
                 <state img="2-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
-                <state img="2-excited.png">Your turn ~name~. Be bold about it!</state>
                 <state img="2-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
                 <state img="2-excited.png">You're gonna have to try harder if you wanna beat me!</state>
+                <state img="2-happy.png">It's not over! Don't give up, ~name~!</state>
+                <state img="2-excited.png">Show us what you've got, ~name~!</state>
+                <state img="2-excited.png">It's your time to shine, ~name~!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="2-embarrassed.png">Uh, Aimee? What are you doing with that gun?</state>
@@ -3786,6 +3841,10 @@
             </case>
             <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow7">
                 <state img="2-neutral.png">Too bad your sandals don't seem to be catching ~player~'s interest very much, Tharja. But I guess they had to go eventually.</state>
+            </case>
+            <case tag="female_must_strip" target="uravity" targetSayingMarker="art_class">
+                <state img="2-thinking.png">What kind of art class do you have, Ochako?</state>
+                <state img="2-thinking.png">Sounds like one heck of an art class, Ochako.</state>
             </case>
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0">
                 <state img="2-happy.png">A trainer? A different kind than I'm used to, but I think we can still get along.</state>
@@ -4762,6 +4821,16 @@
                 <state img="2-happy.png">There goes your swimsuit, Sheena.</state>
                 <state img="2-neutral.png">Better be careful, Sheena. You're only one loss away from being out.</state>
             </case>
+            <case tag="opponent_lost" consecutiveLosses="2">
+                <state img="2-neutral.png">Twice in a row? Talk about bad luck, ~name~.</state>
+                <state img="2-neutral.png">Twice? In a row? Your luck doesn't seem to be very good, ~name~.</state>
+                <state img="2-embarrassed.png">I know it's a game of luck, but twice in a row is still unfortunate, ~name~.</state>
+            </case>
+            <case tag="opponent_lost" consecutiveLosses="3">
+                <state img="2-embarrassed.png">Three times? Your luck is terrible, name!</state>
+                <state img="2-shocked.png">Three times in a row? Are you throwing or something, ~name~?</state>
+                <state img="2-embarrassed.png">Three times in a row? If you had an Ability, ~name~, it definitely wouldn't be Super Luck.</state>
+            </case>
             <case tag="opponent_lost" filter="blade" notSaidMarker="seen_blade">
                 <state img="2-shocked.png" marker="seen_blade">Wait, do you have a blade!? Why would you bring that to a poker game!?</state>
             </case>
@@ -4924,6 +4993,9 @@
                 <state img="2-happy.png">Don't forget about your clit, ~name~.</state>
                 <state img="2-excited.png">Faster! Harder! Push yourself as far as you can, ~name~!</state>
             </case>
+            <case tag="female_masturbating" alsoPlaying="uravity" alsoPlayingSayingMarker="facesitting">
+                <state img="2-neutral.png">You say "someone", Ochako, but is ther anyone in particular you have in mind?</state>
+            </case>
             <case tag="female_masturbating" target="croix">
                 <state img="2-embarrassed.png">You, uh, you doing good, Croix?</state>
                 <state img="2-embarrassed.png">You really seem to be enjoying yourself, Croix.</state>
@@ -4958,6 +5030,9 @@
             </case>
             <case tag="female_finished_masturbating" target="black_canary">
                 <state img="2-shocked.png">Did someone just set off a Boomburst!? That was loud!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="uravity" targetSayingMarker="plop">
+                <state img="2-embarrassed.png">You okay, Ochako? It looked like you hit the ground pretty hard there.</state>
             </case>
             <case tag="game_over_victory">
                 <state img="2-excited.png">Now, is anyone up for some skinny dipping?</state>
@@ -5128,6 +5203,10 @@
             <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="2" saidMarker="player_male" alsoPlayingSaying="dream">
                 <state img="3-disappointed.png">You're completely delusional, Tharja.</state>
             </case>
+            <case tag="hand" alsoPlaying="uravity" alsoPlayingSayingMarker="quirk_talk2">
+                <state img="3-thinking.png">Is that kinda like Magnet Rise, Ochako? Or maybe Telekinesis?</state>
+                <state img="3-thinking.png">That's cool and all, Ochako, but how is it relevant to the game we're playing?</state>
+            </case>
             <case tag="hand" alsoPlaying="wiifitfemale" alsoPlayingSayingMarker="carpal">
                 <state img="3-shocked.png">I am? How is that possible, Trainer?</state>
             </case>
@@ -5277,10 +5356,10 @@
             </case>
             <case tag="female_must_strip" priority="1">
                 <state img="3-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
-                <state img="3-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
                 <state img="3-excited.png">Your turn ~name~. Be bold about it!</state>
-                <state img="3-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
-                <state img="3-excited.png">You're gonna have to try harder if you wanna beat me!</state>
+                <state img="3-neutral.png">It's a good thing I decided to step things up.</state>
+                <state img="3-excited.png">I'm playing seriously, now ~name~! You won't beat me that easily!</state>
+                <state img="3-neutral.png">I hope you didn't think it would be easy to beat me just because I'm not wearing much, ~name~.</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="3-embarrassed.png">Uh, Aimee? What are you doing with that gun?</state>
@@ -5393,6 +5472,10 @@
             </case>
             <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow7">
                 <state img="3-neutral.png">Too bad your sandals don't seem to be catching ~player~'s interest very much, Tharja. But I guess they had to go eventually.</state>
+            </case>
+            <case tag="female_must_strip" target="uravity" targetSayingMarker="art_class">
+                <state img="3-thinking.png">What kind of art class do you have, Ochako?</state>
+                <state img="3-thinking.png">Sounds like one heck of an art class, Ochako.</state>
             </case>
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0">
                 <state img="3-happy.png">A trainer? A different kind than I'm used to, but I think we can still get along.</state>
@@ -6376,6 +6459,16 @@
                 <state img="3-happy.png">There goes your swimsuit, Sheena.</state>
                 <state img="3-neutral.png">Better be careful, Sheena. You're only one loss away from being out.</state>
             </case>
+            <case tag="opponent_lost" consecutiveLosses="2">
+                <state img="3-neutral.png">Twice in a row? Talk about bad luck, ~name~.</state>
+                <state img="3-neutral.png">Twice? In a row? Your luck doesn't seem to be very good, ~name~.</state>
+                <state img="3-embarrassed.png">I know it's a game of luck, but twice in a row is still unfortunate, ~name~.</state>
+            </case>
+            <case tag="opponent_lost" consecutiveLosses="3">
+                <state img="3-embarrassed.png">Three times? Your luck is terrible, name!</state>
+                <state img="3-shocked.png">Three times in a row? Are you throwing or something, ~name~?</state>
+                <state img="3-embarrassed.png">Three times in a row? If you had an Ability, ~name~, it definitely wouldn't be Super Luck.</state>
+            </case>
             <case tag="opponent_lost" filter="blade" notSaidMarker="seen_blade">
                 <state img="3-shocked.png" marker="seen_blade">Wait, do you have a blade!? Why would you bring that to a poker game!?</state>
             </case>
@@ -6538,6 +6631,9 @@
                 <state img="3-happy.png">Don't forget about your clit, ~name~.</state>
                 <state img="3-excited.png">Faster! Harder! Push yourself as far as you can, ~name~!</state>
             </case>
+            <case tag="female_masturbating" alsoPlaying="uravity" alsoPlayingSayingMarker="facesitting">
+                <state img="3-neutral.png">You say "someone", Ochako, but is ther anyone in particular you have in mind?</state>
+            </case>
             <case tag="female_masturbating" target="croix">
                 <state img="3-embarrassed.png">You, uh, you doing good, Croix?</state>
                 <state img="3-embarrassed.png">You really seem to be enjoying yourself, Croix.</state>
@@ -6572,6 +6668,9 @@
             </case>
             <case tag="female_finished_masturbating" target="black_canary">
                 <state img="3-shocked.png">Did someone just set off a Boomburst!? That was loud!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="uravity" targetSayingMarker="plop">
+                <state img="3-embarrassed.png">You okay, Ochako? It looked like you hit the ground pretty hard there.</state>
             </case>
             <case tag="game_over_victory">
                 <state img="3-excited.png">Now, is anyone up for some skinny dipping?</state>
@@ -6711,6 +6810,10 @@
             <case tag="hand" alsoPlaying="tharja" alsoPlayingStage="2" saidMarker="player_male" alsoPlayingSaying="dream">
                 <state img="4-disappointed.png">You're completely delusional, Tharja.</state>
             </case>
+            <case tag="hand" alsoPlaying="uravity" alsoPlayingSayingMarker="quirk_talk2">
+                <state img="4-thinking.png">Is that kinda like Magnet Rise, Ochako? Or maybe Telekinesis?</state>
+                <state img="4-thinking.png">That's cool and all, Ochako, but how is it relevant to the game we're playing?</state>
+            </case>
             <case tag="hand" alsoPlaying="wiifitfemale" alsoPlayingSayingMarker="carpal">
                 <state img="4-shocked.png">I am? How is that possible, Trainer?</state>
             </case>
@@ -6720,7 +6823,7 @@
             <case tag="hand" alsoPlaying="wiifitfemale" alsoPlayingSayingMarker="gym">
                 <state img="4-thinking.png">Does it now? I guess that give whole new meaning to "Pokemon Gyms" then.</state>
             </case>
-            <case tag="hand" saidMarker="player_male" notSaidMarker="found_date" priority="1">
+            <case tag="hand" id="4-4" saidMarker="player_male" notSaidMarker="found_date" priority="1">
                 <state img="4-embarrassed.png" marker="askfor_number">Hey, ~player~. Do you... Can we...maybe exchange numbers? So I can call you again later?</state>
             </case>
             <case tag="stripped" alsoPlaying="ami" alsoPlayingSayingMarker="ami_suggests_scissoring">
@@ -6795,10 +6898,10 @@
             </case>
             <case tag="female_must_strip" priority="1">
                 <state img="4-pleased.png">Let's see how your body compares to mine. I swim almost daily, by the way.</state>
-                <state img="4-neutral.png">Look's like it's ~name~'s turn. Show us something good!</state>
                 <state img="4-excited.png">Your turn ~name~. Be bold about it!</state>
-                <state img="4-excited.png">Sorry ~name~, but I came here to win! (And maybe pick up a date.)</state>
-                <state img="4-excited.png">You're gonna have to try harder if you wanna beat me!</state>
+                <state img="4-neutral.png">It's a good thing I decided to step things up.</state>
+                <state img="4-excited.png">I'm playing seriously, now ~name~! You won't beat me that easily!</state>
+                <state img="4-neutral.png">I hope you didn't think it would be easy to beat me just because I'm not wearing much, ~name~.</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="4-embarrassed.png">Uh, Aimee? What are you doing with that gun?</state>
@@ -6907,6 +7010,10 @@
             </case>
             <case tag="female_must_strip" target="tharja" saidMarker="player_male" targetSayingMarker="stripshow7">
                 <state img="4-neutral.png">Too bad your sandals don't seem to be catching ~player~'s interest very much, Tharja. But I guess they had to go eventually.</state>
+            </case>
+            <case tag="female_must_strip" target="uravity" targetSayingMarker="art_class">
+                <state img="4-thinking.png">What kind of art class do you have, Ochako?</state>
+                <state img="4-thinking.png">Sounds like one heck of an art class, Ochako.</state>
             </case>
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0">
                 <state img="4-happy.png">A trainer? A different kind than I'm used to, but I think we can still get along.</state>
@@ -7898,6 +8005,16 @@
                 <state img="4-happy.png">There goes your swimsuit, Sheena.</state>
                 <state img="4-neutral.png">Better be careful, Sheena. You're only one loss away from being out.</state>
             </case>
+            <case tag="opponent_lost" consecutiveLosses="2">
+                <state img="4-neutral.png">Twice in a row? Talk about bad luck, ~name~.</state>
+                <state img="4-neutral.png">Twice? In a row? Your luck doesn't seem to be very good, ~name~.</state>
+                <state img="4-embarrassed.png">I know it's a game of luck, but twice in a row is still unfortunate, ~name~.</state>
+            </case>
+            <case tag="opponent_lost" consecutiveLosses="3">
+                <state img="4-embarrassed.png">Three times? Your luck is terrible, name!</state>
+                <state img="4-shocked.png">Three times in a row? Are you throwing or something, ~name~?</state>
+                <state img="4-embarrassed.png">Three times in a row? If you had an Ability, ~name~, it definitely wouldn't be Super Luck.</state>
+            </case>
             <case tag="opponent_lost" filter="blade" notSaidMarker="seen_blade">
                 <state img="4-shocked.png" marker="seen_blade">Wait, do you have a blade!? Why would you bring that to a poker game!?</state>
             </case>
@@ -7922,7 +8039,7 @@
             <case tag="opponent_lost" filter="winged" notSaidMarker="seen_wings">
                 <state img="4-neutral.png" marker="seen_wings">Hey ~name~, I've been meaning to ask: are those wings real? Can you actually fly with them? If so, then I bet you'd be great at training flying types!</state>
             </case>
-            <case tag="opponent_lost" saidMarker="askfor_number" notSaidMarker="found_date" priority="600">
+            <case tag="opponent_lost" id="4-5" saidMarker="askfor_number" notSaidMarker="found_date" priority="600">
                 <state img="4-excited.png" marker="found_date">Really!? We can? Yes! Thank you!</state>
             </case>
             <case tag="opponent_lost" saidMarker="turned_around==1" priority="400">
@@ -8069,6 +8186,9 @@
                 <state img="4-happy.png">Don't forget about your clit, ~name~.</state>
                 <state img="4-excited.png">Faster! Harder! Push yourself as far as you can, ~name~!</state>
             </case>
+            <case tag="female_masturbating" alsoPlaying="uravity" alsoPlayingSayingMarker="facesitting">
+                <state img="4-neutral.png">You say "someone", Ochako, but is ther anyone in particular you have in mind?</state>
+            </case>
             <case tag="female_masturbating" target="croix">
                 <state img="4-embarrassed.png">You, uh, you doing good, Croix?</state>
                 <state img="4-embarrassed.png">You really seem to be enjoying yourself, Croix.</state>
@@ -8104,12 +8224,15 @@
             <case tag="female_finished_masturbating" target="black_canary">
                 <state img="4-shocked.png">Did someone just set off a Boomburst!? That was loud!</state>
             </case>
+            <case tag="female_finished_masturbating" target="uravity" targetSayingMarker="plop">
+                <state img="4-embarrassed.png">You okay, Ochako? It looked like you hit the ground pretty hard there.</state>
+            </case>
             <case tag="must_masturbate_first">
                 <state img="4-embarrassed.png">I'm first, huh? Can't really say I'm surprised. I didn't come here wearing much after all.</state>
                 <state img="4-embarrassed.png">Looks like I'm first. I don't mind having to do this, but I'm still upset that I lost.</state>
                 <state img="4-thinking.png">I lost, huh? Not only that, but I'm the first one out. Guess I should've worn more clothes.</state>
             </case>
-            <case tag="must_masturbate_first" saidMarker="askfor_number" notSaidMarker="found_date" priority="600">
+            <case tag="must_masturbate_first" id="4-6" saidMarker="askfor_number" notSaidMarker="found_date" priority="600">
                 <state img="4-shocked.png" marker="found_date">Shoot. I lost. Wait, what? You'll exchange numbers with me, ~player~? Really!? Awesome!</state>
             </case>
             <case tag="must_masturbate_first" saidMarker="misty_dvawagertaken">
@@ -9335,6 +9458,9 @@
                 <state img="5-happy.png">Don't forget about your clit, ~name~.</state>
                 <state img="5-excited.png">Faster! Harder! Push yourself as far as you can, ~name~!</state>
             </case>
+            <case tag="female_masturbating" alsoPlaying="uravity" alsoPlayingSayingMarker="facesitting">
+                <state img="5-neutral.png">You say "someone", Ochako, but is ther anyone in particular you have in mind?</state>
+            </case>
             <case tag="female_masturbating" target="croix">
                 <state img="5-embarrassed.png">You, uh, you doing good, Croix?</state>
                 <state img="5-embarrassed.png">You really seem to be enjoying yourself, Croix.</state>
@@ -9369,6 +9495,9 @@
             </case>
             <case tag="female_finished_masturbating" target="black_canary">
                 <state img="5-shocked.png">Did someone just set off a Boomburst!? That was loud!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="uravity" targetSayingMarker="plop">
+                <state img="5-embarrassed.png">You okay, Ochako? It looked like you hit the ground pretty hard there.</state>
             </case>
             <case tag="masturbating">
                 <state img="5-happy.png">It's been too long since I've enjoyed myself like this. Being a Gym Leader just takes up all my time.</state>
@@ -10631,6 +10760,9 @@
                 <state img="6-happy.png">Don't forget about your clit, ~name~.</state>
                 <state img="6-excited.png">Faster! Harder! Push yourself as far as you can, ~name~!</state>
             </case>
+            <case tag="female_masturbating" alsoPlaying="uravity" alsoPlayingSayingMarker="facesitting">
+                <state img="6-neutral.png">You say "someone", Ochako, but is ther anyone in particular you have in mind?</state>
+            </case>
             <case tag="female_masturbating" target="croix">
                 <state img="6-embarrassed.png">You, uh, you doing good, Croix?</state>
                 <state img="6-embarrassed.png">You really seem to be enjoying yourself, Croix.</state>
@@ -10665,6 +10797,9 @@
             </case>
             <case tag="female_finished_masturbating" target="black_canary">
                 <state img="6-shocked.png">Did someone just set off a Boomburst!? That was loud!</state>
+            </case>
+            <case tag="female_finished_masturbating" target="uravity" targetSayingMarker="plop">
+                <state img="6-embarrassed.png">You okay, Ochako? It looked like you hit the ground pretty hard there.</state>
             </case>
             <case tag="finished_masturbating">
                 <state img="6-finished.png">That was incredible. I'm still basking in the afterglow.</state>
