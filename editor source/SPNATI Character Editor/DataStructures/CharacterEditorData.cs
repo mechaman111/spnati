@@ -178,6 +178,7 @@ namespace SPNATI_Character_Editor
 			}
 			Situation line = new Situation(c);
 			NoteworthySituations.Add(line);
+			_character.IsDirty = true;
 			return line;
 		}
 

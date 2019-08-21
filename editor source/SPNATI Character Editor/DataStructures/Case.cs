@@ -16,6 +16,10 @@ using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
+	/// <remarks>
+	/// Note: This class breaks from the normal BindableObject usage by storing properties explicitly. This is for performance reasons since it's
+	/// marginally faster than boxing everything into a dictionary and this class is accessed so frequently it makes a difference
+	/// </remarks>
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public class Case : BindableObject, IComparable<Case>, ISliceable
 	{
@@ -47,11 +51,16 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("id")]
 		public string StageId;
 
+		private int _id;
 		/// <summary>
 		/// ID for a working case. Like the 2nd piece of StageId
 		/// </summary>
 		[XmlIgnore]
-		public int Id;
+		public int Id
+		{
+			get { return _id; }
+			set { if (_id != value) { _id = value; NotifyPropertyChanged(nameof(Id)); } }
+		}
 
 		/// <summary>
 		/// Only used with ImportEdits
@@ -545,7 +554,11 @@ namespace SPNATI_Character_Editor
 		[JsonProperty("lines")]
 		[XmlOrder(410)]
 		[XmlElement("state")]
-		public List<DialogueLine> Lines;
+		public ObservableCollection<DialogueLine> Lines
+		{
+			get { return Get<ObservableCollection<DialogueLine>>(); }
+			set { Set(value); }
+		}
 
 		/// <summary>
 		/// Used for consistently sorting two identical cases
@@ -585,7 +598,7 @@ namespace SPNATI_Character_Editor
 		public Case()
 		{
 			_globalId = s_globalId++;
-			Lines = new List<DialogueLine>();
+			Lines = new ObservableCollection<DialogueLine>();
 			Stages = new ObservableCollection<int>();
 			Conditions = new ObservableCollection<TargetCondition>();
 			Expressions = new ObservableCollection<ExpressionTest>();

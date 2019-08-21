@@ -3,60 +3,111 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using System.ComponentModel;
+using Desktop.DataStructures;
+using Desktop;
 
 namespace SPNATI_Character_Editor
 {
 	/// <summary>
 	/// A single line of dialogue and its pose
 	/// </summary>
-	public class DialogueLine
+	public class DialogueLine : BindableObject
 	{
+		private string _image;
 		[XmlAttribute("img")]
-		public string Image;
+		public string Image
+		{
+			get { return _image; }
+			set { if (_image != value) { _image = value; NotifyPropertyChanged(); } }
+		}
 
 		[XmlIgnore]
-		public Dictionary<int, LineImage> StageImages = new Dictionary<int, LineImage>();
+		public ObservableDictionary<int, LineImage> StageImages
+		{
+			get { return Get<ObservableDictionary<int, LineImage>>(); }
+			set { Set(value); }
+		}
 
 		[XmlText]
-		public string Text;
+		public string Text
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		/// <summary>
 		/// Line will only play once
 		/// </summary>
 		[DefaultValue(0)]
 		[XmlAttribute("oneShotId")]
-		public int OneShotId;
+		public int OneShotId
+		{
+			get { return Get<int>(); }
+			set { Set(value); }
+		}
 
 		[XmlAttribute("marker")]
-		public string Marker;
+		public string Marker
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[DefaultValue("down")]
 		[XmlAttribute("direction")]
-		public string Direction;
+		public string Direction
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[DefaultValue("")]
 		[XmlAttribute("location")]
-		public string Location;
+		public string Location
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[DefaultValue("")]
 		[XmlAttribute("set-gender")]
-		public string Gender;
+		public string Gender
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[DefaultValue("")]
 		[XmlAttribute("set-intelligence")]
-		public string Intelligence;
+		public string Intelligence
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[DefaultValue("")]
 		[XmlAttribute("set-size")]
-		public string Size;
+		public string Size
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[DefaultValue("")]
 		[XmlAttribute("set-label")]
-		public string Label;
+		public string Label
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[DefaultValue(1.0f)]
 		[XmlAttribute("weight")]
-		public float Weight = 1;
+		public float Weight
+		{
+			get { return Get<float>(); }
+			set { Set(value); }
+		}
 
 		[XmlIgnore]
 		public string ImageExtension;
@@ -66,15 +117,27 @@ namespace SPNATI_Character_Editor
 
 		[DefaultValue("")]
 		[XmlAttribute("collectible")]
-		public string CollectibleId;
+		public string CollectibleId
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[DefaultValue("")]
 		[XmlAttribute("collectible-value")]
-		public string CollectibleValue;
+		public string CollectibleValue
+		{
+			get { return Get<string>(); }
+			set	{ Set(value); }
+		}
 
 		[DefaultValue(false)]
 		[XmlAttribute("persist-marker")]
-		public bool IsMarkerPersistent;
+		public bool IsMarkerPersistent
+		{
+			get { return Get<bool>(); }
+			set { Set(value); }
+		}
 
 		public static readonly string[] ArrowDirections = new string[] { "", "down", "left", "right", "up" };
 		public static readonly string[] AILevels = new string[] { "", "throw", "bad", "average", "good", "best" };
@@ -84,10 +147,12 @@ namespace SPNATI_Character_Editor
 			Image = "";
 			Text = "";
 			Direction = "down";
+			Weight = 1;
 			Marker = null;
+			StageImages = new ObservableDictionary<int, LineImage>();
 		}
 
-		public DialogueLine(string image, string text)
+		public DialogueLine(string image, string text) : this()
 		{
 			Image = image;
 			string extension = Path.GetExtension(image);
@@ -97,8 +162,10 @@ namespace SPNATI_Character_Editor
 
 		public DialogueLine Copy()
 		{
-			DialogueLine copy = MemberwiseClone() as DialogueLine;
-			copy.StageImages = new Dictionary<int, LineImage>();
+			DialogueLine copy = new DialogueLine();
+			CopyPropertiesInto(copy);
+			copy._image = _image;
+			copy.StageImages = new ObservableDictionary<int, LineImage>();
 			foreach (KeyValuePair<int, LineImage> kvp in StageImages)
 			{
 				copy.StageImages[kvp.Key] = new LineImage(kvp.Value.Image, kvp.Value.IsGenericImage);
@@ -278,7 +345,7 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				return IsMarkerPersistent || (Marker != null && (Marker.Contains("=") || Marker.Contains("+") || Marker.Contains("-") ||  Marker.Contains("*")));
+				return IsMarkerPersistent || (Marker != null && (Marker.Contains("=") || Marker.Contains("+") || Marker.Contains("-") || Marker.Contains("*")));
 			}
 		}
 	}

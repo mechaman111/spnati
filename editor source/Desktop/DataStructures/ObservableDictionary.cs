@@ -88,9 +88,7 @@ namespace Desktop
 
 		public void Clear()
 		{
-			List<TValue> removedItems = new List<TValue>();
-			removedItems.AddRange(_dict.Values);
-			NotifyCollectionChangedEventArgs args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset, removedItems);
+			NotifyCollectionChangedEventArgs args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
 			_dict.Clear();
 			NotifyCollectionChanged(args);
 		}

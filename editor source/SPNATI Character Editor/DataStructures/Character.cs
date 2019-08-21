@@ -188,7 +188,7 @@ namespace SPNATI_Character_Editor
 		[XmlNewLine]
 		[XmlArray("start")]
 		[XmlArrayItem("state")]
-		public List<DialogueLine> StartingLines { get; set; }
+		public ObservableCollection<DialogueLine> StartingLines { get; set; }
 
 		[XmlNewLine]
 		[XmlArray("wardrobe")]
@@ -216,7 +216,11 @@ namespace SPNATI_Character_Editor
 		public List<System.Xml.XmlElement> ExtraXml;
 
 		[XmlIgnore]
-		public CollectibleData Collectibles = new CollectibleData();
+		public CollectibleData Collectibles
+		{
+			get { return Get<CollectibleData>(); }
+			set { Set(value); }
+		}
 
 		private bool _built;
 
@@ -264,13 +268,14 @@ namespace SPNATI_Character_Editor
 			Metadata = new Metadata();
 			Markers = new MarkerData();
 			Wardrobe = new List<Clothing>();
-			StartingLines = new List<DialogueLine>();
+			StartingLines = new ObservableCollection<DialogueLine>();
 			Endings = new List<Epilogue>();
 			Tags = new List<CharacterTag>();
 			Nicknames = new ObservableCollection<Nickname>();
 			Behavior = new Behaviour();
 			Poses = new List<Pose>();
 			Wardrobe = new List<Clothing>();
+			Collectibles = new CollectibleData();
 		}
 
 		/// <summary>
@@ -290,11 +295,12 @@ namespace SPNATI_Character_Editor
 			Metadata = new Metadata();
 			Markers = new MarkerData();
 			Wardrobe = new List<Clothing>();
-			StartingLines = new List<DialogueLine>();
+			StartingLines = new ObservableCollection<DialogueLine>();
 			Endings = new List<Epilogue>();
 			Poses = new List<Pose>();
 			Version = "";
 			Nicknames = new ObservableCollection<Nickname>();
+			Collectibles = new CollectibleData();
 		}
 
 		public override string ToString()

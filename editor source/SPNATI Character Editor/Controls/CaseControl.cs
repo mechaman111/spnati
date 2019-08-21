@@ -494,14 +494,6 @@ namespace SPNATI_Character_Editor.Controls
 				//Figure out the stages
 				List<int> oldStages = new List<int>();
 				oldStages.AddRange(c.Stages);
-				c.Stages.Clear();
-				for (int i = 0; i < _character.Layers + Clothing.ExtraStages; i++)
-				{
-					if (gridStages.GetChecked(i) && TriggerDatabase.UsedInStage(newTag, _character, i))
-					{
-						c.Stages.Add(i);
-					}
-				}
 
 				tableConditions.Save();
 

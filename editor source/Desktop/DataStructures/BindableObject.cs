@@ -273,7 +273,7 @@ namespace Desktop.DataStructures
 		{
 		}
 
-		public void NotifyPropertyChanged(string propName)
+		public void NotifyPropertyChanged([CallerMemberName] string propName = "")
 		{
 			OnPropertyChanged(propName);
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));

@@ -5,13 +5,14 @@ using System.Xml.Serialization;
 using System.Linq;
 using SPNATI_Character_Editor.IO;
 using System.Collections.ObjectModel;
+using Desktop.DataStructures;
 
 namespace SPNATI_Character_Editor
 {
 	/// <summary>
 	/// Behaviour node of xml file. Contains dialogue
 	/// </summary>
-	public class Behaviour
+	public class Behaviour : BindableObject
 	{
 		/// <summary>
 		/// Raised when a new case is added to the working cases
@@ -56,7 +57,11 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <remarks>Unlike the Stages property, Case instances here can be shared across stages, ensuring that editing in one will update all applicable stages</remarks>
 		[XmlIgnore]
-		private List<Case> _workingCases = new List<Case>();
+		private ObservableCollection<Case> _workingCases
+		{
+			get { return Get<ObservableCollection<Case>>(); }
+			set { Set(value); }
+		}
 
 		/// <summary>
 		/// Whether the working cases list has been built yet
@@ -161,7 +166,7 @@ namespace SPNATI_Character_Editor
 		public void PrepareForEdit(Character character)
 		{
 			_character = character;
-			_workingCases = new List<Case>();
+			_workingCases = new ObservableCollection<Case>();
 			_builtWorkingCases = false;
 
 			EnsureWorkingCases();
@@ -568,7 +573,7 @@ namespace SPNATI_Character_Editor
 		public void BuildWorkingCases()
 		{
 			_builtWorkingCases = true;
-			_workingCases.Clear();
+			_workingCases = new ObservableCollection<Case>();
 
 			if (Triggers.Count > 0)
 			{
@@ -613,7 +618,7 @@ namespace SPNATI_Character_Editor
 		private void PerformChecksum()
 		{
 			if (Stages.Count == 0) { return; }
-			List<Case> original = new List<Case>();
+			ObservableCollection<Case> original = new ObservableCollection<Case>();
 			original.AddRange(_workingCases);
 			_workingCases.Clear();
 			BuildLegacyWorkingCases();
