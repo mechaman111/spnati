@@ -279,7 +279,7 @@ function loadClothing () {
             new Clothing('headphones', 'headphones', EXTRA_ARTICLE, 'head', "player/male/headphones.png", true, 1),
             new Clothing('jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/male/jacket.png", false, 2),
             new Clothing('shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/shirt.png", false, 3),
-            new Clothing('t-shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/tshirt.png", false, 4),
+            new Clothing('t-shirt', 't-shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/tshirt.png", false, 4),
             new Clothing('undershirt', 'undershirt', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/male/undershirt.png", false, 5),
 
             new Clothing('glasses', 'glasses', EXTRA_ARTICLE, 'head', "player/male/glasses.png", true, 6),
@@ -314,7 +314,7 @@ function loadClothing () {
             new Clothing('necklace', 'necklace', EXTRA_ARTICLE, 'neck', "player/female/necklace.png", false, 12),
             new Clothing('bracelet', 'bracelet', EXTRA_ARTICLE, 'arms', "player/female/bracelet.png", false, 13),
             new Clothing('gloves', 'gloves', EXTRA_ARTICLE, 'hands', "player/female/gloves.png", true, 14),
-            new Clothing('stockings', 'socks', MINOR_ARTICLE, 'legs', "player/female/stockings.png", true, 15),
+            new Clothing('stockings', 'stockings', MINOR_ARTICLE, 'legs', "player/female/stockings.png", true, 15),
             new Clothing('socks', 'socks', MINOR_ARTICLE, 'feet', "player/female/socks.png", true, 16),
             new Clothing('shoes', 'shoes', EXTRA_ARTICLE, 'feet', "player/female/shoes.png", true, 17),
         ]
