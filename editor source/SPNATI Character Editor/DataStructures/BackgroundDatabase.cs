@@ -27,7 +27,13 @@ namespace SPNATI_Character_Editor
 							if (tag == null)
 							{
 								tag = new BackgroundTag(name);
-								Definitions.Instance.Add<BackgroundTag>(tag);
+								Definitions.Instance.Add(tag);
+
+								if (Definitions.Instance.Get<BackgroundTagValue>(name) == null)
+								{
+									BackgroundTagValue tagValue = new BackgroundTagValue(name);
+									Definitions.Instance.Add(tagValue);
+								}
 							}
 							tag.AddValue(el.InnerText);
 						}
@@ -106,12 +112,38 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(value))
 			{
 				Values.Add(value);
+				BackgroundTagValue tagValue = Definitions.Instance.Get<BackgroundTagValue>(value);
+				if (tagValue == null)
+				{
+					tagValue = new BackgroundTagValue(value);
+					Definitions.Instance.Add(tagValue);
+				}
 			}
 		}
 
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		public override string ToLookupString()
+		{
+			return Key;
+		}
+	}
+
+	public class BackgroundTagValue : Definition
+	{
+		public BackgroundTagValue() { }
+		public BackgroundTagValue(string value)
+		{
+			Key = value;
+			Name = value;
+		}
+
+		public override string ToString()
+		{
+			return Key;
 		}
 
 		public override string ToLookupString()

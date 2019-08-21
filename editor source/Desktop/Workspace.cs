@@ -169,6 +169,10 @@ namespace Desktop
 					activity.Destroy();
 				}
 			}
+			if (_record is IDirtiable)
+			{
+				((_record as IDirtiable).OnDirtyChanged) -= Workspace_OnDirtyChanged;
+			}
 			Activities.Clear();
 		}
 

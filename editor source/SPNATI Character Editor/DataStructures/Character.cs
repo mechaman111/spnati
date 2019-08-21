@@ -148,7 +148,11 @@ namespace SPNATI_Character_Editor
 
 		[XmlArray("nicknames")]
 		[XmlArrayItem("nickname")]
-		public List<Nickname> Nicknames = new List<Nickname>();
+		public ObservableCollection<Nickname> Nicknames
+		{
+			get { return Get<ObservableCollection<Nickname>>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("stylesheet")]
 		public string StyleSheetName
@@ -166,9 +170,15 @@ namespace SPNATI_Character_Editor
 				if (_styles == null && !string.IsNullOrEmpty(StyleSheetName))
 				{
 					_styles = CharacterStyleSheetSerializer.Load(this, StyleSheetName);
+					_styles.PropertyChanged += _styles_PropertyChanged;
 				}
 				return _styles;
 			}
+		}
+
+		private void _styles_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			IsDirty = true;
 		}
 
 		[XmlNewLine]
@@ -188,7 +198,11 @@ namespace SPNATI_Character_Editor
 
 		[XmlNewLine(XmlNewLinePosition.Both)]
 		[XmlElement("behaviour")]
-		public Behaviour Behavior = new Behaviour();
+		public Behaviour Behavior
+		{
+			get { return Get<Behaviour>(); }
+			set { Set(value); }
+		}
 
 		[XmlNewLine(XmlNewLinePosition.After)]
 		[XmlElement("epilogue")]
@@ -248,6 +262,8 @@ namespace SPNATI_Character_Editor
 			Wardrobe = new List<Clothing>();
 			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
+			Nicknames = new ObservableCollection<Nickname>();
+			Behavior = new Behaviour();
 		}
 
 		/// <summary>
@@ -271,6 +287,7 @@ namespace SPNATI_Character_Editor
 			Endings = new List<Epilogue>();
 			Poses = new List<Pose>();
 			Version = "";
+			Nicknames.Clear();
 		}
 
 		public override string ToString()
@@ -668,16 +685,19 @@ namespace SPNATI_Character_Editor
 				foreach (DialogueLine line in theCase.Lines)
 				{
 					List<string> images = new List<string>();
-					if (line.Image.Contains("#"))
+					if (line.Image != null)
 					{
-						foreach (int stage in theCase.Stages)
+						if (line.Image.Contains("#"))
 						{
-							images.Add(line.Image.Replace("#", stage.ToString()));
+							foreach (int stage in theCase.Stages)
+							{
+								images.Add(line.Image.Replace("#", stage.ToString()));
+							}
 						}
-					}
-					else
-					{
-						images.Add(line.Image);
+						else
+						{
+							images.Add(line.Image);
+						}
 					}
 					foreach (string img in images)
 					{

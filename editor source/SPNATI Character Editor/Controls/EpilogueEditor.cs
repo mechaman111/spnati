@@ -58,6 +58,7 @@ namespace SPNATI_Character_Editor.Controls
 		protected override void OnActivate()
 		{
 			Workspace.ToggleSidebar(false);
+			_character.IsDirty = true;
 		}
 
 		protected override void OnDeactivate()

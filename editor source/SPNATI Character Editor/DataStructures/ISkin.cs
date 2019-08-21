@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Desktop;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor
 {
@@ -34,5 +35,6 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <returns></returns>
 		List<Pose> CustomPoses { get; set; }
+		bool IsDirty { get; set; }
 	}
 }

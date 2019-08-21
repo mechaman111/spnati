@@ -16,8 +16,6 @@ namespace SPNATI_Character_Editor
 {
 	public static class ShellLogic
 	{
-		private static DispatcherTimer _backupTimer = new DispatcherTimer();
-
 		public static void Initialize()
 		{
 			if (!DoInitialSetup())
@@ -35,29 +33,9 @@ namespace SPNATI_Character_Editor
 			Shell.Instance.AutoTickFrequency = Config.AutoSaveInterval * 60000;
 			Shell.Instance.AutoTick += Instance_AutoTick;
 
-			_backupTimer.Tick += _backupTimer_Tick;
-			_backupTimer.Interval = new TimeSpan(0, 5, 0);
-			_backupTimer.Start();
-
 			Config.LoadMacros<Case>("Case");
 
 			CharacterGenerator.SetConverter(Config.ImportMethod);
-		}
-
-		private static void _backupTimer_Tick(object sender, EventArgs e)
-		{
-			if (!Config.BackupEnabled) { return; }
-			Cursor cursor = Cursor.Current;
-			Cursor.Current = Cursors.WaitCursor;
-			foreach (IWorkspace ws in Shell.Instance.Workspaces)
-			{
-				Character c = ws.Record as Character;
-				if (c != null)
-				{
-					Serialization.BackupCharacter(c);
-				}
-			}
-			Cursor.Current = cursor;
 		}
 
 		private static void Instance_AutoTick(object sender, System.EventArgs e)

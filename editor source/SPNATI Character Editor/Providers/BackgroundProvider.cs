@@ -13,4 +13,16 @@ namespace SPNATI_Character_Editor
 			return "Choose a Property";
 		}
 	}
+
+	public class BackgroundTagValueProvider : DefinitionProvider<BackgroundTagValue>
+	{
+		public override void ApplyDefaults(BackgroundTagValue definition)
+		{
+		}
+
+		public override string GetLookupCaption()
+		{
+			return "Choose a Tag";
+		}
+	}
 }

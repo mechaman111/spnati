@@ -112,6 +112,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		protected override void OnActivate()
 		{
 			Workspace.ToggleSidebar(false);
+			_character.IsDirty = true;
 		}
 
 		protected override void OnDeactivate()

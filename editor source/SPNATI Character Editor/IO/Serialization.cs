@@ -106,6 +106,7 @@ namespace SPNATI_Character_Editor
 			int minAge = Config.BackupPeriod;
 			int maxAge = Config.BackupLifeTime * 1440;
 			string oldestRecentFile = null;
+			string oldestFileSuffix = null;
 			double oldestAge = 0.0;
 			if (Directory.Exists(dir))
 			{
@@ -125,9 +126,14 @@ namespace SPNATI_Character_Editor
 					}
 					return result;
 				}).ToList();
+				if (oldestRecentFile != null)
+				{
+					oldestFileSuffix = Path.GetFileName(oldestRecentFile);
+					oldestFileSuffix = oldestFileSuffix.Substring(oldestFileSuffix.IndexOf('-'));
+				}
 				foreach (string file in obsoleteFiles)
 				{
-					if (oldestRecentFile != file)
+					if (oldestFileSuffix == null || !file.EndsWith(oldestFileSuffix))
 					{
 						try
 						{
@@ -158,27 +164,6 @@ namespace SPNATI_Character_Editor
 		private static string GetTimeStamp()
 		{
 			return DateTime.Now.ToString("yyyyMMddHHmmss");
-		}
-
-		/// <summary>
-		/// Backs up a character's xml files
-		/// </summary>
-		/// <param name="character"></param>
-		/// <returns></returns>
-		public static bool BackupCharacter(Character character)
-		{
-			string dir = Config.GetBackupDirectory(character);
-			if (!Directory.Exists(dir))
-			{
-				Directory.CreateDirectory(dir);
-			}
-
-			string timestamp = GetTimeStamp();
-			bool success = ExportXml(character, Path.Combine(dir, $"behaviour-{timestamp}.bak")) &&
-				ExportXml(character.Metadata, Path.Combine(dir, $"meta-{timestamp}.bak")) &&
-				ExportXml(CharacterDatabase.GetEditorData(character), Path.Combine(dir, $"editor-{timestamp}.bak")) &&
-				ExportXml(character.Collectibles, Path.Combine(dir, $"collectibles-{timestamp}.bak"));
-			return success;
 		}
 
 		private static bool BackupAndExportXml(Character character, object data, string name, string timestamp)

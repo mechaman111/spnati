@@ -511,17 +511,21 @@ namespace SPNATI_Character_Editor
 			if (_currentVariable.StartsWith("~background."))
 			{
 				int start = "~background.".Length;
-				string property = _currentVariable.Substring(start, _currentVariable.Length - 1 - start);
-				BackgroundTag bkg = Definitions.Instance.Get<BackgroundTag>(property);
-				if (bkg != null)
+				int length = _currentVariable.Length - 1 - start;
+				if (length >= 0)
 				{
-					if (bkg.Values.Count == 0)
+					string property = _currentVariable.Substring(start, length);
+					BackgroundTag bkg = Definitions.Instance.Get<BackgroundTag>(property);
+					if (bkg != null)
 					{
-						cboValue.Items.Add("true");
-					}
-					else
-					{
-						cboValue.Items.AddRange(bkg.Values);
+						if (bkg.Values.Count == 0)
+						{
+							cboValue.Items.Add("true");
+						}
+						else
+						{
+							cboValue.Items.AddRange(bkg.Values);
+						}
 					}
 				}
 			}
