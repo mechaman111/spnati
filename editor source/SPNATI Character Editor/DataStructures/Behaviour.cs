@@ -640,15 +640,21 @@ namespace SPNATI_Character_Editor
 
 		private void BuildWorkingCasesFromTriggers()
 		{
+			Dictionary<int, int> setToIdMap = new Dictionary<int, int>();
+			CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
+			int nextId = editorData?.NextId ?? 0;
 			foreach (Trigger trigger in Triggers)
 			{
 				Dictionary<int, List<Case>> setCases = new Dictionary<int, List<Case>>();
 				Dictionary<int, HashSet<int>> setStages = new Dictionary<int, HashSet<int>>();
 				foreach (Case triggerCase in trigger.Cases)
 				{
+					//set was a poor choice that is out there for early adopters, so convert it to ID
 					if (string.IsNullOrEmpty(triggerCase.StageId) && triggerCase.TriggerSet > 0)
 					{
-						triggerCase.StageId = triggerCase.TriggerSet.ToString();
+						int uniqueId = ++nextId;
+						setToIdMap[triggerCase.TriggerSet] = uniqueId;
+						triggerCase.StageId = uniqueId.ToString();
 					}
 					int id;
 					int.TryParse(triggerCase.StageId, out id);

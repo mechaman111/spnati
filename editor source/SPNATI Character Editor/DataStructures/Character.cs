@@ -144,7 +144,11 @@ namespace SPNATI_Character_Editor
 
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
-		public List<CharacterTag> Tags;
+		public List<CharacterTag> Tags
+		{
+			get;
+			set;
+		}
 
 		[XmlArray("nicknames")]
 		[XmlArrayItem("nickname")]
@@ -184,17 +188,17 @@ namespace SPNATI_Character_Editor
 		[XmlNewLine]
 		[XmlArray("start")]
 		[XmlArrayItem("state")]
-		public List<DialogueLine> StartingLines;
+		public List<DialogueLine> StartingLines { get; set; }
 
 		[XmlNewLine]
 		[XmlArray("wardrobe")]
 		[XmlArrayItem("clothing")]
-		public List<Clothing> Wardrobe = new List<Clothing>();
+		public List<Clothing> Wardrobe { get; set; }
 
 		[XmlNewLine]
 		[XmlArray("poses")]
 		[XmlArrayItem("pose")]
-		public List<Pose> Poses = new List<Pose>();
+		public List<Pose> Poses { get; set; }
 
 		[XmlNewLine(XmlNewLinePosition.Both)]
 		[XmlElement("behaviour")]
@@ -206,7 +210,7 @@ namespace SPNATI_Character_Editor
 
 		[XmlNewLine(XmlNewLinePosition.After)]
 		[XmlElement("epilogue")]
-		public List<Epilogue> Endings;
+		public List<Epilogue> Endings { get; set; }
 
 		[XmlAnyElement]
 		public List<System.Xml.XmlElement> ExtraXml;
@@ -262,8 +266,11 @@ namespace SPNATI_Character_Editor
 			Wardrobe = new List<Clothing>();
 			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
+			Tags = new List<CharacterTag>();
 			Nicknames = new ObservableCollection<Nickname>();
 			Behavior = new Behaviour();
+			Poses = new List<Pose>();
+			Wardrobe = new List<Clothing>();
 		}
 
 		/// <summary>
@@ -287,7 +294,7 @@ namespace SPNATI_Character_Editor
 			Endings = new List<Epilogue>();
 			Poses = new List<Pose>();
 			Version = "";
-			Nicknames.Clear();
+			Nicknames = new ObservableCollection<Nickname>();
 		}
 
 		public override string ToString()
