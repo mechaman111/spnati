@@ -88,6 +88,12 @@ function Background (id, src, metadata) {
 
     /** 
      * @type {Object}
+     * The top and bottom coordinates to be matched with the top and bottom of the play area.
+     */
+    this.viewport = metadata.viewport;
+
+    /** 
+     * @type {Object}
      * Contains the raw metadata passed to the Background constructor.
      */
     this.metadata = metadata;
@@ -158,6 +164,8 @@ function loadBackgroundFromXml($xml, auto_tag_values) {
                 var tag = $(this).text() || '';
                 metadata.tags.push(fixupTagFormatting(tag));
             });
+        } else if (tagName === 'viewport') {
+            metadata.viewport = { top: $elem.attr('top'), bottom: $elem.attr('bottom') };
         } else {
             var val = $elem.text() || true;
 
@@ -259,6 +267,7 @@ function showOptionsModal () {
     setActiveOption('options-auto-forfeit', FORFEIT_DELAY);
     setActiveOption('options-auto-ending', ENDING_DELAY);
     setActiveOption('options-minimal-ui', MINIMAL_UI);
+    setActiveOption('options-player-finishing-effect', PLAYER_FINISHING_EFFECT);
     $("#options-modal").modal('show');
 }
 $("#options-modal").on('shown.bs.modal', function() {
@@ -319,6 +328,10 @@ $('ul#options-auto-ending').on('click', 'a', function() {
 
 $('ul#options-minimal-ui').on('click', 'a', function() {
     setUIMode($(this).attr('data-value') === 'true');
+});
+
+$('ul#options-player-finishing-effect').on('click', 'a', function() {
+    PLAYER_FINISHING_EFFECT = $(this).attr('data-value') == 'true';
 });
 
 /************************************************************
@@ -385,7 +398,7 @@ $('#game-settings-modal').on('shown.bs.modal', function() {
  ************************************************************/
 function loadMasturbationTimer () {
 	$masturbationTimerBox.val(humanPlayer.stamina);
-	$masturbationWarningLabel.css("visibility", "hidden");
+	$masturbationWarningLabel.css("display", "none");
 }
  /************************************************************
  * The player changed their masturbation timer.
@@ -397,5 +410,5 @@ $masturbationTimerBox.on('input', function() {
 	if (isValidTimerValue){
 		humanPlayer.stamina = newTime;
 	}
-	$masturbationWarningLabel.css("visibility", isValidTimerValue ? "hidden" : "visible");
+	$masturbationWarningLabel.css("display", isValidTimerValue ? "none" : "table-row");
 });
