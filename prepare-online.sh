@@ -27,4 +27,4 @@ python opponents/gzip_dialogue.py .public/opponents/*/behaviour.xml
 python opponents/analyze_image_space.py .public/opponents
 
 # Uncomment this to copy alternate costume files for deployment.
-python opponents/copy_event_alts.py .public/ ./ summer
+#python opponents/copy_event_alts.py .public/ ./ easter

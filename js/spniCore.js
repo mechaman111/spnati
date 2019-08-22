@@ -2038,14 +2038,22 @@ function autoResizeFont ()
 		} else {
 			w = 4 * h / 3;
 		}
-		var ar = backgroundImage.width / backgroundImage.height;
-		if (ar > 4/3) {
-			var scale = Math.sqrt(16/9 / ar);
-			$("body").css("background-size", "auto " + Math.round(scale * h) + "px");
-		} else {
-			var scale = Math.sqrt(ar);
-			$("body").css("background-size", Math.round(scale * w) + "px auto");
-		}
+        if (activeBackground.viewport) {
+            var scale = backgroundImage.height / (activeBackground.viewport.bottom - activeBackground.viewport.top);
+            var offset = ((backgroundImage.height - activeBackground.viewport.bottom) - activeBackground.viewport.top) / 2;
+            $("body").css("background-size", "auto " + Math.round(scale * h) + "px");
+            $("body").css("background-position-y", "calc(50% + " + h * offset / backgroundImage.height + "px)");
+        } else {
+            var ar = backgroundImage.width / backgroundImage.height;
+            if (ar > 4/3) {
+                var scale = Math.sqrt(16/9 / ar);
+                $("body").css("background-size", "auto " + Math.round(scale * h) + "px");
+            } else {
+                var scale = Math.sqrt(ar);
+                $("body").css("background-size", Math.round(scale * w) + "px auto");
+            }
+            $("body").css("background-position-y", '');
+        }
 	}
 	/* set up future resizing */
 	window.onresize = autoResizeFont;
