@@ -373,17 +373,6 @@ Player.prototype.resetState = function () {
         this.allStates = allStates;
 		this.chosenState = this.allStates[0];
 
-        if (!this.chosenState) {
-            /* If the opponent does not have legacy start lines then select
-             * a new-style selected line immediately.
-             * Prevents a crash triggered by selected, unselecting, and re-selecting
-             * an opponent with no legacy starting lines.
-             */
-            this.updateBehaviour(SELECTED);
-        }
-
-        this.commitBehaviourUpdate();
-
         var appearance = this.default_costume;
         if (ALT_COSTUMES_ENABLED && this.alt_costume) {
             appearance = this.alt_costume;
