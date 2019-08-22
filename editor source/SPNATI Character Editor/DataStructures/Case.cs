@@ -17,8 +17,8 @@ using System.Xml.Serialization;
 namespace SPNATI_Character_Editor
 {
 	/// <remarks>
-	/// Note: This class breaks from the normal BindableObject usage by storing properties explicitly. This is for performance reasons since it's
-	/// marginally faster than boxing everything into a dictionary and this class is accessed so frequently it makes a difference
+	/// Note: This class breaks from the normal BindableObject usage by storing properties explicitly. This is for performance and memory reasons
+	/// since storing PropertyChanged handlers starts to really add up when you have thousands of these.
 	/// </remarks>
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public class Case : BindableObject, IComparable<Case>, ISliceable
@@ -32,7 +32,7 @@ namespace SPNATI_Character_Editor
 		public string Tag
 		{
 			get { return _tag; }
-			set { if (_tag != value) { _tag = value; NotifyPropertyChanged(nameof(Tag)); } }
+			set { if (_tag != value) { _tag = value; NotifyPropertyChanged(); } }
 		}
 
 		/// <summary>
@@ -59,7 +59,7 @@ namespace SPNATI_Character_Editor
 		public int Id
 		{
 			get { return _id; }
-			set { if (_id != value) { _id = value; NotifyPropertyChanged(nameof(Id)); } }
+			set { if (_id != value) { _id = value; NotifyPropertyChanged(); } }
 		}
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace SPNATI_Character_Editor
 		public int OneShotId
 		{
 			get { return _oneShotId; }
-			set { if (_oneShotId != value) { _oneShotId = value; NotifyPropertyChanged(nameof(OneShotId)); } }
+			set { if (_oneShotId != value) { _oneShotId = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _target;
@@ -92,7 +92,7 @@ namespace SPNATI_Character_Editor
 		public string Target
 		{
 			get { return _target; }
-			set { if (_target != value) { _target = value; NotifyPropertyChanged(nameof(Target)); } }
+			set { if (_target != value) { _target = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _filter;
@@ -103,7 +103,7 @@ namespace SPNATI_Character_Editor
 		public string Filter
 		{
 			get { return _filter; }
-			set { if (_filter != value) { _filter = value; NotifyPropertyChanged(nameof(Filter)); } }
+			set { if (_filter != value) { _filter = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _hidden;
@@ -114,7 +114,7 @@ namespace SPNATI_Character_Editor
 		public string Hidden
 		{
 			get { return _hidden; }
-			set { if (_hidden != value) { _hidden = value; NotifyPropertyChanged(nameof(Hidden)); } }
+			set { if (_hidden != value) { _hidden = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetStage;
@@ -125,7 +125,7 @@ namespace SPNATI_Character_Editor
 		public string TargetStage
 		{
 			get { return _targetStage; }
-			set { if (_targetStage != value) { _targetStage = value; NotifyPropertyChanged(nameof(TargetStage)); } }
+			set { if (_targetStage != value) { _targetStage = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetLayers;
@@ -136,7 +136,7 @@ namespace SPNATI_Character_Editor
 		public string TargetLayers
 		{
 			get { return _targetLayers; }
-			set { if (_targetLayers != value) { _targetLayers = value; NotifyPropertyChanged(nameof(TargetLayers)); } }
+			set { if (_targetLayers != value) { _targetLayers = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetStartingLayers;
@@ -147,7 +147,7 @@ namespace SPNATI_Character_Editor
 		public string TargetStartingLayers
 		{
 			get { return _targetStartingLayers; }
-			set { if (_targetStartingLayers != value) { _targetStartingLayers = value; NotifyPropertyChanged(nameof(TargetStartingLayers)); } }
+			set { if (_targetStartingLayers != value) { _targetStartingLayers = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetStatus;
@@ -158,7 +158,7 @@ namespace SPNATI_Character_Editor
 		public string TargetStatus
 		{
 			get { return _targetStatus; }
-			set { if (_targetStatus != value) { _targetStatus = value; NotifyPropertyChanged(nameof(TargetStatus)); } }
+			set { if (_targetStatus != value) { _targetStatus = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlaying;
@@ -169,7 +169,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlaying
 		{
 			get { return _alsoPlaying; }
-			set { if (_alsoPlaying != value) { _alsoPlaying = value; NotifyPropertyChanged(nameof(AlsoPlaying)); } }
+			set { if (_alsoPlaying != value) { _alsoPlaying = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingStage;
@@ -180,7 +180,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingStage
 		{
 			get { return _alsoPlayingStage; }
-			set { if (_alsoPlayingStage != value) { _alsoPlayingStage = value; NotifyPropertyChanged(nameof(AlsoPlayingStage)); } }
+			set { if (_alsoPlayingStage != value) { _alsoPlayingStage = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingHand;
@@ -192,7 +192,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingHand
 		{
 			get { return _alsoPlayingHand; }
-			set { if (_alsoPlayingHand != value) { _alsoPlayingHand = value; NotifyPropertyChanged(nameof(AlsoPlayingHand)); } }
+			set { if (_alsoPlayingHand != value) { _alsoPlayingHand = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetHand;
@@ -204,7 +204,7 @@ namespace SPNATI_Character_Editor
 		public string TargetHand
 		{
 			get { return _targetHand; }
-			set { if (_targetHand != value) { _targetHand = value; NotifyPropertyChanged(nameof(TargetHand)); } }
+			set { if (_targetHand != value) { _targetHand = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _hasHand;
@@ -216,7 +216,7 @@ namespace SPNATI_Character_Editor
 		public string HasHand
 		{
 			get { return _hasHand; }
-			set { if (_hasHand != value) { _hasHand = value; NotifyPropertyChanged(nameof(HasHand)); } }
+			set { if (_hasHand != value) { _hasHand = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalMales;
@@ -227,7 +227,7 @@ namespace SPNATI_Character_Editor
 		public string TotalMales
 		{
 			get { return _totalMales; }
-			set { if (_totalMales != value) { _totalMales = value; NotifyPropertyChanged(nameof(TotalMales)); } }
+			set { if (_totalMales != value) { _totalMales = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalFemales;
@@ -238,7 +238,7 @@ namespace SPNATI_Character_Editor
 		public string TotalFemales
 		{
 			get { return _totalFemales; }
-			set { if (_totalFemales != value) { _totalFemales = value; NotifyPropertyChanged(nameof(TotalFemales)); } }
+			set { if (_totalFemales != value) { _totalFemales = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetTimeInStage;
@@ -249,7 +249,7 @@ namespace SPNATI_Character_Editor
 		public string TargetTimeInStage
 		{
 			get { return _targetTimeInStage; }
-			set { if (_targetTimeInStage != value) { _targetTimeInStage = value; NotifyPropertyChanged(nameof(TargetTimeInStage)); } }
+			set { if (_targetTimeInStage != value) { _targetTimeInStage = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingTimeInStage;
@@ -260,7 +260,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingTimeInStage
 		{
 			get { return _alsoPlayingTimeInStage; }
-			set { if (_alsoPlayingTimeInStage != value) { _alsoPlayingTimeInStage = value; NotifyPropertyChanged(nameof(AlsoPlayingTimeInStage)); } }
+			set { if (_alsoPlayingTimeInStage != value) { _alsoPlayingTimeInStage = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _timeInStage;
@@ -271,7 +271,7 @@ namespace SPNATI_Character_Editor
 		public string TimeInStage
 		{
 			get { return _timeInStage; }
-			set { if (_timeInStage != value) { _timeInStage = value; NotifyPropertyChanged(nameof(TimeInStage)); } }
+			set { if (_timeInStage != value) { _timeInStage = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _consecutiveLosses;
@@ -282,7 +282,7 @@ namespace SPNATI_Character_Editor
 		public string ConsecutiveLosses
 		{
 			get { return _consecutiveLosses; }
-			set { if (_consecutiveLosses != value) { _consecutiveLosses = value; NotifyPropertyChanged(nameof(ConsecutiveLosses)); } }
+			set { if (_consecutiveLosses != value) { _consecutiveLosses = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalPlaying;
@@ -293,7 +293,7 @@ namespace SPNATI_Character_Editor
 		public string TotalPlaying
 		{
 			get { return _totalPlaying; }
-			set { if (_totalPlaying != value) { _totalPlaying = value; NotifyPropertyChanged(nameof(TotalPlaying)); } }
+			set { if (_totalPlaying != value) { _totalPlaying = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalExposed;
@@ -304,7 +304,7 @@ namespace SPNATI_Character_Editor
 		public string TotalExposed
 		{
 			get { return _totalExposed; }
-			set { if (_totalExposed != value) { _totalExposed = value; NotifyPropertyChanged(nameof(TotalExposed)); } }
+			set { if (_totalExposed != value) { _totalExposed = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalNaked;
@@ -315,7 +315,7 @@ namespace SPNATI_Character_Editor
 		public string TotalNaked
 		{
 			get { return _totalNaked; }
-			set { if (_totalNaked != value) { _totalNaked = value; NotifyPropertyChanged(nameof(TotalNaked)); } }
+			set { if (_totalNaked != value) { _totalNaked = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalMasturbating;
@@ -326,7 +326,7 @@ namespace SPNATI_Character_Editor
 		public string TotalMasturbating
 		{
 			get { return _totalMasturbating; }
-			set { if (_totalMasturbating != value) { _totalMasturbating = value; NotifyPropertyChanged(nameof(TotalMasturbating)); } }
+			set { if (_totalMasturbating != value) { _totalMasturbating = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalFinished;
@@ -337,7 +337,7 @@ namespace SPNATI_Character_Editor
 		public string TotalFinished
 		{
 			get { return _totalFinished; }
-			set { if (_totalFinished != value) { _totalFinished = value; NotifyPropertyChanged(nameof(TotalFinished)); } }
+			set { if (_totalFinished != value) { _totalFinished = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalRounds;
@@ -348,7 +348,7 @@ namespace SPNATI_Character_Editor
 		public string TotalRounds
 		{
 			get { return _totalRounds; }
-			set { if (_totalRounds != value) { _totalRounds = value; NotifyPropertyChanged(nameof(TotalRounds)); } }
+			set { if (_totalRounds != value) { _totalRounds = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _saidMarker;
@@ -359,7 +359,7 @@ namespace SPNATI_Character_Editor
 		public string SaidMarker
 		{
 			get { return _saidMarker; }
-			set { if (_saidMarker != value) { _saidMarker = value; NotifyPropertyChanged(nameof(SaidMarker)); } }
+			set { if (_saidMarker != value) { _saidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _notSaidMarker;
@@ -370,7 +370,7 @@ namespace SPNATI_Character_Editor
 		public string NotSaidMarker
 		{
 			get { return _notSaidMarker; }
-			set { if (_notSaidMarker != value) { _notSaidMarker = value; NotifyPropertyChanged(nameof(NotSaidMarker)); } }
+			set { if (_notSaidMarker != value) { _notSaidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingSaidMarker;
@@ -381,7 +381,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingSaidMarker
 		{
 			get { return _alsoPlayingSaidMarker; }
-			set { if (_alsoPlayingSaidMarker != value) { _alsoPlayingSaidMarker = value; NotifyPropertyChanged(nameof(AlsoPlayingSaidMarker)); } }
+			set { if (_alsoPlayingSaidMarker != value) { _alsoPlayingSaidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingNotSaidMarker;
@@ -392,7 +392,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingNotSaidMarker
 		{
 			get { return _alsoPlayingNotSaidMarker; }
-			set { if (_alsoPlayingNotSaidMarker != value) { _alsoPlayingNotSaidMarker = value; NotifyPropertyChanged(nameof(AlsoPlayingNotSaidMarker)); } }
+			set { if (_alsoPlayingNotSaidMarker != value) { _alsoPlayingNotSaidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingSayingMarker;
@@ -403,7 +403,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingSayingMarker
 		{
 			get { return _alsoPlayingSayingMarker; }
-			set { if (_alsoPlayingSayingMarker != value) { _alsoPlayingSayingMarker = value; NotifyPropertyChanged(nameof(AlsoPlayingSayingMarker)); } }
+			set { if (_alsoPlayingSayingMarker != value) { _alsoPlayingSayingMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingSaying;
@@ -414,7 +414,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingSaying
 		{
 			get { return _alsoPlayingSaying; }
-			set { if (_alsoPlayingSaying != value) { _alsoPlayingSaying = value; NotifyPropertyChanged(nameof(AlsoPlayingSaying)); } }
+			set { if (_alsoPlayingSaying != value) { _alsoPlayingSaying = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetSaidMarker;
@@ -425,7 +425,7 @@ namespace SPNATI_Character_Editor
 		public string TargetSaidMarker
 		{
 			get { return _targetSaidMarker; }
-			set { if (_targetSaidMarker != value) { _targetSaidMarker = value; NotifyPropertyChanged(nameof(TargetSaidMarker)); } }
+			set { if (_targetSaidMarker != value) { _targetSaidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetNotSaidMarker;
@@ -436,7 +436,7 @@ namespace SPNATI_Character_Editor
 		public string TargetNotSaidMarker
 		{
 			get { return _targetNotSaidMarker; }
-			set { if (_targetNotSaidMarker != value) { _targetNotSaidMarker = value; NotifyPropertyChanged(nameof(TargetNotSaidMarker)); } }
+			set { if (_targetNotSaidMarker != value) { _targetNotSaidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetSayingMarker;
@@ -447,7 +447,7 @@ namespace SPNATI_Character_Editor
 		public string TargetSayingMarker
 		{
 			get { return _targetSayingMarker; }
-			set { if (_targetSayingMarker != value) { _targetSayingMarker = value; NotifyPropertyChanged(nameof(TargetSayingMarker)); } }
+			set { if (_targetSayingMarker != value) { _targetSayingMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetSaying;
@@ -458,7 +458,7 @@ namespace SPNATI_Character_Editor
 		public string TargetSaying
 		{
 			get { return _targetSaying; }
-			set { if (_targetSaying != value) { _targetSaying = value; NotifyPropertyChanged(nameof(TargetSaying)); } }
+			set { if (_targetSaying != value) { _targetSaying = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _priority;
@@ -468,7 +468,7 @@ namespace SPNATI_Character_Editor
 		public string CustomPriority
 		{
 			get { return _priority; }
-			set { if (_priority != value) { _priority = value; NotifyPropertyChanged(nameof(CustomPriority)); } }
+			set { if (_priority != value) { _priority = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _addCharacterTags;
@@ -478,7 +478,7 @@ namespace SPNATI_Character_Editor
 		public string AddCharacterTags
 		{
 			get { return _addCharacterTags; }
-			set { if (_addCharacterTags != value) { _addCharacterTags = value; NotifyPropertyChanged(nameof(AddCharacterTags)); } }
+			set { if (_addCharacterTags != value) { _addCharacterTags = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _removeCharacterTags;
@@ -488,7 +488,7 @@ namespace SPNATI_Character_Editor
 		public string RemoveCharacterTags
 		{
 			get { return _removeCharacterTags; }
-			set { if (_removeCharacterTags != value) { _removeCharacterTags = value; NotifyPropertyChanged(nameof(RemoveCharacterTags)); } }
+			set { if (_removeCharacterTags != value) { _removeCharacterTags = value; NotifyPropertyChanged(); } }
 		}
 
 		[XmlIgnore]

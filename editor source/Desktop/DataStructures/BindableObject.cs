@@ -12,7 +12,7 @@ namespace Desktop.DataStructures
 		private Dictionary<string, object> _values = new Dictionary<string, object>();
 		private Dictionary<string, NotifyCollectionChangedEventHandler> _collectionHandlers = new Dictionary<string, NotifyCollectionChangedEventHandler>();
 		private Dictionary<string, PropertyChangedEventHandler> _propertyHandlers = new Dictionary<string, PropertyChangedEventHandler>();
-		private DualKeyDictionary<string, BindableObject, PropertyChangedEventHandler> _listItemHandlers = new DualKeyDictionary<string, BindableObject, PropertyChangedEventHandler>();
+		private DualKeyDictionary<string, INotifyPropertyChanged, PropertyChangedEventHandler> _listItemHandlers = new DualKeyDictionary<string, INotifyPropertyChanged, PropertyChangedEventHandler>();
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -183,8 +183,8 @@ namespace Desktop.DataStructures
 				case NotifyCollectionChangedAction.Reset:
 					if (_listItemHandlers.ContainsPrimaryKey(propName))
 					{
-						List<BindableObject> toRemove = new List<BindableObject>();
-						foreach (KeyValuePair<BindableObject, PropertyChangedEventHandler> kvp in _listItemHandlers[propName])
+						List<INotifyPropertyChanged> toRemove = new List<INotifyPropertyChanged>();
+						foreach (KeyValuePair<INotifyPropertyChanged, PropertyChangedEventHandler> kvp in _listItemHandlers[propName])
 						{
 							toRemove.Add(kvp.Key);
 						}
@@ -201,7 +201,7 @@ namespace Desktop.DataStructures
 
 		private void TrackListItem(string propName, object o)
 		{
-			BindableObject bo = o as BindableObject;
+			INotifyPropertyChanged bo = o as INotifyPropertyChanged;
 			if (bo != null)
 			{
 				PropertyChangedEventHandler handler = new PropertyChangedEventHandler((changedSender, changedE) =>
