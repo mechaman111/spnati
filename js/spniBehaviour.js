@@ -1038,7 +1038,7 @@ function Case($xml) {
     	if (this.totalMasturbating)        this.priority += 5 + this.totalMasturbating.max;
     	if (this.totalFinished)            this.priority += 5 + this.totalFinished.max;
 
-        this.counters.forEach(function (c) { this.priority += c.priority; });
+        this.counters.forEach(function (c) { this.priority += c.priority; }, this);
 
         // Expression tests (priority = 50 for each)
         this.priority += (tests.length * 50);
