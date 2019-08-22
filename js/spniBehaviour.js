@@ -1180,7 +1180,7 @@ Case.prototype.checkConditions = function (self, opp) {
     
     // targetNotSaidMarker
     if (this.targetNotSaidMarker) {
-        if (!opp || checkMarker(this.targetSaidMarker, opp, null)) {
+        if (!opp || checkMarker(this.targetNotSaidMarker, opp, null)) {
             return false;
         }
     }
@@ -1269,7 +1269,7 @@ Case.prototype.checkConditions = function (self, opp) {
                     
             if (this.alsoPlayingNotSaidMarker) {
                 // Negated marker condition - false if it matches
-                if (checkMarker(this.alsoPlayingSaidMarker, ap, opp)) {
+                if (checkMarker(this.alsoPlayingNotSaidMarker, ap, opp)) {
                     return false;
                 }
             }
