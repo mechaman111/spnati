@@ -1057,17 +1057,19 @@ function initialSetup () {
 
     /* Construct a CSS rule for every combination of arrow direction, screen, and pseudo-element */
     bubbleArrowOffsetRules = [];
+    var targetCssSheet = document.getElementById("spniStyleSheet").sheet;
+
     for (var i = 1; i <= 4; i++) {
         var pair = [];
         [["up", "down"], ["left", "right"]].forEach(function(p) {
-            var index = document.styleSheets[2].cssRules.length;
+            var index = targetCssSheet.cssRules.length;
             var rule = p.map(function(d) {
                 return ["select", "game"].map(function(s) {
                     return '#'+s+'-bubble-'+i+'.arrow-'+d+'::before';
                 }).join(', ');
             }).join(', ') + ' {}';
-            document.styleSheets[2].insertRule(rule, index);
-            pair.push(document.styleSheets[2].cssRules[index]);
+            targetCssSheet.insertRule(rule, index);
+            pair.push(targetCssSheet.cssRules[index]);
         });
         bubbleArrowOffsetRules.push(pair);
     }
