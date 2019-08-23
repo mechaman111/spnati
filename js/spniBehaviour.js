@@ -1410,7 +1410,11 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     for (var i = 0; i < bindingCombinations.length; i++) {
         if (this.tests.every(function(test) {
             var expr = expandDialogue(test.attr('expr'), self, opp, bindingCombinations[i]);
-            var value = expandDialogue(test.attr('value'), self, opp, bindingCombinations[i]);
+            var value = test.attr('value');
+            if (value) {
+                value = expandDialogue(value, self, opp, bindingCombinations[i]);
+            }
+            
             var cmp = test.attr('cmp');
 
             /* For backwards compatibility, if cmp is unspecified, try
