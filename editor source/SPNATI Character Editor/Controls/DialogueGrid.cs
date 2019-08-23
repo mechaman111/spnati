@@ -195,7 +195,7 @@ namespace SPNATI_Character_Editor.Controls
 					if (!_selectedCase.Lines.Contains(line))
 					{
 						_selectedCase.Lines.Add(line);
-						_selectedCase.NotifyPropertyChanged(nameof(_selectedCase.Lines));
+						NotifyChange();
 					}
 					_character?.CacheMarker(line.Marker);
 				}
@@ -613,7 +613,7 @@ namespace SPNATI_Character_Editor.Controls
 					DialogueLine line = row.Tag as DialogueLine;
 					_selectedCase.Lines.Remove(line);
 					gridDialogue.Rows.RemoveAt(e.RowIndex);
-					_selectedCase.NotifyPropertyChanged(nameof(_selectedCase.Lines));
+					NotifyChange();
 					line.PropertyChanged -= Line_PropertyChanged;
 					row.Tag = null;
 				}
@@ -795,7 +795,13 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void Line_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
+			NotifyChange();
+		}
+
+		private void NotifyChange()
+		{
 			_selectedCase?.NotifyPropertyChanged(nameof(_selectedCase.Lines));
+			_character?.Behavior?.NotifyPropertyChanged("");
 		}
 
 		private string GetMarkerTooltip(DialogueLine line)

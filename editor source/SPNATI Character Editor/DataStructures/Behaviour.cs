@@ -57,11 +57,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <remarks>Unlike the Stages property, Case instances here can be shared across stages, ensuring that editing in one will update all applicable stages</remarks>
 		[XmlIgnore]
-		private ObservableCollection<Case> _workingCases
-		{
-			get { return Get<ObservableCollection<Case>>(); }
-			set { Set(value); }
-		}
+		private List<Case> _workingCases = new List<Case>();
 
 		/// <summary>
 		/// Whether the working cases list has been built yet
@@ -166,7 +162,7 @@ namespace SPNATI_Character_Editor
 		public void PrepareForEdit(Character character)
 		{
 			_character = character;
-			_workingCases = new ObservableCollection<Case>();
+			_workingCases.Clear();
 			_builtWorkingCases = false;
 
 			EnsureWorkingCases();
@@ -573,7 +569,7 @@ namespace SPNATI_Character_Editor
 		public void BuildWorkingCases()
 		{
 			_builtWorkingCases = true;
-			_workingCases = new ObservableCollection<Case>();
+			_workingCases.Clear();
 
 			if (Triggers.Count > 0)
 			{
@@ -618,7 +614,7 @@ namespace SPNATI_Character_Editor
 		private void PerformChecksum()
 		{
 			if (Stages.Count == 0) { return; }
-			ObservableCollection<Case> original = new ObservableCollection<Case>();
+			List<Case> original = new List<Case>();
 			original.AddRange(_workingCases);
 			_workingCases.Clear();
 			BuildLegacyWorkingCases();
@@ -928,6 +924,7 @@ namespace SPNATI_Character_Editor
 			EnsureWorkingCases();
 			_workingCases.Add(theCase);
 			CaseAdded?.Invoke(this, theCase);
+			NotifyPropertyChanged(nameof(_workingCases));
 		}
 
 		/// <summary>
@@ -939,6 +936,7 @@ namespace SPNATI_Character_Editor
 			EnsureWorkingCases();
 			_workingCases.Remove(theCase);
 			CaseRemoved?.Invoke(this, theCase);
+			NotifyPropertyChanged(nameof(_workingCases));
 		}
 
 		private void RemoveWorkingCaseAt(int index)
@@ -947,6 +945,7 @@ namespace SPNATI_Character_Editor
 			Case theCase = _workingCases[index];
 			_workingCases.RemoveAt(index);
 			CaseRemoved?.Invoke(this, theCase);
+			NotifyPropertyChanged(nameof(_workingCases));
 		}
 
 		/// <summary>
