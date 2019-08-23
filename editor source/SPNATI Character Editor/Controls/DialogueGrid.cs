@@ -153,6 +153,11 @@ namespace SPNATI_Character_Editor.Controls
 			for (int i = 0; i < gridDialogue.Rows.Count; i++)
 			{
 				DataGridViewRow row = gridDialogue.Rows[i];
+				DialogueLine line = row.Tag as DialogueLine;
+				if (line != null)
+				{
+					line.PropertyChanged -= Line_PropertyChanged;
+				}
 				row.Tag = null;
 				row.Cells["ColImage"].Value = null;
 			}
@@ -161,7 +166,7 @@ namespace SPNATI_Character_Editor.Controls
 
 			//Populate lines
 			gridDialogue.Rows.Clear();
-			ObservableCollection<DialogueLine> lines = _selectedCase.Lines;
+			List<DialogueLine> lines = _selectedCase.Lines;
 			foreach (DialogueLine line in lines)
 			{
 				AddLineToDialogueGrid(line, null);
@@ -174,7 +179,7 @@ namespace SPNATI_Character_Editor.Controls
 		public void Save()
 		{
 			HideDropdown();
-			ObservableCollection<DialogueLine> lines = _selectedCase.Lines;
+			List<DialogueLine> lines = _selectedCase.Lines;
 			if (_character != null)
 			{
 				foreach (DialogueLine line in lines)
@@ -190,6 +195,7 @@ namespace SPNATI_Character_Editor.Controls
 					if (!_selectedCase.Lines.Contains(line))
 					{
 						_selectedCase.Lines.Add(line);
+						_selectedCase.NotifyPropertyChanged(nameof(_selectedCase.Lines));
 					}
 					_character?.CacheMarker(line.Marker);
 				}
@@ -211,10 +217,12 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			DataGridViewRow row = gridDialogue.Rows[rowIndex];
 			DialogueLine line = row.Tag as DialogueLine;
+			bool newLine = false;
 			if (line == null)
 			{
 				line = new DialogueLine();
 				row.Tag = line;
+				newLine = true;
 			}
 			CharacterImage pose = row.Cells["ColImage"].Value as CharacterImage;
 			string image = pose?.Name;
@@ -284,6 +292,11 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				line.CollectibleId = collectibleData.Item1;
 				line.CollectibleValue = collectibleData.Item2;
+			}
+
+			if (newLine)
+			{
+				line.PropertyChanged += Line_PropertyChanged;
 			}
 
 			return line;
@@ -575,7 +588,9 @@ namespace SPNATI_Character_Editor.Controls
 		private void gridDialogue_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
 		{
 			DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
-			row.Tag = new DialogueLine();
+			DialogueLine line = new DialogueLine();
+			line.PropertyChanged += Line_PropertyChanged;
+			row.Tag = line;
 			row.Cells["ColDelete"].ToolTipText = "Delete line";
 			row.Cells["ColTrophy"].ToolTipText = "Unlock collectible";
 			row.Cells[nameof(ColMore)].ToolTipText = "More options";
@@ -598,6 +613,9 @@ namespace SPNATI_Character_Editor.Controls
 					DialogueLine line = row.Tag as DialogueLine;
 					_selectedCase.Lines.Remove(line);
 					gridDialogue.Rows.RemoveAt(e.RowIndex);
+					_selectedCase.NotifyPropertyChanged(nameof(_selectedCase.Lines));
+					line.PropertyChanged -= Line_PropertyChanged;
+					row.Tag = null;
 				}
 			}
 			else if (col == ColTrophy)
@@ -754,7 +772,11 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				row = gridDialogue.Rows[gridDialogue.Rows.Add()];
 			}
-			row.Tag = line;
+			if (row.Tag != line)
+			{
+				line.PropertyChanged += Line_PropertyChanged;
+				row.Tag = line;
+			}
 			SkinnedDataGridViewComboBoxCell imageCell = row.Cells["ColImage"] as SkinnedDataGridViewComboBoxCell;
 			SetImage(imageCell, imageKey);
 			DataGridViewCell textCell = row.Cells["ColText"];
@@ -769,6 +791,11 @@ namespace SPNATI_Character_Editor.Controls
 			row.Cells[nameof(ColTrophy)].Tag = new Tuple<string, string>(line.CollectibleId, line.CollectibleValue);
 			row.Cells[nameof(ColMarkerOptions)].ToolTipText = GetMarkerTooltip(line);
 			_modifyingLine = false;
+		}
+
+		private void Line_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			_selectedCase?.NotifyPropertyChanged(nameof(_selectedCase.Lines));
 		}
 
 		private string GetMarkerTooltip(DialogueLine line)

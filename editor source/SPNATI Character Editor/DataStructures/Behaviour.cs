@@ -53,7 +53,7 @@ namespace SPNATI_Character_Editor
 		public List<Trigger> Triggers = new List<Trigger>();
 
 		/// <summary>
-		/// Flat structure of cases used when editing dialogue. When deserializing, this is constructed from Stages. When serializing, Stages is reconstructed using this info.
+		/// Flat structure of cases used when editing dialogue. When deserializing, this is constructed from Stages/Triggers. When serializing, Triggers is reconstructed using this info.
 		/// </summary>
 		/// <remarks>Unlike the Stages property, Case instances here can be shared across stages, ensuring that editing in one will update all applicable stages</remarks>
 		[XmlIgnore]

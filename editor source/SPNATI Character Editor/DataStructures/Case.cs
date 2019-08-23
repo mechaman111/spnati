@@ -554,9 +554,9 @@ namespace SPNATI_Character_Editor
 		[JsonProperty("lines")]
 		[XmlOrder(410)]
 		[XmlElement("state")]
-		public ObservableCollection<DialogueLine> Lines
+		public List<DialogueLine> Lines
 		{
-			get { return Get<ObservableCollection<DialogueLine>>(); }
+			get { return Get<List<DialogueLine>>(); }
 			set { Set(value); }
 		}
 
@@ -598,7 +598,7 @@ namespace SPNATI_Character_Editor
 		public Case()
 		{
 			_globalId = s_globalId++;
-			Lines = new ObservableCollection<DialogueLine>();
+			Lines = new List<DialogueLine>();
 			Stages = new ObservableCollection<int>();
 			Conditions = new ObservableCollection<TargetCondition>();
 			Expressions = new ObservableCollection<ExpressionTest>();
