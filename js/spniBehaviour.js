@@ -430,6 +430,44 @@ State.prototype.applyOneShot = function (player) {
     }
 }
 
+/********************************************************************
+ * Check that the state doesn't set a marker or contains text that
+ * another player has already ascertained a maximum number of
+ * opponents saying. 
+ *
+ * Each item in unwantedMarkers and unwantedSayings is a two-element
+ * array where the first element is the restricted player and the
+ * second slement is the marker or dialogue text.
+ ********************************************************************/
+State.prototype.checkUnwanteds = function (self, target) {
+    var savedState = self.chosenState;
+    var ok = !players.some(function(p) { // Check that none of the other players' unwanted lists are violated,
+        if (p == self) return false;  // Shouldn't happen
+        if (!p.chosenState || !p.updatePending || !p.chosenState.parentCase) return false; // Ignore if they don't have a case
+        if (this.marker && p.chosenState.parentCase.unwantedMarkers
+            && p.chosenState.parentCase.unwantedMarkers.some(function(item) {
+                if (self == item[0]) {
+                    self.chosenState = this;  // Temporarily set chosenState to this state to be able to use checkMarker()
+                    return checkMarker(item[1], self, target, true); // item[1] is the marker predicate from the <condition>
+                    // If the marker matched, true is returned, which means not OK.
+                }
+                return false;  // Not us
+            }, this)) {
+            return true;  // At least one marker matched.
+        }
+        if (p.chosenState.parentCase.unwantedSayings
+            && p.chosenState.parentCase.unwantedSayings.some(function(item) {
+                return self == item[0]
+                    && normalizeConditionText(this.rawDialogue).indexOf(normalizeConditionText(item[1])) >= 0;
+            }, this)) {
+            return true;  // At least one line of text matched.
+        }
+        return false;
+    }, this);
+    self.chosenState = savedState;
+    return ok;
+}
+
 function getTargetMarker(marker, target) {
     if (!target) { return marker; }
     return "__" + target.id + "_" + marker;
@@ -1117,8 +1155,11 @@ Case.prototype.checkConditions = function (self, opp) {
         return false;
     }
 
-    // all states used up
-    if (this.states.every(function (state) { return state.oneShotId && self.oneShotStates[state.oneShotId]; })) {
+    // all states used up or excluded by other player's negative conditions
+    if (this.states.every(function (state) {
+        return (state.oneShotId && self.oneShotStates[state.oneShotId])
+            || !state.checkUnwanteds(self, opp);
+    })) {
         return false;
     }
 
@@ -1375,6 +1416,7 @@ Case.prototype.checkConditions = function (self, opp) {
     }
 
     var counterMatches = [];
+    var unwantedSayings = [], unwantedMarkers = [];
     // filter counter targets
     if (!this.counters.every(function (ctr) {
         var matches = players.filter(function(p) {
@@ -1395,34 +1437,46 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null))
                 && (ctr.notSaidMarker === undefined || !checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null));
         });
-        var hasUpperBound = (ctr.count.max !== null && ctr.count.max <= players.countTrue());
-        matches = matches.filter(function(p) {
+        var hasUpperBound = (ctr.count.max !== null && ctr.count.max < matches.length);
+        if (ctr.sayingMarker !== undefined || ctr.saying !== undefined) matches = matches.filter(function(p) {
             if (ctr.sayingMarker !== undefined) {
+                // The human player can't talk, and using
+                // saying/sayingMarker on self would be circular.
+                if (p == self || p == humanPlayer) return false;
                 if (checkMarker(ctr.sayingMarker, p, ctr.role == "other" ? opp : null, true)) {
                     volatileDependencies.add(p);
                 } else {
-                    /* If there's an upper bound to the count, we have
-                     * to depend on the non-matching character lest it
-                     * *might* say the marker and invalidate the
-                     * condition. */
+                    /* In case the condition could be violated by some
+                     * of the players fulfilling the non-volatile
+                     * conditions changing state, record those players
+                     * and the violating marker. */
                     if (hasUpperBound) {
-                        volatileDependencies.add(p);
+                        unwantedMarkers.push([p, ctr.sayingMarker]);
                     }
                     return false;
                 }
             }
             if (ctr.saying !== undefined) {
+                if (p == self || p == humanPlayer) return false;
                 if (!p.updatePending && p.chosenState && normalizeConditionText(p.chosenState.rawDialogue).indexOf(normalizeConditionText(ctr.saying)) >= 0) {
                     volatileDependencies.add(p);
                 } else {
                     if (hasUpperBound) {
-                        volatileDependencies.add(p);
+                        unwantedSayings.push([p, ctr.saying]);
                     }
                     return false;
                 }
             }
             return true;
         });
+        /* Don't limit what other characters can say before the've had
+         * a first chance to pick something to say. */
+        if ((unwantedSayings.length || unwantedMarkers.length) && players.some(function(p) {
+            return p.updatePending && (unwantedSayings.some(function(item) { return item[0] == p; })
+                                       || unwantedMakers.some(function(item) { return item[0] == p; }));
+        })) {
+            return false;
+        }
         if (inInterval(matches.length, ctr.count)) {
             if (matches.length && ctr.variable) {
                 counterMatches.push([ ctr.variable, matches ]);
@@ -1476,6 +1530,8 @@ Case.prototype.checkConditions = function (self, opp) {
         })) {
             this.variableBindings = bindingCombinations[i];
             this.volatileDependencies = volatileDependencies;
+            this.unwantedSayings = unwantedSayings;
+            this.unwantedMarkers = unwantedMarkers;
             return true;
         }
     }
@@ -1545,7 +1601,8 @@ Opponent.prototype.findBehaviour = function(tags, opp, bestMatchPriority) {
     var states = bestMatch.reduce(function(list, caseObject) {
         return list.concat(caseObject.states);
     }.bind(this), []).filter(function(state) {
-        return !state.oneShotId || !this.oneShotStates[state.oneShotId];
+        return (!state.oneShotId || !this.oneShotStates[state.oneShotId])
+            && state.checkUnwanteds(this, opp);
     }.bind(this));
     
     var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
