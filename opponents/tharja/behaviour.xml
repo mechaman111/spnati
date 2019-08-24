@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0 at 10:47:42 PM on August 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 10:15:10 PM on August 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.0</version>
     <first>Tharja</first>
@@ -146,28 +146,28 @@
                 <state img="0-shocked.png" marker="cheating1" set-intelligence="bad">Huh? I... I even cheated! How did I lose even after I cast a hex on the cards?</state>
                 <state img="0-gloomy.png" marker="standardroute" set-intelligence="good">Curses! I hate this game...</state>
             </case>
-            <case tag="must_strip_winning" priority="1">
+            <case tag="must_strip_winning" priority="2">
                 <state img="0-disinterested.png">Pfft. Like I care</state>
                 <state img="0-disinterested.png">No, I'm not getting worried. You can fuck off now.</state>
                 <state img="0-disinterested.png">... Wow. You're getting me out of my &lt;i&gt;cape&lt;/i&gt;... Incredible; you should feel soooo proud of yourself.</state>
                 <state img="0-disinterested.png">What? You trying to laugh at me for finally losing a round? Look at yourselves; you're an embarrassment.</state>
             </case>
-            <case tag="must_strip_normal" priority="1">
+            <case tag="must_strip_normal" priority="2">
                 <state img="0-disinterested.png" marker="likeicare">Pfft. Like I care.</state>
                 <state img="0-gloomy.png">Yes, I'm aware I lost... Why are you so happy?</state>
                 <state img="0-disinterested.png">... &lt;i&gt;Fine.&lt;/i&gt; Whatever.</state>
                 <state img="0-embarrassed.png">Oh... A few more of losses and... You all will see me...</state>
                 <state img="0-angry.png">What?! I cast a hex that round! How is this possible?</state>
             </case>
-            <case tag="must_strip_normal" priority="1">
+            <case tag="must_strip_normal" priority="2">
                 <test expr="~target.diff(tharja)~" cmp="&lt;=" value="2" />
                 <state img="0-horny.png">My first loss... Let's just hope ~player~ loses a few more.</state>
             </case>
-            <case tag="must_strip_losing" priority="1">
+            <case tag="must_strip_losing" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <state img="0-calm.png">~player~ can stare as she chooses; the rest of you should mind your own business.</state>
             </case>
-            <case tag="must_strip_losing" priority="1">
+            <case tag="must_strip_losing" priority="2">
                 <condition count="1" filter="human_male" gender="male" />
                 <state img="0-calm.png">~player~ can stare as he chooses; the rest of you should mind your own business.</state>
             </case>
@@ -220,6 +220,7 @@
                 <state img="0-disinterested.png">Ugh, fine. Hurry it up.</state>
                 <state img="0-angry.png">Take it off already you dastard; we don't have all night and you're just wasting time.</state>
                 <state img="0-disinterested.png">Huh? Oh... That's not the outcome I wanted...</state>
+                <state img="0-calm.png">... Submit.</state>
             </case>
             <case tag="male_must_strip" oneShotId="106" target="pit" priority="3">
                 <state img="0-disinterested.png" marker="pit1">Oh good, Angel Boy has to strip.</state>
@@ -276,6 +277,7 @@
                 <state img="0-disinterested.png">Ugh, fine. Hurry it up.</state>
                 <state img="0-angry.png">Take it off already you dastard; we don't have all night. You're just wasting time.</state>
                 <state img="0-disinterested.png">Huh? Oh... That's not the outcome I wanted...</state>
+                <state img="0-calm.png">Submit to me.</state>
             </case>
             <case tag="female_must_strip" oneShotId="39" target="dawn" priority="3">
                 <state img="0-mischievous.png" marker="dawn1">So you're from a region known as Sinnoh, Dawn? Tell me about all the wicked dark type Pokemon your region has to offer!</state>
@@ -319,6 +321,10 @@
             </case>
             <case tag="female_must_strip" oneShotId="12" target="ruby" targetStage="0" priority="3">
                 <state img="0-angry.png">Ruby has to strip? Good. Anything to wipe that stupid smile off her face! (Ugh; what business does she have being so happy? This is strip poker!)</state>
+                <state img="0-excited.png">Happy people are obnoxious; that's why seeing Ruby lose gives me great pleasure.</state>
+            </case>
+            <case tag="female_must_strip" id="0-10" target="zone-tan" targetStage="2" consecutiveLosses="3" totalRounds="0-7" targetSayingMarker="fulldemonloss">
+                <state img="0-excited.png">WOW! I have newfound respect for you now, Zone-tan!</state>
             </case>
             <case tag="female_must_strip" totalFemales="4-" priority="1">
                 <test expr="~target.tag.human~" value="false" />
@@ -362,6 +368,15 @@
                 <state img="0-disinterested.png">Ugh... I don't have all night.</state>
                 <state img="0-calm.png">Whoa... Not even &lt;i&gt;I'm&lt;/i&gt; despicable enough to count ~clothing.ifPlural(~clothing~ as| a ~clothing~ as)~ a legitimate piece of clothing in strip poker.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" priority="1">
+                <state img="0-calm.png">Akko, you're a witch from the Outrealms? Hmmm... We might have to get together sometime to discuss dark magics.</state>
+            </case>
+            <case tag="female_removing_accessory" target="blake" targetStage="5">
+                <state img="0-calm.png">You really waited this long to remove such a stupid accessory? You really are on a whole new level of cluelessness...</state>
+            </case>
+            <case tag="female_removing_accessory" target="lilith" priority="1">
+                <state img="0-mischievous.png">Lilith the siren, heh?  I respect the work of a siren.</state>
+            </case>
             <case tag="female_removing_accessory" oneShotId="16" target="lyn" priority="2">
                 <state img="0-mischievous.png">Oh no, I'm &lt;i&gt;soooooo&lt;/i&gt; sorry Lyn. I'd hate for Miss Popular to have to remove an &lt;i&gt;accessory&lt;/i&gt;.</state>
             </case>
@@ -381,6 +396,9 @@
                 <state img="0-mischievous.png">I've been watching your every… single… move. You masturbated twice in your bed last night and flipped through 12 pages of porn.</state>
                 <state img="0-embarrassed.png">Oh, come on ~player~. Did you have to pick something so small? Think of my feelings next time, dear.</state>
                 <state img="0-shocked.png">Oh ~player~... Don't play with my emotions like that!</state>
+            </case>
+            <case tag="female_removed_accessory" target="blake" targetStage="6">
+                <state img="0-shocked.png">Cat ears? Blake... Are you some witch's black cat gone stray?</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="0-gloomy.png">*sigh* I just want this game to be over already.</state>
@@ -414,18 +432,27 @@
                 <state img="0-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="0-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_minor">
-                <state img="0-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
-                <state img="0-embarrassed.png">You looked... Almost comfortable taking that off...</state>
-                <state img="0-disinterested.png">Yeah, that was a waste of my time...</state>
-                <state img="0-disinterested.png">I have places to be, you know...</state>
+            <case tag="female_removing_minor" oneShotId="120" target="akko">
+                <state img="0-shocked.png" marker="AkkoWand">Your talents are worthy of praise, Akko, but is that wand really necessary? Where I come from, magic is drawn directly from the spell tome...</state>
             </case>
-            <case tag="female_removed_minor">
+            <case tag="female_removed_minor" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="0-horny.png">Oh honey, next time take it off slower. Just for me?</state>
                 <state img="0-horny.png">Wow; if taking off a small item like your ~clothing~ turns me on this much, time will only tell how wet you're gonna make me when you're flicking the bean.</state>
                 <state img="0-mischievous.png">That was good, ~player~, but I'm not through with you just yet!</state>
+            </case>
+            <case tag="female_removed_minor" priority="1">
+                <state img="0-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
+                <state img="0-embarrassed.png">You looked... Almost comfortable taking that off...</state>
+                <state img="0-disinterested.png">Yeah, that was a waste of my time...</state>
+                <state img="0-disinterested.png">I have places to be, you know...</state>
+            </case>
+            <case tag="female_removed_minor" oneShotId="119" target="akko" saidMarker="AkkoWand&gt;0" priority="11">
+                <state img="0-calm.png">Unless, of course, it is healing magic that is in question; but you're definetly not using healing magic.</state>
+            </case>
+            <case tag="female_removed_minor" id="0-8" target="misaka" targetStage="4">
+                <state img="0-disinterested.png">Wearing those just mean you're less of a woman, Mikoto... But that's okay, no one was thinking you were very womanly to begin with.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="0-disinterested.png">Listen, I don't like this either...</state>
@@ -458,15 +485,21 @@
                 <state img="0-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="0-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_major">
-                <state img="0-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
-                <state img="0-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
-            </case>
-            <case tag="female_removed_major">
+            <case tag="female_removed_major" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="0-mischievous.png">My hexes are working as planned. Hehehe.</state>
                 <state img="0-horny.png">Ohhhh yes... Do that again for me.</state>
+            </case>
+            <case tag="female_removed_major" priority="1">
+                <state img="0-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
+                <state img="0-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
+            </case>
+            <case tag="female_removed_major" target="akko" priority="1">
+                <state img="0-shocked.png">You're transformation spells are quite intriguing! Might I borrow your spell books?</state>
+            </case>
+            <case tag="female_removed_major" id="0-13" target="navi" targetStage="1">
+                <state img="0-disinterested.png">Ah, so that's the Fairy Whore's true form...</state>
             </case>
             <case tag="male_chest_will_be_visible" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
@@ -488,9 +521,18 @@
                 <state img="0-excited.png">Oh... I want to rest my head on your chest now.</state>
                 <state img="0-mischievous.png">... Why are you getting nervous all of a sudden? You should know that I'd never stab &lt;i&gt;you&lt;/i&gt; in the heart.</state>
             </case>
+            <case tag="male_chest_is_visible" target="9s" targetStage="3">
+                <state img="0-calm.png">No nipples? Androids must really be flawed creation then.</state>
+                <state img="0-calm.png">No nipples? I guess that makes since for a male android; afterall, androids are meant for nothing other than to function for other people's benefit.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="0-calm.png">I won't be looking; will you do the same for me?</state>
                 <state img="0-calm.png">Looks like you're taking yours out before I had to take mine out... Guess I won?</state>
+            </case>
+            <case tag="male_crotch_will_be_visible">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="0-horny.png">Now &lt;i&gt;this&lt;/i&gt; is what I've been waiting for!</state>
             </case>
             <case tag="male_small_crotch_is_visible" priority="1">
                 <condition count="1" filter="human_male" gender="male" />
@@ -601,6 +643,9 @@
                 <state img="0-gloomy.png">Well this is... Going to get awkward...</state>
                 <state img="0-calm.png">If you want to leave the game now &lt;i&gt;without&lt;/i&gt; showing us your cunt, I won't hold it against you...</state>
                 <state img="0-calm.png" marker="haveanotherlayer">Please tell me you have some extra small accessory somewhere. Please?</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" id="0-9" target="zone-tan">
+                <state img="0-embarrassed.png">I-I-I'm sure ~player~ is more into tits, right? U-Uh... My tits, specifically...</state>
             </case>
             <case tag="female_crotch_is_visible" priority="3">
                 <condition count="1" filter="human_female" gender="female" />
@@ -737,6 +782,11 @@
                 <state img="0-disinterested.png">(Can I kill him instead?)</state>
                 <state img="0-angry.png">Gods, that's even &lt;i&gt;more&lt;/i&gt; repulsive than I was expecting.</state>
             </case>
+            <case tag="male_start_masturbating" id="0-7" priority="2">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="0-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
+            </case>
             <case tag="male_start_masturbating" id="0-1" priority="2">
                 <condition count="1" filter="human_male" gender="male" />
                 <test expr="~target.tag.human~" value="true" />
@@ -744,11 +794,6 @@
                 <state img="0-excited.png">I'm going to be savoring every moment of this!</state>
                 <state img="0-horny.png">Go slow now, okay? I don't want to miss a second of this.</state>
                 <state img="0-excited.png">Up and down, ~player~! Up and down and up and down and up and down! Yes yes yes!</state>
-            </case>
-            <case tag="male_start_masturbating" id="0-7" priority="2">
-                <condition count="1" filter="human_male" gender="male" />
-                <test expr="~target.tag.human~" value="true" />
-                <state img="0-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
             </case>
             <case tag="male_masturbating" priority="3">
                 <condition count="1" filter="human_male" gender="male" />
@@ -817,6 +862,10 @@
                 <state img="0-excited.png">Mmmm I can't wait to witness the techniques you've been refining all these years.</state>
                 <state img="0-horny.png">Go slow now, okay? I don't want to miss a second of this.</state>
             </case>
+            <case tag="female_start_masturbating" id="0-14" target="leafy">
+                <state img="0-calm.png">Huh... I do that sometimes, except I use standard dark magic... Carry on.</state>
+                <state img="0-mischievous.png">Heh, you're tying &lt;i&gt;yourself&lt;/i&gt; up while in the prescene of a dark mage... You don't know what's good for you.</state>
+            </case>
             <case tag="female_masturbating">
                 <state img="0-angry.png">Hey! Look away from ~player~ when you do that!</state>
                 <state img="0-embarrassed.png">Oh... You look like you're in such an intense state of pleasure, ~name~... I hope I can make ~player~ feel what you must be feeling.</state>
@@ -828,9 +877,13 @@
             <case tag="female_masturbating" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
+                <state img="0-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
+            </case>
+            <case tag="female_masturbating" priority="1">
+                <condition count="1" filter="human_female" gender="female" />
+                <test expr="~target.tag.human~" value="true" />
                 <state img="0-horny.png">I'm sorry I'm not much help right now ~player~, but maybe some sexy gestures will help you along.</state>
                 <state img="0-embarrassed.png">Slow down, ~player~! Let me lose a few more rounds so we can masturbate together!</state>
-                <state img="0-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
             </case>
             <case tag="female_masturbating" oneShotId="100" target="dawn" priority="5">
                 <state img="0-shocked.png" marker="palkiapenis">Wait, Dawn! There's a Pokemon named Palkia whose head looks like a penis?!</state>
@@ -848,15 +901,12 @@
                 <state img="0-excited.png">Do it again! I want to see more of your wet love juices!</state>
             </case>
             <case tag="game_over_victory">
-                <state img="0-happy.png">What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.</state>
-            </case>
-            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
-                <state img="0-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
-            </case>
-            <case tag="game_over_victory" totalFinished="2-">
                 <state img="0-excited.png">Heehee... That worked just as planned.</state>
                 <state img="0-mischievous.png">I enjoyed exactly &lt;i&gt;one&lt;/i&gt; performance... The other was dreadful.</state>
                 <state img="0-excited.png">Huzzah! That was easy.</state>
+            </case>
+            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
+                <state img="0-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
             </case>
             <case tag="game_over_victory" totalFinished="3-">
                 <state img="0-excited.png">Heehee... That worked just as planned.</state>
@@ -956,26 +1006,28 @@
                 <state img="1-horny.png" marker="stripshow4">Pay attention, ~player~. I've prepared a special spell specifically created for capturing your attention. I have a feeling you'll like this one.</state>
             </case>
             <case tag="must_strip_winning" priority="1">
-                <state img="1-disinterested.png">Pfft. Like I care</state>
-                <state img="1-disinterested.png">No, I'm not getting worried. You can fuck off now.</state>
                 <state img="1-disinterested.png">Oh shut up. You riff-raff aren't well-dressed yourselves.</state>
             </case>
-            <case tag="must_strip_normal" priority="1">
+            <case tag="must_strip_winning" priority="2">
+                <state img="1-disinterested.png">Pfft. Like I care</state>
+                <state img="1-disinterested.png">No, I'm not getting worried. You can fuck off now.</state>
+            </case>
+            <case tag="must_strip_normal" priority="2">
                 <state img="1-disinterested.png" marker="likeicare">Pfft. Like I care.</state>
                 <state img="1-gloomy.png">Yes, I'm aware I lost... Why are you so happy?</state>
                 <state img="1-disinterested.png">... &lt;i&gt;Fine.&lt;/i&gt; Whatever.</state>
                 <state img="1-embarrassed.png">Oh... A few more of losses and... You all will see me...</state>
                 <state img="1-angry.png">What?! I cast a hex that round! How is this possible?</state>
             </case>
-            <case tag="must_strip_losing" priority="1">
+            <case tag="must_strip_losing" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <state img="1-calm.png">~player~ can stare as she chooses; the rest of you should mind your own business.</state>
             </case>
-            <case tag="must_strip_losing" priority="1">
+            <case tag="must_strip_losing" priority="2">
                 <condition count="1" filter="human_male" gender="male" />
                 <state img="1-calm.png">~player~ can stare as he chooses; the rest of you should mind your own business.</state>
             </case>
-            <case tag="stripping">
+            <case tag="stripping" id="1-11">
                 <state img="1-stripping.png">&lt;i&gt;To ThE dARk PowERs I CaLL, ReMOVe mY GarmEntS AnD CaptURe ~player~'S LuST!&lt;/i&gt;</state>
                 <state img="1-stripping.png" marker="frogcurse1">&lt;i&gt;To ThE dARk PowERs I CaLL, ReMOVe mY GarmEntS AnD cURsE thEm aLL tO FRogS!&lt;/i&gt;</state>
             </case>
@@ -1038,6 +1090,7 @@
                 <state img="1-disinterested.png">Ugh, fine. Hurry it up.</state>
                 <state img="1-angry.png">Take it off already you dastard; we don't have all night and you're just wasting time.</state>
                 <state img="1-disinterested.png">Huh? Oh... That's not the outcome I wanted...</state>
+                <state img="1-calm.png">... Submit.</state>
             </case>
             <case tag="male_must_strip" oneShotId="106" target="pit" priority="3">
                 <state img="1-disinterested.png" marker="pit1">Oh good, Angel Boy has to strip.</state>
@@ -1088,6 +1141,7 @@
                 <state img="1-disinterested.png">Ugh, fine. Hurry it up.</state>
                 <state img="1-angry.png">Take it off already you dastard; we don't have all night. You're just wasting time.</state>
                 <state img="1-disinterested.png">Huh? Oh... That's not the outcome I wanted...</state>
+                <state img="1-calm.png">Submit to me.</state>
             </case>
             <case tag="female_must_strip" oneShotId="39" target="dawn" priority="3">
                 <state img="1-mischievous.png" marker="dawn1">So you're from a region known as Sinnoh, Dawn? Tell me about all the wicked dark type Pokemon your region has to offer!</state>
@@ -1131,6 +1185,10 @@
             </case>
             <case tag="female_must_strip" oneShotId="12" target="ruby" targetStage="0" priority="3">
                 <state img="1-angry.png">Ruby has to strip? Good. Anything to wipe that stupid smile off her face! (Ugh; what business does she have being so happy? This is strip poker!)</state>
+                <state img="1-excited.png">Happy people are obnoxious; that's why seeing Ruby lose gives me great pleasure.</state>
+            </case>
+            <case tag="female_must_strip" id="1-10" target="zone-tan" targetStage="2" consecutiveLosses="3" totalRounds="0-7" targetSayingMarker="fulldemonloss">
+                <state img="1-excited.png">WOW! I have newfound respect for you now, Zone-tan!</state>
             </case>
             <case tag="female_must_strip" totalFemales="4-" priority="1">
                 <test expr="~target.tag.human~" value="false" />
@@ -1174,6 +1232,15 @@
                 <state img="1-disinterested.png">Ugh... I don't have all night.</state>
                 <state img="1-calm.png">Whoa... Not even &lt;i&gt;I'm&lt;/i&gt; despicable enough to count ~clothing.ifPlural(~clothing~ as| a ~clothing~ as)~ a legitimate piece of clothing in strip poker.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" priority="1">
+                <state img="1-calm.png">Akko, you're a witch from the Outrealms? Hmmm... We might have to get together sometime to discuss dark magics.</state>
+            </case>
+            <case tag="female_removing_accessory" target="blake" targetStage="5">
+                <state img="1-calm.png">You really waited this long to remove such a stupid accessory? You really are on a whole new level of cluelessness...</state>
+            </case>
+            <case tag="female_removing_accessory" target="lilith" priority="1">
+                <state img="1-mischievous.png">Lilith the siren, heh?  I respect the work of a siren.</state>
+            </case>
             <case tag="female_removing_accessory" oneShotId="16" target="lyn" priority="2">
                 <state img="1-mischievous.png">Oh no, I'm &lt;i&gt;soooooo&lt;/i&gt; sorry Lyn. I'd hate for Miss Popular to have to remove an &lt;i&gt;accessory&lt;/i&gt;.</state>
             </case>
@@ -1193,6 +1260,9 @@
                 <state img="1-mischievous.png">I've been watching your every… single… move. You masturbated twice in your bed last night and flipped through 12 pages of porn.</state>
                 <state img="1-embarrassed.png">Oh, come on ~player~. Did you have to pick something so small? Think of my feelings next time, dear.</state>
                 <state img="1-shocked.png">Oh ~player~... Don't play with my emotions like that!</state>
+            </case>
+            <case tag="female_removed_accessory" target="blake" targetStage="6">
+                <state img="1-shocked.png">Cat ears? Blake... Are you some witch's black cat gone stray?</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="1-gloomy.png">*sigh* I just want this game to be over already.</state>
@@ -1226,18 +1296,27 @@
                 <state img="1-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="1-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_minor">
-                <state img="1-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
-                <state img="1-embarrassed.png">You looked... Almost comfortable taking that off...</state>
-                <state img="1-disinterested.png">Yeah, that was a waste of my time...</state>
-                <state img="1-disinterested.png">I have places to be, you know...</state>
+            <case tag="female_removing_minor" oneShotId="120" target="akko">
+                <state img="1-shocked.png" marker="AkkoWand">Your talents are worthy of praise, Akko, but is that wand really necessary? Where I come from, magic is drawn directly from the spell tome...</state>
             </case>
-            <case tag="female_removed_minor">
+            <case tag="female_removed_minor" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="1-horny.png">Oh honey, next time take it off slower. Just for me?</state>
                 <state img="1-horny.png">Wow; if taking off a small item like your ~clothing~ turns me on this much, time will only tell how wet you're gonna make me when you're flicking the bean.</state>
                 <state img="1-mischievous.png">That was good, ~player~, but I'm not through with you just yet!</state>
+            </case>
+            <case tag="female_removed_minor" priority="1">
+                <state img="1-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
+                <state img="1-embarrassed.png">You looked... Almost comfortable taking that off...</state>
+                <state img="1-disinterested.png">Yeah, that was a waste of my time...</state>
+                <state img="1-disinterested.png">I have places to be, you know...</state>
+            </case>
+            <case tag="female_removed_minor" oneShotId="119" target="akko" saidMarker="AkkoWand&gt;0" priority="11">
+                <state img="1-calm.png">Unless, of course, it is healing magic that is in question; but you're definetly not using healing magic.</state>
+            </case>
+            <case tag="female_removed_minor" id="1-8" target="misaka" targetStage="4">
+                <state img="1-disinterested.png">Wearing those just mean you're less of a woman, Mikoto... But that's okay, no one was thinking you were very womanly to begin with.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="1-disinterested.png">Listen, I don't like this either...</state>
@@ -1270,15 +1349,21 @@
                 <state img="1-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="1-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_major">
-                <state img="1-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
-                <state img="1-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
-            </case>
-            <case tag="female_removed_major">
+            <case tag="female_removed_major" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="1-mischievous.png">My hexes are working as planned. Hehehe.</state>
                 <state img="1-horny.png">Ohhhh yes... Do that again for me.</state>
+            </case>
+            <case tag="female_removed_major" priority="1">
+                <state img="1-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
+                <state img="1-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
+            </case>
+            <case tag="female_removed_major" target="akko" priority="1">
+                <state img="1-shocked.png">You're transformation spells are quite intriguing! Might I borrow your spell books?</state>
+            </case>
+            <case tag="female_removed_major" id="1-13" target="navi" targetStage="1">
+                <state img="1-disinterested.png">Ah, so that's the Fairy Whore's true form...</state>
             </case>
             <case tag="male_chest_will_be_visible" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
@@ -1300,9 +1385,18 @@
                 <state img="1-excited.png">Oh... I want to rest my head on your chest now.</state>
                 <state img="1-mischievous.png">... Why are you getting nervous all of a sudden? You should know that I'd never stab &lt;i&gt;you&lt;/i&gt; in the heart.</state>
             </case>
+            <case tag="male_chest_is_visible" target="9s" targetStage="3">
+                <state img="1-calm.png">No nipples? Androids must really be flawed creation then.</state>
+                <state img="1-calm.png">No nipples? I guess that makes since for a male android; afterall, androids are meant for nothing other than to function for other people's benefit.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="1-calm.png">I won't be looking; will you do the same for me?</state>
                 <state img="1-calm.png">Looks like you're taking yours out before I had to take mine out... Guess I won?</state>
+            </case>
+            <case tag="male_crotch_will_be_visible">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="1-horny.png">Now &lt;i&gt;this&lt;/i&gt; is what I've been waiting for!</state>
             </case>
             <case tag="male_small_crotch_is_visible" priority="1">
                 <condition count="1" filter="human_male" gender="male" />
@@ -1413,6 +1507,9 @@
                 <state img="1-gloomy.png">Well this is... Going to get awkward...</state>
                 <state img="1-calm.png">If you want to leave the game now &lt;i&gt;without&lt;/i&gt; showing us your cunt, I won't hold it against you...</state>
                 <state img="1-calm.png" marker="haveanotherlayer">Please tell me you have some extra small accessory somewhere. Please?</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" id="1-9" target="zone-tan">
+                <state img="1-embarrassed.png">I-I-I'm sure ~player~ is more into tits, right? U-Uh... My tits, specifically...</state>
             </case>
             <case tag="female_crotch_is_visible" priority="3">
                 <condition count="1" filter="human_female" gender="female" />
@@ -1549,11 +1646,6 @@
                 <state img="1-disinterested.png">(Can I kill him instead?)</state>
                 <state img="1-angry.png">Gods, that's even &lt;i&gt;more&lt;/i&gt; repulsive than I was expecting.</state>
             </case>
-            <case tag="male_start_masturbating" id="1-7" priority="2">
-                <condition count="1" filter="human_male" gender="male" />
-                <test expr="~target.tag.human~" value="true" />
-                <state img="1-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
-            </case>
             <case tag="male_start_masturbating" id="1-1" priority="2">
                 <condition count="1" filter="human_male" gender="male" />
                 <test expr="~target.tag.human~" value="true" />
@@ -1561,6 +1653,11 @@
                 <state img="1-excited.png">I'm going to be savoring every moment of this!</state>
                 <state img="1-horny.png">Go slow now, okay? I don't want to miss a second of this.</state>
                 <state img="1-excited.png">Up and down, ~player~! Up and down and up and down and up and down! Yes yes yes!</state>
+            </case>
+            <case tag="male_start_masturbating" id="1-7" priority="2">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="1-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
             </case>
             <case tag="male_masturbating" priority="3">
                 <condition count="1" filter="human_male" gender="male" />
@@ -1629,6 +1726,10 @@
                 <state img="1-excited.png">Mmmm I can't wait to witness the techniques you've been refining all these years.</state>
                 <state img="1-horny.png">Go slow now, okay? I don't want to miss a second of this.</state>
             </case>
+            <case tag="female_start_masturbating" id="1-14" target="leafy">
+                <state img="1-calm.png">Huh... I do that sometimes, except I use standard dark magic... Carry on.</state>
+                <state img="1-mischievous.png">Heh, you're tying &lt;i&gt;yourself&lt;/i&gt; up while in the prescene of a dark mage... You don't know what's good for you.</state>
+            </case>
             <case tag="female_masturbating">
                 <state img="1-angry.png">Hey! Look away from ~player~ when you do that!</state>
                 <state img="1-embarrassed.png">Oh... You look like you're in such an intense state of pleasure, ~name~... I hope I can make ~player~ feel what you must be feeling.</state>
@@ -1640,9 +1741,13 @@
             <case tag="female_masturbating" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
+                <state img="1-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
+            </case>
+            <case tag="female_masturbating" priority="1">
+                <condition count="1" filter="human_female" gender="female" />
+                <test expr="~target.tag.human~" value="true" />
                 <state img="1-horny.png">I'm sorry I'm not much help right now ~player~, but maybe some sexy gestures will help you along.</state>
                 <state img="1-embarrassed.png">Slow down, ~player~! Let me lose a few more rounds so we can masturbate together!</state>
-                <state img="1-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
             </case>
             <case tag="female_masturbating" oneShotId="100" target="dawn" priority="5">
                 <state img="1-shocked.png" marker="palkiapenis">Wait, Dawn! There's a Pokemon named Palkia whose head looks like a penis?!</state>
@@ -1660,15 +1765,12 @@
                 <state img="1-excited.png">Do it again! I want to see more of your wet love juices!</state>
             </case>
             <case tag="game_over_victory">
-                <state img="1-happy.png">What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.</state>
-            </case>
-            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
-                <state img="1-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
-            </case>
-            <case tag="game_over_victory" totalFinished="2-">
                 <state img="1-excited.png">Heehee... That worked just as planned.</state>
                 <state img="1-mischievous.png">I enjoyed exactly &lt;i&gt;one&lt;/i&gt; performance... The other was dreadful.</state>
                 <state img="1-excited.png">Huzzah! That was easy.</state>
+            </case>
+            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
+                <state img="1-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
             </case>
             <case tag="game_over_victory" totalFinished="3-">
                 <state img="1-excited.png">Heehee... That worked just as planned.</state>
@@ -1763,15 +1865,17 @@
                 <state img="2-horny.png" marker="stripshow7">I'm sorry ~player~, but the desert slave outfit has to go. I hope I won't displease you by removing my sandals.</state>
             </case>
             <case tag="must_strip_winning" priority="1">
-                <state img="2-disinterested.png">Pfft. Like I care</state>
-                <state img="2-disinterested.png">No, I'm not getting worried. You can fuck off now.</state>
                 <state img="2-disinterested.png">Oh shut up. You riff-raff aren't well-dressed yourselves.</state>
             </case>
-            <case tag="must_strip_losing" priority="1">
+            <case tag="must_strip_winning" priority="2">
+                <state img="2-disinterested.png">Pfft. Like I care</state>
+                <state img="2-disinterested.png">No, I'm not getting worried. You can fuck off now.</state>
+            </case>
+            <case tag="must_strip_losing" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <state img="2-calm.png">~player~ can stare as she chooses; the rest of you should mind your own business.</state>
             </case>
-            <case tag="must_strip_losing" priority="1">
+            <case tag="must_strip_losing" priority="2">
                 <condition count="1" filter="human_male" gender="male" />
                 <state img="2-calm.png">~player~ can stare as he chooses; the rest of you should mind your own business.</state>
             </case>
@@ -1837,6 +1941,7 @@
                 <state img="2-disinterested.png">Ugh, fine. Hurry it up.</state>
                 <state img="2-angry.png">Take it off already you dastard; we don't have all night and you're just wasting time.</state>
                 <state img="2-disinterested.png">Huh? Oh... That's not the outcome I wanted...</state>
+                <state img="2-calm.png">... Submit.</state>
             </case>
             <case tag="male_must_strip" oneShotId="106" target="pit" priority="3">
                 <state img="2-disinterested.png" marker="pit1">Oh good, Angel Boy has to strip.</state>
@@ -1879,6 +1984,7 @@
                 <state img="2-disinterested.png">Ugh, fine. Hurry it up.</state>
                 <state img="2-angry.png">Take it off already you dastard; we don't have all night. You're just wasting time.</state>
                 <state img="2-disinterested.png">Huh? Oh... That's not the outcome I wanted...</state>
+                <state img="2-calm.png">Submit to me.</state>
             </case>
             <case tag="female_must_strip" oneShotId="39" target="dawn" priority="3">
                 <state img="2-mischievous.png" marker="dawn1">So you're from a region known as Sinnoh, Dawn? Tell me about all the wicked dark type Pokemon your region has to offer!</state>
@@ -1922,6 +2028,10 @@
             </case>
             <case tag="female_must_strip" oneShotId="12" target="ruby" targetStage="0" priority="3">
                 <state img="2-angry.png">Ruby has to strip? Good. Anything to wipe that stupid smile off her face! (Ugh; what business does she have being so happy? This is strip poker!)</state>
+                <state img="2-excited.png">Happy people are obnoxious; that's why seeing Ruby lose gives me great pleasure.</state>
+            </case>
+            <case tag="female_must_strip" id="2-10" target="zone-tan" targetStage="2" consecutiveLosses="3" totalRounds="0-7" targetSayingMarker="fulldemonloss">
+                <state img="2-excited.png">WOW! I have newfound respect for you now, Zone-tan!</state>
             </case>
             <case tag="female_must_strip" totalFemales="4-" priority="1">
                 <test expr="~target.tag.human~" value="false" />
@@ -1965,6 +2075,15 @@
                 <state img="2-disinterested.png">Good choice; if I saw any more skin from you I think I'd vomit.</state>
                 <state img="2-angry.png">She's just removing an accessory! This is a waste of everyone's time.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" priority="1">
+                <state img="2-calm.png">Akko, you're a witch from the Outrealms? Hmmm... We might have to get together sometime to discuss dark magics.</state>
+            </case>
+            <case tag="female_removing_accessory" target="blake" targetStage="5">
+                <state img="2-calm.png">You really waited this long to remove such a stupid accessory? You really are on a whole new level of cluelessness...</state>
+            </case>
+            <case tag="female_removing_accessory" target="lilith" priority="1">
+                <state img="2-mischievous.png">Lilith the siren, heh?  I respect the work of a siren.</state>
+            </case>
             <case tag="female_removing_accessory" oneShotId="16" target="lyn" priority="2">
                 <state img="2-mischievous.png">Oh no, I'm &lt;i&gt;soooooo&lt;/i&gt; sorry Lyn. I'd hate for Miss Popular to have to remove an &lt;i&gt;accessory&lt;/i&gt;.</state>
             </case>
@@ -1984,6 +2103,9 @@
                 <state img="2-mischievous.png">I've been watching your every… single… move. You masturbated twice in your bed last night and flipped through 12 pages of porn.</state>
                 <state img="2-embarrassed.png">Oh, come on ~player~. Did you have to pick something so small? Think of my feelings next time, dear.</state>
                 <state img="2-shocked.png">Oh ~player~... Don't play with my emotions like that!</state>
+            </case>
+            <case tag="female_removed_accessory" target="blake" targetStage="6">
+                <state img="2-shocked.png">Cat ears? Blake... Are you some witch's black cat gone stray?</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="2-gloomy.png">*sigh* I just want this game to be over already.</state>
@@ -2017,18 +2139,27 @@
                 <state img="2-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="2-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_minor">
-                <state img="2-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
-                <state img="2-embarrassed.png">You looked... Almost comfortable taking that off...</state>
-                <state img="2-disinterested.png">Yeah, that was a waste of my time...</state>
-                <state img="2-disinterested.png">I have places to be, you know...</state>
+            <case tag="female_removing_minor" oneShotId="120" target="akko">
+                <state img="2-shocked.png" marker="AkkoWand">Your talents are worthy of praise, Akko, but is that wand really necessary? Where I come from, magic is drawn directly from the spell tome...</state>
             </case>
-            <case tag="female_removed_minor">
+            <case tag="female_removed_minor" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="2-calm.png">Oh honey, next time take it off slower. Just for me?</state>
                 <state img="2-horny.png">Wow; if taking off a small item like your ~clothing~ turns me on this much, time will only tell how wet you're gonna make me when you're flicking the bean.</state>
                 <state img="2-mischievous.png">That was good, ~player~, but I'm not through with you just yet!</state>
+            </case>
+            <case tag="female_removed_minor" priority="1">
+                <state img="2-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
+                <state img="2-embarrassed.png">You looked... Almost comfortable taking that off...</state>
+                <state img="2-disinterested.png">Yeah, that was a waste of my time...</state>
+                <state img="2-disinterested.png">I have places to be, you know...</state>
+            </case>
+            <case tag="female_removed_minor" oneShotId="119" target="akko" saidMarker="AkkoWand&gt;0" priority="11">
+                <state img="2-calm.png">Unless, of course, it is healing magic that is in question; but you're definetly not using healing magic.</state>
+            </case>
+            <case tag="female_removed_minor" id="2-8" target="misaka" targetStage="4">
+                <state img="2-disinterested.png">Wearing those just mean you're less of a woman, Mikoto... But that's okay, no one was thinking you were very womanly to begin with.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="2-disinterested.png">Listen, I don't like this either...</state>
@@ -2060,15 +2191,21 @@
                 <state img="2-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="2-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_major">
-                <state img="2-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
-                <state img="2-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
-            </case>
-            <case tag="female_removed_major">
+            <case tag="female_removed_major" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="2-mischievous.png">My hexes are working as planned. Hehehe.</state>
                 <state img="2-horny.png">Ohhhh yes... Do that again for me.</state>
+            </case>
+            <case tag="female_removed_major" priority="1">
+                <state img="2-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
+                <state img="2-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
+            </case>
+            <case tag="female_removed_major" target="akko" priority="1">
+                <state img="2-shocked.png">You're transformation spells are quite intriguing! Might I borrow your spell books?</state>
+            </case>
+            <case tag="female_removed_major" id="2-13" target="navi" targetStage="1">
+                <state img="2-disinterested.png">Ah, so that's the Fairy Whore's true form...</state>
             </case>
             <case tag="male_chest_will_be_visible" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
@@ -2090,9 +2227,18 @@
                 <state img="2-excited.png">Oh... I want to rest my head on your chest now.</state>
                 <state img="2-mischievous.png">... Why are you getting nervous all of a sudden? You should know that I'd never stab &lt;i&gt;you&lt;/i&gt; in the heart.</state>
             </case>
+            <case tag="male_chest_is_visible" target="9s" targetStage="3">
+                <state img="2-calm.png">No nipples? Androids must really be flawed creation then.</state>
+                <state img="2-calm.png">No nipples? I guess that makes since for a male android; afterall, androids are meant for nothing other than to function for other people's benefit.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="2-calm.png">I won't be looking; will you do the same for me?</state>
                 <state img="2-calm.png">Looks like you're taking yours out before I had to take mine out... Guess I won?</state>
+            </case>
+            <case tag="male_crotch_will_be_visible">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="2-horny.png">Now &lt;i&gt;this&lt;/i&gt; is what I've been waiting for!</state>
             </case>
             <case tag="male_small_crotch_is_visible" priority="1">
                 <condition count="1" filter="human_male" gender="male" />
@@ -2201,6 +2347,9 @@
                 <state img="2-gloomy.png">Well this is... Going to get awkward...</state>
                 <state img="2-calm.png">If you want to leave the game now &lt;i&gt;without&lt;/i&gt; showing us your cunt, I won't hold it against you...</state>
                 <state img="2-calm.png" marker="haveanotherlayer">Please tell me you have some extra small accessory somewhere. Please?</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" id="2-9" target="zone-tan">
+                <state img="2-embarrassed.png">I-I-I'm sure ~player~ is more into tits, right? U-Uh... My tits, specifically...</state>
             </case>
             <case tag="female_crotch_is_visible" priority="3">
                 <condition count="1" filter="human_female" gender="female" />
@@ -2411,6 +2560,10 @@
                 <state img="2-excited.png">Mmmm I can't wait to witness the techniques you've been refining all these years.</state>
                 <state img="2-horny.png">Go slow now, okay? I don't want to miss a second of this.</state>
             </case>
+            <case tag="female_start_masturbating" id="2-14" target="leafy">
+                <state img="2-calm.png">Huh... I do that sometimes, except I use standard dark magic... Carry on.</state>
+                <state img="2-mischievous.png">Heh, you're tying &lt;i&gt;yourself&lt;/i&gt; up while in the prescene of a dark mage... You don't know what's good for you.</state>
+            </case>
             <case tag="female_masturbating">
                 <state img="2-angry.png">Hey! Look away from ~player~ when you do that!</state>
                 <state img="2-embarrassed.png">Oh... You look like you're in such an intense state of pleasure, ~name~... I hope I can make ~player~ feel what you must be feeling.</state>
@@ -2422,10 +2575,14 @@
             <case tag="female_masturbating" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
-                <state img="2-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
                 <state img="2-calm.png">All eyes on me, ~player~. I better not catch your eyes wandering.</state>
                 <state img="2-mischievous.png">I like your technique ~player~! How often do you practice?</state>
                 <state img="2-excited.png">Hmmm I want to devour you!</state>
+            </case>
+            <case tag="female_masturbating" priority="1">
+                <condition count="1" filter="human_female" gender="female" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="2-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
             </case>
             <case tag="female_masturbating" oneShotId="100" target="dawn" priority="5">
                 <state img="2-shocked.png" marker="palkiapenis">Wait, Dawn! There's a Pokemon named Palkia whose head looks like a penis?!</state>
@@ -2443,15 +2600,12 @@
                 <state img="2-excited.png">Do it again! I want to see more of your wet love juices!</state>
             </case>
             <case tag="game_over_victory">
-                <state img="2-happy.png">What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.</state>
-            </case>
-            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
-                <state img="2-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
-            </case>
-            <case tag="game_over_victory" totalFinished="2-">
                 <state img="2-excited.png">Heehee... That worked just as planned.</state>
                 <state img="2-mischievous.png">I enjoyed exactly &lt;i&gt;one&lt;/i&gt; performance... The other was dreadful.</state>
                 <state img="2-excited.png">Huzzah! That was easy.</state>
+            </case>
+            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
+                <state img="2-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
             </case>
             <case tag="game_over_victory" totalFinished="3-">
                 <state img="2-excited.png">Heehee... That worked just as planned.</state>
@@ -2562,11 +2716,11 @@
                 <state img="3-shocked.png">Fuck! That means... Uhhhhh....</state>
                 <state img="3-shocked.png">What? Impossible? Check the cards again; there has to be a mistake!</state>
             </case>
-            <case tag="must_strip_losing" priority="1">
+            <case tag="must_strip_losing" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <state img="3-calm.png">~player~ can stare as she chooses; the rest of you should mind your own business.</state>
             </case>
-            <case tag="must_strip_losing" priority="1">
+            <case tag="must_strip_losing" priority="2">
                 <condition count="1" filter="human_male" gender="male" />
                 <state img="3-calm.png">~player~ can stare as he chooses; the rest of you should mind your own business.</state>
             </case>
@@ -2640,6 +2794,7 @@
                 <state img="3-disinterested.png">Ugh, fine. Hurry it up.</state>
                 <state img="3-angry.png">Take it off already you dastard; we don't have all night and you're just wasting time.</state>
                 <state img="3-disinterested.png">Huh? Oh... That's not the outcome I wanted...</state>
+                <state img="3-calm.png">... Submit.</state>
             </case>
             <case tag="male_must_strip" oneShotId="106" target="pit" priority="3">
                 <state img="3-disinterested.png" marker="pit1">Oh good, Angel Boy has to strip.</state>
@@ -2682,6 +2837,7 @@
                 <state img="3-disinterested.png">Ugh, fine. Hurry it up.</state>
                 <state img="3-angry.png">Take it off already you dastard; we don't have all night. You're just wasting time.</state>
                 <state img="3-disinterested.png">Huh? Oh... That's not the outcome I wanted...</state>
+                <state img="3-calm.png">Submit to me.</state>
             </case>
             <case tag="female_must_strip" oneShotId="39" target="dawn" priority="3">
                 <state img="3-mischievous.png" marker="dawn1">So you're from a region known as Sinnoh, Dawn? Tell me about all the wicked dark type Pokemon your region has to offer!</state>
@@ -2725,6 +2881,10 @@
             </case>
             <case tag="female_must_strip" oneShotId="12" target="ruby" targetStage="0" priority="3">
                 <state img="3-angry.png">Ruby has to strip? Good. Anything to wipe that stupid smile off her face! (Ugh; what business does she have being so happy? This is strip poker!)</state>
+                <state img="3-excited.png">Happy people are obnoxious; that's why seeing Ruby lose gives me great pleasure.</state>
+            </case>
+            <case tag="female_must_strip" id="3-10" target="zone-tan" targetStage="2" consecutiveLosses="3" totalRounds="0-7" targetSayingMarker="fulldemonloss">
+                <state img="3-excited.png">WOW! I have newfound respect for you now, Zone-tan!</state>
             </case>
             <case tag="female_must_strip" totalFemales="4-" priority="1">
                 <test expr="~target.tag.human~" value="false" />
@@ -2768,6 +2928,15 @@
                 <state img="3-disinterested.png">Good choice; if I saw any more skin from you I think I'd vomit.</state>
                 <state img="3-angry.png">She's just removing an accessory! This is a waste of everyone's time.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" priority="1">
+                <state img="3-calm.png">Akko, you're a witch from the Outrealms? Hmmm... We might have to get together sometime to discuss dark magics.</state>
+            </case>
+            <case tag="female_removing_accessory" target="blake" targetStage="5">
+                <state img="3-calm.png">You really waited this long to remove such a stupid accessory? You really are on a whole new level of cluelessness...</state>
+            </case>
+            <case tag="female_removing_accessory" target="lilith" priority="1">
+                <state img="3-mischievous.png">Lilith the siren, heh?  I respect the work of a siren.</state>
+            </case>
             <case tag="female_removing_accessory" oneShotId="16" target="lyn" priority="2">
                 <state img="3-mischievous.png">Oh no, I'm &lt;i&gt;soooooo&lt;/i&gt; sorry Lyn. I'd hate for Miss Popular to have to remove an &lt;i&gt;accessory&lt;/i&gt;.</state>
             </case>
@@ -2787,6 +2956,9 @@
                 <state img="3-mischievous.png">I've been watching your every… single… move. You masturbated twice in your bed last night and flipped through 12 pages of porn.</state>
                 <state img="3-embarrassed.png">Oh, come on ~player~. Did you have to pick something so small? Think of my feelings next time, dear.</state>
                 <state img="3-shocked.png">Oh ~player~... Don't play with my emotions like that!</state>
+            </case>
+            <case tag="female_removed_accessory" target="blake" targetStage="6">
+                <state img="3-shocked.png">Cat ears? Blake... Are you some witch's black cat gone stray?</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="3-gloomy.png">*sigh* I just want this game to be over already.</state>
@@ -2820,18 +2992,27 @@
                 <state img="3-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="3-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_minor">
-                <state img="3-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
-                <state img="3-embarrassed.png">You looked... Almost comfortable taking that off...</state>
-                <state img="3-disinterested.png">Yeah, that was a waste of my time...</state>
-                <state img="3-disinterested.png">I have places to be, you know...</state>
+            <case tag="female_removing_minor" oneShotId="120" target="akko">
+                <state img="3-shocked.png" marker="AkkoWand">Your talents are worthy of praise, Akko, but is that wand really necessary? Where I come from, magic is drawn directly from the spell tome...</state>
             </case>
-            <case tag="female_removed_minor">
+            <case tag="female_removed_minor" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="3-horny.png">Oh honey, next time take it off slower. Just for me?</state>
                 <state img="3-horny.png">Wow; if taking off a small item like your ~clothing~ turns me on this much, time will only tell how wet you're gonna make me when you're flicking the bean.</state>
                 <state img="3-mischievous.png">That was good, ~player~, but I'm not through with you just yet!</state>
+            </case>
+            <case tag="female_removed_minor" priority="1">
+                <state img="3-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
+                <state img="3-embarrassed.png">You looked... Almost comfortable taking that off...</state>
+                <state img="3-disinterested.png">Yeah, that was a waste of my time...</state>
+                <state img="3-disinterested.png">I have places to be, you know...</state>
+            </case>
+            <case tag="female_removed_minor" oneShotId="119" target="akko" saidMarker="AkkoWand&gt;0" priority="11">
+                <state img="3-calm.png">Unless, of course, it is healing magic that is in question; but you're definetly not using healing magic.</state>
+            </case>
+            <case tag="female_removed_minor" id="3-8" target="misaka" targetStage="4">
+                <state img="3-disinterested.png">Wearing those just mean you're less of a woman, Mikoto... But that's okay, no one was thinking you were very womanly to begin with.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="3-disinterested.png">Listen, I don't like this either...</state>
@@ -2863,15 +3044,21 @@
                 <state img="3-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="3-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_major">
-                <state img="3-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
-                <state img="3-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
-            </case>
-            <case tag="female_removed_major">
+            <case tag="female_removed_major" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="3-mischievous.png">My hexes are working as planned. Hehehe.</state>
                 <state img="3-horny.png">Ohhhh yes... Do that again for me.</state>
+            </case>
+            <case tag="female_removed_major" priority="1">
+                <state img="3-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
+                <state img="3-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
+            </case>
+            <case tag="female_removed_major" target="akko" priority="1">
+                <state img="3-shocked.png">You're transformation spells are quite intriguing! Might I borrow your spell books?</state>
+            </case>
+            <case tag="female_removed_major" id="3-13" target="navi" targetStage="1">
+                <state img="3-disinterested.png">Ah, so that's the Fairy Whore's true form...</state>
             </case>
             <case tag="male_chest_will_be_visible" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
@@ -2893,9 +3080,18 @@
                 <state img="3-excited.png">Oh... I want to rest my head on your chest now.</state>
                 <state img="3-mischievous.png">... Why are you getting nervous all of a sudden? You should know that I'd never stab &lt;i&gt;you&lt;/i&gt; in the heart.</state>
             </case>
+            <case tag="male_chest_is_visible" target="9s" targetStage="3">
+                <state img="3-calm.png">No nipples? Androids must really be flawed creation then.</state>
+                <state img="3-calm.png">No nipples? I guess that makes since for a male android; afterall, androids are meant for nothing other than to function for other people's benefit.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="3-calm.png">I won't be looking; will you do the same for me?</state>
                 <state img="3-calm.png">Looks like you're taking yours out before I had to take mine out... Guess I won?</state>
+            </case>
+            <case tag="male_crotch_will_be_visible">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="3-horny.png">Now &lt;i&gt;this&lt;/i&gt; is what I've been waiting for!</state>
             </case>
             <case tag="male_small_crotch_is_visible" priority="1">
                 <condition count="1" filter="human_male" gender="male" />
@@ -3003,6 +3199,9 @@
                 <state img="3-gloomy.png">Well this is... Going to get awkward...</state>
                 <state img="3-calm.png">If you want to leave the game now &lt;i&gt;without&lt;/i&gt; showing us your cunt, I won't hold it against you...</state>
                 <state img="3-calm.png" marker="haveanotherlayer">Please tell me you have some extra small accessory somewhere. Please?</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" id="3-9" target="zone-tan">
+                <state img="3-embarrassed.png">I-I-I'm sure ~player~ is more into tits, right? U-Uh... My tits, specifically...</state>
             </case>
             <case tag="female_crotch_is_visible" priority="3">
                 <condition count="1" filter="human_female" gender="female" />
@@ -3136,17 +3335,17 @@
                 <state img="3-disinterested.png">(Can I kill him instead?)</state>
                 <state img="3-angry.png">Gods, that's even &lt;i&gt;more&lt;/i&gt; repulsive than I was expecting.</state>
             </case>
-            <case tag="male_start_masturbating" id="3-7" priority="2">
-                <condition count="1" filter="human_male" gender="male" />
-                <test expr="~target.tag.human~" value="true" />
-                <state img="3-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
-            </case>
             <case tag="male_start_masturbating" id="3-5" priority="2">
                 <condition count="1" filter="human_male" gender="male" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="3-excited.png">Spit on your hand first. I want to hear wet noises!</state>
                 <state img="3-horny.png">Mmm the way your penis surrenders itself into the clutches of your hand...</state>
                 <state img="3-shocked.png">The way your glans is... Looking at me while you do that... It looks like it wants to say hello.</state>
+            </case>
+            <case tag="male_start_masturbating" id="3-7" priority="2">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="3-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
             </case>
             <case tag="male_masturbating" priority="3">
                 <condition count="1" filter="human_male" gender="male" />
@@ -3213,6 +3412,10 @@
                 <state img="3-horny.png">Heehee... I want to see your juices covering your every fold!</state>
                 <state img="3-excited.png">I'm going to be savoring every second of this!</state>
             </case>
+            <case tag="female_start_masturbating" id="3-14" target="leafy">
+                <state img="3-calm.png">Huh... I do that sometimes, except I use standard dark magic... Carry on.</state>
+                <state img="3-mischievous.png">Heh, you're tying &lt;i&gt;yourself&lt;/i&gt; up while in the prescene of a dark mage... You don't know what's good for you.</state>
+            </case>
             <case tag="female_masturbating">
                 <state img="3-angry.png">Hey! Look away from ~player~ when you do that!</state>
                 <state img="3-disinterested.png">Oh... You look like you're in such an intense state of pleasure, ~name~... I hope I can make ~player~ feel what you must be feeling.</state>
@@ -3225,10 +3428,14 @@
             <case tag="female_masturbating" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
-                <state img="3-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
                 <state img="3-calm.png">All eyes on me, ~player~. I better not catch your eyes wandering.</state>
                 <state img="3-mischievous.png">I like your technique ~player~! How often do you practice?</state>
                 <state img="3-excited.png">Hmmm I want to devour you!</state>
+            </case>
+            <case tag="female_masturbating" priority="1">
+                <condition count="1" filter="human_female" gender="female" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="3-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
             </case>
             <case tag="female_masturbating" oneShotId="100" target="dawn" priority="5">
                 <state img="3-shocked.png" marker="palkiapenis">Wait, Dawn! There's a Pokemon named Palkia whose head looks like a penis?!</state>
@@ -3246,15 +3453,12 @@
                 <state img="3-excited.png">Do it again! I want to see more of your wet love juices!</state>
             </case>
             <case tag="game_over_victory">
-                <state img="3-happy.png">What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.</state>
-            </case>
-            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
-                <state img="3-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
-            </case>
-            <case tag="game_over_victory" totalFinished="2-">
                 <state img="3-happy.png">Heehee... That worked just as planned.</state>
                 <state img="3-mischievous.png">I enjoyed exactly &lt;i&gt;one&lt;/i&gt; performance... The other was dreadful.</state>
                 <state img="3-excited.png">Huzzah! That was easy.</state>
+            </case>
+            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
+                <state img="3-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
             </case>
             <case tag="game_over_victory" totalFinished="3-">
                 <state img="3-happy.png">Heehee... That worked just as planned.</state>
@@ -3365,11 +3569,11 @@
                 <state img="4-shocked.png">Fuck! That means... Uhhhhh....</state>
                 <state img="4-shocked.png">What? Impossible? Check the cards again; there has to be a mistake!</state>
             </case>
-            <case tag="must_strip_losing" priority="1">
+            <case tag="must_strip_losing" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <state img="4-calm.png">~player~ can stare as she chooses; the rest of you should mind your own business.</state>
             </case>
-            <case tag="must_strip_losing" priority="1">
+            <case tag="must_strip_losing" priority="2">
                 <condition count="1" filter="human_male" gender="male" />
                 <state img="4-calm.png">~player~ can stare as he chooses; the rest of you should mind your own business.</state>
             </case>
@@ -3379,7 +3583,7 @@
                 <state img="4-stripping.png">Whelp... Here goes the last bit of clothing I have left...</state>
             </case>
             <case tag="stripping" oneShotId="70" saidMarker="cheating13&gt;0" priority="5">
-                <state img="4-stripping.png" marker="cheating14">I don't care anymore... If stripping down in front of everyone is my punishment for being a failure then so be it. A useless incompetent mage like me doesn't deserve forgivenesss.</state>
+                <state img="4-stripping.png" marker="cheating14">I don't care anymore... If stripping down in front of everyone is my punishment for being a failure then so be it. A useless incompetent mage like me doesn't deserve forgiveness.</state>
             </case>
             <case tag="stripping" oneShotId="72" saidMarker="stripshow13&gt;0" priority="5">
                 <state img="4-stripping.png" marker="stripshow14">I lather my pussy with the finest oils and elixirs to keep it smooth and clean. My pussy is yours, ~player~ darling.</state>
@@ -3510,6 +3714,10 @@
             </case>
             <case tag="female_must_strip" oneShotId="12" target="ruby" targetStage="0" priority="3">
                 <state img="4-angry.png">Ruby has to strip? Good. Anything to wipe that stupid smile off her face! (Ugh; what business does she have being so happy? This is strip poker!)</state>
+                <state img="4-excited.png">Happy people are obnoxious; that's why seeing Ruby lose gives me great pleasure.</state>
+            </case>
+            <case tag="female_must_strip" id="4-10" target="zone-tan" targetStage="2" consecutiveLosses="3" totalRounds="0-7" targetSayingMarker="fulldemonloss">
+                <state img="4-excited.png">WOW! I have newfound respect for you now, Zone-tan!</state>
             </case>
             <case tag="female_must_strip" totalFemales="4-" priority="1">
                 <test expr="~target.tag.human~" value="false" />
@@ -3553,6 +3761,15 @@
                 <state img="4-disinterested.png">Good choice; if I saw any more skin from you I think I'd vomit.</state>
                 <state img="4-angry.png">She's just removing an accessory! This is a waste of everyone's time.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" priority="1">
+                <state img="4-calm.png">Akko, you're a witch from the Outrealms? Hmmm... We might have to get together sometime to discuss dark magics.</state>
+            </case>
+            <case tag="female_removing_accessory" target="blake" targetStage="5">
+                <state img="4-calm.png">You really waited this long to remove such a stupid accessory? You really are on a whole new level of cluelessness...</state>
+            </case>
+            <case tag="female_removing_accessory" target="lilith" priority="1">
+                <state img="4-mischievous.png">Lilith the siren, heh?  I respect the work of a siren.</state>
+            </case>
             <case tag="female_removing_accessory" oneShotId="16" target="lyn" priority="2">
                 <state img="4-mischievous.png">Oh no, I'm &lt;i&gt;soooooo&lt;/i&gt; sorry Lyn. I'd hate for Miss Popular to have to remove an &lt;i&gt;accessory&lt;/i&gt;.</state>
             </case>
@@ -3572,6 +3789,9 @@
                 <state img="4-mischievous.png">I've been watching your every… single… move. You masturbated twice in your bed last night and flipped through 12 pages of porn.</state>
                 <state img="4-embarrassed.png">Oh, come on ~player~. Did you have to pick something so small? Think of my feelings next time, dear.</state>
                 <state img="4-shocked.png">Oh ~player~... Don't play with my emotions like that!</state>
+            </case>
+            <case tag="female_removed_accessory" target="blake" targetStage="6">
+                <state img="4-shocked.png">Cat ears? Blake... Are you some witch's black cat gone stray?</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="4-gloomy.png">*sigh* I just want this game to be over already.</state>
@@ -3605,18 +3825,27 @@
                 <state img="4-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="4-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_minor">
-                <state img="4-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
-                <state img="4-embarrassed.png">You looked... Almost comfortable taking that off...</state>
-                <state img="4-disinterested.png">Yeah, that was a waste of my time...</state>
-                <state img="4-disinterested.png">I have places to be, you know...</state>
+            <case tag="female_removing_minor" oneShotId="120" target="akko">
+                <state img="4-shocked.png" marker="AkkoWand">Your talents are worthy of praise, Akko, but is that wand really necessary? Where I come from, magic is drawn directly from the spell tome...</state>
             </case>
-            <case tag="female_removed_minor">
+            <case tag="female_removed_minor" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="4-horny.png">Oh honey, next time take it off slower. Just for me?</state>
                 <state img="4-horny.png">Wow; if taking off a small item like your ~clothing~ turns me on this much, time will only tell how wet you're gonna make me when you're flicking the bean.</state>
                 <state img="4-mischievous.png">That was good, ~player~, but I'm not through with you just yet!</state>
+            </case>
+            <case tag="female_removed_minor" priority="1">
+                <state img="4-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
+                <state img="4-embarrassed.png">You looked... Almost comfortable taking that off...</state>
+                <state img="4-disinterested.png">Yeah, that was a waste of my time...</state>
+                <state img="4-disinterested.png">I have places to be, you know...</state>
+            </case>
+            <case tag="female_removed_minor" oneShotId="119" target="akko" saidMarker="AkkoWand&gt;0" priority="11">
+                <state img="4-calm.png">Unless, of course, it is healing magic that is in question; but you're definetly not using healing magic.</state>
+            </case>
+            <case tag="female_removed_minor" id="4-8" target="misaka" targetStage="4">
+                <state img="4-disinterested.png">Wearing those just mean you're less of a woman, Mikoto... But that's okay, no one was thinking you were very womanly to begin with.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="4-disinterested.png">Listen, I don't like this either...</state>
@@ -3648,16 +3877,22 @@
                 <state img="4-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="4-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_major">
-                <state img="4-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
-                <state img="4-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
-            </case>
-            <case tag="female_removed_major">
+            <case tag="female_removed_major" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="4-excited.png">To think that you took off your ~clothing~ in front of me. I would have murdered half a village for this!</state>
                 <state img="4-horny.png">You know how to make a girl wet.</state>
                 <state img="4-embarrassed.png">The thought that you'd take off you ~clothing~ for me...</state>
+            </case>
+            <case tag="female_removed_major" priority="1">
+                <state img="4-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
+                <state img="4-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
+            </case>
+            <case tag="female_removed_major" target="akko" priority="1">
+                <state img="4-shocked.png">You're transformation spells are quite intriguing! Might I borrow your spell books?</state>
+            </case>
+            <case tag="female_removed_major" id="4-13" target="navi" targetStage="1">
+                <state img="4-disinterested.png">Ah, so that's the Fairy Whore's true form...</state>
             </case>
             <case tag="male_chest_will_be_visible" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
@@ -3680,10 +3915,19 @@
                 <state img="4-shocked.png">Heh, your heart is now more exposed to me then it's ever been... Wait, why did you get all nervous so suddenly?</state>
                 <state img="4-mischievous.png">You look just like one of my victims... Nervous, half-naked... And helpless...</state>
             </case>
+            <case tag="male_chest_is_visible" target="9s" targetStage="3">
+                <state img="4-calm.png">No nipples? Androids must really be flawed creation then.</state>
+                <state img="4-calm.png">No nipples? I guess that makes since for a male android; afterall, androids are meant for nothing other than to function for other people's benefit.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="4-angry.png">You're taking yours out in front of me? If this was &lt;i&gt;any&lt;/i&gt; other situation my dagger would already be at your throat.</state>
                 <state img="4-calm.png">All guys have penises... We've all been expecting this would happen so I don't know why you look so embarrassed.</state>
                 <state img="4-disinterested.png">Fine. Take your dick out if you have to. Just don't start waving it around near me or I'll kill you.</state>
+            </case>
+            <case tag="male_crotch_will_be_visible">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="4-horny.png">Now &lt;i&gt;this&lt;/i&gt; is what I've been waiting for!</state>
             </case>
             <case tag="male_small_crotch_is_visible" priority="1">
                 <condition count="1" filter="human_male" gender="male" />
@@ -3794,6 +4038,9 @@
                 <state img="4-angry.png">... What, you think I'm supposed to care about seeing ~target~'s cunt? Get over yourselves.</state>
                 <state img="4-angry.png">Guh... These rules suck! I don't want to look at ~name~'s pussy!</state>
                 <state img="4-mischievous.png">(If I kill her now, I'll be spared from having to look at-.... Hmmm...)</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" id="4-9" target="zone-tan">
+                <state img="4-embarrassed.png">I-I-I'm sure ~player~ is more into tits, right? U-Uh... My tits, specifically...</state>
             </case>
             <case tag="female_crotch_is_visible" priority="3">
                 <condition count="1" filter="human_female" gender="female" />
@@ -3927,17 +4174,17 @@
                 <state img="4-angry.png">If you so much as glance at ~player~ while you're doing that, I'm cursing you into a rat.</state>
                 <state img="4-calm.png">Mind if I cast a hex to make you finish quicker? ... No, it's not for your benefit; it was for mine.</state>
             </case>
+            <case tag="male_start_masturbating" id="4-7" priority="2">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="4-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
+            </case>
             <case tag="male_start_masturbating" id="4-5" priority="2">
                 <condition count="1" filter="human_male" gender="male" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="4-excited.png">Spit on your hand first. I want to hear wet noises!</state>
                 <state img="4-horny.png">Mmm the way your penis surrenders itself into the clutches of your hand...</state>
                 <state img="4-shocked.png">The way your glans is... Looking at me while you do that... It looks like it wants to say hello.</state>
-            </case>
-            <case tag="male_start_masturbating" id="4-7" priority="2">
-                <condition count="1" filter="human_male" gender="male" />
-                <test expr="~target.tag.human~" value="true" />
-                <state img="4-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
             </case>
             <case tag="male_masturbating" priority="3">
                 <condition count="1" filter="human_male" gender="male" />
@@ -4008,6 +4255,10 @@
             <case tag="female_start_masturbating" priority="1">
                 <state img="4-embarrassed.png">Oh... Your fingers... I would be lying if I said that didn't look fun...</state>
             </case>
+            <case tag="female_start_masturbating" id="4-14" target="leafy">
+                <state img="4-calm.png">Huh... I do that sometimes, except I use standard dark magic... Carry on.</state>
+                <state img="4-mischievous.png">Heh, you're tying &lt;i&gt;yourself&lt;/i&gt; up while in the prescene of a dark mage... You don't know what's good for you.</state>
+            </case>
             <case tag="female_masturbating">
                 <state img="4-angry.png">Hey! Look away from ~player~ when you do that!</state>
                 <state img="4-disinterested.png">Oh... You look like you're in such an intense state of pleasure, ~name~... I hope I can make ~player~ feel what you must be feeling.</state>
@@ -4020,10 +4271,14 @@
             <case tag="female_masturbating" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
-                <state img="4-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
                 <state img="4-calm.png">All eyes on me, ~player~. I better not catch your eyes wandering.</state>
                 <state img="4-mischievous.png">I like your technique ~player~! How often do you practice?</state>
                 <state img="4-excited.png">Hmmm I want to devour you!</state>
+            </case>
+            <case tag="female_masturbating" priority="1">
+                <condition count="1" filter="human_female" gender="female" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="4-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
             </case>
             <case tag="female_masturbating" oneShotId="99" target="dawn" notSaidMarker="palkiapenis" priority="5">
                 <state img="4-shocked.png">Wait, Dawn! There's a Pokemon named Palkia whose head looks like a penis?! Do... Do you have a picture of one?</state>
@@ -4041,15 +4296,12 @@
                 <state img="4-excited.png">Hee hee. I can't wait for you to spray that all over my face next time!</state>
             </case>
             <case tag="game_over_victory">
-                <state img="4-happy.png">What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.</state>
-            </case>
-            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
-                <state img="4-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
-            </case>
-            <case tag="game_over_victory" totalFinished="2-">
                 <state img="4-excited.png">Heehee... That worked just as planned.</state>
                 <state img="4-mischievous.png">I enjoyed exactly &lt;i&gt;one&lt;/i&gt; performance... The other was dreadful.</state>
                 <state img="4-excited.png">Huzzah! That was easy.</state>
+            </case>
+            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
+                <state img="4-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
             </case>
             <case tag="game_over_victory" totalFinished="3-">
                 <state img="4-excited.png">Heehee... That worked just as planned.</state>
@@ -4269,6 +4521,10 @@
             </case>
             <case tag="female_must_strip" oneShotId="12" target="ruby" targetStage="0" priority="3">
                 <state img="5-angry.png">Ruby has to strip? Good. Anything to wipe that stupid smile off her face! (Ugh; what business does she have being so happy? This is strip poker!)</state>
+                <state img="5-excited.png">Happy people are obnoxious; that's why seeing Ruby lose gives me great pleasure.</state>
+            </case>
+            <case tag="female_must_strip" id="5-10" target="zone-tan" targetStage="2" consecutiveLosses="3" totalRounds="0-7" targetSayingMarker="fulldemonloss">
+                <state img="5-excited.png">WOW! I have newfound respect for you now, Zone-tan!</state>
             </case>
             <case tag="female_must_strip" totalFemales="4-" priority="1">
                 <test expr="~target.tag.human~" value="false" />
@@ -4312,6 +4568,15 @@
                 <state img="5-calm.png">Only a coward would even wear something like~clothing.ifPlural(| their)~ ~clothing~ to a game of strip poker.</state>
                 <state img="5-calm.png">Oh, just an accessory? Good; I hope it will stay that way.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" priority="1">
+                <state img="5-calm.png">Akko, you're a witch from the Outrealms? Hmmm... We might have to get together sometime to discuss dark magics.</state>
+            </case>
+            <case tag="female_removing_accessory" target="blake" targetStage="5">
+                <state img="5-calm.png">You really waited this long to remove such a stupid accessory? You really are on a whole new level of cluelessness...</state>
+            </case>
+            <case tag="female_removing_accessory" target="lilith" priority="1">
+                <state img="5-mischievous.png">Lilith the siren, heh?  I respect the work of a siren.</state>
+            </case>
             <case tag="female_removing_accessory" oneShotId="16" target="lyn" priority="2">
                 <state img="5-mischievous.png">Oh no, I'm &lt;i&gt;soooooo&lt;/i&gt; sorry Lyn. I'd hate for Miss Popular to have to remove an &lt;i&gt;accessory&lt;/i&gt;.</state>
             </case>
@@ -4331,6 +4596,9 @@
                 <state img="5-mischievous.png">I've been watching your every… single… move. You masturbated twice in your bed last night and flipped through 12 pages of porn.</state>
                 <state img="5-embarrassed.png">Oh, come on ~player~. Did you have to pick something so small? Think of my feelings next time, dear.</state>
                 <state img="5-shocked.png">Oh ~player~... Don't play with my emotions like that!</state>
+            </case>
+            <case tag="female_removed_accessory" target="blake" targetStage="6">
+                <state img="5-shocked.png">Cat ears? Blake... Are you some witch's black cat gone stray?</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="5-gloomy.png">*sigh* I just want this game to be over already.</state>
@@ -4366,18 +4634,27 @@
                 <state img="5-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="5-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_minor">
-                <state img="5-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
-                <state img="5-embarrassed.png">You looked... Almost comfortable taking that off...</state>
-                <state img="5-disinterested.png">Yeah, that was a waste of my time...</state>
-                <state img="5-disinterested.png">I have places to be, you know...</state>
+            <case tag="female_removing_minor" oneShotId="120" target="akko">
+                <state img="5-shocked.png" marker="AkkoWand">Your talents are worthy of praise, Akko, but is that wand really necessary? Where I come from, magic is drawn directly from the spell tome...</state>
             </case>
-            <case tag="female_removed_minor">
+            <case tag="female_removed_minor" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="5-horny.png">Oh honey, next time take it off slower. Just for me?</state>
                 <state img="5-horny.png">Wow; if taking off a small item like your ~clothing~ turns me on this much, time will only tell how wet you're gonna make me when you're flicking the bean.</state>
                 <state img="5-mischievous.png">That was good, ~player~, but I'm not through with you just yet!</state>
+            </case>
+            <case tag="female_removed_minor" priority="1">
+                <state img="5-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
+                <state img="5-embarrassed.png">You looked... Almost comfortable taking that off...</state>
+                <state img="5-disinterested.png">Yeah, that was a waste of my time...</state>
+                <state img="5-disinterested.png">I have places to be, you know...</state>
+            </case>
+            <case tag="female_removed_minor" oneShotId="119" target="akko" saidMarker="AkkoWand&gt;0" priority="11">
+                <state img="5-calm.png">Unless, of course, it is healing magic that is in question; but you're definetly not using healing magic.</state>
+            </case>
+            <case tag="female_removed_minor" id="5-8" target="misaka" targetStage="4">
+                <state img="5-disinterested.png">Wearing those just mean you're less of a woman, Mikoto... But that's okay, no one was thinking you were very womanly to begin with.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="5-disinterested.png">Listen, I don't like this either...</state>
@@ -4409,16 +4686,22 @@
                 <state img="5-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="5-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_major">
-                <state img="5-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
-                <state img="5-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
-            </case>
-            <case tag="female_removed_major">
+            <case tag="female_removed_major" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="5-excited.png">To think that you took off your ~clothing~ in front of me. I would have murdered half a village for this!</state>
                 <state img="5-horny.png">You know how to make a girl wet.</state>
                 <state img="5-embarrassed.png">The thought that you'd take off you ~clothing~ for me...</state>
+            </case>
+            <case tag="female_removed_major" priority="1">
+                <state img="5-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
+                <state img="5-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
+            </case>
+            <case tag="female_removed_major" target="akko" priority="1">
+                <state img="5-shocked.png">You're transformation spells are quite intriguing! Might I borrow your spell books?</state>
+            </case>
+            <case tag="female_removed_major" id="5-13" target="navi" targetStage="1">
+                <state img="5-disinterested.png">Ah, so that's the Fairy Whore's true form...</state>
             </case>
             <case tag="male_chest_will_be_visible" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
@@ -4441,10 +4724,19 @@
                 <state img="5-shocked.png">Heh, your heart is now more exposed to me then it's ever been... Wait, why did you get all nervous so suddenly?</state>
                 <state img="5-mischievous.png">You look just like one of my victims... Nervous, half-naked... And helpless...</state>
             </case>
+            <case tag="male_chest_is_visible" target="9s" targetStage="3">
+                <state img="5-calm.png">No nipples? Androids must really be flawed creation then.</state>
+                <state img="5-calm.png">No nipples? I guess that makes since for a male android; afterall, androids are meant for nothing other than to function for other people's benefit.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="5-angry.png">You're taking yours out in front of me? If this was &lt;i&gt;any&lt;/i&gt; other situation my dagger would already be at your throat.</state>
                 <state img="5-calm.png">All guys have penises... We've all been expecting this would happen so I don't know why you look so embarrassed.</state>
                 <state img="5-disinterested.png">Fine. Take your dick out if you have to. Just don't start waving it around near me or I'll kill you.</state>
+            </case>
+            <case tag="male_crotch_will_be_visible">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="5-horny.png">Now &lt;i&gt;this&lt;/i&gt; is what I've been waiting for!</state>
             </case>
             <case tag="male_small_crotch_is_visible" priority="1">
                 <condition count="1" filter="human_male" gender="male" />
@@ -4553,6 +4845,9 @@
                 <state img="5-angry.png">... What, you think I'm supposed to care about seeing ~target~'s cunt? Get over yourselves.</state>
                 <state img="5-angry.png">Guh... These rules suck! I don't want to look at ~name~'s pussy!</state>
                 <state img="5-mischievous.png">(If I kill her now, I'll be spared from having to look at-.... Hmmm...)</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" id="5-9" target="zone-tan">
+                <state img="5-embarrassed.png">I-I-I'm sure ~player~ is more into tits, right? U-Uh... My tits, specifically...</state>
             </case>
             <case tag="female_crotch_is_visible" priority="3">
                 <condition count="1" filter="human_female" gender="female" />
@@ -4766,6 +5061,10 @@
             <case tag="female_start_masturbating" priority="1">
                 <state img="5-embarrassed.png">Oh... Your fingers... I would be lying if I said that didn't look fun...</state>
             </case>
+            <case tag="female_start_masturbating" id="5-14" target="leafy">
+                <state img="5-calm.png">Huh... I do that sometimes, except I use standard dark magic... Carry on.</state>
+                <state img="5-mischievous.png">Heh, you're tying &lt;i&gt;yourself&lt;/i&gt; up while in the prescene of a dark mage... You don't know what's good for you.</state>
+            </case>
             <case tag="female_masturbating">
                 <state img="5-angry.png">Hey! Look away from ~player~ when you do that!</state>
                 <state img="5-disinterested.png">Oh... You look like you're in such an intense state of pleasure, ~name~... I hope I can make ~player~ feel what you must be feeling.</state>
@@ -4778,12 +5077,16 @@
             <case tag="female_masturbating" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
-                <state img="5-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
                 <state img="5-calm.png">All eyes on me, ~player~. I better not catch your eyes wandering.</state>
                 <state img="5-horny.png">Heeh hee... Rub it for me, ~player~.</state>
                 <state img="5-excited.png">Mmmmm... Just like that, ~player~.</state>
                 <state img="5-mischievous.png">Hee... Come to think of it, I should start spying on you in your chambers more often. Spike your drink with a potion of lust and...</state>
                 <state img="5-horny.png">Hmmm let me lick it really quick...</state>
+            </case>
+            <case tag="female_masturbating" priority="1">
+                <condition count="1" filter="human_female" gender="female" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="5-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
             </case>
             <case tag="female_masturbating" oneShotId="99" target="dawn" notSaidMarker="palkiapenis" priority="5">
                 <state img="5-shocked.png">Wait, Dawn! There's a Pokemon named Palkia whose head looks like a penis?! Do... Do you have a picture of one?</state>
@@ -4816,15 +5119,12 @@
                 <state img="5-starting.png">~player~, I'm doing this for you... Here goes...</state>
             </case>
             <case tag="game_over_victory">
-                <state img="5-happy.png">What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.</state>
-            </case>
-            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
-                <state img="5-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
-            </case>
-            <case tag="game_over_victory" totalFinished="2-">
                 <state img="5-excited.png">Heehee... That worked just as planned.</state>
                 <state img="5-mischievous.png">I enjoyed exactly &lt;i&gt;one&lt;/i&gt; performance... The other was dreadful.</state>
                 <state img="5-excited.png">Huzzah! That was easy.</state>
+            </case>
+            <case tag="game_over_victory" saidMarker="standardroute&gt;0">
+                <state img="5-mischievous.png">... Oh yeah, I was cheating, by the way. I totally cursed the deck in my favor.</state>
             </case>
             <case tag="game_over_victory" totalFinished="3-">
                 <state img="5-excited.png">Heehee... That worked just as planned.</state>
@@ -4995,6 +5295,10 @@
             </case>
             <case tag="female_must_strip" oneShotId="12" target="ruby" targetStage="0" priority="3">
                 <state img="6-angry.png">Ruby has to strip? Good. Anything to wipe that stupid smile off her face! (Ugh; what business does she have being so happy? This is strip poker!)</state>
+                <state img="6-excited.png">Happy people are obnoxious; that's why seeing Ruby lose gives me great pleasure.</state>
+            </case>
+            <case tag="female_must_strip" id="6-10" target="zone-tan" targetStage="2" consecutiveLosses="3" totalRounds="0-7" targetSayingMarker="fulldemonloss">
+                <state img="6-excited.png">WOW! I have newfound respect for you now, Zone-tan!</state>
             </case>
             <case tag="female_must_strip" totalFemales="4-" priority="1">
                 <test expr="~target.tag.human~" value="false" />
@@ -5092,6 +5396,15 @@
                 <state img="6-calm.png">Only a coward would even wear something like~clothing.ifPlural(| their)~ ~clothing~ to a game of strip poker.</state>
                 <state img="6-calm.png">Oh, just an accessory? Good; I hope it will stay that way.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" priority="1">
+                <state img="6-calm.png">Akko, you're a witch from the Outrealms? Hmmm... We might have to get together sometime to discuss dark magics.</state>
+            </case>
+            <case tag="female_removing_accessory" target="blake" targetStage="5">
+                <state img="6-calm.png">You really waited this long to remove such a stupid accessory? You really are on a whole new level of cluelessness...</state>
+            </case>
+            <case tag="female_removing_accessory" target="lilith" priority="1">
+                <state img="6-mischievous.png">Lilith the siren, heh?  I respect the work of a siren.</state>
+            </case>
             <case tag="female_removing_accessory" oneShotId="16" target="lyn" priority="2">
                 <state img="6-mischievous.png">Oh no, I'm &lt;i&gt;soooooo&lt;/i&gt; sorry Lyn. I'd hate for Miss Popular to have to remove an &lt;i&gt;accessory&lt;/i&gt;.</state>
             </case>
@@ -5111,6 +5424,9 @@
                 <state img="6-mischievous.png">I've been watching your every… single… move. You masturbated twice in your bed last night and flipped through 12 pages of porn.</state>
                 <state img="6-embarrassed.png">Oh, come on ~player~. Did you have to pick something so small? Think of my feelings next time, dear.</state>
                 <state img="6-shocked.png">Oh ~player~... Don't play with my emotions like that!</state>
+            </case>
+            <case tag="female_removed_accessory" target="blake" targetStage="6">
+                <state img="6-shocked.png">Cat ears? Blake... Are you some witch's black cat gone stray?</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="6-gloomy.png">*sigh* I just want this game to be over already.</state>
@@ -5145,18 +5461,27 @@
                 <state img="6-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="6-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_minor">
-                <state img="6-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
-                <state img="6-embarrassed.png">You looked... Almost comfortable taking that off...</state>
-                <state img="6-disinterested.png">Yeah, that was a waste of my time...</state>
-                <state img="6-disinterested.png">I have places to be, you know...</state>
+            <case tag="female_removing_minor" oneShotId="120" target="akko">
+                <state img="6-shocked.png" marker="AkkoWand">Your talents are worthy of praise, Akko, but is that wand really necessary? Where I come from, magic is drawn directly from the spell tome...</state>
             </case>
-            <case tag="female_removed_minor">
+            <case tag="female_removed_minor" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="6-horny.png">Oh honey, next time take it off slower. Just for me?</state>
                 <state img="6-horny.png">Wow; if taking off a small item like your ~clothing~ turns me on this much, time will only tell how wet you're gonna make me when you're flicking the bean.</state>
                 <state img="6-mischievous.png">That was good, ~player~, but I'm not through with you just yet!</state>
+            </case>
+            <case tag="female_removed_minor" priority="1">
+                <state img="6-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
+                <state img="6-embarrassed.png">You looked... Almost comfortable taking that off...</state>
+                <state img="6-disinterested.png">Yeah, that was a waste of my time...</state>
+                <state img="6-disinterested.png">I have places to be, you know...</state>
+            </case>
+            <case tag="female_removed_minor" oneShotId="119" target="akko" saidMarker="AkkoWand&gt;0" priority="11">
+                <state img="6-calm.png">Unless, of course, it is healing magic that is in question; but you're definetly not using healing magic.</state>
+            </case>
+            <case tag="female_removed_minor" id="6-8" target="misaka" targetStage="4">
+                <state img="6-disinterested.png">Wearing those just mean you're less of a woman, Mikoto... But that's okay, no one was thinking you were very womanly to begin with.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="6-disinterested.png">Listen, I don't like this either...</state>
@@ -5188,16 +5513,22 @@
                 <state img="6-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="6-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_major">
-                <state img="6-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
-                <state img="6-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
-            </case>
-            <case tag="female_removed_major">
+            <case tag="female_removed_major" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="6-excited.png">To think that you took off your ~clothing~ in front of me. I would have murdered half a village for this!</state>
                 <state img="6-horny.png">You know how to make a girl wet.</state>
                 <state img="6-embarrassed.png">The thought that you'd take off you ~clothing~ for me...</state>
+            </case>
+            <case tag="female_removed_major" priority="1">
+                <state img="6-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
+                <state img="6-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
+            </case>
+            <case tag="female_removed_major" target="akko" priority="1">
+                <state img="6-shocked.png">You're transformation spells are quite intriguing! Might I borrow your spell books?</state>
+            </case>
+            <case tag="female_removed_major" id="6-13" target="navi" targetStage="1">
+                <state img="6-disinterested.png">Ah, so that's the Fairy Whore's true form...</state>
             </case>
             <case tag="male_chest_will_be_visible" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
@@ -5220,10 +5551,19 @@
                 <state img="6-shocked.png">Heh, your heart is now more exposed to me then it's ever been... Wait, why did you get all nervous so suddenly?</state>
                 <state img="6-mischievous.png">You look just like one of my victims... Nervous, half-naked... And helpless...</state>
             </case>
+            <case tag="male_chest_is_visible" target="9s" targetStage="3">
+                <state img="6-calm.png">No nipples? Androids must really be flawed creation then.</state>
+                <state img="6-calm.png">No nipples? I guess that makes since for a male android; afterall, androids are meant for nothing other than to function for other people's benefit.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="6-angry.png">You're taking yours out in front of me? If this was &lt;i&gt;any&lt;/i&gt; other situation my dagger would already be at your throat.</state>
                 <state img="6-calm.png">All guys have penises... We've all been expecting this would happen so I don't know why you look so embarrassed.</state>
                 <state img="6-disinterested.png">Fine. Take your dick out if you have to. Just don't start waving it around near me or I'll kill you.</state>
+            </case>
+            <case tag="male_crotch_will_be_visible">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="6-horny.png">Now &lt;i&gt;this&lt;/i&gt; is what I've been waiting for!</state>
             </case>
             <case tag="male_small_crotch_is_visible" priority="1">
                 <condition count="1" filter="human_male" gender="male" />
@@ -5334,6 +5674,9 @@
                 <state img="6-angry.png">... What, you think I'm supposed to care about seeing ~target~'s cunt? Get over yourselves.</state>
                 <state img="6-angry.png">Guh... These rules suck! I don't want to look at ~name~'s pussy!</state>
                 <state img="6-mischievous.png">(If I kill her now, I'll be spared from having to look at-.... Hmmm...)</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" id="6-9" target="zone-tan">
+                <state img="6-embarrassed.png">I-I-I'm sure ~player~ is more into tits, right? U-Uh... My tits, specifically...</state>
             </case>
             <case tag="female_crotch_is_visible" priority="3">
                 <condition count="1" filter="human_female" gender="female" />
@@ -5466,17 +5809,17 @@
                 <state img="6-angry.png">If you so much as glance at ~player~ while you're doing that, I'm cursing you into a rat.</state>
                 <state img="6-calm.png">Mind if I cast a hex to make you finish quicker? ... No, it's not for your benefit; it was for mine.</state>
             </case>
+            <case tag="male_start_masturbating" id="6-7" priority="2">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="6-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
+            </case>
             <case tag="male_start_masturbating" id="6-6" priority="2">
                 <condition count="1" filter="human_male" gender="male" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="6-horny.png">Yes ~player~, start stroking it for me... Nice and hard now; and look my way.</state>
                 <state img="6-excited.png">You have no idea how long I've been waiting for this! Stroke it for me until you cum!</state>
                 <state img="6-excited.png">Spit on it! Let me spit on it! Let's soak that thing in saliva!</state>
-            </case>
-            <case tag="male_start_masturbating" id="6-7" priority="2">
-                <condition count="1" filter="human_male" gender="male" />
-                <test expr="~target.tag.human~" value="true" />
-                <state img="6-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
             </case>
             <case tag="male_masturbating" priority="3">
                 <condition count="1" filter="human_male" gender="male" />
@@ -5540,6 +5883,10 @@
                 <state img="6-excited.png">You have no idea how long I've been waiting for this! Rub it for me until you squirt!</state>
                 <state img="6-excited.png">Spit on it! Let me spit on it! Let's drench that thing in saliva!</state>
             </case>
+            <case tag="female_start_masturbating" id="6-14" target="leafy">
+                <state img="6-calm.png">Huh... I do that sometimes, except I use standard dark magic... Carry on.</state>
+                <state img="6-mischievous.png">Heh, you're tying &lt;i&gt;yourself&lt;/i&gt; up while in the prescene of a dark mage... You don't know what's good for you.</state>
+            </case>
             <case tag="female_masturbating">
                 <state img="6-angry.png">Hey! Look away from ~player~ when you do that!</state>
                 <state img="6-embarrassed.png">Oh... You look like you're in such an intense state of pleasure, ~name~... I hope I can make ~player~ feel what you must be feeling.</state>
@@ -5551,6 +5898,10 @@
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="6-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
+            </case>
+            <case tag="female_masturbating" priority="1">
+                <condition count="1" filter="human_female" gender="female" />
+                <test expr="~target.tag.human~" value="true" />
                 <state img="6-calm.png">All eyes on me, ~player~. I better not catch your eyes wandering.</state>
                 <state img="6-horny.png">Heeh hee... Rub it for me, ~player~.</state>
                 <state img="6-excited.png">Mmmmm... Just like that, ~player~.</state>
@@ -5766,6 +6117,10 @@
             </case>
             <case tag="female_must_strip" oneShotId="12" target="ruby" targetStage="0" priority="3">
                 <state img="7-angry.png">Ruby has to strip? Good. Anything to wipe that stupid smile off her face! (Ugh; what business does she have being so happy? This is strip poker!)</state>
+                <state img="7-excited.png">Happy people are obnoxious; that's why seeing Ruby lose gives me great pleasure.</state>
+            </case>
+            <case tag="female_must_strip" id="7-10" target="zone-tan" targetStage="2" consecutiveLosses="3" totalRounds="0-7" targetSayingMarker="fulldemonloss">
+                <state img="7-excited.png">WOW! I have newfound respect for you now, Zone-tan!</state>
             </case>
             <case tag="female_must_strip" totalFemales="4-" priority="1">
                 <test expr="~target.tag.human~" value="false" />
@@ -5809,6 +6164,15 @@
                 <state img="7-calm.png">Only a coward would even wear something like~clothing.ifPlural(| their)~ ~clothing~ to a game of strip poker.</state>
                 <state img="7-calm.png">Oh, just an accessory? Good; I hope it will stay that way.</state>
             </case>
+            <case tag="female_removing_accessory" target="akko" priority="1">
+                <state img="7-calm.png">Akko, you're a witch from the Outrealms? Hmmm... We might have to get together sometime to discuss dark magics.</state>
+            </case>
+            <case tag="female_removing_accessory" target="blake" targetStage="5">
+                <state img="7-calm.png">You really waited this long to remove such a stupid accessory? You really are on a whole new level of cluelessness...</state>
+            </case>
+            <case tag="female_removing_accessory" target="lilith" priority="1">
+                <state img="7-mischievous.png">Lilith the siren, heh?  I respect the work of a siren.</state>
+            </case>
             <case tag="female_removing_accessory" oneShotId="16" target="lyn" priority="2">
                 <state img="7-mischievous.png">Oh no, I'm &lt;i&gt;soooooo&lt;/i&gt; sorry Lyn. I'd hate for Miss Popular to have to remove an &lt;i&gt;accessory&lt;/i&gt;.</state>
             </case>
@@ -5828,6 +6192,9 @@
                 <state img="7-mischievous.png">I've been watching your every… single… move. You masturbated twice in your bed last night and flipped through 12 pages of porn.</state>
                 <state img="7-embarrassed.png">Oh, come on ~player~. Did you have to pick something so small? Think of my feelings next time, dear.</state>
                 <state img="7-shocked.png">Oh ~player~... Don't play with my emotions like that!</state>
+            </case>
+            <case tag="female_removed_accessory" target="blake" targetStage="6">
+                <state img="7-shocked.png">Cat ears? Blake... Are you some witch's black cat gone stray?</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="7-gloomy.png">*sigh* I just want this game to be over already.</state>
@@ -5863,18 +6230,27 @@
                 <state img="7-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="7-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_minor">
-                <state img="7-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
-                <state img="7-embarrassed.png">You looked... Almost comfortable taking that off...</state>
-                <state img="7-disinterested.png">Yeah, that was a waste of my time...</state>
-                <state img="7-disinterested.png">I have places to be, you know...</state>
+            <case tag="female_removing_minor" oneShotId="120" target="akko">
+                <state img="7-shocked.png" marker="AkkoWand">Your talents are worthy of praise, Akko, but is that wand really necessary? Where I come from, magic is drawn directly from the spell tome...</state>
             </case>
-            <case tag="female_removed_minor">
+            <case tag="female_removed_minor" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="7-horny.png">Oh honey, next time take it off slower. Just for me?</state>
                 <state img="7-horny.png">Wow; if taking off a small item like your ~clothing~ turns me on this much, time will only tell how wet you're gonna make me when you're flicking the bean.</state>
                 <state img="7-mischievous.png">That was good, ~player~, but I'm not through with you just yet!</state>
+            </case>
+            <case tag="female_removed_minor" priority="1">
+                <state img="7-disinterested.png">Ugh... I can tell being a stripper isn't in your future.</state>
+                <state img="7-embarrassed.png">You looked... Almost comfortable taking that off...</state>
+                <state img="7-disinterested.png">Yeah, that was a waste of my time...</state>
+                <state img="7-disinterested.png">I have places to be, you know...</state>
+            </case>
+            <case tag="female_removed_minor" oneShotId="119" target="akko" saidMarker="AkkoWand&gt;0" priority="11">
+                <state img="7-calm.png">Unless, of course, it is healing magic that is in question; but you're definetly not using healing magic.</state>
+            </case>
+            <case tag="female_removed_minor" id="7-8" target="misaka" targetStage="4">
+                <state img="7-disinterested.png">Wearing those just mean you're less of a woman, Mikoto... But that's okay, no one was thinking you were very womanly to begin with.</state>
             </case>
             <case tag="male_removing_major">
                 <state img="7-disinterested.png">Listen, I don't like this either...</state>
@@ -5906,16 +6282,22 @@
                 <state img="7-mischievous.png">From one witch to another, I admire your technique!</state>
                 <state img="7-mischievous.png">Perhaps we could team up? Hex this, curse that... Anything would be possible, ~target~.</state>
             </case>
-            <case tag="female_removed_major">
-                <state img="7-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
-                <state img="7-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
-            </case>
-            <case tag="female_removed_major">
+            <case tag="female_removed_major" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="7-excited.png">To think that you took off your ~clothing~ in front of me. I would have murdered half a village for this!</state>
                 <state img="7-horny.png">You know how to make a girl wet.</state>
                 <state img="7-embarrassed.png">The thought that you'd take off you ~clothing~ for me...</state>
+            </case>
+            <case tag="female_removed_major" priority="1">
+                <state img="7-disinterested.png">You look afraid to lose again. Worried about having to show the goods? If it puts you at ease, I won't be watching.</state>
+                <state img="7-calm.png">If you lose again, I'm going to be pissed. ~player~ doesn't need to be seeing this much skin.</state>
+            </case>
+            <case tag="female_removed_major" target="akko" priority="1">
+                <state img="7-shocked.png">You're transformation spells are quite intriguing! Might I borrow your spell books?</state>
+            </case>
+            <case tag="female_removed_major" id="7-13" target="navi" targetStage="1">
+                <state img="7-disinterested.png">Ah, so that's the Fairy Whore's true form...</state>
             </case>
             <case tag="male_chest_will_be_visible" priority="1">
                 <condition count="1" filter="human_female" gender="female" />
@@ -5938,10 +6320,19 @@
                 <state img="7-shocked.png">Heh, your heart is now more exposed to me then it's ever been... Wait, why did you get all nervous so suddenly?</state>
                 <state img="7-mischievous.png">You look just like one of my victims... Nervous, half-naked... And helpless...</state>
             </case>
+            <case tag="male_chest_is_visible" target="9s" targetStage="3">
+                <state img="7-calm.png">No nipples? Androids must really be flawed creation then.</state>
+                <state img="7-calm.png">No nipples? I guess that makes since for a male android; afterall, androids are meant for nothing other than to function for other people's benefit.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="7-angry.png">You're taking yours out in front of me? If this was &lt;i&gt;any&lt;/i&gt; other situation my dagger would already be at your throat.</state>
                 <state img="7-calm.png">All guys have penises... We've all been expecting this would happen so I don't know why you look so embarrassed.</state>
                 <state img="7-disinterested.png">Fine. Take your dick out if you have to. Just don't start waving it around near me or I'll kill you.</state>
+            </case>
+            <case tag="male_crotch_will_be_visible">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="7-horny.png">Now &lt;i&gt;this&lt;/i&gt; is what I've been waiting for!</state>
             </case>
             <case tag="male_small_crotch_is_visible" priority="1">
                 <condition count="1" filter="human_male" gender="male" />
@@ -6050,6 +6441,9 @@
                 <state img="7-angry.png">... What, you think I'm supposed to care about seeing ~target~'s cunt? Get over yourselves.</state>
                 <state img="7-angry.png">Guh... These rules suck! I don't want to look at ~name~'s pussy!</state>
                 <state img="7-mischievous.png">(If I kill her now, I'll be spared from having to look at-.... Hmmm...)</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" id="7-9" target="zone-tan">
+                <state img="7-embarrassed.png">I-I-I'm sure ~player~ is more into tits, right? U-Uh... My tits, specifically...</state>
             </case>
             <case tag="female_crotch_is_visible" priority="3">
                 <condition count="1" filter="human_female" gender="female" />
@@ -6182,17 +6576,17 @@
                 <state img="7-angry.png">If you so much as glance at ~player~ while you're doing that, I'm cursing you into a rat.</state>
                 <state img="7-calm.png">Mind if I cast a hex to make you finish quicker? ... No, it's not for your benefit; it was for mine.</state>
             </case>
-            <case tag="male_start_masturbating" id="7-7" priority="2">
-                <condition count="1" filter="human_male" gender="male" />
-                <test expr="~target.tag.human~" value="true" />
-                <state img="7-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
-            </case>
             <case tag="male_start_masturbating" id="7-6" priority="2">
                 <condition count="1" filter="human_male" gender="male" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="7-horny.png">Yes ~player~, start stroking it for me... Nice and hard now; and look my way.</state>
                 <state img="7-excited.png">You have no idea how long I've been waiting for this! Stroke it for me until you cum!</state>
                 <state img="7-excited.png">Spit on it! Let me spit on it! Let's soak that thing in saliva!</state>
+            </case>
+            <case tag="male_start_masturbating" id="7-7" priority="2">
+                <condition count="1" filter="human_male" gender="male" />
+                <test expr="~target.tag.human~" value="true" />
+                <state img="7-horny.png">Don't worry. I'll take care of you. ...Veeery good care.</state>
             </case>
             <case tag="male_masturbating" priority="3">
                 <condition count="1" filter="human_male" gender="male" />
@@ -6257,6 +6651,10 @@
                 <state img="7-excited.png">You have no idea how long I've been waiting for this! Rub it for me until you squirt!</state>
                 <state img="7-excited.png">Spit on it! Let me spit on it! Let's drench that thing in saliva!</state>
             </case>
+            <case tag="female_start_masturbating" id="7-14" target="leafy">
+                <state img="7-calm.png">Huh... I do that sometimes, except I use standard dark magic... Carry on.</state>
+                <state img="7-mischievous.png">Heh, you're tying &lt;i&gt;yourself&lt;/i&gt; up while in the prescene of a dark mage... You don't know what's good for you.</state>
+            </case>
             <case tag="female_masturbating">
                 <state img="7-angry.png">Hey! Look away from ~player~ when you do that!</state>
                 <state img="7-embarrassed.png">Oh... You look like you're in such an intense state of pleasure, ~name~... I hope I can make ~player~ feel what you must be feeling.</state>
@@ -6268,6 +6666,10 @@
                 <condition count="1" filter="human_female" gender="female" />
                 <test expr="~target.tag.human~" value="true" />
                 <state img="7-mischievous.png">Aw, how sweet. She's masturbating. Masturbating and...helpless. Hee hee hee hee!</state>
+            </case>
+            <case tag="female_masturbating" priority="1">
+                <condition count="1" filter="human_female" gender="female" />
+                <test expr="~target.tag.human~" value="true" />
                 <state img="7-calm.png">All eyes on me, ~player~. I better not catch your eyes wandering.</state>
                 <state img="7-horny.png">Heeh hee... Rub it for me, ~player~.</state>
                 <state img="7-excited.png">Mmmmm... Just like that, ~player~.</state>
@@ -6289,7 +6691,7 @@
                 <state img="7-excited.png">Can you come here now, ~player~? I want to suck on your fingers...</state>
                 <state img="7-excited.png">Hee hee. I can't wait for you to spray that all over my face next time!</state>
             </case>
-            <case tag="finished_masturbating">
+            <case tag="finished_masturbating" id="7-12">
                 <state img="7-finished.png">Whew... That took a lot out of me. I'm going to need a rest.</state>
                 <state img="7-finished.png">...... Okay, now to cast my memory wiping hex.</state>
             </case>
