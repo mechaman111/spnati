@@ -929,6 +929,26 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 }, this);
             });
 
+            /* Clone cases with alternative conditions/test, keeping
+             * one alternative set of conditions and tests on the case
+             * level of each case clone. This may create multiple
+             * cases with the same oneShotId, which is what we want,
+             * because the case clones should still be seen as the
+             * same case.
+             *
+             * This means that the conditions on the case element as
+             * well as any condition and test elements outside of
+             * alternatives must always be fulfilled, along with all
+             * the conditions of tests inside any of the alternative
+             * elements. */
+            $xml.find('>behaviour case:has(>alternative)').each(function() {
+                var $case = $(this);
+                $case.children('alternative').each(function() {
+                    $case.clone().insertAfter($case).append($(this).children()).children('alternative').remove();
+                });
+                $case.remove();
+            });
+
             this.targetedLines = targetedLines;
 
             var nicknames = {};
