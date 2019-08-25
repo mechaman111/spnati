@@ -566,16 +566,6 @@ namespace SPNATI_Character_Editor
 		public void OnBeforeSerialize()
 		{
 			Gender = Gender.ToLower();
-
-			string dir = Config.GetRootDirectory(this);
-			foreach (var line in StartingLines)
-			{
-				string image = Path.GetFileNameWithoutExtension(line.Image) + line.ImageExtension;
-				if (!string.IsNullOrEmpty(line.Image) && !char.IsNumber(line.Image[0]) && !File.Exists(Path.Combine(dir, image)))
-				{
-					line.Image = "0-" + line.Image;
-				}
-			}
 			Behavior.OnBeforeSerialize(this);
 			Metadata.PopulateFromCharacter(this);
 			Version = Config.Version;

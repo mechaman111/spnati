@@ -307,10 +307,7 @@ namespace SPNATI_Character_Editor
 				Case genericCase = new Case(tag);
 				DialogueLine line = DialogueDatabase.CreateDefault(tag);
 				genericCase.Lines.Add(line);
-				foreach (int stage in remainingStages)
-				{
-					genericCase.Stages.Add(stage);
-				}
+				genericCase.AddStages(remainingStages);
 				AddWorkingCase(genericCase);
 				modified = true;
 			}
@@ -578,22 +575,24 @@ namespace SPNATI_Character_Editor
 			if (Triggers.Count > 0)
 			{
 				BuildWorkingCasesFromTriggers();
+				Triggers.Clear();
 			}
 			else
 			{
 				BuildLegacyWorkingCases();
+				Stages.Clear(); //conserve memory by clearing this out
 			}
 
 			//Move the legacy Start lines into Selected/Game start cases
 			if (_character != null && _character.StartingLines.Count > 0)
 			{
 				Case selected = new Case("selected");
-				selected.Stages.Add(0);
+				selected.AddStage(0);
 				selected.Lines.Add(_character.StartingLines[0]);
 				AddWorkingCase(selected);
 
 				Case start = new Case("game_start");
-				start.Stages.Add(0);
+				start.AddStage(0);
 				if (_character.StartingLines.Count > 1)
 				{
 					for (int i = 1; i < _character.StartingLines.Count; i++)
@@ -735,8 +734,7 @@ namespace SPNATI_Character_Editor
 				{
 					List<Case> list = kvp.Value;
 					HashSet<int> stages2 = setStages[kvp.Key];
-					list[0].Stages.AddRange(stages2);
-					list[0].Stages.Sort();
+					list[0].AddStages(stages2);
 				}
 			}
 		}
@@ -804,7 +802,7 @@ namespace SPNATI_Character_Editor
 						}
 						if (!existing.Stages.Contains(stage.Id))
 						{
-							existing.Stages.Add(stage.Id);
+							existing.AddStage(stage.Id);
 
 							if (!addedDuplicate)
 							{
@@ -853,7 +851,7 @@ namespace SPNATI_Character_Editor
 				{
 					caseMatchingStages = bucket.CopyConditions();
 					caseMatchingStages.Id = bucket.Id;
-					caseMatchingStages.Stages.AddRange(bucket.Stages);
+					caseMatchingStages.AddStages(bucket.Stages);
 					caseList.Add(caseMatchingStages);
 				}
 				foreach (DialogueLine line in bucket.Lines)
@@ -984,12 +982,12 @@ namespace SPNATI_Character_Editor
 				if (stage != retainStage)
 				{
 					Case stageCase = DuplicateCase(original, false);
-					stageCase.Stages.Add(stage);
+					stageCase.AddStage(stage);
 					AddWorkingCase(stageCase);
 				}
 			}
-			original.Stages.Clear();
-			original.Stages.Add(retainStage);
+			original.ClearStages();
+			original.AddStage(retainStage);
 			ApplyChanges(original);
 		}
 
@@ -1005,8 +1003,8 @@ namespace SPNATI_Character_Editor
 			{
 				if (original.Stages[s] != splitPoint)
 				{
-					beforeSplitCase.Stages.Add(original.Stages[s]);
-					original.Stages.RemoveAt(s);
+					beforeSplitCase.AddStage(original.Stages[s]);
+					original.RemoveStage(s);
 				}
 			}
 			ApplyChanges(original);
@@ -1030,8 +1028,8 @@ namespace SPNATI_Character_Editor
 			{
 				if (original.Stages[s] < splitPoint)
 				{
-					beforeSplitCase.Stages.Add(original.Stages[s]);
-					original.Stages.RemoveAt(s);
+					beforeSplitCase.AddStage(original.Stages[s]);
+					original.RemoveStage(s);
 				}
 			}
 			ApplyChanges(original);
@@ -1065,7 +1063,7 @@ namespace SPNATI_Character_Editor
 			}
 			if (addToWorking)
 			{
-				copy.Stages.AddRange(original.Stages);
+				copy.AddStages(original.Stages);
 				AddWorkingCase(copy);
 			}
 			return copy;
@@ -1098,7 +1096,7 @@ namespace SPNATI_Character_Editor
 					foreach (string tag in destinationTags)
 					{
 						Case newCase = sourceCase.Copy();
-						newCase.Stages.AddRange(sourceCase.Stages);
+						newCase.AddStages(sourceCase.Stages);
 						newCase.Tag = tag;
 						AddWorkingCase(newCase);
 					}
@@ -1143,7 +1141,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (Case workingCase in _workingCases)
 			{
-				ObservableCollection<int> stages = workingCase.Stages;
+				List<int> stages = workingCase.Stages;
 				for (int i = 0; i < stages.Count; i++)
 				{
 					int stage = stages[i];
@@ -1161,7 +1159,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (Case workingCase in _workingCases)
 			{
-				ObservableCollection<int> stages = workingCase.Stages;
+				List<int> stages = workingCase.Stages;
 				for (int i = stages.Count - 1; i >= 0; i--)
 				{
 					int stage = stages[i];
@@ -1182,7 +1180,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (Case workingCase in _workingCases)
 			{
-				ObservableCollection<int> stages = workingCase.Stages;
+				List<int> stages = workingCase.Stages;
 				for (int i = 0; i < stages.Count; i++)
 				{
 					int stage = stages[i];

@@ -49,33 +49,8 @@ namespace SPNATI_Character_Editor
 		}
 
 		[XmlIgnore]
-		private ObservableDictionary<int, PoseMapping> _stageImages = new ObservableDictionary<int, PoseMapping>();
-		public ObservableDictionary<int, PoseMapping> StageImages
-		{
-			get { return _stageImages; }
-			set
-			{
-				if (_stageImages != value)
-				{
-					if (_stageImages != null)
-					{
-						_stageImages.CollectionChanged -= _stageImages_CollectionChanged;
-					}
-					_stageImages = value;
-					if (_stageImages != null)
-					{
-						_stageImages.CollectionChanged += _stageImages_CollectionChanged;
-					}
-					NotifyPropertyChanged();
-				}
-			}
-		}
-
-		private void _stageImages_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			NotifyPropertyChanged(nameof(StageImages));
-		}
-
+		public Dictionary<int, PoseMapping> StageImages { get; set; }
+		
 		private string _text;
 		[XmlText]
 		public string Text
@@ -210,6 +185,7 @@ namespace SPNATI_Character_Editor
 			Direction = "down";
 			Weight = 1;
 			Marker = null;
+			StageImages = new Dictionary<int, PoseMapping>();
 		}
 
 		public DialogueLine(string image, string text) : this()
@@ -223,7 +199,7 @@ namespace SPNATI_Character_Editor
 		public DialogueLine Copy()
 		{
 			DialogueLine copy = MemberwiseClone() as DialogueLine;
-			copy.StageImages = new ObservableDictionary<int, PoseMapping>();
+			copy.StageImages = new Dictionary<int, PoseMapping>();
 			foreach (KeyValuePair<int, PoseMapping> kvp in StageImages)
 			{
 				copy.StageImages[kvp.Key] = kvp.Value;

@@ -159,7 +159,7 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					currentStage = _character.Layers + offset;
 				}
-				newCase.Stages.Add(currentStage);
+				newCase.AddStage(currentStage);
 			}
 			else
 			{
@@ -167,7 +167,7 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					if (TriggerDatabase.UsedInStage(tag, _character, stageIndex))
 					{
-						newCase.Stages.Add(stageIndex);
+						newCase.AddStage(stageIndex);
 					}
 				}
 			}

@@ -214,7 +214,7 @@ namespace SPNATI_Character_Editor
 			return new Tuple<int, int>(min, max);
 		}
 
-		public static string ListToString(ObservableCollection<int> list)
+		public static string ListToString(List<int> list)
 		{
 			string result;
 			if (list.Count == 0)
@@ -257,9 +257,9 @@ namespace SPNATI_Character_Editor
 			return result;
 		}
 
-		public static ObservableCollection<int> StringToList(string input)
+		public static List<int> StringToList(string input)
 		{
-			ObservableCollection<int> list = new ObservableCollection<int>();
+			List<int> list = new List<int>();
 			string[] ranges = input.Split(' ');
 			foreach (string range in ranges)
 			{

@@ -554,11 +554,7 @@ namespace SPNATI_Character_Editor
 		[JsonProperty("lines")]
 		[XmlOrder(410)]
 		[XmlElement("state")]
-		public List<DialogueLine> Lines
-		{
-			get { return Get<List<DialogueLine>>(); }
-			set { Set(value); }
-		}
+		public List<DialogueLine> Lines = new List<DialogueLine>();
 
 		/// <summary>
 		/// Used for consistently sorting two identical cases
@@ -569,11 +565,7 @@ namespace SPNATI_Character_Editor
 		/// Stages this case appears in
 		/// </summary>
 		[XmlIgnore]
-		public ObservableCollection<int> Stages
-		{
-			get { return Get<ObservableCollection<int>>(); }
-			set { Set(value); }
-		}
+		public List<int> Stages = new List<int>();
 
 		[DefaultValue("")]
 		[XmlAttribute("stage")]
@@ -599,10 +591,10 @@ namespace SPNATI_Character_Editor
 		{
 			_globalId = s_globalId++;
 			Lines = new List<DialogueLine>();
-			Stages = new ObservableCollection<int>();
+			Stages = new List<int>();
 			Conditions = new ObservableCollection<TargetCondition>();
 			Expressions = new ObservableCollection<ExpressionTest>();
-			AlternativeConditions = new ObservableCollection<Case>();
+			AlternativeConditions = new List<Case>();
 		}
 
 		public Case(string tag) : this()
@@ -837,7 +829,7 @@ namespace SPNATI_Character_Editor
 			{
 				copy.Lines.Add(Lines[i].Copy());
 			}
-			copy.AlternativeConditions = new ObservableCollection<Case>();
+			copy.AlternativeConditions = new List<Case>();
 			foreach (Case alternate in AlternativeConditions)
 			{
 				copy.AlternativeConditions.Add(alternate.Copy());
@@ -1250,11 +1242,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		[XmlIgnore]
-		public ObservableCollection<Case> AlternativeConditions
-		{
-			get { return Get<ObservableCollection<Case>>(); }
-			set { Set(value); }
-		}
+		public List<Case> AlternativeConditions = new List<Case>();
 
 		public IEnumerable<Case> GetConditionSets()
 		{
@@ -2408,6 +2396,93 @@ namespace SPNATI_Character_Editor
 		public int GetSliceCount()
 		{
 			return Lines.Count;
+		}
+
+		public void AddStage(int stage)
+		{
+			for (int i = 0; i < Stages.Count; i++)
+			{
+				if (Stages[i] > stage)
+				{
+					Stages.Insert(i, stage);
+					NotifyPropertyChanged(nameof(Stages));
+					return;
+				}
+				else if(Stages[i] == stage)
+				{
+					return;
+				}
+			}
+			Stages.Add(stage);
+			NotifyPropertyChanged(nameof(Stages));
+		}
+
+		public void AddStages(IEnumerable<int> stages)
+		{
+			HashSet<int> current = new HashSet<int>();
+			foreach (int s in Stages)
+			{
+				current.Add(s);
+			}
+			bool modified = false;
+			foreach (int s in stages)
+			{
+				if (!current.Contains(s))
+				{
+					Stages.Add(s);
+					modified = true;
+				}
+			}
+			if (modified)
+			{
+				Stages.Sort();
+				NotifyPropertyChanged(nameof(Stages));
+			}
+		}
+
+		public void AddStageRange(int start, int end)
+		{
+			HashSet<int> current = new HashSet<int>();
+			foreach (int s in Stages)
+			{
+				current.Add(s);
+			}
+			bool modified = false;
+			for (int s = start; s <= end; s++)
+			{
+				if (!current.Contains(s))
+				{
+					Stages.Add(s);
+					modified = true;
+				}
+			}
+			if (modified)
+			{
+				Stages.Sort();
+				NotifyPropertyChanged(nameof(Stages));
+			}
+		}
+
+		public void RemoveStage(int stage)
+		{
+			for (int i = 0; i < Stages.Count; i++)
+			{
+				if (Stages[i] == stage)
+				{
+					Stages.RemoveAt(i);
+					NotifyPropertyChanged(nameof(Stages));
+					return;
+				}
+			}
+		}
+
+		public void ClearStages()
+		{
+			if (Stages.Count > 0)
+			{
+				Stages.Clear();
+				NotifyPropertyChanged(nameof(Stages));
+			}
 		}
 	}
 

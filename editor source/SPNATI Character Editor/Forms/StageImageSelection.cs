@@ -106,6 +106,7 @@ namespace SPNATI_Character_Editor.Forms
 					_line.StageImages[(int)row.Tag] = img;
 				}
 			}
+			_line.NotifyPropertyChanged(nameof(_line.StageImages));
 
 			DialogResult = DialogResult.OK;
 			Close();

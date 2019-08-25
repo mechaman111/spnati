@@ -84,13 +84,13 @@ namespace SPNATI_Character_Editor.Forms
 		{
 			DialogResult = DialogResult.OK;
 
-			_response.Stages.Clear();
+			_response.ClearStages();
 			foreach (ListViewItem item in lstStages.Items)
 			{
 				if (item.Checked)
 				{
 					int stage = (int)item.Tag;
-					_response.Stages.Add(stage);
+					_response.AddStage(stage);
 				}
 			}
 

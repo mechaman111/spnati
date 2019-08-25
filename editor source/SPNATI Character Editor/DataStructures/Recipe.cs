@@ -62,7 +62,7 @@ namespace SPNATI_Character_Editor
 			{
 				if (TriggerDatabase.UsedInStage(workingCase.Tag, character, stage))
 				{
-					workingCase.Stages.Add(stage);
+					workingCase.AddStage(stage);
 				}
 				if (workingCase.TotalRounds == "1")
 				{

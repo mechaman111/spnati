@@ -105,10 +105,7 @@ namespace SPNATI_Character_Editor.Activities
 					{
 						//Found a splitting point
 						Case subCase = stageCase.Copy();
-						for (int s = startStage; s <= stage; s++)
-						{
-							subCase.Stages.Add(s);
-						}
+						subCase.AddStageRange(startStage, stage);
 						TargetData subdata = new TargetData(other, subCase);
 						lines.Add(subdata);
 						startStage = nextStage;
@@ -120,10 +117,7 @@ namespace SPNATI_Character_Editor.Activities
 					}
 				}
 				Case lastCase = stageCase.Copy();
-				for (int s = startStage; s <= stage; s++)
-				{
-					lastCase.Stages.Add(s);
-				}
+				lastCase.AddStageRange(startStage, stage);
 				TargetData data = new TargetData(other, lastCase);
 				lines.Add(data);
 			}
@@ -414,7 +408,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				Character = character;
 				Case = c.Copy();
-				Case.Stages.AddRange(c.Stages);
+				Case.AddStages(c.Stages);
 			}
 		}
 

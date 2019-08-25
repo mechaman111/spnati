@@ -19,6 +19,7 @@ namespace SPNATI_Character_Editor.Controls
 		private Stage _selectedStage;
 		private bool _populatingCase;
 		private List<DialogueLine> _lineClipboard = new List<DialogueLine>();
+		private Case _trackedCase;
 
 		public event EventHandler<DialogueLine> TextUpdated;
 		public event EventHandler<int> HighlightRow;
@@ -70,8 +71,6 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_selectedCase != null)
 			{
-				_selectedCase.AlternativeConditions.CollectionChanged -= AlternativeConditions_CollectionChanged;
-				tabsConditions.Selected -= TabsConditions_Selected;
 				tabsConditions.SelectedIndexChanged -= tabsConditions_SelectedIndexChanged;
 				tabsConditions.SelectedIndex = 0;
 				for (int i = tabsConditions.TabPages.Count - 1; i > 0; i--)
@@ -81,23 +80,22 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			_selectedStage = stage;
 			_selectedCase = workingCase;
+			TrackCase(_selectedCase);
 			if (_selectedCase != null)
 			{
-				_selectedCase.AlternativeConditions.CollectionChanged += AlternativeConditions_CollectionChanged;
 				tabConditions.Enabled = true;
 				foreach (Case alternative in _selectedCase.AlternativeConditions)
 				{
 					AddAlternateTab();
 				}
 				tabsConditions.SelectedIndexChanged += tabsConditions_SelectedIndexChanged;
-				tabsConditions.Selected += TabsConditions_Selected;
 			}
 			PopulateCase();
 		}
 
-		private void TabsConditions_Selected(object sender, TabControlEventArgs e)
+		private void CasePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			
+			_character.IsDirty = true;
 		}
 
 		public void UpdateStages()
@@ -147,12 +145,8 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			_populatingCase = true;
 			HashSet<int> stages = GetSelectedStages();
-			_selectedCase.Stages.Clear();
-			foreach (int stage in stages)
-			{
-				_selectedCase.Stages.Add(stage);
-			}
-			_selectedCase.Stages.Sort();
+			_selectedCase.ClearStages();
+			_selectedCase.AddStages(stages);
 			UpdatePreviewStage(stages, -1);
 			_populatingCase = false;
 		}
@@ -588,7 +582,7 @@ namespace SPNATI_Character_Editor.Controls
 		public object CreateData()
 		{
 			Case tag = new Case(_selectedCase.Tag);
-			tag.Stages.AddRange(_selectedCase.Stages);
+			tag.AddStages(_selectedCase.Stages);
 			return tag;
 		}
 
@@ -677,6 +671,8 @@ namespace SPNATI_Character_Editor.Controls
 			if (_selectedCase == null) { return; }
 			Case alternate = new Case(_selectedCase.Tag);
 			_selectedCase.AlternativeConditions.Add(alternate);
+			_selectedCase.NotifyPropertyChanged(nameof(_selectedCase.AlternativeConditions));
+			AddAlternateTab();
 			tabsConditions.SelectedIndex = _selectedCase.AlternativeConditions.Count;
 		}
 
@@ -692,6 +688,12 @@ namespace SPNATI_Character_Editor.Controls
 			if (index >= 0)
 			{
 				_selectedCase.AlternativeConditions.RemoveAt(index);
+				_selectedCase.NotifyPropertyChanged(nameof(_selectedCase.AlternativeConditions));
+				tabsConditions.TabPages.RemoveAt(index + 1);
+				for (int i = index + 1; i < tabsConditions.TabPages.Count; i++)
+				{
+					tabsConditions.TabPages[i].Text = "Set " + (i + 1);
+				}
 				tabsConditions.SelectedIndex = index < tabsConditions.TabPages.Count - 1 ? index + 1 : index;
 			}
 		}
@@ -705,7 +707,21 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				desiredCase = _selectedCase.AlternativeConditions[index - 1];
 			}
+			TrackCase(desiredCase);
 			PopulateConditionTable(desiredCase);
+		}
+
+		private void TrackCase(Case c)
+		{
+			if (_trackedCase != null)
+			{
+				_trackedCase.PropertyChanged -= CasePropertyChanged;
+			}
+			_trackedCase = c;
+			if (_trackedCase != null)
+			{
+				_trackedCase.PropertyChanged += CasePropertyChanged;
+			}
 		}
 	}
 }

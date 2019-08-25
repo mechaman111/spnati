@@ -97,7 +97,7 @@ namespace SPNATI_Character_Editor.Activities
 					{
 						Case container = workingCase.CopyConditions();
 						container.Lines.Add(line);
-						container.Stages.AddRange(workingCase.Stages);
+						container.AddStages(workingCase.Stages);
 						lstLines.Items.Add(new MarkerItem(container));
 					}
 				}
