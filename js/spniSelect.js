@@ -1030,9 +1030,17 @@ function advanceSelectScreen () {
             },
         });
     }
+
+    var playedCharacters = save.getPlayedCharacterSet();
     players.forEach(function(player) {
+        if (player.id !== 'human') {
+            playedCharacters.push(player.id);
+        }
+
         player.preloadStageImages(0);
     });
+
+    save.savePlayedCharacterSet(playedCharacters);
 
 	transcriptHistory = [];
     inGame = true;

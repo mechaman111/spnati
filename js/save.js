@@ -284,6 +284,25 @@ function Save() {
         localStorage.setItem(prefix+'markers.'+player.id+'.'+name, value.toString());
     }
 
+    this.getPlayedCharacterSet = function () {
+        return JSON.parse(localStorage.getItem(prefix + "playedCharacters")) || [];
+    }
+
+    this.savePlayedCharacterSet = function (set) {
+        var o = {};
+        set.forEach(function (v) { o[v] = true; });
+
+        localStorage.setItem(prefix+"playedCharacters", JSON.stringify(Object.keys(o)));
+    }
+
+    this.hasShownResortModal = function () {
+        return localStorage.getItem(prefix+"resortModalShown") === 'true';
+    }
+
+    this.setResortModalFlag = function (val) {
+        localStorage.setItem(prefix+"resortModalShown", val.toString());
+    }
+
     /** Serializes the localStorage into a base64-encoded JSON string */
     this.serializeLocalStorage = function () {
         return Base64.encode(JSON.stringify(localStorage));

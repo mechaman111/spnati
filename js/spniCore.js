@@ -18,6 +18,7 @@ var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
 var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
+var RESORT_ACTIVE = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
@@ -98,6 +99,7 @@ $usageTrackingModal = $('#usage-reporting-modal');
 $playerTagsModal = $('#player-tags-modal');
 $collectibleInfoModal = $('#collectibles-info-modal');
 $ioModal = $('#io-modal');
+$resortModal = $('#resort-modal');
 
 /* Screen State */
 $previousScreen = null;
@@ -1243,6 +1245,15 @@ function loadConfigFile () {
                 console.log("Debug mode disabled - collectibles disabled");
             }
 
+            var _resort_mode = $(xml).find('resort').text();
+            if (_resort_mode.toLowerCase() === 'true') {
+                console.log("Resort mode active!");
+                RESORT_ACTIVE = true;
+            } else {
+                RESORT_ACTIVE = false;
+                console.log("Resort mode disabled.");
+            }
+
 			$(xml).find('include-status').each(function() {
 				includedOpponentStatuses[$(this).text()] = true;
 				console.log("Including", $(this).text(), "opponents");
@@ -1944,6 +1955,18 @@ function showImportModal() {
             $('#import-invalid-code').show();
         }
     });
+}
+
+function showResortModal() {
+    var playedCharacters = save.getPlayedCharacterSet();
+    if (RESORT_ACTIVE && playedCharacters.length >= 8) {
+        if (!save.hasShownResortModal()) {
+            $resortModal.modal('show');
+        }
+        save.setResortModalFlag(true);
+    } else {
+        save.setResortModalFlag(false);
+    }
 }
 
 /**********************************************************************
