@@ -143,9 +143,6 @@ namespace SPNATI_Character_Editor
 		}
 
 		[XmlIgnore]
-		public string ImageExtension;
-
-		[XmlIgnore]
 		public bool IsGenericImage;
 
 		private string _collectibleId;
@@ -191,8 +188,6 @@ namespace SPNATI_Character_Editor
 		public DialogueLine(string image, string text) : this()
 		{
 			Image = image;
-			string extension = Path.GetExtension(image);
-			ImageExtension = extension;
 			Text = text ?? "";
 		}
 
@@ -243,94 +238,6 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Gets whether an image name is in the format [custom:]#-abc
-		/// </summary>
-		/// <param name="image"></param>
-		/// <returns></returns>
-		public static bool IsStageSpecificImage(string image)
-		{
-			if (string.IsNullOrEmpty(image)) { return true; }
-			return _stageRegex.IsMatch(image);
-		}
-
-		/// <summary>
-		/// Converts an image name (ex. 0-shy.png) to a generic name (shy)
-		/// </summary>
-		/// <param name="image"></param>
-		/// <returns></returns>
-		public static string GetDefaultImage(string image)
-		{
-			if (string.IsNullOrEmpty(image))
-				return image;
-			bool custom = image.StartsWith("custom:");
-			if (custom)
-			{
-				image = image.Substring(7);
-			}
-			int hyphen = image.IndexOf('-');
-			if (hyphen > 0)
-			{
-				string prefix = image.Substring(0, hyphen);
-				int value;
-				if (int.TryParse(prefix, out value) || prefix == "#")
-				{
-					string reduced = Path.GetFileNameWithoutExtension(image.Substring(hyphen + 1));
-					if (custom)
-					{
-						reduced = "custom:" + reduced;
-					}
-					return reduced;
-				}
-			}
-			string path = Path.GetFileNameWithoutExtension(image);
-			if (custom)
-			{
-				path = "custom:" + path;
-			}
-			return path;
-		}
-
-		public static string GetPlaceholderImage(string name)
-		{
-			return GetStageImage("#", name);
-		}
-
-		public static string GetStageImage(int stage, string name)
-		{
-			return GetStageImage(stage.ToString(), name);
-		}
-
-		/// <summary>
-		/// Converts a generic image name into a stage-specific one (ex. shy to 0-shy)
-		/// </summary>
-		/// <param name="stage"></param>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		public static string GetStageImage(string stage, string name)
-		{
-			if (string.IsNullOrEmpty(name))
-			{
-				return name;
-			}
-			if (name.StartsWith("custom:"))
-			{
-				if (name.StartsWith($"custom:{stage}-"))
-				{
-					return name;
-				}
-				return $"custom:{stage}-{name.Substring(7)}";
-			}
-			else
-			{
-				if (name.StartsWith($"{stage}-"))
-				{
-					return name;
-				}
-				return $"{stage}-{name}";
-			}
-		}
-
-		/// <summary>
 		/// Gets a list of variables in a block of text that are invalid
 		/// </summary>
 		/// <param name="tag"></param>
@@ -360,18 +267,6 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			return invalidVars;
-		}
-
-		/// <summary>
-		/// Sets a dialogue line to use the generic version of a particular image
-		/// </summary>
-		public void GeneralizeImage(DialogueLine line)
-		{
-			string extension = line.ImageExtension ?? Path.GetExtension(line.Image);
-			ImageExtension = extension;
-			line.ImageExtension = extension;
-			Image = GetDefaultImage(line.Image);
-			IsGenericImage = line.IsGenericImage;
 		}
 
 		public bool HasAdvancedMarker

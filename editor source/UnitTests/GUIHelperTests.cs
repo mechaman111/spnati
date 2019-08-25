@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SPNATI_Character_Editor;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace UnitTests
 {
@@ -10,7 +10,7 @@ namespace UnitTests
 		[TestMethod]
 		public void EmptyList()
 		{
-			ObservableCollection<int> list = new ObservableCollection<int>();
+			List<int> list = new List<int>();
 			string output = GUIHelper.ListToString(list);
 			Assert.AreEqual("", output);
 		}
@@ -18,7 +18,7 @@ namespace UnitTests
 		[TestMethod]
 		public void SingleStage()
 		{
-			string output = GUIHelper.ListToString(new ObservableCollection<int>
+			string output = GUIHelper.ListToString(new List<int>
 			{
 				5
 			});
@@ -28,7 +28,7 @@ namespace UnitTests
 		[TestMethod]
 		public void SingleRange()
 		{
-			string output = GUIHelper.ListToString(new ObservableCollection<int>
+			string output = GUIHelper.ListToString(new List<int>
 			{
 				5,
 				6,
@@ -40,7 +40,7 @@ namespace UnitTests
 		[TestMethod]
 		public void MultipleRange()
 		{
-			string output = GUIHelper.ListToString(new ObservableCollection<int>
+			string output = GUIHelper.ListToString(new List<int>
 			{
 				1,
 				2,
@@ -54,7 +54,7 @@ namespace UnitTests
 		[TestMethod]
 		public void RangeStage()
 		{
-			string output = GUIHelper.ListToString(new ObservableCollection<int>
+			string output = GUIHelper.ListToString(new List<int>
 			{
 				1,
 				2,
@@ -67,7 +67,7 @@ namespace UnitTests
 		[TestMethod]
 		public void StageRange()
 		{
-			string output = GUIHelper.ListToString(new ObservableCollection<int>
+			string output = GUIHelper.ListToString(new List<int>
 			{
 				1,
 				4,
@@ -80,7 +80,7 @@ namespace UnitTests
 		[TestMethod]
 		public void SortedRange()
 		{
-			string output = GUIHelper.ListToString(new ObservableCollection<int>
+			string output = GUIHelper.ListToString(new List<int>
 			{
 				6,
 				5,
@@ -93,7 +93,7 @@ namespace UnitTests
 		[TestMethod]
 		public void StageRange_ToList()
 		{
-			ObservableCollection<int> list = GUIHelper.StringToList("1 4-6");
+			List<int> list = GUIHelper.StringToList("1 4-6");
 			Assert.AreEqual(4, list.Count);
 			Assert.AreEqual(1, list[0]);
 			Assert.AreEqual(4, list[1]);
@@ -104,7 +104,7 @@ namespace UnitTests
 		[TestMethod]
 		public void RangeStage_ToList()
 		{
-			ObservableCollection<int> list = GUIHelper.StringToList("1-3 6");
+			List<int> list = GUIHelper.StringToList("1-3 6");
 			Assert.AreEqual(4, list.Count);
 			Assert.AreEqual(1, list[0]);
 			Assert.AreEqual(2, list[1]);
@@ -115,7 +115,7 @@ namespace UnitTests
 		[TestMethod]
 		public void MultipleRange_ToList()
 		{
-			ObservableCollection<int> list = GUIHelper.StringToList("1-2 4-6");
+			List<int> list = GUIHelper.StringToList("1-2 4-6");
 			Assert.AreEqual(5, list.Count);
 			Assert.AreEqual(1, list[0]);
 			Assert.AreEqual(2, list[1]);
@@ -127,7 +127,7 @@ namespace UnitTests
 		[TestMethod]
 		public void SingleRange_ToList()
 		{
-			ObservableCollection<int> list = GUIHelper.StringToList("5-7");
+			List<int> list = GUIHelper.StringToList("5-7");
 			Assert.AreEqual(3, list.Count);
 			Assert.AreEqual(5, list[0]);
 			Assert.AreEqual(6, list[1]);
@@ -137,7 +137,7 @@ namespace UnitTests
 		[TestMethod]
 		public void SingleStage_ToList()
 		{
-			ObservableCollection<int> list = GUIHelper.StringToList("5");
+			List<int> list = GUIHelper.StringToList("5");
 			Assert.AreEqual(1, list.Count);
 			Assert.AreEqual(5, list[0]);
 		}
@@ -145,14 +145,14 @@ namespace UnitTests
 		[TestMethod]
 		public void Empty_ToList()
 		{
-			ObservableCollection<int> list = GUIHelper.StringToList("");
+			List<int> list = GUIHelper.StringToList("");
 			Assert.AreEqual(0, list.Count);
 		}
 
 		[TestMethod]
 		public void UnsortedRange_ToList()
 		{
-			ObservableCollection<int> list = GUIHelper.StringToList("4-6 2");
+			List<int> list = GUIHelper.StringToList("4-6 2");
 			Assert.AreEqual(4, list.Count);
 			Assert.AreEqual(2, list[0]);
 			Assert.AreEqual(4, list[1]);

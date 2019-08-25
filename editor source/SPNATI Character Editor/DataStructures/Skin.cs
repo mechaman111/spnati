@@ -244,12 +244,12 @@ namespace SPNATI_Character_Editor
 					{
 						if (stage < endStage)
 						{
-							DialogueLine stageLine = Behaviour.CreateStageSpecificLine(line, stage, Character);
-							if (stageLine.Image.StartsWith("custom:"))
+							PoseMapping pose = line.Pose;
+							if (pose == null || pose.Key.StartsWith("custom:"))
 							{
 								continue;
 							}
-							string name = Path.GetFileNameWithoutExtension(stageLine.Image);
+							string name = pose.GetStageKey(stage, false);
 							images.Add(name);
 						}
 					}

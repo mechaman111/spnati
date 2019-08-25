@@ -267,11 +267,6 @@ namespace SPNATI_Character_Editor.Controls
 				line.Marker = $"{marker}={markerValue}";
 			}
 
-			if (pose != null)
-			{
-				line.IsGenericImage = pose.IsGeneric;
-			}
-
 			Tuple<string, string> collectibleData = row.Cells[nameof(ColTrophy)].Tag as Tuple<string, string>;
 			if (collectibleData != null)
 			{

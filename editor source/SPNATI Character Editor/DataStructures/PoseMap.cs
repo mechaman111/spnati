@@ -187,6 +187,28 @@ namespace SPNATI_Character_Editor
 			return $"{(string.IsNullOrEmpty(extension) && !id.StartsWith("custom:") ? "custom:" : "")}{(stage >= 0 ? "#-" : "")}{id}{(!string.IsNullOrEmpty(extension) ? extension : "")}";
 		}
 
+		public PoseMapping GetFlatFilePose(string name)
+		{
+			string file = Path.Combine(_character.GetDirectory(), name);
+			if (File.Exists(file))
+			{
+				return GetPose(name);
+			}
+			else
+			{
+				string key = name;
+				if (key.StartsWith("custom:"))
+				{
+					key = "custom:#-" + key.Substring("custom:".Length);
+				}
+				else
+				{
+					key = "#-" + key;
+				}
+				return GetPose(key);
+			}
+		}
+
 		/// <summary>
 		/// Gets a PoseMapping based on how it might appear in a stage element
 		/// </summary>
@@ -194,6 +216,10 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public PoseMapping GetPose(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+			{
+				return null;
+			}
 			if (!_initialized)
 			{
 				Initialize();
@@ -232,6 +258,11 @@ namespace SPNATI_Character_Editor
 		/// User-friendly display name
 		/// </summary>
 		public string DisplayName { get; set; }
+
+		public string GetFlatFormat()
+		{
+			return Key.Replace("#-", "");
+		}
 
 		private Dictionary<int, PoseReference> _stages = new Dictionary<int, PoseReference>();
 
@@ -303,6 +334,20 @@ namespace SPNATI_Character_Editor
 				_stages.TryGetValue(-1, out definition);
 			}
 			return definition;
+		}
+
+		public string GetStageKey(int stage, bool includeExtension)
+		{
+			string key = Key;
+			if (!key.StartsWith("custom:") && !includeExtension)
+			{
+				string extension = Path.GetExtension(key);
+				if (!string.IsNullOrEmpty(extension))
+				{
+					key = key.Substring(0, key.Length - extension.Length);
+				}
+			}
+			return key.Replace("#-", stage.ToString() + "-");
 		}
 
 		public bool ContainsPose(Pose pose)

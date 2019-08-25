@@ -174,76 +174,6 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Converts a generic line of dialogue into one specific for the given stage (i.e gives the image the applicable prefix)
-		/// </summary>
-		/// <param name="line">Line to convert</param>
-		/// <param name="stage">Stage to convert to</param>
-		/// <returns></returns>
-		public static DialogueLine CreateStageSpecificLine(DialogueLine line, int stage, Character character)
-		{
-			DialogueLine copy = line.Copy();
-			if (copy.StageImages.ContainsKey(stage))
-			{
-				copy.Pose = copy.StageImages[stage];
-			}
-			if (!copy.IsGenericImage)
-			{
-				copy.Image = DialogueLine.GetStageImage(stage.ToString(), copy.Image);
-			}
-			if (copy.Image != null)
-			{
-				bool custom = copy.Image.StartsWith("custom:");
-				string path = character != null ? Config.GetRootDirectory(character) : "";
-				string extension = line.ImageExtension;
-				if (!custom)
-				{
-					if (string.IsNullOrEmpty(extension))
-					{
-						//figure out the extension by searching for files of different names
-						bool basePngExists = File.Exists(Path.Combine(path, copy.Image + ".png"));
-						bool baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
-
-						if (!copy.Image.StartsWith(stage + "-") && !basePngExists && !baseGifExists)
-						{
-							copy.Image = stage + "-" + copy.Image;
-							baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
-							if (baseGifExists)
-							{
-								extension = ".gif";
-							}
-							else
-							{
-								extension = ".png";
-							}
-						}
-						else
-						{
-							if (baseGifExists)
-							{
-								extension = ".gif";
-							}
-							else
-							{
-								extension = ".png";
-							}
-						}
-					}
-					if (!copy.Image.StartsWith(stage + "-") && !File.Exists(Path.Combine(path, copy.Image + extension)))
-					{
-						copy.Image = stage + "-" + copy.Image;
-					}
-					if (extension != null && !copy.Image.EndsWith(extension))
-					{
-						copy.Image += extension;
-					}
-					copy.ImageExtension = extension;
-				}
-			}
-			copy.Text = line.Text?.Trim();
-			return copy;
-		}
-
-		/// <summary>
 		/// Looks through the working cases to locate any Stage+Trigger combos that don't exist, and creates default cases for any missing combinations.
 		/// Triggers apply to one or more stages, and a case with no targeted dialogue must exist for each applicable stage
 		/// </summary>
@@ -337,19 +267,6 @@ namespace SPNATI_Character_Editor
 				comparison = c1.CompareTo(c2);
 			}
 			return comparison;
-		}
-
-		/// <summary>
-		/// Creates a generic line from a stage specific one (i.e. strips the stage prefix from the image)
-		/// </summary>
-		/// <param name="line"></param>
-		/// <returns></returns>
-		public static DialogueLine CreateDefaultLine(DialogueLine line)
-		{
-			DialogueLine copy = line.Copy();
-			copy.Text = line.Text.Trim();
-			copy.GeneralizeImage(line);
-			return copy;
 		}
 
 		/// <summary>

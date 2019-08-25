@@ -291,6 +291,7 @@ namespace SPNATI_Character_Editor
 			Poses = new List<Pose>();
 			Wardrobe = new List<Clothing>();
 			Collectibles = new CollectibleData();
+			PoseLibrary = new PoseMap(this);
 		}
 
 		/// <summary>

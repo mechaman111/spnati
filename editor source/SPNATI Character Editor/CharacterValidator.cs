@@ -314,10 +314,10 @@ namespace SPNATI_Character_Editor
 					{
 						context = new ValidationContext(stage, stageCase, line);
 
-						DialogueLine stageLine = Behaviour.CreateStageSpecificLine(line, stageIndex, character);
+						DialogueLine stageLine = line;
 
 						//Validate image
-						string img = stageLine.Image;
+						string img = stageLine.Pose?.GetStageKey(stage.Id, true);
 						if (!string.IsNullOrEmpty(img))
 						{
 							unusedImages.Remove(img);

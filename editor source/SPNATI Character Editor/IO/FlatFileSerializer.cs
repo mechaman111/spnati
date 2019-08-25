@@ -67,12 +67,6 @@ namespace SPNATI_Character_Editor
 			lines.Add("dialogue-layer=" + metadata.BubblePosition);
 
 			lines.Add("");
-			lines.Add("#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.");
-			foreach (var line in character.StartingLines)
-			{
-				var defaultLine = Behaviour.CreateDefaultLine(line);
-				lines.Add(string.Format("start=0-{0},{1}", defaultLine.Image, defaultLine.Text));
-			}
 
 			#region Clothing commentary
 			lines.Add("");
@@ -196,7 +190,8 @@ namespace SPNATI_Character_Editor
 							stageCase.Id = c.Id;
 							foreach (var line in c.Lines)
 							{
-								stageCase.Lines.Add(Behaviour.CreateStageSpecificLine(line, stage, character));
+								DialogueLine l = line.Copy();
+								stageCase.Lines.Add(l);
 							}
 							cases.Add(stageCase);
 						}
@@ -322,13 +317,13 @@ namespace SPNATI_Character_Editor
 
 				foreach (var line in outputCase.Lines)
 				{
-					var defaultLine = Behaviour.CreateDefaultLine(line);
+					var defaultLine = line;
 					string lineCode = caseCode;
 					if (!string.IsNullOrEmpty(defaultLine.Marker))
 					{
 						lineCode += string.Format(",marker:{0}", defaultLine.Marker);
 					}
-					if (!string.IsNullOrEmpty(defaultLine.Direction))
+					if (!string.IsNullOrEmpty(defaultLine.Direction) && defaultLine.Direction != "down")
 					{
 						lineCode += $",direction:{defaultLine.Direction}";
 					}
@@ -373,7 +368,7 @@ namespace SPNATI_Character_Editor
 						lineCode += $",weight:{defaultLine.Weight.ToString(CultureInfo.InvariantCulture)}";
 					}
 					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~silent~" : defaultLine.Text;
-					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Image, text));
+					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Pose.GetFlatFormat(), text));
 				}
 			}
 
@@ -1285,15 +1280,10 @@ namespace SPNATI_Character_Editor
 				text = "";
 			}
 
-			line.Image = img;
+			PoseMapping mapping = character.PoseLibrary.GetFlatFilePose(img);
+			line.Image = mapping.Key;
+			line.Pose = mapping;
 			line.Text = text;
-
-			if (!startingLine)
-			{
-				if (stage == -99)
-					line = Behaviour.CreateDefaultLine(line);
-				else line = Behaviour.CreateStageSpecificLine(line, stage, character);
-			}
 
 			lineCase.Lines.Add(line);
 			return lineCase;
