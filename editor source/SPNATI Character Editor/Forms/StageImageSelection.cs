@@ -10,7 +10,6 @@ namespace SPNATI_Character_Editor.Forms
 	{
 		private DialogueLine _line;
 		private Character _character;
-		private ImageLibrary _imageLibrary;
 
 		public StageImageSelection()
 		{
@@ -21,7 +20,6 @@ namespace SPNATI_Character_Editor.Forms
 		{
 			_line = line;
 			_character = character;
-			_imageLibrary = ImageLibrary.Get(_character);
 
 			foreach (int stage in workingCase.Stages)
 			{
@@ -33,14 +31,9 @@ namespace SPNATI_Character_Editor.Forms
 
 				if (_line.StageImages.ContainsKey(stage))
 				{
-					LineImage lineImage = _line.StageImages[stage];
-					string imageKey = lineImage.Image;
-					if (!lineImage.IsGenericImage)
-					{
-						SkinnedDataGridViewComboBoxCell cell = row.Cells[nameof(ColImage)] as SkinnedDataGridViewComboBoxCell;
-						imageKey = DialogueLine.GetStageImage(stage.ToString(), imageKey);
-						SetImage(cell, imageKey);
-					}
+					PoseMapping pose = _line.StageImages[stage];
+					SkinnedDataGridViewComboBoxCell cell = row.Cells[nameof(ColImage)] as SkinnedDataGridViewComboBoxCell;
+					SetImage(cell, pose);
 				}
 			}
 		}
@@ -58,34 +51,22 @@ namespace SPNATI_Character_Editor.Forms
 			}
 			if (row == null) { return; }
 			SkinnedDataGridViewComboBoxCell cell = row.Cells[ColImage.Index] as SkinnedDataGridViewComboBoxCell;
-			cell.ValueType = typeof(CharacterImage);
+			cell.ValueType = typeof(PoseMapping);
 			cell.Items.Clear();
-			List<CharacterImage> images = new List<CharacterImage>();
-			images.AddRange(_imageLibrary.GetImages(stageId));
-			if (Config.UsePrefixlessImages)
-			{
-				foreach (CharacterImage img in _imageLibrary.GetImages(-1))
-				{
-					string file = img.Name;
-					if (!_imageLibrary.FilterImage(_character, file))
-					{
-						images.Add(img);
-					}
-				}
-			}
-			foreach (CharacterImage img in images)
+			List<PoseMapping> images = new List<PoseMapping>();
+			images.AddRange(_character.PoseLibrary.GetPoses(stageId));
+			foreach (PoseMapping img in images)
 			{
 				cell.Items.Add(img);
 			}
 		}
 
-		private void SetImage(SkinnedDataGridViewComboBoxCell cell, string key)
+		private void SetImage(SkinnedDataGridViewComboBoxCell cell, PoseMapping pose)
 		{
-			string defaultKey = DialogueLine.GetDefaultImage(key);
 			foreach (object item in cell.Items)
 			{
-				CharacterImage image = item as CharacterImage;
-				if (image != null && image.DefaultName == defaultKey)
+				PoseMapping image = item as PoseMapping;
+				if (image == pose)
 				{
 					cell.Value = image;
 					return;
@@ -98,25 +79,18 @@ namespace SPNATI_Character_Editor.Forms
 			if (e.RowIndex == -1)
 				return;
 			DataGridViewRow row = grid.Rows[e.RowIndex];
-			string image = row.Cells[nameof(ColImage)].Value?.ToString();
+			PoseMapping image = row.Cells[nameof(ColImage)].Value as PoseMapping;
 			ShowImage(image, (int)row.Tag);
 		}
 
-		private void ShowImage(string image, int stage)
+		private void ShowImage(PoseMapping image, int stage)
 		{
-			CharacterImage img = null;
-			img = _imageLibrary.Find(image);
-			if (img == null)
-			{
-				image = DialogueLine.GetStageImage(stage, DialogueLine.GetDefaultImage(image));
-				img = _imageLibrary.Find(image);
-			}
-			if (img != null)
+			if (image != null)
 			{
 				Desktop.IWorkspace ws = Desktop.Shell.Instance.GetWorkspace(_character);
 				if (ws != null)
 				{
-					ws.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
+					ws.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, stage));
 				}
 			}
 		}
@@ -126,20 +100,10 @@ namespace SPNATI_Character_Editor.Forms
 			_line.StageImages.Clear();
 			foreach (DataGridViewRow row in grid.Rows)
 			{
-				CharacterImage img = row.Cells[ColImage.Index].Value as CharacterImage;
+				PoseMapping img = row.Cells[ColImage.Index].Value as PoseMapping;
 				if (img != null)
 				{
-					string name = img.Name;
-					if (!img.IsGeneric)
-					{
-						name = DialogueLine.GetDefaultImage(name);
-					}
-					if (name == _line.Image)
-					{
-						continue;
-					}
-					LineImage li = new LineImage(img.Name, img.IsGeneric);
-					_line.StageImages[(int)row.Tag] = li;
+					_line.StageImages[(int)row.Tag] = img;
 				}
 			}
 
@@ -171,8 +135,8 @@ namespace SPNATI_Character_Editor.Forms
 						string name = v.ToString();
 						foreach (object item in cell.Items)
 						{
-							CharacterImage img = item as CharacterImage;
-							if (img != null && img.Name == name)
+							PoseMapping img = item as PoseMapping;
+							if (img != null && img.DisplayName == name)
 							{
 								e.Value = img;
 								e.ParsingApplied = true;
@@ -227,7 +191,7 @@ namespace SPNATI_Character_Editor.Forms
 				return;
 			}
 			int stage = (int)grid.SelectedCells[0].OwningRow.Tag;
-			ShowImage(comboBox.SelectedItem?.ToString(), stage);
+			ShowImage(comboBox.SelectedItem as PoseMapping, stage);
 		}
 	}
 }

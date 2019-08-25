@@ -27,7 +27,7 @@ namespace SPNATI_Character_Editor.Forms
 				{
 					HashSet<int> stages = new HashSet<int>();
 					stages.Add(c.Stages[0]);
-					gridLines.SetData(character, new Stage(c.Stages[0]), c, stages, ImageLibrary.Get(_character));
+					gridLines.SetData(character, new Stage(c.Stages[0]), c, stages);
 					break;
 				}
 			}

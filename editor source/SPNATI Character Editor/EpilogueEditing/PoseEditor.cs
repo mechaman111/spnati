@@ -23,7 +23,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private float _playbackTime;
 		private bool _playing;
 		private ILabel _labelData;
-		private ImageLibrary _library;
 
 		public PoseEditor()
 		{
@@ -55,7 +54,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		protected override void OnInitialize()
 		{
 			_character = Record as ISkin;
-			_library = ImageLibrary.Get(_character);
 		}
 
 		private void _history_CommandApplied(object sender, CommandEventArgs obj)
@@ -264,7 +262,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (_labelData == _pose)
 			{
 				_sourcePose.Id = _pose.Id;
-				_library.Rename(_sourcePose);
+				_character.Character.PoseLibrary.Rename(_sourcePose);
 				lstPoses.RefreshListItems();
 			}
 		}
@@ -399,7 +397,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			lstPoses.SelectedItem = pose;
 			_character.CustomPoses.Add(pose);
 			_character.CustomPoses.Sort();
-			_library.Add(pose);
+			_character.Character.PoseLibrary.Add(pose);
 		}
 
 		private void tsRemovePose_Click(object sender, System.EventArgs e)
@@ -411,7 +409,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				return;
 			}
 			_character.CustomPoses.Remove(_sourcePose);
-			_library.Remove(_sourcePose);
+			_character.Character.PoseLibrary.Remove(_sourcePose);
 			lstPoses.Items.Remove(_sourcePose);
 			if (lstPoses.Items.Count > 0)
 			{
@@ -596,7 +594,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (_pose == null) { return; }
 			SavePose();
 			PoseExporter exporter = new PoseExporter();
-			exporter.SetPose(_sourcePose);
+			exporter.SetPose(_character, _sourcePose);
 			exporter.ShowDialog();
 		}
 

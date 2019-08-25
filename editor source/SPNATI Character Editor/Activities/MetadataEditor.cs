@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -10,7 +11,6 @@ namespace SPNATI_Character_Editor.Activities
 	{
 		private bool _populatingImages;
 		private Character _character;
-		private ImageLibrary _imageLibrary;
 
 		public MetadataEditor()
 		{
@@ -33,7 +33,6 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnFirstActivate()
 		{
-			_imageLibrary = ImageLibrary.Get(_character);
 			Config.Set(Settings.LastCharacter, _character.FolderName);
 			txtFirstName.Text = _character.FirstName;
 			txtLastName.Text = _character.LastName;
@@ -48,10 +47,9 @@ namespace SPNATI_Character_Editor.Activities
 			PopulatePortraitDropdown();
 			if (_character.Metadata.Portrait != null)
 			{
-				string portrait = _character.Metadata.Portrait.Replace("custom:", "@@@");
-				portrait = Path.GetFileNameWithoutExtension(portrait);
-				portrait = portrait.Replace("@@@", "custom:");
-				cboDefaultPic.SelectedItem = _imageLibrary.Find(portrait);
+				string portrait = _character.Metadata.Portrait;
+				PoseMapping pose = _character.PoseLibrary.GetPose(portrait);
+				cboDefaultPic.SelectedItem = pose;
 			}
 			gridAI.Data = _character.Intelligence;
 
@@ -68,27 +66,21 @@ namespace SPNATI_Character_Editor.Activities
 		private void PopulatePortraitDropdown()
 		{
 			_populatingImages = true;
-			List<CharacterImage> images = new List<CharacterImage>();
-			images.Add(new CharacterImage(" ", null));
-			images.AddRange(_imageLibrary.GetImages(0));
-			if (Config.UsePrefixlessImages)
-			{
-				foreach (CharacterImage img in _imageLibrary.GetImages(-1))
-				{
-					if (!_imageLibrary.FilterImage(_character, img.Name))
-					{
-						images.Add(img);
-					}
-				}
-			}
-			cboDefaultPic.DataSource = images;
+			List<PoseMapping> poses = _character.PoseLibrary.GetPoses(0);
+			cboDefaultPic.DisplayMember = "DisplayName";
+			cboDefaultPic.DataSource = poses;
 			_populatingImages = false;
 		}
 
 		protected override void OnActivate()
 		{
 			txtLabel.Text = _character.Label;
-			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, _imageLibrary.Find(_character.Metadata.Portrait));
+
+			PoseMapping image = _character.PoseLibrary.GetPose(_character.Metadata.Portrait);
+			if (image == null)
+				return;
+			_character.Metadata.Portrait = image.Key.Replace("#-", "0-");
+			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, 0));
 		}
 
 		public override void Save()
@@ -107,15 +99,15 @@ namespace SPNATI_Character_Editor.Activities
 			gridAI.Save(ColAIStage);
 		}
 
-		private void cboDefaultPic_SelectedIndexChanged(object sender, System.EventArgs e)
+		private void cboDefaultPic_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (_populatingImages)
 				return;
-			CharacterImage image = cboDefaultPic.SelectedItem as CharacterImage;
+			PoseMapping image = cboDefaultPic.SelectedItem as PoseMapping;
 			if (image == null)
 				return;
-			_character.Metadata.Portrait = image.Name + image.FileExtension;
-			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, _imageLibrary.Find(_character.Metadata.Portrait));
+			_character.Metadata.Portrait = image.Key.Replace("#-", "0-");
+			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, 0));
 		}
 
 		private void cboGender_SelectedIndexChanged(object sender, System.EventArgs e)

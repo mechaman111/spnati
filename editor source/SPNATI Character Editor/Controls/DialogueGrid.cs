@@ -2,7 +2,6 @@
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -15,7 +14,6 @@ namespace SPNATI_Character_Editor.Controls
 		private Case _selectedCase;
 		private Stage _selectedStage;
 		private Character _character;
-		private ImageLibrary _imageLibrary;
 		private bool _populatingCase;
 		private int _selectedRow;
 		private IDialogueDropDownControl _markerCtl;
@@ -68,7 +66,7 @@ namespace SPNATI_Character_Editor.Controls
 			_lineCtl = new DialogueAdvancedControl();
 			CreateDropdown(_lineCtl, out _lineDropDown);
 
-			ColImage.ValueType = typeof(CharacterImage);
+			ColImage.ValueType = typeof(PoseMapping);
 
 			_intellisense = new IntellisenseControl();
 			_intellisense.InsertSnippet += _intellisense_InsertSnippet;
@@ -133,21 +131,15 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				stages.Add(s);
 			}
-			ImageLibrary library = null;
-			if (character != null)
-			{
-				library = ImageLibrary.Get(character);
-			}
-			SetData(character, stage, c, stages, library);
+			SetData(character, stage, c, stages);
 		}
 
-		public void SetData(Character character, Stage stage, Case c, HashSet<int> selectedStages, ImageLibrary imageLibrary)
+		public void SetData(Character character, Stage stage, Case c, HashSet<int> selectedStages)
 		{
 			HideDropdown();
 			_character = character;
 			_selectedStage = stage;
 			_selectedCase = c;
-			_imageLibrary = imageLibrary;
 			_populatingCase = true;
 
 			for (int i = 0; i < gridDialogue.Rows.Count; i++)
@@ -224,8 +216,7 @@ namespace SPNATI_Character_Editor.Controls
 				row.Tag = line;
 				newLine = true;
 			}
-			CharacterImage pose = row.Cells["ColImage"].Value as CharacterImage;
-			string image = pose?.Name;
+			PoseMapping pose = row.Cells["ColImage"].Value as PoseMapping;
 			string text = row.Cells["ColText"].Value?.ToString();
 			string markerValue;
 			bool perTarget;
@@ -246,14 +237,8 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			if (text == null && pose == null)
 				return null;
-			if (pose != null && !pose.IsGeneric)
-			{
-				image = DialogueLine.GetDefaultImage(image);
-			}
 
-			line.Image = image;
-			string extension = Path.GetExtension(image);
-			line.ImageExtension = pose?.FileExtension;
+			line.Pose = pose;
 			line.Text = text ?? "";
 
 			if (perTarget)
@@ -322,23 +307,12 @@ namespace SPNATI_Character_Editor.Controls
 			int stageId = _selectedStage == null ? 0 : _selectedStage.Id;
 			SkinnedDataGridViewComboBoxColumn col = gridDialogue.Columns["ColImage"] as SkinnedDataGridViewComboBoxColumn;
 			col.Items.Clear();
-			List<CharacterImage> images = new List<CharacterImage>();
+			List<PoseMapping> images = new List<PoseMapping>();
 			if (_character != null)
 			{
 				if (_selectedStage == null)
 				{
-					images.AddRange(_imageLibrary.GetImages(0));
-					if (Config.UsePrefixlessImages)
-					{
-						foreach (CharacterImage img in _imageLibrary.GetImages(-1))
-						{
-							string file = img.Name;
-							if (!_imageLibrary.FilterImage(_character, file))
-							{
-								images.Add(img);
-							}
-						}
-					}
+					images.AddRange(_character.PoseLibrary.GetPoses(0));
 					foreach (var image in images)
 					{
 						col.Items.Add(image);
@@ -346,47 +320,23 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				else
 				{
-					images.AddRange(_imageLibrary.GetImages(stageId));
-					if (Config.UsePrefixlessImages)
+					images.AddRange(_character.PoseLibrary.GetPoses(stageId));
+					
+					foreach (PoseMapping image in images)
 					{
-						foreach (CharacterImage img in _imageLibrary.GetImages(-1))
-						{
-							string file = img.Name;
-							if (!_imageLibrary.FilterImage(_character, file))
-							{
-								images.Add(img);
-							}
-						}
-					}
-
-					foreach (var image in images)
-					{
-						string name = DialogueLine.GetDefaultImage(image.Name);
-						//Filter out the ones that don't appear in every selected stage, unless there are stage-specific images, which would result in a blank field
 						bool stageSpecific = _selectedCase.Lines.Find(l => l.StageImages.Count > 0) != null;
+						bool isGeneric = image.IsGeneric;
 						bool allExist = true;
-						if (!image.IsGeneric && !stageSpecific)
+						if (!isGeneric && !stageSpecific)
 						{
-							bool custom = name.StartsWith("custom:");
-							string nameWithoutStage = name;
-							if (custom)
-							{
-								nameWithoutStage = DialogueLine.GetDefaultImage(image.Name.Substring(7));
-							}
 							foreach (int stage in selectedStages)
 							{
-								string key = stage + "-" + nameWithoutStage;
-								if (custom)
-								{
-									key = "custom:" + key;
-								}
-								if (_imageLibrary.Find(key) == null)
+								if (!image.ContainsStage(stage))
 								{
 									allExist = false;
 									break;
 								}
 							}
-
 						}
 						if (allExist)
 						{
@@ -423,9 +373,9 @@ namespace SPNATI_Character_Editor.Controls
 					bool found = false;
 					foreach (var item in col.Items)
 					{
-						CharacterImage img = item as CharacterImage;
-						CharacterImage oldImg = values[i] as CharacterImage;
-						if ((oldImg == null && img.DefaultName == values[i]?.ToString()) || (oldImg != null && oldImg.DefaultName == img.DefaultName))
+						PoseMapping img = item as PoseMapping;
+						PoseMapping oldImg = values[i] as PoseMapping;
+						if (oldImg == img)
 						{
 							row.Cells["ColImage"].Value = item;
 							found = true;
@@ -522,7 +472,7 @@ namespace SPNATI_Character_Editor.Controls
 					SkinnedDataGridViewComboBoxCell cell = (SkinnedDataGridViewComboBoxCell)gridDialogue.Rows[e.RowIndex].Cells[e.ColumnIndex];
 					foreach (object item in cell.Items)
 					{
-						if (((CharacterImage)item).DefaultName == e.Value.ToString())
+						if (((PoseMapping)item).DisplayName == e.Value.ToString())
 						{
 							e.Value = item;
 							e.ParsingApplied = true;
@@ -700,10 +650,10 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="row"></param>
 		/// <returns></returns>
-		public string GetImage(int index)
+		public PoseMapping GetImage(int index)
 		{
 			DataGridViewRow row = gridDialogue.Rows[index];
-			string image = row.Cells["ColImage"].Value?.ToString();
+			PoseMapping image = row.Cells["ColImage"].Value as PoseMapping;
 			return image;
 		}
 
@@ -760,14 +710,7 @@ namespace SPNATI_Character_Editor.Controls
 		private void AddLineToDialogueGrid(DialogueLine line, DataGridViewRow row)
 		{
 			_modifyingLine = true;
-			string imageKey = line.Image;
-			if (!line.IsGenericImage && _selectedCase.Stages.Count > 0)
-			{
-				int stage = _selectedCase.Stages[0];
-				if (_selectedStage != null)
-					stage = _selectedStage.Id;
-				imageKey = DialogueLine.GetStageImage(stage, imageKey);
-			}
+			PoseMapping pose = line.Pose;
 			if (row == null)
 			{
 				row = gridDialogue.Rows[gridDialogue.Rows.Add()];
@@ -778,7 +721,7 @@ namespace SPNATI_Character_Editor.Controls
 				row.Tag = line;
 			}
 			SkinnedDataGridViewComboBoxCell imageCell = row.Cells["ColImage"] as SkinnedDataGridViewComboBoxCell;
-			SetImage(imageCell, imageKey);
+			SetImage(imageCell, pose);
 			DataGridViewCell textCell = row.Cells["ColText"];
 			textCell.Value = line.Text;
 
@@ -820,14 +763,13 @@ namespace SPNATI_Character_Editor.Controls
 		/// Sets the image cell of a dialogue row
 		/// </summary>
 		/// <param name="cell"></param>
-		/// <param name="key"></param>
-		private void SetImage(SkinnedDataGridViewComboBoxCell cell, string key)
+		/// <param name="pose"></param>
+		private void SetImage(SkinnedDataGridViewComboBoxCell cell, PoseMapping pose)
 		{
-			string defaultKey = DialogueLine.GetDefaultImage(key);
 			foreach (var item in cell.Items)
 			{
-				CharacterImage image = item as CharacterImage;
-				if (image != null && image.DefaultName == defaultKey)
+				PoseMapping image = item as PoseMapping;
+				if (image == pose)
 				{
 					cell.Value = item;
 					return;

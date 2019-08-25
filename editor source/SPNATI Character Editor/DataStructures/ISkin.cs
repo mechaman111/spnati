@@ -35,6 +35,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <returns></returns>
 		List<Pose> CustomPoses { get; set; }
+		ISkin Skin { get; }
 		bool IsDirty { get; set; }
 	}
 }

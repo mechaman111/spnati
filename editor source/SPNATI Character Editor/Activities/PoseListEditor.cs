@@ -5,7 +5,6 @@ using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -21,13 +20,13 @@ namespace SPNATI_Character_Editor.Activities
 	public partial class PoseListEditor : Activity
 	{
 		private const int MiniHeight = 200;
-		private ImageLibrary _imageLibrary;
 		private ImageMetadata _previewImageMetadata;
 		private ISkin _character;
 		private PoseList _poseList = new PoseList();
 		private string _lastPoseFile;
 		private DataGridViewColumn _sortedColumn;
 		private bool _sortAscending;
+		private Dictionary<string, Image> _thumbnails = new Dictionary<string, Image>();
 
 		private ImageMetadata _clipboard;
 
@@ -61,7 +60,6 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnFirstActivate()
 		{
-			_imageLibrary = ImageLibrary.Get(_character);
 			string defaultFileName = Path.Combine(_character.GetDirectory(), "poses.txt");
 			if (File.Exists(defaultFileName))
 			{
@@ -260,15 +258,12 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void CleanUpGrid()
 		{
-			foreach (DataGridViewRow row in gridPoses.Rows)
-			{
-				CharacterImage image = row.Tag as CharacterImage;
-				if (image != null)
-				{
-					image.ReleaseImage();
-				}
-			}
 			gridPoses.Rows.Clear();
+			foreach (Image img in _thumbnails.Values)
+			{
+				img.Dispose();
+			}
+			_thumbnails.Clear();
 		}
 
 		/// <summary>
@@ -364,16 +359,33 @@ namespace SPNATI_Character_Editor.Activities
 			row.Cells["ColData"].Tag = (pose.SkipPreprocessing ? "1" : null);
 		}
 
+		private Image GetThumbnail(string key)
+		{
+			Image thumbnail;
+			if (!_thumbnails.TryGetValue(key, out thumbnail))
+			{
+				string file = Path.Combine(_character.GetDirectory(), key + ".png");
+				if (File.Exists(file))
+				{
+					using (Image fullSize = new Bitmap(file))
+					{
+						float aspect = (float)fullSize.Width / fullSize.Height;
+						int width = (int)(aspect * MiniHeight);
+						thumbnail = new Bitmap(fullSize, new Size(width, MiniHeight));
+						_thumbnails[key] = thumbnail;
+					}
+				}
+			}
+			return thumbnail;
+		}
+
 		private void UpdateImageCell(string key, DataGridViewRow row)
 		{
-			CharacterImage cached = row.Tag as CharacterImage;
-			cached?.ReleaseImage();
-			CharacterImage existingImage = _imageLibrary.GetMini(key, MiniHeight);
+			Image thumbnail = GetThumbnail(key);
 			DataGridViewImageCell imageCell = row.Cells["ColImage"] as DataGridViewImageCell;
-			if (existingImage != null)
+			if (thumbnail != null)
 			{
-				imageCell.Value = existingImage.GetImage();
-				row.Tag = existingImage;
+				imageCell.Value = thumbnail;
 				row.Cells["ColImport"].Value = "Reimport";
 			}
 			else
@@ -619,11 +631,14 @@ namespace SPNATI_Character_Editor.Activities
 
 			//Figure out which images need importing
 			List<ImageMetadata> toImport = new List<ImageMetadata>();
-			foreach (var metadata in _poseList.Poses)
+			foreach (ImageMetadata metadata in _poseList.Poses)
 			{
-				CharacterImage existingImage = _imageLibrary.Find(metadata.ImageKey);
-				if (existingImage != null)
+				string filename = metadata.ImageKey + ".png";
+				string fullPath = Path.Combine(_character.GetDirectory(), filename);
+				if (File.Exists(fullPath))
+				{
 					continue;
+				}
 				toImport.Add(metadata);
 			}
 
@@ -768,7 +783,8 @@ namespace SPNATI_Character_Editor.Activities
 
 			image.Save(fullPath);
 
-			_imageLibrary.Replace(fullPath, image);
+			_thumbnails.Remove(imageKey);
+			_character.Character.PoseLibrary.Add(fullPath);
 			return fullPath;
 		}
 
@@ -1071,15 +1087,18 @@ namespace SPNATI_Character_Editor.Activities
 				return;
 			}
 			string name = pose;
+			int numStage = -1;
 			if (!string.IsNullOrEmpty(stage))
 			{
 				name = stage + "-" + pose;
+				int.TryParse(stage, out numStage);
 			}
 
-			CharacterImage img = _imageLibrary.Find(name);
+			Character c = _character.Character;
+			PoseMapping img = c.PoseLibrary.GetPose(name + ".png");
 			if (img != null)
 			{
-				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
+				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, img, numStage));
 			}
 		}
 

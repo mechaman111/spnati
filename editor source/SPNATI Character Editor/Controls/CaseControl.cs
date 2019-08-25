@@ -15,7 +15,6 @@ namespace SPNATI_Character_Editor.Controls
 
 		private Character _character;
 		private CharacterEditorData _editorData;
-		private ImageLibrary _imageLibrary = new ImageLibrary();
 		private Case _selectedCase;
 		private Stage _selectedStage;
 		private bool _populatingCase;
@@ -27,6 +26,11 @@ namespace SPNATI_Character_Editor.Controls
 		public CaseControl()
 		{
 			InitializeComponent();
+		}
+
+		public int PreviewStage
+		{
+			get { return _selectedStage == null ? _selectedCase.Stages[0] : _selectedStage.Id; }
 		}
 
 		public void OnUpdateSkin(Skin skin)
@@ -53,7 +57,6 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			_character = character;
 			_editorData = CharacterDatabase.GetEditorData(_character);
-			_imageLibrary = ImageLibrary.Get(character);
 			tableConditions.Context = character;
 			CreateStageCheckboxes();
 		}
@@ -225,7 +228,7 @@ namespace SPNATI_Character_Editor.Controls
 			return gridDialogue.FindReplace(args);
 		}
 
-		public string GetImage(int index)
+		public PoseMapping GetImage(int index)
 		{
 			return gridDialogue.GetImage(index);
 		}
@@ -358,7 +361,7 @@ namespace SPNATI_Character_Editor.Controls
 			GUIHelper.SetNumericBox(valPriority, _selectedCase.CustomPriority);
 
 			var stages = GetSelectedStages();
-			gridDialogue.SetData(_character, _selectedStage, _selectedCase, stages, _imageLibrary);
+			gridDialogue.SetData(_character, _selectedStage, _selectedCase, stages);
 
 			PopulateTagsTab();
 

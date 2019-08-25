@@ -184,9 +184,7 @@ namespace SPNATI_Character_Editor
 			DialogueLine copy = line.Copy();
 			if (copy.StageImages.ContainsKey(stage))
 			{
-				LineImage li = copy.StageImages[stage];
-				copy.Image = li.Image;
-				copy.IsGenericImage = li.IsGenericImage;
+				copy.Pose = copy.StageImages[stage];
 			}
 			if (!copy.IsGenericImage)
 			{
@@ -406,18 +404,16 @@ namespace SPNATI_Character_Editor
 					{
 						foreach (DialogueLine line in workingCase.Lines)
 						{
-							DialogueLine stageLine = CreateStageSpecificLine(line, stage, character);
-							if (stageLine.Image != null && stageLine.Image.StartsWith(string.Format("{0}-", stage)))
+							DialogueLine stageLine = line.Copy();
+							if (stageLine.StageImages.ContainsKey(stage))
 							{
-								stageLine.Image = string.Format("#-{0}", stageLine.Image.Substring(stage.ToString().Length + 1));
+								stageLine.Image = stageLine.StageImages[stage]?.Key;
 							}
 							else
 							{
-								if (stageLine.Image != null && stageLine.Image.StartsWith(string.Format("custom:{0}-", stage)))
-								{
-									stageLine.Image = string.Format("custom:#-{0}", stageLine.Image.Substring(("custom:" + stage.ToString()).Length + 1));
-								}
+								stageLine.Image = stageLine.Pose?.Key;
 							}
+							
 							int hash = stageLine.GetHashCode();
 							if (!lines.ContainsKey(hash))
 							{
@@ -550,7 +546,15 @@ namespace SPNATI_Character_Editor
 						//Move the lines over, and make them stage-specific
 						foreach (var line in workingCase.Lines)
 						{
-							DialogueLine stageLine = CreateStageSpecificLine(line, s, character);
+							DialogueLine stageLine = line.Copy();
+							if (stageLine.StageImages.ContainsKey(stage.Id))
+							{
+								stageLine.Image = stageLine.StageImages[stage.Id]?.Key;
+							}
+							else
+							{
+								stageLine.Image = stageLine.Pose?.Key;
+							}
 							existingCase.Lines.Add(stageLine);
 
 							if (!string.IsNullOrEmpty(line.Gender))
@@ -701,16 +705,18 @@ namespace SPNATI_Character_Editor
 						}
 						foreach (DialogueLine line in triggerCase.Lines)
 						{
-							DialogueLine defaultLine = CreateDefaultLine(line);
+							DialogueLine defaultLine = line.Copy();
 							int code = line.GetHashCodeWithoutImage();
 							bool foundMatch = false;
 							foreach (DialogueLine rootLine in rootCase.Lines)
 							{
+								//look to see if this is an alternative stage-specific image for an existing line
 								if (rootLine.GetHashCodeWithoutImage() == code)
 								{
 									foreach (int lineStage in triggerCase.Stages)
 									{
-										rootLine.StageImages[lineStage] = new LineImage(defaultLine.Image, defaultLine.IsGenericImage);
+										PoseMapping pose = _character.PoseLibrary.GetPose(line.Image);
+										rootLine.StageImages[lineStage] = pose;
 									}
 									foundMatch = true;
 									break;
@@ -718,6 +724,8 @@ namespace SPNATI_Character_Editor
 							}
 							if (!foundMatch)
 							{
+								//not a stage-specific image but a new line
+								defaultLine.Pose = _character.PoseLibrary.GetPose(line.Image);
 								rootCase.Lines.Add(defaultLine);
 							}
 						}
@@ -766,8 +774,7 @@ namespace SPNATI_Character_Editor
 					foreach (DialogueLine line in stageCase.Lines)
 					{
 						bool addedDuplicate = false;
-						line.IsGenericImage = !DialogueLine.IsStageSpecificImage(line.Image);
-						var defaultLine = CreateDefaultLine(line);
+						var defaultLine = line.Copy();
 
 						if (defaultLine.OneShotId > 0)
 						{
@@ -809,7 +816,11 @@ namespace SPNATI_Character_Editor
 										if (existingLine.Image != defaultLine.Image)
 										{
 											//if the images are different, remember that difference
-											existingLine.StageImages[stage.Id] = new LineImage(defaultLine.Image, line.IsGenericImage);
+											PoseMapping pose = _character.PoseLibrary.GetPose(defaultLine.Image);
+											if (pose != null)
+											{
+												existingLine.StageImages[stage.Id] = pose;
+											}
 										}
 										break;
 									}
@@ -887,6 +898,10 @@ namespace SPNATI_Character_Editor
 					}
 					if (newCase)
 					{
+						foreach (DialogueLine line in c.Lines)
+						{
+							line.Pose = _character.PoseLibrary.GetPose(line.Image);
+						}
 						_workingCases.Add(c);
 					}
 				}

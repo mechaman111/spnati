@@ -41,6 +41,9 @@ namespace SPNATI_Character_Editor
 		public bool IsDirty { get; set; }
 
 		[XmlIgnore]
+		public ISkin Skin { get { return this; } }
+
+		[XmlIgnore]
 		public string Folder
 		{
 			get

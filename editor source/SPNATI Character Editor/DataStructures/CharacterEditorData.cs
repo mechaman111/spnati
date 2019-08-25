@@ -108,6 +108,21 @@ namespace SPNATI_Character_Editor
 				if (s.Id == 0)
 				{
 					s.LinkedCase = s.LegacyCase;
+					foreach (DialogueLine line in s.LegacyCase.Lines)
+					{
+						line.Pose = _character.PoseLibrary.GetPose(line.Image);
+						if (line.Pose == null)
+						{
+							if (line.Image.StartsWith("custom:"))
+							{
+								line.Pose = _character.PoseLibrary.GetPose("custom:#-" + line.Image.Substring("custom:".Length));
+							}
+							else
+							{
+								line.Pose = _character.PoseLibrary.GetPose("#-" + line.Image);
+							}
+						}
+					}
 				}
 			}
 		}

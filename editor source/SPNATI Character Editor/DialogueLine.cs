@@ -26,6 +26,9 @@ namespace SPNATI_Character_Editor
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
 		}
 
+		/// <summary>
+		/// Image as it's serialized
+		/// </summary>
 		private string _image;
 		[XmlAttribute("img")]
 		public string Image
@@ -34,9 +37,20 @@ namespace SPNATI_Character_Editor
 			set { if (_image != value) { _image = value; NotifyPropertyChanged(); } }
 		}
 
+		private PoseMapping _pose;
+		/// <summary>
+		/// Working pose image
+		/// </summary>
 		[XmlIgnore]
-		private ObservableDictionary<int, LineImage> _stageImages = new ObservableDictionary<int, LineImage>();
-		public ObservableDictionary<int, LineImage> StageImages
+		public PoseMapping Pose
+		{
+			get { return _pose; }
+			set { if (_pose != value) { _pose = value; NotifyPropertyChanged(); } }
+		}
+
+		[XmlIgnore]
+		private ObservableDictionary<int, PoseMapping> _stageImages = new ObservableDictionary<int, PoseMapping>();
+		public ObservableDictionary<int, PoseMapping> StageImages
 		{
 			get { return _stageImages; }
 			set
@@ -173,7 +187,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("collectible-value")]
 		public string CollectibleValue
 		{
-			get { return _collectibleId; }
+			get { return _collectibleValue; }
 			set	{ if (_collectibleValue != value) { _collectibleValue = value; NotifyPropertyChanged(); } }
 		}
 
@@ -209,10 +223,10 @@ namespace SPNATI_Character_Editor
 		public DialogueLine Copy()
 		{
 			DialogueLine copy = MemberwiseClone() as DialogueLine;
-			copy.StageImages = new ObservableDictionary<int, LineImage>();
-			foreach (KeyValuePair<int, LineImage> kvp in StageImages)
+			copy.StageImages = new ObservableDictionary<int, PoseMapping>();
+			foreach (KeyValuePair<int, PoseMapping> kvp in StageImages)
 			{
-				copy.StageImages[kvp.Key] = new LineImage(kvp.Value.Image, kvp.Value.IsGenericImage);
+				copy.StageImages[kvp.Key] = kvp.Value;
 			}
 			return copy;
 		}
@@ -390,29 +404,6 @@ namespace SPNATI_Character_Editor
 			{
 				return IsMarkerPersistent || (Marker != null && (Marker.Contains("=") || Marker.Contains("+") || Marker.Contains("-") || Marker.Contains("*")));
 			}
-		}
-	}
-
-	public class LineImage : ICloneable
-	{
-		public string Image;
-		public bool IsGenericImage;
-
-		public LineImage(string img, bool generic)
-		{
-			Image = img;
-			IsGenericImage = generic;
-		}
-
-		public object Clone()
-		{
-			LineImage copy = MemberwiseClone() as LineImage;
-			return copy;
-		}
-
-		public override string ToString()
-		{
-			return Image;
 		}
 	}
 }

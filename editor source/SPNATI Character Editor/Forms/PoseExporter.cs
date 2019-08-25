@@ -17,8 +17,9 @@ namespace SPNATI_Character_Editor.Forms
 			preview.AutoPlayback = false;
 		}
 
-		public void SetPose(Pose pose)
+		public void SetPose(ISkin character, Pose pose)
 		{
+			preview.SetCharacter(character);
 			_pose = pose;
 			lblName.Text = pose.Id;
 			txtFile.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), pose.Id + ".gif");
@@ -50,7 +51,9 @@ namespace SPNATI_Character_Editor.Forms
 			}
 			preview.Width = (int)valWidth.Value;
 			preview.Height = (int)valHeight.Value;
-			preview.SetImage(new CharacterImage(_pose));
+			PoseMapping pose = new PoseMapping(_pose.Id);
+			pose.SetPose(-1, _pose);
+			preview.SetImage(pose, -1);
 
 			float duration = preview.Pose.Sprites.Max(s =>
 			{

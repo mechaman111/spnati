@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using Desktop.Skinning;
 using SPNATI_Character_Editor.Controls.Reference;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -25,6 +26,7 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as Character;
+			picPortrait.SetCharacter(Record as ISkin);
 			if (_character != null)
 			{
 				_character.PrepareForEdit();
@@ -40,7 +42,7 @@ namespace SPNATI_Character_Editor.Activities
 				chkText.Visible = false;
 			}
 			SubscribeWorkspace<DialogueLine>(WorkspaceMessages.PreviewLine, UpdatePreview);
-			SubscribeWorkspace<CharacterImage>(WorkspaceMessages.UpdatePreviewImage, UpdatePreviewImage);
+			SubscribeWorkspace<UpdateImageArgs>(WorkspaceMessages.UpdatePreviewImage, UpdatePreviewImage);
 			SubscribeWorkspace<List<string>>(WorkspaceMessages.UpdateMarkers, UpdateMarkers);
 			UpdateLineCount();
 		}
@@ -94,9 +96,17 @@ namespace SPNATI_Character_Editor.Activities
 			picPortrait.SetMarkers(markers);
 		}
 
-		private void UpdatePreviewImage(CharacterImage image)
+		private void UpdatePreviewImage(UpdateImageArgs data)
 		{
-			picPortrait.SetImage(image);
+			if (data.Image != null)
+			{
+				picPortrait.SetImage(data.Image);
+			}
+			else
+			{
+				picPortrait.SetCharacter(data.Character);
+				picPortrait.SetImage(data.Pose, data.Stage);
+			}
 		}
 
 		private void UpdatePreview(DialogueLine line)
@@ -121,10 +131,6 @@ namespace SPNATI_Character_Editor.Activities
 			if (_character == null) { return; }
 			SkinLink current = cboSkin.SelectedItem as SkinLink;
 			_character.CurrentSkin = current?.Costume;
-
-			//update images in use to use new skin
-			ImageLibrary library = ImageLibrary.Get(_character);
-			library.UpdateSkin(_character.CurrentSkin);
 			Workspace.SendMessage(WorkspaceMessages.SkinChanged);
 		}
 

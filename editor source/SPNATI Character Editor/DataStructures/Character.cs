@@ -43,6 +43,9 @@ namespace SPNATI_Character_Editor
 		}
 
 		[XmlIgnore]
+		public PoseMap PoseLibrary;
+
+		[XmlIgnore]
 		public string Group { get; }
 
 		[XmlIgnore]
@@ -239,11 +242,23 @@ namespace SPNATI_Character_Editor
 			set { FolderName = value; }
 		}
 
+		private Costume _currentSkin;
 		/// <summary>
 		/// Current skin in play
 		/// </summary>
 		[XmlIgnore]
-		public Costume CurrentSkin { get; set; }
+		public Costume CurrentSkin
+		{
+			get { return _currentSkin; }
+			set
+			{
+				if (_currentSkin != value)
+				{
+					_currentSkin = value;
+					NotifyPropertyChanged();
+				}
+			}
+		}
 
 		public string ToLookupString()
 		{
@@ -588,6 +603,8 @@ namespace SPNATI_Character_Editor
 			{
 				pose.OnAfterDeserialize();
 			}
+
+			PoseLibrary = new PoseMap(this);
 		}
 		#endregion
 
@@ -607,7 +624,10 @@ namespace SPNATI_Character_Editor
 
 		private void Character_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			IsDirty = true;
+			if (e.PropertyName != "CurrentSkin")
+			{
+				IsDirty = true;
+			}
 		}
 
 		/// <summary>
@@ -892,6 +912,19 @@ namespace SPNATI_Character_Editor
 		public string GetDirectory()
 		{
 			return Config.GetRootDirectory(this);
+		}
+
+		public ISkin Skin
+		{
+			get
+			{
+				ISkin skin = CurrentSkin;
+				if (skin == null)
+				{
+					skin = this;
+				}
+				return skin;
+			}
 		}
 
 		public HashSet<string> GetRequiredPoses()

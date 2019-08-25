@@ -14,7 +14,6 @@ namespace SPNATI_Character_Editor.Activities
 
 		private Character _character;
 		private CharacterEditorData _editorData;
-		private ImageLibrary _imageLibrary = new ImageLibrary();
 		private Stage _selectedStage;
 		private Case _selectedCase;
 		private FindReplace _findForm;
@@ -86,7 +85,6 @@ namespace SPNATI_Character_Editor.Activities
 
 			caseControl.Activate();
 			_character = c;
-			_imageLibrary = ImageLibrary.Get(c);
 
 			OnSettingsUpdated();
 
@@ -263,16 +261,11 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (index == -1)
 				return;
-			string image = caseControl.GetImage(index);
-			CharacterImage img = null;
-			img = _imageLibrary.Find(image);
-			if (img == null)
+			PoseMapping image = caseControl.GetImage(index);
+			if (image != null)
 			{
-				int stage = _selectedStage == null ? 0 : _selectedStage.Id;
-				image = DialogueLine.GetStageImage(stage, DialogueLine.GetDefaultImage(image));
-				img = _imageLibrary.Find(image);
+				DisplayImage(image, caseControl.PreviewStage);
 			}
-			DisplayImage(img);
 
 			DialogueLine line = caseControl.GetLine(index);
 			DisplayText(line);
@@ -287,14 +280,14 @@ namespace SPNATI_Character_Editor.Activities
 		/// Displays an image in the preview box
 		/// </summary>
 		/// <param name="image">Image to display</param>
-		private void DisplayImage(CharacterImage image)
+		private void DisplayImage(PoseMapping image, int stage)
 		{
 			if (_selectedCase != null)
 			{
 				List<string> markers = _selectedCase.GetMarkers();
 				Workspace.SendMessage(WorkspaceMessages.UpdateMarkers, markers);
 			}
-			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, image);
+			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, stage));
 		}
 
 		private void cmdCallOut_Click(object sender, EventArgs e)

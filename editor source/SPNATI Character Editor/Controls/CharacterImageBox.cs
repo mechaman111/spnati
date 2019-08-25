@@ -4,8 +4,10 @@ using Desktop.Skinning;
 using SPNATI_Character_Editor.EpilogueEditor;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -22,13 +24,19 @@ namespace SPNATI_Character_Editor.Controls
 		private const int ArrowSize = 15;
 
 		private float _time;
-		private CharacterImage _image;
 		private Mailbox _mailbox;
+		private Image _singleUseImage;
 		private Image _imageReference;
 		private bool _animating;
 		private string _text = null;
 		private float _percent = 0.5f;
 		private List<string> _markers = new List<string>();
+
+		private ISkin _character;
+
+		private PoseMapping _currentPose;
+		private int _currentStage;
+		private ImageReference _reference;
 
 		private DateTime _lastTick;
 
@@ -46,12 +54,41 @@ namespace SPNATI_Character_Editor.Controls
 			if (Shell.Instance != null)
 			{
 				_mailbox = Shell.Instance.PostOffice.GetMailbox();
-				_mailbox.Subscribe<ImageReplacementArgs>(DesktopMessages.ReplaceImage, OnReplaceImage);
 				_mailbox.Subscribe(DesktopMessages.ToggleImages, OnToggleImages);
 			}
 
 			_textBorder = new Pen(Color.Black, TextBorder);
 			UpdateFont();
+		}
+
+		public void SetCharacter(ISkin character)
+		{
+			if (_character != character)
+			{
+				_currentPose = null;
+				if (_character != null && _character is INotifyPropertyChanged)
+				{
+					((INotifyPropertyChanged)_character).PropertyChanged -= Character_PropertyChanged;
+				}
+				_character = character;
+				if (_character != null && _character is INotifyPropertyChanged)
+				{
+					((INotifyPropertyChanged)_character).PropertyChanged += Character_PropertyChanged;
+				}
+			}
+		}
+
+		private void Character_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "CurrentSkin")
+			{
+				PoseMapping pose = _currentPose;
+				if (pose != null)
+				{
+					_currentPose = null;
+					SetImage(pose, _currentStage);
+				}
+			}
 		}
 
 		private bool _showText;
@@ -93,31 +130,42 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void Destroy()
 		{
-			if (_image != null)
+			if (_imageReference != null && _animating)
 			{
-				_imageReference = null;
-				if (_image.GetPose() != null)
-				{
-					Pose = null;
-				}
-				else
-				{
-					_image.ReleaseImage();
-				}
-				_image = null;
+				ImageAnimator.StopAnimate(_imageReference, OnFrameChanged);
 			}
+
+			if (_reference != null)
+			{
+				ImageCache.Release(_reference.FileName);
+				_reference = null;
+			}
+
+			if (_singleUseImage != null)
+			{
+				_singleUseImage.Dispose();
+				_singleUseImage = null;
+			}
+			Pose = null;
 		}
 
 		public void SetText(DialogueLine line)
 		{
-			_text = line.Text;
-			_percent = 0.5f;
-			if (!string.IsNullOrEmpty(line.Location) && line.Location.EndsWith("%"))
+			if (line == null)
 			{
-				int percent;
-				if (int.TryParse(line.Location.Substring(0, line.Location.Length - 1), out percent))
+				_text = null;
+			}
+			else
+			{
+				_text = line.Text;
+				_percent = 0.5f;
+				if (!string.IsNullOrEmpty(line.Location) && line.Location.EndsWith("%"))
 				{
-					_percent = percent / 100.0f;
+					int percent;
+					if (int.TryParse(line.Location.Substring(0, line.Location.Length - 1), out percent))
+					{
+						_percent = percent / 100.0f;
+					}
 				}
 			}
 			canvas.Invalidate();
@@ -128,30 +176,55 @@ namespace SPNATI_Character_Editor.Controls
 			_markers = markers;
 		}
 
-		public void SetImage(CharacterImage image)
+		public void SetImage(Image image)
 		{
-			if (_image == image)
+			Destroy();
+			tmrTick.Stop();
+			_currentPose = null;
+			_currentStage = -1;
+			_singleUseImage = image;
+			_imageReference = image;
+			canvas.Invalidate();
+		}
+
+		public void SetImage(PoseMapping pose, int stage)
+		{
+			if (_currentPose == pose && _currentStage == stage)
 			{
 				return;
 			}
 			Destroy();
-			if (_imageReference != null && _animating)
-			{
-				ImageAnimator.StopAnimate(_imageReference, OnFrameChanged);
-			}
+
 			UpdateSceneTransform();
-			_image = image;
-			Pose = null;
 			tmrTick.Stop();
-			if (image == null)
+			_currentPose = pose;
+			_currentStage = stage;
+			if (pose != null)
 			{
-				_imageReference = null;
-			}
-			else
-			{
-				if (image.GetPose() != null)
+				PoseReference poseRef = pose.GetPose(stage);
+				if (poseRef.Pose == null)
 				{
-					Pose = new LivePose(image.Skin, image.GetPose());
+					string file = Path.Combine(_character.Skin.GetDirectory(), poseRef.FileName);
+					if (!File.Exists(file))
+					{
+						file = Path.Combine(_character.GetDirectory(), poseRef.FileName);
+					}
+					_reference = ImageCache.Get(file);
+					_imageReference = _reference.Image;
+					if (ImageAnimator.CanAnimate(_imageReference))
+					{
+						_animating = true;
+						ImageAnimator.Animate(_imageReference, OnFrameChanged);
+					}
+				}
+				else
+				{
+					Pose p = _character.Skin.CustomPoses.Find(cp => cp.Id == poseRef.Pose.Id);
+					if (p == null)
+					{
+						p = poseRef.Pose;
+					}
+					Pose = new LivePose(_character, p);
 					if (AutoPlayback)
 					{
 						_time = 0;
@@ -159,15 +232,10 @@ namespace SPNATI_Character_Editor.Controls
 						tmrTick.Enabled = true;
 					}
 				}
-				else
-				{
-					_imageReference = image.GetImage();
-					if (ImageAnimator.CanAnimate(_imageReference))
-					{
-						_animating = true;
-						ImageAnimator.Animate(_imageReference, OnFrameChanged);
-					}
-				}
+			}
+			else
+			{
+				_imageReference = null;
 			}
 			canvas.Invalidate();
 		}
@@ -175,20 +243,6 @@ namespace SPNATI_Character_Editor.Controls
 		private void OnFrameChanged(object sender, EventArgs e)
 		{
 			canvas.Invalidate();
-		}
-
-		private void OnReplaceImage(ImageReplacementArgs args)
-		{
-			if (_image == args.Reference)
-			{
-				canvas.Invalidate();
-				if (_image.GetPose() != null)
-				{
-					Pose = new LivePose(_image.Skin, _image.GetPose());
-					_time = 0;
-				}
-				_imageReference = args.NewImage;
-			}
 		}
 
 		private void canvas_Paint(object sender, PaintEventArgs e)

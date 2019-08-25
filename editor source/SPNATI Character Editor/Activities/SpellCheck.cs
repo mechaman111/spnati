@@ -15,7 +15,6 @@ namespace SPNATI_Character_Editor.Activities
 		private ISpellChecker _spellchecker;
 		private Character _character;
 		private List<Case> _unprocessedCases = new List<Case>();
-		private ImageLibrary _imageLibrary;
 		private Queue<Misspelling> _misspellings = new Queue<Misspelling>();
 		private Misspelling _currentMisspelling;
 
@@ -32,7 +31,6 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as Character;
-			_imageLibrary = ImageLibrary.Get(_character);
 		}
 
 		private void Behavior_CaseRemoved(object sender, Case theCase)
@@ -156,22 +154,11 @@ namespace SPNATI_Character_Editor.Activities
 			DisplayWord(ms);
 		}
 
-		private void DisplayImage(Case workingCase, string image)
+		private void DisplayImage(Case workingCase, PoseMapping pose)
 		{
-			CharacterImage img = null;
-			img = _imageLibrary.Find(image);
-			if (img == null)
+			if (pose != null)
 			{
-				if (workingCase.Stages.Count > 0)
-				{
-					int stage = workingCase.Stages[0];
-					image = DialogueLine.GetStageImage(stage, DialogueLine.GetDefaultImage(image));
-					img = _imageLibrary.Find(image);
-				}
-			}
-			if (img != null)
-			{
-				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
+				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, pose, workingCase.Stages[0]));
 			}
 		}
 
@@ -181,7 +168,7 @@ namespace SPNATI_Character_Editor.Activities
 
 			_currentMisspelling = misspelling;
 			lblProgress.Text = $"Remaining: {_misspellings.Count}";
-			DisplayImage(misspelling.Case, misspelling.Line.Image);
+			DisplayImage(misspelling.Case, misspelling.Line.Pose);
 
 			int start = misspelling.Index;
 			string word = misspelling.Word;

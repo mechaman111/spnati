@@ -16,7 +16,6 @@ namespace SPNATI_Character_Editor.Activities
 		public bool Modified { get; private set; }
 		private Dictionary<Character, List<TargetData>> _lines = new Dictionary<Character, List<TargetData>>();
 		private Dictionary<Character, List<TargetData>> _filterLines = new Dictionary<Character, List<TargetData>>();
-		private ImageLibrary _imageLibrary;
 		private int _oldSplitter;
 		private bool _editing;
 		private bool _loading;
@@ -37,7 +36,6 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as Character;
-			_imageLibrary = ImageLibrary.Get(_character);
 		}
 
 		protected override void OnFirstActivate()
@@ -224,17 +222,17 @@ namespace SPNATI_Character_Editor.Activities
 				lblCaseInfo.Text = data.Case.ToString();
 
 				grpBaseLine.Text = string.Format("{0} may be reacting to these lines from {1}:", _selectedData.Character, _character);
-
-				ImageLibrary library = ImageLibrary.Get(_selectedData.Character);
+			
 				DialogueLine line = row.Cells["ColText"].Tag as DialogueLine;
 				if (line != null)
 				{
-					string image = DialogueLine.GetStageImage(data.Case.Stages[0].ToString(), line.Image);
-					CharacterImage img = library.Find(image);
-					if (img != null)
+					int stage = data.Case.Stages[0];
+					PoseMapping pose = line.Pose;
+					if (pose != null)
 					{
-						Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
+						Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_selectedData.Character, pose, stage));
 					}
+					Workspace.SendMessage(WorkspaceMessages.PreviewLine, line);
 				}
 
 
@@ -306,7 +304,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (index == -1)
 				return;
-			string image = "";
+			PoseMapping image = null;
 			if (ctlResponse.Visible)
 			{
 				image = ctlResponse.GetImage(index);
@@ -315,15 +313,11 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				image = gridResponse.GetImage(index);
 			}
-			CharacterImage img = null;
-			img = _imageLibrary.Find(image);
-			if (img == null)
+			if (image != null)
 			{
-				int stage = _workingResponse.Stages[0];
-				image = DialogueLine.GetDefaultImage(image);
-				img = _imageLibrary.Find(stage + "-" + image);
+				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, _workingResponse.Stages[0]));
 			}
-			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
+			Workspace.SendMessage(WorkspaceMessages.PreviewLine, gridResponse.GetLine(index));
 		}
 
 		private void cmdCreateResponse_Click(object sender, EventArgs e)
@@ -388,7 +382,7 @@ namespace SPNATI_Character_Editor.Activities
 				gridResponse.Visible = true;
 				ctlResponse.Visible = false;
 				Stage stage = new Stage(response.Stages[0]);
-				gridResponse.SetData(_character, stage, response, selectedStages, _imageLibrary);
+				gridResponse.SetData(_character, stage, response, selectedStages);
 			}			
 			
 			grpResponse.Text = $"Response from {_character}";
@@ -403,9 +397,9 @@ namespace SPNATI_Character_Editor.Activities
 				_editing = true;
 				_oldSplitter = splitContainer2.SplitterDistance;
 				splitContainer2.SplitterDistance = 110;
-				if (gridLines.SelectedRows.Count > 0)
+				if (gridLines.SelectedCells.Count > 0)
 				{
-					gridLines.FirstDisplayedScrollingRowIndex = gridLines.SelectedRows[0].Index;
+					gridLines.FirstDisplayedScrollingRowIndex = gridLines.SelectedCells[0].RowIndex;
 				}
 				gridLines.Enabled = false;
 			}

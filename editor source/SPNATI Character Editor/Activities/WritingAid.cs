@@ -78,6 +78,11 @@ namespace SPNATI_Character_Editor.Activities
 			cboFilter.SelectedIndex = 0;
 		}
 
+		protected override void OnActivate()
+		{
+			Workspace.SendMessage<DialogueLine>(WorkspaceMessages.PreviewLine, null);
+		}
+
 		private void cboFilter_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			GenerateSuggestions();
@@ -209,41 +214,29 @@ namespace SPNATI_Character_Editor.Activities
 			_activeCharacter = character;
 			_activeSituation = situation;
 			Stage stage = new Stage(situation.MinStage);
-			gridActiveSituation.SetData(character, stage, situation.LinkedCase, new HashSet<int>(), ImageLibrary.Get(character));
+			gridActiveSituation.SetData(character, stage, situation.LinkedCase, new HashSet<int>());
 		}
 
 		private void gridActiveSituation_HighlightRow(object sender, int index)
 		{
 			if (index == -1)
 				return;
-			string image = gridActiveSituation.GetImage(index);
-			CharacterImage img = null;
-			ImageLibrary library = ImageLibrary.Get(_activeCharacter);
-			img = library.Find(image);
-			if (img == null)
+			PoseMapping image = gridActiveSituation.GetImage(index);
+			if (image != null)
 			{
-				int stage = _activeSituation.MinStage;
-				image = DialogueLine.GetDefaultImage(image);
-				img = library.Find(stage + "-" + image);
+				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_activeCharacter, image, _activeSituation.MinStage));
 			}
-			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
 		}
 
 		private void gridLines_HighlightRow(object sender, int index)
 		{
 			if (index == -1)
 				return;
-			string image = gridLines.GetImage(index);
-			CharacterImage img = null;
-			ImageLibrary library = ImageLibrary.Get(_character);
-			img = library.Find(image);
-			if (img == null)
+			PoseMapping image = gridLines.GetImage(index);
+			if (image != null)
 			{
-				int stage = _response.Stages[0];
-				image = DialogueLine.GetDefaultImage(image);
-				img = library.Find(stage + "-" + image);
+				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, _response.Stages[0]));
 			}
-			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
 		}
 
 		private void cmdRespond_Click(object sender, EventArgs e)
@@ -297,7 +290,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				stages.Add(i);
 			}
-			gridLines.SetData(_character, stage, _response, stages, ImageLibrary.Get(_character));
+			gridLines.SetData(_character, stage, _response, stages);
 		}
 
 		private void cmdAccept_Click(object sender, EventArgs e)
