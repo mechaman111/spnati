@@ -1960,8 +1960,8 @@ function showImportModal() {
 function showResortModal() {
     var playedCharacters = save.getPlayedCharacterSet();
     
-    /* NOTE: 8 can be tweaked as necessary, it's late and I want to sleep */
-    if (RESORT_ACTIVE && playedCharacters.length >= 8) {
+    /* NOTE: Vis is a slepy boi */
+    if (RESORT_ACTIVE && playedCharacters.length >= 20) {
         if (!save.hasShownResortModal()) {
             $resortModal.modal('show');
         }
