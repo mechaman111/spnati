@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Desktop.DataStructures
 {
-	public class BindableObject : INotifyPropertyChanged, ICloneable
+	public class BindableObject : INotifyPropertyChanged, ICloneable, IPropertyChangedNotifier
 	{
 		private Dictionary<string, object> _values = new Dictionary<string, object>();
 		private Dictionary<string, NotifyCollectionChangedEventHandler> _collectionHandlers = new Dictionary<string, NotifyCollectionChangedEventHandler>();

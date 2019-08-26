@@ -39,8 +39,6 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public int MaxStageId { get; set; }
 
-		private bool _temporary;
-
 		/// <summary>
 		/// Only used when serializing or deserializing XML. Cases that share text across stages are split into separate cases per stage here
 		/// </summary>
@@ -133,25 +131,6 @@ namespace SPNATI_Character_Editor
 					}
 					_character.CacheMarker(line.Marker);
 				}
-			}
-		}
-
-		/// <summary>
-		/// The Banter Wizard has to build WorkingCases for every character, which runs into OutOfMemoryExceptions.
-		/// This is a quick and dirty measure to avoid that by unloading the working cases after we no longer need them, but only if we aren't actually editing this character
-		/// </summary>
-		public void FlagTemporary()
-		{
-			if (_builtWorkingCases) { return; }
-			_temporary = true;
-		}
-		public void ReleaseTemporary()
-		{
-			if (_temporary)
-			{
-				_temporary = false;
-				_builtWorkingCases = false;
-				_workingCases.Clear();
 			}
 		}
 
@@ -492,12 +471,10 @@ namespace SPNATI_Character_Editor
 			if (Triggers.Count > 0)
 			{
 				BuildWorkingCasesFromTriggers();
-				Triggers.Clear();
 			}
 			else
 			{
 				BuildLegacyWorkingCases();
-				Stages.Clear(); //conserve memory by clearing this out
 			}
 
 			//Move the legacy Start lines into Selected/Game start cases

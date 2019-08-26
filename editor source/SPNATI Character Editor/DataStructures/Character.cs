@@ -191,7 +191,7 @@ namespace SPNATI_Character_Editor
 		[XmlNewLine]
 		[XmlArray("start")]
 		[XmlArrayItem("state")]
-		public ObservableCollection<DialogueLine> StartingLines { get; set; }
+		public List<DialogueLine> StartingLines { get; set; }
 
 		[XmlNewLine]
 		[XmlArray("wardrobe")]
@@ -283,7 +283,7 @@ namespace SPNATI_Character_Editor
 			Metadata = new Metadata();
 			Markers = new MarkerData();
 			Wardrobe = new List<Clothing>();
-			StartingLines = new ObservableCollection<DialogueLine>();
+			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
 			Tags = new List<CharacterTag>();
 			Nicknames = new ObservableCollection<Nickname>();
@@ -311,7 +311,7 @@ namespace SPNATI_Character_Editor
 			Metadata = new Metadata();
 			Markers = new MarkerData();
 			Wardrobe = new List<Clothing>();
-			StartingLines = new ObservableCollection<DialogueLine>();
+			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
 			Poses = new List<Pose>();
 			Version = "";

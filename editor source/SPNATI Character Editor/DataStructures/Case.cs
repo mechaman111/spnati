@@ -1,16 +1,15 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
 using Desktop.CommonControls.PropertyControls;
-using Desktop.DataStructures;
 using Desktop.Reporting;
 using Newtonsoft.Json;
 using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
@@ -21,9 +20,16 @@ namespace SPNATI_Character_Editor
 	/// since storing PropertyChanged handlers starts to really add up when you have thousands of these.
 	/// </remarks>
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
-	public class Case : BindableObject, IComparable<Case>, ISliceable
+	public class Case : INotifyPropertyChanged, IPropertyChangedNotifier, IComparable<Case>, ISliceable
 	{
 		private static long s_globalId;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+		public void NotifyPropertyChanged([CallerMemberName] string propName = "")
+		{
+			_conditionHash = 0;
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+		}
 
 		private string _tag;
 		[XmlOrder(0)]
@@ -535,21 +541,13 @@ namespace SPNATI_Character_Editor
 		[XmlOrder(390)]
 		[XmlElement("condition")]
 		[JsonProperty("counters")]
-		public ObservableCollection<TargetCondition> Conditions
-		{
-			get { return Get<ObservableCollection<TargetCondition>>(); }
-			set { Set(value); }
-		}
+		public List<TargetCondition> Conditions;
 
 		[Expression(DisplayName = "Variable Test (+)", GroupName = "Game", GroupOrder = 5, Description = "Tests the value of a variable. Multiple can be added", BoundProperties = new string[] { "Target", "AlsoPlaying" })]
 		[XmlOrder(400)]
 		[XmlElement("test")]
 		[JsonProperty("tests")]
-		public ObservableCollection<ExpressionTest> Expressions
-		{
-			get { return Get<ObservableCollection<ExpressionTest>>(); }
-			set { Set(value); }
-		}
+		public List<ExpressionTest> Expressions;
 
 		[JsonProperty("lines")]
 		[XmlOrder(410)]
@@ -592,8 +590,8 @@ namespace SPNATI_Character_Editor
 			_globalId = s_globalId++;
 			Lines = new List<DialogueLine>();
 			Stages = new List<int>();
-			Conditions = new ObservableCollection<TargetCondition>();
-			Expressions = new ObservableCollection<ExpressionTest>();
+			Conditions = new List<TargetCondition>();
+			Expressions = new List<ExpressionTest>();
 			AlternativeConditions = new List<Case>();
 		}
 
@@ -804,13 +802,13 @@ namespace SPNATI_Character_Editor
 			}
 
 			//Since it's just a shallow collection, need to break references to objects
-			copy.Conditions = new ObservableCollection<TargetCondition>();
+			copy.Conditions = new List<TargetCondition>();
 			foreach (TargetCondition condition in Conditions)
 			{
 				copy.Conditions.Add(condition.Copy());
 			}
 
-			copy.Expressions = new ObservableCollection<ExpressionTest>();
+			copy.Expressions = new List<ExpressionTest>();
 			foreach (ExpressionTest test in Expressions)
 			{
 				copy.Expressions.Add(test.Copy());
@@ -1027,10 +1025,6 @@ namespace SPNATI_Character_Editor
 		}
 
 		private int _conditionHash;
-		protected override void OnPropertyChanged(string propName)
-		{
-			_conditionHash = 0;
-		}
 
 		private int GetConditionHash()
 		{

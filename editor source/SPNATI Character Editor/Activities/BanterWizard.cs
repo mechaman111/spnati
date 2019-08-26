@@ -90,8 +90,7 @@ namespace SPNATI_Character_Editor.Activities
 		}
 
 		private List<TargetData> LoadLines(Character other, TargetType targetType)
-		{
-			other.Behavior.FlagTemporary();
+		{;
 			List<TargetData> lines = new List<TargetData>();
 			foreach (var stageCase in other.GetWorkingCasesTargetedAtCharacter(_character, targetType))
 			{
@@ -121,7 +120,6 @@ namespace SPNATI_Character_Editor.Activities
 				TargetData data = new TargetData(other, lastCase);
 				lines.Add(data);
 			}
-			other.Behavior.ReleaseTemporary();
 			return lines;
 		}
 

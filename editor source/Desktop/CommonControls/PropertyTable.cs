@@ -4,6 +4,7 @@ using Desktop.Skinning;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -557,6 +558,10 @@ namespace Desktop.CommonControls
 								item = Activator.CreateInstance(itemType);
 							}
 							list.Add(item);
+							if (Data is IPropertyChangedNotifier)
+							{
+								((IPropertyChangedNotifier)Data).NotifyPropertyChanged(result.Property);
+							}
 							index = list.Count - 1;
 						}
 					}
