@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor
 {
 	public class TargetCondition : BindableObject
 	{
+		[DefaultValue("")]
 		[XmlAttribute("count")]
 		[JsonProperty("count")]
 		/// <summary>
@@ -22,6 +23,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		[DefaultValue("")]
 		[XmlAttribute("filter")]
 		[JsonProperty("filter")]
 		/// <summary>
@@ -33,6 +35,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		[DefaultValue("")]
 		[JsonProperty("gender")]
 		[XmlAttribute("gender")]
 		public string Gender
@@ -41,6 +44,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		[DefaultValue("")]
 		[Status(DisplayName = "Status", Description = "Status of the characters to match", GroupOrder = 10, Required = true)]
 		[XmlAttribute("status")]
 		[JsonProperty("status")]
