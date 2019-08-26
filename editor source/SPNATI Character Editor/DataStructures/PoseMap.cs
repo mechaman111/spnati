@@ -109,7 +109,21 @@ namespace SPNATI_Character_Editor
 			{
 				PoseMapping m = new PoseMapping(key);
 				_poses.Add(m);
-				_poses.Sort();
+				_poses.Sort((p1, p2) =>
+				{
+					bool custom1 = p1.Key.StartsWith("custom:");
+					bool custom2 = p2.Key.StartsWith("custom:");
+					bool generic1 = p1.IsGeneric;
+					bool generic2 = p2.IsGeneric;
+					int type1 = custom1 ? 1 : generic1 ? 2 : 0;
+					int type2 = custom2 ? 1 : generic2 ? 2 : 0;
+					int compare = type1.CompareTo(type2);
+					if (compare == 0)
+					{
+						compare = p1.Key.CompareTo(p2.Key);
+					}
+					return compare;
+				});
 				return m;
 			});
 			mapping.SetPose(stage, pose);
@@ -132,8 +146,8 @@ namespace SPNATI_Character_Editor
 			{
 				_poseMap.Remove(key);
 				_poses.Remove(mapping);
-				Add(pose);
 			}
+			Add(pose);
 		}
 
 		public void Remove(Pose pose)

@@ -69,14 +69,24 @@ namespace SPNATI_Character_Editor
 			{
 				try
 				{
-					using (var temp = new Bitmap(filename))
+					if (filename.EndsWith(".gif"))
 					{
-						//Load an image and then create a new one from it so that we can dispose the original image and unlock the file, which
-						//will allow us to replace the file with a new one when importing new images
-						Image image = new Bitmap(temp);
+						Image image = Image.FromFile(filename);
 						ImageReference imageRef = new ImageReference(filename, image);
 						reference = new ImageAsset(imageRef);
 						_cache[filename] = reference;
+					}
+					else
+					{
+						using (var temp = new Bitmap(filename))
+						{
+							//Load an image and then create a new one from it so that we can dispose the original image and unlock the file, which
+							//will allow us to replace the file with a new one when importing new images
+							Image image = new Bitmap(temp);
+							ImageReference imageRef = new ImageReference(filename, image);
+							reference = new ImageAsset(imageRef);
+							_cache[filename] = reference;
+						}
 					}
 				}
 				catch { }

@@ -306,6 +306,10 @@ namespace SPNATI_Character_Editor
 					}
 					#endregion
 
+					#region Variable tests
+					ValidateExpressions(warnings, character, caseLabel, stageCase, context); 
+					#endregion
+
 					Tuple<string, string> template = DialogueDatabase.GetTemplate(stageCase.Tag);
 					string defaultLine = template.Item2;
 					Regex regex = new Regex(@"\<\/i\>");
@@ -538,6 +542,21 @@ namespace SPNATI_Character_Editor
 						}
 
 					}
+				}
+			}
+		}
+
+		private static void ValidateExpressions(List<ValidationError> warnings, Character character, string caseLabel, Case stageCase, ValidationContext context)
+		{
+			foreach (ExpressionTest test in stageCase.Expressions)
+			{
+				if (string.IsNullOrEmpty(test.Expression))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no expression: {test}", context));
+				}
+				if (string.IsNullOrEmpty(test.Value))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no value: {test}", context));
 				}
 			}
 		}
