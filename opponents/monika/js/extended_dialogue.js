@@ -49,7 +49,7 @@
             ["interested-2", "Who knows? Maybe it's even a bit like the Literature Club, but in your reality..."],
             ["happy", "Though I'm sure you won't find anyone like me, ehehe~!"],
             ["happy", "Anyways, that's all I had to say for now~!"],
-            ["shocked", "Oh! Wait, before we get back to the game, I found <a href=\"https://old.reddit.com/r/spnati/\">this link</a> in the code."],
+            ["shocked", "Oh! Wait, before we get back to the game, I found <a href=\"https://old.reddit.com/r/spnati/\" target=\"_blank\">this link</a> in the code."],
             ["interested-2", "Could you maybe find out where it goes? Thanks~"]
         ]
     }
