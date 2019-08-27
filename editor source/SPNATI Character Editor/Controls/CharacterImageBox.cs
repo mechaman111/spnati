@@ -202,35 +202,42 @@ namespace SPNATI_Character_Editor.Controls
 			if (pose != null)
 			{
 				PoseReference poseRef = pose.GetPose(stage);
-				if (poseRef.Pose == null)
+				if (poseRef != null)
 				{
-					string file = Path.Combine(_character.Skin.GetDirectory(), poseRef.FileName);
-					if (!File.Exists(file))
+					if (poseRef.Pose == null)
 					{
-						file = Path.Combine(_character.GetDirectory(), poseRef.FileName);
+						string file = Path.Combine(_character.Skin.GetDirectory(), poseRef.FileName);
+						if (!File.Exists(file))
+						{
+							file = Path.Combine(_character.GetDirectory(), poseRef.FileName);
+						}
+						_reference = ImageCache.Get(file);
+						_imageReference = _reference.Image;
+						if (ImageAnimator.CanAnimate(_imageReference))
+						{
+							_animating = true;
+							ImageAnimator.Animate(_imageReference, OnFrameChanged);
+						}
 					}
-					_reference = ImageCache.Get(file);
-					_imageReference = _reference.Image;
-					if (ImageAnimator.CanAnimate(_imageReference))
+					else
 					{
-						_animating = true;
-						ImageAnimator.Animate(_imageReference, OnFrameChanged);
+						Pose p = _character.Skin.CustomPoses.Find(cp => cp.Id == poseRef.Pose.Id);
+						if (p == null)
+						{
+							p = poseRef.Pose;
+						}
+						Pose = new LivePose(_character, p);
+						if (AutoPlayback)
+						{
+							_time = 0;
+							_lastTick = DateTime.Now;
+							tmrTick.Enabled = true;
+						}
 					}
 				}
 				else
 				{
-					Pose p = _character.Skin.CustomPoses.Find(cp => cp.Id == poseRef.Pose.Id);
-					if (p == null)
-					{
-						p = poseRef.Pose;
-					}
-					Pose = new LivePose(_character, p);
-					if (AutoPlayback)
-					{
-						_time = 0;
-						_lastTick = DateTime.Now;
-						tmrTick.Enabled = true;
-					}
+					_imageReference = null;
 				}
 			}
 			else
