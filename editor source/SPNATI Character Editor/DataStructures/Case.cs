@@ -2072,15 +2072,15 @@ namespace SPNATI_Character_Editor
 				{
 					return tag;
 				}
-				else if (tag == "opponent_lost")
+				else if (tag == "lost")
 				{
 					return "must_strip";
 				}
-				else if (tag == "opponent_stripping")
+				else if (tag == "stripping")
 				{
 					return "stripping";
 				}
-				else if (tag == "opponent_stripped")
+				else if (tag == "stripped")
 				{
 					return "stripped";
 				}

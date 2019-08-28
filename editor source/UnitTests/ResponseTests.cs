@@ -435,6 +435,51 @@ namespace UnitTests
 		}
 
 		[TestMethod]
+		public void OpponentLost_Is_Target()
+		{
+			Case c = new Case("opponent_lost");
+			c.Target = _male.FolderName;
+			Assert.AreEqual("must_strip", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void OpponentLost_Is_Not_Target()
+		{
+			Case c = new Case("opponent_lost");
+			Assert.AreEqual("opponent_lost", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Stripping_Opponent_Is_Target()
+		{
+			Case c = new Case("opponent_stripping");
+			c.Target = _male.FolderName;
+			Assert.AreEqual("stripping", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Stripping_Opponent_Is_Not_Target()
+		{
+			Case c = new Case("opponent_stripping");
+			Assert.AreEqual("opponent_stripping", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Stripped_Opponent_Is_Target()
+		{
+			Case c = new Case("opponent_stripped");
+			c.Target = _male.FolderName;
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Stripped_Opponent_Is_Not_Target()
+		{
+			Case c = new Case("opponent_stripped");
+			Assert.AreEqual("opponent_stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
 		public void Stripped_Extra_Opponent()
 		{
 			Case c = new Case("stripped");
