@@ -781,10 +781,21 @@ namespace SPNATI_Character_Editor.Activities
 			string filename = imageKey + ".png";
 			string fullPath = Path.Combine(_character.GetDirectory(), filename);
 
-			image.Save(fullPath);
+			try
+			{
+				image.Save(fullPath);
 
-			_thumbnails.Remove(imageKey);
-			_character.Character.PoseLibrary.Add(fullPath);
+				_thumbnails.Remove(imageKey);
+				_character.Character.PoseLibrary.Add(fullPath);
+
+				string backup = Path.Combine(_character.GetBackupDirectory(), "images", filename);
+				if (File.Exists(backup))
+				{
+					File.Delete(backup);
+				}
+			}
+			catch { }
+
 			return fullPath;
 		}
 

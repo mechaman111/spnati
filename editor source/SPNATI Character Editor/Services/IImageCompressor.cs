@@ -2,6 +2,6 @@
 {
 	public interface IImageCompressor
 	{
-		bool Compress(string filepath);
+		bool Compress(string filepath, ISkin skin);
 	}
 }

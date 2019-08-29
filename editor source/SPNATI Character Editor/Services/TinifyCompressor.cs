@@ -9,7 +9,7 @@ namespace SPNATI_Character_Editor
 	{
 		private const string DefaultAPIKey = "99wT3hQ8h4bB0jLmT0Hzl7XLrX4wtCtj";
 
-		public bool Compress(string filepath)
+		public bool Compress(string filepath, ISkin skin)
 		{
 			string key = Config.TinifyKey;
 			if (string.IsNullOrEmpty(key))
@@ -17,8 +17,7 @@ namespace SPNATI_Character_Editor
 				key = DefaultAPIKey;
 			}
 			
-			string dir = Path.GetFileName(Path.GetDirectoryName(filepath));
-			dir = Path.Combine(Config.AppDataDirectory, dir, "images");
+			string dir = Path.Combine(skin.GetBackupDirectory(), "images");
 			if (!Directory.Exists(dir))
 			{
 				Directory.CreateDirectory(dir);

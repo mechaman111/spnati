@@ -46,6 +46,7 @@
 			this.ColSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColStatus = new System.Windows.Forms.DataGridViewImageColumn();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.cmdMarkCompressed = new Desktop.Skinning.SkinnedButton();
 			this.skinnedGroupBox1.SuspendLayout();
 			this.skinnedGroupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridFiles)).BeginInit();
@@ -138,6 +139,7 @@
 			this.skinnedGroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedGroupBox2.Controls.Add(this.cmdMarkCompressed);
 			this.skinnedGroupBox2.Controls.Add(this.cmdCompressSelected);
 			this.skinnedGroupBox2.Controls.Add(this.cmdCompressAll);
 			this.skinnedGroupBox2.Controls.Add(this.gridFiles);
@@ -252,6 +254,20 @@
 			this.ColStatus.ReadOnly = true;
 			this.ColStatus.Width = 75;
 			// 
+			// cmdMarkCompressed
+			// 
+			this.cmdMarkCompressed.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdMarkCompressed.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdMarkCompressed.Flat = false;
+			this.cmdMarkCompressed.Location = new System.Drawing.Point(386, 85);
+			this.cmdMarkCompressed.Name = "cmdMarkCompressed";
+			this.cmdMarkCompressed.Size = new System.Drawing.Size(170, 23);
+			this.cmdMarkCompressed.TabIndex = 6;
+			this.cmdMarkCompressed.Text = "Mark Compressed";
+			this.toolTip1.SetToolTip(this.cmdMarkCompressed, "Mark selected files as already compressed");
+			this.cmdMarkCompressed.UseVisualStyleBackColor = true;
+			this.cmdMarkCompressed.Click += new System.EventHandler(this.cmdMarkCompressed_Click);
+			// 
 			// ScreenshotTaker
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -284,5 +300,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColSize;
 		private System.Windows.Forms.DataGridViewImageColumn ColStatus;
 		private System.Windows.Forms.ToolTip toolTip1;
+		private Desktop.Skinning.SkinnedButton cmdMarkCompressed;
 	}
 }
