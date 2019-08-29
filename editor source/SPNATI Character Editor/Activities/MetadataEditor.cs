@@ -1,8 +1,6 @@
 ﻿using Desktop;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {

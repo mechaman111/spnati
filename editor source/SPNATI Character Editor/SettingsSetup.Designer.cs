@@ -43,6 +43,12 @@
 			this.helpIntellisense = new Desktop.Skinning.SkinnedIcon();
 			this.button1 = new Desktop.Skinning.SkinnedIcon();
 			this.chkDefaults = new Desktop.Skinning.SkinnedCheckBox();
+			this.helpAutoSave = new Desktop.Skinning.SkinnedIcon();
+			this.valAutoSave = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.helpFrequency = new Desktop.Skinning.SkinnedIcon();
+			this.valFrequency = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.helpLifetime = new Desktop.Skinning.SkinnedIcon();
+			this.valLifetime = new Desktop.Skinning.SkinnedNumericUpDown();
 			this.chkIntellisense = new Desktop.Skinning.SkinnedCheckBox();
 			this.label4 = new Desktop.Skinning.SkinnedLabel();
 			this.txtFilter = new Desktop.Skinning.SkinnedTextBox();
@@ -52,7 +58,11 @@
 			this.cmdBrowseKisekae = new Desktop.Skinning.SkinnedButton();
 			this.txtKisekae = new Desktop.Skinning.SkinnedTextBox();
 			this.label5 = new Desktop.Skinning.SkinnedLabel();
+			this.tabImages = new System.Windows.Forms.TabPage();
+			this.cboImportMethod = new Desktop.Skinning.SkinnedComboBox();
+			this.skinnedLabel3 = new Desktop.Skinning.SkinnedLabel();
 			this.tabDialogue = new System.Windows.Forms.TabPage();
+			this.chkEmptyCases = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkColorTargets = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkCaseTree = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkInitialAdd = new Desktop.Skinning.SkinnedCheckBox();
@@ -61,39 +71,32 @@
 			this.tabEpilogues = new System.Windows.Forms.TabPage();
 			this.label6 = new Desktop.Skinning.SkinnedLabel();
 			this.lstPauses = new Desktop.Skinning.SkinnedCheckedListBox();
+			this.tabBackups = new System.Windows.Forms.TabPage();
+			this.panelSnapshot = new Desktop.Skinning.SkinnedPanel();
+			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
+			this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
+			this.chkAutoBackup = new Desktop.Skinning.SkinnedCheckBox();
+			this.label3 = new Desktop.Skinning.SkinnedLabel();
 			this.tabTroubleshoot = new System.Windows.Forms.TabPage();
 			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripSections = new Desktop.Skinning.SkinnedTabStrip();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
-			this.tabBackups = new System.Windows.Forms.TabPage();
-			this.helpAutoSave = new Desktop.Skinning.SkinnedIcon();
-			this.valAutoSave = new Desktop.Skinning.SkinnedNumericUpDown();
-			this.label3 = new Desktop.Skinning.SkinnedLabel();
-			this.chkAutoBackup = new Desktop.Skinning.SkinnedCheckBox();
-			this.helpFrequency = new Desktop.Skinning.SkinnedIcon();
-			this.valFrequency = new Desktop.Skinning.SkinnedNumericUpDown();
-			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
-			this.helpLifetime = new Desktop.Skinning.SkinnedIcon();
-			this.valLifetime = new Desktop.Skinning.SkinnedNumericUpDown();
-			this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
-			this.tabImages = new System.Windows.Forms.TabPage();
-			this.skinnedLabel3 = new Desktop.Skinning.SkinnedLabel();
-			this.cboImportMethod = new Desktop.Skinning.SkinnedComboBox();
-			this.chkEmptyCases = new Desktop.Skinning.SkinnedCheckBox();
-			this.panelSnapshot = new Desktop.Skinning.SkinnedPanel();
-			this.tabsSections.SuspendLayout();
-			this.tabGeneral.SuspendLayout();
-			this.tabDialogue.SuspendLayout();
-			this.tabBanter.SuspendLayout();
-			this.tabEpilogues.SuspendLayout();
-			this.tabTroubleshoot.SuspendLayout();
-			this.skinnedPanel1.SuspendLayout();
-			this.tabBackups.SuspendLayout();
+			this.cmdVerify = new Desktop.Skinning.SkinnedButton();
+			this.txtTinify = new Desktop.Skinning.SkinnedTextBox();
+			this.skinnedLabel4 = new Desktop.Skinning.SkinnedLabel();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).BeginInit();
+			this.tabsSections.SuspendLayout();
+			this.tabGeneral.SuspendLayout();
 			this.tabImages.SuspendLayout();
+			this.tabDialogue.SuspendLayout();
+			this.tabBanter.SuspendLayout();
+			this.tabEpilogues.SuspendLayout();
+			this.tabBackups.SuspendLayout();
 			this.panelSnapshot.SuspendLayout();
+			this.tabTroubleshoot.SuspendLayout();
+			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtApplicationDirectory
@@ -258,6 +261,103 @@
         "ogue lines.");
 			this.chkDefaults.UseVisualStyleBackColor = true;
 			// 
+			// helpAutoSave
+			// 
+			this.helpAutoSave.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.helpAutoSave.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.helpAutoSave.Flat = false;
+			this.helpAutoSave.FlatAppearance.BorderSize = 0;
+			this.helpAutoSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.helpAutoSave.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.helpAutoSave.Location = new System.Drawing.Point(182, 4);
+			this.helpAutoSave.Name = "helpAutoSave";
+			this.helpAutoSave.Size = new System.Drawing.Size(21, 23);
+			this.helpAutoSave.TabIndex = 9;
+			this.toolTip1.SetToolTip(this.helpAutoSave, "Only characters with your username as the writer can be auto-saved");
+			this.helpAutoSave.UseVisualStyleBackColor = true;
+			// 
+			// valAutoSave
+			// 
+			this.valAutoSave.BackColor = System.Drawing.Color.White;
+			this.valAutoSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valAutoSave.ForeColor = System.Drawing.Color.Black;
+			this.valAutoSave.Location = new System.Drawing.Point(133, 6);
+			this.valAutoSave.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+			this.valAutoSave.Name = "valAutoSave";
+			this.valAutoSave.Size = new System.Drawing.Size(45, 20);
+			this.valAutoSave.TabIndex = 8;
+			this.toolTip1.SetToolTip(this.valAutoSave, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
+        "ave.");
+			// 
+			// helpFrequency
+			// 
+			this.helpFrequency.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.helpFrequency.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.helpFrequency.Flat = false;
+			this.helpFrequency.FlatAppearance.BorderSize = 0;
+			this.helpFrequency.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.helpFrequency.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.helpFrequency.Location = new System.Drawing.Point(180, 1);
+			this.helpFrequency.Name = "helpFrequency";
+			this.helpFrequency.Size = new System.Drawing.Size(21, 23);
+			this.helpFrequency.TabIndex = 13;
+			this.toolTip1.SetToolTip(this.helpFrequency, "\"Whenever a snapshot is created, it will replace any previous snapshot existing w" +
+        "ithin this time period in minutes\"");
+			this.helpFrequency.UseVisualStyleBackColor = true;
+			// 
+			// valFrequency
+			// 
+			this.valFrequency.BackColor = System.Drawing.Color.White;
+			this.valFrequency.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valFrequency.ForeColor = System.Drawing.Color.Black;
+			this.valFrequency.Location = new System.Drawing.Point(131, 3);
+			this.valFrequency.Maximum = new decimal(new int[] {
+            1440,
+            0,
+            0,
+            0});
+			this.valFrequency.Name = "valFrequency";
+			this.valFrequency.Size = new System.Drawing.Size(45, 20);
+			this.valFrequency.TabIndex = 12;
+			this.toolTip1.SetToolTip(this.valFrequency, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
+        "ave.");
+			// 
+			// helpLifetime
+			// 
+			this.helpLifetime.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.helpLifetime.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.helpLifetime.Flat = false;
+			this.helpLifetime.FlatAppearance.BorderSize = 0;
+			this.helpLifetime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.helpLifetime.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.helpLifetime.Location = new System.Drawing.Point(180, 27);
+			this.helpLifetime.Name = "helpLifetime";
+			this.helpLifetime.Size = new System.Drawing.Size(21, 23);
+			this.helpLifetime.TabIndex = 16;
+			this.toolTip1.SetToolTip(this.helpLifetime, "Snapshots older than this will be removed");
+			this.helpLifetime.UseVisualStyleBackColor = true;
+			// 
+			// valLifetime
+			// 
+			this.valLifetime.BackColor = System.Drawing.Color.White;
+			this.valLifetime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valLifetime.ForeColor = System.Drawing.Color.Black;
+			this.valLifetime.Location = new System.Drawing.Point(131, 29);
+			this.valLifetime.Maximum = new decimal(new int[] {
+            365,
+            0,
+            0,
+            0});
+			this.valLifetime.Name = "valLifetime";
+			this.valLifetime.Size = new System.Drawing.Size(45, 20);
+			this.valLifetime.TabIndex = 15;
+			this.toolTip1.SetToolTip(this.valLifetime, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
+        "ave.");
+			// 
 			// chkIntellisense
 			// 
 			this.chkIntellisense.AutoSize = true;
@@ -386,6 +486,50 @@
 			this.label5.TabIndex = 9;
 			this.label5.Text = "KKL.exe location:";
 			// 
+			// tabImages
+			// 
+			this.tabImages.BackColor = System.Drawing.Color.White;
+			this.tabImages.Controls.Add(this.cmdVerify);
+			this.tabImages.Controls.Add(this.txtTinify);
+			this.tabImages.Controls.Add(this.skinnedLabel4);
+			this.tabImages.Controls.Add(this.cboImportMethod);
+			this.tabImages.Controls.Add(this.skinnedLabel3);
+			this.tabImages.ForeColor = System.Drawing.Color.Black;
+			this.tabImages.Location = new System.Drawing.Point(104, 4);
+			this.tabImages.Name = "tabImages";
+			this.tabImages.Size = new System.Drawing.Size(447, 208);
+			this.tabImages.TabIndex = 6;
+			this.tabImages.Text = "Image Import";
+			// 
+			// cboImportMethod
+			// 
+			this.cboImportMethod.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.cboImportMethod.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+			this.cboImportMethod.BackColor = System.Drawing.Color.White;
+			this.cboImportMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboImportMethod.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cboImportMethod.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.cboImportMethod.Location = new System.Drawing.Point(103, 5);
+			this.cboImportMethod.Name = "cboImportMethod";
+			this.cboImportMethod.SelectedIndex = -1;
+			this.cboImportMethod.SelectedItem = null;
+			this.cboImportMethod.Size = new System.Drawing.Size(319, 23);
+			this.cboImportMethod.Sorted = false;
+			this.cboImportMethod.TabIndex = 1;
+			// 
+			// skinnedLabel3
+			// 
+			this.skinnedLabel3.AutoSize = true;
+			this.skinnedLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel3.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel3.Location = new System.Drawing.Point(3, 10);
+			this.skinnedLabel3.Name = "skinnedLabel3";
+			this.skinnedLabel3.Size = new System.Drawing.Size(75, 13);
+			this.skinnedLabel3.TabIndex = 0;
+			this.skinnedLabel3.Text = "Import images:";
+			// 
 			// tabDialogue
 			// 
 			this.tabDialogue.BackColor = System.Drawing.Color.White;
@@ -407,6 +551,17 @@
 			this.tabDialogue.Size = new System.Drawing.Size(447, 208);
 			this.tabDialogue.TabIndex = 1;
 			this.tabDialogue.Text = "Dialogue";
+			// 
+			// chkEmptyCases
+			// 
+			this.chkEmptyCases.AutoSize = true;
+			this.chkEmptyCases.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkEmptyCases.Location = new System.Drawing.Point(6, 166);
+			this.chkEmptyCases.Name = "chkEmptyCases";
+			this.chkEmptyCases.Size = new System.Drawing.Size(158, 17);
+			this.chkEmptyCases.TabIndex = 29;
+			this.chkEmptyCases.Text = "Show optional, empty cases";
+			this.chkEmptyCases.UseVisualStyleBackColor = true;
 			// 
 			// chkColorTargets
 			// 
@@ -505,6 +660,87 @@
 			this.lstPauses.Size = new System.Drawing.Size(120, 154);
 			this.lstPauses.TabIndex = 0;
 			// 
+			// tabBackups
+			// 
+			this.tabBackups.BackColor = System.Drawing.Color.White;
+			this.tabBackups.Controls.Add(this.panelSnapshot);
+			this.tabBackups.Controls.Add(this.chkAutoBackup);
+			this.tabBackups.Controls.Add(this.helpAutoSave);
+			this.tabBackups.Controls.Add(this.valAutoSave);
+			this.tabBackups.Controls.Add(this.label3);
+			this.tabBackups.ForeColor = System.Drawing.Color.Black;
+			this.tabBackups.Location = new System.Drawing.Point(104, 4);
+			this.tabBackups.Name = "tabBackups";
+			this.tabBackups.Padding = new System.Windows.Forms.Padding(3);
+			this.tabBackups.Size = new System.Drawing.Size(447, 208);
+			this.tabBackups.TabIndex = 5;
+			this.tabBackups.Text = "Backups";
+			// 
+			// panelSnapshot
+			// 
+			this.panelSnapshot.Controls.Add(this.valFrequency);
+			this.panelSnapshot.Controls.Add(this.helpLifetime);
+			this.panelSnapshot.Controls.Add(this.skinnedLabel1);
+			this.panelSnapshot.Controls.Add(this.valLifetime);
+			this.panelSnapshot.Controls.Add(this.helpFrequency);
+			this.panelSnapshot.Controls.Add(this.skinnedLabel2);
+			this.panelSnapshot.Location = new System.Drawing.Point(3, 55);
+			this.panelSnapshot.Name = "panelSnapshot";
+			this.panelSnapshot.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.panelSnapshot.Size = new System.Drawing.Size(206, 100);
+			this.panelSnapshot.TabIndex = 18;
+			this.panelSnapshot.TabSide = Desktop.Skinning.TabSide.None;
+			// 
+			// skinnedLabel1
+			// 
+			this.skinnedLabel1.AutoSize = true;
+			this.skinnedLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel1.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel1.Location = new System.Drawing.Point(4, 6);
+			this.skinnedLabel1.Name = "skinnedLabel1";
+			this.skinnedLabel1.Size = new System.Drawing.Size(105, 13);
+			this.skinnedLabel1.TabIndex = 14;
+			this.skinnedLabel1.Text = "Frequency (minutes):";
+			// 
+			// skinnedLabel2
+			// 
+			this.skinnedLabel2.AutoSize = true;
+			this.skinnedLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel2.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel2.Location = new System.Drawing.Point(4, 32);
+			this.skinnedLabel2.Name = "skinnedLabel2";
+			this.skinnedLabel2.Size = new System.Drawing.Size(77, 13);
+			this.skinnedLabel2.TabIndex = 17;
+			this.skinnedLabel2.Text = "Lifetime (days):";
+			// 
+			// chkAutoBackup
+			// 
+			this.chkAutoBackup.AutoSize = true;
+			this.chkAutoBackup.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkAutoBackup.Location = new System.Drawing.Point(9, 32);
+			this.chkAutoBackup.Name = "chkAutoBackup";
+			this.chkAutoBackup.Size = new System.Drawing.Size(176, 17);
+			this.chkAutoBackup.TabIndex = 11;
+			this.chkAutoBackup.Text = "Create data recovery snapshots";
+			this.chkAutoBackup.UseVisualStyleBackColor = true;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.label3.Location = new System.Drawing.Point(6, 9);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(103, 13);
+			this.label3.TabIndex = 10;
+			this.label3.Text = "Auto-save (minutes):";
+			// 
 			// tabTroubleshoot
 			// 
 			this.tabTroubleshoot.BackColor = System.Drawing.Color.White;
@@ -562,235 +798,47 @@
 			this.skinnedPanel1.TabIndex = 14;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
-			// tabBackups
+			// cmdVerify
 			// 
-			this.tabBackups.BackColor = System.Drawing.Color.White;
-			this.tabBackups.Controls.Add(this.panelSnapshot);
-			this.tabBackups.Controls.Add(this.chkAutoBackup);
-			this.tabBackups.Controls.Add(this.helpAutoSave);
-			this.tabBackups.Controls.Add(this.valAutoSave);
-			this.tabBackups.Controls.Add(this.label3);
-			this.tabBackups.ForeColor = System.Drawing.Color.Black;
-			this.tabBackups.Location = new System.Drawing.Point(104, 4);
-			this.tabBackups.Name = "tabBackups";
-			this.tabBackups.Padding = new System.Windows.Forms.Padding(3);
-			this.tabBackups.Size = new System.Drawing.Size(447, 208);
-			this.tabBackups.TabIndex = 5;
-			this.tabBackups.Text = "Backups";
+			this.cmdVerify.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdVerify.Background = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.cmdVerify.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdVerify.Flat = true;
+			this.cmdVerify.ForeColor = System.Drawing.Color.Blue;
+			this.cmdVerify.Location = new System.Drawing.Point(355, 32);
+			this.cmdVerify.Name = "cmdVerify";
+			this.cmdVerify.Size = new System.Drawing.Size(67, 23);
+			this.cmdVerify.TabIndex = 15;
+			this.cmdVerify.Text = "Verify";
+			this.cmdVerify.UseVisualStyleBackColor = true;
+			this.cmdVerify.Click += new System.EventHandler(this.cmdVerify_Click);
 			// 
-			// helpAutoSave
+			// txtTinify
 			// 
-			this.helpAutoSave.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
-			this.helpAutoSave.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.helpAutoSave.Flat = false;
-			this.helpAutoSave.FlatAppearance.BorderSize = 0;
-			this.helpAutoSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.helpAutoSave.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
-			this.helpAutoSave.Location = new System.Drawing.Point(182, 4);
-			this.helpAutoSave.Name = "helpAutoSave";
-			this.helpAutoSave.Size = new System.Drawing.Size(21, 23);
-			this.helpAutoSave.TabIndex = 9;
-			this.toolTip1.SetToolTip(this.helpAutoSave, "Only characters with your username as the writer can be auto-saved");
-			this.helpAutoSave.UseVisualStyleBackColor = true;
+			this.txtTinify.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtTinify.BackColor = System.Drawing.Color.White;
+			this.txtTinify.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.txtTinify.ForeColor = System.Drawing.Color.Black;
+			this.txtTinify.Location = new System.Drawing.Point(103, 34);
+			this.txtTinify.Name = "txtTinify";
+			this.txtTinify.Size = new System.Drawing.Size(246, 20);
+			this.txtTinify.TabIndex = 14;
+			this.toolTip1.SetToolTip(this.txtTinify, "This is used for auto-saving. Only characters written by this user will be auto-s" +
+        "aved.");
 			// 
-			// valAutoSave
+			// skinnedLabel4
 			// 
-			this.valAutoSave.BackColor = System.Drawing.Color.White;
-			this.valAutoSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.valAutoSave.ForeColor = System.Drawing.Color.Black;
-			this.valAutoSave.Location = new System.Drawing.Point(133, 6);
-			this.valAutoSave.Maximum = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-			this.valAutoSave.Name = "valAutoSave";
-			this.valAutoSave.Size = new System.Drawing.Size(45, 20);
-			this.valAutoSave.TabIndex = 8;
-			this.toolTip1.SetToolTip(this.valAutoSave, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
-        "ave.");
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
-			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.label3.Location = new System.Drawing.Point(6, 9);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(103, 13);
-			this.label3.TabIndex = 10;
-			this.label3.Text = "Auto-save (minutes):";
-			// 
-			// chkAutoBackup
-			// 
-			this.chkAutoBackup.AutoSize = true;
-			this.chkAutoBackup.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkAutoBackup.Location = new System.Drawing.Point(9, 32);
-			this.chkAutoBackup.Name = "chkAutoBackup";
-			this.chkAutoBackup.Size = new System.Drawing.Size(176, 17);
-			this.chkAutoBackup.TabIndex = 11;
-			this.chkAutoBackup.Text = "Create data recovery snapshots";
-			this.chkAutoBackup.UseVisualStyleBackColor = true;
-			// 
-			// helpFrequency
-			// 
-			this.helpFrequency.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
-			this.helpFrequency.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.helpFrequency.Flat = false;
-			this.helpFrequency.FlatAppearance.BorderSize = 0;
-			this.helpFrequency.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.helpFrequency.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
-			this.helpFrequency.Location = new System.Drawing.Point(180, 1);
-			this.helpFrequency.Name = "helpFrequency";
-			this.helpFrequency.Size = new System.Drawing.Size(21, 23);
-			this.helpFrequency.TabIndex = 13;
-			this.toolTip1.SetToolTip(this.helpFrequency, "\"Whenever a snapshot is created, it will replace any previous snapshot existing w" +
-        "ithin this time period in minutes\"");
-			this.helpFrequency.UseVisualStyleBackColor = true;
-			// 
-			// valFrequency
-			// 
-			this.valFrequency.BackColor = System.Drawing.Color.White;
-			this.valFrequency.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.valFrequency.ForeColor = System.Drawing.Color.Black;
-			this.valFrequency.Location = new System.Drawing.Point(131, 3);
-			this.valFrequency.Maximum = new decimal(new int[] {
-            1440,
-            0,
-            0,
-            0});
-			this.valFrequency.Name = "valFrequency";
-			this.valFrequency.Size = new System.Drawing.Size(45, 20);
-			this.valFrequency.TabIndex = 12;
-			this.toolTip1.SetToolTip(this.valFrequency, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
-        "ave.");
-			// 
-			// skinnedLabel1
-			// 
-			this.skinnedLabel1.AutoSize = true;
-			this.skinnedLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.skinnedLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.skinnedLabel1.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
-			this.skinnedLabel1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.skinnedLabel1.Location = new System.Drawing.Point(4, 6);
-			this.skinnedLabel1.Name = "skinnedLabel1";
-			this.skinnedLabel1.Size = new System.Drawing.Size(105, 13);
-			this.skinnedLabel1.TabIndex = 14;
-			this.skinnedLabel1.Text = "Frequency (minutes):";
-			// 
-			// helpLifetime
-			// 
-			this.helpLifetime.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
-			this.helpLifetime.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.helpLifetime.Flat = false;
-			this.helpLifetime.FlatAppearance.BorderSize = 0;
-			this.helpLifetime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.helpLifetime.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
-			this.helpLifetime.Location = new System.Drawing.Point(180, 27);
-			this.helpLifetime.Name = "helpLifetime";
-			this.helpLifetime.Size = new System.Drawing.Size(21, 23);
-			this.helpLifetime.TabIndex = 16;
-			this.toolTip1.SetToolTip(this.helpLifetime, "Snapshots older than this will be removed");
-			this.helpLifetime.UseVisualStyleBackColor = true;
-			// 
-			// valLifetime
-			// 
-			this.valLifetime.BackColor = System.Drawing.Color.White;
-			this.valLifetime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.valLifetime.ForeColor = System.Drawing.Color.Black;
-			this.valLifetime.Location = new System.Drawing.Point(131, 29);
-			this.valLifetime.Maximum = new decimal(new int[] {
-            365,
-            0,
-            0,
-            0});
-			this.valLifetime.Name = "valLifetime";
-			this.valLifetime.Size = new System.Drawing.Size(45, 20);
-			this.valLifetime.TabIndex = 15;
-			this.toolTip1.SetToolTip(this.valLifetime, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
-        "ave.");
-			// 
-			// skinnedLabel2
-			// 
-			this.skinnedLabel2.AutoSize = true;
-			this.skinnedLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.skinnedLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.skinnedLabel2.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
-			this.skinnedLabel2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.skinnedLabel2.Location = new System.Drawing.Point(4, 32);
-			this.skinnedLabel2.Name = "skinnedLabel2";
-			this.skinnedLabel2.Size = new System.Drawing.Size(77, 13);
-			this.skinnedLabel2.TabIndex = 17;
-			this.skinnedLabel2.Text = "Lifetime (days):";
-			// 
-			// tabImages
-			// 
-			this.tabImages.BackColor = System.Drawing.Color.White;
-			this.tabImages.Controls.Add(this.cboImportMethod);
-			this.tabImages.Controls.Add(this.skinnedLabel3);
-			this.tabImages.ForeColor = System.Drawing.Color.Black;
-			this.tabImages.Location = new System.Drawing.Point(104, 4);
-			this.tabImages.Name = "tabImages";
-			this.tabImages.Size = new System.Drawing.Size(447, 208);
-			this.tabImages.TabIndex = 6;
-			this.tabImages.Text = "Image Import";
-			// 
-			// skinnedLabel3
-			// 
-			this.skinnedLabel3.AutoSize = true;
-			this.skinnedLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.skinnedLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.skinnedLabel3.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
-			this.skinnedLabel3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.skinnedLabel3.Location = new System.Drawing.Point(3, 9);
-			this.skinnedLabel3.Name = "skinnedLabel3";
-			this.skinnedLabel3.Size = new System.Drawing.Size(75, 13);
-			this.skinnedLabel3.TabIndex = 0;
-			this.skinnedLabel3.Text = "Import images:";
-			// 
-			// cboImportMethod
-			// 
-			this.cboImportMethod.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-			this.cboImportMethod.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-			this.cboImportMethod.BackColor = System.Drawing.Color.White;
-			this.cboImportMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cboImportMethod.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
-			this.cboImportMethod.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.cboImportMethod.Location = new System.Drawing.Point(84, 5);
-			this.cboImportMethod.Name = "cboImportMethod";
-			this.cboImportMethod.SelectedIndex = -1;
-			this.cboImportMethod.SelectedItem = null;
-			this.cboImportMethod.Size = new System.Drawing.Size(313, 23);
-			this.cboImportMethod.Sorted = false;
-			this.cboImportMethod.TabIndex = 1;
-			// 
-			// chkEmptyCases
-			// 
-			this.chkEmptyCases.AutoSize = true;
-			this.chkEmptyCases.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkEmptyCases.Location = new System.Drawing.Point(6, 166);
-			this.chkEmptyCases.Name = "chkEmptyCases";
-			this.chkEmptyCases.Size = new System.Drawing.Size(158, 17);
-			this.chkEmptyCases.TabIndex = 29;
-			this.chkEmptyCases.Text = "Show optional, empty cases";
-			this.chkEmptyCases.UseVisualStyleBackColor = true;
-			// 
-			// panelSnapshot
-			// 
-			this.panelSnapshot.Controls.Add(this.valFrequency);
-			this.panelSnapshot.Controls.Add(this.helpLifetime);
-			this.panelSnapshot.Controls.Add(this.skinnedLabel1);
-			this.panelSnapshot.Controls.Add(this.valLifetime);
-			this.panelSnapshot.Controls.Add(this.helpFrequency);
-			this.panelSnapshot.Controls.Add(this.skinnedLabel2);
-			this.panelSnapshot.Location = new System.Drawing.Point(3, 55);
-			this.panelSnapshot.Name = "panelSnapshot";
-			this.panelSnapshot.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
-			this.panelSnapshot.Size = new System.Drawing.Size(206, 100);
-			this.panelSnapshot.TabIndex = 18;
-			this.panelSnapshot.TabSide = Desktop.Skinning.TabSide.None;
+			this.skinnedLabel4.AutoSize = true;
+			this.skinnedLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel4.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel4.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel4.Location = new System.Drawing.Point(3, 37);
+			this.skinnedLabel4.Name = "skinnedLabel4";
+			this.skinnedLabel4.Size = new System.Drawing.Size(93, 13);
+			this.skinnedLabel4.TabIndex = 13;
+			this.skinnedLabel4.Text = "TinyPNG API key:";
 			// 
 			// SettingsSetup
 			// 
@@ -810,27 +858,27 @@
 			this.Sizable = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Settings";
+			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).EndInit();
 			this.tabsSections.ResumeLayout(false);
 			this.tabGeneral.ResumeLayout(false);
 			this.tabGeneral.PerformLayout();
+			this.tabImages.ResumeLayout(false);
+			this.tabImages.PerformLayout();
 			this.tabDialogue.ResumeLayout(false);
 			this.tabDialogue.PerformLayout();
 			this.tabBanter.ResumeLayout(false);
 			this.tabBanter.PerformLayout();
 			this.tabEpilogues.ResumeLayout(false);
 			this.tabEpilogues.PerformLayout();
+			this.tabBackups.ResumeLayout(false);
+			this.tabBackups.PerformLayout();
+			this.panelSnapshot.ResumeLayout(false);
+			this.panelSnapshot.PerformLayout();
 			this.tabTroubleshoot.ResumeLayout(false);
 			this.tabTroubleshoot.PerformLayout();
 			this.skinnedPanel1.ResumeLayout(false);
-			this.tabBackups.ResumeLayout(false);
-			this.tabBackups.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).EndInit();
-			this.tabImages.ResumeLayout(false);
-			this.tabImages.PerformLayout();
-			this.panelSnapshot.ResumeLayout(false);
-			this.panelSnapshot.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -889,5 +937,8 @@
 		private Desktop.Skinning.SkinnedLabel skinnedLabel3;
 		private Desktop.Skinning.SkinnedCheckBox chkEmptyCases;
 		private Desktop.Skinning.SkinnedPanel panelSnapshot;
+		private Desktop.Skinning.SkinnedButton cmdVerify;
+		private Desktop.Skinning.SkinnedTextBox txtTinify;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel4;
 	}
 }

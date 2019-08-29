@@ -76,7 +76,8 @@ namespace SPNATI_Character_Editor
 			bool success = BackupAndExportXml(character, character, "behaviour", timestamp) &&
 				BackupAndExportXml(character, character.Metadata, "meta", timestamp) &&
 				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor", timestamp) &&
-				BackupAndExportXml(character, character.Collectibles, "collectibles", timestamp);
+				BackupAndExportXml(character, character.Collectibles, "collectibles", timestamp) &&
+				CharacterHistory.Save(character);
 
 			if (success && !string.IsNullOrEmpty(character.StyleSheetName))
 			{

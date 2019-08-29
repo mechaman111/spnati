@@ -905,6 +905,11 @@ namespace SPNATI_Character_Editor
 			return Config.GetRootDirectory(this);
 		}
 
+		public string GetBackupDirectory()
+		{
+			return Config.GetBackupDirectory(this);
+		}
+
 		public ISkin Skin
 		{
 			get

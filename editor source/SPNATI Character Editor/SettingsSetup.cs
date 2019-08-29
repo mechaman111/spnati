@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using Desktop.Skinning;
+using TinifyAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,6 +37,7 @@ namespace SPNATI_Character_Editor
 			valFrequency.Value = Config.BackupPeriod;
 			valLifetime.Value = Config.BackupLifeTime;
 			panelSnapshot.Enabled = Config.BackupEnabled;
+			txtTinify.Text = Config.TinifyKey;
 
 			HashSet<string> pauses = Config.AutoPauseDirectives;
 			foreach (DirectiveDefinition def in Definitions.Instance.Get<DirectiveDefinition>())
@@ -130,6 +132,7 @@ namespace SPNATI_Character_Editor
 			CharacterGenerator.SetConverter(Config.ImportMethod);
 			Config.BackupPeriod = (int)valFrequency.Value;
 			Config.BackupLifeTime = (int)valLifetime.Value;
+			Config.TinifyKey = txtTinify.Text;
 
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)
@@ -239,6 +242,23 @@ namespace SPNATI_Character_Editor
 		{
 			Config.Set(Settings.HideImages, chkHideImages.Checked);
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.ToggleImages);
+		}
+
+		private void cmdVerify_Click(object sender, EventArgs e)
+		{
+			string key = txtTinify.Text;
+			Cursor = Cursors.WaitCursor;
+			try
+			{
+				Tinify.Key = key;
+				Tinify.Validate().Wait();
+				MessageBox.Show($"API key is valid. Remaining compressions this month: {500 - Tinify.CompressionCount}", "Verify Tinify API Key", MessageBoxButtons.OK);
+			}
+			catch (System.Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Verify Tinify API Key", MessageBoxButtons.OK);
+			}
+			Cursor = Cursors.Default;
 		}
 	}
 }

@@ -534,6 +534,15 @@ namespace SPNATI_Character_Editor
 			get { return GetString("lastending"); }
 			set { Set("lastending", value); }
 		}
+
+		/// <summary>
+		/// Tinify API key
+		/// </summary>
+		public static string TinifyKey
+		{
+			get { return GetString("tinify"); }
+			set { Set("tinify", value); }
+		}
 	}
 
 	public static class Settings

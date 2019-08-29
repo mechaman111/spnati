@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
-using System.Linq;
+﻿using Desktop.DataStructures;
 using SPNATI_Character_Editor.IO;
-using System.Collections.ObjectModel;
-using Desktop.DataStructures;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
@@ -499,12 +497,10 @@ namespace SPNATI_Character_Editor
 					start.Lines.Add(_character.StartingLines[0]);
 				}
 				AddWorkingCase(start);
-
 				_character.StartingLines.Clear();
 			}
 
 			if (_character == null) { return; }
-
 			SortWorking();
 		}
 

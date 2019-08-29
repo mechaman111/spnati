@@ -219,6 +219,12 @@ namespace SPNATI_Character_Editor
 			return dir;
 		}
 
+		public string GetBackupDirectory()
+		{
+			string dir = Character.GetBackupDirectory();
+			return Path.Combine(dir, Id);
+		}
+
 		public string GetAttachmentsDirectory()
 		{
 			return Path.Combine(Config.SpnatiDirectory, "attachments", "reskins", FolderName);

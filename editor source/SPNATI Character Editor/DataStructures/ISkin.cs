@@ -17,6 +17,11 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		string GetDirectory();
 		/// <summary>
+		/// Gets the full path to the skin's backup directory
+		/// </summary>
+		/// <returns></returns>
+		string GetBackupDirectory();
+		/// <summary>
 		/// Gets the path where attachments should be stored
 		/// </summary>
 		/// <returns></returns>

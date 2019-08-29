@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SPNATI_Character_Editor</RootNamespace>
     <AssemblyName>SPNATI Character Editor</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -27,6 +27,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -75,6 +76,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tinify">
+      <HintPath>.\Tinify.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -548,6 +552,7 @@
     <Compile Include="DataStructures\BindableTagList.cs" />
     <Compile Include="DataStructures\CaseLabel.cs" />
     <Compile Include="DataStructures\CaseNote.cs" />
+    <Compile Include="DataStructures\CharacterHistory.cs" />
     <Compile Include="DataStructures\Choice.cs" />
     <Compile Include="DataStructures\ClothingDatabase.cs" />
     <Compile Include="DataStructures\Collectible.cs" />
@@ -1031,8 +1036,9 @@
     <Compile Include="IO\SpnatiXmlSerializer.cs" />
     <Compile Include="DataStructures\Listing.cs" />
     <Compile Include="IO\CharacterStyleSheetSerializer.cs" />
-    <Compile Include="KisekaeOnlineConverter.cs" />
-    <Compile Include="KisekaeConverter.cs" />
+    <Compile Include="Services\IImageCompressor.cs" />
+    <Compile Include="Services\KisekaeOnlineConverter.cs" />
+    <Compile Include="Services\KisekaeConverter.cs" />
     <Compile Include="MathExtensions.cs" />
     <Compile Include="MathUtil.cs" />
     <Compile Include="Multithreading\BackgroundQueue.cs" />
@@ -1052,6 +1058,7 @@
     <Compile Include="Providers\TagProvider.cs" />
     <Compile Include="Providers\TargetProvider.cs" />
     <Compile Include="Serialization\ImportEdit.cs" />
+    <Compile Include="Services\TinifyCompressor.cs" />
     <Compile Include="WorkflowFilter.cs" />
     <Compile Include="WorkspaceMessages.cs" />
     <Compile Include="NewCharacterPrompt.cs">
