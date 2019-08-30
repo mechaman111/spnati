@@ -1501,7 +1501,8 @@ function sendFeedbackReport() {
     }
 
     var desc = $('#feedback-report-desc').val();
-    var character = $("#feedback-report-character").val();
+    var slot = $("#feedback-report-character").val();
+    var character = players[slot].id;
     var report = compileBaseErrorReport(desc, "feedback");
 
     $.ajax({
@@ -1534,12 +1535,30 @@ function updateFeedbackSendButton() {
 
 $('#feedback-report-desc').keyup(updateFeedbackSendButton).change(updateFeedbackSendButton);
 
+function updateFeedbackMessage() {
+    var slot = $('#feedback-report-character').val();
+    if (players[slot] && players[slot].feedbackData && 
+        players[slot].feedbackData.enabled && 
+        players[slot].feedbackData.message
+    ) {
+        $(".feedback-message-container").show();
+        $(".feedback-character-name").text(players[slot].label);
+        $(".feedback-message").text(players[slot].feedbackData.message);
+    } else {
+        $(".feedback-message-container").hide();
+    }
+}
+
+$("#feedback-report-character").change(updateFeedbackMessage);
+
 function addFeedbackSelectorOption (player) {
     $("#feedback-report-character option[data-load-indicator]").remove();
 
     var mixedCaseID = player.id.charAt(0).toUpperCase() + player.id.substring(1);
-    var r = $('<option value="' + player.id + '">' + mixedCaseID + '</option>');
+    var r = $('<option value="' + player.slot + '">' + mixedCaseID + '</option>');
     $('#feedback-report-character').append(r);
+
+    updateFeedbackMessage();
 }
 
 function showFeedbackReportModal() {
