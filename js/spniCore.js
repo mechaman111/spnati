@@ -1504,7 +1504,7 @@ function sendFeedbackReport() {
     }
 
     var desc = $('#feedback-report-desc').val();
-    var slot = $("#feedback-report-character").val();
+    var slot = parseInt($('#feedback-report-character').val(), 10);
     var report = compileBaseErrorReport(desc, "feedback");
 
     if (slot > 0) {
@@ -1544,7 +1544,8 @@ function updateFeedbackSendButton() {
 $('#feedback-report-desc').keyup(updateFeedbackSendButton).change(updateFeedbackSendButton);
 
 function updateFeedbackMessage() {
-    var slot = $('#feedback-report-character').val();
+    var slot = parseInt($('#feedback-report-character').val(), 10);
+
     if (players[slot] && players[slot].feedbackData && 
         players[slot].feedbackData.enabled && 
         players[slot].feedbackData.message
@@ -1559,20 +1560,9 @@ function updateFeedbackMessage() {
 
 $("#feedback-report-character").change(updateFeedbackMessage);
 
-function addFeedbackSelectorOption (player) {
-    $("#feedback-report-character option[data-load-indicator]").remove();
-
-    var mixedCaseID = player.id.charAt(0).toUpperCase() + player.id.substring(1);
-    var r = $('<option value="' + player.slot + '">' + mixedCaseID + '</option>');
-    $('#feedback-report-character').append(r);
-
-    updateFeedbackMessage();
-}
-
 function showFeedbackReportModal(fromModal) {
     $('#feedback-report-character').empty().append(
         $('<option value="" disabled data-load-indicator="">Loading...</option>'),
-        $('<option value="-1">General Game Feedback</option>')
     ).val("");
 
     if (!fromModal) {
@@ -1583,8 +1573,13 @@ function showFeedbackReportModal(fromModal) {
 
     for (let i = 1; i < 5; i++) {
         if (players[i]) {
+            let mixedCaseID = players[i].id.charAt(0).toUpperCase() + players[i].id.substring(1);
+            let selectorOption = $('<option value="' + players[i].slot + '">' + mixedCaseID + '</option>');
+            $("#feedback-report-character").append(selectorOption);
+
             if (players[i].feedbackData) {
-                addFeedbackSelectorOption(players[i]);
+                $("#feedback-report-character option[data-load-indicator]").remove();
+                 updateFeedbackMessage();
             } else {
                 $.ajax({
                     url: FEEDBACK_ROUTE + players[i].id,
@@ -1592,7 +1587,9 @@ function showFeedbackReportModal(fromModal) {
                     dataType: "json",
                     success: function (data) {
                         players[i].feedbackData = data;
-                        addFeedbackSelectorOption(players[i]);
+                        
+                        $("#feedback-report-character option[data-load-indicator]").remove();
+                        updateFeedbackMessage();
                     },
                     error: function () {
                         console.error("Failed to get feedback message data for " + players[i].id);
@@ -1601,6 +1598,10 @@ function showFeedbackReportModal(fromModal) {
             }
         }
     }
+
+    $("#feedback-report-character").append(
+        $('<option value="-1" data-general-option="">General Game Feedback</option>')
+    );
 
     if (fromModal) fromModal.modal('hide');
     $feedbackReportModal.modal('show');
