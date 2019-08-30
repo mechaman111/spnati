@@ -1552,7 +1552,6 @@ function showFeedbackReportModal() {
     for (let i = 1; i < 5; i++) {
         if (players[i]) {
             if (players[i].feedbackData) {
-                if (!players[i].feedbackData['enabled']) continue;
                 addFeedbackSelectorOption(players[i]);
             } else {
                 var p = $.ajax({
@@ -1560,10 +1559,7 @@ function showFeedbackReportModal() {
                     type: "GET",
                     dataType: "json",
                     success: function (data) {
-                        console.log(players[i]);
                         players[i].feedbackData = data;
-                        if (!data['enabled']) return;
-
                         addFeedbackSelectorOption(players[i]);
                     },
                     error: function () {
@@ -1575,13 +1571,6 @@ function showFeedbackReportModal() {
             }
         }
     }
-
-    $.when.apply($, promises).always(function() {
-        if ($("#feedback-report-character option[data-load-indicator]").length > 0) {
-            $("#feedback-report-character option[data-load-indicator]").text("No characters available for feedback...");
-            $("#feedback-report-character").val("");
-        }
-    });
 
     $feedbackReportModal.modal('show');
 }
