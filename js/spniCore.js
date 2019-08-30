@@ -1575,14 +1575,12 @@ function showFeedbackReportModal(fromModal) {
         feedbackModalReturn = fromModal;
     }
 
-    var promises = [];
-
     for (let i = 1; i < 5; i++) {
         if (players[i]) {
             if (players[i].feedbackData) {
                 addFeedbackSelectorOption(players[i]);
             } else {
-                var p = $.ajax({
+                $.ajax({
                     url: FEEDBACK_ROUTE + players[i].id,
                     type: "GET",
                     dataType: "json",
@@ -1594,8 +1592,6 @@ function showFeedbackReportModal(fromModal) {
                         console.error("Failed to get feedback message data for " + players[i].id);
                     },
                 });
-
-                promises.push(p);
             }
         }
     }
