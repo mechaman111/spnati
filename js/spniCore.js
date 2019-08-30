@@ -24,6 +24,7 @@ var BASE_SCREEN_WIDTH = 100;
 
 var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
 var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
+var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback/";
 
 var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;
@@ -95,6 +96,7 @@ $helpModal = $('#help-modal');
 $creditModal = $('#credit-modal');
 $versionModal = $('#version-modal');
 $bugReportModal = $('#bug-report-modal');
+$feedbackReportModal = $('#feedback-report-modal');
 $usageTrackingModal = $('#usage-reporting-modal');
 $playerTagsModal = $('#player-tags-modal');
 $collectibleInfoModal = $('#collectibles-info-modal');
@@ -1447,8 +1449,6 @@ function sendBugReport() {
             closeBugReportModal();
         }
     });
-
-
 }
 
 $('#bug-report-type').change(updateBugReportOutput);
@@ -1489,6 +1489,110 @@ $bugReportModal.on('shown.bs.modal', function() {
 function closeBugReportModal() {
     $bugReportModal.modal('hide');
 }
+
+ /************************************************************
+  * Functions for the feedback reporting modal.
+  ************************************************************/
+
+function sendFeedbackReport() {
+    if ($('#feedback-report-desc').val().trim().length == 0) {
+        $('#feedback-report-status').text("Please enter a description first!");
+        return false;
+    }
+
+    var desc = $('#feedback-report-desc').val();
+    var character = $("#feedback-report-character").val();
+    var report = compileBaseErrorReport(desc, "feedback");
+
+    $.ajax({
+        url: FEEDBACK_ROUTE+character,
+        method: 'POST',
+        data: JSON.stringify(report),
+        contentType: 'application/json',
+        error: function (jqXHR, status, err) {
+            console.error("Could not send feedback report - error " + status + ": " + err);
+            $('#feedback-report-status').text("Failed to send feedback report (error " + err + ")");
+        },
+        success: function () {
+            $('#feedback-report-status').text("Feedback sent!");
+            $('#feedback-report-desc').val("");
+            closeFeedbackReportModal();
+        }
+    });
+}
+
+function updateFeedbackSendButton() {
+    if (
+        !!$("#feedback-report-character").val() &&
+        $('#feedback-report-desc').val().trim().length > 0
+    ) {
+        $("#feedback-report-modal-send-button").removeAttr('disabled');
+    } else {
+        $("#feedback-report-modal-send-button").attr('disabled', 'true');
+    }
+}
+
+$('#feedback-report-desc').keyup(updateFeedbackSendButton).change(updateFeedbackSendButton);
+
+function addFeedbackSelectorOption (player) {
+    $("#feedback-report-character option[data-load-indicator]").remove();
+
+    var mixedCaseID = player.id.charAt(0).toUpperCase() + player.id.substring(1);
+    var r = $('<option value="' + player.id + '">' + mixedCaseID + '</option>');
+    $('#feedback-report-character').append(r);
+}
+
+function showFeedbackReportModal() {
+    $('#feedback-report-character').empty().append(
+        $('<option value="" disabled data-load-indicator="">Loading...</option>')
+    ).val("");
+
+    var promises = [];
+
+    for (let i = 1; i < 5; i++) {
+        if (players[i]) {
+            if (players[i].feedbackData) {
+                if (!players[i].feedbackData['enabled']) continue;
+                addFeedbackSelectorOption(players[i]);
+            } else {
+                var p = $.ajax({
+                    url: FEEDBACK_ROUTE + players[i].id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(players[i]);
+                        players[i].feedbackData = data;
+                        if (!data['enabled']) return;
+
+                        addFeedbackSelectorOption(players[i]);
+                    },
+                    error: function () {
+                        console.error("Failed to get feedback message data for " + players[i].id);
+                    },
+                });
+
+                promises.push(p);
+            }
+        }
+    }
+
+    $.when.apply($, promises).always(function() {
+        if ($("#feedback-report-character option[data-load-indicator]").length > 0) {
+            $("#feedback-report-character option[data-load-indicator]").text("No characters available for feedback...");
+            $("#feedback-report-character").val("");
+        }
+    });
+
+    $feedbackReportModal.modal('show');
+}
+
+function closeFeedbackReportModal() {
+    $feedbackReportModal.modal('hide');
+}
+
+$feedbackReportModal.on('shown.bs.modal', function () {
+    $('#feedback-report-character').focus();
+});
 
 /*
  * Show the usage tracking consent modal.
