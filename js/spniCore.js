@@ -1505,11 +1505,16 @@ function sendFeedbackReport() {
 
     var desc = $('#feedback-report-desc').val();
     var slot = $("#feedback-report-character").val();
-    var character = players[slot].id;
     var report = compileBaseErrorReport(desc, "feedback");
 
+    if (slot > 0) {
+        var character = players[slot].id;
+    } else {
+        var character = "";
+    }
+
     $.ajax({
-        url: FEEDBACK_ROUTE+character,
+        url: FEEDBACK_ROUTE + character,
         method: 'POST',
         data: JSON.stringify(report),
         contentType: 'application/json',
@@ -1566,7 +1571,8 @@ function addFeedbackSelectorOption (player) {
 
 function showFeedbackReportModal(fromModal) {
     $('#feedback-report-character').empty().append(
-        $('<option value="" disabled data-load-indicator="">Loading...</option>')
+        $('<option value="" disabled data-load-indicator="">Loading...</option>'),
+        $('<option value="-1">General Game Feedback</option>')
     ).val("");
 
     if (!fromModal) {
