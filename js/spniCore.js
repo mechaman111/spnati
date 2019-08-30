@@ -64,6 +64,9 @@ var humanPlayer;
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
 var timeoutID;
 
+/* Modal to return to from the feedback modal, or null if not returning to any modal. */
+var feedbackModalReturn = null;
+
 /**********************************************************************
  * Game Wide Global Variables
  **********************************************************************/
@@ -1561,10 +1564,16 @@ function addFeedbackSelectorOption (player) {
     updateFeedbackMessage();
 }
 
-function showFeedbackReportModal() {
+function showFeedbackReportModal(fromModal) {
     $('#feedback-report-character').empty().append(
         $('<option value="" disabled data-load-indicator="">Loading...</option>')
     ).val("");
+
+    if (!fromModal) {
+        feedbackModalReturn = null;
+    } else {
+        feedbackModalReturn = fromModal;
+    }
 
     var promises = [];
 
@@ -1591,11 +1600,17 @@ function showFeedbackReportModal() {
         }
     }
 
+    if (fromModal) fromModal.modal('hide');
     $feedbackReportModal.modal('show');
 }
 
 function closeFeedbackReportModal() {
     $feedbackReportModal.modal('hide');
+
+    if (feedbackModalReturn) {
+        feedbackModalReturn.modal('show');
+        feedbackModalReturn = null;
+    }
 }
 
 $feedbackReportModal.on('shown.bs.modal', function () {
