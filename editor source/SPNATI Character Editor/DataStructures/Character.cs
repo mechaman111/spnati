@@ -933,6 +933,23 @@ namespace SPNATI_Character_Editor
 			get { return Poses; }
 			set { Poses = value; }
 		}
+
+		/// <summary>
+		/// Enumerates through all tags belonging to a certain group
+		/// </summary>
+		/// <param name="group"></param>
+		/// <returns></returns>
+		public IEnumerable<CharacterTag> EnumerateTags(string group)
+		{
+			foreach (CharacterTag tag in Tags)
+			{
+				Tag t = TagDatabase.GetTag(tag.Tag);
+				if (t.Group == group)
+				{
+					yield return tag;
+				}
+			}
+		}
 	}
 
 	/// <summary>
@@ -1049,6 +1066,11 @@ namespace SPNATI_Character_Editor
 		public CharacterTag(string tag)
 		{
 			Tag = tag;
+		}
+
+		public override string ToString()
+		{
+			return Tag;
 		}
 	}
 

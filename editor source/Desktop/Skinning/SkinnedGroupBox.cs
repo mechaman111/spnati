@@ -45,5 +45,23 @@ namespace Desktop.Skinning
 				g.DrawString(text, font, textBrush, textRect);
 			}
 		}
+
+		private Shield _shield;
+		public void Shield()
+		{
+			if (_shield != null) { return; }
+			_shield = new Shield();
+			_shield.Dock = DockStyle.Fill;
+			Controls.Add(_shield);
+			_shield.BringToFront();
+		}
+
+		public void Unshield()
+		{
+			if (_shield == null) { return; }
+			Controls.Remove(_shield);
+			_shield.Dispose();
+			_shield = null;
+		}
 	}
 }

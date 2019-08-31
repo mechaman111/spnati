@@ -109,10 +109,17 @@ namespace SPNATI_Character_Editor.Activities
 								CharacterTag tag = character.Tags[t];
 								tag.Tag = tag.Tag.ToLowerInvariant();
 								character.Tags[t] = tag;
+
+								Tag def = TagDatabase.GetTag(tag.Tag);
+								if (def != null)
+								{
+									TagDatabase.CacheGroup(def, character);
+								}
+
 								if (!string.IsNullOrEmpty(tag.Tag))
 								{
 									TagDatabase.AddTag(tag.Tag);
-								}
+								}								
 							}
 							TagDatabase.AddTag(character.DisplayName, false);
 							for (int l = 0; l < character.Layers; l++)

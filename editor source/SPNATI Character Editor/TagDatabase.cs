@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Desktop;
+using System;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor
 {
@@ -9,6 +11,9 @@ namespace SPNATI_Character_Editor
 	{
 		private static Dictionary<string, int> _tags = new Dictionary<string, int>();
 		public static TagDictionary Dictionary { get; private set; }
+
+		private static DualKeyDictionary<string, string, List<Character>> _groups = new DualKeyDictionary<string, string, List<Character>>();
+		private static DualKeyDictionary<Character, string, List<string>> _characterGroups = new DualKeyDictionary<Character, string, List<string>>();
 
 		public static void Load()
 		{
@@ -79,6 +84,51 @@ namespace SPNATI_Character_Editor
 				return tag;
 			string name = tag.Substring(0, split);
 			return name;
+		}
+
+		public static void CacheGroup(Tag tag, Character character)
+		{
+			if (string.IsNullOrEmpty(tag.Group)) { return; }
+			List<Character> list = _groups.Get(tag.Group, tag.Key);
+			List<string> tags = _characterGroups.Get(character, tag.Group);
+			if (tags == null)
+			{
+				tags = new List<string>();
+				_characterGroups.Set(character, tag.Group, tags);
+			}
+			tags.Add(tag.Key);
+			if (list == null)
+			{
+				list = new List<Character>();
+				_groups.Set(tag.Group, tag.Key, list);
+			}
+			list.Add(character);
+		}
+
+		public static Tuple<string, List<Character>> GetSmallestGroup(string group, Character character)
+		{
+			List<string> tags = _characterGroups.Get(character, group);
+			int min = int.MaxValue;
+			string minTag = null;
+			List<Character> minList = null;
+			Dictionary<string, List<Character>> output = new Dictionary<string, List<Character>>();
+			Dictionary<string, List<Character>> result;
+			_groups.TryGetValue(group, out result);
+			foreach (string tag in tags)
+			{
+				List<Character> list = result.Get(tag);
+				if (list != null && list.Count > 1 && (min == 0 || min > list.Count))
+				{
+					min = list.Count;
+					minTag = tag;
+					minList = list;
+				}
+			}
+			if (minTag == null)
+			{
+				return null;
+			}
+			return new Tuple<string, List<Character>>(minTag, minList);
 		}
 	}
 }

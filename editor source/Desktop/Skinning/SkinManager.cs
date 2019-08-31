@@ -34,6 +34,9 @@ namespace Desktop.Skinning
 		private HashSet<ISkinControl> _pendingUpdates = new HashSet<ISkinControl>();
 		private Timer _timer = new Timer();
 
+		private Dictionary<Color, SolidBrush> _colorBrushes = new Dictionary<Color, SolidBrush>();
+		private Dictionary<Color, Pen> _colorPens = new Dictionary<Color, Pen>();
+
 		private SkinManager()
 		{
 			_timer.Interval = 1;
@@ -237,5 +240,38 @@ namespace Desktop.Skinning
 			_pendingUpdates.Clear();
 		}
 		#endregion
+
+
+		/// <summary>
+		/// Gets and caches a brush with the given color
+		/// </summary>
+		/// <param name="color"></param>
+		/// <returns></returns>
+		public SolidBrush GetBrush(Color color)
+		{
+			SolidBrush brush;
+			if (!_colorBrushes.TryGetValue(color, out brush))
+			{
+				brush = new SolidBrush(color);
+				_colorBrushes[color] = brush;
+			}
+			return brush;
+		}
+
+		/// <summary>
+		/// Gets and caches a pen with the given color
+		/// </summary>
+		/// <param name="color"></param>
+		/// <returns></returns>
+		public Pen GetPen(Color color)
+		{
+			Pen pen;
+			if (!_colorPens.TryGetValue(color, out pen))
+			{
+				pen = new Pen(color);
+				_colorPens[color] = pen;
+			}
+			return pen;
+		}
 	}
 }

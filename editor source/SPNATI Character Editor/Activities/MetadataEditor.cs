@@ -31,7 +31,6 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnFirstActivate()
 		{
-			Config.Set(Settings.LastCharacter, _character.FolderName);
 			txtFirstName.Text = _character.FirstName;
 			txtLastName.Text = _character.LastName;
 			cboSize.SelectedItem = _character.Size;

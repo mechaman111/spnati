@@ -85,11 +85,17 @@ namespace Desktop.Skinning
 		[Color(DisplayName = "Good")]
 		public Color GoodForeColor = Color.Green;
 
+		[Color(DisplayName = "Caution")]
+		public Color CautionForeColor = Color.Yellow;
+
 		[Color(DisplayName = "Bad")]
 		public Color BadForeColor = Color.Red;
 
 		[Color(DisplayName = "Focus Rect")]
 		public Color FocusRectangle = Color.Black;
+
+		[Color(DisplayName = "Empty Graph")]
+		public Color EmptyColor = Color.LightGray;
 
 		#region Colors visible on a field
 		[Color(DisplayName = "Gray")]
@@ -418,5 +424,6 @@ namespace Desktop.Skinning
 		Good,
 		Bad,
 		Heading,
+		SecondaryHeading,
 	}
 }

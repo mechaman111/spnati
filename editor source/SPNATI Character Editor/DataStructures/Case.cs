@@ -2478,6 +2478,43 @@ namespace SPNATI_Character_Editor
 				NotifyPropertyChanged(nameof(Stages));
 			}
 		}
+
+		/// <summary>
+		/// Gets a set of all character IDs being targeted by this case
+		/// </summary>
+		/// <returns></returns>
+		public HashSet<string> GetTargets()
+		{
+			HashSet<string> set = new HashSet<string>();
+			if (!string.IsNullOrEmpty(Target))
+			{
+				set.Add(Target);
+			}
+			if (!string.IsNullOrEmpty(AlsoPlaying))
+			{
+				set.Add(AlsoPlaying);
+			}
+			if (!string.IsNullOrEmpty(Filter))
+			{
+				Character c = CharacterDatabase.GetById(Filter);
+				if (c != null)
+				{
+					set.Add(c.FolderName);
+				}
+			}
+			foreach (TargetCondition condition in Conditions)
+			{
+				if (!string.IsNullOrEmpty(condition.FilterId))
+				{
+					Character c = CharacterDatabase.GetById(condition.FilterId);
+					if (c != null)
+					{
+						set.Add(c.FolderName);
+					}
+				}
+			}
+			return set;
+		}
 	}
 
 	public static class Extensions

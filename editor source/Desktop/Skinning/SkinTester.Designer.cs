@@ -48,10 +48,15 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.cmdDisable = new Desktop.Skinning.SkinnedButton();
 			this.skinnedTabControl1 = new Desktop.Skinning.SkinnedTabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.skinnedTabControl2 = new Desktop.Skinning.SkinnedTabControl();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.radialGauge4 = new Desktop.CommonControls.RadialGauge();
+			this.radialGauge3 = new Desktop.CommonControls.RadialGauge();
+			this.radialGauge2 = new Desktop.CommonControls.RadialGauge();
+			this.radialGauge1 = new Desktop.CommonControls.RadialGauge();
 			this.skinnedSlider2 = new Desktop.Skinning.SkinnedSlider();
 			this.skinnedSlider1 = new Desktop.Skinning.SkinnedSlider();
 			this.accordionListView1 = new Desktop.CommonControls.AccordionListView();
@@ -153,7 +158,7 @@
 			this.skinnedTabStrip2 = new Desktop.Skinning.SkinnedTabStrip();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.skinnedTabStrip1 = new Desktop.Skinning.SkinnedTabStrip();
-			this.cmdDisable = new Desktop.Skinning.SkinnedButton();
+			this.skinnedGroupBox3 = new Desktop.Skinning.SkinnedGroupBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -172,6 +177,7 @@
 			this.skinnedGroupBox1.SuspendLayout();
 			this.skinnedPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.skinnedNumericUpDown1)).BeginInit();
+			this.skinnedGroupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuButtonToolStripMenuItem
@@ -246,6 +252,20 @@
 			this.panel1.Size = new System.Drawing.Size(810, 670);
 			this.panel1.TabIndex = 16;
 			// 
+			// cmdDisable
+			// 
+			this.cmdDisable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdDisable.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdDisable.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdDisable.Flat = false;
+			this.cmdDisable.Location = new System.Drawing.Point(727, 621);
+			this.cmdDisable.Name = "cmdDisable";
+			this.cmdDisable.Size = new System.Drawing.Size(75, 23);
+			this.cmdDisable.TabIndex = 16;
+			this.cmdDisable.Text = "Toggle";
+			this.cmdDisable.UseVisualStyleBackColor = true;
+			this.cmdDisable.Click += new System.EventHandler(this.cmdDisable_Click);
+			// 
 			// skinnedTabControl1
 			// 
 			this.skinnedTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -265,6 +285,7 @@
 			this.tabPage1.BackColor = System.Drawing.Color.White;
 			this.tabPage1.Controls.Add(this.skinnedTabControl2);
 			this.tabPage1.Controls.Add(this.skinnedTabStrip2);
+			this.tabPage1.ForeColor = System.Drawing.Color.Black;
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -289,6 +310,7 @@
 			// tabPage3
 			// 
 			this.tabPage3.BackColor = System.Drawing.Color.White;
+			this.tabPage3.Controls.Add(this.skinnedGroupBox3);
 			this.tabPage3.Controls.Add(this.skinnedSlider2);
 			this.tabPage3.Controls.Add(this.skinnedSlider1);
 			this.tabPage3.Controls.Add(this.accordionListView1);
@@ -300,12 +322,113 @@
 			this.tabPage3.Controls.Add(this.skinnedDataGridView1);
 			this.tabPage3.Controls.Add(this.toolStrip1);
 			this.tabPage3.Controls.Add(this.skinnedGroupBox1);
+			this.tabPage3.ForeColor = System.Drawing.Color.Black;
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPage3.Size = new System.Drawing.Size(702, 544);
 			this.tabPage3.TabIndex = 1;
 			this.tabPage3.Text = "Tab 3";
+			// 
+			// radialGauge4
+			// 
+			this.radialGauge4.CapacityMode = true;
+			this.radialGauge4.Location = new System.Drawing.Point(6, 98);
+			this.radialGauge4.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.radialGauge4.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.radialGauge4.Name = "radialGauge4";
+			this.radialGauge4.ShowPercentage = false;
+			this.radialGauge4.Size = new System.Drawing.Size(87, 69);
+			this.radialGauge4.Unit = "";
+			this.radialGauge4.TabIndex = 28;
+			this.radialGauge4.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			// 
+			// radialGauge3
+			// 
+			this.radialGauge3.CapacityMode = true;
+			this.radialGauge3.Location = new System.Drawing.Point(94, 98);
+			this.radialGauge3.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.radialGauge3.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.radialGauge3.Name = "radialGauge3";
+			this.radialGauge3.ShowPercentage = false;
+			this.radialGauge3.Size = new System.Drawing.Size(87, 69);
+			this.radialGauge3.Unit = "";
+			this.radialGauge3.TabIndex = 27;
+			this.radialGauge3.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+			// 
+			// radialGauge2
+			// 
+			this.radialGauge2.CapacityMode = true;
+			this.radialGauge2.Location = new System.Drawing.Point(6, 27);
+			this.radialGauge2.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.radialGauge2.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.radialGauge2.Name = "radialGauge2";
+			this.radialGauge2.ShowPercentage = false;
+			this.radialGauge2.Size = new System.Drawing.Size(87, 69);
+			this.radialGauge2.Unit = "";
+			this.radialGauge2.TabIndex = 26;
+			this.radialGauge2.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			// 
+			// radialGauge1
+			// 
+			this.radialGauge1.CapacityMode = false;
+			this.radialGauge1.Location = new System.Drawing.Point(93, 27);
+			this.radialGauge1.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.radialGauge1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.radialGauge1.Name = "radialGauge1";
+			this.radialGauge1.ShowPercentage = false;
+			this.radialGauge1.Size = new System.Drawing.Size(86, 69);
+			this.radialGauge1.Unit = "";
+			this.radialGauge1.TabIndex = 25;
+			this.radialGauge1.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
 			// 
 			// skinnedSlider2
 			// 
@@ -341,6 +464,7 @@
 			this.accordionListView1.Location = new System.Drawing.Point(4, 336);
 			this.accordionListView1.Name = "accordionListView1";
 			this.accordionListView1.SelectedItem = null;
+			this.accordionListView1.ShowIndicators = false;
 			this.accordionListView1.Size = new System.Drawing.Size(312, 69);
 			this.accordionListView1.TabIndex = 22;
 			// 
@@ -867,10 +991,11 @@
             this.Column6,
             this.Column7,
             this.Column8});
+			this.skinnedDataGridView1.Data = null;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 9F);
-			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
 			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
@@ -1411,6 +1536,7 @@
 			// tabPage4
 			// 
 			this.tabPage4.BackColor = System.Drawing.Color.White;
+			this.tabPage4.ForeColor = System.Drawing.Color.Black;
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -1420,12 +1546,14 @@
 			// 
 			// skinnedTabStrip2
 			// 
+			this.skinnedTabStrip2.AddCaption = null;
 			this.skinnedTabStrip2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.skinnedTabStrip2.Location = new System.Drawing.Point(4, 3);
 			this.skinnedTabStrip2.Margin = new System.Windows.Forms.Padding(0);
 			this.skinnedTabStrip2.Name = "skinnedTabStrip2";
 			this.skinnedTabStrip2.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.skinnedTabStrip2.ShowAddButton = false;
 			this.skinnedTabStrip2.ShowCloseButton = false;
 			this.skinnedTabStrip2.Size = new System.Drawing.Size(89, 757);
 			this.skinnedTabStrip2.StartMargin = 5;
@@ -1441,6 +1569,7 @@
 			// tabPage2
 			// 
 			this.tabPage2.BackColor = System.Drawing.Color.White;
+			this.tabPage2.ForeColor = System.Drawing.Color.Black;
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -1450,12 +1579,14 @@
 			// 
 			// skinnedTabStrip1
 			// 
+			this.skinnedTabStrip1.AddCaption = null;
 			this.skinnedTabStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.skinnedTabStrip1.Location = new System.Drawing.Point(0, 24);
 			this.skinnedTabStrip1.Margin = new System.Windows.Forms.Padding(0);
 			this.skinnedTabStrip1.Name = "skinnedTabStrip1";
 			this.skinnedTabStrip1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryLight;
+			this.skinnedTabStrip1.ShowAddButton = false;
 			this.skinnedTabStrip1.ShowCloseButton = false;
 			this.skinnedTabStrip1.Size = new System.Drawing.Size(810, 32);
 			this.skinnedTabStrip1.StartMargin = 5;
@@ -1468,19 +1599,19 @@
 			this.skinnedTabStrip1.Text = "skinnedTabStrip1";
 			this.skinnedTabStrip1.Vertical = false;
 			// 
-			// cmdDisable
+			// skinnedGroupBox3
 			// 
-			this.cmdDisable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdDisable.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
-			this.cmdDisable.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
-			this.cmdDisable.Flat = false;
-			this.cmdDisable.Location = new System.Drawing.Point(727, 621);
-			this.cmdDisable.Name = "cmdDisable";
-			this.cmdDisable.Size = new System.Drawing.Size(75, 23);
-			this.cmdDisable.TabIndex = 16;
-			this.cmdDisable.Text = "Toggle";
-			this.cmdDisable.UseVisualStyleBackColor = true;
-			this.cmdDisable.Click += new System.EventHandler(this.cmdDisable_Click);
+			this.skinnedGroupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedGroupBox3.Controls.Add(this.radialGauge1);
+			this.skinnedGroupBox3.Controls.Add(this.radialGauge4);
+			this.skinnedGroupBox3.Controls.Add(this.radialGauge2);
+			this.skinnedGroupBox3.Controls.Add(this.radialGauge3);
+			this.skinnedGroupBox3.Location = new System.Drawing.Point(509, 336);
+			this.skinnedGroupBox3.Name = "skinnedGroupBox3";
+			this.skinnedGroupBox3.Size = new System.Drawing.Size(183, 186);
+			this.skinnedGroupBox3.TabIndex = 29;
+			this.skinnedGroupBox3.TabStop = false;
+			this.skinnedGroupBox3.Text = "Graphs";
 			// 
 			// SkinTester
 			// 
@@ -1517,6 +1648,7 @@
 			this.skinnedGroupBox1.PerformLayout();
 			this.skinnedPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.skinnedNumericUpDown1)).EndInit();
+			this.skinnedGroupBox3.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1637,5 +1769,10 @@
 		private CommonControls.AccordionListView accordionListView1;
 		private SkinnedSlider skinnedSlider2;
 		private SkinnedSlider skinnedSlider1;
+		private CommonControls.RadialGauge radialGauge4;
+		private CommonControls.RadialGauge radialGauge3;
+		private CommonControls.RadialGauge radialGauge2;
+		private CommonControls.RadialGauge radialGauge1;
+		private SkinnedGroupBox skinnedGroupBox3;
 	}
 }

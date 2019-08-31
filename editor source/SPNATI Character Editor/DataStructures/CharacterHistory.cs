@@ -31,7 +31,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="character"></param>
 		/// <returns></returns>
-		public static CharacterHistory Get(Character character)
+		public static CharacterHistory Get(Character character, bool update)
 		{
 			CharacterHistory history = null;
 			if (!_histories.TryGetValue(character.FolderName, out history))
@@ -50,6 +50,14 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+			else
+			{
+				if (update)
+				{
+					history.Update();
+				}
+				return history;
+			}
 			if (history == null)
 			{
 				history = new CharacterHistory();
@@ -66,9 +74,7 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public static bool Save(Character character)
 		{
-			CharacterHistory history = Get(character);
-
-			history.Update();
+			CharacterHistory history = Get(character, true);
 
 			string json = Json.Serialize(history);
 			try
@@ -91,6 +97,11 @@ namespace SPNATI_Character_Editor
 		[JsonProperty("work")]
 		private List<LineWork> _work = new List<LineWork>();
 
+		public LineWork Current
+		{
+			get { return _workToday; }
+		}
+
 		/// <summary>
 		/// Initialization for a new(ly loaded) history
 		/// </summary>
@@ -109,7 +120,17 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
-			_workToday = GetWork(today);
+			_workToday = GetWork(today, true);
+
+			Update();
+
+			if (_work.Count == 1)
+			{
+				//if today is the only logged day, create yesterday with the current values in order to get accurate diffs going forward
+				LineWork yesterday = _workToday.Clone() as LineWork;
+				yesterday.Time = today - new TimeSpan(1, 0, 0, 0);
+				_work.Insert(0, yesterday);
+			}
 		}
 
 		public void Update()
@@ -118,27 +139,54 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// Gets the line work performed most recently before the given date
+		/// </summary>
+		/// <param name="date"></param>
+		/// <returns></returns>
+		public LineWork GetMostRecentWorkBefore(DateTime date)
+		{
+			DateTime inputDate = date.ToLocalTime().Date;
+			for (int i = _work.Count - 1; i >= 0; i--)
+			{
+				DateTime work = _work[i].Time;
+				if (work.ToLocalTime().Date < inputDate)
+				{
+					return _work[i];
+				}
+			}
+			return null;
+		}
+
+		/// <summary>
 		/// Gets the line work performed on the given date
 		/// </summary>
 		/// <param name="date"></param>
 		/// <returns></returns>
-		public LineWork GetWork(DateTime date)
+		public LineWork GetWork(DateTime date, bool addIfNew)
 		{
+			DateTime localDate = date.ToLocalTime().Date;
 			foreach (LineWork work in _work)
 			{
-				if (work.Time.Date == date.Date)
+				if (work.Time.ToLocalTime().Date == localDate)
 				{
 					return work;
 				}
 			}
-			LineWork newWork = new LineWork();
-			_work.Add(newWork);
-			newWork.Time = DateTime.UtcNow;
-			return newWork;
+			if (addIfNew)
+			{
+				LineWork newWork = new LineWork();
+				_work.Add(newWork);
+				newWork.Time = DateTime.UtcNow;
+				return newWork;
+			}
+			else
+			{
+				return null;
+			}
 		}
 	}
 
-	public class LineWork
+	public class LineWork : ICloneable
 	{
 		public DateTime Time;
 		/// <summary>
@@ -158,9 +206,22 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public int FilterCount;
 
+		[JsonIgnore]
+		public int TotalLines
+		{
+			get
+			{
+				return TargetedCount + ConditionCount + GenericCount + FilterCount;
+			}
+		}
+
+		[JsonIgnore]
+		public List<TargetingInformation> Targets = new List<TargetingInformation>();
+
 		public void Update(Character character)
 		{
-			Dictionary<LineFilter, HashSet<string>> visitedLines = new Dictionary<LineFilter, HashSet<string>>();
+			Dictionary<string, TargetingInformation> targetInfo = new Dictionary<string, TargetingInformation>();
+			HashSet<string> lines = new HashSet<string>();
 			Dictionary<LineFilter, int> counts = new Dictionary<LineFilter, int>();
 			counts[LineFilter.Generic] = 0;
 			counts[LineFilter.Targeted] = 0;
@@ -168,8 +229,13 @@ namespace SPNATI_Character_Editor
 			counts[LineFilter.Conditional] = 0;
 			foreach (Case c in character.Behavior.GetWorkingCases())
 			{
+				if (!string.IsNullOrEmpty(c.Hidden))
+				{
+					continue;
+				}
 				LineFilter type = (c.HasTargetedConditions ? LineFilter.Targeted : c.HasFilters ? LineFilter.Filter : c.HasConditions ? LineFilter.Conditional : LineFilter.Generic);
-				HashSet<string> lines = visitedLines.GetOrAddDefault(type, () => new HashSet<string>());
+
+				int caseCount = 0;
 				foreach (DialogueLine line in c.Lines)
 				{
 					if (lines.Contains(line.Text))
@@ -179,12 +245,63 @@ namespace SPNATI_Character_Editor
 					lines.Add(line.Text);
 
 					counts[type]++;
+					caseCount++;
+				}
+				if (type == LineFilter.Targeted)
+				{
+					HashSet<string> targets = c.GetTargets();
+					foreach (string target in targets)
+					{
+						TargetingInformation info = targetInfo.GetOrAddDefault(target, () => new TargetingInformation(target));
+						info.LineCount += caseCount;
+					}
 				}
 			}
 			TargetedCount = counts[LineFilter.Targeted];
 			FilterCount = counts[LineFilter.Filter];
 			ConditionCount = counts[LineFilter.Conditional];
 			GenericCount = counts[LineFilter.Generic];
+			Targets = new List<TargetingInformation>();
+			foreach (TargetingInformation info in targetInfo.Values)
+			{
+				bool added = false;
+				int count = info.LineCount;
+				for (int i = 0; i < Targets.Count; i++)
+				{
+					if (count < Targets[i].LineCount)
+					{
+						Targets.Insert(i, info);
+						added = true;
+						break;
+					}
+				}
+				if (!added)
+				{
+					Targets.Add(info);
+				}
+			}
+		}
+
+		public object Clone()
+		{
+			LineWork copy = MemberwiseClone() as LineWork;
+			return copy;
+		}
+	}
+
+	public class TargetingInformation
+	{
+		public string Target;
+		public int LineCount;
+
+		public TargetingInformation(string target)
+		{
+			Target = target;
+		}
+
+		public override string ToString()
+		{
+			return Target + ": " + LineCount;
 		}
 	}
 }
