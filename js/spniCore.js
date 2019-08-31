@@ -24,6 +24,7 @@ var BASE_SCREEN_WIDTH = 100;
 
 var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
 var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
+var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback/";
 
 var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;
@@ -63,6 +64,9 @@ var humanPlayer;
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
 var timeoutID;
 
+/* Modal to return to from the feedback modal, or null if not returning to any modal. */
+var feedbackModalReturn = null;
+
 /**********************************************************************
  * Game Wide Global Variables
  **********************************************************************/
@@ -95,6 +99,7 @@ $helpModal = $('#help-modal');
 $creditModal = $('#credit-modal');
 $versionModal = $('#version-modal');
 $bugReportModal = $('#bug-report-modal');
+$feedbackReportModal = $('#feedback-report-modal');
 $usageTrackingModal = $('#usage-reporting-modal');
 $playerTagsModal = $('#player-tags-modal');
 $collectibleInfoModal = $('#collectibles-info-modal');
@@ -1447,8 +1452,6 @@ function sendBugReport() {
             closeBugReportModal();
         }
     });
-
-
 }
 
 $('#bug-report-type').change(updateBugReportOutput);
@@ -1489,6 +1492,133 @@ $bugReportModal.on('shown.bs.modal', function() {
 function closeBugReportModal() {
     $bugReportModal.modal('hide');
 }
+
+ /************************************************************
+  * Functions for the feedback reporting modal.
+  ************************************************************/
+
+function sendFeedbackReport() {
+    if ($('#feedback-report-desc').val().trim().length == 0) {
+        $('#feedback-report-status').text("Please enter a description first!");
+        return false;
+    }
+
+    var desc = $('#feedback-report-desc').val();
+    var slot = parseInt($('#feedback-report-character').val(), 10);
+    var report = compileBaseErrorReport(desc, "feedback");
+
+    if (slot > 0) {
+        var character = players[slot].id;
+    } else {
+        var character = "";
+    }
+
+    $.ajax({
+        url: FEEDBACK_ROUTE + character,
+        method: 'POST',
+        data: JSON.stringify(report),
+        contentType: 'application/json',
+        error: function (jqXHR, status, err) {
+            console.error("Could not send feedback report - error " + status + ": " + err);
+            $('#feedback-report-status').text("Failed to send feedback report (error " + err + ")");
+        },
+        success: function () {
+            $('#feedback-report-status').text("Feedback sent!");
+            $('#feedback-report-desc').val("");
+            closeFeedbackReportModal();
+        }
+    });
+}
+
+function updateFeedbackSendButton() {
+    if (
+        !!$("#feedback-report-character").val() &&
+        $('#feedback-report-desc').val().trim().length > 0
+    ) {
+        $("#feedback-report-modal-send-button").removeAttr('disabled');
+    } else {
+        $("#feedback-report-modal-send-button").attr('disabled', 'true');
+    }
+}
+
+$('#feedback-report-desc').keyup(updateFeedbackSendButton).change(updateFeedbackSendButton);
+
+function updateFeedbackMessage() {
+    var slot = parseInt($('#feedback-report-character').val(), 10);
+
+    if (players[slot] && players[slot].feedbackData && 
+        players[slot].feedbackData.enabled && 
+        players[slot].feedbackData.message
+    ) {
+        $(".feedback-message-container").show();
+        $(".feedback-character-name").text(players[slot].label);
+        $(".feedback-message").text(players[slot].feedbackData.message);
+    } else {
+        $(".feedback-message-container").hide();
+    }
+}
+
+$("#feedback-report-character").change(updateFeedbackMessage);
+
+function showFeedbackReportModal(fromModal) {
+    $('#feedback-report-character').empty().append(
+        $('<option value="" disabled data-load-indicator="">Loading...</option>'),
+    ).val("");
+
+    if (!fromModal) {
+        feedbackModalReturn = null;
+    } else {
+        feedbackModalReturn = fromModal;
+    }
+
+    for (let i = 1; i < 5; i++) {
+        if (players[i]) {
+            let mixedCaseID = players[i].id.charAt(0).toUpperCase() + players[i].id.substring(1);
+            let selectorOption = $('<option value="' + players[i].slot + '">' + mixedCaseID + '</option>');
+            $("#feedback-report-character").append(selectorOption);
+
+            if (players[i].feedbackData) {
+                $("#feedback-report-character option[data-load-indicator]").remove();
+                 updateFeedbackMessage();
+            } else {
+                $.ajax({
+                    url: FEEDBACK_ROUTE + players[i].id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        players[i].feedbackData = data;
+                        
+                        $("#feedback-report-character option[data-load-indicator]").remove();
+                        updateFeedbackMessage();
+                    },
+                    error: function () {
+                        console.error("Failed to get feedback message data for " + players[i].id);
+                    },
+                });
+            }
+        }
+    }
+
+    $("#feedback-report-character").append(
+        $('<option value="-1" data-general-option="">General Game Feedback</option>')
+    );
+
+    if (fromModal) fromModal.modal('hide');
+    $feedbackReportModal.modal('show');
+}
+
+function closeFeedbackReportModal() {
+    $feedbackReportModal.modal('hide');
+
+    if (feedbackModalReturn) {
+        feedbackModalReturn.modal('show');
+        feedbackModalReturn = null;
+    }
+}
+
+$feedbackReportModal.on('shown.bs.modal', function () {
+    $('#feedback-report-character').focus();
+});
 
 /*
  * Show the usage tracking consent modal.

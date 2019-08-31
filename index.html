@@ -1262,10 +1262,14 @@
                             </div>
                             <div class="modal-body">
                                 <div class="modal-body-container">
-                                    <button class="bordered smooth-button modal-button" data-dismiss="modal"
-                                        onclick="restartGame()">Yes</button>
-                                    <button class="bordered smooth-button modal-button" data-dismiss="modal"
-                                        onclick="closeRestartModal()">No</button>
+                                    <div class="modal-footer-button-row">
+                                        <button class="bordered smooth-button modal-button" data-dismiss="modal"
+                                            onclick="restartGame()">Yes</button>
+                                        <button class="bordered smooth-button green modal-button" data-dismiss="modal"
+                                            onclick="showFeedbackReportModal($restartModal)">Feedback?</button>
+                                        <button class="bordered smooth-button modal-button" data-dismiss="modal"
+                                            onclick="closeRestartModal()">No</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1669,6 +1673,73 @@
         </div>
     </div>
     <!-- End of Bug Report Modal -->
+
+    <!-- Start of Feedback Report Modal -->
+    <div id="feedback-report-modal" class="modal table-modal fade" role="dialog">
+        <div class="modal-table-container">
+            <div class="bordered modal-dialog wide-modal-dialog">
+                <div class="bordered modal-dialog-surface">
+                    <!-- Start of Modal Content -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title text-center"><b>Submit Character Feedback</b></h3>
+                        </div>
+                        <!-- Yes, we reuse the bug-report-form etc. classes here. That's intentional. -->
+                        <div class="modal-body">
+                            <div class="bug-report-form">
+                                <p>
+                                    Voice your thoughts on a character here.
+                                </p>
+                                <p>
+                                    Please remember that behind every character, there are human creators hard at work.
+                                    <br>
+                                    Be nice!
+                                    <br>
+                                </p>
+                                <p>
+                                    Also, if you would like to report a specific problem with a character, please send a
+                                    <i>bug</i> report instead.
+                                </p>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="feedback-report-character">Feedback For:</label>
+                                        <select class="form-control" id="feedback-report-character"></select>
+                                    </div>
+                                    <div class="feedback-message-container">
+                                        <h3>Message from <span class="feedback-character-name"></span>'s creator(s):
+                                        </h3>
+                                        <p class="feedback-message"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="feedback-report-desc">Feedback (required):</label>
+                                        <textarea class="form-control" id="feedback-report-desc" rows="5"
+                                            cols="80"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="bug-report-out-wrapper">
+                                <div class="bug-report-out-explanation">
+                                    To submit your feedback, just hit 'Send', below.
+                                </div>
+                                <div class="bug-report-out-explanation">
+                                    Keep in mind that feedback sent to us is publically viewable!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div id="feedback-report-status"></div>
+                            <button id="feedback-report-modal-send-button" class="bordered smooth-button modal-button"
+                                onclick="sendFeedbackReport()" disabled>Send</button>
+                            <button id="feedback-report-modal-button" class="bordered smooth-button modal-button"
+                                onclick="closeFeedbackReportModal()">Close</button>
+                        </div>
+                    </div>
+                    <!-- End of Modal Content -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Feedback Report Modal -->
 
     <!-- Start of Usage Reporting Modal -->
     <div id="usage-reporting-modal" class="modal table-modal fade" role="dialog">
@@ -2918,6 +2989,11 @@
                                 <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
                                 <span class="game-menu-label">Help and FAQ</span>
                             </button></li>
+                        <li><button id="game-feedback-button" class="dropdown-button-item bordered smooth-button red"
+                                onclick="showFeedbackReportModal()">
+                                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                <span class="game-menu-label">Character Feedback</span>
+                            </button></li>
                         <li><button id="game-log-button" class="dropdown-button-item bordered smooth-button red"
                                 onclick="showLogModal()">
                                 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
@@ -2994,12 +3070,13 @@
 
                                 </div>
                             </div>
-                            <div class="modal-footer">
+                            <div class="modal-footer modal-footer-button-row">
                                 <button id="epilogue-modal-accept-button"
                                     class="bordered smooth-button modal-button epilogue-modal-button"
                                     onclick="doEpilogue()">Choose</button>
-                            </div>
-                            <div class="modal-footer">
+                                <button id="epilogue-modal-feedback-button"
+                                    class="bordered smooth-button green modal-button epilogue-modal-button"
+                                    onclick="showFeedbackReportModal($epilogueSelectionModal)">Feedback?</button>
                                 <button id="epilogue-modal-restart-button"
                                     class="bordered smooth-button modal-button epilogue-modal-button"
                                     onclick="showRestartModal()" data-dismiss="modal">Restart?</button>
