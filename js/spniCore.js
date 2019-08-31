@@ -944,7 +944,16 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             $xml.find('>behaviour case:has(>alternative)').each(function() {
                 var $case = $(this);
                 $case.children('alternative').each(function() {
-                    $case.clone().insertAfter($case).append($(this).children()).children('alternative').remove();
+                    // Make clone and insert after original case
+                    var $clone = $case.clone().insertAfter($case);
+                    // Remove all <alternative> elements from clone, leaving base conditions
+                    $clone.children('alternative').remove();
+                    // Append conditions from this alternative to cloned case
+                    $clone.append($(this).children());
+                    for (var i = 0; i < this.attributes.length; i++) {
+                        $clone.attr(this.attributes[i].name, this.attributes[i].value);
+                    }
+                    $(this).attr
                 });
                 $case.remove();
             });
