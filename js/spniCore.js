@@ -1031,6 +1031,9 @@ function initialSetup () {
     loadTitleScreen();
     selectTitleCandy();
 
+    /* Attempt to detect broken images as caused by running SPNATI from an invalid archive. */
+    detectBrokenOffline();
+    
     /* Make sure that the config file is loaded before processing the
      *  opponent list, so that includedOpponentStatuses is populated.
      *
@@ -1263,7 +1266,7 @@ function loadConfigFile () {
 				includedOpponentStatuses[$(this).text()] = true;
 				console.log("Including", $(this).text(), "opponents");
 			});
-		}
+        }
 	});
 }
 
@@ -1284,6 +1287,42 @@ function loadGeneralCollectibles () {
 	});
 }
 
+/**
+ * Attempt to detect common ways of incorrectly running the offline version.
+ * Specifically, we check the following:
+ * - Can we load resources using XHR?
+ * - Have image LFS pointers been properly replaced with actual content?
+ * If either of these checks fail, the broken offline modal is shown.
+ */
+function detectBrokenOffline() {
+    $("#broken-offline-modal .section").hide();
+
+    $.ajax({
+        type: "GET",
+        url: "img/enter.png",
+        dataType: "text",
+        success: function (data) {
+            if (data.startsWith("version ")) {
+                /* Returned data is indicative of an LFS pointer file.
+                 * PNG files start with a different 8-byte signature.
+                 */
+                $("#broken-images-section").show();
+                $("#broken-offline-modal").modal('show');
+            }
+        },
+        error: function (jqXHR, status, err) {
+            $("#broken-xhr-section").show();
+            $("#broken-offline-modal").modal('show');
+        }
+    });
+
+    var img = new Image();
+    img.onerror = function () {
+        $("#broken-images-section").show();
+    }
+
+    img.src = "img/enter.png";
+}
 
 function enterTitleScreen() {
     $warningScreen.hide();
