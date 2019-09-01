@@ -953,7 +953,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                     for (var i = 0; i < this.attributes.length; i++) {
                         $clone.attr(this.attributes[i].name, this.attributes[i].value);
                     }
-                    $(this).attr
                 });
                 $case.remove();
             });

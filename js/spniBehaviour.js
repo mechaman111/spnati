@@ -262,7 +262,7 @@ function State($xml_or_state, parentCase, stage) {
             return checkStage(stage, $(this).attr('stage'));
         });
         if ($altImages.length > 0) {
-            this.image = $($altImages.get(getRandomNumber(0, altImages.length))).text();
+            this.image = $($altImages.get(getRandomNumber(0, $altImages.length))).text();
         }
     } else {
         this.rawDialogue = $xml.html();
