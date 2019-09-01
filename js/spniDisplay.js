@@ -1133,7 +1133,10 @@ OpponentDetailsDisplay.prototype.updateCollectiblesView = function () {
     if (!COLLECTIBLES_ENABLED || !this.opponent.has_collectibles || !this.opponent.collectibles) return;
     
     var cards = this.opponent.collectibles.map(function (collectible) {
-        if (collectible.hidden && !collectible.isUnlocked()) {
+        if (
+            (collectible.status && !includedOpponentStatuses[collectible.status]) ||
+            (collectible.hidden && !collectible.isUnlocked())
+        ) {
             return null;
         } else {
             return this.createCollectibleCard(collectible);
@@ -1185,6 +1188,11 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         
         opponent.endings.each(function (idx, elem) {
             var $elem = $(elem);
+
+            var status = $elem.attr('status');
+            if (status && !includedOpponentStatuses[status]) {
+                return;
+            }
             
             totalEndings += 1;
             if (save.hasEnding(opponent.id, $elem.text())) {
@@ -1231,7 +1239,15 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
 
     if (COLLECTIBLES_ENABLED && opponent.has_collectibles) {        
         var updateCollectiblesBtn = function () {
+            if (!opponent.has_collectibles) {
+                this.collectiblesField.removeClass('has-collectibles');
+            }
+
             var counts = opponent.collectibles.reduce(function (acc, collectible) {
+                if (collectible.status && !includedOpponentStatuses[collectible.status]) {
+                    return acc;
+                }
+
                 acc.total += 1;
                 if (collectible.isUnlocked()) acc.unlocked += 1;
                 

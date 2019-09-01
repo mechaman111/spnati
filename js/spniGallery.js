@@ -77,7 +77,8 @@ function unescapeHTML(in_text) {
 function Collectible(xmlElem, player) {
 	this.id = xmlElem.attr('id');
 	this.thumbnail = xmlElem.attr('thumbnail');
-    this.image = xmlElem.attr('img');
+	this.image = xmlElem.attr('img');
+	this.status = xmlElem.attr('status');
 	this.title = unescapeHTML(xmlElem.find('title').text());
 	this.subtitle = unescapeHTML(xmlElem.find('subtitle').text());	
 	this.unlock_hint = unescapeHTML(xmlElem.find('unlock').text());
@@ -171,6 +172,10 @@ Collectible.prototype.display = function () {
 };
 
 Collectible.prototype.listElement = function () {
+	if (this.status && !includedOpponentStatuses[this.status]) {
+		return null;
+	}
+	
     if (this.hidden && !this.isUnlocked()) {
         return null;
     }
@@ -272,7 +277,7 @@ function loadGalleryScreen(){
     $('.gallery-character-filter-option').detach();
     
     $('#collectible-character-filter').append(loadedOpponents.filter(function (opp) {
-        return opp && opp.has_collectibles
+        return opp && opp.has_collectibles;
     }).map(createFilterOption));
     
     $('#epilogue-character-filter').append(loadedOpponents.filter(function (opp) {
@@ -323,8 +328,15 @@ function updateCollectiblesScreen() {
     }
     
     loadedOpponents.forEach(function (opp) {
-        if (opp && opp.collectibles) {
-            if (filter && opp.id !== filter) return;
+		if (!opp) return;
+
+        if (opp.collectibles) {
+			if (!opp.has_collectibles) {
+				$('#collectible-character-filter [value=\"'+opp.id+'\"]').remove();
+				return;
+			}
+
+			if (filter && opp.id !== filter) return;
             
             opp.collectibles.forEach(function (item) {
                 var elem = item.listElement();

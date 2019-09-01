@@ -807,9 +807,13 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
 			var collectiblesArray = [];
 			$(xml).find('collectible').each(function (idx, elem) {
 				collectiblesArray.push(new Collectible($(elem), this));
-			}.bind(this));
-			
-			this.collectibles = collectiblesArray;
+            }.bind(this));
+            
+            this.collectibles = collectiblesArray;
+            
+            this.has_collectibles = this.collectibles.some(function (c) {
+                return !c.status || includedOpponentStatuses[c.status];
+            });
             
             if (onLoaded) onLoaded(this);
 		}.bind(this),
