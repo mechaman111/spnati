@@ -325,18 +325,17 @@ namespace Desktop
 			}
 		}
 
-		/// <summary>
-		/// Launches to a specific activity, opening the workspace if necessary
-		/// </summary>
-		/// <typeparam name="TRecord"></typeparam>
-		/// <typeparam name="TActivity"></typeparam>
-		/// <param name="record"></param>
-		/// <param name="parameters"></param>
-		public void Launch<TRecord, TActivity>(TRecord record, params object[] parameters) where TRecord : IRecord where TActivity : IActivity
+		public void Launch(LaunchParameters launchParameters)
 		{
-			bool changingWorkspace = ActiveWorkspace?.Record != (IRecord)record;
+			Launch(launchParameters.Record, launchParameters.Activity, launchParameters.Parameters);
+		}
 
-			if (!changingWorkspace && ActiveActivity?.GetType() == typeof(TActivity))
+		public void Launch(IRecord record, Type activityType, params object[] parameters)
+		{
+			Type recordType = record.GetType();
+			bool changingWorkspace = ActiveWorkspace?.Record != record;
+
+			if (!changingWorkspace && ActiveActivity?.GetType() == activityType)
 			{
 				//already active, so just pass new run parameters
 				ActiveActivity.UpdateParameters(parameters);
@@ -354,7 +353,7 @@ namespace Desktop
 				if (ActiveSidebarActivity != null && !ActiveSidebarActivity.CanDeactivate(args))
 					return;
 
-				workspace = FindWorkspace(typeof(TRecord), record.Key);
+				workspace = FindWorkspace(recordType, record.Key);
 				if (workspace == null)
 				{
 					//need to launch the workspace
@@ -367,7 +366,7 @@ namespace Desktop
 			}
 
 			//Activate the workspace and its first activity
-			IActivity activity = workspace.Find<TActivity>();
+			IActivity activity = workspace.Find(activityType);
 			if (activity == null)
 			{
 				throw new NotImplementedException("No support for launching activities into an open workspace yet.");
@@ -384,6 +383,18 @@ namespace Desktop
 					Activate(activity);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Launches to a specific activity, opening the workspace if necessary
+		/// </summary>
+		/// <typeparam name="TRecord"></typeparam>
+		/// <typeparam name="TActivity"></typeparam>
+		/// <param name="record"></param>
+		/// <param name="parameters"></param>
+		public void Launch<TRecord, TActivity>(TRecord record, params object[] parameters) where TRecord : IRecord where TActivity : IActivity
+		{
+			Launch(record, typeof(TActivity), parameters);
 		}
 
 		public void LaunchWorkspace<T>(T record, params object[] parameters) where T : IRecord
@@ -865,6 +876,20 @@ namespace Desktop
 		{
 			Reason = reason;
 			SaveData = true;
+		}
+	}
+
+	public class LaunchParameters
+	{
+		public IRecord Record { get; set; }
+		public Type Activity { get; set; }
+		public object[] Parameters { get; set; }
+
+		public LaunchParameters(IRecord record, Type activityType, params object[] parameters)
+		{
+			Record = record;
+			Activity = activityType;
+			Parameters = parameters;
 		}
 	}
 }

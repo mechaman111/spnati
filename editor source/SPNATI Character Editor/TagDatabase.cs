@@ -108,6 +108,7 @@ namespace SPNATI_Character_Editor
 		public static Tuple<string, List<Character>> GetSmallestGroup(string group, Character character)
 		{
 			List<string> tags = _characterGroups.Get(character, group);
+			if (tags == null) { return null; }
 			int min = int.MaxValue;
 			string minTag = null;
 			List<Character> minList = null;

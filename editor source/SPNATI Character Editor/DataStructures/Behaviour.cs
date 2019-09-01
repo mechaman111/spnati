@@ -151,17 +151,12 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Looks through the working cases to locate any Stage+Trigger combos that don't exist, and creates default cases for any missing combinations.
-		/// Triggers apply to one or more stages, and a case with no targeted dialogue must exist for each applicable stage
+		/// Generate an index of expected stage+tag combos
 		/// </summary>
-		/// <param name="character">Character this behavior belongs to</param>
-		public bool EnsureDefaults(Character character)
+		/// <returns></returns>
+		private Dictionary<string, HashSet<int>> GetRequiredLineIndex()
 		{
-			_character = character;
-			bool modified = false;
-
-			//Generate an index of expected stage+tag combos
-			int layers = character.Layers + Clothing.ExtraStages;
+			int layers = _character.Layers + Clothing.ExtraStages;
 			Dictionary<string, HashSet<int>> requiredLineIndex = new Dictionary<string, HashSet<int>>();
 			foreach (TriggerDefinition t in TriggerDatabase.Triggers)
 			{
@@ -170,16 +165,23 @@ namespace SPNATI_Character_Editor
 				HashSet<int> stages = new HashSet<int>();
 				for (int stage = 0; stage < layers; stage++)
 				{
-					if (TriggerDatabase.UsedInStage(t.Tag, character, stage))
+					if (TriggerDatabase.UsedInStage(t.Tag, _character, stage))
 					{
 						stages.Add(stage);
 					}
 				}
 				requiredLineIndex[t.Tag] = stages;
 			}
+			return requiredLineIndex;
+		}
 
-			//Loop through the cases and remove any satisfied tags from the index
-			foreach (var workingCase in character.Behavior._workingCases)
+		/// <summary>
+		/// Loops through the cases and removes any satisfied tags from the index
+		/// </summary>
+		/// <param name="requiredLineIndex"></param>
+		private void FilterFulfilledCases(Dictionary<string, HashSet<int>> requiredLineIndex)
+		{
+			foreach (var workingCase in GetWorkingCases())
 			{
 				if (workingCase.HasConditions)
 					continue; //A filtered case can't possibly be a default
@@ -205,6 +207,52 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Gets all cases containing default text
+		/// </summary>
+		/// <returns></returns>
+		public List<Case> GetDefaultCases()
+		{
+			List<Case> list = new List<Case>();
+			Dictionary<string, HashSet<int>> requiredLineIndex = GetRequiredLineIndex();
+			foreach (Case workingCase in GetWorkingCases())
+			{
+				if (workingCase.HasConditions)
+					continue; //A case with conditions can't possibly be a default
+				string tag = workingCase.Tag;
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
+				if (!trigger.Optional && !string.IsNullOrEmpty(trigger.DefaultText))
+				{
+					foreach (DialogueLine line in workingCase.Lines)
+					{
+						if (line.Text == trigger.DefaultText)
+						{
+							list.Add(workingCase);
+							break;
+						}
+					}
+				}
+			}
+			return list;
+		}
+
+		/// <summary>
+		/// Looks through the working cases to locate any Stage+Trigger combos that don't exist, and creates default cases for any missing combinations.
+		/// Triggers apply to one or more stages, and a case with no targeted dialogue must exist for each applicable stage
+		/// </summary>
+		/// <param name="character">Character this behavior belongs to</param>
+		public bool EnsureDefaults(Character character)
+		{
+			_character = character;
+			bool modified = false;
+
+			//Generate an index of expected stage+tag combos
+			Dictionary<string, HashSet<int>> requiredLineIndex = GetRequiredLineIndex();
+
+			//Loop through the cases and remove any satisfied tags from the index
+			FilterFulfilledCases(requiredLineIndex);
 
 			//Finally, add lines for whatever remains in the index
 			foreach (var kvp in requiredLineIndex)

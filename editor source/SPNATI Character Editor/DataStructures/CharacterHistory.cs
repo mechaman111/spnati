@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using static SPNATI_Character_Editor.Character;
 
 namespace SPNATI_Character_Editor
@@ -93,6 +94,7 @@ namespace SPNATI_Character_Editor
 		private Character _character;
 
 		private LineWork _workToday;
+		private float _fileSize = 0;
 
 		[JsonProperty("work")]
 		private List<LineWork> _work = new List<LineWork>();
@@ -183,6 +185,26 @@ namespace SPNATI_Character_Editor
 			{
 				return null;
 			}
+		}
+
+		public float GetTotalFileSize(bool forceCompute)
+		{
+			if (_fileSize == 0 || forceCompute)
+			{
+				long size = 0;
+				string dir = _character.GetDirectory();
+				DirectoryInfo directory = new DirectoryInfo(dir);
+				foreach (FileInfo file in directory.EnumerateFiles()
+					.Where(f => f.Extension == ".png" || f.Extension == ".gif"))
+				{
+					if (char.IsNumber(file.Name[0])) //only include images that start with a number. Assume others are for epilogues and shouldn't count towards the requirements
+					{
+						size += file.Length;
+					}
+				}
+				_fileSize = (float)Math.Round(size / 1048576f, 2);
+			}
+			return _fileSize;
 		}
 	}
 

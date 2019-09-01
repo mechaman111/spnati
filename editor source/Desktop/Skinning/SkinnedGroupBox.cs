@@ -10,6 +10,12 @@ namespace Desktop.Skinning
 			get { return SkinnedBackgroundType.Surface; }
 		}
 
+		protected override void OnCreateControl()
+		{
+			base.OnCreateControl();
+			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
+		}
+
 		public void OnUpdateSkin(Skin skin)
 		{
 			BackColor = skin.Surface.Normal;

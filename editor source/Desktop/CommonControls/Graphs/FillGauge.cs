@@ -73,9 +73,10 @@ namespace Desktop.CommonControls.Graphs
 
 		public void OnUpdateSkin(Skin skin)
 		{
-			_outline.Color = skin.Surface.GetBorderPen(VisualState.Normal, false, true).Color;
+			_outline.Color = skin.PrimaryWidget.Border;
 			_textBrush.Color = skin.GetForeColor(SkinnedBackgroundType.Background);
 			_invertedTextBrush.Color = _textBrush.Color.Invert();
+			_fillBrush.Color = skin.PrimaryForeColor;
 			Invalidate();
 		}
 
@@ -85,14 +86,14 @@ namespace Desktop.CommonControls.Graphs
 			if (ShowLimits)
 			{
 				string label = $"{Maximum}/{Maximum}";
-				int width = (int)g.MeasureString(label, _font).Width;
+				int width = (int)g.MeasureString(label, _font).Width + AreaPadding;
 				_graphBounds = new Rectangle(0, 0, Width - width - AreaPadding, Height - 1);
 			}
 			else
 			{
 				_graphBounds = new Rectangle(0, 0, Width - 1, Height - 1);
 			}
-			_limitsBounds = new Rectangle(_graphBounds.Right + AreaPadding, 0, Width - _graphBounds.Right, Height);
+			_limitsBounds = new Rectangle(_graphBounds.Right + AreaPadding, 0, Width - _graphBounds.Right - AreaPadding, Height);
 		}
 
 		private void FillGauge_Paint(object sender, PaintEventArgs e)

@@ -63,6 +63,21 @@ namespace Desktop
 			return null;
 		}
 
+		public IActivity Find(Type type)
+		{
+			foreach (KeyValuePair<WorkspacePane, List<IActivity>> kvp in Activities)
+			{
+				foreach (var activity in kvp.Value)
+				{
+					if (activity.GetType() == type)
+					{
+						return activity;
+					}
+				}
+			}
+			return null;
+		}
+
 		public override string ToString()
 		{
 			return Caption;

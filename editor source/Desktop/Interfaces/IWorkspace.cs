@@ -14,6 +14,7 @@ namespace Desktop
 		IActivity GetFirstActivity();
 		IActivity GetFirstSidebarActivity();
 		IActivity Find<T>() where T : IActivity;
+		IActivity Find(Type type);
 		void RemoveActivity(IActivity activity);
 		void Initialize();
 		string Caption { get; }

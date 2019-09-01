@@ -1,0 +1,260 @@
+﻿using Desktop;
+using SPNATI_Character_Editor.Activities;
+using SPNATI_Character_Editor.DataStructures;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Windows.Forms;
+
+namespace SPNATI_Character_Editor.Controls.Dashboards
+{
+	public partial class ChecklistWidget : UserControl, IDashboardWidget
+	{
+		private Character _character;
+
+		public ChecklistWidget()
+		{
+			InitializeComponent();
+		}
+
+		public void Initialize(Character character)
+		{
+			_character = character;
+			grpChecklist.Shield();
+		}
+
+		public IEnumerator DoWork()
+		{
+			bool skipMinor = false;
+			grpChecklist.Shield();
+			tasks.Clear();
+			CheckMetadata();
+			if (!CheckWardrobe())
+			{
+				grpChecklist.Unshield();
+				yield break;
+			}
+			CheckTags();
+			yield return true;
+
+			if (CheckGenericCases())
+			{
+				yield return true;
+				if (!CheckLineRequirements())
+				{
+					skipMinor = true;
+				}
+			}
+			else
+			{
+				skipMinor = true;
+			}
+
+			yield return true;			
+
+			CheckImageSizes();
+
+			yield return true;
+
+			if (!skipMinor)
+			{
+				CheckMarkers();
+				CheckSituations();
+				CheckSpelling();
+			}
+
+			grpChecklist.Unshield();
+			yield break;
+		}
+
+		private void CheckMetadata()
+		{
+			if (string.IsNullOrEmpty(_character.Label))
+			{
+				AddMetadataTask("Character has no label", "The label is what other characters call yours.");
+			}
+			if (string.IsNullOrEmpty(_character.Metadata.Portrait))
+			{
+				AddMetadataTask("Assign a starting portrait", "The portrait is the image that appears on the character selection screen.");
+			}
+			if (string.IsNullOrEmpty(_character.Metadata.Writer))
+			{
+				AddMetadataTask("Assign a writer", "Ensure proper credit is received in game.");
+			}
+			if (string.IsNullOrEmpty(_character.Metadata.Artist))
+			{
+				AddMetadataTask("Assign an artist", "Ensure proper credit is received in game.");
+			}
+		}
+
+		private void AddMetadataTask(string message)
+		{
+			AddMetadataTask(message, null);
+		}
+		private void AddMetadataTask(string message, string helpText)
+		{
+			AddTask(message, helpText, typeof(MetadataEditor));
+		}
+
+		private void AddTask(string message, string helpText, Type activityType)
+		{
+			ChecklistTask task = new ChecklistTask(message);
+			task.HelpText = helpText;
+			task.LaunchData = new LaunchParameters(_character, activityType);
+			tasks.AddTask(task);
+		}
+
+		private bool CheckWardrobe()
+		{
+			if (_character.Layers == 2 && _character.Wardrobe[0].Name == "final layer")
+			{
+				AddTask("Fill out wardrobe", "Filling out the character's stripping sequence is vital to everything else.", typeof(WardrobeEditor));
+				return false;
+			}
+			return true;
+		}
+
+		private void CheckTags()
+		{
+			if (_character.Tags.Count == 0)
+			{
+				AddTask("Fill out tags", "Tags describe your character's appearance and help other characters react intelligently to your character.", typeof(TagEditor));
+			}
+		}
+
+		private bool CheckGenericCases()
+		{
+			if (Config.SuppressDefaults) { return true; }
+			List<Case> cases = _character.Behavior.GetDefaultCases();
+			if (cases.Count > 0)
+			{
+				ChecklistTask task = new ChecklistTask("Replace generic placeholder dialogue");
+				task.ProgressBased = true;
+				int total = 0;
+				foreach (TriggerDefinition trigger in TriggerDatabase.Triggers)
+				{
+					if (trigger.Tag != "-" && !trigger.Optional && !string.IsNullOrEmpty(trigger.DefaultText))
+					{
+						for (int stage = 0; stage < _character.Layers + Clothing.ExtraStages; stage++)
+						{
+							if (TriggerDatabase.UsedInStage(trigger.Tag, _character, stage))
+							{
+								total++;
+							}
+						}
+					}
+				}
+
+				int finished = total;
+
+				foreach (Case workingCase in cases)
+				{
+					string tag = workingCase.Tag;
+					for (int stage = 0; stage < _character.Layers + Clothing.ExtraStages; stage++)
+					{
+						if (TriggerDatabase.UsedInStage(tag, _character, stage))
+						{
+							finished--;
+						}
+					}
+				}
+
+				task.Value = finished;
+				task.MaxValue = total;
+
+				task.HelpText = "Replacing placeholders gets your character to the bare minimum of line coverage.";
+				ValidationContext context = new ValidationContext(new Stage(cases[0].Stages[0]), cases[0], null);
+				task.LaunchData = new LaunchParameters(_character, typeof(DialogueEditor), context);
+				tasks.AddTask(task);
+				return false;
+			}
+			return true;
+		}
+
+		private bool CheckLineRequirements()
+		{
+			CharacterHistory history = CharacterHistory.Get(_character, false);
+			TestRequirements requirements = TestRequirements.Instance;
+
+			LineWork work = history.Current;
+			if (work.TotalLines < requirements.Lines)
+			{
+				AddLineTask("Write more lines!", $"You need a minimum of {requirements.Lines} lines to be eligible for being added to the game.", work.TotalLines, requirements.Lines);
+				return false;
+			}
+			if (work.TargetedCount < requirements.Targeted)
+			{
+				AddLineTask("Write lines to other characters", $"Games are more interesting when characters speak directly to each other.\r\n\r\nUse the Also Playing or Target conditions to direct dialogue towards another player.", work.TargetedCount, requirements.Targeted);
+				return false;
+			}
+			if (work.Targets.Count < requirements.UniqueTargets)
+			{
+				AddLineTask("Write lines to more characters", $"You need to target at least {requirements.UniqueTargets} unique characters to be eligible for being added to the game.", work.Targets.Count, requirements.UniqueTargets);
+				return false;
+			}
+			if (work.FilterCount < requirements.Filtered)
+			{
+				AddLineTask("Write filtered lines", $"Filtered lines are lines directed towards another character's tags (ex. a line directed towards a blonde).\r\nThese are important because targeting another character's appearance or personality traits ensures that your character will automatically have appropriate contextual dialogue for future characters.\r\n\r\nUse the Target > Target Tag condition to make a filtered line.", work.FilterCount, requirements.Filtered);
+				return false;
+			}
+
+			return true;
+		}
+
+		private void AddLineTask(string message, string helpText, int value, int max)
+		{
+			ChecklistTask task = new ChecklistTask(message);
+			task.HelpText = helpText;
+			task.ProgressBased = true;
+			task.Value = value;
+			task.MaxValue = max;
+			task.LaunchData = new LaunchParameters(_character, typeof(DialogueEditor));
+			tasks.AddTask(task);
+		}
+
+		private void CheckImageSizes()
+		{
+			CharacterHistory history = CharacterHistory.Get(_character, false);
+			TestRequirements requirements = TestRequirements.Instance;
+			float size = history.GetTotalFileSize(false);
+			if (size > requirements.SizeLimit)
+			{
+				AddTask("Compress images", $"Characters are allowed to use {requirements.SizeLimit}MB for non-epilogue images. Consider compressing your poses if you haven't yet in order to conserve space.", typeof(ScreenshotTaker));
+			}
+		}
+
+		private void CheckMarkers()
+		{
+			CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
+			if (editorData != null)
+			{
+				foreach (Marker marker in editorData.Markers.Markers)
+				{
+					if (!string.IsNullOrEmpty(marker.Name) && string.IsNullOrEmpty(marker.Description))
+					{
+						AddTask("Document markers", $"Documenting what your markers are used for helps you remember what each marker signifies and helps other authors use your markers appropriately.\r\n\r\n" +
+							$"Any markers that should be hidden from other authors should be given a \"private\" scope.", typeof(MarkerEditor));
+						break;
+					}
+				}
+			}
+		}
+
+		private void CheckSituations()
+		{
+			CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
+			if (editorData != null)
+			{
+				if (editorData.NoteworthySituations == null || editorData.NoteworthySituations.Count == 0)
+				{
+					AddTask("Call out \"must target\" situations", "Use the \"Call Out\" button for dialogue cases where something particularly interesting is happening that other characters should definitely react to.\r\n\r\n" +
+						"These situations will appear in other characters' Writing Aid, making it easy to get other characters to interact with yours." , typeof(DialogueEditor));
+				}
+			}
+		}
+
+		private void CheckSpelling()
+		{
+		}
+	}
+}

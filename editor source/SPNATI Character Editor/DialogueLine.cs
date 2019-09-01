@@ -50,9 +50,19 @@ namespace SPNATI_Character_Editor
 
 		[XmlIgnore]
 		public Dictionary<int, PoseMapping> StageImages { get; set; }
-		
-		private string _text;
+
+		/// <summary>
+		/// Text will be read from the XmlText but written to the &lt;text&gt; element
+		/// </summary>
 		[XmlText]
+		public string LegacyText
+		{
+			get { return null; } //XmlSerializer won't read this without a getter, so use a dummy to prevent writing it back out 
+			set { Text = value; }
+		}
+
+		private string _text;
+		[XmlElement("text")]
 		public string Text
 		{
 			get { return _text; }

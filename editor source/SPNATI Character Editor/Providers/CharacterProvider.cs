@@ -34,7 +34,7 @@ namespace SPNATI_Character_Editor.Providers
 			Character c = new Character();
 			c.FirstName = key;
 			c.Label = key;
-			c.FolderName = key;
+			c.FolderName = key.ToLower();
 
 			if (_characterContext == null)
 			{
@@ -45,6 +45,8 @@ namespace SPNATI_Character_Editor.Providers
 				c.Wardrobe.Add(new Clothing() { GenericName = "", Name = "final layer", Position = "lower", Type = "important" });
 				c.Wardrobe.Add(new Clothing() { GenericName = "", Name = "first layer", Position = "upper", Type = "important" });
 				c.Behavior.EnsureDefaults(c);
+
+				c.Intelligence.Add(new StageSpecificValue(0, "average"));
 
 				Serialization.ExportCharacter(c);
 				CharacterDatabase.Add(c);
