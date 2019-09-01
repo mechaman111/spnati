@@ -1435,7 +1435,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
                 && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, consecutiveLosses))
                 && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null))
-                && (ctr.notSaidMarker === undefined || !checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null));
+                && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null));
         });
         var hasUpperBound = (ctr.count.max !== null && ctr.count.max < matches.length);
         if (ctr.sayingMarker !== undefined || ctr.saying !== undefined) matches = matches.filter(function(p) {
@@ -1473,7 +1473,7 @@ Case.prototype.checkConditions = function (self, opp) {
          * a first chance to pick something to say. */
         if ((unwantedSayings.length || unwantedMarkers.length) && players.some(function(p) {
             return p.updatePending && (unwantedSayings.some(function(item) { return item[0] == p; })
-                                       || unwantedMakers.some(function(item) { return item[0] == p; }));
+                                       || unwantedMarkers.some(function(item) { return item[0] == p; }));
         })) {
             return false;
         }
@@ -1667,7 +1667,7 @@ Opponent.prototype.updateVolatileBehaviour = function () {
             var dependencies = p.chosenState.parentCase.volatileDependencies;
             return dependencies && dependencies.has(this);
         } else return false;
-    })) {
+    }, this)) {
         console.log("Player "+this.slot+" state is locked.");
         return;
     }
