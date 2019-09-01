@@ -282,6 +282,10 @@ function loadEpilogueData(player) {
     /* Returning true from this function adds the current epilogue to the list of selectable epilogues.
      * Conversely, returning false from this function will make the current epilogue not selectable.
      */
+    var epilogue_status = $(this).attr('status');
+    if (epilogue_status && !includedOpponentStatuses[epilogue_status]) {
+      return false;
+    }
 
     /* 'gender' attribute: the epilogue will only be selectable if the player character has the given gender, or if the epilogue is marked for 'any' gender. */
     var epilogue_gender = $(this).attr('gender');

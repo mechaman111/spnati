@@ -1052,6 +1052,11 @@ OpponentDetailsDisplay.prototype.updateEpiloguesView = function () {
     this.opponent.endings.each(function (idx, elem) {
         var $elem = $(elem);
         var title = $elem.text();
+
+        var status = $elem.attr('status');
+        if (status && !includedOpponentStatuses[status]) {
+            return;
+        }
         
         if(!groups.some(function (group) {
             if (group.every(isEquivalentEpilogue.bind(null, $elem))) {

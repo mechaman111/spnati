@@ -344,6 +344,11 @@ function loadGalleryEndings(){
 	for(var i=0; i<loadedOpponents.length; i++){
 		if (loadedOpponents[i] && loadedOpponents[i].ending) {
 			loadedOpponents[i].endings.each(function () {
+				var status = $(this).attr('status');
+				if (status && !includedOpponentStatuses[status]) {
+					return;
+				}
+
 				var gending = new GEnding(loadedOpponents[i], this);
 				allEndings.push(gending);
 			});
