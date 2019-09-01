@@ -183,8 +183,8 @@ function loadGameScreen () {
             p.commitBehaviourUpdate();
         }
         
-        if (p.allStates) {
-            p.chosenState = p.allStates[getRandomNumber(0, p.allStates.length)];
+        if (p.startStates && p.startStates.length) {
+            p.chosenState = p.startStates[getRandomNumber(0, p.startStates.length)];
             p.stateCommitted = false;
         }
     }.bind(this));

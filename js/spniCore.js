@@ -363,22 +363,17 @@ Player.prototype.resetState = function () {
          * This may be overridden by later updateBehaviour calls if
          * the player has (new-style) selected or game start case lines.
          */
-		var allStates = [];
-
-        /* Initialize reaction handling state. */
-        this.volatileMatches = [];
-        this.bestVolatileMatch = null;
-        this.currentTarget = null;
-        this.currentPriority = -1;
-        this.stateLockCount = 0;
-        this.stateCommitted = false;
-
-        this.xml.children('start').children('state').each(function () {
-            allStates.push(new State($(this)));
+        this.startStates = this.xml.children('start').children('state').get().map(function(el) {
+            return new State($(el));
         });
 
-        this.allStates = allStates;
-		this.chosenState = this.allStates[0];
+        /* Initialize reaction handling state. */
+        this.currentTarget = null;
+        this.currentTags = [];
+        this.currentPriority = -1;
+        this.stateCommitted = false;
+
+		this.chosenState = this.startStates[0];
 
         var appearance = this.default_costume;
         if (ALT_COSTUMES_ENABLED && this.alt_costume) {
