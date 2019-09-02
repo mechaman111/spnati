@@ -3417,11 +3417,15 @@ label {
     height: auto;
 }
 
+#epilogue-modal .modal-body-container {
+    overflow-y: auto;
+    max-height: 40rem;
+}
+
 #epilogue-list {
     list-style: none;
     text-align: centred;
     padding-left: 0;
-    margin-bottom: 10%;
 }
 
 .epilogue-entry {
@@ -3449,6 +3453,26 @@ label {
 .epilogue-entry.unlocked button::after {
     color: darkgreen;
     content: "\2714";
+}
+
+.epilogue-entry.unavailable {
+    margin: 0.1rem 0;
+}
+
+.epilogue-entry.unavailable .epilogue-title {
+    text-decoration: line-through;
+}
+
+.epilogue-entry.unavailable button::after {
+    content: " (Unavailable)";
+}
+
+.epilogue-entry.unavailable .epilogue-hint {
+    font-style: italic;
+}
+
+.epilogue-entry.unavailable .epilogue-hint::before {
+    content: "Hint: ";
 }
 
 .epilogue-viewport {
