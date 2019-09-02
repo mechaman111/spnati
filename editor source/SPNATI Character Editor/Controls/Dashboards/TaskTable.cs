@@ -1,8 +1,6 @@
-﻿using Desktop;
-using Desktop.Skinning;
+﻿using Desktop.Skinning;
 using SPNATI_Character_Editor.DataStructures;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -22,6 +20,8 @@ namespace SPNATI_Character_Editor.Controls
 			_rows.Clear();
 		}
 
+		public int Count { get { return _rows.Count; } }
+
 		/// <summary>
 		/// Adds a task
 		/// </summary>
@@ -31,6 +31,7 @@ namespace SPNATI_Character_Editor.Controls
 			row.Dock = DockStyle.Top;
 			pnlRecords.Controls.Add(row);
 			pnlRecords.Controls.SetChildIndex(row, 0);
+			_rows[task] = row;
 			SkinManager.Instance.ReskinControl(row, SkinManager.Instance.CurrentSkin);
 		}
 	}

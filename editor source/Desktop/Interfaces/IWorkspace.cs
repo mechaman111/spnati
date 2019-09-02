@@ -32,5 +32,8 @@ namespace Desktop
 		void SendMessage<T>(int message, T args);
 		bool IsSidebarExpanded { get; }
 		void ToggleSidebar(bool expanded);
+		void SetData(string key, object value);
+		T GetData<T>(string key);
+		bool AllowAutoStart(Type activityType);
 	}
 }

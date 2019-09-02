@@ -20,6 +20,13 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			grpHistory.Shield();
 		}
 
+		public bool IsVisible()
+		{
+			return Config.DevMode ||
+				string.IsNullOrEmpty(_character.Metadata.Writer) ||
+				Config.UserName == _character.Metadata.Writer;
+		}
+
 		public IEnumerator DoWork()
 		{
 			CharacterHistory history = CharacterHistory.Get(_character, false);

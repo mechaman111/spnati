@@ -82,11 +82,17 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void DoNextTask()
 		{
+			_taskTimer.Interval = TaskInterval;
+
 			if (_currentTask != null)
 			{
 				if (!_currentTask.MoveNext())
 				{
 					_currentTask = null;
+				}
+				else if (_currentTask.Current is int)
+				{
+					_taskTimer.Interval = (int)_currentTask.Current;
 				}
 			}
 			else
@@ -99,10 +105,20 @@ namespace SPNATI_Character_Editor.Activities
 				}
 
 				IDashboardWidget widget = _widgets[_currentTaskIndex];
-				_currentTask = widget.DoWork();
-				if (!_currentTask.MoveNext())
+
+				bool visible = widget.IsVisible();
+				ShowWidget(widget, visible);
+				if (visible)
 				{
-					_currentTask = null;
+					_currentTask = widget.DoWork();
+					if (!_currentTask.MoveNext())
+					{
+						_currentTask = null;
+					}
+					else if (_currentTask.Current is int)
+					{
+						_taskTimer.Interval = (int)_currentTask.Current;
+					}
 				}
 			}
 
@@ -122,8 +138,25 @@ namespace SPNATI_Character_Editor.Activities
 			}
 		}
 
-		private void HideWidget(Control widget)
+		private void ShowWidget(IDashboardWidget widget, bool visible)
 		{
+			Control ctl = widget as Control;
+			if (ctl != null)
+			{
+				SplitterPanel parent = ctl.Parent as SplitterPanel;
+				if (parent != null)
+				{
+					SplitContainer container = parent.Parent as SplitContainer;
+					if (container.Panel1 == parent)
+					{
+						container.Panel1Collapsed = !visible;
+					}
+					else if (container.Panel2 == parent)
+					{
+						container.Panel2Collapsed = !visible;
+					}
+				}
+			}
 		}
 	}
 }

@@ -543,6 +543,27 @@ namespace SPNATI_Character_Editor
 			get { return GetString("tinify"); }
 			set { Set("tinify", value); }
 		}
+
+		#region
+		//Dashboard
+		public static bool EnableDashboard
+		{
+			get { return !GetBoolean("nodashboard"); }
+			set { Set("nodashboard", !value); }
+		}
+
+		public static bool EnableDashboardSpellCheck
+		{
+			get { return !GetBoolean("nodashboardspell"); }
+			set { Set("nodashboardspell", !value); }
+		}
+
+		public static bool EnableDashboardValidation
+		{
+			get { return !GetBoolean("nodashboardvalidation"); }
+			set { Set("nodashboardvalidation", !value); }
+		}
+		#endregion
 	}
 
 	public static class Settings

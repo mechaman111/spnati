@@ -35,6 +35,7 @@ namespace SPNATI_Character_Editor.Providers
 			c.FirstName = key;
 			c.Label = key;
 			c.FolderName = key.ToLower();
+			c.IsNew = true;
 
 			if (_characterContext == null)
 			{

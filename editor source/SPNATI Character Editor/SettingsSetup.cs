@@ -38,6 +38,9 @@ namespace SPNATI_Character_Editor
 			valLifetime.Value = Config.BackupLifeTime;
 			panelSnapshot.Enabled = Config.BackupEnabled;
 			txtTinify.Text = Config.TinifyKey;
+			chkDashboard.Checked = Config.EnableDashboard;
+			chkChecklistSpell.Checked = Config.EnableDashboardSpellCheck;
+			chkChecklistValidation.Checked = Config.EnableDashboardValidation;
 
 			HashSet<string> pauses = Config.AutoPauseDirectives;
 			foreach (DirectiveDefinition def in Definitions.Instance.Get<DirectiveDefinition>())
@@ -133,6 +136,9 @@ namespace SPNATI_Character_Editor
 			Config.BackupPeriod = (int)valFrequency.Value;
 			Config.BackupLifeTime = (int)valLifetime.Value;
 			Config.TinifyKey = txtTinify.Text;
+			Config.EnableDashboard = chkDashboard.Checked;
+			Config.EnableDashboardSpellCheck = chkChecklistSpell.Checked;
+			Config.EnableDashboardValidation = chkChecklistValidation.Checked;
 
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)
@@ -259,6 +265,11 @@ namespace SPNATI_Character_Editor
 				MessageBox.Show(ex.Message, "Verify Tinify API Key", MessageBoxButtons.OK);
 			}
 			Cursor = Cursors.Default;
+		}
+
+		private void chkDashboard_CheckedChanged(object sender, EventArgs e)
+		{
+			grpChecklist.Enabled = chkDashboard.Checked;
 		}
 	}
 }

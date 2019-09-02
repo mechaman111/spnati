@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.IO;
-using System.Linq;
+﻿using System.Collections;
 using System.Text;
 using System.Windows.Forms;
 
@@ -20,6 +17,11 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 		{
 			_character = character;
 			grpRequirements.Shield();
+		}
+
+		public bool IsVisible()
+		{
+			return true;
 		}
 
 		public IEnumerator DoWork()

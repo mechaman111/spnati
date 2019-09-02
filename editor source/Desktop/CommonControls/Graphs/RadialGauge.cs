@@ -27,14 +27,14 @@ namespace Desktop.CommonControls
 		public string Caption
 		{
 			get { return _caption; }
-			set { _caption = value; Invalidate(); }
+			set { _caption = value; Invalidate(true); }
 		}
 
 		private string _unit = "";
 		public string Unit
 		{
 			get { return _unit; }
-			set { _unit = value; Invalidate(); }
+			set { _unit = value; Invalidate(true); }
 		}
 
 		private bool _capacityMode;
@@ -48,7 +48,7 @@ namespace Desktop.CommonControls
 				{
 					_pen.Color = SkinManager.Instance.CurrentSkin.SecondaryColor.GetColor(VisualState.Normal, false, true);
 				}
-				Invalidate();
+				Invalidate(true);
 			}
 		}
 		private bool _flippedCapacity;
@@ -58,7 +58,7 @@ namespace Desktop.CommonControls
 			set
 			{
 				_flippedCapacity = value;
-				Invalidate();
+				Invalidate(true);
 			}
 		}
 
@@ -68,13 +68,13 @@ namespace Desktop.CommonControls
 		public decimal Minimum
 		{
 			get { return _min; }
-			set { _min = Math.Min(value, _max - 1); Invalidate(); }
+			set { _min = Math.Min(value, _max - 1); Invalidate(true); }
 		}
 		private decimal _max = 100;
 		public decimal Maximum
 		{
 			get { return _max; }
-			set { _max = Math.Max(value, _min + 1); Invalidate(); }
+			set { _max = Math.Max(value, _min + 1); Invalidate(true); }
 		}
 		private decimal _previousValue = 0;
 		private decimal _value = 0;
@@ -89,7 +89,7 @@ namespace Desktop.CommonControls
 					_value = value;
 					_animator.Reset();
 					_animator.StartAnimation(AnimationDirection.In);
-					Invalidate();
+					Invalidate(true);
 				}
 			}
 		}
@@ -105,12 +105,12 @@ namespace Desktop.CommonControls
 		protected override void OnResize(EventArgs e)
 		{
 			base.OnResize(e);
-			Invalidate();
+			Invalidate(true);
 		}
 
 		private void _animator_OnUpdate(object sender, float e)
 		{
-			Invalidate();
+			Invalidate(true);
 		}
 
 		private void RadialGauge_Load(object sender, EventArgs e)
@@ -140,7 +140,7 @@ namespace Desktop.CommonControls
 			if (!string.IsNullOrEmpty(Caption))
 			{
 				captionHeight = (int)g.MeasureString(Caption, _headerFont).Height;
-				g.DrawString(Caption, _headerFont, _headerBrush, new Rectangle(0, 0, Width, captionHeight), _center);
+				g.DrawString(Caption, _headerFont, _headerBrush, new Rectangle(0, 0, panel.Width, captionHeight), _center);
 			}
 
 			string label = null;
@@ -160,15 +160,15 @@ namespace Desktop.CommonControls
 			int labelHeight = (int)g.MeasureString(label, _tickFont).Height + unitHeight;
 
 			int arcTop = radius + captionHeight;
-			int arcSize = Math.Max(1, Width - PenWidth - 1);
-			int arcHeight = Math.Max(1, (Height - arcTop - labelHeight) * 2);
+			int arcSize = Math.Max(1, panel.Width - PenWidth - 1);
+			int arcHeight = Math.Max(1, (panel.Height - arcTop - labelHeight) * 2);
 			int arcBottom = captionHeight + arcHeight / 2;
 			g.DrawArc(_backPen, radius, arcTop, arcSize, arcHeight, 180, 180);
 
 			Skin skin = SkinManager.Instance.CurrentSkin;
 
 			float height = g.MeasureString(Maximum.ToString(), _tickFont).Height;
-			Rectangle textRect = new Rectangle(0, arcBottom + radius, Width, (int)height);
+			Rectangle textRect = new Rectangle(0, arcBottom + radius, panel.Width, (int)height);
 			g.DrawString(Minimum.ToString(), _tickFont, _tickBrush, textRect, _leftAlign);
 			g.DrawString(Maximum.ToString(), _tickFont, _tickBrush, textRect, _rightAlign);
 
@@ -189,10 +189,10 @@ namespace Desktop.CommonControls
 			float angle = amount * 180;
 			g.DrawArc(_pen, radius, arcTop, arcSize, arcHeight, 180, angle);
 			int labelTop = (int)(arcTop + (arcBottom - arcTop) * 0.33f);
-			g.DrawString(label, _font, _fontBrush, new Rectangle(0, labelTop, Width, arcBottom - arcTop), new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+			g.DrawString(label, _font, _fontBrush, new Rectangle(0, labelTop, panel.Width, arcBottom - arcTop), new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
 			if (!string.IsNullOrEmpty(Unit) && !ShowPercentage)
 			{
-				g.DrawString(Unit.ToString(), _tickFont, _fontBrush, new Rectangle(0, labelTop + (arcBottom - arcTop) / 2 + labelHeight - unitHeight, Width, unitHeight), new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Near });
+				g.DrawString(Unit.ToString(), _tickFont, _fontBrush, new Rectangle(0, labelTop + (arcBottom - arcTop) / 2 + labelHeight - unitHeight, panel.Width, unitHeight), new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Near });
 			}
 
 			g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;

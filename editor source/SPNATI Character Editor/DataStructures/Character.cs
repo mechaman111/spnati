@@ -42,6 +42,12 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		/// <summary>
+		/// Set during session where the character was initially created
+		/// </summary>
+		[XmlIgnore]
+		public bool IsNew { get; set; }
+
 		[XmlIgnore]
 		public PoseMap PoseLibrary;
 

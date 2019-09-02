@@ -547,7 +547,10 @@ namespace Desktop
 			{
 				foreach (var type in activities.Values)
 				{
-					CreateActivityInWorkspace(ws, type);
+					if (ws.AllowAutoStart(type))
+					{
+						CreateActivityInWorkspace(ws, type);
+					}
 				}
 			}
 		}

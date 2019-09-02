@@ -1,9 +1,13 @@
 ﻿using Desktop;
+using Desktop.Skinning;
 using SPNATI_Character_Editor.Activities;
 using SPNATI_Character_Editor.DataStructures;
+using SPNATI_Character_Editor.Services;
+using SPNATI_Character_Editor.Workspaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls.Dashboards
@@ -11,6 +15,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 	public partial class ChecklistWidget : UserControl, IDashboardWidget
 	{
 		private Character _character;
+		private Pen _checkmark = new Pen(Color.Green, 20);
 
 		public ChecklistWidget()
 		{
@@ -23,8 +28,16 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			grpChecklist.Shield();
 		}
 
+		public bool IsVisible()
+		{
+			return Config.DevMode ||
+				string.IsNullOrEmpty(_character.Metadata.Writer) ||
+				Config.UserName == _character.Metadata.Writer;
+		}
+
 		public IEnumerator DoWork()
 		{
+			pnlGood.Visible = false;
 			bool skipMinor = false;
 			grpChecklist.Shield();
 			tasks.Clear();
@@ -35,11 +48,11 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				yield break;
 			}
 			CheckTags();
-			yield return true;
+			yield return 100;
 
 			if (CheckGenericCases())
 			{
-				yield return true;
+				yield return 100;
 				if (!CheckLineRequirements())
 				{
 					skipMinor = true;
@@ -50,17 +63,44 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				skipMinor = true;
 			}
 
-			yield return true;			
+			yield return 100;			
 
 			CheckImageSizes();
 
-			yield return true;
+			yield return 100;
 
 			if (!skipMinor)
 			{
 				CheckMarkers();
 				CheckSituations();
-				CheckSpelling();
+				grpChecklist.Unshield();
+
+				yield return 500;
+				grpChecklist.Shield();
+				bool result = CheckSpelling();
+				grpChecklist.Unshield();
+				if (false && !result)
+				{
+					yield break;
+				}
+				yield return 2000;
+				grpChecklist.Shield();
+				result = CheckValidation();
+				grpChecklist.Unshield();
+				if (false && !result)
+				{
+					yield break;
+				}
+
+				foreach (int delay in CheckMustTargets())
+				{
+					yield return delay;
+				}
+			}
+
+			if (tasks.Count == 0)
+			{
+				pnlGood.Visible = true;
 			}
 
 			grpChecklist.Unshield();
@@ -96,11 +136,11 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			AddTask(message, helpText, typeof(MetadataEditor));
 		}
 
-		private void AddTask(string message, string helpText, Type activityType)
+		private void AddTask(string message, string helpText, Type activityType, params object[] runParameters)
 		{
 			ChecklistTask task = new ChecklistTask(message);
 			task.HelpText = helpText;
-			task.LaunchData = new LaunchParameters(_character, activityType);
+			task.LaunchData = new LaunchParameters(_character, activityType, runParameters);
 			tasks.AddTask(task);
 		}
 
@@ -226,7 +266,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 		private void CheckMarkers()
 		{
 			CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
-			if (editorData != null)
+			if (editorData != null && editorData.Markers != null)
 			{
 				foreach (Marker marker in editorData.Markers.Markers)
 				{
@@ -253,8 +293,100 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			}
 		}
 
-		private void CheckSpelling()
+		private bool CheckSpelling()
 		{
+			if (!Config.EnableDashboardSpellCheck)
+			{
+				return true;
+			}
+			IWorkspace ws = Shell.Instance.GetWorkspace(_character);
+			if (ws != null)
+			{
+				SpellCheckerService spellchecker = ws.GetData<SpellCheckerService>(CharacterWorkspace.SpellCheckerService);
+				spellchecker?.Run();
+				if (spellchecker.RemainingMisspellings > 0)
+				{
+					ChecklistTask task = new ChecklistTask($"Run Spell Check ({spellchecker.RemainingMisspellings})");
+					task.HelpText = "You have some potentially misspelled words. For false positives (like \"ummmmmmmm\"), considering adding them to the dictionary to prevent this message from appearing again.";
+					task.LaunchData = new LaunchParameters(_character, typeof(SpellCheck));
+					tasks.AddTask(task);
+					return false;
+				}
+			}
+			return true;
+		}
+
+		private bool CheckValidation()
+		{
+			if (!Config.EnableDashboardValidation)
+			{
+				return true;
+			}
+			List<ValidationError> warnings;
+			CharacterValidator.Validate(_character, out warnings);
+			int count = 0;
+			foreach (ValidationError error in warnings)
+			{
+				if (error.Level > ValidationFilterLevel.MissingTargets)
+				{
+					count++;
+				}
+			}
+			if (count > 0)
+			{
+				ChecklistTask task = new ChecklistTask($"Resolve validator warnings ({count})");
+				task.HelpText = "The Character Validator performs general QA of your character and helps catch problems before they reach the game.";
+				task.LaunchData = new LaunchParameters(_character, typeof(ValidateActivity));
+				tasks.AddTask(task);
+				return false;
+			}
+			return true;
+		}
+
+		private IEnumerable<int> CheckMustTargets()
+		{
+			//Disabled for now because figuring out if you've responded to a situation requires building that character's working cases, so this would cause
+			//everybody to do so right away at startup.
+			yield break;
+
+			//foreach (Character c in CharacterDatabase.Characters)
+			//{
+			//	if (c.FolderName == "human" || c == _character)
+			//	{
+			//		continue;
+			//	}
+			//	CharacterEditorData editorData = CharacterDatabase.GetEditorData(c);
+			//	if (editorData != null && editorData.NoteworthySituations.Count > 0)
+			//	{
+			//		for (int i = 0; i < editorData.NoteworthySituations.Count; i++)
+			//		{
+			//			if (editorData.NoteworthySituations[i].Priority == SituationPriority.MustTarget && !WritingAid.HasResponded(c, _character, editorData.NoteworthySituations[i]))
+			//			{
+			//				AddTask("Respond to Must Target situations", "There are unanswered \"must targets\" from other characters. Failing to respond to these will make your character appear aloof when they occur.\r\n\r\n" +
+			//					"To respond to Must Target situations, use the Writing Aid and filter the priority to Must Target.", typeof(WritingAid), SituationPriority.MustTarget);
+			//				yield break;
+			//			}
+			//		}
+			//	}
+			//	yield return 50;
+			//}
+			//yield break;
+		}
+
+		private void pnlGood_Paint(object sender, PaintEventArgs e)
+		{
+			const int CheckSize = 200;
+
+			Graphics g = e.Graphics;
+			g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+			_checkmark.Color = SkinManager.Instance.CurrentSkin.GoodForeColor;
+			g.DrawLines(_checkmark, new PointF[] {
+				new PointF(pnlGood.Width / 2 - CheckSize / 2, pnlGood.Height / 2),
+				new PointF(pnlGood.Width / 2, pnlGood.Height / 1.5f),
+				new PointF(pnlGood.Width / 2 + CheckSize / 2, pnlGood.Height / 2 - CheckSize / 2),
+			});
+
+			g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
 		}
 	}
 }

@@ -23,6 +23,8 @@ namespace Desktop
 			}
 		}
 
+		private Dictionary<string, object> _storedData = new Dictionary<string, object>();
+
 		private void Workspace_OnDirtyChanged(object sender, bool dirty)
 		{
 			Shell.Instance.SetDirty(this, dirty);
@@ -35,6 +37,11 @@ namespace Desktop
 		public IActivity ActiveActivity { get; set; }
 		public IActivity ActiveSidebarActivity { get; set; }
 		public Dictionary<WorkspacePane, List<IActivity>> Activities = new Dictionary<WorkspacePane, List<IActivity>>();
+
+		public virtual bool AllowAutoStart(Type activityType)
+		{
+			return true;
+		}
 
 		public IActivity GetFirstActivity()
 		{
@@ -189,6 +196,15 @@ namespace Desktop
 				((_record as IDirtiable).OnDirtyChanged) -= Workspace_OnDirtyChanged;
 			}
 			Activities.Clear();
+
+			foreach (object obj in _storedData.Values)
+			{
+				if (obj is IDisposable)
+				{
+					((IDisposable)obj).Dispose();
+				}
+			}
+			_storedData.Clear();
 		}
 
 		public bool ActivateActivity(IActivity activity)
@@ -250,6 +266,24 @@ namespace Desktop
 		public void ToggleSidebar(bool expanded)
 		{
 			Control.ToggleSidebar(expanded);
+		}
+
+		public void SetData(string key, object value)
+		{
+			_storedData[key] = value;
+		}
+
+		public T GetData<T>(string key)
+		{
+			object value;
+			if (_storedData.TryGetValue(key, out value))
+			{
+				return (T)value;
+			}
+			else
+			{
+				return default(T);
+			}
 		}
 	}
 }

@@ -22,6 +22,19 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			grpPartners.Shield();
 		}
 
+		public bool IsVisible()
+		{
+			foreach (CharacterTag tag in _character.Tags)
+			{
+				Tag def = TagDatabase.GetTag(tag.Tag);
+				if (def != null && def.Group == "Source Material")
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
 		public IEnumerator DoWork()
 		{
 			//Figure out which source material tag has the most characters in common
