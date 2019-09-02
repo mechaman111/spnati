@@ -258,7 +258,7 @@ function State($xml_or_state, parentCase, stage) {
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
     if (this.rawDialogue = $xml.children('text').html()) {
-        var $altImages = $xml.children('img').filter(function() {
+        var $altImages = $xml.children('image').filter(function() {
             return checkStage(stage, $(this).attr('stage'));
         });
         if ($altImages.length > 0) {
