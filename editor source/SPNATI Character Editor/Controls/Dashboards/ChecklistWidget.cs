@@ -75,27 +75,37 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				CheckSituations();
 				grpChecklist.Unshield();
 
-				yield return 500;
-				grpChecklist.Shield();
-				bool result = CheckSpelling();
-				grpChecklist.Unshield();
-				if (false && !result)
+				if (Config.EnableDashboardSpellCheck)
 				{
-					yield break;
+					yield return 500;
+					grpChecklist.Shield();
+					bool result = CheckSpelling();
+					grpChecklist.Unshield();
+					if (false && !result)
+					{
+						yield break;
+					}
 				}
-				yield return 2000;
-				grpChecklist.Shield();
-				result = CheckValidation();
-				grpChecklist.Unshield();
-				if (false && !result)
+				if (Config.EnableDashboardValidation)
 				{
-					yield break;
+					yield return 2000;
+					grpChecklist.Shield();
+					bool result = CheckValidation();
+					grpChecklist.Unshield();
+
+					if (false && !result)
+					{
+						yield break;
+					}
 				}
 
 				foreach (int delay in CheckMustTargets())
 				{
 					yield return delay;
 				}
+
+				grpChecklist.Shield();
+				CheckUntargeted();
 			}
 
 			if (tasks.Count == 0)
@@ -371,6 +381,34 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			//	yield return 50;
 			//}
 			//yield break;
+		}
+
+		private void CheckUntargeted()
+		{
+			CharacterHistory history = CharacterHistory.Get(_character, false);
+			LineWork current = history.Current;
+			List<Character> untargetedCharacters = new List<Character>();
+			foreach (Character c in CharacterDatabase.Characters)
+			{
+				if (c == _character || c.FolderName == "human") { continue; }
+				CharacterEditorData editorData = CharacterDatabase.GetEditorData(c);
+				if (editorData.NoteworthySituations.Count > 0 && current.Targets.Find(t => t.Target == c.FolderName) == null)
+				{
+					string message;
+					if (!string.IsNullOrEmpty(c.Metadata.Writer))
+					{
+						message = $"{c.Metadata.Writer} took the time to call out some important dialogue for {c}";
+					}
+					else
+					{
+						message = $"{c} has had some noteworthy situations called out";
+					}
+					message += $", but you haven't written anything to acknowledge their existence.\r\n\r\n" +
+						"Use the Writing Aid to write a line towards {c}.";
+					AddTask($"{c} is feeling neglected.", message, typeof(WritingAid), c);
+					return;
+				}
+			}
 		}
 
 		private void pnlGood_Paint(object sender, PaintEventArgs e)

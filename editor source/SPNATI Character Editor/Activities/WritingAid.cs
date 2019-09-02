@@ -33,8 +33,20 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			InitializeComponent();
 
+			recFilter.RecordType = typeof(Character);
+			recFilter.RecordFilter = FilterRecords;
+
 			cboPriority.Items.AddRange(new string[] { "- All -", "Must Target", "Noteworthy", "FYI" });
 			cboPriority.SelectedIndex = 0;
+		}
+
+		private bool FilterRecords(IRecord record)
+		{
+			if (record == _character || record.Key == "human")
+			{
+				return false;
+			}
+			return true;
 		}
 
 		public override string Caption
@@ -44,10 +56,16 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnParametersUpdated(params object[] parameters)
 		{
-			if (parameters.Length >= 1 && parameters[0] is SituationPriority)
+			if (parameters.Length >= 1)
 			{
-				cboPriority.SelectedIndex = (int)parameters[0];
-
+				if (parameters[0] is SituationPriority)
+				{
+					cboPriority.SelectedIndex = (int)parameters[0];
+				}
+				else if (parameters[0] is Character)
+				{
+					recFilter.Record = parameters[0] as Character;
+				}
 			}
 			base.OnParametersUpdated(parameters);
 		}
@@ -74,20 +92,17 @@ namespace SPNATI_Character_Editor.Activities
 			splitContainer1.Panel2Collapsed = true;
 			_maxSuggestions = 0;
 
-			cboFilter.Items.Add("- All - ");
 			foreach (Character c in CharacterDatabase.Characters)
 			{
 				if (c.FolderName == "human" || c == _character)
 				{
 					continue;
 				}
-				cboFilter.Items.Add(c);
-
+				
 				CharacterEditorData editorData = CharacterDatabase.GetEditorData(c);
 				_maxSuggestions += editorData.NoteworthySituations.Count;
 			}
-			cboFilter.Sorted = true;
-			cboFilter.SelectedIndex = 0;
+			GenerateSuggestions();
 		}
 
 		protected override void OnActivate()
@@ -97,7 +112,16 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void cboFilter_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if(!_activated)
+			if (!_activated)
+			{
+				return;
+			}
+			GenerateSuggestions();
+		}
+
+		private void recFilter_RecordChanged(object sender, Desktop.CommonControls.RecordEventArgs e)
+		{
+			if (!_activated)
 			{
 				return;
 			}
@@ -124,7 +148,7 @@ namespace SPNATI_Character_Editor.Activities
 			int suggestionCount = (int)valSuggestions.Value;
 			int max = Math.Min(_maxSuggestions, suggestionCount);
 
-			Character filter = cboFilter.SelectedItem as Character;
+			Character filter = recFilter.Record as Character;
 			Character currentCharacter = filter;
 			CharacterEditorData editorData = null;
 			if (filter != null)
@@ -373,14 +397,12 @@ namespace SPNATI_Character_Editor.Activities
 			GenerateSuggestions();
 		}
 
-
 		private void ChkFilter_CheckedChanged(object sender, EventArgs e)
 		{
 			_showExisting = chkFilter.Checked;
 			Config.Set(ShowSuggestionSetting, _showExisting);
 			GenerateSuggestions();
 		}
-
 
 		private void cmdJumpToDialogue_Click(object sender, EventArgs e)
 		{
