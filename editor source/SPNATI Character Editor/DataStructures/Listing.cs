@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.ComponentModel;
+using System.Xml;
 
 namespace SPNATI_Character_Editor
 {
@@ -32,6 +33,12 @@ namespace SPNATI_Character_Editor
 		[XmlArray("groups")]
 		[XmlArrayItem("group")]
 		public List<Group> Groups = new List<Group>();
+
+		[XmlAnyAttribute]
+		public List<XmlAttribute> ExtraAttributes;
+
+		[XmlAnyElement]
+		public List<XmlElement> ExtraXml;
 
 		public OpponentStatus GetCharacterStatus(string name)
 		{
@@ -73,6 +80,12 @@ namespace SPNATI_Character_Editor
 		[XmlText]
 		public string Name;
 
+		[XmlAnyAttribute]
+		public List<XmlAttribute> ExtraAttributes;
+
+		[XmlAnyElement]
+		public List<XmlElement> ExtraXml;
+
 		public Opponent()
 		{
 
@@ -100,6 +113,14 @@ namespace SPNATI_Character_Editor
 		public string Opponent3;
 		[XmlAttribute("opp4")]
 		public string Opponent4;
+		[XmlAttribute("background")]
+		public string Background;
+
+		[XmlAnyAttribute]
+		public List<XmlAttribute> ExtraAttributes;
+
+		[XmlAnyElement]
+		public List<XmlElement> ExtraXml;
 
 		public Group()
 		{

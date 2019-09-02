@@ -21,6 +21,15 @@ namespace SPNATI_Character_Editor.DataStructures
 			set { Set(value); }
 		}
 
+		[EnumControl(DisplayName = "Status", Description = "Where the collectible is available", GroupOrder = 2, ValueType = typeof(OpponentStatus))]
+		[DefaultValue(OpponentStatus.Main)]
+		[XmlAttribute("status")]
+		public OpponentStatus Status
+		{
+			get { return Get<OpponentStatus>(); }
+			set { Set(value); }
+		}
+
 		[FileSelect(DisplayName = "Image", Description = "Image when viewing the collectible", GroupOrder = 40)]
 		[DefaultValue("")]
 		[XmlAttribute("img")]

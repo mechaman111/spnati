@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Xml.Serialization;
 
 namespace Desktop
 {
@@ -8,9 +9,10 @@ namespace Desktop
 	/// </summary>
 	public static class PropertyTypeInfo
 	{
-		public static DualKeyDictionary<Type, string, Type> _mapping = new DualKeyDictionary<Type, string, Type>();
-		public static DualKeyDictionary<Type, string, FieldInfo> _fieldMapping = new DualKeyDictionary<Type, string, FieldInfo>();
-		public static DualKeyDictionary<Type, string, MemberInfo> _memberMapping = new DualKeyDictionary<Type, string, MemberInfo>();
+		private static DualKeyDictionary<Type, string, Type> _mapping = new DualKeyDictionary<Type, string, Type>();
+		private static DualKeyDictionary<Type, string, FieldInfo> _fieldMapping = new DualKeyDictionary<Type, string, FieldInfo>();
+		private static DualKeyDictionary<Type, string, MemberInfo> _memberMapping = new DualKeyDictionary<Type, string, MemberInfo>();
+		private static DualKeyDictionary<Type, string, string> _enumNames = new DualKeyDictionary<Type, string, string>();
 
 		public static Type GetType(Type type, string property)
 		{
@@ -52,6 +54,31 @@ namespace Desktop
 				}
 			}
 			return mi;
+		}
+
+		public static string GetSerializedEnumValue(Type type, string value)
+		{
+			string name = _enumNames.Get(type, value);
+			if (name == null)
+			{
+				MemberInfo[] mi = type.GetMember(value);
+				if (mi.Length > 0)
+				{
+					XmlEnumAttribute enumAttribute = mi[0].GetCustomAttribute<XmlEnumAttribute>();
+					if (enumAttribute != null)
+					{
+						value = enumAttribute.Name;
+						_enumNames.Set(type, value, value);
+						return value;
+					}
+				}
+				_enumNames.Set(type, value, value);
+				return value;
+			}
+			else
+			{
+				return name;
+			}
 		}
 	}
 }

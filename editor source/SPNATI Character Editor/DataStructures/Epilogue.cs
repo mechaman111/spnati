@@ -51,6 +51,10 @@ namespace SPNATI_Character_Editor
 		[XmlElement("title")]
 		public string Title = "New Ending";
 
+		[EnumControl(DisplayName = "Status", Description = "Where the epilogue is available", GroupOrder = 1, ValueType = typeof(OpponentStatus))]
+		[XmlAttribute("status")]
+		public OpponentStatus Status;
+
 		[XmlElement("scene")]
 		public List<Scene> Scenes = new List<Scene>();
 

@@ -1,4 +1,5 @@
-﻿using Desktop.CommonControls;
+﻿using Desktop;
+using Desktop.CommonControls;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -154,6 +155,10 @@ namespace SPNATI_Character_Editor.IO
 					if (field.FieldType == typeof(bool))
 					{
 						value = value.ToLowerInvariant();
+					}
+					else if (objValue is Enum)
+					{
+						value = PropertyTypeInfo.GetSerializedEnumValue(objValue.GetType(), objValue.ToString());
 					}
 					writer.WriteAttributeString(attribute.AttributeName, value);
 					continue;
