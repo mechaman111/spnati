@@ -22,7 +22,7 @@ def getRelevantStagesForTrigger(tag, layers):
         return (layers, layers)
     if tag in ('masturbating', 'heavy_masturbating', 'finishing_masturbating'):
         return (layers + 1, layers + 1)
-    if tag in ('finished_masturbating', 'game_over_defeat'):
+    if tag in ('finished_masturbating', 'after_masturbating', 'game_over_defeat'):
         return (layers + 2, layers + 2)
     return (0, layers + 2)
 
