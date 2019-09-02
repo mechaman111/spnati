@@ -1004,19 +1004,24 @@ Player.prototype.getImagesForStage = function (stage) {
             && (filter === undefined || players.some(function(p) { return p.hasTag(filter); })))
         {
             $(this).children('state').each(function (i, e) {
-                var poseName = $(e).attr('img');
-                if (!poseName) return;
-                poseName = poseName.replace('#', stage);
+                var images = $xml.children('image').filter(function() {
+                    return checkStage(stage, $(this).attr('stage'));
+                }).map(function() { return $(this).text(); }).get();
+                if (images.length == 0) images = [ $(e).attr('img') ];
+                images.forEach(function(poseName) {
+                    if (!poseName) return;
+                    poseName = poseName.replace('#', stage);
                 
-                if (poseName.startsWith('custom:')) {
-                    var key = poseName.split(':', 2)[1];
-                    var pose = advPoses[key];
-                    if (pose) pose.getUsedImages().forEach(function (img) {
-                        imageSet[img.replace('#', stage)] = true;
-                    });
-                } else {
-                    imageSet[folder+poseName] = true;
-                }
+                    if (poseName.startsWith('custom:')) {
+                        var key = poseName.split(':', 2)[1];
+                        var pose = advPoses[key];
+                        if (pose) pose.getUsedImages().forEach(function (img) {
+                            imageSet[img.replace('#', stage)] = true;
+                        });
+                    } else {
+                        imageSet[folder+poseName] = true;
+                    }
+                }, this);
             });
         }
     });

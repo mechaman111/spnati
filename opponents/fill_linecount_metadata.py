@@ -77,24 +77,30 @@ def process(opponent_folder_path):
     print(num_layers)
     
     for state in soup.find_all('state', recursive=True):
-        pose = state.get('img', '')
-        if pose.find('#') >= 0:
-            case = state.findParent()
-            trigger = case.findParent()
+        case = state.findParent()
+        trigger = case.findParent('trigger')
+        stage = case.findParent('stage')
+        if trigger is not None:
             stageInterval = getRelevantStagesForTrigger(trigger.get('id'), num_layers)
-            for stage in range(stageInterval[0], stageInterval[1] + 1):
-                if checkStage(stage, case.get('stage')):
-                    all_poses.add(pose.replace('#', str(stage)))
-        else:
-            all_poses.add(pose)
+        elif stage is not None:
+            stageInterval = (int(stage.get('id')), int(stage.get('id')))
+        else: # probably legacy <start>
+            stageInterval = (0, 0)
+
+        for stage in range(stageInterval[0], stageInterval[1] + 1):
+            images = [ x.get_text() for x in filter(lambda t: checkStage(stage, t.get('stage')), state.findChildren('image')) ]
+
+            if len(images) == 0:
+                images = [ state.get('img', '') ]
+            for pose in images:
+                all_poses.add(pose.replace('#', str(stage)))
         
         dialogue = ''.join(str(child) for child in state.stripped_strings).strip()
         all_lines.add(dialogue)
-        
+
     n_unique_lines = len(all_lines)
     n_poses = len(all_poses)
         
-    print(opponent+":")
     print("    - "+str(n_unique_lines)+" lines")
     print("    - "+str(n_poses)+" poses")
     
