@@ -60,6 +60,9 @@
 			this.txtKisekae = new Desktop.Skinning.SkinnedTextBox();
 			this.label5 = new Desktop.Skinning.SkinnedLabel();
 			this.tabDashboard = new System.Windows.Forms.TabPage();
+			this.grpChecklist = new Desktop.Skinning.SkinnedGroupBox();
+			this.chkChecklistValidation = new Desktop.Skinning.SkinnedCheckBox();
+			this.chkChecklistSpell = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkDashboard = new Desktop.Skinning.SkinnedCheckBox();
 			this.tabImages = new System.Windows.Forms.TabPage();
 			this.cmdVerify = new Desktop.Skinning.SkinnedButton();
@@ -86,15 +89,14 @@
 			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripSections = new Desktop.Skinning.SkinnedTabStrip();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
-			this.grpChecklist = new Desktop.Skinning.SkinnedGroupBox();
-			this.chkChecklistSpell = new Desktop.Skinning.SkinnedCheckBox();
-			this.chkChecklistValidation = new Desktop.Skinning.SkinnedCheckBox();
+			this.chkStartDashboard = new Desktop.Skinning.SkinnedCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).BeginInit();
 			this.tabsSections.SuspendLayout();
 			this.tabGeneral.SuspendLayout();
 			this.tabDashboard.SuspendLayout();
+			this.grpChecklist.SuspendLayout();
 			this.tabImages.SuspendLayout();
 			this.tabDialogue.SuspendLayout();
 			this.tabBanter.SuspendLayout();
@@ -103,7 +105,6 @@
 			this.panelSnapshot.SuspendLayout();
 			this.tabTroubleshoot.SuspendLayout();
 			this.skinnedPanel1.SuspendLayout();
-			this.grpChecklist.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtApplicationDirectory
@@ -511,6 +512,7 @@
 			// tabDashboard
 			// 
 			this.tabDashboard.BackColor = System.Drawing.Color.White;
+			this.tabDashboard.Controls.Add(this.chkStartDashboard);
 			this.tabDashboard.Controls.Add(this.grpChecklist);
 			this.tabDashboard.Controls.Add(this.chkDashboard);
 			this.tabDashboard.ForeColor = System.Drawing.Color.Black;
@@ -521,15 +523,51 @@
 			this.tabDashboard.TabIndex = 7;
 			this.tabDashboard.Text = "Dashboard";
 			// 
+			// grpChecklist
+			// 
+			this.grpChecklist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.grpChecklist.BackColor = System.Drawing.Color.White;
+			this.grpChecklist.Controls.Add(this.chkChecklistValidation);
+			this.grpChecklist.Controls.Add(this.chkChecklistSpell);
+			this.grpChecklist.Location = new System.Drawing.Point(6, 29);
+			this.grpChecklist.Name = "grpChecklist";
+			this.grpChecklist.Size = new System.Drawing.Size(434, 111);
+			this.grpChecklist.TabIndex = 1;
+			this.grpChecklist.TabStop = false;
+			this.grpChecklist.Text = "Checklist";
+			// 
+			// chkChecklistValidation
+			// 
+			this.chkChecklistValidation.AutoSize = true;
+			this.chkChecklistValidation.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkChecklistValidation.Location = new System.Drawing.Point(6, 48);
+			this.chkChecklistValidation.Name = "chkChecklistValidation";
+			this.chkChecklistValidation.Size = new System.Drawing.Size(149, 17);
+			this.chkChecklistValidation.TabIndex = 2;
+			this.chkChecklistValidation.Text = "Check for validation errors";
+			this.chkChecklistValidation.UseVisualStyleBackColor = true;
+			// 
+			// chkChecklistSpell
+			// 
+			this.chkChecklistSpell.AutoSize = true;
+			this.chkChecklistSpell.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkChecklistSpell.Location = new System.Drawing.Point(6, 25);
+			this.chkChecklistSpell.Name = "chkChecklistSpell";
+			this.chkChecklistSpell.Size = new System.Drawing.Size(95, 17);
+			this.chkChecklistSpell.TabIndex = 1;
+			this.chkChecklistSpell.Text = "Check spelling";
+			this.chkChecklistSpell.UseVisualStyleBackColor = true;
+			// 
 			// chkDashboard
 			// 
 			this.chkDashboard.AutoSize = true;
 			this.chkDashboard.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.chkDashboard.Location = new System.Drawing.Point(6, 6);
 			this.chkDashboard.Name = "chkDashboard";
-			this.chkDashboard.Size = new System.Drawing.Size(112, 17);
+			this.chkDashboard.Size = new System.Drawing.Size(114, 17);
 			this.chkDashboard.TabIndex = 0;
-			this.chkDashboard.Text = "Enable dashboard";
+			this.chkDashboard.Text = "Enable Dashboard";
 			this.chkDashboard.UseVisualStyleBackColor = true;
 			this.chkDashboard.CheckedChanged += new System.EventHandler(this.chkDashboard_CheckedChanged);
 			// 
@@ -873,41 +911,16 @@
 			this.skinnedPanel1.TabIndex = 14;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
-			// grpChecklist
+			// chkStartDashboard
 			// 
-			this.grpChecklist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.grpChecklist.BackColor = System.Drawing.Color.White;
-			this.grpChecklist.Controls.Add(this.chkChecklistValidation);
-			this.grpChecklist.Controls.Add(this.chkChecklistSpell);
-			this.grpChecklist.Location = new System.Drawing.Point(6, 29);
-			this.grpChecklist.Name = "grpChecklist";
-			this.grpChecklist.Size = new System.Drawing.Size(434, 111);
-			this.grpChecklist.TabIndex = 1;
-			this.grpChecklist.TabStop = false;
-			this.grpChecklist.Text = "Checklist";
-			// 
-			// chkChecklistSpell
-			// 
-			this.chkChecklistSpell.AutoSize = true;
-			this.chkChecklistSpell.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkChecklistSpell.Location = new System.Drawing.Point(6, 25);
-			this.chkChecklistSpell.Name = "chkChecklistSpell";
-			this.chkChecklistSpell.Size = new System.Drawing.Size(95, 17);
-			this.chkChecklistSpell.TabIndex = 1;
-			this.chkChecklistSpell.Text = "Check spelling";
-			this.chkChecklistSpell.UseVisualStyleBackColor = true;
-			// 
-			// chkChecklistValidation
-			// 
-			this.chkChecklistValidation.AutoSize = true;
-			this.chkChecklistValidation.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkChecklistValidation.Location = new System.Drawing.Point(6, 48);
-			this.chkChecklistValidation.Name = "chkChecklistValidation";
-			this.chkChecklistValidation.Size = new System.Drawing.Size(149, 17);
-			this.chkChecklistValidation.TabIndex = 2;
-			this.chkChecklistValidation.Text = "Check for validation errors";
-			this.chkChecklistValidation.UseVisualStyleBackColor = true;
+			this.chkStartDashboard.AutoSize = true;
+			this.chkStartDashboard.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkStartDashboard.Location = new System.Drawing.Point(126, 6);
+			this.chkStartDashboard.Name = "chkStartDashboard";
+			this.chkStartDashboard.Size = new System.Drawing.Size(118, 17);
+			this.chkStartDashboard.TabIndex = 2;
+			this.chkStartDashboard.Text = "Start on Dashboard";
+			this.chkStartDashboard.UseVisualStyleBackColor = true;
 			// 
 			// SettingsSetup
 			// 
@@ -935,6 +948,8 @@
 			this.tabGeneral.PerformLayout();
 			this.tabDashboard.ResumeLayout(false);
 			this.tabDashboard.PerformLayout();
+			this.grpChecklist.ResumeLayout(false);
+			this.grpChecklist.PerformLayout();
 			this.tabImages.ResumeLayout(false);
 			this.tabImages.PerformLayout();
 			this.tabDialogue.ResumeLayout(false);
@@ -950,8 +965,6 @@
 			this.tabTroubleshoot.ResumeLayout(false);
 			this.tabTroubleshoot.PerformLayout();
 			this.skinnedPanel1.ResumeLayout(false);
-			this.grpChecklist.ResumeLayout(false);
-			this.grpChecklist.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -1018,5 +1031,6 @@
 		private Desktop.Skinning.SkinnedGroupBox grpChecklist;
 		private Desktop.Skinning.SkinnedCheckBox chkChecklistValidation;
 		private Desktop.Skinning.SkinnedCheckBox chkChecklistSpell;
+		private Desktop.Skinning.SkinnedCheckBox chkStartDashboard;
 	}
 }

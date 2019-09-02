@@ -334,6 +334,8 @@ namespace Desktop.CommonControls
 			set { Set(value); }
 		}
 
+		public int Index { get; set; }
+
 		public DataSeries()
 		{
 			Points = new ObservableCollection<DataPoint>();

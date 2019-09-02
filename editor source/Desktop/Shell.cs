@@ -377,7 +377,7 @@ namespace Desktop
 			if (changingWorkspace && activity.Pane == WorkspacePane.Main)
 			{
 				//Also need to mark the sidebar as active too
-				activity = workspace.GetFirstSidebarActivity();
+				activity = workspace.GetDefaultSidebarActivity();
 				if (activity != null)
 				{
 					Activate(activity);
@@ -420,12 +420,16 @@ namespace Desktop
 			if (ActiveSidebarActivity != null && !ActiveSidebarActivity.CanDeactivate(args))
 				return;
 			IWorkspace workspace = FindWorkspace(type, recordKey);
+			tabWorkspaces.SuspendDrawing();
 			if (workspace == null)
 			{
 				//open record lookup
 				IRecord record = RecordLookup.DoLookup(type, recordKey);
 				if (record == null)
+				{
+					tabWorkspaces.ResumeDrawing();
 					return; //no record to launch, so stop
+				}
 
 				//one more chance to find the workspace
 				workspace = FindWorkspace(type, record.Key);
@@ -437,16 +441,17 @@ namespace Desktop
 			}
 
 			//Activate the workspace and its first activity
-			IActivity activity = workspace.GetFirstActivity();
+			IActivity activity = workspace.GetDefaultActivity();
 			Activate(activity);
 			activity.UpdateParameters(parameters);
 
 			//Also the sidebar
-			activity = workspace.GetFirstSidebarActivity();
+			activity = workspace.GetDefaultSidebarActivity();
 			if (activity != null)
 			{
 				Activate(activity);
 			}
+			tabWorkspaces.ResumeDrawing();
 		}
 
 		public void LaunchWorkspace(Type type, IRecord record, bool defaultWorkspace = false, params object[] parameters)
@@ -456,6 +461,7 @@ namespace Desktop
 				|| ActiveSidebarActivity != null && !ActiveSidebarActivity.CanDeactivate(args)
 				|| record == null)
 				return;
+			tabWorkspaces.SuspendDrawing();
 			IWorkspace workspace = FindWorkspace(type, record.Key);
 			if (workspace == null)
 			{
@@ -463,16 +469,17 @@ namespace Desktop
 			}
 
 			//Activate the workspace and its first activity
-			IActivity activity = workspace.GetFirstActivity();
+			IActivity activity = workspace.GetDefaultActivity();
 			Activate(activity);
 			activity.UpdateParameters(parameters);
 
 			//Also the sidebar
-			activity = workspace.GetFirstSidebarActivity();
+			activity = workspace.GetDefaultSidebarActivity();
 			if (activity != null)
 			{
 				Activate(activity);
 			}
+			tabWorkspaces.ResumeDrawing();
 		}
 
 		private IWorkspace CreateWorkspace(IRecord record, bool defaultWorkspace = false)

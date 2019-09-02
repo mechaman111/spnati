@@ -31,16 +31,24 @@
 			this.components = new System.ComponentModel.Container();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.colLeft = new System.Windows.Forms.SplitContainer();
+			this.colLeftBottom = new System.Windows.Forms.SplitContainer();
 			this.colRight = new System.Windows.Forms.SplitContainer();
+			this.colRightTop = new System.Windows.Forms.SplitContainer();
 			this.tooltipPartners = new System.Windows.Forms.ToolTip(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.colLeft)).BeginInit();
+			this.colLeft.Panel2.SuspendLayout();
 			this.colLeft.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.colLeftBottom)).BeginInit();
+			this.colLeftBottom.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.colRight)).BeginInit();
+			this.colRight.Panel1.SuspendLayout();
 			this.colRight.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.colRightTop)).BeginInit();
+			this.colRightTop.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer1
@@ -74,10 +82,28 @@
 			// 
 			// colLeft.Panel2
 			// 
-			this.colLeft.Panel2.Padding = new System.Windows.Forms.Padding(6);
+			this.colLeft.Panel2.Controls.Add(this.colLeftBottom);
 			this.colLeft.Size = new System.Drawing.Size(397, 548);
-			this.colLeft.SplitterDistance = 304;
+			this.colLeft.SplitterDistance = 162;
 			this.colLeft.TabIndex = 0;
+			// 
+			// colLeftBottom
+			// 
+			this.colLeftBottom.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.colLeftBottom.Location = new System.Drawing.Point(0, 0);
+			this.colLeftBottom.Name = "colLeftBottom";
+			this.colLeftBottom.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// colLeftBottom.Panel1
+			// 
+			this.colLeftBottom.Panel1.Padding = new System.Windows.Forms.Padding(6);
+			// 
+			// colLeftBottom.Panel2
+			// 
+			this.colLeftBottom.Panel2.Padding = new System.Windows.Forms.Padding(6);
+			this.colLeftBottom.Size = new System.Drawing.Size(397, 382);
+			this.colLeftBottom.SplitterDistance = 158;
+			this.colLeftBottom.TabIndex = 0;
 			// 
 			// colRight
 			// 
@@ -88,14 +114,32 @@
 			// 
 			// colRight.Panel1
 			// 
-			this.colRight.Panel1.Padding = new System.Windows.Forms.Padding(6);
+			this.colRight.Panel1.Controls.Add(this.colRightTop);
 			// 
 			// colRight.Panel2
 			// 
 			this.colRight.Panel2.Padding = new System.Windows.Forms.Padding(6);
 			this.colRight.Size = new System.Drawing.Size(416, 548);
-			this.colRight.SplitterDistance = 289;
+			this.colRight.SplitterDistance = 381;
 			this.colRight.TabIndex = 0;
+			// 
+			// colRightTop
+			// 
+			this.colRightTop.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.colRightTop.Location = new System.Drawing.Point(0, 0);
+			this.colRightTop.Name = "colRightTop";
+			this.colRightTop.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// colRightTop.Panel1
+			// 
+			this.colRightTop.Panel1.Padding = new System.Windows.Forms.Padding(6);
+			// 
+			// colRightTop.Panel2
+			// 
+			this.colRightTop.Panel2.Padding = new System.Windows.Forms.Padding(6);
+			this.colRightTop.Size = new System.Drawing.Size(416, 381);
+			this.colRightTop.SplitterDistance = 215;
+			this.colRightTop.TabIndex = 0;
 			// 
 			// Dashboard
 			// 
@@ -108,10 +152,16 @@
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
+			this.colLeft.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.colLeft)).EndInit();
 			this.colLeft.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.colLeftBottom)).EndInit();
+			this.colLeftBottom.ResumeLayout(false);
+			this.colRight.Panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.colRight)).EndInit();
 			this.colRight.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.colRightTop)).EndInit();
+			this.colRightTop.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -121,5 +171,7 @@
 		private System.Windows.Forms.SplitContainer colLeft;
 		private System.Windows.Forms.SplitContainer colRight;
 		private System.Windows.Forms.ToolTip tooltipPartners;
+		private System.Windows.Forms.SplitContainer colLeftBottom;
+		private System.Windows.Forms.SplitContainer colRightTop;
 	}
 }

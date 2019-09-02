@@ -11,8 +11,8 @@ namespace Desktop
 		void AddActivity(IActivity activity);
 		IActivity ActiveActivity { get; set; }
 		IActivity ActiveSidebarActivity { get; set; }
-		IActivity GetFirstActivity();
-		IActivity GetFirstSidebarActivity();
+		IActivity GetDefaultActivity();
+		IActivity GetDefaultSidebarActivity();
 		IActivity Find<T>() where T : IActivity;
 		IActivity Find(Type type);
 		void RemoveActivity(IActivity activity);

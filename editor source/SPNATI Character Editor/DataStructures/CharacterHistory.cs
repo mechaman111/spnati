@@ -240,11 +240,15 @@ namespace SPNATI_Character_Editor
 		[JsonIgnore]
 		public List<TargetingInformation> Targets = new List<TargetingInformation>();
 
+		[JsonIgnore]
+		public Dictionary<int, int> LinesPerStage = new Dictionary<int, int>();
+
 		public void Update(Character character)
 		{
 			Dictionary<string, TargetingInformation> targetInfo = new Dictionary<string, TargetingInformation>();
 			HashSet<string> lines = new HashSet<string>();
 			Dictionary<LineFilter, int> counts = new Dictionary<LineFilter, int>();
+			LinesPerStage.Clear();
 			counts[LineFilter.Generic] = 0;
 			counts[LineFilter.Targeted] = 0;
 			counts[LineFilter.Filter] = 0;
@@ -269,6 +273,12 @@ namespace SPNATI_Character_Editor
 					counts[type]++;
 					caseCount++;
 				}
+
+				foreach (int stage in c.Stages)
+				{
+					LinesPerStage[stage] = LinesPerStage.Get(stage) + caseCount;
+				}
+
 				if (type == LineFilter.Targeted)
 				{
 					HashSet<string> targets = c.GetTargets();
@@ -290,7 +300,7 @@ namespace SPNATI_Character_Editor
 				int count = info.LineCount;
 				for (int i = 0; i < Targets.Count; i++)
 				{
-					if (count < Targets[i].LineCount)
+					if (count > Targets[i].LineCount)
 					{
 						Targets.Insert(i, info);
 						added = true;

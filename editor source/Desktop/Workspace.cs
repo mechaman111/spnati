@@ -43,13 +43,13 @@ namespace Desktop
 			return true;
 		}
 
-		public IActivity GetFirstActivity()
+		public virtual IActivity GetDefaultActivity()
 		{
 			List<IActivity> list = Activities[WorkspacePane.Main];
 			return list.Count > 0 ? list[0] : null;
 		}
 
-		public IActivity GetFirstSidebarActivity()
+		public virtual IActivity GetDefaultSidebarActivity()
 		{
 			List<IActivity> list = Activities[WorkspacePane.Sidebar];
 			return list.Count > 0 ? list[0] : null;

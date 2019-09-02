@@ -44,9 +44,11 @@ namespace SPNATI_Character_Editor.Activities
 			_taskTimer.Interval = TaskInterval;
 			_taskTimer.Elapsed += _taskTimer_Elapsed;
 
-			AddWidget(colRight.Panel1, new LineHistoryWidget());
-			AddWidget(colLeft.Panel2, new SponsorshipWidget());
+			AddWidget(colRightTop.Panel1, new LineHistoryWidget());
+			AddWidget(colLeftBottom.Panel2, new SponsorshipWidget());
+			AddWidget(colLeftBottom.Panel1, new StageReviewWidget());
 			AddWidget(colRight.Panel2, new ComparisonWidget());
+			AddWidget(colRightTop.Panel2, new TargetWidget());
 			AddWidget(colLeft.Panel1, new ChecklistWidget());
 		}
 

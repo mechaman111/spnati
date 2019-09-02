@@ -49,7 +49,8 @@ namespace Desktop.CommonControls.Graphs
 
 			for (int i = 0; i < _series.Count; i++)
 			{
-				_series[i].Color = LineGraph.GetAxesColor(i);
+				int index = _series[i].Index;
+				_series[i].Color = LineGraph.GetAxesColor(index > 0 ? index : i);
 			}
 		}
 
@@ -76,12 +77,13 @@ namespace Desktop.CommonControls.Graphs
 			Invalidate();
 		}
 
-		public DataSeries AddSeries(string label)
+		public DataSeries AddSeries(string label, int index = 0)
 		{
 			DataSeries series = new DataSeries()
 			{
 				Label = label,
-				Color = LineGraph.GetAxesColor(_series.Count)
+				Index = index,
+				Color = LineGraph.GetAxesColor(index > 0 ? index : _series.Count),
 			};
 			_series.Add(series);
 			series.PropertyChanged += Series_PropertyChanged;

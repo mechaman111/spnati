@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Desktop;
 using SPNATI_Character_Editor.Activities;
 using SPNATI_Character_Editor.Services;
@@ -28,6 +29,16 @@ namespace SPNATI_Character_Editor.Workspaces
 				return false;
 			}
 			return base.AllowAutoStart(activityType);
+		}
+
+		public override IActivity GetDefaultActivity()
+		{
+			if (!Config.StartOnDashboard)
+			{
+				List<IActivity> list = Activities[WorkspacePane.Main];
+				return list[1];
+			}
+			return base.GetDefaultActivity();
 		}
 	}
 }

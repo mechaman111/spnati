@@ -41,6 +41,7 @@ namespace SPNATI_Character_Editor
 			chkDashboard.Checked = Config.EnableDashboard;
 			chkChecklistSpell.Checked = Config.EnableDashboardSpellCheck;
 			chkChecklistValidation.Checked = Config.EnableDashboardValidation;
+			chkStartDashboard.Checked = Config.StartOnDashboard;
 
 			HashSet<string> pauses = Config.AutoPauseDirectives;
 			foreach (DirectiveDefinition def in Definitions.Instance.Get<DirectiveDefinition>())
@@ -137,6 +138,7 @@ namespace SPNATI_Character_Editor
 			Config.BackupLifeTime = (int)valLifetime.Value;
 			Config.TinifyKey = txtTinify.Text;
 			Config.EnableDashboard = chkDashboard.Checked;
+			Config.StartOnDashboard = chkStartDashboard.Checked;
 			Config.EnableDashboardSpellCheck = chkChecklistSpell.Checked;
 			Config.EnableDashboardValidation = chkChecklistValidation.Checked;
 
@@ -269,7 +271,7 @@ namespace SPNATI_Character_Editor
 
 		private void chkDashboard_CheckedChanged(object sender, EventArgs e)
 		{
-			grpChecklist.Enabled = chkDashboard.Checked;
+			chkStartDashboard.Enabled = grpChecklist.Enabled = chkDashboard.Checked;
 		}
 	}
 }

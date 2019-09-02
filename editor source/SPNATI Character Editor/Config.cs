@@ -546,6 +546,12 @@ namespace SPNATI_Character_Editor
 
 		#region
 		//Dashboard
+		public static bool StartOnDashboard
+		{
+			get { return !GetBoolean("startmetadata"); }
+			set { Set("startmetadata", !value); }
+		}
+
 		public static bool EnableDashboard
 		{
 			get { return !GetBoolean("nodashboard"); }
