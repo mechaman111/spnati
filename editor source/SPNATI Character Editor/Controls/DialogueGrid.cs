@@ -319,10 +319,9 @@ namespace SPNATI_Character_Editor.Controls
 					
 					foreach (PoseMapping image in images)
 					{
-						bool stageSpecific = _selectedCase.Lines.Find(l => l.StageImages.Count > 0) != null;
 						bool isGeneric = image.IsGeneric;
 						bool allExist = true;
-						if (!isGeneric && !stageSpecific)
+						if (!isGeneric)
 						{
 							foreach (int stage in selectedStages)
 							{

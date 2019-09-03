@@ -714,14 +714,30 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (DialogueLine line in theCase.Lines)
 				{
-					List<string> images = new List<string>();
+					HashSet<string> images = new HashSet<string>();
+					HashSet<int> usedStages = new HashSet<int>();
+					foreach (StageImage img in line.Images)
+					{
+						if (img.Image != null)
+						{
+							foreach (int stage in img.Stages)
+							{
+								usedStages.Add(stage);
+								images.Add(img.Image.Replace("#", stage.ToString()));
+							}
+						}
+					}
+
 					if (line.Image != null)
 					{
 						if (line.Image.Contains("#"))
 						{
 							foreach (int stage in theCase.Stages)
 							{
-								images.Add(line.Image.Replace("#", stage.ToString()));
+								if (!usedStages.Contains(stage))
+								{
+									images.Add(line.Image.Replace("#", stage.ToString()));
+								}
 							}
 						}
 						else

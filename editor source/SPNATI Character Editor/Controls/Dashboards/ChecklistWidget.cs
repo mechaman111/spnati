@@ -405,7 +405,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 					}
 					message += $", but you haven't written anything to acknowledge their existence.\r\n\r\n" +
 						"Use the Writing Aid to write a line towards {c}.";
-					AddTask($"{c} is feeling neglected.", message, typeof(WritingAid), c);
+					AddTask($"{c} is feeling neglected", message, typeof(WritingAid), c);
 					return;
 				}
 			}

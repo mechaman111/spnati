@@ -28,5 +28,10 @@ namespace SPNATI_Character_Editor
 			int compare = TriggerDatabase.Compare(tag1, tag2);
 			return compare;
 		}
+
+		public override string ToString()
+		{
+			return Id;
+		}
 	}
 }

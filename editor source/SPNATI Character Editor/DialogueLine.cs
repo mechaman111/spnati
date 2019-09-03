@@ -48,8 +48,11 @@ namespace SPNATI_Character_Editor
 			set { if (_pose != value) { _pose = value; NotifyPropertyChanged(); } }
 		}
 
-		[XmlIgnore]
-		public Dictionary<int, PoseMapping> StageImages { get; set; }
+		/// <summary>
+		/// Stage-specific images
+		/// </summary>
+		[XmlElement("image")]
+		public List<StageImage> Images { get; set; }
 
 		/// <summary>
 		/// Text will be read from the XmlText but written to the &lt;text&gt; element
@@ -192,7 +195,7 @@ namespace SPNATI_Character_Editor
 			Direction = "down";
 			Weight = 1;
 			Marker = null;
-			StageImages = new Dictionary<int, PoseMapping>();
+			Images = new List<StageImage>();
 		}
 
 		public DialogueLine(string image, string text) : this()
@@ -204,10 +207,10 @@ namespace SPNATI_Character_Editor
 		public DialogueLine Copy()
 		{
 			DialogueLine copy = MemberwiseClone() as DialogueLine;
-			copy.StageImages = new Dictionary<int, PoseMapping>();
-			foreach (KeyValuePair<int, PoseMapping> kvp in StageImages)
+			copy.Images = new List<StageImage>();
+			foreach (StageImage img in Images)
 			{
-				copy.StageImages[kvp.Key] = kvp.Value;
+				copy.Images.Add(img.Copy());
 			}
 			return copy;
 		}

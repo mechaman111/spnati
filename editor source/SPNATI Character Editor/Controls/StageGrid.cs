@@ -24,11 +24,19 @@ namespace SPNATI_Character_Editor.Controls
 		public event EventHandler CheckedChanged;
 		public event EventHandler<int> LayerSelected;
 
+		public HashSet<int> AllowedStages = new HashSet<int>();
+
 		private int _headerHeight = 100;
 		public int ColumnHeaderHeight
 		{
 			get { return _headerHeight; }
 			set { _headerHeight = value; ResizeGrid(); }
+		}
+
+		public bool ShowSelectAll
+		{
+			get { return chkSelectAll.Visible; }
+			set { chkSelectAll.Visible = value; }
 		}
 
 		public StageGrid()
@@ -57,6 +65,11 @@ namespace SPNATI_Character_Editor.Controls
 			Width = (int)(cols * CellSize + _headerHeight * 1.67f);
 			Height = rows * CellSize + _headerHeight;
 			RecreateHandle();
+		}
+
+		public int GetPreviewStage()
+		{
+			return _currentStage;
 		}
 
 		public void SetPreviewStage(int currentStage)
@@ -121,7 +134,10 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					using (Brush disabledBack = new SolidBrush(skin.Background.Disabled))
 					{
-						g.DrawString("Select All", Skin.TextFont, fontBrush, chkSelectAll.Right + 2, chkSelectAll.Top);
+						if (ShowSelectAll)
+						{
+							g.DrawString("Select All", Skin.TextFont, fontBrush, chkSelectAll.Right + 2, chkSelectAll.Top);
+						}
 
 						g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
@@ -224,11 +240,20 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
+		public void ToggleStage(int stage)
+		{
+			_stages[stage] = !_stages[stage];
+			_populating = true;
+			CheckedChanged?.Invoke(this, EventArgs.Empty);
+			UpdateCheckAllState();
+			_populating = false;
+		}
+
 		private void panel_MouseDown(object sender, MouseEventArgs e)
 		{
 			int x = e.X / CellSize;
 			int y = (e.Y - _headerHeight) / CellSize;
-			if (e.X >= 18 && e.X <= 70 && e.Y >= 18 && e.Y <= 35)
+			if (e.X >= 18 && e.X <= 70 && e.Y >= 18 && e.Y <= 35 && ShowSelectAll)
 			{
 				chkSelectAll.Checked = !chkSelectAll.Checked;
 			}
@@ -237,11 +262,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (!IsStageEnabled(x)) { return; }
 				if (e.Button == MouseButtons.Left)
 				{
-					_stages[x] = !_stages[x];
-					_populating = true;
-					CheckedChanged?.Invoke(this, EventArgs.Empty);
-					UpdateCheckAllState();
-					_populating = false;
+					ToggleStage(x);
 				}
 				else if (e.Button == MouseButtons.Right && _stages[x])
 				{
@@ -305,7 +326,7 @@ namespace SPNATI_Character_Editor.Controls
 		private bool IsStageEnabled(int i)
 		{
 			if (_case == null) { return false; }
-			return TriggerDatabase.UsedInStage(_case.Tag, _character, i);
+			return TriggerDatabase.UsedInStage(_case.Tag, _character, i) && (AllowedStages.Count == 0 || AllowedStages.Contains(i));
 		}
 	}
 }

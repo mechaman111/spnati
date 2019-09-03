@@ -1,4 +1,5 @@
 ﻿using Desktop.Skinning;
+using SPNATI_Character_Editor.Controls;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,77 +11,44 @@ namespace SPNATI_Character_Editor.Forms
 	{
 		private DialogueLine _line;
 		private Character _character;
+		private Case _workingCase;
 
 		public StageImageSelection()
 		{
 			InitializeComponent();
-			ColClear.Flat = true;
 		}
 		public StageImageSelection(Character character, DialogueLine line, Case workingCase) : this()
 		{
 			_line = line;
 			_character = character;
+			_workingCase = workingCase;
 
-			foreach (int stage in workingCase.Stages)
+			foreach (StageImage stageImage in line.Images)
 			{
-				DataGridViewRow row = grid.Rows[grid.Rows.Add()];
-				row.Tag = stage;
-				row.Cells[nameof(ColStage)].Value = _character.LayerToStageName(stage);
-
-				UpdateAvailableImages(stage);
-
-				if (_line.StageImages.ContainsKey(stage))
-				{
-					PoseMapping pose = _line.StageImages[stage];
-					SkinnedDataGridViewComboBoxCell cell = row.Cells[nameof(ColImage)] as SkinnedDataGridViewComboBoxCell;
-					SetImage(cell, pose);
-				}
+				Add(stageImage);
 			}
 		}
 
-		private void UpdateAvailableImages(int stageId)
+		private void Add(StageImage stageImage)
 		{
-			DataGridViewRow row = null;
-			foreach (DataGridViewRow r in grid.Rows)
-			{
-				if ((int)r.Tag == stageId)
-				{
-					row = r;
-					break;
-				}
-			}
-			if (row == null) { return; }
-			SkinnedDataGridViewComboBoxCell cell = row.Cells[ColImage.Index] as SkinnedDataGridViewComboBoxCell;
-			cell.ValueType = typeof(PoseMapping);
-			cell.Items.Clear();
-			List<PoseMapping> images = new List<PoseMapping>();
-			images.AddRange(_character.PoseLibrary.GetPoses(stageId));
-			foreach (PoseMapping img in images)
-			{
-				cell.Items.Add(img);
-			}
+			StageImageControl control = new StageImageControl();
+			control.Dock = DockStyle.Top;
+			control.SetData(_character, _workingCase, stageImage);
+			pnlImages.Controls.Add(control);
+			pnlImages.Controls.SetChildIndex(control, 0);
+			control.Delete += Control_Delete;
+			control.Preview += Control_Preview;
 		}
 
-		private void SetImage(SkinnedDataGridViewComboBoxCell cell, PoseMapping pose)
+		private void Control_Delete(object sender, EventArgs e)
 		{
-			foreach (object item in cell.Items)
-			{
-				PoseMapping image = item as PoseMapping;
-				if (image == pose)
-				{
-					cell.Value = image;
-					return;
-				}
-			}
+			Control ctl = sender as Control;
+			pnlImages.Controls.Remove(ctl);
 		}
 
-		private void grid_CellEnter(object sender, DataGridViewCellEventArgs e)
+		private void Control_Preview(object sender, UpdateImageArgs e)
 		{
-			if (e.RowIndex == -1)
-				return;
-			DataGridViewRow row = grid.Rows[e.RowIndex];
-			PoseMapping image = row.Cells[nameof(ColImage)].Value as PoseMapping;
-			ShowImage(image, (int)row.Tag);
+			ShowImage(e.Pose, e.Stage);
 		}
 
 		private void ShowImage(PoseMapping image, int stage)
@@ -97,16 +65,16 @@ namespace SPNATI_Character_Editor.Forms
 
 		private void cmdOK_Click(object sender, EventArgs e)
 		{
-			_line.StageImages.Clear();
-			foreach (DataGridViewRow row in grid.Rows)
+			_line.Images.Clear();
+			for(int i = pnlImages.Controls.Count - 1; i >= 0; i--)
 			{
-				PoseMapping img = row.Cells[ColImage.Index].Value as PoseMapping;
-				if (img != null)
+				StageImageControl stageControl = pnlImages.Controls[i] as StageImageControl;
+				if (stageControl != null)
 				{
-					_line.StageImages[(int)row.Tag] = img;
+					_line.Images.Add(stageControl.StageImage);
 				}
 			}
-			_line.NotifyPropertyChanged(nameof(_line.StageImages));
+			_line.NotifyPropertyChanged(nameof(_line.Images));
 
 			DialogResult = DialogResult.OK;
 			Close();
@@ -122,77 +90,26 @@ namespace SPNATI_Character_Editor.Forms
 		{
 			e.ThrowException = false;
 		}
-
-		private void grid_CellParsing(object sender, DataGridViewCellParsingEventArgs e)
+		
+		private void tsAdd_Click(object sender, EventArgs e)
 		{
-			if (e.ColumnIndex == ColImage.Index)
+			Add(new StageImage());
+		}
+
+		private void pnlImages_ControlAdded(object sender, ControlEventArgs e)
+		{
+			if (pnlImages.Controls.Count > 1)
 			{
-				SkinnedDataGridViewComboBoxCell cell = grid.Rows[e.RowIndex].Cells[e.ColumnIndex] as SkinnedDataGridViewComboBoxCell;
-				if (cell != null)
-				{
-					object v = e.Value;
-					if (v is string)
-					{
-						string name = v.ToString();
-						foreach (object item in cell.Items)
-						{
-							PoseMapping img = item as PoseMapping;
-							if (img != null && img.DisplayName == name)
-							{
-								e.Value = img;
-								e.ParsingApplied = true;
-								break;
-							}
-						}
-					}
-				}
+				pnlZeroState.Visible = false;
 			}
 		}
 
-		private void grid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+		private void pnlImages_ControlRemoved(object sender, ControlEventArgs e)
 		{
-			if (e.ColumnIndex == ColClear.Index)
+			if (pnlImages.Controls.Count == 1)
 			{
-				Image img = Properties.Resources.Delete;
-				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-				var w = img.Width;
-				var h = img.Height;
-				var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-				var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
-
-				e.Graphics.DrawImage(img, new Rectangle(x, y, w, h));
-				e.Handled = true;
+				pnlZeroState.Visible = true;
 			}
-		}
-
-		private void grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (e.RowIndex >= 0 && e.ColumnIndex == ColClear.Index)
-			{
-				DataGridViewCell cell = grid.Rows[e.RowIndex].Cells[ColImage.Index];
-				cell.Value = null;
-			}
-		}
-
-		private void grid_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-		{
-			SkinnedComboBox cb = e.Control as SkinnedComboBox;
-			if (cb != null)
-			{
-				cb.SelectedIndexChanged -= Cb_SelectedIndexChanged;
-				cb.SelectedIndexChanged += Cb_SelectedIndexChanged;
-			}
-		}
-
-		private void Cb_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			SkinnedComboBox comboBox = sender as SkinnedComboBox;
-			if (grid.SelectedCells.Count == 0)
-			{
-				return;
-			}
-			int stage = (int)grid.SelectedCells[0].OwningRow.Tag;
-			ShowImage(comboBox.SelectedItem as PoseMapping, stage);
 		}
 	}
 }

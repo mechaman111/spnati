@@ -336,76 +336,96 @@ namespace SPNATI_Character_Editor
 					{
 						sets.AddRange(workingCase.AlternativeConditions);
 					}
-					Dictionary<int, DialogueLine> lines = new Dictionary<int, DialogueLine>();
-					Dictionary<int, List<int>> lineStages = new Dictionary<int, List<int>>();
-					Dictionary<int, int> earliestStage = new Dictionary<int, int>();
-					foreach (int stage in workingCase.Stages)
+
+					Case triggerCase = workingCase.Copy();
+					triggerCase.StageRange = workingCase.StageRange;
+
+					foreach (DialogueLine line in triggerCase.Lines)
 					{
-						foreach (DialogueLine line in workingCase.Lines)
+						line.Image = line.Pose?.Key;
+						foreach (StageImage img in line.Images)
 						{
-							DialogueLine stageLine = line.Copy();
-							if (stageLine.StageImages.ContainsKey(stage))
-							{
-								stageLine.Image = stageLine.StageImages[stage]?.Key;
-							}
-							else
-							{
-								stageLine.Image = stageLine.Pose?.Key;
-							}
-							
-							int hash = stageLine.GetHashCode();
-							if (!lines.ContainsKey(hash))
-							{
-								lines.Add(hash, stageLine);
-							}
-							List<int> usedStages = lineStages.GetOrAddDefault(hash, () => new List<int>());
-							usedStages.Add(stage);
+							img.Image = img.Pose?.Key;
 						}
 					}
-					Dictionary<int, Case> splitCases = new Dictionary<int, Case>();
-					foreach (int hash in lines.Keys)
+
+					if (workingCase.Id > 0)
 					{
-						DialogueLine line = lines[hash];
-						List<int> stages = lineStages[hash];
-						int stageHash = ToHash(stages);
-						Case c = splitCases.GetOrAddDefault(stageHash, delegate
-						{
-							Case newCase = new Case(workingCase.Tag);
-							if (workingCase.Id > 0)
-							{
-								newCase.StageId = workingCase.Id.ToString();
-							}
-							else
-							{
-								editorData.AssignId(newCase);
-								newCase.StageId = newCase.Id.ToString();
-							}
-							newCase.Stages.AddRange(stages);
-							return newCase;
-						});
-						c.Lines.Add(line);
+						triggerCase.StageId = workingCase.Id.ToString();
 					}
-					foreach (Case set in sets)
-					{
-						set.TriggerSet = 0;
-						foreach (Case lineSet in splitCases.Values)
-						{
-							Case copy = set.CopyConditions();
-							if (workingCase.Id > 0)
-							{
-								copy.StageId = workingCase.Id.ToString();
-							}
-							else
-							{
-								editorData.AssignId(copy);
-								copy.StageId = copy.Id.ToString();
-							}
-							copy.Tag = null;
-							copy.Lines = lineSet.Lines;
-							copy.Stages = lineSet.Stages;
-							trigger.Cases.Add(copy);
-						}
-					}
+					triggerCase.Tag = null;
+					triggerCase.TriggerSet = 0;
+					trigger.Cases.Add(triggerCase);
+					//Dictionary<int, DialogueLine> lines = new Dictionary<int, DialogueLine>();
+					//Dictionary<int, List<int>> lineStages = new Dictionary<int, List<int>>();
+					//Dictionary<int, int> earliestStage = new Dictionary<int, int>();
+					//foreach (int stage in workingCase.Stages)
+					//{
+					//	foreach (DialogueLine line in workingCase.Lines)
+					//	{
+					//		DialogueLine stageLine = line.Copy();
+					//		if (stageLine.StageImages.ContainsKey(stage))
+					//		{
+					//			stageLine.Image = stageLine.StageImages[stage]?.Key;
+					//		}
+					//		else
+					//		{
+					//			stageLine.Image = stageLine.Pose?.Key;
+					//		}
+
+					//		int hash = stageLine.GetHashCode();
+					//		if (!lines.ContainsKey(hash))
+					//		{
+					//			lines.Add(hash, stageLine);
+					//		}
+					//		List<int> usedStages = lineStages.GetOrAddDefault(hash, () => new List<int>());
+					//		usedStages.Add(stage);
+					//	}
+					//}
+					//Dictionary<int, Case> splitCases = new Dictionary<int, Case>();
+					//foreach (int hash in lines.Keys)
+					//{
+					//	DialogueLine line = lines[hash];
+					//	List<int> stages = lineStages[hash];
+					//	int stageHash = ToHash(stages);
+					//	Case c = splitCases.GetOrAddDefault(stageHash, delegate
+					//	{
+					//		Case newCase = new Case(workingCase.Tag);
+					//		if (workingCase.Id > 0)
+					//		{
+					//			newCase.StageId = workingCase.Id.ToString();
+					//		}
+					//		else
+					//		{
+					//			editorData.AssignId(newCase);
+					//			newCase.StageId = newCase.Id.ToString();
+					//		}
+					//		newCase.Stages.AddRange(stages);
+					//		return newCase;
+					//	});
+					//	c.Lines.Add(line);
+					//}
+					//foreach (Case set in sets)
+					//{
+					//	set.TriggerSet = 0;
+					//	foreach (Case lineSet in splitCases.Values)
+					//	{
+					//		Case copy = set.CopyConditions();
+					//		if (workingCase.Id > 0)
+					//		{
+					//			copy.StageId = workingCase.Id.ToString();
+					//		}
+					//		else
+					//		{
+					//			editorData.AssignId(copy);
+					//			copy.StageId = copy.Id.ToString();
+					//		}
+					//		copy.Tag = null;
+					//		copy.Lines = lineSet.Lines;
+					//		copy.Stages = lineSet.Stages;
+					//		trigger.Cases.Add(copy);
+					//	}
+					//}
 				}
 			}
 			foreach (Trigger trigger in triggers.Values)
@@ -486,14 +506,7 @@ namespace SPNATI_Character_Editor
 						foreach (var line in workingCase.Lines)
 						{
 							DialogueLine stageLine = line.Copy();
-							if (stageLine.StageImages.ContainsKey(stage.Id))
-							{
-								stageLine.Image = stageLine.StageImages[stage.Id]?.Key;
-							}
-							else
-							{
-								stageLine.Image = stageLine.Pose?.Key;
-							}
+							stageLine.Image = stageLine.Pose?.Key;
 							existingCase.Lines.Add(stageLine);
 
 							if (!string.IsNullOrEmpty(line.Gender))
@@ -591,15 +604,28 @@ namespace SPNATI_Character_Editor
 				Dictionary<int, HashSet<int>> setStages = new Dictionary<int, HashSet<int>>();
 				foreach (Case triggerCase in trigger.Cases)
 				{
-					//set was a poor choice that is out there for early adopters, so convert it to ID
-					if (string.IsNullOrEmpty(triggerCase.StageId) && triggerCase.TriggerSet > 0)
-					{
-						int uniqueId = ++nextId;
-						setToIdMap[triggerCase.TriggerSet] = uniqueId;
-						triggerCase.StageId = uniqueId.ToString();
-					}
 					int id;
 					int.TryParse(triggerCase.StageId, out id);
+					if (string.IsNullOrEmpty(triggerCase.StageId))
+					{
+						if (triggerCase.TriggerSet > 0)
+						{
+							if (setToIdMap.ContainsKey(triggerCase.TriggerSet))
+							{
+								id = setToIdMap[triggerCase.TriggerSet];
+							}
+							else
+							{
+								int uniqueId = ++nextId;
+								setToIdMap[triggerCase.TriggerSet] = uniqueId;
+								id = uniqueId;
+							}
+						}
+						else
+						{
+							id = ++nextId;
+						}
+					}
 					List<Case> cases = setCases.GetOrAddDefault(id, () => new List<Case>());
 					HashSet<int> stages = setStages.GetOrAddDefault(id, () => new HashSet<int>());
 					triggerCase.Tag = trigger.Id;
@@ -645,18 +671,48 @@ namespace SPNATI_Character_Editor
 							DialogueLine defaultLine = line.Copy();
 							int code = line.GetHashCodeWithoutImage();
 							bool foundMatch = false;
-							foreach (DialogueLine rootLine in rootCase.Lines)
+
+							foreach (StageImage img in defaultLine.Images)
+							{
+								img.Pose = _character.PoseLibrary.GetPose(img.Image);
+							}
+
+							if (triggerCase.TriggerSet > 0)
 							{
 								//look to see if this is an alternative stage-specific image for an existing line
-								if (rootLine.GetHashCodeWithoutImage() == code)
+								foreach (DialogueLine rootLine in rootCase.Lines)
 								{
-									foreach (int lineStage in triggerCase.Stages)
+									if (rootLine.GetHashCodeWithoutImage() == code)
 									{
-										PoseMapping pose = _character.PoseLibrary.GetPose(line.Image);
-										rootLine.StageImages[lineStage] = pose;
+										foreach (int lineStage in triggerCase.Stages)
+										{
+											PoseMapping pose = _character.PoseLibrary.GetPose(line.Image);
+											StageImage existing = rootLine.Images.Find(si => si.Pose == pose);
+											if (existing == null)
+											{
+												rootLine.Images.Add(new StageImage(lineStage, pose));
+											}
+											else
+											{
+												bool added = false;
+												for (int n = 0; n < existing.Stages.Count; n++)
+												{
+													if (existing.Stages[n] > lineStage)
+													{
+														added = true;
+														existing.Stages.Insert(n, lineStage);
+														break;
+													}
+												}
+												if (!added)
+												{
+													existing.Stages.Add(lineStage);
+												}
+											}
+										}
+										foundMatch = true;
+										break;
 									}
-									foundMatch = true;
-									break;
 								}
 							}
 							if (!foundMatch)
@@ -755,7 +811,28 @@ namespace SPNATI_Character_Editor
 											PoseMapping pose = _character.PoseLibrary.GetPose(defaultLine.Image);
 											if (pose != null)
 											{
-												existingLine.StageImages[stage.Id] = pose;
+												StageImage existingImage = existingLine.Images.Find(si => si.Pose == pose);
+												if (existingImage == null)
+												{
+													existingLine.Images.Add(new StageImage(stage.Id, pose));
+												}
+												else
+												{
+													bool added = false;
+													for (int n = 0; n < existingImage.Stages.Count; n++)
+													{
+														if (existingImage.Stages[n] > stage.Id)
+														{
+															added = true;
+															existingImage.Stages.Insert(n, stage.Id);
+															break;
+														}
+													}
+													if (!added)
+													{
+														existingImage.Stages.Add(stage.Id);
+													}
+												}
 											}
 										}
 										break;

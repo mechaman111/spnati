@@ -67,7 +67,7 @@ namespace Desktop
 					XmlEnumAttribute enumAttribute = mi[0].GetCustomAttribute<XmlEnumAttribute>();
 					if (enumAttribute != null)
 					{
-						value = enumAttribute.Name;
+						value = enumAttribute.Name ?? value;
 						_enumNames.Set(type, value, value);
 						return value;
 					}
