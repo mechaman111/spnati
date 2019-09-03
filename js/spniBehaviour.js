@@ -1415,7 +1415,7 @@ Case.prototype.checkConditions = function (self, opp) {
         }
     }
 
-    var counterMatches = [];
+    var counterMatches = {};
     var unwantedSayings = [], unwantedMarkers = [];
     // filter counter targets
     if (!this.counters.every(function (ctr) {
@@ -1479,7 +1479,14 @@ Case.prototype.checkConditions = function (self, opp) {
         }
         if (inInterval(matches.length, ctr.count)) {
             if (matches.length && ctr.variable) {
-                counterMatches.push([ ctr.variable, matches ]);
+                if (counterMatches.hasOwnProperty(ctr.variable)) {
+                    // If two <condition> elements define the same variable, take the intersection of the matches.
+                    // If any intersection is empty, getAllBindingCombinations() will return an empty array and the
+                    // case will not match.
+                    counterMatches[ctr.variable] = counterMatches[ctr.variable].filter(function(m) { return matches.indexOf(m) >= 0; });
+                } else {
+                    counterMatches[ctr.variable] = matches;
+                }
             }
             return true;
         }
@@ -1487,7 +1494,7 @@ Case.prototype.checkConditions = function (self, opp) {
     })) {
         return false; // failed filter count
     }
-    var bindingCombinations = getAllBindingCombinations(counterMatches);
+    var bindingCombinations = getAllBindingCombinations(Object.entries(counterMatches));
     shuffleArray(bindingCombinations);
     /* In the trivial case with no condition variables, we get a single binding combination of {}.
        And with no tests, this.tests.every() trivially returns true. */
