@@ -51,7 +51,7 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// Stage-specific images
 		/// </summary>
-		[XmlElement("img")]
+		[XmlElement("alt-img")]
 		public List<StageImage> Images { get; set; }
 
 		/// <summary>

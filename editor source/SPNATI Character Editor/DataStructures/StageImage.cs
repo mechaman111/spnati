@@ -6,7 +6,7 @@ namespace SPNATI_Character_Editor
 {
 	public class StageImage
 	{
-		[XmlAttribute("src")]
+		[XmlText]
 		public string Image;
 
 		/// <summary>
