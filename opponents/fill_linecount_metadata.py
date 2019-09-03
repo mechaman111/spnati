@@ -88,7 +88,7 @@ def process(opponent_folder_path):
             stageInterval = (0, 0)
 
         for stage in range(stageInterval[0], stageInterval[1] + 1):
-            images = [ x.get_text() for x in filter(lambda t: checkStage(stage, t.get('stage')), state.findChildren('image')) ]
+            images = [ x.get_text() for x in filter(lambda t: checkStage(stage, t.get('stage')), state.findChildren('alt-img')) ]
 
             if len(images) == 0:
                 images = [ state.get('img', '') ]

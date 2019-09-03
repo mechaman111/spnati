@@ -1477,7 +1477,7 @@ function countLinesImages(xml) {
                 : { min: 0, max: 0 };
 
             for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
-                var images = $(data).children('image').filter(function() {
+                var images = $(data).children('alt-img').filter(function() {
                     return checkStage(stage, $(this).attr('stage'));
                 }).map(function() { return $(this).text(); }).get();
                 if (images.length == 0) images = [ $(data).attr('img') ];
