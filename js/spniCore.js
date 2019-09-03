@@ -1004,7 +1004,7 @@ Player.prototype.getImagesForStage = function (stage) {
             && (filter === undefined || players.some(function(p) { return p.hasTag(filter); })))
         {
             $(this).children('state').each(function (i, e) {
-                var images = $xml.children('alt-img').filter(function() {
+                var images = $(e).children('alt-img').filter(function() {
                     return checkStage(stage, $(this).attr('stage'));
                 }).map(function() { return $(this).text(); }).get();
                 if (images.length == 0) images = [ $(e).attr('img') ];
