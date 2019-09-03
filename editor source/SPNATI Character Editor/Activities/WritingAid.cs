@@ -211,7 +211,7 @@ namespace SPNATI_Character_Editor.Activities
 				if (!_showExisting)
 				{
 					//see if we've already responded
-					bool responded = HasResponded(currentCharacter, _character, situation);
+					bool responded = HasResponded(currentCharacter, _character, situation, false);
 					if (responded || situation.LinkedCase == null)
 					{
 						if (filter != null)
@@ -232,10 +232,20 @@ namespace SPNATI_Character_Editor.Activities
 			Cursor.Current = Cursors.Default;
 		}
 
-		public static bool HasResponded(Character speaker, Character character, Situation situation)
+		public static bool HasResponded(Character speaker, Character character, Situation situation, bool checkLinkedOnly)
 		{
 			bool responded = false;
 			CharacterEditorData editorData = CharacterDatabase.GetEditorData(character);
+
+			if (editorData.HasResponse(speaker, situation.Id))
+			{
+				return true;
+			}
+			if (checkLinkedOnly)
+			{
+				return false;
+			}
+
 			if (situation.LinkedCase != null)
 			{
 				if (situation.LinkedCase.Id > 0)

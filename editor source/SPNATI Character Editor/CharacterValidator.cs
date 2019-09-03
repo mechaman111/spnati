@@ -600,16 +600,46 @@ namespace SPNATI_Character_Editor
 
 						int min, max;
 						Case.ToRange(stageRange, out min, out max);
-						for (int i = 0; i <= min && i < character.Behavior.Stages.Count; i++)
+						if (character.Behavior.Triggers.Count > 0)
 						{
-							Stage stage = character.Behavior.Stages[i];
-							foreach (var c in stage.Cases)
+							foreach (Trigger t in character.Behavior.Triggers)
 							{
-								foreach (var line in c.Lines)
+								foreach (Case c in t.Cases)
 								{
-									if (line.Marker == name)
+									foreach (var line in c.Lines)
 									{
-										return;
+										if (string.IsNullOrEmpty(line.Marker)) { continue; }
+										string val;
+										bool pt;
+										string markerName = Marker.ExtractPieces(line.Marker, out val, out pt);
+										if (markerName == name)
+										{
+											for (int i = 0; i < c.Stages.Count; i++)
+											{
+												if (c.Stages[i] <= min)
+												{
+													return;
+												}
+											}
+										}
+									}
+
+								}
+							}
+						}
+						else
+						{
+							for (int i = 0; i <= min && i < character.Behavior.Stages.Count; i++)
+							{
+								Stage stage = character.Behavior.Stages[i];
+								foreach (var c in stage.Cases)
+								{
+									foreach (var line in c.Lines)
+									{
+										if (line.Marker == name)
+										{
+											return;
+										}
 									}
 								}
 							}

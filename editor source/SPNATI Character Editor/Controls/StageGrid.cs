@@ -21,7 +21,7 @@ namespace SPNATI_Character_Editor.Controls
 		private Case _case;
 		private bool _populating;
 
-		public event EventHandler CheckedChanged;
+		public event EventHandler<int> CheckedChanged;
 		public event EventHandler<int> LayerSelected;
 
 		public HashSet<int> AllowedStages = new HashSet<int>();
@@ -244,7 +244,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			_stages[stage] = !_stages[stage];
 			_populating = true;
-			CheckedChanged?.Invoke(this, EventArgs.Empty);
+			CheckedChanged?.Invoke(this, stage);
 			UpdateCheckAllState();
 			_populating = false;
 		}
@@ -320,7 +320,7 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 			Invalidate(true);
-			CheckedChanged?.Invoke(this, e);
+			CheckedChanged?.Invoke(this, -1);
 		}
 
 		private bool IsStageEnabled(int i)

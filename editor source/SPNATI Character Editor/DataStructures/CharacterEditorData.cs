@@ -299,11 +299,15 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public bool HasResponse(Character opponent, Case opponentCase)
 		{
-			if (opponentCase.Id == 0)
+			return HasResponse(opponent, opponentCase.Id);
+		}
+		public bool HasResponse(Character opponent, int id)
+		{
+			if (id == 0)
 			{
 				return false;
 			}
-			SituationResponse response = Responses.Find(r => r.Opponent == opponent.FolderName && r.OpponentId == opponentCase.Id);
+			SituationResponse response = Responses.Find(r => r.Opponent == opponent.FolderName && r.OpponentId == id);
 			return response != null;
 		}
 
@@ -381,6 +385,7 @@ namespace SPNATI_Character_Editor
 			{
 				_usedFolders.Add(folder);
 			}
+			workingCase.NotifyPropertyChanged(nameof(workingCase.Id));
 		}
 
 		public CaseLabel GetLabel(Case workingCase)

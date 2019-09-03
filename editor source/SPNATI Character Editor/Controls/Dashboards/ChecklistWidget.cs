@@ -355,32 +355,28 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 
 		private IEnumerable<int> CheckMustTargets()
 		{
-			//Disabled for now because figuring out if you've responded to a situation requires building that character's working cases, so this would cause
-			//everybody to do so right away at startup.
+			foreach (Character c in CharacterDatabase.Characters)
+			{
+				if (c.FolderName == "human" || c == _character)
+				{
+					continue;
+				}
+				CharacterEditorData editorData = CharacterDatabase.GetEditorData(c);
+				if (editorData != null && editorData.NoteworthySituations.Count > 0)
+				{
+					for (int i = 0; i < editorData.NoteworthySituations.Count; i++)
+					{
+						if (editorData.NoteworthySituations[i].Priority == SituationPriority.MustTarget && !WritingAid.HasResponded(c, _character, editorData.NoteworthySituations[i], true))
+						{
+							AddTask("Respond to Must Target situations", "There are unanswered \"must targets\" from other characters. Failing to respond to these will make your character appear aloof when they occur.\r\n\r\n" +
+								"To respond to Must Target situations, use the Writing Aid and filter the priority to Must Target.", typeof(WritingAid), SituationPriority.MustTarget);
+							yield break;
+						}
+					}
+				}
+				yield return 50;
+			}
 			yield break;
-
-			//foreach (Character c in CharacterDatabase.Characters)
-			//{
-			//	if (c.FolderName == "human" || c == _character)
-			//	{
-			//		continue;
-			//	}
-			//	CharacterEditorData editorData = CharacterDatabase.GetEditorData(c);
-			//	if (editorData != null && editorData.NoteworthySituations.Count > 0)
-			//	{
-			//		for (int i = 0; i < editorData.NoteworthySituations.Count; i++)
-			//		{
-			//			if (editorData.NoteworthySituations[i].Priority == SituationPriority.MustTarget && !WritingAid.HasResponded(c, _character, editorData.NoteworthySituations[i]))
-			//			{
-			//				AddTask("Respond to Must Target situations", "There are unanswered \"must targets\" from other characters. Failing to respond to these will make your character appear aloof when they occur.\r\n\r\n" +
-			//					"To respond to Must Target situations, use the Writing Aid and filter the priority to Must Target.", typeof(WritingAid), SituationPriority.MustTarget);
-			//				yield break;
-			//			}
-			//		}
-			//	}
-			//	yield return 50;
-			//}
-			//yield break;
 		}
 
 		private void CheckUntargeted()
@@ -404,7 +400,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 						message = $"{c} has had some noteworthy situations called out";
 					}
 					message += $", but you haven't written anything to acknowledge their existence.\r\n\r\n" +
-						"Use the Writing Aid to write a line towards {c}.";
+						$"Use the Writing Aid to write a line towards {c}.";
 					AddTask($"{c} is feeling neglected", message, typeof(WritingAid), c);
 					return;
 				}

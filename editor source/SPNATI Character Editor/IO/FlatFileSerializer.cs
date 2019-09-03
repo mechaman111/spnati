@@ -185,9 +185,11 @@ namespace SPNATI_Character_Editor
 					{
 						foreach (Case set in c.GetConditionSets())
 						{
+							set.Tag = c.Tag;
 							Case stageCase = set.CopyConditions();
 							stageCase.Stages.Add(stage);
 							stageCase.Id = c.Id;
+							stageCase.TriggerSet = c.TriggerSet;
 							foreach (var line in c.Lines)
 							{
 								DialogueLine l = line.Copy();

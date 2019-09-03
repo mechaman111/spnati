@@ -57,7 +57,14 @@ namespace SPNATI_Character_Editor.Controls
 			cboImage.DataSource = list;
 			gridStages.SetData(_character, _workingCase, _workingCase.Stages.Count > 0 ? _workingCase.Stages[0] : -1);
 			gridStages.LayerSelected += GridStages_LayerSelected;
+			gridStages.CheckedChanged += GridStages_CheckedChanged;
 			cboImage.SelectedItem = image.Pose;
+		}
+
+		private void GridStages_CheckedChanged(object sender, int e)
+		{
+			PoseMapping pose = cboImage.SelectedItem as PoseMapping;
+			Preview?.Invoke(this, new UpdateImageArgs(_character, pose, e));
 		}
 
 		private void GridStages_LayerSelected(object sender, int e)
@@ -107,7 +114,12 @@ namespace SPNATI_Character_Editor.Controls
 					}
 				}
 			}
-			Preview?.Invoke(this, new UpdateImageArgs(_character, pose, gridStages.GetPreviewStage()));
+			int previewStage = gridStages.GetPreviewStage();
+			if (previewStage == -1)
+			{
+				previewStage = 0;
+			}
+			Preview?.Invoke(this, new UpdateImageArgs(_character, pose, previewStage));
 			gridStages.Invalidate(true);
 		}
 	}

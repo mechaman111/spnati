@@ -151,7 +151,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Check_CheckedChanged(object sender, EventArgs e)
+		private void Check_CheckedChanged(object sender, int stage)
 		{
 			if (_populatingCase)
 				return;
