@@ -549,6 +549,10 @@ namespace SPNATI_Character_Editor
 		[JsonProperty("tests")]
 		public List<ExpressionTest> Expressions;
 
+		[XmlOrder(405)]
+		[XmlElement("alternate")]
+		public List<Case> AlternativeConditions = new List<Case>();
+
 		[JsonProperty("lines")]
 		[XmlOrder(410)]
 		[XmlElement("state")]
@@ -624,10 +628,10 @@ namespace SPNATI_Character_Editor
 
 		public string ToConditionsString(bool excludeTarget)
 		{
-			List<string> results = new List<string>();
+			List<string> alternates = new List<string>();
 			foreach (Case alternate in AlternativeConditions)
 			{
-				results.Add(alternate.ToConditionsString(excludeTarget));
+				alternates.Add(alternate.ToConditionsString(false));
 			}
 			List<string> result = new List<string>();
 			if (!string.IsNullOrEmpty(Target) && !excludeTarget)
@@ -770,13 +774,37 @@ namespace SPNATI_Character_Editor
 			{
 				result.Add("(play once)");
 			}
-			results.Add(string.Join(" ", result));
-			string conditions = string.Join(" OR ", results);
-			if (AlternativeConditions.Count > 0)
+			string conditions = string.Join(" ", result);
+			if (alternates.Count > 0)
 			{
-				conditions = "*" + conditions;
+				string alternatesString = string.Join(" OR ", alternates);
+				conditions = $"*{conditions} AND ({alternatesString})";
 			}
 			return conditions;
+		}
+
+		public void ClearConditions()
+		{
+			foreach (MemberInfo field in this.GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance))
+			{
+				if (field.Name == "StageRange" || field.Name == "Tag" || field.Name == "OneShotId" || field.Name == "Id" || field.Name == "StageId")
+				{
+					continue;
+				}
+				if (field.MemberType == MemberTypes.Field || field.MemberType == MemberTypes.Property)
+				{
+					if (field.GetDataType() == typeof(string))
+					{
+						field.SetValue(this, null);
+					}
+					else if (field.GetDataType() == typeof(int))
+					{
+						field.SetValue(this, 0);
+					}
+				}
+			}
+			Conditions.Clear();
+			Expressions.Clear();
 		}
 
 		/// <summary>
@@ -813,6 +841,13 @@ namespace SPNATI_Character_Editor
 			{
 				copy.Expressions.Add(test.Copy());
 			}
+
+			copy.AlternativeConditions = new List<Case>();
+			foreach (Case alternate in AlternativeConditions)
+			{
+				copy.AlternativeConditions.Add(alternate.Copy());
+			}
+
 			return copy;
 		}
 
@@ -826,11 +861,6 @@ namespace SPNATI_Character_Editor
 			for (int i = 0; i < Lines.Count; i++)
 			{
 				copy.Lines.Add(Lines[i].Copy());
-			}
-			copy.AlternativeConditions = new List<Case>();
-			foreach (Case alternate in AlternativeConditions)
-			{
-				copy.AlternativeConditions.Add(alternate.Copy());
 			}
 			return copy;
 		}
@@ -1235,9 +1265,6 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		[XmlIgnore]
-		public List<Case> AlternativeConditions = new List<Case>();
-
 		public IEnumerable<Case> GetConditionSets()
 		{
 			yield return this;
@@ -1246,7 +1273,6 @@ namespace SPNATI_Character_Editor
 				yield return alternate;
 			}
 		}
-
 
 		/// <summary>
 		/// Gets whether this case has any targeted dialogue that is based on game state

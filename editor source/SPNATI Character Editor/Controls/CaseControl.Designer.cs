@@ -155,7 +155,7 @@
 			// 
 			// stripConditions
 			// 
-			this.stripConditions.AddCaption = "OR";
+			this.stripConditions.AddCaption = "AND";
 			this.stripConditions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.stripConditions.Location = new System.Drawing.Point(6, 122);
@@ -283,6 +283,7 @@
 			// 
 			this.skinnedGroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedGroupBox1.BackColor = System.Drawing.Color.White;
 			this.skinnedGroupBox1.Controls.Add(this.txtFolder);
 			this.skinnedGroupBox1.Controls.Add(this.skinnedLabel1);
 			this.skinnedGroupBox1.Controls.Add(this.cmdColorCode);
@@ -412,6 +413,7 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.BackColor = System.Drawing.Color.White;
 			this.groupBox3.Controls.Add(this.gridStages);
 			this.groupBox3.Location = new System.Drawing.Point(6, 6);
 			this.groupBox3.Name = "groupBox3";
@@ -425,6 +427,7 @@
 			this.gridStages.ColumnHeaderHeight = 72;
 			this.gridStages.Location = new System.Drawing.Point(6, 4);
 			this.gridStages.Name = "gridStages";
+			this.gridStages.ShowSelectAll = true;
 			this.gridStages.Size = new System.Drawing.Size(72, 102);
 			this.gridStages.TabIndex = 37;
 			// 

@@ -330,13 +330,6 @@ namespace SPNATI_Character_Editor
 				{
 					Case workingCase = enumerator.Current;
 					Trigger trigger = triggers.GetOrAddDefault(workingCase.Tag, () => new Trigger(workingCase.Tag));
-					List<Case> sets = new List<Case>();
-					sets.Add(workingCase);
-					if (workingCase.AlternativeConditions != null)
-					{
-						sets.AddRange(workingCase.AlternativeConditions);
-					}
-
 					Case triggerCase = workingCase.Copy();
 					triggerCase.StageRange = workingCase.StageRange;
 
@@ -356,76 +349,6 @@ namespace SPNATI_Character_Editor
 					triggerCase.Tag = null;
 					triggerCase.TriggerSet = 0;
 					trigger.Cases.Add(triggerCase);
-					//Dictionary<int, DialogueLine> lines = new Dictionary<int, DialogueLine>();
-					//Dictionary<int, List<int>> lineStages = new Dictionary<int, List<int>>();
-					//Dictionary<int, int> earliestStage = new Dictionary<int, int>();
-					//foreach (int stage in workingCase.Stages)
-					//{
-					//	foreach (DialogueLine line in workingCase.Lines)
-					//	{
-					//		DialogueLine stageLine = line.Copy();
-					//		if (stageLine.StageImages.ContainsKey(stage))
-					//		{
-					//			stageLine.Image = stageLine.StageImages[stage]?.Key;
-					//		}
-					//		else
-					//		{
-					//			stageLine.Image = stageLine.Pose?.Key;
-					//		}
-
-					//		int hash = stageLine.GetHashCode();
-					//		if (!lines.ContainsKey(hash))
-					//		{
-					//			lines.Add(hash, stageLine);
-					//		}
-					//		List<int> usedStages = lineStages.GetOrAddDefault(hash, () => new List<int>());
-					//		usedStages.Add(stage);
-					//	}
-					//}
-					//Dictionary<int, Case> splitCases = new Dictionary<int, Case>();
-					//foreach (int hash in lines.Keys)
-					//{
-					//	DialogueLine line = lines[hash];
-					//	List<int> stages = lineStages[hash];
-					//	int stageHash = ToHash(stages);
-					//	Case c = splitCases.GetOrAddDefault(stageHash, delegate
-					//	{
-					//		Case newCase = new Case(workingCase.Tag);
-					//		if (workingCase.Id > 0)
-					//		{
-					//			newCase.StageId = workingCase.Id.ToString();
-					//		}
-					//		else
-					//		{
-					//			editorData.AssignId(newCase);
-					//			newCase.StageId = newCase.Id.ToString();
-					//		}
-					//		newCase.Stages.AddRange(stages);
-					//		return newCase;
-					//	});
-					//	c.Lines.Add(line);
-					//}
-					//foreach (Case set in sets)
-					//{
-					//	set.TriggerSet = 0;
-					//	foreach (Case lineSet in splitCases.Values)
-					//	{
-					//		Case copy = set.CopyConditions();
-					//		if (workingCase.Id > 0)
-					//		{
-					//			copy.StageId = workingCase.Id.ToString();
-					//		}
-					//		else
-					//		{
-					//			editorData.AssignId(copy);
-					//			copy.StageId = copy.Id.ToString();
-					//		}
-					//		copy.Tag = null;
-					//		copy.Lines = lineSet.Lines;
-					//		copy.Stages = lineSet.Stages;
-					//		trigger.Cases.Add(copy);
-					//	}
-					//}
 				}
 			}
 			foreach (Trigger trigger in triggers.Values)
@@ -657,6 +580,18 @@ namespace SPNATI_Character_Editor
 						}
 						else
 						{
+							if (rootCase.AlternativeConditions.Count == 0)
+							{
+								//the official alternative format treats the base case separately from the alternatives, so to mimic that from the old format,
+								//move the rootcase into an alt of its own
+								Case rootAlt = rootCase.CopyConditions();
+								rootAlt.Tag = null;
+								rootAlt.OneShotId = 0;
+								rootAlt.Id = 0;
+								rootAlt.TriggerSet = 0;
+								rootCase.ClearConditions();
+								rootCase.AlternativeConditions.Add(rootAlt);
+							}
 							rootCase.AlternativeConditions.Add(existingCase);
 						}
 					}
@@ -805,7 +740,9 @@ namespace SPNATI_Character_Editor
 								{
 									if (existingLine.GetHashCodeWithoutImage() == lineHash)
 									{
-										if (existingLine.Image != defaultLine.Image)
+										string existingKey = _character.PoseLibrary.GetPose(existingLine.Image)?.Key;
+										string defaultKey = _character.PoseLibrary.GetPose(defaultLine.Image)?.Key;
+										if (existingKey != defaultKey)
 										{
 											//if the images are different, remember that difference
 											PoseMapping pose = _character.PoseLibrary.GetPose(defaultLine.Image);
@@ -892,6 +829,18 @@ namespace SPNATI_Character_Editor
 						{
 							if (similar.MatchesNonConditions(c))
 							{
+								if (similar.AlternativeConditions.Count == 0)
+								{
+									//the official alternative format treats the base case separately from the alternatives, so to mimic that from the old format,
+									//move the rootcase into an alt of its own
+									Case rootAlt = similar.CopyConditions();
+									rootAlt.Tag = null;
+									rootAlt.OneShotId = 0;
+									rootAlt.Id = 0;
+									rootAlt.TriggerSet = 0;
+									similar.ClearConditions();
+									similar.AlternativeConditions.Add(rootAlt);
+								}
 								similar.AlternativeConditions.Add(c);
 								foundSimilar = true;
 								newCase = false;
@@ -914,6 +863,10 @@ namespace SPNATI_Character_Editor
 						foreach (DialogueLine line in c.Lines)
 						{
 							line.Pose = _character.PoseLibrary.GetPose(line.Image);
+							foreach (StageImage img in line.Images)
+							{
+								img.Pose = _character.PoseLibrary.GetPose(img.Image);
+							}
 						}
 						_workingCases.Add(c);
 					}

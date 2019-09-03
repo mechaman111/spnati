@@ -29,6 +29,18 @@ namespace SPNATI_Character_Editor.Controls
 			InitializeComponent();
 		}
 
+		private void UpdateAddCaption()
+		{
+			if (tabsConditions.TabCount > 1)
+			{
+				stripConditions.AddCaption = "OR";
+			}
+			else
+			{
+				stripConditions.AddCaption = "AND";
+			}
+		}
+
 		public int PreviewStage
 		{
 			get { return _selectedStage == null ? _selectedCase.Stages[0] : _selectedStage.Id; }
@@ -660,7 +672,7 @@ namespace SPNATI_Character_Editor.Controls
 					tabsConditions.TabPages.RemoveAt(e.OldStartingIndex + 1);
 					for (int i = e.OldStartingIndex + 1; i < tabsConditions.TabPages.Count; i++)
 					{
-						tabsConditions.TabPages[i].Text = "Set " + (i + 1);
+						tabsConditions.TabPages[i].Text = "Set " + i;
 					}
 					break;
 			}
@@ -678,7 +690,8 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void AddAlternateTab()
 		{
-			tabsConditions.TabPages.Add($"Set {(tabsConditions.TabPages.Count + 1)}");
+			tabsConditions.TabPages.Add($"Set {(tabsConditions.TabPages.Count)}");
+			UpdateAddCaption();
 		}
 
 		private void stripConditions_CloseButtonClicked(object sender, EventArgs e)
@@ -692,9 +705,10 @@ namespace SPNATI_Character_Editor.Controls
 				tabsConditions.TabPages.RemoveAt(index + 1);
 				for (int i = index + 1; i < tabsConditions.TabPages.Count; i++)
 				{
-					tabsConditions.TabPages[i].Text = "Set " + (i + 1);
+					tabsConditions.TabPages[i].Text = "Set " + i;
 				}
 				tabsConditions.SelectedIndex = index < tabsConditions.TabPages.Count - 1 ? index + 1 : index;
+				UpdateAddCaption();
 			}
 		}
 
