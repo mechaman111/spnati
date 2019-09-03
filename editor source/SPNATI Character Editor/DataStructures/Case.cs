@@ -1056,7 +1056,7 @@ namespace SPNATI_Character_Editor
 
 		private int _conditionHash;
 
-		private int GetConditionHash()
+		private int GetConditionHash(bool includePriority)
 		{
 			if (_conditionHash > 0)
 			{
@@ -1097,7 +1097,10 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (AlsoPlayingSaying ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (AddCharacterTags ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (RemoveCharacterTags ?? string.Empty).GetHashCode();
-			hash = (hash * 397) ^ (CustomPriority ?? string.Empty).GetHashCode();
+			if (includePriority)
+			{
+				hash = (hash * 397) ^ (CustomPriority ?? string.Empty).GetHashCode();
+			}
 			hash = (hash * 397) ^ (Hidden ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (OneShotId > 0 ? OneShotId : -1);
 			_conditionHash = hash;
@@ -1134,19 +1137,23 @@ namespace SPNATI_Character_Editor
 			return true;
 		}
 
+		public bool MatchesConditions(Case other)
+		{
+			return MatchesConditions(other, true);
+		}
 		/// <summary>
 		/// Gets whether this case matches the conditions+tag of another, but not necessarily the lines or stages
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
-		public bool MatchesConditions(Case other)
+		public bool MatchesConditions(Case other, bool includePriority)
 		{
 			if (other == this)
 				return true;
 			if (Tag != other.Tag)
 				return false;
 
-			bool sameFilters = (GetConditionHash() == other.GetConditionHash());
+			bool sameFilters = (GetConditionHash(includePriority) == other.GetConditionHash(includePriority));
 			if (!sameFilters)
 				return false;
 
@@ -1307,7 +1314,7 @@ namespace SPNATI_Character_Editor
 		public int GetCode()
 		{
 			int hash = Tag.GetHashCode();
-			hash = (hash * 397) ^ GetConditionHash();
+			hash = (hash * 397) ^ GetConditionHash(true);
 			foreach (var condition in Conditions)
 			{
 				hash = (hash * 397) ^ condition.GetHashCode();

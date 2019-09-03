@@ -26,6 +26,10 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public List<Situation> NoteworthySituations = new List<Situation>();
 
+		[DefaultValue(false)]
+		[XmlElement("reviewed")]
+		public bool ReviewedPriorities;
+
 		[XmlArray("hidden")]
 		[XmlArrayItem("id")]
 		/// <summary>
@@ -185,16 +189,27 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public Situation MarkNoteworthy(Case c)
+		public Situation MarkNoteworthy(Case c, SituationPriority priority)
 		{
 			if (c.Id == 0)
 			{
 				AssignId(c);
 			}
 			Situation line = new Situation(c);
+			line.Priority = priority;
 			NoteworthySituations.Add(line);
 			_character.IsDirty = true;
 			return line;
+		}
+
+		public void LinkSituation(Situation situation, Case c)
+		{
+			AssignId(c);
+			situation.LegacyCase = null;
+			situation.LinkedCase = c;
+			situation.Id = c.Id;
+			situation.MinStage = c.Stages.Min(stage => stage);
+			situation.MaxStage = c.Stages.Max(stage => stage);
 		}
 
 		public void OnBeforeSerialize()
@@ -454,6 +469,11 @@ namespace SPNATI_Character_Editor
 
 			Name = $"Identifying name (ex. {TriggerDatabase.GetLabel(realCase.Tag)})";
 			Description = "Description about what's interesting happening with the character (i.e. why should others target this?)";
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 
 		public void OnAfterDeserialize()

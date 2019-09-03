@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Desktop;
 using SPNATI_Character_Editor.Activities;
+using SPNATI_Character_Editor.Forms;
 using SPNATI_Character_Editor.Services;
 
 namespace SPNATI_Character_Editor.Workspaces
@@ -16,11 +17,14 @@ namespace SPNATI_Character_Editor.Workspaces
 		protected override void OnInitialize()
 		{
 			_character = Record as Character;
+			_character.PrepareForEdit();
+
 			SpellCheckerService spellChecker = new SpellCheckerService(_character);
 			SetData(SpellCheckerService, spellChecker);
 
 			Config.Set(Settings.LastCharacter, _character.FolderName);
 		}
+
 
 		public override bool AllowAutoStart(Type activityType)
 		{

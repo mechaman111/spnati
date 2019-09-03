@@ -27,6 +27,10 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+			if (Config.VersionPredates(version, "v5.2"))
+			{
+				Convert5_1(character);
+			}
 		}
 
 		private static void Convert3_2(Character character)
@@ -180,6 +184,35 @@ namespace SPNATI_Character_Editor
 
 			ending.Backgrounds.Clear();
 			ending.Screens.Clear();
+		}
+
+		private static void Convert5_1(Character character)
+		{
+			//try to link up any old-style situations
+			CharacterEditorData editorData = CharacterDatabase.GetEditorData(character);
+			foreach (Situation s in editorData.NoteworthySituations)
+			{
+				if (s.LegacyCase != null)
+				{
+					//find a matching case
+					bool foundLink = false;
+					foreach (Case workingCase in character.Behavior.GetWorkingCases())
+					{
+						if (workingCase.MatchesConditions(s.LegacyCase, false) && workingCase.MatchesStages(s.LegacyCase, true))
+						{
+							var l1 = workingCase.Lines;
+							var l2 = s.LegacyCase.Lines;
+							editorData.LinkSituation(s, workingCase);
+							foundLink = true;
+							break;
+						}
+					}
+					if (!foundLink)
+					{
+
+					}
+				}
+			}
 		}
 	}
 }

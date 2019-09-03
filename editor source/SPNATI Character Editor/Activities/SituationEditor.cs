@@ -70,26 +70,33 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (parameters.Length > 0)
 			{
-				Situation line = parameters[0] as Situation;
+				if (parameters[0] is bool)
+				{
+					_editorData.ReviewedPriorities = true;
+				}
+				else
+				{
+					Situation line = parameters[0] as Situation;
 
-				//See if the line was already added (will be the case if launching this from the Call Out button)
-				DataGridViewRow row = null;
-				foreach (DataGridViewRow r in gridCases.Rows)
-				{
-					Situation s = r.Tag as Situation;
-					if (s == line)
+					//See if the line was already added (will be the case if launching this from the Call Out button)
+					DataGridViewRow row = null;
+					foreach (DataGridViewRow r in gridCases.Rows)
 					{
-						row = r;
-						break;
+						Situation s = r.Tag as Situation;
+						if (s == line)
+						{
+							row = r;
+							break;
+						}
 					}
+					if (row == null)
+					{
+						row = BuildLine(line);
+					}
+					row.Selected = true;
+					gridCases.ClearSelection();
+					row.Cells[0].Selected = true;
 				}
-				if (row == null)
-				{
-					row = BuildLine(line);
-				}
-				row.Selected = true;
-				gridCases.ClearSelection();
-				row.Cells[0].Selected = true;
 			}
 		}
 

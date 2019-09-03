@@ -298,7 +298,12 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				if (editorData.NoteworthySituations == null || editorData.NoteworthySituations.Count == 0)
 				{
 					AddTask("Call out \"must target\" situations", "Use the \"Call Out\" button for dialogue cases where something particularly interesting is happening that other characters should definitely react to.\r\n\r\n" +
-						"These situations will appear in other characters' Writing Aid, making it easy to get other characters to interact with yours." , typeof(DialogueEditor));
+						"These situations will appear in other characters' Writing Aid, making it easy to get other characters to interact with yours.", typeof(DialogueEditor));
+				}
+				else if (!editorData.ReviewedPriorities)
+				{
+					AddTask("Review situation priorities", "Situations can be given priorities to affect how frequently they appear in other character's Writing Aid.\r\n\r\n" +
+						"Use the Situations tab to update the Priority for any truly \"Must Target\" situation to use \"Must Target\".", typeof(SituationEditor), true);
 				}
 			}
 		}

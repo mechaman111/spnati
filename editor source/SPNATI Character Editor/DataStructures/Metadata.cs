@@ -195,6 +195,7 @@ namespace SPNATI_Character_Editor
 			Layers = c.Layers;
 			Endings = c.Endings.ConvertAll(e => new EpilogueMeta
 			{
+				Status = e.Status,
 				Title = e.Title,
 				Gender = e.Gender,
 				GalleryImage = e.GalleryImage ?? (e.Scenes.Count > 0 ? e.Scenes[0].Background : null),
@@ -230,6 +231,9 @@ namespace SPNATI_Character_Editor
 
 	public class EpilogueMeta
 	{
+		[XmlAttribute("status")]
+		public OpponentStatus Status;
+
 		[XmlAttribute("gender")]
 		public string Gender;
 

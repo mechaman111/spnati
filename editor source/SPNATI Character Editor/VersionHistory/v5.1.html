@@ -1,14 +1,14 @@
 ﻿<h3>General</h3>
 <ul>
-	<li>Moved <pre style="display:inline">&lt;nicknames&gt;</pre> up next to <pre style="display:inline">&lt;tags&gt;</pre> in behaviour.xml</li>
-	<li>behaviour.xml's file format has changed to group cases by type rather than by stage. This will result in a smaller file size but will also cause a major file diff upon saving for the first time.</li>
+	<li>behaviour.xml's file format has changed to group cases by type rather than by stage and in general reduce the amount of duplication. This will result in a smaller file size but will also <span style="color:red">cause a major file diff upon saving for the first time.</span></li>
 	<li>The editor is a bit smarter about unsaved changes now and will not spam you with "Do you want to save X before closing?" messages quite as often.</li>
 	<li>The editor now runs in 64-bit mode. The increasing roster and editor complexity have been pushing the limits of 32-bit.</li>
+	<li>Moved <pre style="display:inline">&lt;nicknames&gt;</pre> up next to <pre style="display:inline">&lt;tags&gt;</pre> in behaviour.xml</li>
 </ul>
 
 <h3>Dashboard</h3>
 <ul>
-	<li>Established characters now open to a Character Dashboard. This screen contains an at-a-glance overview of the character. For new characters, it also displays progress towards meeting minimum sponsorship requirements and step-by-step instructions for outstanding tasks.</li>
+	<li>Established characters now open to a Character Dashboard. This screen contains an at-a-glance overview of the character, progress towards meeting minimum sponsorship requirements, and step-by-step instructions for outstanding tasks or best practices.</li>
 </ul>
 
 <h3>Image Importing</h3>
@@ -22,7 +22,7 @@
 <ul>
 	<li>The "Screenshot" tab has been renamed to "Images"</li>
 	<li>It's now possible to compress images using TinyPNG directly from the editor. Visit a character's Images tab to do so.</li>
-	<li>TinyPNG allows 500 compressions per month per API key. By default, the editor shares a single key across all Character Editor users, so it's strongly recommended to obtain your own free API key from <a href="https://tinypng.com/developers" target="_blank">tinypng.com</a>. Then, fill this key into Settings > Image Import > TinyPNG API key and use the verify button to validate your key.</li>
+	<li>TinyPNG allows 500 compressions per month per API key. By default, the editor shares a single key across all Character Editor users, so it's strongly recommended to obtain your own free API key from <a href="https://tinypng.com/developers" target="_blank">tinypng.com</a>. Then, fill this key into "Settings > Image Import > TinyPNG API key" and use the verify button to validate your key.</li>
 </ul>
 
 <h3>Dialogue</h3>
@@ -34,6 +34,7 @@
 	<li>Sorting by case is now the default sort method. To go back to the old sorting method, select Stage from the View dropdown.</li>
 	<li>Filters can now filter any type of condition (said marker, time in stage, etc.) Use Filter (+) > Add Filter > Desired condition.</li>
 	<li>It's now possible to assign multiple images to a single stage on a single line of dialogue. The game will select a random image from among these. The Stage-Specific Images screen has been revamped to accommodate adding multiple images per stage.</li>
+	<li>"If A OR B then..." type conditions are now natively supported by the game, but they work a little differently from how the editor would do A OR B previously. They now come in the form "If base conditions are met AND (alterative A or alternative B) then...". To reflect this, a case with no alternative conditions now has a +AND button. Subsequent alternatives will display an +OR button. To do "If A OR B" then, you would leave the "Conditions" tab blank and add two alternative tabs in the case.</li>
 </ul>
 
 <h3>Epilogues</h3>

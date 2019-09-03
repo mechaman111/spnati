@@ -29,7 +29,6 @@ namespace SPNATI_Character_Editor.Activities
 			picPortrait.SetCharacter(Record as ISkin);
 			if (_character != null)
 			{
-				_character.PrepareForEdit();
 				_character.Behavior.CaseAdded += WorkingCasesChanged;
 				_character.Behavior.CaseRemoved += WorkingCasesChanged;
 				_character.Behavior.CaseModified += WorkingCasesChanged;

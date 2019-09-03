@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using SPNATI_Character_Editor.Controls;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -305,8 +306,12 @@ namespace SPNATI_Character_Editor.Activities
 						return;
 					}
 				}
-				Situation line = _editorData.MarkNoteworthy(_selectedCase);
-				Shell.Instance.Launch<Character, SituationEditor>(_character, line);
+				CallOutForm form = new CallOutForm();
+				if (form.ShowDialog() == DialogResult.OK)
+				{
+					Situation line = _editorData.MarkNoteworthy(_selectedCase, form.Priority);
+					Shell.Instance.Launch<Character, SituationEditor>(_character, line);
+				}
 			}
 		}
 
