@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -65,6 +66,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _text;
+		[XmlConditionalText("UseXmlText")]
 		[XmlElement("text")]
 		public string Text
 		{
@@ -288,6 +290,11 @@ namespace SPNATI_Character_Editor
 			{
 				return IsMarkerPersistent || (Marker != null && (Marker.Contains("=") || Marker.Contains("+") || Marker.Contains("-") || Marker.Contains("*")));
 			}
+		}
+
+		private bool UseXmlText()
+		{
+			return Images.Count == 0;
 		}
 	}
 }

@@ -10,6 +10,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 	{
 		private Character _character;
 		private PartnerGraphs _partnerGraphType = PartnerGraphs.Lines;
+		private Tuple<string, List<Character>> _franchises;
 
 		public ComparisonWidget()
 		{
@@ -29,7 +30,8 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				Tag def = TagDatabase.GetTag(tag.Tag);
 				if (def != null && def.Group == "Source Material")
 				{
-					return true;
+					_franchises = TagDatabase.GetSmallestGroup("Source Material", _character);
+					return _franchises != null;
 				}
 			}
 			return false;
@@ -38,20 +40,18 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 		public IEnumerator DoWork()
 		{
 			//Figure out which source material tag has the most characters in common
-			Tuple<string, List<Character>> franchise = TagDatabase.GetSmallestGroup("Source Material", _character);
-
 			graphPartners.Clear();
-			if (franchise != null)
+			if (_franchises != null)
 			{
 				switch (_partnerGraphType)
 				{
 					case PartnerGraphs.Lines:
 						lblLines.Text = "Lines";
-						UpdatePartnerLines(franchise);
+						UpdatePartnerLines(_franchises);
 						break;
 					case PartnerGraphs.Targets:
 						lblLines.Text = $"Banter with {_character}";
-						UpdatePartnerBanter(franchise);
+						UpdatePartnerBanter(_franchises);
 						break;
 				}
 			}
