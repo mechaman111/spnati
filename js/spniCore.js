@@ -2172,6 +2172,18 @@ if (!String.prototype.endsWith) {
     };
 }
 
+if (!Object.entries) {
+    Object.entries = function (obj) {
+        var ownProps = Object.keys(obj),
+            i = ownProps.length,
+            resArray = new Array(i); // preallocate the Array
+        while (i--)
+            resArray[i] = [ownProps[i], obj[ownProps[i]]];
+
+        return resArray;
+    };
+}
+
 /************************************************************
  * Counts the number of elements that evaluate as true, or,
  * if a function is provided, passes the test implemented by it.
