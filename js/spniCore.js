@@ -931,6 +931,34 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 }, this);
             });
 
+            /* Clone cases with alternative conditions/test, keeping
+             * one alternative set of conditions and tests on the case
+             * level of each case clone. This may create multiple
+             * cases with the same oneShotId, which is what we want,
+             * because the case clones should still be seen as the
+             * same case.
+             *
+             * This means that the conditions on the case element as
+             * well as any condition and test elements outside of
+             * alternatives must always be fulfilled, along with all
+             * the conditions of tests inside any of the alternative
+             * elements. */
+            $xml.find('>behaviour case:has(>alternative)').each(function() {
+                var $case = $(this);
+                $case.children('alternative').each(function() {
+                    // Make clone and insert after original case
+                    var $clone = $case.clone().insertAfter($case);
+                    // Remove all <alternative> elements from clone, leaving base conditions
+                    $clone.children('alternative').remove();
+                    // Append conditions from this alternative to cloned case
+                    $clone.append($(this).children());
+                    for (var i = 0; i < this.attributes.length; i++) {
+                        $clone.attr(this.attributes[i].name, this.attributes[i].value);
+                    }
+                });
+                $case.remove();
+            });
+
             this.targetedLines = targetedLines;
 
             var nicknames = {};
@@ -978,19 +1006,24 @@ Player.prototype.getImagesForStage = function (stage) {
             && (filter === undefined || players.some(function(p) { return p.hasTag(filter); })))
         {
             $(this).children('state').each(function (i, e) {
-                var poseName = $(e).attr('img');
-                if (!poseName) return;
-                poseName = poseName.replace('#', stage);
+                var images = $(e).children('alt-img').filter(function() {
+                    return checkStage(stage, $(this).attr('stage'));
+                }).map(function() { return $(this).text(); }).get();
+                if (images.length == 0) images = [ $(e).attr('img') ];
+                images.forEach(function(poseName) {
+                    if (!poseName) return;
+                    poseName = poseName.replace('#', stage);
                 
-                if (poseName.startsWith('custom:')) {
-                    var key = poseName.split(':', 2)[1];
-                    var pose = advPoses[key];
-                    if (pose) pose.getUsedImages().forEach(function (img) {
-                        imageSet[img.replace('#', stage)] = true;
-                    });
-                } else {
-                    imageSet[folder+poseName] = true;
-                }
+                    if (poseName.startsWith('custom:')) {
+                        var key = poseName.split(':', 2)[1];
+                        var pose = advPoses[key];
+                        if (pose) pose.getUsedImages().forEach(function (img) {
+                            imageSet[img.replace('#', stage)] = true;
+                        });
+                    } else {
+                        imageSet[folder+poseName] = true;
+                    }
+                }, this);
             });
         }
     });

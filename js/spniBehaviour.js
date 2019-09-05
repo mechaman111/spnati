@@ -239,7 +239,7 @@ function expandTagsList(input_tags) {
  *****                  State Object Specification                *****
  **********************************************************************/
 
-function State($xml_or_state, parentCase) {
+function State($xml_or_state, parentCase, stage) {
     if ($xml_or_state instanceof State) {
         /* Shallow-copy the state: */
         for (var prop in $xml_or_state) {
@@ -257,7 +257,16 @@ function State($xml_or_state, parentCase) {
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
-    this.rawDialogue = $xml.html();
+    if (this.rawDialogue = $xml.children('text').html()) {
+        var $altImages = $xml.children('alt-img').filter(function() {
+            return checkStage(stage, $(this).attr('stage'));
+        });
+        if ($altImages.length > 0) {
+            this.image = $($altImages.get(getRandomNumber(0, $altImages.length))).text();
+        }
+    } else {
+        this.rawDialogue = $xml.html();
+    }
     this.weight = Number($xml.attr('weight')) || 1;
     if (this.weight < 0) this.weight = 0;
     
@@ -964,7 +973,8 @@ function Condition($xml) {
  *****                  Case Object Specification                 *****
  **********************************************************************/
 
-function Case($xml) {
+function Case($xml, stage) {
+    // stage is current stage. Only passed to State to choose a correct image.
     this.stage =                    $xml.attr('stage');
     this.tag =                      $xml.attr('tag');
     this.target =                   $xml.attr("target");
@@ -1020,7 +1030,7 @@ function Case($xml) {
     
     this.states = [];
     $xml.find('state').each(function (idx, elem) {
-        this.states.push(new State($(elem), this));
+        this.states.push(new State($(elem), this, stage));
     }.bind(this));
     
     this.counters = [];
@@ -1590,7 +1600,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, bestMatchPriority) {
     var bestMatch = [];
     
     for (var i = 0; i < cases.length; i++) {
-        var curCase = new Case(cases[i]);
+        var curCase = new Case(cases[i], this.stage);
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             curCase.checkConditions(this, opp))
