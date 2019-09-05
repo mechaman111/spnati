@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Windows.Threading;
 
 namespace SPNATI_Character_Editor
 {
@@ -32,10 +31,18 @@ namespace SPNATI_Character_Editor
 
 			Shell.Instance.AutoTickFrequency = Config.AutoSaveInterval * 60000;
 			Shell.Instance.AutoTick += Instance_AutoTick;
+			Shell.Instance.Version = Config.Version;
+			Shell.Instance.VersionClick += Instance_VersionClick;
 
 			Config.LoadMacros<Case>("Case");
+			Shell.Instance.Description = Config.UserName;
 
 			CharacterGenerator.SetConverter(Config.ImportMethod);
+		}
+
+		private static void Instance_VersionClick(object sender, EventArgs e)
+		{
+			new About().ShowDialog();
 		}
 
 		private static void Instance_AutoTick(object sender, System.EventArgs e)

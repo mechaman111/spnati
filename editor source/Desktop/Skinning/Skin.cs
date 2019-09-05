@@ -13,6 +13,7 @@ namespace Desktop.Skinning
 		public static Font ButtonFont = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
 		public static Font TabFont = new Font("Segoe UI", 9);
 		public static Font ActiveTabFont = new Font("Segoe UI", 9, FontStyle.Bold);
+		public static Font DecorationFont = new Font("Segoe UI", 8);
 		public static Font TitleFont = new Font("Segoe UI", 16);
 		public static Font CompletionFont = new Font("Segoe UI", 28);
 

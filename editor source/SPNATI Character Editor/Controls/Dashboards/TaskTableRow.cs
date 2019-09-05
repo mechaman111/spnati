@@ -26,6 +26,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (Task == null) { return; }
 			lblTask.Text = Task.Text;
 			link.LaunchParameters = Task.LaunchData;
+			link.LaunchHandler = Task.LaunchHandler;
 
 			if (Task.ProgressBased)
 			{
@@ -52,7 +53,7 @@ namespace SPNATI_Character_Editor.Controls
 				bubbleTip.SetToolTip(cmdHelp, Task.HelpText);
 				cmdHelp.Visible = true;
 			}
-			link.Visible = Task.LaunchData != null;
+			link.Visible = Task.LaunchData != null || Task.LaunchHandler != null;
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using Desktop.Skinning;
 using SPNATI_Character_Editor.Activities;
 using SPNATI_Character_Editor.DataStructures;
+using SPNATI_Character_Editor.Forms;
 using SPNATI_Character_Editor.Services;
 using SPNATI_Character_Editor.Workspaces;
 using System;
@@ -63,9 +64,16 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				skipMinor = true;
 			}
 
-			yield return 100;			
+			yield return 100;
 
 			CheckImageSizes();
+
+			yield return 100;
+
+			foreach (int delay in CheckLines())
+			{
+				yield return delay;
+			}
 
 			yield return 100;
 
@@ -151,6 +159,14 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			ChecklistTask task = new ChecklistTask(message);
 			task.HelpText = helpText;
 			task.LaunchData = new LaunchParameters(_character, activityType, runParameters);
+			tasks.AddTask(task);
+		}
+
+		private void AddTask(string message, string helpText, Action launchHandler)
+		{
+			ChecklistTask task = new ChecklistTask(message);
+			task.HelpText = helpText;
+			task.LaunchHandler = launchHandler;
 			tasks.AddTask(task);
 		}
 
@@ -410,6 +426,26 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 					return;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Checks lines for various fixups
+		/// </summary>
+		/// <returns></returns>
+		private IEnumerable<int> CheckLines()
+		{
+			foreach (DuplicateCase dupe in _character.EnumerateDuplicates())
+			{
+				//found a duplicate
+				AddTask("Clean up duplicate cases", "The same case was found in each of the \"Hand=(Good/Okay/Bad)\" case types. This can be simplified by using a single \"Hand (Any)\" case.\r\n\r\nClick Go to open the Case Merger Utility.", () =>
+				{
+					CaseMerger form = new CaseMerger();
+					form.SetData(_character);
+					form.ShowDialog();
+				});
+				break;
+			}
+			yield break;
 		}
 
 		private void pnlGood_Paint(object sender, PaintEventArgs e)

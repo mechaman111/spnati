@@ -37,6 +37,7 @@
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tsVersion = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tmrAutoTick = new System.Windows.Forms.Timer(this.components);
 			this.stripActivities = new Desktop.Skinning.SkinnedTabStrip();
 			this.actionStrip = new System.Windows.Forms.MenuStrip();
@@ -85,7 +86,8 @@
 			this.statusStrip1.AutoSize = false;
 			this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblStatus});
+            this.lblStatus,
+            this.tsVersion});
 			this.statusStrip1.Location = new System.Drawing.Point(1, 761);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(1302, 22);
@@ -96,8 +98,21 @@
 			// lblStatus
 			// 
 			this.lblStatus.Name = "lblStatus";
-			this.lblStatus.Size = new System.Drawing.Size(39, 17);
+			this.lblStatus.Size = new System.Drawing.Size(1260, 17);
+			this.lblStatus.Spring = true;
 			this.lblStatus.Text = "Status";
+			this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tsVersion
+			// 
+			this.tsVersion.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tsVersion.Name = "tsVersion";
+			this.tsVersion.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.tsVersion.Size = new System.Drawing.Size(27, 17);
+			this.tsVersion.Text = "v1.0";
+			this.tsVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.tsVersion.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+			this.tsVersion.Click += new System.EventHandler(this.tsVersion_Click);
 			// 
 			// tmrAutoTick
 			// 
@@ -108,6 +123,7 @@
 			this.stripActivities.AddCaption = null;
 			this.stripActivities.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.stripActivities.DecorationText = null;
 			this.stripActivities.Location = new System.Drawing.Point(1, 25);
 			this.stripActivities.Margin = new System.Windows.Forms.Padding(0);
 			this.stripActivities.Name = "stripActivities";
@@ -177,6 +193,7 @@
 		private System.Windows.Forms.Timer tmrAutoTick;
 		private Skinning.SkinnedTabStrip stripActivities;
 		private System.Windows.Forms.MenuStrip actionStrip;
+		private System.Windows.Forms.ToolStripStatusLabel tsVersion;
 	}
 }
 

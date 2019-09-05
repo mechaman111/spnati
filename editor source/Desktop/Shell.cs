@@ -25,6 +25,12 @@ namespace Desktop
 
 		public PostOffice PostOffice = new PostOffice();
 
+		public string Description
+		{
+			get { return stripActivities.DecorationText; }
+			set { stripActivities.DecorationText = value; }
+		}
+
 		private Dictionary<Type, SortedList<int, Type>> _recordToActivityMap;
 		private Dictionary<Type, Type> _recordToWorkspaceMap;
 		private Dictionary<Type, WorkspacePane> _activityToPaneMap;
@@ -34,6 +40,8 @@ namespace Desktop
 		public IWorkspace ActiveWorkspace;
 		public IActivity ActiveActivity;
 		public IActivity ActiveSidebarActivity;
+
+		public event EventHandler VersionClick;
 
 		/// <summary>
 		/// Iterates through all open workspaces. Do not try launching or closing workspaces while iterating over this
@@ -58,6 +66,12 @@ namespace Desktop
 		}
 		public event EventHandler AutoTick;
 
+		public string Version
+		{
+			get { return tsVersion.Text; }
+			set { tsVersion.Text = value; }
+		}
+
 		private List<IActivity> _activationOrder = new List<IActivity>();
 
 		public Shell(string caption, Icon icon)
@@ -74,6 +88,8 @@ namespace Desktop
 
 		private void Shell_Load(object sender, EventArgs e)
 		{
+			statusStrip1.Padding = new Padding(statusStrip1.Padding.Left, statusStrip1.Padding.Top, statusStrip1.Padding.Left, statusStrip1.Padding.Bottom);
+
 			BuildWorkspaceMap();
 		}
 
@@ -588,7 +604,7 @@ namespace Desktop
 		/// <returns>True if the worksapce was closed</returns>
 		public bool CloseWorkspace(IWorkspace ws, bool silent = false)
 		{
-			if(!silent && !ws.CanQuit(CloseReason.ClosingWorkspace))
+			if (!silent && !ws.CanQuit(CloseReason.ClosingWorkspace))
 				return false;
 			QuitWorkspace(ws, false);
 			return true;
@@ -840,6 +856,11 @@ namespace Desktop
 					page.Text = page.Text.Substring(0, page.Text.Length - 1);
 				}
 			}
+		}
+
+		private void tsVersion_Click(object sender, EventArgs e)
+		{
+			VersionClick?.Invoke(this, e);
 		}
 	}
 

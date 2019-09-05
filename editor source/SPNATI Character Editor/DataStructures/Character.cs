@@ -972,6 +972,60 @@ namespace SPNATI_Character_Editor
 				}
 			}
 		}
+
+		public IEnumerable<DuplicateCase> EnumerateDuplicates()
+		{
+			Dictionary<string, HashSet<int>> hands = new Dictionary<string, HashSet<int>>();
+			DualKeyDictionary<string, int, Case> map = new DualKeyDictionary<string, int, Case>();
+
+			//TODO: Generalize this to handle more than Hand cases
+
+			hands["okay_hand"] = new HashSet<int>();
+			hands["good_hand"] = new HashSet<int>();
+			hands["bad_hand"] = new HashSet<int>();
+			hands["hand"] = new HashSet<int>();
+			foreach (Case workingCase in Behavior.GetWorkingCases())
+			{
+				string tag = workingCase.Tag;
+				if (tag == "okay_hand" || tag == "good_hand" || tag == "bad_hand" || tag == "hand")
+				{
+					int code = workingCase.GetFullHashCode();
+					map.Set(tag, code, workingCase);
+					hands[tag].Add(code);
+					bool inAll = true;
+					bool inDefault = false;
+					foreach (KeyValuePair<string, HashSet<int>> kvp in hands)
+					{
+						bool inTag = kvp.Value.Contains(code);
+						if (kvp.Key == "hand")
+						{
+							inDefault = inTag;
+						}
+						else
+						{
+							inAll = inAll && inTag;
+							if (!inAll)
+							{
+								break;
+							}
+						}
+					}
+					if (inAll)
+					{
+						//found a duplicate
+						DuplicateCase dupes = new DuplicateCase("hand");
+						dupes.Duplicates.Add(map.Get("good_hand", code));
+						dupes.Duplicates.Add(map.Get("okay_hand", code));
+						dupes.Duplicates.Add(map.Get("bad_hand", code));
+						if (inDefault)
+						{
+							dupes.Replacement = map.Get("hand", code);
+						}
+						yield return dupes;
+					}
+				}
+			}
+		}
 	}
 
 	/// <summary>
@@ -1101,5 +1155,22 @@ namespace SPNATI_Character_Editor
 		CharacterEditor,
 		MakeXml,
 		Other
+	}
+
+	public class DuplicateCase
+	{
+		public List<Case> Duplicates = new List<Case>();
+		public Case Replacement = null;
+		public string ResolutionTag;
+
+		public DuplicateCase(string tag)
+		{
+			ResolutionTag = tag;
+		}
+
+		public override string ToString()
+		{
+			return $"{Duplicates.Count} -> {ResolutionTag}";
+		}
 	}
 }

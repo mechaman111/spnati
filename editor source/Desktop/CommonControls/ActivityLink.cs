@@ -5,6 +5,17 @@ namespace Desktop.CommonControls
 {
 	public partial class ActivityLink : UserControl
 	{
+		private Action _launchAction;
+		public Action LaunchHandler
+		{
+			get { return _launchAction; }
+			set
+			{
+				_launchAction = value;
+				cmdGo.Enabled = lblLink.Enabled = (_launchParams != null || _launchAction != null);
+			}
+		}
+
 		private LaunchParameters _launchParams;
 		public LaunchParameters LaunchParameters
 		{
@@ -12,7 +23,7 @@ namespace Desktop.CommonControls
 			set
 			{
 				_launchParams = value;
-				cmdGo.Enabled = lblLink.Enabled = (_launchParams != null);
+				cmdGo.Enabled = lblLink.Enabled = (_launchParams != null || _launchAction != null);
 			}
 		}
 
@@ -33,7 +44,14 @@ namespace Desktop.CommonControls
 
 		private void Launch()
 		{
-			Shell.Instance.Launch(LaunchParameters);
+			if (_launchAction != null)
+			{
+				_launchAction();
+			}
+			else
+			{
+				Shell.Instance.Launch(LaunchParameters);
+			}
 		}
 	}
 }

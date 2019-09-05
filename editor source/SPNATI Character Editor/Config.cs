@@ -300,7 +300,11 @@ namespace SPNATI_Character_Editor
 		public static string UserName
 		{
 			get { return GetString(Settings.UserName); }
-			set { Set(Settings.UserName, value); }
+			set
+			{
+				Shell.Instance.Description = value;
+				Set(Settings.UserName, value);
+			}
 		}
 
 		/// <summary>

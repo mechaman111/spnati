@@ -1307,6 +1307,21 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		public int GetFullHashCode()
+		{
+			int hash = GetConditionHash(true);
+			foreach (var condition in Conditions)
+			{
+				hash = (hash * 397) ^ condition.GetHashCode();
+			}
+			foreach (ExpressionTest expr in Expressions)
+			{
+				hash = (hash * 397) ^ expr.GetHashCode();
+			}
+			hash = (hash * 397) ^ GetLineCode();
+			return hash;
+		}
+
 		/// <summary>
 		/// Gets a unique hash for this combination of conditions
 		/// </summary>

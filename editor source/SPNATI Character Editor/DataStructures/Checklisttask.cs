@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using System;
 
 namespace SPNATI_Character_Editor.DataStructures
 {
@@ -6,6 +7,7 @@ namespace SPNATI_Character_Editor.DataStructures
 	{
 		public string Text;
 		public string HelpText;
+		public Action LaunchHandler;
 		public LaunchParameters LaunchData;
 		public int Value;
 		public int MaxValue;
