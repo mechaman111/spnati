@@ -48,6 +48,14 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		public static void AddRange<T>(this HashSet<T> set, IEnumerable<T> items)
+		{
+			foreach (T item in items)
+			{
+				set.Add(item);
+			}
+		}
+
 		public static void Sort<T>(this ObservableCollection<T> list)
 		{
 			List<T> temp = new List<T>();

@@ -9,6 +9,7 @@ namespace SPNATI_Character_Editor.Controls
 	{
 		private Case _workingCase;
 		private Character _character;
+		private Case _sourceCase;
 		private StageImage _image;
 
 		public event EventHandler Delete;
@@ -36,6 +37,7 @@ namespace SPNATI_Character_Editor.Controls
 		public void SetData(Character character, Case workingCase, StageImage image)
 		{
 			_character = character;
+			_sourceCase = workingCase;
 			_workingCase = workingCase.Copy();
 			_image = image;
 			HashSet<PoseMapping> poses = new HashSet<PoseMapping>();
@@ -50,7 +52,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			foreach (int stage in image.Stages)
 			{
-				_workingCase.Stages.Add(stage);
+				_workingCase.AddStages(workingCase.Stages);
 			}
 			List<PoseMapping> list = poses.ToList();
 			list.Sort();
@@ -97,7 +99,7 @@ namespace SPNATI_Character_Editor.Controls
 			PoseMapping pose = cboImage.SelectedItem as PoseMapping;
 			if (pose != null)
 			{
-				foreach (int stage in _workingCase.Stages)
+				foreach (int stage in _sourceCase.Stages)
 				{
 					PoseReference poseRef = pose.GetPose(stage);
 					if (poseRef != null)

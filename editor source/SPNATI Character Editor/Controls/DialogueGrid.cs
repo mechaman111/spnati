@@ -299,10 +299,11 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 
+			bool hasStageImages = _selectedCase.Lines.Find(l => l.Images.Count > 0) != null;
 			int stageId = _selectedStage == null ? 0 : _selectedStage.Id;
 			SkinnedDataGridViewComboBoxColumn col = gridDialogue.Columns["ColImage"] as SkinnedDataGridViewComboBoxColumn;
 			col.Items.Clear();
-			List<PoseMapping> images = new List<PoseMapping>();
+			HashSet<PoseMapping> images = new HashSet<PoseMapping>();
 			if (_character != null)
 			{
 				if (_selectedStage == null)
@@ -315,13 +316,23 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				else
 				{
-					images.AddRange(_character.PoseLibrary.GetPoses(stageId));
+					if (hasStageImages)
+					{
+						foreach (int selectedStage in _selectedCase.Stages)
+						{
+							images.AddRange(_character.PoseLibrary.GetPoses(selectedStage));
+						}
+					}
+					else
+					{
+						images.AddRange(_character.PoseLibrary.GetPoses(stageId));
+					}
 					
 					foreach (PoseMapping image in images)
 					{
 						bool isGeneric = image.IsGeneric;
 						bool allExist = true;
-						if (!isGeneric)
+						if (!isGeneric && !hasStageImages)
 						{
 							foreach (int stage in selectedStages)
 							{

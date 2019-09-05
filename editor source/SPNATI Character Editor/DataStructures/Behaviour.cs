@@ -589,9 +589,12 @@ namespace SPNATI_Character_Editor
 								rootAlt.OneShotId = 0;
 								rootAlt.Id = 0;
 								rootAlt.TriggerSet = 0;
+								rootAlt.Hidden = null;
 								rootCase.ClearConditions();
 								rootCase.AlternativeConditions.Add(rootAlt);
 							}
+							existingCase.Tag = null;
+							existingCase.Hidden = null;
 							rootCase.AlternativeConditions.Add(existingCase);
 						}
 					}
@@ -838,9 +841,12 @@ namespace SPNATI_Character_Editor
 									rootAlt.OneShotId = 0;
 									rootAlt.Id = 0;
 									rootAlt.TriggerSet = 0;
+									rootAlt.Hidden = null;
 									similar.ClearConditions();
 									similar.AlternativeConditions.Add(rootAlt);
 								}
+								c.Tag = null;
+								c.Hidden = null;
 								similar.AlternativeConditions.Add(c);
 								foundSimilar = true;
 								newCase = false;

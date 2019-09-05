@@ -3,6 +3,7 @@ using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.IO;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -51,6 +52,7 @@ namespace SPNATI_Character_Editor
 		[XmlElement("title")]
 		public string Title = "New Ending";
 
+		[DefaultValue(OpponentStatus.Main)]
 		[EnumControl(DisplayName = "Status", Description = "Where the epilogue is available", GroupOrder = 1, ValueType = typeof(OpponentStatus))]
 		[XmlAttribute("status")]
 		public OpponentStatus Status;

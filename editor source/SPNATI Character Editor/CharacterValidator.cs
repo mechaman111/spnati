@@ -320,32 +320,47 @@ namespace SPNATI_Character_Editor
 
 						DialogueLine stageLine = line;
 
-						//Validate image
-						string img = stageLine.Pose?.GetStageKey(stage.Id, true);
-						if (!string.IsNullOrEmpty(img))
+						List<string> imagesInStage = new List<string>();
+						foreach (StageImage si in line.Images)
 						{
-							unusedImages.Remove(img);
-							if (img.StartsWith("custom:"))
+							if (si.Stages.Contains(stage.Id))
 							{
-								string id = img.Substring(7);
-								Pose pose = character.Poses.Find(p => p.Id == id);
-								if (pose == null)
-								{
-									warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("Pose {1} does not exist. {0}", caseLabel, img), context));
-								}
+								imagesInStage.Add(si.Pose?.GetStageKey(stage.Id, true));
 							}
-							else
-							{
-								if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
-								{
-									warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img), context));
-								}
-							}
-							stageImages.Add(img);
 						}
-						else if (!string.IsNullOrEmpty(line.Text))
+						if (imagesInStage.Count == 0)
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no pose assigned. {0}", caseLabel), context));
+							imagesInStage.Add(stageLine.Pose?.GetStageKey(stage.Id, true));
+						}
+
+						//Validate image
+						foreach (string img in imagesInStage)
+						{
+							if (!string.IsNullOrEmpty(img))
+							{
+								unusedImages.Remove(img);
+								if (img.StartsWith("custom:"))
+								{
+									string id = img.Substring(7);
+									Pose pose = character.Poses.Find(p => p.Id == id);
+									if (pose == null)
+									{
+										warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("Pose {1} does not exist. {0}", caseLabel, img), context));
+									}
+								}
+								else
+								{
+									if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
+									{
+										warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img), context));
+									}
+								}
+								stageImages.Add(img);
+							}
+							else if (!string.IsNullOrEmpty(line.Text))
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no pose assigned. {0}", caseLabel), context));
+							}
 						}
 
 						//Validate variables
@@ -982,7 +997,6 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
-
 
 			foreach (Pose pose in skin.Poses)
 			{
