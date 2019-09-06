@@ -333,6 +333,11 @@ namespace SPNATI_Character_Editor
 					Case triggerCase = workingCase.Copy();
 					triggerCase.StageRange = workingCase.StageRange;
 
+					foreach (Case alternative in triggerCase.AlternativeConditions)
+					{
+						alternative.Tag = null;
+					}
+
 					foreach (DialogueLine line in triggerCase.Lines)
 					{
 						line.Image = line.Pose?.Key;
