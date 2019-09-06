@@ -194,7 +194,7 @@ class KisekaeCharacter(object):
 
 
 class KisekaeCode(object):
-    def __init__(self, code=None):
+    def __init__(self, code=None, version=92):
         """
         Represents an entire importable Kisekae code, possibly containing
         character data and scene data.
@@ -205,7 +205,7 @@ class KisekaeCode(object):
             characters (list of KisekaeCharacter): List of characters contained in the code.
         """
         
-        self.version = 92
+        self.version = version
         self.characters = []
         self.scene = None
         
@@ -547,7 +547,7 @@ def import_and_unlink(import_code, scene_name='temp'):
     retry_interval = 0.2  #  re-check for the existance of the image every 200 milliseconds
     retry_limit = int(retry_time_limit // retry_interval) # try 50 times
 
-    for i in range(retry_limit):
+    for retry in range(retry_limit):
         try:
             output_path.unlink()
             break

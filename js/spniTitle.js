@@ -477,6 +477,8 @@ function validateTitleScreen () {
 
     if (USAGE_TRACKING === undefined) {
         showUsageTrackingModal();
+    } else {
+        showResortModal();
     }
 }
 

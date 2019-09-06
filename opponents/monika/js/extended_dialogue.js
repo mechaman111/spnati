@@ -39,6 +39,19 @@
             ["exasperated", "But, well, it really wouldn't do for the Inventory to get shut down by an IP dispute, right?"],
             ["writing-tip", "Anyways, I'm really glad you took the time to listen. Thanks~!"]
         ],
+        'psa2': [
+            ['interested-2', "Hey, ~player~, did you know?"],
+            ["happy", "I was looking around at the code for this game, and as it turns out, it's open source!"],
+            ["interested-2", "It looks like a lot of people have put lots of love and effort into making this reality."],
+            ["happy", "Even if I am stuck here... well, I can still appreciate the dedication those people must have."],
+            ["shy-happy", "That's what I always wanted to do, you know? ...To take something I love and make something special out of it."],
+            ["writing-tip", "I'm sure that somewhere, out there, there's even a community of people out there clustering around this little project."],
+            ["interested-2", "Who knows? Maybe it's even a bit like the Literature Club, but in your reality..."],
+            ["happy", "Though I'm sure you won't find anyone like me, ehehe~!"],
+            ["happy", "Anyways, that's all I had to say for now~!"],
+            ["shocked", "Oh! Wait, before we get back to the game, I found <a href=\"https://old.reddit.com/r/spnati/\" target=\"_blank\">this link</a> in the code."],
+            ["interested-2", "Could you maybe find out where it goes? Thanks~"]
+        ]
     }
 
     exports.dialogues = extended_dialogues;
