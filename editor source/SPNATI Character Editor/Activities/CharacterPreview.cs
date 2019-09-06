@@ -1,6 +1,9 @@
 ﻿using Desktop;
+using Desktop.Skinning;
 using SPNATI_Character_Editor.Controls.Reference;
+using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
@@ -23,9 +26,9 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as Character;
+			picPortrait.SetCharacter(Record as ISkin);
 			if (_character != null)
 			{
-				_character.PrepareForEdit();
 				_character.Behavior.CaseAdded += WorkingCasesChanged;
 				_character.Behavior.CaseRemoved += WorkingCasesChanged;
 				_character.Behavior.CaseModified += WorkingCasesChanged;
@@ -38,7 +41,7 @@ namespace SPNATI_Character_Editor.Activities
 				chkText.Visible = false;
 			}
 			SubscribeWorkspace<DialogueLine>(WorkspaceMessages.PreviewLine, UpdatePreview);
-			SubscribeWorkspace<CharacterImage>(WorkspaceMessages.UpdatePreviewImage, UpdatePreviewImage);
+			SubscribeWorkspace<UpdateImageArgs>(WorkspaceMessages.UpdatePreviewImage, UpdatePreviewImage);
 			SubscribeWorkspace<List<string>>(WorkspaceMessages.UpdateMarkers, UpdateMarkers);
 			UpdateLineCount();
 		}
@@ -92,9 +95,17 @@ namespace SPNATI_Character_Editor.Activities
 			picPortrait.SetMarkers(markers);
 		}
 
-		private void UpdatePreviewImage(CharacterImage image)
+		private void UpdatePreviewImage(UpdateImageArgs data)
 		{
-			picPortrait.SetImage(image);
+			if (data.Image != null)
+			{
+				picPortrait.SetImage(data.Image);
+			}
+			else
+			{
+				picPortrait.SetCharacter(data.Character);
+				picPortrait.SetImage(data.Pose, data.Stage);
+			}
 		}
 
 		private void UpdatePreview(DialogueLine line)
@@ -119,10 +130,6 @@ namespace SPNATI_Character_Editor.Activities
 			if (_character == null) { return; }
 			SkinLink current = cboSkin.SelectedItem as SkinLink;
 			_character.CurrentSkin = current?.Costume;
-
-			//update images in use to use new skin
-			ImageLibrary library = ImageLibrary.Get(_character);
-			library.UpdateSkin(_character.CurrentSkin);
 			Workspace.SendMessage(WorkspaceMessages.SkinChanged);
 		}
 
@@ -146,11 +153,15 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void BuildReference()
 		{
-			TagGuide guide = new TagGuide();
 			tabsReference.Width = splitContainer1.Panel2.Width;
 			tabsReference.Height = splitContainer1.Panel2.Height - stripReference.Height;
+			TagGuide guide = new TagGuide();
 			tabTags.Controls.Add(guide);
 			guide.Dock = System.Windows.Forms.DockStyle.Fill;
+			TargetReport report = new TargetReport(this._character);
+			tabTargets.Controls.Add(report);
+			report.Dock = DockStyle.Fill;
+			SkinManager.UpdateSkin(report, SkinManager.Instance.CurrentSkin);
 		}
 
 		private void splitContainer1_Panel1_Resize(object sender, System.EventArgs e)

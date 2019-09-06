@@ -338,7 +338,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		public bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger)
+		public bool IsTriggerValid(DialogueNode selectedNode, TriggerDefinition trigger)
 		{
 			Stage stage = selectedNode?.Stage;
 			if (stage == null)
@@ -383,9 +383,12 @@ namespace SPNATI_Character_Editor.Controls
 
 		public int SortGroups(string key1, string key2)
 		{
-			int s1 = int.Parse(key1);
-			int s2 = int.Parse(key2);
-			return s1.CompareTo(s2);
+			int s1, s2;
+			if (int.TryParse(key1, out s1) && int.TryParse(key2, out s2))
+			{
+				return s1.CompareTo(s2);
+			}
+			return key1.CompareTo(key2);
 		}
 
 		public void FormatRow(FormatRowEventArgs args)

@@ -25,9 +25,7 @@
 
 using Desktop.Messaging;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using static NativeMethods;
@@ -51,6 +49,7 @@ namespace Desktop.Skinning
 		public const int WM_LBUTTONUP = 0x0202;
 		public const int WM_LBUTTONDBLCLK = 0x0203;
 		public const int WM_RBUTTONDOWN = 0x0204;
+		private const int WM_NCHITTEST = 0x84;
 		private const int HTBOTTOMLEFT = 16;
 		private const int HTBOTTOMRIGHT = 17;
 		private const int HTLEFT = 10;
@@ -59,30 +58,7 @@ namespace Desktop.Skinning
 		private const int HTTOP = 12;
 		private const int HTTOPLEFT = 13;
 		private const int HTTOPRIGHT = 14;
-		private const int BORDER_WIDTH = 7;
-		private ResizeDirection _resizeDir;
 		private ButtonState _buttonState = ButtonState.None;
-
-		private const int WMSZ_TOP = 3;
-		private const int WMSZ_TOPLEFT = 4;
-		private const int WMSZ_TOPRIGHT = 5;
-		private const int WMSZ_LEFT = 1;
-		private const int WMSZ_RIGHT = 2;
-		private const int WMSZ_BOTTOM = 6;
-		private const int WMSZ_BOTTOMLEFT = 7;
-		private const int WMSZ_BOTTOMRIGHT = 8;
-
-		private readonly Dictionary<int, int> _resizingLocationsToCmd = new Dictionary<int, int>
-		{
-			{HTTOP,         WMSZ_TOP},
-			{HTTOPLEFT,     WMSZ_TOPLEFT},
-			{HTTOPRIGHT,    WMSZ_TOPRIGHT},
-			{HTLEFT,        WMSZ_LEFT},
-			{HTRIGHT,       WMSZ_RIGHT},
-			{HTBOTTOM,      WMSZ_BOTTOM},
-			{HTBOTTOMLEFT,  WMSZ_BOTTOMLEFT},
-			{HTBOTTOMRIGHT, WMSZ_BOTTOMRIGHT}
-		};
 
 		private const int STATUS_BAR_BUTTON_WIDTH = StatusBarHeight;
 		private const int StatusBarHeight = 27;
@@ -98,19 +74,6 @@ namespace Desktop.Skinning
 
 		private const int MONITOR_DEFAULTTONEAREST = 2;
 
-		private enum ResizeDirection
-		{
-			BottomLeft,
-			Left,
-			Right,
-			BottomRight,
-			Bottom,
-			Top,
-			TopLeft,
-			TopRight,
-			None
-		}
-
 		private enum ButtonState
 		{
 			XOver,
@@ -121,14 +84,23 @@ namespace Desktop.Skinning
 			MinDown,
 			None
 		}
-
-		private readonly Cursor[] _resizeCursors = { Cursors.SizeNESW, Cursors.SizeWE, Cursors.SizeNWSE, Cursors.SizeWE, Cursors.SizeNS };
-
+		
 		private Rectangle _minButtonBounds;
 		private Rectangle _maxButtonBounds;
 		private Rectangle _xButtonBounds;
 		private Rectangle _actionBarBounds;
 		private Rectangle _statusBarBounds;
+
+		private const int ResizeBuffer = 5;
+		private Rectangle TopEdge { get { return new Rectangle(0, 0, ClientSize.Width, ResizeBuffer); } }
+		private Rectangle LeftEdge { get { return new Rectangle(0, 0, ResizeBuffer, ClientSize.Height); } }
+		private Rectangle BottomEdge { get { return new Rectangle(0, ClientSize.Height - ResizeBuffer, ClientSize.Width, ResizeBuffer); } }
+		private Rectangle RightEdge { get { return new Rectangle(ClientSize.Width - ResizeBuffer, 0, ResizeBuffer, ClientSize.Height); } }
+
+		private Rectangle TopLeft { get { return new Rectangle(0, 0, ResizeBuffer, ResizeBuffer); } }
+		private Rectangle TopRight { get { return new Rectangle(ClientSize.Width - ResizeBuffer, 0, ResizeBuffer, ResizeBuffer); } }
+		private Rectangle BottomLeft { get { return new Rectangle(0, ClientSize.Height - ResizeBuffer, ResizeBuffer, ResizeBuffer); } }
+		private Rectangle BottomRight { get { return new Rectangle(ClientSize.Width - ResizeBuffer, ClientSize.Height - ResizeBuffer, ResizeBuffer, ResizeBuffer); } }
 
 		private bool _maximized;
 		private Size _previousSize;
@@ -142,12 +114,14 @@ namespace Desktop.Skinning
 
 			if (m.Msg == WM_LBUTTONDBLCLK)
 			{
+				//maximize toggle when double clicking header
 				MaximizeWindow(!_maximized);
 			}
 			else if (m.Msg == WM_MOUSEMOVE && _maximized &&
 				(_statusBarBounds.Contains(PointToClient(Cursor.Position)) || _actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
 				!(_minButtonBounds.Contains(PointToClient(Cursor.Position)) || _maxButtonBounds.Contains(PointToClient(Cursor.Position)) || _xButtonBounds.Contains(PointToClient(Cursor.Position))))
 			{
+				//dragging header when window is maximized - restore window and start dragging
 				if (_headerMouseDown)
 				{
 					_maximized = false;
@@ -172,6 +146,7 @@ namespace Desktop.Skinning
 				(_statusBarBounds.Contains(PointToClient(Cursor.Position)) || _actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
 				!(_minButtonBounds.Contains(PointToClient(Cursor.Position)) || _maxButtonBounds.Contains(PointToClient(Cursor.Position)) || _xButtonBounds.Contains(PointToClient(Cursor.Position))))
 			{
+				//Dragging title bar to move window
 				if (!_maximized)
 				{
 					ReleaseCapture();
@@ -184,6 +159,7 @@ namespace Desktop.Skinning
 			}
 			else if (m.Msg == WM_RBUTTONDOWN)
 			{
+				//System menu when right-clicking header
 				Point cursorPos = PointToClient(Cursor.Position);
 
 				if (_statusBarBounds.Contains(cursorPos) && !_minButtonBounds.Contains(cursorPos) &&
@@ -196,28 +172,45 @@ namespace Desktop.Skinning
 					SendMessage(Handle, WM_SYSCOMMAND, (IntPtr)id, (IntPtr)0);
 				}
 			}
-			else if (m.Msg == WM_NCLBUTTONDOWN)
-			{
-				// This re-enables resizing by letting the application know when the
-				// user is trying to resize a side. This is disabled by default when using WS_SYSMENU.
-				if (!Sizable) return;
-
-				byte bFlag = 0;
-
-				// Get which side to resize from
-				if (_resizingLocationsToCmd.ContainsKey((int)m.WParam))
-				{
-					bFlag = (byte)_resizingLocationsToCmd[(int)m.WParam];
-				}
-
-				if (bFlag != 0)
-				{
-					SendMessage(Handle, WM_SYSCOMMAND, (IntPtr)(0xF000 | bFlag), m.LParam);
-				}
-			}
 			else if (m.Msg == WM_LBUTTONUP)
 			{
 				_headerMouseDown = false;
+			}
+			else if (m.Msg == WM_NCHITTEST && Sizable)
+			{
+				Point cursor = PointToClient(Cursor.Position);
+				if (TopLeft.Contains(cursor))
+				{
+					m.Result = (IntPtr)HTTOPLEFT;
+				}
+				else if (TopRight.Contains(cursor))
+				{
+					m.Result = (IntPtr)HTTOPRIGHT;
+				}
+				else if (BottomLeft.Contains(cursor))
+				{
+					m.Result = (IntPtr)HTBOTTOMLEFT;
+				}
+				else if (BottomRight.Contains(cursor))
+				{
+					m.Result = (IntPtr)HTBOTTOMRIGHT;
+				}
+				else if (TopEdge.Contains(cursor))
+				{
+					m.Result = (IntPtr)HTTOP;
+				}
+				else if (LeftEdge.Contains(cursor))
+				{
+					m.Result = (IntPtr)HTLEFT;
+				}
+				else if (RightEdge.Contains(cursor))
+				{
+					m.Result = (IntPtr)HTRIGHT;
+				}
+				else if (BottomEdge.Contains(cursor))
+				{
+					m.Result = (IntPtr)HTBOTTOM;
+				}
 			}
 		}
 
@@ -228,7 +221,7 @@ namespace Desktop.Skinning
 				var par = base.CreateParams;
 				// WS_SYSMENU: Trigger the creation of the system menu
 				// WS_MINIMIZEBOX: Allow minimizing from taskbar
-				par.Style = par.Style | WS_MINIMIZEBOX | WS_SYSMENU; // Turn on the WS_MINIMIZEBOX style flag
+				par.Style = par.Style | WS_MINIMIZEBOX; // Turn on the WS_MINIMIZEBOX style flag
 				return par;
 			}
 		}
@@ -242,9 +235,6 @@ namespace Desktop.Skinning
 		{
 			if (DesignMode) return;
 			UpdateButtons(e);
-
-			if (e.Button == MouseButtons.Left && !_maximized && !Modal) //Modal check is a workaround until we figure out what's causing modals to resize when they should be dragged
-				ResizeForm(_resizeDir);
 			base.OnMouseDown(e);
 		}
 
@@ -262,74 +252,7 @@ namespace Desktop.Skinning
 
 			if (DesignMode) return;
 
-			if (Sizable && ControlBox)
-			{
-				//True if the mouse is hovering over a child control
-				var isChildUnderMouse = GetChildAtPoint(e.Location) != null;
-				//isChildUnderMouse = false;
-
-				if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
-				{
-					_resizeDir = ResizeDirection.BottomLeft;
-					Cursor = Cursors.SizeNESW;
-				}
-				else if (e.Location.X < BORDER_WIDTH && e.Location.Y < BORDER_WIDTH && !isChildUnderMouse && !_maximized)
-				{
-					_resizeDir = ResizeDirection.TopLeft;
-					Cursor = Cursors.SizeNWSE;
-				}
-				else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y < BORDER_WIDTH && !isChildUnderMouse && !_maximized && !_xButtonBounds.Contains(e.Location))
-				{
-					_resizeDir = ResizeDirection.TopRight;
-					Cursor = Cursors.SizeNESW;
-				}
-				else if (e.Location.X < BORDER_WIDTH && !isChildUnderMouse && !_maximized)
-				{
-					_resizeDir = ResizeDirection.Left;
-					Cursor = Cursors.SizeWE;
-				}
-				else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
-				{
-					_resizeDir = ResizeDirection.BottomRight;
-					Cursor = Cursors.SizeNWSE;
-				}
-				else if (e.Location.X > Width - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
-				{
-					_resizeDir = ResizeDirection.Right;
-					Cursor = Cursors.SizeWE;
-				}
-				else if (e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
-				{
-					_resizeDir = ResizeDirection.Bottom;
-					Cursor = Cursors.SizeNS;
-				}
-				else if (e.Location.Y < BORDER_WIDTH && e.Location.X < _minButtonBounds.X && !isChildUnderMouse && !_maximized)
-				{
-					_resizeDir = ResizeDirection.Top;
-					Cursor = Cursors.SizeNS;
-				}
-				else
-				{
-					_resizeDir = ResizeDirection.None;
-
-					//Only reset the cursor when needed, this prevents it from flickering when a child control changes the cursor to its own needs
-					if (_resizeCursors.Contains(Cursor))
-					{
-						Cursor = Cursors.Default;
-					}
-				}
-			}
-
 			UpdateButtons(e);
-		}
-
-		protected void OnGlobalMouseMove(object sender, MouseEventArgs e)
-		{
-			if (IsDisposed || System.Threading.Thread.CurrentThread.ManagedThreadId != _threadId) return;
-			// Convert to client position and pass to Form.MouseMove
-			var clientCursorPos = PointToClient(e.Location);
-			var newE = new MouseEventArgs(MouseButtons.None, 0, clientCursorPos.X, clientCursorPos.Y, 0);
-			OnMouseMove(newE);
 		}
 
 		private void UpdateButtons(MouseEventArgs e, bool up = false)
@@ -420,45 +343,6 @@ namespace Desktop.Skinning
 
 			base.OnMouseUp(e);
 			ReleaseCapture();
-		}
-
-		private void ResizeForm(ResizeDirection direction)
-		{
-			if (DesignMode) return;
-			var dir = -1;
-			switch (direction)
-			{
-				case ResizeDirection.BottomLeft:
-					dir = HTBOTTOMLEFT;
-					break;
-				case ResizeDirection.Left:
-					dir = HTLEFT;
-					break;
-				case ResizeDirection.Right:
-					dir = HTRIGHT;
-					break;
-				case ResizeDirection.BottomRight:
-					dir = HTBOTTOMRIGHT;
-					break;
-				case ResizeDirection.Bottom:
-					dir = HTBOTTOM;
-					break;
-				case ResizeDirection.Top:
-					dir = HTTOP;
-					break;
-				case ResizeDirection.TopLeft:
-					dir = HTTOPLEFT;
-					break;
-				case ResizeDirection.TopRight:
-					dir = HTTOPRIGHT;
-					break;
-			}
-
-			ReleaseCapture();
-			if (dir != -1)
-			{
-				SendMessage(Handle, WM_NCLBUTTONDOWN, (IntPtr)dir, (IntPtr)0);
-			}
 		}
 
 		private const int FormPadding = 14;
@@ -622,10 +506,6 @@ namespace Desktop.Skinning
 			Sizable = true;
 			DoubleBuffered = true;
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-
-			// This enables the form to trigger the MouseMove event even when mouse is over another control
-			Application.AddMessageFilter(new MouseMessageFilter());
-			MouseMessageFilter.MouseMove += OnGlobalMouseMove;
 		}
 
 		protected override void OnLoad(EventArgs e)
@@ -653,27 +533,6 @@ namespace Desktop.Skinning
 
 		protected virtual void OnUpdateSkin(Skin skin)
 		{
-		}
-	}
-
-	public class MouseMessageFilter : IMessageFilter
-	{
-		private const int WM_MOUSEMOVE = 0x0200;
-
-		public static event MouseEventHandler MouseMove;
-
-		public bool PreFilterMessage(ref Message m)
-		{
-			if (m.Msg == WM_MOUSEMOVE)
-			{
-				if (MouseMove != null)
-				{
-					int x = Control.MousePosition.X, y = Control.MousePosition.Y;
-
-					MouseMove(null, new MouseEventArgs(MouseButtons.None, 0, x, y, 0));
-				}
-			}
-			return false;
 		}
 	}
 }

@@ -165,91 +165,92 @@ namespace Desktop.Skinning
 
 		public static void DrawContent(Graphics g, Rectangle bounds, Color color, Image image, ContentAlignment imageAlign, string text, ContentAlignment textAlign)
 		{
-			using (Brush foreColor = new SolidBrush(color))
+			SkinManager manager = SkinManager.Instance;
+			Skin skin = manager.CurrentSkin;
+			Brush foreColor = manager.GetBrush(color);
+
+			const int InnerPadding = 5;
+			Rectangle textRect = new Rectangle(bounds.X + InnerPadding, bounds.Y + InnerPadding, bounds.Width - InnerPadding * 2, bounds.Height - InnerPadding * 2);
+
+			if (image != null)
 			{
-				const int InnerPadding = 5;
-				Rectangle textRect = new Rectangle(bounds.X + InnerPadding, bounds.Y + InnerPadding, bounds.Width - InnerPadding * 2, bounds.Height - InnerPadding * 2);
-
-				if (image != null)
-				{
-					Rectangle imageRect = bounds;
-					switch (imageAlign)
-					{
-						case ContentAlignment.BottomCenter:
-							imageRect = new Rectangle(bounds.Width / 2 - image.Width / 2, bounds.Height - InnerPadding - image.Height, image.Width, image.Height);
-							break;
-						case ContentAlignment.BottomLeft:
-							imageRect = new Rectangle(InnerPadding, bounds.Height - InnerPadding - image.Height, image.Width, image.Height);
-							break;
-						case ContentAlignment.BottomRight:
-							imageRect = new Rectangle(bounds.Width - InnerPadding - image.Width, bounds.Height - InnerPadding - image.Height, image.Width, image.Height);
-							break;
-						case ContentAlignment.MiddleCenter:
-							imageRect = new Rectangle(bounds.Width / 2 - image.Width / 2, bounds.Height / 2 - image.Height / 2, image.Width, image.Height);
-							break;
-						case ContentAlignment.MiddleLeft:
-							imageRect = new Rectangle(InnerPadding, bounds.Height / 2 - image.Height / 2, image.Width, image.Height);
-							break;
-						case ContentAlignment.MiddleRight:
-							imageRect = new Rectangle(bounds.Width - InnerPadding - image.Width, bounds.Height / 2 - image.Height / 2, image.Width, image.Height);
-							break;
-						case ContentAlignment.TopCenter:
-							imageRect = new Rectangle(bounds.Width / 2 - image.Width / 2, InnerPadding, image.Width, image.Height);
-							break;
-						case ContentAlignment.TopLeft:
-							imageRect = new Rectangle(InnerPadding, InnerPadding, image.Width, image.Height);
-							break;
-						case ContentAlignment.TopRight:
-							imageRect = new Rectangle(bounds.Width - InnerPadding - image.Width, InnerPadding, image.Width, image.Height);
-							break;
-					}
-					g.DrawImage(image, imageRect);
-				}
-
-				StringFormat sf = new StringFormat();
-				sf.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.Show;
-				switch (textAlign)
+				Rectangle imageRect = bounds;
+				switch (imageAlign)
 				{
 					case ContentAlignment.BottomCenter:
-						sf.LineAlignment = StringAlignment.Far;
-						sf.Alignment = StringAlignment.Center;
+						imageRect = new Rectangle(bounds.Width / 2 - image.Width / 2, bounds.Height - InnerPadding - image.Height, image.Width, image.Height);
 						break;
 					case ContentAlignment.BottomLeft:
-						sf.LineAlignment = StringAlignment.Far;
-						sf.Alignment = StringAlignment.Near;
+						imageRect = new Rectangle(InnerPadding, bounds.Height - InnerPadding - image.Height, image.Width, image.Height);
 						break;
 					case ContentAlignment.BottomRight:
-						sf.LineAlignment = StringAlignment.Far;
-						sf.Alignment = StringAlignment.Far;
+						imageRect = new Rectangle(bounds.Width - InnerPadding - image.Width, bounds.Height - InnerPadding - image.Height, image.Width, image.Height);
 						break;
 					case ContentAlignment.MiddleCenter:
-						sf.LineAlignment = StringAlignment.Center;
-						sf.Alignment = StringAlignment.Center;
+						imageRect = new Rectangle(bounds.Width / 2 - image.Width / 2, bounds.Height / 2 - image.Height / 2, image.Width, image.Height);
 						break;
 					case ContentAlignment.MiddleLeft:
-						sf.LineAlignment = StringAlignment.Center;
-						sf.Alignment = StringAlignment.Near;
+						imageRect = new Rectangle(InnerPadding, bounds.Height / 2 - image.Height / 2, image.Width, image.Height);
 						break;
 					case ContentAlignment.MiddleRight:
-						sf.LineAlignment = StringAlignment.Center;
-						sf.Alignment = StringAlignment.Far;
+						imageRect = new Rectangle(bounds.Width - InnerPadding - image.Width, bounds.Height / 2 - image.Height / 2, image.Width, image.Height);
 						break;
 					case ContentAlignment.TopCenter:
-						sf.LineAlignment = StringAlignment.Near;
-						sf.Alignment = StringAlignment.Center;
+						imageRect = new Rectangle(bounds.Width / 2 - image.Width / 2, InnerPadding, image.Width, image.Height);
 						break;
 					case ContentAlignment.TopLeft:
-						sf.LineAlignment = StringAlignment.Near;
-						sf.Alignment = StringAlignment.Near;
+						imageRect = new Rectangle(InnerPadding, InnerPadding, image.Width, image.Height);
 						break;
 					case ContentAlignment.TopRight:
-						sf.LineAlignment = StringAlignment.Near;
-						sf.Alignment = StringAlignment.Far;
+						imageRect = new Rectangle(bounds.Width - InnerPadding - image.Width, InnerPadding, image.Width, image.Height);
 						break;
 				}
-				sf.FormatFlags = StringFormatFlags.NoWrap;
-				g.DrawString(text?.ToUpper() ?? "", Skin.ButtonFont, foreColor, textRect, sf);
+				g.DrawImage(image, imageRect);
 			}
+
+			StringFormat sf = new StringFormat();
+			sf.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.Show;
+			switch (textAlign)
+			{
+				case ContentAlignment.BottomCenter:
+					sf.LineAlignment = StringAlignment.Far;
+					sf.Alignment = StringAlignment.Center;
+					break;
+				case ContentAlignment.BottomLeft:
+					sf.LineAlignment = StringAlignment.Far;
+					sf.Alignment = StringAlignment.Near;
+					break;
+				case ContentAlignment.BottomRight:
+					sf.LineAlignment = StringAlignment.Far;
+					sf.Alignment = StringAlignment.Far;
+					break;
+				case ContentAlignment.MiddleCenter:
+					sf.LineAlignment = StringAlignment.Center;
+					sf.Alignment = StringAlignment.Center;
+					break;
+				case ContentAlignment.MiddleLeft:
+					sf.LineAlignment = StringAlignment.Center;
+					sf.Alignment = StringAlignment.Near;
+					break;
+				case ContentAlignment.MiddleRight:
+					sf.LineAlignment = StringAlignment.Center;
+					sf.Alignment = StringAlignment.Far;
+					break;
+				case ContentAlignment.TopCenter:
+					sf.LineAlignment = StringAlignment.Near;
+					sf.Alignment = StringAlignment.Center;
+					break;
+				case ContentAlignment.TopLeft:
+					sf.LineAlignment = StringAlignment.Near;
+					sf.Alignment = StringAlignment.Near;
+					break;
+				case ContentAlignment.TopRight:
+					sf.LineAlignment = StringAlignment.Near;
+					sf.Alignment = StringAlignment.Far;
+					break;
+			}
+			sf.FormatFlags = StringFormatFlags.NoWrap;
+			g.DrawString(text?.ToUpper() ?? "", Skin.ButtonFont, foreColor, textRect, sf);
 		}
 
 		public void OnUpdateSkin(Skin skin)

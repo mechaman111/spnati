@@ -23,6 +23,11 @@ namespace SPNATI_Character_Editor.Activities
 			grid.SetCharacter(Record as Character);
 		}
 
+		protected override void OnActivate()
+		{
+			(Record as Character).IsDirty = true;
+		}
+
 		public override void Save()
 		{
 			grid.Save();

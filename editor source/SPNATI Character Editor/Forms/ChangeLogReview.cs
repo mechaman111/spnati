@@ -15,7 +15,7 @@ namespace SPNATI_Character_Editor.Forms
 
 		private void ChangeLogReview_Load(object sender, System.EventArgs e)
 		{
-			wb.Navigate(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "VersionHistory", "whatsnew.html"));
+			wb.Navigate(Path.Combine(Config.ExecutableDirectory, "VersionHistory", "whatsnew.html"));
 		}
 
 		private void wb_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -36,7 +36,7 @@ namespace SPNATI_Character_Editor.Forms
 
 		private void ShowVersion(string version)
 		{
-			string file = $"VersionHistory/{version}.html";
+			string file = Path.Combine(Config.ExecutableDirectory, $"VersionHistory/{version}.html");
 			StringBuilder sb = new StringBuilder();
 			sb.Append("<section class='card'>");
 			if (File.Exists(file))

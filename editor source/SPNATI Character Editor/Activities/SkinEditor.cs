@@ -10,7 +10,6 @@ namespace SPNATI_Character_Editor.Activities
 	{
 		private bool _linkDataChanged = false;
 		private Costume _costume;
-		private ImageLibrary _imageLibrary;
 		private bool _populatingImages;
 
 		public SkinEditor()
@@ -27,7 +26,6 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			_costume = Record as Costume;
 			SubscribeWorkspace<bool>(WorkspaceMessages.Save, OnSaveWorkspace);
-			_imageLibrary = ImageLibrary.Get(_costume);
 		}
 
 		private void OnSaveWorkspace(bool auto)
@@ -89,7 +87,12 @@ namespace SPNATI_Character_Editor.Activities
 			gridLabels.Set(_costume.Labels);
 
 			PopulatePortraitDropdown();
-			cboDefaultPic.SelectedItem = _imageLibrary.Find(Path.GetFileNameWithoutExtension(_costume.Link?.PreviewImage));
+			if (_costume.Link?.PreviewImage != null)
+			{
+				string portrait = _costume.Link.PreviewImage;
+				PoseMapping pose = _costume.Character.PoseLibrary.GetPose(portrait);
+				cboDefaultPic.SelectedItem = pose;
+			}
 		}
 
 		/// <summary>
@@ -98,21 +101,9 @@ namespace SPNATI_Character_Editor.Activities
 		private void PopulatePortraitDropdown()
 		{
 			_populatingImages = true;
-			List<CharacterImage> images = new List<CharacterImage>();
-			images.Add(new CharacterImage(" ", null));
-			images.AddRange(_imageLibrary.GetImages(0));
-			if (Config.UsePrefixlessImages)
-			{
-				foreach (CharacterImage img in _imageLibrary.GetImages(-1))
-				{
-					string file = img.Name;
-					if (!_imageLibrary.FilterImage(_costume.Character, file))
-					{
-						images.Add(img);
-					}
-				}
-			}
-			cboDefaultPic.Items.AddRange(images);
+			List<PoseMapping> poses = _costume.Character.PoseLibrary.GetPoses(0);
+			cboDefaultPic.DisplayMember = "DisplayName";
+			cboDefaultPic.DataSource = poses;
 			_populatingImages = false;
 		}
 
@@ -149,15 +140,12 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_populatingImages)
 				return;
-			CharacterImage image = cboDefaultPic.SelectedItem as CharacterImage;
+
+			PoseMapping image = cboDefaultPic.SelectedItem as PoseMapping;
 			if (image == null)
 				return;
-			if (_costume.Link != null)
-			{
-				_costume.Link.PreviewImage = image.Name + image.FileExtension; ;
-				_linkDataChanged = true;
-				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, _imageLibrary.Find(_costume.Link.PreviewImage));
-			}
+			_costume.Link.PreviewImage = image.Key.Replace("#-", "0-");
+			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_costume, image, 0));
 		}
 	}
 }

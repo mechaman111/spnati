@@ -11,7 +11,6 @@ namespace SPNATI_Character_Editor.Activities
 	{
 		private Character _character;
 		private CharacterEditorData _editorData;
-		private ImageLibrary _imageLibrary;
 		private Situation _selectedCase;
 
 		private static Dictionary<SituationPriority, string> _priorities;
@@ -58,7 +57,6 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnFirstActivate()
 		{
-			_imageLibrary = ImageLibrary.Get(_character);
 			PopulateLines();
 
 			if (gridCases.RowCount == 0)
@@ -72,26 +70,33 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (parameters.Length > 0)
 			{
-				Situation line = parameters[0] as Situation;
+				if (parameters[0] is bool)
+				{
+					_editorData.ReviewedPriorities = true;
+				}
+				else
+				{
+					Situation line = parameters[0] as Situation;
 
-				//See if the line was already added (will be the case if launching this from the Call Out button)
-				DataGridViewRow row = null;
-				foreach (DataGridViewRow r in gridCases.Rows)
-				{
-					Situation s = r.Tag as Situation;
-					if (s == line)
+					//See if the line was already added (will be the case if launching this from the Call Out button)
+					DataGridViewRow row = null;
+					foreach (DataGridViewRow r in gridCases.Rows)
 					{
-						row = r;
-						break;
+						Situation s = r.Tag as Situation;
+						if (s == line)
+						{
+							row = r;
+							break;
+						}
 					}
+					if (row == null)
+					{
+						row = BuildLine(line);
+					}
+					row.Selected = true;
+					gridCases.ClearSelection();
+					row.Cells[0].Selected = true;
 				}
-				if (row == null)
-				{
-					row = BuildLine(line);
-				}
-				row.Selected = true;
-				gridCases.ClearSelection();
-				row.Cells[0].Selected = true;
 			}
 		}
 
@@ -169,7 +174,8 @@ namespace SPNATI_Character_Editor.Activities
 				if (line == null) { return; }
 				HashSet<int> selectedStages = new HashSet<int>();
 				selectedStages.Add(line.MinStage);
-				gridLines.SetData(_character, _character.Behavior.Stages[line.MinStage], line.LinkedCase, selectedStages, _imageLibrary);
+				Stage stage = new Stage(line.MinStage);
+				gridLines.SetData(_character, stage, line.LinkedCase, selectedStages);
 			}
 		}
 
@@ -177,16 +183,12 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (index == -1)
 				return;
-			string image = gridLines.GetImage(index);
-			CharacterImage img = null;
-			img = _imageLibrary.Find(image);
-			if (img == null)
+			PoseMapping image = gridLines.GetImage(index);
+			if (image != null)
 			{
 				int stage = _selectedCase.MinStage;
-				image = DialogueLine.GetDefaultImage(image);
-				img = _imageLibrary.Find(stage + "-" + image);
+				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, stage));
 			}
-			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
 		}
 
 		private void gridCases_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Desktop;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor
 {
@@ -15,6 +16,11 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <returns></returns>
 		string GetDirectory();
+		/// <summary>
+		/// Gets the full path to the skin's backup directory
+		/// </summary>
+		/// <returns></returns>
+		string GetBackupDirectory();
 		/// <summary>
 		/// Gets the path where attachments should be stored
 		/// </summary>
@@ -34,5 +40,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <returns></returns>
 		List<Pose> CustomPoses { get; set; }
+		ISkin Skin { get; }
+		bool IsDirty { get; set; }
 	}
 }

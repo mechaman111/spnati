@@ -1,8 +1,10 @@
 ﻿using Desktop;
+using Desktop.DataStructures;
 using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Xml;
@@ -18,15 +20,36 @@ namespace SPNATI_Character_Editor
 	/// </remarks>
 	[XmlRoot("opponent", Namespace = "")]
 	[XmlHeader("This file was machine generated using the Character Editor {Version} at {Time} on {Date}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.")]
-	public class Character : IHookSerialization, IRecord, IWardrobe, ISkin
+	public class Character : BindableObject, IHookSerialization, IRecord, IWardrobe, ISkin, IDirtiable
 	{
 		[XmlElement("version")]
 		/// <summary>
 		/// What version of the editor this was last saved under. Used for performing one-time data conversions when necessary.
 		/// </summary>
-		public string Version;
+		public string Version { get; set; }
 		[XmlIgnore]
 		public EditorSource Source;
+
+		private bool _dirty;
+		[XmlIgnore]
+		public bool IsDirty
+		{
+			get { return _dirty; }
+			set
+			{
+				_dirty = value;
+				OnDirtyChanged?.Invoke(this, _dirty);
+			}
+		}
+
+		/// <summary>
+		/// Set during session where the character was initially created
+		/// </summary>
+		[XmlIgnore]
+		public bool IsNew { get; set; }
+
+		[XmlIgnore]
+		public PoseMap PoseLibrary;
 
 		[XmlIgnore]
 		public string Group { get; }
@@ -38,7 +61,11 @@ namespace SPNATI_Character_Editor
 		/// Where did this character come from?
 		/// </summary>
 		[XmlIgnore]
-		public Metadata Metadata;
+		public Metadata Metadata
+		{
+			get { return Get<Metadata>(); }
+			set { Set(value); }
+		}
 
 		/// <summary>
 		/// Cached information about what markers are set in this character's dialog
@@ -47,16 +74,32 @@ namespace SPNATI_Character_Editor
 		public MarkerData Markers;
 
 		[XmlIgnore]
-		public string FolderName;
+		public string FolderName
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("first")]
-		public string FirstName;
+		public string FirstName
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("last")]
-		public string LastName;
+		public string LastName
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("label")]
-		public List<StageSpecificValue> Labels;
+		public ObservableCollection<StageSpecificValue> Labels
+		{
+			get { return Get<ObservableCollection<StageSpecificValue>>(); }
+			set { Set(value); }
+		}
 
 		[XmlIgnore]
 		public string Label // Compatibility property
@@ -80,24 +123,56 @@ namespace SPNATI_Character_Editor
 		}
 
 		[XmlElement("gender")]
-		public string Gender;
+		public string Gender
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("size")]
-		public string Size;
+		public string Size
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("timer")]
-		public int Stamina;
+		public int Stamina
+		{
+			get { return Get<int>(); }
+			set { Set(value); }
+		}
 
 		[XmlNewLine(Position = XmlNewLinePosition.After)]
 		[XmlElement("intelligence")]
-		public List<StageSpecificValue> Intelligence;
+		public ObservableCollection<StageSpecificValue> Intelligence
+		{
+			get { return Get<ObservableCollection<StageSpecificValue>>(); }
+			set { Set(value); }
+		}
 
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
-		public List<CharacterTag> Tags;
+		public List<CharacterTag> Tags
+		{
+			get;
+			set;
+		}
+
+		[XmlArray("nicknames")]
+		[XmlArrayItem("nickname")]
+		public ObservableCollection<Nickname> Nicknames
+		{
+			get { return Get<ObservableCollection<Nickname>>(); }
+			set { Set(value); }
+		}
 
 		[XmlElement("stylesheet")]
-		public string StyleSheetName;
+		public string StyleSheetName
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		private CharacterStyleSheet _styles;
 		[XmlIgnore]
@@ -108,45 +183,57 @@ namespace SPNATI_Character_Editor
 				if (_styles == null && !string.IsNullOrEmpty(StyleSheetName))
 				{
 					_styles = CharacterStyleSheetSerializer.Load(this, StyleSheetName);
+					_styles.PropertyChanged += _styles_PropertyChanged;
 				}
 				return _styles;
 			}
 		}
 
+		private void _styles_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			IsDirty = true;
+		}
+
 		[XmlNewLine]
 		[XmlArray("start")]
 		[XmlArrayItem("state")]
-		public List<DialogueLine> StartingLines;
+		public List<DialogueLine> StartingLines { get; set; }
 
 		[XmlNewLine]
 		[XmlArray("wardrobe")]
 		[XmlArrayItem("clothing")]
-		public List<Clothing> Wardrobe = new List<Clothing>();
+		public List<Clothing> Wardrobe { get; set; }
 
 		[XmlNewLine]
 		[XmlArray("poses")]
 		[XmlArrayItem("pose")]
-		public List<Pose> Poses = new List<Pose>();
+		public List<Pose> Poses { get; set; }
 
 		[XmlNewLine(XmlNewLinePosition.Both)]
 		[XmlElement("behaviour")]
-		public Behaviour Behavior = new Behaviour();
-
-		[XmlArray("nicknames")]
-		[XmlArrayItem("nickname")]
-		public List<Nickname> Nicknames = new List<Nickname>();
+		public Behaviour Behavior
+		{
+			get { return Get<Behaviour>(); }
+			set { Set(value); }
+		}
 
 		[XmlNewLine(XmlNewLinePosition.After)]
 		[XmlElement("epilogue")]
-		public List<Epilogue> Endings;
+		public List<Epilogue> Endings { get; set; }
 
 		[XmlAnyElement]
 		public List<System.Xml.XmlElement> ExtraXml;
 
 		[XmlIgnore]
-		public CollectibleData Collectibles = new CollectibleData();
+		public CollectibleData Collectibles
+		{
+			get { return Get<CollectibleData>(); }
+			set { Set(value); }
+		}
 
 		private bool _built;
+
+		public event EventHandler<bool> OnDirtyChanged;
 
 		[XmlIgnore]
 		public string Name
@@ -161,11 +248,23 @@ namespace SPNATI_Character_Editor
 			set { FolderName = value; }
 		}
 
+		private Costume _currentSkin;
 		/// <summary>
 		/// Current skin in play
 		/// </summary>
 		[XmlIgnore]
-		public Costume CurrentSkin { get; set; }
+		public Costume CurrentSkin
+		{
+			get { return _currentSkin; }
+			set
+			{
+				if (_currentSkin != value)
+				{
+					_currentSkin = value;
+					NotifyPropertyChanged();
+				}
+			}
+		}
 
 		public string ToLookupString()
 		{
@@ -181,10 +280,10 @@ namespace SPNATI_Character_Editor
 		{
 			FirstName = "New";
 			LastName = "Character";
-			Labels = new List<StageSpecificValue>();
+			Labels = new ObservableCollection<StageSpecificValue>();
 			Gender = "female";
 			Size = "medium";
-			Intelligence = new List<StageSpecificValue>();
+			Intelligence = new ObservableCollection<StageSpecificValue>();
 			Stamina = 15;
 			Tags = new List<CharacterTag>();
 			Metadata = new Metadata();
@@ -192,12 +291,19 @@ namespace SPNATI_Character_Editor
 			Wardrobe = new List<Clothing>();
 			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
+			Tags = new List<CharacterTag>();
+			Nicknames = new ObservableCollection<Nickname>();
+			Behavior = new Behaviour();
+			Poses = new List<Pose>();
+			Wardrobe = new List<Clothing>();
+			Collectibles = new CollectibleData();
+			PoseLibrary = new PoseMap(this);
 		}
 
 		/// <summary>
 		/// Clears all data from this character
 		/// </summary>
-		public void Clear()
+		public new void Clear()
 		{
 			FirstName = "";
 			LastName = "";
@@ -205,7 +311,7 @@ namespace SPNATI_Character_Editor
 			Gender = "";
 			Size = "";
 			Behavior = new Behaviour();
-			Intelligence = new List<StageSpecificValue>();
+			Intelligence = new ObservableCollection<StageSpecificValue>();
 			Stamina = 15;
 			Tags.Clear();
 			Metadata = new Metadata();
@@ -215,6 +321,8 @@ namespace SPNATI_Character_Editor
 			Endings = new List<Epilogue>();
 			Poses = new List<Pose>();
 			Version = "";
+			Nicknames = new ObservableCollection<Nickname>();
+			Collectibles = new CollectibleData();
 		}
 
 		public override string ToString()
@@ -465,16 +573,6 @@ namespace SPNATI_Character_Editor
 		public void OnBeforeSerialize()
 		{
 			Gender = Gender.ToLower();
-
-			string dir = Config.GetRootDirectory(this);
-			foreach (var line in StartingLines)
-			{
-				string image = Path.GetFileNameWithoutExtension(line.Image) + line.ImageExtension;
-				if (!string.IsNullOrEmpty(line.Image) && !char.IsNumber(line.Image[0]) && !File.Exists(Path.Combine(dir, image)))
-				{
-					line.Image = "0-" + line.Image;
-				}
-			}
 			Behavior.OnBeforeSerialize(this);
 			Metadata.PopulateFromCharacter(this);
 			Version = Config.Version;
@@ -502,6 +600,8 @@ namespace SPNATI_Character_Editor
 			{
 				pose.OnAfterDeserialize();
 			}
+
+			PoseLibrary = new PoseMap(this);
 		}
 		#endregion
 
@@ -514,7 +614,17 @@ namespace SPNATI_Character_Editor
 			if (_built)
 				return;
 			Behavior.PrepareForEdit(this);
+			IsDirty = false;
+			PropertyChanged += Character_PropertyChanged;
 			_built = true;
+		}
+
+		private void Character_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName != "CurrentSkin")
+			{
+				IsDirty = true;
+			}
 		}
 
 		/// <summary>
@@ -578,42 +688,77 @@ namespace SPNATI_Character_Editor
 			int count = 0;
 			HashSet<string> poses = new HashSet<string>();
 			HashSet<string> lines = new HashSet<string>();
-			List<Stage> stages = Behavior.Stages;
-			foreach (var stage in stages)
+			foreach (Case stageCase in Behavior.EnumerateSourceCases())
 			{
-				foreach (var stageCase in stage.Cases)
-				{
-					if (!string.IsNullOrEmpty(stageCase.Hidden))
-					{
-						continue;
-					}
-					bool targeted = stageCase.HasTargetedConditions;
-					bool special = stageCase.HasStageConditions;
-					bool generic = !stageCase.HasConditions;
-					bool filter = stageCase.HasFilters;
-
-					if ((filters == LineFilter.None) ||
-						(filters & LineFilter.Generic) > 0 && generic ||
-						(filters & LineFilter.Targeted) > 0 && targeted ||
-						(filters & LineFilter.Special) > 0 && special ||
-						(filters & LineFilter.Filter) > 0 && filter)
-					{
-						foreach (var line in stageCase.Lines)
-						{
-							if (!poses.Contains(line.Image))
-							{
-								poses.Add(line.Image);
-								poseCount++;
-							}
-							if (lines.Contains(line.Text))
-								continue;
-							count++;
-							lines.Add(line.Text);
-						}
-					}
-				}
+				AddLines(poses, lines, stageCase, filters, ref poseCount, ref count);
 			}
 			return count;
+		}
+
+		private void AddLines(HashSet<string> poses, HashSet<string> lines, Case theCase, LineFilter filters, ref int poseCount, ref int count)
+		{
+			if (!string.IsNullOrEmpty(theCase.Hidden))
+			{
+				return;
+			}
+			bool targeted = theCase.HasTargetedConditions;
+			bool special = theCase.HasStageConditions;
+			bool generic = !theCase.HasConditions;
+			bool filter = theCase.HasFilters;
+
+			if ((filters == LineFilter.None) ||
+				(filters & LineFilter.Generic) > 0 && generic ||
+				(filters & LineFilter.Targeted) > 0 && targeted ||
+				(filters & LineFilter.Special) > 0 && special ||
+				(filters & LineFilter.Filter) > 0 && filter)
+			{
+				foreach (DialogueLine line in theCase.Lines)
+				{
+					HashSet<string> images = new HashSet<string>();
+					HashSet<int> usedStages = new HashSet<int>();
+					foreach (StageImage img in line.Images)
+					{
+						if (img.Image != null)
+						{
+							foreach (int stage in img.Stages)
+							{
+								usedStages.Add(stage);
+								images.Add(img.Image.Replace("#", stage.ToString()));
+							}
+						}
+					}
+
+					if (line.Image != null)
+					{
+						if (line.Image.Contains("#"))
+						{
+							foreach (int stage in theCase.Stages)
+							{
+								if (!usedStages.Contains(stage))
+								{
+									images.Add(line.Image.Replace("#", stage.ToString()));
+								}
+							}
+						}
+						else
+						{
+							images.Add(line.Image);
+						}
+					}
+					foreach (string img in images)
+					{
+						if (!poses.Contains(img))
+						{
+							poses.Add(img);
+							poseCount++;
+						}
+					}
+					if (lines.Contains(line.Text))
+						continue;
+					count++;
+					lines.Add(line.Text);
+				}
+			}
 		}
 
 		[Flags]
@@ -657,20 +802,11 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public IEnumerable<Case> GetCasesTargetedAtCharacter(Character character, TargetType targetTypes)
 		{
-			List<Stage> stages = Behavior.Stages;
-			foreach (var stage in stages)
+			foreach (var stageCase in Behavior.EnumerateSourceCases())
 			{
-				foreach (var stageCase in stage.Cases)
+				if (IsCaseTargetedAtCharacter(stageCase, character, targetTypes))
 				{
-					if (IsCaseTargetedAtCharacter(stageCase, character, targetTypes))
-					{
-						bool addStage = !stageCase.Stages.Contains(stage.Id);
-						if (addStage)
-							stageCase.Stages.Add(stage.Id);
-						yield return stageCase;
-						if (addStage)
-							stageCase.Stages.Remove(stage.Id);
-					}
+					yield return stageCase;
 				}
 			}
 		}
@@ -737,27 +873,23 @@ namespace SPNATI_Character_Editor
 		{
 			int count = 0;
 			HashSet<string> lines = new HashSet<string>();
-			List<Stage> stages = Behavior.Stages;
-			foreach (var stage in stages)
+			foreach (var stageCase in Behavior.EnumerateSourceCases())
 			{
-				foreach (var stageCase in stage.Cases)
+				if (targetGender != "" && !stageCase.Tag.StartsWith(targetGender))
+					continue;
+				bool usesTag = (stageCase.Filter == tag);
+				if (!usesTag)
 				{
-					if (targetGender != "" && !stageCase.Tag.StartsWith(targetGender))
-						continue;
-					bool usesTag = (stageCase.Filter == tag);
-					if (!usesTag)
+					usesTag = stageCase.Conditions.Find(c => c.FilterTag == tag) != null;
+				}
+				if (usesTag)
+				{
+					foreach (var line in stageCase.Lines)
 					{
-						usesTag = stageCase.Conditions.Find(c => c.FilterTag == tag) != null;
-					}
-					if (usesTag)
-					{
-						foreach (var line in stageCase.Lines)
-						{
-							if (lines.Contains(line.Text))
-								continue;
-							count++;
-							lines.Add(line.Text);
-						}
+						if (lines.Contains(line.Text))
+							continue;
+						count++;
+						lines.Add(line.Text);
 					}
 				}
 			}
@@ -795,6 +927,24 @@ namespace SPNATI_Character_Editor
 			return Config.GetRootDirectory(this);
 		}
 
+		public string GetBackupDirectory()
+		{
+			return Config.GetBackupDirectory(this);
+		}
+
+		public ISkin Skin
+		{
+			get
+			{
+				ISkin skin = CurrentSkin;
+				if (skin == null)
+				{
+					skin = this;
+				}
+				return skin;
+			}
+		}
+
 		public HashSet<string> GetRequiredPoses()
 		{
 			return null;
@@ -804,6 +954,77 @@ namespace SPNATI_Character_Editor
 		{
 			get { return Poses; }
 			set { Poses = value; }
+		}
+
+		/// <summary>
+		/// Enumerates through all tags belonging to a certain group
+		/// </summary>
+		/// <param name="group"></param>
+		/// <returns></returns>
+		public IEnumerable<CharacterTag> EnumerateTags(string group)
+		{
+			foreach (CharacterTag tag in Tags)
+			{
+				Tag t = TagDatabase.GetTag(tag.Tag);
+				if (t.Group == group)
+				{
+					yield return tag;
+				}
+			}
+		}
+
+		public IEnumerable<DuplicateCase> EnumerateDuplicates()
+		{
+			Dictionary<string, HashSet<int>> hands = new Dictionary<string, HashSet<int>>();
+			DualKeyDictionary<string, int, Case> map = new DualKeyDictionary<string, int, Case>();
+
+			//TODO: Generalize this to handle more than Hand cases
+
+			hands["okay_hand"] = new HashSet<int>();
+			hands["good_hand"] = new HashSet<int>();
+			hands["bad_hand"] = new HashSet<int>();
+			hands["hand"] = new HashSet<int>();
+			foreach (Case workingCase in Behavior.GetWorkingCases())
+			{
+				string tag = workingCase.Tag;
+				if (tag == "okay_hand" || tag == "good_hand" || tag == "bad_hand" || tag == "hand")
+				{
+					int code = workingCase.GetFullHashCode();
+					map.Set(tag, code, workingCase);
+					hands[tag].Add(code);
+					bool inAll = true;
+					bool inDefault = false;
+					foreach (KeyValuePair<string, HashSet<int>> kvp in hands)
+					{
+						bool inTag = kvp.Value.Contains(code);
+						if (kvp.Key == "hand")
+						{
+							inDefault = inTag;
+						}
+						else
+						{
+							inAll = inAll && inTag;
+							if (!inAll)
+							{
+								break;
+							}
+						}
+					}
+					if (inAll)
+					{
+						//found a duplicate
+						DuplicateCase dupes = new DuplicateCase("hand");
+						dupes.Duplicates.Add(map.Get("good_hand", code));
+						dupes.Duplicates.Add(map.Get("okay_hand", code));
+						dupes.Duplicates.Add(map.Get("bad_hand", code));
+						if (inDefault)
+						{
+							dupes.Replacement = map.Get("hand", code);
+						}
+						yield return dupes;
+					}
+				}
+			}
 		}
 	}
 
@@ -848,20 +1069,28 @@ namespace SPNATI_Character_Editor
 		MoveDown
 	}
 
-	public class StageSpecificValue
+	public class StageSpecificValue : BindableObject
 	{
 		/// <summary>
 		/// Stages this intelligence begins at
 		/// </summary>
 		[XmlAttribute("stage")]
 		[DefaultValue(0)]
-		public int Stage;
+		public int Stage
+		{
+			get { return Get<int>(); }
+			set { Set(value); }
+		}
 
 		/// <summary>
 		/// Intelligence level
 		/// </summary>
 		[XmlText]
-		public string Value;
+		public string Value
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		public StageSpecificValue()
 		{
@@ -914,6 +1143,11 @@ namespace SPNATI_Character_Editor
 		{
 			Tag = tag;
 		}
+
+		public override string ToString()
+		{
+			return Tag;
+		}
 	}
 
 	public enum EditorSource
@@ -921,5 +1155,22 @@ namespace SPNATI_Character_Editor
 		CharacterEditor,
 		MakeXml,
 		Other
+	}
+
+	public class DuplicateCase
+	{
+		public List<Case> Duplicates = new List<Case>();
+		public Case Replacement = null;
+		public string ResolutionTag;
+
+		public DuplicateCase(string tag)
+		{
+			ResolutionTag = tag;
+		}
+
+		public override string ToString()
+		{
+			return $"{Duplicates.Count} -> {ResolutionTag}";
+		}
 	}
 }

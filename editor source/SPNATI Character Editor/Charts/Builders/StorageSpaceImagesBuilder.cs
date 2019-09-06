@@ -60,7 +60,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			for (int i = 0; i < _data.Count; i++)
 			{
 				var item = _data[i];
-				series0.Add(new ChartData(item.Item1.Label, item.Item2 / 1000000.0f));
+				series0.Add(new ChartData(item.Item1.Label, item.Item2 / 1048576.0f));
 			}
 
 			return data;

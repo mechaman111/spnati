@@ -457,6 +457,14 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		public void CollapseAll()
+		{
+			foreach (Group group in _groupMap.Values)
+			{
+				ToggleGroup(group.Path, false);
+			}
+		}
+
 		/// <summary>
 		/// Expands all the groups leading up to an item
 		/// </summary>
@@ -634,6 +642,7 @@ namespace Desktop.CommonControls
 		/// <param name="item">Item to expand to</param>
 		void ExpandTo(object item);
 		void ExpandAll();
+		void CollapseAll();
 		event EventHandler<GroupedListChangedEventArgs> ListChanged;
 		event EventHandler<GroupedListMovingEventArgs> BeforeMovingItem;
 		event EventHandler<GroupedListMovingEventArgs> AfterMovingItem;

@@ -13,8 +13,15 @@ namespace Desktop.Skinning
 		private const int CloseMarkWidth = 10;
 		private const int SpacerSize = 15;
 
+		private static StringFormat CenterFormat = new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center, FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter };
+		private static StringFormat VerticalFormat = new StringFormat() { LineAlignment = StringAlignment.Center, FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter };
+
 		public event EventHandler CloseButtonClicked;
 		public event EventHandler AddButtonClicked;
+
+		private SolidBrush _activeBrush = new SolidBrush(Color.Black);
+		private SolidBrush _textBrush = new SolidBrush(Color.Black);
+		private SolidBrush _decorBrush = new SolidBrush(Color.Black);
 
 		private int _startMargin = 5;
 		public int StartMargin
@@ -28,6 +35,16 @@ namespace Desktop.Skinning
 			}
 		}
 
+		private string _decorationText;
+		public string DecorationText
+		{
+			get { return _decorationText; }
+			set
+			{
+				_decorationText = value;
+				Invalidate(true);
+			}
+		}
 
 		private SkinnedBackgroundType _type = SkinnedBackgroundType.PrimaryLight;
 		public SkinnedBackgroundType PanelType
@@ -136,6 +153,10 @@ namespace Desktop.Skinning
 				_tabControl.VisibleChanged += delegate
 				{
 					OnUpdateSkin(SkinManager.Instance.CurrentSkin);
+				};
+				_tabControl.TextChanged += delegate
+				{
+					Invalidate();
 				};
 			}
 		}
@@ -288,76 +309,78 @@ namespace Desktop.Skinning
 
 			List<Rectangle> rects = GetTabRects();
 			g.DrawLine(borderPen, ClientRectangle.X, ClientRectangle.Bottom - 1, ClientRectangle.Right, ClientRectangle.Bottom - 1);
-			using (StringFormat sf = new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center, FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter })
+			_activeBrush.Color = _textBrush.Color = Enabled ? set.ForeColor : set.DisabledForeColor;
+			if (!string.IsNullOrEmpty(_decorationText))
 			{
-				using (Brush activeBrush = new SolidBrush(Enabled ? set.ForeColor : set.DisabledForeColor))
+				using (StringFormat decorFormat = new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Far })
 				{
-					using (Brush textBrush = new SolidBrush(Enabled ? set.ForeColor : set.DisabledForeColor))
+					_decorBrush.Color = ColorSet.BlendColor(_textBrush.Color, color, 0.2f);
+					Rectangle rect = new Rectangle(0, 0, ClientRectangle.Width - 5, ClientRectangle.Height);
+					g.DrawString(_decorationText, Skin.DecorationFont, _decorBrush, rect, decorFormat);
+				}
+			}
+
+			for (int i = 0; i < rects.Count; i++)
+			{
+				bool showClose = ShowCloseButton || (i > 0 && ShowAddButton && i < rects.Count - 1);
+				bool showAdd = (ShowAddButton && i == rects.Count - 1);
+				Rectangle rect = rects[i];
+				TabPage page = i < _tabControl.TabPages.Count ? _tabControl.TabPages[i] : null;
+				string text = page == null ? AddCaption : page.Text;
+				int buttonWidth = showClose ? CloseButtonWidth : 0;
+				Rectangle textRect = new Rectangle(rect.X, rect.Y + IndicatorSize + 1, rect.Width - buttonWidth, rect.Height - IndicatorSize - 2);
+				if (showAdd)
+				{
+					textRect = new Rectangle(rect.X + Properties.Resources.Add.Width, rect.Y + IndicatorSize + 1, rect.Width - Properties.Resources.Add.Width, textRect.Height);
+				}
+
+				if (_hoveredTabIndex == i)
+				{
+					g.FillRectangle(hoverBrush, rect);
+				}
+
+				//tab and text
+				if (i == _tabControl.SelectedIndex)
+				{
+					SolidBrush tabBrush = tabSet.GetBrush(VisualState.Normal, false, Enabled);
+					g.FillRectangle(tabBrush, rect.X, rect.Y, rect.Width, rect.Height + 1); //Height + 1 to cover border line
+					g.FillRectangle(indicatorBrush, new RectangleF(rect.X, 1, rect.Width, IndicatorSize));
+					g.DrawLine(borderPen, rect.X, rect.Top, rect.Right, rect.Top);
+					g.DrawLine(borderPen, rect.X, rect.Y + 1, rect.X, rect.Bottom);
+					g.DrawLine(borderPen, rect.Right, rect.Y + 1, rect.Right, rect.Bottom);
+
+					using (SolidBrush foreBrush = new SolidBrush(Enabled ? tabSet.ForeColor : tabSet.DisabledForeColor))
 					{
-						for (int i = 0; i < rects.Count; i++)
+						g.DrawString(text, Skin.ActiveTabFont, foreBrush, textRect, CenterFormat);
+
+						if (showClose && !showAdd)
 						{
-							bool showClose = ShowCloseButton || (i > 0 && ShowAddButton && i < rects.Count - 1);
-							bool showAdd = (ShowAddButton && i == rects.Count - 1);
-							Rectangle rect = rects[i];
-							TabPage page = i < _tabControl.TabPages.Count ? _tabControl.TabPages[i] : null;
-							string text = page == null ? AddCaption : page.Text;
-							int buttonWidth = showClose ? CloseButtonWidth : 0;
-							Rectangle textRect = new Rectangle(rect.X, rect.Y + IndicatorSize + 1, rect.Width - buttonWidth, rect.Height - IndicatorSize - 2);
-							if (showAdd)
+							//close button
+							g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+							Color closeColor = skin.PrimaryForeColor;
+							Rectangle closeRect = GetCloseRectangle();
+							if (!RectangleToScreen(new Rectangle(closeRect.X - 3, closeRect.Y - 3, closeRect.Width + 6, closeRect.Height + 6)).Contains(MousePosition))
 							{
-								textRect = new Rectangle(rect.X + Properties.Resources.Add.Width, rect.Y + IndicatorSize + 1, rect.Width - Properties.Resources.Add.Width, textRect.Height);
+								closeColor = Color.FromArgb(127, closeColor);
 							}
-
-							if (_hoveredTabIndex == i)
+							using (Pen closePen = new Pen(closeColor, 2))
 							{
-								g.FillRectangle(hoverBrush, rect);
+								g.DrawLine(closePen, closeRect.X, closeRect.Y, closeRect.Right, closeRect.Bottom);
+								g.DrawLine(closePen, closeRect.X, closeRect.Bottom, closeRect.Right, closeRect.Top);
 							}
-
-							//tab and text
-							if (i == _tabControl.SelectedIndex)
-							{
-								SolidBrush tabBrush = tabSet.GetBrush(VisualState.Normal, false, Enabled);
-								g.FillRectangle(tabBrush, rect.X, rect.Y, rect.Width, rect.Height + 1); //Height + 1 to cover border line
-								g.FillRectangle(indicatorBrush, new RectangleF(rect.X, 1, rect.Width, IndicatorSize));
-								g.DrawLine(borderPen, rect.X, rect.Top, rect.Right, rect.Top);
-								g.DrawLine(borderPen, rect.X, rect.Y + 1, rect.X, rect.Bottom);
-								g.DrawLine(borderPen, rect.Right, rect.Y + 1, rect.Right, rect.Bottom);
-
-								using (SolidBrush foreBrush = new SolidBrush(Enabled ? tabSet.ForeColor : tabSet.DisabledForeColor))
-								{
-									g.DrawString(text, Skin.ActiveTabFont, foreBrush, textRect, sf);
-
-									if (showClose && !showAdd)
-									{
-										//close button
-										g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-										Color closeColor = skin.PrimaryForeColor;
-										Rectangle closeRect = GetCloseRectangle();
-										if (!RectangleToScreen(new Rectangle(closeRect.X - 3, closeRect.Y - 3, closeRect.Width + 6, closeRect.Height + 6)).Contains(MousePosition))
-										{
-											closeColor = Color.FromArgb(127, closeColor);
-										}
-										using (Pen closePen = new Pen(closeColor, 2))
-										{
-											g.DrawLine(closePen, closeRect.X, closeRect.Y, closeRect.Right, closeRect.Bottom);
-											g.DrawLine(closePen, closeRect.X, closeRect.Bottom, closeRect.Right, closeRect.Top);
-										}
-										g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
-									}
-								}
-							}
-							else
-							{
-								if (showAdd)
-								{
-									//Add buttton
-									g.DrawImage(Properties.Resources.Add, textRect.X - Properties.Resources.Add.Width + TabPadding, textRect.Y + 1);
-								}
-
-								g.DrawString(text, Skin.TabFont, textBrush, textRect, sf);
-							}
+							g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
 						}
 					}
+				}
+				else
+				{
+					if (showAdd)
+					{
+						//Add buttton
+						g.DrawImage(Properties.Resources.Add, textRect.X - Properties.Resources.Add.Width + TabPadding, textRect.Y + 1);
+					}
+
+					g.DrawString(text, Skin.TabFont, _textBrush, textRect, CenterFormat);
 				}
 			}
 		}
@@ -392,42 +415,36 @@ namespace Desktop.Skinning
 
 			List<Rectangle> rects = GetTabRects();
 
-			using (StringFormat sf = new StringFormat() { LineAlignment = StringAlignment.Center, FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter })
+
+			_activeBrush.Color = Enabled ? tabSet.ForeColor : tabSet.DisabledForeColor;
+			_textBrush.Color = Enabled ? background.ForeColor : background.DisabledForeColor;
+			for (int i = 0; i < _tabControl.TabPages.Count; i++)
 			{
-				using (Brush activeBrush = new SolidBrush(Enabled ? tabSet.ForeColor : tabSet.DisabledForeColor))
+				Rectangle rect = rects[i];
+				TabPage page = _tabControl.TabPages[i];
+				string text = page.Text;
+
+				Rectangle textRect = new Rectangle(rect.X + 3, rect.Y, rect.Width - 6, rect.Height);
+
+				if (_tabControl.SelectedIndex == i)
 				{
-					using (Brush textBrush = new SolidBrush(Enabled ? background.ForeColor : background.DisabledForeColor))
-					{
-						for (int i = 0; i < _tabControl.TabPages.Count; i++)
-						{
-							Rectangle rect = rects[i];
-							TabPage page = _tabControl.TabPages[i];
-							string text = page.Text;
-
-							Rectangle textRect = new Rectangle(rect.X + 3, rect.Y, rect.Width - 6, rect.Height);
-
-							if (_tabControl.SelectedIndex == i)
-							{
-								Rectangle clientRect = ClientRectangle;
-								Brush activeBar = skin.SecondaryColor.GetBrush(VisualState.Normal, false, Enabled);
-								g.FillRectangle(indicatorBrush, rect);
-								g.FillRectangle(activeBar, new RectangleF(rect.X + 1, rect.Y, IndicatorSize, rect.Height));
-								g.DrawString(text, Skin.ActiveTabFont, activeBrush, new Rectangle(textRect.X + IndicatorSize, textRect.Y, textRect.Width - IndicatorSize, textRect.Height), sf);
-								g.DrawLine(innerBorderPen, clientRect.X, textRect.Y - 1, clientRect.X, textRect.Bottom);
-								g.DrawLine(innerBorderPen, clientRect.X, textRect.Y - 1, clientRect.Right - 2, textRect.Y - 1);
-								g.DrawLine(innerBorderPen, clientRect.X, textRect.Bottom, clientRect.Right - 2, textRect.Bottom);
-							}
-							else if (_hoveredTabIndex == i)
-							{
-								g.FillRectangle(hoverBrush, new RectangleF(rect.X, rect.Y, rect.Width - 1, rect.Height));
-								g.DrawString(text, Skin.TabFont, textBrush, textRect, sf);
-							}
-							else
-							{
-								g.DrawString(text, Skin.TabFont, textBrush, textRect, sf);
-							}
-						}
-					}
+					Rectangle clientRect = ClientRectangle;
+					Brush activeBar = skin.SecondaryColor.GetBrush(VisualState.Normal, false, Enabled);
+					g.FillRectangle(indicatorBrush, rect);
+					g.FillRectangle(activeBar, new RectangleF(rect.X + 1, rect.Y, IndicatorSize, rect.Height));
+					g.DrawString(text, Skin.ActiveTabFont, _activeBrush, new Rectangle(textRect.X + IndicatorSize, textRect.Y, textRect.Width - IndicatorSize, textRect.Height), VerticalFormat);
+					g.DrawLine(innerBorderPen, clientRect.X, textRect.Y - 1, clientRect.X, textRect.Bottom);
+					g.DrawLine(innerBorderPen, clientRect.X, textRect.Y - 1, clientRect.Right - 2, textRect.Y - 1);
+					g.DrawLine(innerBorderPen, clientRect.X, textRect.Bottom, clientRect.Right - 2, textRect.Bottom);
+				}
+				else if (_hoveredTabIndex == i)
+				{
+					g.FillRectangle(hoverBrush, new RectangleF(rect.X, rect.Y, rect.Width - 1, rect.Height));
+					g.DrawString(text, Skin.TabFont, _textBrush, textRect, VerticalFormat);
+				}
+				else
+				{
+					g.DrawString(text, Skin.TabFont, _textBrush, textRect, VerticalFormat);
 				}
 			}
 		}
@@ -489,7 +506,7 @@ namespace Desktop.Skinning
 
 			for (int i = 0; i < rects.Count; i++)
 			{
-				TabPage page = i < _tabControl.TabPages.Count ? _tabControl.TabPages[i]: null;
+				TabPage page = i < _tabControl.TabPages.Count ? _tabControl.TabPages[i] : null;
 				if (page?.Tag?.ToString() == "spacer")
 				{
 					continue;

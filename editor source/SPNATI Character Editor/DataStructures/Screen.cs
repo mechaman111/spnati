@@ -62,7 +62,7 @@ namespace SPNATI_Character_Editor
 	/// <summary>
 	/// Legacy background tag
 	/// </summary>
-	public class Background
+	public class LegacyBackground
 	{
 		[XmlAttribute("img")]
 		public string Image;

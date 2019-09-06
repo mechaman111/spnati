@@ -10,9 +10,16 @@ namespace SPNATI_Character_Editor
 		private static Dictionary<string, Variable> _tempVariables = new Dictionary<string, Variable>();
 		private static List<Variable> _globalVariables = new List<Variable>();
 
+		public static void Clear()
+		{
+			_variables.Clear();
+			_tempVariables.Clear();
+			_globalVariables.Clear();
+		}
+
 		public static void Load()
 		{
-			string filename = "variables.xml";
+			string filename = Path.Combine(Config.ExecutableDirectory, "variables.xml");
 			if (File.Exists(filename))
 			{
 				TextReader reader = null;
@@ -24,11 +31,7 @@ namespace SPNATI_Character_Editor
 
 					foreach (Variable variable in list.Variables)
 					{
-						_variables[variable.Name] = variable;
-						if (variable.IsGlobal)
-						{
-							_globalVariables.Add(variable);
-						}
+						Add(variable);
 						SpellChecker.Instance.AddWord(variable.Name, false);
 						foreach (VariableFunction func in variable.Functions)
 						{
@@ -41,6 +44,16 @@ namespace SPNATI_Character_Editor
 					if (reader != null)
 						reader.Close();
 				}
+			}
+		}
+
+		public static void Add(Variable variable)
+		{
+			_variables[variable.Name] = variable;
+			bool isGlobal = variable.IsGlobal;
+			if (isGlobal)
+			{
+				_globalVariables.Add(variable);
 			}
 		}
 

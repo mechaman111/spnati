@@ -1,15 +1,24 @@
-﻿using System;
+﻿using Desktop.DataStructures;
+using System;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor.DataStructures
 {
-	public class Nickname : IComparable<Nickname>
+	public class Nickname : BindableObject, IComparable<Nickname>
 	{
 		[XmlAttribute("for")]
-		public string Character;
+		public string Character
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		[XmlText]
-		public string Label;
+		public string Label
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
 
 		public Nickname()
 		{

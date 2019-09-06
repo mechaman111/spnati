@@ -99,6 +99,9 @@ namespace Desktop.Skinning
 				case SkinnedHighlight.Heading:
 					ForeColor = skin.PrimaryForeColor;
 					break;
+				case SkinnedHighlight.SecondaryHeading:
+					ForeColor = skin.SecondaryForeColor;
+					break;
 			}
 		}
 	}

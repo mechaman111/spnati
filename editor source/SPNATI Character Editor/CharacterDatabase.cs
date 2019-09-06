@@ -32,6 +32,15 @@ namespace SPNATI_Character_Editor
 			get { return _characters.Count; }
 		}
 
+		public static void Clear()
+		{
+			_characters.Clear();
+			_characterMap.Clear();
+			_idMap.Clear();
+			_editorData.Clear();
+			_reskins.Clear();
+		}
+
 		public static void Add(Character character)
 		{
 			_characters.Add(character);

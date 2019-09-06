@@ -13,6 +13,7 @@ namespace Desktop.Skinning
 		public static Font ButtonFont = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
 		public static Font TabFont = new Font("Segoe UI", 9);
 		public static Font ActiveTabFont = new Font("Segoe UI", 9, FontStyle.Bold);
+		public static Font DecorationFont = new Font("Segoe UI", 8);
 		public static Font TitleFont = new Font("Segoe UI", 16);
 		public static Font CompletionFont = new Font("Segoe UI", 28);
 
@@ -85,11 +86,17 @@ namespace Desktop.Skinning
 		[Color(DisplayName = "Good")]
 		public Color GoodForeColor = Color.Green;
 
+		[Color(DisplayName = "Caution")]
+		public Color CautionForeColor = Color.Yellow;
+
 		[Color(DisplayName = "Bad")]
 		public Color BadForeColor = Color.Red;
 
 		[Color(DisplayName = "Focus Rect")]
 		public Color FocusRectangle = Color.Black;
+
+		[Color(DisplayName = "Empty Graph")]
+		public Color EmptyColor = Color.LightGray;
 
 		#region Colors visible on a field
 		[Color(DisplayName = "Gray")]
@@ -418,5 +425,6 @@ namespace Desktop.Skinning
 		Good,
 		Bad,
 		Heading,
+		SecondaryHeading,
 	}
 }

@@ -14,7 +14,6 @@ namespace SPNATI_Character_Editor.Activities
 	[Activity(typeof(Costume), 205)]
 	public partial class TemplateEditor : Activity
 	{
-		private ImageLibrary _imageLibrary;
 		private ISkin _character;
 		private string _lastTemplateFile;
 
@@ -34,7 +33,6 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as ISkin;
-			_imageLibrary = ImageLibrary.Get(_character);
 		}
 
 		protected override void OnActivate()
@@ -265,8 +263,7 @@ namespace SPNATI_Character_Editor.Activities
 
 				if (img != null)
 				{
-					CharacterImage preview = _imageLibrary.Replace(ImageLibrary.PreviewImage, img);
-					Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, preview);
+					Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(img));
 				}
 				else
 				{

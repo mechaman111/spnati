@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using Desktop.CommonControls;
 using System.Reflection;
 
 namespace SPNATI_Character_Editor.Analyzers
@@ -18,18 +19,17 @@ namespace SPNATI_Character_Editor.Analyzers
 
 		public override bool GetValue(Character character)
 		{
-			FieldInfo fi = PropertyTypeInfo.GetFieldInfo(typeof(Case), PropertyName);
-			foreach (Stage stage in character.Behavior.Stages)
+			MemberInfo mi = PropertyTypeInfo.GetMemberInfo(typeof(Case), PropertyName);
+			
+			foreach (Case theCase in character.Behavior.EnumerateSourceCases())
 			{
-				foreach (Case theCase in stage.Cases)
+				string value = mi.GetValue(theCase)?.ToString();
+				if (!string.IsNullOrEmpty(value))
 				{
-					string value = fi.GetValue(theCase)?.ToString();
-					if (!string.IsNullOrEmpty(value))
-					{
-						return true;
-					}
+					return true;
 				}
 			}
+			
 			return false;
 		}
 	}
@@ -193,9 +193,9 @@ namespace SPNATI_Character_Editor.Analyzers
 		public override string PropertyName { get { return "RemoveCharacterTags"; } }
 		public override string ParentKey { get { return "Dialogue>Conditions"; } }
 	}
-	public abstract class CaseConditionAnalyzer : BooleanAnalyzer
+	public class CaseFilterAnalyzer : BooleanAnalyzer
 	{
-		public override string Key { get { return "Conditions"; } }
+		public override string Key { get { return "Filters"; } }
 		public override string Name { get { return "Uses Filters"; } }
 		public override string FullName { get { return "Dialogue - Uses Filters"; } }
 
@@ -206,20 +206,17 @@ namespace SPNATI_Character_Editor.Analyzers
 
 		public override bool GetValue(Character character)
 		{
-			foreach (Stage stage in character.Behavior.Stages)
+			foreach (Case theCase in character.Behavior.EnumerateSourceCases())
 			{
-				foreach (Case theCase in stage.Cases)
+				if (theCase.HasFilters)
 				{
-					if (theCase.HasFilters)
-					{
-						return true;
-					}
+					return true;
 				}
 			}
 			return false;
 		}
 	}
-	public abstract class CaseVariableAnalyzer : BooleanAnalyzer
+	public class CaseVariableAnalyzer : BooleanAnalyzer
 	{
 		public override string Key { get { return "Variable"; } }
 		public override string Name { get { return "Uses Variable Tests"; } }
@@ -232,14 +229,11 @@ namespace SPNATI_Character_Editor.Analyzers
 
 		public override bool GetValue(Character character)
 		{
-			foreach (Stage stage in character.Behavior.Stages)
+			foreach (Case theCase in character.Behavior.EnumerateSourceCases())
 			{
-				foreach (Case theCase in stage.Cases)
+				if (theCase.Expressions.Count > 0)
 				{
-					if (theCase.Expressions.Count > 0)
-					{
-						return true;
-					}
+					return true;
 				}
 			}
 			return false;

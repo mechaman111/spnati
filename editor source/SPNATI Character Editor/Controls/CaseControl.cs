@@ -15,11 +15,11 @@ namespace SPNATI_Character_Editor.Controls
 
 		private Character _character;
 		private CharacterEditorData _editorData;
-		private ImageLibrary _imageLibrary = new ImageLibrary();
 		private Case _selectedCase;
 		private Stage _selectedStage;
 		private bool _populatingCase;
 		private List<DialogueLine> _lineClipboard = new List<DialogueLine>();
+		private Case _trackedCase;
 
 		public event EventHandler<DialogueLine> TextUpdated;
 		public event EventHandler<int> HighlightRow;
@@ -27,6 +27,23 @@ namespace SPNATI_Character_Editor.Controls
 		public CaseControl()
 		{
 			InitializeComponent();
+		}
+
+		private void UpdateAddCaption()
+		{
+			if (tabsConditions.TabCount > 1)
+			{
+				stripConditions.AddCaption = "OR";
+			}
+			else
+			{
+				stripConditions.AddCaption = "AND";
+			}
+		}
+
+		public int PreviewStage
+		{
+			get { return _selectedStage == null ? _selectedCase.Stages[0] : _selectedStage.Id; }
 		}
 
 		public void OnUpdateSkin(Skin skin)
@@ -53,7 +70,6 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			_character = character;
 			_editorData = CharacterDatabase.GetEditorData(_character);
-			_imageLibrary = ImageLibrary.Get(character);
 			tableConditions.Context = character;
 			CreateStageCheckboxes();
 		}
@@ -67,8 +83,6 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_selectedCase != null)
 			{
-				_selectedCase.AlternativeConditions.CollectionChanged -= AlternativeConditions_CollectionChanged;
-				tabsConditions.Selected -= TabsConditions_Selected;
 				tabsConditions.SelectedIndexChanged -= tabsConditions_SelectedIndexChanged;
 				tabsConditions.SelectedIndex = 0;
 				for (int i = tabsConditions.TabPages.Count - 1; i > 0; i--)
@@ -78,23 +92,22 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			_selectedStage = stage;
 			_selectedCase = workingCase;
+			TrackCase(_selectedCase);
 			if (_selectedCase != null)
 			{
-				_selectedCase.AlternativeConditions.CollectionChanged += AlternativeConditions_CollectionChanged;
 				tabConditions.Enabled = true;
 				foreach (Case alternative in _selectedCase.AlternativeConditions)
 				{
 					AddAlternateTab();
 				}
 				tabsConditions.SelectedIndexChanged += tabsConditions_SelectedIndexChanged;
-				tabsConditions.Selected += TabsConditions_Selected;
 			}
 			PopulateCase();
 		}
 
-		private void TabsConditions_Selected(object sender, TabControlEventArgs e)
+		private void CasePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			
+			_character.IsDirty = true;
 		}
 
 		public void UpdateStages()
@@ -138,12 +151,14 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Check_CheckedChanged(object sender, EventArgs e)
+		private void Check_CheckedChanged(object sender, int stage)
 		{
 			if (_populatingCase)
 				return;
 			_populatingCase = true;
 			HashSet<int> stages = GetSelectedStages();
+			_selectedCase.ClearStages();
+			_selectedCase.AddStages(stages);
 			UpdatePreviewStage(stages, -1);
 			_populatingCase = false;
 		}
@@ -219,7 +234,7 @@ namespace SPNATI_Character_Editor.Controls
 			return gridDialogue.FindReplace(args);
 		}
 
-		public string GetImage(int index)
+		public PoseMapping GetImage(int index)
 		{
 			return gridDialogue.GetImage(index);
 		}
@@ -257,18 +272,18 @@ namespace SPNATI_Character_Editor.Controls
 
 			PopulateStageCheckboxes();
 
-			Trigger caseTrigger = TriggerDatabase.GetTrigger(stageCase.Tag);
+			TriggerDefinition caseTrigger = TriggerDatabase.GetTrigger(stageCase.Tag);
 
 			#region Case-wide settings
 			//Tag combo box
 			cboCaseTags.Items.Clear();
-			Trigger currentTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
+			TriggerDefinition currentTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
 			if (_selectedStage != null)
 			{
-				Trigger selection = null;
+				TriggerDefinition selection = null;
 				foreach (string tag in TriggerDatabase.GetTags())
 				{
-					Trigger t = TriggerDatabase.GetTrigger(tag);
+					TriggerDefinition t = TriggerDatabase.GetTrigger(tag);
 					if (currentTrigger.HasTarget && currentTrigger.HasTarget != t.HasTarget)
 					{
 						continue;
@@ -352,7 +367,7 @@ namespace SPNATI_Character_Editor.Controls
 			GUIHelper.SetNumericBox(valPriority, _selectedCase.CustomPriority);
 
 			var stages = GetSelectedStages();
-			gridDialogue.SetData(_character, _selectedStage, _selectedCase, stages, _imageLibrary);
+			gridDialogue.SetData(_character, _selectedStage, _selectedCase, stages);
 
 			PopulateTagsTab();
 
@@ -368,11 +383,10 @@ namespace SPNATI_Character_Editor.Controls
 		public static void AddSpeedButtons(PropertyTable table, string tag)
 		{
 			if (tag == null) { return; }
-			Trigger caseTrigger = TriggerDatabase.GetTrigger(tag);
+			TriggerDefinition caseTrigger = TriggerDatabase.GetTrigger(tag);
 
 			//Game-wide
 			table.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
-			table.AddSpeedButton("Game", "Inside/Outside", (data) => { return AddVariableTest("~background.location~", data); });
 
 			//Player variables
 
@@ -472,10 +486,10 @@ namespace SPNATI_Character_Editor.Controls
 
 			SaveNotes();
 			var c = _selectedCase;
-			if (c.Tag != Trigger.StartTrigger)
+			if (c.Tag != TriggerDefinition.StartTrigger)
 			{
 				string newTag = "";
-				Trigger trigger = cboCaseTags.SelectedItem as Trigger;
+				TriggerDefinition trigger = cboCaseTags.SelectedItem as TriggerDefinition;
 				if (trigger != null)
 				{
 					newTag = trigger.Tag;
@@ -489,14 +503,6 @@ namespace SPNATI_Character_Editor.Controls
 				//Figure out the stages
 				List<int> oldStages = new List<int>();
 				oldStages.AddRange(c.Stages);
-				c.Stages.Clear();
-				for (int i = 0; i < _character.Layers + Clothing.ExtraStages; i++)
-				{
-					if (gridStages.GetChecked(i) && TriggerDatabase.UsedInStage(newTag, _character, i))
-					{
-						c.Stages.Add(i);
-					}
-				}
 
 				tableConditions.Save();
 
@@ -588,7 +594,7 @@ namespace SPNATI_Character_Editor.Controls
 		public object CreateData()
 		{
 			Case tag = new Case(_selectedCase.Tag);
-			tag.Stages.AddRange(_selectedCase.Stages);
+			tag.AddStages(_selectedCase.Stages);
 			return tag;
 		}
 
@@ -600,7 +606,7 @@ namespace SPNATI_Character_Editor.Controls
 		public Func<PropertyRecord, bool> GetRecordFilter(object data)
 		{
 			Case tag = data as Case;
-			Trigger trigger = TriggerDatabase.GetTrigger(tag.Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag.Tag);
 			if (trigger.HasTarget)
 			{
 				return FilterTargets;
@@ -619,7 +625,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void cboCaseTags_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Trigger tag = cboCaseTags.SelectedItem as Trigger;
+			TriggerDefinition tag = cboCaseTags.SelectedItem as TriggerDefinition;
 			if (tag != null)
 			{
 				lblHelpText.Text = tag.HelpText;
@@ -666,7 +672,7 @@ namespace SPNATI_Character_Editor.Controls
 					tabsConditions.TabPages.RemoveAt(e.OldStartingIndex + 1);
 					for (int i = e.OldStartingIndex + 1; i < tabsConditions.TabPages.Count; i++)
 					{
-						tabsConditions.TabPages[i].Text = "Set " + (i + 1);
+						tabsConditions.TabPages[i].Text = "Set " + i;
 					}
 					break;
 			}
@@ -677,12 +683,15 @@ namespace SPNATI_Character_Editor.Controls
 			if (_selectedCase == null) { return; }
 			Case alternate = new Case(_selectedCase.Tag);
 			_selectedCase.AlternativeConditions.Add(alternate);
+			_selectedCase.NotifyPropertyChanged(nameof(_selectedCase.AlternativeConditions));
+			AddAlternateTab();
 			tabsConditions.SelectedIndex = _selectedCase.AlternativeConditions.Count;
 		}
 
 		private void AddAlternateTab()
 		{
-			tabsConditions.TabPages.Add($"Set {(tabsConditions.TabPages.Count + 1)}");
+			tabsConditions.TabPages.Add($"Set {(tabsConditions.TabPages.Count)}");
+			UpdateAddCaption();
 		}
 
 		private void stripConditions_CloseButtonClicked(object sender, EventArgs e)
@@ -692,7 +701,14 @@ namespace SPNATI_Character_Editor.Controls
 			if (index >= 0)
 			{
 				_selectedCase.AlternativeConditions.RemoveAt(index);
+				_selectedCase.NotifyPropertyChanged(nameof(_selectedCase.AlternativeConditions));
+				tabsConditions.TabPages.RemoveAt(index + 1);
+				for (int i = index + 1; i < tabsConditions.TabPages.Count; i++)
+				{
+					tabsConditions.TabPages[i].Text = "Set " + i;
+				}
 				tabsConditions.SelectedIndex = index < tabsConditions.TabPages.Count - 1 ? index + 1 : index;
+				UpdateAddCaption();
 			}
 		}
 
@@ -705,7 +721,21 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				desiredCase = _selectedCase.AlternativeConditions[index - 1];
 			}
+			TrackCase(desiredCase);
 			PopulateConditionTable(desiredCase);
+		}
+
+		private void TrackCase(Case c)
+		{
+			if (_trackedCase != null)
+			{
+				_trackedCase.PropertyChanged -= CasePropertyChanged;
+			}
+			_trackedCase = c;
+			if (_trackedCase != null)
+			{
+				_trackedCase.PropertyChanged += CasePropertyChanged;
+			}
 		}
 	}
 }

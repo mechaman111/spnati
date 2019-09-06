@@ -10,14 +10,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Windows.Threading;
 
 namespace SPNATI_Character_Editor
 {
 	public static class ShellLogic
 	{
-		private static DispatcherTimer _backupTimer = new DispatcherTimer();
-
 		public static void Initialize()
 		{
 			if (!DoInitialSetup())
@@ -34,28 +31,18 @@ namespace SPNATI_Character_Editor
 
 			Shell.Instance.AutoTickFrequency = Config.AutoSaveInterval * 60000;
 			Shell.Instance.AutoTick += Instance_AutoTick;
-
-			_backupTimer.Tick += _backupTimer_Tick;
-			_backupTimer.Interval = new TimeSpan(0, 5, 0);
-			_backupTimer.Start();
+			Shell.Instance.Version = Config.Version;
+			Shell.Instance.VersionClick += Instance_VersionClick;
 
 			Config.LoadMacros<Case>("Case");
+			Shell.Instance.Description = Config.UserName;
+
+			CharacterGenerator.SetConverter(Config.ImportMethod);
 		}
 
-		private static void _backupTimer_Tick(object sender, EventArgs e)
+		private static void Instance_VersionClick(object sender, EventArgs e)
 		{
-			if (!Config.AutoBackupEnabled) { return; }
-			Cursor cursor = Cursor.Current;
-			Cursor.Current = Cursors.WaitCursor;
-			foreach (IWorkspace ws in Shell.Instance.Workspaces)
-			{
-				Character c = ws.Record as Character;
-				if (c != null)
-				{
-					Serialization.BackupCharacter(c);
-				}
-			}
-			Cursor.Current = cursor;
+			new About().ShowDialog();
 		}
 
 		private static void Instance_AutoTick(object sender, System.EventArgs e)
@@ -284,7 +271,7 @@ namespace SPNATI_Character_Editor
 
 		private static void BuildDataSlicers()
 		{
-			SlicerProvider.AddSlicer("Case Type", "Groups by case type", () => new RecordSlicer(typeof(Trigger), "Tag", "Case Type", true, false));
+			SlicerProvider.AddSlicer("Case Type", "Groups by case type", () => new RecordSlicer(typeof(TriggerDefinition), "Tag", "Case Type", true, false));
 			SlicerProvider.AddSlicer("Target", "Groups by target", () => new RecordSlicer(typeof(Character), "Target", "Target", true, true));
 			SlicerProvider.AddSlicer("Target Hand", "Groups by self hand", () => new ComboSlicer(typeof(Case), "TargetHand", "Target Hand"));
 			SlicerProvider.AddSlicer("Target Stage", "Groups by target stage", () => new IntervalSlicer("TargetStage", "Target Stage", 0, 10));

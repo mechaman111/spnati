@@ -67,12 +67,6 @@ namespace SPNATI_Character_Editor
 			lines.Add("dialogue-layer=" + metadata.BubblePosition);
 
 			lines.Add("");
-			lines.Add("#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.");
-			foreach (var line in character.StartingLines)
-			{
-				var defaultLine = Behaviour.CreateDefaultLine(line);
-				lines.Add(string.Format("start=0-{0},{1}", defaultLine.Image, defaultLine.Text));
-			}
 
 			#region Clothing commentary
 			lines.Add("");
@@ -191,12 +185,15 @@ namespace SPNATI_Character_Editor
 					{
 						foreach (Case set in c.GetConditionSets())
 						{
+							set.Tag = c.Tag;
 							Case stageCase = set.CopyConditions();
 							stageCase.Stages.Add(stage);
 							stageCase.Id = c.Id;
+							stageCase.TriggerSet = c.TriggerSet;
 							foreach (var line in c.Lines)
 							{
-								stageCase.Lines.Add(Behaviour.CreateStageSpecificLine(line, stage, character));
+								DialogueLine l = line.Copy();
+								stageCase.Lines.Add(l);
 							}
 							cases.Add(stageCase);
 						}
@@ -208,8 +205,8 @@ namespace SPNATI_Character_Editor
 			cases.Sort((c1, c2) =>
 			{
 				//1st key: group
-				Trigger t1 = TriggerDatabase.GetTrigger(c1.Tag);
-				Trigger t2 = TriggerDatabase.GetTrigger(c2.Tag);
+				TriggerDefinition t1 = TriggerDatabase.GetTrigger(c1.Tag);
+				TriggerDefinition t2 = TriggerDatabase.GetTrigger(c2.Tag);
 				int compare = t1.Group.CompareTo(t2.Group);
 				if (compare == 0)
 				{
@@ -257,7 +254,7 @@ namespace SPNATI_Character_Editor
 				if (outputCase.IsDefault)
 					stageId = -9;
 				string tag = outputCase.Tag;
-				Trigger trigger = TriggerDatabase.GetTrigger(tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
 				int group = trigger.Group;
 				bool needSpacer = (lastGroup != group || lastStage != stageId);
 				if (needSpacer)
@@ -322,13 +319,13 @@ namespace SPNATI_Character_Editor
 
 				foreach (var line in outputCase.Lines)
 				{
-					var defaultLine = Behaviour.CreateDefaultLine(line);
+					var defaultLine = line;
 					string lineCode = caseCode;
 					if (!string.IsNullOrEmpty(defaultLine.Marker))
 					{
 						lineCode += string.Format(",marker:{0}", defaultLine.Marker);
 					}
-					if (!string.IsNullOrEmpty(defaultLine.Direction))
+					if (!string.IsNullOrEmpty(defaultLine.Direction) && defaultLine.Direction != "down")
 					{
 						lineCode += $",direction:{defaultLine.Direction}";
 					}
@@ -373,7 +370,7 @@ namespace SPNATI_Character_Editor
 						lineCode += $",weight:{defaultLine.Weight.ToString(CultureInfo.InvariantCulture)}";
 					}
 					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~silent~" : defaultLine.Text;
-					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Image, text));
+					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Pose.GetFlatFormat(), text));
 				}
 			}
 
@@ -908,7 +905,11 @@ namespace SPNATI_Character_Editor
 						}
 						break;
 					case "dialogue-layer":
-						Enum.TryParse(value, out character.Metadata.BubblePosition);
+						DialogueLayer pos;
+						if (Enum.TryParse(value, out pos))
+						{
+							character.Metadata.BubblePosition = pos;
+						}
 						break;
 					case "start":
 						Case temp = MakeLine(key, value, character, true);
@@ -1281,15 +1282,10 @@ namespace SPNATI_Character_Editor
 				text = "";
 			}
 
-			line.Image = img;
+			PoseMapping mapping = character.PoseLibrary.GetFlatFilePose(img);
+			line.Image = mapping.Key;
+			line.Pose = mapping;
 			line.Text = text;
-
-			if (!startingLine)
-			{
-				if (stage == -99)
-					line = Behaviour.CreateDefaultLine(line);
-				else line = Behaviour.CreateStageSpecificLine(line, stage, character);
-			}
 
 			lineCase.Lines.Add(line);
 			return lineCase;
@@ -1300,7 +1296,7 @@ namespace SPNATI_Character_Editor
 			string[] kvp = data.Split(new char[] { ':' }, 2);
 			if (kvp.Length == 2)
 			{
-				Trigger trigger = TriggerDatabase.GetTrigger(lineCase.Tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(lineCase.Tag);
 				string key = kvp[0].ToLower();
 				string value = kvp[1];
 				//Targets

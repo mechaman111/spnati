@@ -339,17 +339,30 @@ namespace Desktop.CommonControls
 			_source?.ExpandAll();
 		}
 
+		public void CollapseAll()
+		{
+			GroupedListItem item = null;
+			if (view.SelectedIndices.Count > 0)
+			{
+				item = _source.GetItem(this.view.SelectedIndices[0]);
+			}
+			_source?.CollapseAll();
+			if (item != null)
+			{
+				SelectedItem = item.Group;
+			}
+		}
+
 		private void View_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
 		{
-			Skin skin = SkinManager.Instance.CurrentSkin;
+			SkinManager manager = SkinManager.Instance;
+			Skin skin = manager.CurrentSkin;
 			Graphics g = e.Graphics;
 			SolidBrush back = skin.Surface.GetBrush(VisualState.Normal, false, true);
 			g.FillRectangle(back, e.Bounds);
-			using (SolidBrush fore = new SolidBrush(skin.Surface.ForeColor))
-			{
-				Rectangle textRect = new Rectangle(e.Bounds.X + 5, e.Bounds.Y, e.Bounds.Width - 5, e.Bounds.Height);
-				g.DrawString(e.Header.Text, Font, fore, textRect, _sf);
-			}
+			SolidBrush fore = manager.GetBrush(skin.Surface.ForeColor);
+			Rectangle textRect = new Rectangle(e.Bounds.X + 5, e.Bounds.Y, e.Bounds.Width - 5, e.Bounds.Height);
+			g.DrawString(e.Header.Text, Font, fore, textRect, _sf);
 			Pen border = skin.Surface.GetBorderPen(VisualState.Normal, false, true);
 			g.DrawLine(border, e.Bounds.X, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
 			if (e.ColumnIndex > 0)
@@ -366,8 +379,8 @@ namespace Desktop.CommonControls
 		private void View_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
 		{
 			Graphics g = e.Graphics;
-			Skin skin = SkinManager.Instance.CurrentSkin;
-
+			SkinManager manager = SkinManager.Instance;
+			Skin skin = manager.CurrentSkin;
 			if (e.Item.Selected && e.ColumnIndex == 0)
 			{
 				g.FillRectangle(skin.PrimaryColor.GetBrush(VisualState.Focused, false, Enabled), e.Item.Bounds);
@@ -407,10 +420,8 @@ namespace Desktop.CommonControls
 					{
 						if (!item.Selected)
 						{
-							using (SolidBrush back = new SolidBrush(skin.FieldBackColor))
-							{
-								g.FillRectangle(back, new Rectangle(0, itemBounds.Y, view.Width, itemBounds.Height));
-							}
+							SolidBrush back = manager.GetBrush(skin.FieldBackColor);
+							g.FillRectangle(back, new Rectangle(0, itemBounds.Y, view.Width, itemBounds.Height));
 						}
 						Pen divider = skin.PrimaryColor.GetBorderPen(VisualState.Normal, false, Enabled);
 						GroupedListGrouper group = item.Tag as GroupedListGrouper;
@@ -424,10 +435,8 @@ namespace Desktop.CommonControls
 
 						if (ShowIndicators)
 						{
-							using (SolidBrush br = new SolidBrush(item.ForeColor))
-							{
-								g.FillRectangle(br, e.Bounds.X, e.Bounds.Y, 3, e.Bounds.Height);
-							}
+							SolidBrush br = manager.GetBrush(item.ForeColor);
+							g.FillRectangle(br, e.Bounds.X, e.Bounds.Y, 3, e.Bounds.Height);
 						}
 					}
 				}
@@ -438,32 +447,24 @@ namespace Desktop.CommonControls
 
 				if (item.Selected)
 				{
-					using (SolidBrush textBrush = new SolidBrush(Enabled ? skin.PrimaryColor.ForeColor : skin.PrimaryColor.DisabledForeColor))
-					{
-						g.DrawString(e.SubItem.Text, item.Font, textBrush, bounds, sf);
-					}
+					SolidBrush textBrush = manager.GetBrush(Enabled ? skin.PrimaryColor.ForeColor : skin.PrimaryColor.DisabledForeColor);
+					g.DrawString(e.SubItem.Text, item.Font, textBrush, bounds, sf);
 				}
 				else
 				{
 					if (!(item.Tag is GroupedListGrouper))
 					{
 						int depth = _source.GetDepth(item.Tag);
-						using (SolidBrush back = new SolidBrush(depth % 2 == 0 ? skin.FieldBackColor : skin.FieldAltBackColor))
-						{
-							g.FillRectangle(back, e.Bounds);
-						}
+						SolidBrush back = manager.GetBrush(depth % 2 == 0 ? skin.FieldBackColor : skin.FieldAltBackColor);
+						g.FillRectangle(back, e.Bounds);
 						if (e.ColumnIndex == 0 && ShowIndicators)
 						{
-							using (SolidBrush br = new SolidBrush(item.GrouperColor))
-							{
-								g.FillRectangle(br, e.Bounds.X, e.Bounds.Y, 3, e.Bounds.Height);
-							}
+							SolidBrush br2 = manager.GetBrush(item.GrouperColor);
+							g.FillRectangle(br2, e.Bounds.X, e.Bounds.Y, 3, e.Bounds.Height);
 						}
 					}
-					using (SolidBrush br = new SolidBrush(item.ForeColor))
-					{
-						g.DrawString(e.SubItem.Text, item.Font, br, bounds, sf);
-					}
+					SolidBrush br = manager.GetBrush(item.ForeColor);
+					g.DrawString(e.SubItem.Text, item.Font, br, bounds, sf);
 				}
 
 				if (item.Item.LastInGroup)

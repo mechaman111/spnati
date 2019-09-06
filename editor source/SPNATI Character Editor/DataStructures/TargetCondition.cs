@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor
 {
 	public class TargetCondition : BindableObject
 	{
+		[DefaultValue("")]
 		[XmlAttribute("count")]
 		[JsonProperty("count")]
 		/// <summary>
@@ -22,6 +23,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		[DefaultValue("")]
 		[XmlAttribute("filter")]
 		[JsonProperty("filter")]
 		/// <summary>
@@ -33,6 +35,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		[DefaultValue("")]
 		[JsonProperty("gender")]
 		[XmlAttribute("gender")]
 		public string Gender
@@ -41,6 +44,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		[DefaultValue("")]
 		[Status(DisplayName = "Status", Description = "Status of the characters to match", GroupOrder = 10, Required = true)]
 		[XmlAttribute("status")]
 		[JsonProperty("status")]
@@ -90,7 +94,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		//[NumericRange(DisplayName = "Layers", GroupName = "Add Filter", GroupOrder = 50, Description = "Number of layers the target has left")]
+		[NumericRange(DisplayName = "Layers", GroupName = "Add Filter", GroupOrder = 50, Description = "Number of layers the target has left")]
 		[DefaultValue("")]
 		[XmlAttribute("layers")]
 		[JsonProperty("layers")]
@@ -100,7 +104,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		//[NumericRange(DisplayName = "Starting Layers", GroupName = "Add Filter", GroupOrder = 55, Description = "Number of layers the target started with")]
+		[NumericRange(DisplayName = "Starting Layers", GroupName = "Add Filter", GroupOrder = 55, Description = "Number of layers the target started with")]
 		[DefaultValue("")]
 		[XmlAttribute("startingLayers")]
 		[JsonProperty("startingLayers")]
@@ -110,7 +114,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		//[NumericRange(DisplayName = "Time in Stage", GroupName = "Add Filter", GroupOrder = 60, Description = "Number of rounds since the last time this target lost a hand")]
+		[NumericRange(DisplayName = "Time in Stage", GroupName = "Add Filter", GroupOrder = 60, Description = "Number of rounds since the last time this target lost a hand")]
 		[DefaultValue("")]
 		[XmlAttribute("timeInStage")]
 		[JsonProperty("timeInStage")]
@@ -120,8 +124,8 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		//[ComboBox(DisplayName = "Has Hand", GroupName = "Add Filter", GroupOrder = 65, Description = "Character has a particular poker hand",
-		//			Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
+		[ComboBox(DisplayName = "Has Hand", GroupName = "Add Filter", GroupOrder = 65, Description = "Character has a particular poker hand",
+					Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
 		[DefaultValue("")]
 		[XmlAttribute("hasHand")]
 		[JsonProperty("hasHand")]
@@ -131,7 +135,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		//[NumericRange(DisplayName = "Consecutive Losses", GroupName = "Add Filter", GroupOrder = 63, Description = "Number of hands the target has lost in a row")]
+		[NumericRange(DisplayName = "Consecutive Losses", GroupName = "Add Filter", GroupOrder = 63, Description = "Number of hands the target has lost in a row")]
 		[DefaultValue("")]
 		[XmlAttribute("consecutiveLosses")]
 		[JsonProperty("consecutiveLosses")]
@@ -141,7 +145,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		//[MarkerCondition(DisplayName = "Said Marker", GroupName = "Add Filter", GroupOrder = 45, Description = "Character has said a marker", ShowPrivate = false, BoundProperties = new string[] { "FilterId" })]
+		[MarkerCondition(DisplayName = "Said Marker", GroupName = "Add Filter", GroupOrder = 45, Description = "Character has said a marker", ShowPrivate = false, BoundProperties = new string[] { "FilterId" })]
 		[DefaultValue("")]
 		[XmlAttribute("saidMarker")]
 		[JsonProperty("saidMarker")]
@@ -151,7 +155,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		//[MarkerCondition(DisplayName = "Saying Marker", GroupName = "Add Filter", GroupOrder = 46, Description = "Character is saying a marker", ShowPrivate = false, BoundProperties = new string[] { "FilterId" })]
+		[MarkerCondition(DisplayName = "Saying Marker", GroupName = "Add Filter", GroupOrder = 46, Description = "Character is saying a marker", ShowPrivate = false, BoundProperties = new string[] { "FilterId" })]
 		[DefaultValue("")]
 		[XmlAttribute("sayingMarker")]
 		[JsonProperty("sayingMarker")]
@@ -161,7 +165,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		//[Marker(DisplayName = "Not Said Marker", GroupName = "Add Filter", GroupOrder = 47, Description = "Character has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "FilterId" })]
+		[Marker(DisplayName = "Not Said Marker", GroupName = "Add Filter", GroupOrder = 47, Description = "Character has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "FilterId" })]
 		[DefaultValue("")]
 		[XmlAttribute("notSaidMarker")]
 		[JsonProperty("notSaidMarker")]
@@ -171,7 +175,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		//[Text(DisplayName = "Saying Text", GroupName = "Add Filter", GroupOrder = 48, Description = "Character is saying some text at this very moment")]
+		[Text(DisplayName = "Saying Text", GroupName = "Add Filter", GroupOrder = 48, Description = "Character is saying some text at this very moment")]
 		[DefaultValue("")]
 		[XmlAttribute("saying")]
 		[JsonProperty("saying")]

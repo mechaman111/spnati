@@ -22,23 +22,19 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			Dictionary<string, HashSet<string>> markers = new Dictionary<string, HashSet<string>>();
 			foreach (Character c in CharacterDatabase.Characters)
 			{
-				var stages = c.Behavior.Stages;
-				foreach (var stage in stages)
+				foreach (Case stageCase in c.Behavior.EnumerateSourceCases())
 				{
-					foreach (var stageCase in stage.Cases)
+					if (!string.IsNullOrEmpty(stageCase.Target) && CharacterDatabase.Exists(stageCase.Target))
 					{
-						if (!String.IsNullOrEmpty(stageCase.Target) && CharacterDatabase.Exists(stageCase.Target))
-						{
-							TrackMarker(markers, stageCase.Target, stageCase.TargetSaidMarker);
-							TrackMarker(markers, stageCase.Target, stageCase.TargetNotSaidMarker);
-							TrackMarker(markers, stageCase.Target, stageCase.TargetSayingMarker);
-						}
-						if (!String.IsNullOrEmpty(stageCase.AlsoPlaying) && CharacterDatabase.Exists(stageCase.AlsoPlaying))
-						{
-							TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingNotSaidMarker);
-							TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingSaidMarker);
-							TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingSayingMarker);
-						}
+						TrackMarker(markers, stageCase.Target, stageCase.TargetSaidMarker);
+						TrackMarker(markers, stageCase.Target, stageCase.TargetNotSaidMarker);
+						TrackMarker(markers, stageCase.Target, stageCase.TargetSayingMarker);
+					}
+					if (!string.IsNullOrEmpty(stageCase.AlsoPlaying) && CharacterDatabase.Exists(stageCase.AlsoPlaying))
+					{
+						TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingNotSaidMarker);
+						TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingSaidMarker);
+						TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingSayingMarker);
 					}
 				}
 			}

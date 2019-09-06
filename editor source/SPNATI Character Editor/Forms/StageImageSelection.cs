@@ -1,4 +1,5 @@
 ﻿using Desktop.Skinning;
+using SPNATI_Character_Editor.Controls;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,138 +11,70 @@ namespace SPNATI_Character_Editor.Forms
 	{
 		private DialogueLine _line;
 		private Character _character;
-		private ImageLibrary _imageLibrary;
+		private Case _workingCase;
 
 		public StageImageSelection()
 		{
 			InitializeComponent();
-			ColClear.Flat = true;
 		}
 		public StageImageSelection(Character character, DialogueLine line, Case workingCase) : this()
 		{
 			_line = line;
 			_character = character;
-			_imageLibrary = ImageLibrary.Get(_character);
+			_workingCase = workingCase;
 
-			foreach (int stage in workingCase.Stages)
+			foreach (StageImage stageImage in line.Images)
 			{
-				DataGridViewRow row = grid.Rows[grid.Rows.Add()];
-				row.Tag = stage;
-				row.Cells[nameof(ColStage)].Value = _character.LayerToStageName(stage);
-
-				UpdateAvailableImages(stage);
-
-				if (_line.StageImages.ContainsKey(stage))
-				{
-					LineImage lineImage = _line.StageImages[stage];
-					string imageKey = lineImage.Image;
-					if (!lineImage.IsGenericImage)
-					{
-						SkinnedDataGridViewComboBoxCell cell = row.Cells[nameof(ColImage)] as SkinnedDataGridViewComboBoxCell;
-						imageKey = DialogueLine.GetStageImage(stage, imageKey);
-						SetImage(cell, imageKey);
-					}
-				}
+				Add(stageImage);
 			}
 		}
 
-		private void UpdateAvailableImages(int stageId)
+		private void Add(StageImage stageImage)
 		{
-			DataGridViewRow row = null;
-			foreach (DataGridViewRow r in grid.Rows)
-			{
-				if ((int)r.Tag == stageId)
-				{
-					row = r;
-					break;
-				}
-			}
-			if (row == null) { return; }
-			SkinnedDataGridViewComboBoxCell cell = row.Cells[ColImage.Index] as SkinnedDataGridViewComboBoxCell;
-			cell.ValueType = typeof(CharacterImage);
-			cell.Items.Clear();
-			List<CharacterImage> images = new List<CharacterImage>();
-			images.AddRange(_imageLibrary.GetImages(stageId));
-			if (Config.UsePrefixlessImages)
-			{
-				foreach (CharacterImage img in _imageLibrary.GetImages(-1))
-				{
-					string file = img.Name;
-					if (!_imageLibrary.FilterImage(_character, file))
-					{
-						images.Add(img);
-					}
-				}
-			}
-			foreach (CharacterImage img in images)
-			{
-				cell.Items.Add(img);
-			}
+			StageImageControl control = new StageImageControl();
+			control.Dock = DockStyle.Top;
+			control.SetData(_character, _workingCase, stageImage);
+			pnlImages.Controls.Add(control);
+			pnlImages.Controls.SetChildIndex(control, 0);
+			control.Delete += Control_Delete;
+			control.Preview += Control_Preview;
 		}
 
-		private void SetImage(SkinnedDataGridViewComboBoxCell cell, string key)
+		private void Control_Delete(object sender, EventArgs e)
 		{
-			string defaultKey = DialogueLine.GetDefaultImage(key);
-			foreach (object item in cell.Items)
-			{
-				CharacterImage image = item as CharacterImage;
-				if (image != null && image.DefaultName == defaultKey)
-				{
-					cell.Value = image;
-					return;
-				}
-			}
+			Control ctl = sender as Control;
+			pnlImages.Controls.Remove(ctl);
 		}
 
-		private void grid_CellEnter(object sender, DataGridViewCellEventArgs e)
+		private void Control_Preview(object sender, UpdateImageArgs e)
 		{
-			if (e.RowIndex == -1)
-				return;
-			DataGridViewRow row = grid.Rows[e.RowIndex];
-			string image = row.Cells[nameof(ColImage)].Value?.ToString();
-			ShowImage(image, (int)row.Tag);
+			ShowImage(e.Pose, e.Stage);
 		}
 
-		private void ShowImage(string image, int stage)
+		private void ShowImage(PoseMapping image, int stage)
 		{
-			CharacterImage img = null;
-			img = _imageLibrary.Find(image);
-			if (img == null)
-			{
-				image = DialogueLine.GetStageImage(stage, DialogueLine.GetDefaultImage(image));
-				img = _imageLibrary.Find(image);
-			}
-			if (img != null)
+			if (image != null)
 			{
 				Desktop.IWorkspace ws = Desktop.Shell.Instance.GetWorkspace(_character);
 				if (ws != null)
 				{
-					ws.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
+					ws.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, stage));
 				}
 			}
 		}
 
 		private void cmdOK_Click(object sender, EventArgs e)
 		{
-			_line.StageImages.Clear();
-			foreach (DataGridViewRow row in grid.Rows)
+			_line.Images.Clear();
+			for(int i = pnlImages.Controls.Count - 1; i >= 0; i--)
 			{
-				CharacterImage img = row.Cells[ColImage.Index].Value as CharacterImage;
-				if (img != null)
+				StageImageControl stageControl = pnlImages.Controls[i] as StageImageControl;
+				if (stageControl != null)
 				{
-					string name = img.Name;
-					if (!img.IsGeneric)
-					{
-						name = DialogueLine.GetDefaultImage(name);
-					}
-					if (name == _line.Image)
-					{
-						continue;
-					}
-					LineImage li = new LineImage(img.Name, img.IsGeneric);
-					_line.StageImages[(int)row.Tag] = li;
+					_line.Images.Add(stageControl.StageImage);
 				}
 			}
+			_line.NotifyPropertyChanged(nameof(_line.Images));
 
 			DialogResult = DialogResult.OK;
 			Close();
@@ -157,77 +90,26 @@ namespace SPNATI_Character_Editor.Forms
 		{
 			e.ThrowException = false;
 		}
-
-		private void grid_CellParsing(object sender, DataGridViewCellParsingEventArgs e)
+		
+		private void tsAdd_Click(object sender, EventArgs e)
 		{
-			if (e.ColumnIndex == ColImage.Index)
+			Add(new StageImage());
+		}
+
+		private void pnlImages_ControlAdded(object sender, ControlEventArgs e)
+		{
+			if (pnlImages.Controls.Count > 1)
 			{
-				SkinnedDataGridViewComboBoxCell cell = grid.Rows[e.RowIndex].Cells[e.ColumnIndex] as SkinnedDataGridViewComboBoxCell;
-				if (cell != null)
-				{
-					object v = e.Value;
-					if (v is string)
-					{
-						string name = v.ToString();
-						foreach (object item in cell.Items)
-						{
-							CharacterImage img = item as CharacterImage;
-							if (img != null && img.Name == name)
-							{
-								e.Value = img;
-								e.ParsingApplied = true;
-								break;
-							}
-						}
-					}
-				}
+				pnlZeroState.Visible = false;
 			}
 		}
 
-		private void grid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+		private void pnlImages_ControlRemoved(object sender, ControlEventArgs e)
 		{
-			if (e.ColumnIndex == ColClear.Index)
+			if (pnlImages.Controls.Count == 1)
 			{
-				Image img = Properties.Resources.Delete;
-				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-				var w = img.Width;
-				var h = img.Height;
-				var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-				var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
-
-				e.Graphics.DrawImage(img, new Rectangle(x, y, w, h));
-				e.Handled = true;
+				pnlZeroState.Visible = true;
 			}
-		}
-
-		private void grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (e.RowIndex >= 0 && e.ColumnIndex == ColClear.Index)
-			{
-				DataGridViewCell cell = grid.Rows[e.RowIndex].Cells[ColImage.Index];
-				cell.Value = null;
-			}
-		}
-
-		private void grid_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-		{
-			SkinnedComboBox cb = e.Control as SkinnedComboBox;
-			if (cb != null)
-			{
-				cb.SelectedIndexChanged -= Cb_SelectedIndexChanged;
-				cb.SelectedIndexChanged += Cb_SelectedIndexChanged;
-			}
-		}
-
-		private void Cb_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			SkinnedComboBox comboBox = sender as SkinnedComboBox;
-			if (grid.SelectedCells.Count == 0)
-			{
-				return;
-			}
-			int stage = (int)grid.SelectedCells[0].OwningRow.Tag;
-			ShowImage(comboBox.SelectedItem?.ToString(), stage);
 		}
 	}
 }

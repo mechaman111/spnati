@@ -1,25 +1,35 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
 using Desktop.CommonControls.PropertyControls;
-using Desktop.DataStructures;
 using Desktop.Reporting;
 using Newtonsoft.Json;
 using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
+	/// <remarks>
+	/// Note: This class breaks from the normal BindableObject usage by storing properties explicitly. This is for performance and memory reasons
+	/// since storing PropertyChanged handlers starts to really add up when you have thousands of these.
+	/// </remarks>
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
-	public class Case : BindableObject, IComparable<Case>, ISliceable
+	public class Case : INotifyPropertyChanged, IPropertyChangedNotifier, IComparable<Case>, ISliceable
 	{
 		private static long s_globalId;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+		public void NotifyPropertyChanged([CallerMemberName] string propName = "")
+		{
+			_conditionHash = 0;
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+		}
 
 		private string _tag;
 		[XmlOrder(0)]
@@ -28,22 +38,35 @@ namespace SPNATI_Character_Editor
 		public string Tag
 		{
 			get { return _tag; }
-			set { if (_tag != value) { _tag = value; NotifyPropertyChanged(nameof(Tag)); } }
+			set { if (_tag != value) { _tag = value; NotifyPropertyChanged(); } }
 		}
+
+		/// <summary>
+		/// This was only used in the preview. StageId is used now, so once characters using it get saved again, this can be deleted later
+		/// </summary>
+		[DefaultValue(0)]
+		[XmlOrder(1)]
+		[XmlAttribute("set")]
+		public int TriggerSet;
 
 		/// <summary>
 		/// Unique case identifier in the format Stage-Id. Unused by the game, but important for the editor
 		/// </summary>
 		[DefaultValue(null)]
-		[XmlOrder(1)]
+		[XmlOrder(2)]
 		[XmlAttribute("id")]
 		public string StageId;
 
+		private int _id;
 		/// <summary>
 		/// ID for a working case. Like the 2nd piece of StageId
 		/// </summary>
 		[XmlIgnore]
-		public int Id;
+		public int Id
+		{
+			get { return _id; }
+			set { if (_id != value) { _id = value; NotifyPropertyChanged(); } }
+		}
 
 		/// <summary>
 		/// Only used with ImportEdits
@@ -64,7 +87,7 @@ namespace SPNATI_Character_Editor
 		public int OneShotId
 		{
 			get { return _oneShotId; }
-			set { if (_oneShotId != value) { _oneShotId = value; NotifyPropertyChanged(nameof(OneShotId)); } }
+			set { if (_oneShotId != value) { _oneShotId = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _target;
@@ -75,7 +98,7 @@ namespace SPNATI_Character_Editor
 		public string Target
 		{
 			get { return _target; }
-			set { if (_target != value) { _target = value; NotifyPropertyChanged(nameof(Target)); } }
+			set { if (_target != value) { _target = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _filter;
@@ -86,7 +109,7 @@ namespace SPNATI_Character_Editor
 		public string Filter
 		{
 			get { return _filter; }
-			set { if (_filter != value) { _filter = value; NotifyPropertyChanged(nameof(Filter)); } }
+			set { if (_filter != value) { _filter = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _hidden;
@@ -97,7 +120,7 @@ namespace SPNATI_Character_Editor
 		public string Hidden
 		{
 			get { return _hidden; }
-			set { if (_hidden != value) { _hidden = value; NotifyPropertyChanged(nameof(Hidden)); } }
+			set { if (_hidden != value) { _hidden = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetStage;
@@ -108,7 +131,7 @@ namespace SPNATI_Character_Editor
 		public string TargetStage
 		{
 			get { return _targetStage; }
-			set { if (_targetStage != value) { _targetStage = value; NotifyPropertyChanged(nameof(TargetStage)); } }
+			set { if (_targetStage != value) { _targetStage = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetLayers;
@@ -119,7 +142,7 @@ namespace SPNATI_Character_Editor
 		public string TargetLayers
 		{
 			get { return _targetLayers; }
-			set { if (_targetLayers != value) { _targetLayers = value; NotifyPropertyChanged(nameof(TargetLayers)); } }
+			set { if (_targetLayers != value) { _targetLayers = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetStartingLayers;
@@ -130,7 +153,7 @@ namespace SPNATI_Character_Editor
 		public string TargetStartingLayers
 		{
 			get { return _targetStartingLayers; }
-			set { if (_targetStartingLayers != value) { _targetStartingLayers = value; NotifyPropertyChanged(nameof(TargetStartingLayers)); } }
+			set { if (_targetStartingLayers != value) { _targetStartingLayers = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetStatus;
@@ -141,7 +164,7 @@ namespace SPNATI_Character_Editor
 		public string TargetStatus
 		{
 			get { return _targetStatus; }
-			set { if (_targetStatus != value) { _targetStatus = value; NotifyPropertyChanged(nameof(TargetStatus)); } }
+			set { if (_targetStatus != value) { _targetStatus = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlaying;
@@ -152,7 +175,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlaying
 		{
 			get { return _alsoPlaying; }
-			set { if (_alsoPlaying != value) { _alsoPlaying = value; NotifyPropertyChanged(nameof(AlsoPlaying)); } }
+			set { if (_alsoPlaying != value) { _alsoPlaying = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingStage;
@@ -163,7 +186,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingStage
 		{
 			get { return _alsoPlayingStage; }
-			set { if (_alsoPlayingStage != value) { _alsoPlayingStage = value; NotifyPropertyChanged(nameof(AlsoPlayingStage)); } }
+			set { if (_alsoPlayingStage != value) { _alsoPlayingStage = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingHand;
@@ -175,7 +198,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingHand
 		{
 			get { return _alsoPlayingHand; }
-			set { if (_alsoPlayingHand != value) { _alsoPlayingHand = value; NotifyPropertyChanged(nameof(AlsoPlayingHand)); } }
+			set { if (_alsoPlayingHand != value) { _alsoPlayingHand = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetHand;
@@ -187,7 +210,7 @@ namespace SPNATI_Character_Editor
 		public string TargetHand
 		{
 			get { return _targetHand; }
-			set { if (_targetHand != value) { _targetHand = value; NotifyPropertyChanged(nameof(TargetHand)); } }
+			set { if (_targetHand != value) { _targetHand = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _hasHand;
@@ -199,7 +222,7 @@ namespace SPNATI_Character_Editor
 		public string HasHand
 		{
 			get { return _hasHand; }
-			set { if (_hasHand != value) { _hasHand = value; NotifyPropertyChanged(nameof(HasHand)); } }
+			set { if (_hasHand != value) { _hasHand = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalMales;
@@ -210,7 +233,7 @@ namespace SPNATI_Character_Editor
 		public string TotalMales
 		{
 			get { return _totalMales; }
-			set { if (_totalMales != value) { _totalMales = value; NotifyPropertyChanged(nameof(TotalMales)); } }
+			set { if (_totalMales != value) { _totalMales = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalFemales;
@@ -221,7 +244,7 @@ namespace SPNATI_Character_Editor
 		public string TotalFemales
 		{
 			get { return _totalFemales; }
-			set { if (_totalFemales != value) { _totalFemales = value; NotifyPropertyChanged(nameof(TotalFemales)); } }
+			set { if (_totalFemales != value) { _totalFemales = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetTimeInStage;
@@ -232,7 +255,7 @@ namespace SPNATI_Character_Editor
 		public string TargetTimeInStage
 		{
 			get { return _targetTimeInStage; }
-			set { if (_targetTimeInStage != value) { _targetTimeInStage = value; NotifyPropertyChanged(nameof(TargetTimeInStage)); } }
+			set { if (_targetTimeInStage != value) { _targetTimeInStage = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingTimeInStage;
@@ -243,7 +266,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingTimeInStage
 		{
 			get { return _alsoPlayingTimeInStage; }
-			set { if (_alsoPlayingTimeInStage != value) { _alsoPlayingTimeInStage = value; NotifyPropertyChanged(nameof(AlsoPlayingTimeInStage)); } }
+			set { if (_alsoPlayingTimeInStage != value) { _alsoPlayingTimeInStage = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _timeInStage;
@@ -254,7 +277,7 @@ namespace SPNATI_Character_Editor
 		public string TimeInStage
 		{
 			get { return _timeInStage; }
-			set { if (_timeInStage != value) { _timeInStage = value; NotifyPropertyChanged(nameof(TimeInStage)); } }
+			set { if (_timeInStage != value) { _timeInStage = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _consecutiveLosses;
@@ -265,7 +288,7 @@ namespace SPNATI_Character_Editor
 		public string ConsecutiveLosses
 		{
 			get { return _consecutiveLosses; }
-			set { if (_consecutiveLosses != value) { _consecutiveLosses = value; NotifyPropertyChanged(nameof(ConsecutiveLosses)); } }
+			set { if (_consecutiveLosses != value) { _consecutiveLosses = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalPlaying;
@@ -276,7 +299,7 @@ namespace SPNATI_Character_Editor
 		public string TotalPlaying
 		{
 			get { return _totalPlaying; }
-			set { if (_totalPlaying != value) { _totalPlaying = value; NotifyPropertyChanged(nameof(TotalPlaying)); } }
+			set { if (_totalPlaying != value) { _totalPlaying = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalExposed;
@@ -287,7 +310,7 @@ namespace SPNATI_Character_Editor
 		public string TotalExposed
 		{
 			get { return _totalExposed; }
-			set { if (_totalExposed != value) { _totalExposed = value; NotifyPropertyChanged(nameof(TotalExposed)); } }
+			set { if (_totalExposed != value) { _totalExposed = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalNaked;
@@ -298,7 +321,7 @@ namespace SPNATI_Character_Editor
 		public string TotalNaked
 		{
 			get { return _totalNaked; }
-			set { if (_totalNaked != value) { _totalNaked = value; NotifyPropertyChanged(nameof(TotalNaked)); } }
+			set { if (_totalNaked != value) { _totalNaked = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalMasturbating;
@@ -309,7 +332,7 @@ namespace SPNATI_Character_Editor
 		public string TotalMasturbating
 		{
 			get { return _totalMasturbating; }
-			set { if (_totalMasturbating != value) { _totalMasturbating = value; NotifyPropertyChanged(nameof(TotalMasturbating)); } }
+			set { if (_totalMasturbating != value) { _totalMasturbating = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalFinished;
@@ -320,7 +343,7 @@ namespace SPNATI_Character_Editor
 		public string TotalFinished
 		{
 			get { return _totalFinished; }
-			set { if (_totalFinished != value) { _totalFinished = value; NotifyPropertyChanged(nameof(TotalFinished)); } }
+			set { if (_totalFinished != value) { _totalFinished = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _totalRounds;
@@ -331,7 +354,7 @@ namespace SPNATI_Character_Editor
 		public string TotalRounds
 		{
 			get { return _totalRounds; }
-			set { if (_totalRounds != value) { _totalRounds = value; NotifyPropertyChanged(nameof(TotalRounds)); } }
+			set { if (_totalRounds != value) { _totalRounds = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _saidMarker;
@@ -342,7 +365,7 @@ namespace SPNATI_Character_Editor
 		public string SaidMarker
 		{
 			get { return _saidMarker; }
-			set { if (_saidMarker != value) { _saidMarker = value; NotifyPropertyChanged(nameof(SaidMarker)); } }
+			set { if (_saidMarker != value) { _saidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _notSaidMarker;
@@ -353,7 +376,7 @@ namespace SPNATI_Character_Editor
 		public string NotSaidMarker
 		{
 			get { return _notSaidMarker; }
-			set { if (_notSaidMarker != value) { _notSaidMarker = value; NotifyPropertyChanged(nameof(NotSaidMarker)); } }
+			set { if (_notSaidMarker != value) { _notSaidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingSaidMarker;
@@ -364,7 +387,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingSaidMarker
 		{
 			get { return _alsoPlayingSaidMarker; }
-			set { if (_alsoPlayingSaidMarker != value) { _alsoPlayingSaidMarker = value; NotifyPropertyChanged(nameof(AlsoPlayingSaidMarker)); } }
+			set { if (_alsoPlayingSaidMarker != value) { _alsoPlayingSaidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingNotSaidMarker;
@@ -375,7 +398,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingNotSaidMarker
 		{
 			get { return _alsoPlayingNotSaidMarker; }
-			set { if (_alsoPlayingNotSaidMarker != value) { _alsoPlayingNotSaidMarker = value; NotifyPropertyChanged(nameof(AlsoPlayingNotSaidMarker)); } }
+			set { if (_alsoPlayingNotSaidMarker != value) { _alsoPlayingNotSaidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingSayingMarker;
@@ -386,7 +409,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingSayingMarker
 		{
 			get { return _alsoPlayingSayingMarker; }
-			set { if (_alsoPlayingSayingMarker != value) { _alsoPlayingSayingMarker = value; NotifyPropertyChanged(nameof(AlsoPlayingSayingMarker)); } }
+			set { if (_alsoPlayingSayingMarker != value) { _alsoPlayingSayingMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _alsoPlayingSaying;
@@ -397,7 +420,7 @@ namespace SPNATI_Character_Editor
 		public string AlsoPlayingSaying
 		{
 			get { return _alsoPlayingSaying; }
-			set { if (_alsoPlayingSaying != value) { _alsoPlayingSaying = value; NotifyPropertyChanged(nameof(AlsoPlayingSaying)); } }
+			set { if (_alsoPlayingSaying != value) { _alsoPlayingSaying = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetSaidMarker;
@@ -408,7 +431,7 @@ namespace SPNATI_Character_Editor
 		public string TargetSaidMarker
 		{
 			get { return _targetSaidMarker; }
-			set { if (_targetSaidMarker != value) { _targetSaidMarker = value; NotifyPropertyChanged(nameof(TargetSaidMarker)); } }
+			set { if (_targetSaidMarker != value) { _targetSaidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetNotSaidMarker;
@@ -419,7 +442,7 @@ namespace SPNATI_Character_Editor
 		public string TargetNotSaidMarker
 		{
 			get { return _targetNotSaidMarker; }
-			set { if (_targetNotSaidMarker != value) { _targetNotSaidMarker = value; NotifyPropertyChanged(nameof(TargetNotSaidMarker)); } }
+			set { if (_targetNotSaidMarker != value) { _targetNotSaidMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetSayingMarker;
@@ -430,7 +453,7 @@ namespace SPNATI_Character_Editor
 		public string TargetSayingMarker
 		{
 			get { return _targetSayingMarker; }
-			set { if (_targetSayingMarker != value) { _targetSayingMarker = value; NotifyPropertyChanged(nameof(TargetSayingMarker)); } }
+			set { if (_targetSayingMarker != value) { _targetSayingMarker = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _targetSaying;
@@ -441,7 +464,7 @@ namespace SPNATI_Character_Editor
 		public string TargetSaying
 		{
 			get { return _targetSaying; }
-			set { if (_targetSaying != value) { _targetSaying = value; NotifyPropertyChanged(nameof(TargetSaying)); } }
+			set { if (_targetSaying != value) { _targetSaying = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _priority;
@@ -451,7 +474,7 @@ namespace SPNATI_Character_Editor
 		public string CustomPriority
 		{
 			get { return _priority; }
-			set { if (_priority != value) { _priority = value; NotifyPropertyChanged(nameof(CustomPriority)); } }
+			set { if (_priority != value) { _priority = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _addCharacterTags;
@@ -461,7 +484,7 @@ namespace SPNATI_Character_Editor
 		public string AddCharacterTags
 		{
 			get { return _addCharacterTags; }
-			set { if (_addCharacterTags != value) { _addCharacterTags = value; NotifyPropertyChanged(nameof(AddCharacterTags)); } }
+			set { if (_addCharacterTags != value) { _addCharacterTags = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _removeCharacterTags;
@@ -471,7 +494,7 @@ namespace SPNATI_Character_Editor
 		public string RemoveCharacterTags
 		{
 			get { return _removeCharacterTags; }
-			set { if (_removeCharacterTags != value) { _removeCharacterTags = value; NotifyPropertyChanged(nameof(RemoveCharacterTags)); } }
+			set { if (_removeCharacterTags != value) { _removeCharacterTags = value; NotifyPropertyChanged(); } }
 		}
 
 		[XmlIgnore]
@@ -518,26 +541,22 @@ namespace SPNATI_Character_Editor
 		[XmlOrder(390)]
 		[XmlElement("condition")]
 		[JsonProperty("counters")]
-		public ObservableCollection<TargetCondition> Conditions
-		{
-			get { return Get<ObservableCollection<TargetCondition>>(); }
-			set { Set(value); }
-		}
+		public List<TargetCondition> Conditions;
 
 		[Expression(DisplayName = "Variable Test (+)", GroupName = "Game", GroupOrder = 5, Description = "Tests the value of a variable. Multiple can be added", BoundProperties = new string[] { "Target", "AlsoPlaying" })]
 		[XmlOrder(400)]
 		[XmlElement("test")]
 		[JsonProperty("tests")]
-		public ObservableCollection<ExpressionTest> Expressions
-		{
-			get { return Get<ObservableCollection<ExpressionTest>>(); }
-			set { Set(value); }
-		}
+		public List<ExpressionTest> Expressions;
+
+		[XmlOrder(405)]
+		[XmlElement("alternative")]
+		public List<Case> AlternativeConditions = new List<Case>();
 
 		[JsonProperty("lines")]
 		[XmlOrder(410)]
 		[XmlElement("state")]
-		public List<DialogueLine> Lines;
+		public List<DialogueLine> Lines = new List<DialogueLine>();
 
 		/// <summary>
 		/// Used for consistently sorting two identical cases
@@ -548,10 +567,20 @@ namespace SPNATI_Character_Editor
 		/// Stages this case appears in
 		/// </summary>
 		[XmlIgnore]
-		public ObservableCollection<int> Stages
+		public List<int> Stages = new List<int>();
+
+		[DefaultValue("")]
+		[XmlAttribute("stage")]
+		public string StageRange
 		{
-			get { return Get<ObservableCollection<int>>(); }
-			set { Set(value); }
+			get
+			{
+				return GUIHelper.ListToString(Stages);
+			}
+			set
+			{
+				Stages = GUIHelper.StringToList(value);
+			}
 		}
 
 		/// <summary>
@@ -564,10 +593,10 @@ namespace SPNATI_Character_Editor
 		{
 			_globalId = s_globalId++;
 			Lines = new List<DialogueLine>();
-			Stages = new ObservableCollection<int>();
-			Conditions = new ObservableCollection<TargetCondition>();
-			Expressions = new ObservableCollection<ExpressionTest>();
-			AlternativeConditions = new ObservableCollection<Case>();
+			Stages = new List<int>();
+			Conditions = new List<TargetCondition>();
+			Expressions = new List<ExpressionTest>();
+			AlternativeConditions = new List<Case>();
 		}
 
 		public Case(string tag) : this()
@@ -599,10 +628,10 @@ namespace SPNATI_Character_Editor
 
 		public string ToConditionsString(bool excludeTarget)
 		{
-			List<string> results = new List<string>();
+			List<string> alternates = new List<string>();
 			foreach (Case alternate in AlternativeConditions)
 			{
-				results.Add(alternate.ToConditionsString(excludeTarget));
+				alternates.Add(alternate.ToConditionsString(false));
 			}
 			List<string> result = new List<string>();
 			if (!string.IsNullOrEmpty(Target) && !excludeTarget)
@@ -745,13 +774,37 @@ namespace SPNATI_Character_Editor
 			{
 				result.Add("(play once)");
 			}
-			results.Add(string.Join(" ", result));
-			string conditions = string.Join(" OR ", results);
-			if (AlternativeConditions.Count > 0)
+			string conditions = string.Join(" ", result);
+			if (alternates.Count > 0)
 			{
-				conditions = "*" + conditions;
+				string alternatesString = string.Join(" OR ", alternates);
+				conditions = $"*{conditions} AND ({alternatesString})";
 			}
 			return conditions;
+		}
+
+		public void ClearConditions()
+		{
+			foreach (MemberInfo field in this.GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance))
+			{
+				if (field.Name == "StageRange" || field.Name == "Tag" || field.Name == "OneShotId" || field.Name == "Id" || field.Name == "StageId" || field.Name == "Hidden")
+				{
+					continue;
+				}
+				if (field.MemberType == MemberTypes.Field || field.MemberType == MemberTypes.Property)
+				{
+					if (field.GetDataType() == typeof(string))
+					{
+						field.SetValue(this, null);
+					}
+					else if (field.GetDataType() == typeof(int))
+					{
+						field.SetValue(this, 0);
+					}
+				}
+			}
+			Conditions.Clear();
+			Expressions.Clear();
 		}
 
 		/// <summary>
@@ -763,6 +816,10 @@ namespace SPNATI_Character_Editor
 			Case copy = new Case();
 			foreach (MemberInfo field in this.GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance))
 			{
+				if (field.Name == "StageRange")
+				{
+					continue;
+				}
 				if (field.MemberType == MemberTypes.Field || field.MemberType == MemberTypes.Property)
 				{
 					if (field.GetDataType() == typeof(string) || field.GetDataType() == typeof(int))
@@ -773,17 +830,24 @@ namespace SPNATI_Character_Editor
 			}
 
 			//Since it's just a shallow collection, need to break references to objects
-			copy.Conditions = new ObservableCollection<TargetCondition>();
+			copy.Conditions = new List<TargetCondition>();
 			foreach (TargetCondition condition in Conditions)
 			{
 				copy.Conditions.Add(condition.Copy());
 			}
 
-			copy.Expressions = new ObservableCollection<ExpressionTest>();
+			copy.Expressions = new List<ExpressionTest>();
 			foreach (ExpressionTest test in Expressions)
 			{
 				copy.Expressions.Add(test.Copy());
 			}
+
+			copy.AlternativeConditions = new List<Case>();
+			foreach (Case alternate in AlternativeConditions)
+			{
+				copy.AlternativeConditions.Add(alternate.Copy());
+			}
+
 			return copy;
 		}
 
@@ -798,11 +862,6 @@ namespace SPNATI_Character_Editor
 			{
 				copy.Lines.Add(Lines[i].Copy());
 			}
-			copy.AlternativeConditions = new ObservableCollection<Case>();
-			foreach (Case alternate in AlternativeConditions)
-			{
-				copy.AlternativeConditions.Add(alternate.Copy());
-			}
 			return copy;
 		}
 
@@ -810,6 +869,10 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (MemberInfo field in this.GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance))
 			{
+				if (field.Name == "StageRange")
+				{
+					continue;
+				}
 				if (field.MemberType == MemberTypes.Field || field.MemberType == MemberTypes.Property)
 				{
 					if (field.GetDataType() == typeof(string) && (string)field.GetValue(this) == "")
@@ -992,12 +1055,8 @@ namespace SPNATI_Character_Editor
 		}
 
 		private int _conditionHash;
-		protected override void OnPropertyChanged(string propName)
-		{
-			_conditionHash = 0;
-		}
 
-		private int GetConditionHash()
+		private int GetConditionHash(bool includePriority)
 		{
 			if (_conditionHash > 0)
 			{
@@ -1038,7 +1097,10 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (AlsoPlayingSaying ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (AddCharacterTags ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (RemoveCharacterTags ?? string.Empty).GetHashCode();
-			hash = (hash * 397) ^ (CustomPriority ?? string.Empty).GetHashCode();
+			if (includePriority)
+			{
+				hash = (hash * 397) ^ (CustomPriority ?? string.Empty).GetHashCode();
+			}
 			hash = (hash * 397) ^ (Hidden ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (OneShotId > 0 ? OneShotId : -1);
 			_conditionHash = hash;
@@ -1075,19 +1137,23 @@ namespace SPNATI_Character_Editor
 			return true;
 		}
 
+		public bool MatchesConditions(Case other)
+		{
+			return MatchesConditions(other, true);
+		}
 		/// <summary>
 		/// Gets whether this case matches the conditions+tag of another, but not necessarily the lines or stages
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
-		public bool MatchesConditions(Case other)
+		public bool MatchesConditions(Case other, bool includePriority)
 		{
 			if (other == this)
 				return true;
 			if (Tag != other.Tag)
 				return false;
 
-			bool sameFilters = (GetConditionHash() == other.GetConditionHash());
+			bool sameFilters = (GetConditionHash(includePriority) == other.GetConditionHash(includePriority));
 			if (!sameFilters)
 				return false;
 
@@ -1163,8 +1229,23 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				return !string.IsNullOrEmpty(Filter) ||
-					Conditions.Any(c => !string.IsNullOrEmpty(c.FilterId));
+				if (!string.IsNullOrEmpty(Filter))
+				{
+					if (CharacterDatabase.GetById(Filter) == null)
+					{
+						return true;
+					}
+				}
+				return Conditions.Any(c =>
+				{
+					bool result = false;
+					if (!string.IsNullOrEmpty(c.FilterId))
+					{
+						Character character = CharacterDatabase.GetById(c.FilterId);
+						result = (character == null);
+					}
+					return result;
+				});
 			}
 		}
 
@@ -1175,16 +1256,20 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				return !string.IsNullOrEmpty(Target) ||
-					 !string.IsNullOrEmpty(AlsoPlaying);
+				bool targeted = !string.IsNullOrEmpty(Target) || !string.IsNullOrEmpty(AlsoPlaying) || (!string.IsNullOrEmpty(Filter) && CharacterDatabase.GetById(Filter) != null);
+				if (!targeted)
+				{
+					foreach (TargetCondition condition in Conditions)
+					{
+						if (!string.IsNullOrEmpty(condition.FilterId))
+						{
+							targeted = true;
+							break;
+						}
+					}
+				}
+				return targeted;
 			}
-		}
-
-		[XmlIgnore]
-		public ObservableCollection<Case> AlternativeConditions
-		{
-			get { return Get<ObservableCollection<Case>>(); }
-			set { Set(value); }
 		}
 
 		public IEnumerable<Case> GetConditionSets()
@@ -1195,7 +1280,6 @@ namespace SPNATI_Character_Editor
 				yield return alternate;
 			}
 		}
-
 
 		/// <summary>
 		/// Gets whether this case has any targeted dialogue that is based on game state
@@ -1223,6 +1307,21 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		public int GetFullHashCode()
+		{
+			int hash = GetConditionHash(true);
+			foreach (var condition in Conditions)
+			{
+				hash = (hash * 397) ^ condition.GetHashCode();
+			}
+			foreach (ExpressionTest expr in Expressions)
+			{
+				hash = (hash * 397) ^ expr.GetHashCode();
+			}
+			hash = (hash * 397) ^ GetLineCode();
+			return hash;
+		}
+
 		/// <summary>
 		/// Gets a unique hash for this combination of conditions
 		/// </summary>
@@ -1230,7 +1329,7 @@ namespace SPNATI_Character_Editor
 		public int GetCode()
 		{
 			int hash = Tag.GetHashCode();
-			hash = (hash * 397) ^ GetConditionHash();
+			hash = (hash * 397) ^ GetConditionHash(true);
 			foreach (var condition in Conditions)
 			{
 				hash = (hash * 397) ^ condition.GetHashCode();
@@ -1258,7 +1357,11 @@ namespace SPNATI_Character_Editor
 
 		public int CompareTo(Case other)
 		{
-			int comparison = Tag.CompareTo(other.Tag);
+			int comparison = 0;
+			if (!string.IsNullOrEmpty(Tag) && !string.IsNullOrEmpty(other.Tag))
+			{
+				comparison = Tag.CompareTo(other.Tag);
+			}
 			if (comparison == 0)
 				comparison = other.GetPriority().CompareTo(GetPriority());
 			if (comparison == 0)
@@ -1443,8 +1546,19 @@ namespace SPNATI_Character_Editor
 				return null; //if I computed the truth table correctly, this should never happen
 			}
 
+			string otherId = CharacterDatabase.GetId(responder);
+			foreach (ExpressionTest test in Expressions)
+			{
+				if (test.GetTarget() == otherId)
+				{
+					ExpressionTest copy = test.Copy();
+					copy.ChangeTarget("self");
+					response.Expressions.Add(copy);
+				}
+			}
+
 			//if no stages have been set, apply it to all
-			Trigger trigger = TriggerDatabase.GetTrigger(response.Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(response.Tag);
 			if (response.Stages.Count == 0)
 			{
 				for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
@@ -1465,7 +1579,13 @@ namespace SPNATI_Character_Editor
 					response.Conditions.Add(cond);
 				}
 			}
-			response.Expressions.AddRange(Expressions);
+			foreach (ExpressionTest test in Expressions)
+			{
+				if (!test.RefersTo(speaker, speaker, Target) && !test.RefersTo(responder, speaker, Target))
+				{
+					response.Expressions.Add(test);
+				}
+			}
 			response.ConsecutiveLosses = ConsecutiveLosses;
 			response.TotalFemales = TotalFemales;
 			response.TotalMales = TotalMales;
@@ -1561,7 +1681,7 @@ namespace SPNATI_Character_Editor
 				string position = Tag.Contains("chest") ? "upper" : "lower";
 
 				//all stages
-				Trigger trigger = TriggerDatabase.GetTrigger(other.Tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(other.Tag);
 				for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
 				{
 					int standardStage = TriggerDatabase.ToStandardStage(responder, i);
@@ -1598,6 +1718,15 @@ namespace SPNATI_Character_Editor
 			other.SaidMarker = TargetSaidMarker;
 			other.NotSaidMarker = TargetNotSaidMarker;
 			other.TimeInStage = TargetTimeInStage;
+			foreach (ExpressionTest test in Expressions)
+			{
+				if (test.GetTarget() == "target")
+				{
+					ExpressionTest copy = test.Copy();
+					copy.ChangeTarget("self");
+					other.Expressions.Add(copy);
+				}
+			}
 		}
 
 		/// <summary>
@@ -1630,7 +1759,7 @@ namespace SPNATI_Character_Editor
 				min = Stages.Min(stage => stage);
 				max = Stages.Max(stage => stage);
 			}
-			Trigger trigger = TriggerDatabase.GetTrigger(Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(Tag);
 			if (TriggerDatabase.ToStandardStage(speaker, min) == trigger.StartStage && TriggerDatabase.ToStandardStage(speaker, max) == trigger.EndStage)
 			{
 				speakerStageRange = null;
@@ -1678,6 +1807,17 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+
+			string id = CharacterDatabase.GetId(speaker);
+			foreach (ExpressionTest test in Expressions)
+			{
+				if (test.GetTarget() == "self")
+				{
+					ExpressionTest copy = test.Copy();
+					copy.ChangeTarget(id);
+					other.Expressions.Add(copy);
+				}
+			}
 		}
 
 		/// <summary>
@@ -1698,7 +1838,7 @@ namespace SPNATI_Character_Editor
 			else
 			{
 				//all stages
-				Trigger trigger = TriggerDatabase.GetTrigger(other.Tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(other.Tag);
 				for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
 				{
 					int stage = TriggerDatabase.ToStandardStage(responder, i);
@@ -1728,7 +1868,7 @@ namespace SPNATI_Character_Editor
 				min = Stages.Min(stage => stage);
 				max = Stages.Max(stage => stage);
 			}
-			Trigger trigger = TriggerDatabase.GetTrigger(Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(Tag);
 			if (TriggerDatabase.ToStandardStage(speaker, min) == trigger.StartStage && TriggerDatabase.ToStandardStage(speaker, max) == trigger.EndStage)
 			{
 				speakerStageRange = null;
@@ -1787,6 +1927,16 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+
+			foreach (ExpressionTest test in Expressions)
+			{
+				if (test.GetTarget() == "self")
+				{
+					ExpressionTest copy = test.Copy();
+					copy.ChangeTarget("target");
+					other.Expressions.Add(copy);
+				}
+			}
 		}
 
 		/// <summary>
@@ -1800,7 +1950,7 @@ namespace SPNATI_Character_Editor
 		{
 			Clothing layer = speaker.Wardrobe[speaker.Layers - stage - 1];
 			string layerType = layer.Type;
-			if (layer.Type == "major" && layer.Position != "both")
+			if (layer.Type == "major" && (string.IsNullOrEmpty(layer.Position) || layer.Position == "upper" || layer.Position == "lower"))
 			{
 				//if this is the last major and there are no importants, treat as important
 				bool foundImportant = false;
@@ -1932,9 +2082,9 @@ namespace SPNATI_Character_Editor
 			{
 				return "game_over_defeat";
 			}
-			else if (Tag == "finishing_masturbating")
+			else if (Tag == "after_masturbating")
 			{
-				return null;
+				return "hand";
 			}
 
 			string tag = Tag;
@@ -1970,15 +2120,15 @@ namespace SPNATI_Character_Editor
 				{
 					return tag;
 				}
-				else if (tag == "opponent_lost")
+				else if (tag == "lost")
 				{
 					return "must_strip";
 				}
-				else if (tag == "opponent_stripping")
+				else if (tag == "stripping")
 				{
 					return "stripping";
 				}
-				else if (tag == "opponent_stripped")
+				else if (tag == "stripped")
 				{
 					return "stripped";
 				}
@@ -2198,7 +2348,7 @@ namespace SPNATI_Character_Editor
 		private bool FilterTargetByCase(IRecord record)
 		{
 			Character character = record as Character;
-			Trigger trigger = TriggerDatabase.GetTrigger(Tag);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(Tag);
 
 			if (character.Key == "human")
 			{
@@ -2288,6 +2438,130 @@ namespace SPNATI_Character_Editor
 		public int GetSliceCount()
 		{
 			return Lines.Count;
+		}
+
+		public void AddStage(int stage)
+		{
+			for (int i = 0; i < Stages.Count; i++)
+			{
+				if (Stages[i] > stage)
+				{
+					Stages.Insert(i, stage);
+					NotifyPropertyChanged(nameof(Stages));
+					return;
+				}
+				else if(Stages[i] == stage)
+				{
+					return;
+				}
+			}
+			Stages.Add(stage);
+			NotifyPropertyChanged(nameof(Stages));
+		}
+
+		public void AddStages(IEnumerable<int> stages)
+		{
+			HashSet<int> current = new HashSet<int>();
+			foreach (int s in Stages)
+			{
+				current.Add(s);
+			}
+			bool modified = false;
+			foreach (int s in stages)
+			{
+				if (!current.Contains(s))
+				{
+					Stages.Add(s);
+					modified = true;
+				}
+			}
+			if (modified)
+			{
+				Stages.Sort();
+				NotifyPropertyChanged(nameof(Stages));
+			}
+		}
+
+		public void AddStageRange(int start, int end)
+		{
+			HashSet<int> current = new HashSet<int>();
+			foreach (int s in Stages)
+			{
+				current.Add(s);
+			}
+			bool modified = false;
+			for (int s = start; s <= end; s++)
+			{
+				if (!current.Contains(s))
+				{
+					Stages.Add(s);
+					modified = true;
+				}
+			}
+			if (modified)
+			{
+				Stages.Sort();
+				NotifyPropertyChanged(nameof(Stages));
+			}
+		}
+
+		public void RemoveStage(int stage)
+		{
+			for (int i = 0; i < Stages.Count; i++)
+			{
+				if (Stages[i] == stage)
+				{
+					Stages.RemoveAt(i);
+					NotifyPropertyChanged(nameof(Stages));
+					return;
+				}
+			}
+		}
+
+		public void ClearStages()
+		{
+			if (Stages.Count > 0)
+			{
+				Stages.Clear();
+				NotifyPropertyChanged(nameof(Stages));
+			}
+		}
+
+		/// <summary>
+		/// Gets a set of all character IDs being targeted by this case
+		/// </summary>
+		/// <returns></returns>
+		public HashSet<string> GetTargets()
+		{
+			HashSet<string> set = new HashSet<string>();
+			if (!string.IsNullOrEmpty(Target))
+			{
+				set.Add(Target);
+			}
+			if (!string.IsNullOrEmpty(AlsoPlaying))
+			{
+				set.Add(AlsoPlaying);
+			}
+			if (!string.IsNullOrEmpty(Filter))
+			{
+				Character c = CharacterDatabase.GetById(Filter);
+				if (c != null)
+				{
+					set.Add(c.FolderName);
+				}
+			}
+			foreach (TargetCondition condition in Conditions)
+			{
+				if (!string.IsNullOrEmpty(condition.FilterId))
+				{
+					Character c = CharacterDatabase.GetById(condition.FilterId);
+					if (c != null)
+					{
+						set.Add(c.FolderName);
+					}
+				}
+			}
+			return set;
 		}
 	}
 

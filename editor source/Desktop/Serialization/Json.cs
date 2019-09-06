@@ -15,6 +15,7 @@ namespace Desktop
 			_settings.TypeNameHandling = TypeNameHandling.Auto;
 			_settings.Formatting = Formatting.Indented;
 			_settings.NullValueHandling = NullValueHandling.Ignore;
+			_settings.Converters.Add(new DateConverter());
 		}
 
 		public static string Serialize(object value)

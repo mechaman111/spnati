@@ -12,7 +12,7 @@ namespace SPNATI_Character_Editor
 
 		public static void LogError(string error)
 		{
-			File.AppendAllText(_filename, string.Format("\r\n{0} - {1}", DateTime.Now, error));
+			File.AppendAllText(Path.Combine(Config.ExecutableDirectory, _filename), string.Format("\r\n{0} - {1}", DateTime.Now, error));
 		}
 	}
 }

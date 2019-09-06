@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
@@ -78,7 +75,14 @@ namespace SPNATI_Character_Editor
 			{
 				if (!Config.DisableWorkflowTracer)
 				{
-					_screens.AddLast(Capture(enmScreenCaptureMode.Window));
+					try
+					{
+						_screens.AddLast(Capture(enmScreenCaptureMode.Window));
+					}
+					catch
+					{
+						Config.DisableWorkflowTracer = true;
+					}
 					if (_screens.Count > TrackedScreens)
 					{
 						_screens.RemoveFirst();

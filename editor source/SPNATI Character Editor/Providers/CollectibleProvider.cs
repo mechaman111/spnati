@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using SPNATI_Character_Editor.DataStructures;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Providers
@@ -11,7 +12,7 @@ namespace SPNATI_Character_Editor.Providers
 
 		public bool AllowsNew { get { return true; } }
 
-		private static List<Collectible> _genericCollectibles = new List<Collectible>();
+		private static ObservableCollection<Collectible> _genericCollectibles = new ObservableCollection<Collectible>();
 
 		public void SetContext(object context)
 		{
@@ -66,7 +67,7 @@ namespace SPNATI_Character_Editor.Providers
 		public List<IRecord> GetRecords(string text)
 		{
 			text = text.ToLower();
-			List<Collectible> source = _genericCollectibles;
+			ObservableCollection<Collectible> source = _genericCollectibles;
 			var list = new List<IRecord>();
 
 			if (_character != null)

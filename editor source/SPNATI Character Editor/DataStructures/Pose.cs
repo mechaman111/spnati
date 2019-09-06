@@ -23,9 +23,6 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("baseHeight")]
 		public string BaseHeight = "1400";
 
-		[XmlIgnore]
-		public CharacterImage ImageLink;
-
 		[XmlElement("sprite")]
 		public List<Sprite> Sprites = new List<Sprite>();
 

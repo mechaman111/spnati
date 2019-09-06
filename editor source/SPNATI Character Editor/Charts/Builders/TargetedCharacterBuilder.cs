@@ -22,16 +22,12 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			foreach (Character c in CharacterDatabase.Characters)
 			{
 				HashSet<string> targets = new HashSet<string>();
-				List<Stage> stages = c.Behavior.Stages;
-				foreach (var stage in stages)
+				foreach (var stageCase in c.Behavior.EnumerateSourceCases())
 				{
-					foreach (var stageCase in stage.Cases)
-					{
-						if (!string.IsNullOrEmpty(stageCase.Target))
-							targets.Add(stageCase.Target);
-						if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
-							targets.Add(stageCase.AlsoPlaying);
-					}
+					if (!string.IsNullOrEmpty(stageCase.Target))
+						targets.Add(stageCase.Target);
+					if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
+						targets.Add(stageCase.AlsoPlaying);
 				}
 				int count = targets.Count;
 				if (count > 0)

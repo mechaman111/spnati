@@ -72,7 +72,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// <summary>
 		/// Gets whether a trigger in the Add menu can be used based on the currently selected node
 		/// </summary>
-		bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger);
+		bool IsTriggerValid(DialogueNode selectedNode, TriggerDefinition trigger);
 
 		/// <summary>
 		/// Hides or unhides a case

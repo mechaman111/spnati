@@ -3,6 +3,7 @@ using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -13,7 +14,6 @@ namespace SPNATI_Character_Editor.Controls
 		private Case _selectedCase;
 		private Stage _selectedStage;
 		private Character _character;
-		private ImageLibrary _imageLibrary;
 		private bool _populatingCase;
 		private int _selectedRow;
 		private IDialogueDropDownControl _markerCtl;
@@ -21,6 +21,7 @@ namespace SPNATI_Character_Editor.Controls
 		private IDialogueDropDownControl _lineCtl;
 		private ToolStripDropDown _lineDropDown;
 		private ToolStripDropDown _activeDropdown;
+		private bool _modifyingLine;
 
 		#region Events
 		public new event EventHandler<KeyEventArgs> KeyDown;
@@ -65,7 +66,7 @@ namespace SPNATI_Character_Editor.Controls
 			_lineCtl = new DialogueAdvancedControl();
 			CreateDropdown(_lineCtl, out _lineDropDown);
 
-			ColImage.ValueType = typeof(CharacterImage);
+			ColImage.ValueType = typeof(PoseMapping);
 
 			_intellisense = new IntellisenseControl();
 			_intellisense.InsertSnippet += _intellisense_InsertSnippet;
@@ -112,7 +113,10 @@ namespace SPNATI_Character_Editor.Controls
 		public void SetStage(Stage stage, HashSet<int> stages)
 		{
 			_selectedStage = stage;
+			_modifyingLine = true;
 			UpdateAvailableImagesForCase(stages, true);
+			HighlightRow?.Invoke(this, GetHighlightedLineIndex());
+			_modifyingLine = false;
 		}
 
 		public void SetData(Character character, Case c)
@@ -127,25 +131,26 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				stages.Add(s);
 			}
-			ImageLibrary library = null;
-			if (character != null)
-			{
-				library = ImageLibrary.Get(character);
-			}
-			SetData(character, stage, c, stages, library);
+			SetData(character, stage, c, stages);
 		}
 
-		public void SetData(Character character, Stage stage, Case c, HashSet<int> selectedStages, ImageLibrary imageLibrary)
+		public void SetData(Character character, Stage stage, Case c, HashSet<int> selectedStages)
 		{
 			HideDropdown();
 			_character = character;
 			_selectedStage = stage;
 			_selectedCase = c;
-			_imageLibrary = imageLibrary;
 			_populatingCase = true;
+
 			for (int i = 0; i < gridDialogue.Rows.Count; i++)
 			{
 				DataGridViewRow row = gridDialogue.Rows[i];
+				DialogueLine line = row.Tag as DialogueLine;
+				if (line != null)
+				{
+					line.PropertyChanged -= Line_PropertyChanged;
+				}
+				row.Tag = null;
 				row.Cells["ColImage"].Value = null;
 			}
 
@@ -153,7 +158,7 @@ namespace SPNATI_Character_Editor.Controls
 
 			//Populate lines
 			gridDialogue.Rows.Clear();
-			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger && _character != null ? _character.StartingLines : _selectedCase.Lines);
+			List<DialogueLine> lines = _selectedCase.Lines;
 			foreach (DialogueLine line in lines)
 			{
 				AddLineToDialogueGrid(line, null);
@@ -166,7 +171,7 @@ namespace SPNATI_Character_Editor.Controls
 		public void Save()
 		{
 			HideDropdown();
-			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger && _character != null ? _character.StartingLines : _selectedCase.Lines);
+			List<DialogueLine> lines = _selectedCase.Lines;
 			if (_character != null)
 			{
 				foreach (DialogueLine line in lines)
@@ -174,13 +179,16 @@ namespace SPNATI_Character_Editor.Controls
 					_character.RemoveMarkerReference(line.Marker);
 				}
 			}
-			lines.Clear();
 			for (int i = 0; i < gridDialogue.Rows.Count; i++)
 			{
 				DialogueLine line = ReadLineFromDialogueGrid(i);
 				if (line != null)
 				{
-					lines.Add(line);
+					if (!_selectedCase.Lines.Contains(line))
+					{
+						_selectedCase.Lines.Add(line);
+						NotifyChange();
+					}
 					_character?.CacheMarker(line.Marker);
 				}
 			}
@@ -200,13 +208,19 @@ namespace SPNATI_Character_Editor.Controls
 		private DialogueLine ReadLineFromDialogueGrid(int rowIndex)
 		{
 			DataGridViewRow row = gridDialogue.Rows[rowIndex];
-			DialogueLine taggedLine = row.Tag as DialogueLine ?? new DialogueLine();
-			CharacterImage pose = row.Cells["ColImage"].Value as CharacterImage;
-			string image = pose?.Name;
+			DialogueLine line = row.Tag as DialogueLine;
+			bool newLine = false;
+			if (line == null)
+			{
+				line = new DialogueLine();
+				row.Tag = line;
+				newLine = true;
+			}
+			PoseMapping pose = row.Cells["ColImage"].Value as PoseMapping;
 			string text = row.Cells["ColText"].Value?.ToString();
 			string markerValue;
 			bool perTarget;
-			string marker = Marker.ExtractPieces(taggedLine.Marker, out markerValue, out perTarget);
+			string marker = Marker.ExtractPieces(line.Marker, out markerValue, out perTarget);
 			marker = row.Cells["ColMarker"].Value?.ToString();
 			if (string.IsNullOrWhiteSpace(marker))
 			{
@@ -223,21 +237,9 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			if (text == null && pose == null)
 				return null;
-			if (pose != null && !pose.IsGeneric)
-			{
-				image = DialogueLine.GetDefaultImage(image);
-			}
-			DialogueLine line = new DialogueLine(image, text);
-			line.StageImages = taggedLine.StageImages;
-			line.IsMarkerPersistent = taggedLine.IsMarkerPersistent;
-			line.Direction = taggedLine.Direction;
-			line.Location = taggedLine.Location;
-			line.Weight = taggedLine.Weight;
-			line.Size = taggedLine.Size;
-			line.Intelligence = taggedLine.Intelligence;
-			line.Label = taggedLine.Label;
-			line.Gender = taggedLine.Gender;
-			line.OneShotId = taggedLine.OneShotId;
+
+			line.Pose = pose;
+			line.Text = text ?? "";
 
 			if (perTarget)
 			{
@@ -265,16 +267,16 @@ namespace SPNATI_Character_Editor.Controls
 				line.Marker = $"{marker}={markerValue}";
 			}
 
-			if (pose != null)
-			{
-				line.IsGenericImage = pose.IsGeneric;
-			}
-
 			Tuple<string, string> collectibleData = row.Cells[nameof(ColTrophy)].Tag as Tuple<string, string>;
 			if (collectibleData != null)
 			{
 				line.CollectibleId = collectibleData.Item1;
 				line.CollectibleValue = collectibleData.Item2;
+			}
+
+			if (newLine)
+			{
+				line.PropertyChanged += Line_PropertyChanged;
 			}
 
 			return line;
@@ -297,26 +299,16 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 
+			bool hasStageImages = _selectedCase.Lines.Find(l => l.Images.Count > 0) != null;
 			int stageId = _selectedStage == null ? 0 : _selectedStage.Id;
 			SkinnedDataGridViewComboBoxColumn col = gridDialogue.Columns["ColImage"] as SkinnedDataGridViewComboBoxColumn;
 			col.Items.Clear();
-			List<CharacterImage> images = new List<CharacterImage>();
+			HashSet<PoseMapping> images = new HashSet<PoseMapping>();
 			if (_character != null)
 			{
 				if (_selectedStage == null)
 				{
-					images.AddRange(_imageLibrary.GetImages(0));
-					if (Config.UsePrefixlessImages)
-					{
-						foreach (CharacterImage img in _imageLibrary.GetImages(-1))
-						{
-							string file = img.Name;
-							if (!_imageLibrary.FilterImage(_character, file))
-							{
-								images.Add(img);
-							}
-						}
-					}
+					images.AddRange(_character.PoseLibrary.GetPoses(0));
 					foreach (var image in images)
 					{
 						col.Items.Add(image);
@@ -324,47 +316,32 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				else
 				{
-					images.AddRange(_imageLibrary.GetImages(stageId));
-					if (Config.UsePrefixlessImages)
+					if (hasStageImages)
 					{
-						foreach (CharacterImage img in _imageLibrary.GetImages(-1))
+						foreach (int selectedStage in _selectedCase.Stages)
 						{
-							string file = img.Name;
-							if (!_imageLibrary.FilterImage(_character, file))
-							{
-								images.Add(img);
-							}
+							images.AddRange(_character.PoseLibrary.GetPoses(selectedStage));
 						}
 					}
-
-					foreach (var image in images)
+					else
 					{
-						string name = DialogueLine.GetDefaultImage(image.Name);
-						//Filter out the ones that don't appear in every selected stage, unless there are stage-specific images, which would result in a blank field
-						bool stageSpecific = _selectedCase.Lines.Find(l => l.StageImages.Count > 0) != null;
+						images.AddRange(_character.PoseLibrary.GetPoses(stageId));
+					}
+					
+					foreach (PoseMapping image in images)
+					{
+						bool isGeneric = image.IsGeneric;
 						bool allExist = true;
-						if (!image.IsGeneric && !stageSpecific)
+						if (!isGeneric && !hasStageImages)
 						{
-							bool custom = name.StartsWith("custom:");
-							string nameWithoutStage = name;
-							if (custom)
-							{
-								nameWithoutStage = DialogueLine.GetDefaultImage(image.Name.Substring(7));
-							}
 							foreach (int stage in selectedStages)
 							{
-								string key = stage + "-" + nameWithoutStage;
-								if (custom)
-								{
-									key = "custom:" + key;
-								}
-								if (_imageLibrary.Find(key) == null)
+								if (!image.ContainsStage(stage))
 								{
 									allExist = false;
 									break;
 								}
 							}
-
 						}
 						if (allExist)
 						{
@@ -401,9 +378,9 @@ namespace SPNATI_Character_Editor.Controls
 					bool found = false;
 					foreach (var item in col.Items)
 					{
-						CharacterImage img = item as CharacterImage;
-						CharacterImage oldImg = values[i] as CharacterImage;
-						if ((oldImg == null && img.DefaultName == values[i]?.ToString()) || (oldImg != null && oldImg.DefaultName == img.DefaultName))
+						PoseMapping img = item as PoseMapping;
+						PoseMapping oldImg = values[i] as PoseMapping;
+						if (oldImg == img)
 						{
 							row.Cells["ColImage"].Value = item;
 							found = true;
@@ -433,6 +410,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void gridDialogue_CellEnter(object sender, DataGridViewCellEventArgs e)
 		{
+			if (_modifyingLine) { return; }
 			SelectRow(e.RowIndex);
 		}
 
@@ -499,7 +477,7 @@ namespace SPNATI_Character_Editor.Controls
 					SkinnedDataGridViewComboBoxCell cell = (SkinnedDataGridViewComboBoxCell)gridDialogue.Rows[e.RowIndex].Cells[e.ColumnIndex];
 					foreach (object item in cell.Items)
 					{
-						if (((CharacterImage)item).DefaultName == e.Value.ToString())
+						if (((PoseMapping)item).DisplayName == e.Value.ToString())
 						{
 							e.Value = item;
 							e.ParsingApplied = true;
@@ -543,6 +521,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void gridDialogue_CellValueChanged(object sender, DataGridViewCellEventArgs e)
 		{
+			if (_modifyingLine) { return; }
 			if (e.ColumnIndex == 0)
 			{
 				SelectRow(e.RowIndex);
@@ -564,7 +543,9 @@ namespace SPNATI_Character_Editor.Controls
 		private void gridDialogue_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
 		{
 			DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
-			row.Tag = new DialogueLine();
+			DialogueLine line = new DialogueLine();
+			line.PropertyChanged += Line_PropertyChanged;
+			row.Tag = line;
 			row.Cells["ColDelete"].ToolTipText = "Delete line";
 			row.Cells["ColTrophy"].ToolTipText = "Unlock collectible";
 			row.Cells[nameof(ColMore)].ToolTipText = "More options";
@@ -581,7 +562,16 @@ namespace SPNATI_Character_Editor.Controls
 			DataGridViewColumn col = gridDialogue.Columns[e.ColumnIndex];
 			if (col == ColDelete)
 			{
-				gridDialogue.Rows.RemoveAt(e.RowIndex);
+				DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
+				if (row != null && !row.IsNewRow)
+				{
+					DialogueLine line = row.Tag as DialogueLine;
+					_selectedCase.Lines.Remove(line);
+					gridDialogue.Rows.RemoveAt(e.RowIndex);
+					NotifyChange();
+					line.PropertyChanged -= Line_PropertyChanged;
+					row.Tag = null;
+				}
 			}
 			else if (col == ColTrophy)
 			{
@@ -665,11 +655,20 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="row"></param>
 		/// <returns></returns>
-		public string GetImage(int index)
+		public PoseMapping GetImage(int index)
 		{
 			DataGridViewRow row = gridDialogue.Rows[index];
-			string image = row.Cells["ColImage"].Value?.ToString();
+			PoseMapping image = row.Cells["ColImage"].Value as PoseMapping;
 			return image;
+		}
+
+		public int GetHighlightedLineIndex()
+		{
+			if (gridDialogue.SelectedCells.Count > 0)
+			{
+				return gridDialogue.SelectedCells[0].RowIndex;
+			}
+			return 0;
 		}
 
 		public DialogueLine GetLine(int index)
@@ -687,9 +686,9 @@ namespace SPNATI_Character_Editor.Controls
 			List<DialogueLine> lines = new List<DialogueLine>();
 			for (int i = 0; i < gridDialogue.Rows.Count; i++)
 			{
-				var line = ReadLineFromDialogueGrid(i);
+				DialogueLine line = ReadLineFromDialogueGrid(i);
 				if (line != null)
-					lines.Add(line);
+					lines.Add(line.Copy());
 			}
 			return lines;
 		}
@@ -701,9 +700,11 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void PasteLines(List<DialogueLine> lines)
 		{
-			foreach (var line in lines)
+			foreach (DialogueLine line in lines)
 			{
-				AddLineToDialogueGrid(line, null);
+				DialogueLine copy = line.Copy();
+				_selectedCase.Lines.Add(copy);
+				AddLineToDialogueGrid(copy, null);
 			}
 		}
 
@@ -713,21 +714,19 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="line">Line to populate the row with</param>
 		private void AddLineToDialogueGrid(DialogueLine line, DataGridViewRow row)
 		{
-			string imageKey = line.Image;
-			if (!line.IsGenericImage && _selectedCase.Stages.Count > 0)
-			{
-				int stage = _selectedCase.Stages[0];
-				if (_selectedStage != null)
-					stage = _selectedStage.Id;
-				imageKey = DialogueLine.GetStageImage(stage, imageKey);
-			}
+			_modifyingLine = true;
+			PoseMapping pose = line.Pose;
 			if (row == null)
 			{
 				row = gridDialogue.Rows[gridDialogue.Rows.Add()];
 			}
-			row.Tag = line;
+			if (row.Tag != line)
+			{
+				line.PropertyChanged += Line_PropertyChanged;
+				row.Tag = line;
+			}
 			SkinnedDataGridViewComboBoxCell imageCell = row.Cells["ColImage"] as SkinnedDataGridViewComboBoxCell;
-			SetImage(imageCell, imageKey);
+			SetImage(imageCell, pose);
 			DataGridViewCell textCell = row.Cells["ColText"];
 			textCell.Value = line.Text;
 
@@ -739,6 +738,18 @@ namespace SPNATI_Character_Editor.Controls
 			
 			row.Cells[nameof(ColTrophy)].Tag = new Tuple<string, string>(line.CollectibleId, line.CollectibleValue);
 			row.Cells[nameof(ColMarkerOptions)].ToolTipText = GetMarkerTooltip(line);
+			_modifyingLine = false;
+		}
+
+		private void Line_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			NotifyChange();
+		}
+
+		private void NotifyChange()
+		{
+			_selectedCase?.NotifyPropertyChanged(nameof(_selectedCase.Lines));
+			_character?.Behavior?.NotifyPropertyChanged("");
 		}
 
 		private string GetMarkerTooltip(DialogueLine line)
@@ -757,14 +768,13 @@ namespace SPNATI_Character_Editor.Controls
 		/// Sets the image cell of a dialogue row
 		/// </summary>
 		/// <param name="cell"></param>
-		/// <param name="key"></param>
-		private void SetImage(SkinnedDataGridViewComboBoxCell cell, string key)
+		/// <param name="pose"></param>
+		private void SetImage(SkinnedDataGridViewComboBoxCell cell, PoseMapping pose)
 		{
-			string defaultKey = DialogueLine.GetDefaultImage(key);
 			foreach (var item in cell.Items)
 			{
-				CharacterImage image = item as CharacterImage;
-				if (image != null && image.DefaultName == defaultKey)
+				PoseMapping image = item as PoseMapping;
+				if (image == pose)
 				{
 					cell.Value = item;
 					return;

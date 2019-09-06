@@ -41,7 +41,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach(string tag in TriggerDatabase.GetTags())
 			{
-				Trigger trigger = TriggerDatabase.GetTrigger(tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
 				Tuple<string, string> tuple = new Tuple<string, string>(trigger.DefaultImage, trigger.DefaultText);
 				_templates[tag] = tuple;
 			}

@@ -67,6 +67,7 @@ namespace SPNATI_Character_Editor.Activities
 				MessageBox.Show(ex.Message, "Failed to Import", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
+
 			List<Case> imports = new List<Case>();
 			List<string> errors = new List<string>();
 			for (int i = 0; i < edits.Count; i++)
@@ -120,18 +121,13 @@ namespace SPNATI_Character_Editor.Activities
 		private void caseEditor_HighlightRow(object sender, int index)
 		{
 			if (_character == null) { return; }
-			string image = caseEditor.GetImage(index);
-			ImageLibrary imageLibrary = ImageLibrary.Get(_character);
-			CharacterImage img = null;
-			img = imageLibrary.Find(image);
-			if (img == null)
+			PoseMapping image = caseEditor.GetImage(index);
+			if (image != null)
 			{
 				Case workingCase = caseEditor.GetCase();
 				int stage = workingCase.Stages[0];
-				image = DialogueLine.GetStageImage(stage, DialogueLine.GetDefaultImage(image));
-				img = imageLibrary.Find(image);
+				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, stage));
 			}
-			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
 		}
 
 		private void cmdImport_Click(object sender, System.EventArgs e)

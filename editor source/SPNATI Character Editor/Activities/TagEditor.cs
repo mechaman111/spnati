@@ -1,7 +1,4 @@
 ﻿using Desktop;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
@@ -109,6 +106,7 @@ namespace SPNATI_Character_Editor.Activities
 		private void SaveTags()
 		{
 			_bindings.SaveIntoCharacter();
+			_character.IsDirty = true;
 		}
 
 		private void toc_SelectedIndexChanged(object sender, System.EventArgs e)

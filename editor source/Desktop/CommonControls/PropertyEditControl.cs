@@ -97,6 +97,10 @@ namespace Desktop.CommonControls
 			if (_list != null)
 			{
 				_list.RemoveAt(Index);
+				if (Data is IPropertyChangedNotifier)
+				{
+					((IPropertyChangedNotifier)Data).NotifyPropertyChanged(Property);
+				}
 			}
 			ParentTable.ModifyingProperty = old;
 		}
@@ -215,6 +219,12 @@ namespace Desktop.CommonControls
 
 		private void ClearBindableData()
 		{
+			object value = GetValue();
+			if (value is INotifyPropertyChanged)
+			{
+				((INotifyPropertyChanged)value).PropertyChanged -= PropertyEditControl_PropertyChanged;
+			}
+
 			if (_bindableData != null)
 			{
 				_bindableData.PropertyChanged -= BindableData_PropertyChanged;
@@ -262,8 +272,22 @@ namespace Desktop.CommonControls
 				}
 			}
 			Data = data;
+
+			object value = GetValue();
+			if (value is INotifyPropertyChanged)
+			{
+				((INotifyPropertyChanged)value).PropertyChanged += PropertyEditControl_PropertyChanged;
+			}
 			PreviewData = previewData;
 			UpdateBinding(false);
+		}
+
+		private void PropertyEditControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (Data is IPropertyChangedNotifier)
+			{
+				((IPropertyChangedNotifier)Data).NotifyPropertyChanged(Property);
+			}
 		}
 
 		public virtual bool IsUpdating

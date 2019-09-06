@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using SPNATI_Character_Editor.Controls;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,6 @@ namespace SPNATI_Character_Editor.Activities
 
 		private Character _character;
 		private CharacterEditorData _editorData;
-		private ImageLibrary _imageLibrary = new ImageLibrary();
 		private Stage _selectedStage;
 		private Case _selectedCase;
 		private FindReplace _findForm;
@@ -86,7 +86,6 @@ namespace SPNATI_Character_Editor.Activities
 
 			caseControl.Activate();
 			_character = c;
-			_imageLibrary = ImageLibrary.Get(c);
 
 			OnSettingsUpdated();
 
@@ -115,7 +114,7 @@ namespace SPNATI_Character_Editor.Activities
 				else if (parameters[0] is Case)
 				{
 					Case jumpCase = parameters[0] as Case;
-					Stage stage = _character.Behavior.Stages[jumpCase.Stages[0]];
+					Stage stage = new Stage(jumpCase.Stages[0]);
 					JumpToLine(stage, jumpCase, null);
 				}
 			}
@@ -206,7 +205,7 @@ namespace SPNATI_Character_Editor.Activities
 		/// <returns></returns>
 		private bool PromptToSave()
 		{
-			if (_character == null)
+			if (_character == null || !_character.IsDirty)
 				return true;
 			DialogResult result = MessageBox.Show(string.Format("Do you wish to save {0} first?", _character), "Save changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 			if (result == DialogResult.Yes)
@@ -263,16 +262,11 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (index == -1)
 				return;
-			string image = caseControl.GetImage(index);
-			CharacterImage img = null;
-			img = _imageLibrary.Find(image);
-			if (img == null)
+			PoseMapping image = caseControl.GetImage(index);
+			if (image != null)
 			{
-				int stage = _selectedStage == null ? 0 : _selectedStage.Id;
-				image = DialogueLine.GetStageImage(stage, DialogueLine.GetDefaultImage(image));
-				img = _imageLibrary.Find(image);
+				DisplayImage(image, caseControl.PreviewStage);
 			}
-			DisplayImage(img);
 
 			DialogueLine line = caseControl.GetLine(index);
 			DisplayText(line);
@@ -287,14 +281,14 @@ namespace SPNATI_Character_Editor.Activities
 		/// Displays an image in the preview box
 		/// </summary>
 		/// <param name="image">Image to display</param>
-		private void DisplayImage(CharacterImage image)
+		private void DisplayImage(PoseMapping image, int stage)
 		{
 			if (_selectedCase != null)
 			{
 				List<string> markers = _selectedCase.GetMarkers();
 				Workspace.SendMessage(WorkspaceMessages.UpdateMarkers, markers);
 			}
-			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, image);
+			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, stage));
 		}
 
 		private void cmdCallOut_Click(object sender, EventArgs e)
@@ -312,8 +306,12 @@ namespace SPNATI_Character_Editor.Activities
 						return;
 					}
 				}
-				Situation line = _editorData.MarkNoteworthy(_selectedCase);
-				Shell.Instance.Launch<Character, SituationEditor>(_character, line);
+				CallOutForm form = new CallOutForm();
+				if (form.ShowDialog() == DialogResult.OK)
+				{
+					Situation line = _editorData.MarkNoteworthy(_selectedCase, form.Priority);
+					Shell.Instance.Launch<Character, SituationEditor>(_character, line);
+				}
 			}
 		}
 

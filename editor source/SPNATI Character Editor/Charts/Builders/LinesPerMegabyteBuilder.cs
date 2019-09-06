@@ -30,7 +30,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 				int lineCount = c.GetUniqueLineCount();
 				if (filesize > 0)
 				{
-					double megabytes = filesize / 1000000.0f;
+					double megabytes = filesize / 1048576.0f;
 					double average = lineCount / megabytes;
 					counts.Add(new Tuple<Character, double>(c, average));
 				}

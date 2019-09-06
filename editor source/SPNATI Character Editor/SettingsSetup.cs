@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using Desktop.Skinning;
+using TinifyAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,13 +23,25 @@ namespace SPNATI_Character_Editor
 			chkHidePrefixlessImages.Checked = Config.UsePrefixlessImages;
 			txtFilter.Text = Config.PrefixFilter;
 			chkAutoBanter.Checked = Config.AutoLoadBanterWizard;
-			chkAutoBackup.Checked = Config.AutoBackupEnabled;
+			chkAutoBackup.Checked = Config.BackupEnabled;
 			chkInitialAdd.Checked = Config.AutoOpenConditions;
 			chkDefaults.Checked = !Config.SuppressDefaults;
 			chkCaseTree.Checked = !Config.UseSimpleTree;
 			chkHideImages.Checked = Config.GetBoolean(Settings.HideImages);
 			chkColorTargets.Checked = Config.ColorTargetedLines;
 			chkWorkflowTracer.Checked = !Config.DisableWorkflowTracer;
+			chkEmptyCases.Checked = !Config.HideEmptyCases;
+			cboImportMethod.Items.Add("Locally (kkl.exe must be running)");
+			cboImportMethod.Items.Add("Remotely (Internet connection required)");
+			cboImportMethod.SelectedIndex = Config.ImportMethod;
+			valFrequency.Value = Config.BackupPeriod;
+			valLifetime.Value = Config.BackupLifeTime;
+			panelSnapshot.Enabled = Config.BackupEnabled;
+			txtTinify.Text = Config.TinifyKey;
+			chkDashboard.Checked = Config.EnableDashboard;
+			chkChecklistSpell.Checked = Config.EnableDashboardSpellCheck;
+			chkChecklistValidation.Checked = Config.EnableDashboardValidation;
+			chkStartDashboard.Checked = Config.StartOnDashboard;
 
 			HashSet<string> pauses = Config.AutoPauseDirectives;
 			foreach (DirectiveDefinition def in Definitions.Instance.Get<DirectiveDefinition>())
@@ -104,7 +117,7 @@ namespace SPNATI_Character_Editor
 			Config.UsePrefixlessImages = chkHidePrefixlessImages.Checked;
 			Config.PrefixFilter = txtFilter.Text;
 			Config.AutoLoadBanterWizard = chkAutoBanter.Checked;
-			Config.AutoBackupEnabled = chkAutoBackup.Checked;
+			Config.BackupEnabled = chkAutoBackup.Checked;
 			Config.AutoOpenConditions = chkInitialAdd.Checked;
 			if (txtKisekae.Text != Config.KisekaeDirectory)
 			{
@@ -118,6 +131,16 @@ namespace SPNATI_Character_Editor
 			Config.UseSimpleTree = !chkCaseTree.Checked;
 			Config.ColorTargetedLines = chkColorTargets.Checked;
 			Config.DisableWorkflowTracer = !chkWorkflowTracer.Checked;
+			Config.HideEmptyCases = !this.chkEmptyCases.Checked;
+			Config.ImportMethod = cboImportMethod.SelectedIndex;
+			CharacterGenerator.SetConverter(Config.ImportMethod);
+			Config.BackupPeriod = (int)valFrequency.Value;
+			Config.BackupLifeTime = (int)valLifetime.Value;
+			Config.TinifyKey = txtTinify.Text;
+			Config.EnableDashboard = chkDashboard.Checked;
+			Config.StartOnDashboard = chkStartDashboard.Checked;
+			Config.EnableDashboardSpellCheck = chkChecklistSpell.Checked;
+			Config.EnableDashboardValidation = chkChecklistValidation.Checked;
 
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)
@@ -227,6 +250,28 @@ namespace SPNATI_Character_Editor
 		{
 			Config.Set(Settings.HideImages, chkHideImages.Checked);
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.ToggleImages);
+		}
+
+		private void cmdVerify_Click(object sender, EventArgs e)
+		{
+			string key = txtTinify.Text;
+			Cursor = Cursors.WaitCursor;
+			try
+			{
+				Tinify.Key = key;
+				Tinify.Validate().Wait();
+				MessageBox.Show($"API key is valid. Remaining compressions this month: {500 - Tinify.CompressionCount}", "Verify Tinify API Key", MessageBoxButtons.OK);
+			}
+			catch (System.Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Verify Tinify API Key", MessageBoxButtons.OK);
+			}
+			Cursor = Cursors.Default;
+		}
+
+		private void chkDashboard_CheckedChanged(object sender, EventArgs e)
+		{
+			chkStartDashboard.Enabled = grpChecklist.Enabled = chkDashboard.Checked;
 		}
 	}
 }

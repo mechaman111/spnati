@@ -8,7 +8,6 @@ namespace SPNATI_Character_Editor.Activities
 	{
 		private Character _selectedCharacter;
 		private Marker _selectedMarker;
-		private ImageLibrary _imageLibrary;
 
 		public MarkerReport()
 		{
@@ -47,16 +46,15 @@ namespace SPNATI_Character_Editor.Activities
 			if (marker == null) { return; }
 			DialogueLine line = marker.Case.Lines[0];
 			int stage = marker.Case.Stages[0];
-			CharacterImage image = _imageLibrary.Find(string.Format("{0}-{1}", stage, line.Image));
-			picPortrait.SetImage(image);
+			picPortrait.SetImage(_selectedCharacter.PoseLibrary.GetPose(line.Image), stage);
 		}
 
 		private void SetCharacter(Character character)
 		{
 			if (character == null)
 				return;
+			picPortrait.SetCharacter(character);
 			_selectedCharacter = character;
-			_imageLibrary = ImageLibrary.Get(character);
 			PopulateMarkers();
 		}
 
@@ -80,7 +78,7 @@ namespace SPNATI_Character_Editor.Activities
 		private void SetMarker(Marker marker)
 		{
 			_selectedMarker = marker;
-			picPortrait.SetImage(null);
+			picPortrait.SetImage(null, -1);
 			PopulateLines();
 		}
 
@@ -99,7 +97,7 @@ namespace SPNATI_Character_Editor.Activities
 					{
 						Case container = workingCase.CopyConditions();
 						container.Lines.Add(line);
-						container.Stages.AddRange(workingCase.Stages);
+						container.AddStages(workingCase.Stages);
 						lstLines.Items.Add(new MarkerItem(container));
 					}
 				}

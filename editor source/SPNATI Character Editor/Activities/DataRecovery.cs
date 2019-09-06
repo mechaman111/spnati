@@ -60,68 +60,6 @@ namespace SPNATI_Character_Editor.Activities
 			LoadSnapshots();
 		}
 
-		private void DeleteOldSnapshots()
-		{
-			const int MaxSnapshots = 10;
-			int count = 0;
-			int nonEligibleCount = 0;
-			if (_character == null) { return; }
-			string dir = Config.GetBackupDirectory(_character);
-			if (!Directory.Exists(dir)) { return; }
-
-			List<string> eligibleForDeletion = new List<string>();
-
-			foreach (string file in Directory.GetFiles(dir))
-			{
-				string name = Path.GetFileName(file);
-				if (!name.StartsWith("behaviour"))
-				{
-					continue;
-				}
-
-				count++;
-
-				FileInfo fi = new FileInfo(file);
-				TimeSpan age = DateTime.Now - fi.LastWriteTime;
-				if (age.TotalDays >= 1)
-				{
-					//anything older than a day is eligible for deletion
-					eligibleForDeletion.Add(file);
-				}
-				else
-				{
-					nonEligibleCount++;
-				}
-			}
-
-			eligibleForDeletion.Sort();
-			int keepCount = Math.Max(0, MaxSnapshots - nonEligibleCount);
-			int amountToDelete = Math.Max(0, eligibleForDeletion.Count - keepCount);
-			for (int i = 0; i < amountToDelete; i++)
-			{
-				string file = eligibleForDeletion[i];
-				string name = Path.GetFileNameWithoutExtension(file);
-				string extension = Path.GetExtension(file);
-				if (extension != ".bak")
-				{
-					continue;
-				}
-				string timestamp = name.Substring("behaviour".Length + 1);
-				foreach (string prefix in new string[] { "behaviour", "meta", "markers", "editor" })
-				{
-					string deleteFile = Path.Combine(dir, $"{prefix}-{timestamp}{extension}");
-					if (File.Exists(deleteFile))
-					{
-						try
-						{
-							File.Delete(deleteFile);
-						}
-						catch { }
-					}
-				}
-			}
-		}
-
 		private void LoadSnapshots()
 		{
 			cmdRecover.Enabled = false;
@@ -134,7 +72,7 @@ namespace SPNATI_Character_Editor.Activities
 			string dir = Config.GetBackupDirectory(_character);
 			if (!Directory.Exists(dir)) { return; }
 
-			DeleteOldSnapshots();
+			List<string> recoveryFiles = new List<string>();
 
 			foreach (string file in Directory.EnumerateFiles(dir))
 			{
@@ -157,40 +95,43 @@ namespace SPNATI_Character_Editor.Activities
 							break;
 						}
 					}
-					if (!valid)
+					if (valid)
 					{
-						continue;
+						recoveryFiles.Add(file);
 					}
+				}
+			}
 
-					string lineCount = "CORRUPTED";
-					string endingCount = "CORRUPTED";
-					string poseCount = "CORRUPTED";
-					Character c = Serialization.ImportXml<Character>(file);
-					if (c != null)
-					{
-						lineCount = c.GetUniqueLineCount().ToString();
-						endingCount = c.Endings.Count.ToString();
-						poseCount = c.Poses.Count.ToString();
-					}
+			recoveryFiles.Sort((string f1, string f2) => File.GetLastWriteTime(f2).CompareTo(File.GetLastWriteTime(f1)));
+			foreach (string file in recoveryFiles)
+			{
+				string filename = Path.GetFileNameWithoutExtension(file);
+				string timestamp = filename.Substring(root.Length + 1);
+				string lineCount = "CORRUPTED";
+				string endingCount = "CORRUPTED";
+				string poseCount = "CORRUPTED";
+				Character c = Serialization.ImportXml<Character>(file);
+				if (c != null)
+				{
+					lineCount = c.GetUniqueLineCount().ToString();
+					endingCount = c.Endings.Count.ToString();
+					poseCount = c.Poses.Count.ToString();
+				}
 
-					ListViewItem item = new ListViewItem(new string[] {
+				ListViewItem item = new ListViewItem(new string[] {
 						DateTime.ParseExact(timestamp, "yyyyMMddHHmmss", null).ToString(),
 						lineCount,
 						endingCount,
 						poseCount,
 					});
-					item.Tag = timestamp;
-					if (lineCount == "CORRUPTED")
-					{
-						item.Tag = null;
-						item.ForeColor = System.Drawing.Color.Red;
-					}
-					lstSnapshots.Items.Add(item);
-
+				item.Tag = timestamp;
+				if (lineCount == "CORRUPTED")
+				{
+					item.Tag = null;
+					item.ForeColor = System.Drawing.Color.Red;
 				}
+				lstSnapshots.Items.Add(item);
 			}
-
-			lstSnapshots.Sorting = SortOrder.Descending;
 		}
 
 		private void lstSnapshots_SelectedIndexChanged(object sender, EventArgs e)

@@ -33,7 +33,7 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				Trigger trigger = TriggerDatabase.GetTrigger(Case.Tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(Case.Tag);
 				return trigger?.Label ?? Case.Tag;
 			}
 		}

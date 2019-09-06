@@ -72,6 +72,9 @@ namespace SPNATI_Character_Editor.Controls
 
 		public override void Save()
 		{
+			//Feeling lazy: Just mark it dirty whenever this activity is visited
+			_wardrobe.IsDirty = true;
+
 			if (gridWardrobe.SelectedCells.Count > 0)
 			{
 				gridWardrobe.EndEdit();

@@ -25,6 +25,7 @@ namespace SPNATI_Character_Editor.Activities
 		private async void LoadData()
 		{
 			await LoadChunk("Triggers", 0, () => TriggerDatabase.Load());
+			await LoadChunk("Backgrounds", 0, () => BackgroundDatabase.Load());
 			await LoadChunk("Tags", 0, () => TagDatabase.Load());
 			await LoadChunk("Variables", 1, () => VariableDatabase.Load());
 			await LoadChunk("Default Dialogue", 1, () => DialogueDatabase.Load());
@@ -108,10 +109,17 @@ namespace SPNATI_Character_Editor.Activities
 								CharacterTag tag = character.Tags[t];
 								tag.Tag = tag.Tag.ToLowerInvariant();
 								character.Tags[t] = tag;
+
+								Tag def = TagDatabase.GetTag(tag.Tag);
+								if (def != null)
+								{
+									TagDatabase.CacheGroup(def, character);
+								}
+
 								if (!string.IsNullOrEmpty(tag.Tag))
 								{
 									TagDatabase.AddTag(tag.Tag);
-								}
+								}								
 							}
 							TagDatabase.AddTag(character.DisplayName, false);
 							for (int l = 0; l < character.Layers; l++)

@@ -13,7 +13,7 @@ namespace SPNATI_Character_Editor
 
 		private void HelpForm_Load(object sender, EventArgs e)
 		{
-			wb.Navigate(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Help", "help.html"));
+			wb.Navigate(Path.Combine(Config.ExecutableDirectory, "Help", "help.html"));
 		}
 	}
 }

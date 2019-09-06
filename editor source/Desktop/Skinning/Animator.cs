@@ -23,6 +23,13 @@ namespace Desktop.Skinning
 			_timer.Tick += _timer_Tick;
 		}
 
+		public void Reset()
+		{
+			_timer.Stop();
+			_progress = 0;
+			Value = 0;
+		}
+
 		public void StartAnimation(AnimationDirection direction)
 		{
 			_direction = direction;

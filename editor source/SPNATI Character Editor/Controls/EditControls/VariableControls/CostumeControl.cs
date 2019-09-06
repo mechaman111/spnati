@@ -64,7 +64,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls.VariableControls
 		protected override void OnSave()
 		{
 			base.OnSave();
-			Expression.Operator = (chkNot.Checked ? "!=" : "==");
+			Expression.Operator = (chkNot.Checked ? "!=" : null);
 			Expression.Value = recCostume.RecordKey;
 		}
 

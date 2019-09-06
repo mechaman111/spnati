@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
@@ -24,6 +25,10 @@ namespace SPNATI_Character_Editor
 		/// Cases that have been called out for targeting.
 		/// </summary>
 		public List<Situation> NoteworthySituations = new List<Situation>();
+
+		[DefaultValue(false)]
+		[XmlElement("reviewed")]
+		public bool ReviewedPriorities;
 
 		[XmlArray("hidden")]
 		[XmlArrayItem("id")]
@@ -92,6 +97,7 @@ namespace SPNATI_Character_Editor
 			{
 				if (workingCase.Id > 0)
 				{
+					NextId = Math.Max(workingCase.Id, NextId);
 					Situation situation = NoteworthySituations.Find(s => s.Id == workingCase.Id);
 					if (situation != null)
 					{
@@ -106,6 +112,21 @@ namespace SPNATI_Character_Editor
 				if (s.Id == 0)
 				{
 					s.LinkedCase = s.LegacyCase;
+					foreach (DialogueLine line in s.LegacyCase.Lines)
+					{
+						line.Pose = _character.PoseLibrary.GetPose(line.Image);
+						if (line.Pose == null)
+						{
+							if (line.Image.StartsWith("custom:"))
+							{
+								line.Pose = _character.PoseLibrary.GetPose("custom:#-" + line.Image.Substring("custom:".Length));
+							}
+							else
+							{
+								line.Pose = _character.PoseLibrary.GetPose("#-" + line.Image);
+							}
+						}
+					}
 				}
 			}
 		}
@@ -168,15 +189,27 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public Situation MarkNoteworthy(Case c)
+		public Situation MarkNoteworthy(Case c, SituationPriority priority)
 		{
 			if (c.Id == 0)
 			{
 				AssignId(c);
 			}
 			Situation line = new Situation(c);
+			line.Priority = priority;
 			NoteworthySituations.Add(line);
+			_character.IsDirty = true;
 			return line;
+		}
+
+		public void LinkSituation(Situation situation, Case c)
+		{
+			AssignId(c);
+			situation.LegacyCase = null;
+			situation.LinkedCase = c;
+			situation.Id = c.Id;
+			situation.MinStage = c.Stages.Min(stage => stage);
+			situation.MaxStage = c.Stages.Max(stage => stage);
 		}
 
 		public void OnBeforeSerialize()
@@ -267,7 +300,7 @@ namespace SPNATI_Character_Editor
 		/// Gives a case a unique ID
 		/// </summary>
 		/// <param name="c"></param>
-		private void AssignId(Case c)
+		public void AssignId(Case c)
 		{
 			if (c.Id > 0) { return; }
 			c.Id = ++NextId;
@@ -281,11 +314,15 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public bool HasResponse(Character opponent, Case opponentCase)
 		{
-			if (opponentCase.Id == 0)
+			return HasResponse(opponent, opponentCase.Id);
+		}
+		public bool HasResponse(Character opponent, int id)
+		{
+			if (id == 0)
 			{
 				return false;
 			}
-			SituationResponse response = Responses.Find(r => r.Opponent == opponent.FolderName && r.OpponentId == opponentCase.Id);
+			SituationResponse response = Responses.Find(r => r.Opponent == opponent.FolderName && r.OpponentId == id);
 			return response != null;
 		}
 
@@ -363,6 +400,7 @@ namespace SPNATI_Character_Editor
 			{
 				_usedFolders.Add(folder);
 			}
+			workingCase.NotifyPropertyChanged(nameof(workingCase.Id));
 		}
 
 		public CaseLabel GetLabel(Case workingCase)
@@ -431,6 +469,11 @@ namespace SPNATI_Character_Editor
 
 			Name = $"Identifying name (ex. {TriggerDatabase.GetLabel(realCase.Tag)})";
 			Description = "Description about what's interesting happening with the character (i.e. why should others target this?)";
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 
 		public void OnAfterDeserialize()

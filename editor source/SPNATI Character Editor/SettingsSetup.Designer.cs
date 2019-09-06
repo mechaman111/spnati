@@ -38,14 +38,18 @@
 			this.label2 = new Desktop.Skinning.SkinnedLabel();
 			this.txtUserName = new Desktop.Skinning.SkinnedTextBox();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.label3 = new Desktop.Skinning.SkinnedLabel();
-			this.valAutoSave = new Desktop.Skinning.SkinnedNumericUpDown();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.chkHidePrefixlessImages = new Desktop.Skinning.SkinnedCheckBox();
-			this.helpAutoSave = new Desktop.Skinning.SkinnedIcon();
 			this.helpIntellisense = new Desktop.Skinning.SkinnedIcon();
 			this.button1 = new Desktop.Skinning.SkinnedIcon();
 			this.chkDefaults = new Desktop.Skinning.SkinnedCheckBox();
+			this.helpAutoSave = new Desktop.Skinning.SkinnedIcon();
+			this.valAutoSave = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.helpFrequency = new Desktop.Skinning.SkinnedIcon();
+			this.valFrequency = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.helpLifetime = new Desktop.Skinning.SkinnedIcon();
+			this.valLifetime = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.txtTinify = new Desktop.Skinning.SkinnedTextBox();
 			this.chkIntellisense = new Desktop.Skinning.SkinnedCheckBox();
 			this.label4 = new Desktop.Skinning.SkinnedLabel();
 			this.txtFilter = new Desktop.Skinning.SkinnedTextBox();
@@ -55,7 +59,18 @@
 			this.cmdBrowseKisekae = new Desktop.Skinning.SkinnedButton();
 			this.txtKisekae = new Desktop.Skinning.SkinnedTextBox();
 			this.label5 = new Desktop.Skinning.SkinnedLabel();
+			this.tabDashboard = new System.Windows.Forms.TabPage();
+			this.grpChecklist = new Desktop.Skinning.SkinnedGroupBox();
+			this.chkChecklistValidation = new Desktop.Skinning.SkinnedCheckBox();
+			this.chkChecklistSpell = new Desktop.Skinning.SkinnedCheckBox();
+			this.chkDashboard = new Desktop.Skinning.SkinnedCheckBox();
+			this.tabImages = new System.Windows.Forms.TabPage();
+			this.cmdVerify = new Desktop.Skinning.SkinnedButton();
+			this.skinnedLabel4 = new Desktop.Skinning.SkinnedLabel();
+			this.cboImportMethod = new Desktop.Skinning.SkinnedComboBox();
+			this.skinnedLabel3 = new Desktop.Skinning.SkinnedLabel();
 			this.tabDialogue = new System.Windows.Forms.TabPage();
+			this.chkEmptyCases = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkColorTargets = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkCaseTree = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkInitialAdd = new Desktop.Skinning.SkinnedCheckBox();
@@ -64,19 +79,32 @@
 			this.tabEpilogues = new System.Windows.Forms.TabPage();
 			this.label6 = new Desktop.Skinning.SkinnedLabel();
 			this.lstPauses = new Desktop.Skinning.SkinnedCheckedListBox();
+			this.tabBackups = new System.Windows.Forms.TabPage();
+			this.panelSnapshot = new Desktop.Skinning.SkinnedPanel();
+			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
+			this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
+			this.chkAutoBackup = new Desktop.Skinning.SkinnedCheckBox();
+			this.label3 = new Desktop.Skinning.SkinnedLabel();
+			this.tabTroubleshoot = new System.Windows.Forms.TabPage();
+			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripSections = new Desktop.Skinning.SkinnedTabStrip();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
-			this.tabTroubleshoot = new System.Windows.Forms.TabPage();
-			this.chkAutoBackup = new Desktop.Skinning.SkinnedCheckBox();
-			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
+			this.chkStartDashboard = new Desktop.Skinning.SkinnedCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).BeginInit();
 			this.tabsSections.SuspendLayout();
 			this.tabGeneral.SuspendLayout();
+			this.tabDashboard.SuspendLayout();
+			this.grpChecklist.SuspendLayout();
+			this.tabImages.SuspendLayout();
 			this.tabDialogue.SuspendLayout();
 			this.tabBanter.SuspendLayout();
 			this.tabEpilogues.SuspendLayout();
-			this.skinnedPanel1.SuspendLayout();
+			this.tabBackups.SuspendLayout();
+			this.panelSnapshot.SuspendLayout();
 			this.tabTroubleshoot.SuspendLayout();
+			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtApplicationDirectory
@@ -182,36 +210,6 @@
 			this.openFileDialog1.FileName = "openFileDialog1";
 			this.openFileDialog1.Filter = "Exe files|*.exe";
 			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
-			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.label3.Location = new System.Drawing.Point(7, 88);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(103, 13);
-			this.label3.TabIndex = 7;
-			this.label3.Text = "Auto-save (minutes):";
-			// 
-			// valAutoSave
-			// 
-			this.valAutoSave.BackColor = System.Drawing.Color.White;
-			this.valAutoSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.valAutoSave.ForeColor = System.Drawing.Color.Black;
-			this.valAutoSave.Location = new System.Drawing.Point(133, 85);
-			this.valAutoSave.Maximum = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-			this.valAutoSave.Name = "valAutoSave";
-			this.valAutoSave.Size = new System.Drawing.Size(45, 20);
-			this.valAutoSave.TabIndex = 5;
-			this.toolTip1.SetToolTip(this.valAutoSave, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
-        "ave.");
-			// 
 			// chkHidePrefixlessImages
 			// 
 			this.chkHidePrefixlessImages.AutoSize = true;
@@ -225,21 +223,6 @@
         "ogue lines.");
 			this.chkHidePrefixlessImages.UseVisualStyleBackColor = true;
 			this.chkHidePrefixlessImages.CheckedChanged += new System.EventHandler(this.chkHideImages_CheckedChanged);
-			// 
-			// helpAutoSave
-			// 
-			this.helpAutoSave.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
-			this.helpAutoSave.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.helpAutoSave.Flat = false;
-			this.helpAutoSave.FlatAppearance.BorderSize = 0;
-			this.helpAutoSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.helpAutoSave.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
-			this.helpAutoSave.Location = new System.Drawing.Point(182, 83);
-			this.helpAutoSave.Name = "helpAutoSave";
-			this.helpAutoSave.Size = new System.Drawing.Size(21, 23);
-			this.helpAutoSave.TabIndex = 6;
-			this.toolTip1.SetToolTip(this.helpAutoSave, "Only characters with your username as the writer can be auto-saved");
-			this.helpAutoSave.UseVisualStyleBackColor = true;
 			// 
 			// helpIntellisense
 			// 
@@ -286,6 +269,117 @@
         "ogue lines.");
 			this.chkDefaults.UseVisualStyleBackColor = true;
 			// 
+			// helpAutoSave
+			// 
+			this.helpAutoSave.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.helpAutoSave.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.helpAutoSave.Flat = false;
+			this.helpAutoSave.FlatAppearance.BorderSize = 0;
+			this.helpAutoSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.helpAutoSave.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.helpAutoSave.Location = new System.Drawing.Point(182, 4);
+			this.helpAutoSave.Name = "helpAutoSave";
+			this.helpAutoSave.Size = new System.Drawing.Size(21, 23);
+			this.helpAutoSave.TabIndex = 9;
+			this.toolTip1.SetToolTip(this.helpAutoSave, "Only characters with your username as the writer can be auto-saved");
+			this.helpAutoSave.UseVisualStyleBackColor = true;
+			// 
+			// valAutoSave
+			// 
+			this.valAutoSave.BackColor = System.Drawing.Color.White;
+			this.valAutoSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valAutoSave.ForeColor = System.Drawing.Color.Black;
+			this.valAutoSave.Location = new System.Drawing.Point(133, 6);
+			this.valAutoSave.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+			this.valAutoSave.Name = "valAutoSave";
+			this.valAutoSave.Size = new System.Drawing.Size(45, 20);
+			this.valAutoSave.TabIndex = 8;
+			this.toolTip1.SetToolTip(this.valAutoSave, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
+        "ave.");
+			// 
+			// helpFrequency
+			// 
+			this.helpFrequency.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.helpFrequency.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.helpFrequency.Flat = false;
+			this.helpFrequency.FlatAppearance.BorderSize = 0;
+			this.helpFrequency.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.helpFrequency.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.helpFrequency.Location = new System.Drawing.Point(180, 1);
+			this.helpFrequency.Name = "helpFrequency";
+			this.helpFrequency.Size = new System.Drawing.Size(21, 23);
+			this.helpFrequency.TabIndex = 13;
+			this.toolTip1.SetToolTip(this.helpFrequency, "\"Whenever a snapshot is created, it will replace any previous snapshot existing w" +
+        "ithin this time period in minutes\"");
+			this.helpFrequency.UseVisualStyleBackColor = true;
+			// 
+			// valFrequency
+			// 
+			this.valFrequency.BackColor = System.Drawing.Color.White;
+			this.valFrequency.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valFrequency.ForeColor = System.Drawing.Color.Black;
+			this.valFrequency.Location = new System.Drawing.Point(131, 3);
+			this.valFrequency.Maximum = new decimal(new int[] {
+            1440,
+            0,
+            0,
+            0});
+			this.valFrequency.Name = "valFrequency";
+			this.valFrequency.Size = new System.Drawing.Size(45, 20);
+			this.valFrequency.TabIndex = 12;
+			this.toolTip1.SetToolTip(this.valFrequency, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
+        "ave.");
+			// 
+			// helpLifetime
+			// 
+			this.helpLifetime.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.helpLifetime.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.helpLifetime.Flat = false;
+			this.helpLifetime.FlatAppearance.BorderSize = 0;
+			this.helpLifetime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.helpLifetime.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.helpLifetime.Location = new System.Drawing.Point(180, 27);
+			this.helpLifetime.Name = "helpLifetime";
+			this.helpLifetime.Size = new System.Drawing.Size(21, 23);
+			this.helpLifetime.TabIndex = 16;
+			this.toolTip1.SetToolTip(this.helpLifetime, "Snapshots older than this will be removed");
+			this.helpLifetime.UseVisualStyleBackColor = true;
+			// 
+			// valLifetime
+			// 
+			this.valLifetime.BackColor = System.Drawing.Color.White;
+			this.valLifetime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valLifetime.ForeColor = System.Drawing.Color.Black;
+			this.valLifetime.Location = new System.Drawing.Point(131, 29);
+			this.valLifetime.Maximum = new decimal(new int[] {
+            365,
+            0,
+            0,
+            0});
+			this.valLifetime.Name = "valLifetime";
+			this.valLifetime.Size = new System.Drawing.Size(45, 20);
+			this.valLifetime.TabIndex = 15;
+			this.toolTip1.SetToolTip(this.valLifetime, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
+        "ave.");
+			// 
+			// txtTinify
+			// 
+			this.txtTinify.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtTinify.BackColor = System.Drawing.Color.White;
+			this.txtTinify.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.txtTinify.ForeColor = System.Drawing.Color.Black;
+			this.txtTinify.Location = new System.Drawing.Point(103, 34);
+			this.txtTinify.Name = "txtTinify";
+			this.txtTinify.Size = new System.Drawing.Size(246, 20);
+			this.txtTinify.TabIndex = 14;
+			this.toolTip1.SetToolTip(this.txtTinify, "This is used for auto-saving. Only characters written by this user will be auto-s" +
+        "aved.");
+			// 
 			// chkIntellisense
 			// 
 			this.chkIntellisense.AutoSize = true;
@@ -327,9 +421,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabsSections.Controls.Add(this.tabGeneral);
+			this.tabsSections.Controls.Add(this.tabDashboard);
+			this.tabsSections.Controls.Add(this.tabImages);
 			this.tabsSections.Controls.Add(this.tabDialogue);
 			this.tabsSections.Controls.Add(this.tabBanter);
 			this.tabsSections.Controls.Add(this.tabEpilogues);
+			this.tabsSections.Controls.Add(this.tabBackups);
 			this.tabsSections.Controls.Add(this.tabTroubleshoot);
 			this.tabsSections.ItemSize = new System.Drawing.Size(25, 100);
 			this.tabsSections.Location = new System.Drawing.Point(101, 27);
@@ -337,7 +434,7 @@
 			this.tabsSections.Multiline = true;
 			this.tabsSections.Name = "tabsSections";
 			this.tabsSections.SelectedIndex = 0;
-			this.tabsSections.Size = new System.Drawing.Size(555, 181);
+			this.tabsSections.Size = new System.Drawing.Size(555, 250);
 			this.tabsSections.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabsSections.TabIndex = 12;
 			// 
@@ -348,19 +445,16 @@
 			this.tabGeneral.Controls.Add(this.cmdBrowseKisekae);
 			this.tabGeneral.Controls.Add(this.txtKisekae);
 			this.tabGeneral.Controls.Add(this.label5);
-			this.tabGeneral.Controls.Add(this.helpAutoSave);
 			this.tabGeneral.Controls.Add(this.cmdBrowse);
 			this.tabGeneral.Controls.Add(this.txtApplicationDirectory);
 			this.tabGeneral.Controls.Add(this.label1);
 			this.tabGeneral.Controls.Add(this.txtUserName);
-			this.tabGeneral.Controls.Add(this.valAutoSave);
 			this.tabGeneral.Controls.Add(this.label2);
-			this.tabGeneral.Controls.Add(this.label3);
 			this.tabGeneral.ForeColor = System.Drawing.Color.Black;
 			this.tabGeneral.Location = new System.Drawing.Point(104, 4);
 			this.tabGeneral.Name = "tabGeneral";
 			this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabGeneral.Size = new System.Drawing.Size(447, 173);
+			this.tabGeneral.Size = new System.Drawing.Size(447, 242);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
 			// 
@@ -368,7 +462,7 @@
 			// 
 			this.chkHideImages.AutoSize = true;
 			this.chkHideImages.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkHideImages.Location = new System.Drawing.Point(10, 111);
+			this.chkHideImages.Location = new System.Drawing.Point(9, 86);
 			this.chkHideImages.Name = "chkHideImages";
 			this.chkHideImages.Size = new System.Drawing.Size(126, 17);
 			this.chkHideImages.TabIndex = 9;
@@ -415,9 +509,144 @@
 			this.label5.TabIndex = 9;
 			this.label5.Text = "KKL.exe location:";
 			// 
+			// tabDashboard
+			// 
+			this.tabDashboard.BackColor = System.Drawing.Color.White;
+			this.tabDashboard.Controls.Add(this.chkStartDashboard);
+			this.tabDashboard.Controls.Add(this.grpChecklist);
+			this.tabDashboard.Controls.Add(this.chkDashboard);
+			this.tabDashboard.ForeColor = System.Drawing.Color.Black;
+			this.tabDashboard.Location = new System.Drawing.Point(104, 4);
+			this.tabDashboard.Name = "tabDashboard";
+			this.tabDashboard.Padding = new System.Windows.Forms.Padding(3);
+			this.tabDashboard.Size = new System.Drawing.Size(447, 242);
+			this.tabDashboard.TabIndex = 7;
+			this.tabDashboard.Text = "Dashboard";
+			// 
+			// grpChecklist
+			// 
+			this.grpChecklist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.grpChecklist.BackColor = System.Drawing.Color.White;
+			this.grpChecklist.Controls.Add(this.chkChecklistValidation);
+			this.grpChecklist.Controls.Add(this.chkChecklistSpell);
+			this.grpChecklist.Location = new System.Drawing.Point(6, 29);
+			this.grpChecklist.Name = "grpChecklist";
+			this.grpChecklist.Size = new System.Drawing.Size(434, 111);
+			this.grpChecklist.TabIndex = 1;
+			this.grpChecklist.TabStop = false;
+			this.grpChecklist.Text = "Checklist";
+			// 
+			// chkChecklistValidation
+			// 
+			this.chkChecklistValidation.AutoSize = true;
+			this.chkChecklistValidation.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkChecklistValidation.Location = new System.Drawing.Point(6, 48);
+			this.chkChecklistValidation.Name = "chkChecklistValidation";
+			this.chkChecklistValidation.Size = new System.Drawing.Size(149, 17);
+			this.chkChecklistValidation.TabIndex = 2;
+			this.chkChecklistValidation.Text = "Check for validation errors";
+			this.chkChecklistValidation.UseVisualStyleBackColor = true;
+			// 
+			// chkChecklistSpell
+			// 
+			this.chkChecklistSpell.AutoSize = true;
+			this.chkChecklistSpell.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkChecklistSpell.Location = new System.Drawing.Point(6, 25);
+			this.chkChecklistSpell.Name = "chkChecklistSpell";
+			this.chkChecklistSpell.Size = new System.Drawing.Size(95, 17);
+			this.chkChecklistSpell.TabIndex = 1;
+			this.chkChecklistSpell.Text = "Check spelling";
+			this.chkChecklistSpell.UseVisualStyleBackColor = true;
+			// 
+			// chkDashboard
+			// 
+			this.chkDashboard.AutoSize = true;
+			this.chkDashboard.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkDashboard.Location = new System.Drawing.Point(6, 6);
+			this.chkDashboard.Name = "chkDashboard";
+			this.chkDashboard.Size = new System.Drawing.Size(114, 17);
+			this.chkDashboard.TabIndex = 0;
+			this.chkDashboard.Text = "Enable Dashboard";
+			this.chkDashboard.UseVisualStyleBackColor = true;
+			this.chkDashboard.CheckedChanged += new System.EventHandler(this.chkDashboard_CheckedChanged);
+			// 
+			// tabImages
+			// 
+			this.tabImages.BackColor = System.Drawing.Color.White;
+			this.tabImages.Controls.Add(this.cmdVerify);
+			this.tabImages.Controls.Add(this.txtTinify);
+			this.tabImages.Controls.Add(this.skinnedLabel4);
+			this.tabImages.Controls.Add(this.cboImportMethod);
+			this.tabImages.Controls.Add(this.skinnedLabel3);
+			this.tabImages.ForeColor = System.Drawing.Color.Black;
+			this.tabImages.Location = new System.Drawing.Point(104, 4);
+			this.tabImages.Name = "tabImages";
+			this.tabImages.Size = new System.Drawing.Size(447, 242);
+			this.tabImages.TabIndex = 6;
+			this.tabImages.Text = "Image Import";
+			// 
+			// cmdVerify
+			// 
+			this.cmdVerify.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdVerify.Background = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.cmdVerify.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdVerify.Flat = true;
+			this.cmdVerify.ForeColor = System.Drawing.Color.Blue;
+			this.cmdVerify.Location = new System.Drawing.Point(355, 32);
+			this.cmdVerify.Name = "cmdVerify";
+			this.cmdVerify.Size = new System.Drawing.Size(67, 23);
+			this.cmdVerify.TabIndex = 15;
+			this.cmdVerify.Text = "Verify";
+			this.cmdVerify.UseVisualStyleBackColor = true;
+			this.cmdVerify.Click += new System.EventHandler(this.cmdVerify_Click);
+			// 
+			// skinnedLabel4
+			// 
+			this.skinnedLabel4.AutoSize = true;
+			this.skinnedLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel4.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel4.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel4.Location = new System.Drawing.Point(3, 37);
+			this.skinnedLabel4.Name = "skinnedLabel4";
+			this.skinnedLabel4.Size = new System.Drawing.Size(93, 13);
+			this.skinnedLabel4.TabIndex = 13;
+			this.skinnedLabel4.Text = "TinyPNG API key:";
+			// 
+			// cboImportMethod
+			// 
+			this.cboImportMethod.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.cboImportMethod.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+			this.cboImportMethod.BackColor = System.Drawing.Color.White;
+			this.cboImportMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboImportMethod.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cboImportMethod.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.cboImportMethod.Location = new System.Drawing.Point(103, 5);
+			this.cboImportMethod.Name = "cboImportMethod";
+			this.cboImportMethod.SelectedIndex = -1;
+			this.cboImportMethod.SelectedItem = null;
+			this.cboImportMethod.Size = new System.Drawing.Size(319, 23);
+			this.cboImportMethod.Sorted = false;
+			this.cboImportMethod.TabIndex = 1;
+			// 
+			// skinnedLabel3
+			// 
+			this.skinnedLabel3.AutoSize = true;
+			this.skinnedLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel3.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel3.Location = new System.Drawing.Point(3, 10);
+			this.skinnedLabel3.Name = "skinnedLabel3";
+			this.skinnedLabel3.Size = new System.Drawing.Size(75, 13);
+			this.skinnedLabel3.TabIndex = 0;
+			this.skinnedLabel3.Text = "Import images:";
+			// 
 			// tabDialogue
 			// 
 			this.tabDialogue.BackColor = System.Drawing.Color.White;
+			this.tabDialogue.Controls.Add(this.chkEmptyCases);
 			this.tabDialogue.Controls.Add(this.chkColorTargets);
 			this.tabDialogue.Controls.Add(this.chkCaseTree);
 			this.tabDialogue.Controls.Add(this.chkDefaults);
@@ -432,9 +661,20 @@
 			this.tabDialogue.Location = new System.Drawing.Point(104, 4);
 			this.tabDialogue.Name = "tabDialogue";
 			this.tabDialogue.Padding = new System.Windows.Forms.Padding(3);
-			this.tabDialogue.Size = new System.Drawing.Size(447, 173);
+			this.tabDialogue.Size = new System.Drawing.Size(447, 242);
 			this.tabDialogue.TabIndex = 1;
 			this.tabDialogue.Text = "Dialogue";
+			// 
+			// chkEmptyCases
+			// 
+			this.chkEmptyCases.AutoSize = true;
+			this.chkEmptyCases.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkEmptyCases.Location = new System.Drawing.Point(6, 166);
+			this.chkEmptyCases.Name = "chkEmptyCases";
+			this.chkEmptyCases.Size = new System.Drawing.Size(158, 17);
+			this.chkEmptyCases.TabIndex = 29;
+			this.chkEmptyCases.Text = "Show optional, empty cases";
+			this.chkEmptyCases.UseVisualStyleBackColor = true;
 			// 
 			// chkColorTargets
 			// 
@@ -477,7 +717,7 @@
 			this.tabBanter.Location = new System.Drawing.Point(104, 4);
 			this.tabBanter.Name = "tabBanter";
 			this.tabBanter.Padding = new System.Windows.Forms.Padding(3);
-			this.tabBanter.Size = new System.Drawing.Size(447, 173);
+			this.tabBanter.Size = new System.Drawing.Size(447, 242);
 			this.tabBanter.TabIndex = 2;
 			this.tabBanter.Text = "Banter Wizard";
 			// 
@@ -502,7 +742,7 @@
 			this.tabEpilogues.Location = new System.Drawing.Point(104, 4);
 			this.tabEpilogues.Name = "tabEpilogues";
 			this.tabEpilogues.Padding = new System.Windows.Forms.Padding(3);
-			this.tabEpilogues.Size = new System.Drawing.Size(447, 173);
+			this.tabEpilogues.Size = new System.Drawing.Size(447, 242);
 			this.tabEpilogues.TabIndex = 3;
 			this.tabEpilogues.Text = "Epilogues";
 			// 
@@ -530,8 +770,112 @@
 			this.lstPauses.FormattingEnabled = true;
 			this.lstPauses.Location = new System.Drawing.Point(6, 23);
 			this.lstPauses.Name = "lstPauses";
-			this.lstPauses.Size = new System.Drawing.Size(120, 124);
+			this.lstPauses.Size = new System.Drawing.Size(120, 184);
 			this.lstPauses.TabIndex = 0;
+			// 
+			// tabBackups
+			// 
+			this.tabBackups.BackColor = System.Drawing.Color.White;
+			this.tabBackups.Controls.Add(this.panelSnapshot);
+			this.tabBackups.Controls.Add(this.chkAutoBackup);
+			this.tabBackups.Controls.Add(this.helpAutoSave);
+			this.tabBackups.Controls.Add(this.valAutoSave);
+			this.tabBackups.Controls.Add(this.label3);
+			this.tabBackups.ForeColor = System.Drawing.Color.Black;
+			this.tabBackups.Location = new System.Drawing.Point(104, 4);
+			this.tabBackups.Name = "tabBackups";
+			this.tabBackups.Padding = new System.Windows.Forms.Padding(3);
+			this.tabBackups.Size = new System.Drawing.Size(447, 242);
+			this.tabBackups.TabIndex = 5;
+			this.tabBackups.Text = "Backups";
+			// 
+			// panelSnapshot
+			// 
+			this.panelSnapshot.Controls.Add(this.valFrequency);
+			this.panelSnapshot.Controls.Add(this.helpLifetime);
+			this.panelSnapshot.Controls.Add(this.skinnedLabel1);
+			this.panelSnapshot.Controls.Add(this.valLifetime);
+			this.panelSnapshot.Controls.Add(this.helpFrequency);
+			this.panelSnapshot.Controls.Add(this.skinnedLabel2);
+			this.panelSnapshot.Location = new System.Drawing.Point(3, 55);
+			this.panelSnapshot.Name = "panelSnapshot";
+			this.panelSnapshot.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.panelSnapshot.Size = new System.Drawing.Size(206, 100);
+			this.panelSnapshot.TabIndex = 18;
+			this.panelSnapshot.TabSide = Desktop.Skinning.TabSide.None;
+			// 
+			// skinnedLabel1
+			// 
+			this.skinnedLabel1.AutoSize = true;
+			this.skinnedLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel1.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel1.Location = new System.Drawing.Point(4, 6);
+			this.skinnedLabel1.Name = "skinnedLabel1";
+			this.skinnedLabel1.Size = new System.Drawing.Size(105, 13);
+			this.skinnedLabel1.TabIndex = 14;
+			this.skinnedLabel1.Text = "Frequency (minutes):";
+			// 
+			// skinnedLabel2
+			// 
+			this.skinnedLabel2.AutoSize = true;
+			this.skinnedLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel2.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel2.Location = new System.Drawing.Point(4, 32);
+			this.skinnedLabel2.Name = "skinnedLabel2";
+			this.skinnedLabel2.Size = new System.Drawing.Size(77, 13);
+			this.skinnedLabel2.TabIndex = 17;
+			this.skinnedLabel2.Text = "Lifetime (days):";
+			// 
+			// chkAutoBackup
+			// 
+			this.chkAutoBackup.AutoSize = true;
+			this.chkAutoBackup.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkAutoBackup.Location = new System.Drawing.Point(9, 32);
+			this.chkAutoBackup.Name = "chkAutoBackup";
+			this.chkAutoBackup.Size = new System.Drawing.Size(176, 17);
+			this.chkAutoBackup.TabIndex = 11;
+			this.chkAutoBackup.Text = "Create data recovery snapshots";
+			this.chkAutoBackup.UseVisualStyleBackColor = true;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.label3.Location = new System.Drawing.Point(6, 9);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(103, 13);
+			this.label3.TabIndex = 10;
+			this.label3.Text = "Auto-save (minutes):";
+			// 
+			// tabTroubleshoot
+			// 
+			this.tabTroubleshoot.BackColor = System.Drawing.Color.White;
+			this.tabTroubleshoot.Controls.Add(this.chkWorkflowTracer);
+			this.tabTroubleshoot.ForeColor = System.Drawing.Color.Black;
+			this.tabTroubleshoot.Location = new System.Drawing.Point(104, 4);
+			this.tabTroubleshoot.Name = "tabTroubleshoot";
+			this.tabTroubleshoot.Padding = new System.Windows.Forms.Padding(3);
+			this.tabTroubleshoot.Size = new System.Drawing.Size(447, 242);
+			this.tabTroubleshoot.TabIndex = 4;
+			this.tabTroubleshoot.Text = "Diagnostics";
+			// 
+			// chkWorkflowTracer
+			// 
+			this.chkWorkflowTracer.AutoSize = true;
+			this.chkWorkflowTracer.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkWorkflowTracer.Location = new System.Drawing.Point(6, 6);
+			this.chkWorkflowTracer.Name = "chkWorkflowTracer";
+			this.chkWorkflowTracer.Size = new System.Drawing.Size(245, 17);
+			this.chkWorkflowTracer.TabIndex = 9;
+			this.chkWorkflowTracer.Text = "Record workflow screenshots for crash reports";
+			this.chkWorkflowTracer.UseVisualStyleBackColor = true;
 			// 
 			// stripSections
 			// 
@@ -544,7 +888,7 @@
 			this.stripSections.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryLight;
 			this.stripSections.ShowAddButton = false;
 			this.stripSections.ShowCloseButton = false;
-			this.stripSections.Size = new System.Drawing.Size(100, 181);
+			this.stripSections.Size = new System.Drawing.Size(100, 250);
 			this.stripSections.StartMargin = 5;
 			this.stripSections.TabControl = this.tabsSections;
 			this.stripSections.TabIndex = 13;
@@ -559,7 +903,7 @@
 			this.skinnedPanel1.Controls.Add(this.cmdCancel);
 			this.skinnedPanel1.Controls.Add(this.cmdOk);
 			this.skinnedPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.skinnedPanel1.Location = new System.Drawing.Point(0, 208);
+			this.skinnedPanel1.Location = new System.Drawing.Point(0, 277);
 			this.skinnedPanel1.Margin = new System.Windows.Forms.Padding(0);
 			this.skinnedPanel1.Name = "skinnedPanel1";
 			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
@@ -567,40 +911,16 @@
 			this.skinnedPanel1.TabIndex = 14;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
-			// tabTroubleshoot
+			// chkStartDashboard
 			// 
-			this.tabTroubleshoot.BackColor = System.Drawing.Color.White;
-			this.tabTroubleshoot.Controls.Add(this.chkWorkflowTracer);
-			this.tabTroubleshoot.Controls.Add(this.chkAutoBackup);
-			this.tabTroubleshoot.ForeColor = System.Drawing.Color.Black;
-			this.tabTroubleshoot.Location = new System.Drawing.Point(104, 4);
-			this.tabTroubleshoot.Name = "tabTroubleshoot";
-			this.tabTroubleshoot.Padding = new System.Windows.Forms.Padding(3);
-			this.tabTroubleshoot.Size = new System.Drawing.Size(447, 173);
-			this.tabTroubleshoot.TabIndex = 4;
-			this.tabTroubleshoot.Text = "Diagnostics";
-			// 
-			// chkAutoBackup
-			// 
-			this.chkAutoBackup.AutoSize = true;
-			this.chkAutoBackup.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkAutoBackup.Location = new System.Drawing.Point(6, 6);
-			this.chkAutoBackup.Name = "chkAutoBackup";
-			this.chkAutoBackup.Size = new System.Drawing.Size(176, 17);
-			this.chkAutoBackup.TabIndex = 8;
-			this.chkAutoBackup.Text = "Create data recovery snapshots";
-			this.chkAutoBackup.UseVisualStyleBackColor = true;
-			// 
-			// chkWorkflowTracer
-			// 
-			this.chkWorkflowTracer.AutoSize = true;
-			this.chkWorkflowTracer.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkWorkflowTracer.Location = new System.Drawing.Point(6, 29);
-			this.chkWorkflowTracer.Name = "chkWorkflowTracer";
-			this.chkWorkflowTracer.Size = new System.Drawing.Size(245, 17);
-			this.chkWorkflowTracer.TabIndex = 9;
-			this.chkWorkflowTracer.Text = "Record workflow screenshots for crash reports";
-			this.chkWorkflowTracer.UseVisualStyleBackColor = true;
+			this.chkStartDashboard.AutoSize = true;
+			this.chkStartDashboard.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkStartDashboard.Location = new System.Drawing.Point(126, 6);
+			this.chkStartDashboard.Name = "chkStartDashboard";
+			this.chkStartDashboard.Size = new System.Drawing.Size(118, 17);
+			this.chkStartDashboard.TabIndex = 2;
+			this.chkStartDashboard.Text = "Start on Dashboard";
+			this.chkStartDashboard.UseVisualStyleBackColor = true;
 			// 
 			// SettingsSetup
 			// 
@@ -608,7 +928,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(657, 238);
+			this.ClientSize = new System.Drawing.Size(657, 307);
 			this.Controls.Add(this.skinnedPanel1);
 			this.Controls.Add(this.stripSections);
 			this.Controls.Add(this.tabsSections);
@@ -621,18 +941,30 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Settings";
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).EndInit();
 			this.tabsSections.ResumeLayout(false);
 			this.tabGeneral.ResumeLayout(false);
 			this.tabGeneral.PerformLayout();
+			this.tabDashboard.ResumeLayout(false);
+			this.tabDashboard.PerformLayout();
+			this.grpChecklist.ResumeLayout(false);
+			this.grpChecklist.PerformLayout();
+			this.tabImages.ResumeLayout(false);
+			this.tabImages.PerformLayout();
 			this.tabDialogue.ResumeLayout(false);
 			this.tabDialogue.PerformLayout();
 			this.tabBanter.ResumeLayout(false);
 			this.tabBanter.PerformLayout();
 			this.tabEpilogues.ResumeLayout(false);
 			this.tabEpilogues.PerformLayout();
-			this.skinnedPanel1.ResumeLayout(false);
+			this.tabBackups.ResumeLayout(false);
+			this.tabBackups.PerformLayout();
+			this.panelSnapshot.ResumeLayout(false);
+			this.panelSnapshot.PerformLayout();
 			this.tabTroubleshoot.ResumeLayout(false);
 			this.tabTroubleshoot.PerformLayout();
+			this.skinnedPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -648,8 +980,6 @@
 		private Desktop.Skinning.SkinnedLabel label2;
 		private Desktop.Skinning.SkinnedTextBox txtUserName;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
-		private Desktop.Skinning.SkinnedLabel label3;
-		private Desktop.Skinning.SkinnedNumericUpDown valAutoSave;
 		private System.Windows.Forms.ToolTip toolTip1;
 		private Desktop.Skinning.SkinnedCheckBox chkIntellisense;
 		private Desktop.Skinning.SkinnedCheckBox chkHidePrefixlessImages;
@@ -658,7 +988,6 @@
 		private Desktop.Skinning.SkinnedTabControl tabsSections;
 		private System.Windows.Forms.TabPage tabGeneral;
 		private System.Windows.Forms.TabPage tabDialogue;
-		private Desktop.Skinning.SkinnedIcon helpAutoSave;
 		private Desktop.Skinning.SkinnedIcon button1;
 		private Desktop.Skinning.SkinnedIcon helpIntellisense;
 		private System.Windows.Forms.TabPage tabBanter;
@@ -678,6 +1007,30 @@
 		private Desktop.Skinning.SkinnedCheckBox chkColorTargets;
 		private System.Windows.Forms.TabPage tabTroubleshoot;
 		private Desktop.Skinning.SkinnedCheckBox chkWorkflowTracer;
+		private System.Windows.Forms.TabPage tabBackups;
+		private Desktop.Skinning.SkinnedIcon helpLifetime;
+		private Desktop.Skinning.SkinnedNumericUpDown valLifetime;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel2;
+		private Desktop.Skinning.SkinnedIcon helpFrequency;
+		private Desktop.Skinning.SkinnedNumericUpDown valFrequency;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel1;
 		private Desktop.Skinning.SkinnedCheckBox chkAutoBackup;
+		private Desktop.Skinning.SkinnedIcon helpAutoSave;
+		private Desktop.Skinning.SkinnedNumericUpDown valAutoSave;
+		private Desktop.Skinning.SkinnedLabel label3;
+		private System.Windows.Forms.TabPage tabImages;
+		private Desktop.Skinning.SkinnedComboBox cboImportMethod;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel3;
+		private Desktop.Skinning.SkinnedCheckBox chkEmptyCases;
+		private Desktop.Skinning.SkinnedPanel panelSnapshot;
+		private Desktop.Skinning.SkinnedButton cmdVerify;
+		private Desktop.Skinning.SkinnedTextBox txtTinify;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel4;
+		private System.Windows.Forms.TabPage tabDashboard;
+		private Desktop.Skinning.SkinnedCheckBox chkDashboard;
+		private Desktop.Skinning.SkinnedGroupBox grpChecklist;
+		private Desktop.Skinning.SkinnedCheckBox chkChecklistValidation;
+		private Desktop.Skinning.SkinnedCheckBox chkChecklistSpell;
+		private Desktop.Skinning.SkinnedCheckBox chkStartDashboard;
 	}
 }
