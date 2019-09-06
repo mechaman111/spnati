@@ -550,7 +550,7 @@ namespace SPNATI_Character_Editor
 		public List<ExpressionTest> Expressions;
 
 		[XmlOrder(405)]
-		[XmlElement("alternate")]
+		[XmlElement("alternative")]
 		public List<Case> AlternativeConditions = new List<Case>();
 
 		[JsonProperty("lines")]

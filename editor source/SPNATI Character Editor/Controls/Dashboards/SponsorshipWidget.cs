@@ -21,7 +21,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 
 		public bool IsVisible()
 		{
-			return true;
+			return TestRequirements.Instance.Lines > 0;
 		}
 
 		public IEnumerator DoWork()
