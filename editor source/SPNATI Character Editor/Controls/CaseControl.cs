@@ -368,6 +368,7 @@ namespace SPNATI_Character_Editor.Controls
 
 			var stages = GetSelectedStages();
 			gridDialogue.SetData(_character, _selectedStage, _selectedCase, stages);
+			UpdateAddCaption();
 
 			PopulateTagsTab();
 

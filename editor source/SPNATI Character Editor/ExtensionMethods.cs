@@ -76,5 +76,18 @@ namespace SPNATI_Character_Editor
 					   color.G.ToString("X2") +
 					   color.B.ToString("X2");
 		}
+
+		public static void Shuffle<T>(this List<T> list)
+		{
+			int n = list.Count;
+			while (n > 1)
+			{
+				n--;
+				int k = _random.Next(n + 1);
+				T value = list[k];
+				list[k] = list[n];
+				list[n] = value;
+			}
+		}
 	}
 }

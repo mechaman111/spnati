@@ -128,6 +128,10 @@ namespace SPNATI_Character_Editor
 						}
 					}
 				}
+				else
+				{
+					//s.LinkedCase = new Case("hand"); //just to prevent null exceptions
+				}
 			}
 		}
 

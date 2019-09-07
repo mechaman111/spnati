@@ -168,6 +168,7 @@ namespace SPNATI_Character_Editor.Activities
 					{
 						foreach (Situation s in data.NoteworthySituations)
 						{
+							if (s.LinkedCase == null && s.LegacyCase == null) { continue; }
 							SituationPriority sitPriority = s.Priority == SituationPriority.None ? SituationPriority.Noteworthy : s.Priority;
 							if (s.Priority == priority)
 							{
@@ -200,7 +201,7 @@ namespace SPNATI_Character_Editor.Activities
 				List<Situation> situations = editorData.NoteworthySituations.Where(s =>
 				{
 					SituationPriority sitPriority = s.Priority == SituationPriority.None ? SituationPriority.Noteworthy : s.Priority;
-					return !suggestions.Contains(s) && (priority == SituationPriority.None || s.Priority == priority);
+					return (s.LegacyCase != null || s.LinkedCase != null) && !suggestions.Contains(s) && (priority == SituationPriority.None || s.Priority == priority);
 				}).ToList();
 				if (situations.Count == 0)
 				{

@@ -46,7 +46,7 @@ namespace SPNATI_Character_Editor.Activities
 			_character = Record as Character;
 			_editorData = CharacterDatabase.GetEditorData(_character);
 
-			foreach(SituationPriority priority in Enum.GetValues(typeof(SituationPriority)))
+			foreach (SituationPriority priority in Enum.GetValues(typeof(SituationPriority)))
 			{
 				if (_priorities.ContainsKey(priority))
 				{
@@ -110,7 +110,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private DataGridViewRow BuildLine(Situation line)
 		{
-			DataGridViewRow row = gridCases.Rows[gridCases.Rows.Add(line.Name, line.Description, "", line.GetStageString(), line.LinkedCase.ToString())];
+			DataGridViewRow row = gridCases.Rows[gridCases.Rows.Add(line.Name, line.Description, "", line.GetStageString(), line.LinkedCase?.ToString())];
 			SituationPriority priority = line.Priority;
 			if (priority == SituationPriority.None)
 			{
@@ -242,7 +242,7 @@ namespace SPNATI_Character_Editor.Activities
 						//linker.SetData(_character, situation);
 						//linker.ShowDialog();
 					}
-					else
+					else if (situation.LinkedCase != null)
 					{
 						Shell.Instance.Launch<Character, DialogueEditor>(_character, new ValidationContext(new Stage(situation.LinkedCase.Stages[0]), situation.LinkedCase, null));
 					}
