@@ -136,7 +136,14 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					DoNextTask();
 				};
-				Invoke(invoker);
+				try
+				{
+					if (!IsDisposed)
+					{
+						Invoke(invoker);
+					}
+				}
+				catch { }
 			}
 		}
 
