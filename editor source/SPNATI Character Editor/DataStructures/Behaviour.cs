@@ -336,6 +336,7 @@ namespace SPNATI_Character_Editor
 					foreach (Case alternative in triggerCase.AlternativeConditions)
 					{
 						alternative.Tag = null;
+						alternative.Lines.Clear();
 					}
 
 					foreach (DialogueLine line in triggerCase.Lines)

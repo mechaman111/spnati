@@ -158,13 +158,16 @@ namespace SPNATI_Character_Editor.Controls
 
 			//Populate lines
 			gridDialogue.Rows.Clear();
-			List<DialogueLine> lines = _selectedCase.Lines;
-			foreach (DialogueLine line in lines)
+			if (_selectedCase != null)
 			{
-				AddLineToDialogueGrid(line, null);
+				List<DialogueLine> lines = _selectedCase.Lines;
+				foreach (DialogueLine line in lines)
+				{
+					AddLineToDialogueGrid(line, null);
+				}
+				if (lines.Count > 0)
+					SelectRow(0);
 			}
-			if (lines.Count > 0)
-				SelectRow(0);
 			_populatingCase = false;
 		}
 
@@ -288,6 +291,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="retainValue"></param>
 		public void UpdateAvailableImagesForCase(HashSet<int> selectedStages, bool retainValue)
 		{
+			if (_selectedCase == null) { return; }
 			List<object> values = new List<object>();
 			if (retainValue)
 			{

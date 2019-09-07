@@ -8,6 +8,7 @@ using SPNATI_Character_Editor.Workspaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -112,8 +113,10 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 					yield return delay;
 				}
 
-				grpChecklist.Shield();
-				CheckUntargeted();
+				foreach (int delay in CheckUntargeted())
+				{
+					yield return delay;
+				}
 			}
 
 			if (tasks.Count == 0)
@@ -376,7 +379,11 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 
 		private IEnumerable<int> CheckMustTargets()
 		{
-			foreach (Character c in CharacterDatabase.Characters)
+			const int Threshold = 20;
+			int count = 0;
+			List<Character> characters = CharacterDatabase.Characters.ToList();
+			characters.Shuffle();
+			foreach (Character c in characters)
 			{
 				if (c.FolderName == "human" || c == _character)
 				{
@@ -395,17 +402,24 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 						}
 					}
 				}
-				yield return 50;
+				if (count >= Threshold)
+				{
+					count = 0;
+					yield return 50;
+				}
 			}
 			yield break;
 		}
 
-		private void CheckUntargeted()
+		private IEnumerable<int> CheckUntargeted()
 		{
+			const int Threshold = 20;
 			CharacterHistory history = CharacterHistory.Get(_character, false);
 			LineWork current = history.Current;
-			List<Character> untargetedCharacters = new List<Character>();
-			foreach (Character c in CharacterDatabase.Characters)
+			List<Character> characters = CharacterDatabase.Characters.ToList();
+			characters.Shuffle();
+			int count = 0;
+			foreach (Character c in characters)
 			{
 				if (c == _character || c.FolderName == "human") { continue; }
 				CharacterEditorData editorData = CharacterDatabase.GetEditorData(c);
@@ -423,7 +437,13 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 					message += $", but you haven't written anything to acknowledge their existence.\r\n\r\n" +
 						$"Use the Writing Aid to write a line towards {c}.";
 					AddTask($"{c} is feeling neglected", message, typeof(WritingAid), c);
-					return;
+					yield break;
+				}
+				count++;
+				if (count >= Threshold)
+				{
+					count = 0;
+					yield return 20;
 				}
 			}
 		}
