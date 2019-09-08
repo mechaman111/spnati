@@ -995,6 +995,11 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(TotalRounds))
 				totalPriority += 10;
 
+			if (AlternativeConditions.Count > 0)
+			{
+				totalPriority += (int)AlternativeConditions.Average(c => c.GetPriority());
+			}
+
 			return totalPriority;
 		}
 
@@ -1236,7 +1241,7 @@ namespace SPNATI_Character_Editor
 						return true;
 					}
 				}
-				return Conditions.Any(c =>
+				bool filtered = Conditions.Any(c =>
 				{
 					bool result = false;
 					if (!string.IsNullOrEmpty(c.FilterId))
@@ -1246,6 +1251,11 @@ namespace SPNATI_Character_Editor
 					}
 					return result;
 				});
+				if (!filtered)
+				{
+					filtered = AlternativeConditions.Any(a => a.HasFilters);
+				}
+				return filtered;
 			}
 		}
 
@@ -1265,6 +1275,16 @@ namespace SPNATI_Character_Editor
 						{
 							targeted = true;
 							break;
+						}
+					}
+				}
+				if (!targeted)
+				{
+					foreach (Case alternative in AlternativeConditions)
+					{
+						if (alternative.HasTargetedConditions)
+						{
+							return true;
 						}
 					}
 				}
@@ -2560,6 +2580,18 @@ namespace SPNATI_Character_Editor
 						set.Add(c.FolderName);
 					}
 				}
+				if (!string.IsNullOrEmpty(condition.FilterTag))
+				{
+					Character c = CharacterDatabase.GetById(condition.FilterTag);
+					if (c != null)
+					{
+						set.Add(c.FolderName);
+					}
+				}
+			}
+			foreach (Case c in AlternativeConditions)
+			{
+				set.AddRange(c.GetTargets());
 			}
 			return set;
 		}

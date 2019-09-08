@@ -5,6 +5,28 @@ namespace Desktop.Skinning
 {
 	public class SkinnedGroupBox : GroupBox, ISkinControl, ISkinnedPanel
 	{
+		private Image _image;
+		public Image Image
+		{
+			get { return _image; }
+			set
+			{
+				_image = value;
+				Invalidate();
+			}
+		}
+
+		private SkinnedHighlight _highlight = SkinnedHighlight.Heading;
+		public SkinnedHighlight Highlight
+		{
+			get { return _highlight; }
+			set
+			{
+				_highlight = value;
+				Invalidate();
+			}
+		}
+
 		public SkinnedBackgroundType PanelType
 		{
 			get { return SkinnedBackgroundType.Surface; }
@@ -38,11 +60,21 @@ namespace Desktop.Skinning
 				g.DrawLine(shadow, ClientRectangle.X, rect.Bottom + 1, rect.Right, rect.Bottom + 1);
 			}
 
+			if (Image != null)
+			{
+				g.DrawImage(Image, ClientRectangle.Left + 4, ClientRectangle.Top + 4);
+			}
+
 			string text = Text;
 			Font font = Skin.HeaderFont;
 			SizeF textSize = g.MeasureString(text, font);
-			RectangleF textRect = new RectangleF(ClientRectangle.Left + 4, ClientRectangle.Top + 1, textSize.Width, textSize.Height);
-			using (Brush textBrush = new SolidBrush(Enabled ? skin.PrimaryForeColor : skin.Surface.DisabledForeColor))
+			RectangleF textRect = new RectangleF(ClientRectangle.Left + 4 + (Image == null ? 0 : Image.Width), ClientRectangle.Top + 1, textSize.Width, textSize.Height);
+			Color textColor = Enabled ? skin.PrimaryForeColor : skin.Surface.DisabledForeColor;
+			if (Enabled && Highlight != SkinnedHighlight.Heading)
+			{
+				textColor = skin.GetHighlightColor(Highlight);
+			}
+			using (Brush textBrush = new SolidBrush(textColor))
 			{
 				using (Brush back = new SolidBrush(BackColor))
 				{

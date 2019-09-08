@@ -14,7 +14,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6",
 			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2", "v4.0b", "v4.0.1b", "v4.0.2b", "v4.0.3b", "v4.0", "v4.1", "v4.2", "v4.2.1", "v4.3", "v4.4b", "v5.0b", "v5.0",
-			"v5.1", "v5.1.1" };
+			"v5.1", "v5.1.1", "v5.2" };
 
 		/// <summary>
 		/// Current Version
@@ -302,7 +302,10 @@ namespace SPNATI_Character_Editor
 			get { return GetString(Settings.UserName); }
 			set
 			{
-				Shell.Instance.Description = value;
+				if (Shell.Instance != null)
+				{
+					Shell.Instance.Description = value;
+				}
 				Set(Settings.UserName, value);
 			}
 		}
@@ -581,7 +584,7 @@ namespace SPNATI_Character_Editor
 			{
 				return false;
 			}
-			string[] names = name.Split(',');
+			string[] names = name.Split(',', '&');
 			foreach (string n in names)
 			{
 				if (n.Trim().ToLower() == userName)
@@ -589,6 +592,7 @@ namespace SPNATI_Character_Editor
 					return true;
 				}
 			}
+
 			return false;
 		}
 	}

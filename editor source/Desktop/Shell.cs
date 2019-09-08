@@ -37,6 +37,7 @@ namespace Desktop
 		private Dictionary<Type, int> _activityWidthMap;
 		private Dictionary<IWorkspace, WorkspaceControl> _workspaces = new Dictionary<IWorkspace, WorkspaceControl>();
 		private Dictionary<IWorkspace, TabPage> _tabs = new Dictionary<IWorkspace, TabPage>();
+		private Toaster _toaster = new Toaster();
 		public IWorkspace ActiveWorkspace;
 		public IActivity ActiveActivity;
 		public IActivity ActiveSidebarActivity;
@@ -874,6 +875,18 @@ namespace Desktop
 		{
 			SubActionClick?.Invoke(this, e);
 		}
+
+		#region Toaster
+		public void ShowToast(string caption, string text, Image icon = null, SkinnedHighlight highlight = SkinnedHighlight.Heading)
+		{
+			Toast toast = new Toast(caption, text)
+			{
+				Highlight =  highlight,
+				Icon = icon,
+			};
+			_toaster.ShowToast(toast);
+		}
+		#endregion
 	}
 
 	public enum WorkspacePane

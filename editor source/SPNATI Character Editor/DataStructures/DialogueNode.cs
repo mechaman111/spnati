@@ -161,7 +161,12 @@ namespace SPNATI_Character_Editor
 				{
 					return "*" + Case.CustomPriority;
 				}
-				return Case.GetPriority().ToString();
+				string priority = Case.GetPriority().ToString();
+				if (Case.AlternativeConditions.Count > 0)
+				{
+					priority = "≈" + priority;
+				}
+				return priority;
 			}
 		}
 

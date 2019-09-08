@@ -117,7 +117,26 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_character != null)
 			{
-				lblLinesOfDialogue.Text = $"Unique lines: {(_character.Behavior.UniqueLines.ToString())}";
+				CharacterHistory history = CharacterHistory.Get(_character, true);
+				if (history == null)
+				{
+					lblLinesOfDialogue.Text = $"Unique lines: {(_character.Behavior.UniqueLines.ToString())}";
+				}
+				else
+				{
+					//check goals
+					if (history.DailyGoal > 0 && !history.BannerDisplayedToday)
+					{
+						int linesAdded = history.Current.TotalLines - history.Previous.TotalLines;
+						if (linesAdded >= history.DailyGoal)
+						{
+							history.MarkBannerAsDisplayed();
+							Shell.Instance.ShowToast("Daily Goal Met!", "You've written your target number of lines for the day.", Properties.Resources.Checkmark, Desktop.Skinning.SkinnedHighlight.Good);
+						}
+					}
+
+					lblLinesOfDialogue.Text = $"Unique lines: {(history.Current.TotalLines)}";
+				}
 			}
 			else
 			{

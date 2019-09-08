@@ -44,24 +44,8 @@ namespace SPNATI_Character_Editor
 
 		private static void Instance_SubActionClick(object sender, EventArgs e)
 		{
-			//List<string> errorData = new List<string>();
-			//errorData.Add(exception.Message);
-			//errorData.Add(stack);
-
 			ErrorReport form = new ErrorReport();
 			form.ShowDialog();
-
-
-			//string crashLog = Path.Combine(dir, "crash.txt");
-			//File.WriteAllLines(crashLog, errorData);
-
-			//int count = 1;
-			//foreach (Bitmap bmp in _workflowFilter.GetScreens())
-			//{
-			//	string file = Path.Combine(dir, "capture" + count + ".png");
-			//	bmp.Save(file);
-			//	count++;
-			//}
 		}
 
 		private static void Instance_VersionClick(object sender, EventArgs e)

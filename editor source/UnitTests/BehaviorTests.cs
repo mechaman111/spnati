@@ -191,7 +191,7 @@ namespace UnitTests
 			behavior.PrepareForEdit(_character);
 			Assert.AreEqual(1, behavior.GetWorkingCases().Count());
 			Case first = behavior.GetWorkingCases().First();
-			Assert.AreEqual(1, first.AlternativeConditions.Count);
+			Assert.AreEqual(2, first.AlternativeConditions.Count);
 		}
 
 		[TestMethod]

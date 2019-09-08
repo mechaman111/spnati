@@ -100,8 +100,16 @@ namespace SPNATI_Character_Editor
 		[JsonProperty("lineGoal")]
 		public int DailyGoal = 0;
 
+		[JsonProperty("goalBanner")]
+		public DateTime LastGoalBanner;
+
 		[JsonProperty("work")]
 		private List<LineWork> _work = new List<LineWork>();
+
+		public LineWork Previous
+		{
+			get { return _work.Count > 1 ? _work[_work.Count - 2] : _workToday; }
+		}
 
 		public LineWork Current
 		{
@@ -142,6 +150,15 @@ namespace SPNATI_Character_Editor
 		public void Update()
 		{
 			_workToday.Update(_character);
+		}
+
+		public bool BannerDisplayedToday
+		{
+			get { return DateTime.Now.Date == LastGoalBanner.ToLocalTime(); }
+		}
+		public void MarkBannerAsDisplayed()
+		{
+			LastGoalBanner = DateTime.UtcNow.Date;
 		}
 
 		/// <summary>
@@ -251,6 +268,7 @@ namespace SPNATI_Character_Editor
 		{
 			Dictionary<string, TargetingInformation> targetInfo = new Dictionary<string, TargetingInformation>();
 			HashSet<string> lines = new HashSet<string>();
+			Dictionary<string, HashSet<string>> targetLines = new Dictionary<string, HashSet<string>>();
 			Dictionary<LineFilter, int> counts = new Dictionary<LineFilter, int>();
 			LinesPerStage.Clear();
 			counts[LineFilter.Generic] = 0;
@@ -288,8 +306,20 @@ namespace SPNATI_Character_Editor
 					HashSet<string> targets = c.GetTargets();
 					foreach (string target in targets)
 					{
+						int targetCount = 0;
+						HashSet<string> targetedLines = targetLines.GetOrAddDefault(target, () => new HashSet<string>());
+						foreach (DialogueLine line in c.Lines)
+						{
+							if (targetedLines.Contains(line.Text))
+							{
+								continue;
+							}
+							targetedLines.Add(line.Text);
+							targetCount++;
+						}
+
 						TargetingInformation info = targetInfo.GetOrAddDefault(target, () => new TargetingInformation(target));
-						info.LineCount += caseCount;
+						info.LineCount += targetCount;
 					}
 				}
 			}

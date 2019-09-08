@@ -389,6 +389,25 @@ namespace Desktop.Skinning
 			}
 		}
 
+		public Color GetHighlightColor(SkinnedHighlight highlight)
+		{
+			switch (highlight)
+			{
+				case SkinnedHighlight.Label:
+					return LabelForeColor;
+				case SkinnedHighlight.Good:
+					return GoodForeColor;
+				case SkinnedHighlight.Bad:
+					return BadForeColor;
+				case SkinnedHighlight.Heading:
+					return PrimaryForeColor;
+				case SkinnedHighlight.SecondaryHeading:
+					return SecondaryForeColor;
+				default:
+					return LabelForeColor;
+			}
+		}
+
 		public string ToLookupString()
 		{
 			throw new NotImplementedException();
