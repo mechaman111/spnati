@@ -33,11 +33,35 @@ namespace SPNATI_Character_Editor
 			Shell.Instance.AutoTick += Instance_AutoTick;
 			Shell.Instance.Version = Config.Version;
 			Shell.Instance.VersionClick += Instance_VersionClick;
+			Shell.Instance.SubActionLabel = "Submit Bug Report";
+			Shell.Instance.SubActionClick += Instance_SubActionClick;
 
 			Config.LoadMacros<Case>("Case");
 			Shell.Instance.Description = Config.UserName;
 
 			CharacterGenerator.SetConverter(Config.ImportMethod);
+		}
+
+		private static void Instance_SubActionClick(object sender, EventArgs e)
+		{
+			//List<string> errorData = new List<string>();
+			//errorData.Add(exception.Message);
+			//errorData.Add(stack);
+
+			ErrorReport form = new ErrorReport();
+			form.ShowDialog();
+
+
+			//string crashLog = Path.Combine(dir, "crash.txt");
+			//File.WriteAllLines(crashLog, errorData);
+
+			//int count = 1;
+			//foreach (Bitmap bmp in _workflowFilter.GetScreens())
+			//{
+			//	string file = Path.Combine(dir, "capture" + count + ".png");
+			//	bmp.Save(file);
+			//	count++;
+			//}
 		}
 
 		private static void Instance_VersionClick(object sender, EventArgs e)

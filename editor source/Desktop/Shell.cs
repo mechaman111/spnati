@@ -42,6 +42,7 @@ namespace Desktop
 		public IActivity ActiveSidebarActivity;
 
 		public event EventHandler VersionClick;
+		public event EventHandler SubActionClick;
 
 		/// <summary>
 		/// Iterates through all open workspaces. Do not try launching or closing workspaces while iterating over this
@@ -70,6 +71,12 @@ namespace Desktop
 		{
 			get { return tsVersion.Text; }
 			set { tsVersion.Text = value; }
+		}
+
+		public string SubActionLabel
+		{
+			get { return tsSubAction.Text; }
+			set { tsSubAction.Text = value; }
 		}
 
 		private List<IActivity> _activationOrder = new List<IActivity>();
@@ -861,6 +868,11 @@ namespace Desktop
 		private void tsVersion_Click(object sender, EventArgs e)
 		{
 			VersionClick?.Invoke(this, e);
+		}
+
+		private void tsSubAction_Click(object sender, EventArgs e)
+		{
+			SubActionClick?.Invoke(this, e);
 		}
 	}
 

@@ -504,6 +504,14 @@ namespace Desktop.Skinning
 			Rectangle textRect = new Rectangle(rect.X, rect.Y + IndicatorSize + 1, rect.Width - CloseButtonWidth, rect.Height - IndicatorSize - 2);
 			int crossX = rect.Right - CloseButtonWidth;
 			int crossY = textRect.Top + textRect.Height / 2 - CloseMarkWidth / 2;
+			if (Vertical)
+			{
+				crossY -= _scrollPosition;
+			}
+			else
+			{
+				crossX -= _scrollPosition;
+			}
 			Rectangle closeRect = new Rectangle(crossX, crossY, CloseMarkWidth, CloseMarkWidth);
 			return closeRect;
 		}
