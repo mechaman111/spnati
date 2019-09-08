@@ -378,6 +378,17 @@ namespace Desktop.Skinning
 			}
 		}
 
+		public Color GetHighlightColor(DataHighlight highlight)
+		{
+			switch (highlight)
+			{
+				case DataHighlight.Important:
+					return CautionForeColor;
+				default:
+					return PrimaryColor.Normal;
+			}
+		}
+
 		public string ToLookupString()
 		{
 			throw new NotImplementedException();
@@ -426,5 +437,11 @@ namespace Desktop.Skinning
 		Bad,
 		Heading,
 		SecondaryHeading,
+	}
+
+	public enum DataHighlight
+	{
+		Normal,
+		Important
 	}
 }

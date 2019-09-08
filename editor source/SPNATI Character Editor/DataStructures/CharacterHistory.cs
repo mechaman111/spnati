@@ -44,6 +44,7 @@ namespace SPNATI_Character_Editor
 					{
 						string json = File.ReadAllText(file);
 						history = Json.Deserialize<CharacterHistory>(json);
+						_histories[character.FolderName] = history;
 					}
 					catch
 					{
@@ -95,6 +96,9 @@ namespace SPNATI_Character_Editor
 
 		private LineWork _workToday;
 		private float _fileSize = 0;
+
+		[JsonProperty("lineGoal")]
+		public int DailyGoal = 0;
 
 		[JsonProperty("work")]
 		private List<LineWork> _work = new List<LineWork>();

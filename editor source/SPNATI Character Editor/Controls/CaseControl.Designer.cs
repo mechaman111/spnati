@@ -158,6 +158,7 @@
 			this.stripConditions.AddCaption = "AND";
 			this.stripConditions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.stripConditions.DecorationText = null;
 			this.stripConditions.Location = new System.Drawing.Point(6, 122);
 			this.stripConditions.Margin = new System.Windows.Forms.Padding(0);
 			this.stripConditions.Name = "stripConditions";
@@ -498,6 +499,7 @@
 			// stripCase
 			// 
 			this.stripCase.AddCaption = null;
+			this.stripCase.DecorationText = null;
 			this.stripCase.Dock = System.Windows.Forms.DockStyle.Top;
 			this.stripCase.Location = new System.Drawing.Point(0, 0);
 			this.stripCase.Margin = new System.Windows.Forms.Padding(0);
@@ -658,6 +660,7 @@
 			// stripTabs
 			// 
 			this.stripTabs.AddCaption = null;
+			this.stripTabs.DecorationText = null;
 			this.stripTabs.Dock = System.Windows.Forms.DockStyle.Top;
 			this.stripTabs.Location = new System.Drawing.Point(0, 0);
 			this.stripTabs.Margin = new System.Windows.Forms.Padding(0);

@@ -318,6 +318,14 @@ namespace SPNATI_Character_Editor.Controls
 			#endregion
 
 			txtNotes.Text = _editorData.GetNote(_selectedCase);
+			if (!string.IsNullOrEmpty(txtNotes.Text))
+			{
+				stripTabs.SetHighlight(tabNotes, DataHighlight.Important);
+			}
+			else
+			{
+				stripTabs.SetHighlight(tabNotes, DataHighlight.Normal);
+			}
 			CaseLabel label = _editorData.GetLabel(_selectedCase);
 			txtFolder.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			txtFolder.AutoCompleteSource = AutoCompleteSource.CustomSource;

@@ -233,7 +233,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public static string ExecutableDirectory
 		{
-			get	{ return Path.GetDirectoryName(Application.ExecutablePath);	}
+			get { return Path.GetDirectoryName(Application.ExecutablePath); }
 		}
 
 		/// <summary>
@@ -548,8 +548,7 @@ namespace SPNATI_Character_Editor
 			set { Set("tinify", value); }
 		}
 
-		#region
-		//Dashboard
+		#region Dashboard
 		public static bool StartOnDashboard
 		{
 			get { return !GetBoolean("startmetadata"); }
@@ -574,6 +573,24 @@ namespace SPNATI_Character_Editor
 			set { Set("nodashboardvalidation", !value); }
 		}
 		#endregion
+
+		public static bool IncludesUserName(string name)
+		{
+			string userName = UserName?.ToLower();
+			if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(name))
+			{
+				return false;
+			}
+			string[] names = name.Split(',');
+			foreach (string n in names)
+			{
+				if (n.Trim().ToLower() == userName)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 
 	public static class Settings

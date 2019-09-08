@@ -28,6 +28,7 @@ namespace Desktop.Skinning
 		private SolidBrush _decorBrush = new SolidBrush(Color.Black);
 		private SolidBrush _scrollBrush = new SolidBrush(Color.Black);
 		private SolidBrush _scrollArrowBrush = new SolidBrush(Color.White);
+		private SolidBrush _highlightBrush = new SolidBrush(Color.Black);
 
 		private ScrollBar _upArrow = new ScrollBar();
 		private ScrollBar _downArrow = new ScrollBar();
@@ -35,6 +36,8 @@ namespace Desktop.Skinning
 		private int _maxScroll = 0;
 		private Timer _scrollTimer;
 		private int _scrollDirection;
+
+		private Dictionary<TabPage, DataHighlight> _highlights = new Dictionary<TabPage, DataHighlight>();
 
 		private int _startMargin = 5;
 		public int StartMargin
@@ -142,6 +145,8 @@ namespace Desktop.Skinning
 					return;
 				}
 
+				_highlights.Clear();
+
 				_previousSelectedTabIndex = _tabControl.SelectedIndex;
 				_tabControl.Deselected += (sender, args) =>
 				{
@@ -157,8 +162,13 @@ namespace Desktop.Skinning
 					OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 					Invalidate();
 				};
-				_tabControl.ControlRemoved += delegate
+				_tabControl.ControlRemoved += (object sender, ControlEventArgs args) =>
 				{
+					TabPage page = args.Control as TabPage;
+					if (page != null)
+					{
+						_highlights.Remove(page);
+					}
 					_tabRects = null;
 					OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 					Invalidate();
@@ -390,6 +400,7 @@ namespace Desktop.Skinning
 				Rectangle rect = rects[i];
 				rect.X -= _scrollPosition;
 				TabPage page = i < _tabControl.TabPages.Count ? _tabControl.TabPages[i] : null;
+
 				string text = page == null ? AddCaption : page.Text;
 				int buttonWidth = showClose ? CloseButtonWidth : 0;
 				Rectangle textRect = new Rectangle(rect.X, rect.Y + IndicatorSize + 1, rect.Width - buttonWidth, rect.Height - IndicatorSize - 2);
@@ -403,12 +414,32 @@ namespace Desktop.Skinning
 					g.FillRectangle(hoverBrush, rect);
 				}
 
+				DataHighlight highlight = DataHighlight.Normal;
+				if (page != null)
+				{
+					_highlights.TryGetValue(page, out highlight);
+					if (highlight != DataHighlight.Normal)
+					{
+						_highlightBrush.Color = skin.GetHighlightColor(highlight);
+						g.FillRectangle(_highlightBrush, new RectangleF(rect.X, 1, rect.Width, IndicatorSize));
+					}
+				}
+
 				//tab and text
 				if (i == _tabControl.SelectedIndex)
 				{
+					//selected tab
+
 					SolidBrush tabBrush = tabSet.GetBrush(VisualState.Normal, false, Enabled);
 					g.FillRectangle(tabBrush, rect.X, rect.Y, rect.Width, rect.Height + 1); //Height + 1 to cover border line
-					g.FillRectangle(indicatorBrush, new RectangleF(rect.X, 1, rect.Width, IndicatorSize));
+					if (highlight == DataHighlight.Normal)
+					{
+						g.FillRectangle(indicatorBrush, new RectangleF(rect.X, 1, rect.Width, IndicatorSize));
+					}
+					else
+					{
+						g.FillRectangle(_highlightBrush, new RectangleF(rect.X, 1, rect.Width, IndicatorSize));
+					}
 					g.DrawLine(borderPen, rect.X, rect.Top, rect.Right, rect.Top);
 					g.DrawLine(borderPen, rect.X, rect.Y + 1, rect.X, rect.Bottom);
 					g.DrawLine(borderPen, rect.Right, rect.Y + 1, rect.Right, rect.Bottom);
@@ -763,6 +794,12 @@ namespace Desktop.Skinning
 					break;
 				}
 			}
+		}
+
+		public void SetHighlight(TabPage tab, DataHighlight highlight)
+		{
+			_highlights[tab] = highlight;
+			Invalidate();
 		}
 
 		private class ScrollBar

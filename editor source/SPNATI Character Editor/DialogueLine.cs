@@ -175,7 +175,7 @@ namespace SPNATI_Character_Editor
 		public string CollectibleValue
 		{
 			get { return _collectibleValue; }
-			set	{ if (_collectibleValue != value) { _collectibleValue = value; NotifyPropertyChanged(); } }
+			set { if (_collectibleValue != value) { _collectibleValue = value; NotifyPropertyChanged(); } }
 		}
 
 		private bool _persistent;
@@ -289,6 +289,15 @@ namespace SPNATI_Character_Editor
 			get
 			{
 				return IsMarkerPersistent || (Marker != null && (Marker.Contains("=") || Marker.Contains("+") || Marker.Contains("-") || Marker.Contains("*")));
+			}
+		}
+
+		public bool HasAdvancedData
+		{
+			get
+			{
+				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || !string.IsNullOrEmpty(Intelligence) || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
+					!string.IsNullOrEmpty(Location) || OneShotId > 0 || Weight != 1;
 			}
 		}
 
