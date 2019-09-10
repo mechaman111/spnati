@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1.1 at 2:28:47 PM on September 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.1.1 at 12:41:35 PM on September 10, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.1.1</version>
     <first>Jessie</first>
@@ -29,6 +29,7 @@
     </tags>
     <nicknames>
         <nickname for="dark_magician_girl">DMG</nickname>
+        <nickname for="hk416">Spygirl</nickname>
         <nickname for="kizuna">Kizuna</nickname>
         <nickname for="pit">my angel</nickname>
     </nicknames>
@@ -250,6 +251,11 @@
         </trigger>
 
         <trigger id="swap_cards">
+            <case stage="4" alsoPlaying="tharja" notSaidMarker="TharjaRevert" alsoPlayingSaidMarker="TharjaJessieBoobs" priority="999">
+                <state img="#-after_stripping_tharja.png" marker="TharjaShrink">W-WH-WH-WHAT DID YOU DO, YOU SAD LOWLIFE?!</state>
+                <state img="#-after_stripping_tharja.png" marker="TharjaShrink">W-WH-WH-WHY DID YOU SHRINK MY BOOBS?!</state>
+                <state img="#-after_stripping_tharja.png" marker="TharjaShrink">Y-Y-YOU CRAZY WITCH!</state>
+            </case>
             <case stage="0-5">
                 <test expr="~cards~" value="0" />
                 <state img="#-confident.png">This cards are already perfect, just like me.</state>
@@ -1051,12 +1057,8 @@
                 </alternative>
                 <state img="#-friendly.png" marker="playerDefaultName">Come on, ~player~. Tell us your real name.</state>
             </case>
-            <case stage="1-3">
+            <case stage="1-3" oneShotId="1">
                 <state img="#-calm.png">Too bad I couldn't convince Beli to play this game. This game would do wonders for her self-esteem.</state>
-                <state img="#-calm.png">It's &lt;i&gt;so&lt;/i&gt; unfortunate Lola can't be here. She would have absolutely loved this game.</state>
-                <state img="#-calm.png">Aiko would have absolutely smoked this game. Maybe she would have accepted my invitation if there was actual gambling involved.</state>
-                <state img="#-thinking.png">I wonder if my manager is looking for me right now.</state>
-                <state img="#-thinking.png">Come to think of it, I might have forgotten to invite Audrey here. Too late to invite her now, anyway.</state>
             </case>
             <case stage="3">
                 <state img="#-jiggle.png">Your reward is right here. Come and take it.</state>
@@ -1071,9 +1073,26 @@
                 <state img="#-flirting.png">I can see you stealing a peek, ~char~. Come on, don't be shy. I don't mind.</state>
                 <state img="#-longing.png">Don't forget to look at your cards from time to time, ~char~. I hope I don't distract you into losing.</state>
             </case>
+            <case stage="1-3" oneShotId="2">
+                <state img="#-calm.png">It's &lt;i&gt;so&lt;/i&gt; unfortunate Lola can't be here. She would have absolutely loved this game.</state>
+            </case>
+            <case stage="1-3" oneShotId="3">
+                <state img="#-calm.png">Aiko would have absolutely smoked this game. Maybe she would have accepted my invitation if there was actual gambling involved.</state>
+            </case>
+            <case stage="1-3" oneShotId="4">
+                <state img="#-thinking.png">I wonder if my manager is looking for me right now.</state>
+            </case>
+            <case stage="1-3" oneShotId="5">
+                <state img="#-thinking.png">Come to think of it, I might have forgotten to invite Audrey here. Too late to invite her now, anyway.</state>
+            </case>
         </trigger>
 
         <trigger id="must_strip">
+            <case stage="4" alsoPlaying="tharja" saidMarker="TharjaBegging1" notSaidMarker="TharjaBegging2" priority="999">
+                <state img="#-begging_tharja.png" marker="TharjaBegging2">Please, please, pleeease! I'll do anything you want. Just bring them back!</state>
+                <state img="#-begging_tharja.png" marker="TharjaBegging2">Please, please, pleeease! What do you want from me?! I'll give anything, just bring them back to normal.</state>
+                <state img="#-begging_tharja.png" marker="TharjaBegging2">Please, please, pleeease! You can't do this to me! My career would be ruined by this!</state>
+            </case>
             <case stage="3" alsoPlaying="tharja" priority="970">
                 <state img="#-jiggle.png">Hey, ~player~. I've noticed that you've been staring at my breasts for the entire game. Come closer, they'll look better up close.</state>
                 <state img="#-flirting.png">I know you've been staring at my boobs since I arrived here, ~player~. Why don't you come here for a closer look?</state>
@@ -1090,9 +1109,9 @@
                 <state img="#-horny.png">Are you turned on by my breasts, ~player~? I know some techniques with them that will make your &lt;i&gt;little friend&lt;/i&gt; very happy.</state>
             </case>
             <case stage="0" alsoPlaying="meia" alsoPlayingStage="0-5" priority="900">
-                <state img="#-friendly.png">If you have some questions about men, don't be afraid to ask. I should be able to answer all of them.</state>
-                <state img="#-friendly.png">Don't be afraid to ask anything, Meia. You'll learn a lot about men from me.</state>
-                <state img="#-friendly.png">If it's men's sexuality you're interested about, then you've found the perfect woman to ask. I've seen and done it all.</state>
+                <state img="#-friendly.png" marker="MeiaQuestion1">If you have some questions about men, don't be afraid to ask. I should be able to answer all of them.</state>
+                <state img="#-friendly.png" marker="MeiaQuestion1">Don't be afraid to ask anything, Meia. You'll learn a lot about men from me.</state>
+                <state img="#-friendly.png" marker="MeiaQuestion1">If it's men's sexuality you're interested about, then you've found the perfect woman to ask. I've seen and done it all.</state>
             </case>
             <case stage="0" alsoPlaying="pit" priority="900">
                 <state img="#-confident.png" marker="Pit_MustStrip0">This is just a dyed shirt. There's no way I can afford real leopard skin.</state>
@@ -1338,7 +1357,7 @@
             <case stage="0-4">
                 <state img="#-disappointed.png">I was hoping for better circumstances.</state>
                 <state img="#-disappointed.png">Really now?</state>
-                <state img="#-awkward.png">This hurts my chance, doesn't it?</state>
+                <state img="#-awkward.png">This hurts my chances, doesn't it?</state>
                 <state img="#-confident.png">On the bright side, I'm still not last.</state>
             </case>
             <case stage="0">
@@ -1484,6 +1503,18 @@
             <case stage="1" alsoPlaying="saki_zls" saidMarker="SakiInvitation1" priority="900">
                 <state img="#-stripping.png" marker="SakiInvitation2">Oh, she's more of a &lt;i&gt;hands-on&lt;/i&gt; actress, then. And a retired one too. She must have a lot of stories to tell.</state>
             </case>
+            <case stage="0" alsoPlaying="meia" alsoPlayingStage="0-5" saidMarker="MeiaQuestion1" alsoPlayingSaying="rods" priority="900">
+                <state img="#-stripping.png" marker="MeiaQuestionAnswer1">&lt;i&gt;Activate their rods?&lt;/i&gt; That's a new one. Anyway, to answer your question, seeing women's breasts will definitely help them &lt;i&gt;activate their rods&lt;/i&gt;. So does touching one.</state>
+            </case>
+            <case stage="0" alsoPlaying="meia" alsoPlayingStage="0-5" saidMarker="MeiaQuestion1" alsoPlayingSaying="sight of a naked woman" priority="900">
+                <state img="#-stripping.png" marker="MeiaQuestionAnswer2">Both of those will work. &lt;i&gt;Although&lt;/i&gt;, touching it is definitely more effective, not to mention more enjoyable for both parties,</state>
+            </case>
+            <case stage="0" alsoPlaying="meia" alsoPlayingStage="0-5" saidMarker="MeiaQuestion1" alsoPlayingSaying="rodlike organs" priority="900">
+                <state img="#-stripping.png" marker="MeiaQuestionAnswer4">You can strip naked and put on a &lt;i&gt;show&lt;/i&gt; for them. However, you can always just touch them, which is more prefered by men. You can use either your hand, breasts or mouth for that.</state>
+            </case>
+            <case stage="0" alsoPlaying="meia" alsoPlayingStage="0-5" saidMarker="MeiaQuestion1" alsoPlayingSaying="I stripped nude" priority="900">
+                <state img="#-stripping.png" marker="MeiaQuestionAnswer3">Well, you do have the body to pull that off, Meia. I'm not just being nice either, I mean it.</state>
+            </case>
             <case stage="1-2" alsoPlaying="kizuna" alsoPlayingStage="1-8" alsoPlayingNotSaidMarker="confident_2" alsoPlayingSayingMarker="confident_2">
                 <state img="#-stripping.png">No, not really. I'm just confident by myself.</state>
             </case>
@@ -1616,6 +1647,11 @@
                 <state img="#-after_stripping_tharja.png" marker="TharjaShrink">W-WH-WH-WHAT DID YOU DO, YOU SAD LOWLIFE?!</state>
                 <state img="#-after_stripping_tharja.png" marker="TharjaShrink">W-WH-WH-WHY DID YOU SHRINK MY BOOBS?!</state>
                 <state img="#-after_stripping_tharja.png" marker="TharjaShrink">Y-Y-YOU CRAZY WITCH!</state>
+            </case>
+            <case stage="5" alsoPlaying="tharja" saidMarker="TharjaBegging3" notSaidMarker="TharjaRevert" priority="999">
+                <state img="#-revert_tharja.png" marker="TharjaRevert">Oh, Thank you! Thank you! Thank yooouuuuuu!</state>
+                <state img="#-revert_tharja.png" marker="TharjaRevert">I knew it! You're not a complete bitch like you're actions suggest!</state>
+                <state img="#-revert_tharja.png" marker="TharjaRevert">Yes! My career is saved! I thought I was going to fall into a spiraling depression!</state>
             </case>
             <case stage="1" alsoPlaying="akko" saidMarker="AkkoChariot1" priority="900">
                 <state img="#-after_stripping.png" marker="AkkoChariot2">Yeah, I don't remember anyone with that name. Good to know I have diehard fans, though.</state>
@@ -1827,7 +1863,7 @@
                 <state img="#-after_stripping.png">These shoes are somewhat new, so please don't lose them.</state>
                 <state img="#-after_stripping.png">Do you know how much these shoes normally cost? I wouldn't know either, I got it with a &lt;i&gt;discount.&lt;/i&gt;</state>
             </case>
-            <case stage="2 5">
+            <case stage="5">
                 <state img="#-after_stripping.png">
                     <alt-img stage="5">#-confident.png</alt-img>
                     <text>Come a little closer, there's a lot more to see.</text>
@@ -2722,6 +2758,11 @@
                 <state img="#-curious.png">Did you came from a costume party, Catria?</state>
                 <state img="#-curious.png">You're armor looks very realistic, Catria. What costume party did you attend anyway?</state>
             </case>
+            <case stage="3" targetStatus="not_exposed">
+                <state img="#-teasing.png">If you want to take attention away from me, you'll have to reveal a lot.</state>
+                <state img="#-flirting.png">Don't hold back, ~name~. Show us as much skin as possible.</state>
+                <state img="#-longing.png">Here's a challenge for you: show more skin than I am doing now. Don't be shy, ~name~.</state>
+            </case>
             <case stage="0" hasHand="High Card" totalRounds="0">
                 <state img="#-playful.png">And I thought I would be the first strip. That's your luck, ~name~.</state>
                 <state img="#-friendly.png">Well, if you insist, ~name~. You can be the first to strip.</state>
@@ -2791,13 +2832,6 @@
                 <state img="#-teasing.png">Were you so focused on my rack that you forgot to check your cards, ~name~?</state>
                 <state img="#-playful.png">You're not exactly helping your chances of seeing me naked if you lose first.</state>
             </case>
-            <case stage="3">
-                <state img="#-teasing.png">If you want to take attention away from me, you'll have to reveal a lot.</state>
-                <state img="#-happy.png">I may be running out of clothes, but I'm not running out of luck yet.</state>
-                <state img="#-flirting.png">Don't hold back, ~name~. Show us as much skin as possible.</state>
-                <state img="#-confident.png">Looks like the pressure finally got to you, ~name~. I don't blame you, it can be quite difficult to maintain your composure when I'm standing &lt;i&gt;so&lt;/i&gt; close.</state>
-                <state img="#-longing.png">Here's a challenge for you: show more skin than I am doing now. Don't be shy, ~name~.</state>
-            </case>
             <case stage="4">
                 <state img="#-teasing.png">You got caught staring at my headlights, ~name~.</state>
                 <state img="#-jiggle.png">Oh my, did my huge rack distract you from the game?</state>
@@ -2823,6 +2857,10 @@
             <case stage="7">
                 <state img="#-flirting.png">My performance must have made you &lt;i&gt;so hot&lt;/i&gt; right now. You should get naked to cool off.</state>
                 <state img="#-confident.png">I bet you can't contain yourself after watching me.</state>
+            </case>
+            <case stage="3">
+                <state img="#-happy.png">I may be running out of clothes, but I'm not running out of luck yet.</state>
+                <state img="#-confident.png">Looks like the pressure finally got to you, ~name~. I don't blame you, it can be quite difficult to maintain your composure when I'm standing &lt;i&gt;so&lt;/i&gt; close.</state>
             </case>
         </trigger>
 
@@ -3933,7 +3971,7 @@
             </case>
             <case stage="0-7" target="kizuna" targetStage="6">
                 <state img="#-friendly.png">Do you seriously have not seen your toes before?!</state>
-                <state img="#-playful.png" marker="KizunaToes">I know of some peoples that have an infatuation with toes.</state>
+                <state img="#-playful.png" marker="KizunaToes">I know of some people that have an infatuation with toes. You'd be surprised.</state>
             </case>
             <case stage="0-7" target="kyoko" targetStage="6">
                 <state img="#-disappointed.png">You poor thing! That must have been a horrible experience.</state>
@@ -5290,6 +5328,12 @@
         </trigger>
 
         <trigger id="opponent_lost">
+            <case stage="4" saidMarker="TharjaBegging1" notSaidMarker="TharjaBegging2" priority="999">
+                <condition count="1" filter="tharja" />
+                <state img="#-begging_tharja.png" marker="TharjaBegging2">Please, please, pleeease! I'll do anything you want. Just bring them back!</state>
+                <state img="#-begging_tharja.png" marker="TharjaBegging2">Please, please, pleeease! What do you want from me?! I'll give anything, just bring them back to normal.</state>
+                <state img="#-begging_tharja.png" marker="TharjaBegging2">Please, please, pleeease! You can't do this to me! My career would be ruined by this!</state>
+            </case>
             <case stage="0-7" target="chica">
                 <state img="#-frustrated.png">I didn't exactly come here just to play with an animated sex doll.</state>
                 <state img="#-annoyed.png">I was expecting to play against living people, not robotic sex dolls.</state>
@@ -5375,6 +5419,12 @@
         </trigger>
 
         <trigger id="opponent_stripping">
+            <case stage="4" saidMarker="TharjaBegging2" notSaidMarker="TharjaBegging3" priority="998">
+                <condition count="1" filter="tharja" />
+                <state img="#-bargaining_tharja.png" marker="TharjaBegging3">Okay, let's make a deal! I'll teach you my special techniques, and you'll bring my breasts back to normal.</state>
+                <state img="#-bargaining_tharja.png" marker="TharjaBegging3">Okay, here's a deal for you! I'll leave ~player~ to you if you revert my boobs back to normal.</state>
+                <state img="#-bargaining_tharja.png" marker="TharjaBegging3">Okay, I think we can agree on a deal for this! If you revert my boobs back, I'll give you a spot on my next movie.</state>
+            </case>
             <case stage="0-7" target="aimee" targetStage="0">
                 <state img="#-shocked.png">What are you doing!?</state>
                 <state img="#-shocked.png">It's just a game! You don't kill people over it!</state>
@@ -5445,6 +5495,12 @@
         </trigger>
 
         <trigger id="opponent_stripped">
+            <case stage="4-5" saidMarker="TharjaBegging3" notSaidMarker="TharjaRevert" priority="999">
+                <condition count="1" filter="tharja" />
+                <state img="#-revert_tharja.png" marker="TharjaRevert">Oh, Thank you! Thank you! Thank yooouuuuuu!</state>
+                <state img="#-revert_tharja.png" marker="TharjaRevert">I knew it! You're not a complete bitch like you're actions suggest!</state>
+                <state img="#-revert_tharja.png" marker="TharjaRevert">Yes! My career is saved! I thought I was going to fall into a spiraling depression!</state>
+            </case>
             <case stage="0-7" target="9s" targetStage="2">
                 <state img="#-longing.png">&lt;i&gt;Okay.&lt;/i&gt; The blindfold will go after then.</state>
                 <state img="#-longing.png">I think you forgot your blindfold.</state>
@@ -7492,21 +7548,6 @@
                 <state img="#-awkward.png">You can't be serious...</state>
                 <state img="#-worried.png">Please tell me you're bluffing...</state>
                 <state img="#-disappointed.png">Already? You've barely started...</state>
-            </case>
-            <case stage="4" alsoPlaying="tharja" saidMarker="TharjaBegging1" notSaidMarker="TharjaBegging2" priority="999">
-                <state img="#-begging_tharja.png" marker="TharjaBegging2">Please, please, pleeease! I'll do anything you want. Just bring them back!</state>
-                <state img="#-begging_tharja.png" marker="TharjaBegging2">Please, please, pleeease! What do you want from me?! I'll give anything, just bring them back to normal.</state>
-                <state img="#-begging_tharja.png" marker="TharjaBegging2">Please, please, pleeease! You can't do this to me! My career would be ruined by this!</state>
-            </case>
-            <case stage="4-5" alsoPlaying="tharja" saidMarker="TharjaBegging3" notSaidMarker="TharjaRevert" priority="999">
-                <state img="#-revert_tharja.png" marker="TharjaRevert">Oh, Thank you! Thank you! Thank yooouuuuuu!</state>
-                <state img="#-revert_tharja.png" marker="TharjaRevert">I knew it! You're not a complete bitch like you're actions suggest!</state>
-                <state img="#-revert_tharja.png" marker="TharjaRevert">Yes! My career is saved! I thought I was going to fall into a spiraling depression!</state>
-            </case>
-            <case stage="4" alsoPlaying="tharja" saidMarker="TharjaBegging2" notSaidMarker="TharjaBegging3" priority="998">
-                <state img="#-bargaining_tharja.png" marker="TharjaBegging3">Okay, let's make a deal! I'll teach you my special techniques, and you'll bring my breasts back to normal.</state>
-                <state img="#-bargaining_tharja.png" marker="TharjaBegging3">Okay, here's a deal for you! I'll leave ~player~ to you if you revert my boobs back to normal.</state>
-                <state img="#-bargaining_tharja.png" marker="TharjaBegging3">Okay, I think we can agree on a deal for this! If you revert my boobs back, I'll give you a spot on my next movie.</state>
             </case>
             <case stage="0-7" id="19" alsoPlaying="kamina" alsoPlayingStage="8" alsoPlayingSaidMarker="part1" alsoPlayingNotSaidMarker="part2" alsoPlayingSayingMarker="part2">
                 <state img="#-disappointed.png">I was expecting more from you.</state>
