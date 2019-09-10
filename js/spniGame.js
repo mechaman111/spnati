@@ -356,6 +356,21 @@ function advanceTurn () {
 
 	/* allow them to take their turn */
 	if (currentTurn == 0) {
+        /* Reprocess reactions. */
+        updateAllVolatileBehaviours();
+        
+        /* Commit updated states only. */
+        var updatedPlayers = [];
+        players.forEach(function (p) {
+            if (p.chosenState && !p.stateCommitted) {
+                p.commitBehaviourUpdate();
+                updateGameVisual(p.slot);
+                updatedPlayers.push(p.slot);
+            }
+        });
+        
+        saveTranscriptEntries(updatedPlayers);
+        
         /* human player's turn */
         if (humanPlayer.out) {
 			allowProgression(eGamePhase.REVEAL);
