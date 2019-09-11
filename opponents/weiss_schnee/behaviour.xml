@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.0 at 3:21:29  on september 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.0 at 10:31:55  on september 11, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.0</version>
     <first>Weiss</first>
@@ -136,6 +136,12 @@
             <case tag="game_start" alsoPlaying="ruby">
                 <test expr="~background~" value="beach" />
                 <state img="0-calm.png">Okay, Ruby. You convinced me to go to the beach, what are we going to do?</state>
+            </case>
+            <case tag="game_start" totalFemales="5">
+                <state img="0-happy.png">Alright an all girl game... Has any of you seen my teammates?</state>
+            </case>
+            <case tag="game_start" totalMales="4">
+                <state img="0-tsundere.png">Me against 4 boys? Whatever I am still going to win.</state>
             </case>
             <case tag="swap_cards">
                 <state img="0-calm.png">~cards~ will suffice.</state>
@@ -326,6 +332,9 @@
             <case tag="stripping" alsoPlaying="coco">
                 <state img="0-strip.png">Is that a challange, Coco?</state>
             </case>
+            <case tag="stripping" alsoPlaying="nami">
+                <state img="0-strip_2.png">Yes its very expensive So don't touch it Nami.</state>
+            </case>
             <case tag="stripping" alsoPlaying="rarity">
                 <state img="0-strip.png">Why thank you, Rarity. I got it back at Atlas long ago.</state>
             </case>
@@ -349,6 +358,13 @@
             <case tag="stripping">
                 <condition count="4" filter="rwby" />
                 <state img="0-strip_2.png">Alright. I guess it's not too bad if my teammates are here.</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="0-shocked.png">Wait. This means you h-have to...</state>
+                <state img="0-shocked.png">Oh... So now you have to s-strip, right?</state>
+            </case>
+            <case tag="male_human_must_strip" totalRounds="0">
+                <state img="0-shocked.png">Wait. ~name~ has to strip? What kind of game is this?</state>
             </case>
             <case tag="male_must_strip">
                 <state img="0-happy.png">I knew I would be great at this game.</state>
@@ -518,13 +534,6 @@
                 <state img="0-shocked.png">Nothing left but your thong...</state>
             </case>
             <case tag="female_must_strip" totalRounds="0">
-                <state img="0-shocked.png">Wait. ~name~ has to strip? What kind of game is this?</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="0-shocked.png">Wait. This means you h-have to...</state>
-                <state img="0-shocked.png">Oh... So now you have to s-strip, right?</state>
-            </case>
-            <case tag="male_human_must_strip" totalRounds="0">
                 <state img="0-shocked.png">Wait. ~name~ has to strip? What kind of game is this?</state>
             </case>
             <case tag="male_removing_accessory">
@@ -1280,6 +1289,24 @@
             <case tag="female_crotch_is_visible" target="yang" alsoPlaying="ruby">
                 <state img="0-tsundere.png">I swear... Sometimes, you are the most idiotic person I know.</state>
             </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="0-sad.png">Sorry Chihiro... Are you gonna be okay?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="0-interested.png">Chihiro your back... Are you ready to continue?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="0-angry.png">If Chihiro is allowed to leave why aren't I?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="0-tsundere.png">It's alright to be nervous. But you shouldn't run away like this.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="0-shocked.png">Huh she dropped her computer... It can talk too?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="0-shocked.png">Wait... Your a... How did you hide that from us?</state>
+            </case>
             <case tag="opponent_crotch_is_visible" target="link">
                 <state img="0-interested.png">If only you had said something earlier, maybe you could have avoided this.</state>
             </case>
@@ -1761,6 +1788,11 @@
                 <condition count="4" filter="rwby" />
                 <state img="1-stripped.png">Alright, team, let's move on.</state>
             </case>
+            <case tag="male_human_must_strip">
+                <state img="1-happy.png">I've won this round!  Now, what do I get?</state>
+                <state img="1-happy.png">I kind of wish we were betting lien. Not that I need any more.</state>
+                <state img="1-happy.png">Another victory!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="1-interested.png">Not really what I had in mind for when you lose...</state>
                 <state img="1-sarcastic.png">Not exactly the reward I was thinking of...</state>
@@ -1913,11 +1945,6 @@
             </case>
             <case tag="female_must_strip" target="yang" targetStage="7">
                 <state img="1-shocked.png">Nothing left but your thong...</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="1-happy.png">I've won this round!  Now, what do I get?</state>
-                <state img="1-happy.png">I kind of wish we were betting lien. Not that I need any more.</state>
-                <state img="1-happy.png">Another victory!</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="1-interested.png">I should have brought some more jewelry.</state>
@@ -2616,6 +2643,24 @@
             <case tag="female_crotch_is_visible" target="yang" alsoPlaying="ruby">
                 <state img="1-tsundere.png">I swear... Sometimes, you are the most idiotic person I know.</state>
             </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="1-sad.png">Sorry Chihiro... Are you gonna be okay?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="1-interested.png">Chihiro your back... Are you ready to continue?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="1-angry.png">If Chihiro is allowed to leave why aren't I?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="1-tsundere.png">It's alright to be nervous. But you shouldn't run away like this.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="1-shocked.png">Huh she dropped her computer... It can talk too?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="1-shocked.png">Wait... Your a... How did you hide that from us?</state>
+            </case>
             <case tag="opponent_crotch_is_visible" target="link">
                 <state img="1-interested.png">If only you had said something earlier, maybe you could have avoided this.</state>
             </case>
@@ -3069,6 +3114,12 @@
                 <condition count="4" filter="rwby" />
                 <state img="2-stripped.png">My mother told me she was around my height when she was my age.</state>
             </case>
+            <case tag="male_human_must_strip">
+                <state img="2-happy.png">Another victory!</state>
+                <state img="2-happy.png">Chalk up another win for Team RWBY!</state>
+                <state img="2-interested.png">Your turn, ~name~...</state>
+                <state img="2-win.png">Is that the best you can do?</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="2-interested.png">Time for another reward?</state>
                 <state img="2-calm.png">Is that the best you've got?</state>
@@ -3221,12 +3272,6 @@
             </case>
             <case tag="female_must_strip" target="yang" targetStage="7">
                 <state img="2-shocked.png">Nothing left but your thong...</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="2-happy.png">Another victory!</state>
-                <state img="2-happy.png">Chalk up another win for Team RWBY!</state>
-                <state img="2-interested.png">Your turn, ~name~...</state>
-                <state img="2-win.png">Is that the best you can do?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="2-disappointed.png">Why did I not bring some more accessories?!</state>
@@ -3929,6 +3974,24 @@
             <case tag="female_crotch_is_visible" target="yang" alsoPlaying="ruby">
                 <state img="2-tsundere.png">I swear... Sometimes, you are the most idiotic person I know.</state>
             </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="2-sad.png">Sorry Chihiro... Are you gonna be okay?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="2-interested.png">Chihiro your back... Are you ready to continue?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="2-angry.png">If Chihiro is allowed to leave why aren't I?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="2-tsundere.png">It's alright to be nervous. But you shouldn't run away like this.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="2-shocked.png">Huh she dropped her computer... It can talk too?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="2-shocked.png">Wait... Your a... How did you hide that from us?</state>
+            </case>
             <case tag="opponent_crotch_is_visible" target="link">
                 <state img="2-interested.png">If only you had said something earlier, maybe you could have avoided this.</state>
             </case>
@@ -4405,6 +4468,11 @@
                 <condition count="4" filter="rwby" />
                 <state img="3-stripped.png">Well, except for you, ~player~.</state>
             </case>
+            <case tag="male_human_must_strip">
+                <state img="3-sarcastic.png">Don't worry, ~name~. I promise to enjoy every single moment of this.</state>
+                <state img="3-sarcastic.png">Too bad I was hoping to see someone with decent poker skills.</state>
+                <state img="3-sarcastic.png">Please. Even Jaune is more impressive than you.</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="3-sarcastic.png">I bet you aren't any more special than the other boys at Beacon.</state>
                 <state img="3-sarcastic.png">I'm safe for another round! You don't mind, do you, ~name~?</state>
@@ -4551,11 +4619,6 @@
             </case>
             <case tag="female_must_strip" target="yang" targetStage="7">
                 <state img="3-shocked.png">Nothing left but your thong...</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="3-sarcastic.png">Don't worry, ~name~. I promise to enjoy every single moment of this.</state>
-                <state img="3-sarcastic.png">Too bad I was hoping to see someone with decent poker skills.</state>
-                <state img="3-sarcastic.png">Please. Even Jaune is more impressive than you.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="3-disappointed.png">Wow, sooo impressive of you to take that off.</state>
@@ -5250,6 +5313,24 @@
             <case tag="female_crotch_is_visible" target="yang" alsoPlaying="ruby">
                 <state img="3-tsundere.png">I swear... Sometimes, you are the most idiotic person I know.</state>
             </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="3-sad.png">Sorry Chihiro... Are you gonna be okay?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="3-interested.png">Chihiro your back... Are you ready to continue?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="3-angry.png">If Chihiro is allowed to leave why aren't I?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="3-tsundere.png">It's alright to be nervous. But you shouldn't run away like this.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="3-shocked.png">Huh she dropped her computer... It can talk too?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="3-shocked.png">Wait... Your a... How did you hide that from us?</state>
+            </case>
             <case tag="opponent_crotch_is_visible" target="link">
                 <state img="3-interested.png">If only you had said something earlier, maybe you could have avoided this.</state>
             </case>
@@ -5627,6 +5708,9 @@
                 <state img="4-strip.png">I was convinced I would have won before having to remove my hairpins.</state>
                 <state img="4-strip.png">I really wanted to avoid taking off my hair pins.</state>
             </case>
+            <case tag="stripping" alsoPlaying="nami">
+                <state img="4-strip.png">What else would I do. I don't want to take off my underwear.</state>
+            </case>
             <case tag="stripping">
                 <condition count="4" filter="rwby" />
                 <state img="4-strip.png">Teammates or not, I won't show my chest that easily.</state>
@@ -5692,6 +5776,11 @@
             <case tag="stripped" totalExposed="0" totalNaked="0" totalMasturbating="0" totalFinished="0">
                 <state img="4-stripped.png">Stop staring! I can just play for fun now, right? No more stripping?</state>
                 <state img="4-stripped.png">Ha ha! You got the rich girl to strip down to her underwear. I can just leave now, right?</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="4-happy.png">I've won again! You're so going to pay for looking at me in my underwear...</state>
+                <state img="4-loss.png">What's with that look!? I had to do it too, you know!</state>
+                <state img="4-grinning.png">Hah! Sweet sweet revenge!</state>
             </case>
             <case tag="male_must_strip">
                 <state img="4-grinning.png">I've won again! You're so going to pay for looking at me in my underwear...</state>
@@ -5835,11 +5924,6 @@
             </case>
             <case tag="female_must_strip" target="yang" targetStage="7">
                 <state img="4-shocked.png">Nothing left but your thong...</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="4-happy.png">I've won again! You're so going to pay for looking at me in my underwear...</state>
-                <state img="4-loss.png">What's with that look!? I had to do it too, you know!</state>
-                <state img="4-grinning.png">Hah! Sweet sweet revenge!</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="4-disappointed.png">How dare you take that off when I'm like this!</state>
@@ -6401,7 +6485,7 @@
                 <state img="4-disappointed.png">...Yourself. Or your bra I guess</state>
             </case>
             <case tag="female_large_chest_is_visible">
-                <state img="4-tsundere.png">I-I'm.... Shut up! I] already told you I'm not into girls.</state>
+                <state img="4-tsundere.png">I-I'm.... Shut up! I already told you I'm not into girls.</state>
                 <state img="4-aroused.png">I should just look away... T-they aren't... that impressive...</state>
                 <state img="4-aroused.png">.........</state>
             </case>
@@ -6549,6 +6633,24 @@
             </case>
             <case tag="female_crotch_is_visible" target="yang" alsoPlaying="ruby">
                 <state img="4-tsundere.png">I swear... Sometimes, you are the most idiotic person I know.</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="4-sad.png">Sorry Chihiro... Are you gonna be okay?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="4-interested.png">Chihiro your back... Are you ready to continue?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="4-angry.png">If Chihiro is allowed to leave why aren't I?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="4-tsundere.png">It's alright to be nervous. But you shouldn't run away like this.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="4-shocked.png">Huh she dropped her computer... It can talk too?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="4-shocked.png">Wait... Your a... How did you hide that from us?</state>
             </case>
             <case tag="opponent_crotch_is_visible" target="link">
                 <state img="4-interested.png">If only you had said something earlier, maybe you could have avoided this.</state>
@@ -6997,6 +7099,11 @@
                 <condition count="4" filter="rwby" />
                 <state img="5-stripped.png">You guys better help me set my hair up again after the game.</state>
             </case>
+            <case tag="male_human_must_strip">
+                <state img="5-sarcastic.png">I never intended to let you beat me.</state>
+                <state img="5-sarcastic.png">A dunce like you has no hope of beating me.</state>
+                <state img="5-sarcastic.png">Don't expect pity. You deserve this for making me strip down like this.</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="5-sarcastic.png">Did you really think I was going to let you beat me now.</state>
                 <state img="5-sarcastic.png">I'm not about to let a sleazeball like you beat me.</state>
@@ -7134,11 +7241,6 @@
             </case>
             <case tag="female_must_strip" target="yang" targetStage="7">
                 <state img="5-shocked.png">Nothing left but your thong...</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="5-sarcastic.png">I never intended to let you beat me.</state>
-                <state img="5-sarcastic.png">A dunce like you has no hope of beating me.</state>
-                <state img="5-sarcastic.png">Don't expect pity. You deserve this for making me strip down like this.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="5-angry.png">You cannot be serious. How can someone like you still have accessories left?</state>
@@ -7831,6 +7933,24 @@
             <case tag="female_crotch_is_visible" target="yang" alsoPlaying="ruby">
                 <state img="5-tsundere.png">I swear... Sometimes, you are the most idiotic person I know.</state>
             </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="5-sad.png">Sorry Chihiro... Are you gonna be okay?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="5-interested.png">Chihiro your back... Are you ready to continue?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="5-angry.png">If Chihiro is allowed to leave why aren't I?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="5-tsundere.png">It's alright to be nervous. But you shouldn't run away like this.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="5-shocked.png">Huh she dropped her computer... It can talk too?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="5-shocked.png">Wait... Your a... How did you hide that from us?</state>
+            </case>
             <case tag="opponent_crotch_is_visible" target="link">
                 <state img="5-interested.png">If only you had said something earlier, maybe you could have avoided this.</state>
             </case>
@@ -8160,7 +8280,7 @@
                 <state img="6-happy.png">At least this hand seems good.</state>
                 <state img="6-happy.png">I am going to win this. I have to.</state>
                 <state img="6-happy.png">I'll be safe for this round.</state>
-                <state img="6-sarcastic.png">Sorry ~player~ but I won't take of my underwear this round.</state>
+                <state img="6-sarcastic.png">Sorry ~player~ but I won't take off my underwear this round.</state>
                 <state img="6-sarcastic.png">I am a Schnee. We don't lose.</state>
             </case>
             <case tag="okay_hand">
@@ -8289,6 +8409,11 @@
             <case tag="stripped">
                 <condition count="4" filter="rwby" />
                 <state img="6-stripped.png">Could you guys at least look away...?</state>
+            </case>
+            <case tag="male_human_must_strip">
+                <state img="6-embarrassed.png">Another win for me, but...</state>
+                <state img="6-sarcastic.png">You're going to know my pain pretty soon, ~name~. We'll see who's laughing then!</state>
+                <state img="6-angry.png">Don't you dare and try to look at me while stripping.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="6-embarrassed.png">Another win for me, but...</state>
@@ -8429,11 +8554,6 @@
             </case>
             <case tag="female_must_strip" target="yang" targetStage="7">
                 <state img="6-shocked.png">Nothing left but your thong...</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="6-embarrassed.png">Another win for me, but...</state>
-                <state img="6-sarcastic.png">You're going to know my pain pretty soon, ~name~. We'll see who's laughing then!</state>
-                <state img="6-angry.png">Don't you dare and try to look at me while stripping.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="6-angry.png">This is so unfair! You cheated, didn't you?</state>
@@ -9103,6 +9223,24 @@
             <case tag="female_crotch_is_visible" target="yang" alsoPlaying="ruby">
                 <state img="6-tsundere.png">I swear... Sometimes, you are the most idiotic person I know.</state>
             </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="6-sad.png">Sorry Chihiro... Are you gonna be okay?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="6-interested.png">Chihiro your back... Are you ready to continue?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="6-angry.png">If Chihiro is allowed to leave why aren't I? I don't want to be here either.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="6-tsundere.png">It's alright to be nervous. But you shouldn't run away like this.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="6-shocked.png">Huh she dropped her computer... It can talk too?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="6-shocked.png">Wait... Your a... How did you hide that from us?</state>
+            </case>
             <case tag="opponent_crotch_is_visible" target="link">
                 <state img="6-interested.png">If only you had said something earlier, maybe you could have avoided this.</state>
             </case>
@@ -9488,6 +9626,11 @@
                 <test expr="~background~" value="showers" />
                 <state img="7-sad.png">Can I stop playing now? I don't even like showering with my teammates.</state>
             </case>
+            <case tag="male_human_must_strip">
+                <state img="7-angry.png">Don't think this gives you permission to look at me whenever you lose.</state>
+                <state img="7-sarcastic.png">You have no idea how much pleasure it gives me to see this. N-no wait, that  came out wrong, not THAT kind of pleasure! Y-you know what I meant!</state>
+                <state img="7-angry.png">Hurry up. I want my clothes back as soon as possible.</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="7-shocked.png">Just don't look at me when you take that off!</state>
                 <state img="7-angry.png">I'm not the only one in this room, so look at someone else while you lose!</state>
@@ -9629,11 +9772,6 @@
             </case>
             <case tag="female_must_strip" target="yang" targetStage="7">
                 <state img="7-shocked.png">Nothing left but your thong...</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="7-angry.png">Don't think this gives you permission to look at me whenever you lose.</state>
-                <state img="7-sarcastic.png">You have no idea how much pleasure it gives me to see this. N-no wait, that  came out wrong, not THAT kind of pleasure! Y-you know what I meant!</state>
-                <state img="7-angry.png">Hurry up. I want my clothes back as soon as possible.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="7-shocked.png">How can you still have that!?</state>
@@ -10302,6 +10440,24 @@
             <case tag="female_crotch_is_visible" target="yang" alsoPlaying="ruby">
                 <state img="7-tsundere.png">I swear... Sometimes, you are the most idiotic person I know.</state>
             </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="7-sad.png">Sorry Chihiro... Are you gonna be okay?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="7-interested.png">Chihiro your back... Are you ready to continue?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="7-angry.png">If Chihiro is allowed to leave why aren't I? I don't want to be here either.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="7-tsundere.png">It's alright to be nervous. But I already showed everything.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="7-shocked.png">Huh she dropped her computer... It can talk too?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="7-shocked.png">Wait... Your a... How did you hide that from us?</state>
+            </case>
             <case tag="opponent_crotch_is_visible" target="link">
                 <state img="7-interested.png">If only you had said something earlier, maybe you could have avoided this.</state>
             </case>
@@ -10651,6 +10807,11 @@
         </stage>
 
         <stage id="8">
+            <case tag="male_human_must_strip">
+                <state img="8-interested.png">Can you just take it all off already and get naked with me, ~name~? It might make this less awkward...  Or maybe more... I don't know any more...</state>
+                <state img="8-angry.png">Can you hurry it up? I am pretty embarrassed already.</state>
+                <state img="8-sad.png">Can you hurry up? I just want this nightmare to be over already.</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="8-angry.png">Just because I'm looking at you doesn't mean you can look at me! Just take something off, okay!?</state>
                 <state img="8-angry.png">H-hurry up! T-this is the only time I'll be somewhat okay with this!</state>
@@ -10789,11 +10950,6 @@
             </case>
             <case tag="female_must_strip" target="yang" targetStage="7">
                 <state img="8-shocked.png">Nothing left but your thong...</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="8-interested.png">Can you just take it all off already and get naked with me, ~name~? It might make this less awkward...  Or maybe more... I don't know any more...</state>
-                <state img="8-angry.png">Can you hurry it up? I am pretty embarrassed already.</state>
-                <state img="8-sad.png">Can you hurry up? I just want this nightmare to be over already.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="8-angry.png">You're just toying with me, aren't you!?</state>
@@ -11459,6 +11615,24 @@
             <case tag="female_crotch_is_visible" target="yang" alsoPlaying="ruby">
                 <state img="8-tsundere.png">I swear... Sometimes, you are the most idiotic person I know.</state>
             </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="8-sad.png">Sorry Chihiro... Are you gonna be okay?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="8-interested.png">Chihiro your back... Are you ready to continue?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="8-angry.png">If Chihiro is allowed to leave why aren't I? I don't want to be here either.</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="5">
+                <state img="8-tsundere.png">It's alright to be nervous. But I already showed everything.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="8-shocked.png">Huh she dropped her computer... It can talk too?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="8-shocked.png">Wait... Your a... How did you hide that from us?</state>
+            </case>
             <case tag="opponent_crotch_is_visible" target="link">
                 <state img="8-interested.png">If only you had said something earlier, maybe you could have avoided this.</state>
             </case>
@@ -11739,6 +11913,11 @@
         </stage>
 
         <stage id="9">
+            <case tag="male_human_must_strip">
+                <state img="9-sarcastic.png">Maybe it'd be better if you just took it all off at this point...</state>
+                <state img="9-interested.png">Just take it all off already! You saw me so it's only fair at this point...</state>
+                <state img="9-happy.png">Finally! Just another step closer to paying off your debt...  And this time, you'll be the one putting on a show for me!</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="9-interested.png">Maybe it'd be better if you just took it all off at this point...</state>
                 <state img="9-interested.png">Just take it all off already! You saw me so it's only fair at this point...</state>
@@ -11873,11 +12052,6 @@
             </case>
             <case tag="female_must_strip" target="yang" targetStage="7">
                 <state img="9-shocked.png">Nothing left but your thong...</state>
-            </case>
-            <case tag="male_human_must_strip">
-                <state img="9-sarcastic.png">Maybe it'd be better if you just took it all off at this point...</state>
-                <state img="9-interested.png">Just take it all off already! You saw me so it's only fair at this point...</state>
-                <state img="9-happy.png">Finally! Just another step closer to paying off your debt...  And this time, you'll be the one putting on a show for me!</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="9-angry.png">This isn't what I deserve from a guy like you!</state>
@@ -12516,6 +12690,21 @@
             <case tag="female_crotch_is_visible" target="yang" alsoPlaying="ruby">
                 <state img="9-tsundere.png">I swear... Sometimes, you are the most idiotic person I know.</state>
             </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="4">
+                <state img="9-sad.png">Sorry Chihiro... Are you gonna be okay?</state>
+            </case>
+            <case tag="opponent_lost" target="chihiro" targetStage="5">
+                <state img="9-interested.png">Chihiro your back... Are you ready to continue?</state>
+            </case>
+            <case tag="opponent_stripping" target="chihiro" targetStage="4">
+                <state img="9-angry.png">If Chihiro is allowed to leave why aren't I? I don't want to be here either.</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="5">
+                <state img="9-shocked.png">Huh she dropped her computer... It can talk too?</state>
+            </case>
+            <case tag="opponent_stripped" target="chihiro" targetStage="6">
+                <state img="9-shocked.png">Wait... Your a... How did you hide that from us?</state>
+            </case>
             <case tag="opponent_crotch_is_visible" target="link">
                 <state img="9-interested.png">If only you had said something earlier, maybe you could have avoided this.</state>
             </case>
@@ -12771,6 +12960,9 @@
             </case>
             <case tag="finished_masturbating" oneShotId="5" alsoPlaying="mahiru">
                 <state img="9-angry.png">I mean, if you're inviting me to incur bodily harm, then I guess I have no choice.</state>
+            </case>
+            <case tag="finished_masturbating" alsoPlaying="nami">
+                <state img="9-finished.png">I don't care Nami the game is over and I am getting cold.</state>
             </case>
             <case tag="finished_masturbating" oneShotId="4" alsoPlaying="ruby">
                 <state img="9-finished.png">You will &lt;i&gt;NEVER&lt;/i&gt; speak of this again...okay, Ruby?</state>
