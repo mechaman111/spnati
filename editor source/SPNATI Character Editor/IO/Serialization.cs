@@ -402,7 +402,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="data">Data to serialize</param>
 		/// <param name="filename">File name</param>
 		/// <returns>True if successful</returns>
-		private static bool ExportXml<T>(T data, string filename)
+		public static bool ExportXml<T>(T data, string filename)
 		{
 			TextWriter writer = null;
 			try
@@ -506,7 +506,7 @@ namespace SPNATI_Character_Editor
 			return ImportXml<MarkerData>(filename);
 		}
 
-		private static CharacterEditorData ImportEditorData(string folderName)
+		public static CharacterEditorData ImportEditorData(string folderName)
 		{
 			string folder = Config.GetRootDirectory(folderName);
 			if (!Directory.Exists(folder))

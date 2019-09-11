@@ -83,6 +83,10 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
+				if (Link != null)
+				{
+					return Link.Name;
+				}
 				if (Labels.Count > 0) { return Labels[0].Value; }
 				return Id;
 			}

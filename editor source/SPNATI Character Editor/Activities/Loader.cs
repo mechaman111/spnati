@@ -1,17 +1,18 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using System.Linq;
-using SPNATI_Character_Editor.Forms;
-using SPNATI_Character_Editor.Providers;
+using System.Threading.Tasks;
 
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(LoaderRecord), 0)]
 	public partial class Loader : Activity
 	{
+		public const bool ForceUncached = false;
+
 		public Loader()
 		{
 			InitializeComponent();
@@ -99,9 +100,14 @@ namespace SPNATI_Character_Editor.Activities
 						{
 							return;
 						}
-						Character character = Serialization.ImportCharacter(path);
+						CachedCharacter character = CharacterDatabase.LoadFromCache(path);
+						if (ForceUncached || character == null)
+						{
+							character = CharacterDatabase.CacheCharacter(folderName);
+						}
 						if (character != null)
 						{
+							character.FolderName = folderName;
 							CharacterDatabase.Add(character);
 							SpellChecker.Instance.AddWord(character.Label, false);
 							for (int t = 0; t < character.Tags.Count; t++)
@@ -150,7 +156,6 @@ namespace SPNATI_Character_Editor.Activities
 			CharacterDatabase.Add(human);
 			CharacterDatabase.AddEditorData(human, new CharacterEditorData() { Owner = "human" });
 
-			//link up skins
 			foreach (Character c in CharacterDatabase.Characters)
 			{
 				c.Metadata.AlternateSkins.ForEach(set =>
@@ -196,7 +201,8 @@ namespace SPNATI_Character_Editor.Activities
 				}
 				else
 				{
-					Shell.Instance.LaunchWorkspace(CharacterDatabase.Get(lastCharacter));
+					Character last = CharacterDatabase.Load(lastCharacter);
+					Shell.Instance.LaunchWorkspace(last);
 				}
 			}
 

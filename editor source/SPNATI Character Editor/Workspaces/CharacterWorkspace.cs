@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Desktop;
+﻿using Desktop;
 using SPNATI_Character_Editor.Activities;
-using SPNATI_Character_Editor.Forms;
 using SPNATI_Character_Editor.Services;
+using System;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor.Workspaces
 {

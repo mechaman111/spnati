@@ -9,6 +9,11 @@ namespace SPNATI_Character_Editor
 	{
 		private static Random _random = new Random();
 
+		public static int GetRandom(int maxValue)
+		{
+			return _random.Next(maxValue);
+		}
+
 		public static TValue GetOrAddDefault<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, Func<TValue> defaultFunc)
 		{
 			TValue existing;

@@ -19,15 +19,28 @@ namespace SPNATI_Character_Editor.Activities
 		private IChartDataBuilder _currentBuilder;
 		private string[] _availableViews;
 		private string _currentView;
+		private bool _loaded;
 
 		public ChartHost()
 		{
 			InitializeComponent();
 		}
 
-		protected override void OnInitialize()
+		protected override void OnFirstActivate()
 		{
+			if (!CharacterDatabase.AllLoaded)
+			{
+				Shell.Instance.LaunchWorkspace(new CharacterLoaderRecord());
+			}
+		}
+		protected override void OnActivate()
+		{
+			if (!CharacterDatabase.AllLoaded || _loaded)
+			{
+				return;
+			}
 			FindCharts();
+			_loaded = true;
 		}
 
 		/// <summary>

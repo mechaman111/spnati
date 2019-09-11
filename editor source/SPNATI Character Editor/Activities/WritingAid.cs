@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using Desktop.Messaging;
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,8 @@ namespace SPNATI_Character_Editor.Activities
 		private Character _activeCharacter;
 		private Situation _activeSituation;
 		private Case _response;
+
+		private int _generationId;
 
 		public WritingAid()
 		{
@@ -91,18 +94,17 @@ namespace SPNATI_Character_Editor.Activities
 			_activated = true;
 			splitContainer1.Panel2Collapsed = true;
 			_maxSuggestions = 0;
-
 			foreach (Character c in CharacterDatabase.Characters)
 			{
 				if (c.FolderName == "human" || c == _character)
 				{
 					continue;
 				}
-				
+
 				CharacterEditorData editorData = CharacterDatabase.GetEditorData(c);
 				_maxSuggestions += editorData.NoteworthySituations.Count;
 			}
-			GenerateSuggestions();
+			_generationId = Shell.Instance.DelayAction(GenerateSuggestions, 100);
 		}
 
 		protected override void OnActivate()
@@ -135,6 +137,11 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void GenerateSuggestions()
 		{
+			if (_generationId != 0)
+			{
+				Shell.Instance.CancelAction(_generationId);
+				_generationId = 0;
+			}
 			Cursor.Current = Cursors.WaitCursor;
 
 			int pri = cboPriority.SelectedIndex;
@@ -149,87 +156,61 @@ namespace SPNATI_Character_Editor.Activities
 			int max = Math.Min(_maxSuggestions, suggestionCount);
 
 			Character filter = recFilter.Record as Character;
-			Character currentCharacter = filter;
 			CharacterEditorData editorData = null;
+			List<Character> possibleCharacters = new List<Character>();
 			if (filter != null)
 			{
 				editorData = CharacterDatabase.GetEditorData(filter);
-
-				max = Math.Min(suggestionCount, editorData.NoteworthySituations.Count);
+				possibleCharacters.Add(filter);
+			}
+			else
+			{
+				possibleCharacters.AddRange(CharacterDatabase.Characters);
 			}
 
-			HashSet<Situation> suggestions = new HashSet<Situation>();
-			List<Character> noteworthyCharacters = CharacterDatabase.Characters.Where(c =>
+			List<Tuple<Character, Situation>> suggestions = new List<Tuple<Character, Situation>>();
+			foreach (Character c in possibleCharacters)
 			{
 				CharacterEditorData data = CharacterDatabase.GetEditorData(c);
 				if (c != _character && data.NoteworthySituations.Count > 0)
 				{
-					if (priority != SituationPriority.None)
+					foreach (Situation s in data.NoteworthySituations)
 					{
-						foreach (Situation s in data.NoteworthySituations)
+						SituationPriority sitPriority = s.Priority == SituationPriority.None ? SituationPriority.Noteworthy : s.Priority;
+						if (s.Priority == priority || priority == SituationPriority.None)
 						{
-							if (s.LinkedCase == null && s.LegacyCase == null) { continue; }
-							SituationPriority sitPriority = s.Priority == SituationPriority.None ? SituationPriority.Noteworthy : s.Priority;
-							if (s.Priority == priority)
-							{
-								return true;
-							}
+							suggestions.Add(new Tuple<Character, Situation>(c, s));
 						}
-						return false;
 					}
-					return true;
 				}
-				return false;
-			}).ToList();
-
-			if (filter == null && noteworthyCharacters.Count == 0)
-			{
-				return;
 			}
 
-			int attempts = max + 20; //it's possible to get into an infinite loop if there is a short supply of situations, so take the dumb way out of avoiding this by just trying a maximum number of times
-			while (suggestions.Count < max && attempts-- > 0)
+			for (int i = 0; i < max && suggestions.Count > 0; i++)
 			{
-				if (filter == null)
-				{
-					currentCharacter = noteworthyCharacters.GetRandom();
-					currentCharacter.PrepareForEdit();
-					editorData = CharacterDatabase.GetEditorData(currentCharacter);
-				}
-
-				editorData.Initialize();
-				List<Situation> situations = editorData.NoteworthySituations.Where(s =>
-				{
-					SituationPriority sitPriority = s.Priority == SituationPriority.None ? SituationPriority.Noteworthy : s.Priority;
-					return (s.LegacyCase != null || s.LinkedCase != null) && !suggestions.Contains(s) && (priority == SituationPriority.None || s.Priority == priority);
-				}).ToList();
-				if (situations.Count == 0)
-				{
-					continue;
-				}
-				Situation situation = situations.GetRandom();
+				int index = ExtensionMethods.GetRandom(suggestions.Count);
+				Tuple<Character, Situation> item = suggestions[index];
+				Character owner = item.Item1;
+				Situation situation = item.Item2;
+				suggestions.RemoveAt(index);
 
 				if (!_showExisting)
 				{
 					//see if we've already responded
-					bool responded = HasResponded(currentCharacter, _character, situation, false);
-					if (responded || situation.LinkedCase == null)
+					bool responded = HasResponded(owner, _character, situation, true);
+					if (responded)
 					{
-						if (filter != null)
-						{
-							max--; //avoid an infinite loop of trying the same situation over and over
-						}
+						i--;
 						continue;
 					}
 				}
 
-				suggestions.Add(situation);
-				BuildSuggestionRow(currentCharacter, situation);
+				BuildSuggestionRow(owner, situation);
 				if (gridSituations.Rows.Count == 1)
 				{
-					ShowSituation(currentCharacter, situation);
+					ShowSituation(owner, situation, gridSituations.Rows[0]);
 				}
 			}
+
 			Cursor.Current = Cursors.Default;
 		}
 
@@ -271,7 +252,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void BuildSuggestionRow(Character character, Situation line)
 		{
-			int index = gridSituations.Rows.Add(character.Name, line.Name, line.Description, line.GetStageString(), line.LinkedCase.ToString());
+			int index = gridSituations.Rows.Add(character.Name, line.Name, line.Description, line.GetStageString(), line.LinkedCase?.ToString() ?? "...");
 			DataGridViewRow row = gridSituations.Rows[index];
 			row.Tag = new Tuple<Character, Situation>(character, line);
 		}
@@ -284,19 +265,36 @@ namespace SPNATI_Character_Editor.Activities
 				Tuple<Character, Situation> situation = row.Tag as Tuple<Character, Situation>;
 				if (situation != null)
 				{
-					ShowSituation(situation.Item1, situation.Item2);
+					ShowSituation(situation.Item1, situation.Item2, row);
 				}
 			}
 		}
 
-		private void ShowSituation(Character character, Situation situation)
+		private void ShowSituation(Character character, Situation situation, DataGridViewRow row)
 		{
+			Cursor.Current = Cursors.WaitCursor;
 			splitSituations.Panel2Collapsed = false;
 
+			if (!character.IsFullyLoaded)
+			{
+				character = CharacterDatabase.Load(character.FolderName);
+				character.PrepareForEdit();
+				CharacterEditorData editorData = CharacterDatabase.GetEditorData(character);
+				
+				Situation replacement = editorData.NoteworthySituations.Find(s => (situation.Id > 0 && s.Id == situation.Id) || (situation.Id == 0 && situation.Name == s.Name));
+				if (replacement != null)
+				{
+					situation = replacement;
+				}
+				
+				row.Tag = new Tuple<Character, Situation>(character, situation);
+				row.Cells[ColTrigger.Index].Value = situation.LinkedCase?.ToString() ?? "...";
+			}
 			_activeCharacter = character;
 			_activeSituation = situation;
 			Stage stage = new Stage(situation.MinStage);
 			gridActiveSituation.SetData(character, stage, situation.LinkedCase, new HashSet<int>());
+			Cursor.Current = Cursors.Default;
 		}
 
 		private void gridActiveSituation_HighlightRow(object sender, int index)

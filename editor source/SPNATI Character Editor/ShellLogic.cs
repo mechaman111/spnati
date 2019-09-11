@@ -469,7 +469,12 @@ namespace SPNATI_Character_Editor
 			IRecord record = RecordLookup.DoLookup(typeof(Character), "", true, CharacterDatabase.FilterHuman, null);
 			if (record != null)
 			{
-				Shell.Instance.LaunchWorkspace(record as Character);
+				Character c = record as Character;
+				if (c is CachedCharacter)
+				{
+					c = CharacterDatabase.Load(c.FolderName);
+				}
+				Shell.Instance.LaunchWorkspace(c);
 			}
 		}
 

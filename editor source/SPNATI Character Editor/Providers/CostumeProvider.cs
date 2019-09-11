@@ -81,18 +81,42 @@ namespace SPNATI_Character_Editor.Providers
 
 		public void Sort(List<IRecord> list)
 		{
-			list.Sort((record1, record2) => record1.CompareTo(record2));
+			list.Sort((record1, record2) =>
+			{
+				Costume c1 = record1 as Costume;
+				Costume c2 = record2 as Costume;
+				Character chr1 = c1.Character;
+				Character chr2 = c2.Character;
+				int compare = 0;
+				if (chr1 != null && chr2 == null)
+				{
+					compare = -1;
+				}
+				else if (chr1 == null && chr2 != null)
+				{
+					compare = 1;
+				}
+				else if (chr1 != null && chr2 != null)
+				{
+					compare = chr1.CompareTo(chr2);
+				}
+				if (compare == 0)
+				{
+					compare = c1.Name.CompareTo(c2.Name);
+				}
+				return compare;
+			});
 		}
 
 		public string[] GetColumns()
 		{
-			return new string[] { "Name", "Folder" };
+			return new string[] { "Name", "Id", "Character", "Folder" };
 		}
 
 		public ListViewItem FormatItem(IRecord record)
 		{
 			Costume skin = record as Costume;
-			return new ListViewItem(new string[] { skin.Id, skin.Folder });
+			return new ListViewItem(new string[] { skin.Name, skin.Id, skin.Character?.ToString(), skin.Folder });
 		}
 
 		public void SetContext(object context)

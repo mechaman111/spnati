@@ -1625,6 +1625,8 @@ namespace SPNATI_Character_Editor
 
 			foreach (Case alternate in AlternativeConditions)
 			{
+				alternate.Tag = Tag;
+				alternate.Stages = Stages;
 				Case alternateResponse = alternate.CreateResponse(speaker, responder);
 				response.AlternativeConditions.Add(alternateResponse);
 			}

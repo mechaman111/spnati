@@ -13,6 +13,8 @@ namespace SPNATI_Character_Editor.Activities
 	[Activity(typeof(AnalyzerRecord), 0)]
 	public partial class DataAnalyzer : Activity
 	{
+		private bool _loaded;
+
 		public DataAnalyzer()
 		{
 			InitializeComponent();
@@ -25,7 +27,19 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnFirstActivate()
 		{
+			if (!CharacterDatabase.AllLoaded)
+			{
+				Shell.Instance.LaunchWorkspace(new CharacterLoaderRecord());
+			}
+		}
+		protected override void OnActivate()
+		{
+			if (!CharacterDatabase.AllLoaded || _loaded)
+			{
+				return;
+			}
 			FillExamples();
+			_loaded = true;
 		}
 
 		private void FillExamples()

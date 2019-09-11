@@ -38,6 +38,7 @@ namespace Desktop
 		private Dictionary<IWorkspace, WorkspaceControl> _workspaces = new Dictionary<IWorkspace, WorkspaceControl>();
 		private Dictionary<IWorkspace, TabPage> _tabs = new Dictionary<IWorkspace, TabPage>();
 		private Toaster _toaster = new Toaster();
+		private Messenger _messenger = new Messenger();
 		public IWorkspace ActiveWorkspace;
 		public IActivity ActiveActivity;
 		public IActivity ActiveSidebarActivity;
@@ -876,12 +877,22 @@ namespace Desktop
 			SubActionClick?.Invoke(this, e);
 		}
 
+		public int DelayAction(Action action, int delayMs)
+		{
+			return _messenger.Send(action, delayMs);
+		}
+
+		public void CancelAction(int id)
+		{
+			_messenger.Cancel(id);
+		}
+
 		#region Toaster
 		public void ShowToast(string caption, string text, Image icon = null, SkinnedHighlight highlight = SkinnedHighlight.Heading)
 		{
 			Toast toast = new Toast(caption, text)
 			{
-				Highlight =  highlight,
+				Highlight = highlight,
 				Icon = icon,
 			};
 			_toaster.ShowToast(toast);

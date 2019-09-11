@@ -267,6 +267,14 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		/// <summary>
+		/// Gets whether this is loaded from behaviour.xml or if it's just the placeholder cached version
+		/// </summary>
+		public virtual bool IsFullyLoaded
+		{
+			get { return true; }
+		}
+
 		public string ToLookupString()
 		{
 			return $"{Name} [{Key}]";
@@ -571,7 +579,7 @@ namespace SPNATI_Character_Editor
 			return Path.Combine(root, "attachments", FolderName);
 		}
 
-		public void OnBeforeSerialize()
+		public virtual void OnBeforeSerialize()
 		{
 			Gender = Gender.ToLower();
 			Behavior.OnBeforeSerialize(this);
@@ -583,7 +591,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public void OnAfterDeserialize()
+		public virtual void OnAfterDeserialize()
 		{
 			Wardrobe.ForEach(c => c.OnAfterDeserialize());
 			foreach (var line in StartingLines)

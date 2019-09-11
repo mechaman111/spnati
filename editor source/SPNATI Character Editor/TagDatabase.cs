@@ -12,8 +12,8 @@ namespace SPNATI_Character_Editor
 		private static Dictionary<string, int> _tags = new Dictionary<string, int>();
 		public static TagDictionary Dictionary { get; private set; }
 
-		private static DualKeyDictionary<string, string, List<Character>> _groups = new DualKeyDictionary<string, string, List<Character>>();
-		private static DualKeyDictionary<Character, string, List<string>> _characterGroups = new DualKeyDictionary<Character, string, List<string>>();
+		private static DualKeyDictionary<string, string, List<string>> _groups = new DualKeyDictionary<string, string, List<string>>();
+		private static DualKeyDictionary<string, string, List<string>> _characterGroups = new DualKeyDictionary<string, string, List<string>>();
 
 		public static void Load()
 		{
@@ -89,35 +89,35 @@ namespace SPNATI_Character_Editor
 		public static void CacheGroup(Tag tag, Character character)
 		{
 			if (string.IsNullOrEmpty(tag.Group)) { return; }
-			List<Character> list = _groups.Get(tag.Group, tag.Key);
-			List<string> tags = _characterGroups.Get(character, tag.Group);
+			List<string> list = _groups.Get(tag.Group, tag.Key);
+			List<string> tags = _characterGroups.Get(character.FolderName, tag.Group);
 			if (tags == null)
 			{
 				tags = new List<string>();
-				_characterGroups.Set(character, tag.Group, tags);
+				_characterGroups.Set(character.FolderName, tag.Group, tags);
 			}
 			tags.Add(tag.Key);
 			if (list == null)
 			{
-				list = new List<Character>();
+				list = new List<string>();
 				_groups.Set(tag.Group, tag.Key, list);
 			}
-			list.Add(character);
+			list.Add(character.FolderName);
 		}
 
 		public static Tuple<string, List<Character>> GetSmallestGroup(string group, Character character)
 		{
-			List<string> tags = _characterGroups.Get(character, group);
+			List<string> tags = _characterGroups.Get(character.FolderName, group);
 			if (tags == null) { return null; }
 			int min = int.MaxValue;
 			string minTag = null;
-			List<Character> minList = null;
+			List<string> minList = null;
 			Dictionary<string, List<Character>> output = new Dictionary<string, List<Character>>();
-			Dictionary<string, List<Character>> result;
+			Dictionary<string, List<string>> result;
 			_groups.TryGetValue(group, out result);
 			foreach (string tag in tags)
 			{
-				List<Character> list = result.Get(tag);
+				List<string> list = result.Get(tag);
 				if (list != null && list.Count > 1 && (min == 0 || min > list.Count))
 				{
 					min = list.Count;
@@ -129,7 +129,12 @@ namespace SPNATI_Character_Editor
 			{
 				return null;
 			}
-			return new Tuple<string, List<Character>>(minTag, minList);
+			List<Character> finalList = new List<Character>();
+			foreach (string key in minList)
+			{
+				finalList.Add(CharacterDatabase.Get(key));
+			}
+			return new Tuple<string, List<Character>>(minTag, finalList);
 		}
 	}
 }

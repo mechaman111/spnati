@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Desktop.DataStructures
 {
-	public class BindableObject : INotifyPropertyChanged, ICloneable, IPropertyChangedNotifier
+	public class BindableObject : INotifyPropertyChanged, ICloneable, IPropertyChangedNotifier, IDisposable
 	{
 		private Dictionary<string, object> _values = new Dictionary<string, object>();
 		private Dictionary<string, NotifyCollectionChangedEventHandler> _collectionHandlers = new Dictionary<string, NotifyCollectionChangedEventHandler>();
@@ -294,6 +294,19 @@ namespace Desktop.DataStructures
 			BindableObject copy = Activator.CreateInstance(GetType()) as BindableObject;
 			CopyPropertiesInto(copy);
 			return copy;
+		}
+
+		public void Dispose()
+		{
+			foreach (KeyValuePair<string, object> kvp in _values)
+			{
+				RemoveHandlers(kvp.Value, kvp.Key);
+			}
+			OnDispose();
+		}
+
+		protected virtual void OnDispose()
+		{
 		}
 	}
 }

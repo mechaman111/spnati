@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using static SPNATI_Character_Editor.Character;
 
 namespace SPNATI_Character_Editor
@@ -357,8 +358,12 @@ namespace SPNATI_Character_Editor
 
 	public class TargetingInformation
 	{
+		[XmlAttribute("target")]
 		public string Target;
+		[XmlAttribute("count")]
 		public int LineCount;
+
+		public TargetingInformation() { }
 
 		public TargetingInformation(string target)
 		{
