@@ -100,10 +100,11 @@ namespace SPNATI_Character_Editor.Activities
 						{
 							return;
 						}
-						CachedCharacter character = CharacterDatabase.LoadFromCache(path);
-						if (ForceUncached || character == null)
+						bool stale;
+						CachedCharacter character = CharacterDatabase.LoadFromCache(path, out stale);
+						if (character == null || stale)
 						{
-							character = CharacterDatabase.CacheCharacter(folderName);
+							character = CharacterDatabase.CacheCharacter(folderName, character);
 						}
 						if (character != null)
 						{

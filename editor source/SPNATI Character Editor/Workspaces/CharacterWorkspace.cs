@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor.Workspaces
 	{
 		public const string SpellCheckerService = "SpellCheck";
 
+		private static HashSet<Character> _sessionActivations = new HashSet<Character>();
 		private Character _character;
 
 		protected override void OnInitialize()
@@ -24,6 +25,18 @@ namespace SPNATI_Character_Editor.Workspaces
 			Config.Set(Settings.LastCharacter, _character.FolderName);
 		}
 
+		protected override void OnActivate()
+		{
+			base.OnActivate();
+			if (!_sessionActivations.Contains(_character))
+			{
+				_sessionActivations.Add(_character);
+				if (Config.EnableDashboard && (Config.DevMode || Config.IncludesUserName(_character.Metadata.Writer)) && GlobalCache.HasChanges(_character.FolderName))
+				{
+					Shell.Instance.ShowToast("New Incoming Dialogue!", $"Some characters have had new lines written that target {_character}. Check out the Dashboard for a summary.");
+				}
+			}
+		}
 
 		public override bool AllowAutoStart(Type activityType)
 		{

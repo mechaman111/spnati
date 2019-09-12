@@ -11,9 +11,12 @@ namespace Desktop.CommonControls.Graphs
 		private const int AxesPadding = 3;
 		private const int LegendWidth = 10;
 
+		public bool HorizontalOrientation { get; set; }
+
 		private Animator _animator = new Animator(0.10f);
 
 		private StringFormat _centered = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+		private StringFormat _leftAlign = new StringFormat() { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center };
 
 		private Pen _axesPen = new Pen(Color.Black);
 		private SolidBrush _textBrush = new SolidBrush(Color.Black);
@@ -29,6 +32,7 @@ namespace Desktop.CommonControls.Graphs
 
 		private Rectangle _graphRect;
 		private Rectangle _legendRect;
+		private int _labelWidth;
 
 		public bool ShowLegend { get; set; }
 		public bool ShowTotals { get; set; }
@@ -105,7 +109,134 @@ namespace Desktop.CommonControls.Graphs
 			{
 				RecalculateBounds(g);
 			}
-			
+
+			if (HorizontalOrientation)
+			{
+				PaintHorizontal(g);
+			}
+			else
+			{
+				PaintVertical(g);
+			}
+		}
+
+		private void RecalculateBounds(Graphics g)
+		{
+			_lineHeight = (int)g.MeasureString("X", _font).Height;
+
+			Dictionary<int, int> bars = new Dictionary<int, int>();
+			int maxY = 0;
+			int maxX = 0;
+			int labelWidth = 0;
+			int valueWidth = 0;
+			foreach (DataSeries series in _series)
+			{
+				foreach (DataPoint pt in series.Points)
+				{
+					int current = 0;
+					bars.TryGetValue(pt.X, out current);
+
+					maxX = Math.Max(maxX, pt.X);
+					bars[pt.X] = current + pt.Y;
+					maxY = Math.Max(maxY, bars[pt.X]);
+
+					if (!string.IsNullOrEmpty(pt.Label) && HorizontalOrientation)
+					{
+						labelWidth = Math.Max(labelWidth, (int)g.MeasureString(pt.Label, _font).Width);
+						valueWidth = Math.Max(valueWidth, (int)g.MeasureString(pt.Y.ToString(), _font).Width);
+					}
+				}
+			}
+			_labelWidth = labelWidth + AxesPadding;
+			_maxValueX = maxX;
+			_maxValueY = maxY;
+
+			int legendHeight = 0;
+			if (ShowLegend && _series.Count > 1)
+			{
+				legendHeight = _lineHeight;
+			}
+			_legendRect = new Rectangle(AxesPadding, 0, Width - AxesPadding * 2, legendHeight);
+			if (HorizontalOrientation)
+			{
+				_graphRect = new Rectangle(AxesPadding * 2 + _labelWidth, legendHeight, Width - AxesPadding * 3 - _labelWidth - valueWidth, Height - _lineHeight - legendHeight);
+			}
+			else
+			{
+				_graphRect = new Rectangle(AxesPadding, _lineHeight + legendHeight, Width - AxesPadding * 2, Height - _lineHeight * 2 - legendHeight);
+			}
+
+			_animator.StartAnimation(AnimationDirection.In);
+			_invalidated = false;
+		}
+
+		private void PaintHorizontal(Graphics g)
+		{
+			int axesY = AxesPadding * 2 + _labelWidth;
+			int lineLeft = AxesPadding * 2 + _labelWidth - 1;
+			g.DrawLine(_axesPen, lineLeft, _graphRect.Top, lineLeft, _graphRect.Bottom);
+
+			int legendLeft = _legendRect.Left;
+
+			Dictionary<int, int> bars = new Dictionary<int, int>();
+			Dictionary<int, string> labels = new Dictionary<int, string>();
+			int ySpacing = _graphRect.Height / (_maxValueX + 2);
+			int barWidth = 2 * ySpacing / 3;
+
+			int yStart = _graphRect.Top;
+			for (int n = 0; n < _series.Count; n++)
+			{
+				DataSeries series = _series[n];
+
+				_barBrush.Color = series.Color;
+
+				//legend
+				if (ShowLegend && _series.Count > 1)
+				{
+					int width = LegendWidth + (int)g.MeasureString(series.Label, _font).Width;
+					g.FillRectangle(_barBrush, legendLeft, _legendRect.Top + 1, LegendWidth, _lineHeight - 2);
+					g.DrawString(series.Label, _font, _textBrush, legendLeft + LegendWidth, _legendRect.Top);
+					legendLeft += width + LegendWidth;
+				}
+
+				//bars
+				foreach (DataPoint pt in series.Points)
+				{
+					int currentY = 0;
+					bars.TryGetValue(pt.X, out currentY);
+
+					int x = pt.Y;
+					int y = yStart + (pt.X + 1) * ySpacing;
+
+					int current = (int)MathUtils.Lerp(0, x, _animator.Value);
+					int previous = currentY;
+					bars[pt.X] = current + currentY;
+
+					float previousAmount = previous / (float)_maxValueY;
+					int previousWidth = (int)(_graphRect.Width * previousAmount);
+					int previousRight = _graphRect.Left + previousWidth;
+
+					float amount = current / (float)_maxValueY;
+					int width = (int)(_graphRect.Width * amount);
+
+					g.FillRectangle(_barBrush, _graphRect.Left, y - barWidth / 2, width, barWidth);
+
+					if (!labels.ContainsKey(pt.X) && !string.IsNullOrEmpty(pt.Label))
+					{
+						labels[pt.X] = pt.Label;
+						g.DrawString(pt.Label, _font, _textBrush, new Rectangle(AxesPadding, y - barWidth / 2, _labelWidth, barWidth), _leftAlign);
+					}
+
+					if (ShowTotals)
+					{
+						g.DrawString(pt.Y.ToString(), _font, _textBrush, _graphRect.Left + width, y - _lineHeight / 2);
+					}
+				}
+			}
+		}
+
+		private void PaintVertical(Graphics g)
+		{
 			//axes
 			int axesY = Height - _lineHeight;
 			g.DrawLine(_axesPen, AxesPadding, axesY, Width - AxesPadding, axesY);
@@ -119,7 +250,7 @@ namespace Desktop.CommonControls.Graphs
 			int xSpacing = _graphRect.Width / (_maxValueX + 2);
 			int barWidth = 2 * xSpacing / 3;
 			int xStart = _graphRect.Left;
-			for(int n = 0; n < _series.Count; n++)
+			for (int n = 0; n < _series.Count; n++)
 			{
 				DataSeries series = _series[n];
 
@@ -189,40 +320,6 @@ namespace Desktop.CommonControls.Graphs
 					g.DrawString(text, _font, _textBrush, x - width / 2, top);
 				}
 			}
-		}
-
-		private void RecalculateBounds(Graphics g)
-		{
-			_lineHeight = (int)g.MeasureString("X", _font).Height;
-
-			Dictionary<int, int> bars = new Dictionary<int, int>();
-			int maxY = 0;
-			int maxX = 0;
-			foreach (DataSeries series in _series)
-			{
-				foreach (DataPoint pt in series.Points)
-				{
-					int current = 0;
-					bars.TryGetValue(pt.X, out current);
-
-					maxX = Math.Max(maxX, pt.X);
-					bars[pt.X] = current + pt.Y;
-					maxY = Math.Max(maxY, bars[pt.X]);
-				}
-			}
-			_maxValueX = maxX;
-			_maxValueY = maxY;
-
-			int legendHeight = 0;
-			if (ShowLegend && _series.Count > 1)
-			{
-				legendHeight = _lineHeight;
-			}
-			_graphRect = new Rectangle(AxesPadding, _lineHeight + legendHeight, Width - AxesPadding * 2, Height - _lineHeight * 2 - legendHeight);
-			_legendRect = new Rectangle(_graphRect.Left, 0, _graphRect.Right, _lineHeight);
-
-			_animator.StartAnimation(AnimationDirection.In);
-			_invalidated = false;
 		}
 	}
 }

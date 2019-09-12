@@ -147,8 +147,9 @@ namespace SPNATI_Character_Editor
 			return _reskins.Get(folder);
 		}
 
-		public static CachedCharacter LoadFromCache(string path)
+		public static CachedCharacter LoadFromCache(string path, out bool stale)
 		{
+			stale = false;
 			string folderName = Path.GetFileName(path);
 			string cachePath = Path.Combine(Config.AppDataDirectory, folderName, "cached.xml");
 			CachedCharacter cachedCharacter = null;
@@ -165,20 +166,15 @@ namespace SPNATI_Character_Editor
 					{
 						editorNewer = true;
 					}
-					if (lastChange < cacheDate && !editorNewer)
+					stale = cacheDate < lastChange || editorNewer;
+					cachedCharacter = Serialization.ImportXml<CachedCharacter>(cachePath);
+					if (cachedCharacter != null)
 					{
-						cachedCharacter = Serialization.ImportXml<CachedCharacter>(cachePath);
-						if (cachedCharacter != null)
+						if (cachedCharacter.CacheVersion < CachedCharacter.CurrentVersion)
 						{
-							if (cachedCharacter.CacheVersion < CachedCharacter.CurrentVersion)
-							{
-								cachedCharacter = null;
-							}
-							else
-							{
-								cachedCharacter.LastUpdate = lastChange.ToLocalTime();
-							}
+							stale = true;
 						}
+						cachedCharacter.LastUpdate = lastChange.ToLocalTime();
 					}
 				}
 				catch
@@ -187,7 +183,7 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
-			if (cachedCharacter != null)
+			if (cachedCharacter != null && !stale)
 			{
 				CharacterEditorData data = Serialization.ImportEditorData(folderName);
 				AddEditorData(cachedCharacter, data);
@@ -200,14 +196,17 @@ namespace SPNATI_Character_Editor
 		/// Builds the cached version of a character
 		/// </summary>
 		/// <param name="folderName"></param>
-		public static CachedCharacter CacheCharacter(string folderName)
+		/// <param name="oldCache">If provided, a diff will be generated between the old and new</param>
+		public static CachedCharacter CacheCharacter(string folderName, CachedCharacter oldCache)
 		{
 			string behaviorPath = Path.Combine(Config.GetRootDirectory(folderName), "behaviour.xml");
 			if (File.Exists(behaviorPath))
 			{
 				using (Character realCharacter = Serialization.ImportCharacter(folderName))
 				{
-					return CacheCharacter(realCharacter);
+					CachedCharacter cached = CacheCharacter(realCharacter);
+					GlobalCache.CreateDiff(oldCache, cached);
+					return cached;
 				}
 			}
 			return null;

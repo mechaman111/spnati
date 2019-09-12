@@ -20,6 +20,7 @@ namespace SPNATI_Character_Editor.Activities
 		private int _oldSplitter;
 		private bool _editing;
 		private bool _loading;
+		private Character _target;
 
 		public BanterWizard()
 		{
@@ -46,19 +47,22 @@ namespace SPNATI_Character_Editor.Activities
 			lblCharacters.Text = string.Format(lblCharacters.Text, _character);
 			lstCharacters.Sorted = true;
 
-			if (Config.AutoLoadBanterWizard)
+			FilterTargets();
+		}
+
+		protected override void OnActivate()
+		{
+			_target = null;
+		}
+
+		protected override void OnParametersUpdated(params object[] parameters)
+		{
+			if (parameters.Length > 0 && parameters[0] is Character)
 			{
-				FilterTargets();
-			}
-			else
-			{
-				foreach (Character other in CharacterDatabase.Characters)
-				{
-					if (other.FolderName == "human" || other == _character) { continue; }
-					lstCharacters.Items.Add(other);
-				}
+				_target = parameters[0] as Character;
 			}
 		}
+
 
 		public override bool CanQuit(CloseArgs args)
 		{
@@ -524,6 +528,12 @@ namespace SPNATI_Character_Editor.Activities
 			splitContainer1.Panel1.Enabled = true;
 			Cursor.Current = Cursors.Default;
 			_loading = false;
+
+			if (_target != null)
+			{
+				lstCharacters.SelectedItem = _target;
+				_target = null;
+			}
 		}
 
 		private void cmdJump_Click(object sender, EventArgs e)

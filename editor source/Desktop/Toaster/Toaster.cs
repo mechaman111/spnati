@@ -1,7 +1,5 @@
-﻿using Desktop.Skinning;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -13,7 +11,7 @@ namespace Desktop
 		private List<Toast> _toasts = new List<Toast>();
 
 		public const float MoveTime = 500;
-		public const float DisplayTime = 5000;
+		public const float DisplayTime = 8000;
 
 		private const int ToastMargin = 10;
 
