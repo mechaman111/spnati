@@ -273,7 +273,7 @@ function Pose(poseDef, display) {
 }
 
 Pose.prototype.getHeightScaleFactor = function() {
-    return this.display.height() / this.baseHeight;
+    return this.display.imageAreaHeight / this.baseHeight;
 }
 
 Pose.prototype.onSpriteLoaded = function(sprite) {
@@ -535,12 +535,20 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
     this.imageArea = imageArea;
     this.label = labelElem;
     this.animCallbackID = undefined;
+
+    this.imageAreaHeight = this.imageArea.height();
+
+    this.resizeObserver = new ResizeObserver(function (entries) {
+        if (entries[0].contentBoxSize) {
+            this.imageAreaHeight = entries[0].contentBoxSize.blockSize;
+        } else {
+            this.imageAreaHeight = entries[0].contentRect.height;
+        }
+    }.bind(this));
+
+    this.resizeObserver.observe(this.imageArea[0]);
     
     window.addEventListener('resize', this.onResize.bind(this));
-}
-
-OpponentDisplay.prototype.height = function () {
-    return this.imageArea.height();
 }
 
 OpponentDisplay.prototype.hideBubble = function () {
