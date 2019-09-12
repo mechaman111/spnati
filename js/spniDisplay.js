@@ -118,6 +118,14 @@ PoseSprite.prototype.draw = function() {
     }
 }
 
+PoseSprite.prototype.setWillChangeHints = function (enabled) {
+    $(this.vehicle).css('will-change', enabled ? 'transform, opacity' : 'auto');
+    $(this.pivot).css('will-change', enabled ? 'transform' : 'auto');
+    if (this.img) {
+        $(this.img).css('will-change', enabled ? 'height, width' : 'auto');
+    }
+}
+
 
 function PoseAnimation (targetSprite, pose, args) {
     this.pose = pose;
@@ -324,6 +332,14 @@ Pose.prototype.needsAnimationLoop = function () {
 
     return false;
 }
+
+Pose.prototype.setWillChangeHints = function (enabled) {
+    for (key in this.sprites) {
+        if (this.sprites.hasOwnProperty(key)) {
+            this.sprites[key].setWillChangeHints(enabled);
+        }
+    }
+} 
 
 function xmlToObject($xml) {
     var targetObj = {};
@@ -557,6 +573,10 @@ OpponentDisplay.prototype.hideBubble = function () {
 }
 
 OpponentDisplay.prototype.clearCustomPose = function () {
+    if (this.pose instanceof Pose) {
+        this.pose.setWillChangeHints(false);
+    }
+
     this.imageArea.children('.custom-pose').remove();
     if (this.animCallbackID) {
         window.cancelAnimationFrame(this.animCallbackID);
@@ -569,9 +589,9 @@ OpponentDisplay.prototype.clearSimplePose = function () {
 }
 
 OpponentDisplay.prototype.clearPose = function () {
-    this.pose = null;
     this.clearCustomPose();
     this.clearSimplePose();
+    this.pose = null;
 }
 
 OpponentDisplay.prototype.drawPose = function (pose) {
@@ -587,12 +607,13 @@ OpponentDisplay.prototype.drawPose = function (pose) {
             this.clearSimplePose();
         } else if (this.pose instanceof Pose) {
             // Remove any previously shown custom poses too
-            $(this.pose.container).remove();
+            this.clearCustomPose();
         }
         
         this.imageArea.append(pose.container);
         pose.draw();
         if (pose.needsAnimationLoop()) {
+            pose.setWillChangeHints(true);
             this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
         }
     }
@@ -698,6 +719,7 @@ OpponentDisplay.prototype.loop = function (timestamp) {
     if (this.pose.needsAnimationLoop()) {
         this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
     } else {
+        this.pose.setWillChangeHints(false);
         this.animCallbackID = undefined;
     }
 }
