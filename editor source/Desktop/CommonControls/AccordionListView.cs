@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Windows.Forms;
 
 namespace Desktop.CommonControls
@@ -512,6 +513,7 @@ namespace Desktop.CommonControls
 		}	
 	}
 
+	[Serializable]
 	public class AccordionListViewItem : ListViewItem
 	{
 		public GroupedListItem Item { get; private set; }
@@ -521,6 +523,10 @@ namespace Desktop.CommonControls
 		public AccordionListViewItem(GroupedListItem item)
 		{
 			Item = item;
+		}
+
+		protected AccordionListViewItem(SerializationInfo info, StreamingContext context)
+		{
 		}
 	}
 }

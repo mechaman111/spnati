@@ -96,7 +96,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (_selectedCase != null)
 			{
 				tabConditions.Enabled = true;
-				foreach (Case alternative in _selectedCase.AlternativeConditions)
+				for (int i = 0; i < _selectedCase.AlternativeConditions.Count; i++)
 				{
 					AddAlternateTab();
 				}
@@ -667,23 +667,6 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				cmdColorCode.BackColor = code.GetColor();
 				cmdColorCode.Tag = colorCode;
-			}
-		}
-
-		private void AlternativeConditions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-		{
-			switch (e.Action)
-			{
-				case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
-					AddAlternateTab();
-					break;
-				case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
-					tabsConditions.TabPages.RemoveAt(e.OldStartingIndex + 1);
-					for (int i = e.OldStartingIndex + 1; i < tabsConditions.TabPages.Count; i++)
-					{
-						tabsConditions.TabPages[i].Text = "Set " + i;
-					}
-					break;
 			}
 		}
 

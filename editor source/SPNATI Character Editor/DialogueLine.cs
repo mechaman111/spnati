@@ -20,7 +20,6 @@ namespace SPNATI_Character_Editor
 	public class DialogueLine : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
-		private static Regex _stageRegex = new Regex(@"^(custom:)?\d+-.*");
 
 		public void NotifyPropertyChanged([CallerMemberName] string propName = "")
 		{
@@ -301,6 +300,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
 		private bool UseXmlText()
 		{
 			return Images.Count == 0;

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Desktop
 {
-	internal class Toaster
+	internal class Toaster : IDisposable
 	{
 		private Timer _timer;
 		private List<Toast> _toasts = new List<Toast>();
@@ -141,6 +141,11 @@ namespace Desktop
 			t = Math.Max(0, Math.Min(1, t));
 			float lerpX = MathUtils.Lerp(shell.Width, shell.Width - toast.Control.Width - ToastMargin, t);
 			toast.Control.Location = new System.Drawing.Point((int)lerpX, toast.TargetLocation.Y);
+		}
+
+		public void Dispose()
+		{
+			_timer.Dispose();
 		}
 	}
 }

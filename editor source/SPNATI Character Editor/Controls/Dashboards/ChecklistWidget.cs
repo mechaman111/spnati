@@ -148,10 +148,6 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			}
 		}
 
-		private void AddMetadataTask(string message)
-		{
-			AddMetadataTask(message, null);
-		}
 		private void AddMetadataTask(string message, string helpText)
 		{
 			AddTask(message, helpText, typeof(MetadataEditor));

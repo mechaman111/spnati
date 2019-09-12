@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Desktop
@@ -10,7 +7,7 @@ namespace Desktop
 	/// <summary>
 	/// Handles delayed method invokations as opposed to the PostOffice which works indirectly and immediately
 	/// </summary>
-	public class Messenger
+	public class Messenger : IDisposable
 	{
 		private Timer _timer;
 		private int _nextId;
@@ -77,6 +74,20 @@ namespace Desktop
 			if (_messages.Count == 0)
 			{
 				_timer.Stop();
+			}
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_timer?.Dispose();
 			}
 		}
 

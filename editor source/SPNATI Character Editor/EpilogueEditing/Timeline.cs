@@ -776,7 +776,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					rowCount = widget.GetRowCount();
 					trackHeight = rowCount * RowHeight;
 				}
-				int trackY = y;
 				if (_selectedObject == widget)
 				{
 					g.FillRectangle(_trackFillSelected, 0, y + 1, panel.Width, trackHeight - 1);
@@ -816,12 +815,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			for (int i = 0; i < _widgets.Count; i++)
 			{
 				ITimelineWidget widget = _widgets[i];
-				int trackHeight = RowHeight;
 				int rowCount = 1;
 				if (widget != null)
 				{
 					rowCount = widget.GetRowCount();
-					trackHeight = rowCount * RowHeight;
 				}
 				int trackY = y;
 

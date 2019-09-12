@@ -405,6 +405,7 @@ namespace SPNATI_Character_Editor.Activities
 				splitDialogue.Panel2.Visible = false;
 			}
 
+			DataConversions.ConvertCase5_2(_selectedCase);
 			caseControl.SetCase(_selectedStage, _selectedCase);
 		}
 

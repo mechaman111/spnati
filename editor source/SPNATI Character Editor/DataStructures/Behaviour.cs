@@ -216,7 +216,6 @@ namespace SPNATI_Character_Editor
 		public List<Case> GetDefaultCases()
 		{
 			List<Case> list = new List<Case>();
-			Dictionary<string, HashSet<int>> requiredLineIndex = GetRequiredLineIndex();
 			foreach (Case workingCase in GetWorkingCases())
 			{
 				if (workingCase.HasConditions)
@@ -321,7 +320,6 @@ namespace SPNATI_Character_Editor
 
 		public void BuildTriggers(Character character)
 		{
-			CharacterEditorData editorData = CharacterDatabase.GetEditorData(character);
 			Dictionary<string, Trigger> triggers = new Dictionary<string, Trigger>();
 			Triggers.Clear();
 			using (IEnumerator<Case> enumerator = GetWorkingCases().GetEnumerator())
@@ -364,16 +362,6 @@ namespace SPNATI_Character_Editor
 			}
 
 			Triggers.Sort();
-		}
-
-		private int ToHash(List<int> stages)
-		{
-			int hash = 0;
-			foreach (int stage in stages)
-			{
-				hash += 1 << stage;
-			}
-			return hash;
 		}
 
 		/// <summary>
@@ -493,35 +481,7 @@ namespace SPNATI_Character_Editor
 			if (_character == null) { return; }
 			SortWorking();
 		}
-
-		private void PerformChecksum()
-		{
-			if (Stages.Count == 0) { return; }
-			List<Case> original = new List<Case>();
-			original.AddRange(_workingCases);
-			_workingCases.Clear();
-			BuildLegacyWorkingCases();
-			int count = UniqueLines;
-			SortWorking();
-			List<Case> old = new List<Case>();
-			old.AddRange(_workingCases);
-			BuildTriggers(_character);
-			_workingCases.Clear();
-			BuildWorkingCasesFromTriggers();
-			int newCount = UniqueLines;
-			SortWorking();
-			for (int i = 0; i < Math.Min(_workingCases.Count, old.Count); i++)
-			{
-				Case oldCase = old[i];
-				Case newCase = _workingCases[i];
-				if (oldCase.Tag != newCase.Tag || !oldCase.MatchesConditions(newCase) || !oldCase.MatchesNonConditions(newCase) || !oldCase.MatchesStages(newCase, true))
-				{
-					//cases don't match
-				}
-			}
-			_workingCases = original;
-		}
-
+		
 		private void BuildWorkingCasesFromTriggers()
 		{
 			Dictionary<int, int> setToIdMap = new Dictionary<int, int>();

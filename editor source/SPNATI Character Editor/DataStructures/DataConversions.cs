@@ -200,8 +200,6 @@ namespace SPNATI_Character_Editor
 					{
 						if (workingCase.MatchesConditions(s.LegacyCase, false) && workingCase.MatchesStages(s.LegacyCase, true))
 						{
-							var l1 = workingCase.Lines;
-							var l2 = s.LegacyCase.Lines;
 							editorData.LinkSituation(s, workingCase);
 							foundLink = true;
 							break;
@@ -213,6 +211,35 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Converts a case to use TargetConditions where it previously used direct properties
+		/// </summary>
+		/// <param name="workingCase"></param>
+		public static void ConvertCase5_2(Case workingCase)
+		{
+			//if (workingCase == null) { return; }
+			//if (!string.IsNullOrEmpty(workingCase.Target) ||
+			//	!string.IsNullOrEmpty(workingCase.TargetStage) ||
+			//	!string.IsNullOrEmpty(workingCase.TargetHand) ||
+			//	!string.IsNullOrEmpty(workingCase.TargetLayers) ||
+			//	!string.IsNullOrEmpty(workingCase.TargetStatus) ||
+			//	!string.IsNullOrEmpty(workingCase.TargetSaidMarker) ||
+			//	!string.IsNullOrEmpty(workingCase.TargetNotSaidMarker) ||
+			//	!string.IsNullOrEmpty(workingCase.TargetSayingMarker) ||
+			//	!string.IsNullOrEmpty(workingCase.TargetSaying) ||
+			//	!string.IsNullOrEmpty(workingCase.TargetStartingLayers) ||
+			//	!string.IsNullOrEmpty(workingCase.TargetTimeInStage))
+			//{
+			//	TargetCondition cond = workingCase.Conditions.Find(c => c.Role == "target");
+			//	if (cond == null)
+			//	{
+			//		cond = new TargetCondition();
+			//		cond.Role = "target";
+			//		workingCase.Conditions.Add(cond);
+			//	}
+			//}
 		}
 	}
 }

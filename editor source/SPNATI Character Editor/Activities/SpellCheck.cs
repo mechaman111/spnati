@@ -129,7 +129,7 @@ namespace SPNATI_Character_Editor.Activities
 		private void cmdIgnoreAll_Click(object sender, EventArgs e)
 		{
 			string word = _currentMisspelling.Word;
-			_spellchecker.IgnoreWord(txtWord.Text);
+			_spellchecker.IgnoreWord(word);
 			GetNextMisspelling();
 		}
 

@@ -298,15 +298,24 @@ namespace Desktop.DataStructures
 
 		public void Dispose()
 		{
-			foreach (KeyValuePair<string, object> kvp in _values)
-			{
-				RemoveHandlers(kvp.Value, kvp.Key);
-			}
-			OnDispose();
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 
 		protected virtual void OnDispose()
 		{
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				foreach (KeyValuePair<string, object> kvp in _values)
+				{
+					RemoveHandlers(kvp.Value, kvp.Key);
+				}
+				OnDispose();
+			}
 		}
 	}
 }

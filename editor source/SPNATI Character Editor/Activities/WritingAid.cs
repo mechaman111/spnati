@@ -156,11 +156,9 @@ namespace SPNATI_Character_Editor.Activities
 			int max = Math.Min(_maxSuggestions, suggestionCount);
 
 			Character filter = recFilter.Record as Character;
-			CharacterEditorData editorData = null;
 			List<Character> possibleCharacters = new List<Character>();
 			if (filter != null)
 			{
-				editorData = CharacterDatabase.GetEditorData(filter);
 				possibleCharacters.Add(filter);
 			}
 			else
@@ -177,7 +175,7 @@ namespace SPNATI_Character_Editor.Activities
 					foreach (Situation s in data.NoteworthySituations)
 					{
 						SituationPriority sitPriority = s.Priority == SituationPriority.None ? SituationPriority.Noteworthy : s.Priority;
-						if (s.Priority == priority || priority == SituationPriority.None)
+						if (sitPriority == priority || priority == SituationPriority.None)
 						{
 							suggestions.Add(new Tuple<Character, Situation>(c, s));
 						}
