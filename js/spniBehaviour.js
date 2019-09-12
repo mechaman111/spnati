@@ -952,7 +952,11 @@ function Condition($xml) {
     this.saying         = $xml.attr('saying');
     this.priority = 0;
 
-    if (this.role == "target") {
+    if (this.role == "self") {
+        this.priority += (this.tag ? 0 : 0) + (this.status ? 20 : 0)
+            + (this.consecutiveLosses ? 60 : 0) + (this.timeInStage ? 8 : 0)
+            + (this.hand ? 20 : 0) + (this.gender ? 5 : 0)
+    } else if (this.role == "target") {
         this.priority += (this.id ? 300 : 0) + (this.tag ? 150 : 0)
             + (this.stage ? 80 : 0) + (this.status ? 70 : 0)
             + (this.layers ? 40 : 0) + (this.startingLayers ? 40 : 0)
@@ -1431,6 +1435,7 @@ Case.prototype.checkConditions = function (self, opp) {
     if (!this.counters.every(function (ctr) {
         var matches = players.filter(function(p) {
             return (ctr.role === undefined
+                    || (ctr.role == "self" && p == self)
                     || (ctr.role == "target" && p == opp)
                     || (ctr.role == "opp" && p != self)
                     || (ctr.role == "other" && p != self && p != opp))
