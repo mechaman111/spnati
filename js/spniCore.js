@@ -570,6 +570,8 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.updateTags();
     this.searchTags = this.baseTags.slice();
     
+    this.caseCache = {};
+
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;
 

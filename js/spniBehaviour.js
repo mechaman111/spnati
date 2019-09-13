@@ -1603,13 +1603,35 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
 	var cases = [];
     var $stage = this.xml.find('behaviour>stage[id=' + stageNum + ']');
     if ($stage.length) {
-        cases = $stage.children('case').filter(function() {
-            return tags.indexOf($(this).attr('tag')) >= 0;
-        }).get().map($);
+        if (!this.caseCache[stageNum]) {
+            this.caseCache[stageNum] = {};
+        }
+
+        var cases = tags.reduce(function (cur_cases, tag) {
+            if (!this.caseCache[stageNum][tag]) {
+                this.caseCache[stageNum][tag] = $stage.children('case').filter(function () {
+                    return $(this).attr('id') === tag;
+                }).get().map(function (e) {
+                    return new Case($(e));
+                });
+            }
+
+            Array.prototype.push.apply(cur_cases, this.caseCache[stageNum][tag]);
+            return cur_cases;
+        }.bind(this), []);
     } else {
-        cases = this.xml.find('behaviour>trigger').filter(function() {
-            return tags.indexOf($(this).attr('id')) >= 0;
-        }).children('case').get().map($);
+        cases = tags.reduce(function (cur_cases, tag) {
+            if (!this.caseCache[tag]) {
+                this.caseCache[tag] = this.xml.find('behaviour>trigger').filter(function () {
+                    return $(this).attr('id') === tag;
+                }).children('case').get().map(function (e) {
+                    return new Case($(e));
+                });
+            }
+
+            Array.prototype.push.apply(cur_cases, this.caseCache[tag]);
+            return cur_cases;
+        }.bind(this), []);
 	}
 
     /* quick check to see if the tag exists */
@@ -1622,7 +1644,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
     var bestMatch = [];
     
     for (var i = 0; i < cases.length; i++) {
-        var curCase = new Case(cases[i]);
+        var curCase = cases[i];
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             (!volatileOnly || curCase.isVolatile) &&
@@ -1656,7 +1678,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
         var rnd = Math.random() * weightSum;
         for (var i = 0, x = 0; x < rnd; x += states[i++].weight);
         
-        return states[i - 1];
+        return new State(states[i - 1]);
     }
 
     console.log("-------------------------------------");
