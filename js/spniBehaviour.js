@@ -1610,7 +1610,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
         var cases = tags.reduce(function (cur_cases, tag) {
             if (!this.caseCache[stageNum][tag]) {
                 this.caseCache[stageNum][tag] = $stage.children('case').filter(function () {
-                    return $(this).attr('id') === tag;
+                    return $(this).attr('tag') === tag;
                 }).get().map(function (e) {
                     return new Case($(e));
                 });
