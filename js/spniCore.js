@@ -972,7 +972,23 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 }
             });
             this.nicknames = nicknames;
-            
+
+            /* Pre-emptively optimize new-format opponents. */
+            this.xml.find('behaviour>trigger').each(function (idx, elem) {
+                var $trigger = $(elem);
+                var tag = $trigger.attr('id');
+
+                var cases = $trigger.children('case').get().map(function (e) {
+                    return new Case($(e));
+                });
+
+                if (this.caseCache[tag]) {
+                    Array.prototype.push.apply(this.caseCache[tag], cases);
+                } else {
+                    this.caseCache[tag] = cases;
+                }
+            }.bind(this));
+
             if (this.selected_costume) {
                 return this.loadAlternateCostume();
             }
