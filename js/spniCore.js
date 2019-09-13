@@ -358,15 +358,6 @@ Player.prototype.resetState = function () {
 	this.oneShotStates = {};
 
 	if (this.xml !== null) {
-        /* Load in the legacy "start" lines, and also
-         * initialize player.chosenState to the first listed line.
-         * This may be overridden by later updateBehaviour calls if
-         * the player has (new-style) selected or game start case lines.
-         */
-        this.startStates = this.xml.children('start').children('state').get().map(function(el) {
-            return new State($(el));
-        });
-
         /* Initialize reaction handling state. */
         this.currentTarget = null;
         this.currentTags = [];
@@ -865,6 +856,15 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.size = $xml.find('size').text();
             this.stamina = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
+
+            /* Load in the legacy "start" lines, and also
+             * initialize player.chosenState to the first listed line.
+             * This may be overridden by later updateBehaviour calls if
+             * the player has (new-style) selected or game start case lines.
+             */
+            this.startStates = $xml.children('start').children('state').get().map(function (el) {
+                return new State($(el));
+            });
 
             this.stylesheet = null;
             
