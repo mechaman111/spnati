@@ -923,21 +923,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.default_costume.tags = tagsArray;
 
-            var targetedLines = {};
-
-            $xml.find('>behaviour').find('case[target], case[alsoPlaying], case[filter], case:has(condition[character]), case:has(condition[filter])').each(function() {
-                var $case = $(this);
-                $case.children('condition[character]').map(function() { return $(this).attr('character'); }).get()
-                    .concat($case.children('condition[filter]').map(function() { return $(this).attr('filter'); }).get())
-                    .concat([$case.attr('target'), $case.attr('alsoPlaying'), $case.attr('filter')]).forEach(function(id) {
-                    if (id) {
-                        if (!(id in targetedLines)) { targetedLines[id] = { count: 0, seen: new Set() }; }
-                        $(this).children('state').each(function() {
-                            targetedLines[id].seen.add(this.textContent);
-                        });
-                    }
-                }, this);
-            });
+            this.targetedLines = {};
 
             /* Clone cases with alternative conditions/test, keeping
              * one alternative set of conditions and tests on the case
@@ -966,8 +952,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 });
                 $case.remove();
             });
-
-            this.targetedLines = targetedLines;
 
             var nicknames = {};
             $xml.find('nicknames>nickname').each(function() {
@@ -1005,6 +989,30 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
         }.bind(this));
 }
 
+Opponent.prototype.recordTargetedCase = function (caseObj) {
+    var entities = new Set();
+
+    if (caseObj.target) entities.add(caseObj.target);
+    if (caseObj.alsoPlaying) entities.add(caseObj.alsoPlaying);
+    if (caseObj.filter) entities.add(caseObj.filter);
+
+    caseObj.counters.forEach(function (ctr) {
+        if (ctr.id) entities.add(ctr.id);
+        if (ctr.tag) entities.add(ctr.tag);
+    });
+
+    var lines = new Set();
+    caseObj.states.forEach(function (s) { lines.add(s.rawDialogue); });
+
+    entities.forEach(function (ent) {
+        if (!(ent in this.targetedLines)) {
+            this.targetedLines[ent] = { count: 0, seen: new Set() };
+        }
+
+        lines.forEach(Set.prototype.add, this.targetedLines[ent].seen);
+    }, this);
+}
+
 /*
  * Traverses a new-format opponent's behaviour <trigger> elements
  * and pre-emptively adds their Cases to the opponent's caseCache.
@@ -1014,7 +1022,7 @@ Opponent.prototype.cacheBehaviourTriggers = function (onComplete) {
     var triggerQueue = this.xml.find('behaviour>trigger').get();
     if (triggerQueue.length <= 0) return onComplete();
 
-    this.loadItemsTotal = triggerQueue.length;
+    this.loadItemsTotal = this.xml.find('behaviour>trigger>case').length;
 
     function process(caseOut, tag, elemQueue) {
         var startTS = performance.now();
@@ -1024,7 +1032,6 @@ Opponent.prototype.cacheBehaviourTriggers = function (onComplete) {
             while (elemQueue.length <= 0) {
                 this.caseCache[tag] = caseOut;
                 caseOut = [];
-                this.loadItemsCompleted++;
 
                 /* If triggerQueue is empty, then we are done. */
                 if (triggerQueue.length <= 0) return onComplete();
@@ -1036,6 +1043,9 @@ Opponent.prototype.cacheBehaviourTriggers = function (onComplete) {
 
             let c = new Case($(elemQueue.shift()));
             caseOut.push(c);
+            this.recordTargetedCase(c);
+
+            this.loadItemsCompleted++;
         }
 
         mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
@@ -1060,7 +1070,7 @@ Opponent.prototype.cacheBehaviourStages = function (onComplete) {
     var stageQueue = this.xml.find('behaviour>stage').get();
     if (stageQueue.length <= 0) return onComplete();
 
-    this.loadItemsTotal += stageQueue.length;
+    this.loadItemsTotal += this.xml.find('behaviour>stage>case').length;
 
     function process(stageOut, stage, elemQueue) {
         var startTS = performance.now();
@@ -1069,7 +1079,6 @@ Opponent.prototype.cacheBehaviourStages = function (onComplete) {
             while (elemQueue.length <= 0) {
                 this.caseCache[stage] = stageOut;
                 stageOut = {};
-                this.loadItemsCompleted++;
 
                 if (stageQueue.length <= 0) return onComplete();
 
@@ -1084,6 +1093,9 @@ Opponent.prototype.cacheBehaviourStages = function (onComplete) {
             }
 
             stageOut[c.tag].push(c);
+            this.recordTargetedCase(c);
+            
+            this.loadItemsCompleted++;
         }
 
         mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
