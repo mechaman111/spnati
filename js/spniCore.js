@@ -974,20 +974,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.nicknames = nicknames;
 
             /* Pre-emptively optimize new-format opponents. */
-            this.xml.find('behaviour>trigger').each(function (idx, elem) {
-                var $trigger = $(elem);
-                var tag = $trigger.attr('id');
-
-                var cases = $trigger.children('case').get().map(function (e) {
-                    return new Case($(e));
-                });
-
-                if (this.caseCache[tag]) {
-                    Array.prototype.push.apply(this.caseCache[tag], cases);
-                } else {
-                    this.caseCache[tag] = cases;
-                }
-            }.bind(this));
+            this.cacheBehaviourTriggers();
 
             if (this.selected_costume) {
                 return this.loadAlternateCostume();
@@ -1000,6 +987,47 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             console.log("Failed reading \""+this.id+"\" behaviour.xml");
             delete players[this.slot];
         }.bind(this));
+}
+
+/*
+ * Traverses a new-format opponent's behaviour <trigger> elements
+ * and pre-emptively adds their Cases to the opponent's caseCache.
+ * This is done in 50ms chunks to avoid blocking the UI.
+ */
+Opponent.prototype.cacheBehaviourTriggers = function () {
+    var triggerQueue = this.xml.find('behaviour>trigger').get();
+
+    if (triggerQueue.length <= 0) return;
+
+    function process(caseOut, tag, elemQueue) {
+        var startTS = performance.now();
+
+        /* break tasks into roughly 50ms chunks */
+        while (performance.now() - startTS < 50) {
+            while (elemQueue.length <= 0) {
+                /* If triggerQueue is empty, then we are done. */
+                if (triggerQueue.length <= 0) return;
+
+                this.caseCache[tag] = caseOut;
+                caseOut = [];
+
+                let $trigger = $(triggerQueue.shift());
+                tag = $trigger.attr('id');
+                elemQueue = $trigger.children('case').get();
+            }
+
+            let c = new Case($(elemQueue.shift()));
+            caseOut.push(c);
+        }
+
+        setTimeout(process.bind(this, caseOut, tag, elemQueue), 50);
+    }
+
+    let $trigger = $(triggerQueue.shift());
+    let tag = $trigger.attr('id');
+    let cases = $trigger.children('case').get();
+
+    process.bind(this)([], tag, cases);
 }
 
 Player.prototype.getImagesForStage = function (stage) {
