@@ -239,7 +239,7 @@ function expandTagsList(input_tags) {
  *****                  State Object Specification                *****
  **********************************************************************/
 
-function State($xml_or_state, parentCase, stage) {
+function State($xml_or_state, parentCase) {
     if ($xml_or_state instanceof State) {
         /* Shallow-copy the state: */
         for (var prop in $xml_or_state) {
@@ -257,13 +257,10 @@ function State($xml_or_state, parentCase, stage) {
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
+    this.alt_images = null;
+
     if (this.rawDialogue = $xml.children('text').html()) {
-        var $altImages = $xml.children('alt-img').filter(function() {
-            return checkStage(stage, $(this).attr('stage'));
-        });
-        if ($altImages.length > 0) {
-            this.image = $($altImages.get(getRandomNumber(0, $altImages.length))).text();
-        }
+        this.alt_images = $xml.children('alt-img');
     } else {
         this.rawDialogue = $xml.html();
     }
@@ -394,6 +391,17 @@ State.prototype.applyMarker = function (self, opp) {
 
 State.prototype.expandDialogue = function(self, target) {
     this.dialogue = expandDialogue(this.rawDialogue, self, target, this.parentCase && this.parentCase.variableBindings);
+}
+
+State.prototype.selectImage = function (stage) {
+    if (this.alt_images) {
+        var $altImages = this.alt_images.filter(function () {
+            return checkStage(stage, $(this).attr('stage'));
+        });
+        if ($altImages.length > 0) {
+            this.image = $($altImages.get(getRandomNumber(0, $altImages.length))).text();
+        }
+    }
 }
 
 State.prototype.applyCollectible = function (player) {
@@ -977,8 +985,7 @@ function Condition($xml) {
  *****                  Case Object Specification                 *****
  **********************************************************************/
 
-function Case($xml, stage) {
-    // stage is current stage. Only passed to State to choose a correct image.
+function Case($xml) {
     this.stage =                    $xml.attr('stage');
     this.tag =                      $xml.attr('tag');
     this.target =                   $xml.attr("target");
@@ -1034,7 +1041,7 @@ function Case($xml, stage) {
     
     this.states = [];
     $xml.find('state').each(function (idx, elem) {
-        this.states.push(new State($(elem), this, stage));
+        this.states.push(new State($(elem), this));
     }.bind(this));
     
     this.counters = [];
@@ -1615,7 +1622,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
     var bestMatch = [];
     
     for (var i = 0; i < cases.length; i++) {
-        var curCase = new Case(cases[i], this.stage);
+        var curCase = new Case(cases[i]);
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             (!volatileOnly || curCase.isVolatile) &&
@@ -1736,6 +1743,8 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     if (this.stateCommitted) return;
     
     this.chosenState.expandDialogue(this, this.currentTarget);
+    this.chosenState.selectImage(this.stage);
+
     if (this.chosenState.marker) {
         this.chosenState.applyMarker(this, this.currentTarget);
     }

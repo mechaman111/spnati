@@ -235,6 +235,8 @@ DevModeDialogueBox.prototype.exitEditMode = function () {
     this.player.chosenState.image = this.currentState.image;
     
     this.player.chosenState.expandDialogue(this.player, this.player.currentTarget);
+    this.player.chosenState.selectImage(this.player.stage);
+
     gameDisplays[this.player.slot-1].updateText(this.player);
     gameDisplays[this.player.slot-1].updateImage(this.player);
     
@@ -378,6 +380,8 @@ DevModeDialogueBox.prototype.togglePreview = function () {
         this.player.chosenState.image = this.editData.image;
         
         this.player.chosenState.expandDialogue(this.player, this.player.currentTarget);
+        this.player.chosenState.selectImage(this.player.stage);
+        
         gameDisplays[this.player.slot-1].updateText(this.player);
         gameDisplays[this.player.slot-1].updateImage(this.player);
         
