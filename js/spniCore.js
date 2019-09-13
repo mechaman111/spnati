@@ -550,6 +550,10 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.poses = {};
     this.labelOverridden = false;
     this.pendingCollectiblePopup = null;
+
+    this.loaded = false;
+    this.loadItemsCompleted = 0;
+    this.loadItemsTotal = 0;
     
     /* baseTags stores tags that will be later used in resetState to build the
      * opponent's true tags list. It does not store implied tags.
@@ -607,7 +611,7 @@ Opponent.prototype.clone = function() {
 }
 
 Opponent.prototype.isLoaded = function() {
-	return this.xml != undefined;
+	return this.loaded;
 }
 
 Opponent.prototype.onSelected = function(individual) {
@@ -698,6 +702,7 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
         }
     }
     console.log("Loading alternate costume: "+this.selected_costume);
+
     $.ajax({
         type: "GET",
         url: this.selected_costume+'costume.xml',
@@ -832,6 +837,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
         }
         return;
     }
+    
 
     fetchCompressedURL('opponents/' + this.id + "/behaviour.xml")
 		/* Success callback.
@@ -851,7 +857,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             if (this.has_collectibles) {
                 this.loadCollectibles();
             }
-
+            
             this.xml = $xml;
             this.size = $xml.find('size').text();
             this.stamina = Number($xml.find('timer').text());
@@ -973,14 +979,24 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             });
             this.nicknames = nicknames;
 
-            /* Pre-emptively optimize new-format opponents. */
-            this.cacheBehaviourTriggers();
+            let continueLoading = function () {
+                this.loaded = true;
 
-            if (this.selected_costume) {
-                return this.loadAlternateCostume();
+                if (this.selected_costume) {
+                    return this.loadAlternateCostume();
+                }
+
+                return this.onSelected(individual);
+            }.bind(this);
+
+            /* Pre-emptively optimize new-format opponents. */
+            if (this.xml.find('behaviour>trigger').length > 0) {
+                this.caseFirstFormat = true;
+                this.cacheBehaviourTriggers(continueLoading);
+            } else {
+                this.caseFirstFormat = false;
+                this.cacheBehaviourStages(continueLoading);
             }
-            
-            return this.onSelected(individual);
 		}.bind(this))
 		/* Error callback. */
         .fail(function(err) {
@@ -994,10 +1010,11 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
  * and pre-emptively adds their Cases to the opponent's caseCache.
  * This is done in 50ms chunks to avoid blocking the UI.
  */
-Opponent.prototype.cacheBehaviourTriggers = function () {
+Opponent.prototype.cacheBehaviourTriggers = function (onComplete) {
     var triggerQueue = this.xml.find('behaviour>trigger').get();
+    if (triggerQueue.length <= 0) return onComplete();
 
-    if (triggerQueue.length <= 0) return;
+    this.loadItemsTotal = triggerQueue.length;
 
     function process(caseOut, tag, elemQueue) {
         var startTS = performance.now();
@@ -1005,11 +1022,12 @@ Opponent.prototype.cacheBehaviourTriggers = function () {
         /* break tasks into roughly 50ms chunks */
         while (performance.now() - startTS < 50) {
             while (elemQueue.length <= 0) {
-                /* If triggerQueue is empty, then we are done. */
-                if (triggerQueue.length <= 0) return;
-
                 this.caseCache[tag] = caseOut;
                 caseOut = [];
+                this.loadItemsCompleted++;
+
+                /* If triggerQueue is empty, then we are done. */
+                if (triggerQueue.length <= 0) return onComplete();
 
                 let $trigger = $(triggerQueue.shift());
                 tag = $trigger.attr('id');
@@ -1020,6 +1038,8 @@ Opponent.prototype.cacheBehaviourTriggers = function () {
             caseOut.push(c);
         }
 
+        mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
+
         setTimeout(process.bind(this, caseOut, tag, elemQueue), 50);
     }
 
@@ -1028,6 +1048,54 @@ Opponent.prototype.cacheBehaviourTriggers = function () {
     let cases = $trigger.children('case').get();
 
     process.bind(this)([], tag, cases);
+}
+
+/*
+ * Traverses an old-format opponent's behaviour <stage> elements
+ * and pre-emptively adds their Cases to the opponent's caseCache.
+ * This is done in 50ms chunks to avoid blocking the UI, similarly to
+ * cacheBehaviourTriggers.
+ */
+Opponent.prototype.cacheBehaviourStages = function (onComplete) {
+    var stageQueue = this.xml.find('behaviour>stage').get();
+    if (stageQueue.length <= 0) return onComplete();
+
+    this.loadItemsTotal += stageQueue.length;
+
+    function process(stageOut, stage, elemQueue) {
+        var startTS = performance.now();
+
+        while (performance.now() - startTS < 50) {
+            while (elemQueue.length <= 0) {
+                this.caseCache[stage] = stageOut;
+                stageOut = {};
+                this.loadItemsCompleted++;
+
+                if (stageQueue.length <= 0) return onComplete();
+
+                let $stage = $(stageQueue.shift());
+                stage = parseInt($stage.attr('id'), 10);
+                elemQueue = $stage.children('case').get();
+            }
+
+            let c = new Case($(elemQueue.shift()));
+            if (!stageOut[c.tag]) {
+                stageOut[c.tag] = [];
+            }
+
+            stageOut[c.tag].push(c);
+        }
+
+        mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
+
+        setTimeout(process.bind(this, stageOut, stage, elemQueue), 50);
+    }
+
+    let $stage = $(stageQueue.shift());
+    let stage = parseInt($stage.attr('id'), 10);
+    let cases = $stage.children('case').get();
+
+    process.bind(this)({}, stage, cases);
 }
 
 Player.prototype.getImagesForStage = function (stage) {

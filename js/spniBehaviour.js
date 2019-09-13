@@ -1600,39 +1600,25 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
 	   .get() returns a simple array with the matched
 	   elements. .map($) converts the individual elements back to
 	   jQuery objects. */
-	var cases = [];
-    var $stage = this.xml.find('behaviour>stage[id=' + stageNum + ']');
-    if ($stage.length) {
-        if (!this.caseCache[stageNum]) {
-            this.caseCache[stageNum] = {};
-        }
-
-        var cases = tags.reduce(function (cur_cases, tag) {
-            if (!this.caseCache[stageNum][tag]) {
-                this.caseCache[stageNum][tag] = $stage.children('case').filter(function () {
-                    return $(this).attr('tag') === tag;
-                }).get().map(function (e) {
-                    return new Case($(e));
-                });
+    var cases = [];
+    
+    if (this.caseFirstFormat) {
+        cases = tags.reduce(function (cur_cases, tag) {
+            if (this.caseCache[tag]) {
+                Array.prototype.push.apply(cur_cases, this.caseCache[tag]);
             }
 
-            Array.prototype.push.apply(cur_cases, this.caseCache[stageNum][tag]);
             return cur_cases;
         }.bind(this), []);
     } else {
         cases = tags.reduce(function (cur_cases, tag) {
-            if (!this.caseCache[tag]) {
-                this.caseCache[tag] = this.xml.find('behaviour>trigger').filter(function () {
-                    return $(this).attr('id') === tag;
-                }).children('case').get().map(function (e) {
-                    return new Case($(e));
-                });
+            if (this.caseCache[stageNum] && this.caseCache[stageNum][tag]) {
+                Array.prototype.push.apply(cur_cases, this.caseCache[stageNum][tag]);
             }
 
-            Array.prototype.push.apply(cur_cases, this.caseCache[tag]);
             return cur_cases;
         }.bind(this), []);
-	}
+    }
 
     /* quick check to see if the tag exists */
     if (cases.length <= 0) {
