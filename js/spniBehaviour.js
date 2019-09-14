@@ -1095,6 +1095,12 @@ function Case($xml, stage) {
         // Expression tests (priority = 50 for each)
         this.priority += (tests.length * 50);
     }
+
+    this.isVolatile = this.targetSayingMarker || this.targetSaying
+        || this.alsoPlayingSayingMarker || this.alsoPlayingSaying
+        || this.counters.some(function(c) {
+            return c.sayingMarker || c.saying;
+        });
 }
 
 /* Convert this case's conditions into a plain object, into a format suitable
@@ -1575,9 +1581,13 @@ Case.prototype.applyOneShot = function (player) {
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
 
-Opponent.prototype.findBehaviour = function(tags, opp, bestMatchPriority) {
+Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
     /* get the AI stage */
     var stageNum = this.stage;
+    var bestMatchPriority = 0;
+    if (volatileOnly && this.chosenState && this.chosenState.parentCase) {
+        bestMatchPriority = this.chosenState.parentCase.priority + 1;
+    }
 
     /* try to find the tags/stage.
 	   .get() returns a simple array with the matched
@@ -1608,6 +1618,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, bestMatchPriority) {
         var curCase = new Case(cases[i], this.stage);
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
+            (!volatileOnly || curCase.isVolatile) &&
             curCase.checkConditions(this, opp))
         {
             if (curCase.hidden) {
@@ -1666,12 +1677,11 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     this.currentTarget = opp;
     this.currentTags = tags;
 
-    var state = this.findBehaviour(tags, opp, -1);
+    var state = this.findBehaviour(tags, opp, false);
 
     if (state) {
         /* Reaction handling state... */
         this.chosenState = state;
-        this.currentPriority = state.parentCase.priority;
         this.stateCommitted = false;
         this.lastUpdateTags = tags;
         
@@ -1697,16 +1707,17 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         console.log("Player "+this.slot+" state is locked.");
         return;
     }
+
+    if (this.chosenState) {
+        console.log("Player "+this.slot+": Current priority "+this.chosenState.parentCase.priority);
+    }
     
-    console.log("Player "+this.slot+": Current priority "+this.currentPriority);
-    
-    var newState = this.findBehaviour(this.currentTags, this.currentTarget, this.currentPriority + 1);
+    var newState = this.findBehaviour(this.currentTags, this.currentTarget, true);
 
     if (newState) {
         console.log("Found new volatile state for player "+this.slot+" with priority "+newState.parentCase.priority);
         /* Assign new best-match case and state. */
         this.chosenState = newState;
-        this.currentPriority = newState.parentCase.priority;
         this.stateCommitted = false;
         
         return true;
@@ -1810,7 +1821,7 @@ function updateAllBehaviours (target, target_tags, other_tags) {
  * 'Promotes' players who have available volatile cases to using those cases.
  ************************************************************/
 function updateAllVolatileBehaviours () {
-    for (var pass = 0; pass < 2; pass++) {
+    for (var pass = 0; pass < 3; pass++) {
         console.log("Reaction pass "+(pass+1));
         var anyUpdated = false;
         
