@@ -118,7 +118,10 @@ namespace Desktop.CommonControls
 			table.Controls.Add(ctl);
 			ctl.TabIndex = 0;
 			table.SetCellPosition(ctl, new TableLayoutPanelCellPosition(2, 0));
-			toolTip1.SetToolTip(lblHelp, record.Description);
+			if (record.HideLabel)
+			{
+				table.ColumnStyles[1].Width = 0;
+			}
 		}
 
 		public void Destroy()

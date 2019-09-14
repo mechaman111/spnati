@@ -4,7 +4,6 @@ using Desktop.Skinning;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -23,6 +22,8 @@ namespace Desktop.CommonControls
 		public event PropertyChangedEventHandler PropertyChanged;
 		public event EventHandler<MacroArgs> EditingMacro;
 		public event EventHandler<MacroArgs> MacroChanged;
+		public event EventHandler RowAdded;
+		public event EventHandler RowRemoved;
 
 		private SkinnedBackgroundType _background;
 		public SkinnedBackgroundType PanelType
@@ -209,6 +210,7 @@ namespace Desktop.CommonControls
 			recAdd.Visible = !_hideAdd;
 			menuSpeedButtons.Visible = !_hideMenu;
 			menuSpeedButtons.Left = _hideAdd ? 0 : recAdd.Right;
+			menuSpeedButtons.Width = _hideAdd ? Width : Width - recAdd.Right - 50;
 			int bottom = pnlRecords.Bottom;
 			pnlRecords.Top = (_hideAdd && _hideMenu ? 0 : menuSpeedButtons.Bottom + 3);
 			pnlRecords.Height = bottom - pnlRecords.Top;
@@ -619,6 +621,7 @@ namespace Desktop.CommonControls
 						rowCtl.TabIndex = pnlRecords.Controls.Count - i - 1;
 					}
 				}
+				RowAdded?.Invoke(this, EventArgs.Empty);
 			}
 
 			return ctl;
@@ -763,6 +766,8 @@ namespace Desktop.CommonControls
 					}
 				}
 			}
+
+			RowRemoved?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void Row_ToggleFavorite(object sender, EventArgs e)
@@ -1007,6 +1012,22 @@ namespace Desktop.CommonControls
 		public void OnUpdateSkin(Skin skin)
 		{
 			BackColor = skin.GetBackColor(PanelType);
+		}
+
+		/// <summary>
+		/// Gets the minimum height of everything in the property to avoid scrolling
+		/// </summary>
+		/// <returns></returns>
+		public int GetTotalHeight()
+		{
+			int height = pnlRecords.Top;
+			int max = 0;
+			foreach (Control ctl in pnlRecords.Controls)
+			{
+				max = Math.Max(max, ctl.Bottom);
+			}
+			height += max;
+			return height + pnlRecords.Margin.Bottom + pnlRecords.Margin.Top;
 		}
 	}
 }

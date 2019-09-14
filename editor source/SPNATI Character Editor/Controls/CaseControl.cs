@@ -397,20 +397,36 @@ namespace SPNATI_Character_Editor.Controls
 			//Game-wide
 			table.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
 
+			//Filters
+			table.AddSpeedButton("Filter", "Anyone", (data) => { return AddFilter("", data); });
+			if (caseTrigger.HasTarget)
+			{
+				table.AddSpeedButton("Filter", "Target", (data) => { return AddFilter("target", data); });
+			}
+			table.AddSpeedButton("Filter", "Self", (data) => { return AddFilter("self", data); });
+			table.AddSpeedButton("Filter", "Also Playing", (data) => { return AddFilter("other", data); });
+			table.AddSpeedButton("Filter", "Opponent", (data) => { return AddFilter("opp", data); });
+			table.AddSpeedButton("Filter", "Specific Character", (data) =>
+			{
+				Character character = RecordLookup.DoLookup(typeof(Character), "", false, null) as Character;
+				return AddFilter("", data, character);
+			});
+
 			//Player variables
 
-			table.AddSpeedButton("Player", "Collectible (+)", (data) => { return AddVariableTest("~_.collectible.*~", data); });
-			table.AddSpeedButton("Player", "Collectible (Counter) (+)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
-			table.AddSpeedButton("Player", "Costume (+)", (data) => { return AddVariableTest("~_.costume~", data); });
-			table.AddSpeedButton("Player", "Largest Lead (+)", (data) => { return AddVariableTest("~_.biggestlead~", data); });
-			table.AddSpeedButton("Player", "Layer Difference (+)", (data) => { return AddVariableTest("~_.diff~", data); });
-			table.AddSpeedButton("Player", "Marker (+)", (data) => { return AddVariableTest("~_.marker.*~", data); });
-			table.AddSpeedButton("Player", "Marker (Persistent) (+)", (data) => { return AddVariableTest("~_.persistent.*~", data); });
-			table.AddSpeedButton("Player", "Place (+)", (data) => { return AddVariableTest("~_.lead~", data); });
-			table.AddSpeedButton("Player", "Relative Position (+)", (data) => { return AddVariableTest("~_.position~", data); });
-			table.AddSpeedButton("Player", "Slot (+)", (data) => { return AddVariableTest("~_.slot~", data); });
-			table.AddSpeedButton("Player", "Stage (+)", (data) => { return AddVariableTest("~_.stage~", data); });
-			table.AddSpeedButton("Player", "Tag (+)", (data) => { return AddVariableTest("~_.tag.*~", data); });
+			table.AddSpeedButton("Player", "Collectible", (data) => { return AddVariableTest("~_.collectible.*~", data); });
+			table.AddSpeedButton("Player", "Collectible (Counter)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
+			table.AddSpeedButton("Player", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
+			table.AddSpeedButton("Player", "Largest Lead", (data) => { return AddVariableTest("~_.biggestlead~", data); });
+			table.AddSpeedButton("Player", "Layer Difference", (data) => { return AddVariableTest("~_.diff~", data); });
+			table.AddSpeedButton("Player", "Marker", (data) => { return AddVariableTest("~_.marker.*~", data); });
+			table.AddSpeedButton("Player", "Marker (Persistent)", (data) => { return AddVariableTest("~_.persistent.*~", data); });
+			table.AddSpeedButton("Player", "Place", (data) => { return AddVariableTest("~_.lead~", data); });
+			table.AddSpeedButton("Player", "Relative Position", (data) => { return AddVariableTest("~_.position~", data); });
+			table.AddSpeedButton("Player", "Size", (data) => { return AddVariableTest("~_.size~", data); });
+			table.AddSpeedButton("Player", "Slot", (data) => { return AddVariableTest("~_.slot~", data); });
+			table.AddSpeedButton("Player", "Stage", (data) => { return AddVariableTest("~_.stage~", data); });
+			table.AddSpeedButton("Player", "Tag", (data) => { return AddVariableTest("~_.tag.*~", data); });
 
 			//Table-wide
 			table.AddSpeedButton("Table", "Human Name", (data) => { return AddVariableTest("~player~", data); });
@@ -425,8 +441,6 @@ namespace SPNATI_Character_Editor.Controls
 					table.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
 					table.AddSpeedButton("Clothing", "Clothing Type", (data) => { return AddVariableTest("~clothing.type~", data); });
 				}
-				table.AddSpeedButton("Target", "Gender", (data) => { return AddVariableTest("~target.gender~", data); });
-				table.AddSpeedButton("Target", "Size", (data) => { return AddVariableTest("~target.size~", data); });
 			}
 		}
 
@@ -435,6 +449,19 @@ namespace SPNATI_Character_Editor.Controls
 			Case theCase = data as Case;
 			theCase.Expressions.Add(new ExpressionTest(variable, ""));
 			return "Expressions";
+		}
+
+		private static string AddFilter(string role, object data, Character character = null)
+		{
+			Case theCase = data as Case;
+			TargetCondition condition = new TargetCondition();
+			condition.Role = role;
+			theCase.Conditions.Add(condition);
+			if (character != null)
+			{
+				condition.Character = character.FolderName;
+			}
+			return "Conditions";
 		}
 
 		private void PopulateTagsTab()

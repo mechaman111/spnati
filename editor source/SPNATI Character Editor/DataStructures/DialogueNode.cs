@@ -135,6 +135,10 @@ namespace SPNATI_Character_Editor
 				{
 					return GetCharacterName(Case.AlsoPlaying);
 				}
+				foreach (string target in Case.GetTargets())
+				{
+					return GetCharacterName(target);
+				}
 				return "-";
 			}
 		}

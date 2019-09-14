@@ -29,134 +29,44 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.label1 = new Desktop.Skinning.SkinnedLabel();
-			this.recTag = new Desktop.CommonControls.RecordField();
-			this.label2 = new Desktop.Skinning.SkinnedLabel();
-			this.cboGender = new Desktop.Skinning.SkinnedComboBox();
-			this.valFrom = new Desktop.Skinning.SkinnedNumericUpDown();
-			this.label3 = new Desktop.Skinning.SkinnedLabel();
-			this.valTo = new Desktop.Skinning.SkinnedNumericUpDown();
-			this.cmdExpand = new Desktop.Skinning.SkinnedIcon();
+			this.recWho = new Desktop.CommonControls.RecordField();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.tableAdvanced = new Desktop.CommonControls.PropertyTable();
-			((System.ComponentModel.ISupportInitialize)(this.valFrom)).BeginInit();
+			this.pnlRange = new System.Windows.Forms.Panel();
+			this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
+			this.valTo = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.valFrom = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.label3 = new Desktop.Skinning.SkinnedLabel();
+			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
+			this.pnlCharacter = new System.Windows.Forms.Panel();
+			this.recCharacter = new Desktop.CommonControls.RecordField();
+			this.skinnedLabel3 = new Desktop.Skinning.SkinnedLabel();
+			this.pnlVariable = new System.Windows.Forms.Panel();
+			this.txtVariable = new Desktop.Skinning.SkinnedTextBox();
+			this.skinnedLabel4 = new Desktop.Skinning.SkinnedLabel();
+			this.cmdExpand = new Desktop.Skinning.SkinnedIcon();
+			this.pnlBar = new Desktop.CommonControls.DBPanel();
+			this.pnlRange.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valTo)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valFrom)).BeginInit();
+			this.pnlCharacter.SuspendLayout();
+			this.pnlVariable.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// label1
+			// recWho
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
-			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.label1.Location = new System.Drawing.Point(84, 2);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(41, 13);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "of Tag:";
-			// 
-			// recTag
-			// 
-			this.recTag.AllowCreate = true;
-			this.recTag.Location = new System.Drawing.Point(126, 1);
-			this.recTag.Name = "recTag";
-			this.recTag.PlaceholderText = null;
-			this.recTag.Record = null;
-			this.recTag.RecordContext = null;
-			this.recTag.RecordFilter = null;
-			this.recTag.RecordKey = null;
-			this.recTag.RecordType = null;
-			this.recTag.Size = new System.Drawing.Size(98, 20);
-			this.recTag.TabIndex = 1;
-			this.recTag.UseAutoComplete = true;
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.label2.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
-			this.label2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.label2.Location = new System.Drawing.Point(230, 2);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(45, 13);
-			this.label2.TabIndex = 2;
-			this.label2.Text = "Gender:";
-			// 
-			// cboGender
-			// 
-			this.cboGender.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-			this.cboGender.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-			this.cboGender.BackColor = System.Drawing.Color.White;
-			this.cboGender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cboGender.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
-			this.cboGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.cboGender.FormattingEnabled = true;
-			this.cboGender.Location = new System.Drawing.Point(281, 0);
-			this.cboGender.Name = "cboGender";
-			this.cboGender.SelectedIndex = -1;
-			this.cboGender.SelectedItem = null;
-			this.cboGender.Size = new System.Drawing.Size(62, 21);
-			this.cboGender.Sorted = false;
-			this.cboGender.TabIndex = 3;
-			// 
-			// valFrom
-			// 
-			this.valFrom.BackColor = System.Drawing.Color.White;
-			this.valFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.valFrom.ForeColor = System.Drawing.Color.Black;
-			this.valFrom.Location = new System.Drawing.Point(3, 0);
-			this.valFrom.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-			this.valFrom.Name = "valFrom";
-			this.valFrom.Size = new System.Drawing.Size(30, 20);
-			this.valFrom.TabIndex = 6;
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
-			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.label3.Location = new System.Drawing.Point(33, 2);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(19, 13);
-			this.label3.TabIndex = 7;
-			this.label3.Text = "to:";
-			// 
-			// valTo
-			// 
-			this.valTo.BackColor = System.Drawing.Color.White;
-			this.valTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.valTo.ForeColor = System.Drawing.Color.Black;
-			this.valTo.Location = new System.Drawing.Point(48, 0);
-			this.valTo.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-			this.valTo.Name = "valTo";
-			this.valTo.Size = new System.Drawing.Size(30, 20);
-			this.valTo.TabIndex = 8;
-			// 
-			// cmdExpand
-			// 
-			this.cmdExpand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdExpand.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
-			this.cmdExpand.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.cmdExpand.Flat = false;
-			this.cmdExpand.FlatAppearance.BorderSize = 0;
-			this.cmdExpand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.cmdExpand.Image = global::SPNATI_Character_Editor.Properties.Resources.ChevronDown;
-			this.cmdExpand.Location = new System.Drawing.Point(703, 0);
-			this.cmdExpand.Margin = new System.Windows.Forms.Padding(0);
-			this.cmdExpand.Name = "cmdExpand";
-			this.cmdExpand.Size = new System.Drawing.Size(16, 20);
-			this.cmdExpand.TabIndex = 9;
-			this.toolTip1.SetToolTip(this.cmdExpand, "Toggle advanced options");
-			this.cmdExpand.UseVisualStyleBackColor = true;
-			this.cmdExpand.Click += new System.EventHandler(this.cmdExpand_Click);
+			this.recWho.AllowCreate = true;
+			this.recWho.Location = new System.Drawing.Point(35, 1);
+			this.recWho.Name = "recWho";
+			this.recWho.PlaceholderText = null;
+			this.recWho.Record = null;
+			this.recWho.RecordContext = null;
+			this.recWho.RecordFilter = null;
+			this.recWho.RecordKey = null;
+			this.recWho.RecordType = null;
+			this.recWho.Size = new System.Drawing.Size(94, 20);
+			this.recWho.TabIndex = 24;
+			this.recWho.UseAutoComplete = true;
 			// 
 			// tableAdvanced
 			// 
@@ -168,44 +78,236 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableAdvanced.BackColor = System.Drawing.Color.Transparent;
-			this.tableAdvanced.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tableAdvanced.Data = null;
-			this.tableAdvanced.HeaderType = Desktop.Skinning.SkinnedBackgroundType.Secondary;
+			this.tableAdvanced.HeaderType = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.tableAdvanced.HideAddField = true;
 			this.tableAdvanced.HideSpeedButtons = false;
-			this.tableAdvanced.Location = new System.Drawing.Point(3, 27);
+			this.tableAdvanced.Location = new System.Drawing.Point(1, 21);
 			this.tableAdvanced.ModifyingProperty = null;
 			this.tableAdvanced.Name = "tableAdvanced";
 			this.tableAdvanced.PanelType = Desktop.Skinning.SkinnedBackgroundType.Transparent;
-			this.tableAdvanced.PlaceholderText = null;
+			this.tableAdvanced.PlaceholderText = "Add a condition...";
 			this.tableAdvanced.PreserveControls = true;
 			this.tableAdvanced.PreviewData = null;
 			this.tableAdvanced.RemoveCaption = "Remove";
-			this.tableAdvanced.RowHeaderWidth = 100F;
-			this.tableAdvanced.RunInitialAddEvents = false;
-			this.tableAdvanced.Size = new System.Drawing.Size(716, 89);
+			this.tableAdvanced.RowHeaderWidth = 120F;
+			this.tableAdvanced.RunInitialAddEvents = true;
+			this.tableAdvanced.Size = new System.Drawing.Size(842, 95);
 			this.tableAdvanced.Sorted = true;
-			this.tableAdvanced.TabIndex = 10;
+			this.tableAdvanced.TabIndex = 25;
 			this.tableAdvanced.UndoManager = null;
 			this.tableAdvanced.UseAutoComplete = true;
+			// 
+			// pnlRange
+			// 
+			this.pnlRange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlRange.Controls.Add(this.skinnedLabel2);
+			this.pnlRange.Controls.Add(this.valTo);
+			this.pnlRange.Controls.Add(this.valFrom);
+			this.pnlRange.Controls.Add(this.label3);
+			this.pnlRange.Location = new System.Drawing.Point(567, 0);
+			this.pnlRange.Margin = new System.Windows.Forms.Padding(0);
+			this.pnlRange.Name = "pnlRange";
+			this.pnlRange.Size = new System.Drawing.Size(141, 25);
+			this.pnlRange.TabIndex = 27;
+			this.pnlRange.Visible = false;
+			// 
+			// skinnedLabel2
+			// 
+			this.skinnedLabel2.AutoSize = true;
+			this.skinnedLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel2.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel2.Location = new System.Drawing.Point(-3, 4);
+			this.skinnedLabel2.Name = "skinnedLabel2";
+			this.skinnedLabel2.Size = new System.Drawing.Size(38, 13);
+			this.skinnedLabel2.TabIndex = 12;
+			this.skinnedLabel2.Text = "Count:";
+			// 
+			// valTo
+			// 
+			this.valTo.BackColor = System.Drawing.Color.White;
+			this.valTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valTo.ForeColor = System.Drawing.Color.Black;
+			this.valTo.Location = new System.Drawing.Point(99, 1);
+			this.valTo.Margin = new System.Windows.Forms.Padding(0);
+			this.valTo.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+			this.valTo.Name = "valTo";
+			this.valTo.Size = new System.Drawing.Size(36, 20);
+			this.valTo.TabIndex = 11;
+			// 
+			// valFrom
+			// 
+			this.valFrom.BackColor = System.Drawing.Color.White;
+			this.valFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valFrom.ForeColor = System.Drawing.Color.Black;
+			this.valFrom.Location = new System.Drawing.Point(40, 1);
+			this.valFrom.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+			this.valFrom.Name = "valFrom";
+			this.valFrom.Size = new System.Drawing.Size(36, 20);
+			this.valFrom.TabIndex = 9;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.label3.Location = new System.Drawing.Point(78, 4);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(19, 13);
+			this.label3.TabIndex = 10;
+			this.label3.Text = "to:";
+			// 
+			// skinnedLabel1
+			// 
+			this.skinnedLabel1.AutoSize = true;
+			this.skinnedLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel1.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel1.Location = new System.Drawing.Point(3, 4);
+			this.skinnedLabel1.Name = "skinnedLabel1";
+			this.skinnedLabel1.Size = new System.Drawing.Size(32, 13);
+			this.skinnedLabel1.TabIndex = 26;
+			this.skinnedLabel1.Text = "Filter:";
+			// 
+			// pnlCharacter
+			// 
+			this.pnlCharacter.Controls.Add(this.recCharacter);
+			this.pnlCharacter.Controls.Add(this.skinnedLabel3);
+			this.pnlCharacter.Location = new System.Drawing.Point(138, 0);
+			this.pnlCharacter.Margin = new System.Windows.Forms.Padding(0);
+			this.pnlCharacter.Name = "pnlCharacter";
+			this.pnlCharacter.Size = new System.Drawing.Size(136, 25);
+			this.pnlCharacter.TabIndex = 28;
+			this.pnlCharacter.Visible = false;
+			// 
+			// recCharacter
+			// 
+			this.recCharacter.AllowCreate = true;
+			this.recCharacter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.recCharacter.Location = new System.Drawing.Point(15, 1);
+			this.recCharacter.Name = "recCharacter";
+			this.recCharacter.PlaceholderText = null;
+			this.recCharacter.Record = null;
+			this.recCharacter.RecordContext = null;
+			this.recCharacter.RecordFilter = null;
+			this.recCharacter.RecordKey = null;
+			this.recCharacter.RecordType = null;
+			this.recCharacter.Size = new System.Drawing.Size(118, 20);
+			this.recCharacter.TabIndex = 13;
+			this.recCharacter.UseAutoComplete = true;
+			// 
+			// skinnedLabel3
+			// 
+			this.skinnedLabel3.AutoSize = true;
+			this.skinnedLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel3.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel3.Location = new System.Drawing.Point(-3, 4);
+			this.skinnedLabel3.Name = "skinnedLabel3";
+			this.skinnedLabel3.Size = new System.Drawing.Size(17, 13);
+			this.skinnedLabel3.TabIndex = 12;
+			this.skinnedLabel3.Text = "is:";
+			// 
+			// pnlVariable
+			// 
+			this.pnlVariable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlVariable.Controls.Add(this.txtVariable);
+			this.pnlVariable.Controls.Add(this.skinnedLabel4);
+			this.pnlVariable.Location = new System.Drawing.Point(708, 1);
+			this.pnlVariable.Margin = new System.Windows.Forms.Padding(0);
+			this.pnlVariable.Name = "pnlVariable";
+			this.pnlVariable.Size = new System.Drawing.Size(110, 25);
+			this.pnlVariable.TabIndex = 29;
+			this.pnlVariable.Visible = false;
+			// 
+			// txtVariable
+			// 
+			this.txtVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtVariable.BackColor = System.Drawing.Color.White;
+			this.txtVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.txtVariable.ForeColor = System.Drawing.Color.Black;
+			this.txtVariable.Location = new System.Drawing.Point(50, 0);
+			this.txtVariable.Name = "txtVariable";
+			this.txtVariable.Size = new System.Drawing.Size(60, 20);
+			this.txtVariable.TabIndex = 13;
+			// 
+			// skinnedLabel4
+			// 
+			this.skinnedLabel4.AutoSize = true;
+			this.skinnedLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel4.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel4.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel4.Location = new System.Drawing.Point(3, 3);
+			this.skinnedLabel4.Name = "skinnedLabel4";
+			this.skinnedLabel4.Size = new System.Drawing.Size(48, 13);
+			this.skinnedLabel4.TabIndex = 12;
+			this.skinnedLabel4.Text = "Variable:";
+			// 
+			// cmdExpand
+			// 
+			this.cmdExpand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdExpand.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdExpand.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdExpand.Flat = false;
+			this.cmdExpand.Image = global::SPNATI_Character_Editor.Properties.Resources.ChevronDown;
+			this.cmdExpand.Location = new System.Drawing.Point(822, 1);
+			this.cmdExpand.Name = "cmdExpand";
+			this.cmdExpand.Size = new System.Drawing.Size(21, 21);
+			this.cmdExpand.TabIndex = 30;
+			this.cmdExpand.Text = "skinnedIcon1";
+			this.cmdExpand.UseVisualStyleBackColor = true;
+			this.cmdExpand.Click += new System.EventHandler(this.cmdExpand_Click);
+			// 
+			// pnlBar
+			// 
+			this.pnlBar.Location = new System.Drawing.Point(0, 0);
+			this.pnlBar.Margin = new System.Windows.Forms.Padding(0);
+			this.pnlBar.Name = "pnlBar";
+			this.pnlBar.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.pnlBar.Size = new System.Drawing.Size(3, 120);
+			this.pnlBar.TabIndex = 31;
+			this.pnlBar.TabSide = Desktop.Skinning.TabSide.None;
+			this.pnlBar.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlBar_Paint);
 			// 
 			// FilterControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.tableAdvanced);
+			this.Controls.Add(this.pnlBar);
 			this.Controls.Add(this.cmdExpand);
-			this.Controls.Add(this.valTo);
-			this.Controls.Add(this.valFrom);
-			this.Controls.Add(this.cboGender);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.recTag);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.label3);
+			this.Controls.Add(this.recWho);
+			this.Controls.Add(this.tableAdvanced);
+			this.Controls.Add(this.pnlRange);
+			this.Controls.Add(this.pnlCharacter);
+			this.Controls.Add(this.pnlVariable);
+			this.Controls.Add(this.skinnedLabel1);
 			this.Name = "FilterControl";
-			this.Size = new System.Drawing.Size(723, 119);
-			((System.ComponentModel.ISupportInitialize)(this.valFrom)).EndInit();
+			this.Size = new System.Drawing.Size(844, 119);
+			this.pnlRange.ResumeLayout(false);
+			this.pnlRange.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valTo)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valFrom)).EndInit();
+			this.pnlCharacter.ResumeLayout(false);
+			this.pnlCharacter.PerformLayout();
+			this.pnlVariable.ResumeLayout(false);
+			this.pnlVariable.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -213,15 +315,22 @@
 
 		#endregion
 
-		private Desktop.Skinning.SkinnedLabel label1;
-		private Desktop.CommonControls.RecordField recTag;
-		private Desktop.Skinning.SkinnedLabel label2;
-		private Desktop.Skinning.SkinnedComboBox cboGender;
-		private Desktop.Skinning.SkinnedNumericUpDown valFrom;
-		private Desktop.Skinning.SkinnedLabel label3;
-		private Desktop.Skinning.SkinnedNumericUpDown valTo;
-		private Desktop.Skinning.SkinnedIcon cmdExpand;
+		private Desktop.CommonControls.RecordField recWho;
 		private System.Windows.Forms.ToolTip toolTip1;
 		private Desktop.CommonControls.PropertyTable tableAdvanced;
+		private System.Windows.Forms.Panel pnlRange;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel2;
+		private Desktop.Skinning.SkinnedNumericUpDown valTo;
+		private Desktop.Skinning.SkinnedNumericUpDown valFrom;
+		private Desktop.Skinning.SkinnedLabel label3;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel1;
+		private System.Windows.Forms.Panel pnlCharacter;
+		private Desktop.CommonControls.RecordField recCharacter;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel3;
+		private System.Windows.Forms.Panel pnlVariable;
+		private Desktop.Skinning.SkinnedTextBox txtVariable;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel4;
+		private Desktop.Skinning.SkinnedIcon cmdExpand;
+		private Desktop.CommonControls.DBPanel pnlBar;
 	}
 }

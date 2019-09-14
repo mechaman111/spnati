@@ -16,7 +16,7 @@ namespace Desktop
 		{
 			InitializeComponent();
 
-			cboMenu.Items.AddRange(new string[] { "", "Also Playing", "Game", "Player", "Self", "Table","Target" });
+			cboMenu.Items.AddRange(new string[] { "", "Filter", "Game", "Player", "Table" });
 		}
 
 		public void SetMacro(Macro macro, IMacroEditor editor)

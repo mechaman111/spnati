@@ -99,6 +99,10 @@ namespace SPNATI_Character_Editor
 		private void FillItems()
 		{
 			Case selectedCase = Data as Case;
+			if (selectedCase == null)
+			{
+				selectedCase = Context as Case;
+			}
 
 			string key = _sourceMember.GetValue(Data)?.ToString();
 			Character character = CharacterDatabase.Get(key);
@@ -110,6 +114,10 @@ namespace SPNATI_Character_Editor
 			bool removed = false;
 			bool lookForward = false;
 			bool filterStages = _filterStagesToTarget;
+			if (Data is TargetCondition && ((TargetCondition)Data).Role == "target")
+			{
+				filterStages = true;
+			}
 			if (tag != null && filterStages)
 			{
 				removing = tag.Contains("removing_");
