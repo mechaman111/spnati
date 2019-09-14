@@ -306,7 +306,6 @@ function reactToNewAICards () {
 		players[currentTurn].updateBehaviour([GOOD_HAND, ANY_HAND]);
 	}
     
-    players[currentTurn].updateVolatileBehaviour();
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
     
@@ -343,7 +342,6 @@ function advanceTurn () {
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
             players[currentTurn].updateBehaviour(players[currentTurn].forfeit[0]);
-            players[currentTurn].updateVolatileBehaviour();
             players[currentTurn].commitBehaviourUpdate();
             updateGameVisual(currentTurn);
             
