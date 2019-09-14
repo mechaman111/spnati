@@ -517,7 +517,34 @@ namespace SPNATI_Character_Editor
 		public int GetPriority()
 		{
 			int priority = 0;
-			if (Role == "target")
+			if (Role == "self")
+			{
+				if (!string.IsNullOrEmpty(FilterTag))
+				{
+					priority += 0;
+				}
+				if (!string.IsNullOrEmpty(Status))
+				{
+					priority += 20;
+				}
+				if (!string.IsNullOrEmpty(ConsecutiveLosses))
+				{
+					priority += 60;
+				}
+				if (!string.IsNullOrEmpty(TimeInStage))
+				{
+					priority += 8;
+				}
+				if (!string.IsNullOrEmpty(Hand))
+				{
+					priority += 20;
+				}
+				if (!string.IsNullOrEmpty(Gender))
+				{
+					priority += 5;
+				}
+			}
+			else if (Role == "target")
 			{
 				if (!string.IsNullOrEmpty(FilterId))
 				{
