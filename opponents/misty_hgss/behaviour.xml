@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1.1 at 4:49:00 PM on September 13, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.1.1 at 6:29:17 PM on September 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.1.1</version>
     <first>Misty</first>
@@ -620,6 +620,10 @@
             <case stage="4" alsoPlaying="wiifitfemale" alsoPlayingSayingMarker="gods">
                 <state img="#-after.png">Me too, Trainer. No clothes, no problems.</state>
             </case>
+            <case stage="0-3" alsoPlaying="sayaka" alsoPlayingSayingMarker="tidal_wave2">
+                <state img="#-confused.png">Um, what are you talking about, Sayaka?</state>
+                <state img="#-confused.png">Are you talking about Surf, Sayaka?</state>
+            </case>
             <case stage="4" id="4" oneShotId="1" saidMarker="player_male" notSaidMarker="found_date" priority="1">
                 <state img="#-worried.png" marker="askfor_number">Hey, ~player~. Do you... Can we...maybe exchange numbers? So I can call you again later?</state>
             </case>
@@ -804,6 +808,10 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="0" alsoPlaying="sayaka">
+                <test expr="~sayaka.costume~" value="default" />
+                <state img="#-strip.png">You seem like someone who would like Water type Pokemon, Sayaka.</state>
+            </case>
             <case stage="1" alsoPlaying="palutena" alsoPlayingStage="3-7">
                 <state img="#-strip.png">You're the last person I want to hear complaining, Palutena. How many accessories did you bring again?</state>
                 <state img="#-strip.png">I don't want to hear anything from you, Palutena. You brought way too many accessories.</state>
@@ -844,6 +852,13 @@
                 <state img="#-strip0.png">Oh? Do you have a fetish for them, Pit?</state>
                 <state img="#-strip0.png">You see them. Do you like them, Pit?</state>
                 <state img="#-strip0.png">What's wrong, Pit? Getting turned on?</state>
+            </case>
+            <case stage="1" alsoPlaying="sayaka">
+                <state img="#-strip.png">I'm assuming you're talking about my Pokemon, Sayaka.</state>
+                <state img="#-strip.png">I don't think I would call six Pokemon an army, Sayaka.</state>
+            </case>
+            <case stage="3" alsoPlaying="sayaka">
+                <state>I go skinny-dipping all the time, Sayaka! It's probably my favorite way to swim.</state>
             </case>
             <case stage="0" priority="1">
                 <test expr="~self.costume~" value="default" />
@@ -893,6 +908,10 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="1" alsoPlaying="sayaka">
+                <test expr="~sayaka.costume~" value="default" />
+                <state>Oh, really Sayaka? I think I have a spare Surf HM I can lend you.</state>
+            </case>
             <case stage="3" alsoPlaying="tharja" saidMarker="player_male" alsoPlayingSaying="flaunting">
                 <state img="#-after.png">I'll flaunt them as much as I want to, Tharja. And if ~player~ enjoys it, then you just have to deal with it.</state>
                 <state img="#-after.png">And what if I am, Tharja?</state>
@@ -964,6 +983,12 @@
             </case>
             <case stage="3" alsoPlaying="croix">
                 <state img="#-after.png">Um, no. I'm not interested, Croix.</state>
+            </case>
+            <case stage="2" alsoPlaying="sayaka">
+                <state>No, Sayaka, they're not. Pokemon like that are usually Ghost types.</state>
+            </case>
+            <case stage="4" alsoPlaying="sayaka">
+                <state img="#-after.png">It's really fun, and feels really nice, Sayaka. Wanna come with me next time I go?</state>
             </case>
             <case stage="1" priority="1">
                 <test expr="~self.costume~" value="default" />
@@ -2137,14 +2162,14 @@
                 <state img="#-neutral.png">(Oh. She just took off her bodysuit. I was afraid she was going to mess with ~player~'s mind.)</state>
                 <state img="#-neutral.png">(Oh. That wasn't nearly as bad as I was afraid it would be.)</state>
             </case>
+            <case stage="0-4 6" target="ayano">
+                <state img="#-happy.png">I see you came prepared to swim Ayano! But you won't need your swimsuit for this.</state>
+            </case>
             <case stage="0-2">
                 <state img="#-teasing.png">Getting close to making you show off something good!</state>
                 <state img="#-happy.png">Don't you feel so much better now that you've gotten rid of your ~clothing~?</state>
                 <state img="#-pleased.png">Isn't it liberating to just take it all off?</state>
                 <state img="#-excited.png">Let's keep things rolling! Next round!</state>
-            </case>
-            <case stage="0-4 6">
-                <state img="#-happy.png">I see you came prepared to swim Ayano! But you won't need your swimsuit for this.</state>
             </case>
             <case stage="3-6">
                 <state img="#-happy.png">Now you're showing off a bit more skin!</state>
@@ -3025,4 +3050,9 @@
         </trigger>
 
     </behaviour>
+    <epilogue gender="any">
+        <title>New Ending</title>
+
+    </epilogue>
+
 </opponent>
