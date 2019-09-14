@@ -1578,6 +1578,13 @@ Case.prototype.checkConditions = function (self, opp) {
     return false;
 }
 
+Case.prototype.cleanupMutableState = function () {
+    delete this.variableBindings;
+    delete this.volatileDependencies;
+    delete this.unwantedMarkers;
+    delete this.unwantedSayings;
+}
+
 Case.prototype.applyOneShot = function (player) {
     if (this.oneShotId) {
         player.oneShotCases[this.oneShotId] = true;
@@ -1638,11 +1645,15 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
         {
             if (curCase.hidden) {
                 //if it's hidden, set markers and collectibles but don't actually count as a match
+                curCase.cleanupMutableState();
                 this.applyHiddenStates(curCase, opp);
                 continue;
             }
 
             if (curCase.priority > bestMatchPriority) {
+                /* Cleanup all mutable state on previous best-match cases. */
+                bestMatch.forEach(function (c) { c.cleanupMutableState(); });
+
                 bestMatch = [curCase];
                 bestMatchPriority = curCase.priority;
             } else {
@@ -1664,7 +1675,13 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
         var rnd = Math.random() * weightSum;
         for (var i = 0, x = 0; x < rnd; x += states[i++].weight);
         
-        return new State(states[i - 1]);
+        /* Clean up mutable state on cases not selected. */
+        var chosenState = states[i-1];
+        bestMatch.forEach(function (c) {
+            if (c !== chosenState.parentCase) c.cleanupMutableState();
+        });
+
+        return new State(chosenState);
     }
 
     console.log("-------------------------------------");
