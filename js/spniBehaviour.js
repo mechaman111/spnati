@@ -1708,7 +1708,7 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         return;
     }
 
-    if (this.chosenState) {
+    if (this.chosenState && this.chosenState.parentCase) {
         console.log("Player "+this.slot+": Current priority "+this.chosenState.parentCase.priority);
     }
     
