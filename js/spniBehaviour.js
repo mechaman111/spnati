@@ -1821,7 +1821,7 @@ function updateAllBehaviours (target, target_tags, other_tags) {
  * 'Promotes' players who have available volatile cases to using those cases.
  ************************************************************/
 function updateAllVolatileBehaviours () {
-    for (var pass = 0; pass < 2; pass++) {
+    for (var pass = 0; pass < 3; pass++) {
         console.log("Reaction pass "+(pass+1));
         var anyUpdated = false;
         
