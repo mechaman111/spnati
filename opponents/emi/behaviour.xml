@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1 at 6:19:55 PM on September 13, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.1 at 11:05:33 AM on September 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.1</version>
     <first>Emi</first>
@@ -430,6 +430,9 @@
                 <state img="#-bored.png">Bein' lucky be when yer preparation meets an opportunity. 'tis nah jus' random chance. Ye 'ave t' earn it.</state>
                 <state img="#-happy.png">I'll be lookin' t' survive another round.</state>
             </case>
+            <case stage="0-3" id="25" totalRounds="2-" notSaidMarker="800m" priority="2">
+                <state img="#-happy.png" marker="800m">Let's all have a bet! Whoever loses this hand has to race me on the track tomorrow!</state>
+            </case>
             <case stage="0-1">
                 <state img="#-happy.png">This round is mine!</state>
                 <state img="#-laughing.png">None of you have a chance.</state>
@@ -663,7 +666,7 @@
             </case>
             <case stage="3-7" totalRounds="9-">
                 <condition count="1-5" status="not_lost_some" role="opp" var="leader" />
-                <test expr="~leader.lead~" cmp="&gt;" value="0" />
+                <test expr="~leader.lead~" cmp="&gt;" value="1" />
                 <test expr="~self.place~" cmp="&gt;" value="1" />
                 <state img="#-content.png" oneShotId="13">Could ~leader~ lose a hand already? That would be nice.</state>
                 <state img="#-annoyed.png" oneShotId="14">Are you hiding cards under your sleeve or something, ~leader~?!</state>
@@ -771,7 +774,7 @@
             </case>
             <case stage="2-6">
                 <condition count="1-5" role="opp" var="leader" />
-                <test expr="~leader.lead~" cmp="&gt;" value="0" />
+                <test expr="~leader.lead~" cmp="&gt;" value="1" />
                 <test expr="~self.place~" cmp="&gt;" value="1" />
                 <state img="#-content.png" oneShotId="10">I'm not okay with ~leader~ having so much left. We need to step up our game!</state>
                 <state img="#-happy.png" oneShotId="11">Better watch your back, ~leader~! I'm not about to let you keep that lead!</state>
@@ -802,9 +805,6 @@
             <case stage="0-1" totalMales="4" notSaidMarker="sausage-fest">
                 <state img="#-confused.png" marker="sausage-fest">I'll be honest, I'm not super comfortable playing this with &lt;i&gt;four&lt;/i&gt; guys...I feel like all eyes are on me!</state>
             </case>
-            <case stage="0-3" id="25" totalRounds="2-" notSaidMarker="800m" priority="2">
-                <state img="#-happy.png" marker="800m">Let's all have a bet! Whoever loses this hand has to race me on the track tomorrow!</state>
-            </case>
             <case stage="1-2" saidMarker="car_accident" notSaidMarker="setup_pirate">
                 <state img="#-happy.png" marker="setup_pirate">With these legs I'd make a pretty good pirate, wouldn't I?</state>
                 <state img="#-laughing.png" marker="setup_pirate">With my fake legs, striped clothes, and assertive attitude, I'm basically a pirate!</state>
@@ -814,6 +814,10 @@
                 <state img="#-content.png" marker="car_accident">It might be hard to tell with my vibrant socks, but my legs were amputated below the knee after I was in a car accident. Now I wear prosthetics.</state>
                 <state img="#-sad.png" marker="car_accident">In case any of you were wondering, yes, my legs are prosthetic. I lost them in a car accident several years ago.</state>
                 <state img="#-content.png" marker="car_accident">So yeah, long story short; I was in a car accident several years ago and lost my legs below the knee. I wear prosthetics now.</state>
+            </case>
+            <case stage="5-8" saidMarker="800m==2">
+                <state img="#-interested.png" marker="=3">Here's a new bet just for you, ~player~. If you manage to win this game, you have to race me at the track tomorrow! Sound fair?</state>
+                <state img="#-interested.png" weight="4">Don't worry, ~player~, we'll have a bet just between us if you manage to win this game! </state>
             </case>
         </trigger>
 
@@ -1378,6 +1382,13 @@
             <case stage="0-10" target="pinkie_pie" targetStage="5" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="#-shocked.png">Don't do it! Any basement but &lt;i&gt;hers!&lt;/i&gt;</state>
             </case>
+            <case stage="0-10" target="erufuda" targetStage="0" notSaidMarker="pirate" targetSaidMarker="fries_dont_count">
+                <state img="#-content.png">Is she &lt;i&gt;really&lt;/i&gt; willing to put her fries down for a moment to take something off?</state>
+                <state img="#-content.png">Oh...yay...it's the french fry girl's turn...</state>
+            </case>
+            <case stage="0-10" target="erufuda" targetStage="0" notSaidMarker="pirate" targetNotSaidMarker="fries_dont_count">
+                <state img="#-content.png">Is she going to put down her french fries as a move?</state>
+            </case>
             <case stage="0-10" target="akko" targetStage="1" notSaidMarker="pirate">
                 <state img="#-interested.png">So you learned all this at a school for...witches? And people think my school for the disabled is strange...</state>
             </case>
@@ -1402,11 +1413,6 @@
             </case>
             <case stage="0-10" target="caulifla" targetStage="4" notSaidMarker="pirate">
                 <state img="#-frustrated.png">But I wanted to know if your pubes go all crazy and yellow too! Now we'll never know!</state>
-            </case>
-            <case stage="0-10" target="erufuda" targetStage="0" notSaidMarker="pirate">
-                <state img="#-content.png">Is she &lt;i&gt;really&lt;/i&gt; willing to put her fries down for a moment to take something off?</state>
-                <state img="#-content.png">Oh...yay...it's the french fry girl's turn...</state>
-                <state img="#-content.png" weight="2">Is she going to put down her french fries as a move?</state>
             </case>
             <case stage="0-10" target="erufuda" targetStage="1" notSaidMarker="pirate">
                 <state img="#-content.png">Go ahead, french fry girl.</state>
@@ -3233,8 +3239,8 @@
 
         <trigger id="opponent_lost">
             <case stage="0-3" id="24" filter="human" saidMarker="800m==1" priority="999">
-                <state img="#-interested.png" marker="800m=3">Way to go, ~player~, you just lost my bet! I'm at the track every day after school. Meet me there when you'd like to get, well, schooled!</state>
-                <state img="#-interested.png" marker="800m=3">Nice work, ~player~! You've lost my bet. Hope to see you at the track soon for a race!</state>
+                <state img="#-interested.png" marker="800m=3" collectible="running_shoes">Way to go, ~player~, you just lost my bet! I'm at the track every day after school. Meet me there when you'd like to get, well, schooled!</state>
+                <state img="#-interested.png" marker="800m=3" collectible="running_shoes">Nice work, ~player~! You've lost my bet. Hope to see you at the track soon for a race!</state>
             </case>
             <case stage="0-3" saidMarker="800m==1" priority="999">
                 <test expr="~target.gender~" value="female" />
@@ -3269,7 +3275,7 @@
             </case>
             <case stage="0-10" id="28" oneShotId="1" filter="hero" targetStage="1-3" notSaidMarker="pirate">
                 <state img="#-calm.png" marker="emi_hero">Tell me, ~name~, what drives your heroism? What even &lt;i&gt;is&lt;/i&gt; a hero to you?</state>
-                <state img="#-calm.png" marker="emi_hero">So, ~name~ the hero, what makes you want to &lt;i&gt;be&lt;/i&gt; a hero in the first place?</state>
+                <state img="#-calm.png" marker="emi_hero">So, "~name~ the hero," what made you want to &lt;i&gt;be&lt;/i&gt; a hero in the first place?</state>
                 <state img="#-calm.png" marker="emi_hero">So ~name~, you're a hero, right? What put you down that track?</state>
             </case>
             <case stage="0-10" id="30" oneShotId="3" filter="psychic" targetStage="1-3" notSaidMarker="pirate">
@@ -4505,6 +4511,13 @@
                 <state img="#-frustrated.png" weight="3">What a bilge-sucking, clap o' thunderin', grog blossomin', keelhaul hornswagglin', landlubberin' bottom dweller of a game.</state>
             </case>
             <case stage="10">
+                <test expr="~human.place~" value="1" />
+                <test expr="~human.tag.human_male~" value="true" />
+                <state img="#-interested.png">Okay ~player~, Mr. "Big Winner," how good &lt;i&gt;are&lt;/i&gt; you at winning? Think you could beat me in a race? Let's find out! </state>
+                <state img="#-interested.png">You seem pretty confident, ~player~. Think your luck would hold up on the track? I &lt;i&gt;bet&lt;/i&gt; you can't beat me there! </state>
+                <state img="#-interested.png">I bet you couldn't beat me in a race, ~player~. Your luck won't help you there! </state>
+            </case>
+            <case stage="10">
                 <test expr="~self.place~" value="2" />
                 <state img="#-content.png" weight="2">Second place is just the first loser. Well, last loser in the case of this game, I suppose.</state>
                 <state img="#-content.png">At least I wasn't the first to go down. It's not much of an extra comfort, though. I'd rather &lt;i&gt;win.&lt;/i&gt;</state>
@@ -4523,7 +4536,7 @@
         </trigger>
 
     </behaviour>
-    <epilogue hint="Have Emi challenge you to a race by losing her bet and win the game." gender="male" markers="800m emi_epilogue" img="ep_thumbnail.png">
+    <epilogue gender="male" img="ep_thumbnail.png">
         <title>A Clandestine Encounter</title>
         <scene id="track" name="Track" background="bg_track.png" color="#000000" x="175" y="0" width="1920" height="1080" zoom="1.248374" overlay-alpha="100">
             <directive type="fade" time="0" alpha="100" />
