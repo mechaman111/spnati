@@ -1713,6 +1713,10 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
 
     if (state) {
         /* Reaction handling state... */
+        if (this.chosenState && this.chosenState.parentCase) {
+            this.chosenState.parentCase.cleanupMutableState();
+        }
+
         this.chosenState = state;
         this.stateCommitted = false;
         this.lastUpdateTags = tags;
@@ -1749,6 +1753,10 @@ Opponent.prototype.updateVolatileBehaviour = function () {
     if (newState) {
         console.log("Found new volatile state for player "+this.slot+" with priority "+newState.parentCase.priority);
         /* Assign new best-match case and state. */
+        if (this.chosenState && this.chosenState.parentCase) {
+            this.chosenState.parentCase.cleanupMutableState();
+        }
+        
         this.chosenState = newState;
         this.stateCommitted = false;
         

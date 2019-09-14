@@ -503,6 +503,7 @@ function continueDealPhase () {
      */
     players.forEach(function (p) {
         if (p.chosenState) {
+            if (p.chosenState.parentCase) p.chosenState.parentCase.cleanupMutableState();
             p.chosenState = null;
             p.stateCommitted = false;
         }
@@ -561,6 +562,7 @@ function completeRevealPhase () {
         /* inform the player */
         players.forEach(function (p) {
             if (p.chosenState) {
+                if (p.chosenState.parentCase) p.chosenState.parentCase.cleanupMutableState();
                 p.chosenState = null;
             }
         });
