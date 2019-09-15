@@ -538,7 +538,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		private static void ResetKisekae()
 		{
-			if (MessageBox.Show("This will attempt fix Kisekae when imports are failing. Close kkl.exe before proceeding.", "Fix Kisekae", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+			if (MessageBox.Show("This will attempt to fix Kisekae when imports are failing. Close kkl.exe before proceeding.", "Fix Kisekae", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
 			{
 				return;
 			}
