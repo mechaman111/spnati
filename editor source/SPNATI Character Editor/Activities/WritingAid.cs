@@ -278,13 +278,13 @@ namespace SPNATI_Character_Editor.Activities
 				character = CharacterDatabase.Load(character.FolderName);
 				character.PrepareForEdit();
 				CharacterEditorData editorData = CharacterDatabase.GetEditorData(character);
-				
+
 				Situation replacement = editorData.NoteworthySituations.Find(s => (situation.Id > 0 && s.Id == situation.Id) || (situation.Id == 0 && situation.Name == s.Name));
 				if (replacement != null)
 				{
 					situation = replacement;
 				}
-				
+
 				row.Tag = new Tuple<Character, Situation>(character, situation);
 				row.Cells[ColTrigger.Index].Value = situation.LinkedCase?.ToString() ?? "...";
 			}

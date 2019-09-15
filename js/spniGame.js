@@ -306,7 +306,6 @@ function reactToNewAICards () {
 		players[currentTurn].updateBehaviour([GOOD_HAND, ANY_HAND]);
 	}
     
-    players[currentTurn].updateVolatileBehaviour();
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
     
@@ -343,7 +342,6 @@ function advanceTurn () {
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
             players[currentTurn].updateBehaviour(players[currentTurn].forfeit[0]);
-            players[currentTurn].updateVolatileBehaviour();
             players[currentTurn].commitBehaviourUpdate();
             updateGameVisual(currentTurn);
             
@@ -356,6 +354,21 @@ function advanceTurn () {
 
 	/* allow them to take their turn */
 	if (currentTurn == 0) {
+        /* Reprocess reactions. */
+        updateAllVolatileBehaviours();
+        
+        /* Commit updated states only. */
+        var updatedPlayers = [];
+        players.forEach(function (p) {
+            if (p.chosenState && !p.stateCommitted) {
+                p.commitBehaviourUpdate();
+                updateGameVisual(p.slot);
+                updatedPlayers.push(p.slot);
+            }
+        });
+        
+        saveTranscriptEntries(updatedPlayers);
+        
         /* human player's turn */
         if (humanPlayer.out) {
 			allowProgression(eGamePhase.REVEAL);

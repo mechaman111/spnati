@@ -952,7 +952,11 @@ function Condition($xml) {
     this.saying         = $xml.attr('saying');
     this.priority = 0;
 
-    if (this.role == "target") {
+    if (this.role == "self") {
+        this.priority += (this.tag ? 0 : 0) + (this.status ? 20 : 0)
+            + (this.consecutiveLosses ? 60 : 0) + (this.timeInStage ? 8 : 0)
+            + (this.hand ? 20 : 0) + (this.gender ? 5 : 0)
+    } else if (this.role == "target") {
         this.priority += (this.id ? 300 : 0) + (this.tag ? 150 : 0)
             + (this.stage ? 80 : 0) + (this.status ? 70 : 0)
             + (this.layers ? 40 : 0) + (this.startingLayers ? 40 : 0)
@@ -1091,6 +1095,12 @@ function Case($xml, stage) {
         // Expression tests (priority = 50 for each)
         this.priority += (tests.length * 50);
     }
+
+    this.isVolatile = this.targetSayingMarker || this.targetSaying
+        || this.alsoPlayingSayingMarker || this.alsoPlayingSaying
+        || this.counters.some(function(c) {
+            return c.sayingMarker || c.saying;
+        });
 }
 
 /* Convert this case's conditions into a plain object, into a format suitable
@@ -1431,6 +1441,7 @@ Case.prototype.checkConditions = function (self, opp) {
     if (!this.counters.every(function (ctr) {
         var matches = players.filter(function(p) {
             return (ctr.role === undefined
+                    || (ctr.role == "self" && p == self)
                     || (ctr.role == "target" && p == opp)
                     || (ctr.role == "opp" && p != self)
                     || (ctr.role == "other" && p != self && p != opp))
@@ -1570,9 +1581,13 @@ Case.prototype.applyOneShot = function (player) {
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
 
-Opponent.prototype.findBehaviour = function(tags, opp, bestMatchPriority) {
+Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
     /* get the AI stage */
     var stageNum = this.stage;
+    var bestMatchPriority = 0;
+    if (volatileOnly && this.chosenState && this.chosenState.parentCase) {
+        bestMatchPriority = this.chosenState.parentCase.priority + 1;
+    }
 
     /* try to find the tags/stage.
 	   .get() returns a simple array with the matched
@@ -1603,6 +1618,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, bestMatchPriority) {
         var curCase = new Case(cases[i], this.stage);
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
+            (!volatileOnly || curCase.isVolatile) &&
             curCase.checkConditions(this, opp))
         {
             if (curCase.hidden) {
@@ -1661,12 +1677,11 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     this.currentTarget = opp;
     this.currentTags = tags;
 
-    var state = this.findBehaviour(tags, opp, -1);
+    var state = this.findBehaviour(tags, opp, false);
 
     if (state) {
         /* Reaction handling state... */
         this.chosenState = state;
-        this.currentPriority = state.parentCase.priority;
         this.stateCommitted = false;
         this.lastUpdateTags = tags;
         
@@ -1692,16 +1707,17 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         console.log("Player "+this.slot+" state is locked.");
         return;
     }
+
+    if (this.chosenState && this.chosenState.parentCase) {
+        console.log("Player "+this.slot+": Current priority "+this.chosenState.parentCase.priority);
+    }
     
-    console.log("Player "+this.slot+": Current priority "+this.currentPriority);
-    
-    var newState = this.findBehaviour(this.currentTags, this.currentTarget, this.currentPriority + 1);
+    var newState = this.findBehaviour(this.currentTags, this.currentTarget, true);
 
     if (newState) {
         console.log("Found new volatile state for player "+this.slot+" with priority "+newState.parentCase.priority);
         /* Assign new best-match case and state. */
         this.chosenState = newState;
-        this.currentPriority = newState.parentCase.priority;
         this.stateCommitted = false;
         
         return true;
@@ -1805,7 +1821,7 @@ function updateAllBehaviours (target, target_tags, other_tags) {
  * 'Promotes' players who have available volatile cases to using those cases.
  ************************************************************/
 function updateAllVolatileBehaviours () {
-    for (var pass = 0; pass < 2; pass++) {
+    for (var pass = 0; pass < 3; pass++) {
         console.log("Reaction pass "+(pass+1));
         var anyUpdated = false;
         
