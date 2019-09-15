@@ -45,18 +45,19 @@
 			this.txtVariable = new Desktop.Skinning.SkinnedTextBox();
 			this.skinnedLabel4 = new Desktop.Skinning.SkinnedLabel();
 			this.cmdExpand = new Desktop.Skinning.SkinnedIcon();
-			this.pnlBar = new Desktop.CommonControls.DBPanel();
+			this.grpContainer = new Desktop.Skinning.SkinnedGroupBox();
 			this.pnlRange.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valTo)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrom)).BeginInit();
 			this.pnlCharacter.SuspendLayout();
 			this.pnlVariable.SuspendLayout();
+			this.grpContainer.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// recWho
 			// 
 			this.recWho.AllowCreate = true;
-			this.recWho.Location = new System.Drawing.Point(35, 1);
+			this.recWho.Location = new System.Drawing.Point(36, 2);
 			this.recWho.Name = "recWho";
 			this.recWho.PlaceholderText = null;
 			this.recWho.Record = null;
@@ -79,10 +80,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableAdvanced.BackColor = System.Drawing.Color.Transparent;
 			this.tableAdvanced.Data = null;
-			this.tableAdvanced.HeaderType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.tableAdvanced.HeaderType = Desktop.Skinning.SkinnedBackgroundType.Transparent;
 			this.tableAdvanced.HideAddField = true;
 			this.tableAdvanced.HideSpeedButtons = false;
-			this.tableAdvanced.Location = new System.Drawing.Point(1, 21);
+			this.tableAdvanced.Location = new System.Drawing.Point(6, 22);
 			this.tableAdvanced.ModifyingProperty = null;
 			this.tableAdvanced.Name = "tableAdvanced";
 			this.tableAdvanced.PanelType = Desktop.Skinning.SkinnedBackgroundType.Transparent;
@@ -92,7 +93,7 @@
 			this.tableAdvanced.RemoveCaption = "Remove";
 			this.tableAdvanced.RowHeaderWidth = 120F;
 			this.tableAdvanced.RunInitialAddEvents = true;
-			this.tableAdvanced.Size = new System.Drawing.Size(842, 95);
+			this.tableAdvanced.Size = new System.Drawing.Size(835, 93);
 			this.tableAdvanced.Sorted = true;
 			this.tableAdvanced.TabIndex = 25;
 			this.tableAdvanced.UndoManager = null;
@@ -105,7 +106,7 @@
 			this.pnlRange.Controls.Add(this.valTo);
 			this.pnlRange.Controls.Add(this.valFrom);
 			this.pnlRange.Controls.Add(this.label3);
-			this.pnlRange.Location = new System.Drawing.Point(567, 0);
+			this.pnlRange.Location = new System.Drawing.Point(569, 1);
 			this.pnlRange.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlRange.Name = "pnlRange";
 			this.pnlRange.Size = new System.Drawing.Size(141, 25);
@@ -176,7 +177,7 @@
 			this.skinnedLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.skinnedLabel1.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
 			this.skinnedLabel1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.skinnedLabel1.Location = new System.Drawing.Point(3, 4);
+			this.skinnedLabel1.Location = new System.Drawing.Point(4, 5);
 			this.skinnedLabel1.Name = "skinnedLabel1";
 			this.skinnedLabel1.Size = new System.Drawing.Size(32, 13);
 			this.skinnedLabel1.TabIndex = 26;
@@ -186,7 +187,7 @@
 			// 
 			this.pnlCharacter.Controls.Add(this.recCharacter);
 			this.pnlCharacter.Controls.Add(this.skinnedLabel3);
-			this.pnlCharacter.Location = new System.Drawing.Point(138, 0);
+			this.pnlCharacter.Location = new System.Drawing.Point(135, 1);
 			this.pnlCharacter.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlCharacter.Name = "pnlCharacter";
 			this.pnlCharacter.Size = new System.Drawing.Size(136, 25);
@@ -228,7 +229,7 @@
 			this.pnlVariable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlVariable.Controls.Add(this.txtVariable);
 			this.pnlVariable.Controls.Add(this.skinnedLabel4);
-			this.pnlVariable.Location = new System.Drawing.Point(708, 1);
+			this.pnlVariable.Location = new System.Drawing.Point(710, 2);
 			this.pnlVariable.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlVariable.Name = "pnlVariable";
 			this.pnlVariable.Size = new System.Drawing.Size(110, 25);
@@ -267,7 +268,7 @@
 			this.cmdExpand.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.cmdExpand.Flat = false;
 			this.cmdExpand.Image = global::SPNATI_Character_Editor.Properties.Resources.ChevronDown;
-			this.cmdExpand.Location = new System.Drawing.Point(822, 1);
+			this.cmdExpand.Location = new System.Drawing.Point(820, 1);
 			this.cmdExpand.Name = "cmdExpand";
 			this.cmdExpand.Size = new System.Drawing.Size(21, 21);
 			this.cmdExpand.TabIndex = 30;
@@ -275,29 +276,32 @@
 			this.cmdExpand.UseVisualStyleBackColor = true;
 			this.cmdExpand.Click += new System.EventHandler(this.cmdExpand_Click);
 			// 
-			// pnlBar
+			// grpContainer
 			// 
-			this.pnlBar.Location = new System.Drawing.Point(0, 0);
-			this.pnlBar.Margin = new System.Windows.Forms.Padding(0);
-			this.pnlBar.Name = "pnlBar";
-			this.pnlBar.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
-			this.pnlBar.Size = new System.Drawing.Size(3, 120);
-			this.pnlBar.TabIndex = 31;
-			this.pnlBar.TabSide = Desktop.Skinning.TabSide.None;
-			this.pnlBar.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlBar_Paint);
+			this.grpContainer.BackColor = System.Drawing.Color.White;
+			this.grpContainer.Controls.Add(this.cmdExpand);
+			this.grpContainer.Controls.Add(this.tableAdvanced);
+			this.grpContainer.Controls.Add(this.recWho);
+			this.grpContainer.Controls.Add(this.pnlVariable);
+			this.grpContainer.Controls.Add(this.pnlRange);
+			this.grpContainer.Controls.Add(this.pnlCharacter);
+			this.grpContainer.Controls.Add(this.skinnedLabel1);
+			this.grpContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.grpContainer.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.grpContainer.Image = null;
+			this.grpContainer.Location = new System.Drawing.Point(0, 0);
+			this.grpContainer.Name = "grpContainer";
+			this.grpContainer.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.grpContainer.ShowIndicatorBar = true;
+			this.grpContainer.Size = new System.Drawing.Size(844, 119);
+			this.grpContainer.TabIndex = 31;
+			this.grpContainer.TabStop = false;
 			// 
 			// FilterControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.pnlBar);
-			this.Controls.Add(this.cmdExpand);
-			this.Controls.Add(this.recWho);
-			this.Controls.Add(this.tableAdvanced);
-			this.Controls.Add(this.pnlRange);
-			this.Controls.Add(this.pnlCharacter);
-			this.Controls.Add(this.pnlVariable);
-			this.Controls.Add(this.skinnedLabel1);
+			this.Controls.Add(this.grpContainer);
 			this.Name = "FilterControl";
 			this.Size = new System.Drawing.Size(844, 119);
 			this.pnlRange.ResumeLayout(false);
@@ -308,8 +312,9 @@
 			this.pnlCharacter.PerformLayout();
 			this.pnlVariable.ResumeLayout(false);
 			this.pnlVariable.PerformLayout();
+			this.grpContainer.ResumeLayout(false);
+			this.grpContainer.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -331,6 +336,6 @@
 		private Desktop.Skinning.SkinnedTextBox txtVariable;
 		private Desktop.Skinning.SkinnedLabel skinnedLabel4;
 		private Desktop.Skinning.SkinnedIcon cmdExpand;
-		private Desktop.CommonControls.DBPanel pnlBar;
+		private Desktop.Skinning.SkinnedGroupBox grpContainer;
 	}
 }

@@ -128,6 +128,16 @@ namespace Desktop.Skinning
 		public Color Group4 = Color.FromArgb(175, 89, 49);
 		[Color(DisplayName = "Group 5")]
 		public Color Group5 = Color.Black;
+		[ColorSet(DisplayName = "Group 1 Set")]
+		public ColorSet Group1Set { get; set; } = new ColorSet();
+		[ColorSet(DisplayName = "Group 2 Set")]
+		public ColorSet Group2Set { get; set; } = new ColorSet();
+		[ColorSet(DisplayName = "Group 3 Set")]
+		public ColorSet Group3Set { get; set; } = new ColorSet();
+		[ColorSet(DisplayName = "Group 4 Set")]
+		public ColorSet Group4Set { get; set; } = new ColorSet();
+		[ColorSet(DisplayName = "Group 5 Set")]
+		public ColorSet Group5Set { get; set; } = new ColorSet();
 
 		public Color GetGrouper(int number)
 		{
@@ -145,6 +155,25 @@ namespace Desktop.Skinning
 					return Group5;
 				default:
 					return Surface.ForeColor;
+			}
+		}
+
+		public ColorSet GetGrouperSet(int number)
+		{
+			switch (number)
+			{
+				case 1:
+					return Group1Set;
+				case 2:
+					return Group2Set;
+				case 3:
+					return Group3Set;
+				case 4:
+					return Group4Set;
+				case 5:
+					return Group5Set;
+				default:
+					return Surface;
 			}
 		}
 		#endregion
@@ -348,6 +377,16 @@ namespace Desktop.Skinning
 					return Color.Transparent;
 				case SkinnedBackgroundType.Field:
 					return FieldBackColor;
+				case SkinnedBackgroundType.Group1:
+					return Group1Set.Normal;
+				case SkinnedBackgroundType.Group2:
+					return Group2Set.Normal;
+				case SkinnedBackgroundType.Group3:
+					return Group3Set.Normal;
+				case SkinnedBackgroundType.Group4:
+					return Group4Set.Normal;
+				case SkinnedBackgroundType.Group5:
+					return Group5Set.Normal;
 				default:
 					return Background.Normal;
 			}
@@ -429,6 +468,11 @@ namespace Desktop.Skinning
 		SecondaryLight,
 		Transparent,
 		Field,
+		Group1,
+		Group2,
+		Group3,
+		Group4,
+		Group5,
 	}
 
 	/// <summary>

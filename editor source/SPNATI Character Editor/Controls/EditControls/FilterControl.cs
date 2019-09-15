@@ -159,13 +159,12 @@ namespace SPNATI_Character_Editor
 
 		private int GetHeight()
 		{
-			return tableAdvanced.Top + tableAdvanced.GetTotalHeight();
+			return tableAdvanced.Top + tableAdvanced.GetTotalHeight() + 1;
 		}
 
 		protected override void OnRequireHeight(int height)
 		{
 			base.OnRequireHeight(height);
-			tableAdvanced.Width = Width;
 		}
 
 		protected override void AddHandlers()
@@ -201,7 +200,24 @@ namespace SPNATI_Character_Editor
 				pnlCharacter.Visible = type.CanSpecifyCharacter;
 				_countAvailable = pnlRange.Visible = pnlVariable.Visible = type.CanSpecifyRange;
 			}
-			pnlBar.Invalidate();
+			string key = type?.Key ?? "";
+			switch (key)
+			{
+				case "self":
+					grpContainer.PanelType = SkinnedBackgroundType.Group3;
+					break;
+				case "target":
+					grpContainer.PanelType = SkinnedBackgroundType.Group4;
+					break;
+				case "other":
+				case "opp":
+					grpContainer.PanelType = SkinnedBackgroundType.Group2;
+					break;
+				default:
+					grpContainer.PanelType = SkinnedBackgroundType.Group1;
+					break;
+			}
+			tableAdvanced.HeaderType = grpContainer.PanelType;
 		}
 
 		private void DataValueChanged(object sender, EventArgs e)
@@ -235,9 +251,9 @@ namespace SPNATI_Character_Editor
 			_filter.Role = DetermineRole(type);
 			if (type.CanSpecifyRange && pnlRange.Visible)
 			{
-					_filter.Count = GetCount();
-					_filter.Variable = txtVariable.Text;
-			
+				_filter.Count = GetCount();
+				_filter.Variable = txtVariable.Text;
+
 			}
 			else
 			{
@@ -345,7 +361,7 @@ namespace SPNATI_Character_Editor
 			if (_collapsed)
 			{
 				cmdExpand.Image = Properties.Resources.ChevronDown;
-				OnRequireHeight(23);
+				OnRequireHeight(24);
 
 			}
 			else
@@ -355,30 +371,30 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private void pnlBar_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-		{
-			Graphics g = e.Graphics;
-			Skin skin = SkinManager.Instance.CurrentSkin;
-			FilterType type = recWho.Record as FilterType;
-			string key = type?.Key ?? "";
-			switch (key)
-			{
-				case "self":
-					_indicatorBrush.Color = skin.Group3;
-					break;
-				case "target":
-					_indicatorBrush.Color = skin.Group4;
-					break;
-				case "other":
-				case "opp":
-					_indicatorBrush.Color = skin.Group2;
-					break;
-				default:
-					_indicatorBrush.Color = skin.Group1;
-					break;
-			}
-			g.FillRectangle(_indicatorBrush, 0, 0, pnlBar.Width, Height);
-		}
+		//private void pnlBar_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+		//{
+		//	Graphics g = e.Graphics;
+		//	Skin skin = SkinManager.Instance.CurrentSkin;
+		//	FilterType type = recWho.Record as FilterType;
+		//	string key = type?.Key ?? "";
+		//	switch (key)
+		//	{
+		//		case "self":
+		//			_indicatorBrush.Color = skin.Group3;
+		//			break;
+		//		case "target":
+		//			_indicatorBrush.Color = skin.Group4;
+		//			break;
+		//		case "other":
+		//		case "opp":
+		//			_indicatorBrush.Color = skin.Group2;
+		//			break;
+		//		default:
+		//			_indicatorBrush.Color = skin.Group1;
+		//			break;
+		//	}
+		//	g.FillRectangle(_indicatorBrush, 0, 0, pnlBar.Width, Height);
+		//}
 	}
 
 	public class FilterAttribute : EditControlAttribute
