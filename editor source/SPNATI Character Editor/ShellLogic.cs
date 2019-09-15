@@ -437,6 +437,7 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Data Recovery", OpenDataRecovery, menu, Keys.None);
 			shell.AddToolbarItem("Fix Kisekae", ResetKisekae, menu, Keys.None);
+			shell.AddToolbarItem("Convert Dialogue", ConvertDialogue, menu, Keys.None);
 
 			//Dev tools
 			if (Config.DevMode)
@@ -673,6 +674,24 @@ namespace SPNATI_Character_Editor
 		{
 			Recipe recipe = record as Recipe;
 			return Config.DevMode || !recipe.Core;
+		}
+
+		private static void ConvertDialogue()
+		{
+			int count = 0;
+			Character character = Shell.Instance.ActiveWorkspace.Record as Character;
+			if (character != null)
+			{
+				foreach (Case wc in character.Behavior.GetWorkingCases())
+				{
+					if (wc.HasLegacyConditions())
+					{
+						DataConversions.ConvertCase5_2(wc);
+						count++;
+					}
+				}
+			}
+			MessageBox.Show("Converted " + count + " cases.");
 		}
 	}
 }
