@@ -124,23 +124,32 @@ namespace SPNATI_Character_Editor
 			else
 			{
 				recWho.RecordKey = role;
+				if (role == "self")
+				{
+					recCharacter.RecordKey = (Context as Character)?.Key;
+				}
 			}
 			if (!string.IsNullOrEmpty(_filter.Character))
 			{
 				recCharacter.RecordKey = _filter.Character;
+			}
+			if (string.IsNullOrEmpty(_filter.Gender))
+			{
+				_filter.Gender = null;
 			}
 
 			SetCount(_filter.Count);
 			txtVariable.Text = _filter.Variable;
 
 			tableAdvanced.Context = Data;
+			tableAdvanced.SecondaryContext = Context;
 			tableAdvanced.Data = _filter;
 		}
 
 		public override void OnAddedToRow()
 		{
 			OnRequireHeight(GetHeight());
-			ToggleCollapsed(true);
+			ToggleCollapsed(!_filter.HasAdvancedConditions);
 		}
 
 		private void TableAdvanced_RowAdded(object sender, EventArgs e)
@@ -224,17 +233,16 @@ namespace SPNATI_Character_Editor
 				return;
 			}
 			_filter.Role = DetermineRole(type);
-			if (type.CanSpecifyRange)
+			if (type.CanSpecifyRange && pnlRange.Visible)
 			{
-				if (pnlRange.Visible)
-				{
 					_filter.Count = GetCount();
 					_filter.Variable = txtVariable.Text;
-				}
-				else
-				{
-					_filter.Count = "";
-				}
+			
+			}
+			else
+			{
+				_filter.Count = "";
+				_filter.Variable = null;
 			}
 			if (type.CanSpecifyCharacter)
 			{
@@ -243,6 +251,10 @@ namespace SPNATI_Character_Editor
 			else if (type.IsCharacter)
 			{
 				_filter.Character = type.Key;
+			}
+			else
+			{
+				_filter.Character = null;
 			}
 		}
 

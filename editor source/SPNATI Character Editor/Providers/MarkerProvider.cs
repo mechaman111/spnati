@@ -75,6 +75,10 @@ namespace SPNATI_Character_Editor.Providers
 
 			foreach (Marker record in _character.Markers.Values)
 			{
+				if (string.IsNullOrEmpty(record.Key))
+				{
+					continue;
+				}
 				if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text))
 				{
 					//partial match

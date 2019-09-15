@@ -16,6 +16,7 @@ namespace Desktop.CommonControls
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public object Context { get; set; }
+		public object SecondaryContext { get; set; }
 		public object Data { get; set; }
 		public object PreviewData { get; set; }
 		public UndoManager UndoManager { get; set; }
@@ -252,13 +253,14 @@ namespace Desktop.CommonControls
 		/// </summary>
 		/// <param name="data"></param>
 		/// <param name="property"></param>
-		public void SetData(object data, string property, int index, object context, UndoManager undoManager, object previewData, PropertyTable table)
+		public void SetData(object data, string property, int index, object context, object secondaryContext, UndoManager undoManager, object previewData, PropertyTable table)
 		{
 			ParentTable = table;
 			SetBindableData(data, ref _bindableData);
 			SetBindableData(previewData, ref _bindablePreviewData);
 			UndoManager = undoManager;
 			Context = context;
+			SecondaryContext = secondaryContext;
 			Property = property;
 			Index = index;
 			Type dataType = data.GetType();
@@ -334,7 +336,7 @@ namespace Desktop.CommonControls
 		{
 		}
 
-		public void Rebind(object data, object previewData, object context)
+		public void Rebind(object data, object previewData, object context, object secondaryContext)
 		{
 			ClearBindableData();
 			Data = data;

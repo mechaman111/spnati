@@ -108,6 +108,11 @@ namespace SPNATI_Character_Editor.Forms
 			return character;
 		}
 
+		public object GetSecondaryRecordContext()
+		{
+			return GetRecordContext();
+		}
+
 		public Func<PropertyRecord, bool> GetRecordFilter(object data)
 		{
 			return null;

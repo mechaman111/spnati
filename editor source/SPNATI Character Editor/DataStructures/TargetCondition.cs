@@ -93,7 +93,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		[NumericRange(DisplayName = "Layers", GroupName = "Status", GroupOrder = 50, Description = "Number of layers the character has left")]
+		[NumericRange(DisplayName = "Remaining Layers", GroupName = "Status", GroupOrder = 50, Description = "Number of layers the character has left")]
 		[DefaultValue("")]
 		[XmlAttribute("layers")]
 		[JsonProperty("layers")]
@@ -433,7 +433,7 @@ namespace SPNATI_Character_Editor
 		public string ToString(bool excludeTarget)
 		{
 			string str = GUIHelper.RangeToString(Count);
-			if (FilterTag == null && Status == null && Gender == null && !HasAdvancedConditions)
+			if (!HasAdvancedConditions)
 			{
 				str += " players";
 			}
@@ -664,14 +664,21 @@ namespace SPNATI_Character_Editor
 			return priority;
 		}
 
+		[JsonIgnore]
+		public bool IsEmpty
+		{
+			get
+			{
+				return !HasAdvancedConditions && string.IsNullOrEmpty(Count) && string.IsNullOrEmpty(Character) && string.IsNullOrEmpty(Variable);
+			}
+		}
+
+		[JsonIgnore]
 		public bool HasAdvancedConditions
 		{
 			get
 			{
 				return !string.IsNullOrEmpty(Status) ||
-					!string.IsNullOrEmpty(Variable) ||
-					!string.IsNullOrEmpty(Character) ||
-					!string.IsNullOrEmpty(Role) ||
 					!string.IsNullOrEmpty(Stage) ||
 					!string.IsNullOrEmpty(TimeInStage) ||
 					!string.IsNullOrEmpty(ConsecutiveLosses) ||
@@ -683,7 +690,8 @@ namespace SPNATI_Character_Editor
 					!string.IsNullOrEmpty(Layers) ||
 					!string.IsNullOrEmpty(StartingLayers) ||
 					!string.IsNullOrEmpty(Gender) ||
-					!string.IsNullOrEmpty(FilterTag);
+					!string.IsNullOrEmpty(FilterTag) ||
+					!string.IsNullOrEmpty(Status);
 			}
 		}
 

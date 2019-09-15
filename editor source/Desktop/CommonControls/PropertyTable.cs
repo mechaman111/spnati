@@ -18,6 +18,10 @@ namespace Desktop.CommonControls
 		/// Contextual object that will be passed to edit controls
 		/// </summary>
 		public object Context;
+		/// <summary>
+		/// Contextual object that will be passed to edit controls
+		/// </summary>
+		public object SecondaryContext;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public event EventHandler<MacroArgs> EditingMacro;
@@ -478,7 +482,7 @@ namespace Desktop.CommonControls
 				foreach (PropertyRecord editControl in controlsToRebind)
 				{
 					PropertyEditControl ctl = EditRecord(editControl, -1, out newlyAdded);
-					ctl.Rebind(Data, PreviewData, Context);
+					ctl.Rebind(Data, PreviewData, Context, SecondaryContext);
 				}
 			}
 			finally
@@ -575,7 +579,7 @@ namespace Desktop.CommonControls
 				ctl.SetParameters(result.Attribute);
 				ctl.RequireHeight += PropertyEditControl_RequireHeight;
 
-				ctl.SetData(Data, result.Property, index, Context, UndoManager, _previewData, this);
+				ctl.SetData(Data, result.Property, index, Context, SecondaryContext, UndoManager, _previewData, this);
 
 				row = new PropertyTableRow();
 				if (result.RowHeight > 0)
@@ -795,13 +799,13 @@ namespace Desktop.CommonControls
 		/// Runs a filter over added rows to hide and show them
 		/// </summary>
 		/// <param name="filter"></param>
-		public void RunFilter(Func<PropertyRecord, object, object, bool> filter)
+		public void RunFilter(Func<PropertyRecord, object, object, object, bool> filter)
 		{
 			foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> kvp in _rows)
 			{
 				foreach (PropertyTableRow row in kvp.Value.Values)
 				{
-					row.Visible = filter(row.Record, Data, Context);
+					row.Visible = filter(row.Record, Data, Context, SecondaryContext);
 				}
 			}
 		}

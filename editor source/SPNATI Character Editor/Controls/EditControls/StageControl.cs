@@ -106,6 +106,17 @@ namespace SPNATI_Character_Editor
 
 			string key = _sourceMember.GetValue(Data)?.ToString();
 			Character character = CharacterDatabase.Get(key);
+			if (character == null)
+			{
+				if (Context is Character)
+				{
+					character = Context as Character;
+				}
+				else if (SecondaryContext is Character)
+				{
+					character = SecondaryContext as Character;
+				}
+			}
 			
 			string tag = selectedCase?.Tag;
 			string filterType = null;
@@ -202,6 +213,17 @@ namespace SPNATI_Character_Editor
 		{
 			string key = _sourceMember.GetValue(Data)?.ToString();
 			Character character = CharacterDatabase.Get(key);
+			if (character == null)
+			{
+				if (Context is Character)
+				{
+					character = Context as Character;
+				}
+				else if (SecondaryContext is Character)
+				{
+					character = SecondaryContext as Character;
+				}
+			}
 
 			Case theCase = Data as Case;
 			if (theCase == null)

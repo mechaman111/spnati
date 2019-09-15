@@ -102,6 +102,7 @@ namespace SPNATI_Character_Editor.Activities
 						}
 						bool stale;
 						CachedCharacter character = CharacterDatabase.LoadFromCache(path, out stale);
+						stale = stale || ForceUncached;
 						if (character == null || stale)
 						{
 							character = CharacterDatabase.CacheCharacter(folderName, character);

@@ -1506,7 +1506,7 @@ namespace SPNATI_Character_Editor
 			bool caseIsTargetable = TriggerDatabase.GetTrigger(Tag).HasTarget;
 			bool responseIsTargetable = TriggerDatabase.GetTrigger(response.Tag).HasTarget;
 			bool hasTarget = HasTarget();
-			bool targetingResponder = (Target == responder.FolderName);
+			bool targetingResponder = (Target == responder.FolderName) || (Conditions.Find(c => c.Role == "target" && c.Character == responder.FolderName) != null);
 			bool hasAlsoPlaying = HasAlsoPlaying();
 			bool alsoPlayingIsResponder = (AlsoPlaying == responder.FolderName);
 
@@ -1514,13 +1514,21 @@ namespace SPNATI_Character_Editor
 			{
 				return null;
 			}
+
+			//copy conditions are always the same. If needed, they'll be altered in the method calls below
+			foreach (TargetCondition cond in Conditions)
+			{
+				response.Conditions.Add(cond.Copy());
+			}
+
 			if ((caseIsTargetable && hasAlsoPlaying && !alsoPlayingIsResponder) || (!responseIsTargetable && !hasTarget && hasAlsoPlaying && !alsoPlayingIsResponder))
 			{
 				//for cases where AlsoPlaying is already in use, shift that character into a filter target condition
 				TargetCondition condition = new TargetCondition()
 				{
 					Count = "1",
-					FilterTag = AlsoPlaying
+					FilterTag = AlsoPlaying,
+					Role = "other",
 				};
 				response.Conditions.Add(condition);
 				hasAlsoPlaying = false; //free this up for the responder to go into
@@ -1595,14 +1603,6 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
-			//misc conditions are always the same
-			foreach (TargetCondition cond in Conditions)
-			{
-				if (cond.FilterTag != responder.FolderName)
-				{
-					response.Conditions.Add(cond);
-				}
-			}
 			foreach (ExpressionTest test in Expressions)
 			{
 				if (!test.RefersTo(speaker, speaker, Target) && !test.RefersTo(responder, speaker, Target))
@@ -1610,6 +1610,9 @@ namespace SPNATI_Character_Editor
 					response.Expressions.Add(test);
 				}
 			}
+
+			response.AdjustConditions(speaker, responder, this);
+
 			response.ConsecutiveLosses = ConsecutiveLosses;
 			response.TotalFemales = TotalFemales;
 			response.TotalMales = TotalMales;
@@ -1961,6 +1964,95 @@ namespace SPNATI_Character_Editor
 					ExpressionTest copy = test.Copy();
 					copy.ChangeTarget("target");
 					other.Expressions.Add(copy);
+				}
+			}
+		}
+
+		private void AdjustConditions(Character speaker, Character responder, Case sourceCase)
+		{
+			bool responseHasTarget = TriggerDatabase.GetTrigger(Tag).HasTarget;
+			bool sourceHasTarget = TriggerDatabase.GetTrigger(sourceCase.Tag).HasTarget;
+
+			for (int i = Conditions.Count - 1; i >= 0; i--)
+			{
+				TargetCondition cond = Conditions[i];
+				if (cond.Role == "self")
+				{
+					bool adjustMarkers = false;
+					if (responseHasTarget && !sourceHasTarget)
+					{
+						cond.Role = "target";
+						cond.Character = speaker.FolderName;
+						adjustMarkers = true;
+					}
+					else
+					{
+						cond.Role = "other";
+						cond.Character = speaker.FolderName;
+						adjustMarkers = true;
+					}
+					//If all lines set the same marker, use that marker in alsoPlayingSayingMarker
+					if (adjustMarkers && sourceCase.Lines.Count > 0)
+					{
+						string marker = sourceCase.Lines[0].Marker;
+						for (int l = 1; l < sourceCase.Lines.Count; l++)
+						{
+							DialogueLine line = sourceCase.Lines[l];
+							if (line.Marker != marker)
+							{
+								marker = null;
+								break;
+							}
+						}
+						if (!string.IsNullOrEmpty(marker))
+						{
+							if (marker.StartsWith("+") || marker.StartsWith("-"))
+							{
+								marker = marker.Substring(1);
+							}
+							cond.SayingMarker = marker;
+							if (cond.NotSaidMarker == marker)
+							{
+								//if they had a not said marker for the same thing, clear that
+								cond.NotSaidMarker = null;
+							}
+						}
+					}
+				}
+				else if (cond.Role == "target")
+				{
+					if (cond.Character == responder.FolderName)
+					{
+						//responder was target. If they weren't we can leave this as is
+						cond.Role = "self";
+						cond.Character = null;
+					}
+				}
+				else
+				{
+					if (cond.Character == responder.FolderName)
+					{
+						//responder was Also Playing
+						cond.Role = "self";
+						cond.Character = null;
+					}
+				}
+
+				if (cond.Role == "self")
+				{
+					//move self stage checks to the case's actual stages
+					if (!string.IsNullOrEmpty(cond.Stage))
+					{
+						int min, max;
+						ToRange(cond.Stage, out min, out max);
+						Stages.Clear();
+						AddStageRange(min, max);
+						cond.Stage = null;
+					}
+				}
+				if (cond.IsEmpty)
+				{
+					Conditions.RemoveAt(i);
 				}
 			}
 		}
@@ -2476,7 +2568,7 @@ namespace SPNATI_Character_Editor
 					NotifyPropertyChanged(nameof(Stages));
 					return;
 				}
-				else if(Stages[i] == stage)
+				else if (Stages[i] == stage)
 				{
 					return;
 				}

@@ -92,6 +92,10 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			_selectedStage = stage;
 			_selectedCase = workingCase;
+			if (_selectedCase != null)
+			{
+				DataConversions.ConvertCase5_2(_selectedCase);
+			}
 			TrackCase(_selectedCase);
 			if (_selectedCase != null)
 			{
@@ -635,6 +639,11 @@ namespace SPNATI_Character_Editor.Controls
 		}
 
 		public object GetRecordContext()
+		{
+			return _character;
+		}
+
+		public object GetSecondaryRecordContext()
 		{
 			return _character;
 		}

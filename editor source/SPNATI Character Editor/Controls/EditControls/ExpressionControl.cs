@@ -242,7 +242,7 @@ namespace SPNATI_Character_Editor
 					_subcontrol.Top = 0;
 					_subcontrol.Dock = DockStyle.Fill;
 					_subcontrol.ChangeLabel += _subcontrol_ChangeLabel;
-					_subcontrol.SetData(Data, Property, Index, Context, UndoManager, PreviewData, ParentTable);
+					_subcontrol.SetData(Data, Property, Index, Context, SecondaryContext, UndoManager, PreviewData, ParentTable);
 					_subcontrol.RemoveEventHandlers(); //these'll be added back when this controls AddHandlers gets called, so this is a method to prevent double handlers
 					Controls.Add(_subcontrol);
 				}
