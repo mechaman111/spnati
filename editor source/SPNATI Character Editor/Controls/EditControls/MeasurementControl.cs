@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor.EditControls
 	public partial class MeasurementControl : PropertyEditControl
 	{
 		private Directive _directive;
+		private bool _allowPercentages;
 
 		public MeasurementControl()
 		{
@@ -22,6 +23,7 @@ namespace SPNATI_Character_Editor.EditControls
 			MeasurementAttribute attrib = parameters as MeasurementAttribute;
 			valValue.Minimum = attrib.Minimum;
 			valValue.Maximum = attrib.Maximum;
+			_allowPercentages = attrib.AllowPercentages;
 		}
 
 		protected override void RemoveHandlers()
@@ -95,13 +97,13 @@ namespace SPNATI_Character_Editor.EditControls
 			}
 			else
 			{
-				radPct.Visible = true;
+				radPct.Visible = _allowPercentages;
 				radPx.Visible = true;
 				lblPct.Visible = false;
 				chkCentered.Visible = false;
 				chkCentered.Enabled = false;
 				valValue.Enabled = true;
-				if (text != null && text.EndsWith("%"))
+				if (text != null && text.EndsWith("%") && _allowPercentages)
 				{
 					radPct.Checked = true;
 				}
@@ -184,7 +186,7 @@ namespace SPNATI_Character_Editor.EditControls
 				SetValue(null);
 				return;
 			}
-			bool pctUnits = radPct.Checked;
+			bool pctUnits = radPct.Checked && _allowPercentages;
 			int value = (int)valValue.Value;
 			string v = value.ToString();
 			if (pctUnits)
@@ -201,5 +203,6 @@ namespace SPNATI_Character_Editor.EditControls
 
 		public int Minimum = -100000;
 		public int Maximum = 100000;
+		public bool AllowPercentages = true;
 	}
 }
