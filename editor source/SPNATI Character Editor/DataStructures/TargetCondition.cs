@@ -435,7 +435,10 @@ namespace SPNATI_Character_Editor
 			string str = GUIHelper.RangeToString(Count);
 			if (!HasAdvancedConditions)
 			{
-				str += " players";
+				if (!string.IsNullOrEmpty(str))
+				{
+					str += " players";
+				}
 			}
 			else
 			{
@@ -456,6 +459,10 @@ namespace SPNATI_Character_Editor
 					}
 					roleStr = Role;
 				}
+				if (!string.IsNullOrEmpty(Character) && !excludeTarget)
+				{
+					str += $": {Character}";
+				}
 				if (Status != null)
 				{
 					str += " " + Status.Replace("_", " ");
@@ -463,10 +470,6 @@ namespace SPNATI_Character_Editor
 				if (!string.IsNullOrEmpty(Gender))
 				{
 					str += " " + Gender + (FilterTag != null ? "" : "s");
-				}
-				if (!string.IsNullOrEmpty(Character) && !excludeTarget)
-				{
-					str += $" id: {Character}";
 				}
 				if (!string.IsNullOrEmpty(Stage))
 				{
@@ -482,11 +485,11 @@ namespace SPNATI_Character_Editor
 				}
 				if (!string.IsNullOrEmpty(TimeInStage))
 				{
-					str += $" time in stage: {TimeInStage}";
+					str += $" after {TimeInStage} rounds in stage";
 				}
 				if (!string.IsNullOrEmpty(Layers))
 				{
-					str += $" layers: {Layers}";
+					str += $" layers left: {Layers}";
 				}
 				if (!string.IsNullOrEmpty(StartingLayers))
 				{
@@ -498,23 +501,23 @@ namespace SPNATI_Character_Editor
 				}
 				if (!string.IsNullOrEmpty(ConsecutiveLosses))
 				{
-					str += $" losses in row: {ConsecutiveLosses}";
+					str += $" {ConsecutiveLosses} losses in row";
 				}
 				if (!string.IsNullOrEmpty(SaidMarker))
 				{
-					str += $" said marker: {SaidMarker}";
+					str += $" said {SaidMarker}";
 				}
 				if (!string.IsNullOrEmpty(NotSaidMarker))
 				{
-					str += $" not said marker: {NotSaidMarker}";
+					str += $" not said {NotSaidMarker}";
 				}
 				if (!string.IsNullOrEmpty(SayingMarker))
 				{
-					str += $" saying marker: {SayingMarker}";
+					str += $" saying {SayingMarker}";
 				}
 				if (!string.IsNullOrEmpty(Saying))
 				{
-					str += $" saying text: {Saying}";
+					str += $" saying text {Saying}";
 				}
 				if (!string.IsNullOrEmpty(Variable))
 				{

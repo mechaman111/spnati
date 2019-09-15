@@ -290,6 +290,7 @@ namespace SPNATI_Character_Editor
 			if (int.TryParse(pieces[0], out from))
 			{
 				valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, from));
+				valFrom.Text = valFrom.Value.ToString();
 			}
 			else
 			{
@@ -300,6 +301,7 @@ namespace SPNATI_Character_Editor
 				if (int.TryParse(pieces[1], out to))
 				{
 					valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, to));
+					valTo.Text = valTo.Value.ToString();
 				}
 				else
 				{
@@ -309,6 +311,7 @@ namespace SPNATI_Character_Editor
 			else
 			{
 				valTo.Value = valFrom.Value;
+				valTo.Text = valTo.Value.ToString();
 			}
 		}
 
