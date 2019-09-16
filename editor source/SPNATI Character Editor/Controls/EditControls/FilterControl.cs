@@ -361,7 +361,7 @@ namespace SPNATI_Character_Editor
 			if (_collapsed)
 			{
 				cmdExpand.Image = Properties.Resources.ChevronDown;
-				OnRequireHeight(24);
+				OnRequireHeight(25);
 
 			}
 			else

@@ -109,7 +109,7 @@
 			this.pnlRange.Location = new System.Drawing.Point(569, 1);
 			this.pnlRange.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlRange.Name = "pnlRange";
-			this.pnlRange.Size = new System.Drawing.Size(141, 25);
+			this.pnlRange.Size = new System.Drawing.Size(141, 22);
 			this.pnlRange.TabIndex = 27;
 			this.pnlRange.Visible = false;
 			// 
@@ -190,7 +190,7 @@
 			this.pnlCharacter.Location = new System.Drawing.Point(135, 1);
 			this.pnlCharacter.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlCharacter.Name = "pnlCharacter";
-			this.pnlCharacter.Size = new System.Drawing.Size(136, 25);
+			this.pnlCharacter.Size = new System.Drawing.Size(136, 22);
 			this.pnlCharacter.TabIndex = 28;
 			this.pnlCharacter.Visible = false;
 			// 
@@ -232,7 +232,7 @@
 			this.pnlVariable.Location = new System.Drawing.Point(710, 2);
 			this.pnlVariable.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlVariable.Name = "pnlVariable";
-			this.pnlVariable.Size = new System.Drawing.Size(110, 25);
+			this.pnlVariable.Size = new System.Drawing.Size(110, 22);
 			this.pnlVariable.TabIndex = 29;
 			this.pnlVariable.Visible = false;
 			// 
