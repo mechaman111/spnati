@@ -398,6 +398,22 @@ namespace SPNATI_Character_Editor.Controls
 			if (tag == null) { return; }
 			TriggerDefinition caseTrigger = TriggerDatabase.GetTrigger(tag);
 
+			//Self
+			table.AddSpeedButton("Self", "Said Marker", (data) => { return AddFilter("self", data, "SaidMarker"); });
+			table.AddSpeedButton("Self", "Not Said Marker", (data) => { return AddFilter("self", data, "NotSaidMarker"); });
+			table.AddSpeedButton("Self", "Time in Stage", (data) => { return AddFilter("self", data, "TimeInStage"); });
+			table.AddSpeedButton("Self", "Has Hand", (data) => { return AddFilter("self", data, "Hand"); });
+
+			//Also Playing
+			table.AddSpeedButton("Also Playing", "Also Playing", (data) => { return AddFilter("other", data); });
+			table.AddSpeedButton("Also Playing", "Also Playing Stage", (data) => { return AddFilter("other", data, "Stage"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Said Marker", (data) => { return AddFilter("other", data, "SaidMarker"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Not Said Marker", (data) => { return AddFilter("other", data, "NotSaidMarker"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Saying Marker", (data) => { return AddFilter("other", data, "SayingMarker"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Saying Text", (data) => { return AddFilter("other", data, "Saying"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Time in Stage", (data) => { return AddFilter("other", data, "TimeInStage"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Hand", (data) => { return AddFilter("other", data, "Hand"); });
+
 			//Game-wide
 			table.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
 
@@ -413,7 +429,7 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Filter", "Specific Character", (data) =>
 			{
 				Character character = RecordLookup.DoLookup(typeof(Character), "", false, null) as Character;
-				return AddFilter("", data, character);
+				return AddFilter("", data, null, character);
 			});
 
 			//Player variables
@@ -440,6 +456,21 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			if (caseTrigger.HasTarget)
 			{
+				//Target
+				table.AddSpeedButton("Target", "Target", (data) => { return AddFilter("target", data); });
+				table.AddSpeedButton("Target", "Target Tag", (data) => { return AddFilter("target", data, "FilterTag"); });
+				table.AddSpeedButton("Target", "Target Stage", (data) => { return AddFilter("target", data, "Stage"); });
+				table.AddSpeedButton("Target", "Target Said Marker", (data) => { return AddFilter("target", data, "SaidMarker"); });
+				table.AddSpeedButton("Target", "Target Not Said Marker", (data) => { return AddFilter("target", data, "NotSaidMarker"); });
+				table.AddSpeedButton("Target", "Target Saying Marker", (data) => { return AddFilter("target", data, "SayingMarker"); });
+				table.AddSpeedButton("Target", "Target Saying Text", (data) => { return AddFilter("target", data, "Saying"); });
+				table.AddSpeedButton("Target", "Target Time in Stage", (data) => { return AddFilter("target", data, "TimeInStage"); });
+				table.AddSpeedButton("Target", "Target Hand", (data) => { return AddFilter("target", data, "Hand"); });
+				table.AddSpeedButton("Target", "Target Status", (data) => { return AddFilter("target", data, "Status"); });
+				table.AddSpeedButton("Target", "Target Layers", (data) => { return AddFilter("target", data, "Layers"); });
+				table.AddSpeedButton("Target", "Target Starting Layers", (data) => { return AddFilter("target", data, "StartingLayers"); });
+
+				//Clothing
 				if (caseTrigger.AvailableVariables.Contains("clothing"))
 				{
 					table.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
@@ -448,24 +479,28 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		private static string AddVariableTest(string variable, object data)
+		private static SpeedButtonData AddVariableTest(string variable, object data)
 		{
 			Case theCase = data as Case;
 			theCase.Expressions.Add(new ExpressionTest(variable, ""));
-			return "Expressions";
+			return new SpeedButtonData("Expressions");
 		}
 
-		private static string AddFilter(string role, object data, Character character = null)
+		private static SpeedButtonData AddFilter(string role, object data, string subproperty = null, Character character = null)
 		{
 			Case theCase = data as Case;
-			TargetCondition condition = new TargetCondition();
-			condition.Role = role;
-			theCase.Conditions.Add(condition);
-			if (character != null)
+			TargetCondition condition = theCase.Conditions.Find(c => c.Role == role && (character == null || c.Character == character.FolderName));
+			if (condition == null)
 			{
-				condition.Character = character.FolderName;
+				condition = new TargetCondition();
+				condition.Role = role;
+				theCase.Conditions.Add(condition);
+				if (character != null)
+				{
+					condition.Character = character.FolderName;
+				}
 			}
-			return "Conditions";
+			return new SpeedButtonData("Conditions", subproperty) { ListItem = condition };
 		}
 
 		private void PopulateTagsTab()

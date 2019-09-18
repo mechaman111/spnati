@@ -371,30 +371,10 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		//private void pnlBar_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-		//{
-		//	Graphics g = e.Graphics;
-		//	Skin skin = SkinManager.Instance.CurrentSkin;
-		//	FilterType type = recWho.Record as FilterType;
-		//	string key = type?.Key ?? "";
-		//	switch (key)
-		//	{
-		//		case "self":
-		//			_indicatorBrush.Color = skin.Group3;
-		//			break;
-		//		case "target":
-		//			_indicatorBrush.Color = skin.Group4;
-		//			break;
-		//		case "other":
-		//		case "opp":
-		//			_indicatorBrush.Color = skin.Group2;
-		//			break;
-		//		default:
-		//			_indicatorBrush.Color = skin.Group1;
-		//			break;
-		//	}
-		//	g.FillRectangle(_indicatorBrush, 0, 0, pnlBar.Width, Height);
-		//}
+		public override void EditSubProperty(string property)
+		{
+			tableAdvanced.AddProperty(property);
+		}
 	}
 
 	public class FilterAttribute : EditControlAttribute

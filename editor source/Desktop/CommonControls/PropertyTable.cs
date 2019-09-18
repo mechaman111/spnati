@@ -303,11 +303,36 @@ namespace Desktop.CommonControls
 			}
 		}
 
-		private void AddControl(PropertyRecord result)
+		private PropertyEditControl FindControl(string key, object data)
 		{
-			AddControl(result, null);
+			Dictionary<int, PropertyTableRow> rows = _rows[key];
+			if (rows != null)
+			{
+				foreach (PropertyTableRow row in rows.Values)
+				{
+					if (row.EditControl.GetValue() == data)
+					{
+						return row.EditControl;
+					}
+				}
+			}
+			return null;
 		}
-		private void AddControl(PropertyRecord result, PropertyMacro macro)
+
+		public void AddProperty(string property)
+		{
+			PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property);
+			if (record != null)
+			{
+				AddControl(record);
+			}
+		}
+
+		private PropertyEditControl AddControl(PropertyRecord result)
+		{
+			return AddControl(result, null);
+		}
+		private PropertyEditControl AddControl(PropertyRecord result, PropertyMacro macro)
 		{
 			bool newlyAdded;
 			PropertyEditControl ctl = EditRecord(result, -1, out newlyAdded);
@@ -335,6 +360,7 @@ namespace Desktop.CommonControls
 			{
 				ctl.OnInitialAdd();
 			}
+			return ctl;
 		}
 
 		private void focusOnAdd_Click(object sender, EventArgs e)
@@ -847,7 +873,7 @@ namespace Desktop.CommonControls
 			return groupMenu;
 		}
 
-		public void AddSpeedButton(string group, string caption, Func<object, string> propertyCreator)
+		public void AddSpeedButton(string group, string caption, Func<object, SpeedButtonData> propertyCreator)
 		{
 			ToolStripMenuItem groupMenu = GetOrAddGroupMenu(group);
 
@@ -871,12 +897,32 @@ namespace Desktop.CommonControls
 		private void CustomSpeedButtonClick(object sender, EventArgs e)
 		{
 			ToolStripMenuItem item = sender as ToolStripMenuItem;
-			Func<object, string> func = item.Tag as Func<object, string>;
-			string property = func(Data);
+			Func<object, SpeedButtonData> func = item.Tag as Func<object, SpeedButtonData>;
+			SpeedButtonData data = func(Data);
+			string property = data.Property;
+			string subproperty = data.Subproperty;
+			string[] pieces = property.Split('>');
+			if (pieces.Length > 1)
+			{
+				property = pieces[0];
+				subproperty = pieces[1];
+			}
 			PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property);
 			if (record != null)
 			{
-				AddControl(record);
+				PropertyEditControl ctl = null;
+				if (data.ListItem != null)
+				{
+					ctl = FindControl(property, data.ListItem);
+				}
+				if (ctl == null)
+				{
+					ctl = AddControl(record);
+				}
+				if (ctl != null && !string.IsNullOrEmpty(subproperty))
+				{
+					ctl.EditSubProperty(subproperty);
+				}
 			}
 		}
 
@@ -1032,6 +1078,24 @@ namespace Desktop.CommonControls
 			}
 			height += max;
 			return height + pnlRecords.Margin.Bottom + pnlRecords.Margin.Top;
+		}
+	}
+
+	public class SpeedButtonData
+	{
+		public string Property;
+		public string Subproperty;
+		public object ListItem;
+
+		public SpeedButtonData(string property)
+		{
+			Property = property;
+		}
+
+		public SpeedButtonData(string property, string subproperty)
+		{
+			Property = property;
+			Subproperty = subproperty;
 		}
 	}
 }

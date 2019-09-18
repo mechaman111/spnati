@@ -111,7 +111,7 @@ namespace Desktop.CommonControls
 			return _list;
 		}
 
-		protected object GetValue()
+		public object GetValue()
 		{
 			if (_list != null)
 			{
@@ -378,6 +378,8 @@ namespace Desktop.CommonControls
 		/// Saves the current data
 		/// </summary>
 		protected virtual void OnSave() { }
+
+		public virtual void EditSubProperty(string property) { }
 
 		private class SetValueCommand : ICommand
 		{
