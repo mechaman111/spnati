@@ -213,13 +213,27 @@ namespace SPNATI_Character_Editor
 		{
 			if (_fileSize == 0 || forceCompute)
 			{
+				HashSet<string> customPoseAssets = new HashSet<string>();
+				foreach (Pose pose in _character.Poses)
+				{
+					foreach (Sprite sprite in pose.Sprites)
+					{
+						string path = sprite.Src;
+						if (path.StartsWith(_character.FolderName + "/"))
+						{
+							path = path.Substring(_character.FolderName.Length + 1);
+							customPoseAssets.Add(path);
+						}
+					}
+				}
+
 				long size = 0;
 				string dir = _character.GetDirectory();
 				DirectoryInfo directory = new DirectoryInfo(dir);
 				foreach (FileInfo file in directory.EnumerateFiles()
 					.Where(f => f.Extension == ".png" || f.Extension == ".gif"))
 				{
-					if (char.IsNumber(file.Name[0])) //only include images that start with a number. Assume others are for epilogues and shouldn't count towards the requirements
+					if (char.IsNumber(file.Name[0]) || customPoseAssets.Contains(file.Name)) //only include images that start with a number. Assume others are for epilogues and shouldn't count towards the requirements
 					{
 						size += file.Length;
 					}
