@@ -29,8 +29,6 @@
 		private void InitializeComponent()
 		{
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-			this.lblDragger = new System.Windows.Forms.Label();
-			this.treeScenes = new Desktop.CommonControls.DBTreeView();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.tsAddScene = new System.Windows.Forms.ToolStripButton();
 			this.tsRemove = new System.Windows.Forms.ToolStripButton();
@@ -67,6 +65,8 @@
 			this.tsDuplicate = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsLock = new System.Windows.Forms.ToolStripButton();
+			this.lblDragger = new System.Windows.Forms.Label();
+			this.treeScenes = new Desktop.CommonControls.DBTreeView();
 			this.openFileDialog = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
@@ -81,7 +81,7 @@
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.toolStrip1);
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.lblDragger);
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeScenes);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(357, 405);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(357, 380);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Margin = new System.Windows.Forms.Padding(0);
@@ -89,32 +89,6 @@
 			this.toolStripContainer1.Size = new System.Drawing.Size(357, 405);
 			this.toolStripContainer1.TabIndex = 4;
 			this.toolStripContainer1.Text = "toolStripContainer1";
-			// 
-			// lblDragger
-			// 
-			this.lblDragger.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblDragger.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.lblDragger.Location = new System.Drawing.Point(6, 119);
-			this.lblDragger.Name = "lblDragger";
-			this.lblDragger.Size = new System.Drawing.Size(328, 2);
-			this.lblDragger.TabIndex = 3;
-			this.lblDragger.Visible = false;
-			// 
-			// treeScenes
-			// 
-			this.treeScenes.AllowDrop = true;
-			this.treeScenes.HideSelection = false;
-			this.treeScenes.Location = new System.Drawing.Point(0, 25);
-			this.treeScenes.Name = "treeScenes";
-			this.treeScenes.Size = new System.Drawing.Size(357, 380);
-			this.treeScenes.TabIndex = 2;
-			this.treeScenes.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeScenes_ItemDrag);
-			this.treeScenes.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragDrop);
-			this.treeScenes.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragEnter);
-			this.treeScenes.DragOver += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragOver);
-			this.treeScenes.DragLeave += new System.EventHandler(this.TreeScenes_DragLeave);
-			this.treeScenes.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.TreeScenes_QueryContinueDrag);
 			// 
 			// toolStrip1
 			// 
@@ -474,6 +448,35 @@
 			this.tsLock.Size = new System.Drawing.Size(23, 22);
 			this.tsLock.Text = "Lock changes in canvas";
 			this.tsLock.Click += new System.EventHandler(this.tsLock_Click);
+			// 
+			// lblDragger
+			// 
+			this.lblDragger.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblDragger.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.lblDragger.Location = new System.Drawing.Point(6, 119);
+			this.lblDragger.Name = "lblDragger";
+			this.lblDragger.Size = new System.Drawing.Size(328, 2);
+			this.lblDragger.TabIndex = 3;
+			this.lblDragger.Visible = false;
+			// 
+			// treeScenes
+			// 
+			this.treeScenes.AllowDrop = true;
+			this.treeScenes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.treeScenes.HideSelection = false;
+			this.treeScenes.Location = new System.Drawing.Point(0, 25);
+			this.treeScenes.Name = "treeScenes";
+			this.treeScenes.Size = new System.Drawing.Size(357, 355);
+			this.treeScenes.TabIndex = 2;
+			this.treeScenes.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeScenes_ItemDrag);
+			this.treeScenes.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragDrop);
+			this.treeScenes.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragEnter);
+			this.treeScenes.DragOver += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragOver);
+			this.treeScenes.DragLeave += new System.EventHandler(this.TreeScenes_DragLeave);
+			this.treeScenes.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.TreeScenes_QueryContinueDrag);
 			// 
 			// openFileDialog
 			// 
