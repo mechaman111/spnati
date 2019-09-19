@@ -2003,6 +2003,7 @@ namespace UnitTests
 					new TargetCondition()
 					{
 						Role = "target",
+						SaidMarker = "bob",
 						Character = _female.FolderName
 					}
 				}
@@ -2022,7 +2023,8 @@ namespace UnitTests
 				{
 					new TargetCondition()
 					{
-						Character = _female.FolderName
+						Character = _female.FolderName,
+						SaidMarker = "bob"
 					}
 				}
 			}.CreateResponse(_male, _female);
@@ -2100,6 +2102,7 @@ namespace UnitTests
 					new TargetCondition()
 					{
 						Role = "other",
+						SaidMarker = "bob",
 						Character = _female.FolderName,
 					}
 				}
@@ -2108,6 +2111,26 @@ namespace UnitTests
 			TargetCondition cond = response.Conditions[0];
 			Assert.AreEqual("self", cond.Role);
 			Assert.IsNull(cond.Character);
+		}
+
+		/// <summary>
+		/// Also Playing > Self with no conditions, so it's useless and gets deleted
+		/// </summary>
+		[TestMethod]
+		public void TargetCondition_AlsoPlaying_Delete()
+		{
+			Case response = new Case("hand")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Role = "other",
+						Character = _female.FolderName,
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(0, response.Conditions.Count);
 		}
 
 		[TestMethod]
@@ -2120,6 +2143,7 @@ namespace UnitTests
 					new TargetCondition()
 					{
 						Character = _female.FolderName,
+						SaidMarker = "bob",
 					}
 				}
 			}.CreateResponse(_male, _female);
@@ -2139,6 +2163,7 @@ namespace UnitTests
 					new TargetCondition()
 					{
 						Role = "opp",
+						SaidMarker = "bob",
 						Character = _female.FolderName,
 					}
 				}

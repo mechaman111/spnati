@@ -2263,115 +2263,7 @@ namespace SPNATI_Character_Editor
 
 			return Tag; //if nothing above applied, the speaker is reacting to some event unrelated to the responder, so the responder can target the same thing
 		}
-
-		public static List<int> GetTargetStage(string reactionTag, Character target)
-		{
-			List<int> stages = new List<int>();
-			//limit the stages for certain tags
-			if (reactionTag.EndsWith("crotch_is_visible"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "lower");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer);
-				}
-			}
-			else if (reactionTag.EndsWith("crotch_will_be_visible"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "lower");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer - 1);
-				}
-			}
-			else if (reactionTag.EndsWith("chest_is_visible"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "upper");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer);
-				}
-			}
-			else if (reactionTag.EndsWith("chest_will_be_visible"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "upper");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer - 1);
-				}
-			}
-			else if (reactionTag.EndsWith("removing_accessory"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "extra");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer - 1);
-				}
-			}
-			else if (reactionTag.EndsWith("removed_accessory"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "extra");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer);
-				}
-			}
-			else if (reactionTag.EndsWith("removing_major"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "major");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer - 1);
-				}
-			}
-			else if (reactionTag.EndsWith("removed_major"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "major");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer);
-				}
-			}
-			else if (reactionTag.EndsWith("removing_minor"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "minor");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer - 1);
-				}
-			}
-			else if (reactionTag.EndsWith("removed_minor"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "minor");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer);
-				}
-			}
-			else if (reactionTag.EndsWith("must_masturbate"))
-			{
-				stages.Add(target.Layers);
-			}
-			else if (reactionTag.EndsWith("start_masturbating"))
-			{
-				stages.Add(target.Layers);
-			}
-			else if (reactionTag.Contains("finished"))
-			{
-				stages.Add(target.Layers + 2);
-			}
-			else if (reactionTag.Contains("finishing"))
-			{
-				stages.Add(target.Layers + 1);
-			}
-			else if (reactionTag.EndsWith("masturbating"))
-			{
-				stages.Add(target.Layers + 1);
-			}
-
-			return stages;
-		}
-
+		
 		/// <summary>
 		/// Gets a list of cases that could potentially match up with the given source tag. This could be lines that the sourceCase is responding to, or lines that are responding to the sourceCase
 		/// </summary>
@@ -2724,6 +2616,35 @@ namespace SPNATI_Character_Editor
 				!string.IsNullOrEmpty(AlsoPlayingSayingMarker) ||
 				!string.IsNullOrEmpty(AlsoPlayingSaying) ||
 				!string.IsNullOrEmpty(AlsoPlayingTimeInStage);
+		}
+
+		public string GetStageRange(Character target)
+		{
+			if (target == null) { return ""; }
+			if (Target == target.FolderName)
+			{
+				return TargetStage ?? "";
+			}
+			else if (AlsoPlaying == target.FolderName)
+			{
+				return AlsoPlayingStage ?? "";
+			}
+			foreach (TargetCondition condition in Conditions)
+			{
+				if (condition.Character == target.FolderName)
+				{
+					return condition.Stage ?? "";
+				}
+			}
+			foreach (Case alternate in AlternativeConditions)
+			{
+				string range = alternate.GetStageRange(target);
+				if (!string.IsNullOrEmpty(range))
+				{
+					return range;
+				}
+			}
+			return "";
 		}
 	}
 

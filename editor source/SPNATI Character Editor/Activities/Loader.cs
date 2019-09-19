@@ -203,8 +203,11 @@ namespace SPNATI_Character_Editor.Activities
 				}
 				else
 				{
-					Character last = CharacterDatabase.Load(lastCharacter);
-					Shell.Instance.LaunchWorkspace(last);
+					if (CharacterDatabase.Get(lastCharacter) != null)
+					{
+						Character last = CharacterDatabase.Load(lastCharacter);
+						Shell.Instance.LaunchWorkspace(last);
+					}
 				}
 			}
 

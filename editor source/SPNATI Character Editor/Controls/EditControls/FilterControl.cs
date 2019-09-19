@@ -107,6 +107,7 @@ namespace SPNATI_Character_Editor
 
 		protected override void OnBoundData()
 		{
+			tableAdvanced.Data = null;
 			recWho.RecordContext = Data;
 			_filter = GetValue() as TargetCondition;
 			string role = _filter.Role;

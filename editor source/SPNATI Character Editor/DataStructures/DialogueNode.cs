@@ -22,6 +22,15 @@ namespace SPNATI_Character_Editor
 		public Character Character;
 		private CharacterEditorData _editorData;
 
+		public Character TargetCharacter { get; set; }
+		public string TargetLabel
+		{
+			get
+			{
+				return TargetCharacter?.Label ?? "- untargeted -";
+			}
+		}
+
 		public Stage Stage;
 		public Case Case
 		{
@@ -143,6 +152,14 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		public string TargetStage
+		{
+			get
+			{
+				return Case.GetStageRange(TargetCharacter);
+			}
+		}
+
 		private string GetCharacterName(string key)
 		{
 			Character c = CharacterDatabase.Get(key);
@@ -194,6 +211,10 @@ namespace SPNATI_Character_Editor
 			{
 				key = Stage.Id.ToString();
 			}
+			else if (Mode == NodeMode.Target)
+			{
+				key = TargetCharacter?.FolderName ?? "-";
+			}
 			else
 			{
 				key = Case.Tag;
@@ -211,7 +232,19 @@ namespace SPNATI_Character_Editor
 
 		public int CompareTo(DialogueNode other)
 		{
-			return Case.CompareTo(other.Case);
+			if (Mode == NodeMode.Target)
+			{
+				int compare = TargetStage.CompareTo(other.TargetStage);
+				if (compare == 0)
+				{
+					compare = Case.CompareTo(other.Case);
+				}
+				return compare;
+			}
+			else
+			{
+				return Case.CompareTo(other.Case);
+			}
 		}
 
 		public static int CompareCases(DialogueNode caseNode1, DialogueNode caseNode2)
@@ -245,7 +278,8 @@ namespace SPNATI_Character_Editor
 	public enum NodeMode
 	{
 		Case,
-		Stage
+		Stage,
+		Target,
 	}
 
 	public enum NodeType

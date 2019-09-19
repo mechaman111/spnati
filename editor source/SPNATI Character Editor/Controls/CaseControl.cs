@@ -389,8 +389,11 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void PopulateConditionTable(Case workingCase)
 		{
-			tableConditions.Data = workingCase;
-			AddSpeedButtons(tableConditions, workingCase?.Tag);
+			if (tableConditions.Data != workingCase)
+			{
+				tableConditions.Data = workingCase;
+				AddSpeedButtons(tableConditions, workingCase?.Tag);
+			}
 		}
 
 		public static void AddSpeedButtons(PropertyTable table, string tag)
@@ -490,6 +493,10 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			Case theCase = data as Case;
 			TargetCondition condition = theCase.Conditions.Find(c => c.Role == role && (character == null || c.Character == character.FolderName));
+			if (role != "self" && role != "target" && character == null && subproperty == null)
+			{
+				condition = null; //always create new filters for Also Playing roles
+			}
 			if (condition == null)
 			{
 				condition = new TargetCondition();
