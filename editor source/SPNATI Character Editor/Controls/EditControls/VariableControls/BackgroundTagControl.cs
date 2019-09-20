@@ -84,7 +84,6 @@ namespace SPNATI_Character_Editor.Controls.EditControls.VariableControls
 
 		private void UpdateValues()
 		{
-			BackgroundTagValue tag = recTag.Record as BackgroundTagValue;
 			radTrue.Checked = true;
 		}
 

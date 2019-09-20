@@ -89,7 +89,6 @@ namespace SPNATI_Character_Editor
 			foreach (string file in Directory.EnumerateFiles(dir, "*.*")
 				.Where(s => extensions.Any(ext => ext == Path.GetExtension(s))))
 			{
-				string name = Path.GetFileNameWithoutExtension(file);
 				Add(file);
 			}
 

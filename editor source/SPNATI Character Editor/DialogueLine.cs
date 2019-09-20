@@ -20,7 +20,6 @@ namespace SPNATI_Character_Editor
 	public class DialogueLine : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
-		private static Regex _stageRegex = new Regex(@"^(custom:)?\d+-.*");
 
 		public void NotifyPropertyChanged([CallerMemberName] string propName = "")
 		{
@@ -175,7 +174,7 @@ namespace SPNATI_Character_Editor
 		public string CollectibleValue
 		{
 			get { return _collectibleValue; }
-			set	{ if (_collectibleValue != value) { _collectibleValue = value; NotifyPropertyChanged(); } }
+			set { if (_collectibleValue != value) { _collectibleValue = value; NotifyPropertyChanged(); } }
 		}
 
 		private bool _persistent;
@@ -292,6 +291,16 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		public bool HasAdvancedData
+		{
+			get
+			{
+				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || !string.IsNullOrEmpty(Intelligence) || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
+					!string.IsNullOrEmpty(Location) || OneShotId > 0 || Weight != 1;
+			}
+		}
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
 		private bool UseXmlText()
 		{
 			return Images.Count == 0;

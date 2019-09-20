@@ -87,7 +87,8 @@ namespace Desktop.CommonControls
 			base.OnPaintBackground(e);
 			Skin skin = SkinManager.Instance.CurrentSkin;
 			e.Graphics.Clear(Enabled ? skin.FieldBackColor : SystemColors.Control);
-			e.Graphics.DrawRectangle(skin.PrimaryColor.GetPen(VisualState.Normal, Focused, Enabled), ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
+			Pen pen = skin.PrimaryColor.GetBorderPen(VisualState.Normal, Focused, Enabled);
+			e.Graphics.DrawRectangle(pen, ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
 		}
 
 		protected virtual void OnRecordChanged()

@@ -137,6 +137,10 @@ namespace SPNATI_Character_Editor
 
 		public void LinkOwner(Character character)
 		{
+			if (_character != null)
+			{
+				_character.Behavior.CaseRemoved -= Behavior_CaseRemoved;
+			}
 			Owner = character.FolderName;
 			_character = character;
 			_character.Behavior.CaseRemoved += Behavior_CaseRemoved;

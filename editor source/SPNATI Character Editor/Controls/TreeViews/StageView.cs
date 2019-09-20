@@ -170,7 +170,11 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		public string AddingCase(out string folder)
+		public void BuildCase(Case theCase)
+		{
+		}
+
+		public Case AddingCase(out string folder)
 		{
 			folder = "";
 			DialogueNode node = _listView.SelectedItem as DialogueNode;
@@ -187,7 +191,12 @@ namespace SPNATI_Character_Editor.Controls
 					folder = label.Folder;
 				}
 			}
-			return c?.Tag;
+			string tag = c?.Tag;
+			if (!string.IsNullOrEmpty(tag))
+			{
+				return new Case(tag);
+			}
+			return null;
 		}
 
 		public void ModifyCase(Case modifiedCase)

@@ -590,7 +590,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			bool loop = metadata.Looped;
 			int count = metadata.Iterations;
-			string style = metadata.ClampMethod;
 			if (!loop) { return "-"; }
 			return count.ToString();
 		}

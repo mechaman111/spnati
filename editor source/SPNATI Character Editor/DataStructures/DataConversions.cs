@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 
@@ -30,6 +31,7 @@ namespace SPNATI_Character_Editor
 			if (Config.VersionPredates(version, "v5.2"))
 			{
 				Convert5_1(character);
+				Convert5_2(character);
 			}
 		}
 
@@ -200,8 +202,6 @@ namespace SPNATI_Character_Editor
 					{
 						if (workingCase.MatchesConditions(s.LegacyCase, false) && workingCase.MatchesStages(s.LegacyCase, true))
 						{
-							var l1 = workingCase.Lines;
-							var l2 = s.LegacyCase.Lines;
 							editorData.LinkSituation(s, workingCase);
 							foundLink = true;
 							break;
@@ -213,6 +213,221 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+		}
+
+		private static void Convert5_2(Character character)
+		{
+			HashSet<int> usedOneShots = new HashSet<int>();
+			//de-duplicate oneshot IDs, since every case should be unique now
+			foreach (Case workingCase in character.Behavior.GetWorkingCases())
+			{
+				if (workingCase.OneShotId > 0)
+				{
+					if (usedOneShots.Contains(workingCase.OneShotId))
+					{
+						workingCase.OneShotId = ++character.Behavior.MaxCaseId;
+					}
+					else
+					{
+						usedOneShots.Add(workingCase.OneShotId);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Converts a case to use TargetConditions where it previously used direct properties
+		/// </summary>
+		/// <param name="workingCase"></param>
+		public static void ConvertCase5_2(Case workingCase)
+		{
+			if (workingCase == null || !workingCase.HasLegacyConditions()) { return; }
+			int priority = workingCase.GetPriority();
+			if (!string.IsNullOrEmpty(workingCase.Target) ||
+				!string.IsNullOrEmpty(workingCase.TargetStage) ||
+				!string.IsNullOrEmpty(workingCase.TargetHand) ||
+				!string.IsNullOrEmpty(workingCase.TargetLayers) ||
+				!string.IsNullOrEmpty(workingCase.TargetStatus) ||
+				!string.IsNullOrEmpty(workingCase.TargetSaidMarker) ||
+				!string.IsNullOrEmpty(workingCase.TargetNotSaidMarker) ||
+				!string.IsNullOrEmpty(workingCase.TargetSayingMarker) ||
+				!string.IsNullOrEmpty(workingCase.TargetSaying) ||
+				!string.IsNullOrEmpty(workingCase.TargetStartingLayers) ||
+				!string.IsNullOrEmpty(workingCase.TargetTimeInStage))
+			{
+				TargetCondition cond = GetCondition(workingCase, "target");
+
+				if (!string.IsNullOrEmpty(workingCase.Target))
+				{
+					cond.Character = workingCase.Target;
+					workingCase.Target = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.TargetStage))
+				{
+					cond.Stage = workingCase.TargetStage;
+					workingCase.TargetStage = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.TargetHand))
+				{
+					cond.Hand = workingCase.TargetHand;
+					workingCase.TargetHand = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.TargetLayers))
+				{
+					cond.Layers = workingCase.TargetLayers;
+					workingCase.TargetLayers = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.TargetStatus))
+				{
+					cond.Status = workingCase.TargetStatus;
+					workingCase.TargetStatus = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.TargetSaidMarker))
+				{
+					cond.SaidMarker = workingCase.TargetSaidMarker;
+					workingCase.TargetSaidMarker = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.TargetNotSaidMarker))
+				{
+					cond.NotSaidMarker = workingCase.TargetNotSaidMarker;
+					workingCase.TargetNotSaidMarker = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.TargetSayingMarker))
+				{
+					cond.SayingMarker = workingCase.TargetSayingMarker;
+					workingCase.TargetSayingMarker = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.TargetSaying))
+				{
+					cond.Saying = workingCase.TargetSaying;
+					workingCase.TargetSaying = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.TargetStartingLayers))
+				{
+					cond.StartingLayers = workingCase.TargetStartingLayers;
+					workingCase.TargetStartingLayers = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.TargetTimeInStage))
+				{
+					cond.TimeInStage = workingCase.TargetTimeInStage;
+					workingCase.TargetTimeInStage = null;
+				}
+			}
+			if (!string.IsNullOrEmpty(workingCase.ConsecutiveLosses))
+			{
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(workingCase.Tag);
+				if (trigger != null && trigger.HasTarget)
+				{
+					TargetCondition cond = GetCondition(workingCase, "target");
+					cond.ConsecutiveLosses = workingCase.ConsecutiveLosses;
+					workingCase.ConsecutiveLosses = null;
+				}
+				else
+				{
+					TargetCondition cond = GetCondition(workingCase, "self");
+					cond.ConsecutiveLosses = workingCase.ConsecutiveLosses;
+					workingCase.ConsecutiveLosses = null;
+				}
+			}
+
+			if (!string.IsNullOrEmpty(workingCase.HasHand) ||
+				!string.IsNullOrEmpty(workingCase.SaidMarker) ||
+				!string.IsNullOrEmpty(workingCase.NotSaidMarker) ||
+				!string.IsNullOrEmpty(workingCase.TimeInStage))
+			{
+				TargetCondition cond = GetCondition(workingCase, "self");
+				if (!string.IsNullOrEmpty(workingCase.HasHand))
+				{
+					cond.Hand = workingCase.HasHand;
+					workingCase.HasHand = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.SaidMarker))
+				{
+					cond.SaidMarker = workingCase.SaidMarker;
+					workingCase.SaidMarker = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.NotSaidMarker))
+				{
+					cond.NotSaidMarker = workingCase.NotSaidMarker;
+					workingCase.NotSaidMarker = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.TimeInStage))
+				{
+					cond.TimeInStage = workingCase.TimeInStage;
+					workingCase.TimeInStage = null;
+				}
+			}
+
+			if (!string.IsNullOrEmpty(workingCase.AlsoPlaying) ||
+				!string.IsNullOrEmpty(workingCase.AlsoPlayingStage) ||
+				!string.IsNullOrEmpty(workingCase.AlsoPlayingHand) ||
+				!string.IsNullOrEmpty(workingCase.AlsoPlayingSaidMarker) ||
+				!string.IsNullOrEmpty(workingCase.AlsoPlayingNotSaidMarker) ||
+				!string.IsNullOrEmpty(workingCase.AlsoPlayingSayingMarker) ||
+				!string.IsNullOrEmpty(workingCase.AlsoPlayingSaying) ||
+				!string.IsNullOrEmpty(workingCase.AlsoPlayingTimeInStage))
+			{
+				TargetCondition cond = GetCondition(workingCase, "other");
+
+				if (!string.IsNullOrEmpty(workingCase.AlsoPlaying))
+				{
+					cond.Character = workingCase.AlsoPlaying;
+					workingCase.AlsoPlaying = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.AlsoPlayingStage))
+				{
+					cond.Stage = workingCase.AlsoPlayingStage;
+					workingCase.AlsoPlayingStage = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.AlsoPlayingHand))
+				{
+					cond.Hand = workingCase.AlsoPlayingHand;
+					workingCase.AlsoPlayingHand = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.AlsoPlayingSaidMarker))
+				{
+					cond.SaidMarker = workingCase.AlsoPlayingSaidMarker;
+					workingCase.AlsoPlayingSaidMarker = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.AlsoPlayingNotSaidMarker))
+				{
+					cond.NotSaidMarker = workingCase.AlsoPlayingNotSaidMarker;
+					workingCase.AlsoPlayingNotSaidMarker = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.AlsoPlayingSayingMarker))
+				{
+					cond.SayingMarker = workingCase.AlsoPlayingSayingMarker;
+					workingCase.AlsoPlayingSayingMarker = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.AlsoPlayingSaying))
+				{
+					cond.Saying = workingCase.AlsoPlayingSaying;
+					workingCase.AlsoPlayingSaying = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.AlsoPlayingTimeInStage))
+				{
+					cond.TimeInStage = workingCase.AlsoPlayingTimeInStage;
+					workingCase.AlsoPlayingTimeInStage = null;
+				}
+			}
+
+			int newPriority = workingCase.GetPriority();
+			if (priority != newPriority && string.IsNullOrEmpty(workingCase.CustomPriority))
+			{
+				workingCase.CustomPriority = newPriority.ToString();
+			}
+		}
+
+		private static TargetCondition GetCondition(Case workingCase, string role)
+		{
+			TargetCondition cond = workingCase.Conditions.Find(c => c.Role == role);
+			if (cond == null)
+			{
+				cond = new TargetCondition();
+				cond.Role = role;
+				workingCase.Conditions.Add(cond);
+			}
+			return cond;
 		}
 	}
 }

@@ -17,7 +17,6 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		private bool _moved;
 
 		public float Length;
-		private ITimelineData _data;
 		private UndoManager _history;
 
 		public Cursor GetHoverCursor()
@@ -33,7 +32,6 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		public void Start(WidgetActionArgs args)
 		{
 			_history = args.History;
-			_data = args.Data;
 			_widget = args.Widget as KeyframedWidget;
 			if (_widget == null)
 			{

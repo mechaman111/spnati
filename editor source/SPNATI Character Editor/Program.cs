@@ -24,10 +24,10 @@ namespace SPNATI_Character_Editor
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 
+			_workflowFilter = new WorkflowTracker();
+			Application.AddMessageFilter(_workflowFilter);
 			if (!Debugger.IsAttached)
 			{
-				_workflowFilter = new WorkflowTracker();
-				Application.AddMessageFilter(_workflowFilter);
 				AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(OnUnhandledException);
 			}
 

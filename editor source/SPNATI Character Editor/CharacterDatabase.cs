@@ -1,5 +1,7 @@
 ﻿using Desktop;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor
@@ -143,6 +145,193 @@ namespace SPNATI_Character_Editor
 		public static Costume GetSkin(string folder)
 		{
 			return _reskins.Get(folder);
+		}
+
+		public static CachedCharacter LoadFromCache(string path, out bool stale)
+		{
+			stale = false;
+			string folderName = Path.GetFileName(path);
+			string cachePath = Path.Combine(Config.AppDataDirectory, folderName, "cached.xml");
+			CachedCharacter cachedCharacter = null;
+			if (File.Exists(cachePath))
+			{
+				try
+				{
+					string behaviorPath = Path.Combine(Config.GetRootDirectory(folderName), "behaviour.xml");
+					string editorPath = Path.Combine(Config.GetRootDirectory(folderName), "editor.xml");
+					DateTime lastChange = File.GetLastWriteTimeUtc(behaviorPath);
+					DateTime cacheDate = File.GetLastWriteTimeUtc(cachePath);
+					bool editorNewer = false;
+					if (File.Exists(editorPath) && cacheDate < File.GetLastWriteTimeUtc(editorPath))
+					{
+						editorNewer = true;
+					}
+					stale = cacheDate < lastChange || editorNewer;
+					cachedCharacter = Serialization.ImportXml<CachedCharacter>(cachePath);
+					if (cachedCharacter != null)
+					{
+						if (cachedCharacter.CacheVersion < CachedCharacter.CurrentVersion)
+						{
+							stale = true;
+						}
+						cachedCharacter.LastUpdate = lastChange.ToLocalTime();
+					}
+				}
+				catch
+				{
+					cachedCharacter = null;
+				}
+			}
+
+			if (cachedCharacter != null && !stale)
+			{
+				CharacterEditorData data = Serialization.ImportEditorData(folderName);
+				AddEditorData(cachedCharacter, data);
+			}
+
+			return cachedCharacter;
+		}
+
+		/// <summary>
+		/// Builds the cached version of a character
+		/// </summary>
+		/// <param name="folderName"></param>
+		/// <param name="oldCache">If provided, a diff will be generated between the old and new</param>
+		public static CachedCharacter CacheCharacter(string folderName, CachedCharacter oldCache)
+		{
+			string behaviorPath = Path.Combine(Config.GetRootDirectory(folderName), "behaviour.xml");
+			if (File.Exists(behaviorPath))
+			{
+				using (Character realCharacter = Serialization.ImportCharacter(folderName))
+				{
+					CachedCharacter cached = CacheCharacter(realCharacter);
+					GlobalCache.CreateDiff(oldCache, cached);
+					return cached;
+				}
+			}
+			return null;
+		}
+		/// <summary>
+		/// Builds the cached version of a character
+		/// </summary>
+		/// <param name="character"></param>
+		public static CachedCharacter CacheCharacter(Character character)
+		{
+			CachedCharacter c = new CachedCharacter(character);
+
+			string outputDir = Path.Combine(Config.AppDataDirectory, character.FolderName);
+			if (!Directory.Exists(outputDir))
+			{
+				Directory.CreateDirectory(outputDir);
+			}
+			string cachePath = Path.Combine(outputDir, "cached.xml");
+			Serialization.ExportXml(c, cachePath);
+
+			return c;
+		}
+
+		/// <summary>
+		/// Loads all characters from their behaviours, but doesn't process them for full editing
+		/// </summary>
+		public static void LoadAll()
+		{
+			for (int i = 0; i < _characters.Count; i++)
+			{
+				if (!_characters[i].IsFullyLoaded)
+				{
+					Load(_characters[i].FolderName, i);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Loads all characters from their behaviours, but doesn't process them for full editing
+		/// </summary>
+		public static IEnumerator<Character> LoadAllIncrementally()
+		{
+			for (int i = 0; i < _characters.Count; i++)
+			{
+				if (!_characters[i].IsFullyLoaded)
+				{
+					yield return _characters[i];
+					Load(_characters[i].FolderName, i);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets whether all characters have been loaded from their behaviors
+		/// </summary>
+		public static bool AllLoaded
+		{
+			get
+			{
+				for (int i = 0; i < _characters.Count; i++)
+				{
+					if (!_characters[i].IsFullyLoaded)
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		public static int UnloadedCount
+		{
+			get
+			{
+				int sum = 0;
+				for (int i = 0; i < _characters.Count; i++)
+				{
+					if (!_characters[i].IsFullyLoaded)
+					{
+						sum++;
+					}
+				}
+				return sum;
+			}
+		}
+
+		/// <summary>
+		/// Loads in a full character file, replacing the cached stub
+		/// </summary>
+		/// <param name="folderName"></param>
+		/// <returns></returns>
+		public static Character Load(string folderName, int index = -1)
+		{
+			Character c = Serialization.ImportCharacter(folderName);
+			_characterMap[folderName] = c;
+			if (index == -1)
+			{
+				for (int i = 0; i < _characters.Count; i++)
+				{
+					if (_characters[i].FolderName == folderName)
+					{
+						_characters[i] = c;
+						break;
+					}
+				}
+			}
+			else
+			{
+				_characters[index] = c;
+			}
+
+			c.Metadata.AlternateSkins.ForEach(set =>
+			{
+				foreach (SkinLink link in set.Skins)
+				{
+					Costume skin = GetSkin(link.Folder);
+					if (skin != null)
+					{
+						skin.Character = c;
+						link.Costume = skin;
+						skin.Link = link;
+					}
+				}
+			});
+
+			return c;
 		}
 	}
 }

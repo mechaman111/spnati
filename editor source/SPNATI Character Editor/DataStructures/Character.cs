@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -264,6 +265,14 @@ namespace SPNATI_Character_Editor
 					NotifyPropertyChanged();
 				}
 			}
+		}
+
+		/// <summary>
+		/// Gets whether this is loaded from behaviour.xml or if it's just the placeholder cached version
+		/// </summary>
+		public virtual bool IsFullyLoaded
+		{
+			get { return true; }
 		}
 
 		public string ToLookupString()
@@ -570,7 +579,7 @@ namespace SPNATI_Character_Editor
 			return Path.Combine(root, "attachments", FolderName);
 		}
 
-		public void OnBeforeSerialize()
+		public virtual void OnBeforeSerialize()
 		{
 			Gender = Gender.ToLower();
 			Behavior.OnBeforeSerialize(this);
@@ -582,7 +591,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public void OnAfterDeserialize()
+		public virtual void OnAfterDeserialize()
 		{
 			Wardrobe.ForEach(c => c.OnAfterDeserialize());
 			foreach (var line in StartingLines)
@@ -817,7 +826,7 @@ namespace SPNATI_Character_Editor
 				return false;
 			bool targeted = false;
 			bool targetedByTag = false;
-			targeted = stageCase.Target == character.FolderName || stageCase.AlsoPlaying == character.FolderName;
+			targeted = stageCase.GetTargets().Contains(character.FolderName);
 			if (!targeted && (allowedTargetTypes & TargetType.Filter) > 0)
 			{
 				string gender = stageCase.Tag.StartsWith("male_") ? "male" : stageCase.Tag.StartsWith("female_") ? "female" : null;
@@ -836,7 +845,7 @@ namespace SPNATI_Character_Editor
 			{
 				return true;
 			}
-			return false;
+			return stageCase.AlternativeConditions.Any(c => IsCaseTargetedAtCharacter(c, character, allowedTargetTypes));
 		}
 
 		/// <summary>

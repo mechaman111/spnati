@@ -116,7 +116,7 @@ namespace SPNATI_Character_Editor
 				op = MarkerOperator.Equals;
 				return marker;
 			}
-			Match match = Regex.Match(marker, @"([\w\-\.]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?");
+			Match match = Regex.Match(marker, @"([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?");
 			op = ToOperator(match.Groups[4].ToString());
 			value = match.Groups[5]?.ToString();
 			if (value == "")

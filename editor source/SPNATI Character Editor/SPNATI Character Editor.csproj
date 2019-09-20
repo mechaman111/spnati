@@ -120,6 +120,12 @@
     <Compile Include="Activities\CharacterConfiguration.Designer.cs">
       <DependentUpon>CharacterConfiguration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Activities\CharacterLoader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\CharacterLoader.Designer.cs">
+      <DependentUpon>CharacterLoader.cs</DependentUpon>
+    </Compile>
     <Compile Include="Activities\CharacterPreview.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -239,6 +245,7 @@
     <Compile Include="Analyzers\PoseDirectiveAnalyzers.cs" />
     <Compile Include="Analyzers\PoseCountAnalyzer.cs" />
     <Compile Include="Categories\RelativePosition.cs" />
+    <Compile Include="Categories\SizeCategory.cs" />
     <Compile Include="Categories\Slot.cs" />
     <Compile Include="Charts\Builders\CollectibleBuilder.cs" />
     <Compile Include="Charts\Builders\ClothingBuilder.cs" />
@@ -500,11 +507,11 @@
     <Compile Include="Controls\SlicerControls\StageSlicerControl.Designer.cs">
       <DependentUpon>StageSlicerControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\StageImageControl.cs">
+    <Compile Include="Controls\StageImageGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\StageImageControl.Designer.cs">
-      <DependentUpon>StageImageControl.cs</DependentUpon>
+    <Compile Include="Controls\StageImageGrid.Designer.cs">
+      <DependentUpon>StageImageGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\StageSpecificGrid.cs">
       <SubType>UserControl</SubType>
@@ -605,6 +612,7 @@
     <Compile Include="Controls\TreeViews\IDialogueTreeView.cs" />
     <Compile Include="Controls\TreeViews\CaseView.cs" />
     <Compile Include="Controls\TreeViews\StageView.cs" />
+    <Compile Include="Controls\TreeViews\TargetView.cs" />
     <Compile Include="DataSlicers\IntervalSlicer.cs" />
     <Compile Include="DataSlicers\OneShotSlicer.cs" />
     <Compile Include="DataSlicers\StageSlicer.cs" />
@@ -843,6 +851,8 @@
     <Compile Include="DataStructures\Directive.cs" />
     <Compile Include="DataStructures\Epilogue.cs" />
     <Compile Include="DataStructures\ExpressionTest.cs" />
+    <Compile Include="DataStructures\CachedCharacter.cs" />
+    <Compile Include="DataStructures\GlobalCache.cs" />
     <Compile Include="DataStructures\ISkin.cs" />
     <Compile Include="DataStructures\Marker.cs" />
     <Compile Include="DataStructures\MarkerData.cs" />
@@ -976,11 +986,23 @@
     <Compile Include="Forms\CropCopier.Designer.cs">
       <DependentUpon>CropCopier.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DialogueGoals.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DialogueGoals.Designer.cs">
+      <DependentUpon>DialogueGoals.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\DialogueLegend.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\DialogueLegend.Designer.cs">
       <DependentUpon>DialogueLegend.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ErrorReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ErrorReport.Designer.cs">
+      <DependentUpon>ErrorReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ErrorTrace.cs">
       <SubType>Form</SubType>
@@ -1060,12 +1082,6 @@
     <Compile Include="Forms\ResponseSetupForm.Designer.cs">
       <DependentUpon>ResponseSetupForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SituationLinker.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SituationLinker.Designer.cs">
-      <DependentUpon>SituationLinker.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\StageImageSelection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1097,6 +1113,7 @@
       <DependentUpon>WhatsNew.cs</DependentUpon>
     </Compile>
     <Compile Include="GifWriter.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GUIHelper.cs" />
     <Compile Include="HelpForm.cs">
       <SubType>Form</SubType>
@@ -1111,6 +1128,7 @@
     <Compile Include="IO\SpnatiXmlSerializer.cs" />
     <Compile Include="DataStructures\Listing.cs" />
     <Compile Include="IO\CharacterStyleSheetSerializer.cs" />
+    <Compile Include="Providers\FilterTypeProvider.cs" />
     <Compile Include="Services\IImageCompressor.cs" />
     <Compile Include="Services\KisekaeOnlineConverter.cs" />
     <Compile Include="Services\KisekaeConverter.cs" />
@@ -1169,6 +1187,7 @@
     <Compile Include="DataStructures\TriggerDefinition.cs" />
     <Compile Include="CharacterValidator.cs" />
     <Compile Include="Workspaces\CharacterWorkspace.cs" />
+    <Compile Include="Workspaces\CostumeWorkspace.cs" />
     <Compile Include="XMLHelper.cs" />
     <EmbeddedResource Include="Activities\AdvancedMetadataEditor.resx">
       <DependentUpon>AdvancedMetadataEditor.cs</DependentUpon>
@@ -1181,6 +1200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\CharacterConfiguration.resx">
       <DependentUpon>CharacterConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\CharacterLoader.resx">
+      <DependentUpon>CharacterLoader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\CharacterPreview.resx">
       <DependentUpon>CharacterPreview.cs</DependentUpon>
@@ -1437,8 +1459,8 @@
     <EmbeddedResource Include="Controls\SlicerControls\StageSlicerControl.resx">
       <DependentUpon>StageSlicerControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\StageImageControl.resx">
-      <DependentUpon>StageImageControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\StageImageGrid.resx">
+      <DependentUpon>StageImageGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StageSpecificGrid.resx">
       <DependentUpon>StageSpecificGrid.cs</DependentUpon>
@@ -1527,11 +1549,17 @@
     <EmbeddedResource Include="Forms\CropCopier.resx">
       <DependentUpon>CropCopier.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DialogueGoals.resx">
+      <DependentUpon>DialogueGoals.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\DialogueLegend.resx">
       <DependentUpon>DialogueLegend.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DiscardResponsePrompt.resx">
       <DependentUpon>DiscardResponsePrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ErrorReport.resx">
+      <DependentUpon>ErrorReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ErrorTrace.resx">
       <DependentUpon>ErrorTrace.cs</DependentUpon>
@@ -1568,9 +1596,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ResponseSetupForm.resx">
       <DependentUpon>ResponseSetupForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SituationLinker.resx">
-      <DependentUpon>SituationLinker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StageImageSelection.resx">
       <DependentUpon>StageImageSelection.cs</DependentUpon>
@@ -1996,6 +2021,7 @@
     <None Include="Icons\Sort.png" />
     <None Include="Icons\AddPause.png" />
     <None Include="Icons\SpeechBubble.png" />
+    <Content Include="Icons\EllipsisFilled.png" />
     <Content Include="Resources\license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2151,6 +2177,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v4.2.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v5.2.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v5.1.1.html">

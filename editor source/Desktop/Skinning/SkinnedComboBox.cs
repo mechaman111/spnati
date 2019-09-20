@@ -73,6 +73,7 @@ namespace Desktop.Skinning
 				Items.AddRange(list);
 				_changingDataSource = false;
 				SelectedIndex = index;
+				UpdateIndex(index);
 			}
 		}
 

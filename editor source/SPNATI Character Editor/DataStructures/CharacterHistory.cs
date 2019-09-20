@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using static SPNATI_Character_Editor.Character;
 
 namespace SPNATI_Character_Editor
@@ -44,6 +45,7 @@ namespace SPNATI_Character_Editor
 					{
 						string json = File.ReadAllText(file);
 						history = Json.Deserialize<CharacterHistory>(json);
+						_histories[character.FolderName] = history;
 					}
 					catch
 					{
@@ -96,8 +98,19 @@ namespace SPNATI_Character_Editor
 		private LineWork _workToday;
 		private float _fileSize = 0;
 
+		[JsonProperty("lineGoal")]
+		public int DailyGoal = 0;
+
+		[JsonProperty("goalBanner")]
+		public DateTime LastGoalBanner;
+
 		[JsonProperty("work")]
 		private List<LineWork> _work = new List<LineWork>();
+
+		public LineWork Previous
+		{
+			get { return _work.Count > 1 ? _work[_work.Count - 2] : _workToday; }
+		}
 
 		public LineWork Current
 		{
@@ -138,6 +151,15 @@ namespace SPNATI_Character_Editor
 		public void Update()
 		{
 			_workToday.Update(_character);
+		}
+
+		public bool BannerDisplayedToday
+		{
+			get { return DateTime.Now.Date == LastGoalBanner.ToLocalTime(); }
+		}
+		public void MarkBannerAsDisplayed()
+		{
+			LastGoalBanner = DateTime.UtcNow.Date;
 		}
 
 		/// <summary>
@@ -191,13 +213,27 @@ namespace SPNATI_Character_Editor
 		{
 			if (_fileSize == 0 || forceCompute)
 			{
+				HashSet<string> customPoseAssets = new HashSet<string>();
+				foreach (Pose pose in _character.Poses)
+				{
+					foreach (Sprite sprite in pose.Sprites)
+					{
+						string path = sprite.Src;
+						if (path.StartsWith(_character.FolderName + "/"))
+						{
+							path = path.Substring(_character.FolderName.Length + 1);
+							customPoseAssets.Add(path);
+						}
+					}
+				}
+
 				long size = 0;
 				string dir = _character.GetDirectory();
 				DirectoryInfo directory = new DirectoryInfo(dir);
 				foreach (FileInfo file in directory.EnumerateFiles()
 					.Where(f => f.Extension == ".png" || f.Extension == ".gif"))
 				{
-					if (char.IsNumber(file.Name[0])) //only include images that start with a number. Assume others are for epilogues and shouldn't count towards the requirements
+					if (char.IsNumber(file.Name[0]) || customPoseAssets.Contains(file.Name)) //only include images that start with a number. Assume others are for epilogues and shouldn't count towards the requirements
 					{
 						size += file.Length;
 					}
@@ -247,6 +283,7 @@ namespace SPNATI_Character_Editor
 		{
 			Dictionary<string, TargetingInformation> targetInfo = new Dictionary<string, TargetingInformation>();
 			HashSet<string> lines = new HashSet<string>();
+			Dictionary<string, HashSet<string>> targetLines = new Dictionary<string, HashSet<string>>();
 			Dictionary<LineFilter, int> counts = new Dictionary<LineFilter, int>();
 			LinesPerStage.Clear();
 			counts[LineFilter.Generic] = 0;
@@ -284,8 +321,20 @@ namespace SPNATI_Character_Editor
 					HashSet<string> targets = c.GetTargets();
 					foreach (string target in targets)
 					{
+						int targetCount = 0;
+						HashSet<string> targetedLines = targetLines.GetOrAddDefault(target, () => new HashSet<string>());
+						foreach (DialogueLine line in c.Lines)
+						{
+							if (targetedLines.Contains(line.Text))
+							{
+								continue;
+							}
+							targetedLines.Add(line.Text);
+							targetCount++;
+						}
+
 						TargetingInformation info = targetInfo.GetOrAddDefault(target, () => new TargetingInformation(target));
-						info.LineCount += caseCount;
+						info.LineCount += targetCount;
 					}
 				}
 			}
@@ -323,8 +372,12 @@ namespace SPNATI_Character_Editor
 
 	public class TargetingInformation
 	{
+		[XmlAttribute("target")]
 		public string Target;
+		[XmlAttribute("count")]
 		public int LineCount;
+
+		public TargetingInformation() { }
 
 		public TargetingInformation(string target)
 		{

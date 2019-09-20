@@ -58,12 +58,14 @@
 			// 
 			// menuSpeedButtons
 			// 
+			this.menuSpeedButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.menuSpeedButtons.AutoSize = false;
 			this.menuSpeedButtons.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.menuSpeedButtons.Dock = System.Windows.Forms.DockStyle.None;
 			this.menuSpeedButtons.Location = new System.Drawing.Point(142, 0);
 			this.menuSpeedButtons.Name = "menuSpeedButtons";
-			this.menuSpeedButtons.Size = new System.Drawing.Size(721, 24);
+			this.menuSpeedButtons.Size = new System.Drawing.Size(592, 24);
 			this.menuSpeedButtons.TabIndex = 4;
 			this.menuSpeedButtons.Tag = "Surface";
 			// 
@@ -92,8 +94,9 @@
 			this.pnlRecords.Location = new System.Drawing.Point(3, 27);
 			this.pnlRecords.Name = "pnlRecords";
 			this.pnlRecords.PanelType = Desktop.Skinning.SkinnedBackgroundType.Transparent;
-			this.pnlRecords.Size = new System.Drawing.Size(860, 120);
+			this.pnlRecords.Size = new System.Drawing.Size(731, 120);
 			this.pnlRecords.TabIndex = 2;
+			this.pnlRecords.TabSide = Desktop.Skinning.TabSide.None;
 			// 
 			// PropertyTable
 			// 
@@ -104,7 +107,7 @@
 			this.Controls.Add(this.pnlRecords);
 			this.Controls.Add(this.shortcuts);
 			this.Name = "PropertyTable";
-			this.Size = new System.Drawing.Size(863, 150);
+			this.Size = new System.Drawing.Size(734, 150);
 			this.shortcuts.ResumeLayout(false);
 			this.shortcuts.PerformLayout();
 			this.ResumeLayout(false);

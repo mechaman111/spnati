@@ -162,8 +162,13 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		public string AddingCase(out string folder)
+		public void BuildCase(Case theCase)
 		{
+		}
+
+		public Case AddingCase(out string folder)
+		{
+			string newTag = null;
 			folder = "";
 			if (_character == null)
 			{
@@ -173,14 +178,14 @@ namespace SPNATI_Character_Editor.Controls
 			if (node == null)
 			{
 				GroupedListGrouper group = _listView.SelectedItem as GroupedListGrouper;
-				string tag = group.RootKey ?? group?.Key?.ToString();
+				string tag = group?.RootKey ?? group?.Key?.ToString();
 				if (!string.IsNullOrEmpty(tag))
 				{
 					if (tag != group?.Key?.ToString())
 					{
 						folder = group?.Key?.ToString();
 					}
-					return tag;
+					newTag = tag;
 				}
 			}
 			else
@@ -196,7 +201,15 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 
-			return node?.Case?.Tag;
+			if (string.IsNullOrEmpty(newTag))
+			{
+				newTag = node?.Case?.Tag;
+			}
+			if (!string.IsNullOrEmpty(newTag))
+			{
+				return new Case(newTag);
+			}
+			return null;
 		}
 
 		public void ModifyCase(Case modifiedCase)
@@ -352,6 +365,8 @@ namespace SPNATI_Character_Editor.Controls
 			DialogueNode node = args.Model as DialogueNode;
 			args.Tooltip = node.Case.ToString();
 
+			args.GrouperColor = GetGroupColor(args.Group.Key, args.Group.Index);
+
 			CaseLabel label = _editorData.GetLabel(node.Case);
 			if (label != null)
 			{
@@ -362,7 +377,6 @@ namespace SPNATI_Character_Editor.Controls
 					return;
 				}
 			}
-			args.GrouperColor = GetGroupColor(args.Group.Key, args.Group.Index);
 
 			if (_editorData.IsHidden(node.Case))
 			{

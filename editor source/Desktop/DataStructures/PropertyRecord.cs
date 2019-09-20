@@ -16,6 +16,7 @@ namespace Desktop
 		public string Description { get; set; }
 		public string Property { get; set; }
 		public int RowHeight { get; set; }
+		public bool HideLabel { get; set; }
 
 		public EditControlAttribute Attribute;
 		public Type DataType;
@@ -36,6 +37,7 @@ namespace Desktop
 			Description = attr.Description;
 			Property = member.Name;
 			Required = attr.Required;
+			HideLabel = attr.HideLabel;
 			if (attr.RowHeight > 1)
 			{
 				RowHeight = attr.RowHeight;
@@ -129,6 +131,11 @@ namespace Desktop
 		/// Description of what this edits
 		/// </summary>
 		public string Description;
+
+		/// <summary>
+		/// Whether to hide the label
+		/// </summary>
+		public bool HideLabel;
 
 		/// <summary>
 		/// Properties on the same Data object that should trigger PropertyChanged updates (only works with those properties being in other edit controls)

@@ -1,4 +1,5 @@
 ﻿using Desktop.CommonControls;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections;
 using System.Windows.Forms;
@@ -24,17 +25,21 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 		{
 			return Config.DevMode ||
 				string.IsNullOrEmpty(_character.Metadata.Writer) ||
-				Config.UserName == _character.Metadata.Writer;
+				Config.IncludesUserName(_character.Metadata.Writer);
 		}
 
 		public IEnumerator DoWork()
 		{
 			CharacterHistory history = CharacterHistory.Get(_character, false);
+			int goals = history.DailyGoal;
 			graphLines.Clear();
 
 			DataSeries lines = graphLines.AddSeries("Total");
 			DataSeries generic = graphLines.AddSeries("Generic");
 			DataSeries targeted = graphLines.AddSeries("Targeted");
+
+			cmdGoals.Text = (goals > 0 ? "" : "Set Goals");
+			lines.Threshold = goals;
 
 			DateTime today = DateTime.UtcNow;
 			//last 7 days
@@ -72,9 +77,24 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				generic.AddPoint(6 - i, diffGeneric, label);
 				int diffTarget = work.TargetedCount - previous.TargetedCount;
 				targeted.AddPoint(6 - i, diffTarget, label);
+
+				if (i == 0)
+				{
+					lblGoalMet.Visible = history.DailyGoal > 0 && diffLines >= history.DailyGoal;
+				}
 			}
 			grpHistory.Unshield();
 			yield break;
+		}
+
+		private void cmdGoals_Click(object sender, EventArgs e)
+		{
+			DialogueGoals goals = new DialogueGoals();
+			goals.SetData(_character);
+			if (goals.ShowDialog() == DialogResult.OK)
+			{
+				DoWork().MoveNext();
+			}
 		}
 	}
 }

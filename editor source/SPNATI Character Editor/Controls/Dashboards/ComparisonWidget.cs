@@ -41,25 +41,18 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 		{
 			//Figure out which source material tag has the most characters in common
 			graphPartners.Clear();
-			if (_franchises != null)
+			switch (_partnerGraphType)
 			{
-				switch (_partnerGraphType)
-				{
-					case PartnerGraphs.Lines:
-						lblLines.Text = "Lines";
-						UpdatePartnerLines(_franchises);
-						break;
-					case PartnerGraphs.Targets:
-						lblLines.Text = $"Banter with {_character}";
-						UpdatePartnerBanter(_franchises);
-						break;
-				}
+				case PartnerGraphs.Lines:
+					lblLines.Text = "Lines";
+					UpdatePartnerLines(_franchises);
+					break;
+				case PartnerGraphs.Targets:
+					lblLines.Text = $"Banter with {_character}";
+					UpdatePartnerBanter(_franchises);
+					break;
 			}
-			else
-			{
-				//HideWidget(grpPartners);
-			}
-
+		
 			grpPartners.Unshield();
 			yield break;
 		}
@@ -74,10 +67,17 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			int n = 0;
 			foreach (Character character in franchise.Item2)
 			{
-				CharacterHistory characterHistory = CharacterHistory.Get(character, character != _character);
-				LineWork work = characterHistory.Current;
+				if (character is CachedCharacter)
+				{
+					lines.AddPoint(n++, ((CachedCharacter)character).TotalLines, character.Label);
+				}
+				else
+				{
+					CharacterHistory characterHistory = CharacterHistory.Get(character, character != _character);
+					LineWork work = characterHistory.Current;
 
-				lines.AddPoint(n++, work.TotalLines, character.Label);
+					lines.AddPoint(n++, work.TotalLines, character.Label);
+				}
 			}
 		}
 
@@ -93,7 +93,6 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			int n = 0;
 			foreach (Character character in franchise.Item2)
 			{
-				HashSet<string> usedLines = new HashSet<string>();
 				if (character == _character)
 				{
 					continue;
@@ -102,14 +101,24 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				incomingLines.Add(character.FolderName, new HashSet<string>());
 				indices[character.FolderName] = n;
 				int count = 0;
-				foreach (Case c in character.GetCasesTargetedAtCharacter(_character, TargetType.DirectTarget))
+
+				if (character is CachedCharacter)
 				{
-					foreach (DialogueLine line in c.Lines)
+					CachedCharacter cache = character as CachedCharacter;
+					count = cache.GetTargetedCountTowards(_character.FolderName);
+				}
+				else
+				{
+					HashSet<string> usedLines = new HashSet<string>();
+					foreach (Case c in character.GetCasesTargetedAtCharacter(_character, TargetType.DirectTarget))
 					{
-						if (!usedLines.Contains(line.Text))
+						foreach (DialogueLine line in c.Lines)
 						{
-							usedLines.Add(line.Text);
-							count++;
+							if (!usedLines.Contains(line.Text))
+							{
+								usedLines.Add(line.Text);
+								count++;
+							}
 						}
 					}
 				}

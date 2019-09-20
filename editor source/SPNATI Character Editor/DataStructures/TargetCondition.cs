@@ -24,6 +24,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		[DefaultValue("")]
+		[RecordSelect(DisplayName = "Tag", GroupName = "Metadata", GroupOrder = 10, Description = "Character has the given tag", RecordType = typeof(Tag), UseAutoComplete = true)]
 		[XmlAttribute("filter")]
 		[JsonProperty("filter")]
 		/// <summary>
@@ -36,6 +37,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		[DefaultValue("")]
+		[ComboBox(DisplayName = "Gender", GroupName = "Metadata", GroupOrder = 5, Description = "Character's gender", Options = new string[] { "female", "male" })]
 		[JsonProperty("gender")]
 		[XmlAttribute("gender")]
 		public string Gender
@@ -45,7 +47,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		[DefaultValue("")]
-		[Status(DisplayName = "Status", Description = "Status of the characters to match", GroupOrder = 10, Required = true)]
+		[Status(DisplayName = "Status", GroupName = "Status", GroupOrder = 10, Description = "Current status of the characters to match")]
 		[XmlAttribute("status")]
 		[JsonProperty("status")]
 		public string Status
@@ -55,7 +57,6 @@ namespace SPNATI_Character_Editor
 		}
 
 		[DefaultValue("")]
-		[RecordSelect(DisplayName = "Role", GroupOrder = 20, Description = "What type of characters to target", RecordType = typeof(FilterRole), Required = true)]
 		[XmlAttribute("role")]
 		[JsonProperty("role")]
 		public string Role
@@ -65,27 +66,25 @@ namespace SPNATI_Character_Editor
 		}
 
 		[DefaultValue("")]
-		[RecordSelect(DisplayName = "Character", GroupOrder = 30, Description = "Character to target", RecordType = typeof(Character), Required = true)]
 		[XmlAttribute("character")]
 		[JsonProperty("character")]
-		public string FilterId
+		public string Character
 		{
 			get { return Get<string>(); }
 			set { Set(value); }
 		}
 
 		[DefaultValue("")]
-		[StageSelect(DisplayName = "Stage", GroupName = "Add Filter", GroupOrder = 40, Description = "Stage to target", BoundProperties = new string[] { "FilterId" })]
+		[StageSelect(DisplayName = "Stage", GroupName = "Status", GroupOrder = 40, Description = "Character is within a range of stages", BoundProperties = new string[] { "Character" })]
 		[XmlAttribute("stage")]
 		[JsonProperty("stage")]
-		public string FilterStage
+		public string Stage
 		{
 			get { return Get<string>(); }
 			set { Set(value); }
 		}
 
 		[DefaultValue("")]
-		[Text(DisplayName = "Store into variable", GroupOrder = 0, Description = "Name of variable to store a target that this condition matches", Required = true, Formatter = "FormatVariable")]
 		[XmlAttribute("var")]
 		[JsonProperty("var")]
 		public string Variable
@@ -94,7 +93,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		[NumericRange(DisplayName = "Layers", GroupName = "Add Filter", GroupOrder = 50, Description = "Number of layers the target has left")]
+		[NumericRange(DisplayName = "Remaining Layers", GroupName = "Status", GroupOrder = 50, Description = "Number of layers the character has left")]
 		[DefaultValue("")]
 		[XmlAttribute("layers")]
 		[JsonProperty("layers")]
@@ -104,7 +103,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		[NumericRange(DisplayName = "Starting Layers", GroupName = "Add Filter", GroupOrder = 55, Description = "Number of layers the target started with")]
+		[NumericRange(DisplayName = "Starting Layers", GroupName = "Metadata", GroupOrder = 55, Description = "Number of layers the character started with")]
 		[DefaultValue("")]
 		[XmlAttribute("startingLayers")]
 		[JsonProperty("startingLayers")]
@@ -114,7 +113,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		[NumericRange(DisplayName = "Time in Stage", GroupName = "Add Filter", GroupOrder = 60, Description = "Number of rounds since the last time this target lost a hand")]
+		[NumericRange(DisplayName = "Time in Stage", GroupName = "Status", GroupOrder = 60, Description = "Number of rounds since the last time this character lost a hand")]
 		[DefaultValue("")]
 		[XmlAttribute("timeInStage")]
 		[JsonProperty("timeInStage")]
@@ -124,7 +123,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		[ComboBox(DisplayName = "Has Hand", GroupName = "Add Filter", GroupOrder = 65, Description = "Character has a particular poker hand",
+		[ComboBox(DisplayName = "Has Hand", GroupName = "Game", GroupOrder = 65, Description = "Character has a particular poker hand",
 					Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
 		[DefaultValue("")]
 		[XmlAttribute("hasHand")]
@@ -135,7 +134,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		[NumericRange(DisplayName = "Consecutive Losses", GroupName = "Add Filter", GroupOrder = 63, Description = "Number of hands the target has lost in a row")]
+		[NumericRange(DisplayName = "Consecutive Losses", GroupName = "Game", GroupOrder = 63, Description = "Number of hands the character has lost in a row")]
 		[DefaultValue("")]
 		[XmlAttribute("consecutiveLosses")]
 		[JsonProperty("consecutiveLosses")]
@@ -145,7 +144,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		[MarkerCondition(DisplayName = "Said Marker", GroupName = "Add Filter", GroupOrder = 45, Description = "Character has said a marker", ShowPrivate = false, BoundProperties = new string[] { "FilterId" })]
+		[MarkerCondition(DisplayName = "Said Marker", GroupName = "Dialogue", GroupOrder = 45, Description = "Character has said a marker", ShowPrivate = false, BoundProperties = new string[] { "Character" })]
 		[DefaultValue("")]
 		[XmlAttribute("saidMarker")]
 		[JsonProperty("saidMarker")]
@@ -155,7 +154,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		[MarkerCondition(DisplayName = "Saying Marker", GroupName = "Add Filter", GroupOrder = 46, Description = "Character is saying a marker", ShowPrivate = false, BoundProperties = new string[] { "FilterId" })]
+		[MarkerCondition(DisplayName = "Saying Marker", GroupName = "Dialogue", GroupOrder = 46, Description = "Character is saying a marker", ShowPrivate = false, BoundProperties = new string[] { "Character" })]
 		[DefaultValue("")]
 		[XmlAttribute("sayingMarker")]
 		[JsonProperty("sayingMarker")]
@@ -165,7 +164,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		[Marker(DisplayName = "Not Said Marker", GroupName = "Add Filter", GroupOrder = 47, Description = "Character has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "FilterId" })]
+		[Marker(DisplayName = "Not Said Marker", GroupName = "Dialogue", GroupOrder = 47, Description = "Character has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "Character" })]
 		[DefaultValue("")]
 		[XmlAttribute("notSaidMarker")]
 		[JsonProperty("notSaidMarker")]
@@ -175,7 +174,7 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		[Text(DisplayName = "Saying Text", GroupName = "Add Filter", GroupOrder = 48, Description = "Character is saying some text at this very moment")]
+		[Text(DisplayName = "Saying Text", GroupName = "Dialogue", GroupOrder = 48, Description = "Character is saying some text at this very moment")]
 		[DefaultValue("")]
 		[XmlAttribute("saying")]
 		[JsonProperty("saying")]
@@ -234,10 +233,10 @@ namespace SPNATI_Character_Editor
 								Variable = value;
 								break;
 							case "stage":
-								FilterStage = value;
+								Stage = value;
 								break;
 							case "character":
-								FilterId = value;
+								Character = value;
 								break;
 							case "role":
 								Role = value;
@@ -303,8 +302,8 @@ namespace SPNATI_Character_Editor
 				Gender == other.Gender &&
 				Hand == other.Hand &&
 				Role == other.Role &&
-				FilterId == other.FilterId &&
-				FilterStage == other.FilterStage &&
+				Character == other.Character &&
+				Stage == other.Stage &&
 				TimeInStage == other.TimeInStage &&
 				Layers == other.Layers &&
 				StartingLayers == other.StartingLayers &&
@@ -324,8 +323,8 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (Count ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Hand ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Role ?? string.Empty).GetHashCode();
-			hash = (hash * 397) ^ (FilterId ?? string.Empty).GetHashCode();
-			hash = (hash * 397) ^ (FilterStage ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Character ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Stage ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (TimeInStage ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Layers ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (StartingLayers ?? string.Empty).GetHashCode();
@@ -374,17 +373,17 @@ namespace SPNATI_Character_Editor
 			{
 				parts.Add("role;" + Role);
 			}
-			if (!string.IsNullOrEmpty(FilterId))
+			if (!string.IsNullOrEmpty(Character))
 			{
-				parts.Add("character;" + FilterId);
+				parts.Add("character;" + Character);
 			}
-			if (!string.IsNullOrEmpty(FilterStage))
+			if (!string.IsNullOrEmpty(Stage))
 			{
-				parts.Add("stage;" + FilterStage);
+				parts.Add("stage;" + Stage);
 			}
 			if (!string.IsNullOrEmpty(Variable))
 			{
-				parts.Add("var;" + FilterId);
+				parts.Add("var;" + Character);
 			}
 			if (!string.IsNullOrEmpty(Layers))
 			{
@@ -428,13 +427,22 @@ namespace SPNATI_Character_Editor
 
 		public override string ToString()
 		{
+			return ToString(false);
+		}
+
+		public string ToString(bool excludeTarget)
+		{
 			string str = GUIHelper.RangeToString(Count);
-			if (FilterTag == null && Status == null && Gender == null && !HasAdvancedConditions)
+			if (!HasAdvancedConditions)
 			{
-				str += " players";
+				if (!string.IsNullOrEmpty(str))
+				{
+					str += " players";
+				}
 			}
 			else
 			{
+				string roleStr = null;
 				if (!string.IsNullOrEmpty(Role))
 				{
 					switch (Role)
@@ -449,6 +457,11 @@ namespace SPNATI_Character_Editor
 							str += " other";
 							break;
 					}
+					roleStr = Role;
+				}
+				if (!string.IsNullOrEmpty(Character) && !excludeTarget)
+				{
+					str += $": {Character}";
 				}
 				if (Status != null)
 				{
@@ -458,68 +471,99 @@ namespace SPNATI_Character_Editor
 				{
 					str += " " + Gender + (FilterTag != null ? "" : "s");
 				}
-				if (FilterTag != null)
+				if (!string.IsNullOrEmpty(Stage))
 				{
-					str += " " + FilterTag;
+					str += $" stage: {Stage}";
 				}
-				if (!string.IsNullOrEmpty(FilterId))
+				if (!string.IsNullOrEmpty(Status))
 				{
-					str += $" id: {FilterId}";
-				}
-				if (!string.IsNullOrEmpty(FilterStage))
-				{
-					str += $" stage: {FilterStage}";
-				}
-				if (!string.IsNullOrEmpty(Layers))
-				{
-					str += $" layers: {Layers}";
-				}
-				if (!string.IsNullOrEmpty(StartingLayers))
-				{
-					str += $" starting layers: {StartingLayers}";
-				}
-				if (!string.IsNullOrEmpty(TimeInStage))
-				{
-					str += $" time in stage: {TimeInStage}";
-				}
-				if (!string.IsNullOrEmpty(ConsecutiveLosses))
-				{
-					str += $" losses in row: {ConsecutiveLosses}";
-				}
-				if (!string.IsNullOrEmpty(SaidMarker))
-				{
-					str += $" said marker: {SaidMarker}";
-				}
-				if (!string.IsNullOrEmpty(NotSaidMarker))
-				{
-					str += $" not said marker: {NotSaidMarker}";
-				}
-				if (!string.IsNullOrEmpty(SayingMarker))
-				{
-					str += $" saying marker: {SayingMarker}";
-				}
-				if (!string.IsNullOrEmpty(Saying))
-				{
-					str += $" saying text: {Saying}";
+					str += $" status: {Status.Replace("_", " ")}";
 				}
 				if (!string.IsNullOrEmpty(Hand))
 				{
 					str += $" hand {Hand}";
 				}
+				if (!string.IsNullOrEmpty(TimeInStage))
+				{
+					str += $" after {TimeInStage} rounds in stage";
+				}
+				if (!string.IsNullOrEmpty(Layers))
+				{
+					str += $" layers left: {Layers}";
+				}
+				if (!string.IsNullOrEmpty(StartingLayers))
+				{
+					str += $" starting layers: {StartingLayers}";
+				}
+				if (FilterTag != null)
+				{
+					str += " " + FilterTag;
+				}
+				if (!string.IsNullOrEmpty(ConsecutiveLosses))
+				{
+					str += $" {ConsecutiveLosses} losses in row";
+				}
+				if (!string.IsNullOrEmpty(SaidMarker))
+				{
+					str += $" said {SaidMarker}";
+				}
+				if (!string.IsNullOrEmpty(NotSaidMarker))
+				{
+					str += $" not said {NotSaidMarker}";
+				}
+				if (!string.IsNullOrEmpty(SayingMarker))
+				{
+					str += $" saying {SayingMarker}";
+				}
+				if (!string.IsNullOrEmpty(Saying))
+				{
+					str += $" saying text {Saying}";
+				}
 				if (!string.IsNullOrEmpty(Variable))
 				{
 					str += $" => {Variable}";
 				}
+				if (str.Trim() == roleStr)
+				{
+					return "";
+				}
 			}
-			return str;
+			return str.Trim();
 		}
 
 		public int GetPriority()
 		{
 			int priority = 0;
-			if (Role == "target")
+			if (Role == "self")
 			{
-				if (!string.IsNullOrEmpty(FilterId))
+				if (!string.IsNullOrEmpty(FilterTag))
+				{
+					priority += 0;
+				}
+				if (!string.IsNullOrEmpty(Status))
+				{
+					priority += 20;
+				}
+				if (!string.IsNullOrEmpty(ConsecutiveLosses))
+				{
+					priority += 60;
+				}
+				if (!string.IsNullOrEmpty(TimeInStage))
+				{
+					priority += 8;
+				}
+				if (!string.IsNullOrEmpty(Hand))
+				{
+					priority += 20;
+				}
+				if (!string.IsNullOrEmpty(Gender))
+				{
+					priority += 5;
+				}
+			}
+			else if (Role == "target")
+			{
+				if (!string.IsNullOrEmpty(Character))
 				{
 					priority += 300;
 				}
@@ -527,7 +571,7 @@ namespace SPNATI_Character_Editor
 				{
 					priority += 150;
 				}
-				if (!string.IsNullOrEmpty(FilterStage))
+				if (!string.IsNullOrEmpty(Stage))
 				{
 					priority += 80;
 				}
@@ -562,7 +606,7 @@ namespace SPNATI_Character_Editor
 			}
 			else
 			{
-				if (!string.IsNullOrEmpty(FilterId))
+				if (!string.IsNullOrEmpty(Character))
 				{
 					priority += 100;
 				}
@@ -570,7 +614,7 @@ namespace SPNATI_Character_Editor
 				{
 					priority += 10;
 				}
-				if (!string.IsNullOrEmpty(FilterStage))
+				if (!string.IsNullOrEmpty(Stage))
 				{
 					priority += 40;
 				}
@@ -623,15 +667,22 @@ namespace SPNATI_Character_Editor
 			return priority;
 		}
 
+		[JsonIgnore]
+		public bool IsEmpty
+		{
+			get
+			{
+				return !HasAdvancedConditions && string.IsNullOrEmpty(Count) && string.IsNullOrEmpty(Character) && string.IsNullOrEmpty(Variable);
+			}
+		}
+
+		[JsonIgnore]
 		public bool HasAdvancedConditions
 		{
 			get
 			{
 				return !string.IsNullOrEmpty(Status) ||
-					!string.IsNullOrEmpty(Variable) ||
-					!string.IsNullOrEmpty(FilterId) ||
-					!string.IsNullOrEmpty(Role) ||
-					!string.IsNullOrEmpty(FilterStage) ||
+					!string.IsNullOrEmpty(Stage) ||
 					!string.IsNullOrEmpty(TimeInStage) ||
 					!string.IsNullOrEmpty(ConsecutiveLosses) ||
 					!string.IsNullOrEmpty(SaidMarker) ||
@@ -640,7 +691,10 @@ namespace SPNATI_Character_Editor
 					!string.IsNullOrEmpty(Saying) ||
 					!string.IsNullOrEmpty(Hand) ||
 					!string.IsNullOrEmpty(Layers) ||
-					!string.IsNullOrEmpty(StartingLayers);
+					!string.IsNullOrEmpty(StartingLayers) ||
+					!string.IsNullOrEmpty(Gender) ||
+					!string.IsNullOrEmpty(FilterTag) ||
+					!string.IsNullOrEmpty(Status);
 			}
 		}
 

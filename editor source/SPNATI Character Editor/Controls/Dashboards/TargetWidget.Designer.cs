@@ -31,15 +31,19 @@
 			this.grpWidget = new Desktop.Skinning.SkinnedGroupBox();
 			this.lblName = new Desktop.Skinning.SkinnedLabel();
 			this.graphLines = new Desktop.CommonControls.Graphs.StackedBarGraph();
+			this.linkGo = new Desktop.CommonControls.ActivityLink();
 			this.grpWidget.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// grpWidget
 			// 
 			this.grpWidget.BackColor = System.Drawing.Color.White;
+			this.grpWidget.Controls.Add(this.linkGo);
 			this.grpWidget.Controls.Add(this.lblName);
 			this.grpWidget.Controls.Add(this.graphLines);
 			this.grpWidget.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.grpWidget.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.grpWidget.Image = null;
 			this.grpWidget.Location = new System.Drawing.Point(0, 0);
 			this.grpWidget.Name = "grpWidget";
 			this.grpWidget.Size = new System.Drawing.Size(396, 316);
@@ -67,12 +71,24 @@
 			this.graphLines.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.graphLines.HorizontalOrientation = false;
 			this.graphLines.Location = new System.Drawing.Point(6, 42);
 			this.graphLines.Name = "graphLines";
 			this.graphLines.ShowLegend = false;
 			this.graphLines.ShowTotals = true;
 			this.graphLines.Size = new System.Drawing.Size(384, 268);
 			this.graphLines.TabIndex = 0;
+			// 
+			// linkGo
+			// 
+			this.linkGo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.linkGo.LaunchHandler = null;
+			this.linkGo.LaunchParameters = null;
+			this.linkGo.Location = new System.Drawing.Point(357, 3);
+			this.linkGo.Name = "linkGo";
+			this.linkGo.Size = new System.Drawing.Size(33, 24);
+			this.linkGo.TabIndex = 2;
+			this.linkGo.Visible = false;
 			// 
 			// TargetWidget
 			// 
@@ -91,5 +107,6 @@
 		private Desktop.Skinning.SkinnedGroupBox grpWidget;
 		private Desktop.Skinning.SkinnedLabel lblName;
 		private Desktop.CommonControls.Graphs.StackedBarGraph graphLines;
+		private Desktop.CommonControls.ActivityLink linkGo;
 	}
 }

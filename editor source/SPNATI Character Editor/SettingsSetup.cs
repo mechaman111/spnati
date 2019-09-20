@@ -22,7 +22,6 @@ namespace SPNATI_Character_Editor
 			chkIntellisense.Checked = Config.UseIntellisense;
 			chkHidePrefixlessImages.Checked = Config.UsePrefixlessImages;
 			txtFilter.Text = Config.PrefixFilter;
-			chkAutoBanter.Checked = Config.AutoLoadBanterWizard;
 			chkAutoBackup.Checked = Config.BackupEnabled;
 			chkInitialAdd.Checked = Config.AutoOpenConditions;
 			chkDefaults.Checked = !Config.SuppressDefaults;
@@ -116,7 +115,6 @@ namespace SPNATI_Character_Editor
 			Config.UseIntellisense = chkIntellisense.Checked;
 			Config.UsePrefixlessImages = chkHidePrefixlessImages.Checked;
 			Config.PrefixFilter = txtFilter.Text;
-			Config.AutoLoadBanterWizard = chkAutoBanter.Checked;
 			Config.BackupEnabled = chkAutoBackup.Checked;
 			Config.AutoOpenConditions = chkInitialAdd.Checked;
 			if (txtKisekae.Text != Config.KisekaeDirectory)

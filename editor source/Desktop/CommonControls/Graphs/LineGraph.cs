@@ -261,6 +261,7 @@ namespace Desktop.CommonControls
 					}
 				}
 
+				maxY = Math.Max(maxY, series.Threshold);
 			}
 
 			//Y ticks
@@ -269,6 +270,10 @@ namespace Desktop.CommonControls
 			if (minY == maxY || minY < 0)
 			{
 				minY = 0;
+			}
+			if (maxY < 5)
+			{
+				maxY = 5;
 			}
 			_tickSpacing = MathUtils.GetTickSpacing(minY, maxY, MaxTicks, out _tickMin, out _tickMax);
 			int widest = 0;

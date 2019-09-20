@@ -30,11 +30,16 @@
 		{
 			this.grpHistory = new Desktop.Skinning.SkinnedGroupBox();
 			this.graphLines = new Desktop.CommonControls.LineGraph();
+			this.cmdGoals = new Desktop.Skinning.SkinnedButton();
+			this.lblGoalMet = new Desktop.Skinning.SkinnedLabel();
 			this.grpHistory.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// grpHistory
 			// 
+			this.grpHistory.BackColor = System.Drawing.Color.White;
+			this.grpHistory.Controls.Add(this.lblGoalMet);
+			this.grpHistory.Controls.Add(this.cmdGoals);
 			this.grpHistory.Controls.Add(this.graphLines);
 			this.grpHistory.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.grpHistory.Location = new System.Drawing.Point(0, 0);
@@ -55,6 +60,41 @@
 			this.graphLines.Size = new System.Drawing.Size(418, 324);
 			this.graphLines.TabIndex = 0;
 			// 
+			// cmdGoals
+			// 
+			this.cmdGoals.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdGoals.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdGoals.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdGoals.Flat = true;
+			this.cmdGoals.ForeColor = System.Drawing.Color.Blue;
+			this.cmdGoals.Image = global::SPNATI_Character_Editor.Properties.Resources.Settings;
+			this.cmdGoals.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.cmdGoals.Location = new System.Drawing.Point(323, 3);
+			this.cmdGoals.Name = "cmdGoals";
+			this.cmdGoals.Size = new System.Drawing.Size(101, 23);
+			this.cmdGoals.TabIndex = 2;
+			this.cmdGoals.Text = "Set Goals";
+			this.cmdGoals.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+			this.cmdGoals.UseVisualStyleBackColor = true;
+			this.cmdGoals.Click += new System.EventHandler(this.cmdGoals_Click);
+			// 
+			// lblGoalMet
+			// 
+			this.lblGoalMet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblGoalMet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lblGoalMet.ForeColor = System.Drawing.Color.Green;
+			this.lblGoalMet.Highlight = Desktop.Skinning.SkinnedHighlight.Good;
+			this.lblGoalMet.Image = global::SPNATI_Character_Editor.Properties.Resources.Checkmark;
+			this.lblGoalMet.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lblGoalMet.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.lblGoalMet.Location = new System.Drawing.Point(205, 2);
+			this.lblGoalMet.Name = "lblGoalMet";
+			this.lblGoalMet.Size = new System.Drawing.Size(112, 23);
+			this.lblGoalMet.TabIndex = 3;
+			this.lblGoalMet.Text = "Today\'s goals met!";
+			this.lblGoalMet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lblGoalMet.Visible = false;
+			// 
 			// LineHistoryWidget
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -71,5 +111,7 @@
 
 		private Desktop.Skinning.SkinnedGroupBox grpHistory;
 		private Desktop.CommonControls.LineGraph graphLines;
+		private Desktop.Skinning.SkinnedButton cmdGoals;
+		private Desktop.Skinning.SkinnedLabel lblGoalMet;
 	}
 }

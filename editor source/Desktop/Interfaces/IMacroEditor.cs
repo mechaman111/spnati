@@ -12,6 +12,7 @@ namespace Desktop
 		string GetHelpText();
 		object CreateData();
 		object GetRecordContext();
+		object GetSecondaryRecordContext();
 		Func<PropertyRecord, bool> GetRecordFilter(object data);
 		void AddSpeedButtons(PropertyTable table);
 	}

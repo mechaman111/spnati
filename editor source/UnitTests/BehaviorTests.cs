@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SPNATI_Character_Editor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace UnitTests
 {
 	[TestClass]
-	public class BehaviorTests
+	public class BehaviorTests : IDisposable
 	{
 		private Character _character;
 
@@ -191,7 +192,7 @@ namespace UnitTests
 			behavior.PrepareForEdit(_character);
 			Assert.AreEqual(1, behavior.GetWorkingCases().Count());
 			Case first = behavior.GetWorkingCases().First();
-			Assert.AreEqual(1, first.AlternativeConditions.Count);
+			Assert.AreEqual(2, first.AlternativeConditions.Count);
 		}
 
 		[TestMethod]
@@ -279,6 +280,11 @@ namespace UnitTests
 			behavior.BulkReplace("a", dest);
 			Assert.AreEqual(3, behavior.GetWorkingCases().Count());
 			Assert.AreEqual("c", behavior.GetWorkingCases().ToList()[1].Lines[0].Text);
+		}
+
+		public void Dispose()
+		{
+			_character.Dispose();
 		}
 	}
 }

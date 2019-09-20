@@ -1031,7 +1031,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				float.TryParse(t2, NumberStyles.Number, CultureInfo.InvariantCulture, out f2);
 				return f1.CompareTo(f2);
 			});
-			bool frameExists = Keyframes.Find(k => k.Time == startTime) != null;
 			for (int i = 0; i < directive.Keyframes.Count; i++)
 			{
 				Keyframe kf = directive.Keyframes[i];
@@ -1232,19 +1231,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			end = (last == null ? start : last);
 		}
-
-		private bool HasLoops()
-		{
-			if (Keyframes.Count == 0) { return false; }
-			float endTime = Keyframes[Keyframes.Count - 1].Time;
-			foreach (string property in AnimatedProperties)
-			{
-				LiveKeyframeMetadata meta = GetBlockMetadata(property, endTime);
-				if (meta.Looped) { return true; }
-			}
-			return false;
-		}
-
+		
 		/// <summary>
 		/// Adds an event at the given point
 		/// </summary>

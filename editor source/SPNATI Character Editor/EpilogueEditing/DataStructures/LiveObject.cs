@@ -553,8 +553,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public abstract void Draw(Graphics g, Matrix sceneTransform, List<string> markers, bool inPlayback);
 		public virtual void DrawSelection(Graphics g, Matrix sceneTransform, CanvasState editState, HoverContext hoverContext)
 		{
-			int midX = Width / 2;
-			int midY = Height / 2;
 			PointF[] localPts = new PointF[] {
 				new PointF(0,0),
 				new PointF(Width, 0),
