@@ -189,7 +189,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("emitter") as DirectiveDefinition;
 			def.Description = "Adds an object emitter to the scene.";
 			def.SortOrder = 5;
-			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX", "delay", 
+			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX", "delay",
 				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease", "ignoreRotation", "marker",
 				"startSkewX", "startSkewY", "endSkewX", "endSkewY" })
 			{
@@ -444,6 +444,7 @@ namespace SPNATI_Character_Editor
 			{
 				menu = shell.AddToolbarSubmenu("Dev");
 				shell.AddToolbarItem("Themes...", typeof(Skin), menu);
+				shell.AddToolbarItem("Clear Extraneous IDs", ClearIDs, menu, Keys.None);
 			}
 
 			//Help
@@ -692,6 +693,46 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			MessageBox.Show("Converted " + count + " cases.");
+		}
+
+		private static void ClearIDs()
+		{
+			Character character = Shell.Instance.ActiveWorkspace.Record as Character;
+			if (character != null)
+			{
+				CharacterEditorData editorData = CharacterDatabase.GetEditorData(character);
+				foreach (Case wc in character.Behavior.GetWorkingCases())
+				{
+					if (wc.Id > 0)
+					{
+						CaseLabel label = editorData.GetLabel(wc);
+						if (label != null)
+						{
+							continue;
+						}
+						string note = editorData.GetNote(wc);
+						if (!string.IsNullOrEmpty(note))
+						{
+							continue;
+						}
+						SituationResponse response = editorData.Responses.Find(r => r.Id == wc.Id);
+						if (response != null)
+						{
+							continue;
+						}
+						Situation situation = editorData.NoteworthySituations.Find(s => s.Id == wc.Id);
+						if (situation != null)
+						{
+							continue;
+						}
+						if (editorData.IsHidden(wc))
+						{
+							continue;
+						}
+						wc.Id = 0;
+					}
+				}
+			}
 		}
 	}
 }
