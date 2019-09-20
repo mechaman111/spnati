@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1.1 at 1:43:56 AM on September 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.1.1 at 2:48:42 AM on September 19, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.1.1</version>
     <first>Sola</first>
@@ -60,6 +60,9 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0" id="6" alsoPlaying="chihiro" priority="122">
+                <state img="#-happy.png">Neither have I, Miss Chihiro.</state>
+            </case>
             <case stage="0" alsoPlaying="mythra">
                 <condition count="0" filter="zizou" />
                 <state img="#-loss.png">I wonder if I should tell Zizou about this girl. She feels powerfull...</state>
@@ -594,7 +597,7 @@
             <case stage="2" saidMarker="to_wear_only_part">
                 <state img="#-strip.png">Would be as indecent as just wearing my underwear.</state>
             </case>
-            <case stage="0">
+            <case stage="0" id="2">
                 <state img="#-strip.png" marker="lose_my_ribbon_suppose">I guess I'll lose my ribbon...</state>
                 <state img="#-strip.png" marker="taking_off_ribbon_ok">I'm taking off my ribbon, OK?</state>
                 <state img="#-strip.png" marker="is_ribbon_enough">Is my ribbon enough?</state>
@@ -793,7 +796,7 @@
             <case stage="6" saidMarker="step_it_up">
                 <state img="#-stripped.png">And I'll step up big time with some Revenge Magic.</state>
             </case>
-            <case stage="1">
+            <case stage="1" id="3">
                 <state img="#-stripped.png">My ribbon isn't enough. I'll take my hat off too, OK?</state>
             </case>
             <case stage="2">
@@ -2657,6 +2660,78 @@
             </case>
         </trigger>
 
+        <trigger id="opponent_lost">
+            <case stage="0-8" id="19" target="chihiro">
+                <state img="#-interested.png">Oh... I g-guess you're out, Chihiro...</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_stripping">
+            <case stage="0-8" id="7" target="chihiro" targetStage="0">
+                <state img="#-embarrassed.png">Be strong. It's embarrassing, but we can get through this as friends.</state>
+            </case>
+            <case stage="0-8" id="9" target="chihiro" targetStage="1">
+                <state img="#-appreciative.png">Just pretend nobody's watching.</state>
+            </case>
+            <case stage="0-8" id="11" target="chihiro" targetStage="2">
+                <state img="#-happy.png">That's a lovely coat, Miss Chihiro. Maybe we can go out shopping together after this.</state>
+            </case>
+            <case stage="0-8" id="13" target="chihiro" targetStage="3">
+                <state img="#-shy.png">Don't freak out... Y-You're just taking off y-your skirt...</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_stripped">
+            <case stage="0-8" id="8" target="chihiro" targetStage="1">
+                <state img="#-interested.png">It was just a ribbon. It's OK.</state>
+            </case>
+            <case stage="0-8" id="10" target="chihiro" targetStage="2">
+                <state img="#-happy.png">Don't worry about what comes next. You got through that much.</state>
+            </case>
+            <case stage="0-8" id="12" target="chihiro" targetStage="3">
+                <state img="#-appreciative.png">Such a fancy shirt too. I love your fashion sense.</state>
+            </case>
+            <case stage="0-8" id="14" target="chihiro" targetStage="4">
+                <state img="#-loss.png">It's n-not that bad. It's j-just your underwear showing...</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_chest_will_be_visible">
+            <case stage="0-8" id="15" target="chihiro">
+                <state img="#-shocked.png">Wait, what?</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_chest_is_visible">
+            <case stage="0-8" id="16" target="chihiro">
+                <state img="#-loss.png">So is this a magic ability or can you just talk through a computer?</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_crotch_will_be_visible">
+            <case stage="0-8" id="17" target="chihiro">
+                <state img="#-interested.png">It's OK... Y-You can do it, Miss Chihiro.</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_crotch_is_visible">
+            <case stage="0-8" id="18" target="chihiro">
+                <state img="#-horny.png">I-I m-meam Mister Chihiro... I'm sorry...</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_start_masturbating">
+            <case stage="0-8" id="20" target="chihiro" targetSayingMarker="temperature=0">
+                <state img="#-horny.png">D-Do you mind if _ w-watch..?</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_finished_masturbating">
+            <case stage="0-8" id="21" target="chihiro">
+                <state img="#-shy.png">&lt;i&gt;He's so perfect... I wish I had the nerve to ask him out...&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
         <trigger id="male_must_masturbate">
             <case stage="0-8">
                 <state img="#-horny.png">Woah... ~name~'s gonna touch himself now?</state>
@@ -2837,7 +2912,7 @@
             <case stage="6" alsoPlaying="zizou">
                 <state img="#-must_masturbate.png">I know that... It's just so f-fun...</state>
             </case>
-            <case stage="6">
+            <case stage="6" id="4">
                 <state img="#-must_masturbate.png">OK... I'm going to do my best.</state>
                 <state img="#-must_masturbate.png">I guess it's my turn. Just do what Codino taught you, Sola...</state>
                 <state img="#-must_masturbate.png">My friend Codino taught me how to do this after I walked in on her doing this...</state>
@@ -2850,7 +2925,7 @@
             <case stage="6" alsoPlaying="zizou">
                 <state img="#-starting.png">Thanks for keeping this a secret, Zizou.</state>
             </case>
-            <case stage="6" saidMarker="here_we">
+            <case stage="6" id="5" saidMarker="here_we">
                 <state img="#-starting.png">Go!</state>
             </case>
             <case stage="6">
