@@ -27,11 +27,6 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public event EventHandler<Case> CaseModified;
 
-		/// <summary>
-		/// Next ID for a case that needs one
-		/// </summary>
-		[XmlIgnore]
-		public int NextId { get; set; }
 		[XmlIgnore]
 		public int MaxCaseId { get; set; }
 		[XmlIgnore]
@@ -350,6 +345,10 @@ namespace SPNATI_Character_Editor
 					{
 						triggerCase.StageId = workingCase.Id.ToString();
 					}
+					else
+					{
+						triggerCase.StageId = null;
+					}
 					triggerCase.Tag = null;
 					triggerCase.TriggerSet = 0;
 					trigger.Cases.Add(triggerCase);
@@ -515,6 +514,11 @@ namespace SPNATI_Character_Editor
 							id = ++nextId;
 						}
 					}
+					if (triggerCase.OneShotId > 0)
+					{
+						MaxCaseId = Math.Max(MaxCaseId, triggerCase.OneShotId);
+					}
+
 					List<Case> cases = setCases.GetOrAddDefault(id, () => new List<Case>());
 					HashSet<int> stages = setStages.GetOrAddDefault(id, () => new HashSet<int>());
 					triggerCase.Tag = trigger.Id;

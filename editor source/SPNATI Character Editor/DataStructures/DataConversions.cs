@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 
@@ -30,6 +31,7 @@ namespace SPNATI_Character_Editor
 			if (Config.VersionPredates(version, "v5.2"))
 			{
 				Convert5_1(character);
+				Convert5_2(character);
 			}
 		}
 
@@ -208,6 +210,26 @@ namespace SPNATI_Character_Editor
 					if (!foundLink)
 					{
 
+					}
+				}
+			}
+		}
+
+		private static void Convert5_2(Character character)
+		{
+			HashSet<int> usedOneShots = new HashSet<int>();
+			//de-duplicate oneshot IDs, since every case should be unique now
+			foreach (Case workingCase in character.Behavior.GetWorkingCases())
+			{
+				if (workingCase.OneShotId > 0)
+				{
+					if (usedOneShots.Contains(workingCase.OneShotId))
+					{
+						workingCase.OneShotId = ++character.Behavior.MaxCaseId;
+					}
+					else
+					{
+						usedOneShots.Add(workingCase.OneShotId);
 					}
 				}
 			}
