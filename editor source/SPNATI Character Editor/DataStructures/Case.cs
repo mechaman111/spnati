@@ -292,7 +292,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalPlaying;
-		[NumericRange(DisplayName = "Total Playing", GroupOrder = 3, Description = "Number of players still in the game", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Playing", GroupName = "Table", GroupOrder = 3, Description = "Number of players still in the game", Minimum = 0, Maximum = 5)]
 		[XmlOrder(200)]
 		[XmlAttribute("totalAlive")]
 		[JsonProperty("totalAlive")]
