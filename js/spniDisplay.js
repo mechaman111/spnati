@@ -118,6 +118,14 @@ PoseSprite.prototype.draw = function() {
     }
 }
 
+PoseSprite.prototype.setWillChangeHints = function (enabled) {
+    $(this.vehicle).css('will-change', enabled ? 'transform, opacity' : 'auto');
+    $(this.pivot).css('will-change', enabled ? 'transform' : 'auto');
+    if (this.img) {
+        $(this.img).css('will-change', enabled ? 'height, width' : 'auto');
+    }
+}
+
 
 function PoseAnimation (targetSprite, pose, args) {
     this.pose = pose;
@@ -273,7 +281,7 @@ function Pose(poseDef, display) {
 }
 
 Pose.prototype.getHeightScaleFactor = function() {
-    return this.display.height() / this.baseHeight;
+    return this.display.imageAreaHeight / this.baseHeight;
 }
 
 Pose.prototype.onSpriteLoaded = function(sprite) {
@@ -324,6 +332,14 @@ Pose.prototype.needsAnimationLoop = function () {
 
     return false;
 }
+
+Pose.prototype.setWillChangeHints = function (enabled) {
+    for (key in this.sprites) {
+        if (this.sprites.hasOwnProperty(key)) {
+            this.sprites[key].setWillChangeHints(enabled);
+        }
+    }
+} 
 
 function xmlToObject($xml) {
     var targetObj = {};
@@ -535,12 +551,20 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
     this.imageArea = imageArea;
     this.label = labelElem;
     this.animCallbackID = undefined;
+
+    this.imageAreaHeight = this.imageArea.height();
+
+    this.resizeObserver = new ResizeObserver(function (entries) {
+        if (entries[0].contentBoxSize) {
+            this.imageAreaHeight = entries[0].contentBoxSize.blockSize;
+        } else {
+            this.imageAreaHeight = entries[0].contentRect.height;
+        }
+    }.bind(this));
+
+    this.resizeObserver.observe(this.imageArea[0]);
     
     window.addEventListener('resize', this.onResize.bind(this));
-}
-
-OpponentDisplay.prototype.height = function () {
-    return this.imageArea.height();
 }
 
 OpponentDisplay.prototype.hideBubble = function () {
@@ -549,6 +573,10 @@ OpponentDisplay.prototype.hideBubble = function () {
 }
 
 OpponentDisplay.prototype.clearCustomPose = function () {
+    if (this.pose instanceof Pose) {
+        this.pose.setWillChangeHints(false);
+    }
+
     this.imageArea.children('.custom-pose').remove();
     if (this.animCallbackID) {
         window.cancelAnimationFrame(this.animCallbackID);
@@ -561,9 +589,9 @@ OpponentDisplay.prototype.clearSimplePose = function () {
 }
 
 OpponentDisplay.prototype.clearPose = function () {
-    this.pose = null;
     this.clearCustomPose();
     this.clearSimplePose();
+    this.pose = null;
 }
 
 OpponentDisplay.prototype.drawPose = function (pose) {
@@ -579,12 +607,13 @@ OpponentDisplay.prototype.drawPose = function (pose) {
             this.clearSimplePose();
         } else if (this.pose instanceof Pose) {
             // Remove any previously shown custom poses too
-            $(this.pose.container).remove();
+            this.clearCustomPose();
         }
         
         this.imageArea.append(pose.container);
         pose.draw();
         if (pose.needsAnimationLoop()) {
+            pose.setWillChangeHints(true);
             this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
         }
     }
@@ -690,6 +719,7 @@ OpponentDisplay.prototype.loop = function (timestamp) {
     if (this.pose.needsAnimationLoop()) {
         this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
     } else {
+        this.pose.setWillChangeHints(false);
         this.animCallbackID = undefined;
     }
 }
