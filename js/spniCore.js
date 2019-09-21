@@ -975,10 +975,10 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             /* Pre-emptively optimize new-format opponents. */
             if (this.xml.find('behaviour>trigger').length > 0) {
-                this.caseFirstFormat = true;
+                this.triggerFirstFormat = true;
                 this.cacheBehaviourTriggers(continueLoading);
             } else {
-                this.caseFirstFormat = false;
+                this.triggerFirstFormat = false;
                 this.cacheBehaviourStages(continueLoading);
             }
 		}.bind(this))

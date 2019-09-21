@@ -1602,29 +1602,21 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
     if (volatileOnly && this.chosenState && this.chosenState.parentCase) {
         bestMatchPriority = this.chosenState.parentCase.priority + 1;
     }
-
-    /* try to find the tags/stage.
-	   .get() returns a simple array with the matched
-	   elements. .map($) converts the individual elements back to
-	   jQuery objects. */
+    
     var cases = [];
     
-    if (this.caseFirstFormat) {
-        cases = tags.reduce(function (cur_cases, tag) {
+    if (this.triggerFirstFormat) {
+        tags.forEach(function (tag) {
             if (this.caseCache[tag]) {
-                Array.prototype.push.apply(cur_cases, this.caseCache[tag]);
+                Array.prototype.push.apply(cases, this.caseCache[tag]);
             }
-
-            return cur_cases;
-        }.bind(this), []);
+        }, this);
     } else {
-        cases = tags.reduce(function (cur_cases, tag) {
+        tags.forEach(function (tag) {
             if (this.caseCache[stageNum] && this.caseCache[stageNum][tag]) {
-                Array.prototype.push.apply(cur_cases, this.caseCache[stageNum][tag]);
+                Array.prototype.push.apply(cases, this.caseCache[stageNum][tag]);
             }
-
-            return cur_cases;
-        }.bind(this), []);
+        }, this);
     }
 
     /* quick check to see if the tag exists */
