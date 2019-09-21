@@ -222,7 +222,7 @@ namespace SPNATI_Character_Editor
 
 		public void OnBeforeSerialize()
 		{
-			Markers = _character.Markers;
+			Markers = _character.Markers.Value;
 			Markers.OnBeforeSerialize();
 
 			Notes.Clear();
@@ -239,7 +239,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public void OnAfterDeserialize()
+		public void OnAfterDeserialize(string source)
 		{
 			foreach (Situation c in NoteworthySituations)
 			{
@@ -260,7 +260,7 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
-			Markers?.OnAfterDeserialize();
+			Markers?.OnAfterDeserialize(source);
 		}
 
 		public bool IsCalledOut(Case c)

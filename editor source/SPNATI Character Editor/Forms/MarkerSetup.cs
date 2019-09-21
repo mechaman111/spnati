@@ -14,7 +14,7 @@ namespace SPNATI_Character_Editor.Forms
 
 		public void SetData(Character character, List<string> markers)
 		{
-			lstItems.SelectableItems = character.Markers.Values.ToList().ConvertAll(m => m.Name).ToArray();
+			lstItems.SelectableItems = character.Markers.Value.Values.ToList().ConvertAll(m => m.Name).ToArray();
 			lstItems.SelectedItems = markers.ToArray();
 		}
 

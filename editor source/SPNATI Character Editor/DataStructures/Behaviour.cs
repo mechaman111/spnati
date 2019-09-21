@@ -95,6 +95,7 @@ namespace SPNATI_Character_Editor
 				{
 					foreach (Case theCase in trigger.Cases)
 					{
+						theCase.Tag = trigger.Id;
 						yield return theCase;
 					}
 				}

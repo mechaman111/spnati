@@ -603,7 +603,7 @@ namespace SPNATI_Character_Editor
 				}
 
 				name = Marker.ExtractConditionPieces(name, out op, out value, out perTarget);
-				if (character.Markers.Count > 0 && !character.Markers.Contains(name))
+				if (character.Markers.IsValueCreated && !character.Markers.Value.Contains(name))
 				{
 					//Count could be 0 for characters who have no editor data, so unless we decide to duplicate MarkerData in CachedCharacter, just ignore it for unloaded characters
 					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue that sets marker {2}. {0}", caseLabel, character.FolderName, name), context));
@@ -668,7 +668,7 @@ namespace SPNATI_Character_Editor
 						if (!string.IsNullOrEmpty(value))
 						{
 							bool used = false;
-							Marker m = character.Markers.Values.FirstOrDefault(marker => marker.Name == name);
+							Marker m = character.Markers.Value.Values.FirstOrDefault(marker => marker.Name == name);
 							if (m != null)
 							{
 								used = m.Values.Contains(value);

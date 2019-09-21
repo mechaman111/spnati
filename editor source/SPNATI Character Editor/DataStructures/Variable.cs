@@ -61,7 +61,7 @@ namespace SPNATI_Character_Editor
 			}
 			if (UseMarkers && character != null)
 			{
-				foreach (Marker marker in character.Markers.Values)
+				foreach (Marker marker in character.Markers.Value.Values)
 				{
 					if (marker.ValueCount > 0)
 					{

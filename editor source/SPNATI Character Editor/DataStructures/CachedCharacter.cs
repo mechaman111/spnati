@@ -101,7 +101,7 @@ namespace SPNATI_Character_Editor
 				Targets.Add(new TargetingInformation(kvp.Key) { LineCount = kvp.Value.Count });
 			}
 
-			OnAfterDeserialize();
+			OnAfterDeserialize(FolderName);
 		}
 
 		public override void OnBeforeSerialize()
@@ -109,7 +109,7 @@ namespace SPNATI_Character_Editor
 			//do nothing but prevent the base implementation from running
 		}
 
-		public override void OnAfterDeserialize()
+		public override void OnAfterDeserialize(string source)
 		{
 			_targets = new Dictionary<string, int>();
 			foreach (TargetingInformation ti in Targets)

@@ -95,7 +95,7 @@ namespace SPNATI_Character_Editor
 			get { return _markers.Values; }
 		}
 
-		public void OnAfterDeserialize()
+		public void OnAfterDeserialize(string source)
 		{
 			_markers.Clear();
 			foreach (var marker in Markers)

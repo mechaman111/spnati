@@ -34,7 +34,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (character == null)
 				return;
 
-			foreach (Marker marker in character.Markers.Values)
+			foreach (Marker marker in character.Markers.Value.Values)
 			{
 				if (allowPrivate || marker.Scope == MarkerScope.Public)
 				{
