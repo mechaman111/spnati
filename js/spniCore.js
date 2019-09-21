@@ -963,9 +963,9 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.nicknames = nicknames;
 
             if (this.xml.find('behaviour>trigger').length > 0) {
-                var cachePromise = this.cacheBehaviourTriggers();
+                var cachePromise = this.loadXMLTriggers();
             } else {
-                var cachePromise = this.cacheBehaviourStages();
+                var cachePromise = this.loadXMLStages();
             }
 
             cachePromise.progress(function (completed, total) {
@@ -1023,7 +1023,7 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
  * chunk of work, and the promise resolves once all cases have been processed.
  * All callbacks are fired with the Opponent as `this`.
  */
-Opponent.prototype.cacheBehaviourTriggers = function () {
+Opponent.prototype.loadXMLTriggers = function () {
     var deferred = $.Deferred();
 
     var triggerQueue = this.xml.find('behaviour>trigger').get();
@@ -1082,13 +1082,13 @@ Opponent.prototype.cacheBehaviourTriggers = function () {
  * Traverses an old-format opponent's behaviour <stage> elements
  * and pre-emptively adds their Cases to the opponent's cases structure.
  * This is done in 50ms chunks to avoid blocking the UI, similarly to
- * cacheBehaviourTriggers.
+ * loadXMLTriggers.
  * 
  * @returns {$.Promise} A Promise. Progress callbacks are fired after each
  * chunk of work, and the promise resolves once all cases have been processed.
  * All callbacks are fired with the Opponent as `this`.
  */
-Opponent.prototype.cacheBehaviourStages = function (onComplete) {
+Opponent.prototype.loadXMLStages = function (onComplete) {
     var deferred = $.Deferred();
 
     var stageQueue = this.xml.find('behaviour>stage').get();
