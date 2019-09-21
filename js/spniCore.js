@@ -537,8 +537,6 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.artist = $metaXml.find('artist').text();
     this.writer = $metaXml.find('writer').text();
     this.description = fixupDialogue($metaXml.find('description').html());
-    this.endings = $metaXml.find('epilogue');
-    this.ending = this.endings.length > 0 || $metaXml.find('has_ending').text() === "true";
     this.has_collectibles = $metaXml.find('has_collectibles').text() === "true";
     this.collectibles = null;
     this.layers = parseInt($metaXml.find('layers').text(), 10);
@@ -549,6 +547,18 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.z_index = parseInt($metaXml.find('z-index').text(), 10) || 0;
     this.dialogue_layering = $metaXml.find('dialogue-layer').text();
     
+    this.endings = $metaXml.find('epilogue');
+    this.ending = $metaXml.find('has_ending').text() === "true";
+
+    if (this.endings.length > 0) {
+        this.endings.each(function (idx, elem) {
+            var status = $(elem).attr('status');
+            if (!status || includedOpponentStatuses[status]) {
+                this.ending = true;
+            }
+        }.bind(this));
+    }
+
     if (['over', 'under'].indexOf(this.dialogue_layering) < 0) {
         this.dialogue_layering = 'under';
     }
@@ -792,9 +802,13 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
 			var collectiblesArray = [];
 			$(xml).find('collectible').each(function (idx, elem) {
 				collectiblesArray.push(new Collectible($(elem), this));
-			}.bind(this));
-			
-			this.collectibles = collectiblesArray;
+            }.bind(this));
+            
+            this.collectibles = collectiblesArray;
+            
+            this.has_collectibles = this.collectibles.some(function (c) {
+                return !c.status || includedOpponentStatuses[c.status];
+            });
             
             if (onLoaded) onLoaded(this);
 		}.bind(this),
