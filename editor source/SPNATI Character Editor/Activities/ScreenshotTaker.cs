@@ -233,7 +233,6 @@ namespace SPNATI_Character_Editor.Activities
 					string dir = _character.GetDirectory();
 					int current = 0;
 					bool hasErrors = false;
-					List<string> filesToCompress = new List<string>();
 					foreach (string file in files)
 					{
 						progress.Report(current++);

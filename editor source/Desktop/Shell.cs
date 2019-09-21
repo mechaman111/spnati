@@ -37,11 +37,14 @@ namespace Desktop
 		private Dictionary<Type, int> _activityWidthMap;
 		private Dictionary<IWorkspace, WorkspaceControl> _workspaces = new Dictionary<IWorkspace, WorkspaceControl>();
 		private Dictionary<IWorkspace, TabPage> _tabs = new Dictionary<IWorkspace, TabPage>();
+		private Toaster _toaster = new Toaster();
+		private Messenger _messenger = new Messenger();
 		public IWorkspace ActiveWorkspace;
 		public IActivity ActiveActivity;
 		public IActivity ActiveSidebarActivity;
 
 		public event EventHandler VersionClick;
+		public event EventHandler SubActionClick;
 
 		/// <summary>
 		/// Iterates through all open workspaces. Do not try launching or closing workspaces while iterating over this
@@ -70,6 +73,12 @@ namespace Desktop
 		{
 			get { return tsVersion.Text; }
 			set { tsVersion.Text = value; }
+		}
+
+		public string SubActionLabel
+		{
+			get { return tsSubAction.Text; }
+			set { tsSubAction.Text = value; }
 		}
 
 		private List<IActivity> _activationOrder = new List<IActivity>();
@@ -862,6 +871,33 @@ namespace Desktop
 		{
 			VersionClick?.Invoke(this, e);
 		}
+
+		private void tsSubAction_Click(object sender, EventArgs e)
+		{
+			SubActionClick?.Invoke(this, e);
+		}
+
+		public int DelayAction(Action action, int delayMs)
+		{
+			return _messenger.Send(action, delayMs);
+		}
+
+		public void CancelAction(int id)
+		{
+			_messenger.Cancel(id);
+		}
+
+		#region Toaster
+		public void ShowToast(string caption, string text, Image icon = null, SkinnedHighlight highlight = SkinnedHighlight.Heading)
+		{
+			Toast toast = new Toast(caption, text)
+			{
+				Highlight = highlight,
+				Icon = icon,
+			};
+			_toaster.ShowToast(toast);
+		}
+		#endregion
 	}
 
 	public enum WorkspacePane

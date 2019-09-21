@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\UnusedCodeRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -269,6 +270,7 @@
     <Compile Include="Forms\VariableMapper.Designer.cs">
       <DependentUpon>VariableMapper.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Interfaces\IActivity.cs" />
     <Compile Include="Interfaces\IDirtiable.cs" />
     <Compile Include="Interfaces\IMacroEditor.cs" />
@@ -278,6 +280,7 @@
     <Compile Include="Extensions\MathUtils.cs" />
     <Compile Include="Messaging\CoreDesktopMessages.cs" />
     <Compile Include="Messaging\Mailbox.cs" />
+    <Compile Include="Messaging\Messenger.cs" />
     <Compile Include="Messaging\PostOffice.cs" />
     <Compile Include="Messaging\Subscription.cs" />
     <Compile Include="Metadata\ActivityAttribute.cs" />
@@ -420,6 +423,14 @@
       <DependentUpon>SkinTester.cs</DependentUpon>
     </Compile>
     <Compile Include="Skinning\VisualState.cs" />
+    <Compile Include="Toaster\Toast.cs" />
+    <Compile Include="Toaster\ToastControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Toaster\ToastControl.Designer.cs">
+      <DependentUpon>ToastControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Toaster\Toaster.cs" />
     <Compile Include="UndoRedo\ICommand.cs" />
     <Compile Include="UndoRedo\MultiCommand.cs" />
     <Compile Include="UndoRedo\UndoManager.cs" />
@@ -513,6 +524,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Skinning\SkinTester.resx">
       <DependentUpon>SkinTester.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Toaster\ToastControl.resx">
+      <DependentUpon>ToastControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

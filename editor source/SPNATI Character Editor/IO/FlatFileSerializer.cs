@@ -1158,7 +1158,7 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
-			character.OnAfterDeserialize();
+			character.OnAfterDeserialize(filename);
 			character.Behavior.PrepareForEdit(character);
 		}
 

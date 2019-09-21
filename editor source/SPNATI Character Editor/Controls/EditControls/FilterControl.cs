@@ -1,22 +1,37 @@
-﻿using System;
-using Desktop;
+﻿using Desktop;
 using Desktop.CommonControls;
-using System.Windows.Forms;
+using Desktop.Skinning;
+using SPNATI_Character_Editor.Providers;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace SPNATI_Character_Editor
 {
 	public partial class FilterControl : PropertyEditControl
 	{
 		private TargetCondition _filter;
-
 		private bool _collapsed;
+		private SolidBrush _indicatorBrush = new SolidBrush(Color.Black);
+		private bool _countAvailable = false;
 
 		public FilterControl()
 		{
 			InitializeComponent();
-			cboGender.Items.AddRange(new string[] { "", "female", "male" });
-			recTag.RecordType = typeof(Tag);
+
+			tableAdvanced.RowAdded += TableAdvanced_RowAdded;
+			tableAdvanced.RowRemoved += TableAdvanced_RowAdded;
+			recCharacter.RecordChanged += RecCharacter_RecordChanged;
+			recWho.RecordType = typeof(FilterType);
+			recCharacter.RecordType = typeof(Character);
+			valFrom.Text = "";
+			valTo.Text = "";
+			recWho.RecordChanged += UpdateRecord;
+		}
+
+		public override void OnInitialAdd()
+		{
+			ToggleCollapsed(false);
 		}
 
 		public override void ApplyMacro(List<string> values)
@@ -27,12 +42,15 @@ namespace SPNATI_Character_Editor
 				string tag = values[1];
 				string gender = values[2];
 				string status = values[3];
-				cboGender.SelectedItem = gender;
-				if (cboGender.SelectedItem == null)
+				if (string.IsNullOrEmpty(gender))
 				{
-					cboGender.SelectedIndex = 0;
+					_filter.Gender = null;
 				}
-				recTag.RecordKey = tag;
+				else
+				{
+					_filter.Gender = gender;
+				}
+				_filter.FilterTag = tag;
 				SetCount(count);
 
 				_filter.Status = status;
@@ -41,8 +59,8 @@ namespace SPNATI_Character_Editor
 				{
 					_filter.Role = values[4];
 					_filter.Variable = values[5];
-					_filter.FilterId = values[6];
-					_filter.FilterStage = values[7];
+					_filter.Character = values[6];
+					_filter.Stage = values[7];
 				}
 				if (values.Count > 16)
 				{
@@ -56,24 +74,26 @@ namespace SPNATI_Character_Editor
 					_filter.TimeInStage = values[15];
 					_filter.ConsecutiveLosses = values[16];
 				}
-
-				ToggleCollapsed(!_filter.HasAdvancedConditions);
 			}
+
+			ToggleCollapsed(!_filter.HasAdvancedConditions);
+			tableAdvanced.Data = null;
+			tableAdvanced.Data = _filter;
 		}
 
 		public override void BuildMacro(List<string> values)
 		{
-			string count = GetCount() ?? "0";
-			string tag = recTag.RecordKey;
-			string gender = cboGender.SelectedItem?.ToString();
+			string count = GetCount() ?? "";
+			string tag = _filter.FilterTag ?? "";
+			string gender = _filter.Gender ?? "";
 			values.Add(count);
-			values.Add(tag ?? "");
-			values.Add(gender ?? "");
+			values.Add(tag);
+			values.Add(gender);
 			values.Add(_filter.Status);
 			values.Add(_filter.Role);
 			values.Add(_filter.Variable);
-			values.Add(_filter.FilterId);
-			values.Add(_filter.FilterStage);
+			values.Add(_filter.Character);
+			values.Add(_filter.Stage);
 			values.Add(_filter.Hand);
 			values.Add(_filter.Layers);
 			values.Add(_filter.StartingLayers);
@@ -87,29 +107,198 @@ namespace SPNATI_Character_Editor
 
 		protected override void OnBoundData()
 		{
+			tableAdvanced.Data = null;
+			recWho.RecordContext = Data;
 			_filter = GetValue() as TargetCondition;
-			SetCount(_filter.Count);
-			cboGender.SelectedItem = _filter.Gender;
-			if (cboGender.SelectedItem == null)
+			string role = _filter.Role;
+			if (string.IsNullOrEmpty(role))
 			{
-				cboGender.SelectedIndex = 0;
+				if (!string.IsNullOrEmpty(_filter.Character))
+				{
+					recWho.RecordKey = _filter.Character;
+				}
+				else
+				{
+					recWho.RecordKey = "any";
+				}
 			}
-			recTag.RecordKey = _filter.FilterTag;
+			else
+			{
+				recWho.RecordKey = role;
+				if (role == "self")
+				{
+					recCharacter.RecordKey = (Context as Character)?.Key;
+				}
+			}
+			if (!string.IsNullOrEmpty(_filter.Character))
+			{
+				recCharacter.RecordKey = _filter.Character;
+			}
+			if (string.IsNullOrEmpty(_filter.Gender))
+			{
+				_filter.Gender = null;
+			}
 
+			SetCount(_filter.Count);
+			txtVariable.Text = _filter.Variable;
+
+			tableAdvanced.Context = Data;
+			tableAdvanced.SecondaryContext = Context;
 			tableAdvanced.Data = _filter;
 		}
 
 		public override void OnAddedToRow()
 		{
+			OnRequireHeight(GetHeight());
 			ToggleCollapsed(!_filter.HasAdvancedConditions);
+		}
+
+		private void TableAdvanced_RowAdded(object sender, EventArgs e)
+		{
+			OnRequireHeight(GetHeight());
+		}
+
+		private int GetHeight()
+		{
+			return tableAdvanced.Top + tableAdvanced.GetTotalHeight() + 1;
+		}
+
+		protected override void OnRequireHeight(int height)
+		{
+			base.OnRequireHeight(height);
+		}
+
+		protected override void AddHandlers()
+		{
+			recWho.RecordChanged += RecordDataChanged;
+			recCharacter.RecordChanged += CharacterChanged;
+			valFrom.TextChanged += DataValueChanged;
+			valTo.TextChanged += DataValueChanged;
+			txtVariable.TextChanged += DataValueChanged;
+		}
+
+		protected override void RemoveHandlers()
+		{
+			recWho.RecordChanged -= RecordDataChanged;
+			recCharacter.RecordChanged -= CharacterChanged;
+			valFrom.TextChanged -= DataValueChanged;
+			valTo.TextChanged -= DataValueChanged;
+			txtVariable.TextChanged -= DataValueChanged;
+		}
+
+		private void UpdateRecord(object sender, RecordEventArgs e)
+		{
+			FilterType type = recWho.Record as FilterType;
+			if (type == null)
+			{
+				pnlRange.Visible = false;
+				_countAvailable = false;
+				pnlCharacter.Visible = false;
+				pnlVariable.Visible = false;
+			}
+			else
+			{
+				pnlCharacter.Visible = type.CanSpecifyCharacter;
+				_countAvailable = pnlRange.Visible = pnlVariable.Visible = type.CanSpecifyRange;
+			}
+			string key = type?.Key ?? "";
+			switch (key)
+			{
+				case "self":
+					grpContainer.PanelType = SkinnedBackgroundType.Group3;
+					break;
+				case "target":
+					grpContainer.PanelType = SkinnedBackgroundType.Group4;
+					break;
+				case "other":
+				case "opp":
+					grpContainer.PanelType = SkinnedBackgroundType.Group2;
+					break;
+				default:
+					grpContainer.PanelType = SkinnedBackgroundType.Group1;
+					break;
+			}
+			tableAdvanced.HeaderType = grpContainer.PanelType;
+		}
+
+		private void DataValueChanged(object sender, EventArgs e)
+		{
+			Save();
+		}
+
+		private void RecCharacter_RecordChanged(object sender, RecordEventArgs e)
+		{
+			pnlRange.Visible = pnlVariable.Visible = _countAvailable && string.IsNullOrEmpty(recCharacter.RecordKey);
+		}
+
+		private void CharacterChanged(object sender, RecordEventArgs e)
+		{
+			Save();
+			tableAdvanced.UpdateProperty("Character");
+		}
+
+		private void RecordDataChanged(object sender, RecordEventArgs e)
+		{
+			Save();
+		}
+
+		protected override void OnSave()
+		{
+			FilterType type = recWho.Record as FilterType;
+			if (type == null)
+			{
+				return;
+			}
+			_filter.Role = DetermineRole(type);
+			if (type.CanSpecifyRange && pnlRange.Visible)
+			{
+				_filter.Count = GetCount();
+				_filter.Variable = txtVariable.Text;
+
+			}
+			else
+			{
+				_filter.Count = "";
+				_filter.Variable = null;
+			}
+			if (type.CanSpecifyCharacter)
+			{
+				_filter.Character = recCharacter.RecordKey;
+			}
+			else if (type.IsCharacter)
+			{
+				_filter.Character = type.Key;
+			}
+			else
+			{
+				_filter.Character = null;
+			}
+		}
+
+		/// <summary>
+		/// Gets the appropriate role for a filter type
+		/// </summary>
+		/// <param name="type"></param>
+		private string DetermineRole(FilterType type)
+		{
+			switch (type.Key)
+			{
+				case "self":
+				case "target":
+				case "opp":
+				case "other":
+					return type.Key;
+				default:
+					return null;
+			}
 		}
 
 		private void SetCount(string range)
 		{
 			if (range == null)
 			{
-				valFrom.Value = 0;
-				valTo.Value = 0;
+				valFrom.Text = "";
+				valTo.Text = "";
 				return;
 			}
 			string[] pieces = range.Split('-');
@@ -118,6 +307,7 @@ namespace SPNATI_Character_Editor
 			if (int.TryParse(pieces[0], out from))
 			{
 				valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, from));
+				valFrom.Text = valFrom.Value.ToString();
 			}
 			else
 			{
@@ -128,6 +318,7 @@ namespace SPNATI_Character_Editor
 				if (int.TryParse(pieces[1], out to))
 				{
 					valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, to));
+					valTo.Text = valTo.Value.ToString();
 				}
 				else
 				{
@@ -137,45 +328,7 @@ namespace SPNATI_Character_Editor
 			else
 			{
 				valTo.Value = valFrom.Value;
-			}
-		}
-
-		protected override void RemoveHandlers()
-		{
-			valFrom.ValueChanged -= ValueChanged;
-			valTo.ValueChanged -= ValueChanged;
-			valFrom.TextChanged -= Value_TextChanged;
-			valTo.TextChanged -= Value_TextChanged;
-			cboGender.SelectedIndexChanged -= ValueChanged;
-			recTag.RecordChanged -= RecordChanged;
-		}
-
-		protected override void AddHandlers()
-		{
-			valFrom.ValueChanged += ValueChanged;
-			valTo.ValueChanged += ValueChanged;
-			valFrom.TextChanged += Value_TextChanged;
-			valTo.TextChanged += Value_TextChanged;
-			cboGender.SelectedIndexChanged += ValueChanged;
-			recTag.RecordChanged += RecordChanged;
-		}
-
-		private void RecordChanged(object sender, RecordEventArgs e)
-		{
-			Save();
-		}
-
-		private void ValueChanged(object sender, EventArgs e)
-		{
-			Save();
-		}
-
-		private void Value_TextChanged(object sender, EventArgs e)
-		{
-			NumericUpDown ctl = sender as NumericUpDown;
-			if (ctl?.Text == "")
-			{
-				Save();
+				valTo.Text = valTo.Value.ToString();
 			}
 		}
 
@@ -194,30 +347,6 @@ namespace SPNATI_Character_Editor
 			return GUIHelper.ToRange(from, to);
 		}
 
-		protected override void OnClear()
-		{
-			RemoveHandlers();
-			valFrom.Text = "";
-			valTo.Text = "";
-			cboGender.SelectedIndex = 0;
-			recTag.RecordKey = null;
-			_filter.Status = null;
-
-			Save();
-			AddHandlers();
-		}
-
-		protected override void OnSave()
-		{
-			string count = GetCount() ?? "0";
-			string tag = recTag.RecordKey;
-			string gender = cboGender.SelectedItem?.ToString();
-			_filter.Count = count;
-			_filter.Gender = gender;
-			_filter.FilterTag = tag;
-			tableAdvanced.Save();
-		}
-
 		private void cmdExpand_Click(object sender, EventArgs e)
 		{
 			ToggleCollapsed(!_collapsed);
@@ -233,14 +362,19 @@ namespace SPNATI_Character_Editor
 			if (_collapsed)
 			{
 				cmdExpand.Image = Properties.Resources.ChevronDown;
-				OnRequireHeight(22);
-				
+				OnRequireHeight(25);
+
 			}
 			else
 			{
 				cmdExpand.Image = Properties.Resources.ChevronUp;
-				OnRequireHeight(175);
+				OnRequireHeight(GetHeight());
 			}
+		}
+
+		public override void EditSubProperty(string property)
+		{
+			tableAdvanced.AddProperty(property);
 		}
 	}
 

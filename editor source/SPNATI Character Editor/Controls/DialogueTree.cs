@@ -40,7 +40,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			InitializeComponent();
 
-			cboView.Items.AddRange(new string[] { "Stage", "Case" });
+			cboView.Items.AddRange(new string[] { "Stage", "Case", "Target" });
 		}
 
 		private void DialogueTree_Load(object sender, EventArgs e)
@@ -69,13 +69,17 @@ namespace SPNATI_Character_Editor.Controls
 			cboView.SelectedIndexChanged += cboView_SelectedIndexChanged;
 			if (_view == null)
 			{
-				if (view == 0)
+				switch (view)
 				{
-					_view = new StageView();
-				}
-				else
-				{
-					_view = new CaseView();
+					case 1:
+						_view = new CaseView();
+						break;
+					case 2:
+						_view = new TargetView();
+						break;
+					default:
+						_view = new StageView();
+						break;
 				}
 				InitializeView();
 			}
@@ -138,9 +142,9 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="tag">Tag of case to add</param>
 		/// <param name="singleStage">If true, initial stages will only be the current stage. If false, all possible stages will be checked.</param>
-		private void AddAndSelectNewCase(string tag, string folder, bool singleStage)
+		private void AddAndSelectNewCase(Case newCase, string folder, bool singleStage)
 		{
-			Case newCase = new Case(tag);
+			string tag = newCase.Tag;
 			int startStage;
 			TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
 			startStage = trigger.StartStage;
@@ -386,18 +390,14 @@ namespace SPNATI_Character_Editor.Controls
 		private void tsbtnAddDialogue_ButtonClick(object sender, EventArgs e)
 		{
 			string folder;
-			string tag = _view.AddingCase(out folder);
-			if (tag == null)
+			Case newCase = _view.AddingCase(out folder);
+			if (newCase == null)
 			{
 				return;
 			}
-			else if (tag == "")
-			{
-				tsbtnAddDialogue.ShowDropDown();
-			}
 			else
 			{
-				AddAndSelectNewCase(tag, folder, true);
+				AddAndSelectNewCase(newCase, folder, true);
 			}
 		}
 
@@ -407,7 +407,9 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 
 			string tag = ((ToolStripMenuItem)sender).Name;
-			AddAndSelectNewCase(tag, "", false);
+			Case newCase = new Case(tag);
+			_view.BuildCase(newCase);
+			AddAndSelectNewCase(newCase, "", false);
 		}
 
 		private void tsmiRemove_Click(object sender, EventArgs e)
@@ -436,13 +438,17 @@ namespace SPNATI_Character_Editor.Controls
 			int index = cboView.SelectedIndex;
 			Config.Set(LastViewSetting, index);
 			CleanupView();
-			if (index == 0)
+			switch (index)
 			{
-				_view = new StageView();
-			}
-			else
-			{
-				_view = new CaseView();
+				case 1:
+					_view = new CaseView();
+					break;
+				case 2:
+					_view = new TargetView();
+					break;
+				default:
+					_view = new StageView();
+					break;
 			}
 			InitializeView();
 			tsbtnSplit.DropDown = _view.GetCopyMenu();

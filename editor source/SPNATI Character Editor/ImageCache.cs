@@ -10,18 +10,12 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public static class ImageCache
 	{
-		public const string PreviewImage = "***preview***";
-
 		private static Dictionary<string, ImageAsset> _cache = new Dictionary<string, ImageAsset>();
 
 		private class ImageAsset : IDisposable
 		{
 			public ImageReference Reference;
 			public int Count;
-			public Image Image
-			{
-				get { return Reference.Image; }
-			}
 
 			public ImageAsset(ImageReference reference)
 			{
@@ -33,26 +27,6 @@ namespace SPNATI_Character_Editor
 			{
 				Reference?.Dispose();
 			}
-
-			public void Replace(Image newImage)
-			{
-				Reference.Replace(newImage);
-			}
-		}
-
-		public static void Clear()
-		{
-			_cache.Clear();
-		}
-
-		public static int GetReferenceCount(string filename)
-		{
-			ImageAsset reference = _cache.Get(filename);
-			if (reference != null)
-			{
-				return reference.Count;
-			}
-			return 0;
 		}
 
 		/// <summary>
@@ -113,46 +87,6 @@ namespace SPNATI_Character_Editor
 					_cache.Remove(filename);
 					reference.Dispose();
 				}
-			}
-		}
-
-		/// <summary>
-		/// Adds an image that didn't come from disk to the cache and sets its reference count to 0
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="image"></param>
-		public static void Add(string key, Image image)
-		{
-			ImageAsset reference = null;
-			if (!_cache.TryGetValue(key, out reference))
-			{
-				reference = new ImageAsset(new ImageReference(key, image));
-				_cache[key] = reference;
-				reference.Count = 0;
-			}
-			else
-			{
-				reference.Count++;
-			}
-		}
-
-		/// <summary>
-		/// Replaces a cached image THAT CAME FROM DISK. Current references need to act on the ReplaceImage desktop message to actually use it, however
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="newImage"></param>
-		public static void Replace(string key, Image newImage)
-		{
-			ImageAsset reference = _cache.Get(key);
-			if (reference != null)
-			{
-				//dispose the old image since nobody should still be holding onto a reference. If they are, naughty naughty
-				reference.Dispose();
-				reference.Replace(newImage);
-			}
-			else
-			{
-				newImage.Dispose(); //nobody needs the new image right away, so don't keep it around
 			}
 		}
 	}

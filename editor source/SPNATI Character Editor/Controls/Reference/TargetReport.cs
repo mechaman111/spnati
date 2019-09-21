@@ -59,7 +59,7 @@ namespace SPNATI_Character_Editor.Controls.Reference
 					foreach (TargetCondition condition in workingCase.Conditions)
 					{
 						AddCharacterById(condition.FilterTag, workingCase);
-						AddCharacter(condition.FilterId, workingCase);
+						AddCharacter(condition.Character, workingCase);
 					}
 				}
 				foreach (Character c in CharacterDatabase.Characters)

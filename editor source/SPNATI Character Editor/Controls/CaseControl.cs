@@ -92,11 +92,15 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			_selectedStage = stage;
 			_selectedCase = workingCase;
+			if (_selectedCase != null)
+			{
+				DataConversions.ConvertCase5_2(_selectedCase);
+			}
 			TrackCase(_selectedCase);
 			if (_selectedCase != null)
 			{
 				tabConditions.Enabled = true;
-				foreach (Case alternative in _selectedCase.AlternativeConditions)
+				for (int i = 0; i < _selectedCase.AlternativeConditions.Count; i++)
 				{
 					AddAlternateTab();
 				}
@@ -318,6 +322,14 @@ namespace SPNATI_Character_Editor.Controls
 			#endregion
 
 			txtNotes.Text = _editorData.GetNote(_selectedCase);
+			if (!string.IsNullOrEmpty(txtNotes.Text))
+			{
+				stripTabs.SetHighlight(tabNotes, DataHighlight.Important);
+			}
+			else
+			{
+				stripTabs.SetHighlight(tabNotes, DataHighlight.Normal);
+			}
 			CaseLabel label = _editorData.GetLabel(_selectedCase);
 			txtFolder.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			txtFolder.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -377,8 +389,11 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void PopulateConditionTable(Case workingCase)
 		{
-			tableConditions.Data = workingCase;
-			AddSpeedButtons(tableConditions, workingCase?.Tag);
+			if (tableConditions.Data != workingCase)
+			{
+				tableConditions.Data = workingCase;
+				AddSpeedButtons(tableConditions, workingCase?.Tag);
+			}
 		}
 
 		public static void AddSpeedButtons(PropertyTable table, string tag)
@@ -386,23 +401,55 @@ namespace SPNATI_Character_Editor.Controls
 			if (tag == null) { return; }
 			TriggerDefinition caseTrigger = TriggerDatabase.GetTrigger(tag);
 
+			//Self
+			table.AddSpeedButton("Self", "Said Marker", (data) => { return AddFilter("self", data, "SaidMarker"); });
+			table.AddSpeedButton("Self", "Not Said Marker", (data) => { return AddFilter("self", data, "NotSaidMarker"); });
+			table.AddSpeedButton("Self", "Time in Stage", (data) => { return AddFilter("self", data, "TimeInStage"); });
+			table.AddSpeedButton("Self", "Has Hand", (data) => { return AddFilter("self", data, "Hand"); });
+
+			//Also Playing
+			table.AddSpeedButton("Also Playing", "Also Playing", (data) => { return AddFilter("other", data); });
+			table.AddSpeedButton("Also Playing", "Also Playing Stage", (data) => { return AddFilter("other", data, "Stage"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Said Marker", (data) => { return AddFilter("other", data, "SaidMarker"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Not Said Marker", (data) => { return AddFilter("other", data, "NotSaidMarker"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Saying Marker", (data) => { return AddFilter("other", data, "SayingMarker"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Saying Text", (data) => { return AddFilter("other", data, "Saying"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Time in Stage", (data) => { return AddFilter("other", data, "TimeInStage"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Hand", (data) => { return AddFilter("other", data, "Hand"); });
+
 			//Game-wide
 			table.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
 
+			//Filters
+			table.AddSpeedButton("Filter", "Anyone", (data) => { return AddFilter("", data); });
+			if (caseTrigger.HasTarget)
+			{
+				table.AddSpeedButton("Filter", "Target", (data) => { return AddFilter("target", data); });
+			}
+			table.AddSpeedButton("Filter", "Self", (data) => { return AddFilter("self", data); });
+			table.AddSpeedButton("Filter", "Also Playing", (data) => { return AddFilter("other", data); });
+			table.AddSpeedButton("Filter", "Opponent", (data) => { return AddFilter("opp", data); });
+			table.AddSpeedButton("Filter", "Specific Character", (data) =>
+			{
+				Character character = RecordLookup.DoLookup(typeof(Character), "", false, null) as Character;
+				return AddFilter("", data, null, character);
+			});
+
 			//Player variables
 
-			table.AddSpeedButton("Player", "Collectible (+)", (data) => { return AddVariableTest("~_.collectible.*~", data); });
-			table.AddSpeedButton("Player", "Collectible (Counter) (+)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
-			table.AddSpeedButton("Player", "Costume (+)", (data) => { return AddVariableTest("~_.costume~", data); });
-			table.AddSpeedButton("Player", "Largest Lead (+)", (data) => { return AddVariableTest("~_.biggestlead~", data); });
-			table.AddSpeedButton("Player", "Layer Difference (+)", (data) => { return AddVariableTest("~_.diff~", data); });
-			table.AddSpeedButton("Player", "Marker (+)", (data) => { return AddVariableTest("~_.marker.*~", data); });
-			table.AddSpeedButton("Player", "Marker (Persistent) (+)", (data) => { return AddVariableTest("~_.persistent.*~", data); });
-			table.AddSpeedButton("Player", "Place (+)", (data) => { return AddVariableTest("~_.lead~", data); });
-			table.AddSpeedButton("Player", "Relative Position (+)", (data) => { return AddVariableTest("~_.position~", data); });
-			table.AddSpeedButton("Player", "Slot (+)", (data) => { return AddVariableTest("~_.slot~", data); });
-			table.AddSpeedButton("Player", "Stage (+)", (data) => { return AddVariableTest("~_.stage~", data); });
-			table.AddSpeedButton("Player", "Tag (+)", (data) => { return AddVariableTest("~_.tag.*~", data); });
+			table.AddSpeedButton("Player", "Collectible", (data) => { return AddVariableTest("~_.collectible.*~", data); });
+			table.AddSpeedButton("Player", "Collectible (Counter)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
+			table.AddSpeedButton("Player", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
+			table.AddSpeedButton("Player", "Largest Lead", (data) => { return AddVariableTest("~_.biggestlead~", data); });
+			table.AddSpeedButton("Player", "Layer Difference", (data) => { return AddVariableTest("~_.diff~", data); });
+			table.AddSpeedButton("Player", "Marker", (data) => { return AddVariableTest("~_.marker.*~", data); });
+			table.AddSpeedButton("Player", "Marker (Persistent)", (data) => { return AddVariableTest("~_.persistent.*~", data); });
+			table.AddSpeedButton("Player", "Place", (data) => { return AddVariableTest("~_.lead~", data); });
+			table.AddSpeedButton("Player", "Relative Position", (data) => { return AddVariableTest("~_.position~", data); });
+			table.AddSpeedButton("Player", "Size", (data) => { return AddVariableTest("~_.size~", data); });
+			table.AddSpeedButton("Player", "Slot", (data) => { return AddVariableTest("~_.slot~", data); });
+			table.AddSpeedButton("Player", "Stage", (data) => { return AddVariableTest("~_.stage~", data); });
+			table.AddSpeedButton("Player", "Tag", (data) => { return AddVariableTest("~_.tag.*~", data); });
 
 			//Table-wide
 			table.AddSpeedButton("Table", "Human Name", (data) => { return AddVariableTest("~player~", data); });
@@ -412,21 +459,55 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			if (caseTrigger.HasTarget)
 			{
+				//Target
+				table.AddSpeedButton("Target", "Target", (data) => { return AddFilter("target", data); });
+				table.AddSpeedButton("Target", "Target Tag", (data) => { return AddFilter("target", data, "FilterTag"); });
+				table.AddSpeedButton("Target", "Target Stage", (data) => { return AddFilter("target", data, "Stage"); });
+				table.AddSpeedButton("Target", "Target Said Marker", (data) => { return AddFilter("target", data, "SaidMarker"); });
+				table.AddSpeedButton("Target", "Target Not Said Marker", (data) => { return AddFilter("target", data, "NotSaidMarker"); });
+				table.AddSpeedButton("Target", "Target Saying Marker", (data) => { return AddFilter("target", data, "SayingMarker"); });
+				table.AddSpeedButton("Target", "Target Saying Text", (data) => { return AddFilter("target", data, "Saying"); });
+				table.AddSpeedButton("Target", "Target Time in Stage", (data) => { return AddFilter("target", data, "TimeInStage"); });
+				table.AddSpeedButton("Target", "Target Hand", (data) => { return AddFilter("target", data, "Hand"); });
+				table.AddSpeedButton("Target", "Target Status", (data) => { return AddFilter("target", data, "Status"); });
+				table.AddSpeedButton("Target", "Target Layers", (data) => { return AddFilter("target", data, "Layers"); });
+				table.AddSpeedButton("Target", "Target Starting Layers", (data) => { return AddFilter("target", data, "StartingLayers"); });
+
+				//Clothing
 				if (caseTrigger.AvailableVariables.Contains("clothing"))
 				{
 					table.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
 					table.AddSpeedButton("Clothing", "Clothing Type", (data) => { return AddVariableTest("~clothing.type~", data); });
 				}
-				table.AddSpeedButton("Target", "Gender", (data) => { return AddVariableTest("~target.gender~", data); });
-				table.AddSpeedButton("Target", "Size", (data) => { return AddVariableTest("~target.size~", data); });
 			}
 		}
 
-		private static string AddVariableTest(string variable, object data)
+		private static SpeedButtonData AddVariableTest(string variable, object data)
 		{
 			Case theCase = data as Case;
 			theCase.Expressions.Add(new ExpressionTest(variable, ""));
-			return "Expressions";
+			return new SpeedButtonData("Expressions");
+		}
+
+		private static SpeedButtonData AddFilter(string role, object data, string subproperty = null, Character character = null)
+		{
+			Case theCase = data as Case;
+			TargetCondition condition = theCase.Conditions.Find(c => c.Role == role && (character == null || c.Character == character.FolderName));
+			if (role != "self" && role != "target" && character == null && subproperty == null)
+			{
+				condition = null; //always create new filters for Also Playing roles
+			}
+			if (condition == null)
+			{
+				condition = new TargetCondition();
+				condition.Role = role;
+				theCase.Conditions.Add(condition);
+				if (character != null)
+				{
+					condition.Character = character.FolderName;
+				}
+			}
+			return new SpeedButtonData("Conditions", subproperty) { ListItem = condition };
 		}
 
 		private void PopulateTagsTab()
@@ -604,6 +685,11 @@ namespace SPNATI_Character_Editor.Controls
 			return _character;
 		}
 
+		public object GetSecondaryRecordContext()
+		{
+			return _character;
+		}
+
 		public Func<PropertyRecord, bool> GetRecordFilter(object data)
 		{
 			Case tag = data as Case;
@@ -659,23 +745,6 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				cmdColorCode.BackColor = code.GetColor();
 				cmdColorCode.Tag = colorCode;
-			}
-		}
-
-		private void AlternativeConditions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-		{
-			switch (e.Action)
-			{
-				case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
-					AddAlternateTab();
-					break;
-				case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
-					tabsConditions.TabPages.RemoveAt(e.OldStartingIndex + 1);
-					for (int i = e.OldStartingIndex + 1; i < tabsConditions.TabPages.Count; i++)
-					{
-						tabsConditions.TabPages[i].Text = "Set " + i;
-					}
-					break;
 			}
 		}
 

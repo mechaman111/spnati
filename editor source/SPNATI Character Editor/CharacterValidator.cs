@@ -603,85 +603,89 @@ namespace SPNATI_Character_Editor
 				}
 
 				name = Marker.ExtractConditionPieces(name, out op, out value, out perTarget);
-				if (!character.Markers.Contains(name))
+				if (character.Markers.IsValueCreated && !character.Markers.Value.Contains(name))
 				{
+					//Count could be 0 for characters who have no editor data, so unless we decide to duplicate MarkerData in CachedCharacter, just ignore it for unloaded characters
 					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue that sets marker {2}. {0}", caseLabel, character.FolderName, name), context));
 				}
 				else
 				{
-					if (!string.IsNullOrEmpty(stageRange))
+					if (character.IsFullyLoaded)
 					{
-						//verify that a marker can even be set prior to this point
-
-						int min, max;
-						Case.ToRange(stageRange, out min, out max);
-						if (character.Behavior.Triggers.Count > 0)
+						if (!string.IsNullOrEmpty(stageRange))
 						{
-							foreach (Trigger t in character.Behavior.Triggers)
+							//verify that a marker can even be set prior to this point
+
+							int min, max;
+							Case.ToRange(stageRange, out min, out max);
+							if (character.Behavior.Triggers.Count > 0)
 							{
-								foreach (Case c in t.Cases)
+								foreach (Trigger t in character.Behavior.Triggers)
 								{
-									foreach (var line in c.Lines)
+									foreach (Case c in t.Cases)
 									{
-										if (string.IsNullOrEmpty(line.Marker)) { continue; }
-										string val;
-										bool pt;
-										string markerName = Marker.ExtractPieces(line.Marker, out val, out pt);
-										if (markerName == name)
+										foreach (var line in c.Lines)
 										{
-											for (int i = 0; i < c.Stages.Count; i++)
+											if (string.IsNullOrEmpty(line.Marker)) { continue; }
+											string val;
+											bool pt;
+											string markerName = Marker.ExtractPieces(line.Marker, out val, out pt);
+											if (markerName == name)
 											{
-												if (c.Stages[i] <= min)
+												for (int i = 0; i < c.Stages.Count; i++)
 												{
-													return;
+													if (c.Stages[i] <= min)
+													{
+														return;
+													}
 												}
 											}
 										}
-									}
 
+									}
 								}
 							}
-						}
-						else
-						{
-							for (int i = 0; i <= min && i < character.Behavior.Stages.Count; i++)
+							else
 							{
-								Stage stage = character.Behavior.Stages[i];
-								foreach (var c in stage.Cases)
+								for (int i = 0; i <= min && i < character.Behavior.Stages.Count; i++)
 								{
-									foreach (var line in c.Lines)
+									Stage stage = character.Behavior.Stages[i];
+									foreach (var c in stage.Cases)
 									{
-										if (line.Marker == name)
+										foreach (var line in c.Lines)
 										{
-											return;
+											if (line.Marker == name)
+											{
+												return;
+											}
 										}
 									}
 								}
 							}
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue prior to stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.FolderName, min, name), context));
 						}
-						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue prior to stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.FolderName, min, name), context));
-					}
 
-					if (!string.IsNullOrEmpty(value))
-					{
-						bool used = false;
-						Marker m = character.Markers.Values.FirstOrDefault(marker => marker.Name == name);
-						if (m != null)
+						if (!string.IsNullOrEmpty(value))
 						{
-							used = m.Values.Contains(value);
-							if (!used)
+							bool used = false;
+							Marker m = character.Markers.Value.Values.FirstOrDefault(marker => marker.Name == name);
+							if (m != null)
 							{
-								int test;
-								//they never set the value directly, but if it's numeric, then they might be able to increment or decrement to it
-								if (int.TryParse(value, out test))
+								used = m.Values.Contains(value);
+								if (!used)
 								{
-									used = (m.Values.Contains("+") || m.Values.Contains("-"));
+									int test;
+									//they never set the value directly, but if it's numeric, then they might be able to increment or decrement to it
+									if (int.TryParse(value, out test))
+									{
+										used = (m.Values.Contains("+") || m.Values.Contains("-"));
+									}
 								}
 							}
-						}
-						if (!used)
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"{character.FolderName} has no dialogue that sets marker {name} to {value}, so this case will never trigger. {caseLabel}", context));
+							if (!used)
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"{character.FolderName} has no dialogue that sets marker {name} to {value}, so this case will never trigger. {caseLabel}", context));
+							}
 						}
 					}
 				}
@@ -899,7 +903,7 @@ namespace SPNATI_Character_Editor
 				return;
 			}
 			Character other = CharacterDatabase.Get(target);
-			if (other != null)
+			if (other != null && other.IsFullyLoaded)
 			{
 				bool found = false;
 				foreach (Case stageCase in other.Behavior.EnumerateSourceCases())

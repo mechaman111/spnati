@@ -44,6 +44,14 @@ namespace SPNATI_Character_Editor
 		protected override void OnBindingUpdated(string property)
 		{ 
 			recField.RecordContext = CharacterDatabase.Get(GetBindingValue(property)?.ToString());
+			if (recField.RecordContext == null && Context is Character)
+			{
+				recField.RecordContext = Context;
+			}
+			if (recField.RecordContext == null && SecondaryContext is Character)
+			{
+				recField.RecordContext = SecondaryContext;
+			}
 		}
 
 		protected override void OnSetParameters(EditControlAttribute parameters)

@@ -91,7 +91,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _target;
-		[RecordSelect(DisplayName = "Target", GroupName = "Target", GroupOrder = 0, Description = "Character performing the action", RecordType = typeof(Character), RecordFilter = "FilterTargetByCase", AllowCreate = true)]
+		[RecordSelect(DisplayName = "Target", GroupOrder = 0, Description = "Character performing the action", RecordType = typeof(Character), RecordFilter = "FilterTargetByCase", AllowCreate = true)]
 		[XmlOrder(20)]
 		[XmlAttribute("target")]
 		[JsonProperty("target")]
@@ -102,7 +102,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _filter;
-		[RecordSelect(DisplayName = "Target Tag", GroupName = "Target", GroupOrder = 1, Description = "Target has a certain tag", RecordType = typeof(Tag), AllowCreate = true)]
+		[RecordSelect(DisplayName = "Target Tag", GroupOrder = 1, Description = "Target has a certain tag", RecordType = typeof(Tag), AllowCreate = true)]
 		[XmlOrder(30)]
 		[XmlAttribute("filter")]
 		[JsonProperty("filter")]
@@ -124,7 +124,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _targetStage;
-		[StageSelect(DisplayName = "Target Stage", GroupName = "Target", GroupOrder = 2, Description = "Target is currently within a range of stages", BoundProperties = new string[] { "Target" }, FilterStagesToTarget = true, SkinVariable = "~target.costume~")]
+		[StageSelect(DisplayName = "Target Stage", GroupOrder = 2, Description = "Target is currently within a range of stages", BoundProperties = new string[] { "Target" }, FilterStagesToTarget = true, SkinVariable = "~target.costume~")]
 		[XmlOrder(50)]
 		[XmlAttribute("targetStage")]
 		[JsonProperty("targetStage")]
@@ -135,7 +135,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _targetLayers;
-		[NumericRange(DisplayName = "Target Layers", GroupName = "Target", GroupOrder = 9, Description = "Number of layers the target has left")]
+		[NumericRange(DisplayName = "Target Layers", GroupOrder = 9, Description = "Number of layers the target has left")]
 		[XmlOrder(60)]
 		[XmlAttribute("targetLayers")]
 		[JsonProperty("targetLayers")]
@@ -146,7 +146,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _targetStartingLayers;
-		[NumericRange(DisplayName = "Target Starting Layers", GroupName = "Target", GroupOrder = 10, Description = "Number of layers the target started with")]
+		[NumericRange(DisplayName = "Target Starting Layers", GroupOrder = 10, Description = "Number of layers the target started with")]
 		[XmlOrder(70)]
 		[XmlAttribute("targetStartingLayers")]
 		[JsonProperty("targetStartingLayers")]
@@ -157,7 +157,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _targetStatus;
-		[Status(DisplayName = "Target Status", GroupName = "Target", GroupOrder = 8, Description = "Target's current clothing status")]
+		[Status(DisplayName = "Target Status", GroupOrder = 8, Description = "Target's current clothing status")]
 		[XmlOrder(80)]
 		[XmlAttribute("targetStatus")]
 		[JsonProperty("targetStatus")]
@@ -168,7 +168,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _alsoPlaying;
-		[RecordSelect(DisplayName = "Also Playing", GroupName = "Also Playing", GroupOrder = 0, Description = "Character that is playing but not performing the current action", RecordType = typeof(Character), AllowCreate = true)]
+		[RecordSelect(DisplayName = "Also Playing", GroupOrder = 0, Description = "Character that is playing but not performing the current action", RecordType = typeof(Character), AllowCreate = true)]
 		[XmlOrder(90)]
 		[XmlAttribute("alsoPlaying")]
 		[JsonProperty("alsoPlaying")]
@@ -179,7 +179,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _alsoPlayingStage;
-		[StageSelect(DisplayName = "Also Playing Stage", GroupName = "Also Playing", GroupOrder = 1, Description = "Character in Also Playing is currently within a range of stages", BoundProperties = new string[] { "AlsoPlaying" }, FilterStagesToTarget = false, SkinVariable = "~_.costume~")]
+		[StageSelect(DisplayName = "Also Playing Stage", GroupOrder = 1, Description = "Character in Also Playing is currently within a range of stages", BoundProperties = new string[] { "AlsoPlaying" }, FilterStagesToTarget = false, SkinVariable = "~_.costume~")]
 		[XmlOrder(100)]
 		[XmlAttribute("alsoPlayingStage")]
 		[JsonProperty("alsoPlayingStage")]
@@ -190,7 +190,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _alsoPlayingHand;
-		[ComboBox(DisplayName = "Also Playing Hand", GroupName = "Also Playing", GroupOrder = 6, Description = "Character in Also Playing has a particular poker hand",
+		[ComboBox(DisplayName = "Also Playing Hand", GroupOrder = 6, Description = "Character in Also Playing has a particular poker hand",
 			Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
 		[XmlOrder(110)]
 		[XmlAttribute("alsoPlayingHand")]
@@ -202,7 +202,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _targetHand;
-		[ComboBox(DisplayName = "Target Hand", GroupName = "Target", GroupOrder = 7, Description = "Target has a particular poker hand",
+		[ComboBox(DisplayName = "Target Hand", GroupOrder = 7, Description = "Target has a particular poker hand",
 			Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
 		[XmlOrder(120)]
 		[XmlAttribute("oppHand")]
@@ -214,7 +214,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _hasHand;
-		[ComboBox(DisplayName = "Has Hand", GroupName = "Self", GroupOrder = 5, Description = "Character has a particular poker hand",
+		[ComboBox(DisplayName = "Has Hand", GroupOrder = 5, Description = "Character has a particular poker hand",
 			Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
 		[XmlOrder(130)]
 		[XmlAttribute("hasHand")]
@@ -248,7 +248,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _targetTimeInStage;
-		[NumericRange(DisplayName = "Target Time in Stage", GroupName = "Target", GroupOrder = 6, Description = "Number of rounds since the last time the target lost a hand")]
+		[NumericRange(DisplayName = "Target Time in Stage", GroupOrder = 6, Description = "Number of rounds since the last time the target lost a hand")]
 		[XmlOrder(160)]
 		[XmlAttribute("targetTimeInStage")]
 		[JsonProperty("targetTimeInStage")]
@@ -259,7 +259,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _alsoPlayingTimeInStage;
-		[NumericRange(DisplayName = "Also Playing Time in Stage", GroupName = "Also Playing", GroupOrder = 5, Description = "Number of rounds since the last time the Also Playing player lost a hand")]
+		[NumericRange(DisplayName = "Also Playing Time in Stage", GroupOrder = 5, Description = "Number of rounds since the last time the Also Playing player lost a hand")]
 		[XmlOrder(170)]
 		[XmlAttribute("alsoPlayingTimeInStage")]
 		[JsonProperty("alsoPlayingTimeInStage")]
@@ -270,7 +270,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _timeInStage;
-		[NumericRange(DisplayName = "Time in Stage", GroupName = "Self", GroupOrder = 4, Description = "Number of rounds since the last time this player lost a hand")]
+		[NumericRange(DisplayName = "Time in Stage", GroupOrder = 4, Description = "Number of rounds since the last time this player lost a hand")]
 		[XmlOrder(180)]
 		[XmlAttribute("timeInStage")]
 		[JsonProperty("timeInStage")]
@@ -281,7 +281,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _consecutiveLosses;
-		[NumericRange(DisplayName = "Consecutive Losses", GroupName = "Game", GroupOrder = 0, Description = "Number of hands the target player (or this player) has lost in a row")]
+		[NumericRange(DisplayName = "Consecutive Losses", GroupOrder = 0, Description = "Number of hands the target player (or this player) has lost in a row")]
 		[XmlOrder(190)]
 		[XmlAttribute("consecutiveLosses")]
 		[JsonProperty("consecutiveLosses")]
@@ -358,7 +358,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _saidMarker;
-		[MarkerCondition(DisplayName = "Said Marker", GroupName = "Self", GroupOrder = 0, Description = "Character has said a marker", ShowPrivate = true)]
+		[MarkerCondition(DisplayName = "Said Marker", GroupOrder = 0, Description = "Character has said a marker", ShowPrivate = true)]
 		[XmlOrder(260)]
 		[XmlAttribute("saidMarker")]
 		[JsonProperty("saidMarker")]
@@ -369,7 +369,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _notSaidMarker;
-		[Marker(DisplayName = "Not Said Marker", GroupName = "Self", GroupOrder = 1, Description = "Character has not said a marker", ShowPrivate = true)]
+		[Marker(DisplayName = "Not Said Marker", GroupOrder = 1, Description = "Character has not said a marker", ShowPrivate = true)]
 		[XmlOrder(270)]
 		[XmlAttribute("notSaidMarker")]
 		[JsonProperty("notSaidMarker")]
@@ -380,7 +380,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _alsoPlayingSaidMarker;
-		[MarkerCondition(DisplayName = "Also Playing Said Marker", GroupName = "Also Playing", GroupOrder = 2, Description = "Another player has said a marker", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
+		[MarkerCondition(DisplayName = "Also Playing Said Marker", GroupOrder = 2, Description = "Another player has said a marker", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
 		[XmlOrder(280)]
 		[XmlAttribute("alsoPlayingSaidMarker")]
 		[JsonProperty("alsoPlayingSaidMarker")]
@@ -391,7 +391,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _alsoPlayingNotSaidMarker;
-		[Marker(DisplayName = "Also Playing Not Said Marker", GroupName = "Also Playing", GroupOrder = 3, Description = "Another player has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
+		[Marker(DisplayName = "Also Playing Not Said Marker", GroupOrder = 3, Description = "Another player has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
 		[XmlOrder(290)]
 		[XmlAttribute("alsoPlayingNotSaidMarker")]
 		[JsonProperty("alsoPlayingNotSaidMarker")]
@@ -402,7 +402,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _alsoPlayingSayingMarker;
-		[MarkerCondition(DisplayName = "Also Playing Saying Marker", GroupName = "Also Playing", GroupOrder = 4, Description = "Another player is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
+		[MarkerCondition(DisplayName = "Also Playing Saying Marker", GroupOrder = 4, Description = "Another player is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
 		[XmlOrder(300)]
 		[XmlAttribute("alsoPlayingSayingMarker")]
 		[JsonProperty("alsoPlayingSayingMarker")]
@@ -413,7 +413,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _alsoPlayingSaying;
-		[Text(DisplayName = "Also Playing Saying Text", GroupName = "Also Playing", GroupOrder = 5, Description = "Another player is saying some text at this very moment")]
+		[Text(DisplayName = "Also Playing Saying Text", GroupOrder = 5, Description = "Another player is saying some text at this very moment")]
 		[XmlOrder(310)]
 		[XmlAttribute("alsoPlayingSaying")]
 		[JsonProperty("alsoPlayingSaying")]
@@ -424,7 +424,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _targetSaidMarker;
-		[MarkerCondition(DisplayName = "Target Said Marker", GroupName = "Target", GroupOrder = 3, Description = "Target has said a marker", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
+		[MarkerCondition(DisplayName = "Target Said Marker", GroupOrder = 3, Description = "Target has said a marker", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
 		[XmlOrder(320)]
 		[XmlAttribute("targetSaidMarker")]
 		[JsonProperty("targetSaidMarker")]
@@ -435,7 +435,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _targetNotSaidMarker;
-		[Marker(DisplayName = "Target Not Said Marker", GroupName = "Target", GroupOrder = 4, Description = "Target has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
+		[Marker(DisplayName = "Target Not Said Marker", GroupOrder = 4, Description = "Target has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
 		[XmlOrder(330)]
 		[XmlAttribute("targetNotSaidMarker")]
 		[JsonProperty("targetNotSaidMarker")]
@@ -446,7 +446,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _targetSayingMarker;
-		[MarkerCondition(DisplayName = "Target Saying Marker", GroupName = "Target", GroupOrder = 5, Description = "Target is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
+		[MarkerCondition(DisplayName = "Target Saying Marker", GroupOrder = 5, Description = "Target is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
 		[XmlOrder(340)]
 		[XmlAttribute("targetSayingMarker")]
 		[JsonProperty("targetSayingMarker")]
@@ -457,7 +457,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _targetSaying;
-		[Text(DisplayName = "Target Saying Text", GroupName = "Target", GroupOrder = 6, Description = "Target is saying some text at this very moment")]
+		[Text(DisplayName = "Target Saying Text", GroupOrder = 6, Description = "Target is saying some text at this very moment")]
 		[XmlOrder(350)]
 		[XmlAttribute("targetSaying")]
 		[JsonProperty("targetSaying")]
@@ -537,7 +537,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		[Filter(DisplayName = "Filter (+)", GroupName = "Table", GroupOrder = 0, Description = "Filter based on table conditions. Multiple can be added")]
+		[Filter(DisplayName = "Filter (+)", GroupName = "Table", GroupOrder = 0, Description = "Filter based on table conditions. Multiple can be added", HideLabel = true)]
 		[XmlOrder(390)]
 		[XmlElement("condition")]
 		[JsonProperty("counters")]
@@ -682,10 +682,6 @@ namespace SPNATI_Character_Editor
 			{
 				result.Add(string.Format("(hand={0})", HasHand));
 			}
-			if (Conditions.Count > 0)
-			{
-				result.Add(string.Format("({0})", string.Join(",", Conditions)));
-			}
 			if (!string.IsNullOrEmpty(TotalFemales))
 			{
 				result.Add(string.Format("({0} females)", GUIHelper.RangeToString(TotalFemales)));
@@ -765,6 +761,14 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(AlsoPlayingSaying))
 			{
 				result.Add(string.Format("(other saying \"{0}\")", AlsoPlayingSaying));
+			}
+			if (Conditions.Count > 0)
+			{
+				string cond = string.Join(",", Conditions.Select(c => c.ToString(excludeTarget)));
+				if (!string.IsNullOrEmpty(cond))
+				{
+					result.Add(string.Format("({0})", cond));
+				}
 			}
 			if (Expressions.Count > 0)
 			{
@@ -994,6 +998,11 @@ namespace SPNATI_Character_Editor
 				totalPriority += 5;
 			if (!string.IsNullOrEmpty(TotalRounds))
 				totalPriority += 10;
+
+			if (AlternativeConditions.Count > 0)
+			{
+				totalPriority += (int)AlternativeConditions.Average(c => c.GetPriority());
+			}
 
 			return totalPriority;
 		}
@@ -1236,16 +1245,21 @@ namespace SPNATI_Character_Editor
 						return true;
 					}
 				}
-				return Conditions.Any(c =>
+				bool filtered = Conditions.Any(c =>
 				{
 					bool result = false;
-					if (!string.IsNullOrEmpty(c.FilterId))
+					if (!string.IsNullOrEmpty(c.Character))
 					{
-						Character character = CharacterDatabase.GetById(c.FilterId);
+						Character character = CharacterDatabase.GetById(c.Character);
 						result = (character == null);
 					}
 					return result;
 				});
+				if (!filtered)
+				{
+					filtered = AlternativeConditions.Any(a => a.HasFilters);
+				}
+				return filtered;
 			}
 		}
 
@@ -1261,10 +1275,20 @@ namespace SPNATI_Character_Editor
 				{
 					foreach (TargetCondition condition in Conditions)
 					{
-						if (!string.IsNullOrEmpty(condition.FilterId))
+						if (!string.IsNullOrEmpty(condition.Character))
 						{
 							targeted = true;
 							break;
+						}
+					}
+				}
+				if (!targeted)
+				{
+					foreach (Case alternative in AlternativeConditions)
+					{
+						if (alternative.HasTargetedConditions)
+						{
+							return true;
 						}
 					}
 				}
@@ -1482,7 +1506,7 @@ namespace SPNATI_Character_Editor
 			bool caseIsTargetable = TriggerDatabase.GetTrigger(Tag).HasTarget;
 			bool responseIsTargetable = TriggerDatabase.GetTrigger(response.Tag).HasTarget;
 			bool hasTarget = HasTarget();
-			bool targetingResponder = (Target == responder.FolderName);
+			bool targetingResponder = (Target == responder.FolderName) || (Conditions.Find(c => c.Role == "target" && c.Character == responder.FolderName) != null);
 			bool hasAlsoPlaying = HasAlsoPlaying();
 			bool alsoPlayingIsResponder = (AlsoPlaying == responder.FolderName);
 
@@ -1490,13 +1514,21 @@ namespace SPNATI_Character_Editor
 			{
 				return null;
 			}
+
+			//copy conditions are always the same. If needed, they'll be altered in the method calls below
+			foreach (TargetCondition cond in Conditions)
+			{
+				response.Conditions.Add(cond.Copy());
+			}
+
 			if ((caseIsTargetable && hasAlsoPlaying && !alsoPlayingIsResponder) || (!responseIsTargetable && !hasTarget && hasAlsoPlaying && !alsoPlayingIsResponder))
 			{
 				//for cases where AlsoPlaying is already in use, shift that character into a filter target condition
 				TargetCondition condition = new TargetCondition()
 				{
 					Count = "1",
-					FilterTag = AlsoPlaying
+					FilterTag = AlsoPlaying,
+					Role = "other",
 				};
 				response.Conditions.Add(condition);
 				hasAlsoPlaying = false; //free this up for the responder to go into
@@ -1571,14 +1603,6 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
-			//misc conditions are always the same
-			foreach (TargetCondition cond in Conditions)
-			{
-				if (cond.FilterTag != responder.FolderName)
-				{
-					response.Conditions.Add(cond);
-				}
-			}
 			foreach (ExpressionTest test in Expressions)
 			{
 				if (!test.RefersTo(speaker, speaker, Target) && !test.RefersTo(responder, speaker, Target))
@@ -1586,6 +1610,9 @@ namespace SPNATI_Character_Editor
 					response.Expressions.Add(test);
 				}
 			}
+
+			response.AdjustConditions(speaker, responder, this);
+
 			response.ConsecutiveLosses = ConsecutiveLosses;
 			response.TotalFemales = TotalFemales;
 			response.TotalMales = TotalMales;
@@ -1605,6 +1632,8 @@ namespace SPNATI_Character_Editor
 
 			foreach (Case alternate in AlternativeConditions)
 			{
+				alternate.Tag = Tag;
+				alternate.Stages = Stages;
 				Case alternateResponse = alternate.CreateResponse(speaker, responder);
 				response.AlternativeConditions.Add(alternateResponse);
 			}
@@ -1939,6 +1968,95 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		private void AdjustConditions(Character speaker, Character responder, Case sourceCase)
+		{
+			bool responseHasTarget = TriggerDatabase.GetTrigger(Tag).HasTarget;
+			bool sourceHasTarget = TriggerDatabase.GetTrigger(sourceCase.Tag).HasTarget;
+
+			for (int i = Conditions.Count - 1; i >= 0; i--)
+			{
+				TargetCondition cond = Conditions[i];
+				if (cond.Role == "self")
+				{
+					bool adjustMarkers = false;
+					if (responseHasTarget && !sourceHasTarget)
+					{
+						cond.Role = "target";
+						cond.Character = speaker.FolderName;
+						adjustMarkers = true;
+					}
+					else
+					{
+						cond.Role = "other";
+						cond.Character = speaker.FolderName;
+						adjustMarkers = true;
+					}
+					//If all lines set the same marker, use that marker in alsoPlayingSayingMarker
+					if (adjustMarkers && sourceCase.Lines.Count > 0)
+					{
+						string marker = sourceCase.Lines[0].Marker;
+						for (int l = 1; l < sourceCase.Lines.Count; l++)
+						{
+							DialogueLine line = sourceCase.Lines[l];
+							if (line.Marker != marker)
+							{
+								marker = null;
+								break;
+							}
+						}
+						if (!string.IsNullOrEmpty(marker))
+						{
+							if (marker.StartsWith("+") || marker.StartsWith("-"))
+							{
+								marker = marker.Substring(1);
+							}
+							cond.SayingMarker = marker;
+							if (cond.NotSaidMarker == marker)
+							{
+								//if they had a not said marker for the same thing, clear that
+								cond.NotSaidMarker = null;
+							}
+						}
+					}
+				}
+				else if (cond.Role == "target")
+				{
+					if (cond.Character == responder.FolderName)
+					{
+						//responder was target. If they weren't we can leave this as is
+						cond.Role = "self";
+						cond.Character = null;
+					}
+				}
+				else
+				{
+					if (cond.Character == responder.FolderName)
+					{
+						//responder was Also Playing
+						cond.Role = "self";
+						cond.Character = null;
+					}
+				}
+
+				if (cond.Role == "self")
+				{
+					//move self stage checks to the case's actual stages
+					if (!string.IsNullOrEmpty(cond.Stage))
+					{
+						int min, max;
+						ToRange(cond.Stage, out min, out max);
+						Stages.Clear();
+						AddStageRange(min, max);
+						cond.Stage = null;
+					}
+				}
+				if (cond.IsEmpty)
+				{
+					Conditions.RemoveAt(i);
+				}
+			}
+		}
+
 		/// <summary>
 		/// Translates a layer type and position to a word used in a trigger
 		/// </summary>
@@ -2145,115 +2263,7 @@ namespace SPNATI_Character_Editor
 
 			return Tag; //if nothing above applied, the speaker is reacting to some event unrelated to the responder, so the responder can target the same thing
 		}
-
-		public static List<int> GetTargetStage(string reactionTag, Character target)
-		{
-			List<int> stages = new List<int>();
-			//limit the stages for certain tags
-			if (reactionTag.EndsWith("crotch_is_visible"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "lower");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer);
-				}
-			}
-			else if (reactionTag.EndsWith("crotch_will_be_visible"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "lower");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer - 1);
-				}
-			}
-			else if (reactionTag.EndsWith("chest_is_visible"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "upper");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer);
-				}
-			}
-			else if (reactionTag.EndsWith("chest_will_be_visible"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "upper");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer - 1);
-				}
-			}
-			else if (reactionTag.EndsWith("removing_accessory"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "extra");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer - 1);
-				}
-			}
-			else if (reactionTag.EndsWith("removed_accessory"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "extra");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer);
-				}
-			}
-			else if (reactionTag.EndsWith("removing_major"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "major");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer - 1);
-				}
-			}
-			else if (reactionTag.EndsWith("removed_major"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "major");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer);
-				}
-			}
-			else if (reactionTag.EndsWith("removing_minor"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "minor");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer - 1);
-				}
-			}
-			else if (reactionTag.EndsWith("removed_minor"))
-			{
-				int layer = target.Wardrobe.FindIndex(l => l.Type == "minor");
-				if (layer >= 0)
-				{
-					stages.Add(target.Layers - layer);
-				}
-			}
-			else if (reactionTag.EndsWith("must_masturbate"))
-			{
-				stages.Add(target.Layers);
-			}
-			else if (reactionTag.EndsWith("start_masturbating"))
-			{
-				stages.Add(target.Layers);
-			}
-			else if (reactionTag.Contains("finished"))
-			{
-				stages.Add(target.Layers + 2);
-			}
-			else if (reactionTag.Contains("finishing"))
-			{
-				stages.Add(target.Layers + 1);
-			}
-			else if (reactionTag.EndsWith("masturbating"))
-			{
-				stages.Add(target.Layers + 1);
-			}
-
-			return stages;
-		}
-
+		
 		/// <summary>
 		/// Gets a list of cases that could potentially match up with the given source tag. This could be lines that the sourceCase is responding to, or lines that are responding to the sourceCase
 		/// </summary>
@@ -2450,7 +2460,7 @@ namespace SPNATI_Character_Editor
 					NotifyPropertyChanged(nameof(Stages));
 					return;
 				}
-				else if(Stages[i] == stage)
+				else if (Stages[i] == stage)
 				{
 					return;
 				}
@@ -2552,16 +2562,89 @@ namespace SPNATI_Character_Editor
 			}
 			foreach (TargetCondition condition in Conditions)
 			{
-				if (!string.IsNullOrEmpty(condition.FilterId))
+				if (!string.IsNullOrEmpty(condition.Character))
 				{
-					Character c = CharacterDatabase.GetById(condition.FilterId);
+					Character c = CharacterDatabase.GetById(condition.Character);
+					if (c != null)
+					{
+						set.Add(c.FolderName);
+					}
+				}
+				if (!string.IsNullOrEmpty(condition.FilterTag))
+				{
+					Character c = CharacterDatabase.GetById(condition.FilterTag);
 					if (c != null)
 					{
 						set.Add(c.FolderName);
 					}
 				}
 			}
+			foreach (Case c in AlternativeConditions)
+			{
+				set.AddRange(c.GetTargets());
+			}
 			return set;
+		}
+
+		/// <summary>
+		/// Gets whether this case uses any old attribute-style conditions
+		/// </summary>
+		/// <returns></returns>
+		public bool HasLegacyConditions()
+		{
+			return !string.IsNullOrEmpty(Target) ||
+				!string.IsNullOrEmpty(TargetStage) ||
+				!string.IsNullOrEmpty(TargetHand) ||
+				!string.IsNullOrEmpty(TargetLayers) ||
+				!string.IsNullOrEmpty(TargetStatus) ||
+				!string.IsNullOrEmpty(TargetSaidMarker) ||
+				!string.IsNullOrEmpty(TargetNotSaidMarker) ||
+				!string.IsNullOrEmpty(TargetSayingMarker) ||
+				!string.IsNullOrEmpty(TargetSaying) ||
+				!string.IsNullOrEmpty(TargetStartingLayers) ||
+				!string.IsNullOrEmpty(TargetTimeInStage) ||
+				!string.IsNullOrEmpty(ConsecutiveLosses) ||
+				!string.IsNullOrEmpty(HasHand) ||
+				!string.IsNullOrEmpty(SaidMarker) ||
+				!string.IsNullOrEmpty(NotSaidMarker) ||
+				!string.IsNullOrEmpty(TimeInStage) ||
+				!string.IsNullOrEmpty(AlsoPlaying) ||
+				!string.IsNullOrEmpty(AlsoPlayingStage) ||
+				!string.IsNullOrEmpty(AlsoPlayingHand) ||
+				!string.IsNullOrEmpty(AlsoPlayingSaidMarker) ||
+				!string.IsNullOrEmpty(AlsoPlayingNotSaidMarker) ||
+				!string.IsNullOrEmpty(AlsoPlayingSayingMarker) ||
+				!string.IsNullOrEmpty(AlsoPlayingSaying) ||
+				!string.IsNullOrEmpty(AlsoPlayingTimeInStage);
+		}
+
+		public string GetStageRange(Character target)
+		{
+			if (target == null) { return ""; }
+			if (Target == target.FolderName)
+			{
+				return TargetStage ?? "";
+			}
+			else if (AlsoPlaying == target.FolderName)
+			{
+				return AlsoPlayingStage ?? "";
+			}
+			foreach (TargetCondition condition in Conditions)
+			{
+				if (condition.Character == target.FolderName)
+				{
+					return condition.Stage ?? "";
+				}
+			}
+			foreach (Case alternate in AlternativeConditions)
+			{
+				string range = alternate.GetStageRange(target);
+				if (!string.IsNullOrEmpty(range))
+				{
+					return range;
+				}
+			}
+			return "";
 		}
 	}
 

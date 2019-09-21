@@ -28,7 +28,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			foreach (Character c in CharacterDatabase.Characters)
 			{
-				if (c.Markers.Count > 0)
+				if (c.Markers.Value.Count > 0)
 				{
 					lstCharacters.Items.Add(c);
 				}
@@ -37,7 +37,16 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void lstCharacters_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			SetCharacter(lstCharacters.SelectedItem as Character);
+			Character c = lstCharacters.SelectedItem as Character;
+			if (c != null)
+			{
+				if (!c.IsFullyLoaded)
+				{
+					c = CharacterDatabase.Load(c.FolderName);
+					lstCharacters.Items[lstCharacters.SelectedIndex] = c;
+				}
+			}
+			SetCharacter(c);
 		}
 
 		private void lstLines_SelectedIndexChanged(object sender, System.EventArgs e)

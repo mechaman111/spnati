@@ -13,9 +13,20 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing && (components != null))
+			if (disposing)
 			{
-				components.Dispose();
+				if (_messenger != null)
+				{
+					_messenger.Dispose();
+				}
+				if (_toaster != null)
+				{
+					_toaster.Dispose();
+				}
+				if (components != null)
+				{
+					components.Dispose();
+				}
 			}
 			base.Dispose(disposing);
 		}
@@ -37,6 +48,7 @@
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tsSubAction = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tsVersion = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tmrAutoTick = new System.Windows.Forms.Timer(this.components);
 			this.stripActivities = new Desktop.Skinning.SkinnedTabStrip();
@@ -87,6 +99,7 @@
 			this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus,
+            this.tsSubAction,
             this.tsVersion});
 			this.statusStrip1.Location = new System.Drawing.Point(1, 761);
 			this.statusStrip1.Name = "statusStrip1";
@@ -98,10 +111,16 @@
 			// lblStatus
 			// 
 			this.lblStatus.Name = "lblStatus";
-			this.lblStatus.Size = new System.Drawing.Size(1260, 17);
+			this.lblStatus.Size = new System.Drawing.Size(1122, 17);
 			this.lblStatus.Spring = true;
 			this.lblStatus.Text = "Status";
 			this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tsSubAction
+			// 
+			this.tsSubAction.Name = "tsSubAction";
+			this.tsSubAction.Size = new System.Drawing.Size(0, 17);
+			this.tsSubAction.Click += new System.EventHandler(this.tsSubAction_Click);
 			// 
 			// tsVersion
 			// 
@@ -194,6 +213,7 @@
 		private Skinning.SkinnedTabStrip stripActivities;
 		private System.Windows.Forms.MenuStrip actionStrip;
 		private System.Windows.Forms.ToolStripStatusLabel tsVersion;
+		private System.Windows.Forms.ToolStripStatusLabel tsSubAction;
 	}
 }
 

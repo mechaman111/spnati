@@ -287,12 +287,6 @@ namespace SPNATI_Character_Editor
 				character.Metadata = new Metadata(character);
 			else character.Metadata = metadata;
 
-			MarkerData markers = ImportMarkerData(folderName); //should move this to the editor data at some point, but it would render markers.xml obsolete
-			if (markers != null)
-			{
-				character.Markers.Merge(markers);
-			}
-
 			CollectibleData collectibles = ImportCollectibles(folderName);
 			if (collectibles != null)
 			{
@@ -333,7 +327,7 @@ namespace SPNATI_Character_Editor
 				MarkerData markers = ImportXml<MarkerData>(markerFile);
 				if (markers != null)
 				{
-					recoveredCharacter.Markers.Merge(markers);
+					recoveredCharacter.Markers = new Lazy<MarkerData>(() => markers);
 				}
 			}
 
@@ -378,7 +372,7 @@ namespace SPNATI_Character_Editor
 				IHookSerialization hook = result as IHookSerialization;
 				if (hook != null)
 				{
-					hook.OnAfterDeserialize();
+					hook.OnAfterDeserialize(filename);
 				}
 
 				return result;
@@ -402,7 +396,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="data">Data to serialize</param>
 		/// <param name="filename">File name</param>
 		/// <returns>True if successful</returns>
-		private static bool ExportXml<T>(T data, string filename)
+		public static bool ExportXml<T>(T data, string filename)
 		{
 			TextWriter writer = null;
 			try
@@ -491,7 +485,7 @@ namespace SPNATI_Character_Editor
 			return null;
 		}
 
-		private static MarkerData ImportMarkerData(string folderName)
+		public static MarkerData ImportMarkerData(string folderName)
 		{
 			string folder = Config.GetRootDirectory(folderName);
 			if (!Directory.Exists(folder))
@@ -506,7 +500,7 @@ namespace SPNATI_Character_Editor
 			return ImportXml<MarkerData>(filename);
 		}
 
-		private static CharacterEditorData ImportEditorData(string folderName)
+		public static CharacterEditorData ImportEditorData(string folderName)
 		{
 			string folder = Config.GetRootDirectory(folderName);
 			if (!Directory.Exists(folder))
@@ -643,6 +637,6 @@ namespace SPNATI_Character_Editor
 	public interface IHookSerialization
 	{
 		void OnBeforeSerialize();
-		void OnAfterDeserialize();
+		void OnAfterDeserialize(string source);
 	}
 }

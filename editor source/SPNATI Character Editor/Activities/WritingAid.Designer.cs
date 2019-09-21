@@ -126,6 +126,8 @@
 			this.containerSituation.Controls.Add(this.gridSituations);
 			this.containerSituation.Controls.Add(this.label5);
 			this.containerSituation.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.containerSituation.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.containerSituation.Image = null;
 			this.containerSituation.Location = new System.Drawing.Point(0, 0);
 			this.containerSituation.Name = "containerSituation";
 			this.containerSituation.Size = new System.Drawing.Size(943, 326);
@@ -283,6 +285,7 @@
 			// 
 			this.gridSituations.AllowUserToAddRows = false;
 			this.gridSituations.AllowUserToDeleteRows = false;
+			this.gridSituations.AllowUserToResizeRows = false;
 			this.gridSituations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -397,6 +400,8 @@
 			// 
 			this.containerLines.Controls.Add(this.gridActiveSituation);
 			this.containerLines.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.containerLines.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.containerLines.Image = null;
 			this.containerLines.Location = new System.Drawing.Point(0, 0);
 			this.containerLines.Name = "containerLines";
 			this.containerLines.Size = new System.Drawing.Size(150, 46);
@@ -424,6 +429,8 @@
 			this.containerResponse.Controls.Add(this.cmdCancel);
 			this.containerResponse.Controls.Add(this.cmdAccept);
 			this.containerResponse.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.containerResponse.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.containerResponse.Image = null;
 			this.containerResponse.Location = new System.Drawing.Point(0, 0);
 			this.containerResponse.Name = "containerResponse";
 			this.containerResponse.Size = new System.Drawing.Size(943, 304);

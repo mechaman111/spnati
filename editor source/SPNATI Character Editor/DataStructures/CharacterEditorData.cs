@@ -137,6 +137,10 @@ namespace SPNATI_Character_Editor
 
 		public void LinkOwner(Character character)
 		{
+			if (_character != null)
+			{
+				_character.Behavior.CaseRemoved -= Behavior_CaseRemoved;
+			}
 			Owner = character.FolderName;
 			_character = character;
 			_character.Behavior.CaseRemoved += Behavior_CaseRemoved;
@@ -218,7 +222,7 @@ namespace SPNATI_Character_Editor
 
 		public void OnBeforeSerialize()
 		{
-			Markers = _character.Markers;
+			Markers = _character.Markers.Value;
 			Markers.OnBeforeSerialize();
 
 			Notes.Clear();
@@ -235,7 +239,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public void OnAfterDeserialize()
+		public void OnAfterDeserialize(string source)
 		{
 			foreach (Situation c in NoteworthySituations)
 			{
@@ -256,7 +260,7 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
-			Markers?.OnAfterDeserialize();
+			Markers?.OnAfterDeserialize(source);
 		}
 
 		public bool IsCalledOut(Case c)

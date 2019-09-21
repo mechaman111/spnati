@@ -1710,7 +1710,7 @@ namespace SPNATI_Character_Editor.Controls
 			return true;
 		}
 
-		private bool ChoiceFilter(PropertyRecord record, object data, object context)
+		private bool ChoiceFilter(PropertyRecord record, object data, object context, object secondaryContext)
 		{
 			if (_selectedChoice == null)
 			{
@@ -1778,7 +1778,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		private bool HideRow(PropertyRecord record, object data, object context)
+		private bool HideRow(PropertyRecord record, object data, object context, object secondaryContext)
 		{
 			if (_selectedDirective == null || record.Key == "id")
 			{

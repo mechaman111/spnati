@@ -60,6 +60,7 @@
 			this.txtKisekae = new Desktop.Skinning.SkinnedTextBox();
 			this.label5 = new Desktop.Skinning.SkinnedLabel();
 			this.tabDashboard = new System.Windows.Forms.TabPage();
+			this.chkStartDashboard = new Desktop.Skinning.SkinnedCheckBox();
 			this.grpChecklist = new Desktop.Skinning.SkinnedGroupBox();
 			this.chkChecklistValidation = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkChecklistSpell = new Desktop.Skinning.SkinnedCheckBox();
@@ -74,8 +75,6 @@
 			this.chkColorTargets = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkCaseTree = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkInitialAdd = new Desktop.Skinning.SkinnedCheckBox();
-			this.tabBanter = new System.Windows.Forms.TabPage();
-			this.chkAutoBanter = new Desktop.Skinning.SkinnedCheckBox();
 			this.tabEpilogues = new System.Windows.Forms.TabPage();
 			this.label6 = new Desktop.Skinning.SkinnedLabel();
 			this.lstPauses = new Desktop.Skinning.SkinnedCheckedListBox();
@@ -89,7 +88,6 @@
 			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripSections = new Desktop.Skinning.SkinnedTabStrip();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
-			this.chkStartDashboard = new Desktop.Skinning.SkinnedCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).BeginInit();
@@ -99,7 +97,6 @@
 			this.grpChecklist.SuspendLayout();
 			this.tabImages.SuspendLayout();
 			this.tabDialogue.SuspendLayout();
-			this.tabBanter.SuspendLayout();
 			this.tabEpilogues.SuspendLayout();
 			this.tabBackups.SuspendLayout();
 			this.panelSnapshot.SuspendLayout();
@@ -424,7 +421,6 @@
 			this.tabsSections.Controls.Add(this.tabDashboard);
 			this.tabsSections.Controls.Add(this.tabImages);
 			this.tabsSections.Controls.Add(this.tabDialogue);
-			this.tabsSections.Controls.Add(this.tabBanter);
 			this.tabsSections.Controls.Add(this.tabEpilogues);
 			this.tabsSections.Controls.Add(this.tabBackups);
 			this.tabsSections.Controls.Add(this.tabTroubleshoot);
@@ -523,6 +519,17 @@
 			this.tabDashboard.TabIndex = 7;
 			this.tabDashboard.Text = "Dashboard";
 			// 
+			// chkStartDashboard
+			// 
+			this.chkStartDashboard.AutoSize = true;
+			this.chkStartDashboard.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkStartDashboard.Location = new System.Drawing.Point(126, 6);
+			this.chkStartDashboard.Name = "chkStartDashboard";
+			this.chkStartDashboard.Size = new System.Drawing.Size(118, 17);
+			this.chkStartDashboard.TabIndex = 2;
+			this.chkStartDashboard.Text = "Start on Dashboard";
+			this.chkStartDashboard.UseVisualStyleBackColor = true;
+			// 
 			// grpChecklist
 			// 
 			this.grpChecklist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -530,6 +537,8 @@
 			this.grpChecklist.BackColor = System.Drawing.Color.White;
 			this.grpChecklist.Controls.Add(this.chkChecklistValidation);
 			this.grpChecklist.Controls.Add(this.chkChecklistSpell);
+			this.grpChecklist.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.grpChecklist.Image = null;
 			this.grpChecklist.Location = new System.Drawing.Point(6, 29);
 			this.grpChecklist.Name = "grpChecklist";
 			this.grpChecklist.Size = new System.Drawing.Size(434, 111);
@@ -709,30 +718,6 @@
 			this.chkInitialAdd.Text = "Auto-open selection form when adding conditions";
 			this.chkInitialAdd.UseVisualStyleBackColor = true;
 			// 
-			// tabBanter
-			// 
-			this.tabBanter.BackColor = System.Drawing.Color.White;
-			this.tabBanter.Controls.Add(this.chkAutoBanter);
-			this.tabBanter.ForeColor = System.Drawing.Color.Black;
-			this.tabBanter.Location = new System.Drawing.Point(104, 4);
-			this.tabBanter.Name = "tabBanter";
-			this.tabBanter.Padding = new System.Windows.Forms.Padding(3);
-			this.tabBanter.Size = new System.Drawing.Size(447, 242);
-			this.tabBanter.TabIndex = 2;
-			this.tabBanter.Text = "Banter Wizard";
-			// 
-			// chkAutoBanter
-			// 
-			this.chkAutoBanter.AutoSize = true;
-			this.chkAutoBanter.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkAutoBanter.Location = new System.Drawing.Point(6, 6);
-			this.chkAutoBanter.Name = "chkAutoBanter";
-			this.chkAutoBanter.Size = new System.Drawing.Size(383, 17);
-			this.chkAutoBanter.TabIndex = 0;
-			this.chkAutoBanter.Text = "Always filter list to characters who actually target yours (very slow initial loa" +
-    "d)";
-			this.chkAutoBanter.UseVisualStyleBackColor = true;
-			// 
 			// tabEpilogues
 			// 
 			this.tabEpilogues.BackColor = System.Drawing.Color.White;
@@ -882,6 +867,7 @@
 			this.stripSections.AddCaption = null;
 			this.stripSections.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+			this.stripSections.DecorationText = null;
 			this.stripSections.Location = new System.Drawing.Point(1, 27);
 			this.stripSections.Margin = new System.Windows.Forms.Padding(0);
 			this.stripSections.Name = "stripSections";
@@ -910,17 +896,6 @@
 			this.skinnedPanel1.Size = new System.Drawing.Size(657, 30);
 			this.skinnedPanel1.TabIndex = 14;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
-			// 
-			// chkStartDashboard
-			// 
-			this.chkStartDashboard.AutoSize = true;
-			this.chkStartDashboard.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkStartDashboard.Location = new System.Drawing.Point(126, 6);
-			this.chkStartDashboard.Name = "chkStartDashboard";
-			this.chkStartDashboard.Size = new System.Drawing.Size(118, 17);
-			this.chkStartDashboard.TabIndex = 2;
-			this.chkStartDashboard.Text = "Start on Dashboard";
-			this.chkStartDashboard.UseVisualStyleBackColor = true;
 			// 
 			// SettingsSetup
 			// 
@@ -954,8 +929,6 @@
 			this.tabImages.PerformLayout();
 			this.tabDialogue.ResumeLayout(false);
 			this.tabDialogue.PerformLayout();
-			this.tabBanter.ResumeLayout(false);
-			this.tabBanter.PerformLayout();
 			this.tabEpilogues.ResumeLayout(false);
 			this.tabEpilogues.PerformLayout();
 			this.tabBackups.ResumeLayout(false);
@@ -990,8 +963,6 @@
 		private System.Windows.Forms.TabPage tabDialogue;
 		private Desktop.Skinning.SkinnedIcon button1;
 		private Desktop.Skinning.SkinnedIcon helpIntellisense;
-		private System.Windows.Forms.TabPage tabBanter;
-		private Desktop.Skinning.SkinnedCheckBox chkAutoBanter;
 		private Desktop.Skinning.SkinnedCheckBox chkInitialAdd;
 		private Desktop.Skinning.SkinnedButton cmdBrowseKisekae;
 		private Desktop.Skinning.SkinnedTextBox txtKisekae;

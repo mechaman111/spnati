@@ -89,12 +89,10 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void SaveNicknames()
 		{
-			//_character.Nicknames.Clear();
 			for (int i = 0; i < gridNicknames.Rows.Count; i++)
 			{
 				DataGridViewRow row = gridNicknames.Rows[i];
 				if (row.IsNewRow) { continue; }
-				int index = row.Index;
 				Nickname nickname = row.Tag as Nickname;
 				string key = row.Cells[0].Value?.ToString();
 				string value = row.Cells[1].Value?.ToString();

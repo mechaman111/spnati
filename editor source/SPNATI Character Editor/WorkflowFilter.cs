@@ -8,6 +8,8 @@ namespace SPNATI_Character_Editor
 {
 	public class WorkflowTracker : IMessageFilter
 	{
+		public static WorkflowTracker Instance { get; private set; }
+
 		private const int TrackedScreens = 10;
 
 		private LinkedList<Bitmap> _screens = new LinkedList<Bitmap>();
@@ -32,6 +34,13 @@ namespace SPNATI_Character_Editor
 			public int Top;
 			public int Right;
 			public int Bottom;
+		}
+
+		public bool Paused { get; set; }
+
+		public WorkflowTracker()
+		{
+			Instance = this;
 		}
 
 		public Bitmap Capture(enmScreenCaptureMode screenCaptureMode = enmScreenCaptureMode.Window)
@@ -73,7 +82,7 @@ namespace SPNATI_Character_Editor
 		{
 			if (m.Msg == WM_LBUTTONDOWN)
 			{
-				if (!Config.DisableWorkflowTracer)
+				if (!Config.DisableWorkflowTracer && !Paused)
 				{
 					try
 					{

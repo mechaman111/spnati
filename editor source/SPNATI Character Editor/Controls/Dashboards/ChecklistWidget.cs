@@ -34,7 +34,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 		{
 			return Config.DevMode ||
 				string.IsNullOrEmpty(_character.Metadata.Writer) ||
-				Config.UserName == _character.Metadata.Writer;
+				Config.IncludesUserName(_character.Metadata.Writer);
 		}
 
 		public IEnumerator DoWork()
@@ -148,10 +148,6 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			}
 		}
 
-		private void AddMetadataTask(string message)
-		{
-			AddMetadataTask(message, null);
-		}
 		private void AddMetadataTask(string message, string helpText)
 		{
 			AddTask(message, helpText, typeof(MetadataEditor));
@@ -321,7 +317,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				}
 				else if (!editorData.ReviewedPriorities)
 				{
-					AddTask("Review situation priorities", "Situations can be given priorities to affect how frequently they appear in other character's Writing Aid.\r\n\r\n" +
+					AddTask("Review situation priorities", "Situations can be given priorities to affect how frequently they appear in other characters' Writing Aid.\r\n\r\n" +
 						"Use the Situations tab to update the Priority for any truly \"Must Target\" situation to use \"Must Target\".", typeof(SituationEditor), true);
 				}
 			}

@@ -72,7 +72,7 @@ namespace SPNATI_Character_Editor.Activities
 				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, pose, 0));
 			}
 
-			CharacterHistory history = CharacterHistory.Get(_character, true);
+			CharacterHistory.Get(_character, true);
 
 			DoNextTask();
 		}

@@ -106,7 +106,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		private float _time;
-		private float _elapsedTime;
 
 		public float AspectRatio { get { return Width / (float)Height; } }
 
@@ -174,8 +173,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			Tracks.CollectionChanged += Objects_CollectionChanged;
 
-			HashSet<string> _removedIds = new HashSet<string>();
-
 			HashSet<LiveAnimatedObject> currentBatch = new HashSet<LiveAnimatedObject>();
 
 			foreach (Directive directive in scene.Directives)
@@ -225,7 +222,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 
 			_time = 0;
-			_elapsedTime = 0;
 		}
 
 		private void Camera_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -732,7 +728,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public override void UpdateTime(float time, float elapsedTime, bool inPlayback)
 		{
 			_time = time;
-			_elapsedTime = elapsedTime;
 			foreach (LiveObject obj in Tracks)
 			{
 				obj.Update(time, elapsedTime, inPlayback);

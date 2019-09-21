@@ -43,7 +43,7 @@ namespace SPNATI_Character_Editor.Providers
 
 		public string[] GetColumns()
 		{
-			return new string[] { "Name", "Folder" };
+			return new string[] { "Name", "Folder", "Description" };
 		}
 
 		public string GetLookupCaption()

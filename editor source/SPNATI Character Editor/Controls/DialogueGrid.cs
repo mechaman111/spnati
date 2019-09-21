@@ -454,6 +454,15 @@ namespace SPNATI_Character_Editor.Controls
 				else if (e.ColumnIndex == ColMore.Index)
 				{
 					img = Properties.Resources.Ellipsis;
+					if (e.RowIndex >= 0)
+					{
+						DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
+						DialogueLine line = row.Tag as DialogueLine;
+						if (line != null && line.HasAdvancedData)
+						{
+							img = Properties.Resources.EllipsisFilled;
+						}
+					}
 				}
 				else if (e.ColumnIndex == ColImageOptions.Index)
 				{

@@ -33,11 +33,19 @@ namespace SPNATI_Character_Editor
 			Shell.Instance.AutoTick += Instance_AutoTick;
 			Shell.Instance.Version = Config.Version;
 			Shell.Instance.VersionClick += Instance_VersionClick;
+			Shell.Instance.SubActionLabel = "Submit Bug Report";
+			Shell.Instance.SubActionClick += Instance_SubActionClick;
 
 			Config.LoadMacros<Case>("Case");
 			Shell.Instance.Description = Config.UserName;
 
 			CharacterGenerator.SetConverter(Config.ImportMethod);
+		}
+
+		private static void Instance_SubActionClick(object sender, EventArgs e)
+		{
+			ErrorReport form = new ErrorReport();
+			form.ShowDialog();
 		}
 
 		private static void Instance_VersionClick(object sender, EventArgs e)
@@ -181,7 +189,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("emitter") as DirectiveDefinition;
 			def.Description = "Adds an object emitter to the scene.";
 			def.SortOrder = 5;
-			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX", "delay", 
+			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX", "delay",
 				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease", "ignoreRotation", "marker",
 				"startSkewX", "startSkewY", "endSkewX", "endSkewY" })
 			{
@@ -429,12 +437,14 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Data Recovery", OpenDataRecovery, menu, Keys.None);
 			shell.AddToolbarItem("Fix Kisekae", ResetKisekae, menu, Keys.None);
+			shell.AddToolbarItem("Convert Dialogue", ConvertDialogue, menu, Keys.None);
 
 			//Dev tools
 			if (Config.DevMode)
 			{
 				menu = shell.AddToolbarSubmenu("Dev");
 				shell.AddToolbarItem("Themes...", typeof(Skin), menu);
+				shell.AddToolbarItem("Clear Extraneous IDs", ClearIDs, menu, Keys.None);
 			}
 
 			//Help
@@ -461,7 +471,12 @@ namespace SPNATI_Character_Editor
 			IRecord record = RecordLookup.DoLookup(typeof(Character), "", true, CharacterDatabase.FilterHuman, null);
 			if (record != null)
 			{
-				Shell.Instance.LaunchWorkspace(record as Character);
+				Character c = record as Character;
+				if (c is CachedCharacter)
+				{
+					c = CharacterDatabase.Load(c.FolderName);
+				}
+				Shell.Instance.LaunchWorkspace(c);
 			}
 		}
 
@@ -524,7 +539,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		private static void ResetKisekae()
 		{
-			if (MessageBox.Show("This will attempt fix Kisekae when imports are failing. Close kkl.exe before proceeding.", "Fix Kisekae", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+			if (MessageBox.Show("This will attempt to fix Kisekae when imports are failing. Close kkl.exe before proceeding.", "Fix Kisekae", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
 			{
 				return;
 			}
@@ -660,6 +675,64 @@ namespace SPNATI_Character_Editor
 		{
 			Recipe recipe = record as Recipe;
 			return Config.DevMode || !recipe.Core;
+		}
+
+		private static void ConvertDialogue()
+		{
+			int count = 0;
+			Character character = Shell.Instance.ActiveWorkspace.Record as Character;
+			if (character != null)
+			{
+				foreach (Case wc in character.Behavior.GetWorkingCases())
+				{
+					if (wc.HasLegacyConditions())
+					{
+						DataConversions.ConvertCase5_2(wc);
+						count++;
+					}
+				}
+			}
+			MessageBox.Show("Converted " + count + " cases.");
+		}
+
+		private static void ClearIDs()
+		{
+			Character character = Shell.Instance.ActiveWorkspace.Record as Character;
+			if (character != null)
+			{
+				CharacterEditorData editorData = CharacterDatabase.GetEditorData(character);
+				foreach (Case wc in character.Behavior.GetWorkingCases())
+				{
+					if (wc.Id > 0)
+					{
+						CaseLabel label = editorData.GetLabel(wc);
+						if (label != null)
+						{
+							continue;
+						}
+						string note = editorData.GetNote(wc);
+						if (!string.IsNullOrEmpty(note))
+						{
+							continue;
+						}
+						SituationResponse response = editorData.Responses.Find(r => r.Id == wc.Id);
+						if (response != null)
+						{
+							continue;
+						}
+						Situation situation = editorData.NoteworthySituations.Find(s => s.Id == wc.Id);
+						if (situation != null)
+						{
+							continue;
+						}
+						if (editorData.IsHidden(wc))
+						{
+							continue;
+						}
+						wc.Id = 0;
+					}
+				}
+			}
 		}
 	}
 }

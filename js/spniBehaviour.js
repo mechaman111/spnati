@@ -1454,7 +1454,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.startingLayers === undefined || inInterval(p.startingLayers, ctr.startingLayers))
                 && (ctr.timeInStage === undefined || inInterval(p.timeInStage, ctr.timeInStage))
                 && (ctr.hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
-                && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, consecutiveLosses))
+                && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, ctr.consecutiveLosses))
                 && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null))
                 && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null));
         });

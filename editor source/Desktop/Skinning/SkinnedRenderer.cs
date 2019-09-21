@@ -72,6 +72,26 @@ namespace Desktop.Skinning
 					MenuSet = Skin.Background;
 					CheckedSet = Skin.Surface;
 					break;
+				case SkinnedBackgroundType.Group1:
+					MenuSet = Skin.Group1Set;
+					CheckedSet = Skin.Group1Set;
+					break;
+				case SkinnedBackgroundType.Group2:
+					MenuSet = Skin.Group2Set;
+					CheckedSet = Skin.Group2Set;
+					break;
+				case SkinnedBackgroundType.Group3:
+					MenuSet = Skin.Group3Set;
+					CheckedSet = Skin.Group3Set;
+					break;
+				case SkinnedBackgroundType.Group4:
+					MenuSet = Skin.Group4Set;
+					CheckedSet = Skin.Group4Set;
+					break;
+				case SkinnedBackgroundType.Group5:
+					MenuSet = Skin.Group5Set;
+					CheckedSet = Skin.Group5Set;
+					break;
 				default:
 					MenuSet = Skin.PrimaryColor;
 					break;

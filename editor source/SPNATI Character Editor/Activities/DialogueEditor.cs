@@ -326,6 +326,11 @@ namespace SPNATI_Character_Editor.Activities
 			Character responder = RecordLookup.DoLookup(typeof(Character), last, false, CharacterDatabase.FilterHuman, true, null) as Character;
 			if (responder != null)
 			{
+				if (!responder.IsFullyLoaded)
+				{
+					responder = CharacterDatabase.Load(responder.FolderName);
+				}
+
 				CharacterEditorData responderData = CharacterDatabase.GetEditorData(responder);
 				Case existing = responderData.GetResponse(_character, _selectedCase);
 				Case response = null;
