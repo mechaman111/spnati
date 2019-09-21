@@ -1110,6 +1110,30 @@ function Case($xml) {
         });
 }
 
+/**
+ * Get all stages that this Case can potentially apply to.
+ * If a `stage` condition is provided, we just rely on those. Otherwise,
+ * returns all stage numbers within the interval returned by
+ * `getRelevantStagesForTrigger`.
+ * 
+ * @returns {Array} An array of unique stage numbers that this case may apply to.
+ */
+Case.prototype.getStages = function (n_layers) {    
+    if (this.stage) {
+        var intervals = this.stage.split(/\s+/).map(parseInterval);
+    } else {
+        var intervals = [getRelevantStagesForTrigger(this.tag, n_layers)];
+    }
+    
+    return intervals.reduce(function (acc, interval) {
+        for (var i = interval.min; i <= interval.max; i++) {
+            if (acc.indexOf(i) < 0) acc.push(i);
+        }
+
+        return acc;
+    }, []);
+}
+
 /* Convert this case's conditions into a plain object, into a format suitable
  * for e.g. JSON serialization.
  */
@@ -1604,20 +1628,13 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
     }
 
     var cases = [];
-    
-    if (this.triggerFirstFormat) {
-        tags.forEach(function (tag) {
-            if (this.caseCache[tag]) {
-                Array.prototype.push.apply(cases, this.caseCache[tag]);
-            }
-        }, this);
-    } else {
-        tags.forEach(function (tag) {
-            if (this.caseCache[stageNum] && this.caseCache[stageNum][tag]) {
-                Array.prototype.push.apply(cases, this.caseCache[stageNum][tag]);
-            }
-        }, this);
-    }
+
+    tags.forEach(function (tag) {
+        var relCases = this.cases.get(tag+':'+stageNum) || [];
+        relCases.forEach(function (c) {
+            if (cases.indexOf(c) < 0) cases.push(c);
+        });
+    }, this);
 
     /* quick check to see if the tag exists */
     if (cases.length <= 0) {
