@@ -361,7 +361,6 @@ Player.prototype.resetState = function () {
         /* Initialize reaction handling state. */
         this.currentTarget = null;
         this.currentTags = [];
-        this.currentPriority = -1;
         this.stateCommitted = false;
 
         if (this.startStates.length > 0) this.updateChosenState(new State(this.startStates[0]));

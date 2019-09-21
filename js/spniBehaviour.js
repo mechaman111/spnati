@@ -1708,7 +1708,6 @@ Opponent.prototype.updateChosenState = function (state) {
 
     this.chosenState = state;
     this.stateCommitted = false;
-    if (state.parentCase) this.currentPriority = state.parentCase.priority;
 }
 
 /**
@@ -1721,7 +1720,6 @@ Opponent.prototype.clearChosenState = function (state) {
 
     this.chosenState = null;
     this.stateCommitted = false;
-    this.currentPriority = -1;
 }
 
 /************************************************************
