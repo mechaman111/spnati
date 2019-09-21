@@ -552,8 +552,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.pendingCollectiblePopup = null;
 
     this.loaded = false;
-    this.loadItemsCompleted = 0;
-    this.loadItemsTotal = 0;
+    this.loadProgress = undefined;
     
     /* baseTags stores tags that will be later used in resetState to build the
      * opponent's true tags list. It does not store implied tags.
@@ -963,7 +962,20 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             });
             this.nicknames = nicknames;
 
-            let continueLoading = function () {
+            if (this.xml.find('behaviour>trigger').length > 0) {
+                this.triggerFirstFormat = true;
+                var cachePromise = this.cacheBehaviourTriggers();
+            } else {
+                this.triggerFirstFormat = false;
+                var cachePromise = this.cacheBehaviourStages();
+            }
+
+            cachePromise.progress(function (completed, total) {
+                this.loadProgress = completed / total;
+                mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
+            });
+
+            cachePromise.then(function () {
                 this.loaded = true;
 
                 if (this.selected_costume) {
@@ -971,16 +983,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 }
 
                 return this.onSelected(individual);
-            }.bind(this);
-
-            /* Pre-emptively optimize new-format opponents. */
-            if (this.xml.find('behaviour>trigger').length > 0) {
-                this.triggerFirstFormat = true;
-                this.cacheBehaviourTriggers(continueLoading);
-            } else {
-                this.triggerFirstFormat = false;
-                this.cacheBehaviourStages(continueLoading);
-            }
+            });
 		}.bind(this))
 		/* Error callback. */
         .fail(function(err) {
@@ -1013,16 +1016,26 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
     }, this);
 }
 
-/*
+/**
  * Traverses a new-format opponent's behaviour <trigger> elements
  * and pre-emptively adds their Cases to the opponent's caseCache.
  * This is done in 50ms chunks to avoid blocking the UI.
+ * 
+ * @returns {$.Promise} A Promise. Progress callbacks are fired after each
+ * chunk of work, and the promise resolves once all cases have been processed.
+ * All callbacks are fired with the Opponent as `this`.
  */
-Opponent.prototype.cacheBehaviourTriggers = function (onComplete) {
-    var triggerQueue = this.xml.find('behaviour>trigger').get();
-    if (triggerQueue.length <= 0) return onComplete();
+Opponent.prototype.cacheBehaviourTriggers = function () {
+    var deferred = $.Deferred();
 
-    this.loadItemsTotal = this.xml.find('behaviour>trigger>case').length;
+    var triggerQueue = this.xml.find('behaviour>trigger').get();
+    if (triggerQueue.length <= 0) {
+        deferred.resolveWith(this, [0]);
+        return deferred.promise();
+    }
+
+    var loadItemsTotal = this.xml.find('behaviour>trigger>case').length;
+    var loadItemsCompleted = 0;
 
     function process(caseOut, tag, elemQueue) {
         var startTS = performance.now();
@@ -1034,7 +1047,9 @@ Opponent.prototype.cacheBehaviourTriggers = function (onComplete) {
                 caseOut = [];
 
                 /* If triggerQueue is empty, then we are done. */
-                if (triggerQueue.length <= 0) return onComplete();
+                if (triggerQueue.length <= 0) {
+                    return deferred.resolveWith(this, [loadItemsCompleted]);
+                }
 
                 let $trigger = $(triggerQueue.shift());
                 tag = $trigger.attr('id');
@@ -1045,11 +1060,10 @@ Opponent.prototype.cacheBehaviourTriggers = function (onComplete) {
             caseOut.push(c);
             this.recordTargetedCase(c);
 
-            this.loadItemsCompleted++;
+            loadItemsCompleted++;
         }
 
-        mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
-
+        deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal]);
         setTimeout(process.bind(this, caseOut, tag, elemQueue), 50);
     }
 
@@ -1057,20 +1071,31 @@ Opponent.prototype.cacheBehaviourTriggers = function (onComplete) {
     let tag = $trigger.attr('id');
     let cases = $trigger.children('case').get();
 
-    process.bind(this)([], tag, cases);
+    setTimeout(process.bind(this, [], tag, cases), 0);
+    return deferred.promise();
 }
 
-/*
+/**
  * Traverses an old-format opponent's behaviour <stage> elements
  * and pre-emptively adds their Cases to the opponent's caseCache.
  * This is done in 50ms chunks to avoid blocking the UI, similarly to
  * cacheBehaviourTriggers.
+ * 
+ * @returns {$.Promise} A Promise. Progress callbacks are fired after each
+ * chunk of work, and the promise resolves once all cases have been processed.
+ * All callbacks are fired with the Opponent as `this`.
  */
 Opponent.prototype.cacheBehaviourStages = function (onComplete) {
-    var stageQueue = this.xml.find('behaviour>stage').get();
-    if (stageQueue.length <= 0) return onComplete();
+    var deferred = $.Deferred();
 
-    this.loadItemsTotal += this.xml.find('behaviour>stage>case').length;
+    var stageQueue = this.xml.find('behaviour>stage').get();
+    if (stageQueue.length <= 0) {
+        deferred.resolveWith(this, [0]);
+        return deferred.promise();
+    }
+
+    var loadItemsTotal = this.xml.find('behaviour>stage>case').length;
+    var loadItemsCompleted = 0;
 
     function process(stageOut, stage, elemQueue) {
         var startTS = performance.now();
@@ -1080,7 +1105,9 @@ Opponent.prototype.cacheBehaviourStages = function (onComplete) {
                 this.caseCache[stage] = stageOut;
                 stageOut = {};
 
-                if (stageQueue.length <= 0) return onComplete();
+                if (stageQueue.length <= 0) {
+                    return deferred.resolveWith(this, [loadItemsCompleted]);
+                }
 
                 let $stage = $(stageQueue.shift());
                 stage = parseInt($stage.attr('id'), 10);
@@ -1095,11 +1122,10 @@ Opponent.prototype.cacheBehaviourStages = function (onComplete) {
             stageOut[c.tag].push(c);
             this.recordTargetedCase(c);
             
-            this.loadItemsCompleted++;
+            loadItemsCompleted++;
         }
 
-        mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
-
+        deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal])
         setTimeout(process.bind(this, stageOut, stage, elemQueue), 50);
     }
 
@@ -1107,7 +1133,8 @@ Opponent.prototype.cacheBehaviourStages = function (onComplete) {
     let stage = parseInt($stage.attr('id'), 10);
     let cases = $stage.children('case').get();
 
-    process.bind(this)({}, stage, cases);
+    setTimeout(process.bind(this, {}, stage, cases), 0);
+    return deferred.promise();
 }
 
 Player.prototype.getImagesForStage = function (stage) {

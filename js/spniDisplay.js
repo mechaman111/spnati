@@ -849,10 +849,10 @@ MainSelectScreenDisplay.prototype.update = function (player) {
 MainSelectScreenDisplay.prototype.updateLoadPercentage = function (player) {
     if (player.isLoaded()) return;
 
-    if (player.loadItemsTotal === 0) {
+    if (typeof player.loadProgress !== 'number' || isNaN(player.loadProgress)) {
         this.selectButton.html('Loading...');
     } else {
-        this.selectButton.html('Loading (' + Math.floor((player.loadItemsCompleted / player.loadItemsTotal) * 100) + '%)');
+        this.selectButton.html('Loading (' + Math.floor(player.loadProgress * 100) + '%)');
     }
 }
 
