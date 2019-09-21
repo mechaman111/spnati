@@ -364,7 +364,7 @@ Player.prototype.resetState = function () {
         this.currentPriority = -1;
         this.stateCommitted = false;
 
-		this.chosenState = this.startStates[0];
+        if (this.startStates.length > 0) this.updateChosenState(new State(this.startStates[0]));
 
         var appearance = this.default_costume;
         if (ALT_COSTUMES_ENABLED && this.alt_costume) {

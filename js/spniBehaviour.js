@@ -1602,7 +1602,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
     if (volatileOnly && this.chosenState && this.chosenState.parentCase) {
         bestMatchPriority = this.chosenState.parentCase.priority + 1;
     }
-    
+
     var cases = [];
     
     if (this.triggerFirstFormat) {
@@ -1680,6 +1680,33 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
     return null;
 }
 
+/**
+ * Updates this Opponent's chosenState and related information.
+ * Also cleans up the previous chosenState's parent Case, if it exists.
+ */
+Opponent.prototype.updateChosenState = function (state) {
+    if (this.chosenState && this.chosenState.parentCase) {
+        this.chosenState.parentCase.cleanupMutableState();
+    }
+
+    this.chosenState = state;
+    this.stateCommitted = false;
+    if (state.parentCase) this.currentPriority = state.parentCase.priority;
+}
+
+/**
+ * Clears out this Opponent's previous chosenState, leaving it at null.
+ */
+Opponent.prototype.clearChosenState = function (state) {
+    if (this.chosenState && this.chosenState.parentCase) {
+        this.chosenState.parentCase.cleanupMutableState();
+    }
+
+    this.chosenState = null;
+    this.stateCommitted = false;
+    this.currentPriority = -1;
+}
+
 /************************************************************
  * Updates the behaviour of the given player based on the 
  * provided tag.
@@ -1704,13 +1731,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     var state = this.findBehaviour(tags, opp, false);
 
     if (state) {
-        /* Reaction handling state... */
-        if (this.chosenState && this.chosenState.parentCase) {
-            this.chosenState.parentCase.cleanupMutableState();
-        }
-
-        this.chosenState = state;
-        this.stateCommitted = false;
+        this.updateChosenState(state);
         this.lastUpdateTags = tags;
         
         return true;
@@ -1743,15 +1764,10 @@ Opponent.prototype.updateVolatileBehaviour = function () {
     var newState = this.findBehaviour(this.currentTags, this.currentTarget, true);
 
     if (newState) {
-        console.log("Found new volatile state for player "+this.slot+" with priority "+newState.parentCase.priority);
         /* Assign new best-match case and state. */
-        if (this.chosenState && this.chosenState.parentCase) {
-            this.chosenState.parentCase.cleanupMutableState();
-        }
-        
-        this.chosenState = newState;
-        this.stateCommitted = false;
-        
+        console.log("Found new volatile state for player "+this.slot+" with priority "+newState.parentCase.priority);
+        this.updateChosenState(newState);
+
         return true;
     } else {
         console.log("Found no volatile matches for player "+this.slot);
