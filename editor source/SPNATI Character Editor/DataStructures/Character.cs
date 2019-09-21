@@ -72,7 +72,7 @@ namespace SPNATI_Character_Editor
 		/// Cached information about what markers are set in this character's dialog
 		/// </summary>
 		[XmlIgnore]
-		public MarkerData Markers;
+		public Lazy<MarkerData> Markers;
 
 		[XmlIgnore]
 		public string FolderName
@@ -296,7 +296,7 @@ namespace SPNATI_Character_Editor
 			Stamina = 15;
 			Tags = new List<CharacterTag>();
 			Metadata = new Metadata();
-			Markers = new MarkerData();
+			Markers = new Lazy<MarkerData>(LoadMarkers);
 			Wardrobe = new List<Clothing>();
 			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
@@ -324,7 +324,7 @@ namespace SPNATI_Character_Editor
 			Stamina = 15;
 			Tags.Clear();
 			Metadata = new Metadata();
-			Markers = new MarkerData();
+			Markers = new Lazy<MarkerData>(LoadMarkers);
 			Wardrobe = new List<Clothing>();
 			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
@@ -337,6 +337,12 @@ namespace SPNATI_Character_Editor
 		public override string ToString()
 		{
 			return Label;
+		}
+
+		private MarkerData LoadMarkers()
+		{
+			MarkerData data = CharacterDatabase.LoadMarkerData(this);
+			return data;
 		}
 
 		/// <summary>
@@ -591,8 +597,10 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public virtual void OnAfterDeserialize()
+		public virtual void OnAfterDeserialize(string source)
 		{
+			FolderName = Path.GetFileName(Path.GetDirectoryName(source));
+
 			Wardrobe.ForEach(c => c.OnAfterDeserialize());
 			foreach (var line in StartingLines)
 			{
@@ -845,7 +853,7 @@ namespace SPNATI_Character_Editor
 			{
 				return true;
 			}
-			return stageCase.AlternativeConditions.Any(c => IsCaseTargetedAtCharacter(c, character, allowedTargetTypes));
+			return stageCase.AlternativeConditions.Any(c => { c.Tag = stageCase.Tag; return IsCaseTargetedAtCharacter(c, character, allowedTargetTypes); });
 		}
 
 		/// <summary>
@@ -907,12 +915,12 @@ namespace SPNATI_Character_Editor
 
 		public void RemoveMarkerReference(string marker)
 		{
-			Markers.RemoveReference(marker);
+			Markers.Value.RemoveReference(marker);
 		}
 
 		public void CacheMarker(string marker)
 		{
-			Markers.Cache(marker);
+			Markers.Value.Cache(marker);
 		}
 
 		public WardrobeRestrictions GetWardrobeRestrictions()

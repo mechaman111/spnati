@@ -100,7 +100,10 @@ namespace SPNATI_Character_Editor
 			data = data ?? new CharacterEditorData();
 			data.LinkOwner(character);
 			_editorData[character] = data;
-			character.Markers.Merge(data.Markers);
+			if (character.Markers.IsValueCreated)
+			{
+				character.Markers.Value.Merge(data.Markers);
+			}
 		}
 
 		public static CharacterEditorData GetEditorData(Character character)
@@ -332,6 +335,23 @@ namespace SPNATI_Character_Editor
 			});
 
 			return c;
+		}
+
+		public static MarkerData LoadMarkerData(Character character)
+		{
+			string folderName = character.FolderName;
+			MarkerData markers = new MarkerData();
+			MarkerData markerXml = Serialization.ImportMarkerData(folderName);
+			if (markerXml != null)
+			{
+				markers.Merge(markerXml);
+			}
+			CharacterEditorData editorData = GetEditorData(character);
+			if (editorData != null)
+			{
+				markers.Merge(editorData.Markers);
+			}
+			return markers;
 		}
 	}
 }

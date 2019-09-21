@@ -222,7 +222,7 @@ namespace SPNATI_Character_Editor
 
 		}
 
-		public void OnAfterDeserialize()
+		public void OnAfterDeserialize(string source)
 		{
 			//Encoding these doesn't need to be done in OnBeforeSerialize because the serializer does it automatically
 			Description = XMLHelper.DecodeEntityReferences(Description);

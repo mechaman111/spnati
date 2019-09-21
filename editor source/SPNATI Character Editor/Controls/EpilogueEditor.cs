@@ -199,7 +199,7 @@ namespace SPNATI_Character_Editor.Controls
 			selAllMarkers.SelectableItems
 				= selNotMarkers.SelectableItems
 				= selAnyMarkers.SelectableItems
-				= _character.Markers.Values.ToList().ConvertAll(m => m.Name).ToArray();
+				= _character.Markers.Value.Values.ToList().ConvertAll(m => m.Name).ToArray();
 			selAllMarkers.SelectedItems = _ending.AllMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 			selNotMarkers.SelectedItems = _ending.NotMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 			selAnyMarkers.SelectedItems = _ending.AnyMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
@@ -209,7 +209,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				if (c != _character)
 				{
-					foreach (Marker m in c.Markers.Values)
+					foreach (Marker m in c.Markers.Value.Values)
 					{
 						if (m.Scope == MarkerScope.Public)
 						{

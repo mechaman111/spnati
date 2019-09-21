@@ -52,7 +52,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (_character == null)
 				return;
 			List<Marker> markers = new List<Marker>();
-			foreach (var marker in _character.Markers.Values)
+			foreach (var marker in _character.Markers.Value.Values)
 			{
 				markers.Add(marker);
 			}
@@ -73,8 +73,8 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_character == null)
 				return;
-			List<Marker> oldMarkers = _character.Markers.Values.ToList();
-			_character.Markers.Clear();
+			List<Marker> oldMarkers = _character.Markers.Value.Values.ToList();
+			_character.Markers.Value.Clear();
 			foreach (DataGridViewRow row in gridMarkers.Rows)
 			{
 				string name = row.Cells["ColName"].Value?.ToString();
@@ -87,7 +87,7 @@ namespace SPNATI_Character_Editor.Controls
 				MarkerScope scope;
 				Enum.TryParse(scopeStr, out scope);
 				marker.Scope = scope;
-				_character.Markers.Add(marker);
+				_character.Markers.Value.Add(marker);
 			}
 		}
 

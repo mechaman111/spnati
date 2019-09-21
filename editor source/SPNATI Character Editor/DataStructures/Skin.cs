@@ -115,7 +115,7 @@ namespace SPNATI_Character_Editor
 
 		public void OnBeforeSerialize() { }
 
-		public void OnAfterDeserialize()
+		public void OnAfterDeserialize(string source)
 		{
 			Wardrobe.ForEach(c => c.OnAfterDeserialize());
 
