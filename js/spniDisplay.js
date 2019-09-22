@@ -281,6 +281,7 @@ function Pose(poseDef, display) {
 }
 
 Pose.prototype.getHeightScaleFactor = function() {
+    console.log("reported imageAreaHeight: "+this.display.imageAreaHeight)
     return this.display.imageAreaHeight / this.baseHeight;
 }
 
@@ -553,6 +554,7 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
     this.animCallbackID = undefined;
 
     this.imageAreaHeight = this.imageArea.height();
+    console.log("Current display height: "+this.imageAreaHeight);
 
     this.resizeObserver = new ResizeObserver(function (entries) {
         if (entries[0].contentBoxSize) {
