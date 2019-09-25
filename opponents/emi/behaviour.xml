@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1 at 6:25:30 PM on September 18, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2 at 7:42:00 PM on September 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.1</version>
+    <version>v5.2</version>
     <first>Emi</first>
     <last>Ibarazaki</last>
     <label>Emi</label>
@@ -320,6 +320,11 @@
                 <state img="#-happy.png">I can't believe we get to play with a &lt;i&gt;real&lt;/i&gt; pro hero! This is amazing!</state>
             </case>
             <case stage="0">
+                <alternative alsoPlaying="pinkie_pie" />
+                <alternative alsoPlaying="twilight" />
+                <state img="#-confused.png">Soo...are you a pony, or a person? I'm confused...</state>
+            </case>
+            <case stage="0">
                 <condition count="0" filter="rin" />
                 <test expr="~background~" value="roof" />
                 <state img="#-content.png">Rin and I eat lunch up here all the time. I'm honestly surprised she's not here.</state>
@@ -340,13 +345,6 @@
                 <state img="#-calm.png">I would just like to warn everybody that I will probably take this game more seriously than I should.</state>
                 <state img="#-interested.png">I could win this game in my sleep. I won't be dozing off though, because then I'd miss out on all the fun.</state>
                 <state img="#-content.png">Am I here out of competitive spirit or corrupted desires? You decide.</state>
-            </case>
-            <case stage="0">
-                <alternative alsoPlaying="pinkie_pie" />
-                <alternative alsoPlaying="twilight">
-                    <state img="0-confused.png">Soo...are you a pony, or a person? I'm confused...</state>
-                </alternative>
-                <state img="#-confused.png">Soo...are you a pony, or a person? I'm confused...</state>
             </case>
             <case stage="0" priority="0">
                 <condition count="0" filter="rin" />
@@ -806,7 +804,7 @@
                 <state img="#-laughing.png" marker="setup_pirate">With my fake legs, striped clothes, and assertive attitude, I'm basically a pirate!</state>
                 <state img="#-excited.png" marker="setup_pirate">I've got the legs to make a damn good pirate. I'd be the terror of the high seas!</state>
             </case>
-            <case stage="5-8" oneShotId="1" saidMarker="800m==2" notSaidMarker="pirate">
+            <case stage="5-8" oneShotId="9" saidMarker="800m==2" notSaidMarker="pirate">
                 <state img="#-interested.png" marker="=3">Here's a new bet just for you, ~player~. If you manage to win this game, you have to race me at the track tomorrow! Sound fair?</state>
                 <state img="#-interested.png" weight="4">Don't worry, ~player~, we'll have a bet just between us if you manage to win this game! </state>
             </case>
@@ -1846,6 +1844,17 @@
                 <state img="#-calm.png">That's not very brave of you, ~name~.</state>
                 <state img="#-bored.png">I didn't take you for the cautious type, ~name~.</state>
             </case>
+            <case stage="0-2">
+                <alternative notSaidMarker="coach">
+                    <condition count="4-5" filter="athletic" />
+                    <test expr="~background~" value="locker room" />
+                </alternative>
+                <alternative notSaidMarker="coach">
+                    <condition count="4-5" filter="athletic" />
+                    <test expr="~background~" value="showers" />
+                </alternative>
+                <state img="#-confused.png" marker="coach">I keep waiting for our coach to walk in on us. If I hear a door open I am &lt;i&gt;out of here&lt;/i&gt; as soon as possible!</state>
+            </case>
             <case stage="2-7" notSaidMarker="emi_boots">
                 <test expr="~clothing~" value="boots" />
                 <state img="#-content.png" marker="emi_boots">When is someone going to make a pair of boots that are easy to run in?!</state>
@@ -1889,18 +1898,6 @@
                 <state img="#-content.png">I need to remember to stop by Rin's room to pick up my notebook for class tomorrow.</state>
                 <state img="#-laughing.png">You just don't look the same without the ~clothing~, ~name~. Only kidding, of course.</state>
                 <state img="#-laughing.png">Please do something more exciting next time!</state>
-            </case>
-            <case stage="0-2">
-                <alternative notSaidMarker="coach">
-                    <condition count="4-5" filter="athletic" />
-                    <test expr="~background~" value="locker room" />
-                </alternative>
-                <alternative notSaidMarker="coach">
-                    <condition count="4-5" filter="athletic" />
-                    <test expr="~background~" value="showers" />
-                    <state img="0-confused.png" marker="coach">I keep waiting for our coach to walk in on us. If I hear a door open I am &lt;i&gt;out of here&lt;/i&gt; as soon as possible!</state>
-                </alternative>
-                <state img="#-confused.png" marker="coach">I keep waiting for our coach to walk in on us. If I hear a door open I am &lt;i&gt;out of here&lt;/i&gt; as soon as possible!</state>
             </case>
             <case stage="2-4">
                 <state img="#-calm.png">Any bets on who will win the next round?</state>
@@ -2158,7 +2155,7 @@
                 <state img="#-calm.png" weight="2">You won't see me in boots very often. I don't have a need for ankle support!</state>
             </case>
             <case stage="2-4" oneShotId="2" totalMasturbating="0" totalFinished="0">
-                <state img="#-confused.png">So what exactly are we supposed to do when we're out of f off?</state>
+                <state img="#-confused.png">So what exactly are we supposed to do when we're out of clothes to take off?</state>
             </case>
             <case stage="8" saidMarker="pirate">
                 <state img="#-confused.png">Shouldn't ye be a wee bit more darin' this late into th' game?</state>
@@ -3274,7 +3271,7 @@
                 <test expr="~weekday~" value="Tuesday" />
                 <state img="#-laughing.png">You must be searching through my lines in the Character Editor because this will never fucking happen!</state>
             </case>
-            <case stage="0-10" id="28" oneShotId="1" filter="hero" targetStage="1-3" notSaidMarker="pirate">
+            <case stage="0-10" id="28" oneShotId="10" filter="hero" targetStage="1-3" notSaidMarker="pirate">
                 <state img="#-calm.png" marker="emi_hero">Tell me, ~name~, what drives your heroism? What even &lt;i&gt;is&lt;/i&gt; a hero to you?</state>
                 <state img="#-calm.png" marker="emi_hero">So, "~name~ the hero," what made you want to &lt;i&gt;be&lt;/i&gt; a hero in the first place?</state>
                 <state img="#-calm.png" marker="emi_hero">So ~name~, you're a hero, right? What put you down that track?</state>
@@ -3389,7 +3386,7 @@
             <case stage="3-6" filter="gloomy" notSaidMarker="gloomy">
                 <state img="#-sad.png" marker="gloomy">Is there something I can do to cheer you up, ~name~? You don't seem to be having that much fun.</state>
             </case>
-            <case stage="4-10" oneShotId="2" targetStatus="not_naked" notSaidMarker="pirate">
+            <case stage="4-10" oneShotId="11" targetStatus="not_naked" notSaidMarker="pirate">
                 <test expr="~target.revplace~" value="1" />
                 <state img="#-interested.png">Are you getting worried, ~name~? You treading on thin ice!</state>
                 <state img="#-interested.png">Be careful, ~name~! You'll be our first model at this rate!</state>
@@ -3469,11 +3466,16 @@
                 <state img="#-laughing.png">You'll hardly be able to tell we're both Yamaku students anymore!</state>
                 <state img="#-frustrated.png">Let's be honest, Yamaku's uniforms are more comfortable when they're taken &lt;i&gt;off.&lt;/i&gt;</state>
             </case>
+            <case stage="0-10">
+                <alternative target="hanako" targetStage="1" notSaidMarker="pirate" targetSaying="B-back at school... I had a habit of only stepping on the d-darker tiles..." />
+                <alternative target="hanako" targetStage="1" targetSaying="B-back at Yamaku Academy... I p-played a game where I'd try to only walk on darker tiles..." />
+                <state img="#-laughing.png">I &lt;i&gt;already&lt;/i&gt; have a habit of running into people in the hallways, so I probably shouldn't try that out!</state>
+            </case>
             <case stage="0-3" target="hanako" targetStage="3">
                 <state img="#-confused.png">Do you have trouble getting the sweat stains out of these shirts too? It's such a pain!</state>
                 <state img="#-sad.png">Aww, Hanako, we're not going to match anymore!</state>
             </case>
-            <case stage="0-10" id="29" oneShotId="2" filter="hero" targetStage="1-3" saidMarker="emi_hero" notSaidMarker="pirate">
+            <case stage="0-10" id="29" oneShotId="12" filter="hero" targetStage="1-3" saidMarker="emi_hero" notSaidMarker="pirate">
                 <state img="#-bored.png" marker="emi_hero2">Do you get paid, or do you do your thing just for the heroic sake of it?</state>
                 <state img="#-bored.png" marker="emi_hero2">Are you like a professional hero, or more of a vigilante type?</state>
                 <state img="#-bored.png" marker="emi_hero2">Is that like a job to you, or more of a noble hobby?</state>
@@ -3553,13 +3555,6 @@
             <case stage="0-7 9-10" saidMarker="insane" notSaidMarker="insane2">
                 <state img="#-content.png" marker="insane2">So what is ~name~ going to do this time? Perform a seance?</state>
             </case>
-            <case stage="0-10">
-                <alternative target="hanako" targetStage="1" notSaidMarker="pirate" targetSaying="B-back at school... I had a habit of only stepping on the d-darker tiles..." />
-                <alternative target="hanako" targetStage="1" targetSaying="B-back at Yamaku Academy... I p-played a game where I'd try to only walk on darker tiles...">
-                    <state img="0-laughing.png">I &lt;i&gt;already&lt;/i&gt; have a habit of running into people in the hallways, so I probably shouldn't try that out!</state>
-                </alternative>
-                <state img="#-laughing.png">I &lt;i&gt;already&lt;/i&gt; have a habit of running into people in the hallways, so I probably shouldn't try that out!</state>
-            </case>
         </trigger>
 
         <trigger id="opponent_stripped">
@@ -3602,7 +3597,7 @@
             <case stage="0-10" id="7" target="lucina" targetStage="1" notSaidMarker="pirate">
                 <state img="#-confused.png">Oh! Eh, cool! I have no idea what that means!</state>
             </case>
-            <case stage="0-10" oneShotId="1" targetStatus="exposed" totalExposed="1">
+            <case stage="0-10" oneShotId="13" targetStatus="exposed" totalExposed="1">
                 <test expr="~target.biggestlead~" cmp="&gt;=" value="3" />
                 <state img="#-happy.png">Your overconfidence was your downfall, ~name~! Never take a lead for granted!</state>
             </case>
@@ -3924,7 +3919,7 @@
                 <state img="#-laughing.png">Careful, ~name~, don't blister yourself!</state>
                 <state img="#-interested.png">Pace yourself, ~name~. Show the ladies you got some stamina!</state>
                 <state img="#-happy.png">Don't be looking at me if you're not ready to finish yet!</state>
-                <state img="#-calm.png">I think you're chicken's choking, ~name~.</state>
+                <state img="#-calm.png">I think your chicken's choking, ~name~.</state>
             </case>
         </trigger>
 
@@ -4231,6 +4226,12 @@
             <case stage="0-10" id="59" target="pinkie_pie" targetSayingMarker="pop">
                 <state img="#-laughing.png">I don't know what you expected to happen, Pinkie! </state>
             </case>
+            <case stage="0-10">
+                <alternative target="streaming-chan" notSaidMarker="pirate" />
+                <alternative target="streaming-chan" targetSaidMarker="viewers&gt;=4" />
+                <state img="#-laughing.png">Please tell me you're done asking us questions now!</state>
+                <state img="#-laughing.png">What a &lt;i&gt;golden&lt;/i&gt; finish to the stream!</state>
+            </case>
             <case stage="8" saidMarker="pirate">
                 <state img="#-confused.png">Be that wha' I be in store fer? I needs t' win this game.</state>
                 <state img="#-laughing.png">Wha' am I supposed t' say t' that? Congratulations?</state>
@@ -4241,15 +4242,6 @@
                 <state img="#-laughing.png">Oh my &lt;i&gt;goodness&lt;/i&gt;, ~name~. Way to finish!</state>
                 <state img="#-laughing.png">I will &lt;i&gt;never&lt;/i&gt; let you live this down, ~name~!</state>
                 <state img="#-laughing.png">Meanwhile, &lt;i&gt;I still have all of my clothes on!&lt;/i&gt;</state>
-            </case>
-            <case stage="0-10">
-                <alternative target="streaming-chan" notSaidMarker="pirate" />
-                <alternative target="streaming-chan" targetSaidMarker="viewers&gt;=4">
-                    <state img="0-laughing.png">Please tell me you're done asking us questions now!</state>
-                    <state img="0-laughing.png">What a &lt;i&gt;golden&lt;/i&gt; finish to the stream!</state>
-                </alternative>
-                <state img="#-laughing.png">Please tell me you're done asking us questions now!</state>
-                <state img="#-laughing.png">What a &lt;i&gt;golden&lt;/i&gt; finish to the stream!</state>
             </case>
             <case stage="2-4">
                 <state img="#-laughing.png">This is just too much...</state>
@@ -4381,10 +4373,10 @@
         </trigger>
 
         <trigger id="finished_masturbating">
-            <case stage="10" oneShotId="1" alsoPlaying="juri">
+            <case stage="10" oneShotId="14" alsoPlaying="juri">
                 <state img="#-canoef.png">Ahhhh...well, Juri...I take them off every night before bed, or just whenever to rest my knees. It's hardly a big deal.</state>
             </case>
-            <case stage="10" oneShotId="2">
+            <case stage="10" oneShotId="15">
                 <state img="#-canoef.png">Oooohhh gosh...just let me...catch my breath...</state>
                 <state img="#-canoef.png">Ahhh...that was...incredible...</state>
                 <state img="#-canoef.png">Okay...just...give me a second...</state>
@@ -4401,7 +4393,7 @@
                 <condition count="2" status="alive" var="playing" />
                 <state img="#-excited.png">Oooh! Last round! This will be exciting!</state>
             </case>
-            <case stage="10" id="60" oneShotId="2" saidMarker="pirate_story" priority="5">
+            <case stage="10" id="60" oneShotId="16" saidMarker="pirate_story" priority="5">
                 <state img="#-laughing.png" marker="pirate_story2">Let's be honest, I don't have much else to talk about at this point. Let me tell you all the story. </state>
             </case>
             <case stage="10" saidMarker="finished">
@@ -4417,16 +4409,16 @@
                 <state img="#-sad.png">I &lt;i&gt;hate&lt;/i&gt; being on the bench...</state>
                 <state img="#-bored.png" oneShotId="1" marker="pirate_story" weight="5">Has anyone ever heard the pirate's tale of Peter the Great?</state>
             </case>
-            <case stage="10" oneShotId="3" saidMarker="pirate_story2">
+            <case stage="10" oneShotId="17" saidMarker="pirate_story2">
                 <state img="#-calm.png" marker="pirate_story3">Alright, so there was this French guy named Peter the Great. Well, &lt;i&gt;"the Great"&lt;/i&gt; wasn't his last name, we'll get to that. He was a well known pirate at this point, but not a fabled leader yet. </state>
             </case>
             <case stage="10" oneShotId="4" saidMarker="pirate_story3">
                 <state img="#-happy.png" marker="pirate_story4">So Peter had a crew of 29 men on a large canoe-like boat. Like me after this game, they had suffered failure after failure. They were on their last rope. </state>
             </case>
-            <case stage="10" oneShotId="5" saidMarker="pirate_story4">
+            <case stage="10" oneShotId="18" saidMarker="pirate_story4">
                 <state img="#-sad.png" marker="pirate_story5">Starving, exasperated, and exhausted, Peter's crew hunted for a Spanish merchant vessel not far from the island of Hispaniola. Their provisions were giving out. </state>
             </case>
-            <case stage="10" oneShotId="6" saidMarker="pirate_story5">
+            <case stage="10" oneShotId="19" saidMarker="pirate_story5">
                 <state img="#-calm.png" marker="pirate_story6">Peter's men were on the brink of despair, when they sighted a large ship in the distant waters. They pooled the last of their strength together and paddled their giant canoe to the ship. </state>
             </case>
             <case stage="10" oneShotId="7" saidMarker="pirate_story6">
@@ -4435,22 +4427,22 @@
             <case stage="10" oneShotId="8" saidMarker="pirate_story7">
                 <state img="#-pout.png" marker="pirate_story8">To Peter, their only option was clear. They could either ambush and capture the warship, or die alone in the ocean with empty bellies.</state>
             </case>
-            <case stage="10" oneShotId="1" saidMarker="pirate_story8">
+            <case stage="10" oneShotId="20" saidMarker="pirate_story8">
                 <state img="#-calm.png" marker="pirate_story9">The Spanish captain paid little attention to Peter and his seemingly insignificant canoe as they approached. He decided to haul them on deck and question them if they came closer, but nothing more. </state>
             </case>
-            <case stage="10" oneShotId="2" saidMarker="pirate_story9">
+            <case stage="10" oneShotId="21" saidMarker="pirate_story9">
                 <state img="#-interested.png" marker="pirate_story10">Peter waited until nightfall to approach the ship undetected. He sawed a hole into the canoe so it would sink as they boarded. The pirates would have no escape, except by death.</state>
             </case>
-            <case stage="10" oneShotId="3" saidMarker="pirate_story10">
+            <case stage="10" oneShotId="22" saidMarker="pirate_story10">
                 <state img="#-excited.png" marker="pirate_story11">The pirates climbed the ship like cats, and pounced on the unsuspecting Spaniards. They were stupefied. It appeared these men were demons who had dropped from the sky! </state>
             </case>
-            <case stage="10" oneShotId="4" saidMarker="pirate_story11">
+            <case stage="10" oneShotId="23" saidMarker="pirate_story11">
                 <state img="#-happy.png" marker="pirate_story12">The Spaniards who fought were quickly cut down by desperate, starving pirates. The rest surrendered without a fight. The ship was theirs!</state>
             </case>
-            <case stage="10" oneShotId="5" saidMarker="pirate_story12">
+            <case stage="10" oneShotId="24" saidMarker="pirate_story12">
                 <state img="#-calm.png" marker="pirate_story13">Peter the Great had earned his title. He later sailed back to France and retired a gentleman of wealth and leisure. </state>
             </case>
-            <case stage="10" oneShotId="6" saidMarker="pirate_story13">
+            <case stage="10" oneShotId="25" saidMarker="pirate_story13">
                 <state img="#-laughing.png" marker="pirate_story_end">Great story, isn't it? Now if only I could pull off a similar move. I might be short a few men! </state>
             </case>
             <case stage="10" notSaidMarker="finished">
@@ -4593,7 +4585,7 @@
             <directive type="text" id="text7" width="20%" arrow="left" delay="0.25" x="35%" y="40%">Huh? Oh! Yeah! Yes I was!</directive>
             <directive type="pause" />
             <directive type="move" id="miki" src="ep_miki_calm.png" />
-            <directive type="text" id="text12" width="20%" arrow="right" delay="0.25" x="50%" y="50%">I think have them  in my room somewhere. Want me to bring them to you later?</directive>
+            <directive type="text" id="text12" width="20%" arrow="right" delay="0.25" x="50%" y="50%">I think I have them in my room somewhere. Want me to bring them to you later?</directive>
             <directive type="pause" />
             <directive type="move" id="emi" src="ep_emi_content.png" />
             <directive type="text" id="text15" width="20%" arrow="left" delay="0.25" x="35%" y="65%">Yes! Thanks, Miki! That would be great!</directive>
