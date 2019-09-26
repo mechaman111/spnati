@@ -594,13 +594,19 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     
     $metaXml.find('alternates').find('costume').each(function (i, elem) {
         var set = $(elem).attr('set') || 'offline';
+        var status = $(elem).attr('status') || 'offline';
         
         if (alternateCostumeSets['all'] || alternateCostumeSets[set]) {
+            if (!includedOpponentStatuses[status]) {
+                return;
+            }
+
             var costume_descriptor = {
                 'folder': $(elem).attr('folder'),
                 'label': $(elem).text(),
                 'image': $(elem).attr('img'),
-                'set': set
+                'set': set,
+                'status': status,
             };
             
             if (set === FORCE_ALT_COSTUME) {
@@ -1312,6 +1318,7 @@ function loadConfigFile () {
                 console.log("Resort mode disabled.");
             }
 
+            includedOpponentStatuses.online = true;
 			$(xml).find('include-status').each(function() {
 				includedOpponentStatuses[$(this).text()] = true;
 				console.log("Including", $(this).text(), "opponents");
