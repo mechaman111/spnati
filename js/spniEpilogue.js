@@ -282,6 +282,10 @@ function loadEpilogueData(player) {
     /* Returning true from this function adds the current epilogue to the list of selectable epilogues.
      * Conversely, returning false from this function will make the current epilogue not selectable.
      */
+    var epilogue_status = $(this).attr('status');
+    if (epilogue_status && !includedOpponentStatuses[epilogue_status]) {
+      return false;
+    }
 
     /* 'gender' attribute: the epilogue will only be selectable if the player character has the given gender, or if the epilogue is marked for 'any' gender. */
     var epilogue_gender = $(this).attr('gender');
@@ -808,6 +812,67 @@ function addEpilogueEntry(epilogue) {
 }
 
 /************************************************************
+ * Add entries to the epilogue modal for unavailable epilogues.
+ ************************************************************/
+function populateUnavailableEpilogues() {
+  var unavailable = [];
+
+  players.forEach(function (opp) {
+    if (opp === humanPlayer || opp.endings.length === 0) return;
+
+    opp.endings.each(function() {
+      var ending = $(this);
+      var title = ending.text();
+
+      /* Skip any epilogues that share titles with available epilogues */
+      if (epilogues.some(function (e) { return e.title === title; })) return;
+
+      /* Don't duplicate unavailable epilogue entries */
+      if (unavailable.some(function (e) { return e[1].text() === title })) return;
+
+      unavailable.push([opp, ending]);
+    });
+  });
+
+  var elems = unavailable.map(function (ent) {
+    var player = ent[0];
+    var endingMeta = ent[1];
+
+    var nameStr = player.first + " " + player.last;
+    if (player.first.length <= 0 || player.last.length <= 0) {
+      nameStr = player.first + player.last; //only use a space if they have both first and last names
+    }
+
+    var epilogueTitle = nameStr + ": " + endingMeta.text();
+
+    var elem = createElementWithClass('li', 'epilogue-entry unavailable');
+
+    var btn = createElementWithClass('button', '');
+    $(btn).prop('disabled', true).appendTo(elem);
+
+    var titleElem = createElementWithClass('span', 'epilogue-title');
+    $(titleElem).text(epilogueTitle).appendTo(btn);
+
+    var hint = endingMeta.attr('hint');
+    if (!hint) {
+      var epGender = endingMeta.attr('gender');
+      if (epGender && epGender !== 'any' && epGender !== humanPlayer.gender) {
+        hint = 'Play as a '+epGender+'.';
+      }
+    }
+
+    if (hint) {
+      var hintElem = createElementWithClass('div', 'epilogue-hint');
+      $(hintElem).text(hint).appendTo(elem);
+    }
+
+    return elem;
+  });
+
+  $epilogueList.append(elems);
+}
+
+/************************************************************
  * Clear the Epilogue modal
  ************************************************************/
 
@@ -866,6 +931,8 @@ function doEpilogueModal() {
     players.forEach(function (p) {
       loadEpilogueData(p).forEach(addEpilogueEntry);
     });
+
+    populateUnavailableEpilogues();
   }
 
   //are there any epilogues available for the player to see?

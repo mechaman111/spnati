@@ -15,12 +15,25 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public static class CharacterGenerator
 	{
+		private static int _currentConverter = -1;
 		private static IKisekaeConverter _converter = new KisekaeConverter();
 		private static BackgroundQueue _workerQueue = new BackgroundQueue();
 
-		public static void SetConverter(IKisekaeConverter converter)
+		public static void SetConverter(int converter)
 		{
-			_converter = converter;
+			if (_currentConverter != converter)
+			{
+				_currentConverter = converter;
+				switch (converter)
+				{
+					case 1:
+						_converter = new KisekaeOnlineConverter();
+						break;
+					default:
+						_converter = new KisekaeConverter();
+						break;
+				}
+			}
 		}
 
 		public static void DiscardRequests(object requester)

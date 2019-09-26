@@ -79,5 +79,17 @@
 			get { return GetInt(10); }
 			set { Set(10, value.ToString()); }
 		}
+
+		public int Layer
+		{
+			get { return GetInt(11); }
+			set { Set(11, value.ToString()); }
+		}
+
+		public int Alpha
+		{
+			get { return GetInt(12); }
+			set { Set(12, value.ToString()); }
+		}
 	}
 }

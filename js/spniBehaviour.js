@@ -239,7 +239,7 @@ function expandTagsList(input_tags) {
  *****                  State Object Specification                *****
  **********************************************************************/
 
-function State($xml_or_state, parentCase) {
+function State($xml_or_state, parentCase, stage) {
     if ($xml_or_state instanceof State) {
         /* Shallow-copy the state: */
         for (var prop in $xml_or_state) {
@@ -257,7 +257,16 @@ function State($xml_or_state, parentCase) {
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
-    this.rawDialogue = $xml.html();
+    if (this.rawDialogue = $xml.children('text').html()) {
+        var $altImages = $xml.children('alt-img').filter(function() {
+            return checkStage(stage, $(this).attr('stage'));
+        });
+        if ($altImages.length > 0) {
+            this.image = $($altImages.get(getRandomNumber(0, $altImages.length))).text();
+        }
+    } else {
+        this.rawDialogue = $xml.html();
+    }
     this.weight = Number($xml.attr('weight')) || 1;
     if (this.weight < 0) this.weight = 0;
     
@@ -428,6 +437,44 @@ State.prototype.applyOneShot = function (player) {
     if (this.oneShotId) {
         player.oneShotStates[this.oneShotId] = true;
     }
+}
+
+/********************************************************************
+ * Check that the state doesn't set a marker or contains text that
+ * another player has already ascertained a maximum number of
+ * opponents saying. 
+ *
+ * Each item in unwantedMarkers and unwantedSayings is a two-element
+ * array where the first element is the restricted player and the
+ * second slement is the marker or dialogue text.
+ ********************************************************************/
+State.prototype.checkUnwanteds = function (self, target) {
+    var savedState = self.chosenState;
+    var ok = !players.some(function(p) { // Check that none of the other players' unwanted lists are violated,
+        if (p == self) return false;  // Shouldn't happen
+        if (!p.chosenState || !p.updatePending || !p.chosenState.parentCase) return false; // Ignore if they don't have a case
+        if (this.marker && p.chosenState.parentCase.unwantedMarkers
+            && p.chosenState.parentCase.unwantedMarkers.some(function(item) {
+                if (self == item[0]) {
+                    self.chosenState = this;  // Temporarily set chosenState to this state to be able to use checkMarker()
+                    return checkMarker(item[1], self, target, true); // item[1] is the marker predicate from the <condition>
+                    // If the marker matched, true is returned, which means not OK.
+                }
+                return false;  // Not us
+            }, this)) {
+            return true;  // At least one marker matched.
+        }
+        if (p.chosenState.parentCase.unwantedSayings
+            && p.chosenState.parentCase.unwantedSayings.some(function(item) {
+                return self == item[0]
+                    && normalizeConditionText(this.rawDialogue).indexOf(normalizeConditionText(item[1])) >= 0;
+            }, this)) {
+            return true;  // At least one line of text matched.
+        }
+        return false;
+    }, this);
+    self.chosenState = savedState;
+    return ok;
 }
 
 function getTargetMarker(marker, target) {
@@ -811,11 +858,29 @@ function checkStage(curStage, stageStr) {
     });
 }
 
+function evalOperator (val, op, cmpVal) {
+    switch (op) {
+    case '>': return val > cmpVal;
+    case '>=': return val >= cmpVal;
+    case '<': return val < cmpVal;
+    case '<=': return val <= cmpVal;
+    case '!=': return val != cmpVal;
+    case '!!': return !!val;
+    default:
+    case '=':
+    case '==':
+        return val == cmpVal;
+    }
+}
+
 /************************************************************
  * Check to see if a given marker predicate string is fulfilled
- * w.r.t. a given character.
- * If currentOnly = true, then the predicate will be tested against the
- * current state marker only. This is used for volatile conditions.
+ * w.r.t. a given character.  If currentOnly = true, then the
+ * predicate will be tested against the current state marker
+ * only. This is used for volatile conditions.  If committedOnly =
+ * true, then the predicate will be tested against the committed
+ * markers only. If neither is true, the committed state combined with
+ * the current state marker.
  ************************************************************/
 function checkMarker(predicate, self, target, currentOnly) {
     var match = predicate.match(/^([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(.+))?\s*$/);
@@ -848,46 +913,72 @@ function checkMarker(predicate, self, target, currentOnly) {
     }
     
     if (currentOnly) {
-        if (!self.chosenState) return false;
-        if (!self.chosenState.marker) return false;
-        if (self.chosenState.marker.name !== name) return false;
-        
-        if (!perTarget || !target) {
-            if (self.chosenState.marker.perTarget) return false;
-        }
-        
-        val = self.chosenState.evaluateMarker(self, target);
+        return !self.updatePending
+            && self.chosenState
+            && self.chosenState.marker
+            && self.chosenState.marker.name === name
+            && ((perTarget && target) || !self.chosenState.marker.perTarget)
+            && evalOperator(self.chosenState.evaluateMarker(self, target), op, cmpVal);
+    }
+    if (perTarget && target) {
+        val = self.markers[getTargetMarker(name, target)];
+    }
+    if (!val) {
+        val = self.markers[name];
+    }
+    if (!val) {
+        val = 0;
+    }
+    return evalOperator(val, op, cmpVal);
+}
+
+function Condition($xml) {
+    this.count  = parseInterval($xml.attr('count') || "1-");
+    this.role   = $xml.attr('role');
+    this.variable = $xml.attr('var');
+    this.id     = $xml.attr('character');
+    this.tag    = $xml.attr('filter');
+    this.stage  = parseInterval($xml.attr('stage'));
+    this.layers = parseInterval($xml.attr('layers'));
+    this.startingLayers = parseInterval($xml.attr('startingLayers'));
+    this.gender         = $xml.attr('gender');
+    this.status         = $xml.attr('status');
+    this.timeInStage    = parseInterval($xml.attr('timeInStage'));
+    this.hand           = $xml.attr('hasHand');
+    this.consecutiveLosses = parseInterval($xml.attr('consecutiveLosses'));
+    this.saidMarker     = $xml.attr('saidMarker');
+    this.sayingMarker   = $xml.attr('sayingMarker');
+    this.notSaidMarker  = $xml.attr('notSaidMarker');
+    this.saying         = $xml.attr('saying');
+    this.priority = 0;
+
+    if (this.role == "self") {
+        this.priority += (this.tag ? 0 : 0) + (this.status ? 20 : 0)
+            + (this.consecutiveLosses ? 60 : 0) + (this.timeInStage ? 8 : 0)
+            + (this.hand ? 20 : 0) + (this.gender ? 5 : 0)
+    } else if (this.role == "target") {
+        this.priority += (this.id ? 300 : 0) + (this.tag ? 150 : 0)
+            + (this.stage ? 80 : 0) + (this.status ? 70 : 0)
+            + (this.layers ? 40 : 0) + (this.startingLayers ? 40 : 0)
+            + (this.consecutiveLosses ? 60 : 0) + (this.timeInStage ? 25 : 0)
+            + (this.hand ? 30 : 0) + (this.gender ? 5 : 0)
     } else {
-        if (perTarget && target) {
-    	    val = self.markers[getTargetMarker(name, target)];
-    	}
-    	if (!val) {
-    	    val = self.markers[name];
-    	}
-    	if (!val) {
-    		val = 0;
-    	}
+        this.priority += (this.id ? 100 : 0) + (this.tag ? 10 : 0)
+            + (this.stage ? 40 : 0) + (this.status ? 5 : 0)
+            + (this.layers ? 20 : 0) + (this.startingLayers ? 20 : 0)
+            + (this.consecutiveLosses ? 30 : 0) + (this.timeInStage ? 15 : 0)
+            + (this.hand ? 15 : 0) + (this.gender ? 5 : 0)
     }
-    
-    switch (op) {
-        case '>': return val > cmpVal;
-        case '>=': return val >= cmpVal;
-        case '<': return val < cmpVal;
-        case '<=': return val <= cmpVal;
-        case '!=': return val != cmpVal;
-        case '!!': return !!val;
-        default:
-        case '=':
-        case '==':
-            return val == cmpVal;
-    }
+    this.priority += (this.saidMarker ? 1 : 0) + (this.notSaidMarker ? 1 : 0)
+        + (this.sayingMarker ? 1 : 0) + (this.saying ? 1 : 0);
 }
 
 /**********************************************************************
  *****                  Case Object Specification                 *****
  **********************************************************************/
 
-function Case($xml) {
+function Case($xml, stage) {
+    // stage is current stage. Only passed to State to choose a correct image.
     this.stage =                    $xml.attr('stage');
     this.tag =                      $xml.attr('tag');
     this.target =                   $xml.attr("target");
@@ -943,14 +1034,13 @@ function Case($xml) {
     
     this.states = [];
     $xml.find('state').each(function (idx, elem) {
-        this.states.push(new State($(elem), this));
+        this.states.push(new State($(elem), this, stage));
     }.bind(this));
     
-    var counters = [];
-    $xml.find("condition").each(function () {
-        counters.push($(this));
-    });
-    this.counters = counters;
+    this.counters = [];
+    $xml.find("condition").each(function (idx, elem) {
+        this.counters.push(new Condition($(elem)));
+    }.bind(this));
     
     var tests = [];
     $xml.find("test").each(function () {
@@ -977,6 +1067,7 @@ function Case($xml) {
     	if (this.oppHand)                  this.priority += 30;
     	if (this.targetTimeInStage)        this.priority += 25;
     	if (this.hasHand)                  this.priority += 20;
+
     	if (this.alsoPlaying)              this.priority += 100;
     	if (this.alsoPlayingStage)         this.priority += 40;
     	if (this.alsoPlayingTimeInStage)   this.priority += 15;
@@ -985,34 +1076,31 @@ function Case($xml) {
     	if (this.alsoPlayingNotSaidMarker) this.priority += 1;
     	if (this.alsoPlayingSayingMarker)  this.priority += 1;
         if (this.alsoPlayingSaying)        this.priority += 1;
+
     	if (this.totalRounds)              this.priority += 10;
     	if (this.timeInStage)              this.priority += 8;
     	if (this.totalMales)               this.priority += 5;
     	if (this.totalFemales)             this.priority += 5;
     	if (this.saidMarker)               this.priority += 1;
     	if (this.notSaidMarker)            this.priority += 1;
+
     	if (this.totalAlive)               this.priority += 2 + this.totalAlive.max;
     	if (this.totalExposed)             this.priority += 4 + this.totalExposed.max;
     	if (this.totalNaked)               this.priority += 5 + this.totalNaked.max;
     	if (this.totalMasturbating)        this.priority += 5 + this.totalMasturbating.max;
     	if (this.totalFinished)            this.priority += 5 + this.totalFinished.max;
-    
-    	counters.forEach(function (ctr) {
-            var filterId     = ctr.attr('character');
-            var filterStage  = ctr.attr('stage');
-            var role         = ctr.attr('role');
-            var filterTag    = ctr.attr('filter');
-            var filterGender = ctr.attr('gender');
-            var filterStatus = ctr.attr('status');
 
-            this.priority += (filterId ? (role == "target" ? 300 : 100) : 0)
-                + (filterStage ? (role == "target" ? 80 : 40) : 0)
-                + (filterTag ? 10 : 0) + (filterGender ? 5 : 0) + (filterStatus ? 5 : 0);
-    	}.bind(this));
-    	
-    	// Expression tests (priority = 50 for each)
-    	this.priority += (tests.length * 50);
+        this.counters.forEach(function (c) { this.priority += c.priority; }, this);
+
+        // Expression tests (priority = 50 for each)
+        this.priority += (tests.length * 50);
     }
+
+    this.isVolatile = this.targetSayingMarker || this.targetSaying
+        || this.alsoPlayingSayingMarker || this.alsoPlayingSaying
+        || this.counters.some(function(c) {
+            return c.sayingMarker || c.saying;
+        });
 }
 
 /* Convert this case's conditions into a plain object, into a format suitable
@@ -1079,70 +1167,19 @@ Case.prototype.getAlsoPlaying = function (opp) {
     return ap;
 }
 
-/* Is this case dependent on marker values in the same phase? */
-Case.prototype.isVolatile = function () {
-    if (this.targetSayingMarker || this.targetSaying) {
-        return true;
-    }
+Case.prototype.checkConditions = function (self, opp) {
+    var volatileDependencies = new Set();
     
-    if (this.alsoPlaying && (this.alsoPlayingSayingMarker || this.alsoPlayingSaying)) {
-        return true;
-    }
-    
-    return false;
-}
-
-Case.prototype.volatileRequirementsMet = function (self, opp) {
-    if (this.targetSayingMarker) {
-        if (!opp) return false;
-        if (!checkMarker(this.targetSayingMarker, opp, null, true)) {
-            return false;
-        }
-    }
-    if (this.targetSaying) {
-        if (!opp) return false;
-        if (!opp.chosenState) return false;
-        if (normalizeConditionText(opp.chosenState.rawDialogue).indexOf(normalizeConditionText(this.targetSaying)) < 0) return false;
-    }
-    
-    if (this.alsoPlaying && (this.alsoPlayingSayingMarker || this.alsoPlayingSaying)) {
-        var ap = this.getAlsoPlaying(opp);
-        if (!ap) return false;
-        
-        if (this.alsoPlayingSayingMarker && !checkMarker(this.alsoPlayingSayingMarker, ap, opp, true)) {
-            return false;
-        }
-        if (this.alsoPlayingSaying
-            && (!ap.chosenState || normalizeConditionText(ap.chosenState.rawDialogue).indexOf(normalizeConditionText(this.alsoPlayingSaying)) < 0))
-            return false;
-    }
-    
-    return true;
-}
-
-/* Get all players that this case targets with saying-marker conditions. */
-Case.prototype.getVolatileDependencies = function (self, opp) {
-    var deps = [];
-    
-    if (opp && this.target && (this.targetSayingMarker || this.targetSaying)) {
-        deps.push(opp);
-    }
-    
-    if (this.alsoPlaying && (this.alsoPlayingSayingMarker || this.alsoPlayingSaying)) {
-        deps.push(this.getAlsoPlaying(opp));
-    }
-    
-    return deps;
-}
-
-Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     // one-time use
     if (this.oneShotId && self.oneShotCases[this.oneShotId]) {
         return false;
     }
 
-    // all states used up
-    if (this.states.every(function (state) { return state.oneShotId && self.oneShotStates[state.oneShotId]; })) {
+    // all states used up or excluded by other player's negative conditions
+    if (this.states.every(function (state) {
+        return (state.oneShotId && self.oneShotStates[state.oneShotId])
+            || !state.checkUnwanteds(self, opp);
+    })) {
         return false;
     }
 
@@ -1204,11 +1241,24 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     
     // targetNotSaidMarker
     if (this.targetNotSaidMarker) {
-        if (!opp || opp.markers[this.targetNotSaidMarker]) {
+        if (!opp || checkMarker(this.targetNotSaidMarker, opp, null)) {
             return false;
         }
     }
+
+    if (this.targetSayingMarker) {
+        if (!opp || !checkMarker(this.targetSayingMarker, opp, null, true)) {
+            return false;
+        }
+        volatileDependencies.add(opp);
+    }
+    if (this.targetSaying) {
+        if (!opp || !opp.chosenState || opp.updatePending) return false;
+        if (normalizeConditionText(opp.chosenState.rawDialogue).indexOf(normalizeConditionText(this.targetSaying)) < 0) return false;
+        volatileDependencies.add(opp);
+    }
     
+
     // consecutiveLosses
     if (this.consecutiveLosses) {
         if (opp) { // if there's a target, look at their losses
@@ -1279,9 +1329,23 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
             }
                     
             if (this.alsoPlayingNotSaidMarker) {
-                if (ap.markers[this.alsoPlayingNotSaidMarker]) {
+                // Negated marker condition - false if it matches
+                if (checkMarker(this.alsoPlayingNotSaidMarker, ap, opp)) {
                     return false;
                 }
+            }
+
+            if (this.alsoPlayingSayingMarker) {
+                if (!checkMarker(this.alsoPlayingSayingMarker, ap, opp, true)) {
+                    return false;
+                }
+                volatileDependencies.add(ap);
+            }
+            if (this.alsoPlayingSaying) {
+                if (ap.updatePending || !ap.chosenState || normalizeConditionText(ap.chosenState.rawDialogue).indexOf(normalizeConditionText(this.alsoPlayingSaying)) < 0) {
+                    return false;
+                }
+                volatileDependencies.add(ap);
             }
         }
     }
@@ -1366,36 +1430,84 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     }
     
     if (this.notSaidMarker) {
-        if (self.markers[this.notSaidMarker]) {
+        if (checkMarker(this.notSaidMarker, self, opp)) {
             return false;
         }
     }
 
-    var counterMatches = [];
-
+    var counterMatches = {};
+    var unwantedSayings = [], unwantedMarkers = [];
     // filter counter targets
     if (!this.counters.every(function (ctr) {
-        var desiredCount = parseInterval(ctr.attr('count') || "1-");
-        var role         = ctr.attr('role');
-        var variable     = ctr.attr('var');
-        var filterId     = ctr.attr('character');
-        var filterStage  = parseInterval(ctr.attr('stage'));
-        var filterTag =    ctr.attr('filter');
-        var filterGender = ctr.attr('gender');
-        var filterStatus = ctr.attr('status');
-
         var matches = players.filter(function(p) {
-            return (role === undefined || (role == "target" && p == opp) || (role == "opp" && p != self) || (role == "other" && p != self && p != opp))
-                && (filterId === undefined || p.id == filterId)
-                && (filterStage === undefined || inInterval(p.stage, filterStage))
-                && (filterTag == undefined || p.hasTag(filterTag))
-                && (filterGender == undefined || (p.gender == filterGender))
-                && (filterStatus == undefined || p.checkStatus(filterStatus));
+            return (ctr.role === undefined
+                    || (ctr.role == "self" && p == self)
+                    || (ctr.role == "target" && p == opp)
+                    || (ctr.role == "opp" && p != self)
+                    || (ctr.role == "other" && p != self && p != opp))
+                && (ctr.id === undefined || p.id == ctr.id)
+                && (ctr.stage === undefined || inInterval(p.stage, ctr.stage))
+                && (ctr.tag === undefined || p.hasTag(ctr.tag))
+                && (ctr.gender === undefined || p.gender == ctr.gender)
+                && (ctr.status === undefined || p.checkStatus(ctr.status))
+                && (ctr.layers === undefined || inInterval(p.clothing.length, ctr.layers))
+                && (ctr.startingLayers === undefined || inInterval(p.startingLayers, ctr.startingLayers))
+                && (ctr.timeInStage === undefined || inInterval(p.timeInStage, ctr.timeInStage))
+                && (ctr.hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
+                && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, ctr.consecutiveLosses))
+                && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null))
+                && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null));
         });
-
-        if (inInterval(matches.length, desiredCount)) {
-            if (matches.length && variable) {
-                counterMatches.push([ variable, matches ]);
+        var hasUpperBound = (ctr.count.max !== null && ctr.count.max < matches.length);
+        if (ctr.sayingMarker !== undefined || ctr.saying !== undefined) matches = matches.filter(function(p) {
+            if (ctr.sayingMarker !== undefined) {
+                // The human player can't talk, and using
+                // saying/sayingMarker on self would be circular.
+                if (p == self || p == humanPlayer) return false;
+                if (checkMarker(ctr.sayingMarker, p, ctr.role == "other" ? opp : null, true)) {
+                    volatileDependencies.add(p);
+                } else {
+                    /* In case the condition could be violated by some
+                     * of the players fulfilling the non-volatile
+                     * conditions changing state, record those players
+                     * and the violating marker. */
+                    if (hasUpperBound) {
+                        unwantedMarkers.push([p, ctr.sayingMarker]);
+                    }
+                    return false;
+                }
+            }
+            if (ctr.saying !== undefined) {
+                if (p == self || p == humanPlayer) return false;
+                if (!p.updatePending && p.chosenState && normalizeConditionText(p.chosenState.rawDialogue).indexOf(normalizeConditionText(ctr.saying)) >= 0) {
+                    volatileDependencies.add(p);
+                } else {
+                    if (hasUpperBound) {
+                        unwantedSayings.push([p, ctr.saying]);
+                    }
+                    return false;
+                }
+            }
+            return true;
+        });
+        /* Don't limit what other characters can say before the've had
+         * a first chance to pick something to say. */
+        if ((unwantedSayings.length || unwantedMarkers.length) && players.some(function(p) {
+            return p.updatePending && (unwantedSayings.some(function(item) { return item[0] == p; })
+                                       || unwantedMarkers.some(function(item) { return item[0] == p; }));
+        })) {
+            return false;
+        }
+        if (inInterval(matches.length, ctr.count)) {
+            if (matches.length && ctr.variable) {
+                if (counterMatches.hasOwnProperty(ctr.variable)) {
+                    // If two <condition> elements define the same variable, take the intersection of the matches.
+                    // If any intersection is empty, getAllBindingCombinations() will return an empty array and the
+                    // case will not match.
+                    counterMatches[ctr.variable] = counterMatches[ctr.variable].filter(function(m) { return matches.indexOf(m) >= 0; });
+                } else {
+                    counterMatches[ctr.variable] = matches;
+                }
             }
             return true;
         }
@@ -1403,7 +1515,7 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     })) {
         return false; // failed filter count
     }
-    var bindingCombinations = getAllBindingCombinations(counterMatches);
+    var bindingCombinations = getAllBindingCombinations(Object.entries(counterMatches));
     shuffleArray(bindingCombinations);
     /* In the trivial case with no condition variables, we get a single binding combination of {}.
        And with no tests, this.tests.every() trivially returns true. */
@@ -1411,6 +1523,10 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
         if (this.tests.every(function(test) {
             var expr = expandDialogue(test.attr('expr'), self, opp, bindingCombinations[i]);
             var value = test.attr('value');
+            if (value) {
+                value = expandDialogue(value, self, opp, bindingCombinations[i]);
+            }
+            
             var cmp = test.attr('cmp');
 
             /* For backwards compatibility, if cmp is unspecified, try
@@ -1445,6 +1561,9 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
             return true;
         })) {
             this.variableBindings = bindingCombinations[i];
+            this.volatileDependencies = volatileDependencies;
+            this.unwantedSayings = unwantedSayings;
+            this.unwantedMarkers = unwantedMarkers;
             return true;
         }
     }
@@ -1462,26 +1581,13 @@ Case.prototype.applyOneShot = function (player) {
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
 
-/************************************************************
- * Updates the behaviour of the given player based on the 
- * provided tag.
- ************************************************************/
-Opponent.prototype.updateBehaviour = function(tags, opp) {
-    /* determine if the AI is dialogue locked */
-    if (this.out && this.forfeit[1] == CANNOT_SPEAK) {
-        /* their is restricted to this only */
-        tags = [this.forfeit[0]];
-    }
-    if (Array.isArray(tags) && Array.isArray(tags[0])) {
-        return tags.some(function(t) { return this.updateBehaviour(t, opp) }, this);
-    }
-    if (!Array.isArray(tags)) {
-        tags = [tags];
-    }
-    tags.push(GLOBAL_CASE);
-    
+Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
     /* get the AI stage */
     var stageNum = this.stage;
+    var bestMatchPriority = 0;
+    if (volatileOnly && this.chosenState && this.chosenState.parentCase) {
+        bestMatchPriority = this.chosenState.parentCase.priority + 1;
+    }
 
     /* try to find the tags/stage.
 	   .get() returns a simple array with the matched
@@ -1507,71 +1613,80 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     
     /* Find the best match, as well as potential volatile matches. */
     var bestMatch = [];
-    var bestMatchPriority = -1000;
-    var volatileMatches = [];
     
     for (var i = 0; i < cases.length; i++) {
-        var curCase = new Case(cases[i]);
+        var curCase = new Case(cases[i], this.stage);
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
-            curCase.basicRequirementsMet(this, opp)) 
+            (!volatileOnly || curCase.isVolatile) &&
+            curCase.checkConditions(this, opp))
         {
-            if (curCase.isVolatile()) {
-                volatileMatches.push(curCase); 
-            } else {
-                if (curCase.hidden) {
-                    //if it's hidden, set markers and collectibles but don't actually count as a match
-                    this.applyHiddenStates(curCase, opp);
-                    continue;
-                }
+            if (curCase.hidden) {
+                //if it's hidden, set markers and collectibles but don't actually count as a match
+                this.applyHiddenStates(curCase, opp);
+                continue;
+            }
 
-                if (curCase.priority > bestMatchPriority) {
-                    bestMatch = [curCase];
-                    bestMatchPriority = curCase.priority;
-                } else {
-                    bestMatch.push(curCase);
-                }
+            if (curCase.priority > bestMatchPriority) {
+                bestMatch = [curCase];
+                bestMatchPriority = curCase.priority;
+            } else {
+                bestMatch.push(curCase);
             }
         }
     }
-    
-    /* Re-filter volatileMatches to ensure that all matched cases have
-     * priority >= bestMatchPriority. */
-    volatileMatches = volatileMatches.filter(function (c) { return c.priority >= bestMatchPriority; });
-    
-    var self = this;
-    var states = bestMatch.reduce(function (list, caseObject) {
-        for (var i = 0; i < caseObject.states.length; i++) {
-            if (!caseObject.states[i].oneShotId || !self.oneShotStates[caseObject.states[i].oneShotId]) {
-                list.push(caseObject.states[i]);
-            }
-        }
-        return list;
-    }.bind(this), []);
+    var states = bestMatch.reduce(function(list, caseObject) {
+        return list.concat(caseObject.states);
+    }.bind(this), []).filter(function(state) {
+        return (!state.oneShotId || !this.oneShotStates[state.oneShotId])
+            && state.checkUnwanteds(this, opp);
+    }.bind(this));
     
     var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
     if (weightSum > 0) {
-        console.log("Current NV case priority for player "+this.slot+": "+bestMatchPriority);
+        console.log("Current case priority for player "+this.slot+": "+bestMatchPriority);
 
         var rnd = Math.random() * weightSum;
         for (var i = 0, x = 0; x < rnd; x += states[i++].weight);
         
+        return states[i - 1];
+    }
+
+    console.log("-------------------------------------");
+    return null;
+}
+
+/************************************************************
+ * Updates the behaviour of the given player based on the 
+ * provided tag.
+ ************************************************************/
+Opponent.prototype.updateBehaviour = function(tags, opp) {
+    /* determine if the AI is dialogue locked */
+    if (this.out && this.forfeit[1] == CANNOT_SPEAK) {
+        /* their is restricted to this only */
+        tags = [this.forfeit[0]];
+    }
+
+    if (Array.isArray(tags) && Array.isArray(tags[0])) {
+        return tags.some(function(t) { return this.updateBehaviour(t, opp) }, this);
+    }
+    if (!Array.isArray(tags)) {
+        tags = [tags];
+    }
+    tags.push(GLOBAL_CASE);
+    this.currentTarget = opp;
+    this.currentTags = tags;
+
+    var state = this.findBehaviour(tags, opp, false);
+
+    if (state) {
         /* Reaction handling state... */
-        this.volatileMatches = volatileMatches;
-        this.bestVolatileMatch = null;
-        this.currentTarget = opp;
-        this.currentPriority = bestMatchPriority;
-        this.stateLockCount = 0;
+        this.chosenState = state;
         this.stateCommitted = false;
         this.lastUpdateTags = tags;
         
-        this.allStates = states;
-        this.chosenState = states[i - 1];
-        
         return true;
     }
-    
-    console.log("-------------------------------------");
     return false;
 }
 
@@ -1582,68 +1697,30 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
  * dependencies will be locked, unlocking prior volatile state locks if necessary.
  ************************************************************/
 Opponent.prototype.updateVolatileBehaviour = function () {
-    if (this.stateLockCount > 0) {
+    if (players.some(function(p) {
+        if (p !== players[HUMAN_PLAYER]
+            && !p.updatePending && p.chosenState && p.chosenState.parentCase) {
+            var dependencies = p.chosenState.parentCase.volatileDependencies;
+            return dependencies && dependencies.has(this);
+        } else return false;
+    }, this)) {
         console.log("Player "+this.slot+" state is locked.");
         return;
     }
+
+    if (this.chosenState && this.chosenState.parentCase) {
+        console.log("Player "+this.slot+": Current priority "+this.chosenState.parentCase.priority);
+    }
     
-    console.log("Player "+this.slot+": Current priority "+this.currentPriority+" with "+this.volatileMatches.length+" possible volatile cases");
-    
-    var bestMatches = [];
-    var bestPriority = this.currentPriority;
-    
-    /* Find best-matching volatile case if any. */
-    this.volatileMatches.forEach(function (c) {
-        if (c !== this.bestVolatileMatch &&
-            c.states.length > 0 &&
-            c.priority >= bestPriority &&
-            c.volatileRequirementsMet(this, this.currentTarget))
-        {
-            if (c.priority > bestPriority) {
-                bestMatches = [c];
-                bestPriority = c.priority;
-            } else {
-                bestMatches.push(c);
-            }
-        }
-    }.bind(this));
-    
-    if (bestMatches.length > 0) {
-        console.log("Found new volatile matches for player "+this.slot+" with priority "+bestPriority);
-        
-        /* Remove lock from previous best-match if necessary. */
-        if (this.bestVolatileMatch) {
-            var oldDeps = this.bestVolatileMatch.getVolatileDependencies(this, this.currentTarget);
-            oldDeps.forEach(function (p) { p.stateLockCount -= 1; });
-        }
-        
-        var bestMatch = bestMatches[getRandomNumber(0, bestMatches.length)];
-        var prevPriority = this.currentPriority;
-        
+    var newState = this.findBehaviour(this.currentTags, this.currentTarget, true);
+
+    if (newState) {
+        console.log("Found new volatile state for player "+this.slot+" with priority "+newState.parentCase.priority);
         /* Assign new best-match case and state. */
-        this.bestVolatileMatch = bestMatch;
-        this.currentPriority = bestPriority;
-        this.allStates = bestMatch.states.filter(function(state) {
-            return !state.oneShotId || !this.oneShotStates[state.oneShotId];
-        }.bind(this));
-        this.chosenState = bestMatch.states[getRandomNumber(0, bestMatch.states.length)];
+        this.chosenState = newState;
         this.stateCommitted = false;
         
-        /* Add locks for dependencies. */
-        var deps = bestMatch.getVolatileDependencies(this, this.currentTarget);
-        deps.forEach(function (p) { p.stateLockCount += 1; });
-        
-        /* Filter out lower-priority volatile cases. */
-        this.volatileMatches = this.volatileMatches.filter(function (c) {
-            return c.priority >= bestPriority;
-        });
-        
-        /* Only indicate an update if we have found a strictly higher-priority
-         * volatile case.
-         * This keeps the overall reaction phase logic from repeatedly switching
-         * between two equal-priority cases.
-         */
-        return bestPriority > prevPriority;
+        return true;
     } else {
         console.log("Found no volatile matches for player "+this.slot);
         return false;
@@ -1717,14 +1794,21 @@ Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
  * based on the provided tag.
  ************************************************************/
 function updateAllBehaviours (target, target_tags, other_tags) {
-    for (var i = 1; i < players.length; i++) {
-        if (players[i] && players[i].isLoaded() && (target === null || i != target)) {
-            players[i].updateBehaviour(other_tags, players[target]);
-        }
+    for (var i = 2; i < players.length; i++) {
+        if (!players[i]) continue;
+        /* Indicate that current state will be overwritten and can't
+         * be used with *SayingMarker and *Saying checks. */
+        players[i].updatePending = true;
     }
-    
-    if (target !== null && target_tags !== null) {
-        players[target].updateBehaviour(target_tags, null);
+
+    for (var i = 1; i < players.length; i++) {
+        if (!players[i] || !players[i].isLoaded()) continue;
+        if (target === null || i != target) {
+            players[i].updateBehaviour(other_tags, players[target]);
+        } else if (i == target && target_tags !== null) {
+            players[i].updateBehaviour(target_tags, null);
+        }
+        players[i].updatePending = false;
     }
     
     updateAllVolatileBehaviours();
@@ -1737,7 +1821,7 @@ function updateAllBehaviours (target, target_tags, other_tags) {
  * 'Promotes' players who have available volatile cases to using those cases.
  ************************************************************/
 function updateAllVolatileBehaviours () {
-    for (var pass=0;pass<3;pass++) {
+    for (var pass = 0; pass < 3; pass++) {
         console.log("Reaction pass "+(pass+1));
         var anyUpdated = false;
         

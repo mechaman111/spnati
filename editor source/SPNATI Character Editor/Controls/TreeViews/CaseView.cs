@@ -103,8 +103,11 @@ namespace SPNATI_Character_Editor.Controls
 			foreach (string tag in TriggerDatabase.GetTags())
 			{
 				if (tag == "-") { continue; }
-				Trigger trigger = TriggerDatabase.GetTrigger(tag);
-				_model.AddGroup(trigger.Tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
+				if (!Config.HideEmptyCases || !trigger.Optional)
+				{
+					_model.AddGroup(trigger.Tag);
+				}
 			}
 
 			//Add working cases to the right grouper
@@ -159,8 +162,13 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		public string AddingCase(out string folder)
+		public void BuildCase(Case theCase)
 		{
+		}
+
+		public Case AddingCase(out string folder)
+		{
+			string newTag = null;
 			folder = "";
 			if (_character == null)
 			{
@@ -170,14 +178,14 @@ namespace SPNATI_Character_Editor.Controls
 			if (node == null)
 			{
 				GroupedListGrouper group = _listView.SelectedItem as GroupedListGrouper;
-				string tag = group.RootKey ?? group?.Key?.ToString();
+				string tag = group?.RootKey ?? group?.Key?.ToString();
 				if (!string.IsNullOrEmpty(tag))
 				{
 					if (tag != group?.Key?.ToString())
 					{
 						folder = group?.Key?.ToString();
 					}
-					return tag;
+					newTag = tag;
 				}
 			}
 			else
@@ -193,7 +201,15 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 
-			return node?.Case?.Tag;
+			if (string.IsNullOrEmpty(newTag))
+			{
+				newTag = node?.Case?.Tag;
+			}
+			if (!string.IsNullOrEmpty(newTag))
+			{
+				return new Case(newTag);
+			}
+			return null;
 		}
 
 		public void ModifyCase(Case modifiedCase)
@@ -301,7 +317,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		public bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger)
+		public bool IsTriggerValid(DialogueNode selectedNode, TriggerDefinition trigger)
 		{
 			return true;
 		}
@@ -349,6 +365,8 @@ namespace SPNATI_Character_Editor.Controls
 			DialogueNode node = args.Model as DialogueNode;
 			args.Tooltip = node.Case.ToString();
 
+			args.GrouperColor = GetGroupColor(args.Group.Key, args.Group.Index);
+
 			CaseLabel label = _editorData.GetLabel(node.Case);
 			if (label != null)
 			{
@@ -359,7 +377,6 @@ namespace SPNATI_Character_Editor.Controls
 					return;
 				}
 			}
-			args.GrouperColor = GetGroupColor(args.Group.Key, args.Group.Index);
 
 			if (_editorData.IsHidden(node.Case))
 			{
@@ -396,7 +413,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private Color GetGroupColor(string key, int index)
 		{
-			Trigger trigger = TriggerDatabase.GetTrigger(key);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(key);
 			if (string.IsNullOrEmpty(trigger.Label))
 			{
 				return index % 2 == 0 ? SkinManager.Instance.CurrentSkin.PrimaryForeColor : SkinManager.Instance.CurrentSkin.SecondaryForeColor;
@@ -408,7 +425,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			args.Font = _font;
 			args.ForeColor = GetGroupColor(args.Group.Key, args.Group.Index);
-			Trigger trigger = TriggerDatabase.GetTrigger(args.Group.Key);
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(args.Group.Key);
 			if (!string.IsNullOrEmpty(trigger.Label))
 			{
 				args.Label = trigger.Label;

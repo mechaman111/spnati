@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Desktop</RootNamespace>
     <AssemblyName>Desktop</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\UnusedCodeRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -56,6 +58,12 @@
     <Compile Include="CommonControls\AccordionListView.Designer.cs">
       <DependentUpon>AccordionListView.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommonControls\ActivityLink.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\ActivityLink.Designer.cs">
+      <DependentUpon>ActivityLink.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonControls\ColorField.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -72,6 +80,30 @@
     </Compile>
     <Compile Include="CommonControls\DBTreeView.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CommonControls\Graphs\FillGauge.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\Graphs\FillGauge.Designer.cs">
+      <DependentUpon>FillGauge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonControls\Graphs\LineGraph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\Graphs\LineGraph.Designer.cs">
+      <DependentUpon>LineGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonControls\Graphs\RadialGauge.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\Graphs\RadialGauge.Designer.cs">
+      <DependentUpon>RadialGauge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonControls\Graphs\StackedBarGraph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\Graphs\StackedBarGraph.Designer.cs">
+      <DependentUpon>StackedBarGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonControls\GroupRadioButton.cs">
       <SubType>Component</SubType>
@@ -99,6 +131,12 @@
     </Compile>
     <Compile Include="CommonControls\PropertyControls\ColorSetControl.Designer.cs">
       <DependentUpon>ColorSetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonControls\PropertyControls\EnumControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\PropertyControls\EnumControl.Designer.cs">
+      <DependentUpon>EnumControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonControls\PropertyControls\ComboBoxControl.cs">
       <SubType>UserControl</SubType>
@@ -166,6 +204,12 @@
     <Compile Include="CommonControls\SelectablePanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CommonControls\Shield.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\Shield.Designer.cs">
+      <DependentUpon>Shield.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonControls\TextField.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -206,6 +250,7 @@
     <Compile Include="DataStructures\ObservableSet.cs" />
     <Compile Include="DataStructures\PropertyMacro.cs" />
     <Compile Include="DataStructures\PropertyRecord.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\NativeMethods.cs" />
     <Compile Include="Forms\MacroEditor.cs">
       <SubType>Form</SubType>
@@ -225,12 +270,17 @@
     <Compile Include="Forms\VariableMapper.Designer.cs">
       <DependentUpon>VariableMapper.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Interfaces\IActivity.cs" />
+    <Compile Include="Interfaces\IDirtiable.cs" />
     <Compile Include="Interfaces\IMacroEditor.cs" />
+    <Compile Include="Interfaces\IPropertyChangedNotifier.cs" />
     <Compile Include="Interfaces\IRecord.cs" />
     <Compile Include="Interfaces\IWorkspace.cs" />
+    <Compile Include="Extensions\MathUtils.cs" />
     <Compile Include="Messaging\CoreDesktopMessages.cs" />
     <Compile Include="Messaging\Mailbox.cs" />
+    <Compile Include="Messaging\Messenger.cs" />
     <Compile Include="Messaging\PostOffice.cs" />
     <Compile Include="Messaging\Subscription.cs" />
     <Compile Include="Metadata\ActivityAttribute.cs" />
@@ -279,6 +329,7 @@
     <Compile Include="Reporting\DataSlicerControlMap.cs" />
     <Compile Include="Reporting\RecordSlicer.cs" />
     <Compile Include="Reporting\SlicerGroup.cs" />
+    <Compile Include="Serialization\DateConverter.cs" />
     <Compile Include="Serialization\Json.cs" />
     <Compile Include="Serialization\PropertyTypeInfo.cs" />
     <Compile Include="Shell.cs">
@@ -372,6 +423,14 @@
       <DependentUpon>SkinTester.cs</DependentUpon>
     </Compile>
     <Compile Include="Skinning\VisualState.cs" />
+    <Compile Include="Toaster\Toast.cs" />
+    <Compile Include="Toaster\ToastControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Toaster\ToastControl.Designer.cs">
+      <DependentUpon>ToastControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Toaster\Toaster.cs" />
     <Compile Include="UndoRedo\ICommand.cs" />
     <Compile Include="UndoRedo\MultiCommand.cs" />
     <Compile Include="UndoRedo\UndoManager.cs" />
@@ -381,11 +440,17 @@
     <EmbeddedResource Include="CommonControls\AccordionListView.resx">
       <DependentUpon>AccordionListView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CommonControls\ActivityLink.resx">
+      <DependentUpon>ActivityLink.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CommonControls\DataSlicerControl.resx">
       <DependentUpon>DataSlicerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CommonControls\EnumSelect.resx">
       <DependentUpon>EnumSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommonControls\Graphs\RadialGauge.resx">
+      <DependentUpon>RadialGauge.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CommonControls\PropertyControls\BooleanControl.resx">
       <DependentUpon>BooleanControl.cs</DependentUpon>
@@ -395,6 +460,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CommonControls\PropertyControls\ColorSetControl.resx">
       <DependentUpon>ColorSetControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommonControls\PropertyControls\EnumControl.resx">
+      <DependentUpon>EnumControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CommonControls\PropertyControls\ComboBoxControl.resx">
       <DependentUpon>ComboBoxControl.cs</DependentUpon>
@@ -456,6 +524,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Skinning\SkinTester.resx">
       <DependentUpon>SkinTester.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Toaster\ToastControl.resx">
+      <DependentUpon>ToastControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

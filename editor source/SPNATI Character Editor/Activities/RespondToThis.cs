@@ -32,6 +32,8 @@ namespace SPNATI_Character_Editor.Activities
 			_sourceCase = rec.SourceCase;
 			_responder = rec.ResponseCharacter;
 			_responseCase = rec.ResponseCase;
+			imgSource.SetCharacter(_source);
+			imgResponse.SetCharacter(_responder);
 			gridSource.SetData(_source, _sourceCase);
 			responseControl.SetCharacter(_responder);
 			responseControl.SetCase(new Stage(_responseCase.Stages[0]), _responseCase);
@@ -66,17 +68,8 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (index == -1)
 				return;
-			string image = gridSource.GetImage(index);
-			ImageLibrary lib = ImageLibrary.Get(_source);
-			CharacterImage img = null;
-			img = lib.Find(image);
-			if (img == null)
-			{
-				int stage = _sourceCase.Stages[0];
-				image = DialogueLine.GetStageImage(stage, DialogueLine.GetDefaultImage(image));
-				img = lib.Find(image);
-			}
-			imgSource.SetImage(img);
+			PoseMapping image = gridSource.GetImage(index);
+			imgSource.SetImage(image, _sourceCase.Stages[0]);
 		}
 
 
@@ -84,17 +77,13 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (line == -1)
 				return;
-			string image = responseControl.GetImage(line);
-			ImageLibrary lib = ImageLibrary.Get(_responder);
-			CharacterImage img = null;
-			img = lib.Find(image);
-			if (img == null)
+			PoseMapping image = responseControl.GetImage(line);
+			if (image != null)
 			{
 				int stage = _responseCase.Stages[0];
-				image = DialogueLine.GetStageImage(stage, DialogueLine.GetDefaultImage(image));
-				img = lib.Find(image);
+				imgResponse.SetImage(image, stage);
 			}
-			imgResponse.SetImage(img);
+			
 		}
 
 		public override bool CanDeactivate(DeactivateArgs args)

@@ -18,7 +18,7 @@ namespace SPNATI_Character_Editor
 
 		private static void Load()
 		{
-			string file = "xml_encoding.txt";
+			string file = Path.Combine(Config.ExecutableDirectory, "xml_encoding.txt");
 			string[] lines = File.ReadAllLines(file);
 			foreach (string kvp in lines)
 			{

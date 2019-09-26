@@ -33,11 +33,11 @@ namespace SPNATI_Character_Editor.Providers
 			{
 				if (_character != null)
 				{
-					if (_character.Markers.Contains(key))
+					if (_character.Markers.Value.Contains(key))
 					{
-						return _character.Markers.Get(key);
+						return _character.Markers.Value.Get(key);
 					}
-					_character.Markers.Add(marker);
+					_character.Markers.Value.Add(marker);
 				}
 			}
 			return marker;
@@ -73,8 +73,12 @@ namespace SPNATI_Character_Editor.Providers
 			}
 			if (_character == null) { return list; }
 
-			foreach (Marker record in _character.Markers.Values)
+			foreach (Marker record in _character.Markers.Value.Values)
 			{
+				if (string.IsNullOrEmpty(record.Key))
+				{
+					continue;
+				}
 				if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text))
 				{
 					//partial match

@@ -83,6 +83,7 @@ var ENDING_DELAY = null;
 var GAME_OVER_DELAY = 1000;
 var SHOW_ENDING_DELAY = 5000; //5 seconds
 var CARD_SUGGEST = false;
+var PLAYER_FINISHING_EFFECT = true;
 var EXPLAIN_ALL_HANDS = true;
 var AUTO_FADE = true;
 var MINIMAL_UI = true;
@@ -167,6 +168,7 @@ function loadGameScreen () {
 
     $gamePlayerCardArea.show();
     $gamePlayerCountdown.hide();
+    $gamePlayerCountdown.removeClass('pulse');
     chosenDebug = -1;
     updateDebugState(showDebug);
     
@@ -181,8 +183,8 @@ function loadGameScreen () {
             p.commitBehaviourUpdate();
         }
         
-        if (p.allStates) {
-            p.chosenState = p.allStates[getRandomNumber(0, p.allStates.length)];
+        if (p.startStates && p.startStates.length) {
+            p.chosenState = p.startStates[getRandomNumber(0, p.startStates.length)];
             p.stateCommitted = false;
         }
     }.bind(this));
@@ -304,7 +306,6 @@ function reactToNewAICards () {
 		players[currentTurn].updateBehaviour([GOOD_HAND, ANY_HAND]);
 	}
     
-    players[currentTurn].updateVolatileBehaviour();
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
     
@@ -341,7 +342,6 @@ function advanceTurn () {
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
             players[currentTurn].updateBehaviour(players[currentTurn].forfeit[0]);
-            players[currentTurn].updateVolatileBehaviour();
             players[currentTurn].commitBehaviourUpdate();
             updateGameVisual(currentTurn);
             

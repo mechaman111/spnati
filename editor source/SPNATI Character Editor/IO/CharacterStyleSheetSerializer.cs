@@ -87,9 +87,9 @@ namespace SPNATI_Character_Editor.IO
 						else
 						{
 							string style = text;
-							if (text.EndsWith("}") && text.Length > 1)
+							if (style.EndsWith("}") && style.Length > 1)
 							{
-								style = text.Substring(0, text.Length - 1);
+								style = style.Substring(0, style.Length - 1);
 							}
 							string[] pieces = text.Split(new char[] { ':' }, 2);
 							if (pieces.Length == 2)
@@ -104,7 +104,7 @@ namespace SPNATI_Character_Editor.IO
 								requireAdvanced = true;
 								break;
 							}
-							if (text.EndsWith("}"))
+							if (style.EndsWith("}"))
 							{
 								working.Clear();
 								rule = null;

@@ -1,7 +1,9 @@
 ﻿using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.IO;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
@@ -64,11 +66,18 @@ namespace SPNATI_Character_Editor
 				Directory.CreateDirectory(dir);
 			}
 
+			bool backupEnabled = Config.BackupEnabled;
+			if (backupEnabled)
+			{
+				CleanUpBackups(character);
+			}
+
 			string timestamp = GetTimeStamp();
 			bool success = BackupAndExportXml(character, character, "behaviour", timestamp) &&
 				BackupAndExportXml(character, character.Metadata, "meta", timestamp) &&
 				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor", timestamp) &&
-				BackupAndExportXml(character, character.Collectibles, "collectibles", timestamp);
+				BackupAndExportXml(character, character.Collectibles, "collectibles", timestamp) &&
+				CharacterHistory.Save(character);
 
 			if (success && !string.IsNullOrEmpty(character.StyleSheetName))
 			{
@@ -84,7 +93,60 @@ namespace SPNATI_Character_Editor
 			DeleteFile(character, "markers.edit.bak");
 			DeleteFile(character, "editor.edit.bak");
 
+			if (success)
+			{
+				character.IsDirty = false;
+			}
 			return success;
+		}
+
+		private static void CleanUpBackups(Character character)
+		{
+			string dir = Config.GetBackupDirectory(character);
+			DateTime now = DateTime.Now;
+			int minAge = Config.BackupPeriod;
+			int maxAge = Config.BackupLifeTime * 1440;
+			string oldestRecentFile = null;
+			string oldestFileSuffix = null;
+			double oldestAge = 0.0;
+			if (Directory.Exists(dir))
+			{
+				List<string> obsoleteFiles = Directory.EnumerateFiles(dir, "*.bak", SearchOption.TopDirectoryOnly).Where(delegate (string file)
+				{
+					DateTime writeTime = File.GetLastWriteTime(file);
+					TimeSpan age = now - writeTime;
+					bool result = false;
+					if (age.TotalMinutes > maxAge || age.TotalMinutes < minAge)
+					{
+						if (age.TotalMinutes < minAge && age.TotalMinutes > oldestAge)
+						{
+							oldestRecentFile = file;
+							oldestAge = age.TotalMinutes;
+						}
+						result = true;
+					}
+					return result;
+				}).ToList();
+				if (oldestRecentFile != null)
+				{
+					oldestFileSuffix = Path.GetFileName(oldestRecentFile);
+					oldestFileSuffix = oldestFileSuffix.Substring(oldestFileSuffix.IndexOf('-'));
+				}
+				foreach (string file in obsoleteFiles)
+				{
+					if (oldestFileSuffix == null || !file.EndsWith(oldestFileSuffix))
+					{
+						try
+						{
+							File.Delete(file);
+						}
+						catch (Exception e)
+						{
+							ErrorLog.LogError(e.Message);
+						}
+					}
+				}
+			}
 		}
 
 		private static void DeleteFile(Character character, string file)
@@ -105,27 +167,6 @@ namespace SPNATI_Character_Editor
 			return DateTime.Now.ToString("yyyyMMddHHmmss");
 		}
 
-		/// <summary>
-		/// Backs up a character's xml files
-		/// </summary>
-		/// <param name="character"></param>
-		/// <returns></returns>
-		public static bool BackupCharacter(Character character)
-		{
-			string dir = Config.GetBackupDirectory(character);
-			if (!Directory.Exists(dir))
-			{
-				Directory.CreateDirectory(dir);
-			}
-
-			string timestamp = GetTimeStamp();
-			bool success = ExportXml(character, Path.Combine(dir, $"behaviour-{timestamp}.bak")) &&
-				ExportXml(character.Metadata, Path.Combine(dir, $"meta-{timestamp}.bak")) &&
-				ExportXml(CharacterDatabase.GetEditorData(character), Path.Combine(dir, $"editor-{timestamp}.bak")) &&
-				ExportXml(character.Collectibles, Path.Combine(dir, $"collectibles-{timestamp}.bak"));
-			return success;
-		}
-
 		private static bool BackupAndExportXml(Character character, object data, string name, string timestamp)
 		{
 			if (data == null) { return false; }
@@ -133,22 +174,26 @@ namespace SPNATI_Character_Editor
 			string filename = Path.Combine(dir, name + ".xml");
 			if (ExportXml(data, filename))
 			{
-				string backup = Config.GetBackupDirectory(character);
-				if (!Directory.Exists(backup))
+				bool backupEnabled = Config.BackupEnabled;
+				if (backupEnabled)
 				{
-					Directory.CreateDirectory(backup);
-				}
-				string backupFilename = Path.Combine(backup, $"{name}-{timestamp}.bak");
-				try
-				{
-					if (File.Exists(backupFilename))
+					string backup = Config.GetBackupDirectory(character);
+					if (!Directory.Exists(backup))
 					{
-						File.Delete(backupFilename);
+						Directory.CreateDirectory(backup);
 					}
+					string backupFilename = Path.Combine(backup, $"{name}-{timestamp}.bak");
+					try
+					{
+						if (File.Exists(backupFilename))
+						{
+							File.Delete(backupFilename);
+						}
 
-					File.Copy(filename, backupFilename);
+						File.Copy(filename, backupFilename);
+					}
+					catch { }
 				}
-				catch { }
 				return true;
 			}
 			return false;
@@ -242,12 +287,6 @@ namespace SPNATI_Character_Editor
 				character.Metadata = new Metadata(character);
 			else character.Metadata = metadata;
 
-			MarkerData markers = ImportMarkerData(folderName); //should move this to the editor data at some point, but it would render markers.xml obsolete
-			if (markers != null)
-			{
-				character.Markers.Merge(markers);
-			}
-
 			CollectibleData collectibles = ImportCollectibles(folderName);
 			if (collectibles != null)
 			{
@@ -288,7 +327,7 @@ namespace SPNATI_Character_Editor
 				MarkerData markers = ImportXml<MarkerData>(markerFile);
 				if (markers != null)
 				{
-					recoveredCharacter.Markers.Merge(markers);
+					recoveredCharacter.Markers = new Lazy<MarkerData>(() => markers);
 				}
 			}
 
@@ -333,7 +372,7 @@ namespace SPNATI_Character_Editor
 				IHookSerialization hook = result as IHookSerialization;
 				if (hook != null)
 				{
-					hook.OnAfterDeserialize();
+					hook.OnAfterDeserialize(filename);
 				}
 
 				return result;
@@ -357,7 +396,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="data">Data to serialize</param>
 		/// <param name="filename">File name</param>
 		/// <returns>True if successful</returns>
-		private static bool ExportXml<T>(T data, string filename)
+		public static bool ExportXml<T>(T data, string filename)
 		{
 			TextWriter writer = null;
 			try
@@ -423,7 +462,30 @@ namespace SPNATI_Character_Editor
 			return null;
 		}
 
-		private static MarkerData ImportMarkerData(string folderName)
+		public static BackgroundList ImportBackgrounds()
+		{
+			string filename = Path.Combine(Config.SpnatiDirectory, "backgrounds.xml");
+			if (File.Exists(filename))
+			{
+				TextReader reader = null;
+				try
+				{
+					XmlSerializer serializer = new XmlSerializer(typeof(BackgroundList), "");
+					reader = new StreamReader(filename);
+					return serializer.Deserialize(reader) as BackgroundList;
+				}
+				finally
+				{
+					if (reader != null)
+					{
+						reader.Close();
+					}
+				}
+			}
+			return null;
+		}
+
+		public static MarkerData ImportMarkerData(string folderName)
 		{
 			string folder = Config.GetRootDirectory(folderName);
 			if (!Directory.Exists(folder))
@@ -438,7 +500,7 @@ namespace SPNATI_Character_Editor
 			return ImportXml<MarkerData>(filename);
 		}
 
-		private static CharacterEditorData ImportEditorData(string folderName)
+		public static CharacterEditorData ImportEditorData(string folderName)
 		{
 			string folder = Config.GetRootDirectory(folderName);
 			if (!Directory.Exists(folder))
@@ -470,7 +532,7 @@ namespace SPNATI_Character_Editor
 
 		public static TagDictionary ImportTags()
 		{
-			string filename = "tag_dictionary.xml";
+			string filename = Path.Combine(Config.ExecutableDirectory, "tag_dictionary.xml");
 			if (File.Exists(filename))
 			{
 				TextReader reader = null;
@@ -575,6 +637,6 @@ namespace SPNATI_Character_Editor
 	public interface IHookSerialization
 	{
 		void OnBeforeSerialize();
-		void OnAfterDeserialize();
+		void OnAfterDeserialize(string source);
 	}
 }

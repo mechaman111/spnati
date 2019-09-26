@@ -170,7 +170,11 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		public string AddingCase(out string folder)
+		public void BuildCase(Case theCase)
+		{
+		}
+
+		public Case AddingCase(out string folder)
 		{
 			folder = "";
 			DialogueNode node = _listView.SelectedItem as DialogueNode;
@@ -187,7 +191,12 @@ namespace SPNATI_Character_Editor.Controls
 					folder = label.Folder;
 				}
 			}
-			return c?.Tag;
+			string tag = c?.Tag;
+			if (!string.IsNullOrEmpty(tag))
+			{
+				return new Case(tag);
+			}
+			return null;
 		}
 
 		public void ModifyCase(Case modifiedCase)
@@ -338,7 +347,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		public bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger)
+		public bool IsTriggerValid(DialogueNode selectedNode, TriggerDefinition trigger)
 		{
 			Stage stage = selectedNode?.Stage;
 			if (stage == null)
@@ -383,9 +392,12 @@ namespace SPNATI_Character_Editor.Controls
 
 		public int SortGroups(string key1, string key2)
 		{
-			int s1 = int.Parse(key1);
-			int s2 = int.Parse(key2);
-			return s1.CompareTo(s2);
+			int s1, s2;
+			if (int.TryParse(key1, out s1) && int.TryParse(key2, out s2))
+			{
+				return s1.CompareTo(s2);
+			}
+			return key1.CompareTo(key2);
 		}
 
 		public void FormatRow(FormatRowEventArgs args)

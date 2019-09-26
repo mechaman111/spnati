@@ -11,9 +11,10 @@ namespace Desktop
 		void AddActivity(IActivity activity);
 		IActivity ActiveActivity { get; set; }
 		IActivity ActiveSidebarActivity { get; set; }
-		IActivity GetFirstActivity();
-		IActivity GetFirstSidebarActivity();
+		IActivity GetDefaultActivity();
+		IActivity GetDefaultSidebarActivity();
 		IActivity Find<T>() where T : IActivity;
+		IActivity Find(Type type);
 		void RemoveActivity(IActivity activity);
 		void Initialize();
 		string Caption { get; }
@@ -31,5 +32,8 @@ namespace Desktop
 		void SendMessage<T>(int message, T args);
 		bool IsSidebarExpanded { get; }
 		void ToggleSidebar(bool expanded);
+		void SetData(string key, object value);
+		T GetData<T>(string key);
+		bool AllowAutoStart(Type activityType);
 	}
 }

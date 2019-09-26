@@ -18,10 +18,16 @@ namespace Desktop.CommonControls
 		/// Contextual object that will be passed to edit controls
 		/// </summary>
 		public object Context;
+		/// <summary>
+		/// Contextual object that will be passed to edit controls
+		/// </summary>
+		public object SecondaryContext;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public event EventHandler<MacroArgs> EditingMacro;
 		public event EventHandler<MacroArgs> MacroChanged;
+		public event EventHandler RowAdded;
+		public event EventHandler RowRemoved;
 
 		private SkinnedBackgroundType _background;
 		public SkinnedBackgroundType PanelType
@@ -208,6 +214,7 @@ namespace Desktop.CommonControls
 			recAdd.Visible = !_hideAdd;
 			menuSpeedButtons.Visible = !_hideMenu;
 			menuSpeedButtons.Left = _hideAdd ? 0 : recAdd.Right;
+			menuSpeedButtons.Width = _hideAdd ? Width : Width - recAdd.Right - 50;
 			int bottom = pnlRecords.Bottom;
 			pnlRecords.Top = (_hideAdd && _hideMenu ? 0 : menuSpeedButtons.Bottom + 3);
 			pnlRecords.Height = bottom - pnlRecords.Top;
@@ -296,11 +303,36 @@ namespace Desktop.CommonControls
 			}
 		}
 
-		private void AddControl(PropertyRecord result)
+		private PropertyEditControl FindControl(string key, object data)
 		{
-			AddControl(result, null);
+			Dictionary<int, PropertyTableRow> rows = _rows[key];
+			if (rows != null)
+			{
+				foreach (PropertyTableRow row in rows.Values)
+				{
+					if (row.EditControl.GetValue() == data)
+					{
+						return row.EditControl;
+					}
+				}
+			}
+			return null;
 		}
-		private void AddControl(PropertyRecord result, PropertyMacro macro)
+
+		public void AddProperty(string property)
+		{
+			PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property);
+			if (record != null)
+			{
+				AddControl(record);
+			}
+		}
+
+		private PropertyEditControl AddControl(PropertyRecord result)
+		{
+			return AddControl(result, null);
+		}
+		private PropertyEditControl AddControl(PropertyRecord result, PropertyMacro macro)
 		{
 			bool newlyAdded;
 			PropertyEditControl ctl = EditRecord(result, -1, out newlyAdded);
@@ -328,6 +360,7 @@ namespace Desktop.CommonControls
 			{
 				ctl.OnInitialAdd();
 			}
+			return ctl;
 		}
 
 		private void focusOnAdd_Click(object sender, EventArgs e)
@@ -475,7 +508,7 @@ namespace Desktop.CommonControls
 				foreach (PropertyRecord editControl in controlsToRebind)
 				{
 					PropertyEditControl ctl = EditRecord(editControl, -1, out newlyAdded);
-					ctl.Rebind(Data, PreviewData, Context);
+					ctl.Rebind(Data, PreviewData, Context, SecondaryContext);
 				}
 			}
 			finally
@@ -557,6 +590,10 @@ namespace Desktop.CommonControls
 								item = Activator.CreateInstance(itemType);
 							}
 							list.Add(item);
+							if (Data is IPropertyChangedNotifier)
+							{
+								((IPropertyChangedNotifier)Data).NotifyPropertyChanged(result.Property);
+							}
 							index = list.Count - 1;
 						}
 					}
@@ -568,7 +605,7 @@ namespace Desktop.CommonControls
 				ctl.SetParameters(result.Attribute);
 				ctl.RequireHeight += PropertyEditControl_RequireHeight;
 
-				ctl.SetData(Data, result.Property, index, Context, UndoManager, _previewData, this);
+				ctl.SetData(Data, result.Property, index, Context, SecondaryContext, UndoManager, _previewData, this);
 
 				row = new PropertyTableRow();
 				if (result.RowHeight > 0)
@@ -614,6 +651,7 @@ namespace Desktop.CommonControls
 						rowCtl.TabIndex = pnlRecords.Controls.Count - i - 1;
 					}
 				}
+				RowAdded?.Invoke(this, EventArgs.Empty);
 			}
 
 			return ctl;
@@ -758,6 +796,8 @@ namespace Desktop.CommonControls
 					}
 				}
 			}
+
+			RowRemoved?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void Row_ToggleFavorite(object sender, EventArgs e)
@@ -785,13 +825,13 @@ namespace Desktop.CommonControls
 		/// Runs a filter over added rows to hide and show them
 		/// </summary>
 		/// <param name="filter"></param>
-		public void RunFilter(Func<PropertyRecord, object, object, bool> filter)
+		public void RunFilter(Func<PropertyRecord, object, object, object, bool> filter)
 		{
 			foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> kvp in _rows)
 			{
 				foreach (PropertyTableRow row in kvp.Value.Values)
 				{
-					row.Visible = filter(row.Record, Data, Context);
+					row.Visible = filter(row.Record, Data, Context, SecondaryContext);
 				}
 			}
 		}
@@ -833,7 +873,7 @@ namespace Desktop.CommonControls
 			return groupMenu;
 		}
 
-		public void AddSpeedButton(string group, string caption, Func<object, string> propertyCreator)
+		public void AddSpeedButton(string group, string caption, Func<object, SpeedButtonData> propertyCreator)
 		{
 			ToolStripMenuItem groupMenu = GetOrAddGroupMenu(group);
 
@@ -857,12 +897,32 @@ namespace Desktop.CommonControls
 		private void CustomSpeedButtonClick(object sender, EventArgs e)
 		{
 			ToolStripMenuItem item = sender as ToolStripMenuItem;
-			Func<object, string> func = item.Tag as Func<object, string>;
-			string property = func(Data);
+			Func<object, SpeedButtonData> func = item.Tag as Func<object, SpeedButtonData>;
+			SpeedButtonData data = func(Data);
+			string property = data.Property;
+			string subproperty = data.Subproperty;
+			string[] pieces = property.Split('>');
+			if (pieces.Length > 1)
+			{
+				property = pieces[0];
+				subproperty = pieces[1];
+			}
 			PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property);
 			if (record != null)
 			{
-				AddControl(record);
+				PropertyEditControl ctl = null;
+				if (data.ListItem != null)
+				{
+					ctl = FindControl(property, data.ListItem);
+				}
+				if (ctl == null)
+				{
+					ctl = AddControl(record);
+				}
+				if (ctl != null && !string.IsNullOrEmpty(subproperty))
+				{
+					ctl.EditSubProperty(subproperty);
+				}
 			}
 		}
 
@@ -1002,6 +1062,40 @@ namespace Desktop.CommonControls
 		public void OnUpdateSkin(Skin skin)
 		{
 			BackColor = skin.GetBackColor(PanelType);
+		}
+
+		/// <summary>
+		/// Gets the minimum height of everything in the property to avoid scrolling
+		/// </summary>
+		/// <returns></returns>
+		public int GetTotalHeight()
+		{
+			int height = pnlRecords.Top;
+			int max = 0;
+			foreach (Control ctl in pnlRecords.Controls)
+			{
+				max = Math.Max(max, ctl.Bottom);
+			}
+			height += max;
+			return height + pnlRecords.Margin.Bottom + pnlRecords.Margin.Top;
+		}
+	}
+
+	public class SpeedButtonData
+	{
+		public string Property;
+		public string Subproperty;
+		public object ListItem;
+
+		public SpeedButtonData(string property)
+		{
+			Property = property;
+		}
+
+		public SpeedButtonData(string property, string subproperty)
+		{
+			Property = property;
+			Subproperty = subproperty;
 		}
 	}
 }

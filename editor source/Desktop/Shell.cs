@@ -25,15 +25,26 @@ namespace Desktop
 
 		public PostOffice PostOffice = new PostOffice();
 
+		public string Description
+		{
+			get { return stripActivities.DecorationText; }
+			set { stripActivities.DecorationText = value; }
+		}
+
 		private Dictionary<Type, SortedList<int, Type>> _recordToActivityMap;
 		private Dictionary<Type, Type> _recordToWorkspaceMap;
 		private Dictionary<Type, WorkspacePane> _activityToPaneMap;
 		private Dictionary<Type, int> _activityWidthMap;
 		private Dictionary<IWorkspace, WorkspaceControl> _workspaces = new Dictionary<IWorkspace, WorkspaceControl>();
 		private Dictionary<IWorkspace, TabPage> _tabs = new Dictionary<IWorkspace, TabPage>();
+		private Toaster _toaster = new Toaster();
+		private Messenger _messenger = new Messenger();
 		public IWorkspace ActiveWorkspace;
 		public IActivity ActiveActivity;
 		public IActivity ActiveSidebarActivity;
+
+		public event EventHandler VersionClick;
+		public event EventHandler SubActionClick;
 
 		/// <summary>
 		/// Iterates through all open workspaces. Do not try launching or closing workspaces while iterating over this
@@ -58,6 +69,18 @@ namespace Desktop
 		}
 		public event EventHandler AutoTick;
 
+		public string Version
+		{
+			get { return tsVersion.Text; }
+			set { tsVersion.Text = value; }
+		}
+
+		public string SubActionLabel
+		{
+			get { return tsSubAction.Text; }
+			set { tsSubAction.Text = value; }
+		}
+
 		private List<IActivity> _activationOrder = new List<IActivity>();
 
 		public Shell(string caption, Icon icon)
@@ -74,6 +97,8 @@ namespace Desktop
 
 		private void Shell_Load(object sender, EventArgs e)
 		{
+			statusStrip1.Padding = new Padding(statusStrip1.Padding.Left, statusStrip1.Padding.Top, statusStrip1.Padding.Left, statusStrip1.Padding.Bottom);
+
 			BuildWorkspaceMap();
 		}
 
@@ -325,18 +350,17 @@ namespace Desktop
 			}
 		}
 
-		/// <summary>
-		/// Launches to a specific activity, opening the workspace if necessary
-		/// </summary>
-		/// <typeparam name="TRecord"></typeparam>
-		/// <typeparam name="TActivity"></typeparam>
-		/// <param name="record"></param>
-		/// <param name="parameters"></param>
-		public void Launch<TRecord, TActivity>(TRecord record, params object[] parameters) where TRecord : IRecord where TActivity : IActivity
+		public void Launch(LaunchParameters launchParameters)
 		{
-			bool changingWorkspace = ActiveWorkspace?.Record != (IRecord)record;
+			Launch(launchParameters.Record, launchParameters.Activity, launchParameters.Parameters);
+		}
 
-			if (!changingWorkspace && ActiveActivity?.GetType() == typeof(TActivity))
+		public void Launch(IRecord record, Type activityType, params object[] parameters)
+		{
+			Type recordType = record.GetType();
+			bool changingWorkspace = ActiveWorkspace?.Record != record;
+
+			if (!changingWorkspace && ActiveActivity?.GetType() == activityType)
 			{
 				//already active, so just pass new run parameters
 				ActiveActivity.UpdateParameters(parameters);
@@ -354,7 +378,7 @@ namespace Desktop
 				if (ActiveSidebarActivity != null && !ActiveSidebarActivity.CanDeactivate(args))
 					return;
 
-				workspace = FindWorkspace(typeof(TRecord), record.Key);
+				workspace = FindWorkspace(recordType, record.Key);
 				if (workspace == null)
 				{
 					//need to launch the workspace
@@ -367,7 +391,7 @@ namespace Desktop
 			}
 
 			//Activate the workspace and its first activity
-			IActivity activity = workspace.Find<TActivity>();
+			IActivity activity = workspace.Find(activityType);
 			if (activity == null)
 			{
 				throw new NotImplementedException("No support for launching activities into an open workspace yet.");
@@ -378,12 +402,24 @@ namespace Desktop
 			if (changingWorkspace && activity.Pane == WorkspacePane.Main)
 			{
 				//Also need to mark the sidebar as active too
-				activity = workspace.GetFirstSidebarActivity();
+				activity = workspace.GetDefaultSidebarActivity();
 				if (activity != null)
 				{
 					Activate(activity);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Launches to a specific activity, opening the workspace if necessary
+		/// </summary>
+		/// <typeparam name="TRecord"></typeparam>
+		/// <typeparam name="TActivity"></typeparam>
+		/// <param name="record"></param>
+		/// <param name="parameters"></param>
+		public void Launch<TRecord, TActivity>(TRecord record, params object[] parameters) where TRecord : IRecord where TActivity : IActivity
+		{
+			Launch(record, typeof(TActivity), parameters);
 		}
 
 		public void LaunchWorkspace<T>(T record, params object[] parameters) where T : IRecord
@@ -409,12 +445,16 @@ namespace Desktop
 			if (ActiveSidebarActivity != null && !ActiveSidebarActivity.CanDeactivate(args))
 				return;
 			IWorkspace workspace = FindWorkspace(type, recordKey);
+			tabWorkspaces.SuspendDrawing();
 			if (workspace == null)
 			{
 				//open record lookup
 				IRecord record = RecordLookup.DoLookup(type, recordKey);
 				if (record == null)
+				{
+					tabWorkspaces.ResumeDrawing();
 					return; //no record to launch, so stop
+				}
 
 				//one more chance to find the workspace
 				workspace = FindWorkspace(type, record.Key);
@@ -426,16 +466,17 @@ namespace Desktop
 			}
 
 			//Activate the workspace and its first activity
-			IActivity activity = workspace.GetFirstActivity();
+			IActivity activity = workspace.GetDefaultActivity();
 			Activate(activity);
 			activity.UpdateParameters(parameters);
 
 			//Also the sidebar
-			activity = workspace.GetFirstSidebarActivity();
+			activity = workspace.GetDefaultSidebarActivity();
 			if (activity != null)
 			{
 				Activate(activity);
 			}
+			tabWorkspaces.ResumeDrawing();
 		}
 
 		public void LaunchWorkspace(Type type, IRecord record, bool defaultWorkspace = false, params object[] parameters)
@@ -445,6 +486,7 @@ namespace Desktop
 				|| ActiveSidebarActivity != null && !ActiveSidebarActivity.CanDeactivate(args)
 				|| record == null)
 				return;
+			tabWorkspaces.SuspendDrawing();
 			IWorkspace workspace = FindWorkspace(type, record.Key);
 			if (workspace == null)
 			{
@@ -452,16 +494,17 @@ namespace Desktop
 			}
 
 			//Activate the workspace and its first activity
-			IActivity activity = workspace.GetFirstActivity();
+			IActivity activity = workspace.GetDefaultActivity();
 			Activate(activity);
 			activity.UpdateParameters(parameters);
 
 			//Also the sidebar
-			activity = workspace.GetFirstSidebarActivity();
+			activity = workspace.GetDefaultSidebarActivity();
 			if (activity != null)
 			{
 				Activate(activity);
 			}
+			tabWorkspaces.ResumeDrawing();
 		}
 
 		private IWorkspace CreateWorkspace(IRecord record, bool defaultWorkspace = false)
@@ -536,7 +579,10 @@ namespace Desktop
 			{
 				foreach (var type in activities.Values)
 				{
-					CreateActivityInWorkspace(ws, type);
+					if (ws.AllowAutoStart(type))
+					{
+						CreateActivityInWorkspace(ws, type);
+					}
 				}
 			}
 		}
@@ -567,7 +613,7 @@ namespace Desktop
 		/// <returns>True if the worksapce was closed</returns>
 		public bool CloseWorkspace(IWorkspace ws, bool silent = false)
 		{
-			if(!silent && !ws.CanQuit(CloseReason.ClosingWorkspace))
+			if (!silent && !ws.CanQuit(CloseReason.ClosingWorkspace))
 				return false;
 			QuitWorkspace(ws, false);
 			return true;
@@ -804,6 +850,54 @@ namespace Desktop
 		{
 			AutoTick?.Invoke(this, EventArgs.Empty);
 		}
+
+		public void SetDirty(IWorkspace ws, bool dirty)
+		{
+			TabPage page;
+			if (_tabs.TryGetValue(ws, out page))
+			{
+				if (dirty && !page.Text.EndsWith("*"))
+				{
+					page.Text += "*";
+				}
+				else if (!dirty && page.Text.EndsWith("*"))
+				{
+					page.Text = page.Text.Substring(0, page.Text.Length - 1);
+				}
+			}
+		}
+
+		private void tsVersion_Click(object sender, EventArgs e)
+		{
+			VersionClick?.Invoke(this, e);
+		}
+
+		private void tsSubAction_Click(object sender, EventArgs e)
+		{
+			SubActionClick?.Invoke(this, e);
+		}
+
+		public int DelayAction(Action action, int delayMs)
+		{
+			return _messenger.Send(action, delayMs);
+		}
+
+		public void CancelAction(int id)
+		{
+			_messenger.Cancel(id);
+		}
+
+		#region Toaster
+		public void ShowToast(string caption, string text, Image icon = null, SkinnedHighlight highlight = SkinnedHighlight.Heading)
+		{
+			Toast toast = new Toast(caption, text)
+			{
+				Highlight = highlight,
+				Icon = icon,
+			};
+			_toaster.ShowToast(toast);
+		}
+		#endregion
 	}
 
 	public enum WorkspacePane
@@ -849,6 +943,20 @@ namespace Desktop
 		{
 			Reason = reason;
 			SaveData = true;
+		}
+	}
+
+	public class LaunchParameters
+	{
+		public IRecord Record { get; set; }
+		public Type Activity { get; set; }
+		public object[] Parameters { get; set; }
+
+		public LaunchParameters(IRecord record, Type activityType, params object[] parameters)
+		{
+			Record = record;
+			Activity = activityType;
+			Parameters = parameters;
 		}
 	}
 }

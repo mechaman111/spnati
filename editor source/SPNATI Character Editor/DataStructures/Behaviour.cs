@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
-using System.Linq;
+﻿using Desktop.DataStructures;
 using SPNATI_Character_Editor.IO;
-using System.Collections.ObjectModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
 	/// <summary>
 	/// Behaviour node of xml file. Contains dialogue
 	/// </summary>
-	public class Behaviour
+	public class Behaviour : BindableObject
 	{
 		/// <summary>
 		/// Raised when a new case is added to the working cases
@@ -28,17 +27,10 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public event EventHandler<Case> CaseModified;
 
-		/// <summary>
-		/// Next ID for a case that needs one
-		/// </summary>
-		[XmlIgnore]
-		public int NextId { get; set; }
 		[XmlIgnore]
 		public int MaxCaseId { get; set; }
 		[XmlIgnore]
 		public int MaxStageId { get; set; }
-
-		private bool _temporary;
 
 		/// <summary>
 		/// Only used when serializing or deserializing XML. Cases that share text across stages are split into separate cases per stage here
@@ -47,8 +39,12 @@ namespace SPNATI_Character_Editor
 		[XmlElement("stage")]
 		public List<Stage> Stages = new List<Stage>();
 
+		[XmlNewLine(XmlNewLinePosition.After)]
+		[XmlElement("trigger")]
+		public List<Trigger> Triggers = new List<Trigger>();
+
 		/// <summary>
-		/// Flat structure of cases used when editing dialogue. When deserializing, this is constructed from Stages. When serializing, Stages is reconstructed using this info.
+		/// Flat structure of cases used when editing dialogue. When deserializing, this is constructed from Stages/Triggers. When serializing, Triggers is reconstructed using this info.
 		/// </summary>
 		/// <remarks>Unlike the Stages property, Case instances here can be shared across stages, ensuring that editing in one will update all applicable stages</remarks>
 		[XmlIgnore]
@@ -70,7 +66,8 @@ namespace SPNATI_Character_Editor
 		/// <param name="character"></param>
 		public void OnBeforeSerialize(Character character)
 		{
-			BuildStageTree(character);
+			Stages.Clear();
+			BuildTriggers(character);
 		}
 
 		/// <summary>
@@ -80,37 +77,54 @@ namespace SPNATI_Character_Editor
 		public void OnAfterDeserialize(Character character)
 		{
 			_character = character;
-			foreach (var stage in Stages)
+			foreach (Stage stage in Stages)
 			{
-				foreach (var stageCase in stage.Cases)
+				PostProcessCases(stage.Cases);
+			}
+			foreach (Trigger trigger in Triggers)
+			{
+				PostProcessCases(trigger.Cases);
+			}
+		}
+
+		public IEnumerable<Case> EnumerateSourceCases()
+		{
+			if (Triggers.Count > 0)
+			{
+				foreach (Trigger trigger in Triggers)
 				{
-					foreach (var line in stageCase.Lines)
+					foreach (Case theCase in trigger.Cases)
 					{
-						line.Text = XMLHelper.DecodeEntityReferences(line.Text);
-						if (string.IsNullOrEmpty(line.Marker))
-							line.Marker = null;
-						character.CacheMarker(line.Marker);
+						theCase.Tag = trigger.Id;
+						yield return theCase;
+					}
+				}
+			}
+			else
+			{
+				foreach (Stage stage in Stages)
+				{
+					foreach (Case theCase in stage.Cases)
+					{
+						yield return theCase;
 					}
 				}
 			}
 		}
 
-		/// <summary>
-		/// The Banter Wizard has to build WorkingCases for every character, which runs into OutOfMemoryExceptions.
-		/// This is a quick and dirty measure to avoid that by unloading the working cases after we no longer need them, but only if we aren't actually editing this character
-		/// </summary>
-		public void FlagTemporary()
+		private void PostProcessCases(List<Case> cases)
 		{
-			if (_builtWorkingCases) { return; }
-			_temporary = true;
-		}
-		public void ReleaseTemporary()
-		{
-			if (_temporary)
+			foreach (Case stageCase in cases)
 			{
-				_temporary = false;
-				_builtWorkingCases = false;
-				_workingCases.Clear();
+				foreach (DialogueLine line in stageCase.Lines)
+				{
+					line.Text = XMLHelper.DecodeEntityReferences(line.Text);
+					if (string.IsNullOrEmpty(line.Marker))
+					{
+						line.Marker = null;
+					}
+					_character.CacheMarker(line.Marker);
+				}
 			}
 		}
 
@@ -121,7 +135,7 @@ namespace SPNATI_Character_Editor
 		public void PrepareForEdit(Character character)
 		{
 			_character = character;
-			_workingCases = new List<Case>();
+			_workingCases.Clear();
 			_builtWorkingCases = false;
 
 			EnsureWorkingCases();
@@ -133,112 +147,42 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Converts a generic line of dialogue into one specific for the given stage (i.e gives the image the applicable prefix)
+		/// Generate an index of expected stage+tag combos
 		/// </summary>
-		/// <param name="line">Line to convert</param>
-		/// <param name="stage">Stage to convert to</param>
 		/// <returns></returns>
-		public static DialogueLine CreateStageSpecificLine(DialogueLine line, int stage, Character character)
+		private Dictionary<string, HashSet<int>> GetRequiredLineIndex()
 		{
-			DialogueLine copy = line.Copy();
-			if (copy.StageImages.ContainsKey(stage))
-			{
-				LineImage li = copy.StageImages[stage];
-				copy.Image = li.Image;
-				copy.IsGenericImage = li.IsGenericImage;
-			}
-			if (!copy.IsGenericImage)
-			{
-				copy.Image = DialogueLine.GetStageImage(stage, copy.Image);
-			}
-			if (copy.Image != null)
-			{
-				bool custom = copy.Image.StartsWith("custom:");
-				string path = character != null ? Config.GetRootDirectory(character) : "";
-				string extension = line.ImageExtension;
-				if (!custom)
-				{
-					if (string.IsNullOrEmpty(extension))
-					{
-						//figure out the extension by searching for files of different names
-						bool basePngExists = File.Exists(Path.Combine(path, copy.Image + ".png"));
-						bool baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
-
-						if (!copy.Image.StartsWith(stage + "-") && !basePngExists && !baseGifExists)
-						{
-							copy.Image = stage + "-" + copy.Image;
-							baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
-							if (baseGifExists)
-							{
-								extension = ".gif";
-							}
-							else
-							{
-								extension = ".png";
-							}
-						}
-						else
-						{
-							if (baseGifExists)
-							{
-								extension = ".gif";
-							}
-							else
-							{
-								extension = ".png";
-							}
-						}
-					}
-					if (!copy.Image.StartsWith(stage + "-") && !File.Exists(Path.Combine(path, copy.Image + extension)))
-					{
-						copy.Image = stage + "-" + copy.Image;
-					}
-					if (extension != null && !copy.Image.EndsWith(extension))
-					{
-						copy.Image += extension;
-					}
-					copy.ImageExtension = extension;
-				}
-			}
-			copy.Text = line.Text?.Trim();
-			return copy;
-		}
-
-		/// <summary>
-		/// Looks through the working cases to locate any Stage+Trigger combos that don't exist, and creates default cases for any missing combinations.
-		/// Triggers apply to one or more stages, and a case with no targeted dialogue must exist for each applicable stage
-		/// </summary>
-		/// <param name="character">Character this behavior belongs to</param>
-		public bool EnsureDefaults(Character character)
-		{
-			_character = character;
-			bool modified = false;
-
-			//Generate an index of expected stage+tag combos
-			int layers = character.Layers + Clothing.ExtraStages;
+			int layers = _character.Layers + Clothing.ExtraStages;
 			Dictionary<string, HashSet<int>> requiredLineIndex = new Dictionary<string, HashSet<int>>();
-			foreach (Trigger t in TriggerDatabase.Triggers)
+			foreach (TriggerDefinition t in TriggerDatabase.Triggers)
 			{
-				if (t.Optional || t.Tag == Trigger.StartTrigger)
+				if (t.Optional || t.Tag == TriggerDefinition.StartTrigger)
 					continue;
 				HashSet<int> stages = new HashSet<int>();
 				for (int stage = 0; stage < layers; stage++)
 				{
-					if (TriggerDatabase.UsedInStage(t.Tag, character, stage))
+					if (TriggerDatabase.UsedInStage(t.Tag, _character, stage))
 					{
 						stages.Add(stage);
 					}
 				}
 				requiredLineIndex[t.Tag] = stages;
 			}
+			return requiredLineIndex;
+		}
 
-			//Loop through the cases and remove any satisfied tags from the index
-			foreach (var workingCase in character.Behavior._workingCases)
+		/// <summary>
+		/// Loops through the cases and removes any satisfied tags from the index
+		/// </summary>
+		/// <param name="requiredLineIndex"></param>
+		private void FilterFulfilledCases(Dictionary<string, HashSet<int>> requiredLineIndex)
+		{
+			foreach (var workingCase in GetWorkingCases())
 			{
 				if (workingCase.HasConditions)
 					continue; //A filtered case can't possibly be a default
 				string tag = workingCase.Tag;
-				Trigger trigger = TriggerDatabase.GetTrigger(tag);
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
 				List<string> tags = new List<string>();
 				tags.Add(tag);
 				tags.AddRange(trigger.LinkedTriggers);
@@ -259,6 +203,51 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Gets all cases containing default text
+		/// </summary>
+		/// <returns></returns>
+		public List<Case> GetDefaultCases()
+		{
+			List<Case> list = new List<Case>();
+			foreach (Case workingCase in GetWorkingCases())
+			{
+				if (workingCase.HasConditions)
+					continue; //A case with conditions can't possibly be a default
+				string tag = workingCase.Tag;
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
+				if (!trigger.Optional && !string.IsNullOrEmpty(trigger.DefaultText))
+				{
+					foreach (DialogueLine line in workingCase.Lines)
+					{
+						if (line.Text == trigger.DefaultText)
+						{
+							list.Add(workingCase);
+							break;
+						}
+					}
+				}
+			}
+			return list;
+		}
+
+		/// <summary>
+		/// Looks through the working cases to locate any Stage+Trigger combos that don't exist, and creates default cases for any missing combinations.
+		/// Triggers apply to one or more stages, and a case with no targeted dialogue must exist for each applicable stage
+		/// </summary>
+		/// <param name="character">Character this behavior belongs to</param>
+		public bool EnsureDefaults(Character character)
+		{
+			_character = character;
+			bool modified = false;
+
+			//Generate an index of expected stage+tag combos
+			Dictionary<string, HashSet<int>> requiredLineIndex = GetRequiredLineIndex();
+
+			//Loop through the cases and remove any satisfied tags from the index
+			FilterFulfilledCases(requiredLineIndex);
 
 			//Finally, add lines for whatever remains in the index
 			foreach (var kvp in requiredLineIndex)
@@ -268,10 +257,7 @@ namespace SPNATI_Character_Editor
 				Case genericCase = new Case(tag);
 				DialogueLine line = DialogueDatabase.CreateDefault(tag);
 				genericCase.Lines.Add(line);
-				foreach (int stage in remainingStages)
-				{
-					genericCase.Stages.Add(stage);
-				}
+				genericCase.AddStages(remainingStages);
 				AddWorkingCase(genericCase);
 				modified = true;
 			}
@@ -291,25 +277,16 @@ namespace SPNATI_Character_Editor
 		{
 			string tag1 = c1.Tag;
 			string tag2 = c2.Tag;
-			int comparison = TriggerDatabase.Compare(tag1, tag2);
+			int comparison = 0;
+			if (!string.IsNullOrEmpty(tag1) && !string.IsNullOrEmpty(tag2))
+			{
+				comparison = TriggerDatabase.Compare(tag1, tag2);
+			}
 			if (comparison == 0)
 			{
 				comparison = c1.CompareTo(c2);
 			}
 			return comparison;
-		}
-
-		/// <summary>
-		/// Creates a generic line from a stage specific one (i.e. strips the stage prefix from the image)
-		/// </summary>
-		/// <param name="line"></param>
-		/// <returns></returns>
-		public static DialogueLine CreateDefaultLine(DialogueLine line)
-		{
-			DialogueLine copy = line.Copy();
-			copy.Text = line.Text.Trim();
-			copy.GeneralizeImage(line);
-			return copy;
 		}
 
 		/// <summary>
@@ -335,6 +312,56 @@ namespace SPNATI_Character_Editor
 				}
 				return knownLines.Count;
 			}
+		}
+
+		public void BuildTriggers(Character character)
+		{
+			Dictionary<string, Trigger> triggers = new Dictionary<string, Trigger>();
+			Triggers.Clear();
+			using (IEnumerator<Case> enumerator = GetWorkingCases().GetEnumerator())
+			{
+				while (enumerator.MoveNext())
+				{
+					Case workingCase = enumerator.Current;
+					Trigger trigger = triggers.GetOrAddDefault(workingCase.Tag, () => new Trigger(workingCase.Tag));
+					Case triggerCase = workingCase.Copy();
+					triggerCase.StageRange = workingCase.StageRange;
+
+					foreach (Case alternative in triggerCase.AlternativeConditions)
+					{
+						alternative.Tag = null;
+						alternative.Lines.Clear();
+					}
+
+					foreach (DialogueLine line in triggerCase.Lines)
+					{
+						line.Image = line.Pose?.Key;
+						foreach (StageImage img in line.Images)
+						{
+							img.Image = img.Pose?.Key;
+						}
+					}
+
+					if (workingCase.Id > 0)
+					{
+						triggerCase.StageId = workingCase.Id.ToString();
+					}
+					else
+					{
+						triggerCase.StageId = null;
+					}
+					triggerCase.Tag = null;
+					triggerCase.TriggerSet = 0;
+					trigger.Cases.Add(triggerCase);
+				}
+			}
+			foreach (Trigger trigger in triggers.Values)
+			{
+				Triggers.Add(trigger);
+				trigger.Cases.Sort();
+			}
+
+			Triggers.Sort();
 		}
 
 		/// <summary>
@@ -395,7 +422,8 @@ namespace SPNATI_Character_Editor
 						//Move the lines over, and make them stage-specific
 						foreach (var line in workingCase.Lines)
 						{
-							DialogueLine stageLine = CreateStageSpecificLine(line, s, character);
+							DialogueLine stageLine = line.Copy();
+							stageLine.Image = stageLine.Pose?.Key;
 							existingCase.Lines.Add(stageLine);
 
 							if (!string.IsNullOrEmpty(line.Gender))
@@ -415,6 +443,207 @@ namespace SPNATI_Character_Editor
 		{
 			_builtWorkingCases = true;
 			_workingCases.Clear();
+
+			if (Triggers.Count > 0)
+			{
+				BuildWorkingCasesFromTriggers();
+			}
+			else
+			{
+				BuildLegacyWorkingCases();
+			}
+
+			//Move the legacy Start lines into Selected/Game start cases
+			if (_character != null && _character.StartingLines.Count > 0)
+			{
+				Case selected = new Case("selected");
+				selected.AddStage(0);
+				selected.Lines.Add(_character.StartingLines[0]);
+				AddWorkingCase(selected);
+
+				Case start = new Case("game_start");
+				start.AddStage(0);
+				if (_character.StartingLines.Count > 1)
+				{
+					for (int i = 1; i < _character.StartingLines.Count; i++)
+					{
+						start.Lines.Add(_character.StartingLines[i]);
+					}
+				}
+				else
+				{
+					start.Lines.Add(_character.StartingLines[0]);
+				}
+				AddWorkingCase(start);
+				_character.StartingLines.Clear();
+			}
+
+			if (_character == null) { return; }
+			SortWorking();
+		}
+		
+		private void BuildWorkingCasesFromTriggers()
+		{
+			Dictionary<int, int> setToIdMap = new Dictionary<int, int>();
+			CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
+			int nextId = editorData?.NextId ?? 0;
+			foreach (Trigger trigger in Triggers)
+			{
+				Dictionary<int, List<Case>> setCases = new Dictionary<int, List<Case>>();
+				Dictionary<int, HashSet<int>> setStages = new Dictionary<int, HashSet<int>>();
+				foreach (Case triggerCase in trigger.Cases)
+				{
+					int id;
+					int.TryParse(triggerCase.StageId, out id);
+					if (string.IsNullOrEmpty(triggerCase.StageId))
+					{
+						if (triggerCase.TriggerSet > 0)
+						{
+							if (setToIdMap.ContainsKey(triggerCase.TriggerSet))
+							{
+								id = setToIdMap[triggerCase.TriggerSet];
+							}
+							else
+							{
+								int uniqueId = ++nextId;
+								setToIdMap[triggerCase.TriggerSet] = uniqueId;
+								id = uniqueId;
+							}
+						}
+						else
+						{
+							id = ++nextId;
+						}
+					}
+					if (triggerCase.OneShotId > 0)
+					{
+						MaxCaseId = Math.Max(MaxCaseId, triggerCase.OneShotId);
+					}
+
+					List<Case> cases = setCases.GetOrAddDefault(id, () => new List<Case>());
+					HashSet<int> stages = setStages.GetOrAddDefault(id, () => new HashSet<int>());
+					triggerCase.Tag = trigger.Id;
+					Case rootCase = (cases.Count > 0) ? cases[0] : null;
+					Case existingCase = null;
+					foreach (Case setCase in cases)
+					{
+						if (setCase.MatchesConditions(triggerCase))
+						{
+							existingCase = setCase;
+							break;
+						}
+					}
+					if (existingCase == null)
+					{
+						existingCase = triggerCase.CopyConditions();
+						cases.Add(existingCase);
+						if (rootCase == null)
+						{
+							rootCase = existingCase;
+							rootCase.OneShotId = existingCase.OneShotId;
+							int stageId;
+							if (int.TryParse(triggerCase.StageId, out stageId))
+							{
+								rootCase.Id = stageId;
+							}
+							existingCase.Tag = trigger.Id;
+							_workingCases.Add(existingCase);
+						}
+						else
+						{
+							if (rootCase.AlternativeConditions.Count == 0)
+							{
+								//the official alternative format treats the base case separately from the alternatives, so to mimic that from the old format,
+								//move the rootcase into an alt of its own
+								Case rootAlt = rootCase.CopyConditions();
+								rootAlt.Tag = null;
+								rootAlt.OneShotId = 0;
+								rootAlt.Id = 0;
+								rootAlt.TriggerSet = 0;
+								rootAlt.Hidden = null;
+								rootCase.ClearConditions();
+								rootCase.AlternativeConditions.Add(rootAlt);
+							}
+							existingCase.Tag = null;
+							existingCase.Hidden = null;
+							rootCase.AlternativeConditions.Add(existingCase);
+						}
+					}
+					if (existingCase == rootCase)
+					{
+						foreach (int stage in triggerCase.Stages)
+						{
+							stages.Add(stage);
+						}
+						foreach (DialogueLine line in triggerCase.Lines)
+						{
+							DialogueLine defaultLine = line.Copy();
+							int code = line.GetHashCodeWithoutImage();
+							bool foundMatch = false;
+
+							foreach (StageImage img in defaultLine.Images)
+							{
+								img.Pose = _character.PoseLibrary.GetPose(img.Image);
+							}
+
+							if (triggerCase.TriggerSet > 0)
+							{
+								//look to see if this is an alternative stage-specific image for an existing line
+								foreach (DialogueLine rootLine in rootCase.Lines)
+								{
+									if (rootLine.GetHashCodeWithoutImage() == code)
+									{
+										foreach (int lineStage in triggerCase.Stages)
+										{
+											PoseMapping pose = _character.PoseLibrary.GetPose(line.Image);
+											StageImage existing = rootLine.Images.Find(si => si.Pose == pose);
+											if (existing == null)
+											{
+												rootLine.Images.Add(new StageImage(lineStage, pose));
+											}
+											else
+											{
+												bool added = false;
+												for (int n = 0; n < existing.Stages.Count; n++)
+												{
+													if (existing.Stages[n] > lineStage)
+													{
+														added = true;
+														existing.Stages.Insert(n, lineStage);
+														break;
+													}
+												}
+												if (!added)
+												{
+													existing.Stages.Add(lineStage);
+												}
+											}
+										}
+										foundMatch = true;
+										break;
+									}
+								}
+							}
+							if (!foundMatch)
+							{
+								//not a stage-specific image but a new line
+								defaultLine.Pose = _character.PoseLibrary.GetPose(line.Image);
+								rootCase.Lines.Add(defaultLine);
+							}
+						}
+					}
+				}
+				foreach (KeyValuePair<int, List<Case>> kvp in setCases)
+				{
+					List<Case> list = kvp.Value;
+					HashSet<int> stages2 = setStages[kvp.Key];
+					list[0].AddStages(stages2);
+				}
+			}
+		}
+
+		private void BuildLegacyWorkingCases()
+		{
 			Dictionary<int, Case> map = new Dictionary<int, Case>();
 
 			List<Case> buckets = new List<Case>();
@@ -446,8 +675,7 @@ namespace SPNATI_Character_Editor
 					foreach (DialogueLine line in stageCase.Lines)
 					{
 						bool addedDuplicate = false;
-						line.IsGenericImage = !DialogueLine.IsStageSpecificImage(line.Image);
-						var defaultLine = CreateDefaultLine(line);
+						var defaultLine = line.Copy();
 
 						if (defaultLine.OneShotId > 0)
 						{
@@ -477,7 +705,7 @@ namespace SPNATI_Character_Editor
 						}
 						if (!existing.Stages.Contains(stage.Id))
 						{
-							existing.Stages.Add(stage.Id);
+							existing.AddStage(stage.Id);
 
 							if (!addedDuplicate)
 							{
@@ -486,10 +714,37 @@ namespace SPNATI_Character_Editor
 								{
 									if (existingLine.GetHashCodeWithoutImage() == lineHash)
 									{
-										if (existingLine.Image != defaultLine.Image)
+										string existingKey = _character.PoseLibrary.GetPose(existingLine.Image)?.Key;
+										string defaultKey = _character.PoseLibrary.GetPose(defaultLine.Image)?.Key;
+										if (existingKey != defaultKey)
 										{
 											//if the images are different, remember that difference
-											existingLine.StageImages[stage.Id] = new LineImage(defaultLine.Image, line.IsGenericImage);
+											PoseMapping pose = _character.PoseLibrary.GetPose(defaultLine.Image);
+											if (pose != null)
+											{
+												StageImage existingImage = existingLine.Images.Find(si => si.Pose == pose);
+												if (existingImage == null)
+												{
+													existingLine.Images.Add(new StageImage(stage.Id, pose));
+												}
+												else
+												{
+													bool added = false;
+													for (int n = 0; n < existingImage.Stages.Count; n++)
+													{
+														if (existingImage.Stages[n] > stage.Id)
+														{
+															added = true;
+															existingImage.Stages.Insert(n, stage.Id);
+															break;
+														}
+													}
+													if (!added)
+													{
+														existingImage.Stages.Add(stage.Id);
+													}
+												}
+											}
 										}
 										break;
 									}
@@ -522,7 +777,7 @@ namespace SPNATI_Character_Editor
 				{
 					caseMatchingStages = bucket.CopyConditions();
 					caseMatchingStages.Id = bucket.Id;
-					caseMatchingStages.Stages.AddRange(bucket.Stages);
+					caseMatchingStages.AddStages(bucket.Stages);
 					caseList.Add(caseMatchingStages);
 				}
 				foreach (DialogueLine line in bucket.Lines)
@@ -548,6 +803,21 @@ namespace SPNATI_Character_Editor
 						{
 							if (similar.MatchesNonConditions(c))
 							{
+								if (similar.AlternativeConditions.Count == 0)
+								{
+									//the official alternative format treats the base case separately from the alternatives, so to mimic that from the old format,
+									//move the rootcase into an alt of its own
+									Case rootAlt = similar.CopyConditions();
+									rootAlt.Tag = null;
+									rootAlt.OneShotId = 0;
+									rootAlt.Id = 0;
+									rootAlt.TriggerSet = 0;
+									rootAlt.Hidden = null;
+									similar.ClearConditions();
+									similar.AlternativeConditions.Add(rootAlt);
+								}
+								c.Tag = null;
+								c.Hidden = null;
 								similar.AlternativeConditions.Add(c);
 								foundSimilar = true;
 								newCase = false;
@@ -567,40 +837,18 @@ namespace SPNATI_Character_Editor
 					}
 					if (newCase)
 					{
+						foreach (DialogueLine line in c.Lines)
+						{
+							line.Pose = _character.PoseLibrary.GetPose(line.Image);
+							foreach (StageImage img in line.Images)
+							{
+								img.Pose = _character.PoseLibrary.GetPose(img.Image);
+							}
+						}
 						_workingCases.Add(c);
 					}
 				}
 			}
-
-			//Move the legacy Start lines into Selected/Game start cases
-			if (_character != null && _character.StartingLines.Count > 0)
-			{
-				Case selected = new Case("selected");
-				selected.Stages.Add(0);
-				selected.Lines.Add(_character.StartingLines[0]);
-				AddWorkingCase(selected);
-
-				Case start = new Case("game_start");
-				start.Stages.Add(0);
-				if (_character.StartingLines.Count > 1)
-				{
-					for (int i = 1; i < _character.StartingLines.Count; i++)
-					{
-						start.Lines.Add(_character.StartingLines[i]);
-					}
-				}
-				else
-				{
-					start.Lines.Add(_character.StartingLines[0]);
-				}
-				AddWorkingCase(start);
-
-				_character.StartingLines.Clear();
-			}
-
-			if (_character == null) { return; }
-
-			SortWorking();
 		}
 
 		/// <summary>
@@ -634,6 +882,7 @@ namespace SPNATI_Character_Editor
 			EnsureWorkingCases();
 			_workingCases.Add(theCase);
 			CaseAdded?.Invoke(this, theCase);
+			NotifyPropertyChanged(nameof(_workingCases));
 		}
 
 		/// <summary>
@@ -645,6 +894,7 @@ namespace SPNATI_Character_Editor
 			EnsureWorkingCases();
 			_workingCases.Remove(theCase);
 			CaseRemoved?.Invoke(this, theCase);
+			NotifyPropertyChanged(nameof(_workingCases));
 		}
 
 		private void RemoveWorkingCaseAt(int index)
@@ -653,6 +903,7 @@ namespace SPNATI_Character_Editor
 			Case theCase = _workingCases[index];
 			_workingCases.RemoveAt(index);
 			CaseRemoved?.Invoke(this, theCase);
+			NotifyPropertyChanged(nameof(_workingCases));
 		}
 
 		/// <summary>
@@ -676,12 +927,12 @@ namespace SPNATI_Character_Editor
 				if (stage != retainStage)
 				{
 					Case stageCase = DuplicateCase(original, false);
-					stageCase.Stages.Add(stage);
+					stageCase.AddStage(stage);
 					AddWorkingCase(stageCase);
 				}
 			}
-			original.Stages.Clear();
-			original.Stages.Add(retainStage);
+			original.ClearStages();
+			original.AddStage(retainStage);
 			ApplyChanges(original);
 		}
 
@@ -697,8 +948,8 @@ namespace SPNATI_Character_Editor
 			{
 				if (original.Stages[s] != splitPoint)
 				{
-					beforeSplitCase.Stages.Add(original.Stages[s]);
-					original.Stages.RemoveAt(s);
+					beforeSplitCase.AddStage(original.Stages[s]);
+					original.RemoveStage(s);
 				}
 			}
 			ApplyChanges(original);
@@ -722,8 +973,8 @@ namespace SPNATI_Character_Editor
 			{
 				if (original.Stages[s] < splitPoint)
 				{
-					beforeSplitCase.Stages.Add(original.Stages[s]);
-					original.Stages.RemoveAt(s);
+					beforeSplitCase.AddStage(original.Stages[s]);
+					original.RemoveStage(s);
 				}
 			}
 			ApplyChanges(original);
@@ -757,7 +1008,7 @@ namespace SPNATI_Character_Editor
 			}
 			if (addToWorking)
 			{
-				copy.Stages.AddRange(original.Stages);
+				copy.AddStages(original.Stages);
 				AddWorkingCase(copy);
 			}
 			return copy;
@@ -790,7 +1041,7 @@ namespace SPNATI_Character_Editor
 					foreach (string tag in destinationTags)
 					{
 						Case newCase = sourceCase.Copy();
-						newCase.Stages.AddRange(sourceCase.Stages);
+						newCase.AddStages(sourceCase.Stages);
 						newCase.Tag = tag;
 						AddWorkingCase(newCase);
 					}
@@ -835,7 +1086,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (Case workingCase in _workingCases)
 			{
-				ObservableCollection<int> stages = workingCase.Stages;
+				List<int> stages = workingCase.Stages;
 				for (int i = 0; i < stages.Count; i++)
 				{
 					int stage = stages[i];
@@ -853,7 +1104,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (Case workingCase in _workingCases)
 			{
-				ObservableCollection<int> stages = workingCase.Stages;
+				List<int> stages = workingCase.Stages;
 				for (int i = stages.Count - 1; i >= 0; i--)
 				{
 					int stage = stages[i];
@@ -874,7 +1125,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (Case workingCase in _workingCases)
 			{
-				ObservableCollection<int> stages = workingCase.Stages;
+				List<int> stages = workingCase.Stages;
 				for (int i = 0; i < stages.Count; i++)
 				{
 					int stage = stages[i];

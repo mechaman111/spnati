@@ -4,35 +4,27 @@
     <noteworthy>
         <case name="Challenge" min="2" max="4">
             <description>Mulan challenges other players to reveal secrets if she or they lose. Please PM nmasp if you engage in this so I can make custom dialogue! (Any Hand with these conditions)</description>
-            <trigger tag="good_hand" timeInStage="1" totalNaked="0" totalMasturbating="0" totalFinished="0" notSaidMarker="mulan_duel">
+            <trigger tag="good_hand" stage="2-4" timeInStage="1" totalNaked="0" totalMasturbating="0" totalFinished="0" notSaidMarker="mulan_duel">
                 <state img="challenge.png" marker="mulan_duel">Let's make this interesting. If one of you is the first naked, you reveal a secret. But if &lt;i&gt;you&lt;/i&gt; get me naked first, &lt;i&gt;I’ll&lt;/i&gt; answer a question from &lt;i&gt;each&lt;/i&gt; of you. Fair?</state>
             </trigger>
         </case>
-        <case name="Disguise?" min="2" max="2">
+        <case name="Disguise?" id="32" min="2" max="2">
             <description>Mulan starts the game in disguise. Your character may have realized this by now, but can remark on the change here.</description>
-            <trigger tag="stripped">
-                <state img="stripped.png">I’d quote Sun Tzu about knowing yourself and keeping your opponents off-guard, but that seems a little too...</state>
-                <state img="stripped.png">I’m not ashamed of being a woman, or anything. Sometimes it’s just good form to make a strong first impression. You'd best prepare yourselves.</state>
-                <state img="stripped.png">You’ve gotten me out of my armor. Now I’m going to get you out of the rest of… your stuff. All of it, so get ready!</state>
-            </trigger>
         </case>
         <case name="Dates" min="1" max="1">
             <description>During her first hand after losing her first item, "Ping" queries what types of people the party likes to date. [Any hand]</description>
-            <trigger tag="good_hand" timeInStage="0">
+            <trigger tag="good_hand" stage="1" timeInStage="0">
                 <state img="peace.png" marker="honorable_others">Uh, folks, what kind of things do &lt;i&gt;you&lt;/i&gt; look for in a match? For me: a strong-minded person who speaks their mind, and is courageous, clever, and most importantly: honorable.</state>
             </trigger>
         </case>
         <case name="Mulan lost her duel" min="8" max="8">
             <description>Mulan is the first person naked, and will answer incoming questions. See Challenge. </description>
-            <trigger tag="stripped" totalMasturbating="0" totalFinished="0">
+            <trigger tag="stripped" stage="8" totalMasturbating="0" totalFinished="0">
                 <state img="stripped.png">There’s no shame in an honest loss. Though, the next part… that can be a little shameful if I’m first to lose.</state>
             </trigger>
         </case>
-        <case name="Fa_Ping" min="0" max="1">
+        <case name="Fa_Ping" id="33" min="0" max="1">
             <description>Lowbrow joke about Fapping</description>
-            <trigger tag="hand" totalRounds="9" priority="299">
-                <state img="pinged.png" marker="fa_pp_ing">What's... Fapping? I think it's a joke at my expense. You know, Fa Ping. </state>
-            </trigger>
         </case>
     </noteworthy>
     <hidden />
@@ -61,11 +53,14 @@
         <response id="27" opponent="erufuda" opponentId="5" />
         <response id="28" opponent="erufuda" opponentId="16" />
         <response id="29" opponent="erufuda" opponentId="4" />
+        <response id="30" opponent="misty_hgss" opponentId="1" />
+        <response id="31" opponent="misty_hgss" opponentId="4" />
+        <response id="34" opponent="emi" opponentId="61" />
     </responses>
     <notes />
     <labels />
     <prefixes />
-    <nextId>29</nextId>
+    <nextId>39</nextId>
     <markers>
         <marker scope="Public" name="" />
         <marker scope="Public" name="9s_duel">9S's question. </marker>
@@ -90,8 +85,10 @@
         <marker scope="Public" name="duel_androgynous">Mulan asks a question of a loser of her challenge. See the tag name to see what tag is being targeted. </marker>
         <marker scope="Public" name="duel_cat">Mulan asks a question of a loser of her challenge. See the tag name to see what tag is being targeted. </marker>
         <marker scope="Public" name="duel_celebrity">Mulan asks a question of a loser of her challenge. See the tag name to see what tag is being targeted. </marker>
+        <marker scope="Public" name="duel_coco_lost" />
         <marker scope="Public" name="duel_elf">Mulan asks a question of a loser of her challenge. See the tag name to see what tag is being targeted. </marker>
         <marker scope="Public" name="duel_enf">Mulan asks a question of a loser of her challenge. See the tag name to see what tag is being targeted. </marker>
+        <marker scope="Public" name="duel_erufuda_lost" />
         <marker scope="Public" name="duel_fairy">Mulan asks a question of a loser of her challenge. See the tag name to see what tag is being targeted. </marker>
         <marker scope="Public" name="duel_fighter">Mulan asks a question of a loser of her challenge. See the tag name to see what tag is being targeted. </marker>
         <marker scope="Public" name="duel_futaba_lost">Mulan answers Futaba's question if Mulan loses the challenge. </marker>
@@ -114,6 +111,7 @@
         <marker scope="Public" name="duel_mia_lost">Mulan answers Mia's question if she loses her challenge. </marker>
         <marker scope="Public" name="duel_miko_lost" />
         <marker scope="Public" name="duel_military">Mulan asks a question of a loser of her challenge. See the tag name to see what tag is being targeted. </marker>
+        <marker scope="Public" name="duel_misty_lost" />
         <marker scope="Public" name="duel_model">Mulan asks a question of a loser of her challenge. See the tag name to see what tag is being targeted. </marker>
         <marker scope="Public" name="duel_moe">Mulan asks a question of a loser of her challenge. See the tag name to see what tag is being targeted. </marker>
         <marker scope="Public" name="duel_monster">Mulan asks a question of a loser of her challenge. See the tag name to see what tag is being targeted. </marker>
@@ -140,6 +138,7 @@
         <marker scope="Private" name="duel_x">Unused, placeholder for Filters. </marker>
         <marker scope="Public" name="duel_x_lost">Unused, placeholder. </marker>
         <marker scope="Public" name="duel_xai_lost" />
+        <marker scope="Public" name="erufuda_duel" />
         <marker scope="Public" name="fa_pp_ing" />
         <marker scope="Public" name="foodstuff" />
         <marker scope="Public" name="futaba_duel">Futaba's question. </marker>
@@ -170,11 +169,26 @@
         <marker scope="Public" name="meia_sightseeing">Mulan answers Meia's questions about sightseeing. [Meia Marker]</marker>
         <marker scope="Public" name="mia_duel">Mia's question. </marker>
         <marker scope="Public" name="miko_duel" />
+        <marker scope="Public" name="misty_duel" />
         <marker scope="Public" name="mulan_chest_wraps">In Kamina's sequence, if Mulan is still Ping, she mentions chestwraps, which she reveals later. </marker>
         <marker scope="Public" name="mulan_china_dragons" />
         <marker scope="Public" name="mulan_duel">Mulan initiates a challenge. If she is the first naked, she'll answer one question from every other player. If she wins, she'll ask the first person naked a question. See duel_x markers. </marker>
         <marker scope="Public" name="mulan_favfood">Mulan has a favorite food. [Pit Marker]</marker>
         <marker scope="Public" name="mulan_hair" />
+        <marker scope="Public" name="mulan_jessie_butt" />
+        <marker scope="Public" name="mulan_jessie_family" />
+        <marker scope="Public" name="mulan_jessie_lies" />
+        <marker scope="Public" name="mulan_jessie_lights" />
+        <marker scope="Public" name="mulan_jessie_mast" />
+        <marker scope="Public" name="mulan_jessie_mistake" />
+        <marker scope="Public" name="mulan_jessie_money" />
+        <marker scope="Public" name="mulan_jessie_open" />
+        <marker scope="Public" name="mulan_jessie_porn" />
+        <marker scope="Public" name="mulan_jessie_position" />
+        <marker scope="Public" name="mulan_jessie_secrets" />
+        <marker scope="Public" name="mulan_jessie_sexnumber" />
+        <marker scope="Public" name="mulan_jessie_slept" />
+        <marker scope="Public" name="mulan_jessie_smoke" />
         <marker scope="Public" name="mulan_juke">Mulan answers Futaba's question. </marker>
         <marker scope="Public" name="mulan_larachel_double" />
         <marker scope="Public" name="mulan_meia_sightseeing" />

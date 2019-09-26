@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SPNATI_Character_Editor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace UnitTests
 {
 	[TestClass]
-	public class BehaviorTests
+	public class BehaviorTests : IDisposable
 	{
 		private Character _character;
 
@@ -25,79 +26,6 @@ namespace UnitTests
 		private static bool UsedInStage(string tag, Character character, int stage)
 		{
 			return true;
-		}
-
-		[TestMethod]
-		public void StageSpecificLine()
-		{
-			DialogueLine line = new DialogueLine("hey", "Bubba");
-			line = Behaviour.CreateStageSpecificLine(line, 4, null);
-			Assert.AreEqual("4-hey.png", line.Image);
-			Assert.AreEqual("Bubba", line.Text);
-		}
-
-		[TestMethod]
-		public void StageSpecificLineHasPrefix()
-		{
-			DialogueLine line = new DialogueLine("hey", "Bubba");
-			line = Behaviour.CreateStageSpecificLine(line, 4, null);
-			Assert.AreEqual("4-hey.png", line.Image);
-			Assert.AreEqual("Bubba", line.Text);
-		}
-
-		[TestMethod]
-		public void StageSpecificLineHasExtension()
-		{
-			DialogueLine line = new DialogueLine("hey.png", "Bubba");
-			line.IsGenericImage = true;
-			line = Behaviour.CreateStageSpecificLine(line, 4, null);
-			Assert.AreEqual("4-hey.png", line.Image);
-			Assert.AreEqual("Bubba", line.Text);
-		}
-
-		[TestMethod]
-		public void StageSpecificLineHasPrefixAndExtension()
-		{
-			DialogueLine line = new DialogueLine("hey.png", "Bubba");
-			line = Behaviour.CreateStageSpecificLine(line, 4, null);
-			Assert.AreEqual("4-hey.png", line.Image);
-			Assert.AreEqual("Bubba", line.Text);
-		}
-
-		[TestMethod]
-		public void DefaultLine()
-		{
-			DialogueLine line = new DialogueLine("hey", "Bubba");
-			line = Behaviour.CreateDefaultLine(line);
-			Assert.AreEqual("hey", line.Image);
-			Assert.AreEqual("Bubba", line.Text);
-		}
-
-		[TestMethod]
-		public void DefaultLineHasPrefix()
-		{
-			DialogueLine line = new DialogueLine("4-hey", "Bubba");
-			line = Behaviour.CreateDefaultLine(line);
-			Assert.AreEqual("hey", line.Image);
-			Assert.AreEqual("Bubba", line.Text);
-		}
-
-		[TestMethod]
-		public void DefaultLineHasExtension()
-		{
-			DialogueLine line = new DialogueLine("hey.png", "Bubba");
-			line = Behaviour.CreateDefaultLine(line);
-			Assert.AreEqual("hey", line.Image);
-			Assert.AreEqual("Bubba", line.Text);
-		}
-
-		[TestMethod]
-		public void DefaultLineHasPrefixAndExtension()
-		{
-			DialogueLine line = new DialogueLine("4-hey.png", "Bubba");
-			line = Behaviour.CreateDefaultLine(line);
-			Assert.AreEqual("hey", line.Image);
-			Assert.AreEqual("Bubba", line.Text);
 		}
 
 		private Case CreateWorkingCase(Behaviour behavior, string tag, int[] stages, params string[] lines)
@@ -264,7 +192,7 @@ namespace UnitTests
 			behavior.PrepareForEdit(_character);
 			Assert.AreEqual(1, behavior.GetWorkingCases().Count());
 			Case first = behavior.GetWorkingCases().First();
-			Assert.AreEqual(1, first.AlternativeConditions.Count);
+			Assert.AreEqual(2, first.AlternativeConditions.Count);
 		}
 
 		[TestMethod]
@@ -352,6 +280,11 @@ namespace UnitTests
 			behavior.BulkReplace("a", dest);
 			Assert.AreEqual(3, behavior.GetWorkingCases().Count());
 			Assert.AreEqual("c", behavior.GetWorkingCases().ToList()[1].Lines[0].Text);
+		}
+
+		public void Dispose()
+		{
+			_character.Dispose();
 		}
 	}
 }

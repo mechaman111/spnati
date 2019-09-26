@@ -9,6 +9,7 @@ namespace SPNATI_Character_Editor.Activities
 	public partial class AdvancedMetadataEditor : Activity
 	{
 		private Character _character;
+		private bool _dirty;
 
 		public AdvancedMetadataEditor()
 		{
@@ -36,59 +37,35 @@ namespace SPNATI_Character_Editor.Activities
 			valScale.Value = Math.Max(valScale.Minimum, Math.Min((decimal)_character.Metadata.Scale, valScale.Maximum));
 			valLayer.Value = _character.Metadata.Z;
 			cboDialogueLayer.SelectedItem = _character.Metadata.BubblePosition;
+			gridNicknames.Data = _character.Nicknames;
 			LoadNicknames();
 			styleControl.SetCharacter(_character);
+			_character.PropertyChanged += _character_PropertyChanged;
+		}
+
+		private void _character_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "Nicknames")
+			{
+				_dirty = true;
+			}
 		}
 
 		protected override void OnActivate()
 		{
-			LoadLabels();
+			gridLabels.Data = _character.Labels;
 		}
 
 		public override void Save()
 		{
+			gridOtherNicknames.EndEdit();
+			gridNicknames.EndEdit();
 			_character.Metadata.Scale = (float)valScale.Value;
 			_character.Metadata.BubblePosition = (DialogueLayer)cboDialogueLayer.SelectedItem;
 			_character.Metadata.Z = (int)valLayer.Value;
-			SaveLabels();
+			gridLabels.Save(colLabelsStage);
 			SaveNicknames();
 			styleControl.Save();
-		}
-
-		/// <summary>
-		/// Populates the advanced labels grid
-		/// </summary>
-		private void LoadLabels()
-		{
-			gridLabels.Rows.Clear();
-			foreach (StageSpecificValue i in _character.Labels)
-			{
-				DataGridViewRow row = gridLabels.Rows[gridLabels.Rows.Add()];
-				row.Cells["ColLabelsStage"].Value = i.Stage;
-				row.Cells["ColLabelsLabel"].Value = i.Value;
-			}
-		}
-
-		/// <summary>
-		/// Saves the Labels grid into the current character
-		/// </summary>
-		private void SaveLabels()
-		{
-			_character.Labels.Clear();
-			for (int i = 0; i < gridLabels.Rows.Count; i++)
-			{
-				DataGridViewRow row = gridLabels.Rows[i];
-				string label = row.Cells["ColLabelsLabel"].Value?.ToString();
-				string stageString = row.Cells["ColLabelsStage"].Value?.ToString();
-				if (string.IsNullOrEmpty(label))
-					continue;
-				stageString = stageString ?? string.Empty;
-				int stage;
-				if (int.TryParse(stageString, out stage))
-				{
-					_character.Labels.Add(new StageSpecificValue(stage, label));
-				}
-			}
 		}
 
 		private void LoadNicknames()
@@ -99,37 +76,80 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				if (nickname.Character == "*")
 				{
-					gridOtherNicknames.Rows.Add(new object[] { nickname.Label });
+					DataGridViewRow row = gridOtherNicknames.Rows[gridOtherNicknames.Rows.Add(new object[] { nickname.Label })];
+					row.Tag = nickname;
 				}
 				else
 				{
-					gridNicknames.Rows.Add(new object[] { nickname.Character, nickname.Label });
+					DataGridViewRow row = gridNicknames.Rows[gridNicknames.Rows.Add(new object[] { nickname.Character, nickname.Label })];
+					row.Tag = nickname;
 				}
 			}
 		}
 
 		private void SaveNicknames()
 		{
-			_character.Nicknames.Clear();
-			foreach (DataGridViewRow row in gridNicknames.Rows)
+			for (int i = 0; i < gridNicknames.Rows.Count; i++)
 			{
+				DataGridViewRow row = gridNicknames.Rows[i];
+				if (row.IsNewRow) { continue; }
+				Nickname nickname = row.Tag as Nickname;
 				string key = row.Cells[0].Value?.ToString();
 				string value = row.Cells[1].Value?.ToString();
-				if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value)) { continue; }
-
-				Nickname name = new Nickname(key, value);
-				_character.Nicknames.Add(name);
+				if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value))
+				{
+					gridNicknames.Rows.RemoveAt(i);
+					if (nickname != null)
+					{
+						_character.Nicknames.Remove(nickname);
+					}
+					i--;
+					continue;
+				}
+				else
+				{
+					if (nickname == null)
+					{
+						nickname = new Nickname(key, value);
+						_character.Nicknames.Add(nickname);
+						row.Tag = nickname;
+					}
+					nickname.Character = key;
+					nickname.Label = value;
+				}
 			}
-			foreach (DataGridViewRow row in gridOtherNicknames.Rows)
+			for (int i = 0; i < gridOtherNicknames.Rows.Count; i++)
 			{
+				DataGridViewRow row = gridOtherNicknames.Rows[i];
+				if (row.IsNewRow) { continue; }
 				string value = row.Cells[0].Value?.ToString();
-				if (string.IsNullOrEmpty(value)) { continue; }
-
-				Nickname name = new Nickname("*", value);
-				_character.Nicknames.Add(name);
+				Nickname nickname = row.Tag as Nickname;
+				if (string.IsNullOrEmpty(value))
+				{
+					gridOtherNicknames.Rows.RemoveAt(i);
+					if (nickname != null)
+					{
+						_character.Nicknames.Remove(nickname);
+					}
+					i--;
+				}
+				else
+				{
+					if (nickname == null)
+					{
+						nickname = new Nickname("*", value);
+						_character.Nicknames.Add(nickname);
+						row.Tag = nickname;
+					}
+					nickname.Label = value;
+				}
 			}
 
-			_character.Nicknames.Sort();
+			if (_dirty)
+			{
+				_character.Nicknames.Sort();
+				_dirty = false;
+			}
 		}
 	}
 }

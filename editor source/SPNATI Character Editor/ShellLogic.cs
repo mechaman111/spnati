@@ -10,14 +10,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Windows.Threading;
 
 namespace SPNATI_Character_Editor
 {
 	public static class ShellLogic
 	{
-		private static DispatcherTimer _backupTimer = new DispatcherTimer();
-
 		public static void Initialize()
 		{
 			if (!DoInitialSetup())
@@ -34,28 +31,26 @@ namespace SPNATI_Character_Editor
 
 			Shell.Instance.AutoTickFrequency = Config.AutoSaveInterval * 60000;
 			Shell.Instance.AutoTick += Instance_AutoTick;
-
-			_backupTimer.Tick += _backupTimer_Tick;
-			_backupTimer.Interval = new TimeSpan(0, 5, 0);
-			_backupTimer.Start();
+			Shell.Instance.Version = Config.Version;
+			Shell.Instance.VersionClick += Instance_VersionClick;
+			Shell.Instance.SubActionLabel = "Submit Bug Report";
+			Shell.Instance.SubActionClick += Instance_SubActionClick;
 
 			Config.LoadMacros<Case>("Case");
+			Shell.Instance.Description = Config.UserName;
+
+			CharacterGenerator.SetConverter(Config.ImportMethod);
 		}
 
-		private static void _backupTimer_Tick(object sender, EventArgs e)
+		private static void Instance_SubActionClick(object sender, EventArgs e)
 		{
-			if (!Config.AutoBackupEnabled) { return; }
-			Cursor cursor = Cursor.Current;
-			Cursor.Current = Cursors.WaitCursor;
-			foreach (IWorkspace ws in Shell.Instance.Workspaces)
-			{
-				Character c = ws.Record as Character;
-				if (c != null)
-				{
-					Serialization.BackupCharacter(c);
-				}
-			}
-			Cursor.Current = cursor;
+			ErrorReport form = new ErrorReport();
+			form.ShowDialog();
+		}
+
+		private static void Instance_VersionClick(object sender, EventArgs e)
+		{
+			new About().ShowDialog();
 		}
 
 		private static void Instance_AutoTick(object sender, System.EventArgs e)
@@ -194,7 +189,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("emitter") as DirectiveDefinition;
 			def.Description = "Adds an object emitter to the scene.";
 			def.SortOrder = 5;
-			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX", "delay", 
+			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX", "delay",
 				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease", "ignoreRotation", "marker",
 				"startSkewX", "startSkewY", "endSkewX", "endSkewY" })
 			{
@@ -284,7 +279,7 @@ namespace SPNATI_Character_Editor
 
 		private static void BuildDataSlicers()
 		{
-			SlicerProvider.AddSlicer("Case Type", "Groups by case type", () => new RecordSlicer(typeof(Trigger), "Tag", "Case Type", true, false));
+			SlicerProvider.AddSlicer("Case Type", "Groups by case type", () => new RecordSlicer(typeof(TriggerDefinition), "Tag", "Case Type", true, false));
 			SlicerProvider.AddSlicer("Target", "Groups by target", () => new RecordSlicer(typeof(Character), "Target", "Target", true, true));
 			SlicerProvider.AddSlicer("Target Hand", "Groups by self hand", () => new ComboSlicer(typeof(Case), "TargetHand", "Target Hand"));
 			SlicerProvider.AddSlicer("Target Stage", "Groups by target stage", () => new IntervalSlicer("TargetStage", "Target Stage", 0, 10));
@@ -442,12 +437,14 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Data Recovery", OpenDataRecovery, menu, Keys.None);
 			shell.AddToolbarItem("Fix Kisekae", ResetKisekae, menu, Keys.None);
+			shell.AddToolbarItem("Convert Dialogue", ConvertDialogue, menu, Keys.None);
 
 			//Dev tools
 			if (Config.DevMode)
 			{
 				menu = shell.AddToolbarSubmenu("Dev");
 				shell.AddToolbarItem("Themes...", typeof(Skin), menu);
+				shell.AddToolbarItem("Clear Extraneous IDs", ClearIDs, menu, Keys.None);
 			}
 
 			//Help
@@ -474,7 +471,12 @@ namespace SPNATI_Character_Editor
 			IRecord record = RecordLookup.DoLookup(typeof(Character), "", true, CharacterDatabase.FilterHuman, null);
 			if (record != null)
 			{
-				Shell.Instance.LaunchWorkspace(record as Character);
+				Character c = record as Character;
+				if (c is CachedCharacter)
+				{
+					c = CharacterDatabase.Load(c.FolderName);
+				}
+				Shell.Instance.LaunchWorkspace(c);
 			}
 		}
 
@@ -537,7 +539,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		private static void ResetKisekae()
 		{
-			if (MessageBox.Show("This will attempt fix Kisekae when imports are failing. Close kkl.exe before proceeding.", "Fix Kisekae", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+			if (MessageBox.Show("This will attempt to fix Kisekae when imports are failing. Close kkl.exe before proceeding.", "Fix Kisekae", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
 			{
 				return;
 			}
@@ -673,6 +675,64 @@ namespace SPNATI_Character_Editor
 		{
 			Recipe recipe = record as Recipe;
 			return Config.DevMode || !recipe.Core;
+		}
+
+		private static void ConvertDialogue()
+		{
+			int count = 0;
+			Character character = Shell.Instance.ActiveWorkspace.Record as Character;
+			if (character != null)
+			{
+				foreach (Case wc in character.Behavior.GetWorkingCases())
+				{
+					if (wc.HasLegacyConditions())
+					{
+						DataConversions.ConvertCase5_2(wc);
+						count++;
+					}
+				}
+			}
+			MessageBox.Show("Converted " + count + " cases.");
+		}
+
+		private static void ClearIDs()
+		{
+			Character character = Shell.Instance.ActiveWorkspace.Record as Character;
+			if (character != null)
+			{
+				CharacterEditorData editorData = CharacterDatabase.GetEditorData(character);
+				foreach (Case wc in character.Behavior.GetWorkingCases())
+				{
+					if (wc.Id > 0)
+					{
+						CaseLabel label = editorData.GetLabel(wc);
+						if (label != null)
+						{
+							continue;
+						}
+						string note = editorData.GetNote(wc);
+						if (!string.IsNullOrEmpty(note))
+						{
+							continue;
+						}
+						SituationResponse response = editorData.Responses.Find(r => r.Id == wc.Id);
+						if (response != null)
+						{
+							continue;
+						}
+						Situation situation = editorData.NoteworthySituations.Find(s => s.Id == wc.Id);
+						if (situation != null)
+						{
+							continue;
+						}
+						if (editorData.IsHidden(wc))
+						{
+							continue;
+						}
+						wc.Id = 0;
+					}
+				}
+			}
 		}
 	}
 }

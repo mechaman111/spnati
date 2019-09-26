@@ -62,7 +62,7 @@ namespace SPNATI_Character_Editor
 			{
 				if (TriggerDatabase.UsedInStage(workingCase.Tag, character, stage))
 				{
-					workingCase.Stages.Add(stage);
+					workingCase.AddStage(stage);
 				}
 				if (workingCase.TotalRounds == "1")
 				{
@@ -112,7 +112,7 @@ namespace SPNATI_Character_Editor
 
 		public static void Load()
 		{
-			string dir = Path.Combine("Resources", "Recipes");
+			string dir = Path.Combine(Config.ExecutableDirectory, "Resources", "Recipes");
 			if (Directory.Exists(dir))
 			{
 				foreach (string file in Directory.EnumerateFiles(dir, "*.txt"))

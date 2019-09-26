@@ -155,9 +155,10 @@
 			// 
 			// stripConditions
 			// 
-			this.stripConditions.AddCaption = "OR";
+			this.stripConditions.AddCaption = "AND";
 			this.stripConditions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.stripConditions.DecorationText = null;
 			this.stripConditions.Location = new System.Drawing.Point(6, 122);
 			this.stripConditions.Margin = new System.Windows.Forms.Padding(0);
 			this.stripConditions.Name = "stripConditions";
@@ -283,6 +284,7 @@
 			// 
 			this.skinnedGroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedGroupBox1.BackColor = System.Drawing.Color.White;
 			this.skinnedGroupBox1.Controls.Add(this.txtFolder);
 			this.skinnedGroupBox1.Controls.Add(this.skinnedLabel1);
 			this.skinnedGroupBox1.Controls.Add(this.cmdColorCode);
@@ -412,6 +414,7 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.BackColor = System.Drawing.Color.White;
 			this.groupBox3.Controls.Add(this.gridStages);
 			this.groupBox3.Location = new System.Drawing.Point(6, 6);
 			this.groupBox3.Name = "groupBox3";
@@ -425,6 +428,7 @@
 			this.gridStages.ColumnHeaderHeight = 72;
 			this.gridStages.Location = new System.Drawing.Point(6, 4);
 			this.gridStages.Name = "gridStages";
+			this.gridStages.ShowSelectAll = true;
 			this.gridStages.Size = new System.Drawing.Size(72, 102);
 			this.gridStages.TabIndex = 37;
 			// 
@@ -495,6 +499,7 @@
 			// stripCase
 			// 
 			this.stripCase.AddCaption = null;
+			this.stripCase.DecorationText = null;
 			this.stripCase.Dock = System.Windows.Forms.DockStyle.Top;
 			this.stripCase.Location = new System.Drawing.Point(0, 0);
 			this.stripCase.Margin = new System.Windows.Forms.Padding(0);
@@ -655,6 +660,7 @@
 			// stripTabs
 			// 
 			this.stripTabs.AddCaption = null;
+			this.stripTabs.DecorationText = null;
 			this.stripTabs.Dock = System.Windows.Forms.DockStyle.Top;
 			this.stripTabs.Location = new System.Drawing.Point(0, 0);
 			this.stripTabs.Margin = new System.Windows.Forms.Padding(0);

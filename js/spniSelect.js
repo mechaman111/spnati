@@ -260,7 +260,7 @@ function loadListingFile () {
             updateIndividualSelectScreen();
             updateSelectableGroups(0);
             updateSelectableGroups(1);
-            updateGroupSelectScreen();
+            updateGroupSelectScreen(true);
             updateSelectionVisuals();
         }
         if (outstandingLoads == 0) {
@@ -398,8 +398,12 @@ function updateIndividualSelectScreen () {
 /************************************************************
  * Loads opponents onto the group select screen based on the
  * currently selected page.
+ * 
+ * ignore_bg {boolean}: If true, skips setting up group backgrounds.
+ * This is really only necessary during initial load, when we need to
+ * update this screen despite it not actually being visible.
  ************************************************************/
-function updateGroupSelectScreen () {
+function updateGroupSelectScreen (ignore_bg) {
 	/* safety wrap around */
   if (groupPage[groupSelectScreen] < 0) {
 		/* wrap to last page */
@@ -419,34 +423,36 @@ function updateGroupSelectScreen () {
     if (group) {
         $groupNameLabel.html(group.title);
 
-        if (group.background && backgrounds[group.background]) {
-            var bg = backgrounds[group.background];
+        if (!ignore_bg) {
+            if (group.background && backgrounds[group.background]) {
+                var bg = backgrounds[group.background];
 
-            $('.group-preset-background-row').show();
-            $('#group-preset-background-label').text(bg.name);
+                $('.group-preset-background-row').show();
+                $('#group-preset-background-label').text(bg.name);
 
-            $groupBackgroundToggle.prop('checked', useGroupBackgrounds).off('change');
-            $groupBackgroundToggle.on('change', function () {
-                /* The user toggled the preset background checkbox. */
-                useGroupBackgrounds = $groupBackgroundToggle.is(':checked');
+                $groupBackgroundToggle.prop('checked', useGroupBackgrounds).off('change');
+                $groupBackgroundToggle.on('change', function () {
+                    /* The user toggled the preset background checkbox. */
+                    useGroupBackgrounds = $groupBackgroundToggle.is(':checked');
+
+                    if (useGroupBackgrounds) {
+                        bg.activateBackground();
+                    } else {
+                        optionsBackground.activateBackground();
+                    }
+
+                    save.saveSettings();
+                });
 
                 if (useGroupBackgrounds) {
                     bg.activateBackground();
-                } else {
+                }
+            } else {
+                $('.group-preset-background-row').hide();
+
+                if (useGroupBackgrounds && activeBackground.id !== optionsBackground.id) {
                     optionsBackground.activateBackground();
                 }
-
-                save.saveSettings();
-            });
-
-            if (useGroupBackgrounds) {
-                bg.activateBackground();
-            }
-        } else {
-            $('.group-preset-background-row').hide();
-
-            if (useGroupBackgrounds && activeBackground.id !== optionsBackground.id) {
-                optionsBackground.activateBackground();
             }
         }
 
@@ -1039,9 +1045,17 @@ function advanceSelectScreen () {
             },
         });
     }
+
+    var playedCharacters = save.getPlayedCharacterSet();
     players.forEach(function(player) {
+        if (player.id !== 'human') {
+            playedCharacters.push(player.id);
+        }
+
         player.preloadStageImages(0);
     });
+
+    save.savePlayedCharacterSet(playedCharacters);
 
 	transcriptHistory = [];
     inGame = true;
@@ -1453,10 +1467,8 @@ function updateGroupCountStats() {
 function countLinesImages(xml) {
     // parse all lines of dialogue and all images
 	var numTotalLines = 0;
-	var numUniqueDialogueLines = 0;
-	var numUniqueUsedPoses = 0;
-    var lines = {};
-    var poses = {};
+    var lines = new Set();
+    var poses = new Set();
     
     var matched = $(xml).find('state').get();
     var layers = $(xml).find('wardrobe>clothing').length;
@@ -1473,33 +1485,29 @@ function countLinesImages(xml) {
             numTotalLines++;
             
         	// count only unique lines of dialogue
-        	if (lines[data.textContent.trim()] === undefined) numUniqueDialogueLines++;
-            lines[data.textContent.trim()] = 1;
+            if (data.textContent.trim() != "") lines.add(data.textContent.trim());
+            if ($(data).children('text').length) lines.add($(data).children('text').html().trim());
             
         	// count unique number of poses used in dialogue
         	// note that this number may differ from actual image count if some images
         	// are never used, or if images that don't exist are used in the dialogue
-            var img = $(data).attr("img");
-            if (img.indexOf('#') >= 0) {
-                // Expand # to the relevant stages
-                var $case = $(data).parent();
-                var $trigger = $case.parent();
-                var stageInterval = getRelevantStagesForTrigger($trigger.attr('id'), layers);
+            
+            var $case = $(data).parent();
+            var $trigger = $case.parent('trigger');
+            var $stage = $case.parent('stage');
+            var stageInterval = $trigger.length ? getRelevantStagesForTrigger($trigger.attr('id'), layers)
+                : $stage.length ? { min: $case.parent('stage').attr('id'), max: $case.parent('stage').attr('id') }
+                : { min: 0, max: 0 };
 
-                for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
-                    if (checkStage(stage, $case.attr('stage'))) {
-                        var stageImg = img.replace('#', stage);
-                        if (!(stageImg in poses)) {
-                            numUniqueUsedPoses++;
-                            poses[stageImg] = 1;
-                        }
-                    }
-                }
-            } else {
-                if (!(img in poses)) {
-                    numUniqueUsedPoses++;
-                    poses[img] = 1;
-                }
+            for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
+                var images = $(data).children('alt-img').filter(function() {
+                    return checkStage(stage, $(this).attr('stage'));
+                }).map(function() { return $(this).text(); }).get();
+                if (images.length == 0) images = [ $(data).attr('img') ];
+                images.forEach(function(poseName) {
+                    if (!poseName) return;
+                    poses.add(poseName.replace('#', stage));
+                });
             }
         } while (Date.now() - startTs < 50 && matched.length > 0);
         
@@ -1508,8 +1516,8 @@ function countLinesImages(xml) {
         } else {
             return deferred.resolve({
                 numTotalLines : numTotalLines,
-                numUniqueLines : numUniqueDialogueLines,
-                numPoses : numUniqueUsedPoses
+                numUniqueLines : lines.size,
+                numPoses : poses.size
             });
         }
     }

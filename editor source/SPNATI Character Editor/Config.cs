@@ -3,6 +3,7 @@ using Desktop.Providers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
@@ -12,7 +13,8 @@ namespace SPNATI_Character_Editor
 		/// List of released versions since update tracking was added, used for determining which updates a user skipped and providing info about those
 		/// </summary>
 		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6",
-			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2", "v4.0b", "v4.0.1b", "v4.0.2b", "v4.0.3b", "v4.0", "v4.1", "v4.2", "v4.2.1", "v4.3", "v4.4b", "v5.0b", "v5.0" };
+			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2", "v4.0b", "v4.0.1b", "v4.0.2b", "v4.0.3b", "v4.0", "v4.1", "v4.2", "v4.2.1", "v4.3", "v4.4b", "v5.0b", "v5.0",
+			"v5.1", "v5.1.1", "v5.2", "v5.2.1" };
 
 		/// <summary>
 		/// Current Version
@@ -48,6 +50,16 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			return true; //version that predates VersionHistory
+		}
+
+		/// <summary>
+		/// Gets whether a setting has any value
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public static bool HasValue(string key)
+		{
+			return _settings.ContainsKey(key.ToLower());
 		}
 
 		/// <summary>
@@ -217,6 +229,14 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// Gets the executable's root directory
+		/// </summary>
+		public static string ExecutableDirectory
+		{
+			get { return Path.GetDirectoryName(Application.ExecutablePath); }
+		}
+
+		/// <summary>
 		/// Gets where SPNATI is located
 		/// </summary>
 		public static string SpnatiDirectory
@@ -280,7 +300,14 @@ namespace SPNATI_Character_Editor
 		public static string UserName
 		{
 			get { return GetString(Settings.UserName); }
-			set { Set(Settings.UserName, value); }
+			set
+			{
+				if (Shell.Instance != null)
+				{
+					Shell.Instance.Description = value;
+				}
+				Set(Settings.UserName, value);
+			}
 		}
 
 		/// <summary>
@@ -299,12 +326,62 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// How many minutes to auto-backup
 		/// </summary>
-		public static bool AutoBackupEnabled
+		public static bool BackupEnabled
 		{
 			get { return !GetBoolean("disableautobackup"); }
 			set
 			{
 				Set("disableautobackup", !value);
+			}
+		}
+
+		/// <summary>
+		/// How frequently to backup
+		/// </summary>
+		public static int BackupPeriod
+		{
+			get
+			{
+				int value = GetInt("backupperiod");
+				int result;
+				if (value == 0)
+				{
+					result = 30;
+				}
+				else
+				{
+					result = value;
+				}
+				return result;
+			}
+			set
+			{
+				Set("backupperiod", value);
+			}
+		}
+
+		/// <summary>
+		/// How long to keep backups
+		/// </summary>
+		public static int BackupLifeTime
+		{
+			get
+			{
+				int value = GetInt("backuplife");
+				int result;
+				if (value == 0)
+				{
+					result = 30;
+				}
+				else
+				{
+					result = value;
+				}
+				return result;
+			}
+			set
+			{
+				Set("backuplife", value);
 			}
 		}
 
@@ -323,7 +400,7 @@ namespace SPNATI_Character_Editor
 		public static bool UsePrefixlessImages
 		{
 			get { return !GetBoolean(Settings.HideNoPrefix); }
-			set { Set(Settings.HideNoPrefix,! value); }
+			set { Set(Settings.HideNoPrefix, !value); }
 		}
 
 		/// <summary>
@@ -395,6 +472,18 @@ namespace SPNATI_Character_Editor
 			set { Set("workflowtracer", value); }
 		}
 
+		public static bool HideEmptyCases
+		{
+			get { return GetBoolean("hideemptycases"); }
+			set { Set("hideemptycases", value); }
+		}
+
+		public static int ImportMethod
+		{
+			get { return GetInt("import"); }
+			set { Set("import", value); }
+		}
+
 		public static HashSet<string> AutoPauseDirectives
 		{
 			get
@@ -451,6 +540,60 @@ namespace SPNATI_Character_Editor
 		{
 			get { return GetString("lastending"); }
 			set { Set("lastending", value); }
+		}
+
+		/// <summary>
+		/// Tinify API key
+		/// </summary>
+		public static string TinifyKey
+		{
+			get { return GetString("tinify"); }
+			set { Set("tinify", value); }
+		}
+
+		#region Dashboard
+		public static bool StartOnDashboard
+		{
+			get { return !GetBoolean("startmetadata"); }
+			set { Set("startmetadata", !value); }
+		}
+
+		public static bool EnableDashboard
+		{
+			get { return !GetBoolean("nodashboard"); }
+			set { Set("nodashboard", !value); }
+		}
+
+		public static bool EnableDashboardSpellCheck
+		{
+			get { return !GetBoolean("nodashboardspell"); }
+			set { Set("nodashboardspell", !value); }
+		}
+
+		public static bool EnableDashboardValidation
+		{
+			get { return !GetBoolean("nodashboardvalidation"); }
+			set { Set("nodashboardvalidation", !value); }
+		}
+		#endregion
+
+		public static bool IncludesUserName(string name)
+		{
+			string userName = UserName?.ToLower();
+			if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(name))
+			{
+				return false;
+			}
+			string[] names = name.Split(',', '&');
+			foreach (string n in names)
+			{
+				if (n.Trim().ToLower() == userName)
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 	}
 

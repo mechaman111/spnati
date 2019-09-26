@@ -34,12 +34,12 @@
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitSituations = new System.Windows.Forms.SplitContainer();
 			this.containerSituation = new Desktop.Skinning.SkinnedGroupBox();
+			this.recFilter = new Desktop.CommonControls.RecordField();
 			this.lblPriority = new Desktop.Skinning.SkinnedLabel();
 			this.cboPriority = new Desktop.Skinning.SkinnedComboBox();
 			this.label6 = new Desktop.Skinning.SkinnedLabel();
 			this.label3 = new Desktop.Skinning.SkinnedLabel();
 			this.cmdRespond = new Desktop.Skinning.SkinnedButton();
-			this.cboFilter = new Desktop.Skinning.SkinnedComboBox();
 			this.chkFilter = new Desktop.Skinning.SkinnedCheckBox();
 			this.cmdNew = new Desktop.Skinning.SkinnedButton();
 			this.valSuggestions = new Desktop.Skinning.SkinnedNumericUpDown();
@@ -113,24 +113,44 @@
 			// 
 			// containerSituation
 			// 
+			this.containerSituation.BackColor = System.Drawing.Color.White;
+			this.containerSituation.Controls.Add(this.recFilter);
 			this.containerSituation.Controls.Add(this.lblPriority);
 			this.containerSituation.Controls.Add(this.cboPriority);
 			this.containerSituation.Controls.Add(this.label6);
 			this.containerSituation.Controls.Add(this.label3);
 			this.containerSituation.Controls.Add(this.cmdRespond);
-			this.containerSituation.Controls.Add(this.cboFilter);
 			this.containerSituation.Controls.Add(this.chkFilter);
 			this.containerSituation.Controls.Add(this.cmdNew);
 			this.containerSituation.Controls.Add(this.valSuggestions);
 			this.containerSituation.Controls.Add(this.gridSituations);
 			this.containerSituation.Controls.Add(this.label5);
 			this.containerSituation.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.containerSituation.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.containerSituation.Image = null;
 			this.containerSituation.Location = new System.Drawing.Point(0, 0);
 			this.containerSituation.Name = "containerSituation";
 			this.containerSituation.Size = new System.Drawing.Size(943, 326);
 			this.containerSituation.TabIndex = 11;
 			this.containerSituation.TabStop = false;
 			this.containerSituation.Text = "Choose a Situation to Respond To";
+			// 
+			// recFilter
+			// 
+			this.recFilter.AllowCreate = false;
+			this.recFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.recFilter.Location = new System.Drawing.Point(64, 299);
+			this.recFilter.Name = "recFilter";
+			this.recFilter.PlaceholderText = null;
+			this.recFilter.Record = null;
+			this.recFilter.RecordContext = null;
+			this.recFilter.RecordFilter = null;
+			this.recFilter.RecordKey = null;
+			this.recFilter.RecordType = null;
+			this.recFilter.Size = new System.Drawing.Size(165, 20);
+			this.recFilter.TabIndex = 13;
+			this.recFilter.UseAutoComplete = true;
+			this.recFilter.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recFilter_RecordChanged);
 			// 
 			// lblPriority
 			// 
@@ -207,25 +227,6 @@
 			this.cmdRespond.UseVisualStyleBackColor = true;
 			this.cmdRespond.Click += new System.EventHandler(this.cmdRespond_Click);
 			// 
-			// cboFilter
-			// 
-			this.cboFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.cboFilter.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-			this.cboFilter.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-			this.cboFilter.BackColor = System.Drawing.Color.White;
-			this.cboFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cboFilter.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
-			this.cboFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.cboFilter.FormattingEnabled = true;
-			this.cboFilter.Location = new System.Drawing.Point(64, 299);
-			this.cboFilter.Name = "cboFilter";
-			this.cboFilter.SelectedIndex = -1;
-			this.cboFilter.SelectedItem = null;
-			this.cboFilter.Size = new System.Drawing.Size(165, 21);
-			this.cboFilter.Sorted = false;
-			this.cboFilter.TabIndex = 5;
-			this.cboFilter.SelectedIndexChanged += new System.EventHandler(this.cboFilter_SelectedIndexChanged);
-			// 
 			// chkFilter
 			// 
 			this.chkFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -284,6 +285,7 @@
 			// 
 			this.gridSituations.AllowUserToAddRows = false;
 			this.gridSituations.AllowUserToDeleteRows = false;
+			this.gridSituations.AllowUserToResizeRows = false;
 			this.gridSituations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -307,6 +309,7 @@
             this.ColStages,
             this.ColTrigger,
             this.ColJump});
+			this.gridSituations.Data = null;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -397,6 +400,8 @@
 			// 
 			this.containerLines.Controls.Add(this.gridActiveSituation);
 			this.containerLines.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.containerLines.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.containerLines.Image = null;
 			this.containerLines.Location = new System.Drawing.Point(0, 0);
 			this.containerLines.Name = "containerLines";
 			this.containerLines.Size = new System.Drawing.Size(150, 46);
@@ -418,11 +423,14 @@
 			// 
 			// containerResponse
 			// 
+			this.containerResponse.BackColor = System.Drawing.Color.White;
 			this.containerResponse.Controls.Add(this.gridLines);
 			this.containerResponse.Controls.Add(this.cmdJumpToDialogue);
 			this.containerResponse.Controls.Add(this.cmdCancel);
 			this.containerResponse.Controls.Add(this.cmdAccept);
 			this.containerResponse.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.containerResponse.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.containerResponse.Image = null;
 			this.containerResponse.Location = new System.Drawing.Point(0, 0);
 			this.containerResponse.Name = "containerResponse";
 			this.containerResponse.Size = new System.Drawing.Size(943, 304);
@@ -516,7 +524,6 @@
 		private Controls.DialogueGrid gridLines;
 		private Desktop.Skinning.SkinnedButton cmdNew;
 		private Desktop.Skinning.SkinnedDataGridView gridSituations;
-		private Desktop.Skinning.SkinnedComboBox cboFilter;
 		private Desktop.Skinning.SkinnedLabel label3;
 		private Controls.DialogueGrid gridActiveSituation;
 		private System.Windows.Forms.SplitContainer splitSituations;
@@ -539,5 +546,6 @@
 		private Desktop.Skinning.SkinnedGroupBox containerLines;
 		private Desktop.Skinning.SkinnedLabel lblPriority;
 		private Desktop.Skinning.SkinnedComboBox cboPriority;
+		private Desktop.CommonControls.RecordField recFilter;
 	}
 }

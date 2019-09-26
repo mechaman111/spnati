@@ -1,80 +1,190 @@
-﻿using System.Collections.Generic;
+﻿using Desktop;
+using SPNATI_Character_Editor.IO;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
-using System.ComponentModel;
 
 namespace SPNATI_Character_Editor
 {
 	/// <summary>
 	/// A single line of dialogue and its pose
 	/// </summary>
-	public class DialogueLine
+	/// <remarks>
+	/// Overhead of using a BindableObject is too big for this since it's used thousands of times.
+	/// </remarks>
+	public class DialogueLine : INotifyPropertyChanged
 	{
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public void NotifyPropertyChanged([CallerMemberName] string propName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+		}
+
+		/// <summary>
+		/// Image as it's serialized
+		/// </summary>
+		private string _image;
 		[XmlAttribute("img")]
-		public string Image;
+		public string Image
+		{
+			get { return _image; }
+			set { if (_image != value) { _image = value; NotifyPropertyChanged(); } }
+		}
 
+		private PoseMapping _pose;
+		/// <summary>
+		/// Working pose image
+		/// </summary>
 		[XmlIgnore]
-		public Dictionary<int, LineImage> StageImages = new Dictionary<int, LineImage>();
+		public PoseMapping Pose
+		{
+			get { return _pose; }
+			set { if (_pose != value) { _pose = value; NotifyPropertyChanged(); } }
+		}
 
+		/// <summary>
+		/// Stage-specific images
+		/// </summary>
+		[XmlElement("alt-img")]
+		public List<StageImage> Images { get; set; }
+
+		/// <summary>
+		/// Text will be read from the XmlText but written to the &lt;text&gt; element
+		/// </summary>
 		[XmlText]
-		public string Text;
+		public string LegacyText
+		{
+			get { return null; } //XmlSerializer won't read this without a getter, so use a dummy to prevent writing it back out 
+			set { Text = value; }
+		}
 
+		private string _text;
+		[XmlConditionalText("UseXmlText")]
+		[XmlElement("text")]
+		public string Text
+		{
+			get { return _text; }
+			set { if (_text != value) { _text = value; NotifyPropertyChanged(); } }
+		}
+
+		private int _oneShotId;
 		/// <summary>
 		/// Line will only play once
 		/// </summary>
 		[DefaultValue(0)]
 		[XmlAttribute("oneShotId")]
-		public int OneShotId;
+		public int OneShotId
+		{
+			get { return _oneShotId; }
+			set { if (_oneShotId != value) { _oneShotId = value; NotifyPropertyChanged(); } }
+		}
 
+		private string _marker;
 		[XmlAttribute("marker")]
-		public string Marker;
+		public string Marker
+		{
+			get { return _marker; }
+			set { if (_marker != value) { _marker = value; NotifyPropertyChanged(); } }
+		}
 
+		private string _direction;
 		[DefaultValue("down")]
 		[XmlAttribute("direction")]
-		public string Direction;
+		public string Direction
+		{
+			get { return _direction; }
+			set { if (_direction != value) { _direction = value; NotifyPropertyChanged(); } }
+		}
 
+		private string _location;
 		[DefaultValue("")]
 		[XmlAttribute("location")]
-		public string Location;
+		public string Location
+		{
+			get { return _location; }
+			set { if (_location != value) { _location = value; NotifyPropertyChanged(); } }
+		}
 
+		private string _gender;
 		[DefaultValue("")]
 		[XmlAttribute("set-gender")]
-		public string Gender;
+		public string Gender
+		{
+			get { return _gender; }
+			set { if (_gender != value) { _gender = value; NotifyPropertyChanged(); } }
+		}
 
+		private string _intelligence;
 		[DefaultValue("")]
 		[XmlAttribute("set-intelligence")]
-		public string Intelligence;
+		public string Intelligence
+		{
+			get { return _intelligence; }
+			set { if (_intelligence != value) { _intelligence = value; NotifyPropertyChanged(); } }
+		}
 
+		private string _size;
 		[DefaultValue("")]
 		[XmlAttribute("set-size")]
-		public string Size;
+		public string Size
+		{
+			get { return _size; }
+			set { if (_size != value) { _size = value; NotifyPropertyChanged(); } }
+		}
 
+		private string _label;
 		[DefaultValue("")]
 		[XmlAttribute("set-label")]
-		public string Label;
+		public string Label
+		{
+			get { return _label; }
+			set { if (_label != value) { _label = value; NotifyPropertyChanged(); } }
+		}
 
+		private float _weight = 1.0f;
 		[DefaultValue(1.0f)]
 		[XmlAttribute("weight")]
-		public float Weight = 1;
-
-		[XmlIgnore]
-		public string ImageExtension;
+		public float Weight
+		{
+			get { return _weight; }
+			set { if (_weight != value) { _weight = value; NotifyPropertyChanged(); } }
+		}
 
 		[XmlIgnore]
 		public bool IsGenericImage;
 
+		private string _collectibleId;
 		[DefaultValue("")]
 		[XmlAttribute("collectible")]
-		public string CollectibleId;
+		public string CollectibleId
+		{
+			get { return _collectibleId; }
+			set { if (_collectibleId != value) { _collectibleId = value; NotifyPropertyChanged(); } }
+		}
 
+		private string _collectibleValue;
 		[DefaultValue("")]
 		[XmlAttribute("collectible-value")]
-		public string CollectibleValue;
+		public string CollectibleValue
+		{
+			get { return _collectibleValue; }
+			set { if (_collectibleValue != value) { _collectibleValue = value; NotifyPropertyChanged(); } }
+		}
 
+		private bool _persistent;
 		[DefaultValue(false)]
 		[XmlAttribute("persist-marker")]
-		public bool IsMarkerPersistent;
+		public bool IsMarkerPersistent
+		{
+			get { return _persistent; }
+			set { if (_persistent != value) { _persistent = value; NotifyPropertyChanged(); } }
+		}
 
 		public static readonly string[] ArrowDirections = new string[] { "", "down", "left", "right", "up" };
 		public static readonly string[] AILevels = new string[] { "", "throw", "bad", "average", "good", "best" };
@@ -84,24 +194,24 @@ namespace SPNATI_Character_Editor
 			Image = "";
 			Text = "";
 			Direction = "down";
+			Weight = 1;
 			Marker = null;
+			Images = new List<StageImage>();
 		}
 
-		public DialogueLine(string image, string text)
+		public DialogueLine(string image, string text) : this()
 		{
 			Image = image;
-			string extension = Path.GetExtension(image);
-			ImageExtension = extension;
 			Text = text ?? "";
 		}
 
 		public DialogueLine Copy()
 		{
 			DialogueLine copy = MemberwiseClone() as DialogueLine;
-			copy.StageImages = new Dictionary<int, LineImage>();
-			foreach (KeyValuePair<int, LineImage> kvp in StageImages)
+			copy.Images = new List<StageImage>();
+			foreach (StageImage img in Images)
 			{
-				copy.StageImages[kvp.Key] = new LineImage(kvp.Value.Image, kvp.Value.IsGenericImage);
+				copy.Images.Add(img.Copy());
 			}
 			return copy;
 		}
@@ -141,85 +251,6 @@ namespace SPNATI_Character_Editor
 			return Text;
 		}
 
-		private static Regex _stageRegex = new Regex(@"^(custom:)?\d+-.*");
-		/// <summary>
-		/// Gets whether an image name is in the format [custom:]#-abc
-		/// </summary>
-		/// <param name="image"></param>
-		/// <returns></returns>
-		public static bool IsStageSpecificImage(string image)
-		{
-			if (string.IsNullOrEmpty(image)) { return true; }
-			return _stageRegex.IsMatch(image);
-		}
-
-		/// <summary>
-		/// Converts an image name (ex. 0-shy.png) to a generic name (shy)
-		/// </summary>
-		/// <param name="image"></param>
-		/// <returns></returns>
-		public static string GetDefaultImage(string image)
-		{
-			if (string.IsNullOrEmpty(image))
-				return image;
-			bool custom = image.StartsWith("custom:");
-			if (custom)
-			{
-				image = image.Substring(7);
-			}
-			int hyphen = image.IndexOf('-');
-			if (hyphen > 0)
-			{
-				string prefix = image.Substring(0, hyphen);
-				int value;
-				if (int.TryParse(prefix, out value))
-				{
-					string reduced = Path.GetFileNameWithoutExtension(image.Substring(hyphen + 1));
-					if (custom)
-					{
-						reduced = "custom:" + reduced;
-					}
-					return reduced;
-				}
-			}
-			string path = Path.GetFileNameWithoutExtension(image);
-			if (custom)
-			{
-				path = "custom:" + path;
-			}
-			return path;
-		}
-
-		/// <summary>
-		/// Converts a generic image name into a stage-specific one (ex. shy to 0-shy)
-		/// </summary>
-		/// <param name="stage"></param>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		public static string GetStageImage(int stage, string name)
-		{
-			if (string.IsNullOrEmpty(name))
-			{
-				return name;
-			}
-			if (name.StartsWith("custom:"))
-			{
-				if (name.StartsWith($"custom:{stage}-"))
-				{
-					return name;
-				}
-				return $"custom:{stage}-{name.Substring(7)}";
-			}
-			else
-			{
-				if (name.StartsWith($"{stage}-"))
-				{
-					return name;
-				}
-				return $"{stage}-{name}";
-			}
-		}
-
 		/// <summary>
 		/// Gets a list of variables in a block of text that are invalid
 		/// </summary>
@@ -239,7 +270,7 @@ namespace SPNATI_Character_Editor
 			foreach (var match in matches)
 			{
 				string variable = match.ToString().Trim('~');
-				if (!TriggerDatabase.IsVariableAvailable(tag, variable))
+				if (!TriggerDatabase.IsVariableAvailable(tag, variable) && variable != "~name~")
 				{
 					//check filters for variables
 					TargetCondition filter = dialogueCase.Conditions.Find(c => c.Variable == variable);
@@ -252,41 +283,27 @@ namespace SPNATI_Character_Editor
 			return invalidVars;
 		}
 
-		/// <summary>
-		/// Sets a dialogue line to use the generic version of a particular image
-		/// </summary>
-		public void GeneralizeImage(DialogueLine line)
-		{
-			string extension = line.ImageExtension ?? Path.GetExtension(line.Image);
-			ImageExtension = extension;
-			line.ImageExtension = extension;
-			Image = GetDefaultImage(line.Image);
-			IsGenericImage = line.IsGenericImage;
-		}
-
 		public bool HasAdvancedMarker
 		{
 			get
 			{
-				return IsMarkerPersistent || (Marker != null && (Marker.Contains("=") || Marker.Contains("+") || Marker.Contains("-") ||  Marker.Contains("*")));
+				return IsMarkerPersistent || (Marker != null && (Marker.Contains("=") || Marker.Contains("+") || Marker.Contains("-") || Marker.Contains("*")));
 			}
 		}
-	}
 
-	public class LineImage
-	{
-		public string Image;
-		public bool IsGenericImage;
-
-		public LineImage(string img, bool generic)
+		public bool HasAdvancedData
 		{
-			Image = img;
-			IsGenericImage = generic;
+			get
+			{
+				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || !string.IsNullOrEmpty(Intelligence) || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
+					!string.IsNullOrEmpty(Location) || OneShotId > 0 || Weight != 1;
+			}
 		}
 
-		public override string ToString()
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+		private bool UseXmlText()
 		{
-			return Image;
+			return Images.Count == 0;
 		}
 	}
 }

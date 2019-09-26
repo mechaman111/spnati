@@ -52,6 +52,11 @@
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.skinnedTabControl2 = new Desktop.Skinning.SkinnedTabControl();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.skinnedGroupBox3 = new Desktop.Skinning.SkinnedGroupBox();
+			this.radialGauge1 = new Desktop.CommonControls.RadialGauge();
+			this.radialGauge4 = new Desktop.CommonControls.RadialGauge();
+			this.radialGauge2 = new Desktop.CommonControls.RadialGauge();
+			this.radialGauge3 = new Desktop.CommonControls.RadialGauge();
 			this.skinnedSlider2 = new Desktop.Skinning.SkinnedSlider();
 			this.skinnedSlider1 = new Desktop.Skinning.SkinnedSlider();
 			this.accordionListView1 = new Desktop.CommonControls.AccordionListView();
@@ -152,8 +157,26 @@
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.skinnedTabStrip2 = new Desktop.Skinning.SkinnedTabStrip();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.skinnedGroupBox8 = new Desktop.Skinning.SkinnedGroupBox();
+			this.skinnedTextBox4 = new Desktop.Skinning.SkinnedTextBox();
+			this.skinnedLabel10 = new Desktop.Skinning.SkinnedLabel();
+			this.skinnedGroupBox7 = new Desktop.Skinning.SkinnedGroupBox();
+			this.skinnedTextBox3 = new Desktop.Skinning.SkinnedTextBox();
+			this.skinnedLabel9 = new Desktop.Skinning.SkinnedLabel();
+			this.skinnedGroupBox6 = new Desktop.Skinning.SkinnedGroupBox();
+			this.skinnedTextBox6 = new Desktop.Skinning.SkinnedTextBox();
+			this.skinnedLabel12 = new Desktop.Skinning.SkinnedLabel();
+			this.skinnedGroupBox5 = new Desktop.Skinning.SkinnedGroupBox();
+			this.skinnedTextBox5 = new Desktop.Skinning.SkinnedTextBox();
+			this.skinnedLabel11 = new Desktop.Skinning.SkinnedLabel();
+			this.skinnedGroupBox4 = new Desktop.Skinning.SkinnedGroupBox();
+			this.skinnedTextBox2 = new Desktop.Skinning.SkinnedTextBox();
+			this.skinnedLabel8 = new Desktop.Skinning.SkinnedLabel();
 			this.skinnedTabStrip1 = new Desktop.Skinning.SkinnedTabStrip();
 			this.cmdDisable = new Desktop.Skinning.SkinnedButton();
+			this.skinnedGroupBox9 = new Desktop.Skinning.SkinnedGroupBox();
+			this.skinnedTextBox7 = new Desktop.Skinning.SkinnedTextBox();
+			this.skinnedLabel13 = new Desktop.Skinning.SkinnedLabel();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -161,6 +184,7 @@
 			this.tabPage1.SuspendLayout();
 			this.skinnedTabControl2.SuspendLayout();
 			this.tabPage3.SuspendLayout();
+			this.skinnedGroupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.skinnedSlider2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.skinnedSlider1)).BeginInit();
 			this.skinnedGroupBox2.SuspendLayout();
@@ -172,6 +196,13 @@
 			this.skinnedGroupBox1.SuspendLayout();
 			this.skinnedPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.skinnedNumericUpDown1)).BeginInit();
+			this.tabPage2.SuspendLayout();
+			this.skinnedGroupBox8.SuspendLayout();
+			this.skinnedGroupBox7.SuspendLayout();
+			this.skinnedGroupBox6.SuspendLayout();
+			this.skinnedGroupBox5.SuspendLayout();
+			this.skinnedGroupBox4.SuspendLayout();
+			this.skinnedGroupBox9.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuButtonToolStripMenuItem
@@ -211,7 +242,7 @@
             this.menuButtonToolStripMenuItem1});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(810, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(1003, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Tag = "";
 			this.menuStrip1.Text = "menuStrip1";
@@ -221,9 +252,9 @@
 			this.statusStrip1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 648);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 617);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(810, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(1003, 22);
 			this.statusStrip1.SizingGrip = false;
 			this.statusStrip1.TabIndex = 15;
 			this.statusStrip1.Text = "statusStrip1";
@@ -243,7 +274,7 @@
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(810, 670);
+			this.panel1.Size = new System.Drawing.Size(1003, 639);
 			this.panel1.TabIndex = 16;
 			// 
 			// skinnedTabControl1
@@ -257,7 +288,7 @@
 			this.skinnedTabControl1.Margin = new System.Windows.Forms.Padding(0);
 			this.skinnedTabControl1.Name = "skinnedTabControl1";
 			this.skinnedTabControl1.SelectedIndex = 0;
-			this.skinnedTabControl1.Size = new System.Drawing.Size(804, 789);
+			this.skinnedTabControl1.Size = new System.Drawing.Size(997, 758);
 			this.skinnedTabControl1.TabIndex = 2;
 			// 
 			// tabPage1
@@ -265,10 +296,11 @@
 			this.tabPage1.BackColor = System.Drawing.Color.White;
 			this.tabPage1.Controls.Add(this.skinnedTabControl2);
 			this.tabPage1.Controls.Add(this.skinnedTabStrip2);
+			this.tabPage1.ForeColor = System.Drawing.Color.Black;
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(796, 763);
+			this.tabPage1.Size = new System.Drawing.Size(989, 732);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Tab 1";
 			// 
@@ -283,12 +315,13 @@
 			this.skinnedTabControl2.Margin = new System.Windows.Forms.Padding(0);
 			this.skinnedTabControl2.Name = "skinnedTabControl2";
 			this.skinnedTabControl2.SelectedIndex = 0;
-			this.skinnedTabControl2.Size = new System.Drawing.Size(710, 570);
+			this.skinnedTabControl2.Size = new System.Drawing.Size(903, 539);
 			this.skinnedTabControl2.TabIndex = 1;
 			// 
 			// tabPage3
 			// 
 			this.tabPage3.BackColor = System.Drawing.Color.White;
+			this.tabPage3.Controls.Add(this.skinnedGroupBox3);
 			this.tabPage3.Controls.Add(this.skinnedSlider2);
 			this.tabPage3.Controls.Add(this.skinnedSlider1);
 			this.tabPage3.Controls.Add(this.accordionListView1);
@@ -300,12 +333,140 @@
 			this.tabPage3.Controls.Add(this.skinnedDataGridView1);
 			this.tabPage3.Controls.Add(this.toolStrip1);
 			this.tabPage3.Controls.Add(this.skinnedGroupBox1);
+			this.tabPage3.ForeColor = System.Drawing.Color.Black;
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(702, 544);
+			this.tabPage3.Size = new System.Drawing.Size(895, 513);
 			this.tabPage3.TabIndex = 1;
 			this.tabPage3.Text = "Tab 3";
+			// 
+			// skinnedGroupBox3
+			// 
+			this.skinnedGroupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.skinnedGroupBox3.BackColor = System.Drawing.Color.White;
+			this.skinnedGroupBox3.Controls.Add(this.radialGauge1);
+			this.skinnedGroupBox3.Controls.Add(this.radialGauge4);
+			this.skinnedGroupBox3.Controls.Add(this.radialGauge2);
+			this.skinnedGroupBox3.Controls.Add(this.radialGauge3);
+			this.skinnedGroupBox3.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox3.Image = null;
+			this.skinnedGroupBox3.Location = new System.Drawing.Point(509, 305);
+			this.skinnedGroupBox3.Name = "skinnedGroupBox3";
+			this.skinnedGroupBox3.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox3.ShowIndicatorBar = false;
+			this.skinnedGroupBox3.Size = new System.Drawing.Size(183, 186);
+			this.skinnedGroupBox3.TabIndex = 29;
+			this.skinnedGroupBox3.TabStop = false;
+			this.skinnedGroupBox3.Text = "Graphs";
+			// 
+			// radialGauge1
+			// 
+			this.radialGauge1.CapacityMode = false;
+			this.radialGauge1.Caption = null;
+			this.radialGauge1.InvertCapacityColors = false;
+			this.radialGauge1.Location = new System.Drawing.Point(93, 27);
+			this.radialGauge1.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.radialGauge1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.radialGauge1.Name = "radialGauge1";
+			this.radialGauge1.ShowPercentage = false;
+			this.radialGauge1.Size = new System.Drawing.Size(86, 69);
+			this.radialGauge1.TabIndex = 25;
+			this.radialGauge1.Unit = "";
+			this.radialGauge1.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+			// 
+			// radialGauge4
+			// 
+			this.radialGauge4.CapacityMode = true;
+			this.radialGauge4.Caption = null;
+			this.radialGauge4.InvertCapacityColors = false;
+			this.radialGauge4.Location = new System.Drawing.Point(6, 98);
+			this.radialGauge4.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.radialGauge4.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.radialGauge4.Name = "radialGauge4";
+			this.radialGauge4.ShowPercentage = false;
+			this.radialGauge4.Size = new System.Drawing.Size(87, 69);
+			this.radialGauge4.TabIndex = 28;
+			this.radialGauge4.Unit = "";
+			this.radialGauge4.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			// 
+			// radialGauge2
+			// 
+			this.radialGauge2.CapacityMode = true;
+			this.radialGauge2.Caption = null;
+			this.radialGauge2.InvertCapacityColors = false;
+			this.radialGauge2.Location = new System.Drawing.Point(6, 27);
+			this.radialGauge2.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.radialGauge2.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.radialGauge2.Name = "radialGauge2";
+			this.radialGauge2.ShowPercentage = false;
+			this.radialGauge2.Size = new System.Drawing.Size(87, 69);
+			this.radialGauge2.TabIndex = 26;
+			this.radialGauge2.Unit = "";
+			this.radialGauge2.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			// 
+			// radialGauge3
+			// 
+			this.radialGauge3.CapacityMode = true;
+			this.radialGauge3.Caption = null;
+			this.radialGauge3.InvertCapacityColors = false;
+			this.radialGauge3.Location = new System.Drawing.Point(94, 98);
+			this.radialGauge3.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.radialGauge3.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.radialGauge3.Name = "radialGauge3";
+			this.radialGauge3.ShowPercentage = false;
+			this.radialGauge3.Size = new System.Drawing.Size(87, 69);
+			this.radialGauge3.TabIndex = 27;
+			this.radialGauge3.Unit = "";
+			this.radialGauge3.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
 			// 
 			// skinnedSlider2
 			// 
@@ -341,20 +502,26 @@
 			this.accordionListView1.Location = new System.Drawing.Point(4, 336);
 			this.accordionListView1.Name = "accordionListView1";
 			this.accordionListView1.SelectedItem = null;
-			this.accordionListView1.Size = new System.Drawing.Size(312, 69);
+			this.accordionListView1.ShowIndicators = false;
+			this.accordionListView1.Size = new System.Drawing.Size(312, 38);
 			this.accordionListView1.TabIndex = 22;
 			// 
 			// skinnedGroupBox2
 			// 
 			this.skinnedGroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.skinnedGroupBox2.BackColor = System.Drawing.Color.White;
 			this.skinnedGroupBox2.Controls.Add(this.skinnedComboBox6);
 			this.skinnedGroupBox2.Controls.Add(this.skinnedComboBox7);
 			this.skinnedGroupBox2.Controls.Add(this.skinnedComboBox8);
 			this.skinnedGroupBox2.Controls.Add(this.skinnedComboBox5);
 			this.skinnedGroupBox2.Controls.Add(this.skinnedComboBox4);
 			this.skinnedGroupBox2.Controls.Add(this.skinnedComboBox3);
-			this.skinnedGroupBox2.Location = new System.Drawing.Point(325, 411);
+			this.skinnedGroupBox2.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox2.Image = null;
+			this.skinnedGroupBox2.Location = new System.Drawing.Point(325, 380);
 			this.skinnedGroupBox2.Name = "skinnedGroupBox2";
+			this.skinnedGroupBox2.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox2.ShowIndicatorBar = false;
 			this.skinnedGroupBox2.Size = new System.Drawing.Size(178, 127);
 			this.skinnedGroupBox2.TabIndex = 21;
 			this.skinnedGroupBox2.TabStop = false;
@@ -471,7 +638,7 @@
             this.toolStripButton12});
 			this.toolStrip4.Location = new System.Drawing.Point(3, 78);
 			this.toolStrip4.Name = "toolStrip4";
-			this.toolStrip4.Size = new System.Drawing.Size(696, 25);
+			this.toolStrip4.Size = new System.Drawing.Size(889, 25);
 			this.toolStrip4.TabIndex = 20;
 			this.toolStrip4.Tag = "Surface";
 			this.toolStrip4.Text = "toolStrip4";
@@ -586,7 +753,7 @@
             this.toolStripButton9});
 			this.toolStrip3.Location = new System.Drawing.Point(3, 53);
 			this.toolStrip3.Name = "toolStrip3";
-			this.toolStrip3.Size = new System.Drawing.Size(696, 25);
+			this.toolStrip3.Size = new System.Drawing.Size(889, 25);
 			this.toolStrip3.TabIndex = 19;
 			this.toolStrip3.Tag = "Secondary";
 			this.toolStrip3.Text = "toolStrip3";
@@ -701,7 +868,7 @@
             this.toolStripButton6});
 			this.toolStrip2.Location = new System.Drawing.Point(3, 28);
 			this.toolStrip2.Name = "toolStrip2";
-			this.toolStrip2.Size = new System.Drawing.Size(696, 25);
+			this.toolStrip2.Size = new System.Drawing.Size(889, 25);
 			this.toolStrip2.TabIndex = 18;
 			this.toolStrip2.Tag = "PrimaryLight";
 			this.toolStrip2.Text = "toolStrip2";
@@ -826,7 +993,7 @@
 			this.skinnedListView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2});
-			this.skinnedListView1.Location = new System.Drawing.Point(6, 411);
+			this.skinnedListView1.Location = new System.Drawing.Point(6, 380);
 			this.skinnedListView1.MultiSelect = false;
 			this.skinnedListView1.Name = "skinnedListView1";
 			this.skinnedListView1.OwnerDraw = true;
@@ -847,8 +1014,6 @@
 			// 
 			// skinnedDataGridView1
 			// 
-			this.skinnedDataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.skinnedDataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
 			this.skinnedDataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.skinnedDataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -867,10 +1032,11 @@
             this.Column6,
             this.Column7,
             this.Column8});
+			this.skinnedDataGridView1.Data = null;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 9F);
-			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
 			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
@@ -890,7 +1056,7 @@
 			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
 			this.skinnedDataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-			this.skinnedDataGridView1.Size = new System.Drawing.Size(687, 103);
+			this.skinnedDataGridView1.Size = new System.Drawing.Size(500, 103);
 			this.skinnedDataGridView1.TabIndex = 16;
 			// 
 			// Column5
@@ -934,7 +1100,7 @@
             this.toolStripButton3});
 			this.toolStrip1.Location = new System.Drawing.Point(3, 3);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(696, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(889, 25);
 			this.toolStrip1.TabIndex = 15;
 			this.toolStrip1.Tag = "PrimaryDark";
 			this.toolStrip1.Text = "toolStrip1";
@@ -1041,6 +1207,7 @@
 			// 
 			this.skinnedGroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedGroupBox1.BackColor = System.Drawing.Color.White;
 			this.skinnedGroupBox1.Controls.Add(this.skinnedPanel1);
 			this.skinnedGroupBox1.Controls.Add(this.skinnedButton5);
 			this.skinnedGroupBox1.Controls.Add(this.skinnedButton6);
@@ -1064,9 +1231,13 @@
 			this.skinnedGroupBox1.Controls.Add(this.skinnedLabel2);
 			this.skinnedGroupBox1.Controls.Add(this.skinnedTextBox1);
 			this.skinnedGroupBox1.Controls.Add(this.skinnedLabel1);
+			this.skinnedGroupBox1.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox1.Image = null;
 			this.skinnedGroupBox1.Location = new System.Drawing.Point(6, 113);
 			this.skinnedGroupBox1.Name = "skinnedGroupBox1";
-			this.skinnedGroupBox1.Size = new System.Drawing.Size(690, 112);
+			this.skinnedGroupBox1.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox1.ShowIndicatorBar = false;
+			this.skinnedGroupBox1.Size = new System.Drawing.Size(883, 112);
 			this.skinnedGroupBox1.TabIndex = 0;
 			this.skinnedGroupBox1.TabStop = false;
 			this.skinnedGroupBox1.Text = "Section";
@@ -1411,23 +1582,27 @@
 			// tabPage4
 			// 
 			this.tabPage4.BackColor = System.Drawing.Color.White;
+			this.tabPage4.ForeColor = System.Drawing.Color.Black;
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(702, 544);
+			this.tabPage4.Size = new System.Drawing.Size(895, 513);
 			this.tabPage4.TabIndex = 0;
 			this.tabPage4.Text = "Tab 4";
 			// 
 			// skinnedTabStrip2
 			// 
+			this.skinnedTabStrip2.AddCaption = null;
 			this.skinnedTabStrip2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+			this.skinnedTabStrip2.DecorationText = null;
 			this.skinnedTabStrip2.Location = new System.Drawing.Point(4, 3);
 			this.skinnedTabStrip2.Margin = new System.Windows.Forms.Padding(0);
 			this.skinnedTabStrip2.Name = "skinnedTabStrip2";
 			this.skinnedTabStrip2.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.skinnedTabStrip2.ShowAddButton = false;
 			this.skinnedTabStrip2.ShowCloseButton = false;
-			this.skinnedTabStrip2.Size = new System.Drawing.Size(89, 757);
+			this.skinnedTabStrip2.Size = new System.Drawing.Size(89, 726);
 			this.skinnedTabStrip2.StartMargin = 5;
 			this.skinnedTabStrip2.TabControl = this.skinnedTabControl2;
 			this.skinnedTabStrip2.TabIndex = 0;
@@ -1441,23 +1616,223 @@
 			// tabPage2
 			// 
 			this.tabPage2.BackColor = System.Drawing.Color.White;
+			this.tabPage2.Controls.Add(this.skinnedGroupBox9);
+			this.tabPage2.Controls.Add(this.skinnedGroupBox8);
+			this.tabPage2.Controls.Add(this.skinnedGroupBox7);
+			this.tabPage2.Controls.Add(this.skinnedGroupBox6);
+			this.tabPage2.Controls.Add(this.skinnedGroupBox5);
+			this.tabPage2.Controls.Add(this.skinnedGroupBox4);
+			this.tabPage2.ForeColor = System.Drawing.Color.Black;
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(796, 763);
+			this.tabPage2.Size = new System.Drawing.Size(989, 732);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Tab 2";
 			// 
+			// skinnedGroupBox8
+			// 
+			this.skinnedGroupBox8.BackColor = System.Drawing.Color.White;
+			this.skinnedGroupBox8.Controls.Add(this.skinnedTextBox4);
+			this.skinnedGroupBox8.Controls.Add(this.skinnedLabel10);
+			this.skinnedGroupBox8.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox8.Image = null;
+			this.skinnedGroupBox8.Location = new System.Drawing.Point(212, 112);
+			this.skinnedGroupBox8.Name = "skinnedGroupBox8";
+			this.skinnedGroupBox8.PanelType = Desktop.Skinning.SkinnedBackgroundType.Group5;
+			this.skinnedGroupBox8.ShowIndicatorBar = true;
+			this.skinnedGroupBox8.Size = new System.Drawing.Size(200, 100);
+			this.skinnedGroupBox8.TabIndex = 34;
+			this.skinnedGroupBox8.TabStop = false;
+			this.skinnedGroupBox8.Text = "Group 5";
+			// 
+			// skinnedTextBox4
+			// 
+			this.skinnedTextBox4.BackColor = System.Drawing.Color.White;
+			this.skinnedTextBox4.ForeColor = System.Drawing.Color.Black;
+			this.skinnedTextBox4.Location = new System.Drawing.Point(48, 30);
+			this.skinnedTextBox4.Name = "skinnedTextBox4";
+			this.skinnedTextBox4.Size = new System.Drawing.Size(100, 20);
+			this.skinnedTextBox4.TabIndex = 5;
+			// 
+			// skinnedLabel10
+			// 
+			this.skinnedLabel10.AutoSize = true;
+			this.skinnedLabel10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel10.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.skinnedLabel10.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+			this.skinnedLabel10.Location = new System.Drawing.Point(6, 33);
+			this.skinnedLabel10.Name = "skinnedLabel10";
+			this.skinnedLabel10.Size = new System.Drawing.Size(36, 13);
+			this.skinnedLabel10.TabIndex = 4;
+			this.skinnedLabel10.Text = "Label:";
+			// 
+			// skinnedGroupBox7
+			// 
+			this.skinnedGroupBox7.BackColor = System.Drawing.Color.White;
+			this.skinnedGroupBox7.Controls.Add(this.skinnedTextBox3);
+			this.skinnedGroupBox7.Controls.Add(this.skinnedLabel9);
+			this.skinnedGroupBox7.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox7.Image = null;
+			this.skinnedGroupBox7.Location = new System.Drawing.Point(212, 6);
+			this.skinnedGroupBox7.Name = "skinnedGroupBox7";
+			this.skinnedGroupBox7.PanelType = Desktop.Skinning.SkinnedBackgroundType.Group4;
+			this.skinnedGroupBox7.ShowIndicatorBar = true;
+			this.skinnedGroupBox7.Size = new System.Drawing.Size(200, 100);
+			this.skinnedGroupBox7.TabIndex = 35;
+			this.skinnedGroupBox7.TabStop = false;
+			this.skinnedGroupBox7.Text = "Group 4";
+			// 
+			// skinnedTextBox3
+			// 
+			this.skinnedTextBox3.BackColor = System.Drawing.Color.White;
+			this.skinnedTextBox3.ForeColor = System.Drawing.Color.Black;
+			this.skinnedTextBox3.Location = new System.Drawing.Point(48, 27);
+			this.skinnedTextBox3.Name = "skinnedTextBox3";
+			this.skinnedTextBox3.Size = new System.Drawing.Size(100, 20);
+			this.skinnedTextBox3.TabIndex = 3;
+			// 
+			// skinnedLabel9
+			// 
+			this.skinnedLabel9.AutoSize = true;
+			this.skinnedLabel9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel9.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.skinnedLabel9.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+			this.skinnedLabel9.Location = new System.Drawing.Point(6, 30);
+			this.skinnedLabel9.Name = "skinnedLabel9";
+			this.skinnedLabel9.Size = new System.Drawing.Size(36, 13);
+			this.skinnedLabel9.TabIndex = 2;
+			this.skinnedLabel9.Text = "Label:";
+			// 
+			// skinnedGroupBox6
+			// 
+			this.skinnedGroupBox6.BackColor = System.Drawing.Color.White;
+			this.skinnedGroupBox6.Controls.Add(this.skinnedTextBox6);
+			this.skinnedGroupBox6.Controls.Add(this.skinnedLabel12);
+			this.skinnedGroupBox6.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox6.Image = null;
+			this.skinnedGroupBox6.Location = new System.Drawing.Point(6, 218);
+			this.skinnedGroupBox6.Name = "skinnedGroupBox6";
+			this.skinnedGroupBox6.PanelType = Desktop.Skinning.SkinnedBackgroundType.Group3;
+			this.skinnedGroupBox6.ShowIndicatorBar = true;
+			this.skinnedGroupBox6.Size = new System.Drawing.Size(200, 100);
+			this.skinnedGroupBox6.TabIndex = 37;
+			this.skinnedGroupBox6.TabStop = false;
+			this.skinnedGroupBox6.Text = "Group 3";
+			// 
+			// skinnedTextBox6
+			// 
+			this.skinnedTextBox6.BackColor = System.Drawing.Color.White;
+			this.skinnedTextBox6.ForeColor = System.Drawing.Color.Black;
+			this.skinnedTextBox6.Location = new System.Drawing.Point(48, 28);
+			this.skinnedTextBox6.Name = "skinnedTextBox6";
+			this.skinnedTextBox6.Size = new System.Drawing.Size(100, 20);
+			this.skinnedTextBox6.TabIndex = 9;
+			// 
+			// skinnedLabel12
+			// 
+			this.skinnedLabel12.AutoSize = true;
+			this.skinnedLabel12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel12.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.skinnedLabel12.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+			this.skinnedLabel12.Location = new System.Drawing.Point(6, 31);
+			this.skinnedLabel12.Name = "skinnedLabel12";
+			this.skinnedLabel12.Size = new System.Drawing.Size(36, 13);
+			this.skinnedLabel12.TabIndex = 8;
+			this.skinnedLabel12.Text = "Label:";
+			// 
+			// skinnedGroupBox5
+			// 
+			this.skinnedGroupBox5.BackColor = System.Drawing.Color.White;
+			this.skinnedGroupBox5.Controls.Add(this.skinnedTextBox5);
+			this.skinnedGroupBox5.Controls.Add(this.skinnedLabel11);
+			this.skinnedGroupBox5.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox5.Image = null;
+			this.skinnedGroupBox5.Location = new System.Drawing.Point(6, 112);
+			this.skinnedGroupBox5.Name = "skinnedGroupBox5";
+			this.skinnedGroupBox5.PanelType = Desktop.Skinning.SkinnedBackgroundType.Group2;
+			this.skinnedGroupBox5.ShowIndicatorBar = true;
+			this.skinnedGroupBox5.Size = new System.Drawing.Size(200, 100);
+			this.skinnedGroupBox5.TabIndex = 36;
+			this.skinnedGroupBox5.TabStop = false;
+			this.skinnedGroupBox5.Text = "Group 2";
+			// 
+			// skinnedTextBox5
+			// 
+			this.skinnedTextBox5.BackColor = System.Drawing.Color.White;
+			this.skinnedTextBox5.ForeColor = System.Drawing.Color.Black;
+			this.skinnedTextBox5.Location = new System.Drawing.Point(48, 33);
+			this.skinnedTextBox5.Name = "skinnedTextBox5";
+			this.skinnedTextBox5.Size = new System.Drawing.Size(100, 20);
+			this.skinnedTextBox5.TabIndex = 7;
+			// 
+			// skinnedLabel11
+			// 
+			this.skinnedLabel11.AutoSize = true;
+			this.skinnedLabel11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel11.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.skinnedLabel11.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+			this.skinnedLabel11.Location = new System.Drawing.Point(6, 36);
+			this.skinnedLabel11.Name = "skinnedLabel11";
+			this.skinnedLabel11.Size = new System.Drawing.Size(36, 13);
+			this.skinnedLabel11.TabIndex = 6;
+			this.skinnedLabel11.Text = "Label:";
+			// 
+			// skinnedGroupBox4
+			// 
+			this.skinnedGroupBox4.BackColor = System.Drawing.Color.White;
+			this.skinnedGroupBox4.Controls.Add(this.skinnedTextBox2);
+			this.skinnedGroupBox4.Controls.Add(this.skinnedLabel8);
+			this.skinnedGroupBox4.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox4.Image = null;
+			this.skinnedGroupBox4.Location = new System.Drawing.Point(6, 6);
+			this.skinnedGroupBox4.Name = "skinnedGroupBox4";
+			this.skinnedGroupBox4.PanelType = Desktop.Skinning.SkinnedBackgroundType.Group1;
+			this.skinnedGroupBox4.ShowIndicatorBar = true;
+			this.skinnedGroupBox4.Size = new System.Drawing.Size(200, 100);
+			this.skinnedGroupBox4.TabIndex = 33;
+			this.skinnedGroupBox4.TabStop = false;
+			this.skinnedGroupBox4.Text = "Group 1";
+			// 
+			// skinnedTextBox2
+			// 
+			this.skinnedTextBox2.BackColor = System.Drawing.Color.White;
+			this.skinnedTextBox2.ForeColor = System.Drawing.Color.Black;
+			this.skinnedTextBox2.Location = new System.Drawing.Point(48, 27);
+			this.skinnedTextBox2.Name = "skinnedTextBox2";
+			this.skinnedTextBox2.Size = new System.Drawing.Size(100, 20);
+			this.skinnedTextBox2.TabIndex = 1;
+			// 
+			// skinnedLabel8
+			// 
+			this.skinnedLabel8.AutoSize = true;
+			this.skinnedLabel8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel8.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.skinnedLabel8.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+			this.skinnedLabel8.Location = new System.Drawing.Point(6, 30);
+			this.skinnedLabel8.Name = "skinnedLabel8";
+			this.skinnedLabel8.Size = new System.Drawing.Size(36, 13);
+			this.skinnedLabel8.TabIndex = 0;
+			this.skinnedLabel8.Text = "Label:";
+			// 
 			// skinnedTabStrip1
 			// 
+			this.skinnedTabStrip1.AddCaption = null;
 			this.skinnedTabStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedTabStrip1.DecorationText = null;
 			this.skinnedTabStrip1.Location = new System.Drawing.Point(0, 24);
 			this.skinnedTabStrip1.Margin = new System.Windows.Forms.Padding(0);
 			this.skinnedTabStrip1.Name = "skinnedTabStrip1";
 			this.skinnedTabStrip1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryLight;
+			this.skinnedTabStrip1.ShowAddButton = false;
 			this.skinnedTabStrip1.ShowCloseButton = false;
-			this.skinnedTabStrip1.Size = new System.Drawing.Size(810, 32);
+			this.skinnedTabStrip1.Size = new System.Drawing.Size(1003, 32);
 			this.skinnedTabStrip1.StartMargin = 5;
 			this.skinnedTabStrip1.TabControl = this.skinnedTabControl1;
 			this.skinnedTabStrip1.TabIndex = 1;
@@ -1474,13 +1849,51 @@
 			this.cmdDisable.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdDisable.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
 			this.cmdDisable.Flat = false;
-			this.cmdDisable.Location = new System.Drawing.Point(727, 621);
+			this.cmdDisable.Location = new System.Drawing.Point(920, 590);
 			this.cmdDisable.Name = "cmdDisable";
 			this.cmdDisable.Size = new System.Drawing.Size(75, 23);
 			this.cmdDisable.TabIndex = 16;
 			this.cmdDisable.Text = "Toggle";
 			this.cmdDisable.UseVisualStyleBackColor = true;
 			this.cmdDisable.Click += new System.EventHandler(this.cmdDisable_Click);
+			// 
+			// skinnedGroupBox9
+			// 
+			this.skinnedGroupBox9.BackColor = System.Drawing.Color.White;
+			this.skinnedGroupBox9.Controls.Add(this.skinnedTextBox7);
+			this.skinnedGroupBox9.Controls.Add(this.skinnedLabel13);
+			this.skinnedGroupBox9.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox9.Image = null;
+			this.skinnedGroupBox9.Location = new System.Drawing.Point(212, 218);
+			this.skinnedGroupBox9.Name = "skinnedGroupBox9";
+			this.skinnedGroupBox9.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox9.ShowIndicatorBar = true;
+			this.skinnedGroupBox9.Size = new System.Drawing.Size(200, 100);
+			this.skinnedGroupBox9.TabIndex = 35;
+			this.skinnedGroupBox9.TabStop = false;
+			this.skinnedGroupBox9.Text = "Normal";
+			// 
+			// skinnedTextBox7
+			// 
+			this.skinnedTextBox7.BackColor = System.Drawing.Color.White;
+			this.skinnedTextBox7.ForeColor = System.Drawing.Color.Black;
+			this.skinnedTextBox7.Location = new System.Drawing.Point(48, 30);
+			this.skinnedTextBox7.Name = "skinnedTextBox7";
+			this.skinnedTextBox7.Size = new System.Drawing.Size(100, 20);
+			this.skinnedTextBox7.TabIndex = 5;
+			// 
+			// skinnedLabel13
+			// 
+			this.skinnedLabel13.AutoSize = true;
+			this.skinnedLabel13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel13.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.skinnedLabel13.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+			this.skinnedLabel13.Location = new System.Drawing.Point(6, 33);
+			this.skinnedLabel13.Name = "skinnedLabel13";
+			this.skinnedLabel13.Size = new System.Drawing.Size(36, 13);
+			this.skinnedLabel13.TabIndex = 4;
+			this.skinnedLabel13.Text = "Label:";
 			// 
 			// SkinTester
 			// 
@@ -1489,7 +1902,7 @@
 			this.Controls.Add(this.cmdDisable);
 			this.Controls.Add(this.panel1);
 			this.Name = "SkinTester";
-			this.Size = new System.Drawing.Size(810, 670);
+			this.Size = new System.Drawing.Size(1003, 639);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
@@ -1501,6 +1914,7 @@
 			this.skinnedTabControl2.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
 			this.tabPage3.PerformLayout();
+			this.skinnedGroupBox3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.skinnedSlider2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.skinnedSlider1)).EndInit();
 			this.skinnedGroupBox2.ResumeLayout(false);
@@ -1517,6 +1931,19 @@
 			this.skinnedGroupBox1.PerformLayout();
 			this.skinnedPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.skinnedNumericUpDown1)).EndInit();
+			this.tabPage2.ResumeLayout(false);
+			this.skinnedGroupBox8.ResumeLayout(false);
+			this.skinnedGroupBox8.PerformLayout();
+			this.skinnedGroupBox7.ResumeLayout(false);
+			this.skinnedGroupBox7.PerformLayout();
+			this.skinnedGroupBox6.ResumeLayout(false);
+			this.skinnedGroupBox6.PerformLayout();
+			this.skinnedGroupBox5.ResumeLayout(false);
+			this.skinnedGroupBox5.PerformLayout();
+			this.skinnedGroupBox4.ResumeLayout(false);
+			this.skinnedGroupBox4.PerformLayout();
+			this.skinnedGroupBox9.ResumeLayout(false);
+			this.skinnedGroupBox9.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -1637,5 +2064,28 @@
 		private CommonControls.AccordionListView accordionListView1;
 		private SkinnedSlider skinnedSlider2;
 		private SkinnedSlider skinnedSlider1;
+		private CommonControls.RadialGauge radialGauge4;
+		private CommonControls.RadialGauge radialGauge3;
+		private CommonControls.RadialGauge radialGauge2;
+		private CommonControls.RadialGauge radialGauge1;
+		private SkinnedGroupBox skinnedGroupBox3;
+		private SkinnedGroupBox skinnedGroupBox8;
+		private SkinnedGroupBox skinnedGroupBox7;
+		private SkinnedGroupBox skinnedGroupBox6;
+		private SkinnedGroupBox skinnedGroupBox5;
+		private SkinnedGroupBox skinnedGroupBox4;
+		private SkinnedTextBox skinnedTextBox4;
+		private SkinnedLabel skinnedLabel10;
+		private SkinnedTextBox skinnedTextBox3;
+		private SkinnedLabel skinnedLabel9;
+		private SkinnedTextBox skinnedTextBox6;
+		private SkinnedLabel skinnedLabel12;
+		private SkinnedTextBox skinnedTextBox5;
+		private SkinnedLabel skinnedLabel11;
+		private SkinnedTextBox skinnedTextBox2;
+		private SkinnedLabel skinnedLabel8;
+		private SkinnedGroupBox skinnedGroupBox9;
+		private SkinnedTextBox skinnedTextBox7;
+		private SkinnedLabel skinnedLabel13;
 	}
 }

@@ -91,6 +91,25 @@ namespace SPNATI_Character_Editor.Controls.EditControls.VariableControls
 		{
 			OnChangeLabel("Relative Position");
 		}
+	}
+
+	[SubVariable("size")]
+	public class SizeControl : CategoryControl
+	{
+		protected override Type GetCategoryType()
+		{
+			return typeof(SizeCategory);
+		}
+
+		protected override string GetVariable()
+		{
+			return "size";
+		}
+
+		public override void OnAddedToRow()
+		{
+			OnChangeLabel("Size");
+		}
 
 	}
 }

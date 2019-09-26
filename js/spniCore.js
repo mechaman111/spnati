@@ -18,11 +18,13 @@ var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
 var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
+var RESORT_ACTIVE = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
 var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
 var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
+var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback/";
 
 var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;
@@ -62,6 +64,9 @@ var humanPlayer;
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
 var timeoutID;
 
+/* Modal to return to from the feedback modal, or null if not returning to any modal. */
+var feedbackModalReturn = null;
+
 /**********************************************************************
  * Game Wide Global Variables
  **********************************************************************/
@@ -94,10 +99,12 @@ $helpModal = $('#help-modal');
 $creditModal = $('#credit-modal');
 $versionModal = $('#version-modal');
 $bugReportModal = $('#bug-report-modal');
+$feedbackReportModal = $('#feedback-report-modal');
 $usageTrackingModal = $('#usage-reporting-modal');
 $playerTagsModal = $('#player-tags-modal');
 $collectibleInfoModal = $('#collectibles-info-modal');
 $ioModal = $('#io-modal');
+$resortModal = $('#resort-modal');
 
 /* Screen State */
 $previousScreen = null;
@@ -356,33 +363,17 @@ Player.prototype.resetState = function () {
          * This may be overridden by later updateBehaviour calls if
          * the player has (new-style) selected or game start case lines.
          */
-		var allStates = [];
-
-        /* Initialize reaction handling state. */
-        this.volatileMatches = [];
-        this.bestVolatileMatch = null;
-        this.currentTarget = null;
-        this.currentPriority = -1;
-        this.stateLockCount = 0;
-        this.stateCommitted = false;
-
-        this.xml.children('start').children('state').each(function () {
-            allStates.push(new State($(this)));
+        this.startStates = this.xml.children('start').children('state').get().map(function(el) {
+            return new State($(el));
         });
 
-        this.allStates = allStates;
-		this.chosenState = this.allStates[0];
+        /* Initialize reaction handling state. */
+        this.currentTarget = null;
+        this.currentTags = [];
+        this.currentPriority = -1;
+        this.stateCommitted = false;
 
-        if (!this.chosenState) {
-            /* If the opponent does not have legacy start lines then select
-             * a new-style selected line immediately.
-             * Prevents a crash triggered by selected, unselecting, and re-selecting
-             * an opponent with no legacy starting lines.
-             */
-            this.updateBehaviour(SELECTED);
-        }
-
-        this.commitBehaviourUpdate();
+		this.chosenState = this.startStates[0];
 
         var appearance = this.default_costume;
         if (ALT_COSTUMES_ENABLED && this.alt_costume) {
@@ -552,8 +543,6 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.artist = $metaXml.find('artist').text();
     this.writer = $metaXml.find('writer').text();
     this.description = fixupDialogue($metaXml.find('description').html());
-    this.endings = $metaXml.find('epilogue');
-    this.ending = this.endings.length > 0 || $metaXml.find('has_ending').text() === "true";
     this.has_collectibles = $metaXml.find('has_collectibles').text() === "true";
     this.collectibles = null;
     this.layers = parseInt($metaXml.find('layers').text(), 10);
@@ -564,6 +553,18 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.z_index = parseInt($metaXml.find('z-index').text(), 10) || 0;
     this.dialogue_layering = $metaXml.find('dialogue-layer').text();
     
+    this.endings = $metaXml.find('epilogue');
+    this.ending = $metaXml.find('has_ending').text() === "true";
+
+    if (this.endings.length > 0) {
+        this.endings.each(function (idx, elem) {
+            var status = $(elem).attr('status');
+            if (!status || includedOpponentStatuses[status]) {
+                this.ending = true;
+            }
+        }.bind(this));
+    }
+
     if (['over', 'under'].indexOf(this.dialogue_layering) < 0) {
         this.dialogue_layering = 'under';
     }
@@ -809,9 +810,13 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
 			var collectiblesArray = [];
 			$(xml).find('collectible').each(function (idx, elem) {
 				collectiblesArray.push(new Collectible($(elem), this));
-			}.bind(this));
-			
-			this.collectibles = collectiblesArray;
+            }.bind(this));
+            
+            this.collectibles = collectiblesArray;
+            
+            this.has_collectibles = this.collectibles.some(function (c) {
+                return !c.status || includedOpponentStatuses[c.status];
+            });
             
             if (onLoaded) onLoaded(this);
 		}.bind(this),
@@ -948,6 +953,34 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 }, this);
             });
 
+            /* Clone cases with alternative conditions/test, keeping
+             * one alternative set of conditions and tests on the case
+             * level of each case clone. This may create multiple
+             * cases with the same oneShotId, which is what we want,
+             * because the case clones should still be seen as the
+             * same case.
+             *
+             * This means that the conditions on the case element as
+             * well as any condition and test elements outside of
+             * alternatives must always be fulfilled, along with all
+             * the conditions of tests inside any of the alternative
+             * elements. */
+            $xml.find('>behaviour case:has(>alternative)').each(function() {
+                var $case = $(this);
+                $case.children('alternative').each(function() {
+                    // Make clone and insert after original case
+                    var $clone = $case.clone().insertAfter($case);
+                    // Remove all <alternative> elements from clone, leaving base conditions
+                    $clone.children('alternative').remove();
+                    // Append conditions from this alternative to cloned case
+                    $clone.append($(this).children());
+                    for (var i = 0; i < this.attributes.length; i++) {
+                        $clone.attr(this.attributes[i].name, this.attributes[i].value);
+                    }
+                });
+                $case.remove();
+            });
+
             this.targetedLines = targetedLines;
 
             var nicknames = {};
@@ -995,19 +1028,24 @@ Player.prototype.getImagesForStage = function (stage) {
             && (filter === undefined || players.some(function(p) { return p.hasTag(filter); })))
         {
             $(this).children('state').each(function (i, e) {
-                var poseName = $(e).attr('img');
-                if (!poseName) return;
-                poseName = poseName.replace('#', stage);
+                var images = $(e).children('alt-img').filter(function() {
+                    return checkStage(stage, $(this).attr('stage'));
+                }).map(function() { return $(this).text(); }).get();
+                if (images.length == 0) images = [ $(e).attr('img') ];
+                images.forEach(function(poseName) {
+                    if (!poseName) return;
+                    poseName = poseName.replace('#', stage);
                 
-                if (poseName.startsWith('custom:')) {
-                    var key = poseName.split(':', 2)[1];
-                    var pose = advPoses[key];
-                    if (pose) pose.getUsedImages().forEach(function (img) {
-                        imageSet[img.replace('#', stage)] = true;
-                    });
-                } else {
-                    imageSet[folder+poseName] = true;
-                }
+                    if (poseName.startsWith('custom:')) {
+                        var key = poseName.split(':', 2)[1];
+                        var pose = advPoses[key];
+                        if (pose) pose.getUsedImages().forEach(function (img) {
+                            imageSet[img.replace('#', stage)] = true;
+                        });
+                    } else {
+                        imageSet[folder+poseName] = true;
+                    }
+                }, this);
             });
         }
     });
@@ -1043,6 +1081,9 @@ function initialSetup () {
     loadTitleScreen();
     selectTitleCandy();
 
+    /* Attempt to detect broken images as caused by running SPNATI from an invalid archive. */
+    detectBrokenOffline();
+    
     /* Make sure that the config file is loaded before processing the
      *  opponent list, so that includedOpponentStatuses is populated.
      *
@@ -1076,17 +1117,19 @@ function initialSetup () {
 
     /* Construct a CSS rule for every combination of arrow direction, screen, and pseudo-element */
     bubbleArrowOffsetRules = [];
+    var targetCssSheet = document.getElementById("spniStyleSheet").sheet;
+
     for (var i = 1; i <= 4; i++) {
         var pair = [];
         [["up", "down"], ["left", "right"]].forEach(function(p) {
-            var index = document.styleSheets[2].cssRules.length;
+            var index = targetCssSheet.cssRules.length;
             var rule = p.map(function(d) {
                 return ["select", "game"].map(function(s) {
                     return '#'+s+'-bubble-'+i+'.arrow-'+d+'::before';
                 }).join(', ');
             }).join(', ') + ' {}';
-            document.styleSheets[2].insertRule(rule, index);
-            pair.push(document.styleSheets[2].cssRules[index]);
+            targetCssSheet.insertRule(rule, index);
+            pair.push(targetCssSheet.cssRules[index]);
         });
         bubbleArrowOffsetRules.push(pair);
     }
@@ -1260,11 +1303,20 @@ function loadConfigFile () {
                 console.log("Debug mode disabled - collectibles disabled");
             }
 
+            var _resort_mode = $(xml).find('resort').text();
+            if (_resort_mode.toLowerCase() === 'true') {
+                console.log("Resort mode active!");
+                RESORT_ACTIVE = true;
+            } else {
+                RESORT_ACTIVE = false;
+                console.log("Resort mode disabled.");
+            }
+
 			$(xml).find('include-status').each(function() {
 				includedOpponentStatuses[$(this).text()] = true;
 				console.log("Including", $(this).text(), "opponents");
 			});
-		}
+        }
 	});
 }
 
@@ -1285,6 +1337,42 @@ function loadGeneralCollectibles () {
 	});
 }
 
+/**
+ * Attempt to detect common ways of incorrectly running the offline version.
+ * Specifically, we check the following:
+ * - Can we load resources using XHR?
+ * - Have image LFS pointers been properly replaced with actual content?
+ * If either of these checks fail, the broken offline modal is shown.
+ */
+function detectBrokenOffline() {
+    $("#broken-offline-modal .section").hide();
+
+    $.ajax({
+        type: "GET",
+        url: "img/enter.png",
+        dataType: "text",
+        success: function (data) {
+            if (data.startsWith("version ")) {
+                /* Returned data is indicative of an LFS pointer file.
+                 * PNG files start with a different 8-byte signature.
+                 */
+                $("#broken-images-section").show();
+                $("#broken-offline-modal").modal('show');
+            }
+        },
+        error: function (jqXHR, status, err) {
+            $("#broken-xhr-section").show();
+            $("#broken-offline-modal").modal('show');
+        }
+    });
+
+    var img = new Image();
+    img.onerror = function () {
+        $("#broken-images-section").show();
+    }
+
+    img.src = "img/enter.png";
+}
 
 function enterTitleScreen() {
     $warningScreen.hide();
@@ -1453,8 +1541,6 @@ function sendBugReport() {
             closeBugReportModal();
         }
     });
-
-
 }
 
 $('#bug-report-type').change(updateBugReportOutput);
@@ -1495,6 +1581,133 @@ $bugReportModal.on('shown.bs.modal', function() {
 function closeBugReportModal() {
     $bugReportModal.modal('hide');
 }
+
+ /************************************************************
+  * Functions for the feedback reporting modal.
+  ************************************************************/
+
+function sendFeedbackReport() {
+    if ($('#feedback-report-desc').val().trim().length == 0) {
+        $('#feedback-report-status').text("Please enter a description first!");
+        return false;
+    }
+
+    var desc = $('#feedback-report-desc').val();
+    var slot = parseInt($('#feedback-report-character').val(), 10);
+    var report = compileBaseErrorReport(desc, "feedback");
+
+    if (slot > 0) {
+        var character = players[slot].id;
+    } else {
+        var character = "";
+    }
+
+    $.ajax({
+        url: FEEDBACK_ROUTE + character,
+        method: 'POST',
+        data: JSON.stringify(report),
+        contentType: 'application/json',
+        error: function (jqXHR, status, err) {
+            console.error("Could not send feedback report - error " + status + ": " + err);
+            $('#feedback-report-status').text("Failed to send feedback report (error " + err + ")");
+        },
+        success: function () {
+            $('#feedback-report-status').text("Feedback sent!");
+            $('#feedback-report-desc').val("");
+            closeFeedbackReportModal();
+        }
+    });
+}
+
+function updateFeedbackSendButton() {
+    if (
+        !!$("#feedback-report-character").val() &&
+        $('#feedback-report-desc').val().trim().length > 0
+    ) {
+        $("#feedback-report-modal-send-button").removeAttr('disabled');
+    } else {
+        $("#feedback-report-modal-send-button").attr('disabled', 'true');
+    }
+}
+
+$('#feedback-report-desc').keyup(updateFeedbackSendButton).change(updateFeedbackSendButton);
+
+function updateFeedbackMessage() {
+    var slot = parseInt($('#feedback-report-character').val(), 10);
+
+    if (players[slot] && players[slot].feedbackData && 
+        players[slot].feedbackData.enabled && 
+        players[slot].feedbackData.message
+    ) {
+        $(".feedback-message-container").show();
+        $(".feedback-character-name").text(players[slot].label);
+        $(".feedback-message").text(players[slot].feedbackData.message);
+    } else {
+        $(".feedback-message-container").hide();
+    }
+}
+
+$("#feedback-report-character").change(updateFeedbackMessage);
+
+function showFeedbackReportModal(fromModal) {
+    $('#feedback-report-character').empty().append(
+        $('<option value="" disabled data-load-indicator="">Loading...</option>'),
+    ).val("");
+
+    if (!fromModal) {
+        feedbackModalReturn = null;
+    } else {
+        feedbackModalReturn = fromModal;
+    }
+
+    for (let i = 1; i < 5; i++) {
+        if (players[i]) {
+            let mixedCaseID = players[i].id.charAt(0).toUpperCase() + players[i].id.substring(1);
+            let selectorOption = $('<option value="' + players[i].slot + '">' + mixedCaseID + '</option>');
+            $("#feedback-report-character").append(selectorOption);
+
+            if (players[i].feedbackData) {
+                $("#feedback-report-character option[data-load-indicator]").remove();
+                 updateFeedbackMessage();
+            } else {
+                $.ajax({
+                    url: FEEDBACK_ROUTE + players[i].id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        players[i].feedbackData = data;
+                        
+                        $("#feedback-report-character option[data-load-indicator]").remove();
+                        updateFeedbackMessage();
+                    },
+                    error: function () {
+                        console.error("Failed to get feedback message data for " + players[i].id);
+                    },
+                });
+            }
+        }
+    }
+
+    $("#feedback-report-character").append(
+        $('<option value="-1" data-general-option="">General Game Feedback</option>')
+    );
+
+    if (fromModal) fromModal.modal('hide');
+    $feedbackReportModal.modal('show');
+}
+
+function closeFeedbackReportModal() {
+    $feedbackReportModal.modal('hide');
+
+    if (feedbackModalReturn) {
+        feedbackModalReturn.modal('show');
+        feedbackModalReturn = null;
+    }
+}
+
+$feedbackReportModal.on('shown.bs.modal', function () {
+    $('#feedback-report-character').focus();
+});
 
 /*
  * Show the usage tracking consent modal.
@@ -1963,6 +2176,20 @@ function showImportModal() {
     });
 }
 
+function showResortModal() {
+    var playedCharacters = save.getPlayedCharacterSet();
+    
+    /* NOTE: Vis is a slepy boi */
+    if (RESORT_ACTIVE && playedCharacters.length >= 20) {
+        if (!save.hasShownResortModal()) {
+            $resortModal.modal('show');
+        }
+        save.setResortModalFlag(true);
+    } else {
+        save.setResortModalFlag(false);
+    }
+}
+
 /**********************************************************************
  *****                     Utility Functions                      *****
  **********************************************************************/
@@ -1997,6 +2224,18 @@ if (!String.prototype.endsWith) {
             this_len = this.length;
         }
         return this.substring(this_len - search.length, this_len) === search;
+    };
+}
+
+if (!Object.entries) {
+    Object.entries = function (obj) {
+        var ownProps = Object.keys(obj),
+            i = ownProps.length,
+            resArray = new Array(i); // preallocate the Array
+        while (i--)
+            resArray[i] = [ownProps[i], obj[ownProps[i]]];
+
+        return resArray;
     };
 }
 

@@ -61,7 +61,7 @@ namespace SPNATI_Character_Editor
 								line.Marker = State.Marker.ToString();
 							}
 							line.Image = State.Image;
-							line.GeneralizeImage(line);
+							line.Pose = character.PoseLibrary.GetPose(line.Image);
 							result = workingCase;
 						}
 						else
@@ -84,7 +84,7 @@ namespace SPNATI_Character_Editor
 						}
 						Case response = ResponseTarget.Case.CreateResponse(speaker, character);
 						DialogueLine caseLine = new DialogueLine(State.Image, State.Text);
-						caseLine.GeneralizeImage(caseLine);
+						caseLine.Pose = character.PoseLibrary.GetPose(caseLine.Image);
 						response.Lines.Add(caseLine);
 						result = response;
 					}
@@ -93,7 +93,7 @@ namespace SPNATI_Character_Editor
 						workingCase = new Case(SuggestedTag);
 						workingCase.Stages.Add(Stage);
 						DialogueLine caseLine = new DialogueLine(State.Image, State.Text);
-						caseLine.GeneralizeImage(caseLine);
+						caseLine.Pose = character.PoseLibrary.GetPose(caseLine.Image);
 						workingCase.Lines.Add(caseLine);
 						result = workingCase;
 					}

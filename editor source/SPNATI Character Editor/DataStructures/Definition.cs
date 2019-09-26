@@ -19,7 +19,7 @@ namespace SPNATI_Character_Editor
 		{
 			return Name.CompareTo(other.Name);
 		}
-		public string ToLookupString()
+		public virtual string ToLookupString()
 		{
 			return $"{Name} ({Key})";
 		}

@@ -119,7 +119,13 @@ namespace Desktop
 				records = new List<IRecord>();
 				_recentRecords[type] = records;
 			}
-			records.Remove(record);
+			for (int i = records.Count - 1; i >= 0; i--)
+			{
+				if (records[i].Key == record.Key)
+				{
+					records.RemoveAt(i);
+				}
+			}
 			records.Add(record);
 			const int MaxRecent = 3;
 			while (records.Count > MaxRecent)

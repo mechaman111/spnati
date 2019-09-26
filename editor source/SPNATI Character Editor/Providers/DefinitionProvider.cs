@@ -8,6 +8,7 @@ namespace SPNATI_Character_Editor.Providers
 	public abstract class DefinitionProvider<T> : IRecordProvider<T> where T : Definition, new()
 	{
 		public bool AllowsNew { get { return false; } }
+		protected bool SearchDescription { get; set; }
 
 		public bool TrackRecent
 		{
@@ -50,7 +51,7 @@ namespace SPNATI_Character_Editor.Providers
 			var list = new List<IRecord>();
 			foreach (T record in Definitions.Instance.Get<T>())
 			{
-				if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text))
+				if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text) || (SearchDescription && (record.Description ?? "").ToLower().Contains(text)))
 				{
 					//partial match
 					list.Add(record);

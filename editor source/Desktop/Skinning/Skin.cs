@@ -13,6 +13,7 @@ namespace Desktop.Skinning
 		public static Font ButtonFont = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
 		public static Font TabFont = new Font("Segoe UI", 9);
 		public static Font ActiveTabFont = new Font("Segoe UI", 9, FontStyle.Bold);
+		public static Font DecorationFont = new Font("Segoe UI", 8);
 		public static Font TitleFont = new Font("Segoe UI", 16);
 		public static Font CompletionFont = new Font("Segoe UI", 28);
 
@@ -85,11 +86,17 @@ namespace Desktop.Skinning
 		[Color(DisplayName = "Good")]
 		public Color GoodForeColor = Color.Green;
 
+		[Color(DisplayName = "Caution")]
+		public Color CautionForeColor = Color.Yellow;
+
 		[Color(DisplayName = "Bad")]
 		public Color BadForeColor = Color.Red;
 
 		[Color(DisplayName = "Focus Rect")]
 		public Color FocusRectangle = Color.Black;
+
+		[Color(DisplayName = "Empty Graph")]
+		public Color EmptyColor = Color.LightGray;
 
 		#region Colors visible on a field
 		[Color(DisplayName = "Gray")]
@@ -121,6 +128,16 @@ namespace Desktop.Skinning
 		public Color Group4 = Color.FromArgb(175, 89, 49);
 		[Color(DisplayName = "Group 5")]
 		public Color Group5 = Color.Black;
+		[ColorSet(DisplayName = "Group 1 Set")]
+		public ColorSet Group1Set { get; set; } = new ColorSet();
+		[ColorSet(DisplayName = "Group 2 Set")]
+		public ColorSet Group2Set { get; set; } = new ColorSet();
+		[ColorSet(DisplayName = "Group 3 Set")]
+		public ColorSet Group3Set { get; set; } = new ColorSet();
+		[ColorSet(DisplayName = "Group 4 Set")]
+		public ColorSet Group4Set { get; set; } = new ColorSet();
+		[ColorSet(DisplayName = "Group 5 Set")]
+		public ColorSet Group5Set { get; set; } = new ColorSet();
 
 		public Color GetGrouper(int number)
 		{
@@ -138,6 +155,25 @@ namespace Desktop.Skinning
 					return Group5;
 				default:
 					return Surface.ForeColor;
+			}
+		}
+
+		public ColorSet GetGrouperSet(int number)
+		{
+			switch (number)
+			{
+				case 1:
+					return Group1Set;
+				case 2:
+					return Group2Set;
+				case 3:
+					return Group3Set;
+				case 4:
+					return Group4Set;
+				case 5:
+					return Group5Set;
+				default:
+					return Surface;
 			}
 		}
 		#endregion
@@ -341,6 +377,16 @@ namespace Desktop.Skinning
 					return Color.Transparent;
 				case SkinnedBackgroundType.Field:
 					return FieldBackColor;
+				case SkinnedBackgroundType.Group1:
+					return Group1Set.Normal;
+				case SkinnedBackgroundType.Group2:
+					return Group2Set.Normal;
+				case SkinnedBackgroundType.Group3:
+					return Group3Set.Normal;
+				case SkinnedBackgroundType.Group4:
+					return Group4Set.Normal;
+				case SkinnedBackgroundType.Group5:
+					return Group5Set.Normal;
 				default:
 					return Background.Normal;
 			}
@@ -371,6 +417,36 @@ namespace Desktop.Skinning
 			}
 		}
 
+		public Color GetHighlightColor(DataHighlight highlight)
+		{
+			switch (highlight)
+			{
+				case DataHighlight.Important:
+					return CautionForeColor;
+				default:
+					return PrimaryColor.Normal;
+			}
+		}
+
+		public Color GetHighlightColor(SkinnedHighlight highlight)
+		{
+			switch (highlight)
+			{
+				case SkinnedHighlight.Label:
+					return LabelForeColor;
+				case SkinnedHighlight.Good:
+					return GoodForeColor;
+				case SkinnedHighlight.Bad:
+					return BadForeColor;
+				case SkinnedHighlight.Heading:
+					return PrimaryForeColor;
+				case SkinnedHighlight.SecondaryHeading:
+					return SecondaryForeColor;
+				default:
+					return LabelForeColor;
+			}
+		}
+
 		public string ToLookupString()
 		{
 			throw new NotImplementedException();
@@ -392,6 +468,11 @@ namespace Desktop.Skinning
 		SecondaryLight,
 		Transparent,
 		Field,
+		Group1,
+		Group2,
+		Group3,
+		Group4,
+		Group5,
 	}
 
 	/// <summary>
@@ -418,5 +499,12 @@ namespace Desktop.Skinning
 		Good,
 		Bad,
 		Heading,
+		SecondaryHeading,
+	}
+
+	public enum DataHighlight
+	{
+		Normal,
+		Important
 	}
 }

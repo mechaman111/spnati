@@ -54,8 +54,14 @@ namespace SPNATI_Character_Editor.Controls
 		/// <summary>
 		/// Called when the Add button is clicked
 		/// </summary>
-		/// <returns>A tag for a new case to add, "" to open the Add dropdown, or null to do nothing</returns>
-		string AddingCase(out string folder);
+		/// <returns>A new case to add, or null to do nothing</returns>
+		Case AddingCase(out string folder);
+
+		/// <summary>
+		/// Called when the Add dropdown is used to flesh out properties on the case
+		/// </summary>
+		/// <param name="theCase"></param>
+		void BuildCase(Case theCase);
 
 		/// <summary>
 		/// Adds a brand new case to the tree
@@ -72,7 +78,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// <summary>
 		/// Gets whether a trigger in the Add menu can be used based on the currently selected node
 		/// </summary>
-		bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger);
+		bool IsTriggerValid(DialogueNode selectedNode, TriggerDefinition trigger);
 
 		/// <summary>
 		/// Hides or unhides a case

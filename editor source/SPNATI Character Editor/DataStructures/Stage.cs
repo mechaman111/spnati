@@ -40,8 +40,8 @@ namespace SPNATI_Character_Editor
 		{
 			Case c1 = obj1 as Case;
 			Case c2 = obj2 as Case;
-			Trigger t1 = TriggerDatabase.GetTrigger(c1.Tag);
-			Trigger t2 = TriggerDatabase.GetTrigger(c2.Tag);
+			TriggerDefinition t1 = TriggerDatabase.GetTrigger(c1.Tag);
+			TriggerDefinition t2 = TriggerDatabase.GetTrigger(c2.Tag);
 			int compare = c1.Stages[0].CompareTo(c2.Stages[0]);
 			if (compare == 0)
 			{

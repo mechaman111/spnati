@@ -9,6 +9,11 @@ namespace SPNATI_Character_Editor
 	{
 		private static Random _random = new Random();
 
+		public static int GetRandom(int maxValue)
+		{
+			return _random.Next(maxValue);
+		}
+
 		public static TValue GetOrAddDefault<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, Func<TValue> defaultFunc)
 		{
 			TValue existing;
@@ -48,6 +53,14 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		public static void AddRange<T>(this HashSet<T> set, IEnumerable<T> items)
+		{
+			foreach (T item in items)
+			{
+				set.Add(item);
+			}
+		}
+
 		public static void Sort<T>(this ObservableCollection<T> list)
 		{
 			List<T> temp = new List<T>();
@@ -67,6 +80,19 @@ namespace SPNATI_Character_Editor
 			return "#" + color.R.ToString("X2") +
 					   color.G.ToString("X2") +
 					   color.B.ToString("X2");
+		}
+
+		public static void Shuffle<T>(this List<T> list)
+		{
+			int n = list.Count;
+			while (n > 1)
+			{
+				n--;
+				int k = _random.Next(n + 1);
+				T value = list[k];
+				list[k] = list[n];
+				list[n] = value;
+			}
 		}
 	}
 }

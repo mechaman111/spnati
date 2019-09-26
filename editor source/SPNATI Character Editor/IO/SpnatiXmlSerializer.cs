@@ -1,4 +1,5 @@
-﻿using Desktop.CommonControls;
+﻿using Desktop;
+using Desktop.CommonControls;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace SPNATI_Character_Editor.IO
 	public class SpnatiXmlSerializer
 	{
 		private static Dictionary<Type, ElementInformation> _serializationInfo = new Dictionary<Type, ElementInformation>();
+		private static object[] NullParams = new object[] { };
+		private static XmlTextAttribute TextAttribute = new XmlTextAttribute();
 
 		private const string IndentString = "    ";
 
@@ -115,6 +118,13 @@ namespace SPNATI_Character_Editor.IO
 				}
 
 				XmlElementAttribute element = field.Element;
+				XmlTextAttribute textAttr = field.Text;
+				if (field.ConditionalTextMethod != null && element != null && (bool)field.ConditionalTextMethod.Invoke(data, NullParams))
+				{
+					textAttr = TextAttribute;
+					element = null;
+				}
+
 				if (element != null)
 				{
 					//Save elements for later
@@ -135,7 +145,6 @@ namespace SPNATI_Character_Editor.IO
 					continue;
 				}
 
-				XmlTextAttribute textAttr = field.Text;
 				if (textAttr != null)
 				{
 					text = field.GetValue(data)?.ToString();
@@ -154,6 +163,10 @@ namespace SPNATI_Character_Editor.IO
 					if (field.FieldType == typeof(bool))
 					{
 						value = value.ToLowerInvariant();
+					}
+					else if (objValue is Enum)
+					{
+						value = PropertyTypeInfo.GetSerializedEnumValue(objValue.GetType(), objValue.ToString());
 					}
 					writer.WriteAttributeString(attribute.AttributeName, value);
 					continue;
@@ -320,6 +333,7 @@ namespace SPNATI_Character_Editor.IO
 		public XmlTextAttribute Text;
 		public XmlAttributeAttribute Attribute;
 		public XmlNewLineAttribute NewLine;
+		public MethodInfo ConditionalTextMethod;
 		public MethodInfo SortMethod;
 		public XmlAnyElementAttribute AnyElement;
 		public int Order;
@@ -348,6 +362,12 @@ namespace SPNATI_Character_Editor.IO
 				SortMethod = parentType.GetMethod(sortAttribute.Method, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 			}
 
+			XmlConditionalTextAttribute conditionalAttribute = field.GetCustomAttribute<XmlConditionalTextAttribute>();
+			if (conditionalAttribute != null)
+			{
+				ConditionalTextMethod = parentType.GetMethod(conditionalAttribute.Method, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+			}
+
 			AnyElement = field.GetCustomAttribute<XmlAnyElementAttribute>();
 		}
 
@@ -367,7 +387,7 @@ namespace SPNATI_Character_Editor.IO
 		}
 	}
 
-	[AttributeUsage(AttributeTargets.Field)]
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class XmlNewLineAttribute : Attribute
 	{
 		public XmlNewLinePosition Position { get; set; }
@@ -418,6 +438,19 @@ namespace SPNATI_Character_Editor.IO
 		public XmlOrderAttribute(int order)
 		{
 			SortOrder = order;
+		}
+	}
+
+	/// <summary>
+	/// Use with an XmlElement to write as XmlText if the provided method returns true, otherwise write to the XmlElement
+	/// </summary>
+	public class XmlConditionalTextAttribute : Attribute
+	{
+		public string Method { get; set; }
+
+		public XmlConditionalTextAttribute(string method)
+		{
+			Method = method;
 		}
 	}
 }

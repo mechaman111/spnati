@@ -39,6 +39,14 @@ namespace SPNATI_Character_Editor
 		protected override void OnBindingUpdated(string property)
 		{
 			recField.RecordContext = CharacterDatabase.Get(GetBindingValue(property)?.ToString());
+			if (recField.RecordContext == null && Context is Character)
+			{
+				recField.RecordContext = Context;
+			}
+			if (recField.RecordContext == null && SecondaryContext is Character)
+			{
+				recField.RecordContext = SecondaryContext;
+			}
 		}
 
 		protected override void OnSetParameters(EditControlAttribute parameters)
@@ -52,6 +60,12 @@ namespace SPNATI_Character_Editor
 
 		private bool FilterPrivateMarkers(IRecord record)
 		{
+			TargetCondition condition = Data as TargetCondition;
+			if (condition != null && condition.Role == "self")
+			{
+				return true;
+			}
+
 			Marker marker = record as Marker;
 			return marker.Scope == MarkerScope.Public;
 		}

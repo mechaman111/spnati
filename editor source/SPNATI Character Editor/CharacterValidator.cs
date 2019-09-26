@@ -75,7 +75,7 @@ namespace SPNATI_Character_Editor
 					HashSet<string> stageImages = usedPoses.GetOrAddDefault(stage.Id, () => new HashSet<string>());
 					ValidationContext context = new ValidationContext(stage, stageCase, null);
 
-					Trigger trigger = TriggerDatabase.GetTrigger(stageCase.Tag);
+					TriggerDefinition trigger = TriggerDatabase.GetTrigger(stageCase.Tag);
 					if (trigger == null || trigger.Unrecognized)
 					{
 						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case \"{0}\" is an unknown case. (stage {1})", stageCase.Tag, stage.Id), context));
@@ -306,6 +306,10 @@ namespace SPNATI_Character_Editor
 					}
 					#endregion
 
+					#region Variable tests
+					ValidateExpressions(warnings, character, caseLabel, stageCase, context); 
+					#endregion
+
 					Tuple<string, string> template = DialogueDatabase.GetTemplate(stageCase.Tag);
 					string defaultLine = template.Item2;
 					Regex regex = new Regex(@"\<\/i\>");
@@ -314,42 +318,57 @@ namespace SPNATI_Character_Editor
 					{
 						context = new ValidationContext(stage, stageCase, line);
 
-						DialogueLine stageLine = Behaviour.CreateStageSpecificLine(line, stageIndex, character);
+						DialogueLine stageLine = line;
+
+						List<string> imagesInStage = new List<string>();
+						foreach (StageImage si in line.Images)
+						{
+							if (si.Stages.Contains(stage.Id))
+							{
+								imagesInStage.Add(si.Pose?.GetStageKey(stage.Id, true));
+							}
+						}
+						if (imagesInStage.Count == 0)
+						{
+							imagesInStage.Add(stageLine.Pose?.GetStageKey(stage.Id, true));
+						}
 
 						//Validate image
-						string img = stageLine.Image;
-						if (!string.IsNullOrEmpty(img))
+						foreach (string img in imagesInStage)
 						{
-							unusedImages.Remove(img);
-							if (img.StartsWith("custom:"))
+							if (!string.IsNullOrEmpty(img))
 							{
-								string id = img.Substring(7);
-								Pose pose = character.Poses.Find(p => p.Id == id);
-								if (pose == null)
+								unusedImages.Remove(img);
+								if (img.StartsWith("custom:"))
 								{
-									warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("Pose {1} does not exist. {0}", caseLabel, img), context));
+									string id = img.Substring(7);
+									Pose pose = character.Poses.Find(p => p.Id == id);
+									if (pose == null)
+									{
+										warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("Pose {1} does not exist. {0}", caseLabel, img), context));
+									}
 								}
+								else
+								{
+									if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
+									{
+										warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img), context));
+									}
+								}
+								stageImages.Add(img);
 							}
-							else
+							else if (!string.IsNullOrEmpty(line.Text))
 							{
-								if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
-								{
-									warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img), context));
-								}
+								warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no pose assigned. {0}", caseLabel), context));
 							}
-							stageImages.Add(img);
-						}
-						else if (!string.IsNullOrEmpty(line.Text))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no pose assigned. {0}", caseLabel), context));
 						}
 
 						//Validate variables
-						List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase, line.Text);
-						if (invalidVars.Count > 0)
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
-						}
+						//List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase, line.Text);
+						//if (invalidVars.Count > 0)
+						//{
+						//	warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
+						//}
 
 						//Make sure it's not a placeholder
 						if (defaultLine.Equals(line.Text))
@@ -542,6 +561,21 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		private static void ValidateExpressions(List<ValidationError> warnings, Character character, string caseLabel, Case stageCase, ValidationContext context)
+		{
+			foreach (ExpressionTest test in stageCase.Expressions)
+			{
+				if (string.IsNullOrEmpty(test.Expression))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no expression: {test}", context));
+				}
+				if (string.IsNullOrEmpty(test.Value))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no value: {test}", context));
+				}
+			}
+		}
+
 		private static void ValidateMarker(List<ValidationError> warnings, Character character, string caseLabel, string value, ValidationContext context)
 		{
 			ValidateMarker(warnings, character, caseLabel, value, "", context);
@@ -569,55 +603,89 @@ namespace SPNATI_Character_Editor
 				}
 
 				name = Marker.ExtractConditionPieces(name, out op, out value, out perTarget);
-				if (!character.Markers.Contains(name))
+				if (character.Markers.IsValueCreated && !character.Markers.Value.Contains(name))
 				{
+					//Count could be 0 for characters who have no editor data, so unless we decide to duplicate MarkerData in CachedCharacter, just ignore it for unloaded characters
 					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue that sets marker {2}. {0}", caseLabel, character.FolderName, name), context));
 				}
 				else
 				{
-					if (!string.IsNullOrEmpty(stageRange))
+					if (character.IsFullyLoaded)
 					{
-						//verify that a marker can even be set prior to this point
-
-						int min, max;
-						Case.ToRange(stageRange, out min, out max);
-						for (int i = 0; i <= min && i < character.Behavior.Stages.Count; i++)
+						if (!string.IsNullOrEmpty(stageRange))
 						{
-							Stage stage = character.Behavior.Stages[i];
-							foreach (var c in stage.Cases)
+							//verify that a marker can even be set prior to this point
+
+							int min, max;
+							Case.ToRange(stageRange, out min, out max);
+							if (character.Behavior.Triggers.Count > 0)
 							{
-								foreach (var line in c.Lines)
+								foreach (Trigger t in character.Behavior.Triggers)
 								{
-									if (line.Marker == name)
+									foreach (Case c in t.Cases)
 									{
-										return;
+										foreach (var line in c.Lines)
+										{
+											if (string.IsNullOrEmpty(line.Marker)) { continue; }
+											string val;
+											bool pt;
+											string markerName = Marker.ExtractPieces(line.Marker, out val, out pt);
+											if (markerName == name)
+											{
+												for (int i = 0; i < c.Stages.Count; i++)
+												{
+													if (c.Stages[i] <= min)
+													{
+														return;
+													}
+												}
+											}
+										}
+
 									}
 								}
 							}
-						}
-						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue prior to stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.FolderName, min, name), context));
-					}
-
-					if (!string.IsNullOrEmpty(value))
-					{
-						bool used = false;
-						Marker m = character.Markers.Values.FirstOrDefault(marker => marker.Name == name);
-						if (m != null)
-						{
-							used = m.Values.Contains(value);
-							if (!used)
+							else
 							{
-								int test;
-								//they never set the value directly, but if it's numeric, then they might be able to increment or decrement to it
-								if (int.TryParse(value, out test))
+								for (int i = 0; i <= min && i < character.Behavior.Stages.Count; i++)
 								{
-									used = (m.Values.Contains("+") || m.Values.Contains("-"));
+									Stage stage = character.Behavior.Stages[i];
+									foreach (var c in stage.Cases)
+									{
+										foreach (var line in c.Lines)
+										{
+											if (line.Marker == name)
+											{
+												return;
+											}
+										}
+									}
 								}
 							}
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue prior to stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.FolderName, min, name), context));
 						}
-						if (!used)
+
+						if (!string.IsNullOrEmpty(value))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"{character.FolderName} has no dialogue that sets marker {name} to {value}, so this case will never trigger. {caseLabel}", context));
+							bool used = false;
+							Marker m = character.Markers.Value.Values.FirstOrDefault(marker => marker.Name == name);
+							if (m != null)
+							{
+								used = m.Values.Contains(value);
+								if (!used)
+								{
+									int test;
+									//they never set the value directly, but if it's numeric, then they might be able to increment or decrement to it
+									if (int.TryParse(value, out test))
+									{
+										used = (m.Values.Contains("+") || m.Values.Contains("-"));
+									}
+								}
+							}
+							if (!used)
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"{character.FolderName} has no dialogue that sets marker {name} to {value}, so this case will never trigger. {caseLabel}", context));
+							}
 						}
 					}
 				}
@@ -835,23 +903,16 @@ namespace SPNATI_Character_Editor
 				return;
 			}
 			Character other = CharacterDatabase.Get(target);
-			if (other != null)
+			if (other != null && other.IsFullyLoaded)
 			{
 				bool found = false;
-				foreach (Stage stage in other.Behavior.Stages)
+				foreach (Case stageCase in other.Behavior.EnumerateSourceCases())
 				{
-					foreach (Case stageCase in stage.Cases)
+					foreach (DialogueLine line in stageCase.Lines)
 					{
-						foreach (DialogueLine line in stageCase.Lines)
+						if (line.Text.Contains(text))
 						{
-							if (line.Text.Contains(text))
-							{
-								found = true;
-								break;
-							}
-						}
-						if (found)
-						{
+							found = true;
 							break;
 						}
 					}
@@ -940,7 +1001,6 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
-
 
 			foreach (Pose pose in skin.Poses)
 			{

@@ -9,7 +9,27 @@ namespace Desktop
 		public WorkspaceControl Control { get; set; }
 
 		public int Id { get; set; }
-		public IRecord Record { get; set; }
+		private IRecord _record;
+		public IRecord Record
+		{
+			get { return _record; }
+			set
+			{
+				_record = value;
+				if (_record is IDirtiable)
+				{
+					((_record as IDirtiable).OnDirtyChanged) += Workspace_OnDirtyChanged;
+				}
+			}
+		}
+
+		private Dictionary<string, object> _storedData = new Dictionary<string, object>();
+
+		private void Workspace_OnDirtyChanged(object sender, bool dirty)
+		{
+			Shell.Instance.SetDirty(this, dirty);
+		}
+
 		public bool IsDefault { get; set; }
 
 		private PostOffice _postOffice = new PostOffice();
@@ -18,13 +38,18 @@ namespace Desktop
 		public IActivity ActiveSidebarActivity { get; set; }
 		public Dictionary<WorkspacePane, List<IActivity>> Activities = new Dictionary<WorkspacePane, List<IActivity>>();
 
-		public IActivity GetFirstActivity()
+		public virtual bool AllowAutoStart(Type activityType)
+		{
+			return true;
+		}
+
+		public virtual IActivity GetDefaultActivity()
 		{
 			List<IActivity> list = Activities[WorkspacePane.Main];
 			return list.Count > 0 ? list[0] : null;
 		}
 
-		public IActivity GetFirstSidebarActivity()
+		public virtual IActivity GetDefaultSidebarActivity()
 		{
 			List<IActivity> list = Activities[WorkspacePane.Sidebar];
 			return list.Count > 0 ? list[0] : null;
@@ -37,6 +62,21 @@ namespace Desktop
 				foreach (var activity in kvp.Value)
 				{
 					if (activity.GetType() == typeof(T))
+					{
+						return activity;
+					}
+				}
+			}
+			return null;
+		}
+
+		public IActivity Find(Type type)
+		{
+			foreach (KeyValuePair<WorkspacePane, List<IActivity>> kvp in Activities)
+			{
+				foreach (var activity in kvp.Value)
+				{
+					if (activity.GetType() == type)
 					{
 						return activity;
 					}
@@ -102,7 +142,10 @@ namespace Desktop
 
 		public bool CanQuit(CloseReason reason)
 		{
-			Dictionary<IActivity, bool> saveData = new Dictionary<IActivity, bool>();
+			//Save data
+			ActiveActivity?.Save();
+			ActiveSidebarActivity?.Save();
+
 			foreach (KeyValuePair<WorkspacePane, List<IActivity>> kvp in Activities)
 			{
 				foreach (var activity in kvp.Value)
@@ -110,21 +153,12 @@ namespace Desktop
 					CloseArgs args = new CloseArgs(reason);
 					if (!activity.CanQuit(args))
 						return false;
-					saveData[activity] = args.SaveData;
 				}
 			}
 
 			if (!OnCanQuit(reason))
 				return false;
-
-			//Save data
-			ActiveActivity?.Save();
-			ActiveSidebarActivity?.Save();
-			//foreach (var kvp in saveData)
-			//{
-			//	if (kvp.Value)
-			//		kvp.Key.Save();
-			//}
+			
 			return true;
 		}
 		protected virtual bool OnCanQuit(CloseReason reason)
@@ -157,7 +191,20 @@ namespace Desktop
 					activity.Destroy();
 				}
 			}
+			if (_record is IDirtiable)
+			{
+				((_record as IDirtiable).OnDirtyChanged) -= Workspace_OnDirtyChanged;
+			}
 			Activities.Clear();
+
+			foreach (object obj in _storedData.Values)
+			{
+				if (obj is IDisposable)
+				{
+					((IDisposable)obj).Dispose();
+				}
+			}
+			_storedData.Clear();
 		}
 
 		public bool ActivateActivity(IActivity activity)
@@ -219,6 +266,24 @@ namespace Desktop
 		public void ToggleSidebar(bool expanded)
 		{
 			Control.ToggleSidebar(expanded);
+		}
+
+		public void SetData(string key, object value)
+		{
+			_storedData[key] = value;
+		}
+
+		public T GetData<T>(string key)
+		{
+			object value;
+			if (_storedData.TryGetValue(key, out value))
+			{
+				return (T)value;
+			}
+			else
+			{
+				return default(T);
+			}
 		}
 	}
 }

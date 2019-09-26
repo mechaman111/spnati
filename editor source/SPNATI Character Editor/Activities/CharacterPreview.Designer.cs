@@ -38,6 +38,7 @@
 			this.tabsReference = new Desktop.Skinning.SkinnedTabControl();
 			this.tabTags = new System.Windows.Forms.TabPage();
 			this.stripReference = new Desktop.Skinning.SkinnedTabStrip();
+			this.tabTargets = new System.Windows.Forms.TabPage();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -164,6 +165,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabsReference.Controls.Add(this.tabTags);
+			this.tabsReference.Controls.Add(this.tabTargets);
 			this.tabsReference.Location = new System.Drawing.Point(0, 23);
 			this.tabsReference.Margin = new System.Windows.Forms.Padding(0);
 			this.tabsReference.Name = "tabsReference";
@@ -197,7 +199,13 @@
 			this.stripReference.TabPadding = 20;
 			this.stripReference.TabSize = -1;
 			this.stripReference.TabType = Desktop.Skinning.SkinnedBackgroundType.Background;
-			this.stripReference.Vertical = false;
+			this.stripReference.Vertical = false; this.tabTargets.BackColor = System.Drawing.Color.White;
+			this.tabTargets.ForeColor = System.Drawing.Color.Black;
+			this.tabTargets.Location = new System.Drawing.Point(4, 22);
+			this.tabTargets.Name = "tabTargets";
+			this.tabTargets.Size = new System.Drawing.Size(243, 140);
+			this.tabTargets.TabIndex = 1;
+			this.tabTargets.Text = "Targets";
 			// 
 			// CharacterPreview
 			// 
@@ -228,5 +236,6 @@
 		private Desktop.Skinning.SkinnedTabControl tabsReference;
 		private System.Windows.Forms.TabPage tabTags;
 		private Desktop.Skinning.SkinnedTabStrip stripReference;
+		private System.Windows.Forms.TabPage tabTargets;
 	}
 }

@@ -1,4 +1,6 @@
-﻿namespace SPNATI_Character_Editor
+﻿using System.Drawing;
+
+namespace SPNATI_Character_Editor
 {
 	public static class WorkspaceMessages
 	{
@@ -21,9 +23,9 @@
 		/// Sent when the character's wardrobe has changed
 		/// </summary>
 		public const int WardrobeUpdated = 4;
-		
+
 		/// <summary>
-		/// Sent to inform the preview sidebar to update its image [CharacterImage: image to display]
+		/// Sent to inform the preview sidebar to update its image [UpdateImageArgs]
 		/// </summary>
 		public const int UpdatePreviewImage = 5;
 
@@ -41,5 +43,25 @@
 		/// Sent to inform the preview sidebar to update its image [List&lt;string&gt;: markers that are set]
 		/// </summary>
 		public const int UpdateMarkers = 8;
+	}
+
+	public class UpdateImageArgs
+	{
+		public PoseMapping Pose;
+		public int Stage;
+		public ISkin Character;
+		public Image Image;
+
+		public UpdateImageArgs(Image image)
+		{
+			Image = image;
+		}
+
+		public UpdateImageArgs(ISkin character, PoseMapping pose, int stage)
+		{
+			Pose = pose;
+			Character = character;
+			Stage = stage;
+		}
 	}
 }

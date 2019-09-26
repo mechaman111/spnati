@@ -40,8 +40,6 @@
 			this.valScale = new Desktop.Skinning.SkinnedNumericUpDown();
 			this.lblScale = new Desktop.Skinning.SkinnedLabel();
 			this.gridLabels = new Desktop.Skinning.SkinnedDataGridView();
-			this.colLabelsStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.colLabelsLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.lblStageLabels = new Desktop.Skinning.SkinnedLabel();
 			this.label1 = new Desktop.Skinning.SkinnedLabel();
 			this.cboDialogueLayer = new Desktop.Skinning.SkinnedComboBox();
@@ -59,6 +57,8 @@
 			this.skinnedGroupBox3 = new Desktop.Skinning.SkinnedGroupBox();
 			this.styleControl = new SPNATI_Character_Editor.Controls.StyleControl();
 			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
+			this.colLabelsStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colLabelsLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.valScale)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridLabels)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLayer)).BeginInit();
@@ -132,6 +132,7 @@
 			this.gridLabels.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colLabelsStage,
             this.colLabelsLabel});
+			this.gridLabels.Data = null;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -158,20 +159,6 @@
 			this.gridLabels.RowHeadersVisible = false;
 			this.gridLabels.Size = new System.Drawing.Size(226, 111);
 			this.gridLabels.TabIndex = 87;
-			// 
-			// colLabelsStage
-			// 
-			this.colLabelsStage.HeaderText = "Stage";
-			this.colLabelsStage.MinimumWidth = 50;
-			this.colLabelsStage.Name = "colLabelsStage";
-			this.colLabelsStage.Width = 50;
-			// 
-			// colLabelsLabel
-			// 
-			this.colLabelsLabel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.colLabelsLabel.HeaderText = "Label";
-			this.colLabelsLabel.Name = "colLabelsLabel";
-			this.colLabelsLabel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			// 
 			// lblStageLabels
 			// 
@@ -292,6 +279,7 @@
 			this.gridOtherNicknames.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridOtherNicknames.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColOtherNickname});
+			this.gridOtherNicknames.Data = null;
 			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
 			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -348,6 +336,7 @@
 			this.gridNicknames.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColCharacter,
             this.ColNickname});
+			this.gridNicknames.Data = null;
 			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
 			dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -431,6 +420,8 @@
 			// 
 			// skinnedLabel1
 			// 
+			this.skinnedLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.skinnedLabel1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.skinnedLabel1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.skinnedLabel1.Location = new System.Drawing.Point(3, 519);
@@ -439,6 +430,22 @@
 			this.skinnedLabel1.TabIndex = 97;
 			this.skinnedLabel1.Text = "To assign a nickname mid-game, set a per-target marker named \"nickname\" on a case" +
     " where the desired character is the target.";
+			// 
+			// colLabelsStage
+			// 
+			this.colLabelsStage.DataPropertyName = "Stage";
+			this.colLabelsStage.HeaderText = "Stage";
+			this.colLabelsStage.MinimumWidth = 50;
+			this.colLabelsStage.Name = "colLabelsStage";
+			this.colLabelsStage.Width = 50;
+			// 
+			// colLabelsLabel
+			// 
+			this.colLabelsLabel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.colLabelsLabel.DataPropertyName = "Value";
+			this.colLabelsLabel.HeaderText = "Label";
+			this.colLabelsLabel.Name = "colLabelsLabel";
+			this.colLabelsLabel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			// 
 			// AdvancedMetadataEditor
 			// 
@@ -469,8 +476,6 @@
 		private Desktop.Skinning.SkinnedNumericUpDown valScale;
 		private Desktop.Skinning.SkinnedLabel lblScale;
 		private Desktop.Skinning.SkinnedDataGridView gridLabels;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colLabelsStage;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colLabelsLabel;
 		private Desktop.Skinning.SkinnedLabel lblStageLabels;
 		private Desktop.Skinning.SkinnedLabel label1;
 		private Desktop.Skinning.SkinnedComboBox cboDialogueLayer;
@@ -488,5 +493,7 @@
 		private Desktop.Skinning.SkinnedGroupBox skinnedGroupBox3;
 		private Controls.StyleControl styleControl;
 		private Desktop.Skinning.SkinnedLabel skinnedLabel1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colLabelsStage;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colLabelsLabel;
 	}
 }

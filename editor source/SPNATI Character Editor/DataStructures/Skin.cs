@@ -38,6 +38,12 @@ namespace SPNATI_Character_Editor
 		public List<StageSpecificValue> Folders = new List<StageSpecificValue>();
 
 		[XmlIgnore]
+		public bool IsDirty { get; set; }
+
+		[XmlIgnore]
+		public ISkin Skin { get { return this; } }
+
+		[XmlIgnore]
 		public string Folder
 		{
 			get
@@ -77,6 +83,10 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
+				if (Link != null)
+				{
+					return Link.Name;
+				}
 				if (Labels.Count > 0) { return Labels[0].Value; }
 				return Id;
 			}
@@ -105,7 +115,7 @@ namespace SPNATI_Character_Editor
 
 		public void OnBeforeSerialize() { }
 
-		public void OnAfterDeserialize()
+		public void OnAfterDeserialize(string source)
 		{
 			Wardrobe.ForEach(c => c.OnAfterDeserialize());
 
@@ -213,6 +223,12 @@ namespace SPNATI_Character_Editor
 			return dir;
 		}
 
+		public string GetBackupDirectory()
+		{
+			string dir = Character.GetBackupDirectory();
+			return Path.Combine(dir, Id);
+		}
+
 		public string GetAttachmentsDirectory()
 		{
 			return Path.Combine(Config.SpnatiDirectory, "attachments", "reskins", FolderName);
@@ -238,12 +254,12 @@ namespace SPNATI_Character_Editor
 					{
 						if (stage < endStage)
 						{
-							DialogueLine stageLine = Behaviour.CreateStageSpecificLine(line, stage, Character);
-							if (stageLine.Image.StartsWith("custom:"))
+							PoseMapping pose = line.Pose;
+							if (pose == null || pose.Key.StartsWith("custom:"))
 							{
 								continue;
 							}
-							string name = Path.GetFileNameWithoutExtension(stageLine.Image);
+							string name = pose.GetStageKey(stage, false);
 							images.Add(name);
 						}
 					}

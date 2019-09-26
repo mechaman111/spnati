@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace SPNATI_Character_Editor
@@ -9,33 +10,23 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public static class ImageCache
 	{
-		private static Dictionary<string, ImageReference> _cache = new Dictionary<string, ImageReference>();
+		private static Dictionary<string, ImageAsset> _cache = new Dictionary<string, ImageAsset>();
 
-		private class ImageReference
+		private class ImageAsset : IDisposable
 		{
-			public Image Image;
+			public ImageReference Reference;
 			public int Count;
 
-			public ImageReference(Image image)
+			public ImageAsset(ImageReference reference)
 			{
-				Image = image;
+				Reference = reference;
 				Count = 1;
 			}
-		}
 
-		public static void Clear()
-		{
-			_cache.Clear();
-		}
-
-		public static int GetReferenceCount(string filename)
-		{
-			ImageReference reference = _cache.Get(filename);
-			if (reference != null)
+			public void Dispose()
 			{
-				return reference.Count;
+				Reference?.Dispose();
 			}
-			return 0;
 		}
 
 		/// <summary>
@@ -43,22 +34,33 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="filename"></param>
 		/// <returns></returns>
-		public static Image Get(string filename)
+		public static ImageReference Get(string filename)
 		{
 			if (string.IsNullOrEmpty(filename))
 				return null;
-			ImageReference reference = null;
+			ImageAsset reference = null;
 			if (!_cache.TryGetValue(filename, out reference))
 			{
 				try
 				{
-					using (var temp = new Bitmap(filename))
+					if (filename.EndsWith(".gif"))
 					{
-						//Load an image and then create a new one from it so that we can dispose the original image and unlock the file, which
-						//will allow us to replace the file with a new one when importing new images
-						Image image = new Bitmap(temp);
-						reference = new ImageReference(image);
+						Image image = Image.FromFile(filename);
+						ImageReference imageRef = new ImageReference(filename, image);
+						reference = new ImageAsset(imageRef);
 						_cache[filename] = reference;
+					}
+					else
+					{
+						using (var temp = new Bitmap(filename))
+						{
+							//Load an image and then create a new one from it so that we can dispose the original image and unlock the file, which
+							//will allow us to replace the file with a new one when importing new images
+							Image image = new Bitmap(temp);
+							ImageReference imageRef = new ImageReference(filename, image);
+							reference = new ImageAsset(imageRef);
+							_cache[filename] = reference;
+						}
 					}
 				}
 				catch { }
@@ -67,7 +69,7 @@ namespace SPNATI_Character_Editor
 			{
 				reference.Count++;
 			}
-			return reference?.Image;
+			return reference?.Reference;
 		}
 
 		/// <summary>
@@ -76,57 +78,44 @@ namespace SPNATI_Character_Editor
 		/// <param name="filename"></param>
 		public static void Release(string filename)
 		{
-			ImageReference reference = null;
+			ImageAsset reference = null;
 			if (_cache.TryGetValue(filename, out reference))
 			{
 				reference.Count--;
 				if (reference.Count <= 0)
 				{
 					_cache.Remove(filename);
-					reference.Image.Dispose();
-					reference.Image = null;
+					reference.Dispose();
 				}
 			}
 		}
+	}
 
-		/// <summary>
-		/// Adds an image that didn't come from disk to the cache and sets its reference count to 0
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="image"></param>
-		public static void Add(string key, Image image)
+	public class ImageReference : IDisposable
+	{
+		public string FileName;
+		public Image Image;
+
+		public ImageReference(string filename, Image image)
 		{
-			ImageReference reference = null;
-			if (!_cache.TryGetValue(key, out reference))
-			{
-				reference = new ImageReference(image);
-				_cache[key] = reference;
-				reference.Count = 0;
-			}
-			else
-			{
-				reference.Count++;
-			}
+			FileName = filename;
+			Image = image;
 		}
 
-		/// <summary>
-		/// Replaces a cached image THAT CAME FROM DISK. Current references need to act on the ReplaceImage desktop message to actually use it, however
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="newImage"></param>
-		public static void Replace(string key, Image newImage)
+		public override string ToString()
 		{
-			ImageReference reference = _cache.Get(key);
-			if (reference != null)
-			{
-				//dispose the old image since nobody should still be holding onto a reference. If they are, naughty naughty
-				reference.Image.Dispose();
-				reference.Image = newImage;
-			}
-			else
-			{
-				newImage.Dispose(); //nobody needs the new image right away, so don't keep it around
-			}
+			return FileName;
+		}
+
+		public void Replace(Image newImage)
+		{
+			Image = newImage;
+		}
+
+		public void Dispose()
+		{
+			Image?.Dispose();
+			Image = null;
 		}
 	}
 }

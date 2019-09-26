@@ -16,6 +16,7 @@ namespace Desktop.CommonControls
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public object Context { get; set; }
+		public object SecondaryContext { get; set; }
 		public object Data { get; set; }
 		public object PreviewData { get; set; }
 		public UndoManager UndoManager { get; set; }
@@ -97,6 +98,10 @@ namespace Desktop.CommonControls
 			if (_list != null)
 			{
 				_list.RemoveAt(Index);
+				if (Data is IPropertyChangedNotifier)
+				{
+					((IPropertyChangedNotifier)Data).NotifyPropertyChanged(Property);
+				}
 			}
 			ParentTable.ModifyingProperty = old;
 		}
@@ -106,7 +111,7 @@ namespace Desktop.CommonControls
 			return _list;
 		}
 
-		protected object GetValue()
+		public object GetValue()
 		{
 			if (_list != null)
 			{
@@ -215,6 +220,12 @@ namespace Desktop.CommonControls
 
 		private void ClearBindableData()
 		{
+			object value = GetValue();
+			if (value is INotifyPropertyChanged)
+			{
+				((INotifyPropertyChanged)value).PropertyChanged -= PropertyEditControl_PropertyChanged;
+			}
+
 			if (_bindableData != null)
 			{
 				_bindableData.PropertyChanged -= BindableData_PropertyChanged;
@@ -242,13 +253,14 @@ namespace Desktop.CommonControls
 		/// </summary>
 		/// <param name="data"></param>
 		/// <param name="property"></param>
-		public void SetData(object data, string property, int index, object context, UndoManager undoManager, object previewData, PropertyTable table)
+		public void SetData(object data, string property, int index, object context, object secondaryContext, UndoManager undoManager, object previewData, PropertyTable table)
 		{
 			ParentTable = table;
 			SetBindableData(data, ref _bindableData);
 			SetBindableData(previewData, ref _bindablePreviewData);
 			UndoManager = undoManager;
 			Context = context;
+			SecondaryContext = secondaryContext;
 			Property = property;
 			Index = index;
 			Type dataType = data.GetType();
@@ -262,8 +274,22 @@ namespace Desktop.CommonControls
 				}
 			}
 			Data = data;
+
+			object value = GetValue();
+			if (value is INotifyPropertyChanged)
+			{
+				((INotifyPropertyChanged)value).PropertyChanged += PropertyEditControl_PropertyChanged;
+			}
 			PreviewData = previewData;
 			UpdateBinding(false);
+		}
+
+		private void PropertyEditControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (Data is IPropertyChangedNotifier)
+			{
+				((IPropertyChangedNotifier)Data).NotifyPropertyChanged(Property);
+			}
 		}
 
 		public virtual bool IsUpdating
@@ -310,7 +336,7 @@ namespace Desktop.CommonControls
 		{
 		}
 
-		public void Rebind(object data, object previewData, object context)
+		public void Rebind(object data, object previewData, object context, object secondaryContext)
 		{
 			ClearBindableData();
 			Data = data;
@@ -352,6 +378,8 @@ namespace Desktop.CommonControls
 		/// Saves the current data
 		/// </summary>
 		protected virtual void OnSave() { }
+
+		public virtual void EditSubProperty(string property) { }
 
 		private class SetValueCommand : ICommand
 		{

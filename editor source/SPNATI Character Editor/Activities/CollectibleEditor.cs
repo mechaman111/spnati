@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Desktop.Skinning;
+using System.Collections.ObjectModel;
 
 namespace SPNATI_Character_Editor.Activities
 {
@@ -221,7 +222,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				return;
 			}
-			List<Collectible> collectibles = _character.Collectibles.Collectibles;
+			ObservableCollection<Collectible> collectibles = _character.Collectibles.Collectibles;
 
 			int index = collectibles.IndexOf(collectible);
 			if (index == 0)
@@ -242,7 +243,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				return;
 			}
-			List<Collectible> collectibles = _character.Collectibles.Collectibles;
+			ObservableCollection<Collectible> collectibles = _character.Collectibles.Collectibles;
 
 			int index = collectibles.IndexOf(collectible);
 			if (index == collectibles.Count - 1)
@@ -258,8 +259,8 @@ namespace SPNATI_Character_Editor.Activities
 
 		private class CollectibleSorter : IComparer
 		{
-			private List<Collectible> _list;
-			public CollectibleSorter(List<Collectible> list)
+			private ObservableCollection<Collectible> _list;
+			public CollectibleSorter(ObservableCollection<Collectible> list)
 			{
 				_list = list;
 			}

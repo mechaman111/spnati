@@ -17,7 +17,7 @@ namespace SPNATI_Character_Editor.Forms
 
 		private void WhatsNew_Load(object sender, EventArgs e)
 		{
-			wb.Navigate(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "VersionHistory", "whatsnew.html"));
+			wb.Navigate(Path.Combine(Config.ExecutableDirectory, "VersionHistory", "whatsnew.html"));
 		}
 
 		private void wb_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -41,7 +41,7 @@ namespace SPNATI_Character_Editor.Forms
 					continue; //skip beta versions when not in a beta
 				}
 
-				string file = $"VersionHistory/{version}.html";
+				string file = Path.Combine(Config.ExecutableDirectory, $"VersionHistory/{version}.html");
 				if (File.Exists(file))
 				{
 					updates.Append("<section class='card'>");

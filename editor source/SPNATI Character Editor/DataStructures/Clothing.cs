@@ -102,6 +102,7 @@ namespace SPNATI_Character_Editor
 	{
 		WardrobeRestrictions GetWardrobeRestrictions();
 		int Layers { get; }
+		bool IsDirty { get; set; }
 		Clothing GetClothing(int index);
 		void ApplyWardrobeChanges(Queue<WardrobeChange> changes);
 		int AddLayer(Clothing layer);

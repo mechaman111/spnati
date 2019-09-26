@@ -45,7 +45,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
-				string path = Path.GetFullPath(Path.Combine("Resources", "preview.html"));
+				string path = Path.GetFullPath(Path.Combine(Config.ExecutableDirectory, "Resources", "preview.html"));
 				wbPreview.Navigate(path);
 				_sheet.Rules.CollectionChanged += Rules_CollectionChanged;
 				PopulateStyles();

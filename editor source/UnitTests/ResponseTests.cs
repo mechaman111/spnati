@@ -25,17 +25,17 @@ namespace UnitTests
 
 			_female = new Character() { Gender = "female", FolderName = "female" };
 			_male = new Character() { Gender = "male", FolderName = "male" };
-			_bifemale = new Character() { Gender = "female", FolderName = "female" };
-			_bimale = new Character() { Gender = "male", FolderName = "male" };
-			_femaleMajor = new Character() { Gender = "female", FolderName = "female" };
-			_maleMajor = new Character() { Gender = "male", FolderName = "male" };
-			_bifemaleMajor = new Character() { Gender = "female", FolderName = "female" };
-			_bimaleMajor = new Character() { Gender = "male", FolderName = "male" };
+			_bifemale = new Character() { Gender = "female", FolderName = "nifemale" };
+			_bimale = new Character() { Gender = "male", FolderName = "nimale" };
+			_femaleMajor = new Character() { Gender = "female", FolderName = "femaleMajor" };
+			_maleMajor = new Character() { Gender = "male", FolderName = "maleMajor" };
+			_bifemaleMajor = new Character() { Gender = "female", FolderName = "bifemaleMajor" };
+			_bimaleMajor = new Character() { Gender = "male", FolderName = "bimaleMajor" };
 			foreach (Character c in new Character[] { _female, _male, _bifemale, _bimale })
 			{
 				c.AddLayer(new Clothing() { Type = "extra" });
 				c.AddLayer(new Clothing() { Type = "minor" });
-				c.AddLayer(new Clothing() { Type = "major" });
+				c.AddLayer(new Clothing() { Type = "major", Position = "legs" });
 				c.AddLayer(new Clothing() { Type = "important", Position = "upper" });
 				c.AddLayer(new Clothing() { Type = "important", Position = "lower" });
 			}
@@ -51,6 +51,21 @@ namespace UnitTests
 			_bifemale.Metadata.CrossGender = true;
 			_bimaleMajor.Metadata.CrossGender = true;
 			_bifemaleMajor.Metadata.CrossGender = true;
+			CharacterDatabase.Add(_female);
+			CharacterDatabase.Add(_male);
+			CharacterDatabase.Add(_bifemale);
+			CharacterDatabase.Add(_bimale);
+			CharacterDatabase.Add(_femaleMajor);
+			ExpressionTests.AddVariableFunction("costume");
+			ExpressionTests.AddVariableFunction("marker");
+		}
+
+		[TestCleanup]
+		public void CleanUp()
+		{
+			TriggerDatabase.Clear();
+			VariableDatabase.Clear();
+			CharacterDatabase.Clear();
 		}
 
 		[TestMethod]
@@ -420,6 +435,51 @@ namespace UnitTests
 		}
 
 		[TestMethod]
+		public void OpponentLost_Is_Target()
+		{
+			Case c = new Case("opponent_lost");
+			c.Target = _male.FolderName;
+			Assert.AreEqual("must_strip", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void OpponentLost_Is_Not_Target()
+		{
+			Case c = new Case("opponent_lost");
+			Assert.AreEqual("opponent_lost", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Stripping_Opponent_Is_Target()
+		{
+			Case c = new Case("opponent_stripping");
+			c.Target = _male.FolderName;
+			Assert.AreEqual("stripping", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Stripping_Opponent_Is_Not_Target()
+		{
+			Case c = new Case("opponent_stripping");
+			Assert.AreEqual("opponent_stripping", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Stripped_Opponent_Is_Target()
+		{
+			Case c = new Case("opponent_stripped");
+			c.Target = _male.FolderName;
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Stripped_Opponent_Is_Not_Target()
+		{
+			Case c = new Case("opponent_stripped");
+			Assert.AreEqual("opponent_stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
 		public void Stripped_Extra_Opponent()
 		{
 			Case c = new Case("stripped");
@@ -569,6 +629,13 @@ namespace UnitTests
 		{
 			Case c = new Case("finished_masturbating");
 			Assert.AreEqual("female_finished_masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void After_Masturbating_Female()
+		{
+			Case c = new Case("after_masturbating");
+			Assert.AreEqual("hand", c.GetResponseTag(_female, _male));
 		}
 
 		[TestMethod]
@@ -1750,5 +1817,420 @@ namespace UnitTests
 			Assert.AreEqual(c.AlsoPlayingTimeInStage, response.TimeInStage);
 		}
 		#endregion
+
+		[TestMethod]
+		public void ExpressionTest_Self()
+		{
+			Case response = new Case("hand")
+			{
+				Expressions =
+				{
+					new ExpressionTest("self.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("male.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_ImplicitSelf()
+		{
+			Case response = new Case("hand")
+			{
+				Expressions =
+				{
+					new ExpressionTest("costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("male.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_SelfToTarget()
+		{
+			Case response = new Case("must_strip_normal")
+			{
+				Expressions =
+				{
+					new ExpressionTest("self.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("target.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_ImplicitSelfToTarget()
+		{
+			Case response = new Case("must_strip_normal")
+			{
+				Expressions =
+				{
+					new ExpressionTest("costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("target.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_Target()
+		{
+			Case response = new Case("opponent_lost")
+			{
+				Target = _female.FolderName,
+				Expressions =
+				{
+					new ExpressionTest("target.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("self.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_OtherTarget()
+		{
+			Case response = new Case("opponent_lost")
+			{
+				Target = _bifemale.FolderName,
+				Expressions =
+				{
+					new ExpressionTest("target.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("target.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_AlsoPlaying()
+		{
+			Case response = new Case("hand")
+			{
+				Expressions =
+				{
+					new ExpressionTest("bimale.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("bimale.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_AlsoPlayingSelf()
+		{
+			Case response = new Case("hand")
+			{
+				Expressions =
+				{
+					new ExpressionTest("female.costume", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("self.costume", test.Expression);
+		}
+
+		[TestMethod]
+		public void ExpressionTest_Misc()
+		{
+			Case response = new Case("hand")
+			{
+				Expressions =
+				{
+					new ExpressionTest("background", "blah")
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Expressions.Count);
+			ExpressionTest test = response.Expressions[0];
+			Assert.AreEqual("background", test.Expression);
+		}
+
+		[TestMethod]
+		public void TargetCondition_Self_To_Target()
+		{
+			Case response = new Case("must_strip_normal")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Role = "self"
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.AreEqual("target", cond.Role);
+			Assert.AreEqual(_male.FolderName, cond.Character);
+		}
+
+		[TestMethod]
+		public void TargetCondition_SelfCharacter()
+		{
+			Case response = new Case("must_strip_normal")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Character = _male.FolderName
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.IsNull(cond.Role);
+			Assert.AreEqual(_male.FolderName, cond.Character);
+		}
+
+		[TestMethod]
+		public void TargetCondition_Target_To_Self()
+		{
+			Case response = new Case("opponent_lost")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Role = "target",
+						SaidMarker = "bob",
+						Character = _female.FolderName
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.AreEqual("self", cond.Role);
+			Assert.IsNull(cond.Character);
+		}
+
+		[TestMethod]
+		public void TargetCondition_TargetCharacter_To_Self()
+		{
+			Case response = new Case("opponent_lost")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Character = _female.FolderName,
+						SaidMarker = "bob"
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.AreEqual("self", cond.Role);
+			Assert.IsNull(cond.Character);
+		}
+
+		[TestMethod]
+		public void TargetCondition_Self_To_AlsoPlaying()
+		{
+			Case response = new Case("hand")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Role = "self"
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.AreEqual("other", cond.Role);
+			Assert.AreEqual(cond.Character, _male.FolderName);
+		}
+
+		[TestMethod]
+		public void TargetCondition_SelfCharacter_To_AlsoPlaying()
+		{
+			Case response = new Case("hand")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Character = _male.FolderName
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.IsNull(cond.Role);
+			Assert.AreEqual(cond.Character, _male.FolderName);
+		}
+
+		[TestMethod]
+		public void TargetCondition_AlsoPlaying_To_AlsoPlaying()
+		{
+			Case response = new Case("hand")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Role = "other",
+						Character = "bob",
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.AreEqual("other", cond.Role);
+			Assert.AreEqual("bob", cond.Character);
+		}
+
+		[TestMethod]
+		public void TargetCondition_AlsoPlaying_To_Self()
+		{
+			Case response = new Case("hand")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Role = "other",
+						SaidMarker = "bob",
+						Character = _female.FolderName,
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.AreEqual("self", cond.Role);
+			Assert.IsNull(cond.Character);
+		}
+
+		/// <summary>
+		/// Also Playing > Self with no conditions, so it's useless and gets deleted
+		/// </summary>
+		[TestMethod]
+		public void TargetCondition_AlsoPlaying_Delete()
+		{
+			Case response = new Case("hand")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Role = "other",
+						Character = _female.FolderName,
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(0, response.Conditions.Count);
+		}
+
+		[TestMethod]
+		public void TargetCondition_Roleless_To_Self()
+		{
+			Case response = new Case("hand")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Character = _female.FolderName,
+						SaidMarker = "bob",
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.AreEqual("self", cond.Role);
+			Assert.IsNull(cond.Character);
+		}
+
+		[TestMethod]
+		public void TargetCondition_Opponent_To_Self()
+		{
+			Case response = new Case("hand")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Role = "opp",
+						SaidMarker = "bob",
+						Character = _female.FolderName,
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.AreEqual("self", cond.Role);
+			Assert.IsNull(cond.Character);
+		}
+
+		[TestMethod]
+		public void TargetCondition_Opponent_To_Opponent()
+		{
+			Case response = new Case("hand")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Role = "other",
+						Character = "bob",
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.AreEqual("other", cond.Role);
+			Assert.AreEqual("bob", cond.Character);
+		}
+
+		[TestMethod]
+		public void TargetCondition_Roleless_To_Roleless()
+		{
+			Case response = new Case("hand")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Character = "bob",
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.IsNull(cond.Role);
+			Assert.AreEqual("bob", cond.Character);
+		}
+
+		[TestMethod]
+		public void TargetCondition_Target_To_Target()
+		{
+			Case response = new Case("male_must_strip")
+			{
+				Conditions =
+				{
+					new TargetCondition()
+					{
+						Role = "target",
+						Character = "bob",
+					}
+				}
+			}.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Conditions.Count);
+			TargetCondition cond = response.Conditions[0];
+			Assert.AreEqual("target", cond.Role);
+			Assert.AreEqual("bob", cond.Character);
+		}
 	}
 }

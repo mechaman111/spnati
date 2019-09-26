@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
 	public class WorkflowTracker : IMessageFilter
 	{
+		public static WorkflowTracker Instance { get; private set; }
+
 		private const int TrackedScreens = 10;
 
 		private LinkedList<Bitmap> _screens = new LinkedList<Bitmap>();
@@ -35,6 +34,13 @@ namespace SPNATI_Character_Editor
 			public int Top;
 			public int Right;
 			public int Bottom;
+		}
+
+		public bool Paused { get; set; }
+
+		public WorkflowTracker()
+		{
+			Instance = this;
 		}
 
 		public Bitmap Capture(enmScreenCaptureMode screenCaptureMode = enmScreenCaptureMode.Window)
@@ -76,9 +82,16 @@ namespace SPNATI_Character_Editor
 		{
 			if (m.Msg == WM_LBUTTONDOWN)
 			{
-				if (!Config.DisableWorkflowTracer)
+				if (!Config.DisableWorkflowTracer && !Paused)
 				{
-					_screens.AddLast(Capture(enmScreenCaptureMode.Window));
+					try
+					{
+						_screens.AddLast(Capture(enmScreenCaptureMode.Window));
+					}
+					catch
+					{
+						Config.DisableWorkflowTracer = true;
+					}
 					if (_screens.Count > TrackedScreens)
 					{
 						_screens.RemoveFirst();

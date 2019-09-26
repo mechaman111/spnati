@@ -16,7 +16,7 @@ namespace Desktop
 		{
 			InitializeComponent();
 
-			cboMenu.Items.AddRange(new string[] { "", "Also Playing", "Game", "Player", "Self", "Table","Target" });
+			cboMenu.Items.AddRange(new string[] { "", "Filter", "Game", "Player", "Table" });
 		}
 
 		public void SetMacro(Macro macro, IMacroEditor editor)
@@ -97,6 +97,7 @@ namespace Desktop
 		{
 			tableConditions.Data = _editor.CreateData();
 			tableConditions.Context = _editor.GetRecordContext();
+			tableConditions.SecondaryContext = _editor.GetSecondaryRecordContext();
 			tableConditions.RecordFilter = _editor.GetRecordFilter(tableConditions.Data);
 			_editor.AddSpeedButtons(tableConditions);
 			tableConditions.ApplyMacro(_macro, new Dictionary<string, string>());

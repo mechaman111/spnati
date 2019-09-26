@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace UnitTests
 {
 	[TestClass]
-	public class AnalyzerTests
+	public class AnalyzerTests : IDisposable
 	{
 		private Character _character = new Character();
 
@@ -246,6 +246,11 @@ namespace UnitTests
 			criterion.Analyzer = test;
 			report.Criteria.Add(criterion);
 			return test;
+		}
+
+		public void Dispose()
+		{
+			_character.Dispose();
 		}
 	}
 

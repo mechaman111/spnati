@@ -22,7 +22,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			var data = new List<Tuple<Character, int>>();
 			foreach (Character c in CharacterDatabase.Characters)
 			{
-				int count = c.Markers.Values.Count(m => m.Scope == MarkerScope.Public);
+				int count = c.Markers.Value.Values.Count(m => m.Scope == MarkerScope.Public);
 				if (count > 0)
 				{
 					data.Add(new Tuple<Character, int>(c, count));
