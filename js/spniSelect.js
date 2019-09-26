@@ -379,7 +379,7 @@ function updateStatusIcon(elem, status) {
  * `alt_costume` in this case has only `id` and `label` attributes.
  */
 function getCostumeOption(alt_costume, selected_costume) {
-    return $('<option>', {val: alt_costume.folder, text: 'Alternate Skin: '+alt_costume.label,
+    return $('<option>', {val: alt_costume.folder, text: 'Costume: '+alt_costume.label,
                           selected: alt_costume.folder == selected_costume})
 }
 
@@ -477,21 +477,30 @@ function updateGroupSelectScreen (ignore_bg) {
                 }
 
                 $groupCostumeSelectors[i].hide();
-                if (ALT_COSTUMES_ENABLED) {
-                    if (
-                        (!FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 0) ||
-                        (FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 1)
-                    ) {
-                        if (!FORCE_ALT_COSTUME) {
-                            $groupCostumeSelectors[i].empty().append($('<option>', {
-                                val: '',
-                                text: 'Default Skin'
-                            }));
-                        }
+                if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
+                    $groupCostumeSelectors[i].empty();
+
+                    if (!FORCE_ALT_COSTUME) {
+                        $groupCostumeSelectors[i].append($('<option>', {
+                            val: '',
+                            text: 'Default Costume'
+                        }));
+
                         opponent.alternate_costumes.forEach(function (alt) {
                             $groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
                         });
+
                         $groupCostumeSelectors[i].show();
+                    } else {
+                        opponent.alternate_costumes.some(function (alt) {
+                            if (alt.set === FORCE_ALT_COSTUME) {
+                                $groupCostumeSelectors[i]
+                                    .append(getCostumeOption(alt, opponent.selected_costume))
+                                    .prop('disabled', true)
+                                    .show();
+                                return true;
+                            }
+                        });
                     }
                 }
 

@@ -529,7 +529,13 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.status = status;
     this.first = $metaXml.find('first').text();
     this.last = $metaXml.find('last').text();
-    this.label = $metaXml.find('label').text();
+    
+    /* selectLabel shouldn't change due to e.g. alt costumes selected on
+     * the main select screen.
+     */
+    this.selectLabel = $metaXml.find('label').text();
+    this.label = this.selectLabel;
+
     this.image = $metaXml.find('pic').text();
     this.gender = $metaXml.find('gender').text();
     this.height = $metaXml.find('height').text();
@@ -588,13 +594,19 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     
     $metaXml.find('alternates').find('costume').each(function (i, elem) {
         var set = $(elem).attr('set') || 'offline';
+        var status = $(elem).attr('status') || 'offline';
         
         if (alternateCostumeSets['all'] || alternateCostumeSets[set]) {
+            if (!includedOpponentStatuses[status]) {
+                return;
+            }
+
             var costume_descriptor = {
                 'folder': $(elem).attr('folder'),
                 'label': $(elem).text(),
                 'image': $(elem).attr('img'),
-                'set': set
+                'set': set,
+                'status': status,
             };
             
             if (set === FORCE_ALT_COSTUME) {
@@ -700,6 +712,8 @@ Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
         this.selected_costume = costumeDesc.folder;
         this.selection_image = costumeDesc.folder + costumeDesc.image;
     }
+
+    this.selectionCard.update();
 };
 
 Opponent.prototype.getIntelligence = function () {
@@ -1304,6 +1318,7 @@ function loadConfigFile () {
                 console.log("Resort mode disabled.");
             }
 
+            includedOpponentStatuses.online = true;
 			$(xml).find('include-status').each(function() {
 				includedOpponentStatuses[$(this).text()] = true;
 				console.log("Including", $(this).text(), "opponents");
