@@ -260,7 +260,7 @@ function loadListingFile () {
             updateIndividualSelectScreen();
             updateSelectableGroups(0);
             updateSelectableGroups(1);
-            updateGroupSelectScreen();
+            updateGroupSelectScreen(true);
             updateSelectionVisuals();
         }
         if (outstandingLoads == 0) {
@@ -398,8 +398,12 @@ function updateIndividualSelectScreen () {
 /************************************************************
  * Loads opponents onto the group select screen based on the
  * currently selected page.
+ * 
+ * ignore_bg {boolean}: If true, skips setting up group backgrounds.
+ * This is really only necessary during initial load, when we need to
+ * update this screen despite it not actually being visible.
  ************************************************************/
-function updateGroupSelectScreen () {
+function updateGroupSelectScreen (ignore_bg) {
 	/* safety wrap around */
   if (groupPage[groupSelectScreen] < 0) {
 		/* wrap to last page */
@@ -419,34 +423,36 @@ function updateGroupSelectScreen () {
     if (group) {
         $groupNameLabel.html(group.title);
 
-        if (group.background && backgrounds[group.background]) {
-            var bg = backgrounds[group.background];
+        if (!ignore_bg) {
+            if (group.background && backgrounds[group.background]) {
+                var bg = backgrounds[group.background];
 
-            $('.group-preset-background-row').show();
-            $('#group-preset-background-label').text(bg.name);
+                $('.group-preset-background-row').show();
+                $('#group-preset-background-label').text(bg.name);
 
-            $groupBackgroundToggle.prop('checked', useGroupBackgrounds).off('change');
-            $groupBackgroundToggle.on('change', function () {
-                /* The user toggled the preset background checkbox. */
-                useGroupBackgrounds = $groupBackgroundToggle.is(':checked');
+                $groupBackgroundToggle.prop('checked', useGroupBackgrounds).off('change');
+                $groupBackgroundToggle.on('change', function () {
+                    /* The user toggled the preset background checkbox. */
+                    useGroupBackgrounds = $groupBackgroundToggle.is(':checked');
+
+                    if (useGroupBackgrounds) {
+                        bg.activateBackground();
+                    } else {
+                        optionsBackground.activateBackground();
+                    }
+
+                    save.saveSettings();
+                });
 
                 if (useGroupBackgrounds) {
                     bg.activateBackground();
-                } else {
+                }
+            } else {
+                $('.group-preset-background-row').hide();
+
+                if (useGroupBackgrounds && activeBackground.id !== optionsBackground.id) {
                     optionsBackground.activateBackground();
                 }
-
-                save.saveSettings();
-            });
-
-            if (useGroupBackgrounds) {
-                bg.activateBackground();
-            }
-        } else {
-            $('.group-preset-background-row').hide();
-
-            if (useGroupBackgrounds && activeBackground.id !== optionsBackground.id) {
-                optionsBackground.activateBackground();
             }
         }
 
