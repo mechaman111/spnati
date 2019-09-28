@@ -609,7 +609,7 @@ Opponent.prototype.clone = function() {
 }
 
 Opponent.prototype.isLoaded = function() {
-	return this.loaded;
+    return this.loaded;
 }
 
 Opponent.prototype.onSelected = function(individual) {
@@ -700,7 +700,6 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
         }
     }
     console.log("Loading alternate costume: "+this.selected_costume);
-
     $.ajax({
         type: "GET",
         url: this.selected_costume+'costume.xml',
@@ -835,7 +834,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
         }
         return;
     }
-    
 
     fetchCompressedURL('opponents/' + this.id + "/behaviour.xml")
 		/* Success callback.
