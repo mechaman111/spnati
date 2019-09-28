@@ -12,6 +12,8 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public class Behaviour : BindableObject
 	{
+		internal bool Serializing = false;
+
 		/// <summary>
 		/// Raised when a new case is added to the working cases
 		/// </summary>
@@ -95,7 +97,10 @@ namespace SPNATI_Character_Editor
 				{
 					foreach (Case theCase in trigger.Cases)
 					{
-						theCase.Tag = trigger.Id;
+						if (!Serializing)
+						{
+							theCase.Tag = trigger.Id;
+						}
 						yield return theCase;
 					}
 				}

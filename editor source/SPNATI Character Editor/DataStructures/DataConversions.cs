@@ -245,6 +245,7 @@ namespace SPNATI_Character_Editor
 			int priority = workingCase.GetPriority();
 			if (!string.IsNullOrEmpty(workingCase.Target) ||
 				!string.IsNullOrEmpty(workingCase.TargetStage) ||
+				!string.IsNullOrEmpty(workingCase.Filter) ||
 				!string.IsNullOrEmpty(workingCase.TargetHand) ||
 				!string.IsNullOrEmpty(workingCase.TargetLayers) ||
 				!string.IsNullOrEmpty(workingCase.TargetStatus) ||
@@ -261,6 +262,11 @@ namespace SPNATI_Character_Editor
 				{
 					cond.Character = workingCase.Target;
 					workingCase.Target = null;
+				}
+				if (!string.IsNullOrEmpty(workingCase.Filter))
+				{
+					cond.FilterTag = workingCase.Filter;
+					workingCase.Filter = null;
 				}
 				if (!string.IsNullOrEmpty(workingCase.TargetStage))
 				{

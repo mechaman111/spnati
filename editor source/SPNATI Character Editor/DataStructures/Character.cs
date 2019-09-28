@@ -587,6 +587,7 @@ namespace SPNATI_Character_Editor
 
 		public virtual void OnBeforeSerialize()
 		{
+			Behavior.Serializing = true;
 			Gender = Gender.ToLower();
 			Behavior.OnBeforeSerialize(this);
 			Metadata.PopulateFromCharacter(this);
@@ -595,6 +596,7 @@ namespace SPNATI_Character_Editor
 			{
 				ending.OnBeforeSerialize();
 			}
+			Behavior.Serializing = false;
 		}
 
 		public virtual void OnAfterDeserialize(string source)
