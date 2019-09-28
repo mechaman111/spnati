@@ -393,6 +393,25 @@ State.prototype.expandDialogue = function(self, target) {
     this.dialogue = expandDialogue(this.rawDialogue, self, target, this.parentCase && this.parentCase.variableBindings);
 }
 
+/**
+ * Get all possible images that can be used by this state.
+ * 
+ * @param stage {number} The stage number to use when checking alt image
+ * stage conditions, and for replacing '#' in image names.
+ * @returns {Array} An array of image names.
+ */
+State.prototype.getPossibleImages = function (stage) {
+    if (this.alt_images) {
+        return this.alt_images.filter(function () {
+            return checkStage(stage, $(this).attr('stage'));
+        }).map(function () {
+            return $(this).text().replace('#', stage);
+        }).get();
+    } else {
+        return [ this.image.replace('#', stage) ];
+    }
+}
+
 State.prototype.selectImage = function (stage) {
     if (this.alt_images) {
         var $altImages = this.alt_images.filter(function () {
@@ -1132,6 +1151,23 @@ Case.prototype.getStages = function (n_layers) {
 
         return acc;
     }, []);
+}
+
+/**
+ * Get all possible images that can be used by the States in this case.
+ * 
+ * @param stage {number} A stage number to pass to
+ * `State.prototype.getPossibleImages`.
+ * @returns {Array} An array of image names.
+ */
+Case.prototype.getPossibleImages = function (stage) {
+    var case_images = [];
+
+    this.states.forEach(function (state) {
+        Array.prototype.push.apply(case_images, state.getPossibleImages(stage));
+    });
+
+    return case_images;
 }
 
 /* Convert this case's conditions into a plain object, into a format suitable

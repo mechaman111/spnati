@@ -1051,7 +1051,7 @@ Opponent.prototype.loadXMLTriggers = function () {
             }
 
             let c = new Case($(elemQueue.shift()));
-            this.recordTargetedCase(c);
+            this.recordTargetedCase(c);            
 
             c.getStages().forEach(function (stage) {
                 var key = tag+':'+stage;
@@ -1141,44 +1141,69 @@ Opponent.prototype.loadXMLStages = function (onComplete) {
 Player.prototype.getImagesForStage = function (stage) {
     if(!this.xml) return [];
 
+    var poseSet = {};
     var imageSet = {};
     var folder = this.folders ? this.getByStage(this.folders, stage) : this.folder;
     var advPoses = this.poses;
-    var layers = this.startingLayers;
-    var selector = (stage == -1 ? 'start, stage[id=1]>case[tag=game_start]'
-                    : 'stage[id='+stage+']>case, trigger>case');
-                    
-    this.xml.find(selector).filter(function() {
-        return inInterval(stage, getRelevantStagesForTrigger($(this).parent('trigger').attr('id'), layers))
-            && checkStage(stage, $(this).attr('stage'));
-    }).each(function () {
-        var target = $(this).attr('target'), alsoPlaying = $(this).attr('alsoPlaying'),
-            filter = canonicalizeTag($(this).attr('filter'));
-        // Skip cases requiring a character that isn't present
-        if ((target === undefined || players.some(function(p) { return p.id === target; }))
-            && (alsoPlaying === undefined || players.some(function(p) { return p.id === alsoPlaying; }))
-            && (filter === undefined || players.some(function(p) { return p.hasTag(filter); })))
-        {
-            $(this).children('state').each(function (i, e) {
-                var images = $(e).children('alt-img').filter(function() {
-                    return checkStage(stage, $(this).attr('stage'));
-                }).map(function() { return $(this).text(); }).get();
-                if (images.length == 0) images = [ $(e).attr('img') ];
-                images.forEach(function(poseName) {
-                    if (!poseName) return;
-                    poseName = poseName.replace('#', stage);
-                
-                    if (poseName.startsWith('custom:')) {
-                        var key = poseName.split(':', 2)[1];
-                        var pose = advPoses[key];
-                        if (pose) pose.getUsedImages().forEach(function (img) {
-                            imageSet[img.replace('#', stage)] = true;
-                        });
-                    } else {
-                        imageSet[folder+poseName] = true;
-                    }
-                }, this);
+
+    function processCase (c) {
+        /* Skip cases requiring characters that aren't present. */
+        if (c.target && !players.some(function (p) { return p.id === c.target; })) return; 
+        if (c.alsoPlaying && !players.some(function (p) { return p.id === c.alsoPlaying; })) return;
+        if (c.filter && !players.some(function (p) { return p.hasTag(c.filter); })) return;
+
+        if (!c.counters.every(function (ctr) {
+            var count = players.countTrue(function(p) {
+                if (ctr.id && p.id !== ctr.id) return false;
+                if (ctr.tag && !p.hasTag(ctr.tag)) return false;
+
+                return true;
             });
+
+            return inInterval(count, ctr.count);
+        })) return;
+
+        /* Collate pose names into poseSet. */
+        c.getPossibleImages(stage === -1 ? 0 : stage).forEach(function (poseName) {
+            poseSet[poseName] = true;
+        });
+    }
+
+    if (stage > -1) {
+        /* Find all cases that can play within this stage, then process
+         * them.
+         */
+
+        var keySuffix = ':'+stage;
+        this.cases.forEach(function (caseList, key) {
+            if (!key.endsWith(keySuffix)) return;
+            caseList.forEach(processCase);
+        });
+    } else {
+        /* Get all poses within the game start states. */
+        this.startStates.forEach(function (state) {
+            state.getPossibleImages(0).forEach(function (poseName) {
+                poseSet[poseName] = true;
+            });
+        });
+
+        if (this.cases.has(GAME_START + ':0')) {
+            this.cases.get(GAME_START + ':0').forEach(processCase);
+        }
+    }
+
+    /* Finally, transform the set of collected pose names into a
+     * set of image file paths.
+     */
+    Object.keys(poseSet).forEach(function (poseName) {
+        if (poseName.startsWith('custom:')) {
+            var key = poseName.split(':', 2)[1];
+            var pose = advPoses[key];
+            if (pose) pose.getUsedImages().forEach(function (img) {
+                imageSet[img.replace('#', stage)] = true;
+            });
+        } else {
+            imageSet[folder + poseName] = true;
         }
     });
     
