@@ -21,6 +21,7 @@ namespace Desktop.Skinning
 		public VisualState MouseState { get; private set; }
 		[Editor("System.Windows.Forms.Design.StringCollectionEditor, System.Design, Version = 2.0.0.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a", typeof(UITypeEditor))]
 		public ObjectCollection Items { get; }
+		public string KeyMember { get; set; }
 
 		private ToolStripControlHost _controlHost;
 		private SkinnedListBox _listBox;
@@ -213,6 +214,12 @@ namespace Desktop.Skinning
 			{
 				object item = Items[i];
 				string value = GetFormattedValue(item, DisplayMember);
+				if (value.ToLower() == text)
+				{
+					SelectedIndex = i;
+					break;
+				}
+				value = GetFormattedValue(item, KeyMember);
 				if (value.ToLower() == text)
 				{
 					SelectedIndex = i;

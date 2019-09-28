@@ -439,6 +439,30 @@ namespace SPNATI_Character_Editor
 				{
 					str += " players";
 				}
+				if (!excludeTarget)
+				{
+					string roleStr = null;
+					if (!string.IsNullOrEmpty(Role))
+					{
+						switch (Role)
+						{
+							case "target":
+								str += " target";
+								break;
+							case "opp":
+								str += " opposing";
+								break;
+							case "other":
+								str += " other";
+								break;
+						}
+						roleStr = Role;
+					}
+					if (!string.IsNullOrEmpty(Character) && !excludeTarget)
+					{
+						str += $": {Character}";
+					}
+				}
 			}
 			else
 			{

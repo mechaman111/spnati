@@ -18,6 +18,8 @@ namespace SPNATI_Character_Editor
 		public StageControl()
 		{
 			InitializeComponent();
+			cboFrom.KeyMember = "Id";
+			cboTo.KeyMember = "Id";
 		}
 
 		protected override void OnSetParameters(EditControlAttribute parameters)
