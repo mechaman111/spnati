@@ -199,7 +199,10 @@ function tickForfeitTimers () {
         );
         
         saveAllTranscriptEntries();
-	}
+    } else if (gamePhase == eGamePhase.DEAL && (ANIM_TIME > 0 || GAME_DELAY > 0)) {
+        updateAllBehaviours(null, null, DEALING_CARDS);
+        saveAllTranscriptEntries();
+    }
 	
 	return false;
 }
