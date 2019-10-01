@@ -1905,7 +1905,7 @@ function showVersionModal () {
         if (ent.timestamp) {
             var date = new Date(ent.timestamp);
             var locale = window.navigator.userLanguage || window.navigator.language
-            dateCell.innerText = date.toLocaleDateString(locale, {month: 'long', day: 'numeric', year: 'numeric'});
+            dateCell.innerText = date.toLocaleString(locale, {'dateStyle': 'medium', 'timeStyle': 'short'});
         }
         
         versionCell.innerText = ent.version;
