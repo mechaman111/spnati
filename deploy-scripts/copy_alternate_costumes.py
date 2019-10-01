@@ -16,26 +16,24 @@ def main():
     listing_xml = ET.parse(osp.join(base_dir, 'opponents', 'listing.xml'))
     
     # contains tuples of (character ID, costume folder)
-    event_costumes = []
+    costumes = []
     opp_stage_counts = {}
     delete_stages = {}
     
     for opp in listing_xml.find('individuals').iter('opponent'):
         if 'status' not in opp.attrib or opp.attrib['status'] == "testing":
             meta_xml = ET.parse(osp.join(base_dir, 'opponents',  opp.text, 'meta.xml'))
-            alts = meta_xml.find('alternates')
-            
-            n_stages = int(meta_xml.find('layers').text) + 2
-            
-            if alts:
+            for alts in meta_xml.iter('alternates'):               
+                n_stages = int(meta_xml.find('layers').text) + 2
+                
                 # find any costumes in the specified event set
                 for costume in alts.iter('costume'):
-                    if costume.get('set', None) == event_set:
-                        event_costumes.append((opp.text, costume.get('folder')))
+                    if event_set == 'all' or costume.get('set', None) == event_set:
+                        costumes.append((opp.text, costume.get('folder')))
                         delete_stages[opp.text] = list(range(n_stages))
                         opp_stage_counts[opp.text] = n_stages
     
-    #for opp_id, costume_folder in event_costumes:
+    #for opp_id, costume_folder in costumes:
     #    opp_base_folder = 'opponents/'+opp_id+'/'
     #    costume_xml = ET.parse(osp.join(costume_folder, 'costume.xml'))
     #    
@@ -67,12 +65,15 @@ def main():
     os.mkdir(osp.join(base_dir, 'opponents', 'reskins'))
     
     # Copy over all event costumes.
-    for opp_id, costume_folder in event_costumes:
-        src = osp.join(copyfrom_src, costume_folder)
-        dst = osp.join(base_dir, costume_folder)
-        print("Copying: {} --> {}".format(src, dst))
-        
-        sh.copytree(src, dst)
+    for opp_id, costume_folder in costumes:
+        try:
+            src = osp.join(copyfrom_src, costume_folder)
+            dst = osp.join(base_dir, costume_folder)
+            print("Copying: {} --> {}".format(src, dst))
+            
+            sh.copytree(src, dst)
+        except FileNotFoundError:
+            print("Could not copy: {}".format(src))
 
     # Delete previously-determined stages in base folders:
     #for opp_id, stages in delete_stages.items():

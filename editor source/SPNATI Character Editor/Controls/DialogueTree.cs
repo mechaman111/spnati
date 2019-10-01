@@ -290,7 +290,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				_view.SetFilter((Case workingCase) =>
 				{
-					return workingCase.Target == key || workingCase.AlsoPlaying == key;
+					return workingCase.GetTargets().Contains(key);
 				});
 			}
 			lstDialogue.ExpandAll();
@@ -583,6 +583,11 @@ namespace SPNATI_Character_Editor.Controls
 		private void tsCollapse_Click(object sender, EventArgs e)
 		{
 			lstDialogue.CollapseAll();
+		}
+
+		private void tsExpandAll_Click(object sender, EventArgs e)
+		{
+			lstDialogue.ExpandAll();
 		}
 	}
 

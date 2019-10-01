@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1.1 at 9:58:13 PM on September 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.2 at 1:42:36 PM on October 01, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.1.1</version>
+    <version>v5.2.2</version>
     <first>Zone-tan</first>
     <last />
     <label>Zone-tan</label>
@@ -98,6 +98,15 @@
                 <condition count="2" filter="pink_hair" />
                 <state img="#-cheerful.png">We got 2 in the pink right here already! This is starting out &lt;i&gt;real nice!&lt;/i&gt;</state>
             </case>
+            <case stage="0">
+                <alternative>
+                    <condition count="3-5" filter="school_uniform" />
+                </alternative>
+                <alternative>
+                    <condition count="3-5" filter="student" />
+                </alternative>
+                <state img="#-cheerful.png" marker="top5=1">Good morning, students! My name is Miss Zone-tan, and I'm gonna teach you the top 5 ways to have fun at school!</state>
+            </case>
             <case stage="0" priority="1">
                 <test expr="~player~" value="Dave" />
                 <state img="#-shocked.png">&lt;i&gt;DAVE?! FUCKIN...&lt;/i&gt;&lt;br&gt;Oh, sorry, I mistook you for someone else...</state>
@@ -117,15 +126,6 @@
                 <state img="#-stare.png">Heehee... Stripping people naked is what I'm made for!</state>
                 <state img="#-clamorous.png">Isn't it a beautiful day for pure lust?</state>
                 <state img="#-horny.png">This will be a night of lust and temptation...</state>
-            </case>
-            <case stage="0">
-                <alternative>
-                    <condition count="3-5" filter="school_uniform" />
-                </alternative>
-                <alternative>
-                    <condition count="3-5" filter="student" />
-                </alternative>
-                <state img="#-cheerful.png" marker="top5=1">Good morning, students! My name is Miss Zone-tan, and I'm gonna teach you the top 5 ways to have fun at school!</state>
             </case>
         </trigger>
 
@@ -308,19 +308,25 @@
             <case stage="0" alsoPlaying="ryuko" notSaidMarker="ryukomeet">
                 <state img="#-awkward.png" marker="ryukomeet">Hi, Ryuko! How great to finally meet you-- err, in person!</state>
             </case>
-            <case stage="0-4" alsoPlaying="sei" alsoPlayingSaidMarker="sei_anal">
+            <case stage="0-4">
+                <condition role="other" character="sei" saidMarker="sei_anal" />
                 <state img="#-putitin.png" oneShotId="43" marker="seinal">Oh, Sei, if you come with me, I'll give you all kinds of exciting new experiences. Anal will only be the appetizer. I will absolutely &lt;i&gt;rock. Your. World&lt;/i&gt;.</state>
             </case>
             <case stage="0-4" alsoPlaying="sonya" alsoPlayingSaidMarker="commando">
                 <state img="#-wink.png" oneShotId="50" marker="sonya_commando">Hold on, you call &lt;i&gt;this&lt;/i&gt; your 'commando' mode? I'd hate to break it to you, Sonya, but your technique is lacking one key component.</state>
             </case>
-            <case stage="1" alsoPlaying="futaba" saidMarker="futaba_pro">
+            <case stage="1">
+                <condition role="self" saidMarker="futaba_pro" />
+                <condition role="other" character="futaba" />
                 <state img="#-perky.png" oneShotId="51" marker="futaba_pro2">Just keep playing, keep stripping, keep practicing... You'll be a pro in no time, just like me!</state>
             </case>
-            <case stage="1" alsoPlaying="gwen" saidMarker="gwen_spiderman">
+            <case stage="1">
+                <condition role="self" saidMarker="gwen_spiderman" />
+                <condition role="other" character="gwen" />
                 <state img="#-serene.png" oneShotId="52" marker="shad_gwen">Just to clarify: No, Gwen. Although we may be in the same line of work, Shädman and I are, in fact, &lt;i&gt;not&lt;/i&gt; the same person.</state>
             </case>
-            <case stage="1-4" alsoPlaying="kyu">
+            <case stage="1-4">
+                <condition role="other" character="kyu" />
                 <state img="#-horny.png" oneShotId="53" marker="long_and_messy">Come on, Kyu. Let's make this night &lt;i&gt;long and messy&lt;/i&gt;...!</state>
             </case>
             <case stage="0" totalRounds="0">
@@ -332,7 +338,8 @@
             <case stage="0" alsoPlaying="chiaki" priority="5">
                 <state img="#-horny.png" oneShotId="322">&lt;i&gt;Gawd&lt;/i&gt;, big titty gamer girls get me &lt;i&gt;all&lt;/i&gt; riled up... Hmhmm, nice meeting you, Chiaki!</state>
             </case>
-            <case stage="0" alsoPlaying="korra" priority="5">
+            <case stage="0" priority="5">
+                <condition role="other" character="korra" />
                 <state img="#-stroking.png" oneShotId="321">Ahhhw, you grew your hair back out, Korra...? Bummer! You were &lt;i&gt;rocking&lt;/i&gt; the bad-ass bob cut!</state>
             </case>
             <case stage="0-4" saidMarker="top5==1" priority="5">
@@ -375,7 +382,8 @@
             <case stage="0-4" totalRounds="2-" priority="1">
                 <state img="#-think.png" oneShotId="42" marker="meetnfuck">So... is this like one of those Meet'N'Fuck games, or are we really &lt;i&gt;just&lt;/i&gt; gonna strip?</state>
             </case>
-            <case stage="1-4" saidMarker="raven_regret==1">
+            <case stage="1-4">
+                <condition role="self" saidMarker="raven_regret==1" />
                 <state img="#-sad.png" marker="raven_regret=0">... I think she hates me now...</state>
                 <state img="#-sad.png" marker="raven_regret=0">...</state>
             </case>
@@ -385,7 +393,8 @@
                 <state img="#-clamorous.png">Wednesday Hump Day? Why does this have to be exclusive to Wednesdays? Every day could be Hump Day, if you so desire!</state>
                 <state img="#-pleased.png">Funny how people make up the silliest excuses to post their nudes online. Hey, if saying you're "celebrating Wednesday Hump Day" makes you feel better about yourself, I'm not complaining!</state>
             </case>
-            <case stage="2-4" notSaidMarker="strangled" priority="1">
+            <case stage="2-4" priority="1">
+                <condition role="self" notSaidMarker="strangled" />
                 <state img="#-explain.png" marker="strangled">A demon-girl like myself can survive for &lt;i&gt;centuries&lt;/i&gt;. That is, of course, if I don't get strangled to death by a tentacle-monster one day. Lord knows how close I came to that a couple of times.</state>
             </case>
             <case stage="2" oneShotId="28" priority="1">
@@ -416,6 +425,9 @@
                 <state img="#-horny.png" weight="4">~Player~ is looking at my body like he wants to run his tongue &lt;i&gt;all over&lt;/i&gt; it... Desiring to suck on my tits, then &lt;i&gt;plunge&lt;/i&gt; into me &lt;i&gt;again and again and again&lt;/i&gt;...! &lt;br&gt;What a &lt;i&gt;typical&lt;/i&gt; man, &lt;i&gt;always&lt;/i&gt; thinking about sex.</state>
                 <state img="#-horny.png" weight="4">The look on ~player~'s face says he wants to &lt;i&gt;pin me down&lt;/i&gt; right here and now. Once he's got me right where he wants, he desires to &lt;i&gt;fuck&lt;/i&gt; me, &lt;i&gt;over and over&lt;/i&gt;.&lt;br&gt;Jeez, it always has to be about sex with you guys, huh?</state>
             </case>
+            <case stage="4">
+                <state img="#-butt.png" oneShotId="1" weight="3">&lt;i&gt;Any&lt;/i&gt; excuse to show off your butt is a &lt;i&gt;good&lt;/i&gt; excuse to show off your butt!&lt;br&gt;Like what you see, ~player~...?</state>
+            </case>
         </trigger>
 
         <trigger id="must_strip">
@@ -423,6 +435,43 @@
                 <state img="demonfurious.png" marker="fulldemonloss">{b}&lt;i&gt;I will PERSONALLY deliver the creator of these cards straight to HELL!&lt;/i&gt;{!reset}</state>
                 <state img="demonfurious.png" marker="fulldemonloss">{b}&lt;i&gt;I am about to CHOKE someone to death!&lt;/i&gt;{!reset}</state>
                 <state img="demonfurious.png" marker="fulldemonloss">{b}&lt;i&gt;Whoever rigged my hand will DIE!&lt;/i&gt;{!reset}</state>
+            </case>
+            <case stage="0-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_dave1" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_dave1" />
+                <state img="#-disappointed.png">N-no! That'd be... Dave only does the camerawork, he's a &lt;i&gt;useless&lt;/i&gt; human being otherwise.</state>
+            </case>
+            <case stage="0-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_exp1" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_exp1" />
+                <state img="#-think.png">What haven't I done, Streaming-chan? You mean, like, in a sexual way...?</state>
+                <state img="#-think.png">Hm? What do you mean, Streaming-chan? You mean, like, sexually, or...?</state>
+            </case>
+            <case stage="0-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_lemmy1" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_lemmy1" />
+                <state img="#-perky.png">Oh, you know about my lovely green tentacle friend, Streaming-chan?</state>
+            </case>
+            <case stage="0-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_monsters1" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_monsters1" />
+                <state img="#-horny.png">I can always go for a tentacle monster, Nicole! They're my faaavorite!</state>
+                <state img="#-explain.png">It's not a big secret how much I love tentacle monsters! I can &lt;i&gt;really&lt;/i&gt; have a good time with them!</state>
+            </case>
+            <case stage="0-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_pride1" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_pride1" />
+                <state img="#-serene.png">Oh, I love being drawn by other artists! Zone-sama's the best, but he doesn't want to draw my fully-exposed lewd bits, for &lt;i&gt;some godforsaken&lt;/i&gt; reason...</state>
+            </case>
+            <case stage="0-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_song1" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_song1" />
+                <state img="#-awkward.png">I guess I &lt;i&gt;have&lt;/i&gt; been doing this for a while now, huh...? I'm not planning to hang up the coat quite yet, though. Not in a metaphorical sense, anyway!</state>
+            </case>
+            <case stage="0-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_worst1" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_worst1" />
+                <state img="#-stroking.png">Oh, gawd, Nicole... I swear, &lt;i&gt;you don't wanna know&lt;/i&gt;...!</state>
             </case>
             <case stage="0" alsoPlaying="futaba" alsoPlayingStage="0-1">
                 <state img="#-wink.png">Pixels? Close, Futaba, but I'm vectors the whole way through, baby!</state>
@@ -500,43 +549,6 @@
                 <state img="#-explain.png">Well, I can already see this is gonna be a lot of fun!</state>
                 <state img="#-awkward.png">Aw, it's so cute seeing how desperate you guys are for li'l ol' me.</state>
             </case>
-            <case stage="0-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_dave1" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_dave1" />
-                <state img="#-disappointed.png">N-no! That'd be... Dave only does the camerawork, he's a &lt;i&gt;useless&lt;/i&gt; human being otherwise.</state>
-            </case>
-            <case stage="0-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_exp1" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_exp1" />
-                <state img="#-think.png">What haven't I done, Streaming-chan? You mean, like, in a sexual way...?</state>
-                <state img="#-think.png">Hm? What do you mean, Streaming-chan? You mean, like, sexually, or...?</state>
-            </case>
-            <case stage="0-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_lemmy1" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_lemmy1" />
-                <state img="#-perky.png">Oh, you know about my lovely green tentacle friend, Streaming-chan?</state>
-            </case>
-            <case stage="0-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_monsters1" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_monsters1" />
-                <state img="#-horny.png">I can always go for a tentacle monster, Nicole! They're my faaavorite!</state>
-                <state img="#-explain.png">It's not a big secret how much I love tentacle monsters! I can &lt;i&gt;really&lt;/i&gt; have a good time with them!</state>
-            </case>
-            <case stage="0-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_pride1" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_pride1" />
-                <state img="#-serene.png">Oh, I love being drawn by other artists! Zone-sama's the best, but he doesn't want to draw my fully-exposed lewd bits, for &lt;i&gt;some godforsaken&lt;/i&gt; reason...</state>
-            </case>
-            <case stage="0-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_song1" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_song1" />
-                <state img="#-awkward.png">I guess I &lt;i&gt;have&lt;/i&gt; been doing this for a while now, huh...? I'm not planning to hang up the coat quite yet, though. Not in a metaphorical sense, anyway!</state>
-            </case>
-            <case stage="0-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_worst1" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_worst1" />
-                <state img="#-stroking.png">Oh, gawd, Nicole... I swear, &lt;i&gt;you don't wanna know&lt;/i&gt;...!</state>
-            </case>
             <case stage="0" timeInStage="5-" priority="0">
                 <state img="#-cheerful.png" oneShotId="56">&lt;i&gt;Finally!&lt;/i&gt; It's my turn!</state>
             </case>
@@ -573,6 +585,56 @@
             <case stage="2" saidMarker="fulldemonloss" priority="900">
                 <state img="#-zstripping.png">Err... Sorry about that, guys. I didn't mean to... Here, I'll show off my tits to make it up to you.</state>
                 <state img="#-zstripping.png">&lt;i&gt;*huff*&lt;/i&gt; Okay... I'm okay. Freeing my boobs might calm me down...</state>
+            </case>
+            <case stage="0">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_dave2" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_dave2" />
+                <state img="#-zstripping.png">I don't have a lot of fond memories when it comes to people named 'Dave'... Anyway... let's please the foot fetishists in chat, shall we?</state>
+            </case>
+            <case stage="0-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_exp2" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_exp2" />
+                <state img="#-zstripping.png">I mean, it's always been about sex for me. I guess that &lt;i&gt;is&lt;/i&gt; kind of shallow. I've never really been in any kind of long-term meaningful relationship...</state>
+            </case>
+            <case stage="0-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_lemmy2" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_lemmy2" />
+                <state img="#-zstripping.png">Aren't tentacle monsters the best, Nicole? They give such... pleasurable... &lt;i&gt;experiences&lt;/i&gt;.</state>
+            </case>
+            <case stage="0">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_monsters2" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_monsters2" />
+                <state img="#-zstripping.png">I am very easily satisfied, Nicole. I've had fun with sentient plant monsters too, for example! I guess they're kinda similar to tentacle monster... I just like things to be able to &lt;i&gt;fill some holes&lt;/i&gt;, y'know! I just want to be pleased, just like &lt;i&gt;I'm&lt;/i&gt; about to please all the foot fetishists in chat!</state>
+            </case>
+            <case stage="0-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_pride2" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_pride2" />
+                <state img="#-zstripping.png">I guess... Well, it's not &lt;i&gt;quite&lt;/i&gt; like that, because &lt;i&gt;my&lt;/i&gt; parents are perfectly happy with me being lewded to oblivion! In fact, Zone-sama encourages it!</state>
+            </case>
+            <case stage="0">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_song2" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_song2" />
+                <state img="#-zstripping.png">Well, if it pleases the viewers...! Y'know what, I'll give your audience some foot action, for those who're into that... ♫ &lt;i&gt;Foot fetishist want this encore...&lt;/i&gt; ♪</state>
+            </case>
+            <case stage="0-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_worst2" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_worst2" />
+                <state img="#-zstripping.png" marker="zone_egg">All right, if you &lt;i&gt;really&lt;/i&gt; want to know... There was this one time a girl resorted to using an &lt;i&gt;egg&lt;/i&gt; to masturbate. And no, not a jade egg or whatever, a &lt;i&gt;real hard boiled egg&lt;/i&gt;!</state>
+            </case>
+            <case stage="1-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_dave2" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_dave2" />
+                <state img="#-zstripping.png">I don't have a lot of fond memories when it comes to people named 'Dave'...</state>
+            </case>
+            <case stage="1-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_monsters2" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_monsters2" />
+                <state img="#-zstripping.png">I am very easily satisfied, Nicole. I've had fun with sentient plant monsters too, for example! I guess they're kinda similar to tentacle monster... I just like things to be able to &lt;i&gt;fill some holes&lt;/i&gt;, y'know!</state>
+            </case>
+            <case stage="1-3">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_song2" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_song2" />
+                <state img="#-zstripping.png">Well, if it pleases the viewers...! ♫ &lt;i&gt;The audience wants this encore...&lt;/i&gt; ♪</state>
             </case>
             <case stage="2" alsoPlaying="aimee" alsoPlayingStage="1-5">
                 <state img="#-zstripping.png">Now, don't start shooting off &lt;i&gt;my&lt;/i&gt; clothes like you're doing with your own, Aimee... This is my favorite sweater!</state>
@@ -618,60 +680,10 @@
                 <state img="#-zstripping.png">This one's for all the foot fetishists out there!</state>
                 <state img="#-zstripping.png">All you foot fetishists out there are gonna &lt;i&gt;love&lt;/i&gt; this one!</state>
             </case>
-            <case stage="0">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_dave2" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_dave2" />
-                <state img="#-zstripping.png">I don't have a lot of fond memories when it comes to people named 'Dave'... Anyway... let's please the foot fetishists in chat, shall we?</state>
-            </case>
-            <case stage="0-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_exp2" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_exp2" />
-                <state img="#-zstripping.png">I mean, it's always been about sex for me. I guess that &lt;i&gt;is&lt;/i&gt; kind of shallow. I've never really been in any kind of long-term meaningful relationship...</state>
-            </case>
-            <case stage="0-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_lemmy2" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_lemmy2" />
-                <state img="#-zstripping.png">Aren't tentacle monsters the best, Nicole? They give such... pleasurable... &lt;i&gt;experiences&lt;/i&gt;.</state>
-            </case>
-            <case stage="0">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_monsters2" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_monsters2" />
-                <state img="#-zstripping.png">I am very easily satisfied, Nicole. I've had fun with sentient plant monsters too, for example! I guess they're kinda similar to tentacle monster... I just like things to be able to &lt;i&gt;fill some holes&lt;/i&gt;, y'know! I just want to be pleased, just like &lt;i&gt;I'm&lt;/i&gt; about to please all the foot fetishists in chat!</state>
-            </case>
-            <case stage="0-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_pride2" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_pride2" />
-                <state img="#-zstripping.png">I guess... Well, it's not &lt;i&gt;quite&lt;/i&gt; like that, because &lt;i&gt;my&lt;/i&gt; parents are perfectly happy with me being lewded to oblivion! In fact, Zone-sama encourages it!</state>
-            </case>
-            <case stage="0">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_song2" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_song2" />
-                <state img="#-zstripping.png">Well, if it pleases the viewers...! Y'know what, I'll give your audience some foot action, for those who're into that... ♫ &lt;i&gt;Foot fetishist want this encore...&lt;/i&gt; ♪</state>
-            </case>
-            <case stage="0-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_worst2" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_worst2" />
-                <state img="#-zstripping.png" marker="zone_egg">All right, if you &lt;i&gt;really&lt;/i&gt; want to know... There was this one time a girl resorted to using an &lt;i&gt;egg&lt;/i&gt; to masturbate. And no, not a jade egg or whatever, a &lt;i&gt;real hard boiled egg&lt;/i&gt;!</state>
-            </case>
             <case stage="1">
                 <state img="#-zstripping.png">Here I come, y'all! Full of love!</state>
                 <state img="#-zstripping.png">It's a good thing I didn't go commando today... Well, it isn't a &lt;i&gt;great&lt;/i&gt; thing either, I'm just saying...</state>
                 <state img="#-zstripping.png">Time for some more skin, you filthy little perverts!</state>
-            </case>
-            <case stage="1-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_dave2" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_dave2" />
-                <state img="#-zstripping.png">I don't have a lot of fond memories when it comes to people named 'Dave'...</state>
-            </case>
-            <case stage="1-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_monsters2" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_monsters2" />
-                <state img="#-zstripping.png">I am very easily satisfied, Nicole. I've had fun with sentient plant monsters too, for example! I guess they're kinda similar to tentacle monster... I just like things to be able to &lt;i&gt;fill some holes&lt;/i&gt;, y'know!</state>
-            </case>
-            <case stage="1-3">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_song2" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_song2" />
-                <state img="#-zstripping.png">Well, if it pleases the viewers...! ♫ &lt;i&gt;The audience wants this encore...&lt;/i&gt; ♪</state>
             </case>
             <case stage="2">
                 <state img="#-zstripping.png">This just in, my tits are about to be unveiled.</state>
@@ -686,11 +698,50 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="1-4">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_exp3">
+                    <condition count="1" filter="raven" />
+                </alternative>
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_exp3">
+                    <condition count="1" filter="raven" />
+                </alternative>
+                <state img="#-sad.png" marker="raven_regret">There was this one girl I was very fond of... But I only realized how much I cared for her after I screwed it all up... I don't want to talk about it.</state>
+            </case>
             <case stage="1-4" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_exp3">
                 <state img="#-sad.png" marker="raven_regret=1">I really thought I had something special going on with Raven, but... Well, I think I should've handled that situation with a bit more subtlety, rather than...</state>
             </case>
             <case stage="1-4" alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_exp3">
                 <state img="#-sad.png" marker="raven_regret">I really thought I had something special going on with Raven, but... Well, I think I should've handled that situation with a bit more subtlety, rather than...</state>
+            </case>
+            <case stage="1-4">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_dave3" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_dave3" />
+                <state img="#-awkward.png">Awww. You sure know what to say to make me feel better, Nicole!</state>
+            </case>
+            <case stage="1-4">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_lemmy3" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_lemmy3" />
+                <state img="#-stare.png">Just come with me to my dungeon after the game, Nicole. I'll introduce you to him! Lemmy's a sweetie, he'll treat you nicely!</state>
+            </case>
+            <case stage="1-4">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_monsters3" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_monsters3" />
+                <state img="#-cheerful.png">Hah! I'd love to! We should ask Amalia to help us out with that!</state>
+            </case>
+            <case stage="1-4">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_pride3" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_pride3" />
+                <state img="#-horny.png">It's fine, girl! Hell, I wouldn't mind if you went even &lt;i&gt;more&lt;/i&gt; intimate with me...</state>
+            </case>
+            <case stage="1-4">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_song3" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_song3" />
+                <state img="#-clamorous.png">♫ &lt;i&gt;Don't have enough, would you like more? ZONE's Archive's like a candy store!&lt;/i&gt; ♪</state>
+            </case>
+            <case stage="1-4">
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_worst3" />
+                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_worst3" />
+                <state img="#-awkward.png">Eventually, the inevitable happened... It broke. The egg came out, buuut most of the shell didn't. It was horrifying. I couldn't help but laugh my ass off.</state>
             </case>
             <case stage="1" alsoPlaying="futaba" alsoPlayingStage="4-8">
                 <state img="#-cheerful.png">Hmmm... Yeah, I guess you could call it that, Futaba.</state>
@@ -735,7 +786,8 @@
                 <state img="#-horny.png">Yeah, you like that, Aimee? If you want a little taste of these toes, you just gotta ask, you know...</state>
                 <state img="#-horny.png">There, now my soft feet are &lt;i&gt;completely&lt;/i&gt; exposed... This better, Aimee?</state>
             </case>
-            <case stage="2" alsoPlaying="mulan">
+            <case stage="2">
+                <condition role="other" character="mulan" />
                 <state img="#-clamorous.png">You betcha! I love singing! I should look into doing a duet sometime... Ooooh, I should ask Lemmy! He can be a bit shy, but his voice is &lt;i&gt;buttery smooth&lt;/i&gt;.</state>
             </case>
             <case stage="2" alsoPlaying="sakura">
@@ -771,48 +823,9 @@
                 <state img="#-clamorous.png">And there you go. Boots off, see? I can follow the rules...!</state>
                 <state img="#-clamorous.png">Bye bye, cute boots. Hellooo, cute feet!</state>
             </case>
-            <case stage="1-4">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_dave3" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_dave3" />
-                <state img="#-awkward.png">Awww. You sure know what to say to make me feel better, Nicole!</state>
-            </case>
-            <case stage="1-4">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_lemmy3" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_lemmy3" />
-                <state img="#-stare.png">Just come with me to my dungeon after the game, Nicole. I'll introduce you to him! Lemmy's a sweetie, he'll treat you nicely!</state>
-            </case>
-            <case stage="1-4">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_monsters3" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_monsters3" />
-                <state img="#-cheerful.png">Hah! I'd love to! We should ask Amalia to help us out with that!</state>
-            </case>
-            <case stage="1-4">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_pride3" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_pride3" />
-                <state img="#-horny.png">It's fine, girl! Hell, I wouldn't mind if you went even &lt;i&gt;more&lt;/i&gt; intimate with me...</state>
-            </case>
-            <case stage="1-4">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_song3" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_song3" />
-                <state img="#-clamorous.png">♫ &lt;i&gt;Don't have enough, would you like more? ZONE's Archive's like a candy store!&lt;/i&gt; ♪</state>
-            </case>
-            <case stage="1-4">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_worst3" />
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_worst3" />
-                <state img="#-awkward.png">Eventually, the inevitable happened... It broke. The egg came out, buuut most of the shell didn't. It was horrifying. I couldn't help but laugh my ass off.</state>
-            </case>
             <case stage="1" totalExposed="0" priority="0">
                 <condition count="1" filter="human_male" />
                 <state img="#-horny.png">&lt;i&gt;*pfff*&lt;/i&gt;... Already getting a hard-on, ~player~? I'm not surprised, honestly.</state>
-            </case>
-            <case stage="1-4">
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="zone_exp3">
-                    <condition count="1" filter="raven" />
-                </alternative>
-                <alternative alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSayingMarker="zone_exp3">
-                    <condition count="1" filter="raven" />
-                </alternative>
-                <state img="#-sad.png" marker="raven_regret">There was this one girl I was very fond of... But I only realized how much I cared for her after I screwed it all up... I don't want to talk about it.</state>
             </case>
             <case stage="2">
                 <state img="#-stroking.png" marker="zone-sama">Everything Zone-sama makes is very arousing... Including me, of course!</state>
@@ -990,6 +1003,15 @@
             <case stage="0-6" target="mahiru" targetStage="3">
                 <state img="#-stare.png">Take all the time you need, Mahiru. In fact, please, take it slow. &lt;i&gt;Reaaaal&lt;/i&gt; slow...</state>
             </case>
+            <case stage="0-6">
+                <condition role="target" character="tharja" stage="0" />
+                <state img="#-stare.png">Oh, hey, I recognize that girl! Yeah, I have a &lt;i&gt;really&lt;/i&gt; nice figurine of her in my collection. That ass never fails to give me a &lt;i&gt;good smile&lt;/i&gt;...!</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="tharja" stage="2" />
+                <state img="#-keen.png">I don't think Tharja really minds stripping for you, ~player~... There's &lt;i&gt;definitely&lt;/i&gt; some history between you two...</state>
+                <state img="#-keen.png">Did Tharja come here just so she can strip for you, ~player~...? There's some history between the two of you, for sure.</state>
+            </case>
             <case stage="0-2" filter="heterochromia" notSaidMarker="specialeyes">
                 <state img="#-keen.png" marker="specialeyes">~Name~'s got &lt;i&gt;special&lt;/i&gt; eyes. I'm guessing she's some sort of important character in her source...</state>
                 <state img="#-keen.png" marker="specialeyes">~Name~'s got &lt;i&gt;special&lt;/i&gt; eyes. Is this what happens to you when you use Discord's Light mode...?</state>
@@ -999,6 +1021,11 @@
             </case>
             <case stage="1-4 6" filter="shy">
                 <state img="#-perky.png" oneShotId="18">Don't be shy, ~name~... Be naked instead!</state>
+            </case>
+            <case stage="1-3">
+                <alternative filter="amber_eyes" />
+                <alternative filter="red_eyes" />
+                <state img="#-smirk.png" oneShotId="300">Your eyes are giving off a delightfully devilish aura, ~name~...</state>
             </case>
             <case stage="0" alsoPlaying="amalia">
                 <state img="#-stare.png" oneShotId="75" marker="heyamalia">Hey, it's that cute forest nymph! Amalia, was it...? Well, did you enjoy our little animation?</state>
@@ -1031,11 +1058,6 @@
             </case>
             <case stage="1">
                 <state img="#-cheerful.png" oneShotId="80" weight="4">Guess who's gotta lose her pants... Not me, that's who!</state>
-            </case>
-            <case stage="1-3">
-                <alternative filter="amber_eyes" />
-                <alternative filter="red_eyes" />
-                <state img="#-smirk.png" oneShotId="300">Your eyes are giving off a delightfully devilish aura, ~name~...</state>
             </case>
             <case stage="3-4">
                 <state img="#-horny.png" oneShotId="86" weight="2">You wouldn't mind if I touch myself a little while you strip, right?</state>
@@ -1502,7 +1524,8 @@
         </trigger>
 
         <trigger id="male_removed_minor">
-            <case stage="0-6" target="pit" targetStage="3">
+            <case stage="0-6">
+                <condition role="target" character="pit" stage="3" />
                 <state img="#-wink.png">I feel like only &lt;i&gt;well-endowed&lt;/i&gt; guys would want socks that size, to use 'em as &lt;i&gt;cumsocks&lt;/i&gt;. I guess we'll find out if that's truly the case.</state>
                 <state img="#-wink.png">Considering the rest of your outfit is so &lt;i&gt;sparse&lt;/i&gt;, the only reason I can think of why you would own such big &lt;i&gt;cumsocks&lt;/i&gt; is because you're &lt;i&gt;well-endowed&lt;/i&gt;! We'll see if that holds true for you...</state>
             </case>
@@ -1515,10 +1538,12 @@
             <case stage="1-3" saidMarker="zone-tan_hamburgers">
                 <state img="#-awkward.png" oneShotId="138">I wanna bang a burger on there, cream some ketchup, let loose with some lettuce... Hmm, yeah, I wanna pound that patty good... Wait, what were we doing again...?</state>
             </case>
-            <case stage="2-4 6" saidMarker="slowburn">
+            <case stage="2-4 6">
+                <condition role="self" saidMarker="slowburn" />
                 <state img="demoncalm.png" oneShotId="143" marker="fulldemon">{b}Just don't be surprised if you find yourself being &lt;i&gt;burned slowly&lt;/i&gt; as a result...{!reset}</state>
             </case>
-            <case stage="4-6" saidMarker="manlyman">
+            <case stage="4-6">
+                <condition role="self" saidMarker="manlyman" />
                 <state img="#-sad.png" oneShotId="141">You're not a real man, ~name~...</state>
             </case>
             <case stage="0">
@@ -1536,7 +1561,8 @@
                 <state img="#-pleased.png">You should take something else off, to even it out...</state>
                 <state img="#-shocked.png">Is that really all you're gonna strip...?</state>
             </case>
-            <case stage="4-6" notSaidMarker="elastic" priority="0">
+            <case stage="4-6" priority="0">
+                <condition role="self" notSaidMarker="elastic" />
                 <state img="#-awkward.png" marker="elastic" weight="2">I sure am glad that the internal structure of us animated girls is much more &lt;i&gt;elastic&lt;/i&gt; than our real-life counterpart. Increases the survivability rate &lt;i&gt;significantly&lt;/i&gt;.</state>
             </case>
             <case stage="5-6">
@@ -1544,6 +1570,9 @@
             </case>
             <case stage="6">
                 <state img="#-stroking.png" oneShotId="144" weight="2">Draw me like one of your Zone girls...</state>
+            </case>
+            <case stage="4">
+                <state img="#-butt.png" oneShotId="2" weight="3">I'm gonna pretend I didn't see that...</state>
             </case>
         </trigger>
 
@@ -1599,7 +1628,8 @@
             <case stage="0-6" target="ryuko" targetStage="1">
                 <state img="#-smirk.png">The girl is even stripping along with you? Hmmm, what an &lt;i&gt;obedient little slave&lt;/i&gt;--&lt;br&gt;I mean, assistant.</state>
             </case>
-            <case stage="0-6" target="sonya" targetStage="5">
+            <case stage="0-6">
+                <condition role="target" character="sonya" stage="5" />
                 <state img="#-wink.png">Nice. That's a &lt;i&gt;great&lt;/i&gt; butt.</state>
             </case>
             <case stage="0-6" target="syrenne" targetStage="2">
@@ -1607,6 +1637,10 @@
             </case>
             <case stage="0-6" target="syrenne" targetStage="3">
                 <state img="#-keen.png">So, are you just removing your belt, or...?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="tharja" stage="2" />
+                <state img="#-horny.png">Even your &lt;i&gt;deepest&lt;/i&gt; desires can't be hidden from someone who watches you masturbate every night... Wanna know what gets Tharja off the most, ~player~?</state>
             </case>
             <case stage="4 6" timeInStage="4-" totalNaked="1">
                 <state img="#-bored.png" oneShotId="147">Hrmmm... How is it even &lt;i&gt;possible&lt;/i&gt; to get bored during a game of strip poker...?</state>
@@ -1732,6 +1766,11 @@
             </case>
             <case stage="6" target="sonya" targetStage="6">
                 <state img="#-smirk.png">Heehee... You're just &lt;i&gt;asking&lt;/i&gt; for trouble, aren't ya?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="tharja" stage="3" />
+                <state img="#-stare.png">It's &lt;i&gt;you&lt;/i&gt;, ~player~. You are her deepest desire. Her body goes &lt;i&gt;crazy&lt;/i&gt; when she thinks of you...</state>
+                <state img="#-stare.png">It's &lt;i&gt;you&lt;/i&gt;, ~player~. It's &lt;i&gt;your&lt;/i&gt; name she screams when she's pleasuring herself. And, I swear, I &lt;i&gt;rarely&lt;/i&gt; see someone get orgasms as &lt;i&gt;intense&lt;/i&gt; as hers!</state>
             </case>
             <case stage="0-3" saidMarker="likes_to_sing">
                 <state img="#-clamorous.png" oneShotId="155">What? I like singing a lot! And I'm good at it, too...</state>
@@ -1877,6 +1916,10 @@
             <case stage="0-6" target="mahiru" targetStage="3">
                 <state img="#-think.png">I'm curious what kind of underwear a girl like you would wear...</state>
             </case>
+            <case stage="0-6" id="11">
+                <condition role="target" character="tharja" stage="1" />
+                <state img="#-explain.png">Ooh, this is a neat little spell! I've been &lt;i&gt;dabbling&lt;/i&gt; in the dark magics lately, trying to learn this for myself. It's tricky, but I'll get there eventually!</state>
+            </case>
             <case stage="0-6" target="aimee">
                 <state img="#-shocked.png">W-wow...&lt;br&gt;What are you--...?</state>
             </case>
@@ -1928,8 +1971,22 @@
         </trigger>
 
         <trigger id="female_removed_major">
+            <case stage="0-3">
+                <alternative target="ann" targetStage="4" alsoPlaying="futaba" alsoPlayingStage="2-3" notSaidMarker="afstockings" />
+                <alternative target="futaba" targetStage="3" alsoPlaying="ann" alsoPlayingStage="3-4" notSaidMarker="afstockings" />
+                <state img="#-horny.png" marker="afstockings">Two cute girls in a pair of cute stockings! I'm almost &lt;i&gt;dreading&lt;/i&gt; the inevitable moment when you'll both have to remove them...</state>
+            </case>
             <case stage="0-6" target="futaba" targetStage="3" alsoPlaying="raven">
                 <state img="#-stroking.png">Oooh, an all-black outfit... so cute! I'm way into these kinds of goth-y styles. Just take a look at Raven: &lt;i&gt;deeelicious&lt;/i&gt;!</state>
+            </case>
+            <case stage="0-6">
+                <alternative target="nami" targetStage="4">
+                    <test expr="~background~" value="beach" />
+                </alternative>
+                <alternative target="nami" targetStage="4">
+                    <test expr="~background~" value="tiki bar" />
+                </alternative>
+                <state img="#-cheerful.png">Nice outfit, Nami! And fitting, for the location!</state>
             </case>
             <case stage="0-6" target="coco" targetStage="5">
                 <state img="#-stare.png">Oooh, you sure know how to captivate your audience, C!</state>
@@ -1999,6 +2056,11 @@
             <case stage="0-6" target="mahiru" targetStage="4">
                 <state img="#-clamorous.png">Oh, how lovely! It's a pretty thong! Honestly, I didn't expect anything less from someone who wears such a high-cut dress. You like to show off, huh?</state>
             </case>
+            <case stage="0-6">
+                <condition role="target" character="tharja" stage="2" />
+                <state img="#-wink.png">God, imagine all the possibilities when I master it... Clothes just seem like such an unnecessary obstacle... Let's get rid of it all!</state>
+                <state img="#-clamorous.png">And when I do, I'll remind humanity what it's like to live without clothes once more! That's step one towards perfect harmony!</state>
+            </case>
             <case stage="0-3" target="amalia" saidMarker="zone-tan_deciding==1">
                 <state img="#-smirk.png" oneShotId="175" marker="zone-tan_deciding=2">Are you up for a real-life do-over, Amalia?</state>
             </case>
@@ -2052,20 +2114,6 @@
             </case>
             <case stage="0-6" filter="athletic" notSaidMarker="calories" priority="0">
                 <state img="#-stroking.png" oneShotId="182" marker="calories" weight="5">Sex burns calories, ~name~. Wanna work out?</state>
-            </case>
-            <case stage="0-3">
-                <alternative target="ann" targetStage="4" alsoPlaying="futaba" alsoPlayingStage="2-3" notSaidMarker="afstockings" />
-                <alternative target="futaba" targetStage="3" alsoPlaying="ann" alsoPlayingStage="3-4" notSaidMarker="afstockings" />
-                <state img="#-horny.png" marker="afstockings">Two cute girls in a pair of cute stockings! I'm almost &lt;i&gt;dreading&lt;/i&gt; the inevitable moment when you'll both have to remove them...</state>
-            </case>
-            <case stage="0-6">
-                <alternative target="nami" targetStage="4">
-                    <test expr="~background~" value="beach" />
-                </alternative>
-                <alternative target="nami" targetStage="4">
-                    <test expr="~background~" value="tiki bar" />
-                </alternative>
-                <state img="#-cheerful.png">Nice outfit, Nami! And fitting, for the location!</state>
             </case>
             <case stage="2-6">
                 <state img="#-clamorous.png">That'll be sure to get us some views!</state>
@@ -2373,6 +2421,11 @@
                 <state img="#-perky.png">You're &lt;i&gt;really&lt;/i&gt; commited to keeping that camera around, huh?</state>
                 <state img="#-perky.png">Your bond with that camera must be &lt;i&gt;so&lt;/i&gt; strong... I'm glad you're commited to keeping it around!</state>
             </case>
+            <case stage="0-6">
+                <condition role="target" character="tharja" />
+                <state img="#-horny.png">This woman seems to be &lt;i&gt;obsessed&lt;/i&gt; with you, ~player~...! Her deepest desire is for you to use her body however you please...</state>
+                <state img="#-horny.png">One thing's for sure, ~player~: This woman is &lt;i&gt;obsessed&lt;/i&gt; with you...! She is &lt;i&gt;yearning&lt;/i&gt; for your body and your love...</state>
+            </case>
             <case stage="0-4 6" filter="princess">
                 <state img="#-stare.png" oneShotId="206">It would be a great honor if you were to bestow your breasts upon me, Your Highness!&lt;br&gt;(Translator's note: I just wanna see some tits!)</state>
             </case>
@@ -2497,6 +2550,11 @@
             <case stage="0-6" target="mahiru">
                 <state img="#-wink.png">I must admit, I figured you'd &lt;i&gt;chicken out&lt;/i&gt; at the last second. I guess you're more &lt;i&gt;daring&lt;/i&gt; than I thought...&lt;br&gt;I'll keep that in mind...</state>
                 <state img="#-cheerful.png">You're less of a &lt;i&gt;chicken&lt;/i&gt; than I feared, Mahiru. I'm glad you're sticking to your camera, and not breaking any promises!</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="tharja" />
+                <state img="#-smirk.png">Tharja and I are not all that different in that regard, I suppose.&lt;br&gt;&lt;i&gt;Eeh hee hee!&lt;/i&gt;</state>
+                <state img="#-smirk.png">That's yet &lt;i&gt;another&lt;/i&gt; thing Tharja and I have in common, I suppose.&lt;br&gt;&lt;i&gt;Eeh hee hee!&lt;/i&gt;</state>
             </case>
             <case stage="0">
                 <state img="#-wink.png">Hey... How &lt;i&gt;you&lt;/i&gt; doin'?</state>
@@ -3141,6 +3199,10 @@
             <case stage="5" target="mei">
                 <state img="#-pleased.png">Let's conduct this little experiment together, Mei! Let me know how you feel about the results...</state>
             </case>
+            <case stage="0-4">
+                <condition role="target" character="tharja" />
+                <state img="#-cheerful.png">Here you go, Tharja! Because of me, you may now masturbate in front of your biggest crush. Say "thank you, Zone-tan"!</state>
+            </case>
             <case stage="0-4" alsoPlaying="kyu" alsoPlayingStage="0-6">
                 <state img="#-shocked.png" oneShotId="245" marker="kyuwatching">Just remember:&lt;br&gt;I'm watch-- huh...?</state>
             </case>
@@ -3236,6 +3298,11 @@
             </case>
             <case stage="6" target="shego">
                 <state img="#-cheerful.png">You don't have to use that boring chair, Shego... Just sit on my lap instead!</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="tharja" />
+                <state img="#-pleased.png">You better not disappoint ~player~...! Eh, I'm not worried, seeing how &lt;i&gt;experienced&lt;/i&gt; and &lt;i&gt;skillful&lt;/i&gt; you are...</state>
+                <state img="#-perky.png">Show ~player~ what you're made of, Tharja! Here's your big chance!</state>
             </case>
             <case stage="0-4" alsoPlaying="kyu" alsoPlayingStage="0-6" saidMarker="kyuwatching">
                 <state img="#-pleased.png" oneShotId="250">You're eager, Kyu. I like that in my love fairies...</state>
@@ -3627,11 +3694,23 @@
         </trigger>
 
         <trigger id="global">
-            <case stage="3-4 6" oneShotId="18" saidMarker="fulldemonangry" priority="400">
+            <case stage="3-4 6" oneShotId="18" priority="400">
+                <condition role="self" saidMarker="fulldemonangry" />
                 <state img="#-awkward.png" marker="calmingdown">Errr... Sorry about that. I have a bit of a short temper...</state>
                 <state img="#-awkward.png" marker="calmingdown">Oopsie... Sorry, I think I might've overreacted a little.</state>
             </case>
-            <case stage="1-4 6" oneShotId="3" saidMarker="zone-tan_angry" priority="50">
+            <case stage="0-4" oneShotId="31">
+                <condition role="other" character="monika" sayingMarker="glitching-zone-tan" />
+                <state img="demoncalm.png">{b}&lt;i&gt;Oh, you like messing with me, huh, Monika...? Just be careful, or I will start messing with YOU!&lt;/i&gt;{!reset}</state>
+                <state img="demoncalm.png">{b}&lt;i&gt;What, you like screwing with me, Monika? Yeah, I know you're messing with my code...&lt;/i&gt;{!reset}</state>
+            </case>
+            <case stage="0-4" oneShotId="30" priority="100">
+                <condition role="other" character="monika" sayingMarker="glitching-zone-tan" />
+                <state img="demonfurious.png">{b}&lt;i&gt;SToP GLiTCHiNG mE Out, MOniKA!&lt;/i&gt;{!reset}</state>
+                <state img="demonfurious.png" weight="2">{b}&lt;i&gt;QUiT BUgGIng oUT mY COde, BiTcH!&lt;/i&gt;{!reset}</state>
+            </case>
+            <case stage="1-4 6" oneShotId="3" priority="50">
+                <condition role="self" saidMarker="zone-tan_angry" />
                 <state img="demoncalm.png" marker="fulldemon">{b}&lt;i&gt;And you wouldn't like me when I'm angry...&lt;/i&gt;{!reset}</state>
                 <state img="demoncalm.png" marker="fulldemon">{b}&lt;i&gt;And you don't want to know what happens when I get angry...&lt;/i&gt;{!reset}</state>
             </case>

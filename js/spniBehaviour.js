@@ -239,7 +239,7 @@ function expandTagsList(input_tags) {
  *****                  State Object Specification                *****
  **********************************************************************/
 
-function State($xml_or_state, parentCase, stage) {
+function State($xml_or_state, parentCase) {
     if ($xml_or_state instanceof State) {
         /* Shallow-copy the state: */
         for (var prop in $xml_or_state) {
@@ -257,13 +257,10 @@ function State($xml_or_state, parentCase, stage) {
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
+    this.alt_images = null;
+
     if (this.rawDialogue = $xml.children('text').html()) {
-        var $altImages = $xml.children('alt-img').filter(function() {
-            return checkStage(stage, $(this).attr('stage'));
-        });
-        if ($altImages.length > 0) {
-            this.image = $($altImages.get(getRandomNumber(0, $altImages.length))).text();
-        }
+        this.alt_images = $xml.children('alt-img');
     } else {
         this.rawDialogue = $xml.html();
     }
@@ -394,6 +391,36 @@ State.prototype.applyMarker = function (self, opp) {
 
 State.prototype.expandDialogue = function(self, target) {
     this.dialogue = expandDialogue(this.rawDialogue, self, target, this.parentCase && this.parentCase.variableBindings);
+}
+
+/**
+ * Get all possible images that can be used by this state.
+ * 
+ * @param stage {number} The stage number to use when checking alt image
+ * stage conditions, and for replacing '#' in image names.
+ * @returns {Array} An array of image names.
+ */
+State.prototype.getPossibleImages = function (stage) {
+    if (this.alt_images) {
+        return this.alt_images.filter(function () {
+            return checkStage(stage, $(this).attr('stage'));
+        }).map(function () {
+            return $(this).text().replace('#', stage);
+        }).get();
+    } else {
+        return [ this.image.replace('#', stage) ];
+    }
+}
+
+State.prototype.selectImage = function (stage) {
+    if (this.alt_images) {
+        var $altImages = this.alt_images.filter(function () {
+            return checkStage(stage, $(this).attr('stage'));
+        });
+        if ($altImages.length > 0) {
+            this.image = $($altImages.get(getRandomNumber(0, $altImages.length))).text();
+        }
+    }
 }
 
 State.prototype.applyCollectible = function (player) {
@@ -977,8 +1004,7 @@ function Condition($xml) {
  *****                  Case Object Specification                 *****
  **********************************************************************/
 
-function Case($xml, stage) {
-    // stage is current stage. Only passed to State to choose a correct image.
+function Case($xml) {
     this.stage =                    $xml.attr('stage');
     this.tag =                      $xml.attr('tag');
     this.target =                   $xml.attr("target");
@@ -1034,7 +1060,7 @@ function Case($xml, stage) {
     
     this.states = [];
     $xml.find('state').each(function (idx, elem) {
-        this.states.push(new State($(elem), this, stage));
+        this.states.push(new State($(elem), this));
     }.bind(this));
     
     this.counters = [];
@@ -1101,6 +1127,47 @@ function Case($xml, stage) {
         || this.counters.some(function(c) {
             return c.sayingMarker || c.saying;
         });
+}
+
+/**
+ * Get all stages that this Case can potentially apply to.
+ * If a `stage` condition is provided, we just rely on those. Otherwise,
+ * returns all stage numbers within the interval returned by
+ * `getRelevantStagesForTrigger`.
+ * 
+ * @returns {Array} An array of unique stage numbers that this case may apply to.
+ */
+Case.prototype.getStages = function (n_layers) {    
+    if (this.stage) {
+        var intervals = this.stage.split(/\s+/).map(parseInterval);
+    } else {
+        var intervals = [getRelevantStagesForTrigger(this.tag, n_layers)];
+    }
+    
+    return intervals.reduce(function (acc, interval) {
+        for (var i = interval.min; i <= interval.max; i++) {
+            if (acc.indexOf(i) < 0) acc.push(i);
+        }
+
+        return acc;
+    }, []);
+}
+
+/**
+ * Get all possible images that can be used by the States in this case.
+ * 
+ * @param stage {number} A stage number to pass to
+ * `State.prototype.getPossibleImages`.
+ * @returns {Array} An array of image names.
+ */
+Case.prototype.getPossibleImages = function (stage) {
+    var case_images = [];
+
+    this.states.forEach(function (state) {
+        Array.prototype.push.apply(case_images, state.getPossibleImages(stage));
+    });
+
+    return case_images;
 }
 
 /* Convert this case's conditions into a plain object, into a format suitable
@@ -1571,6 +1638,13 @@ Case.prototype.checkConditions = function (self, opp) {
     return false;
 }
 
+Case.prototype.cleanupMutableState = function () {
+    delete this.variableBindings;
+    delete this.volatileDependencies;
+    delete this.unwantedMarkers;
+    delete this.unwantedSayings;
+}
+
 Case.prototype.applyOneShot = function (player) {
     if (this.oneShotId) {
         player.oneShotCases[this.oneShotId] = true;
@@ -1589,21 +1663,14 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
         bestMatchPriority = this.chosenState.parentCase.priority + 1;
     }
 
-    /* try to find the tags/stage.
-	   .get() returns a simple array with the matched
-	   elements. .map($) converts the individual elements back to
-	   jQuery objects. */
-	var cases = [];
-    var $stage = this.xml.find('behaviour>stage[id=' + stageNum + ']');
-    if ($stage.length) {
-        cases = $stage.children('case').filter(function() {
-            return tags.indexOf($(this).attr('tag')) >= 0;
-        }).get().map($);
-    } else {
-        cases = this.xml.find('behaviour>trigger').filter(function() {
-            return tags.indexOf($(this).attr('id')) >= 0;
-        }).children('case').get().map($);
-	}
+    var cases = [];
+
+    tags.forEach(function (tag) {
+        var relCases = this.cases.get(tag+':'+stageNum) || [];
+        relCases.forEach(function (c) {
+            if (cases.indexOf(c) < 0) cases.push(c);
+        });
+    }, this);
 
     /* quick check to see if the tag exists */
     if (cases.length <= 0) {
@@ -1615,7 +1682,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
     var bestMatch = [];
     
     for (var i = 0; i < cases.length; i++) {
-        var curCase = new Case(cases[i], this.stage);
+        var curCase = cases[i];
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             (!volatileOnly || curCase.isVolatile) &&
@@ -1623,11 +1690,15 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
         {
             if (curCase.hidden) {
                 //if it's hidden, set markers and collectibles but don't actually count as a match
+                curCase.cleanupMutableState();
                 this.applyHiddenStates(curCase, opp);
                 continue;
             }
 
             if (curCase.priority > bestMatchPriority) {
+                /* Cleanup all mutable state on previous best-match cases. */
+                bestMatch.forEach(function (c) { c.cleanupMutableState(); });
+
                 bestMatch = [curCase];
                 bestMatchPriority = curCase.priority;
             } else {
@@ -1649,11 +1720,42 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
         var rnd = Math.random() * weightSum;
         for (var i = 0, x = 0; x < rnd; x += states[i++].weight);
         
-        return states[i - 1];
+        /* Clean up mutable state on cases not selected. */
+        var chosenState = states[i-1];
+        bestMatch.forEach(function (c) {
+            if (c !== chosenState.parentCase) c.cleanupMutableState();
+        });
+
+        return new State(chosenState);
     }
 
     console.log("-------------------------------------");
     return null;
+}
+
+/**
+ * Updates this Opponent's chosenState and related information.
+ * Also cleans up the previous chosenState's parent Case, if it exists.
+ */
+Opponent.prototype.updateChosenState = function (state) {
+    if (this.chosenState && this.chosenState.parentCase) {
+        this.chosenState.parentCase.cleanupMutableState();
+    }
+
+    this.chosenState = state;
+    this.stateCommitted = false;
+}
+
+/**
+ * Clears out this Opponent's previous chosenState, leaving it at null.
+ */
+Opponent.prototype.clearChosenState = function (state) {
+    if (this.chosenState && this.chosenState.parentCase) {
+        this.chosenState.parentCase.cleanupMutableState();
+    }
+
+    this.chosenState = null;
+    this.stateCommitted = false;
 }
 
 /************************************************************
@@ -1680,9 +1782,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     var state = this.findBehaviour(tags, opp, false);
 
     if (state) {
-        /* Reaction handling state... */
-        this.chosenState = state;
-        this.stateCommitted = false;
+        this.updateChosenState(state);
         this.lastUpdateTags = tags;
         
         return true;
@@ -1715,11 +1815,10 @@ Opponent.prototype.updateVolatileBehaviour = function () {
     var newState = this.findBehaviour(this.currentTags, this.currentTarget, true);
 
     if (newState) {
-        console.log("Found new volatile state for player "+this.slot+" with priority "+newState.parentCase.priority);
         /* Assign new best-match case and state. */
-        this.chosenState = newState;
-        this.stateCommitted = false;
-        
+        console.log("Found new volatile state for player "+this.slot+" with priority "+newState.parentCase.priority);
+        this.updateChosenState(newState);
+
         return true;
     } else {
         console.log("Found no volatile matches for player "+this.slot);
@@ -1736,6 +1835,8 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     if (this.stateCommitted) return;
     
     this.chosenState.expandDialogue(this, this.currentTarget);
+    this.chosenState.selectImage(this.stage);
+
     if (this.chosenState.marker) {
         this.chosenState.applyMarker(this, this.currentTarget);
     }

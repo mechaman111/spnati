@@ -537,7 +537,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		[Filter(DisplayName = "Filter (+)", GroupName = "Table", GroupOrder = 0, Description = "Filter based on table conditions. Multiple can be added", HideLabel = true)]
+		[Filter(DisplayName = "Filter (+)", GroupOrder = 0, Description = "Filter based on table conditions. Multiple can be added", HideLabel = true)]
 		[XmlOrder(390)]
 		[XmlElement("condition")]
 		[JsonProperty("counters")]
@@ -1276,6 +1276,11 @@ namespace SPNATI_Character_Editor
 					foreach (TargetCondition condition in Conditions)
 					{
 						if (!string.IsNullOrEmpty(condition.Character))
+						{
+							targeted = true;
+							break;
+						}
+						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.GetById(condition.FilterTag) != null)
 						{
 							targeted = true;
 							break;
@@ -2593,6 +2598,7 @@ namespace SPNATI_Character_Editor
 		public bool HasLegacyConditions()
 		{
 			return !string.IsNullOrEmpty(Target) ||
+				!string.IsNullOrEmpty(Filter) ||
 				!string.IsNullOrEmpty(TargetStage) ||
 				!string.IsNullOrEmpty(TargetHand) ||
 				!string.IsNullOrEmpty(TargetLayers) ||

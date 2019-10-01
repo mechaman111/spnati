@@ -493,9 +493,9 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			Case theCase = data as Case;
 			TargetCondition condition = theCase.Conditions.Find(c => c.Role == role && (character == null || c.Character == character.FolderName));
-			if (role != "self" && role != "target" && character == null && subproperty == null)
+			if (subproperty == null)
 			{
-				condition = null; //always create new filters for Also Playing roles
+				condition = null; //always create new filters for roles
 			}
 			if (condition == null)
 			{

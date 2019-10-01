@@ -800,7 +800,10 @@ function MainSelectScreenDisplay (slot) {
         $('#select-name-label-'+slot)
     );
     
+    this.altCostumeSelector = $("#main-costume-select-"+slot);
     this.selectButton = $("#select-slot-button-"+slot);
+
+    this.altCostumeSelector.on("change", this.altCostumeSelected.bind(this));
 }
 
 MainSelectScreenDisplay.prototype = Object.create(OpponentDisplay.prototype);
@@ -817,6 +820,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.selectButton.html("Select Opponent");
         this.selectButton.removeClass("smooth-button-red");
         this.selectButton.addClass("smooth-button-green");
+        this.altCostumeSelector.hide();
         return;
     }
     
@@ -825,7 +829,8 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.clearPose();
         
         this.label.html(player.label.initCap());
-        this.selectButton.attr('disabled', true).html('Loading...');
+        this.selectButton.attr('disabled', true);
+        this.updateLoadPercentage(player);
     } else {
         OpponentDisplay.prototype.update.call(this, player);
         
@@ -844,6 +849,66 @@ MainSelectScreenDisplay.prototype.update = function (player) {
                 this.imageArea.css('height', 0.8 * player.scale + '%').show();
             }.bind(this);
         }
+
+        this.altCostumeSelector.hide();
+        if (ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0) {
+            this.altCostumeSelector.empty();
+            if (!FORCE_ALT_COSTUME) {
+                this.altCostumeSelector.append($('<option>', {
+                    val: '',
+                    text: 'Default Costume'
+                }));
+
+                player.alternate_costumes.forEach(function (alt) {
+                    this.altCostumeSelector.append(getCostumeOption(alt, player.selected_costume));
+                }.bind(this));
+
+                this.altCostumeSelector.show();
+            } else {
+                player.alternate_costumes.some(function (alt) {
+                    if (alt.set === FORCE_ALT_COSTUME) {
+                        this.altCostumeSelector
+                            .append(getCostumeOption(alt, player.selected_costume))
+                            .prop('disabled', true)
+                            .show();
+                        return true;
+                    }
+                }.bind(this));
+            }
+        }
+    }
+}
+
+MainSelectScreenDisplay.prototype.altCostumeSelected = function () {
+    var opponent = players[this.slot];
+    var selectedCostume = this.altCostumeSelector.val();
+    var costumeDesc = undefined;
+
+    if (selectedCostume.length > 0) {
+        for (let i = 0; i < opponent.alternate_costumes.length; i++) {
+            if (opponent.alternate_costumes[i].folder === selectedCostume) {
+                costumeDesc = opponent.alternate_costumes[i];
+                break;
+            }
+        }
+    }
+
+    opponent.selectAlternateCostume(costumeDesc);
+    if (opponent.selected_costume) {
+        opponent.loadAlternateCostume(true);
+    } else {
+        opponent.unloadAlternateCostume();
+        opponent.onSelected(true);
+    }
+}
+
+MainSelectScreenDisplay.prototype.updateLoadPercentage = function (player) {
+    if (player.isLoaded()) return;
+
+    if (typeof player.loadProgress !== 'number' || isNaN(player.loadProgress)) {
+        this.selectButton.html('Loading...');
+    } else {
+        this.selectButton.html('Loading (' + Math.floor(player.loadProgress * 100) + '%)');
     }
 }
 
@@ -881,6 +946,8 @@ function OpponentSelectionCard (opponent) {
     this.source = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-source')));
     
     this.update();
+
+    this.mainElem.addEventListener('click', this.handleClick.bind(this));
 }
 
 OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
@@ -905,10 +972,8 @@ OpponentSelectionCard.prototype.update = function () {
     }).show();
     this.simpleImage.attr('src', this.opponent.selection_image).css('height', this.opponent.scale + '%').show();
     
-    this.label.text(this.opponent.label);
+    this.label.text(this.opponent.selectLabel);
     this.source.text(this.opponent.source);
-    
-    this.mainElem.addEventListener('click', this.handleClick.bind(this));
 }
 
 OpponentSelectionCard.prototype.clear = function () {}
@@ -1306,12 +1371,13 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     }
 
     if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
-        this.costumeSelector.empty().append($('<option>', {val: '', text: 'Default Skin'})).prop('disabled', false);
+        this.costumeSelector.empty().append($('<option>', {val: '', text: 'Default Costume'})).prop('disabled', false);
         
         opponent.alternate_costumes.forEach(function (alt) {
             this.costumeSelector.append($('<option>', {
                 val: alt.folder,
-                text: alt.label
+                text: alt.label,
+                selected: alt.folder === opponent.selected_costume
             }));
         }.bind(this));
         

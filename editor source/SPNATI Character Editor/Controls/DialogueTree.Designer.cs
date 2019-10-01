@@ -30,6 +30,7 @@
 			this.tsUnhide = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsShowHidden = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsCollapse = new System.Windows.Forms.ToolStripButton();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.cmdLegend = new Desktop.Skinning.SkinnedIcon();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
@@ -41,7 +42,7 @@
 			this.recTag = new Desktop.CommonControls.RecordField();
 			this.label40 = new Desktop.Skinning.SkinnedLabel();
 			this.recTreeTarget = new Desktop.CommonControls.RecordField();
-			this.tsCollapse = new System.Windows.Forms.ToolStripButton();
+			this.tsExpandAll = new System.Windows.Forms.ToolStripButton();
 			this.tstrDialogue.SuspendLayout();
 			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
@@ -60,7 +61,8 @@
             this.tsbtnSplit,
             this.tsbtnRemoveDialogue,
             this.tsConfig,
-            this.tsCollapse});
+            this.tsCollapse,
+            this.tsExpandAll});
 			this.tstrDialogue.Location = new System.Drawing.Point(0, 0);
 			this.tstrDialogue.Name = "tstrDialogue";
 			this.tstrDialogue.Padding = new System.Windows.Forms.Padding(2, 2, 3, 2);
@@ -179,6 +181,16 @@
 			this.tsShowHidden.Size = new System.Drawing.Size(178, 22);
 			this.tsShowHidden.Text = "Show Hidden Cases";
 			this.tsShowHidden.Click += new System.EventHandler(this.tsShowHidden_Click);
+			// 
+			// tsCollapse
+			// 
+			this.tsCollapse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsCollapse.Image = global::SPNATI_Character_Editor.Properties.Resources.CollapseAll;
+			this.tsCollapse.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsCollapse.Name = "tsCollapse";
+			this.tsCollapse.Size = new System.Drawing.Size(23, 23);
+			this.tsCollapse.Text = "Collapse all";
+			this.tsCollapse.Click += new System.EventHandler(this.tsCollapse_Click);
 			// 
 			// cmdLegend
 			// 
@@ -335,15 +347,15 @@
 			this.recTreeTarget.UseAutoComplete = true;
 			this.recTreeTarget.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recTreeTarget_RecordChanged);
 			// 
-			// tsCollapse
+			// tsExpandAll
 			// 
-			this.tsCollapse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsCollapse.Image = global::SPNATI_Character_Editor.Properties.Resources.CollapseAll;
-			this.tsCollapse.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsCollapse.Name = "tsCollapse";
-			this.tsCollapse.Size = new System.Drawing.Size(23, 23);
-			this.tsCollapse.Text = "Collapse all";
-			this.tsCollapse.Click += new System.EventHandler(this.tsCollapse_Click);
+			this.tsExpandAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsExpandAll.Image = global::SPNATI_Character_Editor.Properties.Resources.ExpandAll;
+			this.tsExpandAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsExpandAll.Name = "tsExpandAll";
+			this.tsExpandAll.Size = new System.Drawing.Size(23, 23);
+			this.tsExpandAll.Text = "Expand all";
+			this.tsExpandAll.Click += new System.EventHandler(this.tsExpandAll_Click);
 			// 
 			// DialogueTree
 			// 
@@ -398,5 +410,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton tsCollapse;
+		private System.Windows.Forms.ToolStripButton tsExpandAll;
 	}
 }

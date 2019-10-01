@@ -260,7 +260,7 @@ function loadListingFile () {
             updateIndividualSelectScreen();
             updateSelectableGroups(0);
             updateSelectableGroups(1);
-            updateGroupSelectScreen();
+            updateGroupSelectScreen(true);
             updateSelectionVisuals();
         }
         if (outstandingLoads == 0) {
@@ -379,7 +379,7 @@ function updateStatusIcon(elem, status) {
  * `alt_costume` in this case has only `id` and `label` attributes.
  */
 function getCostumeOption(alt_costume, selected_costume) {
-    return $('<option>', {val: alt_costume.folder, text: 'Alternate Skin: '+alt_costume.label,
+    return $('<option>', {val: alt_costume.folder, text: 'Costume: '+alt_costume.label,
                           selected: alt_costume.folder == selected_costume})
 }
 
@@ -398,8 +398,12 @@ function updateIndividualSelectScreen () {
 /************************************************************
  * Loads opponents onto the group select screen based on the
  * currently selected page.
+ * 
+ * ignore_bg {boolean}: If true, skips setting up group backgrounds.
+ * This is really only necessary during initial load, when we need to
+ * update this screen despite it not actually being visible.
  ************************************************************/
-function updateGroupSelectScreen () {
+function updateGroupSelectScreen (ignore_bg) {
 	/* safety wrap around */
   if (groupPage[groupSelectScreen] < 0) {
 		/* wrap to last page */
@@ -419,34 +423,36 @@ function updateGroupSelectScreen () {
     if (group) {
         $groupNameLabel.html(group.title);
 
-        if (group.background && backgrounds[group.background]) {
-            var bg = backgrounds[group.background];
+        if (!ignore_bg) {
+            if (group.background && backgrounds[group.background]) {
+                var bg = backgrounds[group.background];
 
-            $('.group-preset-background-row').show();
-            $('#group-preset-background-label').text(bg.name);
+                $('.group-preset-background-row').show();
+                $('#group-preset-background-label').text(bg.name);
 
-            $groupBackgroundToggle.prop('checked', useGroupBackgrounds).off('change');
-            $groupBackgroundToggle.on('change', function () {
-                /* The user toggled the preset background checkbox. */
-                useGroupBackgrounds = $groupBackgroundToggle.is(':checked');
+                $groupBackgroundToggle.prop('checked', useGroupBackgrounds).off('change');
+                $groupBackgroundToggle.on('change', function () {
+                    /* The user toggled the preset background checkbox. */
+                    useGroupBackgrounds = $groupBackgroundToggle.is(':checked');
+
+                    if (useGroupBackgrounds) {
+                        bg.activateBackground();
+                    } else {
+                        optionsBackground.activateBackground();
+                    }
+
+                    save.saveSettings();
+                });
 
                 if (useGroupBackgrounds) {
                     bg.activateBackground();
-                } else {
+                }
+            } else {
+                $('.group-preset-background-row').hide();
+
+                if (useGroupBackgrounds && activeBackground.id !== optionsBackground.id) {
                     optionsBackground.activateBackground();
                 }
-
-                save.saveSettings();
-            });
-
-            if (useGroupBackgrounds) {
-                bg.activateBackground();
-            }
-        } else {
-            $('.group-preset-background-row').hide();
-
-            if (useGroupBackgrounds && activeBackground.id !== optionsBackground.id) {
-                optionsBackground.activateBackground();
             }
         }
 
@@ -471,21 +477,30 @@ function updateGroupSelectScreen () {
                 }
 
                 $groupCostumeSelectors[i].hide();
-                if (ALT_COSTUMES_ENABLED) {
-                    if (
-                        (!FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 0) ||
-                        (FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 1)
-                    ) {
-                        if (!FORCE_ALT_COSTUME) {
-                            $groupCostumeSelectors[i].empty().append($('<option>', {
-                                val: '',
-                                text: 'Default Skin'
-                            }));
-                        }
+                if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
+                    $groupCostumeSelectors[i].empty();
+
+                    if (!FORCE_ALT_COSTUME) {
+                        $groupCostumeSelectors[i].append($('<option>', {
+                            val: '',
+                            text: 'Default Costume'
+                        }));
+
                         opponent.alternate_costumes.forEach(function (alt) {
                             $groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
                         });
+
                         $groupCostumeSelectors[i].show();
+                    } else {
+                        opponent.alternate_costumes.some(function (alt) {
+                            if (alt.set === FORCE_ALT_COSTUME) {
+                                $groupCostumeSelectors[i]
+                                    .append(getCostumeOption(alt, opponent.selected_costume))
+                                    .prop('disabled', true)
+                                    .show();
+                                return true;
+                            }
+                        });
                     }
                 }
 

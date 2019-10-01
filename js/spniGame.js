@@ -184,8 +184,8 @@ function loadGameScreen () {
         }
         
         if (p.startStates && p.startStates.length) {
-            p.chosenState = p.startStates[getRandomNumber(0, p.startStates.length)];
-            p.stateCommitted = false;
+            var newState = new State(p.startStates[getRandomNumber(0, p.startStates.length)]);
+            p.updateChosenState(newState);
         }
     }.bind(this));
 
@@ -503,8 +503,7 @@ function continueDealPhase () {
      */
     players.forEach(function (p) {
         if (p.chosenState) {
-            p.chosenState = null;
-            p.stateCommitted = false;
+            p.clearChosenState();
         }
     });
 
@@ -561,7 +560,7 @@ function completeRevealPhase () {
         /* inform the player */
         players.forEach(function (p) {
             if (p.chosenState) {
-                p.chosenState = null;
+                p.clearChosenState();
             }
         });
         updateAllBehaviours(null, null, PLAYERS_TIED);

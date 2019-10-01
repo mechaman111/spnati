@@ -336,7 +336,7 @@ namespace Desktop.CommonControls
 		{
 			bool newlyAdded;
 			PropertyEditControl ctl = EditRecord(result, -1, out newlyAdded);
-			ctl.Focus(); //jump to the control for immediate editing
+			ctl.SetInitialFocus(); //jump to the control for immediate editing
 			recAdd.Record = null;
 			if (macro != null)
 			{

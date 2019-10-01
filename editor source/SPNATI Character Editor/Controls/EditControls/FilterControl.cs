@@ -105,6 +105,18 @@ namespace SPNATI_Character_Editor
 			values.Add(_filter.ConsecutiveLosses);
 		}
 
+		protected override void OnSetInitialFocus()
+		{
+			if (recCharacter.Visible)
+			{
+				recCharacter.Focus();
+			}
+			else
+			{
+				base.OnSetInitialFocus();
+			}
+		}
+
 		protected override void OnBoundData()
 		{
 			tableAdvanced.Data = null;

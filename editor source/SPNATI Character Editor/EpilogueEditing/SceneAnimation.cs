@@ -44,7 +44,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			_initialState.ObjectType = SceneObjectType.Keyframe;
 			_initialState.SourceObject = obj;
-			Id = obj.Id;
+			Id = obj.Id ?? directive.DirectiveType;
 			Directive = directive;
 			Scene = scene;
 

@@ -19,12 +19,12 @@ python3 deploy-scripts/copy_backgrounds.py .public/
 # Include *.js and *.css to accommodate Monika.
 find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" -o -iname "*.woff" -o -iname "*.woff2" | tar -cT - | tar -C .public -x
 
+# Copy alternate costume files for deployment.
+python3 deploy-scripts/copy_alternate_costumes.py .public/ ./ all
+
 # Rename JS and core game CSS for cache-busting purposes.
 python3 deploy-scripts/cache_bust.py .public/
 
 python3 opponents/fill_linecount_metadata.py .public/opponents
 python opponents/gzip_dialogue.py .public/opponents/*/behaviour.xml
 python opponents/analyze_image_space.py .public/opponents
-
-# Uncomment this to copy alternate costume files for deployment.
-#python opponents/copy_event_alts.py .public/ ./ easter

@@ -358,22 +358,12 @@ Player.prototype.resetState = function () {
 	this.oneShotStates = {};
 
 	if (this.xml !== null) {
-        /* Load in the legacy "start" lines, and also
-         * initialize player.chosenState to the first listed line.
-         * This may be overridden by later updateBehaviour calls if
-         * the player has (new-style) selected or game start case lines.
-         */
-        this.startStates = this.xml.children('start').children('state').get().map(function(el) {
-            return new State($(el));
-        });
-
         /* Initialize reaction handling state. */
         this.currentTarget = null;
         this.currentTags = [];
-        this.currentPriority = -1;
         this.stateCommitted = false;
 
-		this.chosenState = this.startStates[0];
+        if (this.startStates.length > 0) this.updateChosenState(new State(this.startStates[0]));
 
         var appearance = this.default_costume;
         if (ALT_COSTUMES_ENABLED && this.alt_costume) {
@@ -529,7 +519,13 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.status = status;
     this.first = $metaXml.find('first').text();
     this.last = $metaXml.find('last').text();
-    this.label = $metaXml.find('label').text();
+    
+    /* selectLabel shouldn't change due to e.g. alt costumes selected on
+     * the main select screen.
+     */
+    this.selectLabel = $metaXml.find('label').text();
+    this.label = this.selectLabel;
+
     this.image = $metaXml.find('pic').text();
     this.gender = $metaXml.find('gender').text();
     this.height = $metaXml.find('height').text();
@@ -569,6 +565,9 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.poses = {};
     this.labelOverridden = false;
     this.pendingCollectiblePopup = null;
+
+    this.loaded = false;
+    this.loadProgress = undefined;
     
     /* baseTags stores tags that will be later used in resetState to build the
      * opponent's true tags list. It does not store implied tags.
@@ -580,6 +579,8 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.updateTags();
     this.searchTags = this.baseTags.slice();
     
+    this.cases = new Map();
+
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;
 
@@ -588,13 +589,19 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     
     $metaXml.find('alternates').find('costume').each(function (i, elem) {
         var set = $(elem).attr('set') || 'offline';
+        var status = $(elem).attr('status') || 'offline';
         
         if (alternateCostumeSets['all'] || alternateCostumeSets[set]) {
+            if (!includedOpponentStatuses[status]) {
+                return;
+            }
+
             var costume_descriptor = {
                 'folder': $(elem).attr('folder'),
                 'label': $(elem).text(),
                 'image': $(elem).attr('img'),
-                'set': set
+                'set': set,
+                'status': status,
             };
             
             if (set === FORCE_ALT_COSTUME) {
@@ -624,7 +631,7 @@ Opponent.prototype.clone = function() {
 }
 
 Opponent.prototype.isLoaded = function() {
-	return this.xml != undefined;
+    return this.loaded;
 }
 
 Opponent.prototype.onSelected = function(individual) {
@@ -700,6 +707,8 @@ Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
         this.selected_costume = costumeDesc.folder;
         this.selection_image = costumeDesc.folder + costumeDesc.image;
     }
+
+    this.selectionCard.update();
 };
 
 Opponent.prototype.getIntelligence = function () {
@@ -872,11 +881,20 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             if (this.has_collectibles) {
                 this.loadCollectibles();
             }
-
+            
             this.xml = $xml;
             this.size = $xml.find('size').text();
             this.stamina = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
+
+            /* Load in the legacy "start" lines, and also
+             * initialize player.chosenState to the first listed line.
+             * This may be overridden by later updateBehaviour calls if
+             * the player has (new-style) selected or game start case lines.
+             */
+            this.startStates = $xml.children('start').children('state').get().map(function (el) {
+                return new State($(el));
+            });
 
             this.stylesheet = null;
             
@@ -929,21 +947,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.default_costume.tags = tagsArray;
 
-            var targetedLines = {};
-
-            $xml.find('>behaviour').find('case[target], case[alsoPlaying], case[filter], case:has(condition[character]), case:has(condition[filter])').each(function() {
-                var $case = $(this);
-                $case.children('condition[character]').map(function() { return $(this).attr('character'); }).get()
-                    .concat($case.children('condition[filter]').map(function() { return $(this).attr('filter'); }).get())
-                    .concat([$case.attr('target'), $case.attr('alsoPlaying'), $case.attr('filter')]).forEach(function(id) {
-                    if (id) {
-                        if (!(id in targetedLines)) { targetedLines[id] = { count: 0, seen: new Set() }; }
-                        $(this).children('state').each(function() {
-                            targetedLines[id].seen.add(this.textContent);
-                        });
-                    }
-                }, this);
-            });
+            this.targetedLines = {};
 
             /* Clone cases with alternative conditions/test, keeping
              * one alternative set of conditions and tests on the case
@@ -973,8 +977,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 $case.remove();
             });
 
-            this.targetedLines = targetedLines;
-
             var nicknames = {};
             $xml.find('nicknames>nickname').each(function() {
                 if ($(this).attr('for') in nicknames) {
@@ -984,12 +986,27 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 }
             });
             this.nicknames = nicknames;
-            
-            if (this.selected_costume) {
-                return this.loadAlternateCostume();
+
+            if (this.xml.find('behaviour>trigger').length > 0) {
+                var cachePromise = this.loadXMLTriggers();
+            } else {
+                var cachePromise = this.loadXMLStages();
             }
-            
-            return this.onSelected(individual);
+
+            cachePromise.progress(function (completed, total) {
+                this.loadProgress = completed / total;
+                mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
+            });
+
+            cachePromise.then(function () {
+                this.loaded = true;
+
+                if (this.selected_costume) {
+                    return this.loadAlternateCostume();
+                }
+
+                return this.onSelected(individual);
+            });
 		}.bind(this))
 		/* Error callback. */
         .fail(function(err) {
@@ -998,47 +1015,221 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
         }.bind(this));
 }
 
+Opponent.prototype.recordTargetedCase = function (caseObj) {
+    var entities = new Set();
+
+    if (caseObj.target) entities.add(caseObj.target);
+    if (caseObj.alsoPlaying) entities.add(caseObj.alsoPlaying);
+    if (caseObj.filter) entities.add(caseObj.filter);
+
+    caseObj.counters.forEach(function (ctr) {
+        if (ctr.id) entities.add(ctr.id);
+        if (ctr.tag) entities.add(ctr.tag);
+    });
+
+    var lines = new Set();
+    caseObj.states.forEach(function (s) { lines.add(s.rawDialogue); });
+
+    entities.forEach(function (ent) {
+        if (!(ent in this.targetedLines)) {
+            this.targetedLines[ent] = { count: 0, seen: new Set() };
+        }
+
+        lines.forEach(Set.prototype.add, this.targetedLines[ent].seen);
+    }, this);
+}
+
+/**
+ * Traverses a new-format opponent's behaviour <trigger> elements
+ * and pre-emptively adds their Cases to the opponent's cases structure.
+ * This is done in 50ms chunks to avoid blocking the UI.
+ * 
+ * @returns {$.Promise} A Promise. Progress callbacks are fired after each
+ * chunk of work, and the promise resolves once all cases have been processed.
+ * All callbacks are fired with the Opponent as `this`.
+ */
+Opponent.prototype.loadXMLTriggers = function () {
+    var deferred = $.Deferred();
+
+    var triggerQueue = this.xml.find('behaviour>trigger').get();
+    if (triggerQueue.length <= 0) {
+        deferred.resolveWith(this, [0]);
+        return deferred.promise();
+    }
+
+    var loadItemsTotal = this.xml.find('behaviour>trigger>case').length;
+    var loadItemsCompleted = 0;
+
+    function process(tag, elemQueue) {
+        var startTS = performance.now();
+
+        /* break tasks into roughly 50ms chunks */
+        while (performance.now() - startTS < 50) {
+            while (elemQueue.length <= 0) {
+                /* If triggerQueue is empty, then we are done. */
+                if (triggerQueue.length <= 0) {
+                    return deferred.resolveWith(this, [loadItemsCompleted]);
+                }
+
+                let $trigger = $(triggerQueue.shift());
+                tag = $trigger.attr('id');
+                elemQueue = $trigger.children('case').get();
+            }
+
+            let c = new Case($(elemQueue.shift()));
+            this.recordTargetedCase(c);            
+
+            c.getStages().forEach(function (stage) {
+                var key = tag+':'+stage;
+                if (!this.cases.has(key)) {
+                    this.cases.set(key, []);
+                }
+
+                this.cases.get(key).push(c);
+            }, this);
+
+            loadItemsCompleted++;
+        }
+
+        deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal]);
+        setTimeout(process.bind(this, tag, elemQueue), 50);
+    }
+
+    let $trigger = $(triggerQueue.shift());
+    let tag = $trigger.attr('id');
+    let cases = $trigger.children('case').get();
+
+    setTimeout(process.bind(this, tag, cases), 0);
+    return deferred.promise();
+}
+
+/**
+ * Traverses an old-format opponent's behaviour <stage> elements
+ * and pre-emptively adds their Cases to the opponent's cases structure.
+ * This is done in 50ms chunks to avoid blocking the UI, similarly to
+ * loadXMLTriggers.
+ * 
+ * @returns {$.Promise} A Promise. Progress callbacks are fired after each
+ * chunk of work, and the promise resolves once all cases have been processed.
+ * All callbacks are fired with the Opponent as `this`.
+ */
+Opponent.prototype.loadXMLStages = function (onComplete) {
+    var deferred = $.Deferred();
+
+    var stageQueue = this.xml.find('behaviour>stage').get();
+    if (stageQueue.length <= 0) {
+        deferred.resolveWith(this, [0]);
+        return deferred.promise();
+    }
+
+    var loadItemsTotal = this.xml.find('behaviour>stage>case').length;
+    var loadItemsCompleted = 0;
+
+    function process(stage, elemQueue) {
+        var startTS = performance.now();
+
+        while (performance.now() - startTS < 50) {
+            while (elemQueue.length <= 0) {
+                if (stageQueue.length <= 0) {
+                    return deferred.resolveWith(this, [loadItemsCompleted]);
+                }
+
+                let $stage = $(stageQueue.shift());
+                stage = parseInt($stage.attr('id'), 10);
+                elemQueue = $stage.children('case').get();
+            }
+
+            let c = new Case($(elemQueue.shift()));
+            this.recordTargetedCase(c);
+
+            var key = c.tag + ':' + stage;
+            if (!this.cases.has(key)) {
+                this.cases.set(key, []);
+            }
+
+            this.cases.get(key).push(c);
+            
+            loadItemsCompleted++;
+        }
+
+        deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal])
+        setTimeout(process.bind(this, stage, elemQueue), 50);
+    }
+
+    let $stage = $(stageQueue.shift());
+    let stage = parseInt($stage.attr('id'), 10);
+    let cases = $stage.children('case').get();
+
+    setTimeout(process.bind(this, stage, cases), 0);
+    return deferred.promise();
+}
+
 Player.prototype.getImagesForStage = function (stage) {
     if(!this.xml) return [];
 
+    var poseSet = {};
     var imageSet = {};
     var folder = this.folders ? this.getByStage(this.folders, stage) : this.folder;
     var advPoses = this.poses;
-    var layers = this.startingLayers;
-    var selector = (stage == -1 ? 'start, stage[id=1]>case[tag=game_start]'
-                    : 'stage[id='+stage+']>case, trigger>case');
-                    
-    this.xml.find(selector).filter(function() {
-        return inInterval(stage, getRelevantStagesForTrigger($(this).parent('trigger').attr('id'), layers))
-            && checkStage(stage, $(this).attr('stage'));
-    }).each(function () {
-        var target = $(this).attr('target'), alsoPlaying = $(this).attr('alsoPlaying'),
-            filter = canonicalizeTag($(this).attr('filter'));
-        // Skip cases requiring a character that isn't present
-        if ((target === undefined || players.some(function(p) { return p.id === target; }))
-            && (alsoPlaying === undefined || players.some(function(p) { return p.id === alsoPlaying; }))
-            && (filter === undefined || players.some(function(p) { return p.hasTag(filter); })))
-        {
-            $(this).children('state').each(function (i, e) {
-                var images = $(e).children('alt-img').filter(function() {
-                    return checkStage(stage, $(this).attr('stage'));
-                }).map(function() { return $(this).text(); }).get();
-                if (images.length == 0) images = [ $(e).attr('img') ];
-                images.forEach(function(poseName) {
-                    if (!poseName) return;
-                    poseName = poseName.replace('#', stage);
-                
-                    if (poseName.startsWith('custom:')) {
-                        var key = poseName.split(':', 2)[1];
-                        var pose = advPoses[key];
-                        if (pose) pose.getUsedImages().forEach(function (img) {
-                            imageSet[img.replace('#', stage)] = true;
-                        });
-                    } else {
-                        imageSet[folder+poseName] = true;
-                    }
-                }, this);
+
+    function processCase (c) {
+        /* Skip cases requiring characters that aren't present. */
+        if (c.target && !players.some(function (p) { return p.id === c.target; })) return; 
+        if (c.alsoPlaying && !players.some(function (p) { return p.id === c.alsoPlaying; })) return;
+        if (c.filter && !players.some(function (p) { return p.hasTag(c.filter); })) return;
+
+        if (!c.counters.every(function (ctr) {
+            var count = players.countTrue(function(p) {
+                if (ctr.id && p.id !== ctr.id) return false;
+                if (ctr.tag && !p.hasTag(ctr.tag)) return false;
+
+                return true;
             });
+
+            return inInterval(count, ctr.count);
+        })) return;
+
+        /* Collate pose names into poseSet. */
+        c.getPossibleImages(stage === -1 ? 0 : stage).forEach(function (poseName) {
+            poseSet[poseName] = true;
+        });
+    }
+
+    if (stage > -1) {
+        /* Find all cases that can play within this stage, then process
+         * them.
+         */
+
+        var keySuffix = ':'+stage;
+        this.cases.forEach(function (caseList, key) {
+            if (!key.endsWith(keySuffix)) return;
+            caseList.forEach(processCase);
+        });
+    } else {
+        /* Get all poses within the game start states. */
+        this.startStates.forEach(function (state) {
+            state.getPossibleImages(0).forEach(function (poseName) {
+                poseSet[poseName] = true;
+            });
+        });
+
+        if (this.cases.has(GAME_START + ':0')) {
+            this.cases.get(GAME_START + ':0').forEach(processCase);
+        }
+    }
+
+    /* Finally, transform the set of collected pose names into a
+     * set of image file paths.
+     */
+    Object.keys(poseSet).forEach(function (poseName) {
+        if (poseName.startsWith('custom:')) {
+            var key = poseName.split(':', 2)[1];
+            var pose = advPoses[key];
+            if (pose) pose.getUsedImages().forEach(function (img) {
+                imageSet[img.replace('#', stage)] = true;
+            });
+        } else {
+            imageSet[folder + poseName] = true;
         }
     });
     
@@ -1304,6 +1495,7 @@ function loadConfigFile () {
                 console.log("Resort mode disabled.");
             }
 
+            includedOpponentStatuses.online = true;
 			$(xml).find('include-status').each(function() {
 				includedOpponentStatuses[$(this).text()] = true;
 				console.log("Including", $(this).text(), "opponents");
@@ -1890,7 +2082,7 @@ function showVersionModal () {
         if (ent.timestamp) {
             var date = new Date(ent.timestamp);
             var locale = window.navigator.userLanguage || window.navigator.language
-            dateCell.innerText = date.toLocaleDateString(locale, {month: 'long', day: 'numeric', year: 'numeric'});
+            dateCell.innerText = date.toLocaleString(locale, {'dateStyle': 'medium', 'timeStyle': 'short'});
         }
         
         versionCell.innerText = ent.version;

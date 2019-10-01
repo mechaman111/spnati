@@ -218,6 +218,15 @@ namespace Desktop.CommonControls
 			ClearBindableData();
 		}
 
+		public void SetInitialFocus()
+		{
+			OnSetInitialFocus();
+		}
+		protected virtual void OnSetInitialFocus()
+		{
+			Focus();
+		}
+
 		private void ClearBindableData()
 		{
 			object value = GetValue();
