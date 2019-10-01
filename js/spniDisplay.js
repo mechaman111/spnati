@@ -829,7 +829,8 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.clearPose();
         
         this.label.html(player.label.initCap());
-        this.selectButton.attr('disabled', true).html('Loading...');
+        this.selectButton.attr('disabled', true);
+        this.updateLoadPercentage(player);
     } else {
         OpponentDisplay.prototype.update.call(this, player);
         
@@ -898,6 +899,16 @@ MainSelectScreenDisplay.prototype.altCostumeSelected = function () {
     } else {
         opponent.unloadAlternateCostume();
         opponent.onSelected(true);
+    }
+}
+
+MainSelectScreenDisplay.prototype.updateLoadPercentage = function (player) {
+    if (player.isLoaded()) return;
+
+    if (typeof player.loadProgress !== 'number' || isNaN(player.loadProgress)) {
+        this.selectButton.html('Loading...');
+    } else {
+        this.selectButton.html('Loading (' + Math.floor(player.loadProgress * 100) + '%)');
     }
 }
 
