@@ -498,6 +498,18 @@ namespace SPNATI_Character_Editor
 				Dictionary<int, HashSet<int>> setStages = new Dictionary<int, HashSet<int>>();
 				foreach (Case triggerCase in trigger.Cases)
 				{
+					if (triggerCase.Stages.Count == 0)
+					{
+						//default to all possible stages if none is supplied
+						for (int i = 0; i < _character.Layers + Clothing.ExtraStages; i++)
+						{
+							if (TriggerDatabase.UsedInStage(trigger.Id, _character, i))
+							{
+								triggerCase.Stages.Add(i);
+							}
+						}
+					}
+
 					int id;
 					int.TryParse(triggerCase.StageId, out id);
 					if (string.IsNullOrEmpty(triggerCase.StageId))
