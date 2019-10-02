@@ -2569,7 +2569,7 @@ namespace SPNATI_Character_Editor
 			{
 				if (!string.IsNullOrEmpty(condition.Character))
 				{
-					Character c = CharacterDatabase.GetById(condition.Character);
+					Character c = CharacterDatabase.Get(condition.Character);
 					if (c != null)
 					{
 						set.Add(c.FolderName);
