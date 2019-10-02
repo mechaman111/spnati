@@ -1507,7 +1507,7 @@ Case.prototype.checkConditions = function (self, opp) {
     // filter counter targets
     if (!this.counters.every(function (ctr) {
         var matches = players.filter(function(p) {
-            return (ctr.role === undefined
+            return p && (ctr.role === undefined
                     || (ctr.role == "self" && p == self)
                     || (ctr.role == "target" && p == opp)
                     || (ctr.role == "opp" && p != self)
