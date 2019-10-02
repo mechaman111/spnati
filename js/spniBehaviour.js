@@ -408,7 +408,7 @@ State.prototype.getPossibleImages = function (stage) {
             return $(this).text().replace('#', stage);
         }).get();
     } else {
-        return [ this.image.replace('#', stage) ];
+        return this.image ? [ this.image.replace('#', stage) ] : [];
     }
 }
 
