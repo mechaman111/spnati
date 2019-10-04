@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.1 at 1:39:16 AM on September 27, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.1 at 2:43:21 AM on October 04, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.1</version>
     <first>Caulifla</first>
@@ -599,7 +599,8 @@
         </trigger>
 
         <trigger id="opponent_selected">
-            <case tag="opponent_selected" stage="0" alsoPlaying="emi" alsoPlayingSaidMarker="cauliflower">
+            <case tag="opponent_selected" stage="0">
+                <condition role="other" character="emi" saidMarker="cauliflower" />
                 <state img="#-Confident.png">It's pronounced Cauli&lt;i&gt;fla&lt;/i&gt;, girlie.</state>
                 <state img="#-Confident.png">That's Cauli&lt;i&gt;fla&lt;/i&gt; to you, missy.</state>
                 <state img="#-Distracted.png">Nah, you ain't pronouncing it right. The name's Cauli&lt;i&gt;fla&lt;/i&gt;, try to get it right from here on out.</state>
@@ -1142,6 +1143,11 @@
                 <state img="custom:SSJ Rnd 1" marker="aura_fade">Never stops feeling great to be a Saiyan.</state>
                 <state img="custom:SSJ Rnd 1" marker="aura_fade">Alright! I'm transformed. That means if you're looking for mercy, you're fresh outta luck now!</state>
             </case>
+            <case tag="hand" stage="0-5" id="30" priority="300">
+                <condition role="other" character="sakura" stage="3-7" saidMarker="makeup_alarm" sayingMarker="makeup_alarm2" />
+                <state img="#-Thinking.png">Hmm. l I guess your smell kinda gave the game away, Sakura. Made me realize that something was up. I don't see why anyone would disguise themselves as a man, so really that one took me more by surprise.</state>
+                <state img="#-Thinking.png">Hard to say...I didn't realise you were a zombie at first, I just thought you smelt funny. But Mulan's whole "Be a Man" gimmick kinda took me by surprise. So...call it a draw I guess?</state>
+            </case>
             <case tag="hand" stage="0-5" alsoPlaying="pit" alsoPlayingStage="5" alsoPlayingTimeInStage="2" alsoPlayingSayingMarker="sacredbuns">
                 <state img="#-Smug.png">Pit? I think I just started likin' ya a little bit more than I used to.</state>
                 <state img="#-Smug.png">Crotch. Ass. It's all good, Pit.</state>
@@ -1155,12 +1161,20 @@
                 <state img="#-Smug.png">Being fair, I can see why ya got that sword of yours. Need something to make sure that the boys don't mess with ya.</state>
                 <state img="#-Distracted.png">Lady. I ain't exactly hard to look at either, but ya don't see me prancing around like I'm the best thing in the universe.</state>
             </case>
-            <case tag="hand" stage="0-5" id="6" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="1">
+            <case tag="hand" stage="0-5" priority="156">
+                <condition role="other" character="mulan" stage="1" timeInStage="0" sayingMarker="honorable_others" />
+                <state img="#-Confident.png">Someone who's strong and confident sounds good. Though honestly, someone who's quiet and unsure about themself sounds perfectly fine, so long as they got a good soul in that heart of theirs.</state>
+                <state img="#-Happy.png">Honestly? Someone  who's spirited sounds great. But I think I've got a soft spot for people who ain't all sure about themselves. Who haven't realized their full potential yet.</state>
+                <state img="#-Confident.png">Well...there is this one person I know. Someone who is everything I could ever ask for. And it's gonna be so amazing to watch her grow into the person I know she can be.</state>
+            </case>
+            <case tag="hand" stage="0-5" id="6">
+                <condition role="other" character="saki_zls" stage="6" timeInStage="1" />
                 <state img="#-Laughing.png">You're some kinda dead girl walking? Huh. Well, that explains why you smelt kinda funky. Done a pretty good job hiding it though.</state>
                 <state img="#-Thinking.png">Did someone wish you back to life wrong or something? I mean, I've died to, sorta. Don't see me looking like you do right now.</state>
                 <state img="#-Happy.png">Huh. So, you've died before? Guess that makes two of us. Can't keep badasses ladies like us down!</state>
             </case>
-            <case tag="hand" stage="0" alsoPlaying="meia" alsoPlayingStage="0" totalRounds="0" alsoPlayingSaying="You're all from Earth, correct?  ">
+            <case tag="hand" stage="0" totalRounds="0">
+                <condition role="other" character="meia" stage="0" saying="You're all from Earth, correct?  " />
                 <state img="#-Confident.png">Huh? I sure ain't from Earth, lady. I'm A Saiyan, from planet Sadala. Seems you ain't too familiar with us.</state>
             </case>
             <case tag="hand" stage="0-5" id="13" totalRounds="2">
@@ -1232,7 +1246,9 @@
                 <condition role="other" character="jessie" stage="3-5" sayingMarker="JessieQA_SexPosition" />
                 <state img="#-Thinking.png">Positions, huh? Hmm. On top, I guess. Controlling the action seems like the most important thing.</state>
             </case>
-            <case tag="hand" stage="1" alsoPlaying="saki_zls" timeInStage="0">
+            <case tag="hand" stage="1">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="saki_zls" />
                 <state img="#-Combat.png">Not a damn chance! And I can tell that you ain't either! Hope you're ready girl, 'cause you're in for the fight of your life when ya tangle with me.</state>
                 <state img="#-Laughing2.png">Ha! You think I'd run from some stupid game like this? As if! I'm a Saiyan, I don't back down from nothing!</state>
                 <state img="#-Laughing2.png">Same goes for you, Sacky. But this joint is only big enough for one punk. Ya better be ready for what I got in store for ya!</state>
@@ -1296,24 +1312,28 @@
         </trigger>
 
         <trigger id="must_strip">
-            <case tag="must_strip" stage="1" alsoPlaying="emi" alsoPlayingNotSaidMarker="pirate" priority="500">
+            <case tag="must_strip" stage="1" priority="500">
+                <condition role="other" character="emi" notSaidMarker="pirate" />
                 <state img="#-Meditating.png">Alright cool, just hold off on the cooking stuff for a second. Trying to focus on something here.</state>
                 <state img="#-Meditating.png">Shame. 'Cause I might need a few calories after this...</state>
                 <state img="#-Meditating.png">The words delicate and Caulifla don't really go together if ya ask me.</state>
             </case>
-            <case tag="must_strip" stage="0" alsoPlaying="meia" alsoPlayingStage="0-5" alsoPlayingSaying="alien life">
+            <case tag="must_strip" stage="0">
+                <condition role="other" character="meia" stage="0-5" saying="alien life" />
                 <state img="#-Confident.png">Well blue, what can I say? I guess I just look kinda like you do.</state>
                 <state img="#-Smug.png">Heh. Well we've certainly got our differences, humans and Saiyans. Amongst other things, I can change my hair color on the spot. Think I'd suit your shade of blue?</state>
                 <state img="#-Bored.png">Tch. What, am I not good enough for ya? Only interested if I've got green skin and tentacles coming out of interesting places?</state>
                 <state img="#-Distracted.png">Plenty of life out there that doesn't look like you or I do. Sounds like you need to get out and about more often, go see what there is to see.</state>
                 <state img="#-Happy.png">Heh. Well, there's one or two differences between Saiyans and humans from what I've seen. Some of 'em a little bigger than ya might expect.</state>
             </case>
-            <case tag="must_strip" stage="0" alsoPlaying="meia" alsoPlayingStage="0-5" alsoPlayingSaying="inspect your anatomy">
+            <case tag="must_strip" stage="0">
+                <condition role="other" character="meia" stage="0-5" saying="inspect your anatomy" />
                 <state img="#-Bored.png">"Inspect my anatomy"? Sorry lady, I don't swing that way. 'Specially not to people who speak to me like that.</state>
                 <state img="#-Angry.png">Psh. Sure, whatever ya say. &lt;i&gt;(Wonder if socking her in the stomach would count as a close enough encounter.)&lt;/i&gt;</state>
                 <state img="#-Angry.png">You might be disappointed there, body-suit. I don't let just anyone go about inspecting my anatomy as they so please. Not without them getting punched in the mouth.</state>
             </case>
-            <case tag="must_strip" stage="0" alsoPlaying="emi" alsoPlayingNotSaidMarker="cauliflower" priority="141">
+            <case tag="must_strip" stage="0" priority="141">
+                <condition role="other" character="emi" notSaidMarker="cauliflower" />
                 <state img="#-Confident.png">It's pronounced Cauli&lt;i&gt;fla&lt;/i&gt;, girlie.</state>
                 <state img="#-Confident.png">That's Cauli&lt;i&gt;fla&lt;/i&gt; to you, missy.</state>
                 <state img="#-Distracted.png">Nah, you ain't pronouncing it right. The name's Cauli&lt;i&gt;fla&lt;/i&gt;, try to get it right from here on out.</state>
@@ -1323,11 +1343,6 @@
                 <state img="#-Distracted.png">A dragon what now? Cosplay? I don't know what one of them is, girlie.</state>
                 <state img="#-Bored.png">What are you babbling about dragon balls for? You wanna make a wish or something, get in line. I've got stuff I want to, you're just gonna have to wait.</state>
                 <state img="#-Combat.png">What? Play? I ain't playing around here, girlie. I came to this place to win!</state>
-            </case>
-            <case tag="must_strip" stage="0" alsoPlaying="saki_zls">
-                <state img="#-Smug.png">Heh. Just a little harmless smack talking. Wouldn't be much of a game without it. Why, can't ya handle it?</state>
-                <state img="#-Laughing2.png">Oh come on, I took ya for the kinda person who'd be all up for a bit early game trash talk. You gotta be tougher than that, right?</state>
-                <state img="#-Happy.png">What, you ain't a fan of trash talk? Come on, hit me back with something! Make this showdown interesting at least.</state>
             </case>
             <case tag="must_strip" stage="1" alsoPlaying="mahiru">
                 <state img="#-Meditating.png">Hey, Mahiru. That takes pictures, right? You're gonna want to take some in just a second.</state>
@@ -1555,7 +1570,8 @@
         </trigger>
 
         <trigger id="stripping">
-            <case tag="stripping" stage="0" alsoPlaying="emi" alsoPlayingNotSaidMarker="pirate" priority="500">
+            <case tag="stripping" stage="0" priority="500">
+                <condition role="other" character="emi" notSaidMarker="pirate" />
                 <state img="#-Stripping.png">Hmm? Oh, you're talking about Earth food? Alright, now you've got my attention.</state>
                 <state img="#-Stripping.png">Oh I see, so there's some kinda Earth food that sounds a lot like my name. Might just be interested in trying whatever it is.</state>
                 <state img="#-Stripping.png">Ooh, is that right? I wouldn't mind getting me some of this Earth cooking of yours.</state>
@@ -1580,10 +1596,11 @@
                 <state img="#-Stripping.png">No idea who this Cloud person is. Doesn't sound like a Saiyan name to me, but if he's got good hair he sounds okay in my book.</state>
                 <state img="#-Stripping.png">Hmm. Can't say I hate it when people compliment my hair. Sounds like you're trying to get into my good graces, kid. That's pretty smart of ya.</state>
             </case>
-            <case tag="stripping" stage="0" alsoPlaying="saki_zls">
-                <state img="#-Stripping.png">Okay. I'm listening. It's Caulif&lt;i&gt;la&lt;/i&gt; by the way, you've gone and gotten that wrong twice now.</state>
+            <case tag="stripping" stage="0">
+                <condition role="other" character="saki_zls" />
+                <state img="#-Stripping.png">Okay. I'm listening. It's Cauli&lt;i&gt;fla&lt;/i&gt; by the way, you've gone and gotten that wrong twice now.</state>
                 <state img="#-Stripping.png">Uh huh. Go on...</state>
-                <state img="#-Stripping.png">Yuh huh. By the way, the name's Caulifl&lt;i&gt;la&lt;/i&gt;. You keep pronouncing it some other weird way.</state>
+                <state img="#-Stripping.png">Yuh huh. By the way, the name's Caulif&lt;i&gt;fla&lt;/i&gt;. You keep pronouncing it some other weird way.</state>
                 <state img="#-Stripping.png">Kamikaze, huh? That name probably means something different to me than it does you, but go on...</state>
                 <state img="#-Stripping.png">Sounds fun. Reminds me of how I first started out. Before I came to own half a city and all.</state>
             </case>
@@ -1671,7 +1688,8 @@
         </trigger>
 
         <trigger id="stripped">
-            <case tag="stripped" stage="1" alsoPlaying="emi" alsoPlayingNotSaidMarker="pirate" priority="500">
+            <case tag="stripped" stage="1" priority="500">
+                <condition role="other" character="emi" notSaidMarker="pirate" />
                 <state img="#-Stripped.png">&lt;i&gt;Hmm&lt;/i&gt;. You're really speaking my language here. Emi, wasn't it? I think we might just have a thing or two to talk about.</state>
                 <state img="#-Stripped.png">&lt;i&gt;Mmm&lt;/i&gt;. No idea what any of this stuff is Emi, but you make it sound &lt;i&gt;real&lt;/i&gt; tasty.</state>
                 <state img="#-Stripped.png">Well, well, can't say I'd turn my nose up at some genuine home cooking. Maybe you can show off these tricks of yours after the game?</state>
@@ -1681,7 +1699,8 @@
                 <state img="#-Stripped.png">Ah, don't worry your pretty little self about it. I'm sure things'll pick up at some point.</state>
                 <state img="#-Stripped.png">Why dontcha throw a hand or two then, Nugi. Give me something to think about.</state>
             </case>
-            <case tag="stripped" stage="5" alsoPlaying="emi" alsoPlayingNotSaidMarker="pirate">
+            <case tag="stripped" stage="5">
+                <condition role="other" character="emi" notSaidMarker="pirate" />
                 <state img="#-Stripped.png">Hmm. Cute. Can't say that's at the top of my list of concerns right now.</state>
                 <state img="#-Distracted.png">Yeah. Can't say I see any point to it either. It's just gonna grow back again, right?</state>
                 <state img="#-Distracted.png">Yeah. Plus there's that rumor going around that it don't ever grow back if ya shave it. Least I heard that's what happens sometimes.</state>
@@ -1703,7 +1722,8 @@
                 <state img="#-Stripped.png">Heh heh. You'd be surprised, Pitsqueak. Gotta be careful though, hair might tangle around those pretty little wings of yours if ya get too powerful.</state>
                 <state img="#-Stripped.png">Yeah, and maybe your cute little wings will turn gold to. I reckon that could look pretty good.</state>
             </case>
-            <case tag="stripped" stage="1" alsoPlaying="saki_zls">
+            <case tag="stripped" stage="1">
+                <condition role="other" character="saki_zls" />
                 <state img="#-Laughing2.png">Hahahaa! See, that's more like it! I like your attitude, maybe after we've gone a round or two, we could be friends. What'ya say?</state>
                 <state img="#-Combat.png">Ha! Gotta admit, you're the best challenge I've had all day. I'm game for a fight if you are, so long as ya think ya can handle it.</state>
                 <state img="#-Happy.png">Finally! I've met a human who isn't a total pushover. I like ya Saki, throwing down with you is gonna be a whole heap of fun!</state>
@@ -1722,7 +1742,8 @@
                 <state img="custom:SSJ">Well, see, I know this guy. And he went and taught me how to pull off this nice little trick right here.</state>
                 <state img="custom:SSJ">It's my true power unleahed, that's what this is! And let me tell ya, there ain't many fighters that are on my level.</state>
             </case>
-            <case tag="stripped" stage="2" alsoPlaying="saki_zls">
+            <case tag="stripped" stage="2">
+                <condition role="other" character="saki_zls" />
                 <state img="custom:SSJ">Yankee? I ain't no Yankee whatever that is, I'm a Saiyan! And us Saiyans got this little trick called transformation. Pretty cool, huh?</state>
             </case>
             <case tag="stripped" stage="3" alsoPlaying="nami">
@@ -1971,6 +1992,12 @@
                 <state img="#-Stretching.png">Hmm. One one hand, kinda like the thought of having a camera on me. What I don't like is the idea of this stuff ending up on Sadala somehow.</state>
                 <state img="#-Annoyed.png">Hey, is this channel thingy of yours showing solely on Earth? Last thing I need is the criminal underbelly of Sadala catching this stuff. Gonna take a &lt;i&gt;lot&lt;/i&gt; of punching people before I hear the end of this.</state>
             </case>
+            <case tag="female_must_strip" stage="0-5" priority="381">
+                <condition role="target" character="meia" stage="2" />
+                <state img="#-Confident.png" marker="Sixth_Universe">Hey Meia, can you tell me which universe you and your Mejarans are from? I'm guessing it ain't the Sixth Universe, though I won't know for sure unless I ask.</state>
+                <state img="#-Happy.png" marker="Sixth_Universe">Hey, Meia, got a question. Which universe are you and your crew from? I'm guessing the Seventh or the Sixth, but I ain't sure which.</state>
+                <state img="#-Thinking.png" marker="Sixth_Universe">Hmm. Y'know, between your scouter and armor, I'm guessing that you ain't from the Sixth Universe, Meia. Could be from the Seventh, though I don't know if any other universes have humans.</state>
+            </case>
             <case tag="female_must_strip" stage="0-3" target="akko" targetStage="1">
                 <state img="#-Confident.png">Illusions like yours could make for a useful technique. Posing as someone I knew to sneak up on me unawares? Good way to get a shot in if I wasn't being careful.</state>
                 <state img="#-Thinking.png">Hmm...your disguises look pretty convincing. But...you do still feel like you, energy-wise. Disguise your energy somehow, and that'd make for a hard technique to deal with.</state>
@@ -1982,7 +2009,8 @@
                 <state img="#-Stretching.png">Smells like a garden in here. You sure love your greenery, lady.</state>
                 <state img="#-Confident.png">Heh. You seem kinda interesting. Your battle power seems a bit weedy though.</state>
             </case>
-            <case tag="female_must_strip" stage="0-3" target="chun-li" targetStage="2">
+            <case tag="female_must_strip" stage="0-3">
+                <condition role="target" character="chun-li" stage="2" />
                 <state img="#-Confident.png">That's your third strike right there, Chun-Li. Whatcha got for us then, hmm?</state>
                 <state img="#-Happy.png">Looks like you're on your third strike. You got some special moment planned for this round?</state>
                 <state img="#-Laughing.png">You weren't gonna parry that hit away.</state>
@@ -2060,7 +2088,8 @@
                 <state img="#-Smug.png">Well seems that you've just ran outta luck, Leggy. What's with the machine ya got there?</state>
                 <state img="#-Confident.png">Well unless you've got any tricks up your fluffy little sleeves, seems like that's game over for ya.</state>
             </case>
-            <case tag="female_must_strip" stage="0-5" target="meia" targetStage="0">
+            <case tag="female_must_strip" stage="0-5">
+                <condition role="target" character="meia" stage="0" />
                 <state img="#-Confident.png">Who are you, some kinda human space warrior? Whatever you're supposed to be, you don't exactly look happy about being here.</state>
                 <state img="#-Laughing.png">Wait, do some humans live in space? I thought they all lived on just one planet or something strange like that.</state>
                 <state img="#-Smug.png">Hmm. Seems you're taking this seriously. Little too seriously maybe. We're supposed to be having fun here, y'know?</state>
@@ -2140,6 +2169,12 @@
                 <state img="#-Happy.png">Gonna take a wild guess and say you're gonna whip that bra of yours off. Think I'm gonna enjoy getting a better look at those boobs of yours.</state>
                 <state img="#-Happy.png">Which option we going with now, Erufuda? Your pants or your bra? I know which one I'm gonna enjoy the most.</state>
                 <state img="#-Smug.png">Lemme guess. You're gonna release the twins now, ain't ya? That's gotta be your ultimate move right there.</state>
+            </case>
+            <case tag="female_must_strip" stage="4" priority="101">
+                <condition role="other" character="emi" notSaidMarker="pirate" />
+                <state img="custom:Super Fade Out">I ain't some damn performing monkey, Emi.</state>
+                <state img="custom:Super Fade Out">Well tough. You're just gonna have to use your imagination.</state>
+                <state img="custom:Super Fade Out">Not in the mood, Emi. Besides, what does or doesn't go on in my pants ain't none of ya business.</state>
             </case>
             <case tag="female_must_strip" stage="0-1">
                 <state img="#-Confident.png">Make it worth our while, lady.</state>
@@ -2391,11 +2426,6 @@
                 <state img="#-Shocked.png">Wait, an afterimage? Or was that instant transfigur-whatever? Either way, that was a quick getaway.</state>
                 <state img="#-Shocked.png">Huh. She stormed off. She moves fast for someone without a whole lotta power.</state>
             </case>
-            <case tag="female_removing_accessory" stage="0-1" target="meia" targetStage="0" alsoPlayingSaying="space travel" priority="381">
-                <state img="#-Stretching.png">The humans of my home universe blew themselves up in some kinda war. They only got resurrected recently. 'Scuse me for not knowing that they could cross space.</state>
-                <state img="#-Bored.png">Hmm, okay. Maybe you're a Universe 7 human or something. I don't know a whole lot about the humans in that universe.</state>
-                <state img="#-Thinking.png">Well I guess that means you're from Universe 7 then. Maybe? That or the humans of my own universe are smarter than I thought.</state>
-            </case>
             <case tag="female_removing_accessory" stage="0-5">
                 <condition role="target" character="erufuda" stage="1" />
                 <state img="#-Happy.png">Wow. I could stare at that freaking thing all freaking day.</state>
@@ -2437,7 +2467,8 @@
                 <state img="#-Laughing.png">You call that a weapon? Well...I guess you could clonk someone on the head with that or something, haha.</state>
                 <state img="#-Thinking.png">Hmm. Well I guess you could try to snare someone up with it. That goes out the window if your opponent can fly though.</state>
             </case>
-            <case tag="female_removing_accessory" stage="0-1" target="meia" targetStage="0">
+            <case tag="female_removing_accessory" stage="0-1">
+                <condition role="target" character="meia" stage="0" />
                 <state img="#-Distracted.png">Wait, hold up. Is that a scouter you're wearing? Looks kinda beat up, any reason you ain't had it repaired?</state>
                 <state img="#-Laughing2.png">Well, whatever...oh hey, is that a scouter? Man, I ain't seen one of those in a while. Looks like a vintage model as well. Sweet!</state>
             </case>
@@ -2541,6 +2572,13 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
+            <case tag="female_removed_accessory" stage="0-7" id="29">
+                <condition role="target" character="estelle" stage="1" />
+                <condition role="other" character="sakura" stage="0-7" />
+                <state img="#-Smug.png">Nice to see some people making new friends at least. </state>
+                <state img="#-Smug.png">Heh. You two are a pair of sweeties, had a feeling you were gonna hit it off.</state>
+                <state img="#-Smug.png">Well, look at that. You two seem to be getting on alright.</state>
+            </case>
             <case tag="female_removed_accessory" stage="0-3" target="revy" targetStage="1" alsoPlaying="revy" alsoPlayingSaidMarker="caulfila_level" priority="500">
                 <state img="#-Distracted.png">It means I'm a better fighter than you are, pistol whip. That's what it means.</state>
                 <state img="#-Confident.png">What it means, dummy, is that you're a weakling, a novice. A rank amateur compared to me. Is that clear enough for ya?</state>
@@ -2581,6 +2619,14 @@
                 <state img="#-Happy.png">Oh trust me, Revy. Once people see what I can do, they pretty much piss themselves at the sight of these purple pants.</state>
                 <state img="#-Annoyed.png">You're looking at me like I'm the one who's trash?! Remind me which gutter you crawled out of again? Some place called Roadkill or whatever the hell you called it?</state>
             </case>
+            <case tag="female_removed_accessory" stage="0-5 7">
+                <condition role="target" character="emi" stage="1" />
+                <condition role="other" character="emi" sayingMarker="car_accident" />
+                <state img="#-Embarassed.png">Wait, you...had some kinda accident? Must've been a bad one. What I don't get though is why you ain't gotten your legs healed up yet. </state>
+                <state img="#-Embarassed.png">You lost your legs in an accident? How come you're still using some kinda aid to move? I don't understand why you wouldn't just have gotten your legs grown back already.</state>
+                <state img="#-Angry.png">Wait, someone hacked your freaking legs off? Why the hell didn't they stick you in a healing pod? Has Earth not got those or something?</state>
+                <state img="#-Angry.png">Alright, something doesn't add up here. You had an accident, long time ago I'm guessing. But you're still crippled from it? Is Earth so damn primitive that they can't even grow peoples legs back!?</state>
+            </case>
             <case tag="female_removed_accessory" stage="0-5">
                 <condition role="target" character="erufuda" stage="2" />
                 <state img="#-Happy.png">Uh huh. I can tell that giving you an ass-whooping is gonna be a whole heap of fun.</state>
@@ -2602,7 +2648,8 @@
                 <state img="#-Thinking.png">&lt;i&gt;Buuut&lt;/i&gt; I suppose you could try to snare someone up with it. Goes out the window if your opponent can fly though.</state>
                 <state img="#-Laughing.png">You're gonna have to work on your combat moves if your best stuff involves twiddling some string around.</state>
             </case>
-            <case tag="female_removed_accessory" stage="0-1" target="meia" targetStage="1">
+            <case tag="female_removed_accessory" stage="0-1">
+                <condition role="target" character="meia" stage="1" />
                 <state img="#-Distracted.png">Oh, uhh, sentimental or something is it? I ain't gonna judge. They're just kinda common where I'm from is all.</state>
                 <state img="#-Confident.png">You seem kinda precious about it, whatever the reason for that is. Don't worry lady, I won't pry. Not if you don't want me to.</state>
             </case>
@@ -2808,6 +2855,15 @@
                 <state img="#-Smug.png">Aww, see, now you're just making me want to eat it more! Haha, don't worry, I'm sure I'll survive.</state>
                 <state img="#-Laughing.png">I'm looking forward to finding out what Earth has to offer. I think visiting this planet was the right idea.</state>
             </case>
+            <case tag="female_removing_minor" stage="0-7" id="32">
+                <condition role="target" character="sakura" stage="3" sayingMarker="headless" />
+                <state img="#-Shocked.png">Wow. You really got busted up bad, huh.</state>
+                <state img="#-Shocked.png">Wait, that thing just pops right off? Doesn't that hurt or something?</state>
+                <state img="#-Shocked.png">Man. You human singers are weird as hell. Saiyan ones can't screw their heads off to my knowledge.</state>
+                <state img="#-Laughing.png">Hahaha! Okay, this is weird as crap I know. But come on, what else can I do besides laugh?</state>
+                <state img="#-Laughing.png">Hahahaa! I guess I gotta laugh about it, beats screaming about it and losing my head like some weakling. Hahahaa!</state>
+                <state img="#-Laughing.png">Haa! Man, I guess if Saiyan music was this much fun, I'd go to way more concerts than I do right now.</state>
+            </case>
             <case tag="female_removing_minor" stage="0-3">
                 <condition role="target" character="erufuda" stage="0" />
                 <state img="#-Distracted.png">Hey, are those french fries or whatever? I passed a place that sold those on my way here. So I stole me some. They were alright, hardly worth screaming over though.</state>
@@ -2834,7 +2890,8 @@
                 <state img="#-Thinking.png">Wait. Shaving? Oooh! Right, I get it. You're gonna count that as a play.</state>
                 <state img="#-Bored.png">Oh. And here I thought I had ya knocked out. Seems you ain't ready to quit just yet.</state>
             </case>
-            <case tag="female_removing_minor" stage="0-5" target="meia" targetStage="1">
+            <case tag="female_removing_minor" stage="0-5">
+                <condition role="target" character="meia" stage="1" />
                 <state img="#-Confident.png">Interesting armor by the way. Looks kinda like the stuff I'm familiar with back home. You humans are more advanced than I thought.</state>
                 <state img="#-Distracted.png">Aww, how cute. Armor ain't no use to me anymore, Meia. Maybe one day you'll get on my level.</state>
                 <state img="#-Happy.png">Armor ain't been no use to me for a long while. You'll get there one day with training, maybe. Enough so you won't have to worry about lasers at least.</state>
@@ -2854,6 +2911,13 @@
                 <state img="#-Thinking.png">Yeah. Definitely something weird going on with ya. (&lt;i&gt;Man, her energy feels real strange. What's up with that?&lt;/i&gt;)</state>
                 <state img="#-Stretching.png">Alright, whatever. I guess this kinda game &lt;i&gt;is&lt;/i&gt; gonna draw people with funny sorts of ideas. Just don't involve me in any of them, got it?</state>
                 <state img="#-Laughing.png">Well. I guess this kinda is gonna attact perverts. Guess that makes me a little dirty to if I thought this'd be fun. Ha! Oh well.</state>
+            </case>
+            <case tag="female_removing_minor" stage="0-7" id="33">
+                <condition role="target" character="sakura" stage="2" />
+                <state img="#-Shocked.png">Wow. I knew something smelt off about ya. But this is on a &lt;i&gt;whole&lt;/i&gt; 'nother level to what I was expecting.</state>
+                <state img="#-Smug.png">Woah. And here I thought you just didn't wash right or some crap. You're actually a dead girl walking.</state>
+                <state img="#-Bored.png">Yeah. Definitely thinking that dragons and magic is behind this somehow. </state>
+                <state img="#-Angry.png">Man. Whatever dragon wished you back to life? Sure had a twisted sense of humor.</state>
             </case>
             <case tag="female_removing_minor" stage="0-1">
                 <state img="#-Bored.png">Gotta admit, I've seen better plays. More gutsy ones to.</state>
@@ -3098,6 +3162,10 @@
         </trigger>
 
         <trigger id="female_removing_major">
+            <case tag="female_removing_major" stage="0-5" priority="381">
+                <condition role="target" character="meia" stage="2" />
+                <state img="#-Distracted.png">See, the humans of my home universe blew themselves up in some kinda war. They only got resurrected recently. That's why I'm curious about where you came from.</state>
+            </case>
             <case tag="female_removing_major" stage="0-3" target="amalia" targetStage="1">
                 <state img="#-Distracted.png">
                     <alt-img stage="2-3">#-Confident.png</alt-img>
@@ -3132,12 +3200,20 @@
                 <state img="#-Smug.png">Wow, clothes that fly. What will they think of next?</state>
                 <state img="#-Smug.png">You have some real weird fashion sense, ~name~.</state>
             </case>
-            <case tag="female_removing_major" stage="0-5" target="saki_zls" targetStage="5">
+            <case tag="female_removing_major" stage="0-5">
+                <condition role="target" character="saki_zls" stage="5" />
                 <state img="#-Angry.png">Oh come on! I ain't gonna accept some stupid makeup as a wager! What are ya trying to pull here?</state>
                 <state img="#-Angry.png">Makeup!? You serious? You're asking for a solid kick in the pants with that crap.</state>
             </case>
             <case tag="female_removing_major" stage="2-3" target="amalia" targetStage="1">
                 <state img="#-Confident.png">So, you're a princess right? If you're looking for a boyfriend or something, I know someone. Decent fighter, real sweet guy. Lemme know if you wanna arrange a date.</state>
+            </case>
+            <case tag="female_removing_major" stage="0-5 7" id="34">
+                <condition role="target" character="emi" stage="7" />
+                <state img="#-Excited.png">Wow. You're really throwing everything you have at this game. That's a real gutsy play right there!</state>
+                <state img="#-Confident.png">Know what Emi? I got a lotta respect for ya, making a play like that. You've got an unshakable sprit and a drive to win. You're one heck of a person, ya know that?</state>
+                <state img="#-Embarassed.png">Jeez, Emi. I can only imagine how vulnerable doing that would make me feel. I ain't pittying ya, don't take it that way. I got a ton of respect for ya in all honesty. Just trying to think about how I'd feel in your place.</state>
+                <state img="#-Confident.png">That's an awesome play right there. You've got the heart of a warrior Emi, ain't no doubting it.</state>
             </case>
             <case tag="female_removing_major" stage="0-1">
                 <state img="#-Distracted.png">That's just bad luck right there.</state>
@@ -3235,7 +3311,8 @@
                 <state img="#-Confident.png">Well this is new, clothes that don't wanna be stripped. Just when I thought I'd seen it all.</state>
                 <state img="#-Laughing.png">You love your little suit, and your little suit loves ya back. That's the cutest thing I've seen all week.</state>
             </case>
-            <case tag="female_removed_major" stage="0-7" id="5" target="saki_zls" targetStage="6">
+            <case tag="female_removed_major" stage="0-7" id="5">
+                <condition role="target" character="saki_zls" stage="6" />
                 <state img="#-Shocked.png">Huh? You've got...how much lady powder are ya wearing right now?</state>
                 <state img="#-Shocked.png">I...wait, you've got makeup on from head to toe? No wonder I could smell it as strong as I could.</state>
                 <state img="#-Laughing.png">Well...I guess that's a little better. Whatever, I'll let it pass.</state>
@@ -3619,6 +3696,13 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
+            <case tag="female_chest_will_be_visible" stage="0-5 7" id="28" priority="500">
+                <condition role="target" character="sakura" />
+                <condition role="other" character="sakura" saidMarker="sakura_desserts&gt;1" />
+                <state img="#-Happy.png">All this talk of desserts and stuff is making me hungry. Gonna need to go looking for all this stuff once the game's over.</state>
+                <state img="#-Happy.png">Man, talk about sweet-talking. If this stuff's as good as you're saying, I'm gonna have to get me some of that once this thing's over.</state>
+                <state img="#-Happy.png">Hmm. You girls are starting to make me hungry. If you know some place that I can get this stuff, I'm all ears.</state>
+            </case>
             <case tag="female_chest_will_be_visible" stage="0-5 7" target="twilight" targetStage="1">
                 <state img="#-Laughing.png">Hahahaa! Man I don't believe it, you're really going all in with this!</state>
                 <state img="#-Laughing.png">Man, you're actually doing it? Hahaa! Man, you're great, you know that?</state>
@@ -3691,7 +3775,8 @@
         </trigger>
 
         <trigger id="female_small_chest_is_visible">
-            <case tag="female_small_chest_is_visible" stage="0-7" target="saki_zls">
+            <case tag="female_small_chest_is_visible" stage="0-7">
+                <condition role="target" character="saki_zls" />
                 <state img="#-Confident.png">Hmm. Pulled yourself together real quick at least. I'm guessing this is common for ya? Seeing how quick ya dealt with that.</state>
                 <state img="#-Laughing.png">I guess if I had been wished back to life looking like that, I could've had some real fun screwing with people at least.</state>
                 <state img="#-Confident.png">That sure was a surprise. You're actually real fun, yeah. Seems like great fun to hang with a zombie.</state>
@@ -3773,10 +3858,27 @@
                 <state img="#-Horny.png">Starting to think that you two are a little more than friends. Or that there might be a few little perks involved as well at least.</state>
                 <state img="#-Smug.png">So, are you two a package deal? Gotta say, that'd make for a pretty good delivery if that's the case.</state>
             </case>
-            <case tag="female_medium_chest_is_visible" stage="2-5 7" target="meia">
+            <case tag="female_medium_chest_is_visible" stage="2-5 7">
+                <condition role="target" character="meia" />
                 <state img="#-Bored.png">You look as good as that and you still ain't satisfied? Your world must have some pretty insane standards.</state>
                 <state img="#-Confident.png">Hmm? Really? I don't think you've got anything to be anxious about there.</state>
                 <state img="#-Confident.png">Hey, Meia. Enough running yourself down. You're drop dead gorgeous, don't let anyone tell ya different.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" stage="4">
+                <condition role="other" character="jessie" stage="0-5" saying="Well, no need to be so angry" />
+                <state img="#-Angry.png">I'll get as angry as I damn well please. If you feel the need to stamp your pretty little foot about it, be my guest.</state>
+                <state img="#-Stripped.png">I ain't playing this for your personal pleasure, Jessie.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" stage="4">
+                <condition role="other" character="jessie" stage="0-5" saying="You're a very angry hair tower, aren't you?" />
+                <state img="#-Stripped.png">Yeah, 'cause calling me crap like that is gonna calm me down.</state>
+                <state img="#-Bored.png">Hmm. Never heard that one before. No, really.</state>
+                <state img="#-Happy.png">&lt;i&gt;A very angry hair tower&lt;/i&gt;...know what? That's such a stupid insult that you've actually cheered me up a little.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" stage="4">
+                <condition role="other" character="jessie" stage="0-5" saying="It's no fun playing with an angry person" />
+                <state img="#-Angry.png">I'll get as angry as I damn well please. If you feel the need to stamp your pretty little foot about it, be my guest.</state>
+                <state img="#-Stripped.png">I ain't playing this for your personal pleasure, Jessie.</state>
             </case>
             <case tag="female_medium_chest_is_visible" stage="0-1">
                 <state img="#-Smug.png">Good size. Fun to play with I'm sure.</state>
@@ -3923,7 +4025,8 @@
                 <state img="#-Laughing.png">Ha haa! Should see the look on your face! Guess even a punk's gonna be surprised by that.</state>
                 <state img="#-Laughing.png">Hahaha! Never gets old.</state>
             </case>
-            <case tag="female_crotch_will_be_visible" stage="0-7" target="saki_zls">
+            <case tag="female_crotch_will_be_visible" stage="0-7">
+                <condition role="target" character="saki_zls" />
                 <state img="#-Annoyed.png">Eww, seriously? Ain't no way I wanna see something like that...least not when I'm playing a game like this.</state>
                 <state img="#-Annoyed.png">Are you messing with me again?!</state>
                 <state img="#-Bored.png">On one hand, gross-out stuff is kinda fun. But a game like this? You're gonna kill the vibe we got going on.</state>
@@ -4018,13 +4121,15 @@
                 <state img="#-Happy.png">Hey come on now, gotta see the funny side there at least. You can get even with her later.</state>
                 <state img="#-Smug.png">Just focus on the game. Ya can figure out a plan for sweet revenge whilst ya at it.</state>
             </case>
-            <case tag="female_crotch_is_visible" stage="0-7" target="saki_zls">
+            <case tag="female_crotch_is_visible" stage="0-7">
+                <condition role="target" character="saki_zls" />
                 <state img="#-Smug.png">Heh. Nice. Ya almost had me going for a second there.</state>
                 <state img="#-Smug.png">Ahh, so you were just trying it on with me, huh? Ha ha, very funny. Least you've gotta sense of humor about ya situation.</state>
                 <state img="#-Bored.png">Ugh. Everyone's a comedian these days.</state>
                 <state img="#-Confident.png">Well, y'know what they say. Don't get mad, get even. Gonna think of some real great, Saiyan grade pranks to pull on you, Saki.</state>
             </case>
-            <case tag="female_crotch_is_visible" stage="2-5 7" target="meia">
+            <case tag="female_crotch_is_visible" stage="2-5 7">
+                <condition role="target" character="meia" />
                 <state img="#-Distracted.png">See? What are you complaining about exactly? Only bad thing I can think about ya is that you're so damn mopey all the time.</state>
                 <state img="#-Happy.png">Your body is damn near perfect. Honestly, it's your attitude that could use a little work. Could stand to be a bit more bright and confident about yourself.</state>
                 <state img="#-Smug.png">Just need to work on your confidence some, Meia. Just uhh, don't overdo it like that other bimbo. You know the one I mean.</state>
@@ -4451,6 +4556,11 @@
         </trigger>
 
         <trigger id="female_start_masturbating">
+            <case tag="female_start_masturbating" stage="0-7" id="31" priority="302">
+                <condition role="target" character="sakura" saidMarker="cum" sayingMarker="wet" />
+                <state img="#-Embarassed.png">I...was about to say that sounds unsanitary. But...you don't really gotta worry about that either, I guess.</state>
+                <state img="#-Embarassed.png">Sounds pretty freaking gross if ya ask me. Then again, you don't exactly seem particularly...err, juicy.</state>
+            </case>
             <case tag="female_start_masturbating" stage="0-7" id="4" target="sayaka" targetSayingMarker="soulgem">
                 <state img="#-Shocked.png">Wait, back up. What was that about your soul just now?</state>
                 <state img="#-Shocked.png">And here I thought it didn't get any weirder than those Kamikaze people. You magic girls are all freaking crazy.</state>
@@ -4620,7 +4730,8 @@
                 <state img="#-Smug.png">Aww. Your little buddy was worried about ya? That's actually kinda sweet.</state>
                 <state img="#-Confident.png">Hehe, ain't that sweet. I was wondering where the little guy dashed off to so quick.</state>
             </case>
-            <case tag="female_finished_masturbating" stage="0-7" target="saki_zls">
+            <case tag="female_finished_masturbating" stage="0-7">
+                <condition role="target" character="saki_zls" />
                 <state img="#-Confident.png">Surprised ya didn't shake yourself apart there. Considering what happened before.</state>
                 <state img="#-Laughing.png">Had ya fun, and all your limbs are still attached. I'd call that a win-win right there.</state>
             </case>
