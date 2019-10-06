@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -415,6 +416,63 @@ namespace SPNATI_Character_Editor
 					cond.TimeInStage = workingCase.AlsoPlayingTimeInStage;
 					workingCase.AlsoPlayingTimeInStage = null;
 				}
+			}
+
+			if (!string.IsNullOrEmpty(workingCase.TotalFemales))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Gender = "female";
+				filter.Count = workingCase.TotalFemales;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalFemales = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalMales))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Gender = "male";
+				filter.Count = workingCase.TotalMales;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalMales = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalExposed))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Status = "exposed";
+				filter.Count = workingCase.TotalExposed;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalExposed = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalNaked))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Status = "naked";
+				filter.Count = workingCase.TotalNaked;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalNaked = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalMasturbating))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Status = "masturbating";
+				filter.Count = workingCase.TotalMasturbating;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalMasturbating = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalFinished))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Status = "finished";
+				filter.Count = workingCase.TotalFinished;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalFinished = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalPlaying))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Status = "alive";
+				filter.Count = workingCase.TotalPlaying;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalPlaying = null;
 			}
 
 			int newPriority = workingCase.GetPriority();

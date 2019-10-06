@@ -107,7 +107,11 @@ namespace SPNATI_Character_Editor
 
 		protected override void OnSetInitialFocus()
 		{
-			if (recCharacter.Visible)
+			if (string.IsNullOrEmpty(_filter.Role) && (!string.IsNullOrEmpty(_filter.Gender) || !string.IsNullOrEmpty(_filter.Status)))
+			{
+				valFrom.Focus();
+			}
+			else if (recCharacter.Visible)
 			{
 				recCharacter.Focus();
 			}

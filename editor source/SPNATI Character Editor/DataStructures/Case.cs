@@ -226,7 +226,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalMales;
-		[NumericRange(DisplayName = "Total Males", GroupName = "Table", GroupOrder = 2, Description = "Number of males playing (including this character and the player)", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Males", GroupOrder = 2, Description = "Number of males playing (including this character and the player)", Minimum = 0, Maximum = 5)]
 		[XmlOrder(140)]
 		[XmlAttribute("totalMales")]
 		[JsonProperty("totalMales")]
@@ -237,7 +237,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalFemales;
-		[NumericRange(DisplayName = "Total Females", GroupName = "Table", GroupOrder = 1, Description = "Number of females playing (including this character and the player)", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Females", GroupOrder = 1, Description = "Number of females playing (including this character and the player)", Minimum = 0, Maximum = 5)]
 		[XmlOrder(150)]
 		[XmlAttribute("totalFemales")]
 		[JsonProperty("totalFemales")]
@@ -292,7 +292,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalPlaying;
-		[NumericRange(DisplayName = "Total Playing", GroupName = "Table", GroupOrder = 3, Description = "Number of players still in the game", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Playing", GroupOrder = 3, Description = "Number of players still in the game", Minimum = 0, Maximum = 5)]
 		[XmlOrder(200)]
 		[XmlAttribute("totalAlive")]
 		[JsonProperty("totalAlive")]
@@ -303,7 +303,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalExposed;
-		[NumericRange(DisplayName = "Total Exposed", GroupName = "Table", GroupOrder = 4, Description = "Number of players who have exposed either their chest or crotch", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Exposed", GroupOrder = 4, Description = "Number of players who have exposed either their chest or crotch", Minimum = 0, Maximum = 5)]
 		[XmlOrder(210)]
 		[XmlAttribute("totalExposed")]
 		[JsonProperty("totalExposed")]
@@ -314,7 +314,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalNaked;
-		[NumericRange(DisplayName = "Total Naked", GroupName = "Table", GroupOrder = 5, Description = "Number of players who have lost all their clothing, but might still be playing", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Naked", GroupOrder = 5, Description = "Number of players who have lost all their clothing, but might still be playing", Minimum = 0, Maximum = 5)]
 		[XmlOrder(220)]
 		[XmlAttribute("totalNaked")]
 		[JsonProperty("totalNaked")]
@@ -325,7 +325,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalMasturbating;
-		[NumericRange(DisplayName = "Total Masturbating", GroupName = "Table", GroupOrder = 6, Description = "Number of players who are currently masturbating", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Masturbating", GroupOrder = 6, Description = "Number of players who are currently masturbating", Minimum = 0, Maximum = 5)]
 		[XmlOrder(230)]
 		[XmlAttribute("totalMasturbating")]
 		[JsonProperty("totalMasturbating")]
@@ -336,7 +336,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalFinished;
-		[NumericRange(DisplayName = "Total Finished", GroupName = "Table", GroupOrder = 7, Description = "Number of players who finished masturbating and completely out of the game", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Finished", GroupOrder = 7, Description = "Number of players who finished masturbating and completely out of the game", Minimum = 0, Maximum = 5)]
 		[XmlOrder(240)]
 		[XmlAttribute("totalFinished")]
 		[JsonProperty("totalFinished")]
@@ -1247,10 +1247,10 @@ namespace SPNATI_Character_Editor
 				}
 				bool filtered = Conditions.Any(c =>
 				{
-					bool result = false;
-					if (!string.IsNullOrEmpty(c.Character))
+					bool result = !string.IsNullOrEmpty(c.FilterTag);
+					if (result)
 					{
-						Character character = CharacterDatabase.GetById(c.Character);
+						Character character = CharacterDatabase.Get(c.FilterTag);
 						result = (character == null);
 					}
 					return result;
@@ -1270,7 +1270,7 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				bool targeted = !string.IsNullOrEmpty(Target) || !string.IsNullOrEmpty(AlsoPlaying) || (!string.IsNullOrEmpty(Filter) && CharacterDatabase.GetById(Filter) != null);
+				bool targeted = !string.IsNullOrEmpty(Target) || !string.IsNullOrEmpty(AlsoPlaying) || (!string.IsNullOrEmpty(Filter) && CharacterDatabase.Get(Filter) != null);
 				if (!targeted)
 				{
 					foreach (TargetCondition condition in Conditions)
@@ -1280,7 +1280,7 @@ namespace SPNATI_Character_Editor
 							targeted = true;
 							break;
 						}
-						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.GetById(condition.FilterTag) != null)
+						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null)
 						{
 							targeted = true;
 							break;
@@ -2621,7 +2621,14 @@ namespace SPNATI_Character_Editor
 				!string.IsNullOrEmpty(AlsoPlayingNotSaidMarker) ||
 				!string.IsNullOrEmpty(AlsoPlayingSayingMarker) ||
 				!string.IsNullOrEmpty(AlsoPlayingSaying) ||
-				!string.IsNullOrEmpty(AlsoPlayingTimeInStage);
+				!string.IsNullOrEmpty(AlsoPlayingTimeInStage) ||
+				!string.IsNullOrEmpty(TotalMales) ||
+				!string.IsNullOrEmpty(TotalPlaying) ||
+				!string.IsNullOrEmpty(TotalFinished) ||
+				!string.IsNullOrEmpty(TotalNaked) ||
+				!string.IsNullOrEmpty(TotalMasturbating) ||
+				!string.IsNullOrEmpty(TotalExposed) ||
+				!string.IsNullOrEmpty(TotalFemales);
 		}
 
 		public string GetStageRange(Character target)

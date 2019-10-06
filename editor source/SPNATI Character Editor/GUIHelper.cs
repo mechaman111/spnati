@@ -214,6 +214,29 @@ namespace SPNATI_Character_Editor
 			return new Tuple<int, int>(min, max);
 		}
 
+		public static Tuple<int, int> ToOpenInterval(string range)
+		{
+			int min;
+			int max;
+			string[] pieces = range.Split('-');
+			if (!int.TryParse(pieces[0], out min))
+			{
+				min = 0;
+			}
+			if (pieces.Length > 1)
+			{
+				if (!int.TryParse(pieces[1], out max))
+				{
+					max = -1;
+				}
+			}
+			else
+			{
+				max = -1;
+			}
+			return new Tuple<int, int>(min, max);
+		}
+
 		public static string ListToString(List<int> list)
 		{
 			string result;
