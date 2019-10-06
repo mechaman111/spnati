@@ -407,6 +407,16 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Self", "Time in Stage", (data) => { return AddFilter("self", data, "TimeInStage"); });
 			table.AddSpeedButton("Self", "Has Hand", (data) => { return AddFilter("self", data, "Hand"); });
 
+			//Table
+			table.AddSpeedButton("Table", "Total Females", (data) => { return AddGenderFilter(data, "female"); });
+			table.AddSpeedButton("Table", "Total Males", (data) => { return AddGenderFilter(data, "male"); });
+			table.AddSpeedButton("Table", "Total Playing", (data) => { return AddStatusFilter(data, "alive"); });
+			table.AddSpeedButton("Table", "Total Exposed", (data) => { return AddStatusFilter(data, "exposed"); });
+			table.AddSpeedButton("Table", "Total Naked", (data) => { return AddStatusFilter(data, "naked"); });
+			table.AddSpeedButton("Table", "Total Masturbating", (data) => { return AddStatusFilter(data, "masturbating"); });
+			table.AddSpeedButton("Table", "Total Finished", (data) => { return AddStatusFilter(data, "finished"); });
+			table.AddSpeedButton("Table", "Human Name", (data) => { return AddVariableTest("~player~", data); });
+
 			//Also Playing
 			table.AddSpeedButton("Also Playing", "Also Playing", (data) => { return AddFilter("other", data); });
 			table.AddSpeedButton("Also Playing", "Also Playing Stage", (data) => { return AddFilter("other", data, "Stage"); });
@@ -452,7 +462,6 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Player", "Tag", (data) => { return AddVariableTest("~_.tag.*~", data); });
 
 			//Table-wide
-			table.AddSpeedButton("Table", "Human Name", (data) => { return AddVariableTest("~player~", data); });
 			if (caseTrigger.AvailableVariables.Contains("cards"))
 			{
 				table.AddSpeedButton("Self", "Cards Exchanged", (data) => { return AddVariableTest("~cards~", data); });
@@ -508,6 +517,24 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 			return new SpeedButtonData("Conditions", subproperty) { ListItem = condition };
+		}
+
+		private static SpeedButtonData AddGenderFilter(object data, string gender)
+		{
+			Case theCase = data as Case;
+			TargetCondition condition = new TargetCondition();
+			condition.Gender = gender;
+			theCase.Conditions.Add(condition);
+			return new SpeedButtonData("Conditions") { ListItem = condition };
+		}
+
+		private static SpeedButtonData AddStatusFilter(object data, string status)
+		{
+			Case theCase = data as Case;
+			TargetCondition condition = new TargetCondition();
+			condition.Status = status;
+			theCase.Conditions.Add(condition);
+			return new SpeedButtonData("Conditions") { ListItem = condition };
 		}
 
 		private void PopulateTagsTab()

@@ -11,7 +11,7 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public class CachedCharacter : Character
 	{
-		public static int CurrentVersion = 1;
+		public static int CurrentVersion = 2;
 
 		[XmlElement("cacheVersion")]
 		public int CacheVersion;
