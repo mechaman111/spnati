@@ -101,7 +101,7 @@ function Save() {
             profile = JSON.parse(localStorage.getItem(prefix + gender)) || { };
         } catch (ex) {
             console.error('Failed parsing', gender, 'player profile from localStorage');
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
         $nameField.val(profile.name || '');
         changePlayerSize(profile.size || eSize.MEDIUM);
@@ -127,7 +127,7 @@ function Save() {
             localStorage.setItem(prefix + humanPlayer.gender, JSON.stringify(profile));
         } catch (ex) {
             console.error("Failed to save player info to localStorage");
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
     };
     this.loadOptions = function(){
@@ -151,7 +151,7 @@ function Save() {
             if ('playerFinishingEffect' in options && typeof options.playerFinishingEffect == 'boolean') PLAYER_FINISHING_EFFECT = options.cardSuggest;
         } catch (ex) {
             console.error('Failed parsing options from localStorage');
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
         try {
             var settings = JSON.parse(localStorage.getItem(prefix + 'settings')) || {};
@@ -166,7 +166,7 @@ function Save() {
             }
         } catch (ex) {
             console.error('Failed parsing settings from localStorage');
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
         var usageTracking = localStorage.getItem(prefix + 'usageTracking');
         if (usageTracking) {
@@ -199,7 +199,7 @@ function Save() {
                 localStorage.setItem(prefix + 'usageTracking', USAGE_TRACKING ? 'yes' : 'no');
             } catch (ex) {
                 console.error("Failed to save usage tracking data to localStorage");
-                if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+                if (SENTRY_INITIALIZED) Sentry.captureException(ex);
             }
         }
     };
@@ -220,7 +220,7 @@ function Save() {
             localStorage.setItem(prefix + 'options', JSON.stringify(options));
         } catch (ex) {
             console.error("Failed to save options data to localStorage");
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
     };
     this.saveSettings = function() {
@@ -239,7 +239,7 @@ function Save() {
             localStorage.setItem(prefix + 'settings', JSON.stringify(settings));
         } catch (ex) {
             console.error("Failed to save settings data to localStorage");
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
     };
     this.loadEndings = function() {
@@ -248,7 +248,7 @@ function Save() {
                 endings = JSON.parse(localStorage.getItem(prefix + 'endings')) || { };
             } catch (ex) {
                 console.error('Failed parsing endings from localStorage');
-                if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+                if (SENTRY_INITIALIZED) Sentry.captureException(ex);
                 endings = {};
             }
         }
@@ -273,7 +273,7 @@ function Save() {
             localStorage.setItem(prefix + 'endings', JSON.stringify(endings));
         } catch (ex) {
             console.error('Failed to save ending ' + character + '/' + title + ' to localStorage');
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
         
         //Clear table of endings, so they are loaded agin when player visits gallery
@@ -295,7 +295,7 @@ function Save() {
             localStorage.setItem(prefix+'collectibles.'+charID+collectible.id, counter.toString());
         } catch (ex) {
             console.error('Failed to save collectible counter ' + charID + '/' + collectible.id + ' to localStorage');
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
     }
     
@@ -321,7 +321,7 @@ function Save() {
             localStorage.setItem(prefix+'markers.'+player.id+'.'+name, value.toString());
         } catch (ex) {
             console.error('Failed to save persistent marker ' + player.id + '/' + name + ' to localStorage');
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
     }
 
@@ -337,7 +337,7 @@ function Save() {
             localStorage.setItem(prefix+"playedCharacters", JSON.stringify(Object.keys(o)));
         } catch (ex) {
             console.error('Failed to save played character set to localStorage');
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
     }
 
@@ -350,7 +350,7 @@ function Save() {
             localStorage.setItem(prefix+"resortModalShown", val.toString());
         } catch (ex) {
             console.error('Failed to save resort modal flag to localStorage');
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
     }
 
@@ -383,7 +383,7 @@ function Save() {
             save.load();
         } catch (ex) {
             console.error('Failed to deserialize localStorage from save code');
-            if (SENTRY_INITIALIZED) sentryInit.captureException(ex);
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
 
         return true;
