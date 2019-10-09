@@ -481,33 +481,32 @@ namespace Desktop.CommonControls
 			view.Invalidate();
 		}
 
-		private void View_MouseDown(object sender, MouseEventArgs e)
-		{
-			if (_source == null) { return; }
-			ListViewItem item = view.GetItemAt(e.X, e.Y);
-			if (item != null && item.Tag is GroupedListGrouper)
-			{
-				GroupedListGrouper grouper = item.Tag as GroupedListGrouper;
-				int depth = grouper.Depth;
-				int targetX = 4 + depth * Properties.Resources.Collapse.Width;
-				if (e.X < targetX || e.X > targetX + Properties.Resources.Collapse.Width)
-				{
-					return;
-				}
-				if (_source.GetGroupCount(grouper.Path) > 0)
-				{
-					_source.ToggleGroup(grouper.Path, !grouper.Expanded);
-				}
-			}
-		}
-
 		private void View_MouseClick(object sender, MouseEventArgs e)
 		{
+			if (_source == null) { return; }
 			if (e.Button == MouseButtons.Right)
 			{
 				if (view.FocusedItem.Bounds.Contains(e.Location))
 				{
 					RightClick?.Invoke(this, new AccordionListViewEventArgs(view.FocusedItem.Tag));
+				}
+			}
+			else if (e.Button == MouseButtons.Left)
+			{
+				ListViewItem item = view.GetItemAt(e.X, e.Y);
+				if (item != null && item.Tag is GroupedListGrouper)
+				{
+					GroupedListGrouper grouper = item.Tag as GroupedListGrouper;
+					int depth = grouper.Depth;
+					int targetX = 4 + depth * Properties.Resources.Collapse.Width;
+					if (e.X < targetX || e.X > targetX + Properties.Resources.Collapse.Width)
+					{
+						return;
+					}
+					if (_source.GetGroupCount(grouper.Path) > 0)
+					{
+						_source.ToggleGroup(grouper.Path, !grouper.Expanded);
+					}
 				}
 			}
 		}	

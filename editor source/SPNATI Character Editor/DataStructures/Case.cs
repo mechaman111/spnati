@@ -1595,15 +1595,38 @@ namespace SPNATI_Character_Editor
 			}
 
 			//if no stages have been set, apply it to all
-			TriggerDefinition trigger = TriggerDatabase.GetTrigger(response.Tag);
-			if (response.Stages.Count == 0)
+			if (Tag.Contains("chest") && !response.Tag.Contains("chest"))
 			{
-				for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
+				int layer = GetRevealStage(responder, "upper");
+				if (Tag.Contains("will"))
 				{
-					int standardStage = TriggerDatabase.ToStandardStage(responder, i);
-					if (standardStage >= trigger.StartStage && standardStage <= trigger.EndStage)
+					layer--;
+				}
+				response.Stages.Clear();
+				response.Stages.Add(layer);
+			}
+			else if (Tag.Contains("crotch") && !response.Tag.Contains("crotch"))
+			{
+				int layer = GetRevealStage(responder, "lower");
+				if (Tag.Contains("will"))
+				{
+					layer--;
+				}
+				response.Stages.Clear();
+				response.Stages.Add(layer);
+			}
+			else
+			{
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(response.Tag);
+				if (response.Stages.Count == 0)
+				{
+					for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
 					{
-						response.Stages.Add(i);
+						int standardStage = TriggerDatabase.ToStandardStage(responder, i);
+						if (standardStage >= trigger.StartStage && standardStage <= trigger.EndStage)
+						{
+							response.Stages.Add(i);
+						}
 					}
 				}
 			}
@@ -2063,6 +2086,28 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// Gets the stage in which a character's position is revealed
+		/// </summary>
+		/// <param name="speaker"></param>
+		/// <returns></returns>
+		private int GetRevealStage(Character speaker, string position)
+		{
+			int last = 0;
+			for (int i = speaker.Wardrobe.Count - 1; i >= 0; i--)
+			{
+				Clothing layer = speaker.Wardrobe[i];
+				if (layer.Type == "major" || layer.Type == "important")
+				{
+					if (layer.Position == position || layer.Position == "both")
+					{
+						last = i;
+					}
+				}
+			}
+			return speaker.Wardrobe.Count - last;
+		}
+
+		/// <summary>
 		/// Translates a layer type and position to a word used in a trigger
 		/// </summary>
 		/// <remarks>This really doesn't belong in the Case class</remarks>
@@ -2224,7 +2269,20 @@ namespace SPNATI_Character_Editor
 				tag = tag.Substring(9);
 			}
 
-			if (Target == responder.FolderName)
+			string target = Target;
+			if (string.IsNullOrEmpty(target))
+			{
+				foreach (TargetCondition condition in Conditions)
+				{
+					if (condition.Role == "target")
+					{
+						target = condition.Character;
+						break;
+					}
+				}
+			}
+
+			if (target == responder.FolderName)
 			{
 				//addressing responder directly, meaning the responder must be doing some action
 				if (tag.Contains("will_be_visible") || tag.Contains("removing"))
@@ -2268,7 +2326,7 @@ namespace SPNATI_Character_Editor
 
 			return Tag; //if nothing above applied, the speaker is reacting to some event unrelated to the responder, so the responder can target the same thing
 		}
-		
+
 		/// <summary>
 		/// Gets a list of cases that could potentially match up with the given source tag. This could be lines that the sourceCase is responding to, or lines that are responding to the sourceCase
 		/// </summary>
