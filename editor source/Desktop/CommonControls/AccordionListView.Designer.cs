@@ -55,7 +55,6 @@
 			this.view.SelectedIndexChanged += new System.EventHandler(this.View_SelectedIndexChanged);
 			this.view.SizeChanged += new System.EventHandler(this.View_SizeChanged);
 			this.view.MouseClick += new System.Windows.Forms.MouseEventHandler(this.View_MouseClick);
-			this.view.MouseDown += new System.Windows.Forms.MouseEventHandler(this.View_MouseDown);
 			// 
 			// tmrTick
 			// 

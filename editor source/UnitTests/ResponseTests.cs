@@ -1363,6 +1363,325 @@ namespace UnitTests
 			Assert.AreEqual("finished_masturbating", c.GetResponseTag(_male, _female));
 		}
 
+		#region Role targets
+		[TestMethod]
+		public void Male_MustStrip_RoleTarget()
+		{
+			Case c = new Case("male_must_strip");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("must_strip", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Male_RemovingAccessory_RoleTarget()
+		{
+			Case c = new Case("male_removing_accessory");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("stripping", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Male_RemovingMinor_RoleTarget()
+		{
+			Case c = new Case("male_removing_minor");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("stripping", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Male_RemovingMajor_RoleTarget()
+		{
+			Case c = new Case("male_removing_major");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("stripping", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Female_MustStrip_RoleTarget()
+		{
+			Case c = new Case("female_must_strip");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("must_strip", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Female_RemovingAccessory_RoleTarget()
+		{
+			Case c = new Case("female_removing_accessory");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("stripping", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Female_RemovingMinor_RoleTarget()
+		{
+			Case c = new Case("female_removing_minor");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("stripping", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Female_RemovingMajor_RoleTarget()
+		{
+			Case c = new Case("female_removing_major");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("stripping", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Male_ChestWillBeVisible_RoleTarget()
+		{
+			Case c = new Case("male_chest_will_be_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("stripping", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Female_ChestWillBeVisible_RoleTarget()
+		{
+			Case c = new Case("female_chest_will_be_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("stripping", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Male_ChestIsVisible_RoleTarget()
+		{
+			Case c = new Case("male_chest_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Female_SmallChestIsVisible_RoleTarget()
+		{
+			Case c = new Case("female_small_chest_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			_female.Size = "small";
+			Assert.AreEqual("stripped", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Female_MediumChestIsVisible_RoleTarget()
+		{
+			Case c = new Case("female_medium_chest_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			_female.Size = "medium";
+			Assert.AreEqual("stripped", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Female_LargeChestIsVisible_RoleTarget()
+		{
+			Case c = new Case("female_large_chest_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			_female.Size = "large";
+			Assert.AreEqual("stripped", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Female_ChestIsVisible_RoleTarget()
+		{
+			Case c = new Case("female_chest_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("stripped", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_ChestIsVisible_RoleTarget()
+		{
+			Case c = new Case("opponent_chest_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Male_CrotchWillBeVisible_RoleTarget()
+		{
+			Case c = new Case("male_crotch_will_be_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("stripping", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Female_CrotchWillBeVisible_RoleTarget()
+		{
+			Case c = new Case("female_crotch_will_be_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("stripping", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_CrotchWillBeVisible_RoleTarget()
+		{
+			Case c = new Case("opponent_crotch_will_be_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("stripping", c.GetResponseTag(_male, _female));
+		}
+		[TestMethod]
+		public void Female_CrotchIsVisible_RoleTarget()
+		{
+			Case c = new Case("female_crotch_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("stripped", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Male_SmallCrotchIsVisible_RoleTarget()
+		{
+			Case c = new Case("male_small_crotch_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			_male.Size = "small";
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Male_MediumCrotchIsVisible_RoleTarget()
+		{
+			Case c = new Case("male_medium_crotch_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			_male.Size = "medium";
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Male_LargeCrotchIsVisible_RoleTarget()
+		{
+			Case c = new Case("male_large_crotch_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			_male.Size = "large";
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Male_CrotchIsVisible_RoleTarget()
+		{
+			Case c = new Case("male_crotch_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Opponent_CrotchIsVisible_RoleTarget()
+		{
+			Case c = new Case("opponent_crotch_is_visible");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("stripped", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Male_MustMasturbate_RoleTarget()
+		{
+			Case c = new Case("male_must_masturbate");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("must_masturbate", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Female_MustMasturbate_RoleTarget()
+		{
+			Case c = new Case("female_must_masturbate");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("must_masturbate", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Male_StartMasturbating_RoleTarget()
+		{
+			Case c = new Case("male_start_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("start_masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Female_StartMasturbating_RoleTarget()
+		{
+			Case c = new Case("female_start_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("start_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_StartMasturbating_RoleTarget()
+		{
+			Case c = new Case("opponent_start_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("start_masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Male_Masturbating_RoleTarget()
+		{
+			Case c = new Case("male_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Female_Masturbating_RoleTarget()
+		{
+			Case c = new Case("female_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_Masturbating_RoleTarget()
+		{
+			Case c = new Case("opponent_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Male_Heavy_Masturbating_RoleTarget()
+		{
+			Case c = new Case("male_heavy_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("heavy_masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Female_Heavy_Masturbating_RoleTarget()
+		{
+			Case c = new Case("female_heavy_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("heavy_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_Heavy_Masturbating_RoleTarget()
+		{
+			Case c = new Case("opponent_heavy_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("heavy_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Male_Finished_Masturbating_RoleTarget()
+		{
+			Case c = new Case("male_finished_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _male.FolderName, Role = "target" });
+			Assert.AreEqual("finished_masturbating", c.GetResponseTag(_female, _male));
+		}
+
+		[TestMethod]
+		public void Female_Finished_Masturbating_RoleTarget()
+		{
+			Case c = new Case("female_finished_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("finished_masturbating", c.GetResponseTag(_male, _female));
+		}
+
+		[TestMethod]
+		public void Opponent_Finished_Masturbating_RoleTarget()
+		{
+			Case c = new Case("opponent_finished_masturbating");
+			c.Conditions.Add(new TargetCondition() { Character = _female.FolderName, Role = "target" });
+			Assert.AreEqual("finished_masturbating", c.GetResponseTag(_male, _female));
+		}
+		#endregion
+
 		[TestMethod]
 		public void StageLimit_RemovingExtra()
 		{
