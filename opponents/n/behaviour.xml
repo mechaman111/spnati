@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.5 at 2:15:06 AM on October 11, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.5 at 2:28:49 AM on October 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.5</version>
     <first>N</first>
@@ -860,10 +860,6 @@
                 <condition role="other" character="leggy" stage="4" timeInStage="0" />
                 <state img="#-Nervous.png">...Then again, I don't know what I was expecting underneath.</state>
             </case>
-            <case stage="0-8">
-                <condition count="1-3" filter="pokemon" role="other" character="moon" />
-                <state img="#-iNform.png">A fellow trainer? Already, I can sense your good heart and your strong bond with your Pokemon. Speaking of which, may I speak to them after the game is over?</state>
-            </case>
             <case stage="0-5" oneShotId="36">
                 <condition status="lost_all" character="human" />
                 <condition count="2" status="alive" />
@@ -969,6 +965,11 @@
                 <condition role="other" character="bi" />
                 <state img="#-iNceNsed.png">Good grief, it smells &lt;i&gt;terrible&lt;/i&gt; here! Did you smear feces all over your arms!?</state>
             </case>
+            <case stage="0-8">
+                <condition count="1-3" filter="pokemon" role="other" />
+                <condition count="0" filter="moon" />
+                <state img="#-iNform.png">A fellow trainer? Already, I can sense your good heart and your strong bond with your Pokemon. Speaking of which, may I speak to them after the game is over?</state>
+            </case>
             <case stage="0-6" oneShotId="27">
                 <condition count="1" filter="witch" role="opp" var="opp" />
                 <state img="#-coNsider.png" marker="hexmaniac">Are you a Hex Maniac, ~opp~? I've seen those trainers before outside of Unova, but I never had a chance to analysis them.</state>
@@ -982,7 +983,7 @@
                 <state img="#-astoNished.png">~opp~... Why on Earth are you carrying a firearm? They have been outlawed in most regions for &lt;i&gt;decades&lt;/i&gt; now, weren't they? How did you even get your hands on one!?</state>
             </case>
             <case stage="0-8" oneShotId="30">
-                <condition count="1-5" filter="gun" var="opp" />
+                <condition count="2-5" filter="gun" var="opp" />
                 <state img="#-astoNished.png">Wh---Haven't all firearms have been outlawed in most regions for several decades!? Is there a region that's an exception to this!?</state>
             </case>
             <case stage="0-8" oneShotId="31">
@@ -2540,6 +2541,10 @@
 
         <trigger id="opponent_lost">
             <case stage="0" totalRounds="0" priority="9999">
+                <condition role="target" character="aimee" />
+                <state img="#-astoNished.png">Ermm, why is everyone looking at her so expectantly---&lt;i&gt;is that what I think it is!?&lt;/i&gt;</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="9997">
                 <state img="#-astoNished.png">Eh!? This is &lt;i&gt;strip&lt;/i&gt; poker? Why wasn't I told so?</state>
                 <state img="#-coNfused.png">Ermm, why is everyone looking at ~name~ so expectantly... Huh? &lt;i&gt;Strip&lt;/i&gt; poker?</state>
                 <state img="#-coNsider.png">So what next? &lt;br&gt; ...~name~ has  to strip? Is that what this game was about?</state>
@@ -2593,10 +2598,6 @@
             <case stage="0-10">
                 <condition status="lost_all" role="target" character="nayru" saidMarker="v_forfeit" />
                 <state img="#-iNceNsed.png">And you were so confident you are going to win for her. Pride goeth before destruction, and an haughty spirit before a fall.</state>
-            </case>
-            <case stage="0" totalRounds="0" priority="311">
-                <condition role="target" character="aimee" />
-                <state img="#-astoNished.png">Ermm, why is everyone looking at her so expectantly---&lt;i&gt;is that what I think it is!?&lt;/i&gt;</state>
             </case>
             <case stage="0" totalRounds="0">
                 <condition role="target" character="human" />
@@ -2656,6 +2657,8 @@
 
         <trigger id="opponent_stripping">
             <case stage="0" totalRounds="0" priority="9997">
+                <condition count="0" filter="aimee" />
+                <condition count="0" filter="moon" />
                 <state img="#-coNsider.png">Hmph. When you asked me to play poker, you never told me stripping was going to be involved. I have no interest in seeing the other players without their clothing.</state>
                 <state img="#-iNceNsed.png">I wish you would have been more specific, ~player~. If I knew what I was getting into, I wouldn't agree to this. But I suppose it's too late now.</state>
             </case>
@@ -2827,6 +2830,8 @@
                 <state img="#-iNceNsed.png">I sincerely hope you aren't that kind of person.</state>
             </case>
             <case stage="0" totalRounds="0" priority="9999">
+                <test expr="~name~" cmp="!=" value="Moon" />
+                <test expr="~name~" cmp="!=" value="Aimee" />
                 <state img="#-coNsider.png">I have no reason to stay after this revelation. But... I suppose I'll stay. This game might help me understand humankind a bit better.</state>
                 <state img="#-coNsider.png">I'd prefer not to stick around, knowing what will eventually happen. But I'll suppose I'll humor you. You went out of your way to invite me, after all.</state>
                 <state img="#-coNsider.png">I only agreed to play because I was hoping we'd both have a good time, but... &lt;i&gt;(This might strengthen our bond a bit... Let's just hope I don't come to regret this.)&lt;/i&gt;</state>
