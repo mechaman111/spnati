@@ -1465,27 +1465,21 @@ function loadConfigFile () {
                 console.log("Alternate costumes disabled");
             }
             
-            if (DEBUG) {
-                COLLECTIBLES_ENABLED = false;
-                COLLECTIBLES_UNLOCKED = false;
+            COLLECTIBLES_ENABLED = false;
+            COLLECTIBLES_UNLOCKED = false;
+            
+            if ($(xml).find('collectibles').text() === 'true') {
+                COLLECTIBLES_ENABLED = true;
+                console.log("Collectibles enabled");
                 
-                if ($(xml).find('collectibles').text() === 'true') {
-                    COLLECTIBLES_ENABLED = true;
-                    console.log("Collectibles enabled");
-                    
-                    if ($(xml).find('collectibles-unlocked').text() === 'true') {
-                        COLLECTIBLES_UNLOCKED = true;
-                        console.log("All collectibles force-unlocked");
-                    }
-                } else {
-                    console.log("Collectibles disabled");
+                if ($(xml).find('collectibles-unlocked').text() === 'true') {
+                    COLLECTIBLES_UNLOCKED = true;
+                    console.log("All collectibles force-unlocked");
                 }
             } else {
-                COLLECTIBLES_ENABLED = false;
-                COLLECTIBLES_UNLOCKED = false;
-                console.log("Debug mode disabled - collectibles disabled");
+                console.log("Collectibles disabled");
             }
-
+            
             var _resort_mode = $(xml).find('resort').text();
             if (_resort_mode.toLowerCase() === 'true') {
                 console.log("Resort mode active!");
