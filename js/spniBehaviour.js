@@ -646,6 +646,16 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     }
 }
 
+function pluralize (text) {
+    if (text.match(/ff?$/)) {
+        return text.replace(/ff?$/, 'ves');
+    } else if (text.match(/s$/)) {
+        return text + 'es';
+    } else {
+        return text + 's';
+    }
+}
+
 /************************************************************
  * Expands variables etc. in a line of dialogue.
  ************************************************************/
@@ -674,6 +684,12 @@ function expandDialogue (dialogue, self, target, bindings) {
                     substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target, bindings);
                 } else if (fn === 'plural') {
                     substitution = clothing.plural ? 'plural' : 'single';
+                } else if (fn === 'toplural') {
+                    if (!clothing.plural) {
+                        substitution = pluralize(clothing.name);
+                    } else {
+                        substitution = clothing.name;
+                    }
                 } else if ((fn == 'type' || fn == 'position') && args === undefined) {
                     substitution = clothing[fn];
                 } else if (fn === undefined) {
