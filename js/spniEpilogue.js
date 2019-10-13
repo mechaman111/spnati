@@ -473,10 +473,51 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
   var title = $epilogue.find("title").html().trim();
   var gender = $epilogue.attr("gender") || 'any';
 
+  var markerOps = $epilogue.find("marker").map(function (i, e) {
+    var $elem = $(e);
+    var name = $elem.attr('name');
+    var op = $elem.attr('op');
+    var value = $elem.attr('value');
+
+    if (!op && !value) {
+      op = '=';
+      value = 1;
+    }
+
+    if (typeof(op) !== 'string' || op.length === 0) {
+      op = '=';
+    } else {
+      op = op[0];
+    }
+
+    var markerOp = new MarkerOperation(name, op, value, true);
+
+    /* By default, execute marker ops only when playing from the game end modal. */
+    markerOp.from_modal = ($elem.attr('epilogue-modal') !== 'false');
+    markerOp.from_gallery = ($elem.attr('gallery') === 'true');
+
+    return markerOp;
+  }).get();
+
+  var collectibleOps = $epilogue.find('collectible').map(function (i, e) {
+    var $elem = $(e);
+    var name = $elem.attr('name');
+    var op = $elem.attr('op');
+
+    var collectibleOp = new CollectibleOperation(name, op);
+
+    collectibleOp.from_modal = ($elem.attr('epilogue-modal') !== 'false');
+    collectibleOp.from_gallery = ($elem.attr('gallery') === 'true');
+
+    return collectibleOp;
+  }).get();
+
   var epilogue = {
     title: title,
     player: player,
     gender: gender,
+    markers: markerOps,
+    collectibles: collectibleOps,
     scenes: [],
   };
   var scenes = epilogue.scenes;
@@ -1017,6 +1058,15 @@ function doEpilogue() {
       },
     });
   }
+
+  /* Apply any marker operations and collectible operations. */
+  chosenEpilogue.markers.forEach(function (markerOp) {
+    if (markerOp.from_modal) markerOp.apply(chosenEpilogue.player);
+  });
+
+  chosenEpilogue.collectibles.forEach(function (collectibleOp) {
+    if (collectibleOp.from_modal) collectibleOp.apply(chosenEpilogue.player);
+  });
 
   epilogueContainer.dataset.background = -1;
   epilogueContainer.dataset.scene = -1;

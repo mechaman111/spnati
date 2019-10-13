@@ -556,6 +556,15 @@ function doEpilogueFromGallery(){
 			
 			// function definition in spniEpilogue.js
 			epilogue = parseEpilogue(player, endingElem);
+
+			/* Apply any marker operations and collectible operations. */
+			epilogue.markers.forEach(function (markerOp) {
+				if (markerOp.from_gallery) markerOp.apply(epilogue.player);
+			});
+
+			epilogue.collectibles.forEach(function (collectibleOp) {
+				if (collectibleOp.from_gallery) collectibleOp.apply(epilogue.player);
+			});
 		
 			if (USAGE_TRACKING) {
 				var usage_tracking_report = {
