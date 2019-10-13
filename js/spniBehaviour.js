@@ -237,6 +237,230 @@ function expandTagsList(input_tags) {
     return output_tags;
 }
 
+var MARKER_ARITHMETIC_OPS = ['+', '-', '*', '/', '%'];
+
+/**
+ * Stores information about operations to execute on character markers.
+ * 
+ * @constructor
+ * 
+ * @param {string} name The raw name of the marker to operate on.
+ * 
+ * @param {string} [op='='] The marker operation to perform. Should be an
+ * arithmetic operator (+, -, *, /, %) or '=' (default).
+ * 
+ * @param {string|number} value The value to use with the given `op`.
+ * 
+ * @param {boolean} [persistent] If true, this operation will be performed
+ * on persistent markers instead of regular markers.
+ * 
+ * @param {boolean} [perTarget] By default, whether or not a given operation
+ * will be performed on per-target markers is determined from the marker
+ * `name` (by checking if the name ends with a '*'). However, if this
+ * needs to be overridden, an explicit `true` or `false` value can be
+ * passed here instead.
+ */
+function MarkerOperation (name, op, value, persistent, perTarget) {
+    /** The name of the marker to operate on. */
+    this.name = name;
+
+    if (perTarget === true || perTarget === false) {
+        /**
+         * Whether or not this operation should be performed on
+         * per-target markers.
+         */
+        this.perTarget = perTarget;
+    } else {
+        this.perTarget = (name.substring(name.length - 1) === '*');
+        if (this.perTarget) this.name = name.substring(0, name.length - 1);
+    }
+
+    /** The actual operation to perform. */
+    this.op = '=';
+
+    /** The 'right-hand-side' in this marker operation. */
+    this.value = value;
+
+    /** @private If true, this operation is an arithmetic operation. */
+    this.arithmetic = false;
+
+    if (MARKER_ARITHMETIC_OPS.indexOf(op) >= 0) {   
+        this.arithmetic = true;
+        this.op = op;
+    }
+
+    /** 
+     * Whether or not this operation should be performed on persistent
+     * markers.
+     */
+    this.persistent = !!persistent;
+}
+
+/**
+ * Parse a string marker operation expression.
+ * 
+ * @returns {MarkerOperation} A MarkerOperation object representing this
+ * expression.
+ * 
+ * @param {string} markerOp The marker operation expression to parse.
+ * @param {boolean} persistMarker Whether or not this marker operation
+ * should be persistent; passed to MarkerOperation as the `persistent`
+ * parameter.
+ */
+function parseMarkerOperation (markerOp, persistMarker) {
+    var match = markerOp.match(/^(?:(\+|-)([\w-]+\*?)|([\w-]+\*?)\s*([-+*%\/]?=)\s*(.*?)\s*)$/);
+    if (match) {
+        if (match[1]) {
+            /* First alternative: increment or decrement ops
+             *  match[1] = operation type ('+' or '-')
+             *  match[2] = marker name, incl. per-target signifier
+             */
+            return new MarkerOperation(
+                match[2],
+                match[1],
+                1,
+                persistMarker
+            );
+        } else {
+            /* second alternative: set operation
+             *  match[3] = marker name, incl. per-target signifier
+             *  match[4] = operation
+             *  match[5] = value
+             * 
+             * match[4] is either going to be a two-character operation
+             * (+=, -=, *=, etc.) or just '='.
+             * Either way, we only need the first character of match[4].
+             */
+            return new MarkerOperation(
+                match[3],
+                match[4][0],
+                match[5],
+                persistMarker
+            );
+        }
+    } else {
+        return new MarkerOperation(markerOp, '=', 1, persistMarker);
+    }
+}
+
+/**
+ * Get the current value of the marker this operation references, before
+ * any operations are applied.
+ * 
+ * @param {Opponent} self The speaking Opponent.
+ * @param {Opponent} [opp] The target Opponent, if any.
+ * 
+ * @returns {number|string} The raw, pre-operation value of the marker
+ * referenced by this operation.
+ */
+MarkerOperation.prototype.getCurrentValue = function (self, opp) {
+    var name = this.name;
+    if (this.perTarget && opp) name = getTargetMarker(name, opp);
+
+    if (this.persistent)
+        return save.getPersistentMarker(self, name);
+    else
+        return self.markers[name];
+}
+
+/**
+ * Calculate what this marker operation would evaluate to, in the context
+ * of a given player, target, and dialogue Case.
+ * 
+ * @param {Opponent} self The speaking Opponent.
+ * @param {Opponent} [opp] The target Opponent, if any.
+ * @param {Case} [contextCase] The dialogue Case context used to expand
+ * string-type operation values, if necessary.
+ * 
+ * @returns {string|number} The computed result of this marker operation.
+ * Will be an integer if possible, but can be a string if the result
+ * cannot be parsed as an integer.
+ */
+MarkerOperation.prototype.evaluate = function (self, opp, contextCase) {
+    if (!self) return;
+
+    /* Compute destination marker name. */
+    var name = this.name;
+    if (this.perTarget && opp) name = getTargetMarker(name, opp);
+
+    if (this.arithmetic) {
+        var curVal = parseInt(this.getCurrentValue(self, opp), 10) || 0;
+
+        var rhs = this.value;
+        if (typeof(this.value) === 'string') {
+            /* Attempt to expand variables in RHS strings first. */
+            rhs = expandDialogue(this.value, self, opp, contextCase && contextCase.variableBindings);
+        }
+        
+        /* Cast the (possibly-expanded) RHS value to an integer. */
+        rhs = parseInt(rhs, 10) || 0;
+        switch (this.op) {
+            case '+':
+            default:
+                return curVal + rhs;
+            case '-':
+                return curVal - rhs;
+            case '*':
+                return curVal * rhs;
+            case '/':
+                return (rhs === 0) ? 0 : Math.round(curVal / rhs);
+            case '%':
+                return (rhs === 0) ? 0 : curVal % rhs;
+        }
+    } else {
+        /* Already-numeric values are returned as-is.
+         * Non-number, non-string values are cast to 1 or 0 depending on
+         * truthiness.
+         * String values are expanded, then parsed as integers if
+         * possible.
+         */
+        if (typeof(this.value) === 'number') return this.value;
+        else if (typeof(this.value) !== 'string') return !!this.value ? 1 : 0;
+
+        var value = expandDialogue(this.value, self, opp, contextCase && contextCase.variableBindings);
+
+        if (!isNaN(parseInt(value, 10))) return parseInt(value, 10);
+        return value;
+    }
+}
+
+/**
+ * Applies this marker operation to a player.
+ * 
+ * @param {Opponent} self The speaking Opponent.
+ * @param {Opponent} [opp] The target Opponent, if any.
+ * @param {Case} [contextCase] The dialogue Case context used to expand
+ * string-type operation values, if necessary.
+ */
+MarkerOperation.prototype.apply = function (self, opp, contextCase) {
+    if (!self) return;
+
+    var name = this.name;
+    if (this.perTarget && opp) name = getTargetMarker(name, opp);
+
+    var newVal = this.evaluate(self, opp, contextCase);
+    
+    if (this.persistent) save.setPersistentMarker(self, name, newVal);
+    else self.markers[name] = newVal;
+}
+
+/**
+ * Get a copy of this MarkerOperation as a flat Object, suitable for
+ * JSON serialization.
+ * 
+ * @returns {Object} A plain Object copy of this operation.
+ */
+MarkerOperation.prototype.serialize = function () {
+    return {
+        name: this.name,
+        op: this.op,
+        value: this.value,
+        perTarget: this.perTarget,
+        persistent: this.persistent
+    };
+}
+
+
 /**********************************************************************
  *****                  State Object Specification                *****
  **********************************************************************/
@@ -307,88 +531,17 @@ function State($xml_or_state, parentCase) {
         }
     }
     
-    if (markerOp) {
-        var match = markerOp.match(/^(?:(\+|-)([\w-]+)(\*?)|([\w-]+)(\*?)\s*=\s*(.*?)\s*)$/);
-        var name;
-        
-        this.marker = {name: null, perTarget: false, persistent: persistMarker, op: null, val: null};
-        
-        if (match) {
-            this.marker.perTarget = !!(match[3] || match[5]);
-            
-            if (match[1] === '+') {
-                // increment marker value
-                this.marker.op = '+';
-                this.marker.name = match[2];
-            } else if (match[1] === '-') {
-                // decrement marker value
-                this.marker.op = '-';
-                this.marker.name = match[2];
-            } else {
-                // set marker value
-                this.marker.op = '=';
-                this.marker.name = match[4];
-                this.marker.val = match[6];
-            }
-        } else {
-            this.marker.op = '=';
-            this.marker.name = markerOp;
-            this.marker.perTarget = (markerOp.substring(markerOp.length - 1, markerOp.length) === "*");
-            this.marker.val = 1;
-        }
-    }
+    if (markerOp) this.marker = parseMarkerOperation(markerOp);
 }
 
 State.prototype.evaluateMarker = function (self, opp) {
     if (!this.marker) return;
-    
-    var name = this.marker.name;
-    if (this.marker.perTarget && opp) {
-        name = getTargetMarker(name, opp);
-    }
-    if (this.marker.op === '+') {
-        if (this.marker.persistent) {
-            var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
-        } else {
-            var curVal = parseInt(self.markers[name], 10) || 0;
-        }
-        
-        return !curVal ? 1 : curVal + 1;
-    } else if (this.marker.op === '-') {
-        if (this.marker.persistent) {
-            var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
-        } else {
-            var curVal = parseInt(self.markers[name], 10) || 0;
-        }
-        
-        return !curVal ? 0 : curVal - 1;
-    } else if (this.marker.op === '=') {
-        if (typeof(this.marker.val) === 'number') return this.marker.val;
-        
-        var val = expandDialogue(this.marker.val, self, opp, this.parentCase && this.parentCase.variableBindings);
-        
-        if (!isNaN(parseInt(val, 10))) {
-            return parseInt(val, 10);
-        } else {
-            return val;
-        }
-    }
+    return this.marker.evaluate(self, opp, this.parentCase);
 }
 
 State.prototype.applyMarker = function (self, opp) {
     if (!this.marker) return;
-    
-    var name = this.marker.name;
-    if (this.marker.perTarget && opp) {
-        name = getTargetMarker(name, opp);
-    }
-    
-    var newVal = this.evaluateMarker(self, opp);
-    if (this.marker.persistent) {
-        save.setPersistentMarker(self, name, newVal);
-    } else {
-        self.markers[name] = newVal;
-    }
+    return this.marker.apply(self, opp, this.parentCase);
 }
 
 State.prototype.expandDialogue = function(self, target) {

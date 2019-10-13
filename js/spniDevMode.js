@@ -307,17 +307,8 @@ DevModeDialogueBox.prototype.saveEdits = function () {
                 info.state = {'text': curState.rawDialogue, 'image': curState.image, 'marker': null};
                 
                 if (curState.marker) {
-                    info.state.marker = {
-                        'name': curState.marker.name,
-                        'perTarget': curState.marker.perTarget,
-                    };
-                    
-                    var markerName = curState.marker.name;
-                    if (curState.marker.perTarget) {
-                        markerName = getTargetMarker(curState.marker.name, player.currentTarget);
-                    }
-                    
-                    info.state.marker.value = player.markers[markerName];
+                    info.state.marker = curState.marker.serialize();
+                    info.state.marker.value = curState.marker.getCurrentValue();
                 }
             }
             
