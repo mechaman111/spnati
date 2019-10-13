@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1.1 at 10:25:55 PM on September 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.5 at 11:11:08 AM on October 11, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.1.1</version>
+    <version>v5.2.5</version>
     <first>Ribbon Girl</first>
     <last />
     <label>Ribbon Girl</label>
@@ -63,19 +63,28 @@
         </trigger>
 
         <trigger id="game_start">
-            <case stage="0" alsoPlaying="sakura" alsoPlayingSayingMarker="number_1_start">
+            <case stage="0">
+                <condition role="other" character="sakura" sayingMarker="number_1_start" />
                 <state img="#-happy.png" marker="nickname*=Fran">How about I just call you "Fran?"</state>
             </case>
-            <case stage="0" alsoPlaying="gwen">
+            <case stage="0">
+                <condition role="other" character="n" saying="seeing things" />
+                <state img="#-happy.png">Heh, don't worry, &lt;i&gt;you're&lt;/i&gt; not crazy, my arms totally are! You weren't seeing things at all, that was real!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="gwen" />
                 <state img="#-happy.png">Spider-Woman, huh? You wouldn't happen to be one of Kid Cobra's friends, would you? They all have cool animal or insect nicknames too!</state>
             </case>
-            <case stage="0" alsoPlaying="joey">
+            <case stage="0">
+                <condition role="other" character="joey" />
                 <state img="#-happy.png">Oh, a clown! I fought a street-performing clown in the ring once! Would you happen to be a street performer too?</state>
             </case>
-            <case stage="0" alsoPlaying="mavis">
+            <case stage="0">
+                <condition role="other" character="mavis" />
                 <state img="#-happy.png">Aha, funny you say that, Mavis, because I know a mummy whose arms are like mine! He's one of the toughest heavy-weights around!</state>
             </case>
-            <case stage="0" alsoPlaying="sayaka">
+            <case stage="0">
+                <condition role="other" character="sayaka" />
                 <state img="#-happy.png">Oh, it's not magic, it's the ARMS ability, and it's pretty scientific! I've heard it's some kind of genetic mutation.</state>
             </case>
             <case stage="0" id="38">
@@ -148,6 +157,11 @@
         </trigger>
 
         <trigger id="bad_hand">
+            <case stage="7-8" oneShotId="2" priority="0">
+                <test expr="~self.trail~" cmp="&gt;=" value="3" />
+                <state img="#-flustered.png">Looks like I'm in a bind, because I'm way behind, and I might be willing to make a deal...</state>
+                <state img="#-sing.png">♪All alone in deseration, now the time has gone...♪</state>
+            </case>
             <case stage="0-3">
                 <state img="#-dukes.png">This hand won't keep me down! The fight's not over until the bell rings!</state>
                 <state img="#-dukes.png">You can't give up just because things look hopeless! A bad hand isn't the end!</state>
@@ -170,88 +184,168 @@
                 <state img="#-flustered.png">O-oh. Th-this hand isn't good at all. Ahaha...</state>
                 <state img="#-sing.png">&lt;i&gt;♪... Let's fight on, even if we get sad and unable to stand up...♪&lt;/i&gt;</state>
                 <state img="#-sing.png">♪I'm going down, in a spiral to the ground! No~ o~ne, no one's gonna save me now!♪</state>
+                <state img="#-flustered.png">Aha, clearly the devil deals the cards in this match!... Y-you see what I did there..?</state>
             </case>
         </trigger>
 
         <trigger id="hand">
-            <case stage="0-8" id="47" alsoPlaying="chun-li" alsoPlayingStage="7" alsoPlayingTimeInStage="0" alsoPlayingSaidMarker="juri_attack">
+            <case stage="0-7" priority="171">
+                <condition role="other" character="mulan" stage="2-4" timeInStage="1" sayingMarker="mulan_duel" />
+                <condition count="0" status="naked" />
+                <condition count="0" status="masturbating" />
+                <condition count="0" status="finished" />
+                <state img="#-dukes.png">You're on! There's no way I can lose this!</state>
+            </case>
+            <case stage="0-8" id="47">
                 <condition count="1" filter="juri" />
+                <condition role="other" character="chun-li" stage="7" timeInStage="0" saidMarker="juri_attack" />
                 <state img="#-flustered.png">That's, uh... not how I'm used to fights ending.</state>
                 <state img="#-flustered.png">That's, uh... not how I'm used to fights ending... &lt;i&gt;Not ones I see in person, anyway...&lt;/i&gt;</state>
             </case>
-            <case stage="0-8" alsoPlaying="cammy_white" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
+            <case stage="0-8">
                 <condition count="1" filter="juri" />
+                <condition role="other" character="cammy_white" stage="5" timeInStage="0" />
                 <state img="#-flustered.png">I'm sorry about the rest of your leotard, Cammy. You can borrow some of my stuff after the match, if any of it will fit you!</state>
             </case>
-            <case stage="0-8" alsoPlaying="chun-li" alsoPlayingStage="10" alsoPlayingTimeInStage="0">
+            <case stage="0-8" priority="156">
+                <condition role="other" character="mulan" stage="1" timeInStage="0" sayingMarker="honorable_others" />
+                <state img="#-happy.png">Oh, uh... I like a man who's sweet, funny, and brave... maybe a little dorky, too...</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="chun-li" stage="10" timeInStage="0" />
                 <state img="#-happy.png">Oh! You look really pretty with your hair down, Chun-Li!</state>
             </case>
-            <case stage="0-8" id="50" alsoPlaying="cammy_white" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
+            <case stage="0-8" id="50">
+                <condition role="other" character="cammy_white" stage="1" timeInStage="0" />
                 <state img="#-dukes.png">That's your call, Cammy. If you think you can still win without them, go ahead and take them off!</state>
             </case>
-            <case stage="0-8" alsoPlaying="cammy_white" alsoPlayingStage="0" totalRounds="0" alsoPlayingSayingMarker="mission">
+            <case stage="0-8" totalRounds="0">
+                <condition role="other" character="cammy_white" stage="0" sayingMarker="mission" />
                 <state img="#-dukes.png">Hi, Cammy! You can call me Ribbon Girl! Let me know if you need any extra muscle!</state>
             </case>
-            <case stage="0-8" alsoPlaying="aella" alsoPlayingStage="0-6" totalAlive="2" notSaidMarker="1v1" alsoPlayingSaidMarker="RGWagerNotSure">
+            <case stage="0-8" priority="147">
+                <condition role="self" notSaidMarker="1v1" />
+                <condition role="other" character="aella" stage="0-6" saidMarker="RGWagerNotSure" />
+                <condition count="2" status="alive" />
                 <state img="#-dukes.png" marker="1v1">You ready to lose the wager, Aella?</state>
             </case>
-            <case stage="0-8" alsoPlaying="aella" alsoPlayingStage="0-6" totalAlive="2" notSaidMarker="1v1">
+            <case stage="0-8" priority="146">
+                <condition role="self" notSaidMarker="1v1" />
+                <condition role="other" character="aella" stage="0-6" />
+                <condition count="2" status="alive" />
                 <state img="#-dukes.png" marker="1v1">Your size doesn't intimidate me, Aella! You're going down!</state>
             </case>
-            <case stage="0-8" alsoPlaying="erufuda" alsoPlayingStage="0-6" totalAlive="2" notSaidMarker="1v1">
+            <case stage="0-8" priority="146">
+                <condition role="self" notSaidMarker="1v1" />
+                <condition role="other" character="erufuda" stage="0-6" />
+                <condition count="2" status="alive" />
                 <state img="#-dukes.png" marker="1v1">It's just us now, Erufuda! Let's see if your elven magic is any match for my fighting spirit!</state>
             </case>
-            <case stage="0-8" alsoPlaying="jotaro" alsoPlayingStage="0-7" totalAlive="2" notSaidMarker="1v1">
+            <case stage="0-8" priority="146">
+                <condition role="self" notSaidMarker="1v1" />
+                <condition role="other" character="jotaro" stage="0-7" />
+                <condition count="2" status="alive" />
                 <state img="#-wink.png" marker="1v1">Not to sound like I'm going to go easy on you, but I totally wouldn't mind losing a game like this to a hunk like you, Jotaro!</state>
             </case>
-            <case stage="0-8" alsoPlaying="sei" alsoPlayingStage="0-8" totalAlive="2" notSaidMarker="1v1">
+            <case stage="0-8" priority="146">
+                <condition role="self" notSaidMarker="1v1" />
+                <condition role="other" character="sei" stage="0-8" />
+                <condition count="2" status="alive" />
                 <state img="#-dukes.png" marker="1v1">Fair warning, Sei, this isn't the first time I've gone 1-on-1 with law enforcement!... In a totally legal way, I mean, of course!</state>
             </case>
-            <case stage="0-8" alsoPlaying="cammy_white" alsoPlayingStage="0-5" totalAlive="2" notSaidMarker="1v1">
+            <case stage="0-8" priority="146">
+                <condition role="self" notSaidMarker="1v1" />
+                <condition role="other" character="cammy_white" stage="0-5" />
+                <condition count="2" status="alive" />
                 <state img="#-wink.png" marker="1v1">Look like it's almost time for me add "spy" to the list of different fighters I've beaten!</state>
             </case>
-            <case stage="0-8" alsoPlaying="emi" alsoPlayingStage="1-2" alsoPlayingSaidMarker="car_accident" alsoPlayingSayingMarker="setup_pirate">
+            <case stage="0-8">
+                <condition role="self" sayingMarker="1v1" />
+                <condition count="2" status="alive" />
+                <condition role="other" character="natsuki" stage="0-8" />
+                <state img="#-dukes.png" marker="1v1">Come on, Gnat-suki! Let's see how your poetry matches against my music!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="mulan" stage="2-8" />
+                <condition count="2" status="alive" />
+                <condition role="self" notSaidMarker="1v1" />
+                <state img="#-dukes.png" marker="1v1">Me too, Mulan! Fighting along side friends is fun, but nothing's like one-on-one matches!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="mulan" stage="0-1" />
+                <condition count="2" status="alive" />
+                <condition role="self" notSaidMarker="1v1" />
+                <state img="#-dukes.png" marker="1v1">Me too, Ping! Fighting along side friends is fun, but nothing compares to one-on-one matches!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" sayingMarker="1v1" />
+                <condition count="2" status="alive" />
+                <condition role="other" character="futaba" stage="0-6" />
+                <state img="#-dukes.png" marker="1v1">&lt;i&gt;You're&lt;/i&gt; the one who's lucky this isn't a fighting game! I've played more than you might think!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="emi" stage="1-2" saidMarker="car_accident" sayingMarker="setup_pirate" />
                 <state img="#-happy.png">Yeah! That's a good attitude to have!</state>
             </case>
-            <case stage="0-8" alsoPlaying="sakura" alsoPlayingStage="0-2" alsoPlayingSayingMarker="ribbon_girl_arms">
+            <case stage="0-8">
+                <condition role="other" character="sakura" stage="0-2" sayingMarker="ribbon_girl_arms" />
                 <state img="#-happy.png">Oh, it's hardly new. The ARMS Grad Prix has been going on for nearly two decades!</state>
             </case>
-            <case stage="1" alsoPlaying="sayaka" alsoPlayingStage="0" alsoPlayingSayingMarker="ribbon_mutant">
+            <case stage="1">
+                <condition role="other" character="sayaka" stage="0" sayingMarker="ribbon_mutant" />
                 <state img="#-flustered.png">Uh, maybe don't use the word "mutant." It's not the radioactive kind of mutation, it's more like... variation!</state>
             </case>
-            <case stage="0-8" alsoPlaying="chun-li" alsoPlayingHand="High Card" totalRounds="4">
+            <case stage="0-8" totalRounds="4" priority="135">
                 <condition count="1" filter="juri" />
+                <condition role="other" character="chun-li" />
                 <state img="#-annoyed.png">No one likes a cheater, Juri! Knock it off!</state>
             </case>
-            <case stage="0" alsoPlaying="jotaro" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="jotaro" />
                 <state img="#-happy.png">Oh! You have a spirit friend, just like Misango! Do you have an affinity for friendship bracelets too, Jotaro? Is that how you guys have those spirits?</state>
             </case>
-            <case stage="0" alsoPlaying="twilight" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="twilight" />
                 <state img="#-happy.png">Oh! It's not every day I meet someone with skin like yours, Twilight. Last person I met who had purple skin was Master Mummy!</state>
             </case>
-            <case stage="0" alsoPlaying="wiifitfemale" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="wiifitfemale" />
                 <state img="#-happy.png">Oh hey, you look just like the trainer in the fitness program I use at home!... That isn't &lt;i&gt;actually&lt;/i&gt; you, right?...</state>
             </case>
-            <case stage="0" alsoPlaying="chun-li" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="chun-li" />
                 <state img="#-happy.png">Oh, I think I've heard of you before, Chun-Li! "Strongest woman in the world," right?</state>
             </case>
-            <case stage="0" alsoPlaying="rainbow_mika" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="rainbow_mika" />
                 <state img="#-dukes.png">Funny meeting another masked fighter here! If you think you're going to beat me tonight, you're dreaming! &lt;i&gt;I'm&lt;/i&gt; the best fighter here!</state>
             </case>
-            <case stage="1" alsoPlaying="sakura" timeInStage="0">
+            <case stage="1">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="sakura" />
                 <state img="#-happy.png">I sure do! That's actually how I practice my singing for concerts! It's basically the same as singing while dancing, so it's a great way to save time!</state>
             </case>
-            <case stage="2" alsoPlaying="sakura" timeInStage="0">
+            <case stage="2">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="sakura" />
                 <state img="#-happy.png">How about after this match? I like doing covers, so let's sing some of your music!</state>
             </case>
-            <case stage="0-8" alsoPlaying="aella" alsoPlayingSaidMarker="RGWager" alsoPlayingNotSaidMarker="RGWagerNotSure" alsoPlayingSayingMarker="RGWagerNotSure">
+            <case stage="0-8">
+                <condition role="other" character="aella" saidMarker="RGWager" sayingMarker="RGWagerNotSure" notSaidMarker="RGWagerNotSure" />
                 <state img="#-happy.png">So, are you going to join in on the wager, Aella?</state>
             </case>
-            <case stage="0-8" alsoPlaying="aella" saidMarker="WagerStart" alsoPlayingNotSaidMarker="RGWager" alsoPlayingSayingMarker="RGWager">
+            <case stage="0-8">
+                <condition role="self" saidMarker="WagerStart" />
+                <condition role="other" character="aella" sayingMarker="RGWager" notSaidMarker="RGWager" />
                 <state img="#-happy.png">Well, it was directed at ~player~, but you can join in too, if you want!</state>
             </case>
-            <case stage="0" alsoPlaying="kizuna" alsoPlayingSayingMarker="kizuna_hi">
+            <case stage="0">
+                <condition role="other" character="kizuna" sayingMarker="kizuna_hi" />
                 <state img="#-happy.png">Hi, Kizuna! Nice to meet you! I'm Ribbon Girl, a famous singer and ARMS fighter!</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="erufuda" saidMarker="ribbon_girl_peak" />
+                <state img="#-flustered.png">... Thank you for that, Erufuda...</state>
             </case>
             <case stage="0" totalRounds="0">
                 <condition count="2-3" filter="celebrity" />
@@ -277,16 +371,24 @@
                 <condition count="2-4" filter="superhero" />
                 <state img="#-happy.png">Oh cool, &lt;i&gt;real&lt;/i&gt; superheroes! I want to know what each of your powers are!</state>
             </case>
-            <case stage="0" totalAlive="3" totalRounds="0">
+            <case stage="0" totalRounds="0" priority="15">
+                <condition count="3" status="alive" />
                 <state img="#-happy.png">So it's just us three, huh? It's kind of nice to go out and do something and not have a ton of people around for once!</state>
             </case>
-            <case stage="0-8" totalAlive="2" notSaidMarker="1v1">
+            <case stage="0-8" oneShotId="3">
+                <condition count="2-4" gender="male" status="naked" role="other" />
+                <state img="#-flustered.png">S-so this is what it's like in the men's locker room, huh...?</state>
+            </case>
+            <case stage="0-8" priority="6">
+                <condition role="self" notSaidMarker="1v1" />
+                <condition count="2" status="alive" />
                 <state img="#-dukes.png" marker="1v1">This is it, just you and me. Don't give up now!</state>
                 <state img="#-dukes.png" marker="1v1">The end is near! Let's wrap this up!</state>
                 <state img="#-dukes.png" marker="1v1">One note away! Time to seize the spotlight!</state>
                 <state img="#-sing.png" marker="1v1">♪It's just me you and the music now, Slim, I hope you hear it!♪</state>
             </case>
-            <case stage="0" id="44" saidMarker="PlayerWager2" notSaidMarker="WagerStart">
+            <case stage="0" id="44">
+                <condition role="self" saidMarker="PlayerWager2" notSaidMarker="WagerStart" />
                 <state img="#-happy.png" marker="WagerStart">Oh, but let's have a few rules: whatever we do can't be illegal, can't be too violent, and can't break the loser's bank... oh, and no pictures or video!</state>
             </case>
         </trigger>
@@ -301,7 +403,8 @@
             <case stage="0" alsoPlaying="jura" alsoPlayingStage="0-6">
                 <state img="#-happy.png">Hmm... How about "Lady Dread?"</state>
             </case>
-            <case stage="0" alsoPlaying="meia" alsoPlayingStage="0-5">
+            <case stage="0">
+                <condition role="other" character="meia" stage="0-5" />
                 <state img="#-happy.png">Oh, an explanation is easy: I have the ARMS ability! It gives me stretchy arms!</state>
             </case>
             <case stage="0" alsoPlaying="revy" alsoPlayingStage="0-7">
@@ -310,7 +413,8 @@
             <case stage="0" alsoPlaying="aella">
                 <state img="#-flustered.png">Oh, uh, it... kinda just does this naturally. It's been like this ever since I got the ARMS ability.</state>
             </case>
-            <case stage="0" alsoPlaying="akko">
+            <case stage="0">
+                <condition role="other" character="akko" />
                 <state img="#-wink.png">Sorry, no, I'm not Twintelle. I'm Ribbon Girl!</state>
                 <state img="#-wink.png">Maybe. There's more than one of us punch girls, you know! If it's Ribbon Girl you're thinking of, that's me!</state>
             </case>
@@ -323,10 +427,12 @@
             <case stage="0" alsoPlaying="sayaka">
                 <state img="#-happy.png">I can dance through the air like a ribbon in the wind!</state>
             </case>
-            <case stage="0" alsoPlaying="sei">
+            <case stage="0">
+                <condition role="other" character="sei" />
                 <state img="#-happy.png">Oh! A fan, huh? Yep, it's me, the one and only Ribbon Girl!</state>
             </case>
-            <case stage="1" alsoPlaying="akko">
+            <case stage="1">
+                <condition role="other" character="akko" />
                 <state img="#-happy.png">There's no magic &lt;i&gt;or&lt;/i&gt; music involved. The ARMS Ability lets me channel energy into the Sparkies to make them, well, &lt;i&gt;sparky&lt;/i&gt;!</state>
             </case>
             <case stage="1" alsoPlaying="sakura">
@@ -334,6 +440,14 @@
             </case>
             <case stage="2" alsoPlaying="nami">
                 <state img="#-happy.png">Nope. This is the work of the ARMS ability! I just woke up one day and my hands were on the other side of the room!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="natsuki" />
+                <state img="#-happy.png">Nope! This stuff is for the real deal!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="futaba" />
+                <state img="#-happy.png">ARMS &lt;i&gt;League&lt;/i&gt;, yep!... But what's "Nintendo" mean?</state>
             </case>
             <case stage="1-3" consecutiveLosses="2">
                 <state img="#-flustered.png">Aw man, again already?</state>
@@ -463,7 +577,8 @@
         </trigger>
 
         <trigger id="stripping">
-            <case stage="0" alsoPlaying="meia" alsoPlayingStage="0-5" alsoPlayingSaying="Stretchy">
+            <case stage="0">
+                <condition role="other" character="meia" stage="0-5" saying="Stretchy" />
                 <state img="#-stripping.png">I swear I'm not a robot, Meia! If you won't take my word for it, why don't you come over and feel me?</state>
             </case>
             <case stage="0" alsoPlaying="aella">
@@ -487,7 +602,8 @@
                 <state img="#-stripping.png" marker="SparkiesTalk">These are one of my signature Arms: Sparkies. They're medium weight, glove-type Arms. Simple, but effective!</state>
                 <state img="#-stripping.png" marker="SparkiesTalk">These are one of my favorite Arms: Sparkies. Medium weight, glove-type, electric Arms. What's not to love?</state>
             </case>
-            <case stage="0" alsoPlaying="sei">
+            <case stage="0">
+                <condition role="other" character="sei" />
                 <state img="#-stripping.png">That's okay, Sei. I don't expect all my fans to know absolutely &lt;i&gt;everything&lt;/i&gt; about me. I do a lot, so that'd be pretty hard!</state>
             </case>
             <case stage="1" alsoPlaying="sakura">
@@ -498,7 +614,8 @@
                 <state img="#-stripping.png" marker="MandatoryChestGuard">Chest guards are pretty much mandatory in the ARMS League. Too bad mine isn't big enough to give me super armor!</state>
                 <state img="#-stripping.png" marker="MandatoryChestGuard">Chest guards are pretty much mandatory in the ARMS League. You'd think with Arms that deal fire, electric, and explosive damage, we'd have more protection than that!</state>
             </case>
-            <case stage="1" alsoPlaying="sei">
+            <case stage="1">
+                <condition role="other" character="sei" />
                 <state img="#-stripping.png">I don't know, to be honest. Whatever it does better be good. This thing wasn't cheap!</state>
             </case>
             <case stage="2" alsoPlaying="akko">
@@ -510,8 +627,9 @@
             <case stage="2" alsoPlaying="sayaka">
                 <state img="#-stripping.png">That's right. My arms will go all wonky if I don't have my mask on. It's not painful, but it's kind of embarrassing!</state>
             </case>
-            <case stage="2" alsoPlaying="sei">
-                <state img="#-stripping.png">Sang-whatnow? &lt;i&gt;Illigal?&lt;/i&gt; No, these boots are legal, I'm pretty sure! Byte would've arrested me if they weren't, I wore these to our fight!</state>
+            <case stage="2">
+                <condition role="other" character="sei" />
+                <state img="#-stripping.png">Sang-whatnow? &lt;i&gt;Illegal?&lt;/i&gt; No, these boots are legal, I'm pretty sure! Byte would've arrested me if they weren't, I wore these to our fight!</state>
             </case>
             <case stage="3" alsoPlaying="sayaka">
                 <state img="#-stripping.png">Oh, you give me too much credit, Sayaka. I'm not saving the world. I'm just an entertainer.</state>
@@ -534,6 +652,22 @@
             </case>
             <case stage="7" alsoPlaying="sayaka">
                 <state img="#-stripping.png">Y-yeah, s-sure, symbolism...</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="natsuki" />
+                <state img="#-stripping.png">Cosplay...? No, I'm the &lt;i&gt;real&lt;/i&gt; Ribbon Girl!</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="natsuki" />
+                <state img="#-stripping.png">Oh yeah, you should check out the classes at Spring Gym! If you're lucky, you might even see Spring Man there!</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="natsuki" />
+                <state img="#-stripping.png">It's okay, Natsuki, I know I'm small... in the, um... yeah, it's okay.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="futaba" />
+                <state img="#-stripping.png">Ink-what? I'm sorry, but you've lost me, Futaba.</state>
             </case>
             <case stage="0">
                 <state img="#-stripping.png">Let's start smart: Sparkies first. This'll make it easier to take everything else off.</state>
@@ -590,10 +724,15 @@
             <case stage="1" alsoPlaying="sei" alsoPlayingStage="9-10">
                 <state img="#-happy.png">Sure, just as long as you wash your hands first.</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="meia" stage="0-5" />
+                <state img="#-flustered.png">How many times do I have to tell you? I'm &lt;i&gt;not&lt;/i&gt; a robot! What can I do to convince you that I'm human?</state>
+            </case>
             <case stage="1" alsoPlaying="sayaka" saidMarker="SparkiesTalk">
                 <state img="#-happy.png">Oh, I can't take credit for that. The Sparkies do all the work creating electicity. All I do is charge them.</state>
             </case>
-            <case stage="2" alsoPlaying="akko" alsoPlayingSaying="spirits">
+            <case stage="2">
+                <condition role="other" character="akko" saying="spirits" />
                 <state img="#-stripped.png">I don't know about anyone else's, but last time I checked, mine doesn't have any!</state>
             </case>
             <case stage="2" alsoPlaying="sayaka" saidMarker="MandatoryChestGuard">
@@ -627,7 +766,8 @@
             <case stage="2" alsoPlaying="sakura">
                 <state img="#-stripped.png">Heehee, yeah. Sometimes, anyway! Other times they hide them completely!</state>
             </case>
-            <case stage="2" alsoPlaying="sei">
+            <case stage="2">
+                <condition role="other" character="sei" />
                 <state img="#-stripped.png">Definitely! I feel that way when I put on an outfit for a stage performance, too!</state>
             </case>
             <case stage="3" alsoPlaying="akko">
@@ -639,7 +779,8 @@
             <case stage="3" alsoPlaying="sayaka">
                 <state img="#-stripped.png">You're right! Hey, maybe one day, we'll see a Magical Girls League? Haha!</state>
             </case>
-            <case stage="3" alsoPlaying="sei">
+            <case stage="3">
+                <condition role="other" character="sei" />
                 <state img="#-stripped.png">What? No! They're just normal boots, I swear!</state>
             </case>
             <case stage="4" alsoPlaying="akko">
@@ -648,13 +789,15 @@
             <case stage="4" alsoPlaying="sayaka">
                 <state img="#-happy.png">I'm certainly proud of my fans, at least!</state>
             </case>
-            <case stage="4" alsoPlaying="sei">
+            <case stage="4">
+                <condition role="other" character="sei" />
                 <state img="#-embarrassed.png">Nanomachines? No, I work out, I just... don't have a great diet...</state>
             </case>
             <case stage="5" alsoPlaying="sayaka">
                 <state img="#-flustered.png">Eheh, I don't know if I'd say &lt;i&gt;that&lt;/i&gt;...</state>
             </case>
-            <case stage="5" alsoPlaying="sei">
+            <case stage="5">
+                <condition role="other" character="sei" />
                 <state img="#-flustered.png">Of course I am, Sei. You... wouldn't...?</state>
             </case>
             <case stage="6" alsoPlaying="akko">
@@ -663,7 +806,8 @@
             <case stage="6" alsoPlaying="sayaka">
                 <state img="#-dukes.png">Not if I can help it!... For myself, I meant... Never mind...</state>
             </case>
-            <case stage="6" alsoPlaying="sei">
+            <case stage="6">
+                <condition role="other" character="sei" />
                 <state img="#-stripped.png">Sorry, Sei. I came here in my ring outfit, which also means I'm wearing my workout underwear.</state>
             </case>
             <case stage="7" alsoPlaying="nami">
@@ -679,8 +823,21 @@
             <case stage="8" alsoPlaying="sayaka">
                 <state img="#-flustered.png">To be fair, they're not exactly big and stretchy right now.</state>
             </case>
-            <case stage="8" alsoPlaying="sei">
+            <case stage="8">
+                <condition role="other" character="sei" />
                 <state img="#-stripped.png" marker="RibbonHair">Y-yeah, &lt;i&gt;all&lt;/i&gt; of my hair is natural, if you can believe that, ribbons and all.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="natsuki" />
+                <state img="#-happy.png">I got into boxing because Twintelle did too. We were sort of close back then, if you can believe that!</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="natsuki" />
+                <state img="#-stripped.png">... Hey, forget Spring Gym. &lt;i&gt;I'll&lt;/i&gt; teach you how to box!</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="futaba" />
+                <state img="#-flustered.png">... Yeah, I'm sorry, Futaba, but I have no idea what you were just talking about.</state>
             </case>
             <case stage="1" saidMarker="SparkiesTalk">
                 <state img="#-happy.png" marker="OtherSignatureArms">I like to use Slapamanders and Poppers too. Both are great at a distance and help me keep my mobility!</state>
@@ -745,7 +902,8 @@
         </trigger>
 
         <trigger id="male_human_must_strip">
-            <case stage="0-8" id="37" notSaidMarker="PlayerWager" priority="999">
+            <case stage="0-8" id="37" priority="999">
+                <condition role="self" notSaidMarker="PlayerWager" />
                 <state img="#-dukes.png" marker="PlayerWager">You've got a certain kind of energy about you, ~player~. We should be rivals!</state>
             </case>
         </trigger>
@@ -825,8 +983,29 @@
             <case stage="0-10" target="joey" targetStage="2" targetSaying="watch">
                 <state img="#-cheer.png">Knock us dead, Joey!</state>
             </case>
+            <case stage="0-10">
+                <alternative target="joey" targetStage="5" targetSaying="time to" />
+                <alternative target="joey" targetStage="5" targetSaying="trick" />
+                <state img="#-flustered.png">A-another trick? Are you sure that's a good idea?</state>
+            </case>
+            <case stage="0-10" priority="381">
+                <condition role="target" character="florina" stage="4" saidMarker="bee" />
+                <state img="#-shocked.png">Ah! I hope no here is alergic!</state>
+            </case>
             <case stage="0" target="chun-li" targetStage="0">
                 <state img="#-flustered.png">I really like your Hya, uh... Hyagu... re... y-your thunder kick move!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="juri" />
+                <state img="#-dukes.png">Of course not! I'm not strong because of my gifts, I'm strong because I know how to use them!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="chun-li" />
+                <state img="#-flustered.png">Oh! I think I know who you're talking about!... What was his name, again...?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="cammy_white" />
+                <state img="#-happy.png">Nope! I'm just an ARMS League fighter and pop star!... Okay, "just" is an understandment, but you know what I meant.</state>
             </case>
             <case stage="0-10" id="22" targetStage="0">
                 <state img="#-wink.png">Sorry, ~name~! No perfect for you this match!</state>
@@ -857,11 +1036,6 @@
                 <state img="#-wink.png">Your turn in the spotlight, ~name~!</state>
                 <state img="#-sing.png">♪The die is cast! She can do nothing but advance!♪</state>
                 <state img="#-wink.png">You're not pulling your punches on us, are you?</state>
-            </case>
-            <case stage="0-10">
-                <alternative target="joey" targetStage="5" targetSaying="time to" />
-                <alternative target="joey" targetStage="5" targetSaying="trick" />
-                <state img="#-flustered.png">A-another trick? Are you sure that's a good idea?</state>
             </case>
             <case stage="4-6">
                 <state img="#-happy.png">Your turn to show some skin, ~name~!</state>
@@ -979,6 +1153,10 @@
         </trigger>
 
         <trigger id="female_removing_accessory">
+            <case stage="0-10" id="60" priority="381">
+                <condition role="target" character="florina" stage="0" saidMarker="fled" />
+                <state img="#-flustered.png">Is she... is she really gone...?</state>
+            </case>
             <case stage="0-10" target="blake" targetStage="5">
                 <state img="#-happy.png">Don't worry, I'll keep your secret, whatever it is!</state>
             </case>
@@ -988,8 +1166,13 @@
             <case stage="0-10" target="twilight" targetStage="3">
                 <state img="#-flustered.png">I guess this &lt;i&gt;is&lt;/i&gt; your last important item.</state>
             </case>
-            <case stage="0" target="chun-li" targetStage="0">
+            <case stage="0">
+                <condition role="target" character="chun-li" stage="0" />
                 <state img="#-wink.png">Oh, and of course, I love your outfit too! It strikes a nice balance between strong and elegant. Just like you, right?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="chun-li" />
+                <state img="#-stripping.png">Dhalsim! Right! Yeah, I have good range, but so do my opponents, so it evens out! Now, if you and I were to fight, I'd keep my arms retracted so we're more even.</state>
             </case>
             <case stage="0-3">
                 <state img="#-sing.png">♪Little ~clothing.ifPlural(things|thing)~, blown away, in the wind, out of play!♪</state>
@@ -1030,6 +1213,10 @@
             </case>
             <case stage="0-10" target="twilight" targetStage="5" targetSayingMarker="twilight_not_human">
                 <state img="#-flustered.png">Aha, good one, Twilight... W-wait, you were kidding, right...?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="florina" stage="1" saidMarker="fled" />
+                <state img="#-happy.png">Aha, silly Florina, you should save the cardio for later!</state>
             </case>
             <case stage="0-10" target="blake" targetStage="6">
                 <state img="#-flustered.png">Oh, that's all? I once fought a big, purple mummy and a slime man. This is... pretty normal compared to that.</state>
@@ -1142,6 +1329,10 @@
         </trigger>
 
         <trigger id="female_removing_minor">
+            <case stage="0-10" id="61" priority="383">
+                <condition role="target" character="florina" stage="4" saidMarker="bee" sayingMarker="bee2" notSaidMarker="bee_stop" />
+                <state img="#-dukes.png">W-wait, stay still, I think I can punch it!</state>
+            </case>
             <case stage="0-10" id="35" target="sakura" targetStage="3" targetSayingMarker="headless">
                 <state img="#-shocked.png">Oh no!</state>
             </case>
@@ -1189,6 +1380,10 @@
         </trigger>
 
         <trigger id="female_removed_minor">
+            <case stage="0-10" priority="381">
+                <condition role="target" character="florina" stage="5" saidMarker="bee2" />
+                <state img="#-happy.png">It's gone!... Say, that gives me an idea for an Arm.... Oh, and I'm sorry about your tunic!</state>
+            </case>
             <case stage="0-10" target="kyoko" targetStage="6">
                 <state img="#-flustered.png">Oh, uh, I meant it's terrible that they're burnt, not terrible that they're visible...</state>
             </case>
@@ -1386,6 +1581,10 @@
             </case>
             <case stage="7-8" target="emi" targetStage="8">
                 <state img="#-dukes.png">I'm sure I'll still take you down anyway, so whatever!</state>
+            </case>
+            <case stage="0-10" id="63">
+                <condition role="target" character="mulan" stage="2" />
+                <state img="#-dukes.png">Man, woman, whatever! As long as you're a good opponent, I don't care what your gender is!</state>
             </case>
             <case stage="0-3" id="12" targetLayers="5-8">
                 <state img="#-flustered.png">That's... certainly a way to play!</state>
@@ -1618,7 +1817,9 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
-            <case stage="0-10" id="45" target="chun-li" alsoPlaying="juri" alsoPlayingStage="4" targetSaidMarker="juri_attack">
+            <case stage="0-10" id="45">
+                <condition role="target" character="chun-li" saidMarker="juri_attack" />
+                <condition role="other" character="juri" stage="4" />
                 <state img="#-shocked.png" weight="2">Look out behind you, Chun-Li!</state>
                 <state img="#-shocked.png">Whoa watch out!</state>
             </case>
@@ -1631,6 +1832,10 @@
             </case>
             <case stage="0-10" target="twilight" targetStage="6">
                 <state img="#-flustered.png">The order you took everything off in sure was... odd, but definitely made things exciting!</state>
+            </case>
+            <case stage="0-10" id="62" priority="302">
+                <condition role="target" character="florina" saidMarker="bee2" sayingMarker="bee3" />
+                <state img="#-dukes.png">Stay still this time, I'll settle this for good!</state>
             </case>
             <case stage="0-10" target="joey" targetNotSaidMarker="NonMagicStrip3">
                 <state img="#-happy.png">Well, I guess you don't have much to lose if this goes wrong.</state>
@@ -1713,6 +1918,10 @@
             <case stage="7-10" target="twilight" targetStage="7">
                 <state img="#-happy.png">It's nice to see that you're not as shy about this as I am, at least!</state>
             </case>
+            <case stage="0-10" priority="302">
+                <condition role="target" character="florina" saidMarker="bee3" sayingMarker="exposed_chest" />
+                <state img="#-flustered.png">Oh, you got it. Well, alright!</state>
+            </case>
             <case stage="0-10" target="aella" targetSayingMarker="NoBra">
                 <state img="#-happy.png">Have you ever tried a sports bra? I'm sure one would fit your needs better than a regular one!</state>
             </case>
@@ -1759,7 +1968,9 @@
         </trigger>
 
         <trigger id="female_large_chest_is_visible">
-            <case stage="0-10" id="46" target="chun-li" alsoPlaying="juri" targetSaidMarker="juri_attack">
+            <case stage="0-10" id="46">
+                <condition role="target" character="chun-li" saidMarker="juri_attack" />
+                <condition role="other" character="juri" />
                 <state img="#-cheer.png">Aw yeah! Nice reversal!</state>
             </case>
             <case stage="0-10" target="erufuda" alsoPlayingSaying="fries">
@@ -1793,7 +2004,9 @@
         </trigger>
 
         <trigger id="female_crotch_will_be_visible">
-            <case stage="0-10" target="cammy_white" alsoPlaying="chun-li" targetSaidMarker="chunli_help">
+            <case stage="0-10">
+                <condition role="target" character="cammy_white" saidMarker="chunli_help" />
+                <condition role="other" character="chun-li" />
                 <state img="#-shocked.png">&lt;i&gt;Wait, what are you doing, Chun-Li?&lt;/i&gt;</state>
             </case>
             <case stage="0-10" id="51" target="rainbow_mika" alsoPlaying="cammy_white" targetSaidMarker="cammy_help">
@@ -1849,7 +2062,9 @@
         </trigger>
 
         <trigger id="female_crotch_is_visible">
-            <case stage="0-10" target="cammy_white" alsoPlaying="chun-li" targetSaidMarker="chunli_help">
+            <case stage="0-10">
+                <condition role="target" character="cammy_white" saidMarker="chunli_help" />
+                <condition role="other" character="chun-li" />
                 <state img="#-flustered.png">A-at least you gave Cammy a reason to get a new leotard! Why not get one by Billy? That's the brand that manufactured my costume! They make good stuff!</state>
             </case>
             <case stage="0-10" target="rainbow_mika" alsoPlaying="cammy_white" targetSaidMarker="cammy_help">
@@ -1865,13 +2080,17 @@
             <case stage="0-10" target="twilight" targetStage="3">
                 <state img="#-happy.png">Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.</state>
             </case>
-            <case stage="0-6" id="16" target="human" saidMarker="WagerStart">
+            <case stage="0-6" id="16">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="WagerStart" />
                 <state img="#-embarrassed.png">O-oh wow... I might reconsider my options for what we'll do if I win...</state>
             </case>
             <case stage="0-10" target="joey" targetNotSaidMarker="NonMagicStrip2">
                 <state img="#-shocked.png">Whoa! Clowns sure do know how to keep me on my toes!</state>
             </case>
-            <case stage="7-8" id="15" target="human" saidMarker="WagerStart">
+            <case stage="7-8" id="15">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="WagerStart" />
                 <state img="#-embarrassed.png">O-oh wow... M-maybe losing to you wouldn't be so bad...</state>
             </case>
             <case stage="0-10" target="cammy_white">
@@ -1920,29 +2139,36 @@
         </trigger>
 
         <trigger id="opponent_lost">
-            <case stage="0-10" target="9s" targetStage="0">
+            <case stage="0-10">
+                <condition role="target" character="9s" stage="0" />
                 <state img="#-happy.png">Oh, are you one of those "blind swordsman" types, or do you just like the challenge of fighting blind?</state>
             </case>
-            <case stage="0-10" target="aella" targetStage="0">
+            <case stage="0-10">
+                <condition role="target" character="aella" stage="0" />
                 <state img="#-dukes.png">You're a heavy weight if I've ever seen one! You look as tough as Master Mummy! Can you heal yourself too?</state>
                 <state img="#-dukes.png">You're a heavy weight if I've ever seen one! You look as tough as Max Brass! Can you puff up too?</state>
             </case>
-            <case stage="0-8" id="39" filter="formal_attire" targetStage="0">
+            <case stage="0-8" id="39">
+                <condition filter="formal_attire" role="target" stage="0" />
                 <state img="#-wink.png">That's a very nice outfit you have on, ~name~! Too bad it's all going to come off when you lose to me!</state>
             </case>
-            <case stage="0-7" id="40" filter="robot" targetStage="0">
+            <case stage="0-7" id="40">
+                <condition filter="robot" role="target" stage="0" />
                 <state img="#-dukes.png">I'm no stranger to having robotic opponents, ~name~! I once faced Springtron in the ring! He was the toughest opponent I've ever faced!</state>
                 <state img="#-dukes.png">I'm no stranger to having robotic opponents, ~name~! I once faced Byte and Barq in the ring! Their teamwork is impeccable, and they don't even wirelessly communicate!</state>
                 <state img="#-happy.png">Oh, a robot, huh? I bet Mechanica would like to meet you; she loves robots! I bet she'd want to see what makes you tick!</state>
                 <state img="#-happy.png">Oh, a robot, huh? I bet Mechanica would like to meet you!... Hopefully she won't take you apart!</state>
             </case>
-            <case stage="0-7" id="41" filter="fighter" targetStage="0">
+            <case stage="0-7" id="41">
+                <condition filter="fighter" role="target" stage="0" />
                 <state img="#-dukes.png">So you're a fighter, huh? Think you can last a round against me?</state>
             </case>
-            <case stage="0-10" filter="gamer" targetStage="0">
+            <case stage="0-10">
+                <condition filter="gamer" role="target" stage="0" />
                 <state img="#-wink.png">So you like to play games, huh? Play any fighting games?</state>
             </case>
-            <case stage="0-10" id="52" alsoPlaying="rainbow_mika" alsoPlayingStage="3" alsoPlayingTimeInStage="1-" alsoPlayingSaidMarker="mask" alsoPlayingSayingMarker="mask_falls">
+            <case stage="0-10" id="52">
+                <condition role="other" character="rainbow_mika" stage="3" timeInStage="1-" saidMarker="mask" sayingMarker="mask_falls" />
                 <state img="#-shocked.png">M-Mika! Y-your mask!</state>
             </case>
         </trigger>
@@ -1955,7 +2181,9 @@
         </trigger>
 
         <trigger id="opponent_stripped">
-            <case stage="0-8" id="1" target="human" saidMarker="PlayerWager" notSaidMarker="PlayerWager2" priority="999">
+            <case stage="0-8" id="1" priority="999">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="PlayerWager" notSaidMarker="PlayerWager2" />
                 <state img="#-happy.png" marker="PlayerWager2">How about this: if you win, we can do whatever you want afterward, but if I win... ah, we can work that out later.</state>
             </case>
             <case stage="0-10" id="2" target="9s" targetStage="6">
@@ -1967,7 +2195,24 @@
             </case>
         </trigger>
 
+        <trigger id="opponent_crotch_is_visible">
+            <case stage="8" priority="148">
+                <condition role="other" character="mulan" stage="2-7" saidMarker="mulan_duel" sayingMarker="duel_ribbon_girl" notSaidMarker="challenge_answer" />
+                <condition count="1-" status="naked" />
+                <state img="#-flustered.png">Oh, well, uh... I haven't really tried that many, but, um... it's that one that's like cowgirl-style, but the man is sitting upright too. What's that one called...?</state>
+            </case>
+        </trigger>
+
         <trigger id="male_must_masturbate">
+            <case stage="0-8">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="1v1" />
+                <state img="#-happy.png">Sorry, ~player~, looks like I win our wager!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="human" />
+                <state img="#-happy.png" marker="PlayerIsOut">Sorry, ~player~, looks like you lost our wager.</state>
+            </case>
             <case stage="0-10" id="28" targetStartingLayers="1-4" totalRounds="1-10">
                 <state img="#-annoyed.png">Aw, you're out already? I expected more of a challenge.</state>
                 <state img="#-annoyed.png">You lost already? That sure was fast.</state>
@@ -2008,6 +2253,11 @@
         </trigger>
 
         <trigger id="male_start_masturbating">
+            <case stage="0-8">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="PlayerIsOut" />
+                <state img="#-happy.png">I could still lose too, though, so it could end up being a draw!</state>
+            </case>
             <case stage="0-3">
                 <state img="#-wink.png">Sorry that I'm not showing off anything nice, but that's kind of your own fault for losing so easily!</state>
                 <state img="#-happy.png">You can look at me while you do that, if you want.</state>
@@ -2040,6 +2290,10 @@
         </trigger>
 
         <trigger id="male_masturbating">
+            <case stage="9-10">
+                <condition role="target" character="human" timeInStage="0" />
+                <state img="#-happy.png">I guess no one wins our wager then, ~player~. Oh well!</state>
+            </case>
             <case stage="0-3">
                 <state img="#-flustered.png">Sorry, I'm staring, aren't I? I probably shouldn't stare, but...</state>
                 <state img="#-embarrassed.png">You're, uh... pretty good at that.</state>
@@ -2108,10 +2362,13 @@
         </trigger>
 
         <trigger id="female_must_masturbate">
-            <case stage="0-8" target="human" saidMarker="1v1">
+            <case stage="0-8">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="1v1" />
                 <state img="#-happy.png">Sorry, ~player~, looks like I win our wager!</state>
             </case>
-            <case stage="0-8" target="human">
+            <case stage="0-8">
+                <condition role="target" character="human" />
                 <state img="#-happy.png" marker="PlayerIsOut">Sorry, ~player~, looks like you lost our wager.</state>
             </case>
             <case stage="0-10" id="30" targetStartingLayers="1-4" totalRounds="1-10">
@@ -2155,7 +2412,9 @@
         </trigger>
 
         <trigger id="female_start_masturbating">
-            <case stage="0-8" target="human" saidMarker="PlayerIsOut">
+            <case stage="0-8">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="PlayerIsOut" />
                 <state img="#-happy.png">I could still lose too, though, so it could end up being a draw!</state>
             </case>
             <case stage="0-10" target="joey">
@@ -2194,7 +2453,8 @@
         </trigger>
 
         <trigger id="female_masturbating">
-            <case stage="9-10" target="human" targetTimeInStage="0">
+            <case stage="9-10">
+                <condition role="target" character="human" timeInStage="0" />
                 <state img="#-happy.png">I guess no one wins our wager then, ~player~. Oh well!</state>
             </case>
             <case stage="0-3">
@@ -2353,6 +2613,21 @@
         </trigger>
 
         <trigger id="game_over_victory">
+            <case stage="0-8">
+                <condition role="other" character="natsuki" />
+                <condition role="self" saidMarker="WagerStart" />
+                <state img="#-flustered.png">... Aw, what's one more back stage pass... Okay! You can join ~player~ and I.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="sei" />
+                <condition role="self" saidMarker="WagerStart" />
+                <state img="#-happy.png">How about you tell me about your police combat training, Sei?... Assuming you're allowed to, of course!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="akko" />
+                <condition role="self" saidMarker="WagerStart" />
+                <state img="#-happy.png">How about you teach me some magic, Akko? It might come in handy the next time I fight Lola Pop!</state>
+            </case>
             <case stage="0-3">
                 <state img="#-happy.png">That was fun! Who wants to play again?</state>
                 <state img="#-wink.png">That was fun! Maybe next time you'll actually see something exciting from me!</state>
@@ -2363,7 +2638,8 @@
                 <state img="#-cheer.png">I win! Flawless victory!</state>
                 <state img="#-cheer.png">Perfect!</state>
             </case>
-            <case stage="0" alsoPlaying="human" priority="0">
+            <case stage="0" priority="0">
+                <condition role="other" character="human" />
                 <test expr="~target.gender~" value="male" />
                 <state img="#-sing.png">♪~player~ just c'mon back if you ever want to try again, 'cause I told you once you son of a gun, I'm the best there's ever been!♪</state>
             </case>
@@ -2380,21 +2656,40 @@
         </trigger>
 
         <trigger id="game_over_defeat">
-            <case stage="10" target="human" saidMarker="PlayerWager">
+            <case stage="10">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="PlayerWager" />
                 <state img="#-happy.png" collectible="badge1">Well played, ~player~! We can do whatever you like just as soon as I get dressed!... U-unless you need me to stay undressed, of course!...</state>
-                <state img="#-happy.png">Well played, ~player~!... Aha, I guess whether I get dressed or not depends on what you have planned, huh?</state>
+                <state img="#-happy.png" collectible="badge1">Well played, ~player~!... Aha, I guess whether I get dressed or not depends on what you have planned, huh?</state>
             </case>
-            <case stage="10" target="aella">
+            <case stage="10">
+                <condition role="self" saidMarker="WagerStart" />
+                <condition role="target" character="natsuki" />
+                <state img="#-happy.png">That wasn't really the deal... but I didn't make a rule against that, so alright!</state>
+            </case>
+            <case stage="10">
+                <condition role="target" character="akko" />
+                <condition role="self" saidMarker="WagerStart" />
+                <state img="#-happy.png">Okay, sure! Magic sounds like fun!</state>
+            </case>
+            <case stage="10">
+                <condition role="target" character="aella" />
                 <state img="#-happy.png">Oh, that's... Yeah! I can do that for you!</state>
             </case>
-            <case stage="10" target="human">
+            <case stage="10">
+                <condition role="target" character="human" />
                 <state img="#-happy.png" collectible="badge1">That was fun! I might play again sometime soon!</state>
                 <state img="#-happy.png" collectible="badge1">That was pretty fun! I think I might make this a regular thing.</state>
                 <state img="#-happy.png" collectible="badge1">Gosh, that was fun! I should find the time to play again soon!</state>
                 <state img="#-wink.png" collectible="badge1">That was fun! A-anyone want an autograph?</state>
             </case>
-            <case stage="10" alsoPlaying="sayaka">
-                <state img="#-happy.png">Yeah, it's been fun talking with you too, Sayaka! I'll be sure to savea nice front row seat for you!</state>
+            <case stage="10">
+                <condition role="target" character="sei" />
+                <state img="#-flustered.png">W-well, I uh... Y-yeah! W-we can do that!</state>
+            </case>
+            <case stage="10">
+                <condition role="other" character="sayaka" />
+                <state img="#-happy.png" collectible="badge1">Yeah, it's been fun talking with you too, Sayaka! I'll be sure to savea nice front row seat for you!</state>
             </case>
             <case stage="10">
                 <state img="#-happy.png">That was fun! I might play again sometime soon!</state>
