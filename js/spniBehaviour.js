@@ -461,6 +461,87 @@ MarkerOperation.prototype.serialize = function () {
 }
 
 
+/**
+ * Stores information about operations to perform on Collectible
+ * counters.
+ * 
+ * @param {string} collectibleId The collectible ID to modify.
+ * @param {string} [collectibleOp] The operation to perform on the
+ * collectible. Should be either '+N', '-N', or '=N' for increment /
+ * decrement / set operations, respectively (where N is any positive
+ * integer), or undefined for unlock operations (which immediately
+ * unlock the specified collectible).
+ */
+function CollectibleOperation (collectibleId, collectibleOp) {
+    this.id = collectibleId;
+    this.op = 'unlock';
+    this.val = undefined;
+
+    if (collectibleOp) {
+        if (collectibleOp.startsWith('+')) {
+            this.op = 'inc';
+            this.val = parseInt(collectibleOp.substring(1), 10);
+        } else if (collectibleOp.startsWith('-')) {
+            this.op = 'dec';
+            this.val = parseInt(collectibleOp.substring(1), 10);
+        } else {
+            this.op = 'set';
+            this.val = parseInt(collectibleOp, 10);
+        }
+
+        if (!this.val || this.val <= 0) {
+            this.op = 'unlock';
+            this.val = undefined;
+        }
+    }
+}
+
+
+/**
+ * Apply this collectible operation to an Opponent.
+ * 
+ * @param {Opponent} self The Opponent to apply this operation to.
+ */
+CollectibleOperation.prototype.apply = function (self) {
+    if (!self) return;
+    
+    if (COLLECTIBLES_ENABLED && self.collectibles) {
+        self.collectibles.some(function (collectible) {
+            if (collectible.id !== this.id) return false;
+
+            console.log(
+                "Performing collectible op: " +
+                this.op.toUpperCase() +
+                " on ID: " +
+                this.id
+            );
+
+            switch (this.op) {
+                default:
+                case 'unlock':
+                    collectible.unlock();
+                    break;
+                case 'inc':
+                    collectible.incrementCounter(this.val);
+                    break;
+                case 'dec':
+                    collectible.incrementCounter(-this.val);
+                    break;
+                case 'set':
+                    collectible.setCounter(this.val);
+                    break;
+            }
+
+            if (collectible.isUnlocked() && !COLLECTIBLES_UNLOCKED) {
+                self.pendingCollectiblePopup = collectible;
+            }
+
+            return true;
+        }, this);
+    }
+}
+
+
 /**********************************************************************
  *****                  State Object Specification                *****
  **********************************************************************/
@@ -509,27 +590,8 @@ function State($xml_or_state, parentCase) {
     var persistMarker = $xml.attr('persist-marker') === 'true';
     var markerOp = $xml.attr('marker');
 
-    if (collectibleId) {
-        this.collectible = {id: collectibleId, op: 'unlock', val: null};
-        
-        if (collectibleOp) {
-            if (collectibleOp.startsWith('+')) {
-                this.collectible.op = 'inc';
-                this.collectible.val = parseInt(collectibleOp.substring(1), 10);
-            } else if (collectibleOp.startsWith('-')) {
-                this.collectible.op = 'dec';
-                this.collectible.val = parseInt(collectibleOp.substring(1), 10);
-            } else {
-                this.collectible.op = 'set';
-                this.collectible.val = parseInt(collectibleOp, 10);
-            }
-            
-            if (!this.collectible.val || this.collectible.val <= 0) {
-                this.collectible.op = 'unlock';
-                this.collectible.val = null;
-            }
-        }
-    }
+    if (collectibleId)
+        this.collectible = new CollectibleOperation(collectibleId, collectibleOp);
     
     if (markerOp) this.marker = parseMarkerOperation(markerOp);
 }
@@ -579,45 +641,8 @@ State.prototype.selectImage = function (stage) {
 }
 
 State.prototype.applyCollectible = function (player) {
-    if (COLLECTIBLES_ENABLED && this.collectible && player.collectibles) {
-        player.collectibles.some(function (collectible) {
-            if (collectible.id === this.collectible.id) {
-                console.log(
-                    "Performing collectible op: "+
-                    this.collectible.op.toUpperCase()+
-                    " on ID: "+
-                    this.collectible.id
-                );
-
-		if (collectible.isUnlocked()) {
-                    console.log("Collectible already unlocked; returning");
-		    return;
-		}
-                
-                switch (this.collectible.op) {
-                default:
-                case 'unlock':
-                    collectible.unlock();
-                    break;
-                case 'inc':
-                    collectible.incrementCounter(this.collectible.val);
-                    break;
-                case 'dec':
-                    collectible.incrementCounter(-this.collectible.val);
-                    break;
-                case 'set':
-                    collectible.setCounter(this.collectible.val);
-                    break;
-                }
-                
-                if (collectible.isUnlocked() && !COLLECTIBLES_UNLOCKED) {
-                    player.pendingCollectiblePopup = collectible;
-                }
-                
-                return true;
-            }
-        }.bind(this));
-    }
+    if (!this.collectible) return;
+    return this.collectible.apply(player);
 }
 
 State.prototype.applyOneShot = function (player) {
