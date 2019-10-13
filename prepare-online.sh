@@ -6,7 +6,7 @@ cp -r css fonts js player index.html version-info.xml backgrounds.xml .public
 # Copy non-recursively to exclude the backgrounds folder.
 cp img/* .public/img
 
-sed "s/__CI_COMMIT_SHA/${CI_COMMIT_SHA}/g" prod-config.xml > .public/config.xml
+sed "s/__CI_COMMIT_SHA/${CI_COMMIT_SHA}/g; s/__VERSION/${VERSION}/g" prod-config.xml > .public/config.xml
 cp opponents/listing.xml .public/opponents
 cp opponents/general_collectibles.xml .public/opponents
 
