@@ -7,7 +7,7 @@ deploy_production:
     tags:
         - production
     script:
-        - export VERSION=$(git describe HEAD)
+        - export VERSION=$(git describe --first-parent $CI_COMMIT_REF_NAME)
         - sentry-cli releases new -p spnati $VERSION
         - bash ./prepare-online.sh
         - rsync -rltz --delete .public/ /opt/spnati
