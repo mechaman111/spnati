@@ -24,14 +24,18 @@
     <defaultImage>sad</defaultImage>
     <defaultText>What the character says just after they take their clothes off. Note that this is the start of a new stage.</defaultText>
   </trigger>
-  <trigger tag="swap_cards" start="0" end="8" label="Swapping Cards" description="When exchanging cards" group="1" order="0" color="2">
+  <trigger tag="dealing_cards" optional="true" start="0" end="10" label="Dealing cards" description="When the cards are dealt for a new round" group="1" order="0" color="1">
+    <defaultImage>calm</defaultImage>
+    <defaultText>This can be used in special situations, for example so that a character doesn't show up in two places after "visiting" another.</defaultText>
+  </trigger>
+  <trigger tag="swap_cards" start="0" end="8" label="Swapping Cards" description="When exchanging cards" group="1" order="1" color="2">
     <vars>
       <string>cards</string>
     </vars>
     <defaultImage>calm</defaultImage>
     <defaultText>I'll exchange ~cards~ cards.</defaultText>
   </trigger>
-  <trigger tag="good_hand" start="0" end="8" relatedGroup="1" label="Hand=Good" description="After exchanging, the character has a good hand" group="1" order="1" color="2">
+  <trigger tag="good_hand" start="0" end="8" relatedGroup="1" label="Hand=Good" description="After exchanging, the character has a good hand" group="1" order="2" color="2">
     <vars>
       <string>cards</string>
     </vars>
@@ -39,7 +43,7 @@
     <defaultText>I've got a good hand.</defaultText>
     <generic>hand</generic>
   </trigger>
-  <trigger tag="okay_hand" start="0" end="8" relatedGroup="1" label="Hand=Okay" description="After exchanging, the character has an okay hand" group="1" order="2" color="2">
+  <trigger tag="okay_hand" start="0" end="8" relatedGroup="1" label="Hand=Okay" description="After exchanging, the character has an okay hand" group="1" order="3" color="2">
     <vars>
       <string>cards</string>
     </vars>
@@ -47,7 +51,7 @@
     <defaultText>I've got an okay hand.</defaultText>
     <generic>hand</generic>
   </trigger>
-  <trigger tag="bad_hand" start="0" end="8" relatedGroup="1" label="Hand=Bad" description="After exchanging, the character has a bad hand" group="1" order="3" color="2">
+  <trigger tag="bad_hand" start="0" end="8" relatedGroup="1" label="Hand=Bad" description="After exchanging, the character has a bad hand" group="1" order="4" color="2">
     <vars>
       <string>cards</string>
     </vars>
@@ -55,7 +59,7 @@
     <defaultText>I've got a bad hand.</defaultText>
     <generic>hand</generic>
   </trigger>
-  <trigger tag="hand" optional="true" start="0" end="8" relatedGroup="1" label="Hand=Any" description="Lines are pulled from here alongside the Good/Okay/Bad lines" group="1" order="4" color="2">
+  <trigger tag="hand" optional="true" start="0" end="8" relatedGroup="1" label="Hand=Any" description="Lines are pulled from here alongside the Good/Okay/Bad lines" group="1" order="5" color="2">
     <vars>
       <string>cards</string>
     </vars>
