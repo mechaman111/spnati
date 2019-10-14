@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1.1 at 5:05:29 PM on September 13, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.5 at 5:08:09 PM on October 13, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.1.1</version>
+    <version>v5.2.5</version>
     <first>Toyosatomimi no</first>
     <last>Miko</last>
     <label>Miko</label>
@@ -677,7 +677,7 @@
                 <state img="#-Happy.png">Are you wondering how I got here? I have no need for Occult Balls or Gaps. Every crack contains infinite space, which I can inhabit.</state>
                 <state img="#-Happy.png">Not every story you've heard about me is true. For instance, I wasn't born in a stable.</state>
                 <state img="#-Happy.png">~player~, should you hold an interest in the Taoist Arts, my dojo is accessible from any crack.</state>
-                <state img="#-Happy.png">”Danmaku?” It is the term for the colored bullets we citizens of Gensokyo shoot each other with, either for fun or to annihilate our opponents.</state>
+                <state img="#-Happy.png">“Danmaku?” It is the term of the colored bullets we citizens of Gensokyo shoot each other with, either for fun or to annihilate our opponents.</state>
                 <state img="#-Happy.png">Gensokyo is the land of illusion. All that passes into myth passes into Gensokyo.</state>
             </case>
             <case stage="2-8" priority="0">
@@ -1575,6 +1575,11 @@
             <case stage="0-10" target="zone-tan" targetStage="0" alsoPlaying="remilia" alsoPlayingStage="3-8">
                 <state img="#-Surprised.png">Oh, Remi. You didn’t mention that Lady Patchouli Knowledge had accompanied you here tonight as well.</state>
             </case>
+            <case stage="0-10">
+                <alternative target="jura" targetStage="5" alsoPlaying="meia" notSaidMarker="Nirvana01" />
+                <alternative target="meia" targetStage="4" alsoPlaying="jura" notSaidMarker="Nirvana01" />
+                <state img="#-Pensive.png" marker="Nirvana01">Hold on… you live on a flying ship…  full of women… named &lt;i&gt;The Nirvana&lt;/i&gt;?</state>
+            </case>
             <case stage="0-10" target="jura" targetStage="1" alsoPlaying="meia">
                 <state img="#-Pensive.png">So you two say you come from a world of only women? But I haven’t seen you in Gensokyo before.</state>
             </case>
@@ -2219,8 +2224,9 @@
             <case stage="0-10" filter="persona_5" priority="0">
                 <state img="#-Smug.png">It's now or never, so you've got make your decision.</state>
             </case>
-            <case stage="0-10" filter="princess" priority="0">
-                <state img="#-Happy.png">From one royal to another, I respect you resolve, Princess ~name~.</state>
+            <case stage="0-10" priority="0">
+                <condition filter="princess" role="target" />
+                <state img="#-Happy.png">From one royal to another, I respect your resolve, Princess ~name~.</state>
                 <state img="#-Smug.png">So Princess ~name~, are you the kind of princess who disguises herself as a man and rules their country with wisdom and splendor? Or some other kind?</state>
                 <state img="#-Happy.png">You handle losing with dignity and grace, Princess.</state>
                 <state img="#-Confident.png" marker="ArrangedMarriage">Princess ~name~, how would you like to unite our two lands? First I need to have a daughter though, for you to marry.</state>
@@ -2262,11 +2268,6 @@
             </case>
             <case stage="0-10" filter="witty" priority="0">
                 <state img="#-Happy.png">Oho, you have a sharp tongue, Lady ~name~. You’d be able to match wits with any in Gensokyo!</state>
-            </case>
-            <case stage="0-10">
-                <alternative target="jura" targetStage="5" alsoPlaying="meia" notSaidMarker="Nirvana01" />
-                <alternative target="meia" targetStage="4" alsoPlaying="jura" notSaidMarker="Nirvana01" />
-                <state img="#-Pensive.png" marker="Nirvana01">Hold on… you live on a flying ship…  full of women… named &lt;i&gt;The Nirvana&lt;/i&gt;?</state>
             </case>
             <case stage="0-10" target="palutena" priority="0">
                 <state img="#-Smug.png">You must be the goddess of failure, then.</state>
@@ -2363,8 +2364,9 @@
             <case stage="0-10" target="ae86" targetStage="1">
                 <state img="#-Happy.png">Oh, I see. It’s simply your run of the mill demonic possession. Very well, carry on then.</state>
             </case>
-            <case stage="0-10" target="bi" targetStage="1">
-                <state img="custom:#-MyPlanetNeedsMe" marker="BiBye">Come Tojiko. Let us return to Gensokyo.</state>
+            <case stage="0-10">
+                <condition role="target" character="bi" stage="1" />
+                <state img="custom:#-MyPlanetNeedsMe" marker="BiBye">Come, Tojiko. Let us return to Gensokyo.</state>
             </case>
             <case stage="0-10" target="kamina" targetStage="1">
                 <state img="#-Smug.png">I don’t begrudge the youth to try to “Fight the Power.” But often, humans &lt;i&gt;need&lt;/i&gt; the power of a gifted (and charismatic) leader.</state>
@@ -4117,6 +4119,11 @@
             <case stage="8" id="1" target="saki_zls" targetStage="7" priority="500">
                 <state img="custom:#-Spellcall_ani" marker="SpecialAttack"></state>
             </case>
+            <case stage="0-10">
+                <alternative target="jura" alsoPlaying="meia" notSaidMarker="Nirvana02" />
+                <alternative target="meia" alsoPlaying="jura" notSaidMarker="Nirvana02" />
+                <state img="#-Angry.png" marker="Nirvana02">There can be no mistake! You two are without a doubt acolytes of that vile Buddhist nun Byakuren!</state>
+            </case>
             <case stage="0-10" target="joey" targetStage="4">
                 <state img="#-Smug.png">Be laid bare before me, villain!</state>
             </case>
@@ -4181,11 +4188,6 @@
             <case stage="0-10" filter="shy" notSaidMarker="Kokoro01" priority="0">
                 <state img="#-Pensive.png" marker="Kokoro01">I feel a little bad, making you undress. You know, I have a daughter I think is about your age.</state>
             </case>
-            <case stage="0-10">
-                <alternative target="jura" alsoPlaying="meia" notSaidMarker="Nirvana02" />
-                <alternative target="meia" alsoPlaying="jura" notSaidMarker="Nirvana02" />
-                <state img="#-Angry.png" marker="Nirvana02">There can be no mistake! You two are without a doubt acolytes of that vile Buddhist nun Byakuren!</state>
-            </case>
         </trigger>
 
         <trigger id="female_crotch_is_visible">
@@ -4194,6 +4196,11 @@
             </case>
             <case stage="0-10" target="revy" alsoPlaying="meia" alsoPlayingStage="5" alsoPlayingSayingMarker="revyfight">
                 <state img="#-Happy.png">Oho, a lovely battle has broken out. Well, such things are the norm in Gensokyo, at least.</state>
+            </case>
+            <case stage="0-10">
+                <alternative target="jura" alsoPlaying="meia" notSaidMarker="Nirvana03" />
+                <alternative target="meia" alsoPlaying="jura" notSaidMarker="Nirvana03" />
+                <state img="#-Nervous.png" marker="Nirvana03">Except… I’m not really feeling Buddhists desires coming from you. My mistake, carry on.</state>
             </case>
             <case stage="0-10" target="joey" targetStage="5">
                 <state img="#-Shocked.png">Ah! She caught me by surprise. I must remember not to lower my guard!</state>
@@ -4282,11 +4289,6 @@
                 <state img="#-Nervous.png">Is the style so different in the modern day?</state>
                 <state img="#-Nervous.png">Is that style... expected in this establishment?</state>
                 <state img="#-Pensive.png">Perhaps you are a species of youkai that is naturally hairless? Some sort of…. demonic naked mole rat, perchance?</state>
-            </case>
-            <case stage="0-10">
-                <alternative target="jura" alsoPlaying="meia" notSaidMarker="Nirvana03" />
-                <alternative target="meia" alsoPlaying="jura" notSaidMarker="Nirvana03" />
-                <state img="#-Nervous.png" marker="Nirvana03">Except… I’m not really feeling Buddhists desires coming from you. My mistake, carry on.</state>
             </case>
             <case stage="4-8">
                 <state img="#-Horny.png">It seems the sparks are flying already. &lt;i&gt;Ow!&lt;/i&gt; No wait, that's Tojiko.</state>

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1.1 at 5:33:36 PM on September 15, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.5 at 2:45:26 AM on October 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.1.1</version>
+    <version>v5.2.5</version>
     <first>Saki</first>
     <last>Nikaidou</last>
     <label>Saki</label>
@@ -66,6 +66,7 @@
         <nickname for="nugi-chan">Nugs</nickname>
         <nickname for="palutena">Tannenbaum</nickname>
         <nickname for="pit">Angel</nickname>
+        <nickname for="remilia">Half-Pint</nickname>
         <nickname for="revy">Smokes</nickname>
         <nickname for="rinkah">Princess</nickname>
         <nickname for="ryuji">Cheeto-Skull</nickname>
@@ -74,6 +75,7 @@
         <nickname for="sakura">Egghead</nickname>
         <nickname for="sayaka">Seafoam</nickname>
         <nickname for="sei">Piggy</nickname>
+        <nickname for="shimakaze">Small Fry</nickname>
         <nickname for="streaming-chan">Streams</nickname>
         <nickname for="syrenne">Suds</nickname>
         <nickname for="twilight">Filly</nickname>
@@ -656,8 +658,10 @@
             <case stage="0-8" alsoPlaying="futaba" alsoPlayingSaidMarker="futaba_jukebox" alsoPlayingSayingMarker="futaba_juke_ask">
                 <state img="#-Excited.png">Oi, Javascript. You should play &lt;i&gt;Adabana Necromancy&lt;/i&gt; by Franchouchou. They’re this great up and coming idol group. You should come to our shows! I mean their shows.</state>
             </case>
-            <case stage="0-8" alsoPlaying="revy" saidMarker="revy_music_resp01" alsoPlayingSaidMarker="music">
-                <state img="#-Thinking.png" marker="revy_music_resp02">Actually, Do they even have CDs any more, Smokes? This is the future, they probably got, like, &lt;i&gt;robots&lt;/i&gt; instead.</state>
+            <case stage="0-8">
+                <condition role="self" saidMarker="revy_music_resp01" />
+                <condition role="other" character="revy" saidMarker="music" />
+                <state img="#-Thinking.png" oneShotId="3" marker="revy_music_resp02">Actually, Do they even have CDs any more, Smokes? This is the future, they probably got, like, &lt;i&gt;robots&lt;/i&gt; instead.</state>
             </case>
             <case stage="0-8" alsoPlaying="sakura" saidMarker="jessie_resp_lights" alsoPlayingSaidMarker="no1_jessie_4a">
                 <state img="#-Horny.png" oneShotId="2" marker="no1_jessie_4a_resp">So you also wanna have the lights on when we do it, Egghead? Good, cuz ~player~ n’ me’d like ta see ya!</state>
@@ -686,11 +690,13 @@
             <case stage="0-8" alsoPlaying="akko" alsoPlayingSayingMarker="shiny_rod">
                 <state img="#-Annoyed.png">Clive Sollish? How the hell you spell that shit?</state>
             </case>
-            <case stage="0-8" id="5" alsoPlaying="revy" alsoPlayingSayingMarker="killing">
-                <state img="#-Laughing.png" marker="revy_killing_resp">There is one person whose death I am very much responsible for, Smokes. Damn, she was a babe, though.</state>
+            <case stage="0-8" id="5">
+                <condition role="other" character="revy" sayingMarker="killing" />
+                <state img="#-Laughing.png" oneShotId="2" marker="revy_killing_resp">There is one person whose death I am very much responsible for, Smokes. Damn, she was a babe, though.</state>
             </case>
-            <case stage="0-8" id="6" alsoPlaying="revy" alsoPlayingSayingMarker="music">
-                <state img="#-Happy.png" marker="revy_music_resp01">I used to have a Walkman! Listened to Mentai Rock all the time! Oh, but I should tell you to listen to the cute idol group Franchouchou.</state>
+            <case stage="0-8" id="6">
+                <condition role="other" character="revy" sayingMarker="music" />
+                <state img="#-Happy.png" oneShotId="1" marker="revy_music_resp01">I used to have a Walkman! Listened to Mentai Rock all the time! Oh, but I should tell you to listen to the cute idol group Franchouchou.</state>
             </case>
             <case stage="0-8" alsoPlaying="jessie" alsoPlayingSayingMarker="JessieQA_DarkSecrets">
                 <state img="#-Laughing.png" marker="jessie_resp_secrets">Haw, do I look like the type to be keeping secrets? Nah. Oh wait, I’mma dead body. Does that count?</state>
@@ -733,6 +739,10 @@
             </case>
             <case stage="0-8" alsoPlaying="jessie" alsoPlayingSayingMarker="JessieQA_Backdoor">
                 <state img="#-Confused.png">Butt stuff… really ain’t my thing. If you like it, though, don’t let me stop ya.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="shimakaze" sayingMarker="japend" />
+                <state img="#-Confused.png">What language are you speaking now? &lt;i&gt;What language am I speaking now?&lt;/i&gt; ‘Cause, I only know Japanese….</state>
             </case>
             <case stage="0" timeInStage="0">
                 <condition count="3" filter="street_fighter" />
@@ -1608,10 +1618,12 @@
             <case stage="0-10" target="mulan" targetStage="1">
                 <state img="#-Smug.png">Ha, swingin’ around your sword ain’t gonna save your armor, is it Mister Musou?</state>
             </case>
-            <case stage="0-10" target="nami" targetStage="0">
+            <case stage="0-10">
+                <condition role="target" character="nami" stage="0" />
                 <state img="#-Laughing.png">Since yer hair’s all orange, I’m gonna call ya “Miss Tangerine.” Cute name for a cute gal.</state>
             </case>
-            <case stage="0-10" target="nami" targetStage="2">
+            <case stage="0-10">
+                <condition role="target" character="nami" stage="2" />
                 <state img="#-Laughing.png">You got such little on I feel like I’m playin’ on easy mode.</state>
             </case>
             <case stage="0-10" target="nugi-chan" targetStage="0">
@@ -1753,6 +1765,38 @@
             </case>
             <case stage="0-10" target="chiaki" targetStage="3">
                 <state img="#-Serious.png">Aw, I’m jus’ yankin’ yer chain, Squishy. If yer good at somethin’, take pride in what ya can do. Don’t give a fuck if &lt;i&gt;school&lt;/i&gt; cares.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="shimakaze" stage="0" />
+                <state img="#-Smug.png">You think you fast, Small Fry? You think you’re the fastest there is?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="shimakaze" stage="1" />
+                <state img="#-Smug.png">So how about it, Small Fry? You not too chicken to race the number one speed demon in Saga?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="0" />
+                <state img="#-Thinking.png">What’s with the maid? You some kinda princess, Half-Pint?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="1" />
+                <state img="#-Thinking.png">So yer character is bein’ the bratty half-pint, I take it?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="2" />
+                <state img="#-Happy.png">So this “Scarred Devil Mansion” is your idol group, right? Actually a pretty dope name.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="3" />
+                <state img="#-Serious.png">Damn, yer really goin’t at that sauce. I’m here if ya ever need ta talk, Half-Pint.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="4" />
+                <state img="#-Happy.png">Yo, that’s a dope light show, Half-Pint. Is yer Meido friend hidin’ a lightset under her skirt?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="5" />
+                <state img="#-Thinking.png">You got hippies in yer group, Half-Pint? Somethin’ smells like burnin’ patchouli.</state>
             </case>
             <case stage="0-10" target="miko">
                 <state img="#-Excited.png">Awwright, here we go! Greenie, time ta strip your wife &lt;i&gt;bare&lt;/i&gt;!</state>
@@ -1985,11 +2029,13 @@
             <case stage="0-10" target="mulan" targetStage="0">
                 <state img="#-Laughing.png">With that whole getup, you look straight outta some &lt;i&gt;Romance of the Three Kingdoms&lt;/i&gt; flick. What? I seen kung-fu movies too, ya know.</state>
             </case>
-            <case stage="0-10" target="nami" targetStage="0">
+            <case stage="0-10">
+                <condition role="target" character="nami" stage="0" />
                 <state img="#-Happy.png">You keep a double sided dildo in your holster? Smart. Never know when the mood will arise.</state>
             </case>
-            <case stage="0-10" target="nami" targetStage="1">
-                <state img="#-Confused.png">“I didn’t understand most of that, Tangerine. Is a “Log Poser” like a Tamagotchi?”</state>
+            <case stage="0-10">
+                <condition role="target" character="nami" stage="1" />
+                <state img="#-Confused.png">I didn’t understand most of that, Tangerine. Is a “Log Poser” like a Tamagotchi?</state>
             </case>
             <case stage="0-10" target="nami" targetStage="2">
                 <state img="#-Happy.png">Oh neat, is that one of those novelty “Wanted” posters? You look good.</state>
@@ -2051,6 +2097,18 @@
             <case stage="0-10" target="chiaki" targetStage="1">
                 <state img="#-Laughing.png">Face the music. If you ain’t good at nothin’ real, then your parents paid a lotta money and lied to you.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="shimakaze" stage="0" />
+                <state img="#-Excited.png">WRONG! Ain’t no one faster than Biker Queen Saki!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="shimakaze" stage="1" />
+                <state img="#-Happy.png">All right Small Fry, grab your bike! After the next hand, we’ll see who’s first to drive off a cliff!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="0" />
+                <state img="#-Annoyed.png">What’re ya talkin’ about with this “Devil” stuff? Vampires? That shit ain’t real.</state>
+            </case>
             <case stage="0-2">
                 <state img="#-Annoyed.png">”Safe” never won no races, ~name~! ‘Course, it also didn’t drive off no roads neither…</state>
             </case>
@@ -2086,6 +2144,14 @@
             </case>
             <case stage="0-10" target="sakura" targetStage="1" saidMarker="ss_threesome">
                 <state img="#-Horny.png">Keep winning them hands, ~player~, and maybe you’ll get a special Franchouchou “duet” all your own!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="shimakaze" stage="4" sayingMarker="dizzy" />
+                <state img="#-Confused.png">Hey Small Fry, are yer clothes supposed to explode? I didn’t wanna say nothin’ in case it was intentional, but you looked kinda… concussed.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="shimakaze" stage="4" sayingMarker="japanese" />
+                <state img="#-Thinking.png">Izzat Japanese…? Wait, were you not speaking Japanese before?</state>
             </case>
             <case stage="0-10" target="akko" targetStage="1">
                 <state img="#-Annoyed.png">You obviously hid your hat with like, mirrors n’ junk. Gonna take more’n that to wow me, Witchy!</state>
@@ -2222,6 +2288,22 @@
             </case>
             <case stage="0-10" target="chiaki" targetStage="2">
                 <state img="#-Smug.png">But hey, nothin’ wrong with bein’ good at games. Y’know, assumin’ that ain’t a load of bull too.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="shimakaze" stage="1" />
+                <state img="#-Laughing.png">I didn’t just live my life past the speed limit, I &lt;i&gt;died&lt;/i&gt; going 140! Beat that, Small Fry!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="shimakaze" stage="2" />
+                <state img="#-Confused.png">What? Boat? Like some fisherman shit? I thought you were a speed racer, Small Fry. I can’t race my bike on water.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="shimakaze" stage="4" />
+                <state img="#-Shocked.png">Hey Small Fry, yer clothes are explodin’. Didn’t wanna say nothin’ earlier in case it was intentional.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="1" />
+                <state img="#-Happy.png">Oh I get it, you’re an idol like me! The goth lolita princess thing is your, what’d Ai call it? Your character.</state>
             </case>
             <case stage="0-10" target="human" saidMarker="choices" notSaidMarker="choices02">
                 <state img="#-Rapping.png" marker="choices02">&lt;i&gt;NOPE!&lt;/i&gt;</state>
@@ -2424,6 +2506,10 @@
                 <state img="#-Excited.png">Lookit me. I ain’t one for academics, but I’m gonna idol my way to the top of Japan!</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="remilia" stage="1" />
+                <state img="#-Annoyed.png">Gotta say, I’m glad we don’t gotta put up with a character like that in Franchouchou. I much prefer my group’s sweet and adorable Shrimpy.</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-Horny.png">Get ~clothing.ifPlural(those|that)~ ~clothing~ outta here, ~Clothing.ifPlural(they’re|it's)~ blockin’ the view!</state>
                 <state img="#-Horny.png">I heard that Franchouchou’s super popular Number Two has a thing for girls who wear ~clothing~~clothing.ifPlural(|s)~.</state>
             </case>
@@ -2507,6 +2593,10 @@
             </case>
             <case stage="0-10" target="chiaki" targetStage="4">
                 <state img="#-Smug.png">Still ain’t gonna believe yer talk ’til we go a round or two in the arcade, though. I ain’t gonna be beat at &lt;i&gt;Daytona USA&lt;/i&gt;!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="2" />
+                <state img="#-Serious.png">Ai said that that sort of “brat” character was goin’ out the door. Your group might needa revamp to stay relevant!</state>
             </case>
             <case stage="0-10" target="human" saidMarker="choices" notSaidMarker="choices02">
                 <state img="#-Rapping.png" marker="choices02">&lt;i&gt;NOPE!&lt;/i&gt;</state>
@@ -2684,6 +2774,14 @@
                 <state img="#-Happy.png">I see they feed ya well at yer hotel, Goth. Maybe Franchouchou oughta do a concert there.</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="remilia" stage="2" />
+                <state img="#-Laughing.png">But &lt;i&gt;“Remilia Scarlet”&lt;/i&gt;? I can’t speak a lick a’ English, and even I can tell yer manager musta been drunk when coming up with that stage name!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="3" />
+                <state img="#-Confused.png">As a fellow idol, I gotta let you know. It would be a scandal if anyone found out about yer drinkin’! </state>
+            </case>
+            <case stage="0-10">
                 <state img="#-Excited.png">Hell yeah, we fast approachin’ schlick time!</state>
                 <state img="#-Horny.png">Please please please have forgotten to wear undies.</state>
             </case>
@@ -2779,6 +2877,14 @@
             </case>
             <case stage="0-10" target="rinkah" targetStage="4">
                 <state img="#-Laughing.png">Woah, looks like a wardrobe malfunction here, folks! Yer fundoshi’s blocking my view of summa yer pubes.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="3" />
+                <state img="#-Confused.png">Look Half-Pint, I know idol life is tough, but ya shouldn’t start boozin’ because of it. Wait, are ya even twenty?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="4" />
+                <state img="#-Thinking.png">I guess all the strippin’ also could be a scandal huh? Well, if the idol thing falls through I could always start an undead biker gang!</state>
             </case>
             <case stage="0-10" target="human" saidMarker="choices" notSaidMarker="choices02">
                 <state img="#-Singing.png" marker="choices02">&lt;i&gt;YEP!&lt;/i&gt;</state>
@@ -2910,7 +3016,7 @@
             <case stage="0-10">
                 <state img="#-Horny.png">That thing take wide right turns?</state>
                 <state img="#-Horny.png">Damn, that’s enough cock for my whole crew!</state>
-                <state img="#-Excited.png">I’d right that down the highway at 150 KPH.</state>
+                <state img="#-Excited.png">I’d ride that down the highway at 150 km/h.</state>
                 <state img="#-Shocked.png">Holy crap that’s long!</state>
                 <state img="#-Shocked.png">HUGE!</state>
             </case>
@@ -2962,6 +3068,10 @@
                 <state img="#-Thinking.png">Top like that, ya gotta have a pretty form fittin’ bra. Or you could be like Big Sis Yuugiri, n’ not even….</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="remilia" />
+                <state img="#-Excited.png">Me n’ my girls did something just like that as Saga Rock! We got hit by lightnin’ and that made us all glowy n’ gave us like synth voices. We could shoot lasers, too!</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-Horny.png">Let’s see just how much ~clothing.ifPlural(those ~clothing~ are|that ~clothing~ is)~ holdin’ you back.</state>
                 <state img="#-Excited.png">Looks like this round, we all win with a pair!</state>
                 <state img="#-Happy.png">Time to bust the girls outta prison!</state>
@@ -2988,6 +3098,10 @@
             </case>
             <case stage="0-10" target="miko">
                 <state img="#-Shocked.png">Whoa, but that ain’t true, Phones! Girlfriend titties count for somethin’ too.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" />
+                <state img="#-Confused.png">Hmmm, kinda an underwhelming reveal for how hype that laser show was lookin’.</state>
             </case>
             <case stage="0-10">
                 <state img="#-Happy.png">I’ve driven off cliffs less steep than that!</state>
@@ -3076,6 +3190,10 @@
                 <state img="#-Horny.png">Even if you came with full makeup, Egghead, it’d been wiped away anyway by how wet you are.</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="remilia" />
+                <state img="#-Serious.png">Bye, Meido! Aw, look Half-Pint, ya dropped yer glass. That’s it, we’re cuttin’ ya off.</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-Excited.png">Don’t be a pussy! Let’s see yours!</state>
                 <state img="#-Horny.png">Need any help with gettin’ ~clothing.ifPlural(those|that)~ ~clothing~ off?</state>
                 <state img="#-Horny.png">Oh man, we gettin’ the good stuff now?</state>
@@ -3151,6 +3269,10 @@
             </case>
             <case stage="8" target="meia">
                 <state img="#-Butt.png">Should I turn away too, Captain?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" />
+                <state img="#-Shocked.png">Woah, it looks like yer flyin’! You musta been hitting the vino pretty hard!</state>
             </case>
             <case stage="0-10" alsoPlaying="akko" alsoPlayingSayingMarker="pies2">
                 <state img="#-Annoyed.png">Girl, you even dumber than I am. Who the fuck turns down free pie, either the sex kind &lt;i&gt;or&lt;/i&gt; the pastry kind?</state>
@@ -3484,6 +3606,10 @@
                 <state img="#-Horny.png">Snuggle up close, Egghead. N’ don’t be afraid to ask for a hand.</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="remilia" />
+                <state img="#-Serious.png">Ooh, scandalous. Don’t worry, Half-Pint, I won’t narc on ya. Girls should be allowed to have fun.</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-Horny.png">Hope yer fingers're up for the long haul, 'cause you are &lt;i&gt;it&lt;/i&gt;, ~name~!</state>
                 <state img="#-Horny.png">Better hope you limbered up earlier, cause you got some serious pleasurin’ ahead a’ you.</state>
                 <state img="#-Excited.png">You ain’t got no more clothes, ~name~? You know what that means— spread them legs and rev those fingers!</state>
@@ -3512,6 +3638,10 @@
             </case>
             <case stage="0-10" target="sayaka">
                 <state img="#-Shocked.png">Your piercing transforms into a sex toy? &lt;i&gt;That’s awesome! I want one!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="remilia" />
+                <state img="#-Confused.png">Yo, Half-Pint. Don’t upchuck while yer fiddlin’ with yerself.</state>
             </case>
             <case stage="0-10" filter="tandem" alsoPlaying="sakura" alsoPlayingStage="0-7">
                 <state img="#-Laughing.png">Lookit ~name~, Egghead! That could be us, but you still playin’. Poker, that is. Hurry up n’ lose so we can do that too.</state>
