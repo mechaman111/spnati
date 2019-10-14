@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.5 at 2:28:49 AM on October 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.5 at 1:34:53 AM on October 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.5</version>
     <first>N</first>
@@ -557,6 +557,14 @@
                 <keyframe time="2.5" x="0" />
             </directive>
         </pose>
+        <pose id="YEET">
+            <sprite id="iNceNsed" src="n/0-iNceNsed.png" x="0" y="0" />
+            <directive type="animation" id="iNceNsed" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="0" y="0" />
+                <keyframe time="0.5" x="0" />
+                <keyframe time="3" x="-10080" />
+            </directive>
+        </pose>
     </poses>
 
     <behaviour>
@@ -569,6 +577,10 @@
                 <test expr="~player~" value="Ghetsis" />
                 <state img="#-BITCH.png">&lt;i&gt;Am I a JOKE to you!?&lt;/i&gt;</state>
                 <state img="#-BITCH.png">Hate. Let me tell you how much I've come to hate you. There are roughly three trillion cells in my body. If the word hate was engraved on each cell of mine, it would not equal one one-billionth of the hatred I'm feeling for you. Hate. Hate.</state>
+            </case>
+            <case stage="0">
+                <test expr="~background.privacy~" value="public" />
+                <state img="#-coNsider.png">Poker? You're... inviting &lt;i&gt;me&lt;/i&gt; to play poker? I can't say I'm an expert at poker... or is this a challenge? Also, what on Earth is with this wallpaper?</state>
             </case>
             <case stage="0">
                 <state img="#-coNfused.png">Poker? You're... inviting &lt;i&gt;me&lt;/i&gt; to play poker? I can't say I'm an expert at poker... or is this a challenge?</state>
@@ -595,6 +607,11 @@
             <case stage="0">
                 <condition role="other" character="ribbon_girl" />
                 <state img="#-astoNished.png">Were your arms...? No, I must be seeing things.</state>
+            </case>
+            <case stage="0">
+                <test expr="~player~" value="Ghetsis" />
+                <state img="custom:YEET">If you're set your name as my &lt;i&gt;father's&lt;/i&gt;, then I'm not joining your goddamn game!</state>
+                <state img="custom:YEET">No. Fuck this, I'm out.</state>
             </case>
             <case stage="0">
                 <alternative>
@@ -860,6 +877,10 @@
                 <condition role="other" character="leggy" stage="4" timeInStage="0" />
                 <state img="#-Nervous.png">...Then again, I don't know what I was expecting underneath.</state>
             </case>
+            <case stage="0-8">
+                <condition role="other" character="meia" stage="4" />
+                <state img="#-thiNk.png">That's fair. I apologized; I should've considered your state of undress first. Let's focus on this game.</state>
+            </case>
             <case stage="0-5" oneShotId="36">
                 <condition status="lost_all" character="human" />
                 <condition count="2" status="alive" />
@@ -1022,7 +1043,16 @@
         </trigger>
 
         <trigger id="must_strip">
-            <case stage="0" totalRounds="0" priority="9999">
+            <case stage="0" priority="9999">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-iNceNsed.png">Damnit! Did I really gain such a reputation that a &lt;i&gt;Kantonian&lt;/i&gt; gym leader recognized me!? Why can't I escape my past?</state>
+                <state img="#-iNceNsed.png">...And here I thought I can get away from the old life I've grown to detest. I just cannot escape from my past with Team Plasma, can I?</state>
+            </case>
+            <case stage="0" priority="9999">
+                <condition role="other" character="misty_hgss" saying="king" />
+                <state img="#-revulsioN.png" marker="king_N">...Tch. So that's that. Expose the past self I've been trying to move on from like it's nothing. I just can't escape, can I? I'll always be known as the king of Team Plasma.</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="9900">
                 <state img="#-astoNished.png">Eh!? This is &lt;i&gt;strip&lt;/i&gt; poker? Why wasn't I told so?</state>
                 <state img="#-coNfused.png">Why is everyone looking at me so expectantly... Huh? &lt;i&gt;Strip&lt;/i&gt; poker?</state>
                 <state img="#-coNsider.png">So what next? &lt;br&gt; ...I have to strip? Is that what this game was about?</state>
@@ -1049,6 +1079,10 @@
                 <condition role="other" character="mae" />
                 <state img="#-coNfideNt.png">Well, you &lt;i&gt;are&lt;/i&gt; doing quite well so far. But keep in mind that I'm still determined to win. A few losses is just a mere setback.</state>
             </case>
+            <case stage="3">
+                <condition role="other" character="mae" />
+                <state img="#-NoNplussed.png">I... apologize for snapping at you, Mae. It's just that... I'm not proud of what I've done in the past.</state>
+            </case>
             <case stage="0-3">
                 <condition count="0" filter="human" status="not_exposed" />
                 <condition role="self" notSaidMarker="notdecent_player" />
@@ -1061,9 +1095,6 @@
             <case stage="6">
                 <state img="#-Nnnnnnnnn!.png">Ghh! Damnit! I didn't want it to come to this!</state>
                 <state img="#-Nnnnnnnnn!.png">I... I... Grrr! Why couldn't have I played better here? I didn't want anyone to know.</state>
-            </case>
-            <case stage="3">
-                <state img="#-NoNplussed.png">I... apologize for snapping at you, Mae. It's just that... I'm not proud of what I've done in the past.</state>
             </case>
         </trigger>
 
@@ -1183,6 +1214,14 @@
                 <condition role="other" character="revy" />
                 <state img="#-strip.png" marker="revy_stripping1=7">Mmm... I'm not here to entertain you, you know, nor am I here to gain respect.</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-strip.png">So you see me as a threat. What a shame; I was hoping to talk to your Pokemon after the game.</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-strip.png">I'm... I'm &lt;i&gt;human&lt;/i&gt;. I'm &lt;i&gt;perfectly&lt;/i&gt; human! I'm not warped or defective at all! I'm...</state>
+            </case>
             <case stage="7">
                 <test expr="~self.revplace~" value="1" />
                 <state img="#-strip.png">...Ahaha, this is awkward... Err, you know how most people wear undergarments? Sometimes I do so too. But...</state>
@@ -1247,6 +1286,11 @@
                 <condition role="self" saidMarker="one_indecent1" />
                 <state img="#-coNfideNt.png">But just because you're indecent doesn't mean I'm obliged to take off something major. I'm not here to entertain---I'm here to &lt;i&gt;win.&lt;/i&gt;</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="misty_hgss" saying="fight you right now" />
+                <condition role="other" character="moon" stage="1-9" />
+                <state img="#-iNceNsed.png">Not right now. But Moon and I have things to settle &lt;i&gt;after&lt;/i&gt; this game is over with.</state>
+            </case>
             <case stage="6">
                 <condition role="other" character="mae" />
                 <test expr="~background.temperature~" value="hot" />
@@ -1271,6 +1315,10 @@
                 <state img="#-coNfideNt.png" marker="revy_stripping2=7">I'm here to win. I was challenged by ~player~, and I'm not going to back down.</state>
             </case>
             <case stage="1">
+                <condition role="other" character="misty_hgss" saying="fight you right now" />
+                <state img="#-iNceNsed.png">Misty, please. This is hardly the place for a battle, and I have no reason to. I'm here for the same reason as you; to enjoy myself.</state>
+            </case>
+            <case stage="1">
                 <condition role="other" character="ryuji" />
                 <state img="#-poststrip.png">Although... I'm afraid I never heard the term 'dick move'. Is this slang I have yet to learn about?</state>
             </case>
@@ -1293,6 +1341,19 @@
             <case stage="7">
                 <condition role="other" character="mae" />
                 <state img="#-stripped.png">...Thank you?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-revulsioN.png">That was the old agenda of Team Plasma. Most of us faced the errors of the ways and are trying to move on from that.</state>
+                <state img="#-revulsioN.png">Believe me, Pokemon liberation is no longer my goal. I thought what I was doing was right, that it would make Pokemon truly happy. But I was proven wrong.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-coNsider.png">Unlike the cube, I have yet to figure out the meaning behind my pendant.</state>
+            </case>
+            <case stage="7">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-stripped.png">&lt;i&gt;It's fine!&lt;/i&gt; ...I'm used to being treated like an oddity. Just leave me be. I want to finish this game.</state>
             </case>
             <case stage="5">
                 <test expr="~background.location~" value="outdoors" />
@@ -2128,6 +2189,10 @@
                 <condition role="target" character="mae" stage="2" />
                 <state img="#-astoNished.png">You're discarding your shirt so casually...</state>
             </case>
+            <case stage="1-10">
+                <condition role="target" character="misty_hgss" stage="0" />
+                <state img="#-coNsider.png">...</state>
+            </case>
             <case stage="0-4">
                 <state img="#-astoNished.png">I see! You're running out of options, ~name~.</state>
                 <state img="#-thiNk.png" marker="philosophy=7">I'm not sure whether to feel guilt or feel happy. I suppose we all had the choice to leave. Choice... It's essential for any Pokemon and for any human to be happy, isn't it?</state>
@@ -2233,6 +2298,10 @@
             <case stage="0-10">
                 <condition role="target" character="ryuko" stage="5" />
                 <state img="#-Nervous.png">Judging by everyone else's expressions... This is far from commonplace. A talking school uniform?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="misty_hgss" />
+                <state img="#-thiNk.png">Yes, you... definetly do look like you've been doing a lot of exercise. Rarely do I encounter a woman who's proud of having a powerful body.</state>
             </case>
             <case stage="0-10" priority="11">
                 <condition filter="pale-skinned" role="target" />
@@ -2400,6 +2469,13 @@
                 <state img="#-NoNplussed.png">Really, it's better if you simply admit defeat. It's not worth the---</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="misty_hgss" />
+                <state img="#-coNsider.png">
+                    <alt-img stage="1-3">#-yawN.png</alt-img>
+                    <text>I have no objections.</text>
+                </state>
+            </case>
+            <case stage="0-10">
                 <condition count="0" gender="female" status="chest_visible" />
                 <condition filter="bottomless_first" role="target" layers="1" />
                 <state img="#-Nervous.png">My sister gave me a lesson on basic human anatomy when I was just beginning puberty, but I've never actually seen a woman's naked form for myself.</state>
@@ -2428,6 +2504,10 @@
         </trigger>
 
         <trigger id="female_medium_chest_is_visible">
+            <case stage="0-10">
+                <condition role="target" character="misty_hgss" stage="3" />
+                <state img="#-thiNk.png">Seems fair anyways, seeing as you didn't have that many options in the first place.</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="leggy" />
                 <state img="#-astoNished.png">Oh... I wasn't expecting human breasts.</state>
@@ -2501,6 +2581,10 @@
                 <condition role="target" character="mae" stage="5" />
                 <state img="#-Nervous.png">If it helps, I can barely see it underneath all that hair...</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="misty_hgss" saying="skinny dipping" />
+                <state img="#-coNfused.png">Skinny-dipping? What an odd term. What exactly is skinny-dipping?</state>
+            </case>
             <case stage="4-5">
                 <condition role="target" character="human" />
                 <state img="#-Nnnnnnnnn!.png"></state>
@@ -2544,10 +2628,20 @@
                 <condition role="target" character="aimee" />
                 <state img="#-astoNished.png">Ermm, why is everyone looking at her so expectantly---&lt;i&gt;is that what I think it is!?&lt;/i&gt;</state>
             </case>
-            <case stage="0" totalRounds="0" priority="9997">
+            <case stage="0" totalRounds="0" priority="9999">
+                <condition role="target" character="natsuki" />
+                <state img="#-astoNished.png">Strip poker? I had no idea either, Natsuki.</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="9900">
                 <state img="#-astoNished.png">Eh!? This is &lt;i&gt;strip&lt;/i&gt; poker? Why wasn't I told so?</state>
                 <state img="#-coNfused.png">Ermm, why is everyone looking at ~name~ so expectantly... Huh? &lt;i&gt;Strip&lt;/i&gt; poker?</state>
                 <state img="#-coNsider.png">So what next? &lt;br&gt; ...~name~ has  to strip? Is that what this game was about?</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="9900">
+                <condition role="target" character="human" />
+                <state img="#-astoNished.png">Eh!? This is &lt;i&gt;strip&lt;/i&gt; poker? Why wasn't I told so?</state>
+                <state img="#-coNfused.png">Ermm, why is everyone looking at you so expectantly, ~player~? Huh? &lt;i&gt;Strip&lt;/i&gt; poker?</state>
+                <state img="#-iNceNsed.png">So what next? &lt;br&gt; ...~name~ has  to strip? Was that what this game was about, ~player~?</state>
             </case>
             <case stage="0-10">
                 <condition status="lost_all" role="target" character="nayru" saidMarker="v_forfeit" />
@@ -2599,16 +2693,6 @@
                 <condition status="lost_all" role="target" character="nayru" saidMarker="v_forfeit" />
                 <state img="#-iNceNsed.png">And you were so confident you are going to win for her. Pride goeth before destruction, and an haughty spirit before a fall.</state>
             </case>
-            <case stage="0" totalRounds="0">
-                <condition role="target" character="human" />
-                <state img="#-astoNished.png">Eh!? This is &lt;i&gt;strip&lt;/i&gt; poker? Why wasn't I told so?</state>
-                <state img="#-coNfused.png">Ermm, why is everyone looking at you so expectantly, ~player~? Huh? &lt;i&gt;Strip&lt;/i&gt; poker?</state>
-                <state img="#-iNceNsed.png">So what next? &lt;br&gt; ...~name~ has  to strip? Was that what this game was about, ~player~?</state>
-            </case>
-            <case stage="0" totalRounds="0">
-                <condition role="target" character="natsuki" />
-                <state img="#-astoNished.png">Strip poker? I had no idea either, Natsuki.</state>
-            </case>
             <case stage="0-8" priority="300">
                 <condition role="target" character="aimee" stage="0" />
                 <state img="#-iNceNsed.png">There's really no need to carry around that---!</state>
@@ -2656,15 +2740,15 @@
         </trigger>
 
         <trigger id="opponent_stripping">
+            <case stage="0-10" priority="9999">
+                <condition role="target" character="leggy" stage="0" />
+                <state img="#-Naturally.png">Regardless, you seem so kind and acceptive. Perhaps you're not a Pokemon, but may we still be friends?</state>
+            </case>
             <case stage="0" totalRounds="0" priority="9997">
                 <condition count="0" filter="aimee" />
                 <condition count="0" filter="moon" />
                 <state img="#-coNsider.png">Hmph. When you asked me to play poker, you never told me stripping was going to be involved. I have no interest in seeing the other players without their clothing.</state>
                 <state img="#-iNceNsed.png">I wish you would have been more specific, ~player~. If I knew what I was getting into, I wouldn't agree to this. But I suppose it's too late now.</state>
-            </case>
-            <case stage="0-10" priority="9995">
-                <condition role="target" character="leggy" stage="0" />
-                <state img="#-Naturally.png">Regardless, you seem so kind and acceptive. Perhaps you're not a Pokemon, but may we still be friends?</state>
             </case>
             <case stage="0" priority="554">
                 <condition role="target" character="leggy" stage="2" />
@@ -2708,7 +2792,7 @@
                 <alternative>
                     <condition role="target" character="jura" stage="0" />
                 </alternative>
-                <state img="#-thiNk.png">Assuming Pokemon also live on your planet, what is the relationship between your kind and Pokemon? Do you all still engage in Pokemon battles?</state>
+                <state img="#-thiNk.png">Ah, my apologies. Assuming Pokemon also live on your planet, what is the relationship between your kind and Pokemon? Do you all still engage in Pokemon battles?</state>
             </case>
             <case stage="0-10">
                 <condition count="1-2" filter="vandread" />
@@ -2822,6 +2906,14 @@
                 <state img="#-coNsider.png">They're sort of like the feet of a Watchog, aren't they?</state>
                 <state img="#-thiNk.png">People wearing sandals would be at a disadvantage, wouldn't they?</state>
             </case>
+            <case stage="0-4">
+                <test expr="~clothing~" value="sandals" />
+                <state img="#-coNsider.png">No socks mean you would be at a disadvantage.</state>
+            </case>
+            <case stage="5-10">
+                <test expr="~clothing~" value="sandals" />
+                <state img="#-NoNplussed.png">No socks mean you would be at a disadvantage. Then again, I had to remove &lt;i&gt;both&lt;/i&gt; as to not exceed the clothing limit.</state>
+            </case>
         </trigger>
 
         <trigger id="opponent_stripped">
@@ -2829,16 +2921,16 @@
                 <condition role="self" saidMarker="pokeballs==6" />
                 <state img="#-iNceNsed.png">I sincerely hope you aren't that kind of person.</state>
             </case>
-            <case stage="0" totalRounds="0" priority="9999">
+            <case stage="0-10" priority="9997">
+                <condition role="target" character="leggy" stage="1" />
+                <state img="#-coNsider.png">My name is N. I'd like to introduce myself properly, but we have a game to play. Shall we speak after the game?</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="9900">
                 <test expr="~name~" cmp="!=" value="Moon" />
                 <test expr="~name~" cmp="!=" value="Aimee" />
                 <state img="#-coNsider.png">I have no reason to stay after this revelation. But... I suppose I'll stay. This game might help me understand humankind a bit better.</state>
                 <state img="#-coNsider.png">I'd prefer not to stick around, knowing what will eventually happen. But I'll suppose I'll humor you. You went out of your way to invite me, after all.</state>
                 <state img="#-coNsider.png">I only agreed to play because I was hoping we'd both have a good time, but... &lt;i&gt;(This might strengthen our bond a bit... Let's just hope I don't come to regret this.)&lt;/i&gt;</state>
-            </case>
-            <case stage="0-10" priority="9997">
-                <condition role="target" character="leggy" stage="1" />
-                <state img="#-coNsider.png">My name is N. I'd like to introduce myself properly, but we have a game to play. Shall we speak after the game?</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="aimee" stage="4" />
@@ -3480,10 +3572,10 @@
         <trigger id="must_masturbate_first">
             <case stage="8">
                 <condition role="self" timeInStage="3" />
-                <state img="custom:leave2" marker="backscars">Wait, I... Masturbation!? &lt;i&gt;Here!?&lt;/i&gt; B-But I... &lt;i&gt;Ugh!!&lt;/i&gt; F-Forget it! I'm going to get a chair.</state>
+                <state img="#-turNt_sideview.png" marker="backscars">Wait, I... Masturbation!? &lt;i&gt;Here!?&lt;/i&gt; B-But I... &lt;i&gt;Ugh!!&lt;/i&gt; F-Forget it! Can I have a chair?</state>
             </case>
             <case stage="8">
-                <state img="custom:leave" marker="firstout">Wait, I... Masturbation!? &lt;i&gt;Here!?&lt;/i&gt; B-But I... &lt;i&gt;Ugh!!&lt;/i&gt; F-Forget it! I'm going to get a chair.</state>
+                <state img="#-wiNce.png" marker="firstout">Wait, I... Masturbation!? &lt;i&gt;Here!?&lt;/i&gt; B-But I... &lt;i&gt;Ugh!!&lt;/i&gt; F-Forget it! Can I have a chair?</state>
             </case>
         </trigger>
 
@@ -3508,24 +3600,23 @@
 
         <trigger id="start_masturbating">
             <case stage="8">
-                <condition role="self" saidMarker="firstout" />
-                <condition role="other" character="moon" />
-                <state img="custom:return">...Why the hell did they give me such a fancy chair? Just how extravagant &lt;i&gt;is&lt;/i&gt; this place? What did I even get myself into!?</state>
+                <condition role="other" character="misty_hgss" />
+                <state img="#-start.png" location="87%">The... Inventory staff? I'd honestly prefer something simplier. This is practically a throne.</state>
             </case>
             <case stage="8">
                 <condition role="self" saidMarker="firstout" />
-                <state img="custom:return">Good grief, just how extravagant &lt;i&gt;is&lt;/i&gt; this place!? Tch. I guess I'll have to humor you all.</state>
+                <state img="#-start.png" location="87%">Good grief, is this really the only chair available!? This is practically a throne... &lt;br&gt; &lt;i&gt;(...Are they trying to mock me?)&lt;/i&gt;</state>
             </case>
             <case stage="8">
                 <condition role="self" saidMarker="backscars" />
-                <state img="#-start.png">Ah... Ummmmmmm... None of you had a good look at my back, right?</state>
+                <state img="#-start.png" location="87%">Ah... Ummmmmmm... None of you had a good look at my back, right?</state>
             </case>
             <case stage="8">
                 <condition role="self" saidMarker="human_cocky" />
-                <state img="#-start.png">Alright, alright, I'm sorry for getting so cocky! And thank you for the chair. I guess? This is a really fancy chair.</state>
+                <state img="#-start.png" location="88%">Alright, alright, I'm sorry for getting so cocky! And thank you for the... chair? This is an unusually fancy chair. Better than the floor at least.</state>
             </case>
             <case stage="8">
-                <state img="#-start.png">T-Thank you. Errmm, this is a rather fancy chair... I suppose I have no room to complain.</state>
+                <state img="#-start.png" location="85%">Ghh---T-Thank you. Errmm, this is an unusually fancy chair... Am I really going to use this for...? &lt;br&gt; &lt;i&gt;(I feel as if they're mocking me.)&lt;/i&gt; </state>
             </case>
         </trigger>
 
@@ -3660,19 +3751,19 @@
                 <state img="#-BITCH.png">&lt;i&gt;NO.&lt;/i&gt; Don't tell me you've forgotten my challenge!</state>
             </case>
             <case stage="0">
-                <state img="#-coNfideNt.png">Oh ho! Looks like I achieved a perfect victory.</state>
+                <state img="#-coNfideNt.png">Perfect victory.</state>
             </case>
             <case stage="1-5">
                 <state img="#-Naturally.png">Well, I knew I had a fair chance of beating ~player~, but I honestly didn't expect myself to be the victor! I guess I shouldn't underestimate my abilities.</state>
                 <state img="#-coNfideNt.png">Checkmate. Looks like I'm victorious.</state>
-                <state img="#-iNform.png">Thank you for  the invitation, ~player~! I didn't think I'd have a good time, but---despite how awkward things have gotten---I enjoyed the thrill that came with risking my dignity!</state>
+                <state img="#-iNform.png">Thank you for  the invitation, ~player~! I didn't think I'd have a good time, but this proved to be surprisingly fun.</state>
             </case>
             <case stage="6">
                 <state img="#-Naturally.png">Whew! And here I had to reveal some things I'd rather not reveal. Thank you for the invitation, ~player~!</state>
                 <state img="#-coNsider.png">That was close! I didn't have much left on and I wasn't keen on removing them either.</state>
             </case>
             <case stage="7">
-                <state img="#-coNsider.png">I suppose I should count myself lucky. Showing you my scars was bad enough.</state>
+                <state img="#-stripped.png">I suppose I should count myself lucky. Showing you my scars was bad enough.</state>
             </case>
             <case stage="8">
                 <state img="#-wiNce.png">This doesn't &lt;i&gt;feel&lt;/i&gt; like victory. May I put my clothes back on?</state>
@@ -3712,6 +3803,10 @@
         </trigger>
 
         <trigger id="global">
+            <case stage="10" priority="10000">
+                <test expr="~player~" value="Ghetsis" />
+                <state img="custom:YEET"></state>
+            </case>
             <case stage="10" priority="9999">
                 <condition role="self" saidMarker="sleep" />
                 <state img="#-sleep.png">Zzzz...</state>
