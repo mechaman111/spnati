@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.5 at 1:50:37 AM on October 13, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.5 at 5:37:16 PM on October 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.5</version>
     <first>Dust</first>
@@ -301,6 +301,11 @@
                 <condition role="other" character="leggy" />
                 <state img="#-embarassed.png" marker="furless">How'd you keep your fur on, Leggy? I think there's a spell around here that makes fur fall off.</state>
             </case>
+            <case stage="0-1">
+                <condition role="other" character="jessie" saidMarker="DustFurless" />
+                <condition role="self" notSaidMarker="jessie_furless" />
+                <state img="#-embarassed.png" marker="jessie_furless">Ah, no, it's not like that, it's not a coat that I can take off.</state>
+            </case>
             <case stage="0-7" id="14" priority="101">
                 <condition role="other" character="revy" sayingMarker="killing" />
                 <condition role="self" saidMarker="cassius_talked&gt;2" />
@@ -515,6 +520,10 @@
                 <condition role="other" character="mae" stage="1-2" saidMarker="asking_target_location" />
                 <state img="#-stripping.png" marker="mae_location_response">Where I'm from? It's a nation called Falana. I don't really have a hometown there.</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="jessie" />
+                <state img="#-stripping.png">This hat's just really special to me.</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <condition role="self" notSaidMarker="knowsstrip" />
                 <state img="#-stripping.png">Wait... I have to undress now? Are those the rules?</state>
@@ -562,6 +571,10 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="6">
+                <condition role="other" character="jessie" />
+                <state img="#-embarassed.png">They're more like fox ears.</state>
+            </case>
             <case stage="7">
                 <condition count="0" status="not_lost_all" />
                 <condition count="1-" gender="female" />
@@ -676,6 +689,26 @@
                 <condition role="target" character="caulifla" stage="4-3" />
                 <condition role="self" saidMarker="cassius_talked&gt;2" />
                 <state img="#-c-smug.png">A shame. I was about to ask you for a duel.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="aimee" stage="0" />
+                <state img="#-um.png">Okay, so Aimee lost, so she--</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="aimee" stage="1" />
+                <state img="#-wat.png">Okay, so you're not going to--</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="aimee" stage="2" />
+                <state img="#-wat.png">Can you put the gun aw--</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="aimee" stage="3" />
+                <state img="#-annoyed.png">She's not going to listen, is she?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="aimee" stage="4" />
+                <state img="#-annoyed.png">Come on, surely not for the--</state>
             </case>
             <case stage="0-9" priority="50">
                 <condition role="self" saidMarker="cassius_talked&gt;2" />
@@ -1054,26 +1087,6 @@
         </trigger>
 
         <trigger id="opponent_lost">
-            <case stage="0">
-                <condition role="target" character="aimee" stage="0" />
-                <state img="#-um.png">Okay, so Aimee lost, so she--</state>
-            </case>
-            <case stage="0">
-                <condition role="target" character="aimee" stage="1" />
-                <state img="#-wat.png">Okay, so you're not going to--</state>
-            </case>
-            <case stage="0">
-                <condition role="target" character="aimee" stage="2" />
-                <state img="#-wat.png">Can you put the gun aw--</state>
-            </case>
-            <case stage="0">
-                <condition role="target" character="aimee" stage="3" />
-                <state img="#-annoyed.png">She's not going to listen, is she?</state>
-            </case>
-            <case stage="0">
-                <condition role="target" character="aimee" stage="4" />
-                <state img="#-annoyed.png">Come on, surely not for the--</state>
-            </case>
             <case stage="0-9" priority="221">
                 <condition role="target" stage="0" />
                 <condition role="other" character="mae" stage="0-2" sayingMarker="redeyes_marker" saying="club" />
@@ -1092,8 +1105,8 @@
             </case>
             <case stage="0-9" priority="101">
                 <condition role="other" character="streaming-chan" sayingMarker="gen_waifu" />
-                <state img="#-annoyed.png">If Fidget were here, she'd make so many snide comments, so I decided to come alone.</state>
-                <state img="#-annoyed.png">I don't think a strip poker game would be appropriate to bring Ahrah to.</state>
+                <state img="#-annoyed.png" marker="fidget">If Fidget were here, she'd make so many snide comments, so I decided to come alone.</state>
+                <state img="#-annoyed.png" marker="ahrah">I don't think a strip poker game would be appropriate to bring Ahrah to.</state>
             </case>
             <case stage="0-9">
                 <condition role="target" consecutiveLosses="3" />
@@ -1118,19 +1131,19 @@
 
         <trigger id="opponent_stripping">
             <case stage="0-9">
-                <condition role="target" character="akko" stage="0" />
-                <state img="#-whoa.png">That's an interesting way to undress.</state>
-                <state img="#-embarassed.png">Are you goning to be doing that spell every time you lose?</state>
-                <state img="#-embarassed.png">Magic for undressing... that's something that's not done in Falana. At least not with the mages I know.</state>
-            </case>
-            <case stage="0">
                 <condition role="target" character="aimee" stage="0" />
                 <state img="#-wat.png">GAH!!!</state>
                 <state img="#-wat.png">What in Elysium?!</state>
                 <state img="#-wat.png">What the?!</state>
             </case>
-            <case stage="0">
-                <condition role="target" character="aimee" stage="1-4" />
+            <case stage="0-9">
+                <condition role="target" character="akko" stage="0" />
+                <state img="#-whoa.png">That's an interesting way to undress.</state>
+                <state img="#-embarassed.png">Are you goning to be doing that spell every time you lose?</state>
+                <state img="#-embarassed.png">Magic for undressing... that's something that's not done in Falana. At least not with the mages I know.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="aimee" stage="1-2" />
                 <state img="#-wat.png">Stop it!</state>
                 <state img="#-wat.png">Put that thing away!</state>
                 <state img="#-wat.png">You're going to kill someone!</state>
@@ -1173,7 +1186,7 @@
                 <state img="#-wat.png" marker="ahrah">Watch it! I don't have Ahrah to Dust Storm these away!</state>
             </case>
             <case stage="0-9">
-                <condition role="target" character="aimee" stage="2-4" />
+                <condition role="target" character="aimee" stage="2-3" />
                 <state img="#-wat.png">Can't you undress like normal people?!</state>
                 <state img="#-wat.png" marker="ahrah">Put that thing away! I can't Dust Storm the projectiles away without Ahrah!</state>
                 <state img="#-pissed.png" marker="+cassius_talked">If you continue to be irresponsible with your weapon...</state>
@@ -1186,6 +1199,11 @@
                 <condition role="target" character="aimee" stage="5" />
                 <state img="#-wat.png">Okay, now can you put the gun away?</state>
                 <state img="#-pissed.png" marker="+cassius_talked">Your lack of control will be your downfall one day.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="aimee" stage="4" />
+                <state img="#-wat.png">EYAAAH!</state>
+                <state img="#-wat.png">Were you doing that on purpose?!</state>
             </case>
             <case stage="0-9" oneShotId="7" priority="125">
                 <condition status="exposed" role="target" />
@@ -1208,7 +1226,7 @@
         <trigger id="opponent_chest_will_be_visible">
             <case stage="0-6" id="21">
                 <condition role="target" character="chihiro" />
-                <state img="#-whoa.png">Hey, wait! Hey! We're not gonna hurt you!</state>
+                <state img="#-whoa.png">Hey, wait! Hey! We're not going to hurt you!</state>
             </case>
         </trigger>
 
@@ -1541,6 +1559,7 @@
                 <state img="#-calm.png">That game's gotten me thirsty. Does this place sell Hot Cocoa?</state>
             </case>
             <case stage="0">
+                <condition role="self" saidMarker="knowsstrip" />
                 <state img="#-victory.png">YES!! I told Fidget I'd win without taking anything off!</state>
             </case>
             <case stage="1-6">
@@ -1550,6 +1569,9 @@
             <case stage="7">
                 <state img="#-embarassed.png">Umm... Please tell me I can get dressed now.</state>
                 <state img="#-embarassed.png">Can I get dressed? I don't want to hike back to Falana naked.</state>
+            </case>
+            <case stage="0">
+                <state img="#-victory.png">No damage at all, now that's what you call a victory!</state>
             </case>
         </trigger>
 
