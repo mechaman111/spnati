@@ -481,7 +481,7 @@ namespace Desktop.CommonControls
 			view.Invalidate();
 		}
 
-		private void View_MouseClick(object sender, MouseEventArgs e)
+		private void view_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (_source == null) { return; }
 			if (e.Button == MouseButtons.Right)
@@ -491,7 +491,11 @@ namespace Desktop.CommonControls
 					RightClick?.Invoke(this, new AccordionListViewEventArgs(view.FocusedItem.Tag));
 				}
 			}
-			else if (e.Button == MouseButtons.Left)
+		}
+
+		private void view_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
 			{
 				ListViewItem item = view.GetItemAt(e.X, e.Y);
 				if (item != null && item.Tag is GroupedListGrouper)
@@ -509,7 +513,7 @@ namespace Desktop.CommonControls
 					}
 				}
 			}
-		}	
+		}
 	}
 
 	[Serializable]
