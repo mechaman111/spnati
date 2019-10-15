@@ -155,7 +155,7 @@ namespace SPNATI_Character_Editor
 
 		public bool BannerDisplayedToday
 		{
-			get { return DateTime.Now.Date == LastGoalBanner.ToLocalTime(); }
+			get { return DateTime.Now.Date == LastGoalBanner.ToLocalTime().Date; }
 		}
 		public void MarkBannerAsDisplayed()
 		{
