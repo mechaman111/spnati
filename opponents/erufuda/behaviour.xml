@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1.1 at 2:30:35 AM on September 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.5 at 5:15:21 PM on October 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.1.1</version>
+    <version>v5.2.5</version>
     <first>Erufuda</first>
     <last />
     <label>Erufuda</label>
@@ -250,6 +250,10 @@
             <case stage="0-6" id="35" alsoPlaying="jessie" alsoPlayingStage="3-5" notSaidMarker="jessie_backdoor" alsoPlayingSayingMarker="JessieQA_Backdoor">
                 <state img="#-bored.png" marker="jessie_backdoor">Been there, done that. Not my thing.</state>
             </case>
+            <case stage="0-6" priority="142">
+                <condition role="other" character="mulan" stage="0-7" saidMarker="erufuda_duel" sayingMarker="challenge_answer" />
+                <state img="#-pleased.png">Hmmm... I enjoy a nice run in the forest, but it sounds like all those squats are paying off!</state>
+            </case>
             <case stage="0-6" alsoPlaying="alice_mgq" alsoPlayingStage="6-8" notSaidMarker="alice_mgq_snake">
                 <state img="#-miffed.png" marker="alice_mgq_snake">What's so great about snake girls, anyway? &lt;i&gt;I&lt;/i&gt; can squeeze you plenty...</state>
                 <state img="#-miffed.png" marker="alice_mgq_snake">Snake girls are overrated. It's much better with someone &lt;i&gt;soft and warm.&lt;/i&gt;</state>
@@ -279,7 +283,8 @@
             <case stage="0-3" alsoPlaying="emi" notSaidMarker="emi_diet">
                 <state img="#-worried.png" marker="emi_diet">Say, Emi... what kind of diet does a track star follow? Are fries allowed?</state>
             </case>
-            <case stage="0-6" alsoPlaying="mulan" alsoPlayingSayingMarker="mulan_duel">
+            <case stage="0-6">
+                <condition role="other" character="mulan" sayingMarker="mulan_duel" />
                 <state img="#-pleased.png" marker="mulan_duel_accept">Ooooh... Sounds like fun! But don't think I'm going to lose!</state>
             </case>
             <case stage="1-6" alsoPlaying="wiifitfemale" notSaidMarker="trainer_check_in">
@@ -299,6 +304,10 @@
         </trigger>
 
         <trigger id="must_strip">
+            <case stage="4" alsoPlaying="caulifla" alsoPlayingStage="0-5" alsoPlayingSaying="Gonna take a wild guess and say you're gonna whip that bra of yours off.">
+                <alternative alsoPlaying="caulifla" alsoPlayingSaying="Gonna take a wild guess and say you're gonna whip that bra of yours off. Think I'm gonna enjoy getting a better look at those boobs of yours." />
+                <state img="#-stripping.png">Well... &lt;i&gt;since you asked so nicely...&lt;/i&gt;</state>
+            </case>
             <case stage="0" alsoPlaying="caulifla" alsoPlayingStage="0-5" notSaidMarker="caulifla_robust" alsoPlayingSaying="Pointy ears and a...robust constitution. You remind me of the Supreme Kai.">
                 <state img="#-angry.png" marker="caulifla_robust">Who are you callin' "robust," punk?</state>
                 <state img="#-bored.png" marker="caulifla_robust">"Robust?" I prefer the term "fry blessed."</state>
@@ -318,10 +327,6 @@
                 <state img="#-angry.png" marker="meia_intro">How &lt;i&gt;dare&lt;/i&gt; you? We elves take pride in our naturally elegant figures! I'm just... uh... &lt;i&gt;working on&lt;/i&gt; mine!</state>
                 <state img="#-miffed.png" marker="meia_intro">If you &lt;i&gt;must&lt;/i&gt; know, elves are naturally tall and slim. My figure has fallen to the magic of french fries...</state>
                 <state img="#-miffed.png" marker="meia_intro">Elves are tall and slender. We have to be, running through the hills and valleys like we do. My condition is the human world's fault.</state>
-            </case>
-            <case stage="4" alsoPlaying="caulifla" alsoPlayingStage="0-5" alsoPlayingSaying="Gonna take a wild guess and say you're gonna whip that bra of yours off.">
-                <alternative alsoPlaying="caulifla" alsoPlayingSaying="Gonna take a wild guess and say you're gonna whip that bra of yours off. Think I'm gonna enjoy getting a better look at those boobs of yours." />
-                <state img="#-stripping.png">Well... &lt;i&gt;since you asked so nicely...&lt;/i&gt;</state>
             </case>
             <case stage="0" alsoPlaying="akko" notSaidMarker="akko_portal_rules" alsoPlayingSaying="You can't go home until you slim down?">
                 <state img="#-worried.png" marker="akko_portal_rules">Well you see... the portal between worlds requires things to be the same weight both ways...</state>
@@ -374,12 +379,19 @@
             <case stage="2" alsoPlaying="futaba" alsoPlayingSaying="Erufuda! Besides fries, what other snacks do you like? I'm definitely a fan of the salty stuff.">
                 <state img="#-pleased.png" marker="futaba_other_fries">Good question, Futaba! I'm a fan of natural-cut fries, Northern Ruby Potato fries, straight-cut fries, but most of all... Shoestring fries!</state>
             </case>
-            <case stage="2" alsoPlaying="mulan" notSaidMarker="mulan_vegetarian">
+            <case stage="2">
+                <condition role="self" notSaidMarker="mulan_vegetarian" />
+                <condition role="other" character="mulan" />
                 <state img="#-worried.png" marker="mulan_vegetarian">No way. Elves don't eat meat. Better to stick with plants from the tender care of nature's bosom.</state>
                 <state img="#-worried.png" marker="mulan_vegetarian">I don't think so... Elves aren't really into meat... At all.</state>
             </case>
             <case stage="4" alsoPlaying="jin" alsoPlayingSaying="It's like opening a bag of rice crackers, so exciting because you KNOW something nice is inside.">
                 <state img="#-frustrated.png" marker="jin_rice_boobs">Are rice crackers all you think about!? Focus on my boobs!</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="rarity_eg" saying=" for you to keep those fries?" />
+                <state img="#-eating.png" marker="rarity_necessary">Sorry, these fries are 100% necessary. They're actually requried by law.</state>
+                <state img="#-eating.png" marker="rarity_necessary">I'm afraid that's not possible, Rarity. Elves need fries for their vital nutrients and flavors.</state>
             </case>
         </trigger>
 
@@ -481,6 +493,11 @@
             <case stage="4" alsoPlaying="misty_hgss" alsoPlayingSayingMarker="misty_beproud">
                 <state img="#-stripping.png">Don't worry, Misty. I've got &lt;i&gt;a lot&lt;/i&gt; to be proud of...</state>
                 <state img="#-stripping.png">Worry about your own pride, Misty. I doubt you'll be able to measure up to these...</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="rarity_eg" saying="Well, I guess the least I could do is to give you a couple tips to help you attract less attention towards your... generous...ness..." />
+                <state img="#-miffed.png" marker="rarity_generous">Oh, how &lt;i&gt;generous&lt;/i&gt; of you... </state>
+                <state img="#-frustrated.png" marker="rarity_generous">&lt;i&gt;Generousness &lt;/i&gt; huh... How &lt;i&gt;generous&lt;/i&gt; of you to be polite about it.</state>
             </case>
             <case stage="0" alsoPlaying="miko">
                 <state img="#-stripping.png" marker="miko_president">Health &lt;i&gt;President?&lt;/i&gt; Does that mean you know some super-secret fitness tips?</state>
@@ -612,10 +629,14 @@
                 <state img="#-taunting.png" marker="miko_immortal">What good is immortality if you just sit around being boring all day? No thanks.</state>
                 <state img="#-worried.png" marker="miko_immortal">I don't know. What's the point of living if your life has no meaning?</state>
             </case>
-            <case stage="2" alsoPlaying="mulan" notSaidMarker="mulan_instructor">
+            <case stage="2">
+                <condition role="self" />
+                <condition role="other" character="mulan" saying="After all, if you're going to follow custom and take off your shoes indoors, you &lt;i&gt;may&lt;/i&gt; as well have something a little tastier than fries-- or at least fried rice!" />
                 <state img="#-bored.png">Rice? Tastier than fries? I think not.</state>
             </case>
-            <case stage="3" alsoPlaying="mulan" notSaidMarker="mulan_instructor">
+            <case stage="3">
+                <condition role="self" notSaidMarker="mulan_instructor" />
+                <condition role="other" character="mulan" />
                 <state img="#-weight_conscious.png" marker="mulan_instructor">I guess &lt;i&gt;might&lt;/i&gt; have been slacking a bit lately. Human hasn't been pushing me very hard...</state>
             </case>
             <case stage="3" alsoPlaying="pit" alsoPlayingSaying="I-It's probably not your fault. Those pants probably shrunk in the wash or something.">
@@ -638,7 +659,9 @@
             <case stage="6" alsoPlaying="futaba" notSaidMarker="futaba_elves_hairless">
                 <state img="#-smug.png" marker="futaba_elves_hairless">Well, Futaba, as an elf, I only really grow hair on my head... Just another reason elves are the best!</state>
             </case>
-            <case stage="6" alsoPlaying="mulan" notSaidMarker="mulan_elven_hair">
+            <case stage="6">
+                <condition role="self" notSaidMarker="mulan_elven_hair" />
+                <condition role="other" character="mulan" />
                 <state img="#-smug.png" marker="mulan_elven_hair">Silly human. Elves don't have to shave. Nature blesses us with &lt;i&gt;exactly&lt;/i&gt; the right amount of hair.</state>
             </case>
             <case stage="6" alsoPlaying="pit" alsoPlayingSaying="You really do fill yourself out well, all things considered... guess elven beauty does exist.">
@@ -649,6 +672,21 @@
                 <state img="#-smug.png" marker="zone_shaved">Sounds like you need to feature more elves, Zone. We don't even have to shave!</state>
                 <state img="#-smug.png" marker="zone_shaved">Smooth? Natural? Elves don't have to choose!</state>
                 <state img="#-eating.png" marker="zone_shaved">Being naturally smooth is certainly convenient...</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="rarity_eg" saying="Great, now I forgot the fashion tip I was about to tell you..." />
+                <state img="#-smug.png" marker="rarity_distracted">Don't worry Rarity, I understand completely. Humans often lose their train of thought when I disrobe. &lt;i&gt;The curse of being so beautiful.&lt;/i&gt;</state>
+            </case>
+            <case stage="1" id="36">
+                <condition role="other" character="rarity_eg" saying="For example, using a shirt that has extra fabric and texture will trick the eye and hide the bulge around your belly." />
+                <state img="#-weight_conscious.png" marker="rarity_flattering">I guess this isn't the most flattering look, huh...</state>
+                <state img="#-weight_conscious.png" marker="rarity_noticable">I don't know, Rarity. I've been dieting a lot lately. I don't think it's that noticable anymore...</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="rarity_eg" saying="Next time, avoid tight or clingy clothes... Overly form-fitting garments can bring unwanted attention to excess fat around the midsection... Not to mention they'll be less likely to do... that..." />
+                <state img="#-miffed.png" marker="rarity_point">Point. Taken.</state>
+                <state img="#-miffed.png" marker="rarity_point">I'll keep that in mind...</state>
+                <state img="#-miffed.png" marker="rarity_point">Thanks, Rarity. I never would have guessed...</state>
             </case>
             <case stage="6" alsoPlaying="jin">
                 <state img="#-horny.png" marker="jin_working_out">Well, Jin, I guess I &lt;i&gt;have&lt;/i&gt; been working out...</state>
@@ -854,7 +892,8 @@
                 <state img="#-taunting.png" marker="mulan_deserved">Serves you right for trying to trick us!</state>
                 <state img="#-taunting.png" marker="mulan_deserved">A fitting punishment for trying to fool me earlier!</state>
             </case>
-            <case stage="0-6 8" target="mulan" targetStage="6" targetSayingMarker="foodstuff">
+            <case stage="0-6 8">
+                <condition role="target" character="mulan" stage="6" sayingMarker="foodstuff" />
                 <state img="#-eating.png" marker="mulan_foodstuff">I understand completely, Mulan. Why, I myself have often been compared to a slender shoestring fry.</state>
             </case>
             <case stage="0-8" target="sayaka" targetStage="4" notSaidMarker="sayaka_boobies" alsoPlayingSaying="boobies">
