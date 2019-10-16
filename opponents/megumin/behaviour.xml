@@ -1,0 +1,898 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--This file was machine generated using the Character Editor v5.1.1 at 1:28:18 AM on October 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<opponent>
+    <version>v5.1.1</version>
+    <first>Megumin</first>
+    <last>of the Crimson Demons</last>
+    <label>Megumin</label>
+    <gender>female</gender>
+    <size>small</size>
+    <timer>15</timer>
+    <intelligence>average</intelligence>
+
+    <tags>
+        <tag>brunette</tag>
+        <tag>long_hair</tag>
+        <tag>red_eyes</tag>
+        <tag>fair-skinned</tag>
+        <tag>short</tag>
+        <tag>pubic_hair</tag>
+        <tag>small_breasts</tag>
+        <tag from="0" to="1">weapon</tag>
+        <tag from="0" to="1">wand</tag>
+        <tag from="0" to="3">cape</tag>
+        <tag from="0" to="4">hat</tag>
+        <tag from="0" to="2">thigh_highs</tag>
+        <tag>aggressive</tag>
+        <tag>cheerful</tag>
+        <tag>ditzy</tag>
+        <tag>innocent</tag>
+        <tag>moe</tag>
+        <tag>sarcastic</tag>
+        <tag>boob_envy</tag>
+        <tag>fantasy</tag>
+        <tag>anime</tag>
+        <tag>visual_novel</tag>
+        <tag>magic</tag>
+        <tag>hero</tag>
+    </tags>
+    <nicknames />
+
+    <start />
+
+    <wardrobe>
+        <clothing name="panties" generic="panties" position="lower" type="important" plural="true" />
+        <clothing name="dress" generic="dress" position="both" type="major" />
+        <clothing name="choker" generic="choker" position="neck" type="minor" />
+        <clothing name="hat" generic="hat" position="head" type="extra" />
+        <clothing name="stocking" generic="stocking" position="feet" type="minor" />
+        <clothing name="shoes" generic="shoes" position="feet" type="extra" plural="true" />
+        <clothing name="gloves" generic="gloves" position="hands" type="extra" plural="true" />
+        <clothing name="cape" generic="cape" position="other" type="extra" />
+    </wardrobe>
+
+    <poses />
+
+    <behaviour>
+        <trigger id="selected">
+            <case stage="0">
+                <state>Fufufu... You have chosen well. I, Megumin, the master of explosion magic, shall be your opponent!</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_selected">
+            <case stage="0" target="kazuma">
+                <state>Don't think you can get rid of me that easily Kazuma! I'm not going anywhere until I learn this new game from your country!</state>
+            </case>
+        </trigger>
+
+        <trigger id="game_start">
+            <case stage="0" alsoPlaying="kazuma">
+                <state>You said this game was from your country right Kazuma? I must say I'm interested in playing. I suppose it's time for me to show my strategic genius and best you at your own game!</state>
+            </case>
+            <case stage="0" totalFemales="5">
+                <state>That Kazuma... alway running off somewhere... That's fine, we shall have a fun time just amongst us girls. Prepare to lose to Megumin of the Crimson Demon Village!</state>
+            </case>
+            <case stage="0" totalMales="4">
+                <state>What kind of card game is this? Kazuma said it was from his country. I must say I’m curious. Well then it's decided! I, Megumin of the Crimson Demon Village will show you men true firepower!</state>
+            </case>
+            <case stage="0">
+                <state>That Kazuma... alway running off somewhere... That's fine, this game seems easy enough. Prepare to lose to Megumin of the Crimson Demon Village!</state>
+                <state>What kind of card game is this? Kazuma said it was from his country. I must say I’m curious.</state>
+                <state>Poker?.. I think Kazuma said that was a game from his country. It’s decided! You all are lucky to have intrigued the great Arch-Wizard Megumin of the Crimson Demon Village! Let us play!</state>
+            </case>
+        </trigger>
+
+        <trigger id="swap_cards">
+            <case stage="0-8">
+                <test expr="~cards~" value="1" />
+                <state>I don’t like this one’s face. I want to exchange it.</state>
+                <state>Something feels wrong with this card. I banish it!</state>
+            </case>
+            <case stage="0-8">
+                <test expr="~cards~" value="5" />
+                <state>Bah! This hand is worthless! Dealer, a new one!</state>
+                <state>All of these are terrible... A new hand please, and this time deal them better...</state>
+                <state>These cards are surely an ill omen! Take them all away from me!</state>
+            </case>
+            <case stage="0-8">
+                <test expr="~cards~" value="0" />
+                <state>Fufufu... This hand is unrivaled in it's potential, much like me. I'll keep it.</state>
+            </case>
+            <case stage="0-8">
+                <state>~cards.Text~ of these cards displease me dealer. I'll exchange them for more powerful ones.</state>
+                <state>I feel a demonic energy from a few of these cards. I’d like to exchange ~cards.text~ of them.</state>
+                <state>My Crimson Demon blood is warning me of these ~cards.text~ cards!</state>
+            </case>
+        </trigger>
+
+        <trigger id="good_hand">
+            <case stage="0-6" alsoPlaying="kazuma">
+                <state oneShotId="1">Fufufu... You should start saying your prayers Kazuma because this hand is going to destroy you!</state>
+                <state oneShotId="2">Kazuma, if you promise to do everything I ask for a week I may hold back from annihilating you with this hand!</state>
+            </case>
+            <case stage="0-6" consecutiveLosses="2-3">
+                <state>Finally! A powerful hand! With this, my days of losing to you all are over!</state>
+            </case>
+            <case stage="7-8" oneShotId="2" consecutiveLosses="2-3">
+                <state>Yes! This hand will wreck havok! And just in time too, that was getting way too close for comfort!</state>
+            </case>
+            <case stage="0-8" hasHand="Royal Flush">
+                <state>Oh!  OOOOOHHH!! This.. this hand is amazing!! HAHAHA prepare to lose!</state>
+            </case>
+            <case stage="0" timeInStage="0">
+                <state>It looks like I'm starting this round with a bang!</state>
+            </case>
+            <case stage="0-8">
+                <state>Now you will see my genius at work!</state>
+                <state>I’ll blow you away with these cards!</state>
+                <state>Tremble in fear and I may show you pity with this hand!</state>
+                <state>EXXPLOO— Oh, sorry... haha! I got a little excited.</state>
+            </case>
+            <case stage="1">
+                <state>My last losing hand was nothing but a minor setback, now I'll show you true power!</state>
+            </case>
+            <case stage="2">
+                <state>My gloves must have been getting in the way. This hand is where I get serious!</state>
+            </case>
+            <case stage="3">
+                <state>This is where I truly turn the tide, brace yourselves!</state>
+            </case>
+            <case stage="4">
+                <state>The cards have whispered me their dark secrets. I have finally unlocked their long sealed power!</state>
+            </case>
+            <case stage="5">
+                <state>With this I will avenge my fallen hat! I really liked that hat!</state>
+            </case>
+            <case stage="6">
+                <state>It's getting a bit close for comfort, but this hand makes me feel confident that I will emerge victorious!</state>
+            </case>
+            <case stage="7">
+                <state>Why didn't I get this hand when I still had my dress!?</state>
+            </case>
+            <case stage="8">
+                <state>Oh thank Eris! I have seen salvation and it is this hand!</state>
+            </case>
+        </trigger>
+
+        <trigger id="okay_hand">
+            <case stage="0-8">
+                <state>I suppose this will do for now...</state>
+                <state>I wonder what the others are up to...</state>
+                <state>These will do. I don't need anything special to win.</state>
+                <state>Even with average cards, you don’t stand a chance against me!</state>
+            </case>
+            <case stage="0">
+                <state>They may seem average, but these cards contain the power of a ferocious beast, I'm sure!</state>
+            </case>
+            <case stage="1">
+                <state>My first magical restraint has been removed. Even simple cards now become terrifying weapons in my hands!</state>
+            </case>
+            <case stage="2">
+                <state>My hands are a bit chilly...</state>
+            </case>
+            <case stage="3">
+                <state>Alright, I think I'm getting the hang of this, and I can say with utmost certainty that this hand is underwhelming...</state>
+            </case>
+            <case stage="4">
+                <state>With this, I should at least be able to endure another round.</state>
+            </case>
+            <case stage="5">
+                <state>I was hoping to avenge the loss of my beloved hat with this hand...</state>
+            </case>
+            <case stage="6">
+                <state>Th-this is starting to become a bit of a dire situation...</state>
+            </case>
+            <case stage="7">
+                <state>&lt;i&gt;Please, please, please&lt;/i&gt; let their hands be worse than mine this round...</state>
+            </case>
+            <case stage="8">
+                <state>But this was when I was supposed to suddenly turn things around and rise to the top! Where are my amazing cards?! </state>
+            </case>
+        </trigger>
+
+        <trigger id="bad_hand">
+            <case stage="0-8" oneShotId="1" alsoPlaying="hermione">
+                <state>You didn't happen to curse my hand did you Hermione? What kind of magic do you know anyways? Either way I'll be keeping my eye on you...</state>
+            </case>
+            <case stage="0-8" oneShotId="3" alsoPlaying="kazuma">
+                <state>Hehe.... Um... Kazuma... I know I've been boasting a lot lately but could you go easy on me this round.....?</state>
+            </case>
+            <case stage="0-4">
+                <state>If only I had Kazuma's luck...</state>
+                <state>I’ve mastered the all powerful explosion magic, surely I can make this work...</state>
+                <state>I’d rather be best friends with YunYun than have to use this hand!</state>
+                <state>Which one of you cursed my cards?!</state>
+                <state>D-does anyone here know healing magic? These cards! They’re &lt;i&gt;cursed&lt;/i&gt;!</state>
+                <state>Did the dealer mess up or am I supposed to be able to do something with these?</state>
+                <state>Guuh.. I mean, Haha! Yes! Truly this is a hand only one with power such as mine could draw!...</state>
+                <state>Dealer, if you continue to toy with me I may have to show you my explosion first-hand!</state>
+                <state>What the heck!!??</state>
+            </case>
+            <case stage="5">
+                <state>AAaaAAH! N-no! It can't be!</state>
+                <state>I can't lose this hand!</state>
+                <state>AH! this hand is terrible! I can't lose this hand, I'm running out of accessories!</state>
+            </case>
+            <case stage="6-7">
+                <state>This is getting really really bad...</state>
+                <state>Is this some kind of prank?! I keep getting bad cards!</state>
+                <state>I'M GONNA BLOW UP THESE CARDS!!!</state>
+            </case>
+            <case stage="8">
+                <state>N-no! Seriously?! This game is rigged! I swear it's rigged!</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip">
+            <case stage="0-7" consecutiveLosses="2">
+                <state>Twice in a row?! Impossible! How could I lose?!</state>
+            </case>
+            <case stage="0-7" consecutiveLosses="3">
+                <state>Th... This game is trying to kill me!!!</state>
+                <state>I am disgraced... To have lost this many times in a row...</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip_winning">
+            <case stage="0-7">
+                <state>Yes, I-I suppose it is only fair. I’m not embarrassed or anything! W-watch and be amazed!</state>
+                <state>I did that on purpose, I swear! I-I just decided to have pity on you guys is all...</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip_normal">
+            <case stage="0" totalRounds="0">
+                <state>I have to what?! Since when— *ahem* I knew that. O-of c-course! I didn’t just walk into here thinking it was a regular card game. That would be silly! Hahaha! Why are you looking at me like that?!</state>
+                <state>Wh-Wha-What?! We have to do what?! No wonder Kazuma so desperately wanted to come here... that hopeless pervert…</state>
+                <state>Are we disarming ourselves if we lose? That’s a strange concept for a game...</state>
+            </case>
+            <case stage="0-7">
+                <state>This is n-nothing! No big deal.</state>
+                <state>W-wait! My turn?! Oh.. okay.. Right no problem.</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip_losing">
+            <case stage="6-7" oneShotId="6" alsoPlaying="kazuma">
+                <test expr="~kazuma.diff(megumin)~" cmp="&gt;=" value="1" />
+                <state>This isn't fair! You need to share some of your luck with me Kazuma, isn't that what a team does?! I-I'm sorry for getting full of myself! I've learned my lesson!</state>
+                <state>N-no fair! Kazuma you should act like a man and let me win some!</state>
+            </case>
+            <case stage="0-7">
+                <test expr="~human.place~" value="1" />
+                <state>~Player~ really is scum, standing there while we have to strip. He keeps winning! Ah! I bet he’s cheating!</state>
+            </case>
+            <case stage="0-7">
+                <state>If I find out one of you is cheating I’ll blow you up after this...</state>
+                <state>C-can we just pretend I won this hand?... No?..</state>
+            </case>
+        </trigger>
+
+        <trigger id="stripping">
+            <case stage="0" totalRounds="0">
+                <state marker="firstever">Kazuma kept saying this was a game for ‘mature’ people only. Well, &lt;i&gt;I’m&lt;/i&gt; plenty mature! I’ll show him!</state>
+            </case>
+            <case stage="0">
+                <state>Well, I suppose if it’s only something small it doesn’t matter...</state>
+                <state>It's just a cape... no big deal right? I can do this!</state>
+            </case>
+            <case stage="1-7">
+                <state>I’ll just take this off casually, this is just a game, everyone is doing it.. No I’m not nervous don’t look at me like that! I’ll blow you up if I see any of you laughing at me!</state>
+                <state>These clothes suppress my mighty and powerful magic. Be prepared to have to deal with the demon sealed within!</state>
+                <state>Just think of it like mixed bathing... Right it's no big deal.</state>
+            </case>
+            <case stage="6">
+                <state>Oh Eris, here we go... Alright, Megumin you can do this...</state>
+            </case>
+        </trigger>
+
+        <trigger id="stripped">
+            <case stage="1" saidMarker="firstever">
+                <state>S-see! I can play along with this stupid game!</state>
+            </case>
+            <case stage="1">
+                <state>Th-there, I did it.</state>
+            </case>
+            <case stage="2-7">
+                <state>There… th-that wasn’t so bad. A trifling matter! Let’s continue.</state>
+                <state>...Just a scratch.</state>
+                <state>There, see! I’m plenty mature!</state>
+                <state>My magic isn’t the only thing that’s explosive.</state>
+            </case>
+            <case stage="8">
+                <state>...Eugh... Erm... M-megumin of the Crim... um... Crimson D-demons is... naked...</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_human_must_strip">
+            <case stage="0" totalRounds="0">
+                <state>Wait you have to do what if you lose?! I know Kazuma said this was a ‘mature’ game but this seems a bit extreme! If the games from where he’s from are like this no wonder he’s a hopeless pervert...</state>
+            </case>
+            <case stage="0-7" oneShotId="1" totalExposed="0">
+                <state>Must you do that here? Isn’t th-there a side room or something?.. No? ...well, if you must..</state>
+            </case>
+            <case stage="0-5">
+                <state>Your defenses have been obliterated!</state>
+            </case>
+            <case stage="6-8 10">
+                <state>If you chicken out, I will personally hunt you down.</state>
+            </case>
+            <case stage="9">
+                <state>I'm suddenly feeling hot all over... I hope you don't mind if I watch.</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_must_strip">
+            <case stage="0-6" target="kazuma" targetStatus="not_lost_some">
+                <state>And what exactly is wrong with me being here? Fufu... I do believe you are getting red with embarassment!</state>
+            </case>
+            <case stage="0-6" target="kazuma">
+                <state>It seems your prized luck has run it's course Kazuma, Fufufu.</state>
+            </case>
+            <case stage="0-5">
+                <state>Hah! I am victorious once again!</state>
+                <state>Yet another opponent falls before my terrifying power!</state>
+            </case>
+            <case stage="6-8 10">
+                <state>Now quickly join me, so this is less embarassing.</state>
+            </case>
+            <case stage="9">
+                <state>What will you show as tribute, I wonder?</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_human_must_strip">
+            <case stage="0" totalRounds="0">
+                <state>Wait you have to do what if you lose?! I know Kazuma said this was a ‘mature’ game but this seems a bit extreme! If the games from where he’s from are like this no wonder he’s a hopeless pervert… Are you not embarrassed?</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_must_strip">
+            <case stage="0-8 10" target="palutena">
+                <state>Just what kind of religion do you practice where something like this is acceptable for you to do?</state>
+            </case>
+            <case stage="0-5">
+                <state>Yes! Er, I mean, I’m sorry for your loss.</state>
+                <state>I almost terrify myself with how good I am.</state>
+                <state>Fufufu... your power means nothing here!</state>
+            </case>
+            <case stage="6-8 10">
+                <state>No complaining allowed, got it?</state>
+                <state>Yes! It wasn't me!</state>
+                <state>Fufufu... it seems you will be joining me.</state>
+            </case>
+            <case stage="9">
+                <state>If I'm actually doing this, then you have no excuse not to strip!</state>
+                <state>Off with your clothes!</state>
+            </case>
+        </trigger>
+
+        <trigger id="tie">
+            <case stage="0-8">
+                <state>The odds of this happening must be astronomically low! Truly fate has been aligned by my presence!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removing_accessory">
+            <case stage="0-10">
+                <state>*(yawn)* I suppose it’s at least one more victory.</state>
+                <state>And what kind of magic does that have?</state>
+                <state>Did you really need to be wearing that in the first place?</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removed_accessory">
+            <case stage="0-10">
+                <state>I see you are nothing but a scared rodent.</state>
+                <state>Pathetic.</state>
+                <state>You have no balls, my good sir!</state>
+                <state>I see you too have no concept of being a gentleman.</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removing_accessory">
+            <case stage="0" totalRounds="0">
+                <state>Well, I suppose it can’t be that bad if the others are doing it...</state>
+            </case>
+            <case stage="0-10">
+                <state>This is just a small dent in your defenses. More explosions are required!</state>
+                <state>We will break through your walls in no time!</state>
+                <state>Now! Ready the attack! Her trinkets will not protect her!</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removed_accessory">
+            <case stage="0-10">
+                <state>Was that a magic charm?</state>
+                <state>Surely, that was important and you aren't just stalling, right?</state>
+                <state>I have claimed another trinket with this victory!</state>
+                <state>One step closer to victory.</state>
+                <state>One small step for man, one giant leap for the Crimson Demons!</state>
+            </case>
+            <case stage="0">
+                <state>Too bad we are not playing for keeps or I would claim that as mine.</state>
+                <state>We should use that as a trophy for the winner!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removing_minor">
+            <case stage="0-10">
+                <state>Oh, don’t mind me, I’ll just be chanting the explosion incantation over here.</state>
+                <state>You... I never thought you'd be &lt;i&gt;this&lt;/i&gt; big of a coward!</state>
+                <state>If you beg now, I might let you run away with your tail between your legs.</state>
+                <state>I can tell this is going to be a terrific display of cowardice.</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removed_minor">
+            <case stage="0-10">
+                <state>That *must* be cheating!</state>
+                <state>I know I’m a fearsome opponent but I didn’t expect to see such cowardice!</state>
+                <state>I’ll whittle you away, one explosive victory at a time!</state>
+                <state>Does that even count?</state>
+            </case>
+            <case stage="7-10">
+                <state>Seriously?! After everything I've done that's all you're removing?! You are truly the most despicable person.</state>
+                <state>The nerve you have! And after everything I've done already!</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removing_minor">
+            <case stage="0-10">
+                <state>A minor blow. I prefer bigger booms.</state>
+                <state>A small victory, but a victory nonetheless.</state>
+                <state>Take that!</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removed_minor">
+            <case stage="0-10">
+                <state>Well played.</state>
+                <state>A decent choice all things considered.</state>
+                <state>Fufufufu, an Inevitable outcome!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removing_major">
+            <case stage="0-5">
+                <state>I-I’m not looking!</state>
+                <state>Did you really have to pick that one?!</state>
+                <state>Gah! You fiend! Resorting to dirty tricks like that!</state>
+                <state>Wai! Your're taking &lt;i&gt;that&lt;/i&gt; off already?!</state>
+            </case>
+            <case stage="6-8 10">
+                <state>A powerful blow!</state>
+                <state>An explosive strike! Let us see what the damage is!</state>
+                <state>Boom!</state>
+            </case>
+            <case stage="9">
+                <state>&lt;i&gt;I can't quite look away...&lt;/i&gt;</state>
+                <state>Yes, hurry up and take it off!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removed_major">
+            <case stage="6-8 10" oneShotId="2" saidMarker="blushing">
+                <state>Okay, maybe I'm blushing...</state>
+            </case>
+            <case stage="0-5">
+                <state>Gah! I didn’t think you would seriously take that off!</state>
+                <state marker="blushing">I-I-I’m not blushing! This is.. This is just a natural reaction to my explosive magic energy! Yes that’s it!</state>
+            </case>
+            <case stage="6-8 10">
+                <state>Not bad.</state>
+                <state>I mean, you aren't hideous or anything...</state>
+                <state>&lt;i&gt;(gulp)&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <state>Thanks for the assistance, minion.</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removing_major">
+            <case stage="0-10" target="haru" targetStage="4">
+                <state>Well at least it won't be anything outrageous...</state>
+            </case>
+            <case stage="0-10">
+                <state>That is quite... um... quite bold of you...</state>
+                <state>Now to see what your strategy is.</state>
+                <state>It’s a shame you have so little options left. I’m glad you are throwing away your dignity for the rest of us. Your sacrifice will be remembered.</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removed_major">
+            <case stage="0-10" target="haru" targetStage="5">
+                <state>&lt;i&gt;WHAAAAAAAAT???!!!&lt;/i&gt; What kind of magic is that and how can one learn it!!! Teach me!!! I will devote my life to studying your craft!!! I will be your most dedicated pupil!!!</state>
+            </case>
+            <case stage="0-10">
+                <state>You almost seemed eager. Are you secretly into this?! Jeez not another one..</state>
+                <state>I will hold a silent prayer for your dignity.</state>
+                <state>I’d hate to be in your shoes...</state>
+                <state>If you grovel, I might let you leave with what dignity you have left.</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_chest_will_be_visible">
+            <case stage="0-10">
+                <state>It’s not like I haven’t seen a shirtless guy before, It’s not a big deal…</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_chest_is_visible">
+            <case stage="0-10" filter="muscular">
+                <state>You must work out as much as Darkness at least with muscles like that.</state>
+                <state>I bet you could handle an explosion with muscles like that! Want to test it?</state>
+            </case>
+            <case stage="0-10">
+                <state>—Huh? What no I wasn’t staring!</state>
+                <state>Did it suddenly get hot in here?</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_crotch_will_be_visible">
+            <case stage="0-8 10" target="kazuma">
+                <state>W-wait now hold on! I may have seen it before but you died! That was an emergency situation! My heart isn't ready for this!</state>
+            </case>
+            <case stage="0-10" oneShotId="1" priority="1">
+                <state>I never imagined this was how I would end up seeing my first one...</state>
+            </case>
+            <case stage="0-8">
+                <state>I can’t believe this is happening..</state>
+                <state>&lt;i&gt;(gulp)&lt;/i&gt; You don’t happen to be wearing anything under that do you?</state>
+            </case>
+            <case stage="9-10">
+                <state>Yes, let's see what you have. I won't laugh too hard, I promise.</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_small_crotch_is_visible">
+            <case stage="0-10">
+                <state>Wait where is it?.. Is that it?</state>
+                <state>Haha... Oh! Sorry! I didn’t mean to laugh!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_medium_crotch_is_visible">
+            <case stage="0-10">
+                <state>It’s bigger than I thought…</state>
+                <state>Is that big? It &lt;i&gt;looks&lt;/i&gt; big.</state>
+                <state>Mhm, yep, perfectly ordinary. I definitely know enough to say that.</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_large_crotch_is_visible">
+            <case stage="0-10">
+                <state>WHA! What is that thing?! That can’t be real can it?!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_crotch_is_visible">
+            <case stage="0-10" target="kazuma">
+                <state>The holy sword Excalibur!</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_chest_will_be_visible">
+            <case stage="0-10" filter="large_breasts">
+                <state>Are you seriously going to?... hmph.. well, I suppose it’s not like you have anything to worry about.. I’m sure Kazuma would be ogling you right now, that useless pervert..</state>
+                <state>No one wants to see your ridiculously oversized chest! How the hell did they even get that big huh?!</state>
+                <state>Are you seriously going to show off? Are you trying to piss me off?!</state>
+            </case>
+            <case stage="0-10">
+                <state>And now for the moment of truth...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_small_chest_is_visible">
+            <case stage="0-10">
+                <state>Don’t feel ashamed, there’s nothing wrong with small! Small is superior!</state>
+                <state>I suddenly and inexplicably feel a kinship with you.</state>
+                <state>Take it from me, don't get your hopes up thinking you'll get bigger... Gah now I'm depressed!</state>
+                <state>Don't worry, flat is justice!!!</state>
+                <state>I feel your pain...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_medium_chest_is_visible">
+            <case stage="0-10">
+                <state>Hmph… I’m just glad everybody decided to stare at ~name~ instead.</state>
+                <state>They might not be huge but they are still &lt;i&gt;far&lt;/i&gt; too big...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_large_chest_is_visible">
+            <case stage="0-10" alsoPlaying="kazuma">
+                <state>You do realize I'm standing right here Kazuma? I swear you are the most disgusting pervert in the world!</state>
+            </case>
+            <case stage="0-10">
+                <state>Those are way too big!</state>
+                <state>My explosion magic is more impressive...</state>
+                <state>You must be some kind of cow demon in disguise! We must get at exorsist at once!</state>
+                <state>Something that big can't be natural!!! Do you not have a broken back?!</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_chest_is_visible">
+            <case stage="0-10" target="revy">
+                <state>Normally, I would say something about the ridiculous size of your chest... but considering I don't want you to hurt me, I will refrain from doing so...</state>
+            </case>
+            <case stage="0-10" target="wiifitfemale">
+                <state>No one wants to see your sweaty gross boobs!</state>
+            </case>
+            <case stage="0-10" target="jura">
+                <state>Wow, what a &lt;i&gt;massive&lt;/i&gt; surprise. &lt;i&gt;No one&lt;/i&gt; could tell what they would look like based on what you were wearing. I am utterly shocked.</state>
+            </case>
+            <case stage="0-10" target="misato">
+                <state>Aren't you a bit old to be showing off like that?</state>
+            </case>
+            <case stage="0-10" target="lotte">
+                <state>You should become my apprentice. I will teach you many ways to kill people who try and make fun of you.</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_crotch_will_be_visible">
+            <case stage="0-7">
+                <state>Be strong, everyone is only going to judge you a little.</state>
+            </case>
+            <case stage="8">
+                <state>Join me and we shall have a pity party.</state>
+            </case>
+            <case stage="9-10">
+                <state>It's already come this far, you better not back out now!</state>
+                <state>Just do it already!</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_crotch_is_visible">
+            <case stage="0-10" target="wiifitfemale">
+                <state>Please tell me that's sweat...</state>
+            </case>
+            <case stage="0-10" target="revy">
+                <state>You're absolutely soaked!!!</state>
+            </case>
+            <case stage="0-10" filter="pubic_hair">
+                <state>It reminds me of Chomusuke a little bit.</state>
+                <state>Nothing unusual here, no need to stare.</state>
+            </case>
+            <case stage="0-10" filter="shaved">
+                <state>Wait isn’t there supposed to be hair?</state>
+                <state>Am I missing something? Why don't you have hair there?</state>
+                <state>Why are you bald down there?</state>
+            </case>
+            <case stage="0-7">
+                <state>You must be incredibly embarassed.</state>
+                <state>I'd hate to be in your shoes.</state>
+            </case>
+            <case stage="8-10">
+                <state>Nothing to see here, let's move on.</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_lost">
+            <case stage="0-8" consecutiveLosses="2-3">
+                <state>It seems you cannot stand up against me. Your luck is running thin!</state>
+            </case>
+            <case stage="9-10" consecutiveLosses="2-3">
+                <state>It seems someone will be joining me soon...</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_must_masturbate">
+            <case stage="0-10" target="kazuma">
+                <state>Wait I have to watch him do what now?! Oh jeez... I suppose rules are rules...</state>
+            </case>
+            <case stage="0-10" target="kazuma">
+                <state>Wait I have to watch him do what now?! Oh jeez... well... I suppose rules are rules...</state>
+            </case>
+            <case stage="0-8" oneShotId="3" totalMasturbating="0" totalFinished="0">
+                <state>Do we really have to watch this?! Is this seriously happening?!</state>
+            </case>
+            <case stage="0-8">
+                <state>This is quickly escalating...</state>
+                <state>Not another one...</state>
+                <state>Again?!</state>
+            </case>
+            <case stage="9-10">
+                <state>Ah... I see you are joining in?...</state>
+            </case>
+            <case stage="9">
+                <state>Perhaps we can do it together?</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_start_masturbating">
+            <case stage="0-10" target="kazuma">
+                <state>&lt;i&gt;(This is embarassing but exhilerating at the same time!... I can't believe I'm seeing this!)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
+                <state>Oh jeez, I can’t believe this… I suppose I might as well watch.</state>
+                <state>&lt;i&gt;(I’ve never actually seen this before. I must say I’m curious)&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_masturbating">
+            <case stage="9" target="human">
+                <state>&lt;i&gt;(I wonder what that rod would feel like inside me...)&lt;/i&gt; </state>
+                <state>&lt;i&gt;(I can't stop looking at his ...thing.)&lt;/i&gt;</state>
+                <state>&lt;i&gt;(This whole situation is making me feel all tingly...)&lt;/i&gt;</state>
+                <state>&lt;i&gt;(It's quite different when a guy does it...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
+                <state>How long is this supposed to last?</state>
+                <state>Hmm….</state>
+                <state>So that’s what it’s like...</state>
+                <state>&lt;i&gt;(It’s almost hypnotic...)&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_heavy_masturbating">
+            <case stage="0-8">
+                <state>A-are you not worried about breaking it?!</state>
+                <state>This is much more intense than I expected..</state>
+                <state>So fast! Is that not painful?!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_finished_masturbating">
+            <case stage="0-10">
+                <state>Ah! It exploded!</state>
+                <state>Don’t aim this way!!</state>
+                <state>GAHH!!??</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_must_masturbate">
+            <case stage="0-8" oneShotId="4" totalMasturbating="0" totalFinished="0">
+                <state>Is she really going to?!... &lt;i&gt;gulp...&lt;/i&gt; Right, of course...</state>
+            </case>
+            <case stage="0-8">
+                <state>Better you than me.</state>
+                <state>And another one gone.</state>
+                <state>Another one bites the dust.</state>
+            </case>
+            <case stage="9-10" oneShotId="5">
+                <state>Finally, someone else to take away the spotlight...</state>
+            </case>
+            <case stage="9-10">
+                <state>Join our depraved conclave.</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_start_masturbating">
+            <case stage="0-10">
+                <state>Is that how you’re supposed to do it?... Wait did I say that out loud? I meant of course that’s how it’s done! I know that!</state>
+                <state>I see... I see...</state>
+                <state>What?! No I'm not taking notes! I swear!</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_masturbating">
+            <case stage="0-5">
+                <state>I can hear it from all the way over here. Are you enjoying this?!</state>
+            </case>
+            <case stage="6-8 10">
+                <state>It seems like you are rather enjoying this.</state>
+                <state>Dance before your puppetmaster!</state>
+                <state>I never thought of trying it like that... Oh nothing! I didn't say anything! </state>
+            </case>
+            <case stage="10" oneShotId="6">
+                <state>It's not as good a show as when I did it, but you'll get there some day, fufufu...</state>
+            </case>
+            <case stage="9">
+                <state img="#-horny.png">I shall &lt;i&gt;never&lt;/i&gt; let you go!</state>
+                <state img="#-awkward.png">Is there no limit to what perverts can ...r-rub off to?</state>
+                <state img="#-embarrassed.png">I'm j-just doing what everyone else is. N-no need to stare or anything...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_heavy_masturbating">
+            <case stage="0-8">
+                <state>What technique! What skill!</state>
+                <state>It's getting everywhere!</state>
+                <state>You... you are really getting into it aren't you...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_finished_masturbating">
+            <case stage="0-10">
+                <state>It’s almost like watching Aqua’s party trick..</state>
+                <state>I have just witnessed a new kind of explosion!</state>
+                <state>What earth shattering force!</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_masturbate_first">
+            <case stage="8">
+                <state>W-wait... hold on now, do I really have to?... I mean, yes, of course, I know that's the point but... Don't give me that smug look! I'm not a kid I'm a mature adult! I'll show you!... &lt;i&gt;gulp&lt;/i&gt; Oh Eris please forgive me for what I'm about to do...</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_masturbate">
+            <case stage="8">
+                <state>I-I suppose it’s c-come to t-this… I’m not nervous, I’ve done this thousands of times, millions, I absolutely know what I’m doing… um.. oh, Eris I can’t believe I’m actually doing this...</state>
+            </case>
+        </trigger>
+
+        <trigger id="start_masturbating">
+            <case stage="8">
+                <state>&lt;i&gt;(I don’t know how to do this!)&lt;/i&gt; Um, yes, I’ll just… rub this and touch there…</state>
+            </case>
+        </trigger>
+
+        <trigger id="masturbating">
+            <case stage="9">
+                <state>I wonder what… I wonder what Kazuma would say if he saw me like this…</state>
+                <state>Th-this is actually rather nice..</state>
+                <state>&lt;i&gt;(Just pretend you are back home and no one is looking..)&lt;/i&gt;</state>
+                <state>Y-yes this is going exactly how it always goes. N-nothing unusual here.</state>
+                <state>I'm starting to feel all warm and tingly... It's quite pleasant...</state>
+                <state>This feels really good...</state>
+                <state>&lt;i&gt;OH!&lt;/i&gt;... T-that area was really sensitive...</state>
+                <state>It feels incredibly warm and wet inside...</state>
+                <state>I wonder how deep I can go with my fingers...</state>
+                <state>Mmm... I could get used to this.</state>
+            </case>
+        </trigger>
+
+        <trigger id="heavy_masturbating">
+            <case stage="9">
+                <state>I’m ab-about to!</state>
+                <state>Yes! Fill me with your power!</state>
+                <state>Harder! Faster!</state>
+                <state>Oh, Eris!!</state>
+                <state>I want to feel you explode inside me!</state>
+                <state>&lt;i&gt;(I don't care that people are watching anymore! This is amazing!)&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="finishing_masturbating">
+            <case stage="9">
+                <state>&lt;i&gt;EXXPLOOOOSIOOON!!!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="finished_masturbating">
+            <case stage="10">
+                <state>That... that felt almost as amazing as using explosion magic.</state>
+                <state>That was second only to casting explosion on a ruined castle...</state>
+                <state>I even collapsed as if I cast explosion... Masturbating is more like magic than I thought!</state>
+                <state>You have not yet beaten the great Megumin! When I recharge, you shall finally taste defeat!</state>
+            </case>
+        </trigger>
+
+        <trigger id="after_masturbating">
+            <case stage="10">
+                <state>That was... surprisingly enjoyable...</state>
+            </case>
+        </trigger>
+
+        <trigger id="game_over_victory">
+            <case stage="0-8">
+                <state>You never stood a chance, although I applaud your effort.</state>
+            </case>
+        </trigger>
+
+        <trigger id="game_over_defeat">
+            <case stage="10">
+                <state>I suppose I underestimated you…</state>
+                <state>Rematch? Or are you too scared to face me again?</state>
+                <state>That... that was actually rather fun.</state>
+            </case>
+        </trigger>
+
+        <trigger id="global">
+            <case stage="0-8 10" oneShotId="3" target="palutena" saidMarker="Goddess" targetSaying="That hurts, but at least it won't be a one-goddess act.">
+                <state marker="Goddess">Indeed, as there were no goddesses here to begin with. §</state>
+            </case>
+            <case stage="0-8 10" oneShotId="4" target="palutena" saidMarker="Goddess" targetSaying="That's right. Unbelievable, maybe but I &lt;i&gt;am&lt;/i&gt; a goddess.">
+                <state marker="Goddess">If you keep going around claiming to be a goddess you will end up in big trouble. I've seen it happen many times before. §</state>
+            </case>
+            <case stage="0-8 10" oneShotId="1" target="palutena" targetSaying="Goddess">
+                <state marker="Goddess">Are you seriously deranged enough that you &lt;i&gt;ALSO&lt;/i&gt; think you are a goddess? Our party Arch Priest is under the same delusion. Is this some secret thing all Arch Priests and Priests believe in?  §</state>
+            </case>
+        </trigger>
+
+    </behaviour>
+</opponent>
