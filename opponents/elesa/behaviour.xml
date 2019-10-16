@@ -49,8 +49,12 @@
 
     <poses>
         <pose id="0-strip">
-            <sprite id="strip1" z="3" src="elesa/0-strip1.png" x="0" y="0" />
+            <sprite id="strip1" z="3" src="elesa/0-strip1.png" x="0" y="0" rotation="0" />
             <sprite id="coat" delay="0.8" src="elesa/coat.png" x="-115" y="329" scalex="1.6" scaley="1.6" alpha="100" rotation="10" />
+            <directive type="animation" id="strip1" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="0" y="0" rotation="0" />
+                <keyframe time="0.8" rotation="0" />
+            </directive>
             <directive type="animation" id="strip1" ease="linear" interpolation="none">
                 <keyframe time="0" src="elesa/0-strip1.png" />
                 <keyframe time="0.8" src="elesa/0-strip2.png" />
