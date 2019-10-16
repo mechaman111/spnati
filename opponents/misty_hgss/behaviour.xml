@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.4 at 7:59:06 PM on October 11, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.4 at 4:58:44 PM on October 15, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.4</version>
     <first>Misty</first>
@@ -324,10 +324,15 @@
                 <state img="#-worried.png">No hands? How are you even going to hold your cards, Rin?</state>
             </case>
             <case stage="0">
-                <condition count="1-4" gender="male" />
-                <condition count="1" filter="human_male" />
+                <condition gender="male" />
+                <condition filter="human_male" />
                 <test expr="~background~" value="hot spring" />
                 <state img="#-teasing.png" marker="player_male">Mixed bathing in a hot spring, huh? How romantic!</state>
+            </case>
+            <case stage="0" id="2" priority="65">
+                <condition count="1" filter="human_male" />
+                <test expr="~background~" value="poolside" />
+                <state img="#-excited.png" marker="player_male=8">Strip poker by the pool! After we all get naked, we can enjoy some skinny dipping!</state>
             </case>
             <case stage="0">
                 <condition count="1" filter="human_male" />
@@ -338,11 +343,6 @@
                 <condition count="1" filter="human_male" />
                 <test expr="~background~" value="hot spring" />
                 <state img="#-thinking.png" marker="player_male">If we're in a hot spring, then why are any of us still wearing clothes?</state>
-            </case>
-            <case stage="0" id="2">
-                <condition count="1" filter="human_male" />
-                <test expr="~background~" value="poolside" />
-                <state img="#-excited.png" marker="player_male=8">Strip poker by the pool! After we all get naked, we can enjoy some skinny dipping!</state>
             </case>
             <case stage="0">
                 <condition count="1-4" gender="male" />
@@ -624,6 +624,11 @@
                 <state img="#-confused.png">Um, what are you talking about, Sayaka?</state>
                 <state img="#-confused.png">Are you talking about Surf, Sayaka?</state>
             </case>
+            <case stage="0-4">
+                <condition role="other" character="jessie" sayingMarker="MistyStageName" />
+                <state img="#-confused.png">&lt;i&gt;Stage&lt;/i&gt; name? And what exactly is it that you do, Jessie?</state>
+                <state img="#-confused.png">Well that's, interesting. What is it that you do that you need a stage name?</state>
+            </case>
             <case stage="4" id="4" oneShotId="12" saidMarker="player_male" notSaidMarker="found_date" priority="1">
                 <state img="#-worried.png" marker="askfor_number">Hey, ~player~. Do you... Can we...maybe exchange numbers? So I can call you again later?</state>
             </case>
@@ -654,15 +659,17 @@
                 <state img="#-irritated.png">Weren't you the one who said she needed to slim down, Erufuda? If you're a little nicer, maybe I could help you.</state>
                 <state img="#-irritated.png">I hope you're not trying to make friends with that kind of attitude, Erufuda.</state>
             </case>
-            <case stage="0-3" alsoPlaying="meia" alsoPlayingSaying="from Pluto">
+            <case stage="0">
+                <condition role="other" character="meia" saying="from Pluto" />
                 <state img="#-confused.png">From Pluto? And where are you from, Meia?</state>
                 <state img="#-shocked.png">Pluto?! How did she even get there?</state>
                 <state img="#-confused.png">Wait. How does she have any experience with men if she was stuck on Pluto?</state>
             </case>
-            <case stage="0-3" alsoPlaying="meia" alsoPlayingSaying="taught">
+            <case stage="0">
+                <condition role="other" character="meia" saying="taught" />
                 <state img="#-confused.png">Taught? We don't get taught about them, Meia. We just experience them.</state>
                 <state img="#-worried.png">Man, I wish, Meia. It would save me the trouble of figuring them out.</state>
-                <state img="#-confused.png">We aren't about them, we just figure them out. Not when we're young, though.</state>
+                <state img="#-confused.png">We aren't &lt;i&gt;taught&lt;/i&gt; about them, we just figure them out. Not when we're young, though.</state>
             </case>
             <case stage="0-3" alsoPlaying="monika" alsoPlayingSaying="messy">
                 <state img="#-disappointed.png">No, Monika. I just go swimming a lot, and don't really care enough to style it.</state>
@@ -838,6 +845,12 @@
             </case>
             <case stage="2" alsoPlaying="chihiro" alsoPlayingSayingMarker="filter_confident">
                 <state img="#-strip1.png">Well, it's easy when you work hard to take care of your body, Chihiro.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="meia" saidMarker="taught_men" />
+                <state img="#-strip.png" marker="MeiaResponse2">Oh. Is that what you meant? Have you really never met any before?</state>
+                <state img="#-strip.png" marker="MeiaResponse2">So &lt;i&gt;that's&lt;/i&gt; what you meant. I know a few, but have you really never met any men before?</state>
+                <state img="#-strip.png" marker="MeiaResponse2">Wait, you meant like general information? Yeah I know plenty, but how do you know nothing?</state>
             </case>
             <case stage="0" alsoPlaying="pit">
                 <state img="#-strip.png">What do mean, "different from what you expected"? What &lt;i&gt;were&lt;/i&gt; you expecting, Pit?</state>
@@ -1054,13 +1067,13 @@
 
         <trigger id="male_must_strip">
             <case stage="0-6">
-                <condition role="target" character="N" stage="0" />
+                <condition role="target" character="n" stage="0" />
                 <state img="#-shocked.png">Wait! I know you! You're the former Team Plasma king from Unova!</state>
                 <state img="#-shocked.png">Hold on! Aren't you that Unova guy that talks to Pokemon?!</state>
                 <state img="#-shocked.png">N?! As in the Team Plasma N?! From Unova!? &lt;i&gt;That&lt;/i&gt; N?!</state>
             </case>
             <case stage="0-6">
-                <condition role="target" character="N" stage="6" />
+                <condition role="target" character="n" stage="6" />
                 <state img="#-confused.png">Oh? So you do get embarassed sometimes, N?</state>
                 <state img="#-confused.png">N? Are you, blushing? I was beginning to think you couldn't do that.</state>
             </case>
@@ -1322,7 +1335,7 @@
 
         <trigger id="male_removing_accessory">
             <case stage="0-6">
-                <condition role="target" character="N" stage="0" />
+                <condition role="target" character="n" stage="0" />
                 <state img="#-worried.png">W-what are you doing &lt;i&gt;here&lt;/i&gt; of all places?</state>
                 <state img="#-worried.png">W-why in the world would you be here of all places?</state>
                 <state img="#-worried.png">How did you even get here?</state>
@@ -1354,13 +1367,13 @@
 
         <trigger id="male_removed_accessory">
             <case stage="0-6">
-                <condition role="target" character="N" stage="1" />
+                <condition role="target" character="n" stage="1" />
                 <state img="#-confused.png">You're not still advocating that Pokemon liberation thing, are you?</state>
                 <state img="#-confused.png">You're done with the whole "release all Pokemon" thing, right?</state>
                 <state img="#-confused.png">You're not gonna make anyone fight you right now, are you? It would kinda ruin my night.</state>
             </case>
             <case stage="0-6">
-                <condition role="target" character="N" stage="3" />
+                <condition role="target" character="n" stage="3" />
                 <state img="#-confused.png">What is that pendant even supposed to be anyway, N?</state>
                 <state img="#-confused.png">Does that pendant represent something, N? Or do you just like how it looks?</state>
             </case>
@@ -1857,7 +1870,7 @@
 
         <trigger id="male_removing_major">
             <case stage="0-6">
-                <condition role="target" character="N" stage="6" />
+                <condition role="target" character="n" stage="6" />
                 <state img="#-embarrassed.png">You've just been so stone-faced this whole time. I was starting to wonder if you were feeling anything at all.</state>
                 <state img="#-embarrassed.png">You just haven't been emoting very much, I wasn't sure if you even could.</state>
             </case>
@@ -1883,7 +1896,7 @@
 
         <trigger id="male_removed_major">
             <case stage="0-6">
-                <condition role="target" character="N" stage="7" />
+                <condition role="target" character="n" stage="7" />
                 <state img="#-worried.png">S-Sorry if that was insensitive.</state>
                 <state img="#-worried.png">I- I didn't upset you by saying that, did I?</state>
             </case>
@@ -2654,7 +2667,9 @@
             <case stage="0-4" filter="blade" notSaidMarker="seen_blade">
                 <state img="#-shocked.png" marker="seen_blade">Wait, do you have a blade!? Why would you bring that to a poker game!?</state>
             </case>
-            <case stage="0-4" filter="blue_hair" notSaidMarker="seen_bluehair">
+            <case stage="0-4">
+                <condition filter="blue_hair" role="target" />
+                <condition role="self" notSaidMarker="seen_bluehair" />
                 <state img="#-confused.png" marker="seen_bluehair">Blue hair is actually pretty common among gym leaders. I saw a bunch of them at the PWT. None from Kanto though.</state>
             </case>
             <case stage="0-4" filter="ginger" notSaidMarker="seen_redhair">
@@ -2678,6 +2693,12 @@
             <case stage="0-3" alsoPlaying="shimakaze" alsoPlayingStage="0" totalRounds="0">
                 <state img="#-worried.png">I don't think you completely understand the point of the game, Shima.</state>
                 <state img="#-worried.png">Faster? That's not a good thing in this game, Shima.</state>
+            </case>
+            <case stage="0-4">
+                <condition role="other" character="jessie" saidMarker="MistyDates" />
+                <state img="#-worried.png">No, I don't think I will, Jessie.</state>
+                <state img="#-worried.png">They are that bad, Jessie. I don't wanna talk about it.</state>
+                <state img="#-worried.png">I'd rather not, Jessie. Because they are &lt;i&gt;that&lt;/i&gt; bad.</state>
             </case>
             <case stage="0-4" consecutiveLosses="2">
                 <state img="#-neutral.png">Twice in a row? Talk about bad luck, ~name~.</state>
@@ -2734,7 +2755,7 @@
 
         <trigger id="male_must_masturbate">
             <case stage="0-6">
-                <condition role="target" character="N" />
+                <condition role="target" character="n" />
                 <state img="#-confused.png">A chair? From where?</state>
                 <state img="#-confused.png">A chair? Is that really necessary?</state>
             </case>
@@ -2759,7 +2780,7 @@
 
         <trigger id="male_start_masturbating">
             <case stage="0-6">
-                <condition role="target" character="N" />
+                <condition role="target" character="n" />
                 <state img="#-shocked.png">Where'd you even get that?</state>
             </case>
             <case stage="0-2">
@@ -3184,11 +3205,17 @@
             <directive type="remove" id="sprite2" />
             <directive type="pause" />
             <directive type="clear-all" />
+            <directive type="pause" />
         </scene>
         <scene transition="true" color="#000000" effect="dissolve" time="1" />
         <scene width="100" height="100">
-            <directive type="camera" delay="0" zoom="0.21" />
-            <directive type="sprite" id="sprite20" src="ceruleancaperesize.png" x="-322" y="-742" pivotx="50%" pivoty="55%" />
+            <directive type="text" id="text18" width="99%" x="1%" y="40%">A few minutes later...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text18" />
+            <directive type="camera" delay="0" x="0" y="-45" zoom="0.17" />
+            <directive type="sprite" id="sprite20" src="ceruleancaperesize.png" x="-291" y="-601" scalex="1" pivotx="50%" pivoty="55%" />
+            <directive type="sprite" id="sprite21" layer="53" src="Misty_epi2.png" x="-298" y="-576" scalex="0.45" scaley="0.45" pivotx="50%" pivoty="50%" />
+            <directive type="pause" />
         </scene>
 
     </epilogue>
