@@ -281,7 +281,6 @@ function Pose(poseDef, display) {
 }
 
 Pose.prototype.getHeightScaleFactor = function() {
-    console.log("reported imageAreaHeight: "+this.display.imageAreaHeight)
     return this.display.imageAreaHeight / this.baseHeight;
 }
 
@@ -554,7 +553,6 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
     this.animCallbackID = undefined;
 
     this.imageAreaHeight = this.imageArea.height();
-    console.log("Current display height: "+this.imageAreaHeight);
 
     this.resizeObserver = new ResizeObserver(function (entries) {
         if (entries[0].contentBoxSize) {
@@ -567,6 +565,17 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
     this.resizeObserver.observe(this.imageArea[0]);
     
     window.addEventListener('resize', this.onResize.bind(this));
+}
+
+OpponentDisplay.prototype.rescaleSimplePose = function (base_scale) {
+    /* Required to properly scale oddly-sized simple poses. */
+    var nh = this.simpleImage[0].naturalHeight;
+    if (nh == 1400) {
+        this.simpleImage.css("height", base_scale+"%");
+    } else {
+        var sf = nh / 1400;
+        this.simpleImage.css("height", "calc("+base_scale+"% * "+sf+")");
+    }
 }
 
 OpponentDisplay.prototype.hideBubble = function () {
@@ -738,6 +747,12 @@ function GameScreenDisplay (slot) {
         $('#game-name-label-'+slot)
     );
     
+    /* The overarching imageArea is properly scaled according to opponent
+     * specifications already, so we only need to scale relative to the imageArea
+     * dimensions.
+     */
+    this.simpleImage.on('load', OpponentDisplay.prototype.rescaleSimplePose.bind(this, 100));
+    
     this.opponentArea = $('#game-opponent-area-'+slot);
     this.collectibleIndicator = $('#collectible-button-'+slot);
     
@@ -841,7 +856,8 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         if (!(this.pose instanceof Pose)) {
             this.simpleImage.one('load', function() {
                 this.bubble.show();
-                this.simpleImage.css('height', player.scale + '%').show();
+                OpponentDisplay.prototype.rescaleSimplePose.call(this, player.scale);
+                this.simpleImage.show();
             }.bind(this));
         } else {
             this.pose.onLoadComplete = function () {
@@ -970,7 +986,9 @@ OpponentSelectionCard.prototype.update = function () {
         src: this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png',
         alt: this.opponent.gender.initCap(),
     }).show();
-    this.simpleImage.attr('src', this.opponent.selection_image).css('height', this.opponent.scale + '%').show();
+
+    this.simpleImage.one('load', OpponentDisplay.prototype.rescaleSimplePose.bind(this, this.opponent.scale));
+    this.simpleImage.attr('src', this.opponent.selection_image).show();
     
     this.label.text(this.opponent.selectLabel);
     this.source.text(this.opponent.source);
@@ -1258,7 +1276,8 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.artistLabel.html(opponent.artist);
     this.descriptionLabel.html(opponent.description);
 
-    this.simpleImage.attr('src', opponent.selection_image).css('height', opponent.scale + '%').show();
+    this.simpleImage.one('load', OpponentDisplay.prototype.rescaleSimplePose.bind(this, opponent.scale));
+    this.simpleImage.attr('src', opponent.selection_image).show();
     
     this.selectButton.prop('disabled', false);
     
