@@ -520,6 +520,8 @@ Player.prototype.checkStatus = function(status) {
  * @param {number} [releaseNumber] 
  */
 function Opponent (id, $metaXml, status, releaseNumber) {
+    Player.call(this, id);
+
     this.id = id;
     this.folder = 'opponents/'+id+'/';
     this.base_folder = 'opponents/'+id+'/';
