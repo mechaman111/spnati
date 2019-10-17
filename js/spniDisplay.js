@@ -570,7 +570,7 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
 OpponentDisplay.prototype.rescaleSimplePose = function (base_scale) {
     /* Required to properly scale oddly-sized simple poses. */
     var nh = this.simpleImage[0].naturalHeight;
-    if (nh == 1400) {
+    if (nh <= 1400) {
         this.simpleImage.css("height", base_scale+"%");
     } else {
         var sf = nh / 1400;
