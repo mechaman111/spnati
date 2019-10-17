@@ -98,24 +98,30 @@ PoseSprite.prototype.draw = function() {
     }
     $(this.vehicle).css(properties);
     
-    if (this.prevSrc !== this.src) {
-
+    if (this.prevSrc !== this.src) {        
+        /* Recompute image height/width only _after_ images have loaded. */
+        this.img.onload = function () {
+            this.height = this.img.naturalHeight;
+            this.width = this.img.naturalWidth;
+            
+            $(this.img).css({
+                'height': this.scaleToDisplay(this.height) + "px",
+                'width': this.scaleToDisplay(this.width) + "px"
+            });
+        }.bind(this);
+        
         this.img.src = this.prevSrc = this.src;
-
-        this.height = this.img.naturalHeight;
-        this.width = this.img.naturalWidth;  
+    } else if (this.img) {
+        $(this.img).css({
+            'height': this.scaleToDisplay(this.height) + "px",
+            'width': this.scaleToDisplay(this.width) + "px"
+        });
     }
 
 
     $(this.pivot).css({
       "transform": "rotate(" + this.rotation + "deg) scale(" + this.scalex + ", " + this.scaley + ") skew(" + this.skewx + "deg, " + this.skewy + "deg)",
     });
-    if (this.img) {
-        $(this.img).css({
-            'height': this.scaleToDisplay(this.height) + "px",
-            'width': this.scaleToDisplay(this.width) + "px"
-        });
-    }
 }
 
 PoseSprite.prototype.setWillChangeHints = function (enabled) {
