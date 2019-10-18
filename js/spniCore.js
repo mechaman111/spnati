@@ -70,6 +70,12 @@ var BLANK_PLAYER_IMAGE = "opponents/blank.png";
  * @type {Player[]}
  */
 var players = Array(5);
+
+/**
+ * The human player. Equivalent to `players[0]`.
+ * @global
+ * @type {Player}
+ */
 var humanPlayer;
 
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
