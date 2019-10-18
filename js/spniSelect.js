@@ -345,7 +345,7 @@ function loadOpponentMeta (id, status, releaseNumber, highlightStatus, onComplet
 		success: function(xml) {
             var $xml = $(xml);
 
-			var opponent = new Opponent(id, $xml, status, releaseNumber, highlightStatus);
+			var opponent = new Player(id, $xml, status, releaseNumber, highlightStatus);
 
 			/* add the opponent to the list */
             onComplete(opponent);
