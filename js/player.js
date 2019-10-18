@@ -7,56 +7,45 @@
  * Enumerations
  **********************************************************************/
 
-/************************************************************
- * An enumeration for gender.
- **/
-var eGender = {
-    MALE   : "male",
-    FEMALE : "female"
-};
-
-/************************************************************
- * An enumeration for player size.
- **/
+/**
+ * Possible player penis / breast sizes.
+ * 
+ * @global
+ * @readonly
+ * @enum {string}
+ */
 var eSize = {
-    SMALL  : "small",
-    MEDIUM : "medium",
-    LARGE  : "large"
+    SMALL: "small",
+    MEDIUM: "medium",
+    LARGE: "large"
 };
 
-/************************************************************
- * An enumeration for player intelligence.
- **/
+/**
+ * Possible AI player intelligence levels (difficulty settings).
+ * 
+ * @global
+ * @readonly
+ * @enum {string}
+ */
 var eIntelligence = {
-    THROW  : "throw",
-    BAD  : "bad",
-    AVERAGE : "average",
-    GOOD  : "good",
-    BEST  : "best"
+    /** 'Throw' intelligence: this player actively tries to lose. */
+    THROW: "throw",
+
+    /** 'Bad' intelligence: this player swaps cards at random. */
+    BAD: "bad",
+
+    /**
+     * 'Average' intelligence: this player makes some attempt at winning, but
+     * may make slightly suboptimal moves.
+     */
+    AVERAGE: "average",
+
+    /** 'Good' intelligence: only attempts to get or improve on pairs. */
+    GOOD: "good",
+
+    /**
+     * 'Best' intelligence: same as 'Good', but also keeps the highest-value
+     * card when receiving bad hands.
+     */
+    BEST: "best"
 };
-
-
-/********************************************************************************
- * Player Object and Elements
- ********************************************************************************/
-
-/**********************************************************************
- * (Object) A player in a strip poker game.
- **/
-function Player(id, slot)
-{
-    this.id = null;
-    this.slot = slot;
-    this.name = "";
-    this.gender = eGender.FEMALE;
-    this.size = eSize.MEDIUM;
-    this.intelligence = eIntelligence.AVERAGE
-    //this.state = new PlayerState();
-    //this.wardrobe = new Wardrobe();
-    //this.hand = new PokerHand();
-    this.out = false;
-    //this.forfeit = new Forfeit();
-    //this.ticket = new Ticket();
-    this.xml = null;
-    this.listing = null;
-}

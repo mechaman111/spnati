@@ -53,7 +53,7 @@ function setDevModeTarget (target) {
     }
 }
 
-Opponent.prototype.initDevMode = function () {
+Player.prototype.initDevMode = function () {
     /* Assign a unique ID number to each state, for later lookup. */
     var curStateID = 0;
     var stateIndex = {};

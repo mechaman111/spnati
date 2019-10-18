@@ -62,6 +62,13 @@ $gameTable = $('#game-table');
 var BLANK_PLAYER_IMAGE = "opponents/blank.png";
 
 /* player array */
+
+/**
+ * The current players at the table.
+ * 
+ * @global
+ * @type {Player[]}
+ */
 var players = Array(5);
 var humanPlayer;
 
@@ -280,55 +287,451 @@ function fetchCompressedURL(baseUrl) {
     return deferred.promise();
 }
 
-
-/**********************************************************************
- *****                Player Object Specification                 *****
- **********************************************************************/
-
- /************************************************************
-  * Creates and returns a new player object based on the
-  * supplied information.
-  *
-  * folder (string), the path to their folder
-  * first (string), their first name.
-  * last (string), their last name.
-  * labels (string or XML element), what's shown on screen and what other players refer to them as.
-  *   Can vary by stage.
-  * size (string): Their level of endowment
-  * intelligence (string or XML element), the name of their AI algorithm.
-  *   Can vary by stage.
-  * gender (constant), their gender.
-  * clothing (array of Clothing objects), their clothing.
-  * stamina (integer), time until forfeit is finished (initial timer value).
-  * state (array of PlayerState objects), their sequential states.
-  * xml (jQuery object), the player's loaded behaviour.xml file.
-  * metaXml (jQuery object), the player's loaded meta.xml file.
-  ************************************************************/
-
-function Player (id) {
+/**
+ * Represents any player in-game, including the player character.
+ * 
+ * @constructor
+ * @global
+ * 
+ * @param {string} id The unique ID for this player. Corresponds to a folder
+ * name for NPCs.
+ * @param {jQuery} [$metaXml] The parsed `meta.xml` object for this character.
+ * @param {string} [status] The opponent status for this character.
+ * @param {number} [releaseNumber] This character's release number.
+ * @param {string} [highlightStatus] This character's highlight status.
+ */
+function Player (id, $metaXml, status, releaseNumber, highlightStatus) {
+    /** 
+     * This player's unique ID.
+     * @type {string}
+     */
     this.id = id;
+
+    /**
+     * The current folder from which data for this character should be loaded.
+     * May change during the course of a game, if an alternate costume is
+     * in use for this character.
+     * @type {string}
+     */
     this.folder = 'opponents/'+id+'/';
+
+    /**
+     * The core folder from which data for this character can be loaded.
+     * This will not change during the course of a game.
+     * @type {string}
+     */
     this.base_folder = 'opponents/'+id+'/';
+
+    /** 
+     * This opponent's first name, if any.
+     * @type {string}
+     */
     this.first = '';
+
+    /** 
+     * This opponent's last name, if any. 
+     * @type {string} 
+     */
     this.last = '';
+
+    /** 
+     * A jQuery selector object matching the <label> elements for this character.
+     * @type {jQuery}
+     */
     this.labels = undefined;
+
+    /**
+     * A jQuery selector object matching the <folder> elements for this character.
+     * @type {jQuery}
+     */
     this.folders = undefined;
-    this.size = eSize.MEDIUM;
-    this.intelligence = eIntelligence.AVERAGE;
+
+    /** 
+     * This player's current gender. 
+     * @type {("male" | "female")}
+     */
     this.gender = eGender.MALE;
+
+    /**
+     * This player's current penis or breast size.
+     * @type {eSize} 
+     */
+    this.size = eSize.MEDIUM;
+
+    /** 
+     * This player's current AI difficulty level.
+     * @type {eIntelligence}  
+     */
+    this.intelligence = eIntelligence.AVERAGE;
+
+    /** 
+     * This player's initial 'stamina' (forfeit stage duration). 
+     * @type {number} 
+     */
     this.stamina = 20;
-    this.scale = undefined;
-    this.tags = this.baseTags = [];
+
+    /**
+     * This player's current image scaling factor, as a percentage
+     * (i.e. 100 = full-scale). This scaling factor is applied to all player
+     * images when rendered on-screen. 
+     * @type {number}
+     */
+    this.scale = 100.0;
+
+    /**
+     * The current list of tags for this player, after considering
+     * canonicalization, tag implications, and per-stage tag changes.
+     * @type {string[]}
+     */
+    this.tags = [];
+
+    /**
+     * The 'base' list of tags that have been specified for this player /
+     * alternate costume.
+     * 
+     * Objects in this array contain both a canonicalized tag name and
+     * an interval of stages that they apply to. Both ends of the stage
+     * interval ('from' and 'to') are optional.
+     * @type {{tag: string, from: string, to: string}[]}
+     */
+    this.baseTags = [];
+
+    /**
+     * The parsed `behaviour.xml` data for this character as a jQuery object.
+     * If this is `null`, this character either has not been loaded, or is
+     * the human player.
+     * @type {?jQuery}
+     */
     this.xml = null;
+
+    /**
+     * The parsed `meta.xml` data for this character as a jQuery object.
+     * If this is `null`, this character must be the human player.
+     * @type {?jQuery}
+     */
     this.metaXml = null;
 
-    this.resetState();
+    /**
+     * This opponent's release status.
+     * 
+     * @type {(undefined | "testing" | "offline" | "incomplete")}
+     */
+    this.status = status;
+
+    /**
+     * This opponent's select screen highlight status.
+     * 
+     * @type {string}
+     */
+    this.highlightStatus = highlightStatus || status || '';
+
+    /**
+     * The number of clothing layers this player starts the game with.
+     * @type {number}
+     */
+    this.startingLayers = 0;
+
+    /**
+     * Flags for whether or not this player's upper and/or lower body are
+     * considered 'exposed'.
+     * @type {{upper: boolean, lower: boolean}}
+     */
+    this.exposed = { upper: true, lower: true };
+
+    /**
+     * Flag for whether or not this player is considered 'mostly clothed'.
+     * Currently, this is `false` if:
+     *  -  the player has taken off anything more significant than an accessory
+     *     item, or if
+     *  - the player began the game as 'exposed' in any way.
+     * @type {boolean}
+     */
+    this.mostlyClothed = false;
+
+    /**
+     * Flag for whether this player is considered 'decent'.
+     * Currently, this is set to `false` if
+     *  - the player has taken off anything any 'major' or 'important' item,
+     *    or if
+     *  - the player began the game as 'exposed' in any way.
+     * @type {boolean}
+     */
+    this.decent = false;
+
+    /**
+     * Flag indicating if this player has lost the game.
+     * @type {boolean}
+     */
+    this.out = false;
+
+    /**
+     * Flag indicating if this player has completed their forfeit.
+     * @type {boolean}
+     */
+    this.finished = false;
+    
+    /**
+     * Indicates how many other players lost before this player.
+     * If `undefined`, this player has not lost yet.
+     * @type {?number}
+     */
+    this.outOrder = undefined;
+
+    /**
+     * Stores the biggest lead (in layer count) this player has had so far
+     * over the course of the game.
+     * @type {number}
+     */
+    this.biggestLead = 0;
+
+    /**
+     * Stores information about this character's current forfeit, if any.
+     * 
+     * `tag` is the dialogue tag to use when processing forfeit dialogue
+     * for this player.
+     * 
+     * `can_speak` indicates whether they can use 'normal' dialogue tags
+     * in addition to their forfeit dialogue `tag`.
+     * 
+     * @type {{tag: string, can_speak: boolean}}
+     */
+    this.forfeit = {
+        'tag': "",
+        'can_speak': true,
+    };
+
+    /**
+     * This player's current stage.
+     * @type {number}
+     */
+    this.stage = 0;
+
+    /**
+     * The current number of consecutive losses this player has experienced.
+     * @type {number}
+     */
+    this.consecutiveLosses = 0;
+
+    /**
+     * How many rounds this player has been in their current stage.
+     * @type {number}
+     */
+    this.timeInStage = -1;
+
+    /**
+     * Contains all current marker key-value pairs for this character.
+     * @type {Object.<string, (number|string)>}
+     */
+    this.markers = {};
+
+    /**
+     * Stores whether a one-shot case ID has been used.
+     * @type {Object.<string, boolean>}
+     */
+    this.oneShotCases = {};
+
+    /**
+     * Stores whether a one-shot state ID has been used.
+     * @type {Object.<string, boolean>}
+     */
+    this.oneShotStates = {};
+
+    if ($metaXml) {
+        this.first = $metaXml.find('first').text();
+        this.last = $metaXml.find('last').text();
+
+        /**
+         * The name label to use for this opponent on the main select screen.
+         * Should not change due to e.g. alt costumes selected on
+         * the main select screen.
+         * @type {string}
+         */
+        this.selectLabel = $metaXml.find('label').text();
+
+        /**
+         * The current label to use for this opponent.
+         * @type {string}
+         */
+        this.label = this.selectLabel;
+
+        /**
+         * The selection screen image to use for this opponent, not including
+         * the folder path.
+         * @type {string}
+         */
+        this.image = $metaXml.find('pic').text();
+
+        this.gender = $metaXml.find('gender').text();
+
+        /**
+         * The listed height of this opponent. Might not be used anywhere?
+         * @type {string}
+         */
+        this.height = $metaXml.find('height').text();
+
+        /**
+         * The source material for this character.
+         * @type {string}
+         */
+        this.source = $metaXml.find('from').text();
+
+        /**
+         * The artist credits for this character.
+         * @type {string}
+         */
+        this.artist = $metaXml.find('artist').text();
+
+        /**
+         * The writer credits for this character.
+         * @type {string}
+         */
+        this.writer = $metaXml.find('writer').text();
+
+        /**
+         * The description for this character on the select screens.
+         * @type {string}
+         */
+        this.description = fixupDialogue($metaXml.find('description').html());
+
+        /**
+         * A flag indicating whether or not this character has collectibles,
+         * drawn from `meta.xml`.
+         * @type {boolean}
+         */
+        this.has_collectibles = $metaXml.find('has_collectibles').text() === "true";
+
+        /**
+         * Contains this character's Collectibles.
+         * @type {Collectible[]}
+         */
+        this.collectibles = null;
+
+        this.layers = parseInt($metaXml.find('layers').text(), 10);
+        this.scale = Number($metaXml.find('scale').text()) || 100.0;
+
+        /**
+         * This character's release number.
+         * @type {number}
+         */
+        this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
+
+        /**
+         * This character's unique dialogue line count.
+         * @type {?number}
+         */
+        this.uniqueLineCount = parseInt($metaXml.find('lines').text(), 10) || undefined;
+
+        /**
+         * This character's unique pose count.
+         * @type {?number}
+         */
+        this.posesImageCount = parseInt($metaXml.find('poses').text(), 10) || undefined;
+
+        /**
+         * This character's game display z-index.
+         * @type {number}
+         * @default 0
+         */
+        this.z_index = parseInt($metaXml.find('z-index').text(), 10) || 0;
+
+        /**
+         * Indicates whether or not this character's dialogue bubble should be
+         * `over` or `under` the character's images.
+         * 
+         * @type {('over'|'under')}
+         * @default 'under'
+         */
+        this.dialogue_layering = $metaXml.find('dialogue-layer').text();
+
+        if (['over', 'under'].indexOf(this.dialogue_layering) < 0) {
+            this.dialogue_layering = 'under';
+        }
+
+        /**
+         * A jQuery object containing `<epilogue>` elements from this character's
+         * `meta.xml`.
+         * @type {jQuery}
+         */
+        this.endings = $metaXml.find('epilogue');
+
+        /**
+         * A flag indicating whether or not this character has available
+         * epilogues, drawn from `meta.xml`.
+         * @type {boolean}
+         */
+        this.ending = $metaXml.find('has_ending').text() === "true";
+
+        if (this.endings.length > 0) {
+            this.endings.each(function (idx, elem) {
+                var status = $(elem).attr('status');
+                if (!status || includedOpponentStatuses[status]) {
+                    this.ending = true;
+                }
+            }.bind(this));
+        }
+
+        this.selected_costume = null;
+        this.alt_costume = null;
+        this.default_costume = null;
+        this.poses = {};
+        this.labelOverridden = false;
+        this.pendingCollectiblePopup = null;
+
+        this.loaded = false;
+        this.loadProgress = undefined;
+
+        /* baseTags stores tags that will be later used in resetState to build the
+         * opponent's true tags list. It does not store implied tags.
+         *
+         * The tags list stores the fully-expanded list of tags for the opponent,
+         * including implied tags.
+         */
+        this.baseTags = $metaXml.find('tags').children().map(function () {
+            return canonicalizeTag($(this).text());
+        }).get();
+        this.updateTags();
+        this.searchTags = this.baseTags.slice();
+
+        this.cases = new Map();
+
+        /* Attempt to preload this opponent's picture for selection. */
+        new Image().src = 'opponents/' + id + '/' + this.image;
+
+        this.alternate_costumes = [];
+        this.selection_image = this.folder + this.image;
+
+        $metaXml.find('alternates').find('costume').each(function (i, elem) {
+            var set = $(elem).attr('set') || 'offline';
+            var status = $(elem).attr('status') || 'offline';
+
+            if (alternateCostumeSets['all'] || alternateCostumeSets[set]) {
+                if (!includedOpponentStatuses[status]) {
+                    return;
+                }
+
+                var costume_descriptor = {
+                    'folder': $(elem).attr('folder'),
+                    'label': $(elem).text(),
+                    'image': $(elem).attr('img'),
+                    'set': set,
+                    'status': status,
+                };
+
+                if (set === FORCE_ALT_COSTUME) {
+                    this.selection_image = costume_descriptor['folder'] + costume_descriptor['image'];
+                    this.selectAlternateCostume(costume_descriptor);
+                }
+
+                this.alternate_costumes.push(costume_descriptor);
+            }
+        }.bind(this)).get();
+    }
 }
 
-/*******************************************************************
- * Sets initial values of state variables used by targetStatus,
- * targetStartingLayers etc. adccording to wardrobe.
- *******************************************************************/
+/**
+ * Sets initial values of state variables used by `targetStatus`,
+ * `targetStartingLayers` etc. according to wardrobe.
+ */
 Player.prototype.initClothingStatus = function () {
 	this.startingLayers = this.clothing.length;
 	this.exposed = { upper: true, lower: true };
@@ -347,15 +750,16 @@ Player.prototype.initClothingStatus = function () {
 		});
 }
 
-/*******************************************************************
- * (Re)Initialize the player properties that change during a game
- *******************************************************************/
+/**
+ * Initialize (or re-initialize) the player properties that change during a 
+ * game.
+ */
 Player.prototype.resetState = function () {
     this.out = this.finished = false;
     this.outOrder = undefined;
     this.biggestLead = 0;
 	this.forfeit = "";
-	this.stage = this.current = this.consecutiveLosses = 0;
+	this.stage = this.consecutiveLosses = 0;
 	this.timeInStage = -1;
 	this.markers = {};
 	this.oneShotCases = {};
@@ -408,14 +812,16 @@ Player.prototype.resetState = function () {
 }
 
 Player.prototype.getIntelligence = function () {
-    return this.intelligence; // Opponent uses getByStage()
+    return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
 };
 
-/* These shouldn't do anything for the human player, but exist as empty functions
-   to make it easier to iterate over the entire players[] array. */
-Player.prototype.updateLabel = function () { }
-Player.prototype.updateFolder = function () { }
-Player.prototype.updateBehaviour = function() { }
+Player.prototype.updateLabel = function () {
+    if (this.labels && !this.labelOverridden) this.label = this.getByStage(this.labels);
+}
+
+Player.prototype.updateFolder = function () {
+    if (this.folders) this.folder = this.getByStage(this.folders);
+}
 
 /* Compute the Player's tags list from their baseTags list. */
 Player.prototype.updateTags = function () {
@@ -511,130 +917,8 @@ Player.prototype.checkStatus = function(status) {
 	}
 }
 
-
-/**
- * Subclass of Player for AI-controlled players.
- * 
- * @constructor
- * 
- * @param {string} id 
- * @param {jQuery} $metaXml 
- * @param {string} status 
- * @param {number} [releaseNumber] 
- * @param {string} [highlightStatus]
- */
-function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
-    Player.call(this, id);
-
-    this.id = id;
-    this.folder = 'opponents/'+id+'/';
-    this.base_folder = 'opponents/'+id+'/';
-    this.metaXml = $metaXml;
-
-    this.status = status;
-    this.highlightStatus = highlightStatus || status || '';
-    this.first = $metaXml.find('first').text();
-    this.last = $metaXml.find('last').text();
-    
-    /* selectLabel shouldn't change due to e.g. alt costumes selected on
-     * the main select screen.
-     */
-    this.selectLabel = $metaXml.find('label').text();
-    this.label = this.selectLabel;
-
-    this.image = $metaXml.find('pic').text();
-    this.gender = $metaXml.find('gender').text();
-    this.height = $metaXml.find('height').text();
-    this.source = $metaXml.find('from').text();
-    this.artist = $metaXml.find('artist').text();
-    this.writer = $metaXml.find('writer').text();
-    this.description = fixupDialogue($metaXml.find('description').html());
-    this.has_collectibles = $metaXml.find('has_collectibles').text() === "true";
-    this.collectibles = null;
-    this.layers = parseInt($metaXml.find('layers').text(), 10);
-    this.scale = Number($metaXml.find('scale').text()) || 100.0;
-    this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
-    this.uniqueLineCount = parseInt($metaXml.find('lines').text(), 10) || undefined;
-    this.posesImageCount = parseInt($metaXml.find('poses').text(), 10) || undefined;
-    this.z_index = parseInt($metaXml.find('z-index').text(), 10) || 0;
-    this.dialogue_layering = $metaXml.find('dialogue-layer').text();
-    
-    this.endings = $metaXml.find('epilogue');
-    this.ending = $metaXml.find('has_ending').text() === "true";
-
-    if (this.endings.length > 0) {
-        this.endings.each(function (idx, elem) {
-            var status = $(elem).attr('status');
-            if (!status || includedOpponentStatuses[status]) {
-                this.ending = true;
-            }
-        }.bind(this));
-    }
-
-    if (['over', 'under'].indexOf(this.dialogue_layering) < 0) {
-        this.dialogue_layering = 'under';
-    }
-    
-    this.selected_costume = null;
-    this.alt_costume = null;
-    this.default_costume = null;
-    this.poses = {};
-    this.labelOverridden = false;
-    this.pendingCollectiblePopup = null;
-
-    this.loaded = false;
-    this.loadProgress = undefined;
-    
-    /* baseTags stores tags that will be later used in resetState to build the
-     * opponent's true tags list. It does not store implied tags.
-     *
-     * The tags list stores the fully-expanded list of tags for the opponent,
-     * including implied tags.
-     */
-    this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
-    this.updateTags();
-    this.searchTags = this.baseTags.slice();
-    
-    this.cases = new Map();
-
-    /* Attempt to preload this opponent's picture for selection. */
-    new Image().src = 'opponents/'+id+'/'+this.image;
-
-    this.alternate_costumes = [];
-    this.selection_image = this.folder + this.image;
-    
-    $metaXml.find('alternates').find('costume').each(function (i, elem) {
-        var set = $(elem).attr('set') || 'offline';
-        var status = $(elem).attr('status') || 'offline';
-        
-        if (alternateCostumeSets['all'] || alternateCostumeSets[set]) {
-            if (!includedOpponentStatuses[status]) {
-                return;
-            }
-
-            var costume_descriptor = {
-                'folder': $(elem).attr('folder'),
-                'label': $(elem).text(),
-                'image': $(elem).attr('img'),
-                'set': set,
-                'status': status,
-            };
-            
-            if (set === FORCE_ALT_COSTUME) {
-                this.selection_image = costume_descriptor['folder'] + costume_descriptor['image'];
-                this.selectAlternateCostume(costume_descriptor);
-            }
-            
-            this.alternate_costumes.push(costume_descriptor);
-        }
-    }.bind(this)).get();
-}
-
-Opponent.prototype = Object.create(Player.prototype);
-Opponent.prototype.constructor = Opponent;
-
-Opponent.prototype.clone = function() {
-	var clone = Object.create(Opponent.prototype);
+Player.prototype.clone = function() {
+	var clone = Object.create(Player.prototype);
 	/* This should be deep enough for our purposes. */
 	for (var prop in this) {
 		if (this[prop] instanceof Array) {
@@ -646,15 +930,13 @@ Opponent.prototype.clone = function() {
 	return clone;
 }
 
-Opponent.prototype.isLoaded = function() {
+Player.prototype.isLoaded = function() {
     return this.loaded;
 }
 
-Opponent.prototype.onSelected = function(individual) {
+Player.prototype.onSelected = function(individual) {
     this.resetState();
-    console.log(this.slot+": ");
-    console.log(this);
-    
+
     // check for duplicate <link> elements:
     if (this.stylesheet) {
         if ($('link[href=\"'+this.stylesheet+'\"]').length === 0) {
@@ -688,16 +970,7 @@ Opponent.prototype.onSelected = function(individual) {
 
     updateSelectionVisuals();
 }
-
-Opponent.prototype.updateLabel = function () {
-    if (this.labels && !this.labelOverridden) this.label = this.getByStage(this.labels);
-}
-
-Opponent.prototype.updateFolder = function () {
-    if (this.folders) this.folder = this.getByStage(this.folders);
-}
-
-Opponent.prototype.getByStage = function (arr, stage) {
+Player.prototype.getByStage = function (arr, stage) {
     if (typeof(arr) === "string") {
         return arr;
     }
@@ -715,7 +988,7 @@ Opponent.prototype.getByStage = function (arr, stage) {
     return bestFit;
 };
 
-Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
+Player.prototype.selectAlternateCostume = function (costumeDesc) {
     if (!costumeDesc) {
         this.selected_costume = null;
         this.selection_image = this.base_folder + this.image;
@@ -728,11 +1001,7 @@ Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
         this.selectionCard.update();
 };
 
-Opponent.prototype.getIntelligence = function () {
-    return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
-};
-
-Opponent.prototype.loadAlternateCostume = function (individual) {
+Player.prototype.loadAlternateCostume = function (individual) {
     if (this.alt_costume) {
         if (this.alt_costume.folder != this.selected_costume) {
             this.unloadAlternateCostume();
@@ -807,7 +1076,7 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
     })
 }
 
-Opponent.prototype.unloadAlternateCostume = function () {
+Player.prototype.unloadAlternateCostume = function () {
     if (!this.alt_costume) {
         return;
     }
@@ -817,7 +1086,7 @@ Opponent.prototype.unloadAlternateCostume = function () {
     this.resetState();
 }
 
-Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
+Player.prototype.loadCollectibles = function (onLoaded, onError) {
     if (!this.has_collectibles) return;
     if (this.collectibles !== null) return;
     
@@ -847,7 +1116,7 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
 }
 
 /* Called prior to removing a character from the table. */
-Opponent.prototype.unloadOpponent = function () {
+Player.prototype.unloadOpponent = function () {
     if (SENTRY_INITIALIZED) {
         Sentry.addBreadcrumb({
             category: 'select',
@@ -869,7 +1138,7 @@ Opponent.prototype.unloadOpponent = function () {
  * The onLoadFinished parameter must be a function capable of
  * receiving a new player object and a slot number.
  ************************************************************/
-Opponent.prototype.loadBehaviour = function (slot, individual) {
+Player.prototype.loadBehaviour = function (slot, individual) {
     this.slot = slot;
     if (this.isLoaded()) {
         if (this.selected_costume) {
@@ -1033,7 +1302,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
         }.bind(this));
 }
 
-Opponent.prototype.recordTargetedCase = function (caseObj) {
+Player.prototype.recordTargetedCase = function (caseObj) {
     var entities = new Set();
 
     if (caseObj.target) entities.add(caseObj.target);
@@ -1066,7 +1335,7 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
  * chunk of work, and the promise resolves once all cases have been processed.
  * All callbacks are fired with the Opponent as `this`.
  */
-Opponent.prototype.loadXMLTriggers = function () {
+Player.prototype.loadXMLTriggers = function () {
     var deferred = $.Deferred();
 
     var triggerQueue = this.xml.find('behaviour>trigger').get();
@@ -1131,7 +1400,7 @@ Opponent.prototype.loadXMLTriggers = function () {
  * chunk of work, and the promise resolves once all cases have been processed.
  * All callbacks are fired with the Opponent as `this`.
  */
-Opponent.prototype.loadXMLStages = function (onComplete) {
+Player.prototype.loadXMLStages = function (onComplete) {
     var deferred = $.Deferred();
 
     var stageQueue = this.xml.find('behaviour>stage').get();

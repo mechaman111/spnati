@@ -1734,7 +1734,7 @@ Case.prototype.applyOneShot = function (player) {
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
 
-Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
+Player.prototype.findBehaviour = function(tags, opp, volatileOnly) {
     /* get the AI stage */
     var stageNum = this.stage;
     var bestMatchPriority = 0;
@@ -1816,7 +1816,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
  * Updates this Opponent's chosenState and related information.
  * Also cleans up the previous chosenState's parent Case, if it exists.
  */
-Opponent.prototype.updateChosenState = function (state) {
+Player.prototype.updateChosenState = function (state) {
     if (this.chosenState && this.chosenState.parentCase && state.parentCase != this.chosenState.parentCase) {
         this.chosenState.parentCase.cleanupMutableState();
     }
@@ -1842,7 +1842,9 @@ Opponent.prototype.clearChosenState = function () {
  * Updates the behaviour of the given player based on the 
  * provided tag.
  ************************************************************/
-Opponent.prototype.updateBehaviour = function(tags, opp) {
+Player.prototype.updateBehaviour = function(tags, opp) {
+    if (!this.xml) return;
+    
     /* determine if the AI is dialogue locked */
     if (this.out && this.forfeit[1] == CANNOT_SPEAK) {
         /* their is restricted to this only */
@@ -1876,7 +1878,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
  * If a higher-priority volatile case is found, its volatile
  * dependencies will be locked, unlocking prior volatile state locks if necessary.
  ************************************************************/
-Opponent.prototype.updateVolatileBehaviour = function () {
+Player.prototype.updateVolatileBehaviour = function () {
     if (players.some(function(p) {
         if (p !== players[HUMAN_PLAYER]
             && !p.updatePending && p.chosenState && p.chosenState.parentCase) {
@@ -1910,7 +1912,7 @@ Opponent.prototype.updateVolatileBehaviour = function () {
  * Finalizes a behaviour update,
  * expanding state dialogue and updating player markers. 
  ************************************************************/
-Opponent.prototype.commitBehaviourUpdate = function () {
+Player.prototype.commitBehaviourUpdate = function () {
     if (!this.chosenState) return;
     if (this.stateCommitted) return;
     
@@ -1960,7 +1962,7 @@ Opponent.prototype.commitBehaviourUpdate = function () {
 /************************************************************
  * Applies markers from all lines in a case
  ************************************************************/
-Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
+Player.prototype.applyHiddenStates = function (chosenCase, opp) {
     var self = this;
     chosenCase.applyOneShot(self);
     chosenCase.states.forEach(function (c) {
