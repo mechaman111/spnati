@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1.1 at 7:28:59 PM on October 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 4:54:13 PM on October 18, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.1.1</version>
+    <version>v5.2.6</version>
     <first>Megumin</first>
     <last>of the Crimson Demons</last>
     <label>Megumin</label>
@@ -13,27 +13,24 @@
 
     <tags>
         <tag>brunette</tag>
-        <tag>long_hair</tag>
+        <tag>medium_hair</tag>
         <tag>red_eyes</tag>
         <tag>fair-skinned</tag>
         <tag>short</tag>
         <tag>pubic_hair</tag>
         <tag>small_breasts</tag>
-        <tag from="0" to="1">weapon</tag>
-        <tag from="0" to="1">wand</tag>
-        <tag from="0" to="3">cape</tag>
+        <tag>weapon</tag>
+        <tag>wand</tag>
+        <tag from="0" to="0">cape</tag>
         <tag from="0" to="4">hat</tag>
-        <tag from="0" to="2">thigh_highs</tag>
+        <tag from="0" to="3">thigh_highs</tag>
         <tag>aggressive</tag>
         <tag>cheerful</tag>
         <tag>ditzy</tag>
-        <tag>innocent</tag>
         <tag>moe</tag>
-        <tag>sarcastic</tag>
         <tag>boob_envy</tag>
         <tag>fantasy</tag>
         <tag>anime</tag>
-        <tag>visual_novel</tag>
         <tag>magic</tag>
         <tag>hero</tag>
     </tags>
@@ -68,10 +65,12 @@
         </trigger>
 
         <trigger id="game_start">
-            <case stage="0" alsoPlaying="kazuma">
+            <case stage="0">
+                <condition role="other" character="kazuma" />
                 <state img="#-smug.png">You said this game was from your country right Kazuma? I must say I'm interested in playing. I suppose it's time for me to show my strategic genius and best you at your own game!</state>
             </case>
-            <case stage="0" totalFemales="5">
+            <case stage="0">
+                <condition count="5" gender="female" />
                 <state img="#-smug.png">That Kazuma... always running off somewhere... That's fine, we shall have a fun time just amongst us girls. Prepare to lose to Megumin of the Crimson Demon Village!</state>
             </case>
             <case stage="0" totalMales="4">
@@ -108,7 +107,8 @@
         </trigger>
 
         <trigger id="good_hand">
-            <case stage="0-6" alsoPlaying="kazuma">
+            <case stage="0-6">
+                <condition role="other" character="kazuma" />
                 <state img="#-smug.png" oneShotId="1">Fufufu... You should start saying your prayers Kazuma because this hand is going to destroy you!</state>
                 <state img="#-smug.png" oneShotId="2">Kazuma, if you promise to do everything I ask for a week I may hold back from annihilating you with this hand!</state>
             </case>
@@ -118,8 +118,9 @@
             <case stage="7-8" oneShotId="2" consecutiveLosses="2-3">
                 <state img="#-smug.png">Yes! This hand will wreak havoc! And just in time too, that was getting way too close for comfort!</state>
             </case>
-            <case stage="0-8" hasHand="Royal Flush">
-                <state img="#-showoff.png">Oh!  OOOOOHHH!! This.. this hand is amazing!! HAHAHA prepare to lose!</state>
+            <case stage="0-8">
+                <condition role="self" hasHand="Royal Flush" />
+                <state img="#-showoff.png">Oh!  OOOOOHHH!! This... this hand is amazing!! HAHAHA prepare to lose!</state>
             </case>
             <case stage="0" timeInStage="0">
                 <state img="#-showoff.png">It looks like I'm starting this round with a bang!</state>
@@ -196,7 +197,8 @@
             <case stage="0-8" oneShotId="1" alsoPlaying="hermione">
                 <state img="#-annoyed.png">You didn't happen to curse my hand did you Hermione? What kind of magic do you know anyways? Either way I'll be keeping my eye on you...</state>
             </case>
-            <case stage="0-8" oneShotId="3" alsoPlaying="kazuma">
+            <case stage="0-8" oneShotId="3">
+                <condition role="other" character="kazuma" />
                 <state img="#-embarrassed.png">Hehe.... Um... Kazuma... I know I've been boasting a lot lately, but could you go easy on me this round.....?</state>
             </case>
             <case stage="0-4">
@@ -206,7 +208,7 @@
                 <state img="#-surprised.png">Which one of you cursed my cards?!</state>
                 <state img="#-fearful.png">D-does anyone here know healing magic? These cards! They’re &lt;i&gt;cursed&lt;/i&gt;!</state>
                 <state img="#-annoyed.png">Did the dealer mess up or am I supposed to be able to do something with these?</state>
-                <state img="#-smug.png">Guuh.. I mean, Haha! Yes! Truly this is a hand only one with power such as mine could draw!...</state>
+                <state img="#-smug.png">Guuh... I mean, Haha! Yes! Truly this is a hand only one with power such as mine could draw!...</state>
                 <state img="#-annoyed.png">Dealer, if you continue to toy with me I may have to show you my explosion first-hand!</state>
                 <state img="#-fearful.png">What the heck!!??</state>
             </case>
@@ -229,7 +231,8 @@
             <case stage="0-7" consecutiveLosses="2">
                 <state img="#-fearful.png">Twice in a row?! Impossible! How could I lose?!</state>
             </case>
-            <case stage="0-7" consecutiveLosses="3">
+            <case stage="0-7">
+                <condition role="self" consecutiveLosses="3" />
                 <state img="#-fearful.png">Th... This game is trying to kill me!!!</state>
                 <state img="#-defeated.png">I am disgraced... To have lost this many times in a row...</state>
             </case>
@@ -250,7 +253,7 @@
             </case>
             <case stage="0-7">
                 <state img="#-embarrassed.png">This is n-nothing! No big deal.</state>
-                <state img="#-embarrassed.png">W-wait! My turn?! Oh.. okay.. Right no problem.</state>
+                <state img="#-embarrassed.png">W-wait! My turn?! Oh... okay... Right no problem.</state>
             </case>
         </trigger>
 
@@ -338,7 +341,8 @@
             <case stage="0" totalRounds="0">
                 <state img="#-fearful.png">Wait you have to do what if you lose?! I know Kazuma said this was a "mature" game, but this seems a bit extreme! If the games from where he’s from are like this no wonder he’s a hopeless pervert...</state>
             </case>
-            <case stage="0-7" oneShotId="1" totalExposed="0">
+            <case stage="0-7" oneShotId="7" priority="5">
+                <condition count="0" status="exposed" />
                 <state img="#-embarrassed.png">Must you do that here? Isn’t th-there a side room or something?.. No? ...well, if you must..</state>
             </case>
             <case stage="0-5">
@@ -353,7 +357,8 @@
         </trigger>
 
         <trigger id="male_must_strip">
-            <case stage="0-6" target="kazuma" targetStage="0">
+            <case stage="0-6">
+                <condition role="target" character="kazuma" stage="0" />
                 <state img="#-smug.png">And what exactly is wrong with me being here? Fufu... I do believe you are getting red with embarrassment!</state>
             </case>
             <case stage="0-6" target="kazuma" targetStage="1">
@@ -515,12 +520,12 @@
         </trigger>
 
         <trigger id="male_removed_major">
-            <case stage="6-8 10" oneShotId="2" saidMarker="blushing">
+            <case stage="6-8 10" oneShotId="8" saidMarker="blushing">
                 <state img="#-embarrassed.png">Okay, maybe I'm blushing...</state>
             </case>
             <case stage="0-5">
                 <state img="#-fearful.png">Gah! I didn’t think you would seriously take that off!</state>
-                <state img="#-horny.png" marker="blushing">I-I-I’m not blushing! This is.. This is just a natural reaction to my explosive magic energy! Yes that’s it!</state>
+                <state img="#-horny.png" marker="blushing">I-I-I’m not blushing! This is.. This is just a natural reaction to my explosive magic energy! Yes, that’s it!</state>
             </case>
             <case stage="6-8 10">
                 <state img="#-embarrassed.png">Not bad.</state>
@@ -577,7 +582,7 @@
             <case stage="0-8 10" target="kazuma">
                 <state img="#-fearful.png">W-wait now hold on! I may have seen it before, but you died! That was an emergency situation! My heart isn't ready for this!</state>
             </case>
-            <case stage="0-10" oneShotId="1" priority="1">
+            <case stage="0-10" oneShotId="9" priority="1">
                 <state img="#-embarrassed.png">I never imagined this was how I would end up seeing my first one...</state>
             </case>
             <case stage="0-8">
@@ -591,7 +596,7 @@
 
         <trigger id="male_small_crotch_is_visible">
             <case stage="0-10">
-                <state img="#-awkward.png">Wait where is it?.. Is that it?</state>
+                <state img="#-awkward.png">Wait where is it? ...Is that it?</state>
                 <state img="#-smug.png">Haha... Oh! Sorry! &lt;i&gt;I didn’t mean to laugh!&lt;/i&gt;</state>
             </case>
         </trigger>
@@ -617,8 +622,9 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
-            <case stage="0-10" filter="large_breasts">
-                <state img="#-annoyed.png">Are you seriously going to?... hmph.. well, I suppose it’s not like you have anything to worry about.. I’m sure Kazuma would be ogling you right now, that useless pervert..</state>
+            <case stage="0-10">
+                <condition filter="large_breasts" role="target" />
+                <state img="#-annoyed.png">Are you seriously going to?... hmph... well, I suppose it’s not like you have anything to worry about... I’m sure Kazuma would be ogling you right now, that useless pervert...</state>
                 <state img="#-fearful.png">No one wants to see your ridiculously oversized chest! How the hell did they even get that big, huh?!</state>
                 <state img="#-awkward.png">Are you seriously going to show off?</state>
             </case>
@@ -657,7 +663,8 @@
         </trigger>
 
         <trigger id="female_chest_is_visible">
-            <case stage="0-10" target="revy">
+            <case stage="0-10">
+                <condition role="target" character="revy" />
                 <state img="#-awkward.png">Normally, I would say something about the ridiculous size of your chest... but considering I don't want you to hurt me, I will refrain from doing so...</state>
             </case>
             <case stage="0-10" target="wiifitfemale">
@@ -722,10 +729,11 @@
         </trigger>
 
         <trigger id="male_must_masturbate">
-            <case stage="0-10" target="kazuma">
+            <case stage="0-10">
+                <condition role="target" character="kazuma" />
                 <state img="#-embarrassed.png">Wait I have to watch him do what now?! Oh jeez... well... I suppose rules are rules...</state>
             </case>
-            <case stage="0-8" oneShotId="3" totalMasturbating="0" totalFinished="0">
+            <case stage="0-8" oneShotId="10" totalMasturbating="0" totalFinished="0">
                 <state img="#-defeated.png">Do we really have to watch this?! Is this seriously happening?!</state>
             </case>
             <case stage="0-8">
@@ -739,7 +747,8 @@
         </trigger>
 
         <trigger id="male_start_masturbating">
-            <case stage="0-10" target="kazuma">
+            <case stage="0-10">
+                <condition role="target" character="kazuma" />
                 <state img="#-fearful.png">&lt;i&gt;(This is embarrassing but exhilarating at the same time!... I can't believe I'm seeing this!)&lt;/i&gt;</state>
             </case>
             <case stage="0-10">
@@ -749,7 +758,8 @@
         </trigger>
 
         <trigger id="male_masturbating">
-            <case stage="9" target="human">
+            <case stage="9">
+                <condition role="target" character="human" />
                 <state img="#-embarrassed.png">&lt;i&gt;(I wonder what that rod would feel like... inside me...)&lt;/i&gt; </state>
                 <state img="#-embarrassed.png">&lt;i&gt;(I can't stop looking at his ...thing.)&lt;/i&gt;</state>
                 <state img="#-awkward.png">&lt;i&gt;(This whole situation is making me feel all tingly...)&lt;/i&gt;</state>
@@ -780,7 +790,9 @@
         </trigger>
 
         <trigger id="female_must_masturbate">
-            <case stage="0-8" oneShotId="4" totalMasturbating="0" totalFinished="0">
+            <case stage="0-8" oneShotId="4">
+                <condition count="0" status="masturbating" />
+                <condition count="0" status="finished" />
                 <state img="#-awkward.png">Is she really going to?!... &lt;i&gt;gulp...&lt;/i&gt; Right, of course...</state>
             </case>
             <case stage="0-8">
@@ -813,7 +825,7 @@
                 <state img="#-showoff.png">Dance before your puppet master!</state>
                 <state img="#-embarrassed.png">I never thought of trying it like that... &lt;i&gt;Oh!&lt;/i&gt; Nothing! I didn't say anything! </state>
             </case>
-            <case stage="10" oneShotId="6">
+            <case stage="10" oneShotId="11">
                 <state img="#-smug.png">It's not as good a show as when I did it, but you'll get there some day, fufufu...</state>
             </case>
             <case stage="9">
@@ -846,7 +858,7 @@
 
         <trigger id="must_masturbate">
             <case stage="8">
-                <state img="#-embarrassed.png">I-I suppose it’s c-come to t-this… I’m not nervous, I’ve done this thousands of times, millions, I absolutely know what I’m doing… um.. Oh, Eris, I can’t believe I’m actually doing this...</state>
+                <state img="#-embarrassed.png">I-I suppose it’s c-come to t-this… I’m not nervous, I’ve done this thousands of times, millions, I absolutely know what I’m doing... um... Oh, Eris, I can’t believe I’m actually doing this...</state>
             </case>
         </trigger>
 
