@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 12:57:21 a. m. on octubre 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 11:37:38 p. m. on octubre 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.6</version>
     <first>Rarity</first>
@@ -308,7 +308,7 @@
                 <state img="#-joy.png">Je suis ravi!</state>
                 <state img="#-joy.png">Incredible.</state>
             </case>
-            <case stage="3-5">
+            <case stage="3-5" priority="0">
                 <state img="#-joy.png">I really needed something good. Thanks a bunch.</state>
                 <state img="#-joy.png">Thank you from the bottom of my heart, Mr. Dealer.</state>
                 <state img="#-joy.png">Maybe miracles really can come true!</state>
@@ -478,13 +478,19 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="0-5" totalAlive="2" notSaidMarker="one_on_one" priority="500">
+            <case stage="0-5" priority="500">
+                <condition role="self" notSaidMarker="one_on_one" />
+                <condition count="2" status="alive" />
                 <state img="#-smug.png" marker="one_on_one">Well darling, it seems it will have to end between us two, that is of course, unless you prefer to just let me win right now.</state>
             </case>
-            <case stage="0-2" totalAlive="2" saidMarker="GGG" notSaidMarker="one_on_one" priority="500">
+            <case stage="0-2" priority="500">
+                <condition role="self" saidMarker="GGG" notSaidMarker="one_on_one" />
+                <condition count="2" status="alive" />
                 <state img="#-bsmug.png" marker="one_on_one">Well darling, it seems it will have to end between us two, that is of course, unless you prefer to just let me win right now.</state>
             </case>
-            <case stage="0-2" totalAlive="2" saidMarker="Fall_formal" notSaidMarker="one_on_one" priority="500">
+            <case stage="0-2" priority="500">
+                <condition role="self" saidMarker="Fall_formal" notSaidMarker="one_on_one" />
+                <condition count="2" status="alive" />
                 <state img="#-csmug.png" marker="one_on_one">Well darling, it seems it will have to end between us two, that is of course, unless you prefer to just let me win right now.</state>
             </case>
             <case stage="0-2" alsoPlaying="twilight" alsoPlayingStage="3" alsoPlayingTimeInStage="0" saidMarker="Fall_formal">
@@ -493,10 +499,20 @@
             <case stage="0-2" alsoPlaying="zone-tan" alsoPlayingStage="3" alsoPlayingTimeInStage="0" saidMarker="Fall_formal">
                 <state img="#-cshade.png">Ugh... you know what... I'll bite, if you are going to be showing your panties like that, the least I can do is to at least give you some &lt;i&gt;good&lt;/i&gt; ones to show off, those are &lt;i&gt;waaaaay&lt;/i&gt; too plain and boring...</state>
             </case>
-            <case stage="0-2" alsoPlaying="syrenne" alsoPlayingStage="1" alsoPlayingTimeInStage="0" saidMarker="GGG">
+            <case stage="0-2">
+                <alternative alsoPlaying="syrenne" alsoPlayingStage="1" alsoPlayingTimeInStage="0" saidMarker="GGG" />
+                <alternative id="35">
+                    <alternative tag="hand" id="35" alsoPlaying="nami" alsoPlayingStage="2-6" alsoPlayingTimeInStage="0-" saidMarker="GGG" alsoPlayingSayingMarker="dreams" />
+                    <alternative tag="hand" alsoPlaying="misty_hgss" alsoPlayingStage="4" alsoPlayingTimeInStage="0" alsoPlayingSaidMarker="player_male" />
+                </alternative>
                 <state img="#-brelaxed.png">Thanks for the offer dear, but usually me and my friends have things like magical monsters under control...</state>
             </case>
-            <case stage="0-2" alsoPlaying="syrenne" alsoPlayingStage="1" alsoPlayingTimeInStage="0" saidMarker="Fall_formal">
+            <case stage="0-2">
+                <alternative alsoPlaying="syrenne" alsoPlayingStage="1" alsoPlayingTimeInStage="0" saidMarker="Fall_formal" />
+                <alternative id="36">
+                    <alternative tag="hand" id="36" alsoPlaying="nami" alsoPlayingStage="2-6" alsoPlayingTimeInStage="0-" saidMarker="Fall_formal" alsoPlayingSayingMarker="dreams" />
+                    <alternative tag="hand" alsoPlaying="zone-tan" alsoPlayingStage="3" alsoPlayingTimeInStage="0" saidMarker="GGG" />
+                </alternative>
                 <state img="#-crelaxed.png">Thanks for the offer dear, but usually me and my friends have things like magical monsters under control...</state>
             </case>
             <case stage="0-2" alsoPlaying="palutena" alsoPlayingStage="6" alsoPlayingTimeInStage="0" saidMarker="GGG">
@@ -504,16 +520,6 @@
             </case>
             <case stage="0-2" alsoPlaying="palutena" alsoPlayingStage="6" alsoPlayingTimeInStage="0" saidMarker="Fall_formal">
                 <state img="#-cnervous.png">(Oooh... I guess she is topless now too, I think I got too carried away by the moment...)</state>
-            </case>
-            <case stage="0-2" id="35">
-                <alternative id="35" alsoPlaying="nami" alsoPlayingStage="2-6" alsoPlayingTimeInStage="0-" saidMarker="GGG" alsoPlayingSayingMarker="dreams" />
-                <alternative alsoPlaying="misty_hgss" alsoPlayingStage="4" alsoPlayingTimeInStage="0" alsoPlayingSaidMarker="player_male" />
-                <state img="#-bnervous.png">Dear, how do I put this softly... Maps of the entire world already exist... probably even before you were even born...</state>
-            </case>
-            <case stage="0-2" id="36">
-                <alternative id="36" alsoPlaying="nami" alsoPlayingStage="2-6" alsoPlayingTimeInStage="0-" saidMarker="Fall_formal" alsoPlayingSayingMarker="dreams" />
-                <alternative alsoPlaying="zone-tan" alsoPlayingStage="3" alsoPlayingTimeInStage="0" saidMarker="GGG" />
-                <state img="#-cnervous.png">Dear, how do I put this softly... Maps of the entire world already exist... probably even before you were even born...</state>
             </case>
             <case stage="0-2">
                 <alternative alsoPlaying="twilight" alsoPlayingStage="3" alsoPlayingTimeInStage="0" saidMarker="GGG" />
@@ -607,6 +613,10 @@
             <case stage="0-2" id="24" alsoPlaying="jessie" alsoPlayingStage="0-2" saidMarker="Fall_formal" alsoPlayingSayingMarker="JessieQA_StupidMistakes">
                 <state img="#-crelaxed.png" marker="JessieQAMistakes">Everyone can have a mistep or two, but as long as they learn and improve from it there's nothing to reprehend.</state>
             </case>
+            <case stage="0-5" priority="142">
+                <condition role="other" character="Rainbow" stage="0" saidMarker="pony_table" sayingMarker="pony_whatupto" />
+                <state img="#-happy.png">Well, I'm finally going to open my second shop, "Canterlot carrousel". You are all invited to the grand opening, if you want to come of course!</state>
+            </case>
             <case stage="0-5" alsoPlaying="pinkie_pie" alsoPlayingStage="0-3" alsoPlayingSaying=" gonna have to wait">
                 <state img="#-nervous.png">Pinkie dear, trust me, despite what happened at that sleep-over, I do not wish to see you naked... again...</state>
             </case>
@@ -685,28 +695,17 @@
                 <alternative oneShotId="8" alsoPlaying="kyu" alsoPlayingSaying="retard" />
                 <state img="#-angry.png">Language, please, how are we supposed to keep our class if you just say vulgarities like that!</state>
             </case>
-            <case stage="0" timeInStage="0" totalRounds="0" saidMarker="Fall_formal" priority="19">
+            <case stage="0" totalRounds="0" priority="19">
+                <condition role="self" timeInStage="0" saidMarker="Fall_formal" />
                 <state img="#-chappy.png">Hello darlings! My name is Rarity, and I'm sure we'll make this a fabulous game!</state>
             </case>
-            <case stage="0" timeInStage="0" totalRounds="0" saidMarker="GGG" priority="19">
+            <case stage="0" totalRounds="0" priority="19">
+                <condition role="self" timeInStage="0" saidMarker="GGG" />
                 <state img="#-bhappy.png">Hello darlings! My name is Rarity, and I'm sure we'll make this a fabulous game!</state>
             </case>
-            <case stage="0" timeInStage="0" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition role="self" timeInStage="0" />
                 <state img="#-happy.png">Hello darlings! My name is Rarity, and I'm sure we'll make this a fabulous game!</state>
-            </case>
-            <case stage="0-2">
-                <condition role="self" saidMarker="GGG" />
-                <state img="#-bcreative.png">Dresses are go-to piece that you can easily dress up or down, for daytime style, casual weekends, wedding guest attire, beach vacation dressing, and special evenings out. </state>
-                <state img="#-bbutt.png">Maxi dresses are typically form-fitting at the top and cut to flow loosely over the body at the bottom. Always in style!</state>
-                <state img="#-bjoy.png">Dresses come in all colors of the rainbow, and about as many patterns as you can imagine, the sky is the limit darlings!</state>
-                <state img="#-bcreative.png">You can amplify the beauty of a long, summer dress in a bold hue or pattern, by adding brightly colored accessories that keep the eye moving around your outfit.</state>
-            </case>
-            <case stage="0-2">
-                <condition role="self" saidMarker="Fall_formal" />
-                <state img="#-ccreative.png">Dresses are go-to piece that you can easily dress up or down, for daytime style, casual weekends, wedding guest attire, beach vacation dressing, and special evenings out. </state>
-                <state img="#-cbutt.png">Maxi dresses are typically form-fitting at the top and cut to flow loosely over the body at the bottom. Always in style!</state>
-                <state img="#-cjoy.png">Dresses come in all colors of the rainbow, and about as many patterns as you can imagine, the sky is the limit darlings!</state>
-                <state img="#-ccreative.png">You can amplify the beauty of a long, summer dress in a bold hue or pattern, by adding brightly colored accessories that keep the eye moving around your outfit.</state>
             </case>
             <case stage="0-2">
                 <condition role="self" saidMarker="GGG" />
@@ -714,7 +713,7 @@
                 <state img="#-bcreative.png">Long skirts with tops are a combination that suits pretty much any body type, as long as you have the right tops to wear with long skirts!</state>
                 <state img="#-bcreative.png">One of the best day looks is pairing a plain white top with stylish long skirts. By stylish I mean your style! Floral, printed, striped... whatever you like.</state>
             </case>
-            <case stage="0-2">
+            <case stage="0-2" priority="1">
                 <condition role="self" saidMarker="Fall_formal" />
                 <state img="#-ccreative.png">There are so many interesting tops to wear with skirts you’ll probably never run out of options, experimentation is the key!</state>
                 <state img="#-ccreative.png">Long skirts with tops are a combination that suits pretty much any body type, as long as you have the right tops to wear with long skirts!</state>
@@ -747,12 +746,6 @@
                 <state img="#-ccreative.png">Denim minis are really easy to pair with clothing and accessories. Just be sure to pick a top based on the fit of the skirt.</state>
                 <state img="#-crelaxed.png">Mini skirts with layers have soft folds that give off an elegant vibe. These are perfect for work or for brunch at a fancy restaurant with your girlfriends.</state>
                 <state img="#-ccreative.png">If you’re wanting to stand out, pick a skirt with some ruffles that has an interesting cut. An outfit with a fun piece like this can be trendy, feminine, and quirky all at the same time!</state>
-            </case>
-            <case stage="0-5">
-                <state img="#-creative.png">Dresses are go-to piece that you can easily dress up or down, for daytime style, casual weekends, wedding guest attire, beach vacation dressing, and special evenings out. </state>
-                <state img="#-butt.png">Maxi dresses are typically form-fitting at the top and cut to flow loosely over the body at the bottom. Always in style!</state>
-                <state img="#-joy.png">Dresses come in all colors of the rainbow, and about as many patterns as you can imagine, the sky is the limit darlings!</state>
-                <state img="#-creative.png">You can amplify the beauty of a long, summer dress in a bold hue or pattern, by adding brightly colored accessories that keep the eye moving around your outfit.</state>
             </case>
             <case stage="0-5">
                 <state img="#-creative.png">There are so many interesting tops to wear with skirts you’ll probably never run out of options, experimentation is the key!</state>
@@ -2364,6 +2357,16 @@
                 <condition role="self" saidMarker="Fall_formal" />
                 <state img="#-cangry.png">...</state>
             </case>
+            <case stage="0-2">
+                <condition role="target" character="chazz" stage="0" />
+                <condition role="self" saidMarker="GGG" />
+                <state img="#-bshade.png">Ugh... That jacket is so tacky, and that hair and, whatever even is that thing on your arm...</state>
+            </case>
+            <case stage="0-2">
+                <condition role="target" character="chazz" stage="0" />
+                <condition role="self" saidMarker="Fall_formal" />
+                <state img="#-cshade.png">Ugh... That jacket is so tacky, and that hair and, whatever even is that thing on your arm...</state>
+            </case>
             <case stage="0-7">
                 <condition role="target" character="pit" stage="0" />
                 <state img="#-disappointed.png">For a supposed to be angel, your fashion sure is far from divine dear...</state>
@@ -2371,6 +2374,10 @@
             <case stage="0-7">
                 <condition role="target" character="kamina" stage="0" />
                 <state img="#-angry.png">...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="chazz" stage="0" />
+                <state img="#-shade.png">Ugh... That jacket is so tacky, and that hair and, whatever even is that thing on your arm...</state>
             </case>
             <case stage="0-2">
                 <condition role="self" saidMarker="Fall_formal" />
@@ -2473,6 +2480,14 @@
                 <state img="#-bhappy.png">An accessory can be a lifesaver, darling!</state>
             </case>
             <case stage="0-2">
+                <condition role="self" saidMarker="GGG" />
+                <state img="#-bshade.png">Duel huh? Well, whatever it is, I am so glad I don't have to see it anymore...</state>
+            </case>
+            <case stage="0-2">
+                <condition role="self" saidMarker="Fall_formal" />
+                <state img="#-cshade.png">Duel huh? Well, whatever it is, I am so glad I don't have to see it anymore...</state>
+            </case>
+            <case stage="0-2">
                 <state img="#-default.png">It's a shame.  ~clothing.ifPlural(Those|That)~ ~clothing~ looked really cute.</state>
                 <state img="#-default.png">As much as I love accessories, you look better without ~clothing.ifPlural(them|it)~.</state>
                 <state img="#-butt.png">I was just hoping that since I decided to wear this lovely dress, you could perhaps return the favor. It's fine, though.</state>
@@ -2489,6 +2504,9 @@
                 <state img="#-angry.png">Perhaps you could have taken that off earlier, ~name~!</state>
                 <state img="#-shade.png">Here I am in my underwear and you're taking ~clothing.ifPlural(&lt;i&gt;those&lt;/i&gt;|&lt;i&gt;that&lt;/i&gt;)~ off...</state>
                 <state img="#-sad.png">Why are you still wearing ~clothing.ifPlural(those|that)~?</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-shade.png">Duel huh? Well, whatever it is, I am so glad I don't have to see it anymore...</state>
             </case>
         </trigger>
 
@@ -3642,9 +3660,23 @@
                 <condition role="self" saidMarker="Fall_formal" />
                 <state img="#-cdisappointed.png">Let's move along...</state>
             </case>
+            <case stage="0-2">
+                <condition role="target" character="chazz" stage="2" />
+                <condition role="self" saidMarker="GGG" />
+                <state img="#-bfreakout.png">Censors... What do you mean we are getting like, broadcasted or something?</state>
+            </case>
+            <case stage="0-2">
+                <condition role="target" character="chazz" stage="2" />
+                <condition role="self" saidMarker="Fall_formal" />
+                <state img="#-cfreakout.png">Censors... What do you mean we are getting like, broadcasted or something?</state>
+            </case>
             <case stage="0-7">
                 <condition role="target" character="kamina" stage="2" />
                 <state img="#-disappointed.png">Let's move along...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="chazz" stage="2" />
+                <state img="#-freakout.png">Censors... What do you mean we are getting like, broadcasted or something?</state>
             </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="attire_choice" notSaidMarker="attire_choice2" />
@@ -5974,6 +6006,14 @@
                 <state img="#-cinterested.png">I haven't lost a single round yet, darling. You must be joking about this.</state>
                 <state img="#-cinterested.png">Maybe I should teach ~name~ how to play. She is clearly doing very poorly.</state>
             </case>
+            <case stage="0-2">
+                <condition role="self" saidMarker="GGG" />
+                <state img="#-bshade.png">Of course the foul mouthed "angel", with emphasis on the quotations, decides to start by taking off her dress...</state>
+            </case>
+            <case stage="0-2">
+                <condition role="self" saidMarker="Fall_formal" />
+                <state img="#-cshade.png">Of course the foul mouthed "angel", with emphasis on the quotations, decides to start by taking off her dress...</state>
+            </case>
             <case stage="0">
                 <state img="#-smug.png">Didn't your mother ever tell you that it's not very ladylike to show your chest in public, ~name~?</state>
                 <state img="#-interested.png">I haven't lost a single round yet, darling. You must be joking about this.</state>
@@ -6002,6 +6042,9 @@
             <case stage="6-7">
                 <state img="#-joy.png">Oh, ~name~ is about to show us her breasts. This is just fabulous.</state>
                 <state img="#-joy.png">I feel a lot better for masturbating in public. Thanks, darling.</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-shade.png">Of course the foul mouthed "angel", with emphasis on the quotations, decides to start by taking off her dress...</state>
             </case>
         </trigger>
 
@@ -6469,6 +6512,20 @@
                 <state img="#-horny.png">You don't need to say anything ~name~. Just let me enjoy this.</state>
                 <state img="#-shocked.png">So huge... Umm. What was I going to say?</state>
                 <state img="#-freakout.png">I can't be sweating. I am a professional fashionista.</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_chest_is_visible">
+            <case stage="0-2">
+                <condition role="self" saidMarker="GGG" />
+                <state img="#-bdisgusted.png">Gah! and you are not even wearing a bra? How did I end up on a table with a skank like this?</state>
+            </case>
+            <case stage="0-2">
+                <condition role="self" saidMarker="Fall_formal" />
+                <state img="#-cdisgusted.png">Gah! and you are not even wearing a bra? How did I end up on a table with a skank like this?</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-disgusted.png">Gah! and you are not even wearing a bra? How did I end up on a table with a skank like this?</state>
             </case>
         </trigger>
 
@@ -7086,6 +7143,20 @@
                 <state img="#-smug.png">Your thirstfull eyes will have to try harder if they want to get a show from me.</state>
             </case>
             <case stage="0-2">
+                <condition role="target" character="megumin" />
+                <condition role="self" saidMarker="GGG" />
+                <state img="#-bsmug.png">I must say darling, that is a beautiful nightmare night costume, but why bring it here?</state>
+            </case>
+            <case stage="0-2">
+                <condition role="target" character="megumin" />
+                <condition role="self" saidMarker="Fall_formal" />
+                <state img="#-csmug.png">I must say darling, that is a beautiful nightmare night costume, but why bring it here?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" />
+                <state img="#-smug.png">I must say darling, that is a beautiful nightmare night costume, but why bring it here?</state>
+            </case>
+            <case stage="0-2">
                 <condition filter="human" status="not_lost_some" role="target" />
                 <condition role="self" saidMarker="GGG" />
                 <state img="#-bsmug.png" marker="first_loss_GGG">Well ~player~, you invited us here. Time to try to impress us...</state>
@@ -7138,9 +7209,36 @@
                 <state img="#-ccreative.png">Fitted or semi-fitted jackets help create flattering, shapely lines. Petites can get lost in loose-fitted or oversized jackets.</state>
                 <state img="#-ccreative.png">Shorter girls should use short jackets as they create the illusion of longer legs.</state>
             </case>
+            <case stage="0-2">
+                <condition role="self" saidMarker="GGG" />
+                <test expr="~clothing~" value="dress" />
+                <state img="#-bcreative.png">Dresses are go-to piece that you can easily dress up or down, for daytime style, casual weekends, wedding guest attire, beach vacation dressing, and special evenings out. </state>
+                <state img="#-bbutt.png">Maxi dresses are typically form-fitting at the top and cut to flow loosely over the body at the bottom. Always in style!</state>
+                <state img="#-bjoy.png">Dresses come in all colors of the rainbow, and about as many patterns as you can imagine, the sky is the limit darlings!</state>
+                <state img="#-bcreative.png">You can amplify the beauty of a long, summer dress in a bold hue or pattern, by adding brightly colored accessories that keep the eye moving around your outfit.</state>
+            </case>
+            <case stage="0-2">
+                <condition role="self" saidMarker="Fall_formal" />
+                <test expr="~clothing~" value="dress" />
+                <state img="#-ccreative.png">Dresses are go-to piece that you can easily dress up or down, for daytime style, casual weekends, wedding guest attire, beach vacation dressing, and special evenings out. </state>
+                <state img="#-cbutt.png">Maxi dresses are typically form-fitting at the top and cut to flow loosely over the body at the bottom. Always in style!</state>
+                <state img="#-cjoy.png">Dresses come in all colors of the rainbow, and about as many patterns as you can imagine, the sky is the limit darlings!</state>
+                <state img="#-ccreative.png">You can amplify the beauty of a long, summer dress in a bold hue or pattern, by adding brightly colored accessories that keep the eye moving around your outfit.</state>
+            </case>
+            <case stage="0-5">
+                <test expr="~clothing~" value="dress" />
+                <state img="#-creative.png">Dresses are go-to piece that you can easily dress up or down, for daytime style, casual weekends, wedding guest attire, beach vacation dressing, and special evenings out. </state>
+                <state img="#-butt.png">Maxi dresses are typically form-fitting at the top and cut to flow loosely over the body at the bottom. Always in style!</state>
+                <state img="#-joy.png">Dresses come in all colors of the rainbow, and about as many patterns as you can imagine, the sky is the limit darlings!</state>
+                <state img="#-creative.png">You can amplify the beauty of a long, summer dress in a bold hue or pattern, by adding brightly colored accessories that keep the eye moving around your outfit.</state>
+            </case>
         </trigger>
 
         <trigger id="opponent_stripped">
+            <case stage="0-7">
+                <condition role="target" character="chazz" stage="5" />
+                <state img="#-laughing.png">Looks like someone has a flowery side under all that dark.</state>
+            </case>
             <case stage="0-2" oneShotId="28">
                 <condition filter="human" status="exposed" role="target" stage="1" />
                 <condition role="self" saidMarker="first_loss" />
@@ -7183,7 +7281,9 @@
                 <test expr="~clothing.type~" value="major" />
                 <state img="#-cinterested.png">Not a bad start, if I say so myself... Hehe...</state>
             </case>
-            <case stage="0-2" oneShotId="9" filter="human" targetStage="1" targetStatus="not_naked" saidMarker="first_loss_GGG">
+            <case stage="0-2" oneShotId="9">
+                <condition filter="human" status="not_naked" role="target" stage="1" />
+                <condition role="self" saidMarker="first_loss_GGG" />
                 <test expr="~clothing.type~" value="major" />
                 <state img="#-binterested.png">Not a bad start, if I say so myself... Hehe...</state>
             </case>
@@ -7249,7 +7349,8 @@
                 <test expr="~clothing.type~" value="important" />
                 <state img="#-disgusted.png">Are you trying to calm me down doing that... I must say it's a very strange way of trying to do it... But the thought is appretiated..?</state>
             </case>
-            <case stage="5-7" totalNaked="5">
+            <case stage="5-7">
+                <condition count="5" status="naked" />
                 <state img="#-nervous.png">Well, here we all are, fully naked...</state>
             </case>
         </trigger>
@@ -7408,8 +7509,22 @@
             <case stage="0-2" target="9s" saidMarker="GGG">
                 <state img="#-bshade.png">Strange... That was not nearly as messy as I feared... In fact... I think nothing happened?</state>
             </case>
+            <case stage="0-2">
+                <condition role="target" character="chazz" />
+                <condition role="self" saidMarker="GGG" />
+                <state img="#-bhorny.png">Oh dear, uhh... I'm sure I must have a towel or something around here so you can remove your... hmmm... fluids... from your body...</state>
+            </case>
+            <case stage="0-2">
+                <condition role="target" character="chazz" />
+                <condition role="self" saidMarker="Fall_formal" />
+                <state img="#-chorny.png">Oh dear, uhh... I'm sure I must have a towel or something around here so you can remove your... hmmm... fluids... from your body...</state>
+            </case>
             <case stage="0-7" target="9s">
                 <state img="#-shade.png">Strange... That was not nearly as messy as I feared... In fact... I think nothing happened?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="chazz" />
+                <state img="#-horny.png">Oh dear, uhh... I'm sure I must have a towel or something around here so you can remove your... hmmm... fluids... from your body...</state>
             </case>
             <case stage="0-2" saidMarker="Fall_formal">
                 <state img="#-cdisgusted.png">Could you try not to make this big of a mess next time?</state>
@@ -7753,6 +7868,16 @@
             <case stage="0-2" id="39" target="nami" saidMarker="Fall_formal">
                 <state img="#-cdisgusted.png">Well, I guess at least it's not a different type of liquid the one you like you pour over yourself, unlike a certain... Prince Charming... Now &lt;i&gt;he&lt;/i&gt; was a weirdo..</state>
             </case>
+            <case stage="0-2">
+                <condition role="target" character="panty" />
+                <condition role="self" saidMarker="GGG" />
+                <state img="#-bdisgusted.png">Oh fashion gods, you are not really going to use th... that, right?</state>
+            </case>
+            <case stage="0-2">
+                <condition role="target" character="panty" />
+                <condition role="self" saidMarker="Fall_formal" />
+                <state img="#-cdisgusted.png">Oh fashion gods, you are not really going to use th... that, right?</state>
+            </case>
             <case stage="0-7" target="aimee">
                 <state img="#-angry.png">Can I at least get you to put the gun down now?</state>
             </case>
@@ -7789,6 +7914,10 @@
             </case>
             <case stage="0-7" id="37" target="nami">
                 <state img="#-disgusted.png">Well, I guess at least it's not a different type of liquid the one you like you pour over yourself, unlike a certain... Prince Charming... Now &lt;i&gt;he&lt;/i&gt; was a weirdo..</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="panty" />
+                <state img="#-disgusted.png">Oh fashion gods, you are not really going to use th... that, right?</state>
             </case>
             <case stage="0-2" filter="villain" saidMarker="Fall_formal">
                 <state img="#-csmug.png">If you weren't such a jerk, I might have taken pity on you.</state>
@@ -7953,7 +8082,9 @@
         </trigger>
 
         <trigger id="female_finished_masturbating">
-            <case stage="0-2" target="pinkie_pie" saidMarker="Fall_formal" targetSaidMarker="pinka_start">
+            <case stage="0-2">
+                <condition role="target" character="pinkie_pie" saidMarker="pinka_start" />
+                <condition role="self" saidMarker="Fall_formal" />
                 <state img="#-chappy.png">Pinkie! I am so relieved to see you back to normal.</state>
             </case>
             <case stage="0-2" target="pinkie_pie" saidMarker="GGG" targetSaidMarker="pinka_start">
@@ -7985,16 +8116,21 @@
                 <state img="#-blaughing.png">Well you certainly know how to make every party unique, Pinkie.</state>
                 <state img="#-binterested.png">Maybe you should use some of your confetti to clean yourself up with.</state>
             </case>
-            <case stage="0-7" target="pinkie_pie" targetSaidMarker="pinka_start">
+            <case stage="0-7">
+                <condition role="target" character="pinkie_pie" saidMarker="pinka_start" />
                 <state img="#-happy.png">Pinkie! I am so relieved to see you back to normal.</state>
             </case>
-            <case stage="0-2" target="twilight" saidMarker="Fall_formal">
+            <case stage="0-2">
+                <condition role="target" character="twilight" />
+                <condition role="self" saidMarker="Fall_formal" />
                 <state img="#-cshocked.png">&lt;i&gt;Woah!…&lt;/i&gt; I wonder if our Twilight is just as... interesting to watch as you...</state>
             </case>
             <case stage="0-2" target="twilight" saidMarker="GGG">
                 <state img="#-bshocked.png">&lt;i&gt;Woah!…&lt;/i&gt; I wonder if our Twilight is just as... interesting to watch as you...</state>
             </case>
-            <case stage="0-2" target="zone-tan" saidMarker="GGG">
+            <case stage="0-2">
+                <condition role="target" character="zone-tan" />
+                <condition role="self" saidMarker="GGG" />
                 <state img="#-bfreakout.png">Alright, we are not just going to ignore the fact that a dark aura shot away from her as she came, right? Right?!</state>
             </case>
             <case stage="0-2" target="zone-tan" saidMarker="Fall_formal">
@@ -8011,6 +8147,16 @@
             </case>
             <case stage="0-2" target="sola" saidMarker="Fall_formal">
                 <state img="#-csad.png">You are too nice to be in this game Sola, I'm sorry you had to do that for us...</state>
+            </case>
+            <case stage="0-2">
+                <condition role="target" character="panty" />
+                <condition role="self" saidMarker="GGG" />
+                <state img="#-bangry.png">I'm sorry, but watching a girl torture her poor personal spot like that was not what I wanted when I entered this place.</state>
+            </case>
+            <case stage="0-2">
+                <condition role="target" character="panty" />
+                <condition role="self" saidMarker="Fall_formal" />
+                <state img="#-cangry.png">I'm sorry, but watching a girl torture her poor personal spot like that was not what I wanted when I entered this place.</state>
             </case>
             <case stage="0-7" target="aimee">
                 <state img="#-freakout.png">&lt;i&gt; OHMYGOD!&lt;/i&gt; Look where your aiming Aimee.</state>
@@ -8039,6 +8185,10 @@
             </case>
             <case stage="0-7" target="sola">
                 <state img="#-sad.png">You are too nice to be in this game Sola, I'm sorry you had to do that for us...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="panty" />
+                <state img="#-angry.png">I'm sorry, but watching a girl torture her poor personal spot like that was not what I wanted when I entered this place.</state>
             </case>
             <case stage="0-2" saidMarker="Fall_formal">
                 <state img="#-cangry.png">Could you please try not to make such a big a mess next time?</state>
@@ -8075,6 +8225,9 @@
             </case>
             <case stage="7">
                 <state img="#-relaxed.png">Fabulous, darling. Perhaps I could help you do that again with me later tonight?</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-joy.png">By the fashion gods! I never knew we could transform just by touching ourselves! Wait, then why doesn't it happen for me?</state>
             </case>
         </trigger>
 
