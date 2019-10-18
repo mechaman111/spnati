@@ -92,7 +92,7 @@ var eIntelligence = {
  * name for NPCs.
  * @param {jQuery} [$metaXml] The parsed `meta.xml` object for this character.
  * @param {ContentStatus} [status] The opponent status for this character.
- * @param {number} [releaseNumber] This character's release number.
+ * @param {string} [releaseNumber] This character's release number.
  * @param {string} [highlightStatus] This character's highlight status.
  */
 function Player (id, $metaXml, status, releaseNumber) {
@@ -108,14 +108,14 @@ function Player (id, $metaXml, status, releaseNumber) {
      * in use for this character.
      * @type {string}
      */
-    this.folder = 'opponents/'+id+'/';
+    this.folder = 'opponents/' + id + '/';
 
     /**
      * The core folder from which data for this character can be loaded.
      * This will not change during the course of a game.
      * @type {string}
      */
-    this.base_folder = 'opponents/'+id+'/';
+    this.base_folder = 'opponents/' + id + '/';
 
     /** 
      * This opponent's first name, if any.
@@ -232,7 +232,10 @@ function Player (id, $metaXml, status, releaseNumber) {
      * considered 'exposed'.
      * @type {{upper: boolean, lower: boolean}}
      */
-    this.exposed = { upper: true, lower: true };
+    this.exposed = {
+        upper: true,
+        lower: true
+    };
 
     /**
      * Flag for whether or not this player is considered 'mostly clothed'.
@@ -265,7 +268,7 @@ function Player (id, $metaXml, status, releaseNumber) {
      * @type {boolean}
      */
     this.finished = false;
-    
+
     /**
      * Indicates how many other players lost before this player.
      * If `undefined`, this player has not lost yet.
@@ -651,20 +654,22 @@ function Player (id, $metaXml, status, releaseNumber) {
  * `targetStartingLayers` etc. according to wardrobe.
  */
 Player.prototype.initClothingStatus = function () {
-	this.startingLayers = this.clothing.length;
-	this.exposed = { upper: true, lower: true };
-	for (var position in this.exposed) {
-		if (this.clothing.some(function(c) {
-			return (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE)
-				&& (c.position == position || c.position == FULL_ARTICLE);
-		})) {
-			this.exposed[position] = false;
-		};
-	}
-	this.mostlyClothed = this.decent = !(this.exposed.upper || this.exposed.lower)
-		&& this.clothing.some(function(c) {
-			return c.type == MAJOR_ARTICLE
-				&& [UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(c.position) >= 0;
+    this.startingLayers = this.clothing.length;
+    this.exposed = {
+        upper: true,
+        lower: true
+    };
+    for (var position in this.exposed) {
+        if (this.clothing.some(function (c) {
+                return (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE) &&
+                    (c.position == position || c.position == FULL_ARTICLE);
+            })) {
+            this.exposed[position] = false;
+        };
+    }
+    this.mostlyClothed = this.decent = !(this.exposed.upper || this.exposed.lower) &&
+        this.clothing.some(function (c) {
+            return c.type == MAJOR_ARTICLE && [UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(c.position) >= 0;
         });
 }
 
@@ -676,14 +681,14 @@ Player.prototype.resetState = function () {
     this.out = this.finished = false;
     this.outOrder = undefined;
     this.biggestLead = 0;
-	this.forfeit = "";
-	this.stage = this.consecutiveLosses = 0;
-	this.timeInStage = -1;
-	this.markers = {};
-	this.oneShotCases = {};
-	this.oneShotStates = {};
+    this.forfeit = "";
+    this.stage = this.consecutiveLosses = 0;
+    this.timeInStage = -1;
+    this.markers = {};
+    this.oneShotCases = {};
+    this.oneShotStates = {};
 
-	if (this.xml !== null) {
+    if (this.xml !== null) {
         /* Initialize reaction handling state. */
 
         this.currentTarget = null;
@@ -703,14 +708,14 @@ Player.prototype.resetState = function () {
         this.baseTags = appearance.tags.slice();
         this.labelOverridden = false;
 
-		/* Load the player's wardrobe. */
+        /* Load the player's wardrobe. */
 
-    	/* Find and grab the wardrobe tag */
-    	$wardrobe = appearance.wardrobe;
+        /* Find and grab the wardrobe tag */
+        $wardrobe = appearance.wardrobe;
 
-    	/* find and create all of their clothing */
+        /* find and create all of their clothing */
         var clothingArr = [];
-    	$wardrobe.find('clothing').each(function () {
+        $wardrobe.find('clothing').each(function () {
             var generic = $(this).attr('generic');
             var name = $(this).attr('name') || $(this).attr('lowercase');
             var type = $(this).attr('type');
@@ -720,15 +725,15 @@ Player.prototype.resetState = function () {
             var newClothing = new Clothing(name, generic, type, position, null, plural, 0);
 
             clothingArr.push(newClothing);
-    	});
-        
+        });
+
         this.poses = appearance.poses;
 
         this.clothing = clothingArr;
-		this.initClothingStatus();
-	}
+        this.initClothingStatus();
+    }
 
-	this.stageChangeUpdate();
+    this.stageChangeUpdate();
 }
 
 /**
@@ -780,31 +785,31 @@ Player.prototype.updateFolder = function () {
 Player.prototype.updateTags = function () {
     var tags = [this.id];
     var stage = this.stage || 0;
-    
+
     if (this.alt_costume && this.alt_costume.id) {
         tags.push(this.alt_costume.id);
     }
-    
+
     this.baseTags.forEach(function (tag_desc) {
-        if (typeof(tag_desc) === 'string') {
+        if (typeof (tag_desc) === 'string') {
             tags.push(tag_desc);
             return;
         }
-        
+
         if (!tag_desc.tag) return;
-        
+
         var tag = tag_desc.tag;
         var from = parseInt(tag_desc.from, 10);
         var to = parseInt(tag_desc.to, 10);
-        
-        if (isNaN(to))   to = Number.POSITIVE_INFINITY;
+
+        if (isNaN(to)) to = Number.POSITIVE_INFINITY;
         if (isNaN(from)) from = 0;
-        
+
         if (stage >= from && stage <= to) {
             tags.push(tag);
         }
     });
-    
+
     this.tags = expandTagsList(tags);
 }
 
@@ -823,7 +828,7 @@ Player.prototype.stageChangeUpdate = function () {
  * Add a tag to this player.
  * @param {string} tag The tag to add. Will be canonicalized.
  */
-Player.prototype.addTag = function(tag) {
+Player.prototype.addTag = function (tag) {
     this.baseTags.push(canonicalizeTag(tag));
 }
 
@@ -832,11 +837,13 @@ Player.prototype.addTag = function(tag) {
  * @param {string} tag The tag to remove. Does not have to be present in the
  * player tags list.
  */
-Player.prototype.removeTag = function(tag) {
+Player.prototype.removeTag = function (tag) {
     tag = canonicalizeTag(tag);
-    
+
     this.baseTags = this.baseTags.filter(function (t) {
-        if (typeof(t) === 'string') { return t !== tag };
+        if (typeof (t) === 'string') {
+            return t !== tag
+        };
         if (!t.tag) return false;
         return t.tag !== tag;
     });
@@ -848,7 +855,7 @@ Player.prototype.removeTag = function(tag) {
  * to be canonicalized.
  * @returns {boolean} Whether or not this character has the given tag.
  */
-Player.prototype.hasTag = function(tag) {
+Player.prototype.hasTag = function (tag) {
     return tag && this.tags && this.tags.indexOf(canonicalizeTag(tag)) >= 0;
 };
 
@@ -856,8 +863,8 @@ Player.prototype.hasTag = function(tag) {
  * Return how many clothing layers this character has left.
  * @returns {number} The number of clothing layers that remain for this character.
  */
-Player.prototype.countLayers = function() {
-	return this.clothing.length;
+Player.prototype.countLayers = function () {
+    return this.clothing.length;
 };
 
 /**
@@ -865,58 +872,58 @@ Player.prototype.countLayers = function() {
  * @param {string} status A status tag.
  * @returns {boolean} Whether or not this opponent fits the given `status`.
  */
-Player.prototype.checkStatus = function(status) {
-	if (status.substr(0, 4) == "not_") {
-		return !this.checkStatus(status.substr(4));
-	}
-	switch (status.trim()) {
-	case STATUS_LOST_SOME:
-		return this.stage > 0;
-	case STATUS_MOSTLY_CLOTHED:
-		return this.mostlyClothed;
-	case STATUS_DECENT:
-		return this.decent;
-	case STATUS_EXPOSED_TOP:
-		return this.exposed.upper;
-	case STATUS_EXPOSED_BOTTOM:
-		return this.exposed.lower;
-	case STATUS_EXPOSED:
-		return this.exposed.upper || this.exposed.lower;
-	case STATUS_EXPOSED_TOP_ONLY:
-		return this.exposed.upper && !this.exposed.lower;
-	case STATUS_EXPOSED_BOTTOM_ONLY:
-		return !this.exposed.upper && this.exposed.lower;
-	case STATUS_NAKED:
-		return this.exposed.upper && this.exposed.lower;
-	case STATUS_ALIVE:
-		return !this.out;
-	case STATUS_LOST_ALL:
-		return this.clothing.length == 0;
-	case STATUS_MASTURBATING:
-		return this.out && !this.finished;
-	case STATUS_FINISHED:
-		return this.finished;
-	}
+Player.prototype.checkStatus = function (status) {
+    if (status.substr(0, 4) == "not_") {
+        return !this.checkStatus(status.substr(4));
+    }
+    switch (status.trim()) {
+        case STATUS_LOST_SOME:
+            return this.stage > 0;
+        case STATUS_MOSTLY_CLOTHED:
+            return this.mostlyClothed;
+        case STATUS_DECENT:
+            return this.decent;
+        case STATUS_EXPOSED_TOP:
+            return this.exposed.upper;
+        case STATUS_EXPOSED_BOTTOM:
+            return this.exposed.lower;
+        case STATUS_EXPOSED:
+            return this.exposed.upper || this.exposed.lower;
+        case STATUS_EXPOSED_TOP_ONLY:
+            return this.exposed.upper && !this.exposed.lower;
+        case STATUS_EXPOSED_BOTTOM_ONLY:
+            return !this.exposed.upper && this.exposed.lower;
+        case STATUS_NAKED:
+            return this.exposed.upper && this.exposed.lower;
+        case STATUS_ALIVE:
+            return !this.out;
+        case STATUS_LOST_ALL:
+            return this.clothing.length == 0;
+        case STATUS_MASTURBATING:
+            return this.out && !this.finished;
+        case STATUS_FINISHED:
+            return this.finished;
+    }
 }
 
-Player.prototype.clone = function() {
-	var clone = Object.create(Player.prototype);
-	/* This should be deep enough for our purposes. */
-	for (var prop in this) {
-		if (this[prop] instanceof Array) {
-			clone[prop] = this[prop].slice();
-		} else {
-			clone[prop] = this[prop];
-		}
-	}
-	return clone;
+Player.prototype.clone = function () {
+    var clone = Object.create(Player.prototype);
+    /* This should be deep enough for our purposes. */
+    for (var prop in this) {
+        if (this[prop] instanceof Array) {
+            clone[prop] = this[prop].slice();
+        } else {
+            clone[prop] = this[prop];
+        }
+    }
+    return clone;
 }
 
 /** 
  * Has this character been fully loaded?
  * @returns {boolean} If the character is fully loaded.
  */
-Player.prototype.isLoaded = function() {
+Player.prototype.isLoaded = function () {
     return this.loaded;
 }
 
@@ -927,20 +934,20 @@ Player.prototype.isLoaded = function() {
  * @param {boolean} individual Whether this character was individually selected
  * from the selection screens or loaded as part of a group.
  */
-Player.prototype.onSelected = function(individual) {
+Player.prototype.onSelected = function (individual) {
     this.resetState();
 
     // check for duplicate <link> elements:
     if (this.stylesheet) {
-        if ($('link[href=\"'+this.stylesheet+'\"]').length === 0) {
-            console.log("Loading stylesheet: "+this.stylesheet);
-            
+        if ($('link[href=\"' + this.stylesheet + '\"]').length === 0) {
+            console.log("Loading stylesheet: " + this.stylesheet);
+
             var link_elem = $('<link />', {
                 'rel': 'stylesheet',
                 'type': 'text/css',
                 'href': this.stylesheet
             });
-            
+
             $('head').append(link_elem);
         }
     }
@@ -952,10 +959,12 @@ Player.prototype.onSelected = function(individual) {
             level: 'info'
         });
     }
-    
+
     this.preloadStageImages(-1);
     if (individual) {
-        updateAllBehaviours(this.slot, SELECTED, [[OPPONENT_SELECTED]]);
+        updateAllBehaviours(this.slot, SELECTED, [
+            [OPPONENT_SELECTED]
+        ]);
     } else {
         this.updateBehaviour(SELECTED);
         this.commitBehaviourUpdate();
@@ -999,10 +1008,10 @@ Player.prototype.loadAlternateCostume = function (individual) {
             return;
         }
     }
-    console.log("Loading alternate costume: "+this.selected_costume);
+    console.log("Loading alternate costume: " + this.selected_costume);
     $.ajax({
         type: "GET",
-        url: this.selected_costume+'costume.xml',
+        url: this.selected_costume + 'costume.xml',
         dataType: "text",
         success: function (xml) {
             var $xml = $(xml);
@@ -1023,14 +1032,14 @@ Player.prototype.loadAlternateCostume = function (individual) {
                 folders: $xml.find('folder'),
                 wardrobe: $xml.find('wardrobe')
             };
-            
+
             var poses = $xml.find('poses');
             var poseDefs = {};
             $(poses).find('pose').each(function (i, elem) {
                 var def = new PoseDefinition($(elem), this);
                 poseDefs[def.id] = def;
             }.bind(this));
-            
+
             this.alt_costume.poses = poseDefs;
 
             var costumeTags = this.default_costume.tags.slice();
@@ -1045,13 +1054,19 @@ Player.prototype.loadAlternateCostume = function (individual) {
                     var toStage = $elem.attr('to');
 
                     // Remove previous declarations for this tag
-                    costumeTags = costumeTags.filter(function (t) { return t.tag !== tag; });
+                    costumeTags = costumeTags.filter(function (t) {
+                        return t.tag !== tag;
+                    });
 
                     if (removed.toLowerCase() !== 'true') {
-                        newTags.push({'tag': tag, 'from': fromStage, 'to': toStage});
+                        newTags.push({
+                            'tag': tag,
+                            'from': fromStage,
+                            'to': toStage
+                        });
                     }
                 });
-                
+
                 Array.prototype.push.apply(costumeTags, newTags);
             }
 
@@ -1060,7 +1075,7 @@ Player.prototype.loadAlternateCostume = function (individual) {
             this.onSelected(individual);
         }.bind(this),
         error: function () {
-            console.error("Failed to load alternate costume: "+this.selected_costume);
+            console.error("Failed to load alternate costume: " + this.selected_costume);
         },
     })
 }
@@ -1073,7 +1088,7 @@ Player.prototype.unloadAlternateCostume = function () {
     if (!this.alt_costume) {
         return;
     }
-    
+
     this.alt_costume = null;
     this.selectAlternateCostume(null);
     this.resetState();
@@ -1088,30 +1103,30 @@ Player.prototype.unloadAlternateCostume = function () {
 Player.prototype.loadCollectibles = function (onLoaded, onError) {
     if (!this.has_collectibles) return;
     if (this.collectibles !== null) return;
-    
+
     $.ajax({
-		type: "GET",
-		url: this.folder + 'collectibles.xml',
-		dataType: "text",
-		success: function(xml) {
-			var collectiblesArray = [];
-			$(xml).find('collectible').each(function (idx, elem) {
-				collectiblesArray.push(new Collectible($(elem), this));
+        type: "GET",
+        url: this.folder + 'collectibles.xml',
+        dataType: "text",
+        success: function (xml) {
+            var collectiblesArray = [];
+            $(xml).find('collectible').each(function (idx, elem) {
+                collectiblesArray.push(new Collectible($(elem), this));
             }.bind(this));
-            
+
             this.collectibles = collectiblesArray;
-            
+
             this.has_collectibles = this.collectibles.some(function (c) {
                 return !c.status || includedOpponentStatuses[c.status];
             });
-            
+
             if (onLoaded) onLoaded(this);
-		}.bind(this),
+        }.bind(this),
         error: function (jqXHR, status, err) {
-            console.error("Error loading collectibles for "+this.id+": "+status+" - "+err);
+            console.error("Error loading collectibles for " + this.id + ": " + status + " - " + err);
             if (onError) onError(this, status, err);
         }.bind(this)
-	});
+    });
 }
 
 /**
@@ -1128,7 +1143,7 @@ Player.prototype.unloadOpponent = function () {
 
     if (this.stylesheet) {
         /* Remove the <link> to this opponent's stylesheet. */
-        $('link[href=\"'+this.stylesheet+'\"]').remove();
+        $('link[href=\"' + this.stylesheet + '\"]').remove();
     }
 }
 
@@ -1154,10 +1169,10 @@ Player.prototype.loadBehaviour = function (slot, individual) {
     }
 
     fetchCompressedURL('opponents/' + this.id + "/behaviour.xml")
-		/* Success callback.
+        /* Success callback.
          * 'this' is bound to the Opponent object.
          */
-		.then(function (xml) {
+        .then(function (xml) {
             var $xml = $(xml);
 
             if (SENTRY_INITIALIZED) {
@@ -1171,8 +1186,8 @@ Player.prototype.loadBehaviour = function (slot, individual) {
             if (this.has_collectibles) {
                 this.loadCollectibles();
             }
-            
-            this.xml = $xml;           
+
+            this.xml = $xml;
             this.size = $xml.find('size').text();
             this.stamina = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
@@ -1187,12 +1202,12 @@ Player.prototype.loadBehaviour = function (slot, individual) {
             });
 
             this.stylesheet = null;
-            
+
             var stylesheet = $xml.find('stylesheet').text();
             if (stylesheet) {
                 var m = stylesheet.match(/[a-zA-Z0-9()~!*:@,;\-.\/]+\.css/i);
                 if (m) {
-                    this.stylesheet = 'opponents/'+this.id+'/'+m[0];
+                    this.stylesheet = 'opponents/' + this.id + '/' + m[0];
                 }
             }
 
@@ -1203,7 +1218,7 @@ Player.prototype.loadBehaviour = function (slot, individual) {
              */
             var startGender = $xml.find('gender').text();
             if (startGender) {
-                this.gender = startGender;    
+                this.gender = startGender;
             }
 
             this.default_costume = {
@@ -1213,14 +1228,14 @@ Player.prototype.loadBehaviour = function (slot, individual) {
                 folders: this.folder,
                 wardrobe: $xml.find('wardrobe')
             };
-            
+
             var poses = $xml.find('poses');
             var poseDefs = {};
             $(poses).find('pose').each(function (i, elem) {
                 var def = new PoseDefinition($(elem), this);
                 poseDefs[def.id] = def;
             }.bind(this));
-            
+
             this.default_costume.poses = poseDefs;
 
             var tags = $xml.find('tags');
@@ -1251,9 +1266,9 @@ Player.prototype.loadBehaviour = function (slot, individual) {
              * alternatives must always be fulfilled, along with all
              * the conditions of tests inside any of the alternative
              * elements. */
-            $xml.find('>behaviour case:has(>alternative)').each(function() {
+            $xml.find('>behaviour case:has(>alternative)').each(function () {
                 var $case = $(this);
-                $case.children('alternative').each(function() {
+                $case.children('alternative').each(function () {
                     // Make clone and insert after original case
                     var $clone = $case.clone().insertAfter($case);
                     // Remove all <alternative> elements from clone, leaving base conditions
@@ -1268,11 +1283,11 @@ Player.prototype.loadBehaviour = function (slot, individual) {
             });
 
             var nicknames = {};
-            $xml.find('nicknames>nickname').each(function() {
+            $xml.find('nicknames>nickname').each(function () {
                 if ($(this).attr('for') in nicknames) {
                     nicknames[$(this).attr('for')].push($(this).text());
                 } else {
-                    nicknames[$(this).attr('for')] = [ $(this).text() ];
+                    nicknames[$(this).attr('for')] = [$(this).text()];
                 }
             });
             this.nicknames = nicknames;
@@ -1297,10 +1312,10 @@ Player.prototype.loadBehaviour = function (slot, individual) {
 
                 return this.onSelected(individual);
             });
-		}.bind(this))
-		/* Error callback. */
-        .fail(function(err) {
-            console.log("Failed reading \""+this.id+"\" behaviour.xml");
+        }.bind(this))
+        /* Error callback. */
+        .fail(function (err) {
+            console.log("Failed reading \"" + this.id + "\" behaviour.xml");
             delete players[this.slot];
         }.bind(this));
 }
@@ -1323,11 +1338,16 @@ Player.prototype.recordTargetedCase = function (caseObj) {
     });
 
     var lines = new Set();
-    caseObj.states.forEach(function (s) { lines.add(s.rawDialogue); });
+    caseObj.states.forEach(function (s) {
+        lines.add(s.rawDialogue);
+    });
 
     entities.forEach(function (ent) {
         if (!(ent in this.targetedLines)) {
-            this.targetedLines[ent] = { count: 0, seen: new Set() };
+            this.targetedLines[ent] = {
+                count: 0,
+                seen: new Set()
+            };
         }
 
         lines.forEach(Set.prototype.add, this.targetedLines[ent].seen);
@@ -1372,10 +1392,10 @@ Player.prototype.loadXMLTriggers = function () {
             }
 
             let c = new Case($(elemQueue.shift()));
-            this.recordTargetedCase(c);            
+            this.recordTargetedCase(c);
 
             c.getStages().forEach(function (stage) {
-                var key = tag+':'+stage;
+                var key = tag + ':' + stage;
                 if (!this.cases.has(key)) {
                     this.cases.set(key, []);
                 }
@@ -1443,7 +1463,7 @@ Player.prototype.loadXMLStages = function (onComplete) {
             }
 
             this.cases.get(key).push(c);
-            
+
             loadItemsCompleted++;
         }
 
@@ -1465,29 +1485,35 @@ Player.prototype.loadXMLStages = function (onComplete) {
  * the given `stage`.
  */
 Player.prototype.getImagesForStage = function (stage) {
-    if(!this.xml) return [];
+    if (!this.xml) return [];
 
     var poseSet = {};
     var imageSet = {};
     var folder = this.folders ? this.getByStage(this.folders, stage) : this.folder;
     var advPoses = this.poses;
 
-    function processCase (c) {
+    function processCase(c) {
         /* Skip cases requiring characters that aren't present. */
-        if (c.target && !players.some(function (p) { return p.id === c.target; })) return; 
-        if (c.alsoPlaying && !players.some(function (p) { return p.id === c.alsoPlaying; })) return;
-        if (c.filter && !players.some(function (p) { return p.hasTag(c.filter); })) return;
+        if (c.target && !players.some(function (p) {
+                return p.id === c.target;
+            })) return;
+        if (c.alsoPlaying && !players.some(function (p) {
+                return p.id === c.alsoPlaying;
+            })) return;
+        if (c.filter && !players.some(function (p) {
+                return p.hasTag(c.filter);
+            })) return;
 
         if (!c.counters.every(function (ctr) {
-            var count = players.countTrue(function(p) {
-                if (ctr.id && p.id !== ctr.id) return false;
-                if (ctr.tag && !p.hasTag(ctr.tag)) return false;
+                var count = players.countTrue(function (p) {
+                    if (ctr.id && p.id !== ctr.id) return false;
+                    if (ctr.tag && !p.hasTag(ctr.tag)) return false;
 
-                return true;
-            });
+                    return true;
+                });
 
-            return inInterval(count, ctr.count);
-        })) return;
+                return inInterval(count, ctr.count);
+            })) return;
 
         /* Collate pose names into poseSet. */
         c.getPossibleImages(stage === -1 ? 0 : stage).forEach(function (poseName) {
@@ -1500,7 +1526,7 @@ Player.prototype.getImagesForStage = function (stage) {
          * them.
          */
 
-        var keySuffix = ':'+stage;
+        var keySuffix = ':' + stage;
         this.cases.forEach(function (caseList, key) {
             if (!key.endsWith(keySuffix)) return;
             caseList.forEach(processCase);
@@ -1532,7 +1558,7 @@ Player.prototype.getImagesForStage = function (stage) {
             imageSet[folder + poseName] = true;
         }
     });
-    
+
     return Object.keys(imageSet);
 };
 
@@ -1541,5 +1567,7 @@ Player.prototype.getImagesForStage = function (stage) {
  */
 Player.prototype.preloadStageImages = function (stage) {
     this.getImagesForStage(stage)
-        .forEach(function(fn) { new Image().src = fn; }, this );
+        .forEach(function (fn) {
+            new Image().src = fn;
+        }, this);
 };
