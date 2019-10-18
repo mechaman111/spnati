@@ -68,6 +68,19 @@ var eIntelligence = {
     BEST: "best"
 };
 
+/**
+ * Alternate costume descriptor.
+ * 
+ * @typedef {Object} CostumeDescriptor
+ * @property {string} folder The folder path for this alt costume.
+ * @property {string} label The label to use for this alt costume at
+ * the selection screen.
+ * @property {string} image The image filename to use for this alt
+ * costume at the selection screen.
+ * @property {string} set The costume set to associate this alt costume
+ * with.
+ * @property {ContentStatus} status The status of this alt costume.
+ */
 
 /**
  * Represents any player in-game, including the player character.
@@ -319,6 +332,12 @@ function Player (id, $metaXml, status, releaseNumber) {
      */
     this.oneShotStates = {};
 
+    /**
+     * The table slot this character currently occupies.
+     * @type {number}
+     */
+    this.slot = 0;
+
     if ($metaXml) {
         this.first = $metaXml.find('first').text();
         this.last = $metaXml.find('last').text();
@@ -548,20 +567,6 @@ function Player (id, $metaXml, status, releaseNumber) {
         new Image().src = 'opponents/' + id + '/' + this.image;
 
         /**
-         * Alternate costume descriptor.
-         * 
-         * @typedef {Object} CostumeDescriptor
-         * @property {string} folder The folder path for this alt costume.
-         * @property {string} label The label to use for this alt costume at
-         * the selection screen.
-         * @property {string} image The image filename to use for this alt
-         * costume at the selection screen.
-         * @property {string} set The costume set to associate this alt costume
-         * with.
-         * @property {ContentStatus} status The status of this alt costume.
-         */
-
-        /**
          * A list of metadata for all alternate costumes associated with this
          * character.
          * @type {CostumeDescriptor[]}
@@ -574,6 +579,12 @@ function Player (id, $metaXml, status, releaseNumber) {
          * @type {string}
          */
         this.selection_image = this.folder + this.image;
+
+        /**
+         * A custom stylesheet to load alongside this character.
+         * @type {?string}
+         */
+        this.stylesheet = undefined;
 
         $metaXml.find('alternates').find('costume').each(function (i, elem) {
             var set = $(elem).attr('set') || 'offline';
@@ -623,7 +634,7 @@ Player.prototype.initClothingStatus = function () {
 		&& this.clothing.some(function(c) {
 			return c.type == MAJOR_ARTICLE
 				&& [UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(c.position) >= 0;
-		});
+        });
 }
 
 /**
@@ -643,9 +654,31 @@ Player.prototype.resetState = function () {
 
 	if (this.xml !== null) {
         /* Initialize reaction handling state. */
+
+        /**
+         * The `Player` this character is targeting.
+         * @type {Player}
+         */
         this.currentTarget = null;
+
+        /**
+         * The dialogue tags this player was last updated with.
+         * @type {string[]}
+         */
         this.currentTags = [];
+
+        /**
+         * A flag indicating whether or not the chosen state has been committed.
+         * @type {boolean}
+         */
         this.stateCommitted = false;
+
+        /**
+         * The state that has been chosen to play for the current round of 
+         * dialogue.
+         * @type {State}
+         */
+        this.chosenState = undefined;
 
         if (this.startStates.length > 0) this.updateChosenState(new State(this.startStates[0]));
 
@@ -680,6 +713,10 @@ Player.prototype.resetState = function () {
         
         this.poses = appearance.poses;
 
+        /**
+         * The clothing currently worn by this character.
+         * @type {Clothing[]}
+         */
         this.clothing = clothingArr;
 		this.initClothingStatus();
 	}
@@ -687,6 +724,37 @@ Player.prototype.resetState = function () {
 	this.stageChangeUpdate();
 }
 
+/**
+ * Given a list of objects specifying start stages, pick out the object that
+ * best fits with the given `stage`.
+ * 
+ * @param {Object[]} arr A list of objects that have "stage" attributes.
+ * @param {number} [stage] A query stage. If undefined, defaults to the current
+ * opponent stage.
+ * @returns {string} The text of the best fitting object.
+ */
+Player.prototype.getByStage = function (arr, stage) {
+    if (typeof (arr) === "string") {
+        return arr;
+    }
+    if (stage === undefined) stage = this.stage;
+    var bestFitStage = -1;
+    var bestFit = null;
+    for (var i = 0; i < arr.length; i++) {
+        var startStage = arr[i].getAttribute('stage');
+        startStage = parseInt(startStage, 10) || 0;
+        if (startStage > bestFitStage && startStage <= stage) {
+            bestFit = $(arr[i]).text();
+            bestFitStage = startStage;
+        }
+    }
+    return bestFit;
+};
+
+/**
+ * Get this character's current AI intelligence.
+ * @returns {eIntelligence}
+ */
 Player.prototype.getIntelligence = function () {
     return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
 };
@@ -699,7 +767,9 @@ Player.prototype.updateFolder = function () {
     if (this.folders) this.folder = this.getByStage(this.folders);
 }
 
-/* Compute the Player's tags list from their baseTags list. */
+/**
+ * Compute the Player's `tags` list from their `baseTags` list.
+ */
 Player.prototype.updateTags = function () {
     var tags = [this.id];
     var stage = this.stage || 0;
@@ -731,16 +801,30 @@ Player.prototype.updateTags = function () {
     this.tags = expandTagsList(tags);
 }
 
+/**
+ * Update various state related to a character after a stage change.
+ */
 Player.prototype.stageChangeUpdate = function () {
+    if (!this.xml) return;
+
     this.updateLabel();
     this.updateFolder();
     this.updateTags();
 }
 
+/**
+ * Add a tag to this player.
+ * @param {string} tag The tag to add. Will be canonicalized.
+ */
 Player.prototype.addTag = function(tag) {
     this.baseTags.push(canonicalizeTag(tag));
 }
 
+/**
+ * Remove a tag from this player.
+ * @param {string} tag The tag to remove. Does not have to be present in the
+ * player tags list.
+ */
 Player.prototype.removeTag = function(tag) {
     tag = canonicalizeTag(tag);
     
@@ -751,14 +835,29 @@ Player.prototype.removeTag = function(tag) {
     });
 }
 
+/**
+ * Is this character tagged with a given `tag`?
+ * @param {string} tag The tag to check against this character. Does not have
+ * to be canonicalized.
+ * @returns {boolean} Whether or not this character has the given tag.
+ */
 Player.prototype.hasTag = function(tag) {
     return tag && this.tags && this.tags.indexOf(canonicalizeTag(tag)) >= 0;
 };
 
+/**
+ * Return how many clothing layers this character has left.
+ * @returns {number} The number of clothing layers that remain for this character.
+ */
 Player.prototype.countLayers = function() {
 	return this.clothing.length;
 };
 
+/**
+ * Check a status tag against this character.
+ * @param {string} status A status tag.
+ * @returns {boolean} Whether or not this opponent fits the given `status`.
+ */
 Player.prototype.checkStatus = function(status) {
 	if (status.substr(0, 4) == "not_") {
 		return !this.checkStatus(status.substr(4));
@@ -806,10 +905,21 @@ Player.prototype.clone = function() {
 	return clone;
 }
 
+/** 
+ * Has this character been fully loaded?
+ * @returns {boolean} If the character is fully loaded.
+ */
 Player.prototype.isLoaded = function() {
     return this.loaded;
 }
 
+/**
+ * Should be called after the character has been selected and has completed
+ * loading.
+ * 
+ * @param {boolean} individual Whether this character was individually selected
+ * from the selection screens or loaded as part of a group.
+ */
 Player.prototype.onSelected = function(individual) {
     this.resetState();
 
@@ -846,24 +956,12 @@ Player.prototype.onSelected = function(individual) {
 
     updateSelectionVisuals();
 }
-Player.prototype.getByStage = function (arr, stage) {
-    if (typeof(arr) === "string") {
-        return arr;
-    }
-    if (stage === undefined) stage = this.stage;
-    var bestFitStage = -1;
-    var bestFit = null;
-    for (var i = 0; i < arr.length; i++) {
-        var startStage = arr[i].getAttribute('stage');
-        startStage = parseInt(startStage, 10) || 0;
-        if (startStage > bestFitStage && startStage <= stage) {
-            bestFit = $(arr[i]).text();
-            bestFitStage = startStage;
-        }
-    }
-    return bestFit;
-};
 
+/**
+ * Selects an alternate costume.
+ * @param {CostumeDescriptor} [costumeDesc] The alternate costume to select,
+ * or `undefined` / `null` to select the default appearance.
+ */
 Player.prototype.selectAlternateCostume = function (costumeDesc) {
     if (!costumeDesc) {
         this.selected_costume = null;
@@ -878,6 +976,13 @@ Player.prototype.selectAlternateCostume = function (costumeDesc) {
     }
 };
 
+/**
+ * Load additional info related to the selected alternate costume for this
+ * character.
+ * 
+ * @param {boolean} individual Whether this character was individually selected
+ * from the selection screens or loaded as part of a group.
+ */
 Player.prototype.loadAlternateCostume = function (individual) {
     if (this.alt_costume) {
         if (this.alt_costume.folder != this.selected_costume) {
@@ -953,6 +1058,10 @@ Player.prototype.loadAlternateCostume = function (individual) {
     })
 }
 
+/**
+ * Clears out internal state related to the currently-selected alt costume, if
+ * any, then deselects it.
+ */
 Player.prototype.unloadAlternateCostume = function () {
     if (!this.alt_costume) {
         return;
@@ -963,6 +1072,12 @@ Player.prototype.unloadAlternateCostume = function () {
     this.resetState();
 }
 
+/**
+ * Load all collectibles for this character.
+ * @param {function} onLoaded A callback to execute once loading has completed
+ * for this character's collectibles.
+ * @param {function} onError A callback to execute in case of errors.
+ */
 Player.prototype.loadCollectibles = function (onLoaded, onError) {
     if (!this.has_collectibles) return;
     if (this.collectibles !== null) return;
@@ -992,7 +1107,9 @@ Player.prototype.loadCollectibles = function (onLoaded, onError) {
 	});
 }
 
-/* Called prior to removing a character from the table. */
+/**
+ * Called prior to removing a character from the table.
+ */
 Player.prototype.unloadOpponent = function () {
     if (SENTRY_INITIALIZED) {
         Sentry.addBreadcrumb({
@@ -1008,15 +1125,17 @@ Player.prototype.unloadOpponent = function () {
     }
 }
 
-/************************************************************
+/**
  * Loads and parses the start of the behaviour XML file of the
  * given opponent.
- *
- * The onLoadFinished parameter must be a function capable of
- * receiving a new player object and a slot number.
- ************************************************************/
+ * 
+ * @param {number} slot The slot this character is going to be loaded into.
+ * @param {boolean} individual Whether this character is being loaded individually
+ * or as part of a group.
+ */
 Player.prototype.loadBehaviour = function (slot, individual) {
     this.slot = slot;
+
     if (this.isLoaded()) {
         if (this.selected_costume) {
             this.loadAlternateCostume();
@@ -1031,7 +1150,7 @@ Player.prototype.loadBehaviour = function (slot, individual) {
 		/* Success callback.
          * 'this' is bound to the Opponent object.
          */
-		.then(function(xml) {
+		.then(function (xml) {
             var $xml = $(xml);
 
             if (SENTRY_INITIALIZED) {
@@ -1046,7 +1165,7 @@ Player.prototype.loadBehaviour = function (slot, individual) {
                 this.loadCollectibles();
             }
             
-            this.xml = $xml;
+            this.xml = $xml;           
             this.size = $xml.find('size').text();
             this.stamina = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
@@ -1179,6 +1298,11 @@ Player.prototype.loadBehaviour = function (slot, individual) {
         }.bind(this));
 }
 
+/**
+ * Record targeted lines within a Case.
+ * @private
+ * @param {Case} caseObj The case object to record.
+ */
 Player.prototype.recordTargetedCase = function (caseObj) {
     var entities = new Set();
 
@@ -1208,7 +1332,7 @@ Player.prototype.recordTargetedCase = function (caseObj) {
  * and pre-emptively adds their Cases to the opponent's cases structure.
  * This is done in 50ms chunks to avoid blocking the UI.
  * 
- * @returns {$.Promise} A Promise. Progress callbacks are fired after each
+ * @returns {jQuery.Promise} A Promise. Progress callbacks are fired after each
  * chunk of work, and the promise resolves once all cases have been processed.
  * All callbacks are fired with the Opponent as `this`.
  */
@@ -1273,7 +1397,7 @@ Player.prototype.loadXMLTriggers = function () {
  * This is done in 50ms chunks to avoid blocking the UI, similarly to
  * loadXMLTriggers.
  * 
- * @returns {$.Promise} A Promise. Progress callbacks are fired after each
+ * @returns {jQuery.Promise} A Promise. Progress callbacks are fired after each
  * chunk of work, and the promise resolves once all cases have been processed.
  * All callbacks are fired with the Opponent as `this`.
  */
@@ -1328,6 +1452,11 @@ Player.prototype.loadXMLStages = function (onComplete) {
     return deferred.promise();
 }
 
+/**
+ * @param {number} stage A stage to look up.
+ * @returns {string[]} A list of all images that are referenced by dialogue in
+ * the given `stage`.
+ */
 Player.prototype.getImagesForStage = function (stage) {
     if(!this.xml) return [];
 
@@ -1400,6 +1529,9 @@ Player.prototype.getImagesForStage = function (stage) {
     return Object.keys(imageSet);
 };
 
+/**
+ * Preload all images used in a given stage by instantiating Image objects.
+ */
 Player.prototype.preloadStageImages = function (stage) {
     this.getImagesForStage(stage)
         .forEach(function(fn) { new Image().src = fn; }, this );
