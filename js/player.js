@@ -338,6 +338,12 @@ function Player (id, $metaXml, status, releaseNumber) {
      */
     this.slot = 0;
 
+    /**
+     * The clothing currently worn by this character.
+     * @type {Clothing[]}
+     */
+    this.clothing = [];
+
     if ($metaXml) {
         this.first = $metaXml.find('first').text();
         this.last = $metaXml.find('last').text();
@@ -586,6 +592,31 @@ function Player (id, $metaXml, status, releaseNumber) {
          */
         this.stylesheet = undefined;
 
+        /**
+         * The `Player` this character is currently targeting, if any.
+         * @type {?Player}
+         */
+        this.currentTarget = null;
+
+        /**
+         * The dialogue tags this player was last updated with.
+         * @type {string[]}
+         */
+        this.currentTags = [];
+
+        /**
+         * A flag indicating whether or not the chosen state has been committed.
+         * @type {boolean}
+         */
+        this.stateCommitted = false;
+
+        /**
+         * The state that has been chosen to play for the current round of 
+         * dialogue.
+         * @type {?State}
+         */
+        this.chosenState = undefined;
+
         $metaXml.find('alternates').find('costume').each(function (i, elem) {
             var set = $(elem).attr('set') || 'offline';
             var status = $(elem).attr('status') || 'offline';
@@ -655,29 +686,9 @@ Player.prototype.resetState = function () {
 	if (this.xml !== null) {
         /* Initialize reaction handling state. */
 
-        /**
-         * The `Player` this character is targeting.
-         * @type {Player}
-         */
         this.currentTarget = null;
-
-        /**
-         * The dialogue tags this player was last updated with.
-         * @type {string[]}
-         */
         this.currentTags = [];
-
-        /**
-         * A flag indicating whether or not the chosen state has been committed.
-         * @type {boolean}
-         */
         this.stateCommitted = false;
-
-        /**
-         * The state that has been chosen to play for the current round of 
-         * dialogue.
-         * @type {State}
-         */
         this.chosenState = undefined;
 
         if (this.startStates.length > 0) this.updateChosenState(new State(this.startStates[0]));
@@ -713,10 +724,6 @@ Player.prototype.resetState = function () {
         
         this.poses = appearance.poses;
 
-        /**
-         * The clothing currently worn by this character.
-         * @type {Clothing[]}
-         */
         this.clothing = clothingArr;
 		this.initClothingStatus();
 	}
