@@ -1,3 +1,5 @@
+// @ts-check
+
 /********************************************************************************
  This file contains all of the variables and functions for the Player object, as
  well as definitions for opponent and group lisitings.
@@ -12,13 +14,20 @@
  * where needed.
  * 
  * @global
- * @typedef {(null|undefined|"online"|"testing"|"offline"|"incomplete")} ContentStatus
+ * @readonly
+ * @enum {string}
  */
+var ContentStatus = {
+    ONLINE: undefined,
+    OFFLINE: 'offline',
+    TESTING: 'testing',
+    INCOMPLETE: 'incomplete'
+};
 
 /**
  * @global
  * @readonly
- * @enum {("male" | "female")}
+ * @enum {string}
  */
 var eGender = {
     MALE: "male",
@@ -90,7 +99,7 @@ var eIntelligence = {
  * 
  * @param {string} id The unique ID for this player. Corresponds to a folder
  * name for NPCs.
- * @param {jQuery} [$metaXml] The parsed `meta.xml` object for this character.
+ * @param {JQuery<HTMLElement>} [$metaXml] The parsed `meta.xml` object for this character.
  * @param {ContentStatus} [status] The opponent status for this character.
  * @param {string} [releaseNumber] This character's release number.
  * @param {string} [highlightStatus] This character's highlight status.
@@ -131,13 +140,13 @@ function Player (id, $metaXml, status, releaseNumber) {
 
     /** 
      * A jQuery selector object matching the <label> elements for this character.
-     * @type {jQuery}
+     * @type {?JQuery<HTMLElement>}
      */
     this.labels = undefined;
 
     /**
      * A jQuery selector object matching the <folder> elements for this character.
-     * @type {jQuery}
+     * @type {?JQuery<HTMLElement>}
      */
     this.folders = undefined;
 
@@ -197,14 +206,14 @@ function Player (id, $metaXml, status, releaseNumber) {
      * The parsed `behaviour.xml` data for this character as a jQuery object.
      * If this is `null`, this character either has not been loaded, or is
      * the human player.
-     * @type {?jQuery}
+     * @type {?JQuery<HTMLElement>}
      */
     this.xml = null;
 
     /**
      * The parsed `meta.xml` data for this character as a jQuery object.
      * If this is `null`, this character must be the human player.
-     * @type {?jQuery}
+     * @type {?JQuery<HTMLElement>}
      */
     this.metaXml = null;
 
@@ -449,7 +458,7 @@ function Player (id, $metaXml, status, releaseNumber) {
          * Indicates whether or not this character's dialogue bubble should be
          * `over` or `under` the character's images.
          * 
-         * @type {('over'|'under')}
+         * @type {string}
          * @default 'under'
          */
         this.dialogue_layering = $metaXml.find('dialogue-layer').text();
@@ -461,7 +470,7 @@ function Player (id, $metaXml, status, releaseNumber) {
         /**
          * A jQuery object containing `<epilogue>` elements from this character's
          * `meta.xml`.
-         * @type {jQuery}
+         * @type {JQuery<HTMLElement>}
          */
         this.endings = $metaXml.find('epilogue');
 
@@ -473,6 +482,7 @@ function Player (id, $metaXml, status, releaseNumber) {
         this.ending = $metaXml.find('has_ending').text() === "true";
 
         if (this.endings.length > 0) {
+            // @ts-ignore
             this.endings.each(function (idx, elem) {
                 var status = $(elem).attr('status');
                 if (!status || includedOpponentStatuses[status]) {
@@ -494,11 +504,12 @@ function Player (id, $metaXml, status, releaseNumber) {
          * @typedef {Object} CostumeInfo
          * 
          * @property {string|null} id The ID of this alternate costume.
-         * @property {jQuery} labels A jQuery collection of <label> elements.
+         * @property {JQuery<HTMLElement>} labels A jQuery collection of <label> elements.
          * @property {{tag: string, to: string, from: string}[]} tags A list of base tags for this costume. See `Player#baseTags`.
          * @property {string|undefined} folder The path to the folder for this alternate costume, or `undefined` for the default costume.
-         * @property {jQuery} folders A jQuery collection of <folder> elements.
-         * @property {jQuery} wardrobe A jQuery object wrapping a <wardrobe> element.
+         * @property {JQuery<HTMLElement>} folders A jQuery collection of <folder> elements.
+         * @property {JQuery<HTMLElement>} wardrobe A jQuery object wrapping a <wardrobe> element.
+         * @property {Object.<string, PoseDefinition>} poses A map of pose definitions used by this costume.
          */
 
         /**
@@ -547,10 +558,12 @@ function Player (id, $metaXml, status, releaseNumber) {
          */
         this.loadProgress = undefined;
 
-        this.baseTags = $metaXml.find('tags').children().map(function () {
+        /** @type {string[]} */
+        var metaTags = $metaXml.find('tags').children().map(function () {
             return canonicalizeTag($(this).text());
         }).get();
 
+        this.baseTags = metaTags;
         this.updateTags();
 
         /**
@@ -559,7 +572,7 @@ function Player (id, $metaXml, status, releaseNumber) {
          * no tag implications are processed.
          * @type {string[]}
          */
-        this.searchTags = this.baseTags.slice();
+        this.searchTags = metaTags.slice();
 
         /**
          * A `Map` of all dialogue `Case`s used by this opponent.
@@ -588,6 +601,12 @@ function Player (id, $metaXml, status, releaseNumber) {
          * @type {string}
          */
         this.selection_image = this.folder + this.image;
+
+        /**
+         * Legacy-style starting <state> elements.
+         * @type {?JQuery<HTMLElement>}
+         */
+        this.startStates = undefined;
 
         /**
          * A custom stylesheet to load alongside this character.
@@ -620,9 +639,19 @@ function Player (id, $metaXml, status, releaseNumber) {
          */
         this.chosenState = undefined;
 
+        /**
+         * @type {?OpponentSelectionCard}
+         */
+        this.selectionCard = undefined
+
+        // @ts-ignore
         $metaXml.find('alternates').find('costume').each(function (i, elem) {
             var set = $(elem).attr('set') || 'offline';
-            var status = $(elem).attr('status') || 'offline';
+            var status = $(elem).attr('status');
+
+            if (['online', 'offine', 'incomplete', 'testing'].indexOf(status) < 0) {
+                status = 'offline';
+            }
 
             if (alternateCostumeSets['all'] || alternateCostumeSets[set]) {
                 if (!includedOpponentStatuses[status]) {
@@ -681,7 +710,10 @@ Player.prototype.resetState = function () {
     this.out = this.finished = false;
     this.outOrder = undefined;
     this.biggestLead = 0;
-    this.forfeit = "";
+    this.forfeit = {
+        'tag': undefined,
+        can_speak: true
+    };
     this.stage = this.consecutiveLosses = 0;
     this.timeInStage = -1;
     this.markers = {};
@@ -696,6 +728,7 @@ Player.prototype.resetState = function () {
         this.stateCommitted = false;
         this.chosenState = undefined;
 
+        // @ts-ignore
         if (this.startStates.length > 0) this.updateChosenState(new State(this.startStates[0]));
 
         var appearance = this.default_costume;
@@ -711,7 +744,7 @@ Player.prototype.resetState = function () {
         /* Load the player's wardrobe. */
 
         /* Find and grab the wardrobe tag */
-        $wardrobe = appearance.wardrobe;
+        var $wardrobe = appearance.wardrobe;
 
         /* find and create all of their clothing */
         var clothingArr = [];
@@ -740,7 +773,7 @@ Player.prototype.resetState = function () {
  * Given a list of objects specifying start stages, pick out the object that
  * best fits with the given `stage`.
  * 
- * @param {Object[]} arr A list of objects that have "stage" attributes.
+ * @param {(JQuery<HTMLElement>|string)} arr A list of objects that have "stage" attributes.
  * @param {number} [stage] A query stage. If undefined, defaults to the current
  * opponent stage.
  * @returns {string} The text of the best fitting object.
@@ -753,8 +786,7 @@ Player.prototype.getByStage = function (arr, stage) {
     var bestFitStage = -1;
     var bestFit = null;
     for (var i = 0; i < arr.length; i++) {
-        var startStage = arr[i].getAttribute('stage');
-        startStage = parseInt(startStage, 10) || 0;
+        var startStage = parseInt(arr[i].getAttribute('stage'), 10) || 0;
         if (startStage > bestFitStage && startStage <= stage) {
             bestFit = $(arr[i]).text();
             bestFitStage = startStage;
@@ -953,6 +985,7 @@ Player.prototype.onSelected = function (individual) {
     }
 
     if (SENTRY_INITIALIZED) {
+        // @ts-ignore
         Sentry.addBreadcrumb({
             category: 'select',
             message: 'Load completed for ' + this.id,
@@ -966,7 +999,9 @@ Player.prototype.onSelected = function (individual) {
             [OPPONENT_SELECTED]
         ]);
     } else {
+        // @ts-ignore
         this.updateBehaviour(SELECTED);
+        // @ts-ignore
         this.commitBehaviourUpdate();
     }
 
@@ -1017,6 +1052,7 @@ Player.prototype.loadAlternateCostume = function (individual) {
             var $xml = $(xml);
 
             if (SENTRY_INITIALIZED) {
+                // @ts-ignore
                 Sentry.addBreadcrumb({
                     category: 'select',
                     message: 'Initializing alternate costume for ' + this.id + ': ' + this.selected_costume,
@@ -1035,6 +1071,7 @@ Player.prototype.loadAlternateCostume = function (individual) {
 
             var poses = $xml.find('poses');
             var poseDefs = {};
+            // @ts-ignore
             $(poses).find('pose').each(function (i, elem) {
                 var def = new PoseDefinition($(elem), this);
                 poseDefs[def.id] = def;
@@ -1046,6 +1083,7 @@ Player.prototype.loadAlternateCostume = function (individual) {
             var tagMods = $xml.find('tags');
             if (tagMods) {
                 var newTags = [];
+                // @ts-ignore
                 tagMods.find('tag').each(function (idx, elem) {
                     var $elem = $(elem);
                     var tag = canonicalizeTag($elem.text());
@@ -1110,6 +1148,7 @@ Player.prototype.loadCollectibles = function (onLoaded, onError) {
         dataType: "text",
         success: function (xml) {
             var collectiblesArray = [];
+            // @ts-ignore
             $(xml).find('collectible').each(function (idx, elem) {
                 collectiblesArray.push(new Collectible($(elem), this));
             }.bind(this));
@@ -1122,6 +1161,7 @@ Player.prototype.loadCollectibles = function (onLoaded, onError) {
 
             if (onLoaded) onLoaded(this);
         }.bind(this),
+        // @ts-ignore
         error: function (jqXHR, status, err) {
             console.error("Error loading collectibles for " + this.id + ": " + status + " - " + err);
             if (onError) onError(this, status, err);
@@ -1134,6 +1174,7 @@ Player.prototype.loadCollectibles = function (onLoaded, onError) {
  */
 Player.prototype.unloadOpponent = function () {
     if (SENTRY_INITIALIZED) {
+        // @ts-ignore
         Sentry.addBreadcrumb({
             category: 'select',
             message: 'Unloading opponent ' + this.id,
@@ -1160,7 +1201,7 @@ Player.prototype.loadBehaviour = function (slot, individual) {
 
     if (this.isLoaded()) {
         if (this.selected_costume) {
-            this.loadAlternateCostume();
+            this.loadAlternateCostume(individual);
         } else {
             this.unloadAlternateCostume();
             this.onSelected(individual);
@@ -1176,6 +1217,7 @@ Player.prototype.loadBehaviour = function (slot, individual) {
             var $xml = $(xml);
 
             if (SENTRY_INITIALIZED) {
+                // @ts-ignore
                 Sentry.addBreadcrumb({
                     category: 'select',
                     message: 'Fetched and parsed opponent ' + this.id + ', initializing...',
@@ -1231,6 +1273,7 @@ Player.prototype.loadBehaviour = function (slot, individual) {
 
             var poses = $xml.find('poses');
             var poseDefs = {};
+            // @ts-ignore
             $(poses).find('pose').each(function (i, elem) {
                 var def = new PoseDefinition($(elem), this);
                 poseDefs[def.id] = def;
@@ -1240,7 +1283,7 @@ Player.prototype.loadBehaviour = function (slot, individual) {
 
             var tags = $xml.find('tags');
             var tagsArray = [];
-            if (typeof tags !== typeof undefined && tags !== false) {
+            if (tags) {
                 tagsArray = $(tags).find('tag').map(function () {
                     return {
                         'tag': canonicalizeTag($(this).text()),
@@ -1300,6 +1343,7 @@ Player.prototype.loadBehaviour = function (slot, individual) {
 
             cachePromise.progress(function (completed, total) {
                 this.loadProgress = completed / total;
+                // @ts-ignore
                 mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
             });
 
@@ -1314,6 +1358,7 @@ Player.prototype.loadBehaviour = function (slot, individual) {
             });
         }.bind(this))
         /* Error callback. */
+        // @ts-ignore
         .fail(function (err) {
             console.log("Failed reading \"" + this.id + "\" behaviour.xml");
             delete players[this.slot];
@@ -1359,7 +1404,7 @@ Player.prototype.recordTargetedCase = function (caseObj) {
  * and pre-emptively adds their Cases to the opponent's cases structure.
  * This is done in 50ms chunks to avoid blocking the UI.
  * 
- * @returns {jQuery.Promise} A Promise. Progress callbacks are fired after each
+ * @returns {JQuery.Promise} A Promise. Progress callbacks are fired after each
  * chunk of work, and the promise resolves once all cases have been processed.
  * All callbacks are fired with the Opponent as `this`.
  */
@@ -1424,10 +1469,11 @@ Player.prototype.loadXMLTriggers = function () {
  * This is done in 50ms chunks to avoid blocking the UI, similarly to
  * loadXMLTriggers.
  * 
- * @returns {jQuery.Promise} A Promise. Progress callbacks are fired after each
+ * @returns {JQuery.Promise} A Promise. Progress callbacks are fired after each
  * chunk of work, and the promise resolves once all cases have been processed.
  * All callbacks are fired with the Opponent as `this`.
  */
+// @ts-ignore
 Player.prototype.loadXMLStages = function (onComplete) {
     var deferred = $.Deferred();
 
@@ -1505,6 +1551,7 @@ Player.prototype.getImagesForStage = function (stage) {
             })) return;
 
         if (!c.counters.every(function (ctr) {
+                // @ts-ignore
                 var count = players.countTrue(function (p) {
                     if (ctr.id && p.id !== ctr.id) return false;
                     if (ctr.tag && !p.hasTag(ctr.tag)) return false;
@@ -1533,6 +1580,7 @@ Player.prototype.getImagesForStage = function (stage) {
         });
     } else {
         /* Get all poses within the game start states. */
+        // @ts-ignore
         this.startStates.forEach(function (state) {
             state.getPossibleImages(0).forEach(function (poseName) {
                 poseSet[poseName] = true;
@@ -1552,6 +1600,7 @@ Player.prototype.getImagesForStage = function (stage) {
             var key = poseName.split(':', 2)[1];
             var pose = advPoses[key];
             if (pose) pose.getUsedImages().forEach(function (img) {
+                // @ts-ignore
                 imageSet[img.replace('#', stage)] = true;
             });
         } else {
