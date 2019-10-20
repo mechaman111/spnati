@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.2 at 3:23:41 AM on October 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 2:22:28 AM on October 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.2</version>
+    <version>v5.2.6</version>
     <first>Kazuma</first>
     <last>Satou</last>
     <label>kazuma</label>
@@ -18,7 +18,9 @@
         <tag>green_eyes</tag>
         <tag>fair-skinned</tag>
         <tag>shaved</tag>
-        <tag>small_penis</tag>
+        <tag from="0" to="6">small_penis</tag>
+        <tag from="8" to="8">small_penis</tag>
+        <tag from="7" to="7">medium_penis</tag>
         <tag>uncircumcised</tag>
         <tag from="0" to="0">cape</tag>
         <tag>indifferent</tag>
@@ -26,7 +28,6 @@
         <tag>nerdy</tag>
         <tag>perverted</tag>
         <tag>sarcastic</tag>
-        <tag>shut_in</tag>
         <tag>witty</tag>
         <tag>straight</tag>
         <tag>single</tag>
@@ -34,8 +35,7 @@
         <tag>fantasy</tag>
         <tag>anime</tag>
         <tag>adventurer</tag>
-        <tag>magic</tag>
-        <tag>hero</tag>
+        <tag>konosuba</tag>
     </tags>
     <nicknames />
 
@@ -270,6 +270,10 @@
                 <state img="#-interested.png">Great curves, long hair, skimpy outfit? Yep, she's a real goddess alright.</state>
             </case>
             <case stage="0">
+                <condition role="other" character="wonder_woman" />
+                <state img="#-horrified.png">An amazon? Let's hope she's not the man-kidnapping kind.</state>
+            </case>
+            <case stage="0">
                 <state img="#-appreciative.png">Long story short, I saved a succubus and she gave me an item called a warp ticket that sent me here.</state>
             </case>
         </trigger>
@@ -444,6 +448,12 @@
             </case>
         </trigger>
 
+        <trigger id="hand">
+            <case stage="0" priority="50">
+                <state img="#-smirk.png" oneShotId="12" marker="devil_deal">Here's an idea. How about the loser has to do whatever I, I mean the winner, says?</state>
+            </case>
+        </trigger>
+
         <trigger id="must_strip">
             <case stage="0" alsoPlaying="megumin">
                 <state img="#-embarrassed.png">Why do I have to strip with that mage here?</state>
@@ -483,7 +493,7 @@
                 <state img="#-awkward.png">Well this sucks.</state>
             </case>
             <case stage="4">
-                <state img="custom:excited2horrified4">So who has to strip? &lt;i.ME?&lt;/i&gt;</state>
+                <state img="custom:excited2horrified4">So who has to strip? &lt;i&gt;ME?&lt;/i&gt;</state>
                 <state img="#-stripped.png">At least I'm still in the lead...</state>
                 <state img="#-loss.png">There goes my lead...</state>
                 <state img="#-embarrassed.png">I hope this doesn't cost me my lead.</state>
@@ -589,6 +599,14 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="5">
+                <condition role="other" character="megumin" stage="0-8" />
+                <state img="#-strip.png">Well, there was also that bath...</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="megumin" stage="10" />
+                <state img="#-strip.png">Well, there was also that bath...</state>
+            </case>
             <case stage="0" totalMales="4">
                 <state img="#-strip.png">Why am I even playing with 4 guys...</state>
             </case>
@@ -607,7 +625,7 @@
                 <state img="#-strip.png" marker="practice_games">This isn't going like the practice games at all...</state>
             </case>
             <case stage="1">
-                <state img="#-strip.png" marker="chunchunmaru">This type of situation is exact;y why I didn't bring Chunchunmaru.</state>
+                <state img="#-strip.png" marker="chunchunmaru">This type of situation is exactly why I didn't bring Chunchunmaru.</state>
                 <state img="#-strip.png" marker="wiz_refund">Despite my luck-buffing spell, I still lost.</state>
                 <state img="#-strip.png" marker="wiz_play_punishment">I took a luck-enhancing potion that I bought from Wiz before playing. I want a refund.</state>
                 <state img="#-strip.png" marker="forgit_socks">Damn it. I left in such a hurry that I forgot to put on socks...</state>
@@ -637,6 +655,10 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="6">
+                <condition role="other" character="megumin" />
+                <state img="#-angry.png">Don't call it that!</state>
+            </case>
             <case stage="1" totalMales="4">
                 <state img="#-stripped.png">I'll still win just to be the best man here!</state>
             </case>
@@ -758,12 +780,13 @@
 
         <trigger id="male_human_must_strip">
             <case stage="0-8">
-                <state img="#-appreciative.png">Thanks for taking the heat on this one, ~player~.</state>
-                <state img="#-smirk.png">You look kind of embarrassed, ~player~.</state>
-            </case>
-            <case stage="0-8">
+                <condition role="target" stage="1" />
                 <state img="#-shocked.png">Oh, you lose again, ~player~?</state>
                 <state img="#-awkward.png">You know, you act like you're from another world yourself.</state>
+            </case>
+            <case stage="0-8">
+                <state img="#-appreciative.png">Thanks for taking the heat on this one, ~player~.</state>
+                <state img="#-smirk.png">You look kind of embarrassed, ~player~.</state>
             </case>
             <case stage="0-8">
                 <state img="#-appreciative.png">If you think this is bad luck, try going on a quest with my party sometime.</state>
@@ -823,7 +846,7 @@
                 <state img="#-appreciative.png">Thanks for taking the heat off of me.</state>
             </case>
             <case stage="4">
-                <state img="#-loss.png">Crap, ~name~ lost... I'm not into that...s</state>
+                <state img="#-loss.png">Crap, ~name~ lost... I'm not into that...</state>
                 <state img="#-appreciative.png">I really wish I knew a spell to turn you into a cute girl right now.</state>
                 <state img="#-victory.png">Hah. You were clearly too intimidated by my presence to focus!</state>
             </case>
@@ -1065,7 +1088,7 @@
             <case stage="8">
                 <state img="#-unimpressed.png">Is that it? Coward.</state>
                 <state img="#-awkward.png">I can't seem to find a single damn to give...</state>
-                <state img="#-loss.png">&lt;i&gt;Nice playou're so good at this.&lt;/i&gt;</state>
+                <state img="#-loss.png">&lt;i&gt;Nice play you're so good at this.&lt;/i&gt;</state>
             </case>
         </trigger>
 
@@ -1075,7 +1098,7 @@
                 <state img="#-happy.png">Honestly, I never expected to see you here, so I'm just gonna try to make the most of it by teasing you.</state>
             </case>
             <case stage="0-8">
-                <condition role="target" character="megumin" stage="1-7" />
+                <condition role="target" character="megumin" stage="1" />
                 <state img="#-awkward.png">Just taking off your gloves? Yunyun was more adventurous when she played. Just saying.</state>
             </case>
             <case stage="0-8">
@@ -1101,6 +1124,10 @@
             <case stage="0-8">
                 <condition role="target" character="palutena" stage="3" />
                 <state img="#-smirk.png">OK, hear me out. I have an adventurer's party with a useless goddess, OK? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="wonder_woman" stage="3" />
+                <state img="#-shocked.png">Woah. Those look like high- class, legendaryequipment.</state>
             </case>
             <case stage="0">
                 <state img="#-horny.png">The eroge I played have prepared me for this.</state>
@@ -1161,7 +1188,7 @@
                 <state img="#-angry.png">But if you tell anyone back home about this, I'll leave you behind next time you cast Explosion.</state>
             </case>
             <case stage="0-8">
-                <condition role="target" character="megumin" stage="2-7" />
+                <condition role="target" character="megumin" stage="2" />
                 <state img="#-smirk.png">Of course one could argue that you're playing smarter. One could. I won't.</state>
             </case>
             <case stage="0-8">
@@ -1186,7 +1213,11 @@
             </case>
             <case stage="0-8">
                 <condition role="target" character="palutena" stage="4" />
-                <state img="#-excited.png">I'll fire her andyou can take her spot! You'll even get paid!</state>
+                <state img="#-excited.png">I'll fire her and you can take her spot! You'll even get paid!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="wonder_woman" stage="4" />
+                <state img="#-excited.png">That looks even more high-class! You're totally kitted out!</state>
             </case>
             <case stage="0">
                 <state img="#-awkward.png">So... do I get EXP when other people strip?</state>
@@ -1235,9 +1266,9 @@
                 <state img="#-interested.png">It's not much, but it's enough for me to jerk it to.</state>
             </case>
             <case stage="8">
-                <state img="#-smirk.png">I may haveeeee lost, but this is still a prize.</state>
+                <state img="#-smirk.png">I may have lost, but this is still a prize.</state>
                 <state img="#-horny.png">Keep this up and I may have to forfeit again.</state>
-                <state img="#-appreciative.png">You only lost an accessoryyyyy, but that's a good thing. It's a tease. You have to appreciate the intricacies of games like this.</state>
+                <state img="#-appreciative.png">You only lost an accessory, but that's a good thing. It's a tease. You have to appreciate the intricacies of games like this.</state>
             </case>
         </trigger>
 
@@ -1375,6 +1406,10 @@
                 <condition role="target" character="palutena" stage="4" />
                 <state img="#-awkward.png">Oh... OK... Well I guess I made things awkward...</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="wonder_woman" stage="1" />
+                <state img="#-embarrassed.png">So that lasso isn't to tie up men for sex, is it?</state>
+            </case>
             <case stage="0" filter="innocent">
                 <state img="#-horny.png" oneShotId="1">Don't be too embarrassed,~name~. C'mon. I'll help you out of your ~clothing~.</state>
             </case>
@@ -1460,6 +1495,10 @@
             <case stage="0-8">
                 <condition role="target" character="palutena" stage="5" />
                 <state img="#-awkward.png">So... How about the game, huh?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="wonder_woman" stage="2" />
+                <state img="#-happy.png">Oh good. I'm not into that kind of stuff. The android maid was bad enough.</state>
             </case>
             <case stage="0" filter="innocent">
                 <state img="#-angry.png" oneShotId="2">I'm not a pervert! Trust me! I was trying to be a gentleman!</state>
@@ -1626,7 +1665,7 @@
                 <state img="#-interested.png">Not bad. You know, for a guy.</state>
             </case>
             <case stage="8">
-                <state img="#-smirk.png">Laugh all you want, I still get to go home to a world where I'm a celebratedddddddd hero.</state>
+                <state img="#-smirk.png">Laugh all you want, I still get to go home to a world where I'm a celebrated hero.</state>
                 <state img="#-horrified.png">He still had something this big?</state>
                 <state img="#-unimpressed.png">Yeah, I don't really give a damn.</state>
             </case>
@@ -1648,6 +1687,10 @@
             <case stage="0-8">
                 <condition role="target" character="palutena" stage="5" />
                 <state img="#-shocked.png">Wait, I may not get to replace Aqua, but I do get to see divine boobs!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="wonder_woman" stage="0" />
+                <state img="#-shocked.png">So you're more colorful than most warriors. Why is that?</state>
             </case>
             <case stage="0">
                 <state img="#-excited.png">Oh hell yes!</state>
@@ -1717,6 +1760,10 @@
             <case stage="0-8">
                 <condition role="target" character="palutena" stage="6" />
                 <state img="#-horny.png">So big. So round. So perfect. I could swear they're glowing.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="wonder_woman" stage="1" />
+                <state img="#-happy.png">Oh, cool. A sacred duty's always fun, I guess.</state>
             </case>
             <case stage="0" targetStatus="bottomless">
                 <state img="#-horny.png">I don't care. I'm still looking at your ass.</state>
@@ -1836,7 +1883,7 @@
                 <state img="#-smirk.png">What a sad joke.</state>
                 <state img="#-unimpressed.png">I feel bad for any girl you know. Or guy, I guess...</state>
                 <state img="#-awkward.png">Does that even qualify as a dick?</state>
-                <state>Some men have no luck, not even with their dicks.</state>
+                <state img="#-smirk.png">Some men have no luck, not even with their dicks.</state>
             </case>
         </trigger>
 
@@ -1928,6 +1975,10 @@
                 <condition role="target" character="remilia" />
                 <state img="#-awkward.png">Are you even old enough to drink, little princess?</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="wonder_woman" />
+                <state img="#-interested.png">So what kind of stat buff does that bodice of yours give you?</state>
+            </case>
             <case stage="0-8" filter="small_breasts">
                 <state img="#-interested.png">So are those bound or just that small?</state>
                 <state img="#-excited.png">So what if you're petite? I don't care as long as you show your boobs off!</state>
@@ -1991,6 +2042,10 @@
 
         <trigger id="female_large_chest_is_visible">
             <case stage="0-8">
+                <condition role="target" character="wonder_woman" />
+                <state img="#-horny.png">I don't think I care abut stats when I could be caring about boobs.</state>
+            </case>
+            <case stage="0-8">
                 <condition filter="goth" role="target" />
                 <state img="#-shocked.png" marker="goth_tiddy">Big tiddy goth girl tits?</state>
             </case>
@@ -2038,6 +2093,10 @@
                 <state img="#-interested.png">Looks like divine boobs aren't all I get to see today...</state>
             </case>
             <case stage="0-8">
+                <condition role="target" character="wonder_woman" />
+                <state img="#-interested.png">Despite your great armor, you still lost. Guess it can't always help.</state>
+            </case>
+            <case stage="0-8">
                 <state img="#-excited.png">If your losing your ~clothing~, that means we're gonna see your butt!</state>
                 <state img="#-smirk.png">You look great, ~name~, but you'll look better without your ~clothing~.</state>
                 <state img="#-horny.png">I can't wait to see your bare ass, ~name~. Among other things.</state>
@@ -2061,6 +2120,10 @@
             <case stage="0-8">
                 <condition role="target" character="palutena" />
                 <state img="#-horny.png">Why are you embarrassed? You're gorgeous. A heavenly vision even.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="wonder_woman" />
+                <state img="#-horny.png">However, you do look better without the armor, so there's that.</state>
             </case>
             <case stage="0-8">
                 <condition filter="enf" role="target" />
@@ -2110,6 +2173,34 @@
                 <state img="#-embarrassed.png">I'm cool. Cool guys like me see naked pussies all the time.</state>
                 <state img="#-horny.png">Now that's a butt I want to squeeze.</state>
                 <state img="#-horny.png">Just... sit on my face...</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_stripping">
+            <case stage="0-8" priority="0">
+                <condition filter="hero" role="target" />
+                <state img="#-unimpressed.png" oneShotId="1">The pure here acting like they're perfect. Glad to see them losing.</state>
+                <state img="#-smirk.png" oneShotId="2">What's the matter, ~name~? Not up to this heroic trial?</state>
+                <state img="#-interested.png" oneShotId="3">What's wrong? The hero not used to losing?</state>
+                <state img="#-happy.png" oneShotId="4">I really hate heroes like you, so this is cathartic for me.</state>
+                <state img="#-excited.png" oneShotId="5">It feels good to see a noble hero get knocked down a peg!</state>
+                <state img="#-smirk.png" oneShotId="1">Some hero. Why don't you just hurry up?</state>
+                <state img="#-happy.png" oneShotId="2">It does my heart good to see a hero humbled.</state>
+                <state img="#-shocked.png" oneShotId="3">What? Not noble enough for a hero like you?</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_stripped">
+            <case stage="0" priority="0">
+                <condition filter="hero" role="target" />
+                <state img="#-horny.png" oneShotId="4">Not bad, for some noble hero type.</state>
+                <state img="#-smirk.png" oneShotId="5">What's wrong? Was this task too much for the hero?</state>
+                <state img="#-happy.png" oneShotId="6">Not used to losing, hero?</state>
+                <state img="#-interested.png" oneShotId="7">Poor, ~name~. A noble hero brought so low.</state>
+                <state img="#-excited.png" oneShotId="8">It makes me feel great seeing a heroic type lose.</state>
+                <state img="#-appreciative.png" oneShotId="9">No legendary whatever to save you, hero.</state>
+                <state img="#-loss.png" oneShotId="10">If you give a heroic "never give up" speach, I'm gonna throw up.</state>
+                <state img="#-excited.png" oneShotId="11">I love seeing heroes fail!</state>
             </case>
         </trigger>
 
@@ -2164,8 +2255,9 @@
         </trigger>
 
         <trigger id="female_must_masturbate">
-            <case stage="0-8" totalMasturbating="0">
+            <case stage="0-8">
                 <condition role="target" character="megumin" />
+                <condition count="5-5" status="not_masturbating" />
                 <state img="#-excited.png">Looks like you're the first out, Megumin! Proof you're not yet on the level to compete with me.</state>
             </case>
             <case stage="0-8" totalMasturbating="0">
@@ -2187,6 +2279,10 @@
             <case stage="0-8">
                 <condition role="target" character="palutena" />
                 <state img="#-shocked.png">Wait, does a goddess this perfect even know how to masturbate?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="wonder_woman" />
+                <state img="#-appreciative.png">As an Amazon, you have to know how to make a girl feel good.</state>
             </case>
             <case stage="0-8" filter="princess">
                 <state img="#-horny.png">Please proceed, your majesty.</state>
@@ -2222,6 +2318,10 @@
                 <state img="#-horny.png">Guess not. I could help you out if you want.</state>
             </case>
             <case stage="0-8">
+                <condition role="target" character="wonder_woman" />
+                <state img="#-shocked.png">Flying masturbation? Maybe I should've had Vanir make me an umbrella.</state>
+            </case>
+            <case stage="0-8">
                 <state img="#-horny.png">Just pretend we're not here if it helps.</state>
                 <state img="#-interested.png">So are you gonna do anything adventurous?</state>
                 <state img="#-excited.png">Finally. I've been waiting to see you do this, ~name~.</state>
@@ -2248,6 +2348,10 @@
         </trigger>
 
         <trigger id="female_finished_masturbating">
+            <case stage="0-8" priority="325">
+                <condition role="target" character="wonder_woman" timeInStage="0-" />
+                <state img="#-excited.png">An extra strip! You're awesome!</state>
+            </case>
             <case stage="0-8">
                 <condition role="target" character="megumin" />
                 <state img="#-horny.png">My, my.. I never figured you were so inexperienced. We'll fix that when we play more games here. Unless you're a chicken.</state>
@@ -2279,6 +2383,10 @@
 
         <trigger id="must_masturbate">
             <case stage="6">
+                <condition role="other" character="megumin" />
+                <state img="#-interested.png">You look pretty interested despiteall your talk.</state>
+            </case>
+            <case stage="6">
                 <state img="#-embarrassed.png">So much for my high luck stat...</state>
                 <state img="#-stripped.png">I mean, it would be nice to let off some steam after a game like this...</state>
                 <state img="#-awkward.png">Is masturbating in front after playing a game like this really "losing?"</state>
@@ -2286,6 +2394,10 @@
         </trigger>
 
         <trigger id="start_masturbating">
+            <case stage="6">
+                <condition role="other" character="megumin" />
+                <state img="#-starting.png">If I can do it in the stables by Aqua, I can do it here in front of Megumin.</state>
+            </case>
             <case stage="6">
                 <state img="#-starting.png">Here I go, I guess...</state>
                 <state img="#-starting.png">Let's hope I have enough skill points put into this...</state>
@@ -2338,7 +2450,7 @@
         <trigger id="finished_masturbating">
             <case stage="8">
                 <state img="#-finished.png">That felt too good...</state>
-                <state img="#-finished.png">I wonder if there's a spell to decrease cool-downnn...</state>
+                <state img="#-finished.png">I wonder if there's a spell to decrease cool-down...</state>
                 <state img="#-finished.png">If that's what I get for losing, the winner must get laid.</state>
             </case>
         </trigger>
@@ -2363,6 +2475,10 @@
             <case stage="0-6">
                 <condition role="other" character="palutena" />
                 <state img="#-smirk.png">I guess if I can best a goddess, I can defeat the Demon King.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="wonder_woman" />
+                <state img="#-victory.png">Ha! How does an Amazon deal with being bested buy a man?</state>
             </case>
             <case stage="0">
                 <state img="#-victory.png">Nobody beats the great hero, Kazuma's luck!</state>
