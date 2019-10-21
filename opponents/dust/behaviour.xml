@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 10:06:00 PM on October 19, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 2:29:44 PM on October 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.6</version>
     <first>Dust</first>
@@ -18,11 +18,13 @@
         <tag>long_hair</tag>
         <tag>messy_hair</tag>
         <tag from="6" to="9">blue_eyes</tag>
-        <tag>fair-skinned</tag>
+        <tag>unusual_skin</tag>
         <tag>athletic</tag>
         <tag>pubic_hair</tag>
         <tag>large_penis</tag>
         <tag>uncircumcised</tag>
+        <tag>monster</tag>
+        <tag>non-human</tag>
         <tag>animal_ears</tag>
         <tag>tail</tag>
         <tag from="0" to="0">cape</tag>
@@ -275,6 +277,10 @@
                 <condition role="other" character="saki_zls" stage="6" timeInStage="0" />
                 <state img="#-wat.png" marker="ahrah">Ack! Monster! Where's Ahrah?! Why'd I leave Ahrah behind?!</state>
             </case>
+            <case stage="0-7">
+                <condition role="other" character="chihiro" stage="5" timeInStage="0" />
+                <state img="#-um.png">Artificial... intelligence? Like a... um... thinking machine?</state>
+            </case>
             <case stage="0-7" id="12" totalRounds="2-">
                 <condition role="other" character="emi" stage="0-3" sayingMarker="800m=1" notSaidMarker="800m" />
                 <state img="#-calm.png">You haven't seen how fast I am with an Aerial Dust Storm, have you?</state>
@@ -364,6 +370,10 @@
                 <condition role="other" character="revy" sayingMarker="music" />
                 <state img="#-embarassed.png" marker="revy_music">Well, there are a few traditional drinking songs from Aurora Village.</state>
                 <state img="#-embarassed.png" marker="revy_music">I just prefer the simple stuff, to be honest.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="misty_hgss" sayingMarker="misty_badwithdates" />
+                <state img="#-um.png" marker="misty_baddate_response">You don't seem like you're the kind to be very unlucky, Misty.</state>
             </case>
             <case stage="0-7" totalRounds="3-">
                 <condition filter="meia" />
@@ -559,7 +569,7 @@
                 <state img="#-pissed.png" marker="+cassius_talked">I will NOT tolerate this failure.</state>
             </case>
             <case stage="0" oneShotId="9">
-                <state img="#-embarassed.png" marker="askhat">How long can I keep my hat on?</state>
+                <state img="#-embarassed.png" marker="askhat">Er, I'm just curious... How long am I allowed to keep my hat on?</state>
             </case>
             <case stage="0-5">
                 <state img="#-pissed.png" marker="+cassius_talked" weight="0.1">This is ridiculous. What kind of game is this?</state>
@@ -608,6 +618,10 @@
             <case stage="5">
                 <condition role="other" character="guzma" stage="0-2" />
                 <state img="#-stripping.png">... I &lt;i&gt;like&lt;/i&gt; this hat.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="chihiro" stage="0-4" />
+                <state img="#-stripping.png">Oh. I get that a lot, actually, I can see just fine with it on.</state>
             </case>
             <case stage="1">
                 <condition role="other" character="jessie" />
@@ -660,6 +674,11 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="1" id="32">
+                <condition role="other" character="chihiro" stage="0-4" />
+                <state img="#-calm.png" marker="chihiro_ahrah">Oh, the hat's not magic, but my sword is.</state>
+                <state img="#-calm.png">That's actually the first time someone asked me if my hat was magic. It's just a normal hat.</state>
+            </case>
             <case stage="1-6" oneShotId="40">
                 <condition role="other" character="rarity_eg" sayingMarker="attire_choice2" />
                 <state img="#-annoyed.png">My outfit is for traveling, not for looks.</state>
@@ -812,6 +831,10 @@
                 <condition role="target" character="revy" stage="1" />
                 <state img="#-wat.png" marker="revy_pirate">You're actually a pirate, Revy?</state>
                 <state img="#-wat.png" marker="revy_pirate">Revy, you're a pirate? I thought they looked... different.</state>
+            </case>
+            <case stage="0-7 9">
+                <condition role="target" character="misty_hgss" />
+                <state img="#-embarassed.png" marker="misty_classes">So, Misty, you're a trainer, right? What do you teach classes in?</state>
             </case>
             <case stage="0-9" priority="50">
                 <condition role="self" saidMarker="cassius_talked&gt;3" />
@@ -1255,6 +1278,10 @@
                 <state img="#-wat.png">(Please let it be the guns she has to drop...)</state>
                 <state img="#-wat.png">N-now, can you put down the guns?</state>
             </case>
+            <case stage="0-9" id="33">
+                <condition role="target" character="chihiro" stage="5" />
+                <state img="#-um.png">Oh! You're back! Are you okay? And what is that odd device?</state>
+            </case>
             <case stage="0-9" priority="221">
                 <condition role="target" stage="0" />
                 <condition role="other" character="mae" stage="0-2" sayingMarker="redeyes_marker" saying="club" />
@@ -1413,9 +1440,23 @@
         </trigger>
 
         <trigger id="opponent_chest_will_be_visible">
-            <case stage="0-6" id="21">
+            <case stage="0-7 9" id="21">
                 <condition role="target" character="chihiro" />
                 <state img="#-whoa.png">Hey, wait! Hey! We're not going to hurt you!</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_chest_is_visible">
+            <case stage="0-7 9">
+                <condition role="target" character="chihiro" />
+                <state img="#-wat.png">Uh... what's that thing they left behind?</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_crotch_is_visible">
+            <case stage="0-9" id="34">
+                <condition role="target" character="chihiro" />
+                <state img="#-um.png">...Oh! I didn't realize...</state>
             </case>
         </trigger>
 
