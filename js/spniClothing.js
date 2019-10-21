@@ -299,8 +299,6 @@ function playerMustStrip (player) {
         players[player].preloadStageImages(players[player].stage + 1);
 	}
 	
-	saveAllTranscriptEntries();
-
 	return clothing.length;
 }
 
@@ -323,8 +321,6 @@ function prepareToStripPlayer (player) {
         updateAllBehaviours(player, PLAYER_STRIPPING, [dialogueTrigger]);
         players[player].preloadStageImages(players[player].stage + 1);
     }
-	
-	saveAllTranscriptEntries();
 }
 
 /************************************************************
@@ -452,8 +448,6 @@ function closeStrippingModal (id) {
         dialogueTrigger.push(OPPONENT_STRIPPED);
         updateAllBehaviours(HUMAN_PLAYER, null, [dialogueTrigger]);
 
-		saveAllTranscriptEntries();
-
         /* allow progression */
         $('#stripping-modal').modal('hide');
         $(document).off('keyup', clothing_keyUp);
@@ -496,8 +490,6 @@ function stripAIPlayer (player) {
 	/* update behaviour */
     dialogueTrigger.push(OPPONENT_STRIPPED);
     updateAllBehaviours(player, PLAYER_STRIPPED, [dialogueTrigger]);
-	
-	saveAllTranscriptEntries();
 }
 
 /************************************************************
