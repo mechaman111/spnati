@@ -190,7 +190,6 @@ function loadGameScreen () {
     }.bind(this));
 
     updateAllBehaviours(null, null, GAME_START);
-    saveAllTranscriptEntries();
     updateBiggestLead();
     setLocalDayOrNight();
 
@@ -281,7 +280,6 @@ function makeAIDecision () {
 	players[currentTurn].swapping = true;
 	players[currentTurn].updateBehaviour(SWAP_CARDS);
     players[currentTurn].commitBehaviourUpdate();
-	updateGameVisual(currentTurn);
     
     saveSingleTranscriptEntry(currentTurn);
 
@@ -307,7 +305,6 @@ function reactToNewAICards () {
 	}
     
     players[currentTurn].commitBehaviourUpdate();
-	updateGameVisual(currentTurn);
     
     players[currentTurn].swapping = false;
     
@@ -343,7 +340,6 @@ function advanceTurn () {
             /* update their speech and skip their turn */
             players[currentTurn].updateBehaviour(players[currentTurn].forfeit[0]);
             players[currentTurn].commitBehaviourUpdate();
-            updateGameVisual(currentTurn);
             
             saveSingleTranscriptEntry(currentTurn);
 
@@ -357,18 +353,8 @@ function advanceTurn () {
         /* Reprocess reactions. */
         updateAllVolatileBehaviours();
         
-        /* Commit updated states only. */
-        var updatedPlayers = [];
-        players.forEach(function (p) {
-            if (p.chosenState && !p.stateCommitted) {
-                p.commitBehaviourUpdate();
-                updateGameVisual(p.slot);
-                updatedPlayers.push(p.slot);
-            }
-        });
-        
-        saveTranscriptEntries(updatedPlayers);
-        
+        commitAllBehaviourUpdates();
+
         /* human player's turn */
         if (humanPlayer.out) {
 			allowProgression(eGamePhase.REVEAL);
@@ -564,7 +550,6 @@ function completeRevealPhase () {
             }
         });
         updateAllBehaviours(null, null, PLAYERS_TIED);
-        updateAllGameVisuals();
 
         recentLoser.forEach(function(i) {
             $gameLabels[i].addClass("tied");
@@ -742,7 +727,6 @@ function handleGameOver() {
 	})) {
 		/* true end */
         updateAllBehaviours(winner.slot, GAME_OVER_VICTORY, GAME_OVER_DEFEAT);
-        saveAllTranscriptEntries();
 
 		allowProgression(eGamePhase.GAME_OVER);
 		//window.setTimeout(doEpilogueModal, SHOW_ENDING_DELAY); //start the endings

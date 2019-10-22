@@ -1877,6 +1877,7 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     }
 
     this.stateCommitted = true;
+    updateGameVisual(this.slot);
 }
 
 /************************************************************
@@ -1916,7 +1917,6 @@ function updateAllBehaviours (target, target_tags, other_tags) {
     
     updateAllVolatileBehaviours();
     commitAllBehaviourUpdates();
-    updateAllGameVisuals();
 }
 
 /************************************************************
@@ -1952,12 +1952,17 @@ function commitAllBehaviourUpdates () {
             p.labelOverridden = true;
         }
     });
-    
+
+    /* Record updated states only. */
+    var updatedPlayers = [];
     players.forEach(function (p) {
-        if (p !== humanPlayer) {
+        if (p !== humanPlayer && p.chosenState && !p.stateCommitted) {
             p.commitBehaviourUpdate();
+            updatedPlayers.push(p.slot);
         }
     });
+
+    saveTranscriptEntries(updatedPlayers);
 }
 
 /*

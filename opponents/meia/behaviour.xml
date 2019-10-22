@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.5 at 5:20:31 PM on October 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.5 at 6:05:47 PM on October 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.5</version>
     <first>Meia</first>
@@ -611,7 +611,6 @@
                 <state img="#-annoyed.png">I put Barnette in charge this evening...she better be taking that seriously.</state>
                 <state img="#-thinking.png">Such a crowded place...I don't like bars.</state>
                 <state img="#-awkward.png">There's so many women in this building...maybe fewer male babies are born on Earth.</state>
-                <state img="#-confused.png" marker="earth_sightseeing">...Well, you're the locals.  What does Earth have to offer besides strip poker?</state>
                 <state img="#-busy.png" marker="tablet">Typical hand...there's practices to schedule.</state>
                 <state img="#-busy.png" marker="tablet">I need to clean this screen off...</state>
                 <state img="#-critical.png" marker="laser_ring">I have reason to believe Earthlings are violent...I'm more armed than I look.</state>
@@ -631,7 +630,6 @@
                 <state img="#-thinking.png">OK, what would Gascogne do?  ...What would Gascogne &lt;i&gt;strip?&lt;/i&gt;</state>
                 <state img="#-awkward.png">Damn it...I didn't draft up next week's flight practices yet.</state>
                 <state img="#-thinking.png">&lt;i&gt;Oh, God...&lt;/i&gt;I can feel myself blushing.</state>
-                <state img="#-awkward.png" marker="earth_sightseeing">Since I'm here already, are there any sights to see on Earth?</state>
                 <state img="#-busy.png" marker="tablet">Dita won't remember that maneuver...I need to tutor her.</state>
                 <state img="#-annoyed.png" marker="laser_ring">My laser ring finger is itching...probably from being on a hostile planet.</state>
                 <state img="#-confused.png" marker="kings_and_queens">How long ago did Earth have "kings" and "queens"?  Or...do you still?</state>
@@ -646,7 +644,6 @@
                 <state img="#-addressing.png">The zipper for this thing is in front.  I'm sure that excites you.</state>
                 <state img="#-stretch.png">I guess I'm as much an exhibitionist as anyone else here.  This thing advertises my backside all day.</state>
                 <state img="#-stretching.png">How's my figure?  This suit might as well be body paint...</state>
-                <state img="#-busy.png" marker="earth_sightseeing">Earth seems to be a much larger planet than Mejare...how much is there to see here?</state>
                 <state img="#-awkward.png">...This suit's tightness makes my breasts look even smaller...</state>
                 <state img="#-stretch.png">...The padding on my armor gives a false impression of my bust size.  You can see the reality now...</state>
             </case>
@@ -687,6 +684,12 @@
                 <state img="#-pleased.png">I'll admit...this is a little fun.  Not to mention thrilling.</state>
                 <state img="#-awkward.png">Hmm...if blue hair is so exotic here, I wonder if blue &lt;i&gt;pubic&lt;/i&gt; hair is considered even more so...</state>
                 <state img="#-happy.png">Something about this is making me feel very feminine.  How do I look?</state>
+            </case>
+            <case stage="0-5" id="4" priority="0">
+                <condition role="self" notSaidMarker="earth_sightseeing" />
+                <state img="#-disappointed.png" marker="earth_sightseeing">...Well, you're the locals.  What does Earth have to offer besides strip poker?</state>
+                <state img="#-stoic.png" marker="earth_sightseeing">Since I'm here already, are there any sights to see on Earth?</state>
+                <state img="#-busy.png" marker="earth_sightseeing">Earth seems to be a much larger planet than Mejare...how much is there to see here?</state>
             </case>
         </trigger>
 
@@ -851,7 +854,8 @@
                 <state img="#-pleased.png">I think that's enough celebration.  Luckily, Gascogne and the captain take all the Christmas suits for themselves...</state>
                 <state img="#-busy.png">Hmm...well, leading the squadron can be stressful, but I'd rather serve under Magno Vivan than Eros the Love Goddess.</state>
             </case>
-            <case stage="0-4" timeInStage="0" priority="990">
+            <case stage="0-4" priority="990">
+                <condition role="self" timeInStage="0" />
                 <test expr="~self.costume~" value="meia_cupid" />
                 <state img="#-stretch.png">Dressing up as a Cupid hasn't made me any more familiar with men, unfortunately...or with Earth.</state>
                 <state img="#-interested.png">No need to worry...this outfit isn't any more layered than my suit.  I won't make it so, anyway.</state>
@@ -1560,7 +1564,9 @@
                 <state img="#-bored.png" marker="sei1">My crewmates have been telling me to relax for a long time, Sei.  Leave me alone...</state>
                 <state img="#-busy.png" marker="sei1">Sei, I'm not relaxing when I could be getting work done.  Stop bothering me.</state>
             </case>
-            <case stage="0-2" alsoPlaying="sei" alsoPlayingStage="0-2" saidMarker="sei_response" notSaidMarker="sei2" alsoPlayingSayingMarker="meia2">
+            <case stage="0-2">
+                <condition role="self" saidMarker="sei_response" notSaidMarker="sei2" />
+                <condition role="other" character="sei" stage="0-2" sayingMarker="meia2" />
                 <state img="#-thinking.png" marker="sei2">&lt;i&gt;Mejare,&lt;/i&gt; Sei.  My home planet.  One of Earth's colonies...the planet of women.</state>
                 <state img="#-stretch.png" marker="sei2">I said &lt;i&gt;Mejare,&lt;/i&gt; Sei.  Mejare is the planet I'm from...populated only by women.</state>
                 <state img="#-bored.png" marker="sei2">Weren't you listening, Sei?  I'm from planet Mejare, which is known for being all-female.</state>
@@ -2182,20 +2188,23 @@
                 <state img="#-angry.png">&lt;i&gt;What's this all about?&lt;/i&gt;  What kind of strip bar lets in groups of schoolgirls?  This is obscene!</state>
                 <state img="#-thinking.png">...Why am I with four classmates?  Listen...you should stay in school.  These sorts of places are for women who've lost their way.</state>
             </case>
-            <case stage="0" totalFemales="1" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition count="1" gender="female" />
                 <state img="#-surprised.png">I'm the...only woman?</state>
                 <state img="#-angry.png">All men...don't try anything funny.</state>
                 <state img="#-bored.png">All men, no women...wouldn't be surprised if Jura was pulling a prank here.</state>
                 <state img="#-impressed.png">I was really expecting a few women here...</state>
                 <state img="#-surprised.png">All men...?  This is more than I bargained for.</state>
             </case>
-            <case stage="0" totalMales="0" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition count="0" gender="male" />
                 <state img="#-awkward.png">No men playing?  I thought Earth was home to plenty of them.</state>
                 <state img="#-disappointed.png">All women...well, it's familiar.</state>
                 <state img="#-impressed.png">Oh, I see.  They must keep these games single-sex.</state>
                 <state img="#-thinking.png">I really thought I'd see a man here...</state>
             </case>
-            <case stage="0" totalMales="1" totalRounds="0" priority="10">
+            <case stage="0" totalRounds="0" priority="10">
+                <condition count="1" gender="male" />
                 <state img="#-impressed.png">A man is playing...this ought to be interesting.</state>
                 <state img="#-busy.png" marker="tablet">A man...I should be taking notes on this.</state>
                 <state img="#-impressed.png">A man...this raises the stakes.</state>
@@ -2241,13 +2250,17 @@
                 <state img="#-thinking.png">I thought we all had to wear the same amount of clothing...a careless mistake.</state>
                 <state img="#-stretch.png">I hope I'm looking toned.  Exercise is something every woman can do to improve her beauty...</state>
             </case>
-            <case stage="0-5" totalAlive="2" notSaidMarker="one_on_one">
+            <case stage="0-5" priority="6">
+                <condition role="self" notSaidMarker="one_on_one" />
+                <condition count="2" status="alive" />
                 <state img="#-explaining.png" marker="one_on_one">
                     <alt-img stage="3-5">#-addressing.png</alt-img>
                     <text>No one left for you to hide behind.  Now you deal with &lt;i&gt;me.&lt;/i&gt;</text>
                 </state>
             </case>
-            <case stage="0" totalAlive="2" notSaidMarker="one_on_one">
+            <case stage="0" priority="6">
+                <condition role="self" notSaidMarker="one_on_one" />
+                <condition count="2" status="alive" />
                 <state img="#-bored.png" marker="one_on_one">And then there were two.  Perhaps now I'll finally lose.</state>
                 <state img="#-disappointed.png" marker="one_on_one">Now it's just you and me.  I hope you're OK with that.</state>
                 <state img="#-bored.png" marker="one_on_one">One-on-one...maybe I'd be excited if you had made me lose at some point.</state>

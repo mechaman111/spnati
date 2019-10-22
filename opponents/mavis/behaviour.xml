@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1.1 at 12:36:55 a. m. on septiembre 08, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.4 at 7:10:05 p. m. on octubre 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.1.1</version>
+    <version>v5.2.4</version>
     <first>Mavis</first>
     <last>Dracula</last>
     <label>Mavis</label>
@@ -80,14 +80,20 @@
         </trigger>
 
         <trigger id="game_start">
-            <case stage="0" alsoPlaying="saki_zls" alsoPlayingSaidMarker="intro_01">
+            <case stage="0">
+                <condition role="other" character="saki_zls" saidMarker="intro_01" />
                 <state img="#-Thinking.png">Wait, zombie? But you look just like a human, Saki!</state>
                 <state img="#-Thinking.png">Zombie? You look just like a human, Saki!</state>
             </case>
             <case stage="0" alsoPlaying="navi">
                 <state img="#-Thinking.png">That's a pretty light, but how is it gonna &lt;i&gt;play?&lt;/i&gt;</state>
             </case>
-            <case stage="0" alsoPlaying="ribbon_girl">
+            <case stage="0">
+                <condition role="other" character="zizou" />
+                <state img="#-Scared.png">Fight? I don't want trouble, Zizou!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="ribbon_girl" />
                 <state img="#-Giggling.png">Oh! I can't believe I thought your arms were like a mummy's. Heehee, silly me!</state>
             </case>
             <case stage="0">
@@ -108,7 +114,7 @@
                 <state img="#-Calm.png">Oh, nevermind. I think ~player~'s the only human here!</state>
             </case>
             <case stage="0">
-                <condition count="2" filter="vampire" />
+                <condition filter="vampire" />
                 <state img="#-Horny.png">Am I seeing this right? I'm not the only vampire here!</state>
             </case>
             <case stage="0">
@@ -182,10 +188,7 @@
                 <state img="#-Happy.png">Yes! I love these cards!</state>
             </case>
             <case stage="2 6">
-                <state img="#-Happy.png">
-                    <alt-img stage="6">#-Calm.png</alt-img>
-                    <text>Very good!</text>
-                </state>
+                <state img="#-Happy.png">Very good!</state>
             </case>
             <case stage="2">
                 <state img="#-Happy.png">What a great hand!</state>
@@ -212,7 +215,8 @@
         </trigger>
 
         <trigger id="okay_hand">
-            <case stage="1-5" timeInStage="0" consecutiveLosses="1" priority="6">
+            <case stage="1-5" priority="6">
+                <condition role="self" timeInStage="0" consecutiveLosses="1" />
                 <state img="#-Calm.png">Maybe I'll have more luck this time!</state>
                 <state img="#-Calm.png">I'll be more lucky this round!</state>
             </case>
@@ -302,7 +306,7 @@
             <case stage="6">
                 <state img="#-Embarrassed.png">Oh... &lt;i&gt;(It was great playing with you guys...!)&lt;/i&gt;</state>
                 <state img="#-Embarrassed.png">I-I guess I'm out after this one...</state>
-                <state img="#-Embarrassed.png">I... I think that was my last hand...</state>
+                <state img="#-Embarrassed.png">I... I think that's my last hand...</state>
                 <state img="#-Sad.png">Am I gonna be out?</state>
                 <state img="#-Embarrassed.png">&lt;i&gt;So&lt;/i&gt;... that's the last one, probably...</state>
             </case>
@@ -336,11 +340,13 @@
             <case stage="0" alsoPlaying="estelle" alsoPlayingStage="0" totalRounds="0">
                 <state img="#-Calm.png">Yes, Estelle! &lt;i&gt;Wait, don't tell me, you're 118, too?&lt;/i&gt; That's awesome!</state>
             </case>
-            <case stage="0-6" alsoPlaying="miko" alsoPlayingStage="1" timeInStage="0">
-                <state img="#-Surprised.png">&lt;i&gt;Y-Your consort? She's your wife? B-But... you're a human, and she's a ghost!&lt;/i&gt;</state>
-            </case>
             <case stage="0-6" alsoPlaying="sakura" alsoPlayingStage="3" timeInStage="0">
                 <state img="#-Happy.png">This is awesome! I'm so happy that a zombie can be a famous singer in the human world! Who knows, maybe vampires could be too!</state>
+            </case>
+            <case stage="0-6">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="miko" stage="1" />
+                <state img="#-Surprised.png">&lt;i&gt;Y-Your consort? She's your wife? B-But... you're a human, and she's a ghost!&lt;/i&gt;</state>
             </case>
             <case stage="3" alsoPlaying="mae" alsoPlayingStage="0-5" timeInStage="0">
                 <state img="#-Embarrassed.png">I-It's not that umcomfortable, Mae. &lt;i&gt;Just a little embarrassing...&lt;/i&gt;</state>
@@ -353,6 +359,13 @@
             </case>
             <case stage="3" alsoPlaying="sakura" alsoPlayingStage="3-9" timeInStage="0">
                 <state img="#-Embarrassed.png">I-I'm not really sure, Sakura... I guess we're not that different from humans. You're also very different from the zombies I know...</state>
+            </case>
+            <case stage="0-6">
+                <alternative alsoPlaying="tharja" alsoPlayingStage="4" />
+                <alternative>
+                    <condition role="other" character="tharja" stage="4" />
+                </alternative>
+                <state img="#-Embarrassed.png">N-No, Tharja, I-I'm just...</state>
             </case>
             <case stage="5-6" alsoPlaying="sakura" alsoPlayingSaidMarker="vampire_pubic_hair==1" alsoPlayingSayingMarker="vampire_pubic_hair">
                 <condition count="2-3" filter="vampire" />
@@ -413,7 +426,8 @@
             <case stage="5-6" alsoPlaying="sakura" alsoPlayingSayingMarker="vampire_pubic_hair">
                 <state img="#-Thinking.png">&lt;i&gt;Eh... I... I don't think so, Sakura?&lt;/i&gt;</state>
             </case>
-            <case stage="3" alsoPlaying="miko">
+            <case stage="3">
+                <condition role="other" character="miko" />
                 <state img="#-Giggling.png">Thanks, Miko. I was getting a little self-conscious about my weight, but now I feel great!</state>
             </case>
             <case stage="0" timeInStage="0">
@@ -438,6 +452,19 @@
                 <state img="#-Butt.png">Look! It's a beautiful full moon tonight!</state>
                 <state img="#-Butt.png">Hey, look! A full moon! It's so beautiful!</state>
             </case>
+            <case stage="0">
+                <alternative />
+                <alternative timeInStage="0">
+                    <test expr="~background~" value="beach" />
+                </alternative>
+                <alternative timeInStage="0">
+                    <test expr="~background~" value="poolside" />
+                </alternative>
+                <alternative timeInStage="0">
+                    <test expr="~background~" value="roof" />
+                </alternative>
+                <state img="#-Thinking.png">You're probably wondering how I'm standing here in sunlight... yeah, me too.</state>
+            </case>
             <case stage="0" totalFemales="1" totalRounds="0">
                 <state img="#-Embarrassed.png">Am I the only girl here? C-Could you go easy on me?</state>
                 <state img="#-Embarrassed.png">Am I the only girl? &lt;i&gt;(Is this good luck, or bad luck...?)&lt;/i&gt;</state>
@@ -450,7 +477,8 @@
             <case stage="0" totalRounds="0">
                 <state img="#-Calm.png">Hi there! I'm Mavis, Dracula's daughter. Yeah, I know, everyone freaks out at first.</state>
             </case>
-            <case stage="3" timeInStage="0">
+            <case stage="3">
+                <condition role="self" timeInStage="0" />
                 <state img="#-Bored.png">Ugh! My stockings are getting tight... I must be gaining weight from just staying at home...</state>
                 <state img="#-Bored.png">&lt;i&gt;Hmm!&lt;/i&gt; Ugh! My stockings are getting tighter. I must be gaining weight since I barely leave home...</state>
             </case>
@@ -459,23 +487,12 @@
                 <state img="#-Embarrassed.png">Is... that not what you usually take off first?</state>
                 <state img="#-Embarrassed.png">W-What? Isn't that what you take off first?</state>
             </case>
-            <case stage="0">
-                <alternative timeInStage="0">
-                    <test expr="~background~" value="beach" />
-                </alternative>
-                <alternative timeInStage="0">
-                    <test expr="~background~" value="poolside" />
-                </alternative>
-                <alternative timeInStage="0">
-                    <test expr="~background~" value="roof" />
-                </alternative>
-                <state img="#-Thinking.png">You're probably wondering how I'm standing here in sunlight... yeah, me too.</state>
-            </case>
         </trigger>
 
         <trigger id="must_strip">
-            <case stage="0" alsoPlaying="remilia" alsoPlayingStage="0-6">
+            <case stage="0">
                 <condition count="1" filter="miko" />
+                <condition role="other" character="remilia" stage="0-6" />
                 <state img="#-Embarrassed.png">Yes, I-I'm Dracula's daughter. I-Is there something wrong with that?</state>
             </case>
             <case stage="2" alsoPlaying="remilia" alsoPlayingStage="0-6">
@@ -498,8 +515,9 @@
                 <condition count="3-" filter="monster" />
                 <state img="#-Embarrassed.png">Eeh... a little bit, Nines. But don't worry! You two are still cute!</state>
             </case>
-            <case stage="1" alsoPlaying="remilia">
+            <case stage="1">
                 <condition count="1" filter="miko" />
+                <condition role="other" character="remilia" />
                 <state img="#-Embarrassed.png">Huh? D-Don't worry, Ms. Remilia. I'd rather take off my clothes myself...</state>
                 <state img="#-Embarrassed.png">Huh? D-Don't worry, Miko. I wouldn't like if someone else took off my clothes...</state>
             </case>
@@ -534,11 +552,19 @@
             <case stage="0" alsoPlaying="sei">
                 <state img="#-Embarrassed.png">&lt;i&gt;B-Biter? W-What do you mean by that, Sei?&lt;/i&gt;</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="syrenne" />
+                <state img="#-Embarrassed.png">Y-Yeah, Syrenne... what did you expect?</state>
+            </case>
             <case stage="1" alsoPlaying="nami">
                 <state img="#-Calm.png">Thank you, Nami! I'm so glad you're not scared of me or anything!</state>
             </case>
             <case stage="1" alsoPlaying="sakura">
                 <state img="#-Calm.png">That's so sweet, Sakura. But &lt;i&gt;please&lt;/i&gt;, don't treat me any different just because of who my dad is!</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="syrenne" />
+                <state img="#-Calm.png">Yes, Syrenne. Heh, I forget you humans can't do that...</state>
             </case>
             <case stage="2" alsoPlaying="mulan">
                 <state img="#-Angry.png">H-Hey! He may be a bit hard-headed, Ping, but that doesn't mean he's evil!</state>
@@ -673,8 +699,9 @@
         </trigger>
 
         <trigger id="stripping">
-            <case stage="0" alsoPlaying="remilia" alsoPlayingStage="0-6">
+            <case stage="0">
                 <condition count="0" filter="miko" />
+                <condition role="other" character="remilia" stage="0-6" />
                 <state img="#-Strip.png">&lt;i&gt;Blood?&lt;/i&gt; Oh! You mean my family name! I'm a Dracula, Ms. Remilia.</state>
             </case>
             <case stage="5" alsoPlaying="mahiru" alsoPlayingStage="7-9" alsoPlayingSayingMarker="mavisselfie">
@@ -773,8 +800,9 @@
                 <condition count="0" filter="remilia" />
                 <state img="#-Thinking.png">You mean there's someone who pretended to be me, Miko? Why would they do that?</state>
             </case>
-            <case stage="1" alsoPlaying="miko">
+            <case stage="1">
                 <condition count="1" filter="remilia" />
+                <condition role="other" character="miko" />
                 <state img="#-Embarrassed.png">&lt;i&gt;R-Really, Miko... you're making me blush...&lt;/i&gt;</state>
             </case>
             <case stage="2" alsoPlaying="miko">
@@ -810,6 +838,14 @@
             <case stage="1" alsoPlaying="sei">
                 <state img="#-Stripped.png">Heh, thank you so much, Sei! Could you believe some people are scared of me?</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="tharja" />
+                <state img="#-Stripped.png">Don't worry about that, Tharja. This is fun!</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="syrenne" />
+                <state img="#-Calm.png">Yay! I'm so glad you're not scared of me! Maybe we can be friends!</state>
+            </case>
             <case stage="2" alsoPlaying="9s">
                 <state img="#-Stripped.png">Floating? This is something vampires can do, Nines!</state>
             </case>
@@ -825,6 +861,16 @@
             <case stage="2" alsoPlaying="sakura">
                 <state img="#-Embarrassed.png">&lt;i&gt;Y-You think I'm pretty, Sakura...?&lt;/i&gt; Aww, you're making me blush!</state>
             </case>
+            <case stage="2">
+                <condition role="other" character="tharja" />
+                <state img="#-Stripped.png">Take over the world? &lt;i&gt;(That would get boring after a while...)&lt;/i&gt; ...Why don't we just keep playing, Tharja?</state>
+                <state img="#-Stripped.png">Take over the world? &lt;i&gt;(That would get boring after a while...)&lt;/i&gt; ...Why don't we just keep playing, Tharja?</state>
+                <state img="#-Stripped.png">Take over the world? &lt;i&gt;(That would get boring after a while...)&lt;/i&gt; ...Why don't we just keep playing, Tharja?</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="syrenne" />
+                <state img="#-Stripped.png">There's lots of things that we can't do that you can! &lt;i&gt;Like sunbathing...&lt;/i&gt;</state>
+            </case>
             <case stage="3" alsoPlaying="estelle">
                 <state img="#-Happy.png">Thank you, Estelle! It's a cute look, right?</state>
             </case>
@@ -836,6 +882,10 @@
             </case>
             <case stage="3" alsoPlaying="sakura">
                 <state img="#-Stripped.png">Diet? I don't really eat anything special, Sakura. Well, other than &lt;i&gt;too many&lt;/i&gt; slices of Scream Pie...</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="tharja" />
+                <state img="#-Angry.png">Hey, Tharja! Of course I;m a vampire! &lt;i&gt;(How could I lie about that...?)&lt;/i&gt;</state>
             </case>
             <case stage="4" alsoPlaying="cammy_white">
                 <state img="#-Giggling.png">I do, Cammy. Sometimes I forget that you humans can't do that, heh, sorry...</state>
@@ -855,11 +905,22 @@
             <case stage="4" alsoPlaying="sakura">
                 <state img="#-Interested.png">Oh, right! You're a singer, Sakura. I'd like to see one of your shows! Maybe one day...</state>
             </case>
+            <case stage="4">
+                <alternative>
+                    <condition role="other" character="tharja" />
+                </alternative>
+                <alternative alsoPlaying="tharja" />
+                <state img="#-Stripped.png">Heh! Thanks, Tharja. I'm sure you would look pretty in them!</state>
+            </case>
             <case stage="5" alsoPlaying="sakura">
                 <state img="#-Stripped.png">There! Wait... who's &lt;i&gt;Tae-chan&lt;/i&gt;, Sakura?</state>
             </case>
             <case stage="6" alsoPlaying="sakura">
                 <state img="#-Happy.png">Aww, I'm so glad you think that, Sakura! Who knows? Maybe I'll do this again soon!</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="tharja" />
+                <state img="#-Calm.png">Thank you, Tharja! You're so nice, that makes me feel so much better.</state>
             </case>
             <case stage="1">
                 <state img="#-Stripped.png">&lt;i&gt;This is fun!&lt;/i&gt;</state>
@@ -942,10 +1003,13 @@
         </trigger>
 
         <trigger id="male_must_strip">
-            <case stage="0" target="el_shaggy_blanco">
+            <case stage="0">
+                <condition role="target" character="el_shaggy_blanco" />
                 <state img="#-Angry.png">Chingada madre...</state>
             </case>
-            <case stage="0-8" targetStage="0" totalMales="1" saidMarker="enm" notSaidMarker="enm">
+            <case stage="0-8" totalMales="1">
+                <condition role="target" stage="0" />
+                <condition role="self" saidMarker="enm" notSaidMarker="enm" />
                 <state img="#-Embarrassed.png" marker="enm">Is it embarrassing to take off something in front of girls? I could... &lt;i&gt;try&lt;/i&gt; not to stare.</state>
                 <state img="#-Embarrassed.png" marker="enm">Is it hard for you to strip in front of girls, ~name~? I'll... &lt;i&gt;try&lt;/i&gt; not to stare.</state>
             </case>
@@ -968,9 +1032,11 @@
             </case>
             <case stage="3">
                 <state img="#-Interested.png">Don't mind me, ~name~.</state>
+                <state img="#-Embarrassed.png">&lt;i&gt;(Do boys like ~name~  like... &lt;i&gt;wider&lt;/i&gt; girls? These stockings aren't doing me any favours...)&lt;/i&gt;</state>
             </case>
             <case stage="5">
-                <state img="#-Embarrassed.png"></state>
+                <state img="#-Horny.png">&lt;i&gt;Teach me about humans, ~name~...&lt;/i&gt;</state>
+                <state img="#-Horny.png">I wanna learn &lt;i&gt;everything&lt;/i&gt; about humans...</state>
             </case>
             <case stage="7">
                 <state img="#-Happy.png">&lt;i&gt;Yes!&lt;/i&gt;</state>
@@ -1095,9 +1161,31 @@
                 <state img="#-Embarrassed.png">You're recording this, ~name~? &lt;i&gt;(Will I even show up...?)&lt;/i&gt;</state>
                 <state img="#-Embarrassed.png">&lt;i&gt;(Do I even appear on ~name~'s camera?)&lt;/i&gt;</state>
             </case>
-            <case stage="0-8" filter="goth" targetStage="0">
+            <case stage="0-8">
+                <alternative />
+                <alternative target="aimee" targetStage="2" />
+                <alternative target="aimee" targetStage="3" />
+                <state img="#-Surprised.png">Oh no!</state>
+            </case>
+            <case stage="0-8" filter="shy">
+                <condition role="target" stage="0" />
+                <state img="#-Embarrassed.png">A-Are all human girls this shy? S-sorry, ~name~...</state>
+                <state img="#-Embarrassed.png">I-Is it normal for humans to be this shy? &lt;i&gt;Or am I scaring you?&lt;/i&gt;</state>
+            </case>
+            <case stage="0-8" filter="student">
+                <condition role="target" stage="0" />
+                <state img="#-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was home schooled...</state>
+                <state img="#-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm home-schooled...</state>
+            </case>
+            <case stage="0-8">
+                <condition filter="goth" role="target" stage="0" />
                 <state img="#-Calm.png">Don't you think our styles match, ~name~?</state>
                 <state img="#-Happy.png">Hey! Our styles match up! Don't you think so, ~name~?</state>
+            </case>
+            <case stage="0-8">
+                <condition filter="non-human" role="target" stage="0" />
+                <state img="#-Interested.png">I came here to learn about humans! Did you come for the same reason, ~name~?</state>
+                <state img="#-Calm.png">Hey! I expected to play against humans, but it's great to see someone more like me!</state>
             </case>
             <case stage="0-8" filter="pale-skinned" targetStage="0">
                 <state img="#-Embarrassed.png">You're looking pale, ~name~. As if you've seen a ghost... &lt;i&gt;Or a vampire...&lt;/i&gt;</state>
@@ -1106,12 +1194,18 @@
             <case stage="0-8" filter="shut_in" targetStage="0">
                 <state img="#-Calm.png">You don't know much about the outside world, do you, ~name~? Don't worry, I don't either. Maybe we could learn together?</state>
             </case>
-            <case stage="0-8" filter="student" targetStage="0">
-                <state img="#-Embarrassed.png">Y-You go to a school, ~name~? H-How is it? I was home schooled...</state>
-                <state img="#-Embarrassed.png">S-so you go to a school, ~name~? I-Is it nice? I'm home-schooled...</state>
-            </case>
-            <case stage="0-8" alsoPlaying="kyu" alsoPlayingStage="0-6" alsoPlayingSayingMarker="goths" targetNotSaidMarker="goths">
+            <case stage="0-8">
+                <condition role="target" notSaidMarker="goths" />
+                <condition role="other" character="kyu" stage="0-6" sayingMarker="goths" />
                 <state img="#-Embarrassed.png">&lt;i&gt;(Did Kyu just call me a... &lt;/i&gt;bitch&lt;i&gt;?)&lt;/i&gt;</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="zizou" />
+                <state img="#-Calm.png">N-No, Zizou! I'm just a normal 118 year old girl!</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="zizou" />
+                <state img="#-Sad.png">Y-Yes, Zizou... &lt;i&gt;(Why are you asking me that...?)&lt;/i&gt;</state>
             </case>
             <case stage="0">
                 <state img="#-Calm.png">It may seem scary at first, but it's not that bad, ~name~.</state>
@@ -1120,11 +1214,8 @@
                 <state img="#-Calm.png">Don't worry, ~name~. We'll all have to do it too.</state>
                 <state img="#-Calm.png">There's always the next round!</state>
                 <state img="#-Calm.png">Don't worry, ~name~. It's just one loss...</state>
-            </case>
-            <case stage="0-8">
-                <alternative target="aimee" targetStage="2" />
-                <alternative target="aimee" targetStage="3" />
-                <state img="#-Surprised.png">Oh no!</state>
+                <state img="#-Interested.png">Is this how humans have fun? I could get used to games like this!</state>
+                <state img="#-Calm.png">Show me how humans play, ~name~!</state>
             </case>
             <case stage="1">
                 <state img="#-Calm.png">Now that I've stripped once, this just got more thrilling!</state>
@@ -1133,6 +1224,7 @@
                 <state img="#-Calm.png">Don't worry, ~name~. It gets way more exciting once you take something off!</state>
                 <state img="#-Embarrassed.png">Have you played this before, ~name~? I'm new to this...</state>
                 <state img="#-Embarrassed.png">This is my first time playing this, ~name~. Have you played before?</state>
+                <state img="#-Interested.png">&lt;i&gt;(I wonder what I'm gonna get for winning...)&lt;/i&gt;</state>
             </case>
             <case stage="2">
                 <state img="#-Calm.png">Sorry, ~name~. Your turn!</state>
@@ -1141,6 +1233,8 @@
                 <state img="#-Embarrassed.png">We're all stripping at some point, ~name~, if that makes you feel any better...</state>
                 <state img="#-Embarrassed.png">You're not embarrassed by now, are you, ~name~?</state>
                 <state img="#-Embarrassed.png">Y-Your turn...</state>
+                <state img="#-Giggling.png">Heehee, ~name~, have fun!</state>
+                <state img="#-Horny.png">Would you... &lt;i&gt;show me more about humans, ~name~?&lt;/i&gt;</state>
             </case>
             <case stage="3">
                 <state img="#-Interested.png">&lt;i&gt;Peek-a-boo!&lt;/i&gt;</state>
@@ -1148,6 +1242,7 @@
                 <state img="#-Giggling.png">&lt;i&gt;Booo! Heehee.&lt;/i&gt; Sorry, ~name~, it's a joke.</state>
                 <state img="#-Interested.png">I'm &lt;i&gt;afraid&lt;/i&gt; you lost, ~name~!</state>
                 <state img="#-Interested.png">&lt;i&gt;We got you!&lt;/i&gt;</state>
+                <state img="#-Happy.png">Hey, ~name~, I feel a lot more cute now that I've taken off my dress. I'm sure you'd feel cuter if you take off something too!</state>
             </case>
             <case stage="4">
                 <state img="#-Embarrassed.png">I normally wouldn't say this, ~name~, but... you're cute!</state>
@@ -1155,6 +1250,10 @@
                 <state img="#-Calm.png">You look good, ~name~. I'm sure we won't mind, whatever you take off.</state>
                 <state img="#-Embarrassed.png">Am I the only one who's feeling... &lt;i&gt;warm?&lt;/i&gt;</state>
                 <state img="#-Embarrassed.png">Is it normal to get... &lt;i&gt;warm&lt;/i&gt; when a girl strips?</state>
+                <state img="#-Giggling.png">This is so fun! &lt;i&gt;(And she's so cute!)&lt;/i&gt;</state>
+                <state img="#-Interested.png">Yes! ~name~'s turn! &lt;i&gt;(I'm so excited!)&lt;/i&gt;</state>
+                <state img="#-Horny.png">W-We're both girls... &lt;i&gt;It's not THAT weird...&lt;/i&gt;</state>
+                <state img="#-Interested.png">I'll learn so much about humans tonight!</state>
             </case>
             <case stage="5">
                 <state img="#-Calm.png">Better luck next time, ~name~!</state>
@@ -1163,6 +1262,7 @@
                 <state img="#-Interested.png">We got you, ~name~!</state>
                 <state img="#-Embarrassed.png">Stripping isn't &lt;i&gt;so&lt;/i&gt; bad, ~name~...</state>
                 <state img="#-Horny.png">&lt;i&gt;(Girls? Maybe...)&lt;/i&gt;</state>
+                <state img="#-Interested.png">I-I wanna know more about human girls...</state>
             </case>
             <case stage="6">
                 <state img="#-Calm.png">Being naked isn't so bad, ~name~. It's kind of liberating.</state>
@@ -1172,18 +1272,23 @@
                 <state img="#-Embarrassed.png">&lt;i&gt;I'm naked, ~name~.&lt;/i&gt; Can't you be fair?</state>
                 <state img="#-Embarrassed.png">I'm naked so... er...</state>
                 <state img="#-Embarrassed.png">Since I'm all naked now, could you... um...</state>
+                <state img="#-Happy.png">Join me, ~name~! It's fun, believe me!</state>
+                <state img="#-Calm.png">Hey, don't worry, ~name~. Being naked isn't that embarrassing, &lt;i&gt;it's kind of fun!&lt;/i&gt;</state>
             </case>
             <case stage="7">
                 <state img="#-Horny.png">Y-You're stripping for me?</state>
                 <state img="#-Horny.png">G-Girls are cute too...</state>
                 <state img="#-Horny.png">O-Oh... ~name~'s stripping. N-Nice...</state>
                 <state img="#-Embarrassed.png">I mean... stripping can't be more awkward than &lt;i&gt;masturbating&lt;/i&gt;...</state>
+                <state img="#-Horny.png">~name~... you're looking so... &lt;i&gt;good...&lt;/i&gt;</state>
+                <state img="#-Horny.png">&lt;i&gt;Oh...&lt;/i&gt; you're gonna help me with this...</state>
             </case>
             <case stage="8">
                 <state img="#-Embarrassed.png">I don't think you're gonna be embarrassed by now, are you, ~name~?</state>
                 <state img="#-Bored.png">No point in getting embarrassed now, ~name~...</state>
                 <state img="#-Embarrassed.png">Maybe I'm distracting you...? Sorry, ~name~...</state>
                 <state img="#-Embarrassed.png">&lt;i&gt;(Does she know I find her... attractive?)&lt;/i&gt;</state>
+                <state img="#-Giggling.png">Join me, ~name~. It's fun!</state>
             </case>
         </trigger>
 
@@ -1195,7 +1300,8 @@
         </trigger>
 
         <trigger id="male_removing_accessory">
-            <case stage="0-8" target="9s" targetStage="5">
+            <case stage="0-8">
+                <condition role="target" character="9s" stage="5" />
                 <state img="#-Thinking.png">I thought you weren't gonna take that off!</state>
                 <state img="#-Thinking.png">I thought you were gonna keep your ~clothing~!</state>
             </case>
@@ -1215,34 +1321,42 @@
         </trigger>
 
         <trigger id="male_removed_accessory">
-            <case stage="0-8" target="9s" targetStage="6">
+            <case stage="0-8">
+                <condition role="target" character="9s" stage="6" />
                 <state img="#-Happy.png">&lt;i&gt;Aww.&lt;/i&gt; Your eyes are so pretty! They're blue, like mine!</state>
                 <state img="#-Calm.png">Aww! You have really pretty eyes!</state>
             </case>
-            <case stage="6-8" targetStatus="exposed">
+            <case stage="6-8">
+                <condition status="exposed" role="target" />
                 <state img="#-Interested.png">Ah! You're trying to delay your loss!</state>
                 <state img="#-Thinking.png">That's not right...</state>
+                <state img="#-Thinking.png">Huh? That can't be right, that's not like what you've taken off before...</state>
             </case>
             <case stage="0-2">
                 <state img="#-Interested.png">Now you've taken off your ~clothing~. But what will happen once the game advances?</state>
                 <state img="#-Calm.png">I won, so I won't complain.</state>
                 <state img="#-Calm.png">Don't worry, ~name~. That's not very important.</state>
+                <state img="#-Thinking.png">It's okay, ~name~. The thing I'm mostly interested on is how humans aren't &lt;i&gt;that different...&lt;/i&gt;</state>
             </case>
             <case stage="3-5">
                 <state img="#-Bored.png">&lt;i&gt;Not fun!&lt;/i&gt;</state>
                 <state img="#-Bored.png">Ugh, &lt;i&gt;fine!&lt;/i&gt;</state>
+                <state img="#-Angry.png">You'd better not complain if someone else does something like that!</state>
             </case>
             <case stage="3 5">
                 <state img="#-Thinking.png">I'm still wondering how I didn't see you wearing ~clothing.ifPlural(those ~clothing~|that ~clothing~)~.</state>
             </case>
             <case stage="4">
                 <state img="#-Thinking.png">I'm still wondering how I didn't see you wearing ~clothing.ifPlural(those ~clothing~|that ~clothing~)~..</state>
+                <state img="#-Bored.png">If I wanted to be bored, I would have stayed at home...</state>
             </case>
             <case stage="6-8">
                 <state img="#-Angry.png">Why do you have to be like that?</state>
                 <state img="#-Sad.png">I... I suppose I can't blame you...</state>
                 <state img="#-Bored.png">And I was starting to like this game!</state>
                 <state img="#-Bored.png">And to think I was starting to like you!</state>
+                <state img="#-Bored.png">I would almost prefer to be home. &lt;i&gt;Almost...&lt;/i&gt;</state>
+                <state img="#-Bored.png">&lt;i&gt;What a dumb game...&lt;/i&gt;</state>
             </case>
         </trigger>
 
@@ -1262,6 +1376,10 @@
                 <state img="#-Calm.png">Oh! I didn't greet your friend, ~name~. Hi!</state>
                 <state img="#-Calm.png">Oh! I didn't greet your friend, ~name~. She's cute! Hi!</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="miko" stage="1" />
+                <state img="#-Giggling.png">Aw! You two look cute together!</state>
+            </case>
             <case stage="0-8" id="22" target="akko" targetStage="0">
                 <state img="#-Happy.png">Magic tricks? I love them!</state>
             </case>
@@ -1279,9 +1397,6 @@
             <case stage="0-8" target="marceline" targetStage="0">
                 <state img="#-Thinking.png">But you don't really look like me...</state>
                 <state img="#-Thinking.png">But we look so different...</state>
-            </case>
-            <case stage="0-8" target="miko" targetStage="1">
-                <state img="#-Giggling.png">Aw! You two look cute together!</state>
             </case>
             <case stage="0-8" target="morrigan" targetStage="0">
                 <state img="#-Embarrassed.png">Consume men's... &lt;i&gt;you know&lt;/i&gt;...</state>
@@ -1306,6 +1421,10 @@
             <case stage="0-8" targetStage="5-10" targetStatus="exposed">
                 <state img="#-Thinking.png" marker="Embarrassed">Why only your ~clothing~? Are you embarrassed about yourself?</state>
                 <state img="#-Thinking.png" marker="Embarrassed">Why are you taking off your ~clothing~ &lt;i&gt;now?&lt;/i&gt; Are you embarrassed about yourself?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="syrenne" />
+                <state img="#-Strip.png">There's so many things! Like turning into a bat and doing this thing with our eyes...</state>
             </case>
             <case stage="0-8" targetStatus="exposed">
                 <state img="#-Surprised.png">&lt;i&gt;That? Now?&lt;/i&gt;</state>
@@ -1347,6 +1466,10 @@
                 <state img="#-Surprised.png">&lt;i&gt;Shima!&lt;/i&gt; Are you alright?</state>
                 <state img="#-Surprised.png">&lt;i&gt;Shima!&lt;/i&gt; What's wrong?!?</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="miko" stage="2" />
+                <state img="#-Thinking.png">Maybe humans and monsters being together isn't as weird as I thought...</state>
+            </case>
             <case stage="0-8" id="23" target="akko" targetStage="1">
                 <state img="#-Interested.png">That was so awesome, Akko!</state>
             </case>
@@ -1363,9 +1486,6 @@
             <case stage="0-8" target="marceline" targetStage="1">
                 <state img="#-Calm.png">Oh well. It's not like I leave home often.</state>
                 <state img="#-Calm.png">Oh well. I don't usually leave home, so what would I know...?</state>
-            </case>
-            <case stage="0-8" target="miko" targetStage="2">
-                <state img="#-Thinking.png">Maybe humans and monsters being together isn't as weird as I thought...</state>
             </case>
             <case stage="0-8" target="morrigan" targetStage="1">
                 <state img="#-Calm.png">&lt;i&gt;Vital energy?&lt;/i&gt; That's not true, right?</state>
@@ -1388,6 +1508,10 @@
             <case stage="0-8" target="twilight" targetStatus="exposed">
                 <state img="#-Calm.png">Well, you don't have anything else on!</state>
                 <state img="#-Calm.png">Oh well, you took off the most important things first.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="zizou" />
+                <state img="#-Stripped.png">Thank you, Zizou! I was starting to think you didn't like me.</state>
             </case>
             <case stage="0-8" targetStatus="exposed">
                 <state img="#-Embarrassed.png">Is that how humans play...? I-I don't get it...</state>
@@ -1483,14 +1607,15 @@
             <case stage="0-8" id="12" target="sakura" targetStage="3" targetSayingMarker="headless">
                 <state img="#-Surprised.png">Your head, Sakura! Don't worry, I've seen this happen with the zombies at the hotel, I can help!</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="miko" stage="0" />
+                <state img="#-Calm.png">I can't believe I didn't see you before, Ghost. Hi! Do you know ~name~?</state>
+                <state img="#-Calm.png">Oh! Hi there, Ghost! Do you know her?</state>
+            </case>
             <case stage="0-3" target="aimee" targetStage="1">
                 <state img="#-Scared.png">&lt;i&gt;A-Ah!&lt;/i&gt;</state>
                 <state img="#-Scared.png">&lt;i&gt;Stop, please!&lt;/i&gt;</state>
                 <state img="#-Scared.png">Please stop, ~name~. You're scaring us!</state>
-            </case>
-            <case stage="0-8" target="miko" targetStage="0">
-                <state img="#-Calm.png">I can't believe I didn't see you before, Ghost. Hi! Do you know ~name~?</state>
-                <state img="#-Calm.png">Oh! Hi there, Ghost! Do you know her?</state>
             </case>
             <case stage="0-8" target="remilia" targetStage="1">
                 <state img="#-Interested.png">That's so cool! I wish we could have a maid like her in the hotel!</state>
@@ -1520,17 +1645,20 @@
         </trigger>
 
         <trigger id="female_removed_minor">
-            <case stage="0-8" target="miko" targetStage="1" alsoPlaying="remilia">
+            <case stage="0-4">
+                <condition role="target" character="miko" stage="1" />
+                <condition role="other" character="remilia" />
                 <state img="#-Thinking.png">Is she your maid, like the one Ms. Remilia has, or is she your...?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="miko" stage="1" />
+                <state img="#-Thinking.png">Is she like, your maid, or is she your...?</state>
             </case>
             <case stage="0-3" target="aimee" targetStage="2">
                 <state img="#-Scared.png">&lt;i&gt;Why?&lt;/i&gt; That's so dangerous!</state>
             </case>
             <case stage="0-8" target="kyoko" targetStage="6">
                 <state img="#-Sad.png">Don't say that, Kyoko. You're not ugly...</state>
-            </case>
-            <case stage="0-8" target="miko" targetStage="1">
-                <state img="#-Thinking.png">Is she like, your maid, or is she your...?</state>
             </case>
             <case stage="0-8" target="remilia" targetStage="2">
                 <state img="#-Interested.png">That's so cool! I wish we could have a maid like her in the hotel!</state>
@@ -1546,17 +1674,22 @@
                 <state img="#-Happy.png">Your ~clothing.ifPlural(~clothing~ are|~clothing~ is)~ so cute! Where could I get something like that?</state>
                 <state img="#-Calm.png">It's not like being at home would be any better.</state>
                 <state img="#-Thinking.png">I'm wondering how your ~clothing~ would look on me, ~name~. What do you think?</state>
+                <state img="#-Thinking.png">I wonder how I'd look in ~clothing.ifPlural(those ~clothing~|that ~clothing~)~ ...</state>
+                <state img="#-Calm.png">Do you think I'd look more like a human if I wore something like that, ~name~?</state>
             </case>
             <case stage="3-5">
                 <state img="#-Interested.png">I'll get you next round!</state>
                 <state img="#-Embarrassed.png">There's always another round...</state>
                 <state img="#-Bored.png">At least it's better than being all alone in my room!</state>
                 <state img="#-Interested.png">Humans are so interesting...</state>
+                <state img="#-Thinking.png">&lt;i&gt;(What does this say about humans...?)&lt;/i&gt;</state>
             </case>
             <case stage="6-8">
                 <state img="#-Bored.png">Umm...</state>
                 <state img="#-Bored.png">&lt;i&gt;Ugh&lt;/i&gt;... next round.</state>
                 <state img="#-Bored.png">Ugh! This is worse than my 116th birthday!</state>
+                <state img="#-Bored.png">&lt;i&gt;(And I'm supposed to be the monster here?)&lt;/i&gt;</state>
+                <state img="#-Bored.png">&lt;i&gt;(And they call US monsters...)&lt;/i&gt;</state>
             </case>
         </trigger>
 
@@ -1564,13 +1697,11 @@
             <case stage="0-8">
                 <state img="#-Horny.png">N-Nice...</state>
                 <state img="#-Horny.png">C-Cool, ~name~...</state>
-                <state img="#-EmbarrassedHorny.png">
-                    <alt-img stage="3-8">#-Interested.png</alt-img>
-                    <text>Oh? Your ~clothing~?</text>
-                </state>
+                <state img="#-Horny.png">Oh? Your ~clothing~?</state>
             </case>
             <case stage="0-2">
                 <state img="#-EmbarrassedHorny.png">Your ~clothing~? Wow! I must be doing really good!</state>
+                <state img="#-EmbarrassedHorny.png">B-But I haven't even taken off anything revealing yet...!</state>
             </case>
         </trigger>
 
@@ -1580,10 +1711,7 @@
                 <state img="#-Thinking.png">Wait, where are your... Oh, I forgot! You were built in a laboratory like Uncle Frank!</state>
             </case>
             <case stage="0-8">
-                <state img="#-EmbarrassedHorny.png">
-                    <alt-img stage="3-8">#-Horny.png</alt-img>
-                    <text>&lt;i&gt;(Escaping from home and coming here was such a good idea!)&lt;/i&gt;</text>
-                </state>
+                <state img="#-Horny.png">&lt;i&gt;(Escaping from home and coming here was such a good idea!)&lt;/i&gt;</state>
                 <state img="#-Happy.png">Woohoo!</state>
             </case>
             <case stage="0-2">
@@ -1598,7 +1726,9 @@
         </trigger>
 
         <trigger id="female_removing_major">
-            <case stage="0-8" target="remilia" targetStage="3" alsoPlaying="miko">
+            <case stage="0-4">
+                <condition role="target" character="remilia" stage="3" />
+                <condition role="other" character="miko" />
                 <state img="#-Interested.png">She's right, Miko. She obviously cares a lot about her!</state>
             </case>
             <case stage="0-4" target="aimee" targetStage="0">
@@ -1639,7 +1769,9 @@
         </trigger>
 
         <trigger id="female_removed_major">
-            <case stage="0-8" target="remilia" targetStage="4" alsoPlaying="miko">
+            <case stage="0-4">
+                <condition role="target" character="remilia" stage="4" />
+                <condition role="other" character="miko" />
                 <state img="#-Embarrassed.png">L-Lesser?</state>
             </case>
             <case stage="0-4" target="aimee" targetStage="1">
@@ -1704,6 +1836,10 @@
             </case>
             <case stage="0-8" alsoPlaying="buffy" alsoPlayingStage="0-1">
                 <state img="#-Calm.png">Thank you, Buffy! You're way nicer than I thought.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="syrenne" />
+                <state img="#-Giggling.png">Oh? &lt;i&gt;Heheh, it's not like that, Syrenne!&lt;/i&gt;</state>
             </case>
             <case stage="0">
                 <state img="#-Embarrassed.png">And I haven't taken off anything yet... sorry, ~name~.</state>
@@ -1798,17 +1934,15 @@
         </trigger>
 
         <trigger id="male_small_crotch_is_visible">
-            <case stage="0-8" target="chihiro">
-                <state img="#-Surprised.png">Wait! So human girls can also be boys? Wow!</state>
-                <state img="#-Surprised.png">Wow! Human girls can turn into boys? I didn't know that!</state>
-            </case>
-            <case stage="0-8" alsoPlaying="nugi-chan">
+            <case stage="0-8">
+                <condition role="other" character="nugi-chan" />
                 <state img="#-Angry.png">That is so &lt;i&gt;mean&lt;/i&gt;, Nugi! ~name~ can't help who he is!</state>
                 <state img="#-Angry.png">You're so mean, Nugi. He can't help it.</state>
                 <state img="#-Embarrassed.png">W-Why are you saying that, Nugi? I-I think his... thingy is cute...</state>
                 <state img="#-Embarrassed.png">What do you mean, Nugi? I think his... thingy is cute...</state>
             </case>
-            <case stage="0-8" totalNaked="1">
+            <case stage="0-8">
+                <condition count="1" status="naked" />
                 <state img="#-Calm.png">Oh! &lt;i&gt;That's it?&lt;/i&gt; I can't believe I was so nervous for such a cute thing, heh.</state>
                 <state img="#-Calm.png">Oh? That's cute! There was no reason to be nervous!</state>
             </case>
@@ -1891,7 +2025,9 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
-            <case stage="0-8" target="remilia" alsoPlaying="miko">
+            <case stage="0-8">
+                <condition role="target" character="remilia" />
+                <condition role="other" character="miko" />
                 <state img="#-Embarrassed.png">Wait... are you two &lt;i&gt;jealous?&lt;/i&gt;</state>
             </case>
             <case stage="0-8" target="florina" targetSaidMarker="bee2" targetSayingMarker="bee3">
@@ -1946,8 +2082,14 @@
         </trigger>
 
         <trigger id="female_small_chest_is_visible">
-            <case stage="0-8" target="remilia" alsoPlaying="miko">
+            <case stage="0-8">
+                <condition role="target" character="remilia" />
+                <condition role="other" character="miko" />
                 <state img="#-Calm.png">&lt;i&gt;Don't fight about that!&lt;/i&gt; There's nothing embarrassing about having a small bust.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="miko" />
+                <state img="#-Embarrassed.png">W-Well... &lt;i&gt;(Hers are pretty big...!)&lt;/i&gt;</state>
             </case>
             <case stage="0-8" target="chihiro">
                 <state img="#-Surprised.png">That screen! It looks just like her!</state>
@@ -1955,9 +2097,6 @@
             <case stage="0-8" target="futaba">
                 <state img="#-Thinking.png">Is it true that that's more comfortable, Futaba?</state>
                 <state img="#-Thinking.png">No bra? Is that more comfortable, Futaba?</state>
-            </case>
-            <case stage="0-8" target="miko">
-                <state img="#-Embarrassed.png">W-Well... &lt;i&gt;(Hers are pretty big...!)&lt;/i&gt;</state>
             </case>
             <case stage="0-8">
                 <state img="#-Calm.png">There's nothing wrong with being small, ~name~.</state>
@@ -2156,6 +2295,14 @@
             </case>
         </trigger>
 
+        <trigger id="opponent_crotch_is_visible">
+            <case stage="0-8">
+                <condition role="target" character="chihiro" />
+                <state img="#-Surprised.png">Wait! So human girls can also be boys? Wow!</state>
+                <state img="#-Surprised.png">Wow! Human girls can turn into boys? I didn't know that!</state>
+            </case>
+        </trigger>
+
         <trigger id="male_must_masturbate">
             <case stage="0-2" totalMasturbating="0" totalFinished="0">
                 <state img="#-EmbarrassedHorny.png">&lt;i&gt;H-He has to~?&lt;/i&gt;</state>
@@ -2262,6 +2409,10 @@
         </trigger>
 
         <trigger id="female_must_masturbate">
+            <case stage="0-8">
+                <condition role="target" character="miko" />
+                <state img="#-Thinking.png">Huh? Where are you going?</state>
+            </case>
             <case stage="0-8" target="aimee">
                 <state img="#-Embarrassed.png">You're gonna use &lt;i&gt;that?&lt;/i&gt;</state>
             </case>
@@ -2271,9 +2422,6 @@
             <case stage="0-8" target="felicia">
                 <state img="#-Embarrassed.png">B-but you could still shave your legs or your arms...</state>
                 <state img="#-Embarrassed.png">B-but you still have fur on your legs and arms...</state>
-            </case>
-            <case stage="0-8" target="miko">
-                <state img="#-Thinking.png">Huh? Where are you going?</state>
             </case>
             <case stage="0-8" target="shimakaze">
                 <state img="#-Surprised.png">&lt;i&gt;Shima!&lt;/i&gt;</state>
@@ -2303,6 +2451,10 @@
         </trigger>
 
         <trigger id="female_start_masturbating">
+            <case stage="0-8">
+                <condition role="target" character="miko" />
+                <state img="#-Horny.png">Oh my! A-Are you and your wife going to... &lt;i&gt;you know...&lt;/i&gt;</state>
+            </case>
             <case stage="0-8" target="aimee">
                 <state img="#-Embarrassed.png">Well... &lt;i&gt;are you?&lt;/i&gt;</state>
             </case>
@@ -2320,9 +2472,6 @@
             <case stage="0-8" target="kurumu">
                 <state img="#-Surprised.png">Ah! You were a... &lt;i&gt;succubus&lt;/i&gt;...</state>
                 <state img="#-Surprised.png">Ah! You were also a... &lt;i&gt;succubus&lt;/i&gt;.</state>
-            </case>
-            <case stage="0-8" target="miko">
-                <state img="#-Horny.png">Oh my! A-Are you and your wife going to... &lt;i&gt;you know...&lt;/i&gt;</state>
             </case>
             <case stage="0-8" id="21" target="navi">
                 <state img="#-Horny.png">Oh my! What kind of &lt;i&gt;magic&lt;/i&gt; beans are those?</state>
@@ -2353,6 +2502,12 @@
         </trigger>
 
         <trigger id="female_masturbating">
+            <case stage="0-8">
+                <condition role="target" character="miko" />
+                <state img="#-Horny.png">They're both so cute...</state>
+                <state img="#-Interested.png">Aww, they really love each other!</state>
+                <state img="#-Horny.png">Oh dear... I never thought a human and a ghost... could...</state>
+            </case>
             <case stage="0-8" target="aimee">
                 <state img="#-Surprised.png">&lt;i&gt;(If that thing fired... oh no!)&lt;/i&gt;</state>
                 <state img="#-Surprised.png">It could fire at any time, be careful!</state>
@@ -2374,11 +2529,6 @@
                 <state img="#-Horny.png">&lt;i&gt;(Should I try that with the ghost back at the hotel...?)&lt;/i&gt;</state>
                 <state img="#-Horny.png">&lt;i&gt;(I never thought of doing that with&lt;/i&gt; ghost hands...&lt;i&gt;)&lt;/i&gt;</state>
                 <state img="#-Interested.png">&lt;i&gt;(Ghost hands? Interesting...)&lt;/i&gt;</state>
-            </case>
-            <case stage="0-8" target="miko">
-                <state img="#-Horny.png">They're both so cute...</state>
-                <state img="#-Interested.png">Aww, they really love each other!</state>
-                <state img="#-Horny.png">Oh dear... I never thought a human and a ghost... could...</state>
             </case>
             <case stage="0-8" target="scarlet_witch">
                 <state img="#-Horny.png">H-How does that feel...?</state>
@@ -2412,6 +2562,11 @@
                 <state img="#-Horny.png">I suppose we all do it the same way...</state>
                 <state img="#-Horny.png">I see humans don't do it any differently...</state>
                 <state img="#-Horny.png">D-Does that feel great, ~name~?</state>
+                <state img="#-Giggling.png">Heheh, she's having fun!</state>
+                <state img="#-Interested.png">&lt;i&gt;(I need to try that myself...)&lt;/i&gt;</state>
+                <state img="#-Embarrassed.png">I-I'll try to not look at you, if you feel embarrassed, ~name~...</state>
+                <state img="#-Horny.png">That must... &lt;i&gt;feel good...&lt;/i&gt;</state>
+                <state img="#-Interested.png">S-She likes it!</state>
             </case>
             <case stage="7">
                 <state img="#-Happy.png">Let's do it together!</state>
@@ -2442,7 +2597,8 @@
         </trigger>
 
         <trigger id="female_finished_masturbating">
-            <case stage="0-8" target="miko" targetTimeInStage="0">
+            <case stage="0-8">
+                <condition role="target" character="miko" timeInStage="0" />
                 <state img="#-Happy.png">A human and a ghost loving each other... It's so heartwarming that you two found love even when you're so different!</state>
             </case>
             <case stage="0-8" target="sola">
@@ -2473,9 +2629,9 @@
 
         <trigger id="must_masturbate_first">
             <case stage="6">
-                <state img="#-Embarrassed.png">Masturbate? It's fine, of course I've done it before...</state>
-                <state img="#-Embarrassed.png">M-Masturbate? I-I mean I've done it before, but... it's kind of embarrassing...</state>
-                <state img="#-Embarrassed.png">M-Masturbate? Y-yeah, I've done it but... no one was watching...</state>
+                <state img="#-Embarrassed.png">M-Masturbate? &lt;i&gt;(Oh! This must be how humans become friends!)&lt;/i&gt; S-Sure, I'll do it...</state>
+                <state img="#-Embarrassed.png">I have to do what...? &lt;i&gt;)This must be how the humans make friends!)&lt;/i&gt; O-Okay...!</state>
+                <state img="#-Embarrassed.png">Wait, &lt;i&gt;masturbate?&lt;/i&gt; Eh... okay. &lt;i&gt;(Humans have some weird ways to make friends...)&lt;/i&gt;</state>
             </case>
         </trigger>
 
@@ -2484,6 +2640,9 @@
                 <state img="#-Embarrassed.png">Masturbate? Okay, i-it's not like I've never done it...</state>
                 <state img="#-Embarrassed.png">Masturbate? I mean... I do it, but... never with someone watching...</state>
                 <state img="#-Embarrassed.png">Masturbate? But when I do it... &lt;i&gt;no one's watching me...&lt;/i&gt;</state>
+                <state img="#-Embarrassed.png">M-Masturbate? Y-yeah, I've done it but... no one was watching...</state>
+                <state img="#-Embarrassed.png">M-Masturbate? I-I mean I've done it before, but... it's kind of embarrassing...</state>
+                <state img="#-Embarrassed.png">Masturbate? It's fine, of course I've done it before...</state>
             </case>
         </trigger>
 
@@ -2511,6 +2670,17 @@
                 <state img="#-MasturbA.png">O-Oh my...</state>
                 <state img="#-Embarrassed.png">I-I feel like I'm floating! Wait...</state>
                 <state img="#-MasturbB.png">&lt;i&gt;OooOoh&lt;/i&gt;... yes...</state>
+                <state img="#-HeavyB.png">A-ah~ ...Human games are so &lt;i&gt;fun&lt;/i&gt;.</state>
+                <state img="#-MasturbA.png">&lt;i&gt;I... I love this...&lt;/i&gt;</state>
+                <state img="#-Calm.png">&lt;i&gt;(Humans have some fun ways to make friends!)&lt;/i&gt;</state>
+                <state img="#-Happy.png">Does this means we're friends now?</state>
+                <state img="#-Embarrassed.png">T-This is how humans become friends...?</state>
+                <state img="#-Horny.png">&lt;i&gt;(A-Are they looking at me...?)&lt;/i&gt;</state>
+                <state img="#-Calm.png">J-Just to be sure, this is something &lt;i&gt;all&lt;/i&gt; humans do, right?</state>
+                <state img="#-Interested.png">I'm so glad I came here, Humans are so fun!</state>
+                <state img="#-Happy.png">These human games are so fun!</state>
+                <state img="#-MasturbB.png">&lt;i&gt;Mmm...&lt;/i&gt; this place is so different from my room, but... I'm feeling good...</state>
+                <state img="#-Interested.png">&lt;i&gt;T-This is pretty fun!&lt;/i&gt; I can't believe I was scared of coming here!</state>
             </case>
         </trigger>
 
@@ -2523,6 +2693,10 @@
                 <state img="#-HeavyB.png">&lt;i&gt;Aw... ah...&lt;/i&gt;</state>
                 <state img="#-HeavyB.png">&lt;i&gt;Heh, I...&lt;/i&gt;</state>
                 <state img="#-MasturbB.png">&lt;i&gt;I-I I'm gonna...&lt;/i&gt;</state>
+                <state img="#-HeavyA.png">&lt;i&gt;Oh! Oh dear, I-I'm...&lt;/i&gt;</state>
+                <state img="#-HeavyB.png">&lt;i&gt;Oh god... I'm gonna, I'm gonna...&lt;/i&gt;</state>
+                <state img="#-Giggling.png">Heh...(&lt;i&gt;I can't believe I'm doing this...&lt;/i&gt;)</state>
+                <state img="#-HeavyA.png">I'm-- I'm so close to...</state>
             </case>
         </trigger>
 
