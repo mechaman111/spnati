@@ -56,7 +56,7 @@
 			// 
 			// recWho
 			// 
-			this.recWho.AllowCreate = true;
+			this.recWho.AllowCreate = false;
 			this.recWho.Location = new System.Drawing.Point(36, 2);
 			this.recWho.Name = "recWho";
 			this.recWho.PlaceholderText = null;
@@ -196,7 +196,7 @@
 			// 
 			// recCharacter
 			// 
-			this.recCharacter.AllowCreate = true;
+			this.recCharacter.AllowCreate = false;
 			this.recCharacter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.recCharacter.Location = new System.Drawing.Point(15, 1);
