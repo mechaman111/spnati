@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.5 at 2:05:20 PM on October 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 5:06:21 PM on October 22, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.5</version>
+    <version>v5.2.6</version>
     <first>Jessie</first>
     <last>Maye</last>
     <label>Jessie</label>
@@ -592,6 +592,15 @@
                 <condition role="other" character="mae" stage="0-4" saying="It's Wednesday, my dudes!" />
                 <test expr="~weekday~" value="Wednesday" />
                 <state img="#-playful.png">♫ Oh, Leon Clarke is magic&lt;br&gt;He wears a magic hat&lt;br&gt;He could of stayed at Wednesday&lt;br&gt;But no, he said fuck that! ♫</state>
+            </case>
+            <case stage="5" oneShotId="319" priority="990">
+                <condition role="other" character="mulan" saidMarker="jessie_duel" sayingMarker="challenge_answer" />
+                <condition role="self" />
+                <state img="#-teasing.png" marker="JessieChallengeAnswer">I'm still waiting for someone to match the skills I saw that night. ~marker.Opp1()~, ~marker.Opp2()~, I have so many candidates for &lt;i&gt;testing&lt;/i&gt; in this table.</state>
+            </case>
+            <case stage="0-5" oneShotId="320" priority="950">
+                <condition role="other" character="mulan" sayingMarker="duel_jessie_lost" />
+                <state img="#-longing.png" marker="MulanChallengeLost">You know, aside from the darkness part, that perfectly sums up some of my chance &lt;i&gt;encounters&lt;/i&gt;.</state>
             </case>
             <case stage="0-5" priority="901">
                 <condition role="other" character="leggy" stage="3" />
@@ -1592,6 +1601,10 @@
                 <condition role="other" character="mulan" stage="2" timeInStage="0" />
                 <state img="#-friendly.png" marker="MulanReveal">You know, Mulan, your disguise might have been convincing if your acting was a little better. You tried &lt;i&gt;too&lt;/i&gt; hard to act like a man.</state>
             </case>
+            <case stage="0-5">
+                <condition role="other" character="misato" stage="2" timeInStage="0" />
+                <state img="#-longing.png">It wasn't a bad attempt at fanservice, Misato. You can never go wrong with a subtle approach.</state>
+            </case>
             <case stage="0-5" totalRounds="0-1">
                 <condition role="other" character="kamina" stage="0" saidMarker="firsthand" sayingMarker="firstdealt" notSaidMarker="firstdealt" />
                 <state img="#-happy.png">Wow! You're not lacking in enthusiasm at all. I hope you carry that energy for the entire game.</state>
@@ -2171,10 +2184,6 @@
                 <condition role="other" character="dust" sayingMarker="jin_talked" />
                 <state img="#-teasing.png" marker="DustJinTalked">Well, I wouldn't mind getting naked for you, Dust. &lt;i&gt;But&lt;/i&gt;, I plan to win this game, so good luck with that.  </state>
             </case>
-            <case stage="0-5" id="66">
-                <condition role="other" character="dust" sayingMarker="furless" />
-                <state img="#-playful.png" marker="DustFurless">Fur?...As in a fur coat? That's too bad for you, Dust. You could have used that fur coat for this game, you know.</state>
-            </case>
             <case stage="0-5">
                 <condition role="other" character="dust" sayingMarker="ahrahwho" />
                 <state img="#-flirting.png" marker="DustAhrahWho">What does that mean?...Oh, I get it. I'd &lt;i&gt;love&lt;/i&gt; to have your &lt;i&gt;sword&lt;/i&gt; talk to me after this game, Dust.</state>
@@ -2572,11 +2581,14 @@
                 <state img="#-jiggle.png">I hope I'm not making you uncomfortable, ~char~.</state>
                 <state img="#-jiggle.png">I hope this is not making you insecure, ~char~.</state>
             </case>
-            <case stage="5" totalAlive="2" totalNaked="2">
+            <case stage="5" priority="10">
+                <condition count="2" status="naked" />
+                <condition count="2" status="alive" />
                 <state img="#-excited.png">This is it. This decides the winner.</state>
             </case>
-            <case stage="0-5" totalAlive="2">
+            <case stage="0-5" priority="6">
                 <condition role="self" notSaidMarker="1v1" />
+                <condition count="2" status="alive" />
                 <state img="#-playful.png" marker="1v1">Don't make the mistake of thinking that I'll go easy on you. I came here to win.</state>
                 <state img="#-playful.png" marker="1v1">Only two of us remaining. I plan on winning, so sorry about that.</state>
                 <state img="#-playful.png" marker="1v1">Which one of us is going to win? I hope it's me.</state>
@@ -3426,6 +3438,10 @@
                 <state img="#-revert_tharja.png" marker="TharjaRevert">Oh, Thank you! Thank you! Thank yooouuuuuu!</state>
                 <state img="#-revert_tharja.png" marker="TharjaRevert">I knew it! You're not a complete bitch like you're actions suggest!</state>
                 <state img="#-revert_tharja.png" marker="TharjaRevert">Yes! My career is saved! I thought I was going to fall into a spiraling depression!</state>
+            </case>
+            <case stage="5" priority="950">
+                <condition role="other" character="mulan" sayingMarker="jessie_duel" />
+                <state img="#-after_stripping.png">There was this college-aged kid that took me home after a night date, and I didn't even have to fake any of it. I never found the panties I wore that night.</state>
             </case>
             <case stage="1" priority="900">
                 <condition role="self" saidMarker="AkkoChariot1" />
@@ -5219,6 +5235,10 @@
                 <state img="#-friendly.png">Aren't you a big bundle of boundless energy, Pinkie. I don't think I'd be able to sleep at night if I had as much energy as you.</state>
             </case>
             <case stage="0-7">
+                <condition role="target" character="natsuki" stage="1" />
+                <state img="#-friendly.png">You did mention that you're a member of your school's literature club, right? What kind of literature do you usually read when you're at home?</state>
+            </case>
+            <case stage="0-7">
                 <condition role="target" character="kyu" saidMarker="florist" sayingMarker="floristc" />
                 <state img="#-confused.png">I don't get it.</state>
             </case>
@@ -6687,7 +6707,7 @@
             </case>
             <case stage="0-7">
                 <condition role="target" character="mulan" stage="1" />
-                <state img="#-annoyed.png">Whoa there! Calm down a little, will you? I was just joking.</state>
+                <state img="#-awkward.png">Oh, I wasn't implying that you're not a man, Ping. I'm just saying that you don't look like a hardened war veteran.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="mulan" stage="3" />
@@ -7089,6 +7109,10 @@
                 <condition role="target" character="mulan" stage="4" />
                 <state img="#-happy.png">I'm just glad that you're putting your sword down. I was starting to worry with the way you were swinging it around.</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="1" />
+                <state img="#-confused.png">"Manga"? I don't think I've heard that word before. Can you explain to me what exactly it is?</state>
+            </case>
             <case stage="0-1">
                 <state img="#-longing.png">Looks like &lt;i&gt;someone&lt;/i&gt; here has experience in strip teasing.</state>
                 <state img="#-playful.png">Wow, you're actually removing your ~clothing~. &lt;i&gt;I'm swooning already&lt;/i&gt;.</state>
@@ -7369,11 +7393,6 @@
                 <state img="#-excited.png">It would be great if you could keep this enthusiasm up until the end of the game.</state>
             </case>
             <case stage="0-7">
-                <condition role="target" character="natsuki" stage="2" />
-                <state img="#-curious.png">Just how many shirts are you wearing, Natsuki? When they said that this game was hot, I don't think that's what they meant.</state>
-                <state img="#-curious.png">Does your uniform really have that many shirts? This game was supposed to be hot, but not like that!</state>
-            </case>
-            <case stage="0-7">
                 <condition role="target" character="sakura" stage="2" />
                 <state img="#-curious.png">Speaking of works, did you injure your ankle during one of your performances? I hope it's not hindering you in any way.</state>
             </case>
@@ -7393,6 +7412,10 @@
             <case stage="0-7">
                 <condition role="target" character="mulan" stage="5" />
                 <state img="#-confused.png">Hmm, that vest wasn't part of your robe? That seems very redundant.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="2" />
+                <state img="#-thinking.png">Oh, it's a children's book? That... counts as literature, I guess.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="aella" sayingMarker="NoShops" />
@@ -9585,7 +9608,7 @@
                 <condition role="target" character="human" />
                 <condition role="self" notSaidMarker="JessieCollectibleUnderwearUnlock" />
                 <test expr="~self.collectible.collectible_underwear~" value="true" />
-                <state img="#-jiggle.png" marker="JessieCollectibleUnderwear" persist-marker="true">Hi there, ~player~! I haven't seen you since you won our last game. I knew you took my bra, by the way. I hope you're enjoying my souveneir.</state>
+                <state img="#-jiggle.png" marker="JessieCollectibleUnderwear" persist-marker="true">Hi there, ~player~! I haven't seen you since you won our last game. I knew you took my bra, by the way. I hope you're enjoying my souvenir.</state>
             </case>
             <case stage="0-7" priority="800">
                 <condition role="self" notSaidMarker="PaluPitA1" />
@@ -13205,7 +13228,7 @@
             <case stage="7" hidden="1">
                 <condition role="target" character="human" />
                 <test expr="~self.collectible.collectible_underwear~" value="false" />
-                <state img="#-shocked.png" collectible="collectible_underwear">This line unlocks Jessi'e underwear collectible. Report this bug immediately if you see this message.</state>
+                <state img="#-shocked.png" collectible="collectible_underwear">This line unlocks Jessie's underwear collectible. Report this bug immediately if you see this message.</state>
             </case>
         </trigger>
 
