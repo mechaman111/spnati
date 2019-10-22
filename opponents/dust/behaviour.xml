@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 2:29:44 PM on October 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 11:13:49 PM on October 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.6</version>
     <first>Dust</first>
@@ -77,7 +77,7 @@
                 <state img="#-annoyed.png">Brr... This is colder than the Blackmoor Mountains...</state>
             </case>
             <case stage="0">
-                <test expr="~background.exhibition~" value="true" />
+                <test expr="~background.exhibition~" cmp="!=" value="true" />
                 <state img="#-annoyed.png" marker="knowsstrip">Strip poker in public? Who chose this location?</state>
                 <state img="#-annoyed.png">I better win so I don't show off to all these people.</state>
             </case>
@@ -94,6 +94,10 @@
                 <state img="#-embarassed.png">Wait, weren't we supposed to undress before entering here?</state>
             </case>
             <case stage="0">
+                <test expr="~background~" value="library" />
+                <state img="#-wat.png" marker="knowsstrip">~player~, are you sure no one will find out about what we're doing here?</state>
+            </case>
+            <case stage="0">
                 <condition count="1-" filter="cheater" role="other" var="opponent" />
                 <state img="#-annoyed.png">Does anyone else think ~opponent~ looks a little shifty?</state>
             </case>
@@ -103,6 +107,7 @@
                 <state img="#-victory.png">Time to play!</state>
                 <state img="#-embarassed.png" marker="knowsstrip">A strip-poker side-quest, huh? This is gonna be interesting</state>
                 <state img="#-embarassed.png" marker="knowsstrip">Strip poker...? An interesting side-quest, but okay.</state>
+                <state img="#-calm.png">Thanks for inviting me, ~player~.</state>
             </case>
         </trigger>
 
@@ -281,6 +286,12 @@
                 <condition role="other" character="chihiro" stage="5" timeInStage="0" />
                 <state img="#-um.png">Artificial... intelligence? Like a... um... thinking machine?</state>
             </case>
+            <case stage="0-7" priority="155">
+                <condition role="other" character="chihiro" stage="5" timeInStage="1-" />
+                <state img="#-um.png" marker="chihiro_book">Oh, forgive me, I've just never seen a talking... book?... like you before.</state>
+                <state img="#-um.png" marker="chihiro_book">Oh, I'm sorry. It's just that I've never seen a book that can talk. Um, are you a book?</state>
+                <state img="#-um.png" marker="chihiro_book">I'm sorry, you're just so new to me. Are you a talking book?</state>
+            </case>
             <case stage="0-7" id="12" totalRounds="2-">
                 <condition role="other" character="emi" stage="0-3" sayingMarker="800m=1" notSaidMarker="800m" />
                 <state img="#-calm.png">You haven't seen how fast I am with an Aerial Dust Storm, have you?</state>
@@ -298,6 +309,12 @@
             <case stage="0-7" id="1">
                 <condition role="other" character="misty_hgss" stage="4" saidMarker="player_male" sayingMarker="askfor_number" notSaidMarker="found_date" />
                 <state img="#-embarassed.png">Isn't that a bit inappropriate right now?</state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="chihiro_ahrah" />
+                <condition role="other" character="chihiro" stage="0-4" sayingMarker="dust_magic_sword" />
+                <state img="#-calm.png" marker="ahrahwho">The Blade of Ahrah is one of the Five Blades of Elysium, which means they can talk, float around on its own, and it chooses their bearer -- which is me.</state>
+                <state img="#-calm.png" marker="ahrahwho">Ahrah is a floating, talking sword, and I'm their fated bearer. Also, by being their bearer, they grant me amazing skills of swordsmanship.</state>
             </case>
             <case stage="0-5" oneShotId="1">
                 <condition role="other" character="link" stage="0-2" />
@@ -325,7 +342,7 @@
                 <condition role="self" notSaidMarker="guzma_loud" />
                 <state img="#-annoyed.png" marker="guzma_loud">Can you maybe stop yelling so much, Guzma? We're all right here.</state>
                 <state img="#-annoyed.png" marker="guzma_loud">You don't need to yell, Guzma.</state>
-                <state img="#-annoyed.png" marker="guzma_loud">Guzma, Is there a reason you're yelling so much?</state>
+                <state img="#-annoyed.png" marker="guzma_loud">Guzma, is there a reason you're yelling so much?</state>
             </case>
             <case stage="0-7" totalRounds="2-">
                 <condition role="other" character="chazz" />
@@ -334,9 +351,9 @@
             </case>
             <case stage="0" oneShotId="20" totalRounds="0">
                 <condition role="other" character="leggy" />
-                <state img="#-embarassed.png" marker="furless">How'd you keep your fur on, Leggy? I think there's a spell around here that makes fur fall off.</state>
+                <state img="#-embarassed.png">Oh! A fellow Warmblood! Where are you from?</state>
             </case>
-            <case stage="0-7" totalRounds="2-">
+            <case stage="0-7" oneShotId="42" totalRounds="2-">
                 <condition role="other" character="n" />
                 <state img="#-um.png" marker="n_name">So, N, is there a reason behind your unusual name?</state>
                 <state img="#-um.png" marker="n_name">N, huh? I've never heard of anyone whose name was just a single letter long...</state>
@@ -371,9 +388,17 @@
                 <state img="#-embarassed.png" marker="revy_music">Well, there are a few traditional drinking songs from Aurora Village.</state>
                 <state img="#-embarassed.png" marker="revy_music">I just prefer the simple stuff, to be honest.</state>
             </case>
-            <case stage="0-7">
+            <case stage="0-7" oneShotId="45">
                 <condition role="other" character="misty_hgss" sayingMarker="misty_badwithdates" />
                 <state img="#-um.png" marker="misty_baddate_response">You don't seem like you're the kind to be very unlucky, Misty.</state>
+            </case>
+            <case stage="0-7" oneShotId="43">
+                <condition role="other" character="jessie" saidMarker="DustAhrahWho" />
+                <state img="#-whoa.png">Well, Ahrah's not much of a conversationalist, but they... Oh! Oh, you meant...</state>
+            </case>
+            <case stage="0-7" oneShotId="44">
+                <condition role="other" character="jessie" saidMarker="DustFidgetWho" />
+                <state img="#-whoa.png">I don't know... Fidget said it's her job to keep Ahrah in her sights at all... Oh! Now I get what you mean...</state>
             </case>
             <case stage="0-7" totalRounds="3-">
                 <condition filter="meia" />
@@ -430,6 +455,7 @@
             <case stage="0-7">
                 <condition role="self" saidMarker="cassius_talked" notSaidMarker="cassiuswhoops" />
                 <state img="#-embarassed.png" marker="cassiuswhoops">Sorry. I get these mood swings sometimes.</state>
+                <state img="#-embarassed.png" marker="cassiuswhoops">Er... I can't really explain these mood swings.</state>
             </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="cassius_talked&gt;3" />
@@ -512,6 +538,10 @@
                 <condition role="other" character="meia" />
                 <state img="#-embarassed.png">Um, Meia? Why are you staring at me?</state>
                 <state img="#-embarassed.png">Meia, can you stop staring at me so much?</state>
+            </case>
+            <case stage="0-6" oneShotId="46">
+                <condition role="other" character="guzma" />
+                <state img="#-annoyed.png">"Human?" Is that the name for you furless Warmbloods? And no, I guess not.</state>
             </case>
             <case stage="0-6">
                 <condition role="self" consecutiveLosses="2" />
@@ -624,6 +654,10 @@
                 <state img="#-stripping.png">Oh. I get that a lot, actually, I can see just fine with it on.</state>
             </case>
             <case stage="1">
+                <condition role="other" character="chihiro" stage="0-4" />
+                <state img="#-stripping.png">Hmm?</state>
+            </case>
+            <case stage="1">
                 <condition role="other" character="jessie" />
                 <state img="#-stripping.png">This hat's just really special to me.</state>
             </case>
@@ -679,6 +713,10 @@
                 <state img="#-calm.png" marker="chihiro_ahrah">Oh, the hat's not magic, but my sword is.</state>
                 <state img="#-calm.png">That's actually the first time someone asked me if my hat was magic. It's just a normal hat.</state>
             </case>
+            <case stage="2">
+                <condition role="other" character="chihiro" stage="0-4" />
+                <state img="#-um.png">It's normal in Falana... In fact, I don't think there are any furless Warmbloods like you there.</state>
+            </case>
             <case stage="1-6" oneShotId="40">
                 <condition role="other" character="rarity_eg" sayingMarker="attire_choice2" />
                 <state img="#-annoyed.png">My outfit is for traveling, not for looks.</state>
@@ -691,6 +729,10 @@
                 <condition role="other" character="n" />
                 <state img="#-embarassed.png" marker="fidget">Does Fidget count as a "Poe-kay-mon?"</state>
                 <state img="#-embarassed.png">A trainer? No, I'm a swordsman.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="guzma" />
+                <state img="#-annoyed.png">Yes, I can, and it's a satgat and I happen to like it, thank you very much.</state>
             </case>
             <case stage="7">
                 <condition count="0" status="not_lost_all" />
@@ -833,7 +875,7 @@
                 <state img="#-wat.png" marker="revy_pirate">Revy, you're a pirate? I thought they looked... different.</state>
             </case>
             <case stage="0-7 9">
-                <condition role="target" character="misty_hgss" />
+                <condition role="target" character="misty_hgss" stage="0" />
                 <state img="#-embarassed.png" marker="misty_classes">So, Misty, you're a trainer, right? What do you teach classes in?</state>
             </case>
             <case stage="0-9" priority="50">
@@ -878,9 +920,6 @@
             <case stage="0-9">
                 <condition role="target" character="chazz" stage="3" />
                 <state img="#-annoyed.png" marker="chazz_poisonivy">(...Maybe I should put poison ivy in &lt;i&gt;this&lt;/i&gt; rich buffoon's underwear as well.)</state>
-            </case>
-            <case stage="0-9">
-                <condition role="other" character="guzma" stage="0-2" />
             </case>
             <case stage="0-5">
                 <condition status="not_decent" role="target" />
@@ -927,12 +966,10 @@
                 <state img="#-pissed.png">You should have come prepared to play, ~name~.</state>
                 <state img="#-pissed.png">~name~! Either play with honor or surrender!</state>
             </case>
-            <case stage="0-6" oneShotId="17">
-                <state img="#-annoyed.png">I don't know much about strip poker, but just the ~clothing~?</state>
-            </case>
             <case stage="0-9">
                 <state img="#-annoyed.png">Well, it's something, at least.</state>
                 <state img="#-annoyed.png">Guess you want a longer game, huh?</state>
+                <state img="#-embarassed.png">You're a bit shy, huh?</state>
             </case>
         </trigger>
 
@@ -940,7 +977,7 @@
             <case stage="0-9" id="23">
                 <condition role="target" character="akko" stage="0" saidMarker="necronomicon" />
                 <state img="#-wat.png" marker="ahrah">Where's Ahrah when I need them?</state>
-                <state img="#-wat.png" marker="ahrah">Nobody told me things like this would happen here. If I would, I would have brough Ahrah...</state>
+                <state img="#-wat.png" marker="ahrah">Nobody told me things like this would happen here. If I would, I would have brought Ahrah...</state>
             </case>
             <case stage="0-9" id="26">
                 <condition role="target" character="nami" stage="0" />
@@ -1019,6 +1056,7 @@
             <case stage="0-9">
                 <state img="#-annoyed.png">Well, it's something, at least.</state>
                 <state img="#-annoyed.png">Guess you want a longer game, huh?</state>
+                <state img="#-embarassed.png">I can understand if you're a bit shy...</state>
             </case>
         </trigger>
 
@@ -1125,6 +1163,7 @@
             </case>
             <case stage="0-9">
                 <state img="#-calm.png">You look like you're keeping in shape, ~name~.</state>
+                <state img="#-um.png">Why are men allowed to go shirtless but not women, anyway?</state>
             </case>
         </trigger>
 
@@ -1138,8 +1177,10 @@
         </trigger>
 
         <trigger id="male_small_crotch_is_visible">
-            <case stage="0-7 9">
+            <case stage="0-7">
                 <state img="#-embarassed.png">Um, to be honest, it is a little cold...</state>
+                <state img="#-embarassed.png">Er... you're not too embarrased, right?</state>
+                <state img="#-embarassed.png">Oh, uh, um...</state>
             </case>
             <case stage="8-9">
                 <state img="#-embarassed.png">Hey, don't feel too bad. It's just nature, right?</state>
@@ -1150,6 +1191,7 @@
         <trigger id="male_medium_crotch_is_visible">
             <case stage="7-9">
                 <state img="#-horny.png">That's a pretty nice size you got there ~name~...</state>
+                <state img="#-horny.png">That's looking healthy.</state>
             </case>
             <case stage="0-6">
                 <state img="#-horny.png" marker="jin_talked">Wow, I bet you have fun in bed.</state>
@@ -1186,6 +1228,7 @@
             <case stage="0-9">
                 <state img="#-horny.png" marker="jin_talked">Ah, um, they're so petite... Sorry.</state>
                 <state img="#-horny.png">They're so cute...</state>
+                <state img="#-horny.png">You're not self-concious about those, are you?</state>
             </case>
         </trigger>
 
@@ -1209,6 +1252,8 @@
             </case>
             <case stage="7-9">
                 <state img="#-horny.png" marker="jin_talked">Oh man, what I wouldn't give to put my face between them...</state>
+                <state img="#-horny.png" marker="jin_talked">Those... those are big, all right...</state>
+                <state img="#-horny.png" marker="jin_talked">Damn... they're so huge.</state>
             </case>
         </trigger>
 
@@ -1478,7 +1523,7 @@
                 <state img="#-wat.png">I feel like watching this would be blasphemy.</state>
                 <state img="#-wat.png">Wait, are gods even allowed to do that?</state>
             </case>
-            <case stage="0-9" oneShotId="14">
+            <case stage="0-7" oneShotId="14">
                 <condition role="self" notSaidMarker="learn_forfeit" />
                 <state img="#-whoa.png" marker="learn_forfeit">So what happens when ~name~ loses while already naked?</state>
             </case>
@@ -1500,6 +1545,7 @@
             </case>
             <case stage="0-6">
                 <state img="#-embarassed.png">This is gonna be a bit embarrassing.</state>
+                <state img="#-embarassed.png">Well, this is what happens when you lose, huh?</state>
             </case>
             <case stage="7-8">
                 <state img="#-horny.png" marker="jin_talked">Uh, is it okay if I study your technique?</state>
@@ -1508,6 +1554,8 @@
             </case>
             <case stage="9">
                 <state img="#-embarassed.png">This is almost making me want to start again.</state>
+                <state img="#-horny.png">Well, you saw me do it, so I'm okay with watching...</state>
+                <state img="#-horny.png">H-hey, ~name~... Don't be embarrassed about this, okay?</state>
             </case>
         </trigger>
 
@@ -1560,6 +1608,7 @@
             <case stage="8-9">
                 <state img="#-embarassed.png">I'm a little ashamed to ask, but did you think of me when you...?</state>
                 <state img="#-embarassed.png">Oh, you're finished, ~name~?</state>
+                <state img="#-horny.png">Did you enjoy that?</state>
             </case>
             <case stage="0-7">
                 <state img="#-embarassed.png">I shouldn't say this, but that kind of turned me on.</state>
@@ -1578,12 +1627,14 @@
                 <state img="#-wat.png">I feel like watching this would be blasphemy.</state>
                 <state img="#-wat.png">Wait, are goddesses even allowed to do that?</state>
             </case>
-            <case stage="0-9" oneShotId="15">
+            <case stage="0-7" oneShotId="15">
                 <condition role="self" notSaidMarker="learn_forfeit" />
                 <state img="#-whoa.png" marker="learn_forfeit">So what happens when ~name~ loses while already naked?</state>
             </case>
             <case stage="8-9">
                 <state img="#-horny.png">Oh, you're gonna do that now...?</state>
+                <state img="#-horny.png">I want to see this, ~name~, are you okay with that?</state>
+                <state img="#-horny.png">This is going to be a real show.</state>
             </case>
             <case stage="0-7">
                 <state img="#-embarassed.png">Heh... I'm still not used to what you have to do when you lose.</state>
@@ -1839,6 +1890,11 @@
                 <state img="#-embarassed.png">Ohh, I was so close, too.</state>
             </case>
             <case stage="9">
+                <condition count="0-" status="not_naked" />
+                <test expr="~background~" value="poolside" />
+                <state img="#-um.png">We're supposed to shower first, right? And is it okay to swim naked here?</state>
+            </case>
+            <case stage="9">
                 <test expr="~background~" value="hot spring" />
                 <state img="#-calm.png">Well, since we're at a hot spring anyway, I guess we can all relax.</state>
             </case>
@@ -1853,6 +1909,50 @@
         </trigger>
 
         <trigger id="global">
+            <case stage="0-9">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Backdoor" />
+                <state img="#-um.png">Um... oh, you mean doing that... Maybe?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_DarkSecrets" />
+                <state img="#-annoyed.png">I suppose I would, if I remembered a little more about my past.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Family" />
+                <state img="#-embarassed.png">I don't really remember my family, so I can't really answer.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Lights" />
+                <state img="#-embarassed.png">Um, this is a weird question, but... on? Why wouldn't you want to see your partner?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_LittleLies" />
+                <state img="#-annoyed.png">I don't like lying, to be honest. The truth will come out eventually.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Masturbate" />
+                <state img="#-embarassed.png">Um... I can't really answer that, I've never really been in a relationship.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_SleptAround" />
+                <state img="#-embarassed.png">Um... I can't really answer that, I've never really been in a relationship.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Porn" />
+                <state img="#-embarassed.png" marker="fidget">Promise you won't tell Fidget? I sometimes read erotic stories when we're camping at night.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Smokers" />
+                <state img="#-calm.png" marker="gianni">I've only known of one smoker, and he's a massive jerk. Made me run his chores, but I got revenge on him.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Million" />
+                <state img="#-um.png">That's more money than I'd know what to do about... um, use it to help rebuild Aurora Village?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_StupidMistakes" />
+                <state img="#-calm.png">Not if it didn't hurt anyone.</state>
+            </case>
             <case stage="0-9" oneShotId="31">
                 <condition role="self" saidMarker="jin_talked" notSaidMarker="jin_whoops" />
                 <state img="#-embarassed.png" marker="jin_whoops">Uh, let's just forget I said that.</state>
