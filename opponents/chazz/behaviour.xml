@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 11:21:38 p. m. on octubre 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.5 at 12:52:15 AM on October 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.6</version>
+    <version>v5.2.5</version>
     <first>Chazz </first>
     <last>Princeton</last>
     <label>Chazz</label>
@@ -42,6 +42,7 @@
     <nicknames>
         <nickname for="mae">Red Eyes</nickname>
         <nickname for="marinette">Bug Brain</nickname>
+        <nickname for="megumin">Blast Magician</nickname>
         <nickname for="starfire">Fartfire</nickname>
     </nicknames>
 
@@ -194,9 +195,13 @@
         <trigger id="hand">
             <case stage="0-7" totalRounds="0">
                 <condition role="other" character="lotte" stage="0" timeInStage="0" sayingMarker="start" />
-                <condition role="other" />
                 <state img="#-happy.png">A witch, huh? Let me guess, it's all smoke machines and holograms.</state>
                 <state img="#-confident.png">Magic isn't real, Lotte! Except for Duel Monster spirits. And the Sacred Beasts. And the Light of Destruction. Those are the only exceptions.</state>
+            </case>
+            <case stage="0-7" totalRounds="0">
+                <condition role="other" character="megumin" stage="2" timeInStage="0" sayingMarker="start" />
+                <state img="#-mock.png">Explosion magic? I didn't even know such a school of magic existed... Probably a fake, just like that guy who claims dynamite is a martial art!</state>
+                <state img="#-confident.png">Allright, Megumin, where's the dynamite?</state>
             </case>
             <case stage="0-7">
                 <condition role="other" character="lotte" stage="1" timeInStage="0" />
@@ -220,6 +225,10 @@
                 <condition role="other" character="revy" sayingMarker="music" />
                 <state img="#-calm.png">My Obelisk Blue posse usually comes with a live band. If not, no biggie.</state>
                 <state img="#-angry.png">A Walkman? What kind of troglodyte still carries one of those around? MP3 players are the way of the future.</state>
+            </case>
+            <case stage="0-1">
+                <condition role="other" character="megumin" />
+                <state img="#-awkward.png">I remind you of your home? I don't wanna look like a dumb wizard, I wanna look like a cool and awesome duelist!</state>
             </case>
             <case stage="0-7" totalRounds="0">
                 <state img="#-smug.png">&lt;i&gt;(Sorry Boss, they all canceled for vague reasons that probably sound like lies.)&lt;/i&gt;</state>
@@ -369,7 +378,7 @@
 
         <trigger id="male_human_must_strip">
             <case stage="0-9">
-                <condition count="0" role="target" stage="0" />
+                <condition role="target" stage="0" />
                 <state img="#-thinking.png">Hey, you look kinda familiar. Like some loser that I barely know.</state>
                 <state img="#-thinking.png">~name~, where have I seen you before?</state>
                 <state img="#-thinking.png">You remind me of a certain other loser I knew at Duel Academy.</state>
@@ -380,7 +389,7 @@
         <trigger id="male_must_strip">
             <case stage="0-9">
                 <condition role="target" character="kazuma" stage="0" />
-                <state img="#-bored.png">Besides, travelling to other dimensions is the worst thing that's ever happened to me.</state>
+                <state img="#-bored.png">A word of advice, Kazuma. Travelling to other dimensions is the worst thing that's ever happened to me.</state>
             </case>
             <case stage="0-9">
                 <state img="#-confident.png">Bada-bing, bada-boom. Simple as that.</state>
@@ -407,11 +416,11 @@
 
         <trigger id="female_must_strip">
             <case stage="0-9">
-                <condition count="0" role="target" character="revy" stage="0" />
+                <condition role="target" character="revy" stage="0" />
                 <state img="#-smug.png">&lt;i&gt;Oh noes.&lt;/i&gt; Look out everyone, we've got an edgelord here!</state>
             </case>
             <case stage="0-9">
-                <condition count="0" role="target" character="mae" stage="0" />
+                <condition role="target" character="mae" stage="0" />
                 <state img="#-shocked.png">What's with the eyes? You possessed or something?</state>
             </case>
             <case stage="0-9">
@@ -423,7 +432,7 @@
                 <state img="#-thinking.png">Some Duel Monsters cards tell a story, and there's one in particular that you remind me of. Allow me to regale you of it from the Duel Monsters Wiki page.</state>
             </case>
             <case stage="0-9">
-                <condition count="0" filter="blonde" role="target" stage="0" />
+                <condition filter="blonde" role="target" stage="0" />
                 <condition count="0" notSaidMarker="alexis" />
                 <test expr="~target.tag.long_hair~" value="true" />
                 <state img="#-horny.png" marker="alexis">Who's this lovely lady? Blonde, long hair, totally after my own heart.</state>
@@ -477,7 +486,7 @@
                 <condition role="target" character="kazuma" stage="1-6" />
                 <state img="#-awkward.png">I see no reason why you'd ever willingly go to another dimension... But maybe you just got luckier than me...</state>
             </case>
-            <case stage="0-9">
+            <case stage="0-9" priority="0">
                 <condition count="0" saidMarker="chowder_gag*" />
                 <state img="#-calm.png">Well would you look at that, you took off your ~clothing~. Just like I predicted.</state>
             </case>
@@ -494,6 +503,11 @@
         </trigger>
 
         <trigger id="female_removing_accessory">
+            <case stage="0-9">
+                <condition role="target" character="megumin" stage="1" />
+                <condition role="other" character="kazuma" />
+                <state img="#-angry.png">Do you know this creep, Blast Magician? Do I need to Chazz him up?</state>
+            </case>
             <case stage="0-9">
                 <condition role="target" character="croix" stage="0" />
                 <state img="#-confident.png" marker="viper">Did you make a pact with a space monster as well? They gonna raise your dead kid? Cause The Chazz is gonna duel you right into the grave!</state>
@@ -548,6 +562,18 @@
                 <condition role="target" character="starfire" stage="0" />
                 <state img="#-bored.png">Oh great, a HERO. HEROes bore me. So trite and predictable.</state>
             </case>
+            <case stage="0-9">
+                <condition role="target" character="megumin" stage="0" />
+                <state img="#-happy.png">I dub thee Blast Magician, after a card which &lt;i&gt;also&lt;/i&gt; claims to be the master of explosions and is total garbage.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="megumin" stage="1" />
+                <state img="#-confident.png">If anything, I'm the real explosion master. Duel Monster holograms come with some pretty nice pyrotechnics. They're so powerful, they can send a duelist flying.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="megumin" stage="2" />
+                <state img="#-mock.png">Does this spellcaster monster need some love?</state>
+            </case>
             <case stage="0-4">
                 <state img="#-happy.png">Such a lovely girl, why is she removing something so trivial?</state>
                 <state img="#-happy.png">Just like unwrapping a tootsie roll pop to get to it's chocolatey center.</state>
@@ -573,6 +599,11 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
+            <case stage="0-9">
+                <condition role="target" character="megumin" stage="2" />
+                <condition role="other" character="kazuma" />
+                <state img="#-joy.png">You gonna embarass him by yourself? The less work for me, the more I get to look at your boobies!</state>
+            </case>
             <case stage="0-9">
                 <condition role="target" character="croix" stage="1" />
                 <state img="#-awkward.png">Oh, you're doing it all for your girlfriend? I'm gonna Chazz you up regardless. And then I'll lose and Jaden will get to clean up my mess. That's just how these things go...</state>
@@ -609,7 +640,7 @@
             </case>
             <case stage="0-9">
                 <condition role="target" character="panty" stage="2" />
-                <state img="#-bored.png">Oh, sorry. I'm not supposed to talk about religion, hence why everyone Angels are referred to as Fairies. Looks like you're not supposed to talk about religion either.</state>
+                <state img="#-bored.png">Oh, sorry. I'm not supposed to talk about religion, hence why Angels are referred to as Fairies. Looks like you're not supposed to talk about religion either.</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="panty" stage="3" />
@@ -622,6 +653,18 @@
             <case stage="0-9">
                 <condition role="target" character="starfire" stage="1" />
                 <state img="#-mock.png">Stars are made of gas, and farts are also gas, so you're Elemental HERO Fartfire to me!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="megumin" stage="1" />
+                <state img="#-smug.png">Or maybe you don't wanna blow up the joint, that's fine too.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="megumin" stage="2" />
+                <state img="#-bored.png">And those are made of computers, not some phony magic.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="megumin" stage="3" />
+                <state img="#-shocked.png">Nevermind, looks like you've already got a fiend type monster equipped, forget I said anything.</state>
             </case>
             <case stage="0-9">
                 <state img="#-horny.png">&lt;i&gt;Shall I hold that for you, madam ~name~?&lt;/i&gt;</state>
@@ -904,7 +947,7 @@
         <trigger id="male_small_crotch_is_visible">
             <case stage="0-9" priority="301">
                 <condition role="target" character="kazuma" />
-                <state img="#-mock.png">Andyou're small too? Damn, you just keep looking more and more pathetic. Girls don't wanna be with a low class perv like you. They wanna be with a high class perv like me.</state>
+                <state img="#-mock.png">You're small too? You just keep looking more pathetic. Girls don't wanna be with a low class perv like you. They wanna be with a high class perv like me.</state>
             </case>
             <case stage="7-9">
                 <condition count="2-" gender="female" />
@@ -938,7 +981,7 @@
 
         <trigger id="male_crotch_is_visible">
             <case stage="0-9">
-                <condition count="0" role="target" character="human" />
+                <condition role="target" character="human" />
                 <state img="#-bored.png">I sincerely hope you didn't expect me to be gay for you, ~player~. The Chazz don't swing that way. Nor does the Chazz swing with Pendulum Monsters.</state>
                 <state img="#-angry.png">You expecting me to say I like it? What did you expect when you chose me, to fall in love with you?</state>
             </case>
@@ -958,11 +1001,11 @@
                 <state img="#-horny.png">Time for the babbling alien to show off her tits.</state>
             </case>
             <case stage="0-9">
-                <condition count="0" role="target" character="croix" />
+                <condition role="target" character="croix" />
                 <state img="#-confident.png" location="81%">&lt;i&gt;(WAIT BOSS, DON"T LET HER LEECH MY ENERGY, I'M TOO SMALL FOR THAT!)&lt;/i&gt;</state>
             </case>
             <case stage="0-9">
-                <condition count="0" role="target" character="saki_zls" />
+                <condition role="target" character="saki_zls" />
                 <state img="#-bored.png">May I suggest a glue stick? I would offer you mine, but I stopped using them in Dueling Kindergarten!</state>
                 <state img="#-happy.png">I guess I'll banish this Mezuki card to bring you back to life. You're much sexier than this stupid horse man anyway.</state>
                 <state img="#-happy.png">Good thing Zombies can never really die. You kill them once and your opponent always has a way to bring them back.</state>
@@ -1008,11 +1051,11 @@
 
         <trigger id="female_medium_chest_is_visible">
             <case stage="0-9">
-                <condition count="0" role="target" character="amalia" stage="4" />
+                <condition role="target" character="amalia" stage="4" />
                 <state img="#-happy.png">What comes out of those, Baby milk, or nectar? &lt;i&gt;I'll drink it either way, you crazy hippie girl.&lt;/i&gt;</state>
             </case>
             <case stage="0-9">
-                <condition count="0" role="target" character="amalia" stage="6" />
+                <condition role="target" character="amalia" stage="6" />
                 <state img="#-confident.png">It's just a hologram, it can't really light stuff on fire. Unless you turn this into a shadow game, in which case yes, Infernal Incinerator can burn up the rest of those dumb daisies.</state>
             </case>
             <case stage="0-9">
@@ -1020,7 +1063,7 @@
                 <state img="#-joy.png">I have to ask, are all your alien friends as free and eager to get naked as you are?</state>
             </case>
             <case stage="0-9">
-                <condition count="0" role="target" character="croix" />
+                <condition role="target" character="croix" />
                 <state img="#-horny.png">What was that Ojama Yellow? I was too busy looking at the evil scientist's tits.</state>
             </case>
             <case stage="0-9">
@@ -1043,7 +1086,7 @@
 
         <trigger id="female_chest_is_visible">
             <case stage="0-9">
-                <condition count="0" filter="muscular" role="target" />
+                <condition filter="muscular" role="target" />
                 <state img="#-happy.png">Me and my friends are all so buff. Playing all that Duel Monsters is really good for your abs.</state>
                 <state img="#-confident.png">Card games are great for building muscle mass, I'll have you know.</state>
                 <state img="#-horny.png">Your muscles are so huge. You could kick so many butts. Like a hundred of them.</state>
@@ -1052,11 +1095,11 @@
 
         <trigger id="female_crotch_will_be_visible">
             <case stage="0-9">
-                <condition count="0" role="target" character="amalia" stage="4" />
+                <condition role="target" character="amalia" stage="4" />
                 <state img="#-thinking.png">Don't crazy hippies like you normally spend all day naked anyway? If anything, this is an improvement for you.</state>
             </case>
             <case stage="0-9">
-                <condition count="0" role="target" character="amalia" stage="6" />
+                <condition role="target" character="amalia" stage="6" />
                 <state img="#-bored.png">So I don't need to pull my Infernal Incinerator out then. A wise choice for a stupid girl like you.</state>
             </case>
             <case stage="0-9">
@@ -1064,7 +1107,7 @@
                 <state img="#-confident.png">The Chazz never gives anyone his energy! Especially if you plan on turning me into a Duel Ghoul as well!</state>
             </case>
             <case stage="0-9">
-                <condition count="0" role="target" character="mae" />
+                <condition role="target" character="mae" />
                 <state img="#-horny.png">Your possessed vagina is gonna be great. Might even distract from your creepy eyes...</state>
             </case>
             <case stage="0-9">
@@ -1106,7 +1149,7 @@
                 <state img="#-drooling.png">I get a sexy naked alien, who actually looks like a human. Way to go, Fartfire!</state>
             </case>
             <case stage="0-9">
-                <condition count="0" filter="hairy" role="target" />
+                <condition role="target" />
                 <state img="#-thinking.png">Have you ever heard of a razor?</state>
                 <state img="#-mock.png">Look at that big, messy bush. My hand would get stuck in it, it's so tangled and matted.</state>
                 <state img="#-confident.png">If you really wanted to be with me, you'd have trimmed that.</state>
@@ -1121,7 +1164,7 @@
 
         <trigger id="opponent_lost">
             <case stage="0">
-                <condition count="0" role="target" character="croix" />
+                <condition role="target" character="croix" />
                 <state img="#-angry.png">Look at Ms. Evil Professor here. You one of the new teachers at Duel Academy?</state>
             </case>
             <case stage="0">
@@ -1135,7 +1178,7 @@
                 <state img="#-happy.png">Duel Academy is the best dueling school around. I bet yours is a lot poorer, isn't it, ~name~?</state>
             </case>
             <case stage="0">
-                <condition count="0" filter="magical_girl" role="target" stage="0" />
+                <condition filter="magical_girl" role="target" stage="0" />
                 <test expr="~target.gender~" value="female" />
                 <state img="#-happy.png">A bonafide magical girl? What backwards school did you have to go to to get those powers?</state>
                 <state img="#-shocked.png">What a silly outfit! Then again, I'm not one to judge.</state>
@@ -1143,7 +1186,7 @@
                 <state img="#-angry.png">Why can't the Chazz have magic powers like yours? &lt;i&gt;It's always the poor people who get the best magic powers...&lt;/i&gt;</state>
             </case>
             <case stage="0">
-                <condition count="0" filter="gamer" role="target" stage="0" />
+                <condition filter="gamer" role="target" stage="0" />
                 <test expr="~target.gender~" value="female" />
                 <state img="#-happy.png">Video games are for commoners. Duel Monsters is a game for men of culture, and Jaden Yuki.</state>
                 <state img="#-angry.png">You prefer to play with yourself, huh? What's the point of playing a game if you can't see your enemy crying in defeat?</state>
@@ -1161,7 +1204,7 @@
 
         <trigger id="opponent_stripped">
             <case stage="0">
-                <condition count="0" role="target" character="human" />
+                <condition role="target" character="human" />
                 <test expr="~target.gender~" value="male" />
                 <state img="#-angry.png">Hey, you are that loser! ~name~, from the Slifer Red dorm at Duel Academy!</state>
                 <state img="#-angry.png">You're a Slifer Slacker, ~name~! I should have known!</state>
@@ -1169,12 +1212,24 @@
                 <state img="#-mock.png">Loser ~name~! From the Slifer Red dorm at Duel Academy, how could I have forgot?</state>
             </case>
             <case stage="0">
-                <condition count="0" role="target" character="human" />
+                <condition role="target" character="human" />
                 <test expr="~target.gender~" value="female" />
                 <state img="#-angry.png">Hey, you are that loser! ~name~, from the Obelisk Blue dorm at Duel Academy!</state>
                 <state img="#-confident.png">You may have made it into Obelisk Blue, but it certainly wasn't based on your merit.</state>
                 <state img="#-angry.png">You stink at Duel Monsters, but you got for free what people men have to put in actual effort for.</state>
                 <state img="#-angry.png">You're only an Obelisk Blue because they have no girls dorm for Slifer Red, which is where you deserved to go!</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_chest_will_be_visible">
+            <case stage="0-9" id="7" target="chihiro">
+                <state img="#-confident.png">Get back here you coward! But if you aren't here, then you can't mind me swiping your computer, now can you?</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_crotch_is_visible">
+            <case stage="0-9" id="6" target="chihiro">
+                <state img="#-angry.png">Oh. Forget anything positive I said about you, Chihiro. The Chazz doesn't like being lied too, especially not by scrawny little punks like you.</state>
             </case>
         </trigger>
 
@@ -1189,7 +1244,7 @@
         <trigger id="male_must_masturbate">
             <case stage="0-9">
                 <condition role="target" character="kazuma" />
-                <state img="#-smug.png">If you can teleport to another dimension, could you kindly teleport somewhere far away from here? You get to masturbate all to yourself, and I get these girls all to myself.</state>
+                <state img="#-smug.png">Could you kindly teleport somewhere far away from here? You get to masturbate all to yourself, and I get these girls all to myself.</state>
             </case>
             <case stage="0-9">
                 <state img="#-confident.png">I don't care &lt;i&gt;Why&lt;/i&gt; I'm the best, all that matters is I am.</state>
@@ -1273,11 +1328,11 @@
 
         <trigger id="female_start_masturbating">
             <case stage="0-9">
-                <condition count="0" role="target" character="croix" />
+                <condition role="target" character="croix" />
                 <state img="#-awkward.png">Oh great, you've got an electro-stimulation fetish! Zane does that, and believe me, it's really gross!</state>
             </case>
             <case stage="0-9">
-                <condition count="0" role="target" character="amalia" />
+                <condition role="target" character="amalia" />
                 <state img="#-awkward.png">I've heard of people getting crushes on Duel Monster spirits, but nothing like this. And not with one like Tentacle Plant.</state>
                 <state img="#-happy.png">Bastion fucks a tiger, you fuck a plant, we're all a bunch of degenerates, aren't we?</state>
             </case>
@@ -1421,11 +1476,11 @@
 
         <trigger id="game_over_defeat">
             <case stage="9">
-                <condition count="0" role="other" character="amalia" />
+                <condition role="other" character="amalia" />
                 <state img="#-happy.png">Maybe spice up your deck with some effect monsters next time, Amalia. Hippies are such dorks, am I right?</state>
             </case>
             <case stage="9">
-                <condition count="0" role="other" character="mae" />
+                <condition role="other" character="mae" />
                 <state img="#-disappointed.png">Huh? Defeating you didn't release the evil spirit? I figured any card game would count for shadow realm rules.</state>
                 <state img="#-confident.png">I'm sure someone more selfless than I will free you eventually. I don't mind enjoying your possessed self for now though.</state>
             </case>

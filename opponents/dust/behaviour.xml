@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 11:13:49 PM on October 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.7 at 1:47:18 AM on October 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.6</version>
+    <version>v5.2.7</version>
     <first>Dust</first>
     <last />
     <label>Dust</label>
@@ -77,7 +77,7 @@
                 <state img="#-annoyed.png">Brr... This is colder than the Blackmoor Mountains...</state>
             </case>
             <case stage="0">
-                <test expr="~background.exhibition~" cmp="!=" value="true" />
+                <test expr="~background~" value="street" />
                 <state img="#-annoyed.png" marker="knowsstrip">Strip poker in public? Who chose this location?</state>
                 <state img="#-annoyed.png">I better win so I don't show off to all these people.</state>
             </case>
@@ -91,7 +91,7 @@
             </case>
             <case stage="0">
                 <test expr="~background~" value="hot spring" />
-                <state img="#-embarassed.png">Wait, weren't we supposed to undress before entering here?</state>
+                <state img="#-embarassed.png">Wait, weren't we supposed to undress &lt;i&gt;before&lt;/i&gt; entering here?</state>
             </case>
             <case stage="0">
                 <test expr="~background~" value="library" />
@@ -541,7 +541,7 @@
             </case>
             <case stage="0-6" oneShotId="46">
                 <condition role="other" character="guzma" />
-                <state img="#-annoyed.png">"Human?" Is that the name for you furless Warmbloods? And no, I guess not.</state>
+                <state img="#-annoyed.png" marker="human_name">"Human?" Is that the name for you furless Warmbloods? And no, I guess not.</state>
             </case>
             <case stage="0-6">
                 <condition role="self" consecutiveLosses="2" />
@@ -708,14 +708,20 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="2">
+                <condition role="other" character="chihiro" stage="0-4" />
+                <condition role="self" notSaidMarker="human_name" />
+                <state img="#-um.png">It's normal in Falana... In fact, I don't think there are any furless Warmbloods like you there.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="chihiro" stage="0-4" />
+                <condition role="self" saidMarker="human_name" />
+                <state img="#-um.png">It's normal in Falana... In fact, I don't think there are any uh... humans there.</state>
+            </case>
             <case stage="1" id="32">
                 <condition role="other" character="chihiro" stage="0-4" />
                 <state img="#-calm.png" marker="chihiro_ahrah">Oh, the hat's not magic, but my sword is.</state>
                 <state img="#-calm.png">That's actually the first time someone asked me if my hat was magic. It's just a normal hat.</state>
-            </case>
-            <case stage="2">
-                <condition role="other" character="chihiro" stage="0-4" />
-                <state img="#-um.png">It's normal in Falana... In fact, I don't think there are any furless Warmbloods like you there.</state>
             </case>
             <case stage="1-6" oneShotId="40">
                 <condition role="other" character="rarity_eg" sayingMarker="attire_choice2" />
@@ -1870,7 +1876,7 @@
                 <state img="#-wat.png">My rings! My blueprints! My hat!</state>
             </case>
             <case stage="9" priority="800">
-                <condition role="self" saidMarker="cassius&gt;3" />
+                <condition role="self" saidMarker="cassius_talked&gt;3" />
                 <state img="#-pissed.png">I will NOT forget this!</state>
                 <state img="#-c-standoffish.png">Remember this: I will NOT lose again!</state>
             </case>
