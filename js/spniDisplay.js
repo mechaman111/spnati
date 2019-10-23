@@ -783,6 +783,7 @@ GameScreenDisplay.prototype.reset = function (player) {
         this.label.removeClass("current loser tied");
     } else {
         this.opponentArea.hide();
+        this.clearPose();
         this.bubble.hide();
     }
 }
