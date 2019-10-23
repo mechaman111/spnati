@@ -40,6 +40,8 @@
 			this.valScale = new Desktop.Skinning.SkinnedNumericUpDown();
 			this.lblScale = new Desktop.Skinning.SkinnedLabel();
 			this.gridLabels = new Desktop.Skinning.SkinnedDataGridView();
+			this.colLabelsStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colLabelsLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.lblStageLabels = new Desktop.Skinning.SkinnedLabel();
 			this.label1 = new Desktop.Skinning.SkinnedLabel();
 			this.cboDialogueLayer = new Desktop.Skinning.SkinnedComboBox();
@@ -57,8 +59,6 @@
 			this.skinnedGroupBox3 = new Desktop.Skinning.SkinnedGroupBox();
 			this.styleControl = new SPNATI_Character_Editor.Controls.StyleControl();
 			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
-			this.colLabelsStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.colLabelsLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.valScale)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridLabels)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLayer)).BeginInit();
@@ -160,6 +160,22 @@
 			this.gridLabels.Size = new System.Drawing.Size(226, 111);
 			this.gridLabels.TabIndex = 87;
 			// 
+			// colLabelsStage
+			// 
+			this.colLabelsStage.DataPropertyName = "Stage";
+			this.colLabelsStage.HeaderText = "Stage";
+			this.colLabelsStage.MinimumWidth = 50;
+			this.colLabelsStage.Name = "colLabelsStage";
+			this.colLabelsStage.Width = 50;
+			// 
+			// colLabelsLabel
+			// 
+			this.colLabelsLabel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.colLabelsLabel.DataPropertyName = "Value";
+			this.colLabelsLabel.HeaderText = "Label";
+			this.colLabelsLabel.Name = "colLabelsLabel";
+			this.colLabelsLabel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			// 
 			// lblStageLabels
 			// 
 			this.lblStageLabels.AutoSize = true;
@@ -195,6 +211,7 @@
 			this.cboDialogueLayer.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboDialogueLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboDialogueLayer.FormattingEnabled = true;
+			this.cboDialogueLayer.KeyMember = null;
 			this.cboDialogueLayer.Location = new System.Drawing.Point(133, 167);
 			this.cboDialogueLayer.Name = "cboDialogueLayer";
 			this.cboDialogueLayer.SelectedIndex = -1;
@@ -222,12 +239,18 @@
 			this.valLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.valLayer.ForeColor = System.Drawing.Color.Black;
 			this.valLayer.Location = new System.Drawing.Point(133, 194);
+			this.valLayer.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
 			this.valLayer.Name = "valLayer";
 			this.valLayer.Size = new System.Drawing.Size(66, 20);
 			this.valLayer.TabIndex = 93;
 			// 
 			// skinnedGroupBox1
 			// 
+			this.skinnedGroupBox1.BackColor = System.Drawing.Color.White;
 			this.skinnedGroupBox1.Controls.Add(this.gridLabels);
 			this.skinnedGroupBox1.Controls.Add(this.valLayer);
 			this.skinnedGroupBox1.Controls.Add(this.lblStageLabels);
@@ -236,8 +259,12 @@
 			this.skinnedGroupBox1.Controls.Add(this.cboDialogueLayer);
 			this.skinnedGroupBox1.Controls.Add(this.lblScale);
 			this.skinnedGroupBox1.Controls.Add(this.label1);
+			this.skinnedGroupBox1.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox1.Image = null;
 			this.skinnedGroupBox1.Location = new System.Drawing.Point(6, 6);
 			this.skinnedGroupBox1.Name = "skinnedGroupBox1";
+			this.skinnedGroupBox1.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox1.ShowIndicatorBar = false;
 			this.skinnedGroupBox1.Size = new System.Drawing.Size(420, 220);
 			this.skinnedGroupBox1.TabIndex = 94;
 			this.skinnedGroupBox1.TabStop = false;
@@ -245,12 +272,17 @@
 			// 
 			// skinnedGroupBox2
 			// 
+			this.skinnedGroupBox2.BackColor = System.Drawing.Color.White;
 			this.skinnedGroupBox2.Controls.Add(this.gridOtherNicknames);
 			this.skinnedGroupBox2.Controls.Add(this.gridNicknames);
 			this.skinnedGroupBox2.Controls.Add(this.label4);
 			this.skinnedGroupBox2.Controls.Add(this.label3);
+			this.skinnedGroupBox2.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox2.Image = null;
 			this.skinnedGroupBox2.Location = new System.Drawing.Point(6, 232);
 			this.skinnedGroupBox2.Name = "skinnedGroupBox2";
+			this.skinnedGroupBox2.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox2.ShowIndicatorBar = false;
 			this.skinnedGroupBox2.Size = new System.Drawing.Size(420, 284);
 			this.skinnedGroupBox2.TabIndex = 95;
 			this.skinnedGroupBox2.TabStop = false;
@@ -400,9 +432,14 @@
 			this.skinnedGroupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedGroupBox3.BackColor = System.Drawing.Color.White;
 			this.skinnedGroupBox3.Controls.Add(this.styleControl);
+			this.skinnedGroupBox3.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox3.Image = null;
 			this.skinnedGroupBox3.Location = new System.Drawing.Point(432, 6);
 			this.skinnedGroupBox3.Name = "skinnedGroupBox3";
+			this.skinnedGroupBox3.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox3.ShowIndicatorBar = false;
 			this.skinnedGroupBox3.Size = new System.Drawing.Size(544, 616);
 			this.skinnedGroupBox3.TabIndex = 96;
 			this.skinnedGroupBox3.TabStop = false;
@@ -430,22 +467,6 @@
 			this.skinnedLabel1.TabIndex = 97;
 			this.skinnedLabel1.Text = "To assign a nickname mid-game, set a per-target marker named \"nickname\" on a case" +
     " where the desired character is the target.";
-			// 
-			// colLabelsStage
-			// 
-			this.colLabelsStage.DataPropertyName = "Stage";
-			this.colLabelsStage.HeaderText = "Stage";
-			this.colLabelsStage.MinimumWidth = 50;
-			this.colLabelsStage.Name = "colLabelsStage";
-			this.colLabelsStage.Width = 50;
-			// 
-			// colLabelsLabel
-			// 
-			this.colLabelsLabel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.colLabelsLabel.DataPropertyName = "Value";
-			this.colLabelsLabel.HeaderText = "Label";
-			this.colLabelsLabel.Name = "colLabelsLabel";
-			this.colLabelsLabel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			// 
 			// AdvancedMetadataEditor
 			// 

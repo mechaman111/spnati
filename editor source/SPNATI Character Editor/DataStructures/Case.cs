@@ -2238,7 +2238,7 @@ namespace SPNATI_Character_Editor
 				}
 				return $"{gender}_{Tag}";
 			}
-			else if (Tag.StartsWith("must_strip"))
+			else if (Tag != null && Tag.StartsWith("must_strip"))
 			{
 				if (speaker.Metadata.CrossGender)
 				{
@@ -2256,15 +2256,15 @@ namespace SPNATI_Character_Editor
 			}
 
 			string tag = Tag;
-			if (tag.StartsWith("female_"))
+			if (tag != null && tag.StartsWith("female_"))
 			{
 				tag = tag.Substring(7);
 			}
-			else if (tag.StartsWith("male_"))
+			else if (tag != null && tag.StartsWith("male_"))
 			{
 				tag = tag.Substring(5);
 			}
-			else if (tag.StartsWith("opponent_"))
+			else if (tag != null && tag.StartsWith("opponent_"))
 			{
 				tag = tag.Substring(9);
 			}
@@ -2625,6 +2625,10 @@ namespace SPNATI_Character_Editor
 			}
 			foreach (TargetCondition condition in Conditions)
 			{
+				if (condition.Count == "0" || condition.Count == "0-0")
+				{
+					continue;
+				}
 				if (!string.IsNullOrEmpty(condition.Character))
 				{
 					Character c = CharacterDatabase.Get(condition.Character);
