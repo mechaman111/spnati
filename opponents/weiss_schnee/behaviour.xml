@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.2 at 4:26:53  on oktober 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.2 at 4:39:13  on oktober 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.2</version>
     <first>Weiss</first>
@@ -8,7 +8,7 @@
     <label>Weiss</label>
     <gender>female</gender>
     <size>small</size>
-    <timer>30</timer>
+    <timer>20</timer>
     <intelligence>average</intelligence>
 
     <intelligence stage="1">average</intelligence>
@@ -551,7 +551,8 @@
         </trigger>
 
         <trigger id="must_strip">
-            <case stage="0" saidMarker="emotions" priority="900">
+            <case stage="0" priority="900">
+                <condition role="self" saidMarker="emotions" />
                 <state img="#-emotions.png" set-intelligence="average">I hate this game of emotions we play.</state>
             </case>
             <case stage="0" alsoPlaying="monika" alsoPlayingStage="0-3">
@@ -1745,11 +1746,13 @@
                 <condition filter="robot" role="target" stage="0" />
                 <state img="#-thinking.png">You remind me of my friend Penny. I'm not entirely sure why.</state>
             </case>
-            <case stage="0" filter="student" targetStage="0">
+            <case stage="0">
+                <condition filter="student" role="target" stage="0" />
                 <state img="#-calm.png">Oh, a fellow student. What Academy do you go to?</state>
             </case>
-            <case stage="0" targetStage="0">
+            <case stage="0">
                 <condition count="1" filter="musician" />
+                <condition role="target" stage="0" />
                 <state img="#-interested.png">You wouldn't happen to  know "Mirror Mirror", would you ~name~?</state>
             </case>
             <case stage="6" totalExposed="0" totalNaked="0" totalMasturbating="0" totalFinished="0">
@@ -1908,7 +1911,7 @@
             <case stage="3">
                 <state img="#-angry.png">Wow... Even Neptune is a bigger gentleman than you.</state>
                 <state img="#-angry.png">That's it? Seriously.</state>
-                <state img="#-angry_goofy.png">Wow! How brave of you, ~name~. Ugh.</state>
+                <state img="#-angry.png">Wow! How brave of you, ~name~. Ugh.</state>
             </case>
             <case stage="4">
                 <state img="#-angry.png">You get to look at me like this! That's not a fair trade!</state>
@@ -1916,9 +1919,9 @@
                 <state img="#-angry.png">That's hardly a fair trade for me.</state>
             </case>
             <case stage="5">
-                <state img="#-angry_goofy.png">If you are done being such an ignoramus, we can continue the game.</state>
-                <state img="#-angry_goofy.png">Why am I playing with this enormous moron?</state>
-                <state img="#-angry_goofy.png">Well, is ~player~ is done being such a ginormous halfwit... We can continue.</state>
+                <state img="#-angry.png">If you are done being such an ignoramus, we can continue the game.</state>
+                <state img="#-angry.png">Why am I playing with this enormous moron?</state>
+                <state img="#-angry.png">Well, is ~player~ is done being such a ginormous halfwit... We can continue.</state>
             </case>
             <case stage="6">
                 <state img="#-angry.png">I'm sitting here like some sort of doll, and you still have small stuff...</state>
@@ -2258,7 +2261,7 @@
             </case>
             <case stage="7">
                 <state img="#-embarrassed.png">Do you like humiliating other girls!?</state>
-                <state img="#-angry_goofy.png">This is just some kind of girl-on-girl bullying, isn't it?</state>
+                <state img="#-angry.png">This is just some kind of girl-on-girl bullying, isn't it?</state>
                 <state img="#-embarrassed.png">This is no doubt a dream of yours...</state>
             </case>
             <case stage="8">
@@ -2728,7 +2731,7 @@
             </case>
             <case stage="5">
                 <state img="#-tsundere.png">Fine! go ahead and take off your ~clothing~.</state>
-                <state img="#-angry_goofy.png">You perv... you wanted to get naked with me, didn't you?</state>
+                <state img="#-angry.png">You perv... you wanted to get naked with me, didn't you?</state>
                 <state img="#-tsundere.png">If that's how you want to be, then that's fine by me.</state>
             </case>
             <case stage="6">
@@ -3235,7 +3238,7 @@
             <case stage="9">
                 <state img="#-angry.png">That doesn't help me now!  Not that it would have when I... It wouldn't have!</state>
                 <state img="#-angry.png">Lot of good that does me now!  N-not that you'd make me...  Shut up!</state>
-                <state img="#-angry_goofy.png">Now? Couldn't you have taken that off earlier?</state>
+                <state img="#-angry.png">Now? Couldn't you have taken that off earlier?</state>
             </case>
         </trigger>
 
@@ -5293,7 +5296,7 @@
             </case>
             <case stage="7">
                 <test expr="~background~" value="street" />
-                <state>You want me to do what? I-I can't there not with the giant crowd around us.</state>
+                <state img="#-loss.png">You want me to do what? I-I can't there not with the giant crowd around us.</state>
             </case>
             <case stage="7">
                 <state img="#-loss.png">I don't have any more clothes on, I'm standing here completely naked! What more could you possibly want me t- Wait... NOOOOO! THIS CAN'T BE HAPPENING!</state>
@@ -5364,14 +5367,22 @@
                 <state img="#-horny2.png">D-don't watch.  I d-don't like it... that much...</state>
                 <state img="#-horny1.png" marker="weiss_is_an_heiress">An heiress... doing something so... deplorable in front of all these people!</state>
                 <state img="#-horny1.png">I need a silence Glyph...</state>
+                <state img="#-horny3.png">I might have been able to enjoy this if everyone wasn't looking.</state>
+                <state img="#-horny2.png">Ah... This almost feel... nice.</state>
             </case>
         </trigger>
 
         <trigger id="heavy_masturbating">
             <case stage="8">
-                <state img="#-heavy.png">I'm playing with myself... completely naked, and I'm about to... in front of all these people...No!</state>
-                <state img="#-heavy.png">N-no!  Not when everybody's watching!</state>
-                <state img="#-heavy.png">They're going to see they're going to see they're going to see THEY'REGOINGTOSEE!!!!!</state>
+                <state img="#-heavy1.png">I'm playing with myself... completely naked, and I'm about to... in front of all these people...No!</state>
+                <state img="#-heavy1.png">N-no!  Not when everybody's watching!</state>
+                <state img="#-heavy1.png">They're going to see they're going to see they're going to see THEY'REGOINGTOSEE!!!!!</state>
+                <state img="#-heavy2.png">Please no! I don't want everyone else to see me...</state>
+                <state img="#-heavy2.png">No, Please! I can feel I am close to... </state>
+                <state img="#-heavy2.png">No, oh god no!</state>
+                <state img="#-heavy3.png">I beg you. Please look away.</state>
+                <state img="#-heavy3.png">I can feel it. This can't be happning.</state>
+                <state img="#-heavy3.png">Please look away. I am close to.</state>
             </case>
         </trigger>
 
