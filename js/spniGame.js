@@ -217,7 +217,9 @@ function loadGameScreen () {
  * Updates all of the main visuals on the main game screen.
  ************************************************************/
 function updateGameVisual (player) {
-    gameDisplays[player-1].update(players[player]);
+    if (inGame) {
+        gameDisplays[player-1].update(players[player]);
+    }
 }
 
 /************************************************************
