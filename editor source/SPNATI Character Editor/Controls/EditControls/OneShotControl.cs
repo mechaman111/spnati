@@ -72,8 +72,8 @@ namespace SPNATI_Character_Editor
 							case OneShotMode.Case:
 								_id = ++character.Behavior.MaxCaseId;
 								break;
-							case OneShotMode.Stage:
-								_id = ++character.Behavior.MaxStageId;
+							case OneShotMode.State:
+								_id = ++character.Behavior.MaxStateId;
 								break;
 						}
 					}
@@ -127,6 +127,6 @@ namespace SPNATI_Character_Editor
 	public enum OneShotMode
 	{
 		Case,
-		Stage
+		State
 	}
 }

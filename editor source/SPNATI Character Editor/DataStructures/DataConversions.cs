@@ -34,6 +34,10 @@ namespace SPNATI_Character_Editor
 				Convert5_1(character);
 				Convert5_2(character);
 			}
+			if (Config.VersionPredates(version, "v5.2.7"))
+			{
+				Convert5_2_7(character);
+			}
 		}
 
 		private static void Convert3_2(Character character)
@@ -231,6 +235,29 @@ namespace SPNATI_Character_Editor
 					else
 					{
 						usedOneShots.Add(workingCase.OneShotId);
+					}
+				}
+			}
+		}
+
+		private static void Convert5_2_7(Character character)
+		{
+			HashSet<int> usedOneShots = new HashSet<int>();
+			//de-duplicate oneshot IDs on lines too
+			foreach (Case workingCase in character.Behavior.GetWorkingCases())
+			{
+				foreach (DialogueLine line in workingCase.Lines)
+				{
+					if (line.OneShotId > 0)
+					{
+						if (usedOneShots.Contains(workingCase.OneShotId))
+						{
+							line.OneShotId = ++character.Behavior.MaxStateId;
+						}
+						else
+						{
+							usedOneShots.Add(workingCase.OneShotId);
+						}
 					}
 				}
 			}

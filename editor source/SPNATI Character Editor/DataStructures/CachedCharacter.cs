@@ -5,13 +5,20 @@ using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
+	/// <summary>
+	/// Initial character stub that exists only during initial load so that CharacterDatabase.Get() calls correctly identify the existence of characters that haven't been loaded yet
+	/// </summary>
+	public class PlaceholderCharacter : Character
+	{
+	}
+
 	[XmlRoot("opponent", Namespace = "")]
 	/// <summary>
 	/// Cached important information about a character to use prior to loading in the real character
 	/// </summary>
 	public class CachedCharacter : Character
 	{
-		public static int CurrentVersion = 2;
+		public static int CurrentVersion = 3;
 
 		[XmlElement("cacheVersion")]
 		public int CacheVersion;
@@ -35,7 +42,7 @@ namespace SPNATI_Character_Editor
 		[XmlArray("altCostumes")]
 		[XmlArrayItem("alternate")]
 		public List<AlternateSkin> Skins = new List<AlternateSkin>();
-
+		
 		public override bool IsFullyLoaded { get { return false; } }
 
 		public CachedCharacter() { }
@@ -122,6 +129,8 @@ namespace SPNATI_Character_Editor
 			{
 				Metadata.AlternateSkins.Add(skin);
 			}
+
+			Metadata.CrossGender = CrossGender;
 		}
 
 		public int GetTargetedCountTowards(string folderName)

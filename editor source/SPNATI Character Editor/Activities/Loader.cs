@@ -57,6 +57,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				filter.Add(lastCharacter);
 			}
+			CharacterDatabase.UsePlaceholders = true;
 			foreach (string key in folders)
 			{
 				int step = (int)(((float)i / count) * 99) + 1;
@@ -147,6 +148,9 @@ namespace SPNATI_Character_Editor.Activities
 					}
 				});
 			}
+
+			CharacterDatabase.UsePlaceholders = false;
+
 			//add a placeholder for the human
 			Character human = new Character()
 			{
