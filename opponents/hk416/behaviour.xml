@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.7 at 9:06:43 PM on October 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.7 at 10:06:41 PM on October 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.7</version>
     <first>HK416</first>
@@ -57,6 +57,10 @@
                 <state img="#-base.png" marker="akko_mistaken">HK416. Please remember this extraord-- &lt;i&gt;G28?!&lt;/i&gt; What are you...</state>
             </case>
             <case stage="0">
+                <condition role="other" character="sei" />
+                <state img="#-base.png">HK416. Please remember this &lt;i&gt;extraordinary&lt;/i&gt; name. &lt;br&gt; ...Hm? I wasn't expecting to see you here, Sei.</state>
+            </case>
+            <case stage="0">
                 <state img="#-base.png">HK416. Please remember this &lt;i&gt;extraordinary&lt;/i&gt; name.</state>
             </case>
         </trigger>
@@ -65,6 +69,10 @@
             <case stage="0">
                 <condition role="target" character="akko" />
                 <state img="#-guarded.png" marker="akko_mistaken">&lt;i&gt;G28?!&lt;/i&gt; What are you doing...</state>
+            </case>
+            <case stage="0">
+                <condition role="target" character="sei" />
+                <state img="#-idle.png">Oh? I wasn't expecting to see you here, Sei...</state>
             </case>
         </trigger>
 
@@ -179,11 +187,25 @@
 
         <trigger id="hand">
             <case stage="0-7">
+                <condition role="other" character="sei" stage="1" timeInStage="0" sayingMarker="drinks_anyone" />
+                <condition role="other" character="akko" />
+                <state img="#-guarded.png" marker="sei_drink">I'm aware the last time I drank was &lt;i&gt;troublesome&lt;/i&gt;, but if you're serious about this, Sei... I suppose a Beer wouldn't hurt-- No, on second thought, make that a Cobalt Velvet...</state>
+            </case>
+            <case stage="0" oneShotId="8" totalRounds="0" priority="200">
+                <condition role="other" character="sei" />
+                <state img="#-question.png" marker="sei_whoareyou">Come to think of it, though... Which Sei am I speaking to, right now? The T-Doll, or the human?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="sei" stage="1" timeInStage="0" sayingMarker="drinks_anyone" />
+                <state img="#-disappointed.png" marker="sei_nodrink">...I won't have anything, Sei. Things got... &lt;i&gt;troublesome&lt;/i&gt; the last time I drank, to say the least.</state>
+            </case>
+            <case stage="0-7">
                 <condition role="other" character="chihiro" stage="5" timeInStage="0" />
                 <state img="#-idle.png">Fujisaki must be truly talented, then, if she can construct an AI that can run on such a constrained platform.</state>
                 <state img="#-idle.png">A true AI, running on such a constrained platform... your creator must be truly talented, Alter Ego. I know a few firms that could use her skills.</state>
             </case>
-            <case stage="0-7" alsoPlaying="sakura" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
+            <case stage="0-7">
+                <condition role="other" character="sakura" stage="1" timeInStage="0" />
                 <state img="#-question.png">Hm. So, is 'Sakura' your &lt;i&gt;real&lt;/i&gt; name, then?</state>
             </case>
             <case stage="0-7" alsoPlaying="sakura" alsoPlayingStage="2" alsoPlayingTimeInStage="0">
@@ -192,9 +214,6 @@
             <case stage="0-7" oneShotId="1">
                 <condition role="other" character="chazz" stage="0" />
                 <state img="#-disappointed.png" marker="chazz_armdevice">You, there. The idiot with the ridiculous hair. &lt;br&gt; What is that device on your arm, and why did you bring it here? </state>
-            </case>
-            <case stage="1-4" alsoPlaying="sei" saidMarker="va-11_hall-a" notSaidMarker="asked_about_va11_hall_a">
-                <state img="#-question.png" marker="asked_about_va11_hall_a">Sei, I believe you mentioned a bar called "VA11 HALL-A"? What is it like?</state>
             </case>
             <case stage="0-7" alsoPlaying="shimakaze" saidMarker="shimakaze_rtb==1">
                 <state img="#-guarded.png" marker="shimakaze_relatable=1">I'm only offering this because of our similar backgrounds, okay? It's... nice to know someone &lt;i&gt;relatable&lt;/i&gt;, here.</state>
@@ -260,10 +279,12 @@
             <case stage="0" alsoPlaying="miko">
                 <state img="#-headtilt.png" marker="miko_names">"Tsukumogami"...? I am not quite familiar with that word. Nonetheless, my official unit designation is HK416, since that is the weapon I was designed to be most adept with.</state>
             </case>
-            <case stage="0" alsoPlaying="sei">
-                <state img="#-idle.png">Yes, I am a Tactical Doll, which I suppose could be considered a type of Lilim. Why do you ask?</state>
+            <case stage="0">
+                <condition role="other" character="sei" />
+                <state img="#-idle.png">Yes, I am a Tactical Doll, which I suppose could be considered similar to a Lilim. Why do you ask?</state>
             </case>
-            <case stage="1" alsoPlaying="sei">
+            <case stage="1">
+                <condition role="other" character="sei" />
                 <state img="#-question.png">Hm? Me?</state>
             </case>
         </trigger>
@@ -378,25 +399,30 @@
             <case stage="0" alsoPlaying="sayaka">
                 <state img="#-strip.png">No, I do not know anyone by the name 'Homura'... and even if I did, I of course would never divulge the identities of my clients.</state>
             </case>
-            <case stage="0" alsoPlaying="sei">
-                <state img="#-strip.png" marker="va-11_hall-a">Hm... No, I don't ever remember visiting that place before, Sei. From the name, I assume it's a BTC bar?</state>
+            <case stage="0">
+                <condition role="other" character="sei" />
+                <state img="#-strip.png" marker="va-11_hall-a">Yes, I've been there before. It was a pleasant place, I suppose. Well, and then I... uhm, nevermind. &lt;br&gt; It was pleasant. Let's just leave it at that.</state>
             </case>
             <case stage="1" alsoPlaying="coco">
                 <state img="#-strip.png">Admittedly, there are many parts of my uniform design that I don't understand, either. I assume someone at IOP was thinking with their &lt;i&gt;head&lt;/i&gt;, instead of their brain.</state>
             </case>
-            <case stage="1" alsoPlaying="sei">
+            <case stage="1">
+                <condition role="other" character="sei" />
                 <state img="#-strip.png">'Holly'? Sounds childish... though it does roll off the tongue better than my weapon designation. And it is far better than 'Hek', to be sure.</state>
             </case>
-            <case stage="2" alsoPlaying="sei">
+            <case stage="2">
+                <condition role="other" character="sei" />
                 <state img="#-strip.png">Hmph... I suppose this situation calls for some loosening up. Getting too worked up over something like this would be... unbecoming of me.</state>
             </case>
             <case stage="3" alsoPlaying="coco">
                 <state img="#-strip.png">I don't... &lt;i&gt;what&lt;/i&gt;, exactly, are you implying?</state>
             </case>
-            <case stage="3" alsoPlaying="sei">
+            <case stage="3">
+                <condition role="other" character="sei" />
                 <state img="#-strip.png">I-I am &lt;i&gt;not!&lt;/i&gt; This is just embarrassing and demeaning... and stop giving me that look, Sei!</state>
             </case>
-            <case stage="4" alsoPlaying="sei">
+            <case stage="4">
+                <condition role="other" character="sei" />
                 <state img="#-strip.png">The skirt &lt;i&gt;is&lt;/i&gt; an inconvenience at times. People who try to look up my skirt during combat operations typically don't live for very long, though.</state>
             </case>
             <case stage="0">
@@ -458,16 +484,19 @@
             <case stage="1" alsoPlaying="sayaka">
                 <state img="#-hmph.png">The only one who will need &lt;i&gt;saving&lt;/i&gt; is UMP45, once I get out of this simulation.</state>
             </case>
-            <case stage="1" alsoPlaying="sei">
+            <case stage="1">
+                <condition role="other" character="sei" />
                 <state img="#-guarded.png">I'm a consummate professional; I take pride in being 'all business'... even if UMP45 makes this extremely difficult at times.</state>
             </case>
             <case stage="2" alsoPlaying="coco">
                 <state img="#-idle.png">On the other hand, I &lt;i&gt;have&lt;/i&gt; been calibrated and optimized with this exact uniform in mind, so I'm stuck with it, for better or worse.</state>
             </case>
-            <case stage="2" alsoPlaying="sei">
+            <case stage="2">
+                <condition role="other" character="sei" />
                 <state img="#-satisfied1.png">Yes, I was built with the utmost precision and engineering quality... do you like what you see?</state>
             </case>
-            <case stage="3" alsoPlaying="sei">
+            <case stage="3">
+                <condition role="other" character="sei" />
                 <state img="#-guarded.png">I do not exactly have time for &lt;i&gt;fun&lt;/i&gt;, Sei. ...I have been learning to cook, though, during my downtime between assignments.</state>
             </case>
             <case stage="4" alsoPlaying="coco">
@@ -476,14 +505,17 @@
             <case stage="4" alsoPlaying="sei">
                 <state img="#-idle.png">In truth, I'm not sure who designed my uniform... though after this, I believe I might have to pay them a &lt;i&gt;visit.&lt;/i&gt; This is beyond ridiculous.</state>
             </case>
-            <case stage="5" alsoPlaying="sei">
+            <case stage="5">
+                <condition role="other" character="sei" />
                 <state img="#-blushing.png">O-Of course I am, I'm the pinnacle of IOP T-Doll design... and I'm glad you recognize that.</state>
             </case>
-            <case stage="6" alsoPlaying="sei">
+            <case stage="6">
+                <condition role="other" character="sei" />
                 <state img="#-blushing.png">And &lt;i&gt;what&lt;/i&gt; is that supposed to mean, Sei?!</state>
             </case>
-            <case stage="7" alsoPlaying="sei">
-                <state img="#-guarded.png">I used to have unit and manufacturer information etched into my pelvic region... though I had it removed long ago when I went rogue.</state>
+            <case stage="7">
+                <condition role="other" character="sei" />
+                <state img="#-guarded.png">I used to have unit and manufacturer information etched into my pelvic region... though I had it removed some time ago. It's not as if I need it anymore.</state>
             </case>
             <case stage="1">
                 <state img="#-hmph.png">I'm still just as combat-effective without my hat.</state>
