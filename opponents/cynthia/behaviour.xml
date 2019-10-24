@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 2:16:18 PM on October 22, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.7 at 10:42:36 PM on October 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.6</version>
+    <version>v5.2.7</version>
     <first>Cynthia</first>
     <last />
     <label>Cynthia</label>
@@ -747,7 +747,7 @@
                 <state img="#-scowling.png">That cheap thing? Please, I bet you bought that from a children's accessory shop... Or stole it from one.</state>
                 <state img="#-scowling.png">Why would you associate with the likes of Team Skull? Don't you have standards or something?</state>
                 <state img="#-scowling.png">Ugh, just looking at thing is... unsettling.. Do you have any idea what that symbol stands for?</state>
-                <state img="#-scowling.png">Ugh, just looking at thing is... unsettling.. That symbol is a symbol of ththieverynd arrogance.</state>
+                <state img="#-scowling.png">Ugh, just looking at thing is... unsettling.. That symbol represents thievery and arrogance.</state>
                 <state img="#-disappointed.png">No one can possibly take you seriously with that thing around you neck anyway, Guzma.</state>
             </case>
             <case stage="0-10">
@@ -791,7 +791,7 @@
                 <state img="#-disappointed.png">You know, it's surprising... You're still the same Guzma as before, but you already look more respectable with that ridiculous chain off your neck.</state>
                 <state img="#-disappointed.png">You know, it's surprising... You're still the same Guzma as before, but you already look more respectable with that cheap trinket off your neck.</state>
                 <state img="#-disappointed.png">You know, it's surprising... Without that chain around you neck, you almost look respectable...</state>
-                <state img="#-disappointed.png">You know, it's surprising... Without that absurd knickknackk around you neck, you almost look respectable...</state>
+                <state img="#-disappointed.png">You know, it's surprising... Without that absurd knickknack around you neck, you almost look respectable...</state>
             </case>
             <case stage="0-10">
                 <state img="#-aggressive.png">Ha! You'll have to take off more than &lt;i&gt;that&lt;/i&gt; to please me.</state>
@@ -805,6 +805,42 @@
 
         <trigger id="female_removing_accessory">
             <case stage="0-10">
+                <condition role="target" character="elesa" stage="2" saying="listening to" />
+                <condition count="2" gender="male" />
+                <state img="#-fingerup.png">What's the matter, are you embarrassed? I don't think the boys here will judge you.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="2" saying="listening to" />
+                <condition count="1" gender="male" var="male" />
+                <state img="#-fingerup.png">What's the matter, are you embarrassed? I don't think ~male~ will judge you.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="2" saying="listening to" />
+                <condition count="0" gender="male" />
+                <state img="#-fingerup.png">What's the matter, are you embarrassed? Come on, let loose a little; we're all women here!</state>
+                <state img="#-fingerup.png">What, are you embarrassed or something? It's just us girls here.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="1" saying=" magnets." />
+                <state img="#-thinking.png">Oh, like a Magnezone? Yeah, yeah I can see it...</state>
+                <state img="#-thinking.png">Why, I suppose they do remind me of Magnezones...</state>
+                <state img="#-thinking.png">I've seen some Magnezones at Mt. Coronet, and you're right! Those do resemblem a Magnezone.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="2" saying="listening to" />
+                <state img="#-thinking.png">Oh? Are you embarrassed about your taste in music?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="1" />
+                <state img="#-happy.png">Why, those shoes are pretty cute, Elesa!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="2" />
+                <state img="#-happy.png">Now those are what I call headphones!</state>
+                <state img="#-excited.png">Those are rather cute! It's the little things that really pull an outfit together.</state>
+                <state img="#-embarrassed.png">You certainly put a lot of effort into every last detail of your outfit! I just... stick to black</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-disappointed.png">Oh, you're taking your ~clothing~ off? I didn't realize that counted.</state>
                 <state img="#-disappointed.png">Come on, ~name~, I know we're all playing to win here, but don't you think you could have been just a &lt;i&gt;little&lt;/i&gt; more ambitious?</state>
                 <state img="#-disappointed.png">Bringing accessories is kind of cheap, but hey, anything to win, right?</state>
@@ -812,6 +848,33 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="2" saying="Are you interested" />
+                <condition count="1" gender="male" var="male" />
+                <test expr="~background.time~" value="night" />
+                <state img="#-fingerup.png">Well, &lt;i&gt;I'm&lt;/i&gt; not interested, Elesa, but I think ~male~ over here might be!</state>
+                <state img="#-fingerup.png">Well, &lt;i&gt;I'm&lt;/i&gt; not interested, Elesa, but I think ~male~ over here might be trying to see more of you!</state>
+                <state img="#-fingerup.png">Well, &lt;i&gt;I'm&lt;/i&gt; not interested, Elesa, but I bet ~male~ came here tonight because he knew you'd be here!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="2" saying="Are you interested" />
+                <condition count="1" gender="male" var="male" />
+                <test expr="~background.time~" value="day" />
+                <state img="#-fingerup.png">Well, &lt;i&gt;I'm&lt;/i&gt; not interested, Elesa, but I think ~male~ over here might be!</state>
+                <state img="#-fingerup.png">Well, &lt;i&gt;I'm&lt;/i&gt; not interested, Elesa, but I think ~male~ over here might be trying to see more of you!</state>
+                <state img="#-fingerup.png">Well, &lt;i&gt;I'm&lt;/i&gt; not interested, Elesa, but I bet ~male~ came here today because he knew you'd be here!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="2" saying="other's company" />
+                <state img="#-fingerup.png">Why, I'm flattered that you enjoy being around me, Elesa! Truly, those are kind words!</state>
+                <state img="#-embarrassed.png">Oh? You... enjoy my company, Elesa?!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="2" saying="Are you interested" />
+                <state img="#-fingerup.png">Ha! Well, I must admit, there's a certain &lt;i&gt;glamour&lt;/i&gt; about you that I find quite &lt;i&gt;charming&lt;/i&gt;. But I wouldn't say I'm &lt;i&gt;interested&lt;/i&gt;.</state>
+                <state img="#-pensive.png">Sorry Elesa, but I'm only interested in men...</state>
+                <state img="#-embarrassed.png">Sorry Elesa, but I'm only interested in men... A-are you interested?</state>
+            </case>
             <case stage="0-10">
                 <state img="#-aggressive.png">Don't worry; I'll win ~clothing.ifPlural(even if you still have ~clothing~!|one ~clothing~ at a time!)~</state>
                 <state img="#-aggressive.png">Ha, that's okay. I'm used to my competitors pulling cheap shots on me.</state>
@@ -859,6 +922,12 @@
                 <state img="#-aggressive.png">What's the matter, scared? Don't worry, most challengers who face me get the instinct to flee.</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="elesa" stage="0" saying=" what they call" />
+                <state img="#-thinking.png">Hmmm... You're a little unfamiliar to me, Elesa... I know that you're a gym leader, but that's about it...</state>
+                <state img="#-thinking.png">They call you... Elesa, right? Elesa the... gym leader, was it?</state>
+                <state img="#-thinking.png">You're a gym leader, right Elesa? Hmmm... I am sorry to say though that I haven't a clue which region you're from...</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-pensive.png">This isn't the part of the game I was looking forward to...</state>
                 <state img="#-pensive.png">A woman taking off her ~clothing~... this is not why I decided to play this game.</state>
             </case>
@@ -866,7 +935,14 @@
 
         <trigger id="female_removed_minor">
             <case stage="0-10">
+                <condition role="target" character="elesa" stage="1" />
+                <state img="#-excited.png">Ha! Very well then, &lt;i&gt;Shining Beauty&lt;/i&gt; Elesa! Let's see how skilled you are at cards!</state>
+                <state img="#-excited.png">So we're going to see your &lt;i&gt;beauty&lt;/i&gt;, Elesa? Does that mean you intend to throw?</state>
+                <state img="#-excited.png">So we're going to see your &lt;i&gt;beauty&lt;/i&gt;, Elesa? Does that mean you expect to lose?</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-fingerup.png">Hopefully next round will have a more desirable outcome!</state>
+                <state img="#-disappointed.png">Well, I'll take the victory, but if truth be told, that wasn't very exciting...</state>
             </case>
         </trigger>
 
@@ -1394,12 +1470,12 @@
             <case stage="0-10">
                 <state img="#-aggressive.png">You may have not overcome the Pokemon League, but you can be &lt;i&gt;my&lt;/i&gt; champion, ~name~!</state>
                 <state img="#-contemplative.png">This reminds me of some perverse mythology I read about...</state>
-                <state img="#-contemplative.png">Mmhmmm... Yes, it's just the like first man did when the the first woman wasn't in the mood...</state>
+                <state img="#-contemplative.png">Mmhmmm... Yes, it's just the like first man did when the first woman wasn't in the mood...</state>
                 <state img="#-fingerup.png">I've studied a lot of ancient paintings, but if truth be told, the pornographic etchings were always my favorite...</state>
             </case>
             <case stage="10">
                 <state img="#-fingerup.png">Is that some pre-cum I see leaking out? Ha ha ha, it must be so fun doing that as a guy!</state>
-                <state img="#-excited.png">Am I imagining things, or did the fapping sound get... wetter? ~Male~, did any pre-cum leak out?</state>
+                <state img="#-excited.png">Am I imagining things, or did the fapping sound get... wetter? ~name~, did any pre-cum leak out?</state>
                 <state img="#-embarrassed.png">Oh, ha ha... Were you looking at me? It's... it's fine to look, if you want to...</state>
             </case>
         </trigger>
@@ -1421,6 +1497,14 @@
                 <state img="#-disappointed.png">Moon's right here; I'm sure she won't mind...</state>
                 <state img="#-disappointed.png">It looks like &lt;i&gt;someone&lt;/i&gt; here might be willing to clean you off...</state>
                 <state img="#-disappointed.png">It looks like &lt;i&gt;someone&lt;/i&gt; here might be willing to clean it off of you...</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="guzma" />
+                <state img="#-sarcastic.png">Hhgn... So that's the finale, then?</state>
+                <state img="#-sarcastic.png">Hhgn... So all of this build up for that?</state>
+                <state img="#-sarcastic.png">Hhgn... Oh, don't mind me; I was just expecting something a little more fierce from, Guzma.</state>
+                <state img="#-contemplative.png">Ha, so that's the climax? &lt;i&gt;(It was a little underwhelming for someone like Guzma.)&lt;/i&gt;</state>
+                <state img="#-contemplative.png">Ha, so that's the climax? &lt;i&gt;(You'd think that with Guzma, it might be a little more remarkable)&lt;/i&gt;</state>
             </case>
             <case stage="4-10">
                 <condition filter="hairy" role="target" />
@@ -1467,13 +1551,6 @@
                 <state img="#-excited.png">Ah! Th-the seeds of creation-- they've been spilled all over!</state>
                 <state img="#-excited.png">Huhah! That's the spoils of victory!</state>
                 <state img="#-frustrated.png">Ah, y-your seed, I-I... I guess I &lt;i&gt;knew&lt;/i&gt; this was coming, but it comes across as such a shock!</state>
-            </case>
-            <case stage="0-10">
-                <state img="#-sarcastic.png">Hhgn... So that's the finale, then?</state>
-                <state img="#-sarcastic.png">Hhgn... So all of this build up for that?</state>
-                <state img="#-sarcastic.png">Hhgn... Oh, don't mind me; I was just expecting something a little more fierce from, Guzma.</state>
-                <state img="#-contemplative.png">Ha, so that's the climax? &lt;i&gt;(It was a little underwhelming for someone like Guzma.)&lt;/i&gt;</state>
-                <state img="#-contemplative.png">Ha, so that's the climax? &lt;i&gt;(You'd think that with Guzma, it might be a little more remarkable)&lt;/i&gt;</state>
             </case>
         </trigger>
 
@@ -1615,7 +1692,7 @@
 
         <trigger id="female_masturbating">
             <case stage="0-10">
-                <condition filter="pubic_hair" role="opp" />
+                <condition filter="pubic_hair" role="target" />
                 <state img="#-fingerup.png">Doesn't the hair kind of get in the way, ~name~? You should try shaving; that way, the surface is nice and smooth!</state>
                 <state img="#-fingerup.png">I'm a little curious here, but why don't  you shave? Do you... enjoy the warmth or something on your hand when you masturbate? Is it a maintenance issue?</state>
             </case>
@@ -1686,7 +1763,7 @@
                 <state img="#-horny.png">&lt;i&gt;(The way ~male~'s dick twitches, and how the tip pokes above his hand before being covered again... Mmmm...)&lt;/i&gt;</state>
             </case>
             <case stage="9">
-                <condition count="1-5" gender="female" stage="9" var="female" />
+                <condition count="1-5" gender="female" role="opp" stage="9" var="female" />
                 <state img="#-happy.png">Ah, keep it up, ~female~; you're giving me some inspiration!</state>
                 <state img="#-horny.png">Oh, could you maybe... &lt;i&gt;spread your legs&lt;/i&gt; a bit more, ~female~? Heh heh, it's arousing to look at...</state>
                 <state img="#-happy.png">Oh my, ~female~, it sounds like you're pretty wet...</state>
