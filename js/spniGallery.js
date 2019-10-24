@@ -278,11 +278,11 @@ function loadGalleryScreen(){
     
     $('#collectible-character-filter').append(loadedOpponents.filter(function (opp) {
         return opp && opp.has_collectibles;
-    }).map(createFilterOption));
+    }).sort(function(a, b) { return a.label < b.label ? -1 : 1; }).map(createFilterOption));
     
     $('#epilogue-character-filter').append(loadedOpponents.filter(function (opp) {
         return opp && opp.ending;
-    }).map(createFilterOption))
+    }).sort(function(a, b) { return a.label < b.label ? -1 : 1; }).map(createFilterOption));
     
     if (COLLECTIBLES_ENABLED) {
         goToCollectiblesScreen();
