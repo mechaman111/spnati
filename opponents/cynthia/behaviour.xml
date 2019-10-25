@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.7 at 10:42:36 PM on October 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.7 at 6:57:11 PM on October 24, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.7</version>
     <first>Cynthia</first>
@@ -64,13 +64,35 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0" priority="106">
+                <condition role="other" character="guzma" />
+                <state img="#-battleready.png" marker="malePlaying">Guzma, the criminal mastermind behind Team Skull?! Jus...- *ahem* Just what are your intentions here, Guzma?</state>
+            </case>
             <case stage="0">
-                <condition count="1-" gender="male" />
-                <state img="#-excited.png" marker="malePlaying">This will be such fun! No holds barred!</state>
+                <condition count="-0" gender="male" />
+                <condition role="other" character="misty_hgss" />
+                <state img="#-happy.png" marker="noMales">Oh, Misty? Fancy meeting you here! You're from Kanto, aren't you?</state>
+                <state img="#-happy.png" marker="noMales">Oh, Misty? Fancy meeting you here! Aren't you from the Kanto region?</state>
+                <state img="#-disappointed.png" marker="noMales">Oh, Misty! It's a bit embarrassing, buuuut... I thought I would see some guys here.</state>
+            </case>
+            <case stage="0">
+                <condition count="1-5" gender="male" var="male" />
+                <condition role="other" character="misty_hgss" />
+                <state img="#-happy.png" marker="malePlaying">Oh, Misty? Fancy meeting you here! You're from Kanto, aren't you?</state>
+                <state img="#-happy.png" marker="malePlaying">Oh, Misty? Fancy meeting you here! Aren't you from the Kanto region?</state>
+                <state img="#-fingerup.png" marker="malePlaying">Oh, Misty! It's a bit embarrassing, buuuut... I heard ~male~ was playing, and I figured I could see something nice.</state>
+            </case>
+            <case stage="0">
+                <condition count="1" gender="male" var="male" />
+                <state img="#-excited.png" marker="malePlaying">Well hello there, everybody; are we ready to begin? I'm looking forward to how this match may develop, ~male~.</state>
             </case>
             <case stage="0">
                 <condition count="-0" gender="male" />
                 <state img="#-disappointed.png" marker="noMales">Wait, huh? There's no men here... I thought... I only joined because... Well, never mind that. Let's get this battle started!</state>
+            </case>
+            <case stage="0">
+                <condition count="2-5" gender="male" />
+                <state img="#-excited.png" marker="malePlaying">Well hello, gentlemen... Ready to for a challenge?</state>
             </case>
         </trigger>
 
@@ -322,6 +344,11 @@
         </trigger>
 
         <trigger id="must_strip">
+            <case stage="0">
+                <condition role="other" character="misty_hgss" stage="0-4" />
+                <state img="#-disappointed.png">Oh, I've been doing fine, Misty! Well... up until now, that is...</state>
+                <state img="#-fingerup.png" marker="MistyGalar">Things have been great, Misty! Have you heard about the newly discovered Galar region? We should make our way there and explore it together!</state>
+            </case>
             <case stage="5" priority="5">
                 <condition count="3" status="alive" />
                 <state img="#-scowling.png">Another crushing defeat by the hands of you two?</state>
@@ -371,6 +398,19 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="0">
+                <condition role="other" character="misty_hgss" />
+                <condition role="self" saidMarker="MistyGalar" />
+                <state img="#-stripping.png">I bet there's a ton of new Pokemon in the Galar region; I'm sure you'll find plenty of water types too, Misty!</state>
+                <state img="#-stripping.png">I plan to book my flight this week, Misty; should I book it for two?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="misty_hgss" />
+                <condition role="self" notSaidMarker="MistyGalar" />
+                <state img="#-stripping.png">Oh, yeah; it's nothing special. It's just a little getaway for when I need to unwind. You should visit sometime!</state>
+                <state img="#-stripping.png">Oh, my vacation home? It's nothing special, but the access to the sea is remarkable!</state>
+                <state img="#-stripping.png">Oh, yeah; sometimes I just need a little getaway is all... You're welcome to stop by anytime, Misty!</state>
+            </case>
             <case stage="7">
                 <test expr="~background.time~" value="night" />
                 <state img="#-stripping.png">Yes, I am a little embarrassed, but more than that, I'm fulfilling my part of tonight's agreement. There can be no wavering now!</state>
@@ -387,10 +427,6 @@
                 <condition count="1-" status="exposed" />
                 <state img="#-stripping.png">V-very well. If seeing others exposed was my reward for playing, it seems only fair that I give them &lt;i&gt;their&lt;/i&gt; reward as well...</state>
                 <state img="#-stripping.png">A-a-at least I'm not the first who has to do this... &lt;i&gt;(I'm not &lt;/i&gt;that&lt;i&gt; much of a loser...)&lt;/i&gt;</state>
-            </case>
-            <case stage="0">
-                <state img="#-stripping.png">Whether it's the cold tundras of Snowpoint or the fiery peaks of Stark Mountain, I wear my coat everywhere I go.</state>
-                <state img="#-stripping.png">You've done well to get me stripping. Enjoy it; it's the last you'll see.</state>
             </case>
             <case stage="1">
                 <state img="#-stripping.png">You're doing well if you've got me taking off my scarf, but I had planned for this accordingly.</state>
@@ -414,6 +450,10 @@
             </case>
             <case stage="7">
                 <state img="#-stripping.png">Yes, I am a little embarrassed, but more than that, I'm fulfilling my part of the game's agreement. There can be no wavering now!</state>
+            </case>
+            <case stage="0">
+                <state img="#-stripping.png">Whether it's the cold tundras of Snowpoint or the fiery peaks of Stark Mountain, I wear my coat everywhere I go.</state>
+                <state img="#-stripping.png">You've done well to get me stripping. Enjoy it; it's the last you'll see.</state>
             </case>
         </trigger>
 
@@ -540,6 +580,18 @@
                 <condition role="target" character="n" stage="0" />
                 <state img="#-battleready.png">Come on, N, you should really know what you're getting yourself into...</state>
                 <state img="#-furious.png">What, you didn't read the rules, N? That's on you, N; you need to be prepared!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="guzma" stage="0" />
+                <state img="#-frustrated.png">Guzma... You may be familiar with Team Galactic from Sinnoh; they've attempted to destroy the universe... If your Team Skull is in any way similar, know that I won't hold back.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="guzma" stage="1" />
+                <state img="#-battleready.png">I hope you'll excuse my alertness, Guzma; Team Galctic has taught me that I cannot be complacant when criminals organize...</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="guzma" stage="2" />
+                <state img="#-battleready.png">Guzma, if you're to expect any restraint from you, you must be clear what you're involvment with Team Skull is; what are your plans?</state>
             </case>
             <case stage="0" totalRounds="1">
                 <state img="#-sarcastic.png">Another victory? Ha, this comes easy.</state>
@@ -684,6 +736,12 @@
             </case>
             <case stage="10" id="49">
                 <state img="#-horny.png">I don't know how you're still even in the game when I'm already out, but I'm looking forward to what you have to show us...</state>
+            </case>
+        </trigger>
+
+        <trigger id="tie">
+            <case stage="0-10">
+                <state img="#-shocked.png">A... a tie?! I'd have better luck encountering a shiny pokemon!</state>
             </case>
         </trigger>
 
@@ -1018,6 +1076,12 @@
                 <state img="#-disappointed.png">M-M-Moon... Y-your... &lt;i&gt;indecency&lt;/i&gt; knows no bounds, does it...</state>
                 <state img="#-pensive.png">Moon, I... I must confess... You're the kind of girl that sets the harmful reputations...</state>
             </case>
+            <case stage="0-10" id="53">
+                <condition role="target" character="misato" stage="4" />
+                <state img="#-aggressive.png">Oh, what's the matter, Misato? It's just a scar; wear it like a badge!</state>
+                <state img="#-aggressive.png">Oh, what's the matter, Misato? You needn't fear about a scar; it's proof of your triumph over a challenge.</state>
+                <state img="#-aggressive.png">Don't fret over a scar, Misato; all the great heroes of the ancient past have a scar or two.</state>
+            </case>
             <case stage="0-10">
                 <state img="#-aggressive.png">I must say, I'm not normally into women, but you might be an exception if you keep this up!</state>
                 <state img="#-aggressive.png">Oh, getting close to the end, are we?</state>
@@ -1323,6 +1387,14 @@
             </case>
         </trigger>
 
+        <trigger id="opponent_chest_will_be_visible">
+            <case stage="0-10" id="52" target="chihiro">
+                <state img="#-sarcastic.png">Huh? Chihiro? Are you running away from the fight?</state>
+                <state img="#-aggressive.png">Huh? Chihiro? You can't run from your fears; you gotta stand up and confront them!</state>
+                <state img="#-disappointed.png">Huh? Chihiro? Are you... quitting? Right when we're getting to the fun part too...</state>
+            </case>
+        </trigger>
+
         <trigger id="opponent_crotch_is_visible">
             <case stage="4-10" id="5">
                 <condition role="target" character="chihiro" />
@@ -1561,17 +1633,27 @@
                 <state img="#-aggressive.png">Upsets are upsets for a reason, Misty; they aren't supposed to happen.</state>
                 <state img="#-aggressive.png">I'm sorry to bring it up, Misty, but I &lt;i&gt;am&lt;/i&gt; first seed; you losing to me was simply the expected result.</state>
                 <state img="#-aggressive.png">I'm sorry to bring it up, Misty, but I &lt;i&gt;was&lt;/i&gt; seeded to win this whole thing; you losing to me was just the expected result.</state>
-                <state img="#-aggressive.png">I hope you excuse my bluntness, but it's not often that gym leaders manage to pull an upset again league champions, Misty.</state>
+                <state img="#-aggressive.png">I hope you excuse my bluntness, but it's not often that gym leaders manage to pull an upset against league champions, Misty.</state>
                 <state img="#-aggressive.png">It's a shame you had to face me in today's game... Having to fight first seed is... It's always rough.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="misty_hgss" />
                 <test expr="~background.time~" value="night" />
-                <state img="#-aggressive.png">Upsets are upsets for a reason, Misty; they aren't supposed to happen.</state>
-                <state img="#-aggressive.png">I'm sorry to bring it up, Misty, but I &lt;i&gt;am&lt;/i&gt; first seed; you losing to me was simply the expected result.</state>
-                <state img="#-aggressive.png">I'm sorry to bring it up, Misty, but I &lt;i&gt;was&lt;/i&gt; seeded to win this whole thing; you losing to me was just the expected result.</state>
-                <state img="#-aggressive.png">I hope you excuse my bluntness, but it's not often that gym leaders manage to pull an upset again league champions, Misty.</state>
-                <state img="#-aggressive.png">It's a shame you had to face me in tonight's game... Having to fight first seed is... It's always rough.</state>
+                <state img="#-pensive.png">Upsets are upsets for a reason, Misty; they aren't supposed to happen.</state>
+                <state img="#-pensive.png">I'm sorry to bring it up, Misty, but I &lt;i&gt;am&lt;/i&gt; first seed; you losing to me was simply the expected result.</state>
+                <state img="#-pensive.png">I'm sorry to bring it up, Misty, but I &lt;i&gt;was&lt;/i&gt; seeded to win this whole thing; you losing to me was just the expected result.</state>
+                <state img="#-pensive.png">I hope you excuse my bluntness, but it's not often that gym leaders manage to pull an upset against league champions, Misty.</state>
+                <state img="#-pensive.png">It's a shame you had to face me in tonight's game... Having to fight first seed is... It's always rough.</state>
+            </case>
+            <case stage="0-10" id="55">
+                <condition role="target" character="nami" saying="perverts" />
+                <state img="#-shocked.png">Huh? If not for that... then what is it used for?</state>
+                <state img="#-thinking.png">Huh? Oh, Nami... You'll give me for my assumptions, I hope?</state>
+            </case>
+            <case stage="0-10" id="54">
+                <condition role="target" character="nami" />
+                <state img="#-thinking.png">Huh? What... what are you doing, Nami?</state>
+                <state img="#-thinking.png">Hmm? There's... there's more moisture in the air... What are you up to, Nami?</state>
             </case>
             <case stage="0-8" id="15">
                 <condition count="3" status="alive" />
