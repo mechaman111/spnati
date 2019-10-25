@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1.1 at 11:45:43 AM on September 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.5 at 1:48:29 PM on October 22, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.1.1</version>
+    <version>v5.2.5</version>
     <first>Futaba</first>
     <last>Sakura</last>
     <label>Futaba</label>
@@ -89,6 +89,15 @@
                 <test expr="~player~" value="Inkling" />
                 <state img="#-gremlin.png" marker="inkling_roleplay">Woomie!?</state>
             </case>
+            <case stage="0">
+                <alternative priority="999">
+                    <test expr="~player~" value="Master Hand" />
+                </alternative>
+                <alternative priority="999">
+                    <test expr="~player~" value="Master" />
+                </alternative>
+                <state img="#-gremlin.png" marker="inkling_roleplay">Oh... Master Hand? We're going to roleplay? I'll be Inkling, then.</state>
+            </case>
             <case stage="0" priority="200">
                 <condition count="3-4" filter="persona" />
                 <state img="#-triumphant.png" marker="persona_table">I've waited so long for the rest of you to try this game out! Let's Take Their Hearts!</state>
@@ -140,6 +149,15 @@
                 <state img="#-happy.png">Oh! I got by Navi sometimes too, Navi. Two Navis here, here to Navigate!</state>
             </case>
             <case stage="0">
+                <alternative>
+                    <test expr="~background~" value="beach" />
+                </alternative>
+                <alternative>
+                    <test expr="~background~" value="poolside" />
+                </alternative>
+                <state img="#-awkward.png">But I didn't even bring a swimsuit...</state>
+            </case>
+            <case stage="0">
                 <condition count="2-4" filter="futaba" />
                 <state img="#-triumphant.png">My own clone(s)! Now neither of us will be virgins! Let's be honest, though, that ship sailed.</state>
             </case>
@@ -159,24 +177,6 @@
                 <state img="#-interested.png">Cards and... p-p-pretty people. Sounds like a good social experience.</state>
                 <state img="#-awkward.png">Joker said I should broaden my social horizons, so here I am...</state>
                 <state img="#-happy.png">Let’s get up, get going, and get out there!</state>
-            </case>
-            <case stage="0">
-                <alternative>
-                    <test expr="~background~" value="beach" />
-                </alternative>
-                <alternative>
-                    <test expr="~background~" value="poolside" />
-                </alternative>
-                <state img="#-awkward.png">But I didn't even bring a swimsuit...</state>
-            </case>
-            <case stage="0">
-                <alternative priority="999">
-                    <test expr="~player~" value="Master Hand" />
-                </alternative>
-                <alternative priority="999">
-                    <test expr="~player~" value="Master" />
-                </alternative>
-                <state img="#-gremlin.png" marker="inkling_roleplay">Oh... Master Hand? We're going to roleplay? I'll be Inkling, then.</state>
             </case>
         </trigger>
 
@@ -325,6 +325,15 @@
                 <condition count="1" filter="kyu" />
                 <state img="#-annoyed.png">Kyu, I am &lt;i&gt;at least&lt;/i&gt; a premium release! Yeah! Like Ryuji said! I'm gonna do it because-if I want to!</state>
             </case>
+            <case stage="0-6">
+                <alternative alsoPlaying="marinette" notSaidMarker="hpsf" alsoPlayingSaidMarker="hpsf">
+                    <condition count="0" filter="joker" />
+                </alternative>
+                <alternative alsoPlaying="sei" notSaidMarker="hpsf" alsoPlayingSaidMarker="hpsf">
+                    <condition count="0" filter="joker" />
+                </alternative>
+                <state img="#-awkward.png" marker="hpsf">B-b-boyfriend? Joker? W-w-what? M-m-me?</state>
+            </case>
             <case stage="0" alsoPlaying="kyu" timeInStage="0">
                 <state img="#-mad.png">I am &lt;i&gt;not&lt;/i&gt; a marketable knockoff, Kyu. I am &lt;i&gt;at least&lt;/i&gt; a premium release!</state>
             </case>
@@ -393,15 +402,6 @@
                 <state img="#-happy.png">All right! Let’s go.</state>
                 <state img="#-triumphant.png">I got it!</state>
                 <state img="#-awkward.png">Humm... What to do...</state>
-            </case>
-            <case stage="0-6">
-                <alternative alsoPlaying="marinette" notSaidMarker="hpsf" alsoPlayingSaidMarker="hpsf">
-                    <condition count="0" filter="joker" />
-                </alternative>
-                <alternative alsoPlaying="sei" notSaidMarker="hpsf" alsoPlayingSaidMarker="hpsf">
-                    <condition count="0" filter="joker" />
-                </alternative>
-                <state img="#-awkward.png" marker="hpsf">B-b-boyfriend? Joker? W-w-what? M-m-me?</state>
             </case>
             <case stage="1">
                 <state img="#-annoyed.png">Hmmhmmuhmm.</state>
@@ -762,10 +762,14 @@
             <case stage="0-6" alsoPlaying="ini" alsoPlayingStage="5-6" saidMarker="futaba_juke_ask" notSaidMarker="ini_reply" alsoPlayingSaidMarker="ini_futaba_jukebox">
                 <state img="#-annoyed.png" marker="ini_reply" collectible="Headphones" collectible-value="+1">The Gavinners are a great band, but you're a huge jerk, Ini. So no. I won't.</state>
             </case>
-            <case stage="0-6" alsoPlaying="lotte" alsoPlayingStage="0-5" notSaidMarker="lotte_cheating" alsoPlayingNotSaidMarker="cheating" alsoPlayingSayingMarker="cheating">
+            <case stage="0-6">
+                <condition role="self" notSaidMarker="lotte_cheating" />
+                <condition role="other" character="lotte" stage="0-5" sayingMarker="cheating" notSaidMarker="cheating" />
                 <state img="#-mad.png" marker="lotte_cheating">I can't use my Metaverse powers here, so you shouldn't cheat either. No psyching us out either, Lotte!</state>
             </case>
-            <case stage="0-6" alsoPlaying="marinette" alsoPlayingStage="2-5" saidMarker="futaba_juke_ask" alsoPlayingNotSaidMarker="mari_juke" alsoPlayingSayingMarker="mari_juke">
+            <case stage="0-6">
+                <condition role="self" saidMarker="futaba_juke_ask" />
+                <condition role="other" character="marinette" stage="2-5" sayingMarker="mari_juke" notSaidMarker="mari_juke" />
                 <state img="#-triumphant.png" marker="marinette_reply" collectible="Headphones" collectible-value="+1">You opened the door on EDM, so EDM it is! I'll put on some of the more rock-y stuff though, like Aoki.</state>
             </case>
             <case stage="0-6" alsoPlaying="mulan" alsoPlayingStage="0-1" saidMarker="futaba_juke_ask" alsoPlayingNotSaidMarker="mulan_juke" alsoPlayingSayingMarker="mulan_juke">
@@ -791,6 +795,10 @@
             </case>
             <case stage="0-6" alsoPlaying="ryuji" alsoPlayingStage="1-5" saidMarker="ryuji_ships" notSaidMarker="ryuji_ships_2">
                 <state img="#-annoyed.png" marker="ryuji_ships_2">N-no... not like... Wait... why do you know so much about boats?</state>
+            </case>
+            <case stage="0-6" id="24" priority="142">
+                <condition role="other" character="ribbon_girl" stage="0" saidMarker="PlayerWager2" sayingMarker="WagerStart" />
+                <state img="#-calm.png">...But those can be some of the most fun parts of stuff... Well, not the violence. That can be kind of icky. Mwehehe. I kinda want to see what you two end up wagering! </state>
             </case>
             <case stage="0-6" alsoPlaying="ryuji" alsoPlayingStage="1-5" notSaidMarker="ryuji_ships">
                 <state img="#-happy.png" marker="ryuji_ships">Ryuji, you read manga, right? What are some of your favorite ships?</state>
@@ -826,8 +834,10 @@
                 <condition count="1" filter="ann" />
                 <state img="#-interested.png" marker="ann_sorting_hat">Ann... you uhm. Did you ever read that English series? Harry Potter? You'd for sure be in Gryffindor.</state>
             </case>
-            <case stage="0-6" alsoPlaying="merula" saidMarker="futaba_sorting_hat" notSaidMarker="haru_sorting_hat">
+            <case stage="0-6">
                 <condition count="1" filter="haru" />
+                <condition role="self" saidMarker="futaba_sorting_hat" notSaidMarker="haru_sorting_hat" />
+                <condition role="other" character="merula" />
                 <state img="#-interested.png" marker="haru_sorting_hat">Haru, you're familiar with Hogwarts, right? You'd be a Slytherin. But a really nice one. You're so clever and ambitious!</state>
             </case>
             <case stage="0-6" alsoPlaying="merula" saidMarker="futaba_sorting_hat" notSaidMarker="hifumi_sorting_hat">
@@ -838,8 +848,10 @@
                 <condition count="1" filter="lotte" />
                 <state img="#-gremlin.png" marker="futaba_bookclub">I started reading Nightfall lately! Aella, you have to read it so Lotte and I can discuss it with you!</state>
             </case>
-            <case stage="0-6" alsoPlaying="merula" saidMarker="futaba_sorting_hat" notSaidMarker="ryuji_sorting_hat">
+            <case stage="0-6">
                 <condition count="1" filter="ryuji" />
+                <condition role="self" saidMarker="futaba_sorting_hat" notSaidMarker="ryuji_sorting_hat" />
+                <condition role="other" character="merula" />
                 <state img="#-interested.png" marker="ryuji_sorting_hat">Skull! You read HP, right? You'd have been... Gryffindor, right?</state>
             </case>
             <case stage="0-1" alsoPlaying="ryuji" notSaidMarker="ryuji_short" alsoPlayingSayingMarker="futabashort">
@@ -896,6 +908,11 @@
             <case stage="5" alsoPlaying="rin" timeInStage="0">
                 <state img="#-triumphant.png">Well said, Rin! They cause you to drop threat, when you could just have your tank &lt;i&gt;right there&lt;/i&gt; ready to take some grabs, right?!</state>
             </case>
+            <case stage="0-6" priority="106">
+                <condition role="other" character="ribbon_girl" sayingMarker="1v1" />
+                <condition count="2" status="alive" />
+                <state img="#-nyoro.png">You're lucky this isn't a fighting game, Ribbon Girl, because I'm down-right-fierce! </state>
+            </case>
             <case stage="0-6" alsoPlaying="9s" saidMarker="futaba_juke_ask" notSaidMarker="9S_reply" alsoPlayingNotSaidMarker="futaba_juke_ask" alsoPlayingSayingMarker="futaba_juke_ask">
                 <state img="#-triumphant.png" marker="9S_reply" collectible="Headphones" collectible-value="+1">So... 9S, you like Dark Ambient? Like Flowers for Bodysnatchers, or just the general Cryochamber Catalogue?</state>
             </case>
@@ -944,10 +961,14 @@
             <case stage="0-6" alsoPlaying="jessie" saidMarker="futaba_juke_ask" notSaidMarker="jessie_reply">
                 <state img="#-interested.png" marker="jessie_reply" collectible="Headphones" collectible-value="+1">W-what kind of mood music would that even be, Jessie? Is there secret horny music?</state>
             </case>
-            <case stage="0-6" alsoPlaying="larachel" saidMarker="futaba_juke_ask" notSaidMarker="larachel_reply">
+            <case stage="0-6">
+                <condition role="self" saidMarker="futaba_juke_ask" notSaidMarker="larachel_reply" />
+                <condition role="other" character="larachel" />
                 <state img="#-awkward.png" marker="larachel_reply" collectible="Headphones" collectible-value="+1">Um... that's okay, L'Arachel... I'm sure you have a great voice, but I meant more like something we could play over the speakers...</state>
             </case>
-            <case stage="0-6" alsoPlaying="mulan" notSaidMarker="futaba_others" alsoPlayingSaidMarker="honorable_others">
+            <case stage="0-6">
+                <condition role="self" notSaidMarker="futaba_others" />
+                <condition role="other" character="mulan" saidMarker="honorable_others" />
                 <state img="#-annoyed.png" marker="futaba_others">Rhehrhemehrmehm. I'm not here to find a boyfriend! I'm here to-- to-- um… menthatgiveheadpats andarecreative!</state>
             </case>
             <case stage="0-6" alsoPlaying="pit" notSaidMarker="futaba_foods" alsoPlayingSaidMarker="pit_favfood">
@@ -995,7 +1016,9 @@
             <case stage="0-6" alsoPlaying="jessie" saidMarker="jessie_futaba_open" alsoPlayingSayingMarker="QA_Open_Futaba">
                 <state img="#-awkward.png">...It's not like I'm into NTR, but I guess if you and the other people...ssss... are fine with it... hrmrhgmghm. </state>
             </case>
-            <case stage="0-6" alsoPlaying="jessie" saidMarker="jessie_futaba_secrets" alsoPlayingSayingMarker="QA_DarkSecret_Futaba">
+            <case stage="0-6">
+                <condition role="self" saidMarker="jessie_futaba_secrets" />
+                <condition role="other" character="jessie" sayingMarker="QA_DarkSecret_Futaba" />
                 <state img="#-gremlin.png">It's kind of like being a pornstar! It's all about making sure people get it good and hard where possible. </state>
             </case>
             <case stage="0-6" alsoPlaying="jura" alsoPlayingSayingMarker="seduction">
@@ -1741,6 +1764,11 @@
                 <state img="#-launched.png">I'm a little... Woozy... Whoa, again, again!</state>
                 <state img="#-launched.png">Woo! O-okay, I'll get the rest of my thigh highs off when I've regained my footing. And adjust my headphones.</state>
             </case>
+            <case stage="6">
+                <alternative alsoPlaying="mahiru" alsoPlayingStage="7" priority="999" />
+                <alternative alsoPlaying="mahiru" alsoPlayingStage="9" priority="999" />
+                <state img="text.png"></state>
+            </case>
             <case stage="1" alsoPlaying="kira" priority="900">
                 <state img="#-stand.png">It makes you have to battle it out in a Rule 34 simulator! You can't just kill us if things go south! Killer Queen has no effect on the Inventory!</state>
             </case>
@@ -2168,11 +2196,6 @@
                 <state img="#-stripped.png">Oh...  no...  Everyone’s seen my p-p-I’m not going to say that word, it’s too much! But yeah, I didn’t bring panties to this.</state>
                 <state img="#-stripped.png">I-I-I'm still trying to do the sexy thing. I know I'm better at cute and weird, but I'm trying to multiclass.</state>
             </case>
-            <case stage="6">
-                <alternative alsoPlaying="mahiru" alsoPlayingStage="7" priority="999" />
-                <alternative alsoPlaying="mahiru" alsoPlayingStage="9" priority="999" />
-                <state img="text.png"></state>
-            </case>
         </trigger>
 
         <trigger id="male_human_must_strip">
@@ -2356,6 +2379,18 @@
             </case>
             <case stage="1-6" target="ryuji" targetStage="0">
                 <state img="#-triumphant.png">I'm still gonna kick your butt, Skull! So get stripping!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="0" />
+                <state img="#-shocked.png">You're like a less edgy version of my friend, Joker! </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="1" />
+                <state img="#-gremlin.png">You're a little bit less of a wild card than joker, but I'll call you Ace, so you can keep your card theme. It's a great codename. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="5" />
+                <state img="#-annoyed.png">Fine, just quit, &lt;i&gt;that's&lt;/i&gt; cool. </state>
             </case>
             <case stage="0-8" filter="drill_hair" targetStage="0" alsoPlaying="ann">
                 <state img="#-interested.png" marker="ann_drills">Ann! Be careful! ~name~ took your hairstyle!</state>
@@ -2773,7 +2808,9 @@
             <case stage="0-8" target="marinette" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=7" alsoPlayingNotSaidMarker="lb_suit1" alsoPlayingSayingMarker="lb_suit1">
                 <state img="#-interested.png">It's like a metaverse outfit, then. But Ladybug does stuff in actual Paris, huh…?</state>
             </case>
-            <case stage="0-8" target="megumin" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="megu_pantsu1" alsoPlayingSayingMarker="megu_pantsu1">
+            <case stage="0-8">
+                <condition role="target" character="megumin" />
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" sayingMarker="megu_pantsu1" notSaidMarker="megu_pantsu1" />
                 <state img="#-annoyed.png">She's not even talking about a bra… I guess she is kind of flat…</state>
             </case>
             <case stage="0-8" target="natsuki" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="viewers&gt;=8" alsoPlayingNotSaidMarker="nat_manga1" alsoPlayingSayingMarker="nat_manga1">
@@ -2943,7 +2980,8 @@
             <case stage="0-8" target="annie" targetStage="0">
                 <state img="#-interested.png">Hmm… You’re smart. I can tell these things because I too am a genius.</state>
             </case>
-            <case stage="0-8" target="annie" targetStage="1">
+            <case stage="0-8">
+                <condition role="target" character="annie" stage="1" />
                 <state img="#-disappointed.png">Oh…!</state>
             </case>
             <case stage="0-8" target="annie" targetStage="2">
@@ -2952,7 +2990,8 @@
             <case stage="0-8" target="annie" targetStage="3">
                 <state img="#-awkward.png">A-a-are you hiding some sort of scars, Annie?</state>
             </case>
-            <case stage="0-8" target="annie" targetStage="4">
+            <case stage="0-8">
+                <condition role="target" character="annie" stage="4" />
                 <state img="#-awkward.png">Oh, here we go.</state>
             </case>
             <case stage="0" target="annie" targetStage="5">
@@ -2961,7 +3000,8 @@
             <case stage="0-8" target="annie" targetStage="6">
                 <state img="#-triumphant.png">Mwehehe. You started to trick me, Annie!</state>
             </case>
-            <case stage="0-8" target="annie" targetStage="7">
+            <case stage="0-8">
+                <condition role="target" character="annie" stage="7" />
                 <state img="#-triumphant.png">Mwehehe, time to see Annie’s true colors.</state>
             </case>
             <case stage="0-8" target="caulifla" targetStage="0">
@@ -3021,7 +3061,8 @@
             <case stage="0-8" target="d.va" targetStage="0">
                 <state img="#-excited.png">Oh! D.va! You’re a really good Starcraft player, right?</state>
             </case>
-            <case stage="0-8" target="d.va" targetStage="2">
+            <case stage="0-8">
+                <condition role="target" character="d.va" stage="2" />
                 <state img="#-interested.png">Say, D.Va, are you listening to K-Pop? I've heard good things, but I'm much more of a... not-pop type person.</state>
             </case>
             <case stage="0-8" target="d.va" targetStage="3">
@@ -3275,7 +3316,8 @@
             <case stage="0-8" target="miko" targetStage="0">
                 <state img="#-disappointed.png">What? Are you seriously going to just stall the whole time?</state>
             </case>
-            <case stage="0-8" target="miko" targetStage="1">
+            <case stage="0-8">
+                <condition role="target" character="miko" stage="1" />
                 <state img="#-awkward.png">Um... even ignoring your Persona or ghost or whatever...</state>
             </case>
             <case stage="0-8" target="miko" targetStage="2">
@@ -3284,7 +3326,8 @@
             <case stage="0-8" target="miko" targetStage="3">
                 <state img="#-triumphant.png">I see how it works, you take damage and lose your clothes, just like in the game!</state>
             </case>
-            <case stage="0-8" target="miko" targetStage="4">
+            <case stage="0-8">
+                <condition role="target" character="miko" stage="4" />
                 <state img="#-gremlin.png">You know, I have some advice since you're so frustrated, Miko...</state>
             </case>
             <case stage="0-8" target="miko" targetStage="5">
@@ -3296,7 +3339,8 @@
             <case stage="0-8" target="misato" targetStage="0">
                 <state img="#-interested.png">Wait a second! You're Misato, from NERV, right!?</state>
             </case>
-            <case stage="0-8" target="misato" targetStage="1">
+            <case stage="0-8">
+                <condition role="target" character="misato" stage="1" />
                 <state img="#-interested.png">Your clothes are so fancy! I'm surprised a military group is so stylish!</state>
             </case>
             <case stage="0-8" target="misato" targetStage="2">
@@ -3607,7 +3651,8 @@
             <case stage="0-8" target="videl" targetStage="0">
                 <state img="#-annoyed.png">You seem... confident.</state>
             </case>
-            <case stage="0-8" target="weiss" targetStage="0">
+            <case stage="0-8">
+                <condition role="target" character="weiss_schnee" stage="0" />
                 <state img="#-interested.png">Hmm... You’re an heiress of some sort. Do you happen to know Haru Okumura?</state>
             </case>
             <case stage="0-8" target="wiifitfemale" targetStage="0">
@@ -3672,6 +3717,38 @@
             </case>
             <case stage="0-8" target="syrenne" targetStage="0">
                 <state img="#-interested.png">Oh! Syrenne's up! Okay, so, you remind me of these two people I know--</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="ribbon_girl" stage="0" />
+                <state img="#-interested.png">Hey! You're from ARMS, right? Do you ever hang out with other Nintendo characters? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="0" />
+                <state img="#-interested.png">You know, if you're going to be scared it's... </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="1" />
+                <state img="#-awkward.png">Y-y-you're so much better at this than I am... d-does it help to just &lt;i&gt;go for it, like that?&lt;/i&gt; </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="2" />
+                <state img="#-excited.png">I'm &lt;i&gt;definitely&lt;/i&gt; taking notes. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="3" />
+                <state img="#-nyoro.png">That's why you should stick with something &lt;i&gt;wayyy&lt;/i&gt; comfier! Like well-worn boots, TBH! </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="0" />
+                <state img="#-interested.png">Whoa... cool dress. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="1" />
+                <state img="#-interested.png">You're totally keeping the hat on, right? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="2" />
+                <state img="#-interested.png">Hey, sooo... where'd you get your outfit? </state>
             </case>
             <case stage="0-8" filter="drill_hair" targetStage="0" alsoPlaying="ann">
                 <state img="#-interested.png" marker="ann_drills">Ann! Be careful! ~name~ took your hairstyle!</state>
@@ -3998,6 +4075,30 @@
             <case stage="0-8" target="ryuji" targetStage="2">
                 <state img="#-happy.png">Aww, but you're so fun to mess with! Well... not as fun Yusuke to mess with. I'm just glad you're here and not him!</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="0" />
+                <state img="#-annoyed.png">...Which is funny, beause I can never get him to play card games with me. </state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="chazz" stage="2" />
+                <state img="#-shocked.png">&lt;i&gt;Eugh!&lt;/i&gt; I hadn't even thought of that... my poor boots... </state>
+            </case>
+            <case stage="2-3">
+                <condition role="target" character="chazz" stage="2" />
+                <state img="#-shocked.png">&lt;i&gt;Eugh!&lt;/i&gt; I hadn't even thought of that... my poor thights... </state>
+            </case>
+            <case stage="4-6">
+                <condition role="target" character="chazz" stage="2" />
+                <state img="#-awkward.png">The floor's not that sticky...? </state>
+            </case>
+            <case stage="7-8">
+                <condition role="target" character="chazz" stage="2" />
+                <state img="#-awkward.png">I don't want your gross shoes anywere near me anyway, kthx! </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="3" />
+                <state img="#-annoyed.png">Just when you were getting cute, Ace, you have to go and act like a villain NPC. Ugh. Downvote. </state>
+            </case>
             <case stage="0">
                 <state img="#-annoyed.png">Oh, taking off ~clothing.ifPlural(~clothing~|a ~clothing~)~, ~name~? If I pout will you take off something better next time?</state>
                 <state img="#-mad.png">Just your ~clothing~? Come on. You’re supposed to do something way cooler.</state>
@@ -4095,6 +4196,18 @@
             </case>
             <case stage="3-8" target="ryuji" targetStage="3">
                 <state img="#-excited.png">He'd make it kind of weird... though maybe... &lt;i&gt;Hmmm....&lt;/i&gt;</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="1" />
+                <state img="#-excited.png">Come to think of it, it kind of sucks you took that off first. It'd have been kind of hot to play some sort of CCG strip game. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="3" />
+                <state img="#-annoyed.png">You're much more compelling when you mute yourself in general chat, Ace.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="4" />
+                <state img="#-mad.png">&lt;i&gt;Something&lt;/i&gt; certainly stinks! And it's a two-bit duelist running an off-meta deck that hasn't been effective in years! </state>
             </case>
             <case stage="0-4" alsoPlaying="ryuji" notSaidMarker="ryujifriendship" alsoPlayingSaidMarker="futabafriendship">
                 <state img="#-awkward.png" marker="ryujifriendship_sexy">&lt;i&gt;W-what&lt;/i&gt;? I'd never spy-- er... I'd &lt;i&gt;rarely&lt;/i&gt; spy! I mean, I've taken showers with Ann, Makoto, and Hifumi before! Not... sexy showers, just... normal stuff!</state>
@@ -4603,7 +4716,8 @@
             <case stage="0-8" target="videl" targetStage="0">
                 <state img="#-mad.png">You don’t really use your head a lot, just... brawn?</state>
             </case>
-            <case stage="0-8" target="weiss" targetStage="0">
+            <case stage="0-8">
+                <condition role="target" character="weiss_schnee" stage="0" />
                 <state img="#-mad.png">Hmm... I don’t know what dust is, but it sounds like drugs. Haru is much more legitimate! Don’t you corrupt her!</state>
             </case>
             <case stage="0-8" target="yang" targetStage="0">
@@ -4611,6 +4725,38 @@
             </case>
             <case stage="0-8" target="syrenne" targetStage="1">
                 <state img="#-interested.png">Did getting those tattoos hurt? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="ribbon_girl" stage="0" />
+                <state img="#-annoyed.png">A lot of Nintendo characters hang out here at the Inventory, and people are always confusing me for that Inkling girl. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="1" />
+                <state img="#-happy.png">...I guess if you start off with your best feature, it makes the rest of it pretty easy, right...? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="2" />
+                <state img="#-awkward.png">But... I do think that I'd have a hard time being... w-w-well, quite as... forward. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="3" />
+                <state img="#-gremlin.png">...Why would I want to give up my size advantage, anyway? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="0" />
+                <state img="#-annoyed.png">Hmrmghmrhgmhrmandm. You need like, an eye patch, though. The look's just not complete without one. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="1" />
+                <state img="#-excited.png">I guess if you kept the gloves on, it'd be harder for someone to do lewd acts... like holding hands. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="2" />
+                <state img="#-awkward.png">...I-I-I don't usually do a lot of shopping but it all looks so cool... </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="4" />
+                <state img="#-shocked.png">You could take something else off, I'm counting a few more layers on you, Megumin! </state>
             </case>
             <case stage="0-8" target="cammy">
                 <state img="#-shocked.png">O-oh no! Wait a second!</state>
@@ -4717,6 +4863,11 @@
             </case>
             <case stage="0-8" target="uravity" targetStage="4" alsoPlaying="haru">
                 <state img="#-happy.png">Wow, Haru, Ochako's more uncomfortable taking her suit off than &lt;i&gt;you&lt;/i&gt; are. She's probably even more vanilla, too!</state>
+            </case>
+            <case stage="0-8">
+                <alternative target="annie" targetStage="1" alsoPlaying="jane" />
+                <alternative target="annie" targetStage="1" alsoPlaying="marinette" />
+                <state img="#-triumphant.png">Unlike, psssst... (The art students.)</state>
             </case>
             <case stage="0-8" target="rin" targetStage="2">
                 <test expr="~player~" value="Joker" />
@@ -5051,6 +5202,38 @@
             <case stage="0-8" target="syrenne" targetStage="2">
                 <state img="#-awkward.png">I've always kind of wanted a tattoo... but w-w-what would I even get? </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="ribbon_girl" stage="1" />
+                <state img="#-excited.png">...I guess I &lt;i&gt;could&lt;/i&gt; give out a good "woomie" if someone really wanted it... </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="2" />
+                <state img="#-disappointed.png">...I guess it kind of sucks when your best feature isn't your appearance... and you feel really awkward doing dirty talk... </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="3" />
+                <state img="#-interested.png">Oh! I can do that! That's the kind of stuff people like to hear, right? I-I can try that! </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="4" />
+                <state img="#-interested.png">D-Do footjobs work on girls too? That seems &lt;i&gt;super&lt;/i&gt; gross but... </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="1" />
+                <state img="#-interested.png">I don't think you'd really have another thing to take off, but that was &lt;i&gt;sooooo&lt;/i&gt; cool. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="2" />
+                <state img="#-gremlin.png">Well... if you're up for lewd acts, I can think of a few explosions you could cause. Mweheheh. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="3" />
+                <state img="#-nyoro.png">We could go shopping... if you're not going to be howling like a demon later, anyway. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="5" />
+                <state img="#-interested.png">...Whoa. You have such a pattable head. I envy and aspire to be as pattable as you. I miss your hat, though. </state>
+            </case>
             <case stage="0-8" target="cammy">
                 <state img="#-triumphant.png">Wow! Cammy's awesome!</state>
                 <state img="#-triumphant.png">O.M.G. Cammy! Show me your moves! Like. Again. Please.</state>
@@ -5064,11 +5247,6 @@
                 <state img="#-happy.png">Hmm. ~clothing.ifPlural(~Clothing~ don't|Your ~clothing~ doesn't)~ provide equivalent armor class like my jacket... I guess if I take that off, she needs to take off a few % more clothing to make it fair, right?</state>
                 <state img="#-excited.png">Oh-ho! Playing the long game, ~name~?</state>
                 <state img="#-calm.png">Hmm...  An accessory...  Did it have Luck on it, perchance?</state>
-            </case>
-            <case stage="0-8">
-                <alternative target="annie" targetStage="1" alsoPlaying="jane" />
-                <alternative target="annie" targetStage="1" alsoPlaying="marinette" />
-                <state img="#-triumphant.png">Unlike, psssst... (The art students.)</state>
             </case>
             <case stage="1">
                 <state img="#-annoyed.png">~Name~, I’ve already promised to leave my glasses and headphones on. That’s all you can do?</state>
@@ -5257,6 +5435,10 @@
             <case stage="4-8" target="jin" targetStage="3">
                 <state img="#-interested.png">Wow, Jin, I kinda wanted to try that but I'd totally have fallen over!</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="1" />
+                <state img="#-interested.png">Cool jacket though. You have pockets for your cards in there? I'd &lt;i&gt;t-totally&lt;/i&gt; have pockets for my cards! </state>
+            </case>
             <case stage="0">
                 <state img="#-triumphant.png">Nice! ~name~ is officially starting to lose! Let’s keep up the pressure!</state>
                 <state img="#-happy.png">Alright! ~name~ is taking off his ~clothing~!</state>
@@ -5341,6 +5523,10 @@
             </case>
             <case stage="7-8" target="ryuji" targetStage="1">
                 <state img="#-excited.png">Er... I've seen you shirtless, but I'm a little... cold over here... N-n-o, n-n-no, take your time. I &lt;i&gt;did&lt;/i&gt; lose fair and square...</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="2" />
+                <state img="#-annoyed.png">Are you seriously going to have a big black censor over your... this better not get abridged! I wanna play cards with you! </state>
             </case>
             <case stage="0">
                 <state img="#-nyoro.png">I still haven’t gotten a scratch yet!</state>
@@ -5583,6 +5769,10 @@
             </case>
             <case stage="0-8" target="syrenne" targetStage="2">
                 <state img="#-annoyed.png">Okay, they're boots. We're at a ~background~. T-t-they're probably going to be a mess anyway, right? Let's talk about something that gives better Knowledge rerolls.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="3" />
+                <state img="#-disappointed.png">Aww... I liked the asymmetrical thigh-highs look. It's totally a new one... </state>
             </case>
             <case stage="0-8" target="meia">
                 <state img="#-shocked.png">Oh wait, you &lt;i&gt;do&lt;/i&gt;?</state>
@@ -6019,6 +6209,10 @@
             <case stage="0-8" target="ryuji" targetStage="5">
                 <state img="#-interested.png">I-I don't know where else you take off your pants, Ryuji.</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="5" />
+                <state img="#-interested.png">Ohhh... you theme your underwear after your hobbies too...? Neat! I didn't wear mine today, but... that's actually pretty cool! </state>
+            </case>
             <case stage="0">
                 <state img="#-happy.png">One more down! Three to go!</state>
                 <state img="#-triumphant.png">I’m glad you’re having fun, ~name~, I know I am!</state>
@@ -6321,6 +6515,14 @@
             </case>
             <case stage="0-8" target="syrenne" targetStage="4">
                 <state img="#-nyoro.png">Something tells me you're wearing panties. Mwehehe. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="0" />
+                <state img="#-excited.png">O-ho, is she...? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" stage="6" />
+                <state img="#-triumphant.png">Aww yiss. Time to see some boobs-- you got this, Megumin! Tiny titty comittee assemble! </state>
             </case>
             <case stage="0-8" target="meia">
                 <state img="#-interested.png" marker="metaverse">My preferred outfit was my black jumpsuit from the Metaverse!</state>
@@ -6695,6 +6897,14 @@
             <case stage="6-8" target="syrenne" targetStage="5">
                 <state img="#-gremlin.png">Well, as usual, looks like I was doing something unique. Mwehehe. My creativity is without limits! </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" stage="1" />
+                <state img="#-triumphant.png">Hell yes! Show me what's up, Panty! </state>
+            </case>
+            <case stage="0-8" id="25">
+                <condition role="target" character="megumin" stage="7" />
+                <state img="#-annoyed.png">You act like nobody's ever seen your boobs before... not that you should be flashing everyone but... </state>
+            </case>
             <case stage="0-8" target="meia">
                 <state img="#-awkward.png">It’s like getting a full body hug. Now it’s more like, a full body-not hug.</state>
             </case>
@@ -6753,6 +6963,10 @@
         </trigger>
 
         <trigger id="male_chest_will_be_visible">
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="5" />
+                <state img="#-triumphant.png">Whoa... Ace, is Ojama your persona? Are we going into the Metaverse!? </state>
+            </case>
             <case stage="0-8" target="9s">
                 <state img="#-triumphant.png">SHOW ME THE MAN TITTIES, Oathkeeper! I demand it!</state>
             </case>
@@ -6819,6 +7033,10 @@
             </case>
             <case stage="0-8" target="jotaro" alsoPlaying="ryuji">
                 <state img="#-mad.png">Ryuji! He's even bigger than you! How is he using a Stand &lt;i&gt;and&lt;/i&gt; so built!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="6" />
+                <state img="#-shocked.png">~player~, is that true? Can you still go into the Metaverse!? How?! Tell me! </state>
             </case>
             <case stage="0-8" target="9s">
                 <state img="#-shocked.png">Whoa, this has to be bugged. Where are your nipples!?</state>
@@ -7798,6 +8016,10 @@
             <case stage="6-8" target="zone-tan">
                 <state img="#-shocked.png">I assure you this is a big deal, ZT! Its not like you're normally leaving nothing to the imagination.</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" />
+                <state img="#-excited.png">Kinda hot that you didn't wear a bra... I can't imagine wearing no panties under a dress. &lt;i&gt;Shorts&lt;/i&gt;, though... </state>
+            </case>
             <case stage="0-8" filter="ginger">
                 <state img="#-interested.png">Aww yiss, time to see if the carpet matches the drapes… Multiple times over!</state>
                 <state img="#-triumphant.png">Time to find out if ~name~'s also a natural firecrotch.</state>
@@ -7808,6 +8030,13 @@
             </case>
             <case stage="0-8" filter="video_game">
                 <state img="#-triumphant.png">Ooo, ~name~’s entered an H-game now! I wonder if they’ll obscure her…</state>
+            </case>
+            <case stage="6 8">
+                <alternative filter="nerdy" />
+                <alternative filter="thong" />
+                <state img="#-excited.png">I do wear panties sometimes...</state>
+                <state img="#-excited.png">I'm not &lt;i&gt;always&lt;/i&gt; naked under my clothes... well... I guess we all are...</state>
+                <state img="#-excited.png">I think I like your underwear, ~name~!</state>
             </case>
             <case stage="0-2">
                 <state img="#-interested.png">This is turning out like one of those H-games... Or a Light Novel. A sexy light novel.</state>
@@ -7854,13 +8083,6 @@
             </case>
             <case stage="6">
                 <state img="#-triumphant.png">Neck and neck and crotch and crotch with ~name~!</state>
-            </case>
-            <case stage="6 8">
-                <alternative filter="nerdy" />
-                <alternative filter="thong" />
-                <state img="#-excited.png">I do wear panties sometimes...</state>
-                <state img="#-excited.png">I'm not &lt;i&gt;always&lt;/i&gt; naked under my clothes... well... I guess we all are...</state>
-                <state img="#-excited.png">I think I like your underwear, ~name~!</state>
             </case>
             <case stage="7">
                 <state img="#-triumphant.png">Let’s see what ~name~ has going on downstairs!</state>
@@ -8066,6 +8288,14 @@
             </case>
             <case stage="8" target="zone-tan">
                 <state img="#-awkward.png">W-whoa. I knew I could learn from you, Zone-tan, but is that really the look people like? You'd think a more mature and sophisticated appearance would…</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="panty" />
+                <state img="#-annoyed.png">If it's so impressive, why did you need to shave it? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" />
+                <state img="#-interested.png">Whoa... are you... is that your natural hair, or is it trimmed? It's so... little. </state>
             </case>
             <case stage="0-2" filter="big_butt">
                 <state img="#-interested.png">Whoa... her butt... is so huge.</state>
@@ -8756,6 +8986,10 @@
             <case stage="0-8" target="kamina">
                 <state img="#-gremlin.png">That was incredible, Kamina!</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" />
+                <state img="#-excited.png">8/10 for effort, Ace. And for the contortions. And for covering your own face with cum. Now that's &lt;i&gt;style&lt;/i&gt;. </state>
+            </case>
             <case stage="0-8" alsoPlaying="ryuji" targetTimeInStage="4">
                 <state img="#-happy.png">Hey, Skull. Mwehehehe. We just watched a man masturbate. Mweheheh! This is is hilarious! I never thought you'd like &lt;i&gt;that&lt;/i&gt;!</state>
             </case>
@@ -8882,6 +9116,10 @@
             </case>
             <case stage="7-8" target="hermione">
                 <state img="#-triumphant.png">Well, maybe there’s more to &lt;i&gt;hacking reality&lt;/i&gt; than I thought.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" />
+                <state img="#-interested.png">Megumin, have you... have you never masturbated? &lt;i&gt;Really&lt;/i&gt;? </state>
             </case>
             <case stage="0">
                 <state img="#-excited.png">~Name~ has to... I’m mentally ready but I still have so many clothes...</state>
@@ -9019,6 +9257,10 @@
             </case>
             <case stage="6-8" target="zone-tan">
                 <state img="#-mad.png">And no big show? No tentacles or toys, ZT?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" />
+                <state img="#-triumphant.png">It's like the best part of the day! C'mon! Go for it! </state>
             </case>
             <case stage="0-8" filter="tandem">
                 <state img="#-shocked.png">Whoa, what? I thought there was a no touching rule!</state>
@@ -9309,6 +9551,10 @@
             <case stage="0-8" target="nami">
                 <state img="#-nyoro.png">You know, if someone told me I'd see another Navigator get drenched tonight-- I'd have believed them!</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="megumin" />
+                <state img="#-gremlin.png">&lt;i&gt;You&lt;/i&gt;, my thight-wearing friend, need to try out a vibrator. If you thought that was good, wait until something &lt;i&gt;blows your mind.&lt;/i&gt; </state>
+            </case>
             <case stage="0-8" alsoPlaying="ryuji" targetTimeInStage="4">
                 <state img="#-interested.png" marker="pt_sleepovers">Huh? Oh, right! I always forget there's no boys at the Phantom Thief sleepovers. Um... not that any of us ever masturbated at those. Openly. Um... &lt;i&gt;nenurhmherhm&lt;/i&gt;!</state>
             </case>
@@ -9593,6 +9839,11 @@
                 <condition count="1" filter="saki" />
                 <state img="#-finished.png" collectible="Saki">~Player~! I’ll be out with Saki and Marinette tomorrow, but after that I will be very drunk and tired! Y-y-you should try and call me when that’s done!</state>
             </case>
+            <case stage="8">
+                <alternative target="saki" alsoPlaying="marinette" />
+                <alternative target="saki" alsoPlaying="uravity" />
+                <state img="#-happy.png" collectible="Saki">Okay, Saki! Let's clean up, get going, and get out there!</state>
+            </case>
             <case stage="8" target="pinkie_pie">
                 <state img="#-finished.png" collectible="Mask">It was nice seeing you play, Pinkie Pie! Let's try this again sometime!</state>
             </case>
@@ -9615,11 +9866,6 @@
             </case>
             <case stage="8">
                 <state img="#-calm.png" collectible="Mask">Well, you got me! This is Oracle, signing out. GG!</state>
-            </case>
-            <case stage="8">
-                <alternative target="saki" alsoPlaying="marinette" />
-                <alternative target="saki" alsoPlaying="uravity" />
-                <state img="#-happy.png" collectible="Saki">Okay, Saki! Let's clean up, get going, and get out there!</state>
             </case>
         </trigger>
 

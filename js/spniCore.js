@@ -28,6 +28,7 @@ var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback/";
 
 var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;
+var VERSION_TAG = undefined;
 
 /* Game Wide Constants */
 var HUMAN_PLAYER = 0;
@@ -507,10 +508,20 @@ Player.prototype.checkStatus = function(status) {
 	}
 }
 
-/*****************************************************************************
+
+/**
  * Subclass of Player for AI-controlled players.
- ****************************************************************************/
+ * 
+ * @constructor
+ * 
+ * @param {string} id 
+ * @param {jQuery} $metaXml 
+ * @param {string} status 
+ * @param {number} [releaseNumber] 
+ */
 function Opponent (id, $metaXml, status, releaseNumber) {
+    Player.call(this, id);
+
     this.id = id;
     this.folder = 'opponents/'+id+'/';
     this.base_folder = 'opponents/'+id+'/';
@@ -1430,6 +1441,14 @@ function loadConfigFile () {
                 console.log("Could not find currently deployed Git commit!");
             }
 
+            var _version_tag = $(xml).find('version-tag').text();
+            if (_version_tag) {
+                VERSION_TAG = _version_tag;
+                console.log("Running SPNATI production version " + VERSION_TAG + '.');
+            } else {
+                console.log("Could not find currently deployed production version tag!");
+            }
+
             var _default_bg = $(xml).find('default-background').text();
             if (_default_bg) {
                 defaultBackgroundID = _default_bg;
@@ -1465,27 +1484,21 @@ function loadConfigFile () {
                 console.log("Alternate costumes disabled");
             }
             
-            if (DEBUG) {
-                COLLECTIBLES_ENABLED = false;
-                COLLECTIBLES_UNLOCKED = false;
+            COLLECTIBLES_ENABLED = false;
+            COLLECTIBLES_UNLOCKED = false;
+            
+            if ($(xml).find('collectibles').text() === 'true') {
+                COLLECTIBLES_ENABLED = true;
+                console.log("Collectibles enabled");
                 
-                if ($(xml).find('collectibles').text() === 'true') {
-                    COLLECTIBLES_ENABLED = true;
-                    console.log("Collectibles enabled");
-                    
-                    if ($(xml).find('collectibles-unlocked').text() === 'true') {
-                        COLLECTIBLES_UNLOCKED = true;
-                        console.log("All collectibles force-unlocked");
-                    }
-                } else {
-                    console.log("Collectibles disabled");
+                if ($(xml).find('collectibles-unlocked').text() === 'true') {
+                    COLLECTIBLES_UNLOCKED = true;
+                    console.log("All collectibles force-unlocked");
                 }
             } else {
-                COLLECTIBLES_ENABLED = false;
-                COLLECTIBLES_UNLOCKED = false;
-                console.log("Debug mode disabled - collectibles disabled");
+                console.log("Collectibles disabled");
             }
-
+            
             var _resort_mode = $(xml).find('resort').text();
             if (_resort_mode.toLowerCase() === 'true') {
                 console.log("Resort mode active!");
@@ -1918,7 +1931,7 @@ function sentryInit() {
 
         var sentry_opts = {
             dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
-            release: VERSION_COMMIT,
+            release: VERSION_TAG,
             maxBreadcrumbs: 100,
             integrations: [new Sentry.Integrations.Breadcrumbs({
                 console: false,
@@ -1927,6 +1940,8 @@ function sentryInit() {
             beforeSend: function (event, hint) {
                 /* Inject additional game state data into event tags: */
                 if (!event.extra) event.extra = {};
+
+                event.tags.commit = VERSION_COMMIT;
 
                 if (inGame && !epiloguePlayer) {
                     event.extra.recentLoser = recentLoser;

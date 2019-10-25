@@ -1,7 +1,9 @@
 ﻿using Desktop.CommonControls;
+using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 
@@ -370,7 +372,7 @@ namespace SPNATI_Character_Editor
 						lineCode += $",weight:{defaultLine.Weight.ToString(CultureInfo.InvariantCulture)}";
 					}
 					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~silent~" : defaultLine.Text;
-					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Pose.GetFlatFormat(), text));
+					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Pose?.GetFlatFormat() ?? "", text));
 				}
 			}
 
@@ -792,6 +794,8 @@ namespace SPNATI_Character_Editor
 		public static void Import(string filename, Character character)
 		{
 			string[] lines = File.ReadAllLines(filename);
+			CollectibleData collectibles = character.Collectibles;
+			ObservableCollection<Nickname> nicknames = character.Nicknames;
 			character.Clear();
 			List<Case> genericCases = new List<Case>();
 
@@ -1159,6 +1163,8 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			character.OnAfterDeserialize(filename);
+			character.Collectibles = collectibles;
+			character.Nicknames = nicknames;
 			character.Behavior.PrepareForEdit(character);
 		}
 
@@ -1283,8 +1289,11 @@ namespace SPNATI_Character_Editor
 			}
 
 			PoseMapping mapping = character.PoseLibrary.GetFlatFilePose(img);
-			line.Image = mapping.Key;
-			line.Pose = mapping;
+			if (mapping != null)
+			{
+				line.Image = mapping.Key;
+				line.Pose = mapping;
+			}
 			line.Text = text;
 
 			lineCase.Lines.Add(line);

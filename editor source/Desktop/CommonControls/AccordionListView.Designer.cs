@@ -54,8 +54,8 @@
 			this.view.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.View_RetrieveVirtualItem);
 			this.view.SelectedIndexChanged += new System.EventHandler(this.View_SelectedIndexChanged);
 			this.view.SizeChanged += new System.EventHandler(this.View_SizeChanged);
-			this.view.MouseClick += new System.Windows.Forms.MouseEventHandler(this.View_MouseClick);
-			this.view.MouseDown += new System.Windows.Forms.MouseEventHandler(this.View_MouseDown);
+			this.view.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view_MouseDown);
+			this.view.MouseUp += new System.Windows.Forms.MouseEventHandler(this.view_MouseUp);
 			// 
 			// tmrTick
 			// 

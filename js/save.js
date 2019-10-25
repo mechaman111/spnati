@@ -101,6 +101,7 @@ function Save() {
             profile = JSON.parse(localStorage.getItem(prefix + gender)) || { };
         } catch (ex) {
             console.error('Failed parsing', gender, 'player profile from localStorage');
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
         $nameField.val(profile.name || '');
         changePlayerSize(profile.size || eSize.MEDIUM);
@@ -109,21 +110,25 @@ function Save() {
         });
         playerTagSelections = profile.tags || {};
     };
-    this.savePlayer = function(){
-        localStorage.setItem(prefix + 'gender', humanPlayer.gender);
-    /*  var tags = {};
-        for (var key in playerTagSelections) {
-            tags[key] = playerTagSelections[key];
-        }*/
+    this.savePlayer = function() {
         var profile = {
             name: $nameField.val(),
             size: humanPlayer.size,
             tags: playerTagSelections,
-            clothing: clothingChoices[humanPlayer.gender].filter(function(item, ix) {
+            clothing: clothingChoices[humanPlayer.gender].filter(function (item, ix) {
                 return selectedChoices[ix];
-            }).map(function(item) { return item.name; }),
+            }).map(function (item) {
+                return item.name;
+            }),
         };
-        localStorage.setItem(prefix + humanPlayer.gender, JSON.stringify(profile));
+
+        try {
+            localStorage.setItem(prefix + 'gender', humanPlayer.gender);
+            localStorage.setItem(prefix + humanPlayer.gender, JSON.stringify(profile));
+        } catch (ex) {
+            console.error("Failed to save player info to localStorage");
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        }
     };
     this.loadOptions = function(){
         try {
@@ -146,6 +151,7 @@ function Save() {
             if ('playerFinishingEffect' in options && typeof options.playerFinishingEffect == 'boolean') PLAYER_FINISHING_EFFECT = options.cardSuggest;
         } catch (ex) {
             console.error('Failed parsing options from localStorage');
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
         try {
             var settings = JSON.parse(localStorage.getItem(prefix + 'settings')) || {};
@@ -160,6 +166,7 @@ function Save() {
             }
         } catch (ex) {
             console.error('Failed parsing settings from localStorage');
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
         var usageTracking = localStorage.getItem(prefix + 'usageTracking');
         if (usageTracking) {
@@ -188,7 +195,12 @@ function Save() {
     }
     this.saveUsageTracking = function() {
         if (USAGE_TRACKING !== undefined) {
-            localStorage.setItem(prefix + 'usageTracking', USAGE_TRACKING ? 'yes' : 'no');
+            try {
+                localStorage.setItem(prefix + 'usageTracking', USAGE_TRACKING ? 'yes' : 'no');
+            } catch (ex) {
+                console.error("Failed to save usage tracking data to localStorage");
+                if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+            }
         }
     };
     this.saveOptions = function() {
@@ -203,7 +215,13 @@ function Save() {
             minimalUI: MINIMAL_UI,
             playerFinishingEffect: PLAYER_FINISHING_EFFECT,
         };
-        localStorage.setItem(prefix + 'options', JSON.stringify(options));
+        
+        try {
+            localStorage.setItem(prefix + 'options', JSON.stringify(options));
+        } catch (ex) {
+            console.error("Failed to save options data to localStorage");
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        }
     };
     this.saveSettings = function() {
         var settings = {
@@ -216,14 +234,21 @@ function Save() {
         } else {
             delete settings.background;
         }
-        localStorage.setItem(prefix + 'settings', JSON.stringify(settings));
+
+        try {
+            localStorage.setItem(prefix + 'settings', JSON.stringify(settings));
+        } catch (ex) {
+            console.error("Failed to save settings data to localStorage");
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        }
     };
     this.loadEndings = function() {
         if (endings === undefined) {
             try {
                 endings = JSON.parse(localStorage.getItem(prefix + 'endings')) || { };
-            } catch (e) {
+            } catch (ex) {
                 console.error('Failed parsing endings from localStorage');
+                if (SENTRY_INITIALIZED) Sentry.captureException(ex);
                 endings = {};
             }
         }
@@ -243,7 +268,14 @@ function Save() {
             return
         }
         endings[character].push(title);
-        localStorage.setItem(prefix + 'endings', JSON.stringify(endings));
+
+        try {
+            localStorage.setItem(prefix + 'endings', JSON.stringify(endings));
+        } catch (ex) {
+            console.error('Failed to save ending ' + character + '/' + title + ' to localStorage');
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        }
+        
         //Clear table of endings, so they are loaded agin when player visits gallery
         allEndings = [];
         anyEndings = [];
@@ -259,7 +291,12 @@ function Save() {
             charID = collectible.player.id;
         }
         
-        localStorage.setItem(prefix+'collectibles.'+charID+collectible.id, counter.toString());
+        try {
+            localStorage.setItem(prefix+'collectibles.'+charID+collectible.id, counter.toString());
+        } catch (ex) {
+            console.error('Failed to save collectible counter ' + charID + '/' + collectible.id + ' to localStorage');
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        }
     }
     
     this.getCollectibleCounter = function (collectible) {
@@ -271,7 +308,6 @@ function Save() {
         }
         
         var ctr = localStorage.getItem(prefix+'collectibles.'+charID+collectible.id);
-        
         return parseInt(ctr, 10) || 0;
     }
     
@@ -281,18 +317,28 @@ function Save() {
     }
     
     this.setPersistentMarker = function (player, name, value) {
-        localStorage.setItem(prefix+'markers.'+player.id+'.'+name, value.toString());
+        try {
+            localStorage.setItem(prefix+'markers.'+player.id+'.'+name, value.toString());
+        } catch (ex) {
+            console.error('Failed to save persistent marker ' + player.id + '/' + name + ' to localStorage');
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        }
     }
 
     this.getPlayedCharacterSet = function () {
-        return JSON.parse(localStorage.getItem(prefix + "playedCharacters")) || [];
+        return JSON.parse(localStorage.getItem(prefix + "playedCharacters") || '[]') || [];
     }
 
     this.savePlayedCharacterSet = function (set) {
         var o = {};
         set.forEach(function (v) { o[v] = true; });
 
-        localStorage.setItem(prefix+"playedCharacters", JSON.stringify(Object.keys(o)));
+        try {
+            localStorage.setItem(prefix+"playedCharacters", JSON.stringify(Object.keys(o)));
+        } catch (ex) {
+            console.error('Failed to save played character set to localStorage');
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        }
     }
 
     this.hasShownResortModal = function () {
@@ -300,7 +346,12 @@ function Save() {
     }
 
     this.setResortModalFlag = function (val) {
-        localStorage.setItem(prefix+"resortModalShown", val.toString());
+        try {
+            localStorage.setItem(prefix+"resortModalShown", val.toString());
+        } catch (ex) {
+            console.error('Failed to save resort modal flag to localStorage');
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        }
     }
 
     /** Serializes the localStorage into a base64-encoded JSON string */
@@ -324,11 +375,16 @@ function Save() {
             }
         }
         
-        localStorage.clear();
-        for (var key in data) {
-            localStorage.setItem(key, data[key]);
+        try {
+            localStorage.clear();
+            for (var key in data) {
+                localStorage.setItem(key, data[key]);
+            }
+            save.load();
+        } catch (ex) {
+            console.error('Failed to deserialize localStorage from save code');
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
-        save.load();
 
         return true;
     }

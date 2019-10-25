@@ -226,7 +226,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalMales;
-		[NumericRange(DisplayName = "Total Males", GroupName = "Table", GroupOrder = 2, Description = "Number of males playing (including this character and the player)", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Males", GroupOrder = 2, Description = "Number of males playing (including this character and the player)", Minimum = 0, Maximum = 5)]
 		[XmlOrder(140)]
 		[XmlAttribute("totalMales")]
 		[JsonProperty("totalMales")]
@@ -237,7 +237,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalFemales;
-		[NumericRange(DisplayName = "Total Females", GroupName = "Table", GroupOrder = 1, Description = "Number of females playing (including this character and the player)", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Females", GroupOrder = 1, Description = "Number of females playing (including this character and the player)", Minimum = 0, Maximum = 5)]
 		[XmlOrder(150)]
 		[XmlAttribute("totalFemales")]
 		[JsonProperty("totalFemales")]
@@ -292,7 +292,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalPlaying;
-		[NumericRange(DisplayName = "Total Playing", GroupName = "Table", GroupOrder = 3, Description = "Number of players still in the game", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Playing", GroupOrder = 3, Description = "Number of players still in the game", Minimum = 0, Maximum = 5)]
 		[XmlOrder(200)]
 		[XmlAttribute("totalAlive")]
 		[JsonProperty("totalAlive")]
@@ -303,7 +303,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalExposed;
-		[NumericRange(DisplayName = "Total Exposed", GroupName = "Table", GroupOrder = 4, Description = "Number of players who have exposed either their chest or crotch", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Exposed", GroupOrder = 4, Description = "Number of players who have exposed either their chest or crotch", Minimum = 0, Maximum = 5)]
 		[XmlOrder(210)]
 		[XmlAttribute("totalExposed")]
 		[JsonProperty("totalExposed")]
@@ -314,7 +314,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalNaked;
-		[NumericRange(DisplayName = "Total Naked", GroupName = "Table", GroupOrder = 5, Description = "Number of players who have lost all their clothing, but might still be playing", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Naked", GroupOrder = 5, Description = "Number of players who have lost all their clothing, but might still be playing", Minimum = 0, Maximum = 5)]
 		[XmlOrder(220)]
 		[XmlAttribute("totalNaked")]
 		[JsonProperty("totalNaked")]
@@ -325,7 +325,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalMasturbating;
-		[NumericRange(DisplayName = "Total Masturbating", GroupName = "Table", GroupOrder = 6, Description = "Number of players who are currently masturbating", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Masturbating", GroupOrder = 6, Description = "Number of players who are currently masturbating", Minimum = 0, Maximum = 5)]
 		[XmlOrder(230)]
 		[XmlAttribute("totalMasturbating")]
 		[JsonProperty("totalMasturbating")]
@@ -336,7 +336,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalFinished;
-		[NumericRange(DisplayName = "Total Finished", GroupName = "Table", GroupOrder = 7, Description = "Number of players who finished masturbating and completely out of the game", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "Total Finished", GroupOrder = 7, Description = "Number of players who finished masturbating and completely out of the game", Minimum = 0, Maximum = 5)]
 		[XmlOrder(240)]
 		[XmlAttribute("totalFinished")]
 		[JsonProperty("totalFinished")]
@@ -1247,10 +1247,10 @@ namespace SPNATI_Character_Editor
 				}
 				bool filtered = Conditions.Any(c =>
 				{
-					bool result = false;
-					if (!string.IsNullOrEmpty(c.Character))
+					bool result = !string.IsNullOrEmpty(c.FilterTag);
+					if (result)
 					{
-						Character character = CharacterDatabase.GetById(c.Character);
+						Character character = CharacterDatabase.Get(c.FilterTag);
 						result = (character == null);
 					}
 					return result;
@@ -1270,7 +1270,7 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				bool targeted = !string.IsNullOrEmpty(Target) || !string.IsNullOrEmpty(AlsoPlaying) || (!string.IsNullOrEmpty(Filter) && CharacterDatabase.GetById(Filter) != null);
+				bool targeted = !string.IsNullOrEmpty(Target) || !string.IsNullOrEmpty(AlsoPlaying) || (!string.IsNullOrEmpty(Filter) && CharacterDatabase.Get(Filter) != null);
 				if (!targeted)
 				{
 					foreach (TargetCondition condition in Conditions)
@@ -1280,7 +1280,7 @@ namespace SPNATI_Character_Editor
 							targeted = true;
 							break;
 						}
-						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.GetById(condition.FilterTag) != null)
+						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null)
 						{
 							targeted = true;
 							break;
@@ -1595,15 +1595,38 @@ namespace SPNATI_Character_Editor
 			}
 
 			//if no stages have been set, apply it to all
-			TriggerDefinition trigger = TriggerDatabase.GetTrigger(response.Tag);
-			if (response.Stages.Count == 0)
+			if (Tag.Contains("chest") && !response.Tag.Contains("chest"))
 			{
-				for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
+				int layer = GetRevealStage(responder, "upper");
+				if (Tag.Contains("will"))
 				{
-					int standardStage = TriggerDatabase.ToStandardStage(responder, i);
-					if (standardStage >= trigger.StartStage && standardStage <= trigger.EndStage)
+					layer--;
+				}
+				response.Stages.Clear();
+				response.Stages.Add(layer);
+			}
+			else if (Tag.Contains("crotch") && !response.Tag.Contains("crotch"))
+			{
+				int layer = GetRevealStage(responder, "lower");
+				if (Tag.Contains("will"))
+				{
+					layer--;
+				}
+				response.Stages.Clear();
+				response.Stages.Add(layer);
+			}
+			else
+			{
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(response.Tag);
+				if (response.Stages.Count == 0)
+				{
+					for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
 					{
-						response.Stages.Add(i);
+						int standardStage = TriggerDatabase.ToStandardStage(responder, i);
+						if (standardStage >= trigger.StartStage && standardStage <= trigger.EndStage)
+						{
+							response.Stages.Add(i);
+						}
 					}
 				}
 			}
@@ -2063,6 +2086,28 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// Gets the stage in which a character's position is revealed
+		/// </summary>
+		/// <param name="speaker"></param>
+		/// <returns></returns>
+		private int GetRevealStage(Character speaker, string position)
+		{
+			int last = 0;
+			for (int i = speaker.Wardrobe.Count - 1; i >= 0; i--)
+			{
+				Clothing layer = speaker.Wardrobe[i];
+				if (layer.Type == "major" || layer.Type == "important")
+				{
+					if (layer.Position == position || layer.Position == "both")
+					{
+						last = i;
+					}
+				}
+			}
+			return speaker.Wardrobe.Count - last;
+		}
+
+		/// <summary>
 		/// Translates a layer type and position to a word used in a trigger
 		/// </summary>
 		/// <remarks>This really doesn't belong in the Case class</remarks>
@@ -2193,7 +2238,7 @@ namespace SPNATI_Character_Editor
 				}
 				return $"{gender}_{Tag}";
 			}
-			else if (Tag.StartsWith("must_strip"))
+			else if (Tag != null && Tag.StartsWith("must_strip"))
 			{
 				if (speaker.Metadata.CrossGender)
 				{
@@ -2211,20 +2256,33 @@ namespace SPNATI_Character_Editor
 			}
 
 			string tag = Tag;
-			if (tag.StartsWith("female_"))
+			if (tag != null && tag.StartsWith("female_"))
 			{
 				tag = tag.Substring(7);
 			}
-			else if (tag.StartsWith("male_"))
+			else if (tag != null && tag.StartsWith("male_"))
 			{
 				tag = tag.Substring(5);
 			}
-			else if (tag.StartsWith("opponent_"))
+			else if (tag != null && tag.StartsWith("opponent_"))
 			{
 				tag = tag.Substring(9);
 			}
 
-			if (Target == responder.FolderName)
+			string target = Target;
+			if (string.IsNullOrEmpty(target))
+			{
+				foreach (TargetCondition condition in Conditions)
+				{
+					if (condition.Role == "target")
+					{
+						target = condition.Character;
+						break;
+					}
+				}
+			}
+
+			if (target == responder.FolderName)
 			{
 				//addressing responder directly, meaning the responder must be doing some action
 				if (tag.Contains("will_be_visible") || tag.Contains("removing"))
@@ -2268,7 +2326,7 @@ namespace SPNATI_Character_Editor
 
 			return Tag; //if nothing above applied, the speaker is reacting to some event unrelated to the responder, so the responder can target the same thing
 		}
-		
+
 		/// <summary>
 		/// Gets a list of cases that could potentially match up with the given source tag. This could be lines that the sourceCase is responding to, or lines that are responding to the sourceCase
 		/// </summary>
@@ -2567,9 +2625,13 @@ namespace SPNATI_Character_Editor
 			}
 			foreach (TargetCondition condition in Conditions)
 			{
+				if (condition.Count == "0" || condition.Count == "0-0")
+				{
+					continue;
+				}
 				if (!string.IsNullOrEmpty(condition.Character))
 				{
-					Character c = CharacterDatabase.GetById(condition.Character);
+					Character c = CharacterDatabase.Get(condition.Character);
 					if (c != null)
 					{
 						set.Add(c.FolderName);
@@ -2621,7 +2683,14 @@ namespace SPNATI_Character_Editor
 				!string.IsNullOrEmpty(AlsoPlayingNotSaidMarker) ||
 				!string.IsNullOrEmpty(AlsoPlayingSayingMarker) ||
 				!string.IsNullOrEmpty(AlsoPlayingSaying) ||
-				!string.IsNullOrEmpty(AlsoPlayingTimeInStage);
+				!string.IsNullOrEmpty(AlsoPlayingTimeInStage) ||
+				!string.IsNullOrEmpty(TotalMales) ||
+				!string.IsNullOrEmpty(TotalPlaying) ||
+				!string.IsNullOrEmpty(TotalFinished) ||
+				!string.IsNullOrEmpty(TotalNaked) ||
+				!string.IsNullOrEmpty(TotalMasturbating) ||
+				!string.IsNullOrEmpty(TotalExposed) ||
+				!string.IsNullOrEmpty(TotalFemales);
 		}
 
 		public string GetStageRange(Character target)

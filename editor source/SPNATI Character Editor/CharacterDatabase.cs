@@ -29,6 +29,9 @@ namespace SPNATI_Character_Editor
 
 		public static List<string> FailedCharacters = new List<string>();
 
+		//If true, Get() will return a placeholder dummy for folders that physically exist but the character wasn't loaded yet. Only needed during initial load
+		public static bool UsePlaceholders = false;
+
 		public static int Count
 		{
 			get { return _characters.Count; }
@@ -45,6 +48,11 @@ namespace SPNATI_Character_Editor
 
 		public static void Add(Character character)
 		{
+			Character old;
+			if (_characterMap.TryGetValue(character.FolderName, out old))
+			{
+				_characters.Remove(old);
+			}
 			_characters.Add(character);
 			_characterMap[character.FolderName] = character;
 			_idMap[GetId(character)] = character;
@@ -66,7 +74,18 @@ namespace SPNATI_Character_Editor
 
 		public static Character Get(string folderName)
 		{
-			return _characterMap.Get(folderName);
+			Character character = _characterMap.Get(folderName);
+			if (character == null && UsePlaceholders)
+			{
+				string path = Config.GetRootDirectory(folderName);
+				if (Directory.Exists(path))
+				{
+					character = new PlaceholderCharacter();
+					character.FolderName = folderName;
+					_characterMap[folderName] = character;
+				}
+			}
+			return character;
 		}
 
 		public static Character GetById(string id)

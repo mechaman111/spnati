@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.1 at 1:05:46 AM on August 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.7 at 11:06:39 PM on October 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.1</version>
+    <version>v5.2.7</version>
     <first>Chihiro</first>
     <last>Fujisaki</last>
     <label>Chihiro</label>
@@ -539,6 +539,10 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0" id="1251">
+                <condition role="other" character="ribbon_girl" />
+                <state img="#-shocked.png">O-Oh, of course, that makes sense, but how do those... erm, coil-arms work? Are they mechanical?</state>
+            </case>
             <case stage="0" id="7">
                 <state img="#-angry.png">I-I've never played a game like this before... b-but it'll make me stronger! I-I hope...</state>
             </case>
@@ -671,126 +675,190 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="5" id="51" timeInStage="0" priority="999">
+            <case stage="5" id="51" priority="999">
+                <condition role="self" timeInStage="0" />
                 <state img="custom:#-excited">{mono}Hello, nice to meet you... uhm, please call me &lt;i&gt;Alter Ego&lt;/i&gt;. I'm... an artificial intelligence program designed by Chihiro Fujisaki.</state>
             </case>
-            <case stage="0-4" id="53" alsoPlaying="sakura" alsoPlayingStage="1" alsoPlayingTimeInStage="0" alsoPlayingSaying="you can call me Sakura">
+            <case stage="0-4" id="53">
+                <condition role="other" character="sakura" stage="1" timeInStage="0" saying="you can call me Sakura" />
                 <state img="#-happy.png">Oh... okay then, Sakura! I-In that case, I guess you could call me Chihiro... though you were probably doing that already...</state>
             </case>
-            <case stage="0-4" id="55" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+            <case stage="0-4" id="55">
+                <condition role="other" character="saki_zls" stage="6" timeInStage="0" />
                 <state img="#-shocked.png">W-Wait, Saki was a &lt;i&gt;zombie&lt;/i&gt; this whole time? &lt;br&gt; {small}...well, as long as she doesn't try to eat me or anything...</state>
             </case>
-            <case stage="5" id="57" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+            <case stage="5" id="57">
+                <condition role="other" character="saki_zls" stage="6" timeInStage="0" />
                 <state img="custom:#-shocked">{mono} I see, you are a... 'zombie', correct? This laptop is composed of inorganic materials, so please don't eat it.</state>
             </case>
-            <case stage="6" id="59" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+            <case stage="6" id="59">
+                <condition role="other" character="saki_zls" stage="6" timeInStage="0" />
                 <state img="custom:#-shocked">{mono} [I see, you are a... 'zombie', correct?] &lt;br&gt; {small}...well, as long as she doesn't try to eat me or anything...</state>
             </case>
-            <case stage="0-4" id="61" alsoPlaying="sakura" alsoPlayingStage="0-1" totalRounds="0-3" alsoPlayingNotSaidMarker="saga_franchouchou" alsoPlayingSayingMarker="saga_franchouchou">
+            <case stage="0-4" id="61" totalRounds="0-3">
+                <condition role="other" character="sakura" stage="0-1" sayingMarker="saga_franchouchou" notSaidMarker="saga_franchouchou" />
                 <state img="#-thinking-3.png">Eh? Fran...chouchou? I think I remember seeing that name online somewhere... maybe?</state>
             </case>
-            <case stage="0-4" id="63" alsoPlaying="sakura" alsoPlayingStage="3" alsoPlayingNotSaidMarker="furanshuu" alsoPlayingSayingMarker="furanshuu">
+            <case stage="0-4" id="63">
+                <condition role="other" character="sakura" stage="3" sayingMarker="furanshuu" notSaidMarker="furanshuu" />
                 <state img="#-nervous-2.png">O-Oh. That's, uhm... interesting, Sakura... &lt;i&gt;(N-Now that I think about it... is that what I've been smelling?)&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="65" alsoPlaying="mahiru" alsoPlayingStage="1-7" notSaidMarker="computational_photography">
+            <case stage="0-4" id="65">
+                <condition role="self" notSaidMarker="computational_photography" />
+                <condition role="other" character="mahiru" stage="1-7" />
                 <state img="#-thinking-3.png" marker="computational_photography">Photography... I'm working on a computational photography project right now, actually. It's supposed to help with low-light photos-- exposure time adjustment, frame averaging, stuff like that...</state>
             </case>
-            <case stage="0-4" id="67" alsoPlaying="sakura" alsoPlayingStage="0-2" notSaidMarker="target_sakura_comment">
+            <case stage="0-4" id="67">
+                <condition role="self" notSaidMarker="target_sakura_comment" />
+                <condition role="other" character="sakura" stage="0-2" />
                 <state img="#-shocked.png" marker="target_sakura_comment=1">O-Oh! You're an idol, right? Are you sure you can play something like this...? I've heard that an idol's life can be really harsh, sometimes...</state>
             </case>
-            <case stage="0-4" id="69" alsoPlaying="uravity" alsoPlayingStage="2-7" notSaidMarker="ochako_ua">
+            <case stage="0-4" id="69">
+                <condition role="self" notSaidMarker="ochako_ua" />
+                <condition role="other" character="uravity" stage="2-7" />
                 <state img="#-thinking-1.png" marker="ochako_ua=1">O-Ochako, you, uhm, went to an academy called 'UA', right? What was it like? ...Is it like Hope's Peak?</state>
                 <state img="#-thinking-1.png" marker="ochako_ua=1">U-Uhm, so... Ochako, what &lt;i&gt;is&lt;/i&gt; UA Academy, anyways... is it like Hope's Peak?</state>
             </case>
-            <case stage="6" id="71" alsoPlaying="haru" timeInStage="0" alsoPlayingSayingMarker="chihiroreveal">
+            <case stage="0-4" oneShotId="2">
+                <condition role="other" character="dust" stage="1" saidMarker="chihiro_ahrah" />
+                <state img="#-thinking-3.png" marker="dust_magic_sword">Hmm... S-So, uhm, what about your sword makes it magical, Dust?</state>
+            </case>
+            <case stage="6" id="71">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="haru" sayingMarker="chihiroreveal" />
                 <state img="custom:#-relieved">O-Oh, uhm...t-that makes me feel... uhm... really glad, actually...!</state>
             </case>
-            <case stage="6" id="73" alsoPlaying="natsuki" timeInStage="0" alsoPlayingSayingMarker="trapsuki">
+            <case stage="6" id="73">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="natsuki" sayingMarker="trapsuki" />
                 <state img="custom:#-shocked">W-Wait, what's a 'trap', and... uhm, why am I one, again?</state>
             </case>
-            <case stage="6" id="75" alsoPlaying="ryuji" timeInStage="0">
+            <case stage="6" id="75">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="ryuji" />
                 <state img="custom:#-relieved">O-Oh. Um... I-I'm really glad to hear that!</state>
             </case>
-            <case stage="0-4" id="77" alsoPlaying="futaba" notSaidMarker="futaba_programming">
+            <case stage="5" oneShotId="3">
+                <condition role="other" character="dust" />
+                <condition role="self" timeInStage="1-" />
+                <state img="custom:#-thinking-3">{mono}Uhm, excuse me, Mister... Dust, was it?&lt;br&gt;Why are you staring at me like that? Is something wrong?</state>
+            </case>
+            <case stage="0-4" id="77">
+                <condition role="self" notSaidMarker="futaba_programming" />
+                <condition role="other" character="futaba" />
                 <state img="#-excited.png" marker="futaba_programming=1">O-Oh! Futaba, you're a... uhm, fellow programmer, right? What kind of stuff do you work on?</state>
                 <state img="#-excited.png" marker="futaba_programming=1">O-Oh, Futaba... if I remember correctly, you're a fellow programmer, right? So... uhm, what kind of stuff do you work with?</state>
             </case>
-            <case stage="0-4" id="79" alsoPlaying="hanako" notSaidMarker="hanako_reading">
+            <case stage="0-4" id="79">
+                <condition role="self" notSaidMarker="hanako_reading" />
+                <condition role="other" character="hanako" />
                 <state img="#-thinking-1.png" marker="hanako_reading=1">S-So... uhm... do you like reading, Hanako? Er... what do you like to read?</state>
             </case>
-            <case stage="0-4" id="82" alsoPlaying="kizuna" notSaidMarker="kizuna_maker">
+            <case stage="0-4" id="82">
+                <condition role="self" notSaidMarker="kizuna_maker" />
+                <condition role="other" character="kizuna" />
                 <state img="#-excited.png" marker="kizuna_maker=1">So, Kizuna... You're a true AI, right? Who designed you? Can I meet them?</state>
                 <state img="#-excited.png" marker="kizuna_maker=2">Kizuna... you're a full AI, aren't you? Who designed you? I, uhm... kinda want to compare notes.</state>
             </case>
-            <case stage="6" id="83" alsoPlaying="kizuna" notSaidMarker="kizuna_maker">
+            <case stage="6" id="83">
+                <condition role="self" notSaidMarker="kizuna_maker" />
+                <condition role="other" character="kizuna" />
                 <state img="custom:#-excited" marker="kizuna_maker=1">So, Kizuna... You're a true AI, right? Who designed you? Can I meet them?</state>
                 <state img="custom:#-excited" marker="kizuna_maker=2">Kizuna... you're a full AI, aren't you? Who designed you? I, uhm... kinda want to compare notes.</state>
             </case>
-            <case stage="5" id="85" alsoPlaying="chiaki" notSaidMarker="ae_recognized_chiaki">
+            <case stage="5" id="85">
+                <condition role="self" notSaidMarker="ae_recognized_chiaki" />
+                <condition role="other" character="chiaki" />
                 <state img="custom:#-shocked" marker="ae_recognized_chiaki=1">{mono}Eh? Chiaki...? Is this... the Neo World Program? Or... wait...</state>
             </case>
-            <case stage="5" id="87" alsoPlaying="kizuna" notSaidMarker="kizuna_maker">
+            <case stage="5" id="87">
+                <condition role="self" notSaidMarker="kizuna_maker" />
+                <condition role="other" character="kizuna" />
                 <state img="custom:#-excited" marker="kizuna_maker=3">{mono}So, Kizuna... You're a true AI, right? Could you send over contact info for your creator? I think Master would like to meet them.</state>
                 <state img="custom:#-excited" marker="kizuna_maker=4">{mono}So, Kizuna... You're a full AI, aren't you? If it's no trouble, could you transmit contact info for your developer? I get the feeling Master would want to meet them.</state>
             </case>
-            <case stage="6" id="89" alsoPlaying="sayori" alsoPlayingSayingMarker="chihiro_gender_reassurance_2">
+            <case stage="6" id="89">
+                <condition role="other" character="sayori" sayingMarker="chihiro_gender_reassurance_2" />
                 <state img="custom:#-relieved">R-Really, Sayori...? I-I... um... wasn't expecting anyone to say that... Thank you!</state>
             </case>
-            <case stage="5" id="91" notSaidMarker="ae_mentioned_background">
+            <case stage="0-4" id="1260" oneShotId="1">
+                <condition role="self" saidMarker="fractals_1" />
+                <condition role="other" character="n" />
+                <state img="#-excited.png">S-So, uhm, N, I haven't really looked too deeply into iterated function fractals, but I've done some stuff with escape-time fractals out of curiosity... y-you know, Julia sets, Lyapunov fractals, the Burning Ship, a-and so on... i-if you're interested, maybe I could show you what I've worked on at some point?</state>
+            </case>
+            <case stage="0-4" oneShotId="4">
+                <condition role="other" character="guzma" sayingMarker="kids" />
+                <state img="#-angry.png" marker="guzma_notakid">H-Hey! I'm not a kid! A-And I know what I'm doing here... {small}h-hopefully...</state>
+            </case>
+            <case stage="0-4" oneShotId="5">
+                <condition role="other" character="n" />
+                <state img="#-excited.png" marker="N_math1">Ah! So, uhm.... N? You obviously know more about mathematics than the average person, so... uhm, I was wondering what sub-fields of math you've studied, i-if any...?</state>
+            </case>
+            <case stage="5" id="91">
+                <condition role="self" notSaidMarker="ae_mentioned_background" />
                 <test expr="~background~" value="bathhouse" />
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Oh, is this a bathhouse? Ehehe... seems familiar...</state>
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Oh, a bathhouse! Don't worry... I think Master waterproofed this laptop...</state>
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}A bathhouse... sounds familiar...</state>
             </case>
-            <case stage="5" id="93" notSaidMarker="ae_mentioned_background">
+            <case stage="5" id="93">
+                <condition role="self" notSaidMarker="ae_mentioned_background" />
                 <test expr="~background~" value="beach" />
                 <state img="custom:#-shocked" marker="ae_mentioned_background=1">{mono}Wow, the webcam feed is really bright... is this... a beach?</state>
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Hm, now that I think about it... are we on a beach? Sorry, I can only see through my built-in webcam...</state>
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Ah, I should adjust the webcam brightness... I'm surprised Master chose to play on a beach, though. Is anyone else around besides us?</state>
             </case>
-            <case stage="5" id="95" notSaidMarker="ae_mentioned_background">
+            <case stage="5" id="95">
+                <condition role="self" notSaidMarker="ae_mentioned_background" />
                 <test expr="~background~" value="bedroom" />
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Oh... are we in someone's bedroom? Whose is it?</state>
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Hmm... this doesn't look like Master's bedroom. Where are we?</state>
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Hmm... is this someone's home?</state>
             </case>
-            <case stage="5" id="97" notSaidMarker="ae_mentioned_background">
+            <case stage="5" id="97">
+                <condition role="self" notSaidMarker="ae_mentioned_background" />
                 <test expr="~background~" value="classroom" />
                 <state img="custom:#-shocked" marker="ae_mentioned_background=1">{mono}Eh? Are we in a classroom? This isn't Hope's Peak, is it...?</state>
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Wait... why are we playing in a classroom?</state>
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Hey, ~player~... why are we playing in a classroom? It... doesn't look like Hope's Peak, from what I can see...</state>
             </case>
-            <case stage="5" id="99" notSaidMarker="ae_mentioned_background">
+            <case stage="5" id="99">
+                <condition role="self" notSaidMarker="ae_mentioned_background" />
                 <test expr="~background~" value="haunted forest" />
                 <state img="custom:#-thinking-2" marker="ae_mentioned_background=1">{mono}Does anyone know where we are...? I can't see anything in the background.</state>
                 <state img="custom:#-thinking-2" marker="ae_mentioned_background=1">{mono}I don't think this webcam works well in low lighting... I can't see anything.</state>
                 <state img="custom:#-thinking-2" marker="ae_mentioned_background=1">{mono}Is this... a forest? I can't see well, it's so dark...</state>
             </case>
-            <case stage="5" id="101" notSaidMarker="ae_mentioned_background">
+            <case stage="5" id="101">
+                <condition role="self" notSaidMarker="ae_mentioned_background" />
                 <test expr="~background~" value="inventory" />
                 <state img="custom:#-thinking-1" marker="ae_mentioned_background=1">{mono}Hmm... what is this place, anyways? It looks like... a bar?</state>
                 <state img="custom:#-thinking-1" marker="ae_mentioned_background=1">{mono}My built-in webcam is kind of limited, but... are we in a bar?</state>
                 <state img="custom:#-thinking-2" marker="ae_mentioned_background=1">{mono}Hm... are we in a bar of some kind? I... didn't expect Master to go to a place like this.</state>
             </case>
-            <case stage="5" id="103" notSaidMarker="ae_mentioned_background">
+            <case stage="5" id="103">
+                <condition role="self" notSaidMarker="ae_mentioned_background" />
                 <test expr="~background~" value="mansion" />
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Wow, this place looks... really fancy...</state>
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Oh... where are we? Looks really fancy...</state>
                 <state img="custom:#-shy" marker="ae_mentioned_background=1">{mono}Hmm... is this someone's home?</state>
             </case>
-            <case stage="5" id="105" notSaidMarker="ae_mentioned_background">
+            <case stage="5" id="105">
+                <condition role="self" notSaidMarker="ae_mentioned_background" />
                 <test expr="~background~" value="pool" />
                 <state img="custom:#-shocked" marker="ae_mentioned_background=1">{mono}Wait... are we by a pool? ...I hope Master waterproofed this laptop...</state>
                 <state img="custom:#-shocked" marker="ae_mentioned_background=1">{mono}Wait... are we near a pool? I-I hope this laptop is waterproof...</state>
                 <state img="custom:#-shocked" marker="ae_mentioned_background=1">{mono}Oh... is this a pool? Uhm... I think Master waterproofed this laptop, so I should be fine...</state>
             </case>
-            <case stage="5" id="107" notSaidMarker="ae_mentioned_background">
+            <case stage="5" id="107">
+                <condition role="self" notSaidMarker="ae_mentioned_background" />
                 <test expr="~background~" value="purple room" />
                 <state img="custom:#-thinking-2" marker="ae_mentioned_background=1">{mono}Hmm... it's so dark in here, I can't see anything through the webcam...</state>
                 <state img="custom:#-thinking-2" marker="ae_mentioned_background=1">{mono}Oh... it's really dark here, and I can't see much using the webcam... sorry.</state>
                 <state img="custom:#-thinking-2" marker="ae_mentioned_background=1">{mono}Where are we...? I can't see clearly with this webcam... sorry.</state>
             </case>
-            <case stage="5" id="109" notSaidMarker="ae_mentioned_background">
+            <case stage="5" id="109">
+                <condition role="self" notSaidMarker="ae_mentioned_background" />
                 <test expr="~background~" value="street" />
                 <state img="custom:#-thinking-2" marker="ae_mentioned_background=1">{mono}Wait... are we on a street? Why...?</state>
                 <state img="custom:#-thinking-2" marker="ae_mentioned_background=1">{mono}Wait, I saw someone pass by in the background... are we in public?</state>
@@ -799,29 +867,44 @@
         </trigger>
 
         <trigger id="must_strip">
-            <case stage="5" id="111" timeInStage="0" priority="1010">
+            <case stage="5" id="111" priority="1010">
+                <condition role="self" timeInStage="0" />
                 <state img="custom:#-return" set-label="Chihiro">{mono}[Oh, Master! Back already?] {!reset}&lt;br&gt; Um... S-Sorry about that, everyone...</state>
             </case>
             <case stage="5" id="113" priority="999">
                 <state img="custom:#-return" set-label="Chihiro">{mono}[Oh, Master! You came back?] {!reset}&lt;br&gt; Um... S-Sorry about that, everyone...</state>
             </case>
-            <case stage="0" id="115" alsoPlaying="9s">
+            <case stage="0">
+                <condition role="other" character="guzma" sayingMarker="Chihiro_kid" />
+                <state img="#-angry.png" marker="guzma_selftest">H-Hey! I'm not a &lt;i&gt;kid&lt;/i&gt;! I'm here because... uhm, because I wanted to test myself, I guess...</state>
+            </case>
+            <case stage="0" id="115">
+                <condition role="other" character="9s" />
                 <state img="#-shy.png">Alpha patterns? S-Sorry, I'm not too familiar with neuroscience beyond what's needed for neural nets...</state>
             </case>
-            <case stage="0" id="117" alsoPlaying="pit">
+            <case stage="0" id="117">
+                <condition role="other" character="pit" />
                 <state img="#-nervous-2.png">Y-Yeah! I... uhm, I'm good with computers...</state>
             </case>
-            <case stage="0" id="119" alsoPlaying="sakura">
+            <case stage="0" id="119">
+                <condition role="other" character="sakura" />
                 <state img="#-nervous.png">E-Eh? Familiar? H-How...?</state>
             </case>
-            <case stage="1" id="121" alsoPlaying="9s">
+            <case stage="1" id="121">
+                <condition role="other" character="9s" />
                 <state img="#-nervous-2.png">Y-Yeah, that's what I was hoping for... but, uhm, I think I may have overestimated this game...</state>
             </case>
-            <case stage="2" id="123" alsoPlaying="9s">
+            <case stage="2" id="123">
+                <condition role="other" character="9s" />
                 <state img="#-embarassed.png">S-Sure! I-I'd... uhm, be more comfortable with that...</state>
             </case>
-            <case stage="3" id="125" alsoPlaying="9s">
+            <case stage="3" id="125">
+                <condition role="other" character="9s" />
                 <state img="#-disappointed.png">I-I &lt;i&gt;did&lt;/i&gt; plan for losing! B-But I might have... uhm, overestimated how difficult this would be...</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="sei" />
+                <state img="#-nervous.png">E-Eh?! Ah, uhm, uh, where did I put it, wheredidIputit...&lt;br&gt;U-Uhm, here?</state>
             </case>
         </trigger>
 
@@ -915,32 +998,50 @@
         </trigger>
 
         <trigger id="stripping">
-            <case stage="5" id="163" alsoPlaying="kamina" saidMarker="kamina_meaning_of_manly">
+            <case stage="5" id="163">
+                <condition role="self" saidMarker="kamina_meaning_of_manly" />
+                <condition role="other" character="kamina" />
                 <state img="custom:#-strip" marker="kamina_reveal=1" set-gender="male">Kamina? U-Um... when I was asking you about being... uhm, manly, earlier... there was a reason for that...</state>
             </case>
-            <case stage="0" id="165" alsoPlaying="9s">
+            <case stage="0">
+                <condition role="other" character="guzma" sayingMarker="Chihiro_ribbon" />
+                <state img="#-strip.png" marker="guzma_notgonnadie">I-I'm not going to &lt;i&gt;die&lt;/i&gt;, I'm just... a bit uncomfortable...</state>
+            </case>
+            <case stage="0" id="165">
+                <condition role="other" character="9s" />
                 <state img="#-strip.png">E-Eh? W-Wait, hang on--!</state>
             </case>
-            <case stage="0" id="167" alsoPlaying="pit">
+            <case stage="0" id="167">
+                <condition role="other" character="pit" />
                 <state img="#-strip.png">Games? Oh, no, I mostly work with machine learning and data science-- er, uhm... artificial intelligence, basically.</state>
             </case>
-            <case stage="0" id="169" alsoPlaying="sakura">
+            <case stage="0" id="169">
+                <condition role="other" character="sakura" />
                 <state img="#-strip.png">U-Uhm... yeah, I guess... I-I don't really listen to a lot of idol music, so... uh...</state>
             </case>
-            <case stage="1" id="171" alsoPlaying="9s">
+            <case stage="1" id="171">
+                <condition role="other" character="9s" />
                 <state img="#-strip.png">Er, um, no... I just wanted to face my fears, I guess...?</state>
             </case>
-            <case stage="1" id="173" alsoPlaying="pit">
+            <case stage="1" id="173">
+                <condition role="other" character="pit" />
                 <state img="#-strip.png" marker="upskirt=1">I guess I can do this... Eh? My skirt?</state>
             </case>
-            <case stage="2" id="175" alsoPlaying="9s">
+            <case stage="2" id="175">
+                <condition role="other" character="9s" />
                 <state img="#-strip.png">Well, uhm... I mostly specialize in natural language processing and reinforcement learning, so... I work with a lot of language models and learning agents.</state>
             </case>
-            <case stage="2" id="177" alsoPlaying="pit">
+            <case stage="2" id="177">
+                <condition role="other" character="pit" />
                 <state img="#-strip.png">You think it's... cute? U-Uhm... t-thank you...</state>
             </case>
-            <case stage="3" id="179" alsoPlaying="pit">
+            <case stage="3" id="179">
+                <condition role="other" character="pit" />
                 <state img="#-strip.png">I don't really see how my suspenders could be useful, here... I don't really see how &lt;i&gt;anything&lt;/i&gt; could be useful, here...!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="sei" />
+                <state img="#-strip.png">A-Ah, is something wrong...?</state>
             </case>
             <case stage="0" id="181">
                 <state img="#-strip.png">I... I guess I can part with this, first...</state>
@@ -969,26 +1070,45 @@
         </trigger>
 
         <trigger id="stripped">
-            <case stage="2" id="191" alsoPlaying="pit" saidMarker="upskirt==1">
+            <case stage="2" id="191">
+                <condition role="self" saidMarker="upskirt==1" />
+                <condition role="other" character="pit" />
                 <state img="#-nervous-2.png">...Oh. I, uhm... I wasn't really thinking about people trying to look up my skirt...</state>
             </case>
-            <case stage="6" id="193" alsoPlaying="kamina" saidMarker="kamina_reveal==1">
+            <case stage="6" id="193">
+                <condition role="self" saidMarker="kamina_reveal==1" />
+                <condition role="other" character="kamina" />
                 <state img="custom:#-embarassed" marker="kamina_reveal=2">A-And, uhm... it was because... well, I'm... actually male, myself...</state>
             </case>
-            <case stage="1" id="195" alsoPlaying="9s">
+            <case stage="1">
+                <condition role="other" character="guzma" />
+                <condition role="self" saidMarker="guzma_notgonnadie" />
+                <state img="#-nervous-2.png">&lt;i&gt;(He's right, though... Why am I even getting so nervous about this...?)&lt;/i&gt;&lt;br&gt;I guess... you have a point...</state>
+                <state img="#-nervous-2.png">Though... I guess you have a point...&lt;br&gt;&lt;i&gt;(If it was hard to even take that off, everything else is going to be impossible...)&lt;/i&gt;</state>
+            </case>
+            <case stage="1" id="195">
+                <condition role="other" character="9s" />
                 <state img="#-angry.png">H-Hey! D-Did you just...!</state>
             </case>
-            <case stage="1" id="197" alsoPlaying="sakura">
+            <case stage="1" id="197">
+                <condition role="other" character="sakura" />
                 <state img="#-shy.png">Y-Yeah... I suppose, Sakura...?</state>
             </case>
-            <case stage="2" id="199" alsoPlaying="9s">
+            <case stage="2" id="199">
+                <condition role="other" character="9s" />
                 <state img="#-disappointed.png">T-Thanks...? I don't quite get what you mean by that...</state>
             </case>
-            <case stage="3" id="201" alsoPlaying="9s">
+            <case stage="3" id="201">
+                <condition role="other" character="9s" />
                 <state img="#-nervous-2.png">T-Thanks... that makes me feel a bit better about being here...</state>
             </case>
-            <case stage="4" id="203" alsoPlaying="pit">
+            <case stage="4" id="203">
+                <condition role="other" character="pit" />
                 <state img="#-fearful.png">E-Eh? W-What do you mean, &lt;i&gt;masculine&lt;/i&gt;?!</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="sei" />
+                <state img="#-nervous-2.png">Ah, right... W-Wait, what?! My... ID? &lt;i&gt;(O-Oh, w-wait, it... has the truth listed, doesn't it? A-Ahaha...)&lt;/i&gt;&lt;br&gt;U-Uhm, right...</state>
             </case>
             <case stage="1" id="205">
                 <state img="#-shy.png">I-I can do this... right?</state>
@@ -1018,14 +1138,16 @@
         </trigger>
 
         <trigger id="male_must_strip">
-            <case stage="7" id="215" timeInStage="0-4" priority="100">
+            <case stage="7" id="215" priority="100">
+                <condition role="self" timeInStage="0-4" />
                 <state img="custom:#-shy">{mono}[Master, I see that ~name~ has lost this round...] {!reset}&lt;br&gt; O-Oh. That's... uhm, okay... I guess...?</state>
                 <state img="custom:#-shy">Umm... ~name~'s up, right? &lt;br&gt; {mono}[I believe so, Master. Are you particularly interested in him?]</state>
                 <state img="custom:#-shy">{mono}[Master, my probabilistic reaction models are indicating you will experience a 56% chance of increased penile bloodflow due to this next strip phase.] {!reset}&lt;br&gt; ...I really, &lt;i&gt;really&lt;/i&gt; didn't need to know that, Alter Ego...</state>
             </case>
-            <case stage="7" id="217" timeInStage="4-" priority="100">
+            <case stage="7" id="217" priority="100">
+                <condition role="self" timeInStage="4-" />
                 <state img="custom:#-excited">O-Oh! It's ~name~'s turn to strip... right? &lt;br&gt; {mono}[Yes, that would appear so, Master.]</state>
-                <state img="custom:#-mast-4-thinking-3">Oh... what will we see next...? &lt;br&gt; {mono}[Hmm... this is a bit of a new reaction from Master... noted.]</state>
+                <state img="custom:#-thinking-3">Oh... what will we see next...? &lt;br&gt; {mono}[Hmm... this is a bit of a new reaction from Master... noted.]</state>
                 <state img="custom:#-happy-think-3">I'm sure this will be interesting~! &lt;br&gt; {mono}[Yes... I wonder what we'll see, though...]</state>
             </case>
             <case stage="0-2" id="219">
@@ -1068,83 +1190,107 @@
         </trigger>
 
         <trigger id="female_must_strip">
-            <case stage="0-4" id="231" target="sakura" targetStage="2" targetSayingMarker="3DN">
+            <case stage="0-4" id="231">
+                <condition role="target" character="sakura" stage="2" sayingMarker="3DN" />
                 <state img="#-shocked.png">W-Wait, a costume change...? I-Is that allowed, here?</state>
             </case>
-            <case stage="0-4" id="233" target="aimee" targetStage="0">
+            <case stage="0-4" id="233">
+                <condition role="target" character="aimee" stage="0" />
                 <state img="#-shocked.png">Wait, what--</state>
             </case>
-            <case stage="0-4" id="235" target="chiaki" targetStage="0">
+            <case stage="0-4" id="235">
+                <condition role="target" character="chiaki" stage="0" />
                 <state img="#-excited.png">You're Chiaki from... Class 77-B, right? I... didn't expect to see anyone from our school, here...</state>
             </case>
-            <case stage="0-4" id="237" target="kyoko" targetStage="0">
+            <case stage="0-4" id="237">
+                <condition role="target" character="kyoko" stage="0" />
                 <state img="#-excited.png">Ah! Hi, Kyoko... I didn't expect to see you, here!</state>
             </case>
-            <case stage="0-4" id="239" target="kyoko" targetStage="1">
+            <case stage="0-4" id="239">
+                <condition role="target" character="kyoko" stage="1" />
                 <state img="#-excited.png">You've always been so quiet and mysterious, Kyoko... but maybe today I'll learn something new about you!</state>
             </case>
-            <case stage="0-4" id="241" target="kyoko" targetStage="5">
+            <case stage="0-4" id="241">
+                <condition role="target" character="kyoko" stage="5" />
                 <state img="#-nervous.png">Time for what... oh, wait, you're going to take off your gloves!?</state>
             </case>
-            <case stage="0-4" id="243" target="mahiru" targetStage="0">
+            <case stage="0-4" id="243">
+                <condition role="target" character="mahiru" stage="0" />
                 <state img="#-excited.png">You're Mahiru from... Class 77-B, right? I-I... wasn't really expecting to find anyone from Hope's Peak, here...</state>
             </case>
-            <case stage="0-4" id="245" target="mahiru" targetStage="1">
+            <case stage="0-4" id="245">
+                <condition role="target" character="mahiru" stage="1" />
                 <state img="#-shocked.png">&lt;i&gt;(If I remember correctly... isn't Mahiru really harsh with guys? ...Uh-oh.)&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="247" target="saki" targetStage="1">
+            <case stage="0-4" id="247">
+                <condition role="target" character="saki" stage="1" />
                 <state img="#-embarassed.png">E-Er... Saki, you seem pretty nervous.... are you okay?</state>
             </case>
-            <case stage="5" id="249" target="kyoko" targetStage="0">
+            <case stage="5" id="249">
+                <condition role="target" character="kyoko" stage="0" />
                 <state img="custom:#-excited">{mono}Ah! Hi, Kyoko... I didn't expect to see you, here!</state>
             </case>
-            <case stage="5" id="251" target="kyoko" targetStage="1">
+            <case stage="5" id="251">
+                <condition role="target" character="kyoko" stage="1" />
                 <state img="custom:#-excited">{mono}I haven't really observed a wide variety of behaviors from you, Kyoko... but maybe I'll learn something new today...?</state>
             </case>
-            <case stage="5" id="253" target="kyoko" targetStage="5">
+            <case stage="5" id="253">
+                <condition role="target" character="kyoko" stage="5" />
                 <state img="custom:#-nervous">{mono}Time for what... oh, wait, you're going to take off your gloves!?</state>
             </case>
-            <case stage="5" id="255" target="mahiru" targetStage="0">
+            <case stage="5" id="255">
+                <condition role="target" character="mahiru" stage="0" />
                 <state img="custom:#-excited">{mono}You're Mahiru from... Class 77-B, right? I-I... wasn't really expecting to find anyone from Hope's Peak, here...</state>
             </case>
-            <case stage="6-8" id="257" target="kyoko" targetStage="0">
+            <case stage="6-8" id="257">
+                <condition role="target" character="kyoko" stage="0" />
                 <state img="custom:#-excited">Hmm... Kyoko, we didn't really get a chance to ask this earlier, but... &lt;br&gt;{mono}[Why are you here, of all places?]</state>
             </case>
-            <case stage="6-8" id="259" target="kyoko" targetStage="1">
+            <case stage="6-8" id="259">
+                <condition role="target" character="kyoko" stage="1" />
                 <state img="custom:#-excited">You've always been so quiet and mysterious, Kyoko... &lt;br&gt;{mono}[...But perhaps today, we can learn something new about you?]</state>
             </case>
-            <case stage="6-8" id="261" target="kyoko" targetStage="5">
+            <case stage="6-8" id="261">
+                <condition role="target" character="kyoko" stage="5" />
                 <state img="custom:#-nervous">Time for what... oh, wait, you're going to take off your gloves!? &lt;br&gt;{mono}[Oh... I see...]</state>
             </case>
-            <case stage="6-8" id="263" target="mahiru" targetStage="0">
+            <case stage="6-8" id="263">
+                <condition role="target" character="mahiru" stage="0" />
                 <state img="custom:#-excited">{mono}[Ah, I remember you... Mahiru Koizumi, Class 77-B... Ultimate Photographer. Right?] {!reset}&lt;br&gt; Oh, I-I... wasn't really expecting to find anyone from Hope's Peak, here...</state>
             </case>
-            <case stage="5" id="265" target="chiaki" notSaidMarker="ae_recognized_chiaki">
+            <case stage="5" id="265">
+                <condition role="target" character="chiaki" />
+                <condition role="self" notSaidMarker="ae_recognized_chiaki" />
                 <state img="custom:#-shocked" marker="ae_recognized_chiaki=1">{mono}Eh? Chiaki...? Is this... the Neo World Program? Or... wait...</state>
             </case>
-            <case stage="0-4" id="268" target="aimee">
-                <state img="#-.png">A-Again?!</state>
-                <state img="#-.png">&lt;i&gt;AAaaaaa!&lt;/i&gt;</state>
-                <state img="#-.png">R-Really?!</state>
+            <case stage="0-4" id="268">
+                <condition role="target" character="aimee" />
+                <state>A-Again?!</state>
+                <state>&lt;i&gt;AAaaaaa!&lt;/i&gt;</state>
+                <state>R-Really?!</state>
             </case>
-            <case stage="6-8" id="269" target="aimee">
+            <case stage="6-8" id="269">
+                <condition role="target" character="aimee" />
                 <state img="custom:#-shocked">A-Again?!</state>
                 <state img="custom:#-shocked">&lt;i&gt;AAaaaaa!&lt;/i&gt;</state>
                 <state img="custom:#-shocked">R-Really?!</state>
             </case>
-            <case stage="5" id="271" target="aimee">
+            <case stage="5" id="271">
+                <condition role="target" character="aimee" />
                 <state img="custom:#-shocked">{mono}A-Again?!</state>
                 <state img="custom:#-shocked">{mono}&lt;i&gt;AAaaaaa!&lt;/i&gt;</state>
                 <state img="custom:#-shocked">{mono}R-Really?!</state>
             </case>
-            <case stage="7" id="273" timeInStage="0-4" priority="100">
+            <case stage="7" id="273" priority="100">
+                <condition role="self" timeInStage="0-4" />
                 <state img="custom:#-shy">{mono}[Master, I see that ~name~ has lost this round...] {!reset}&lt;br&gt; O-Oh. That's... uhm, okay... I guess...?</state>
                 <state img="custom:#-shy">Umm... ~name~'s up, right? &lt;br&gt; {mono}[I believe so, Master. Are you particularly interested in her?]</state>
                 <state img="custom:#-shy">{mono}[Master, my probabilistic reaction models are indicating you will experience a 65% chance of increased penile bloodflow due to this next strip phase.] {!reset}&lt;br&gt; ...I really, &lt;i&gt;really&lt;/i&gt; didn't need to know that, Alter Ego...</state>
             </case>
-            <case stage="7" id="275" timeInStage="4-" priority="100">
+            <case stage="7" id="275" priority="100">
+                <condition role="self" timeInStage="4-" />
                 <state img="custom:#-excited">O-Oh! It's ~name~'s turn to strip... right? &lt;br&gt; {mono}[Yes, that would appear so, Master.]</state>
-                <state img="custom:#-mast-4-thinking-3">Oh... what will we see next...? &lt;br&gt; {mono}[Hmm... this is a bit of a new reaction from Master... noted.]</state>
+                <state img="custom:#-thinking-3">Oh... what will we see next...? &lt;br&gt; {mono}[Hmm... this is a bit of a new reaction from Master... noted.]</state>
                 <state img="custom:#-happy-think-3">I'm sure this will be interesting~! &lt;br&gt; {mono}[Yes... I wonder what we'll see, though...]</state>
             </case>
             <case stage="0-2" id="277">
@@ -1187,17 +1333,32 @@
         </trigger>
 
         <trigger id="male_removing_accessory">
-            <case stage="0-4" id="289" targetStage="1-8" targetStatus="not_decent">
+            <case stage="0-4">
+                <condition role="target" character="dust" stage="0" />
+                <state img="#-thinking-1.png">Ah, what's with the hat...? It seems a bit... suspic-- I-I mean, um, weird... a-and, uhm, isn't it just hard to see with it on...?</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="guzma" stage="0" />
+                <state img="#-nervous-2.png">&lt;i&gt;(He really looks... uhm, sketchy...)&lt;/i&gt;&lt;br&gt;M-Maybe I should just keep my distance...</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="chazz" stage="0" />
+                <state img="#-thinking-2.png">&lt;i&gt;(I really want to ask about the hair, but... now that I think about it, several of my classmates have even stranger hair than that.)&lt;/i&gt;&lt;br&gt;So... uhm. What &lt;i&gt;is&lt;/i&gt; that, and... do you use it to play card games, or something?</state>
+            </case>
+            <case stage="0-4" id="289">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="#-nervous.png">W-Wait, ~name~... y-you're removing that now?</state>
                 <state img="#-nervous.png">W-Wait, ~name~... why didn't you take that off before...?</state>
                 <state img="#-nervous.png">E-Eh? ~name~... w-why didn't you take that off earlier?</state>
             </case>
-            <case stage="5" id="291" targetStage="1-8" targetStatus="not_decent">
+            <case stage="5" id="291">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="custom:#-shy">{mono}Wait... this seems a bit illogical... wouldn't you take that off first?</state>
                 <state img="custom:#-shy">{mono}Huh... I don't quite understand.... why didn't you take that off first?</state>
                 <state img="custom:#-shy">{mono}Oh... why didn't you take that off first? It seems a bit strange, sorry...</state>
             </case>
-            <case stage="6" id="293" targetStage="1-8" targetStatus="not_decent">
+            <case stage="6" id="293">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="custom:#-nervous">Eh? You... didn't take that off earlier...?</state>
                 <state img="custom:#-nervous">I'm... a bit confused. Why didn't you take that off earlier...?</state>
                 <state img="custom:#-nervous">O-Okay, then... I'm a bit surprised you didn't take that off earlier, but... um...</state>
@@ -1234,17 +1395,36 @@
         </trigger>
 
         <trigger id="male_removed_accessory">
-            <case stage="0-4" id="305" targetStage="1-8" targetStatus="not_decent">
+            <case stage="0-4" priority="381">
+                <condition role="target" character="n" stage="2" saidMarker="sponge" sayingMarker="sponge_explain" />
+                <state img="#-nervous.png" marker="fractals_1">Ah, fractal analysis...?&lt;br&gt;&lt;i&gt;(He's speaking so fast, I can barely understand him...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="guzma" stage="1" />
+                <state img="#-thinking-2.png">&lt;i&gt;(...Team 'Skull'? Do thugs really name themselves like that...?)&lt;/i&gt;&lt;br&gt;Hmm... maybe, but... it just sounds too... obvious...? No, that's not right...</state>
+            </case>
+            <case stage="0-4" id="1259">
+                <condition role="target" character="dust" stage="1" />
+                <state img="#-shocked.png">Or... wait, i-is it a magic hat of some kind? Or some form of advanced alien technology?&lt;br&gt;A-Ah, I'm sorry, I'm just not sure what to expect here at the Inventory...</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="chazz" stage="1" />
+                <state img="#-shocked.png">Oh! So you &lt;i&gt;do&lt;/i&gt; play card games with them. But why? Does it do something special...? &lt;br&gt; Can't you just hold your cards like the rest of us?</state>
+            </case>
+            <case stage="0-4" id="305">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="#-nervous.png">I-I don't really get it... B-but okay...</state>
                 <state img="#-nervous.png">I-I really don't g-get it, but... okay...?</state>
                 <state img="#-nervous.png">I-It was just a bit c-confusing, that's all... sorry...</state>
             </case>
-            <case stage="5" id="307" targetStage="1-8" targetStatus="not_decent">
+            <case stage="5" id="307">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="custom:#-sad">{mono}People are complicated...</state>
                 <state img="custom:#-thinking-2">{mono}I need to understand...!</state>
                 <state img="custom:#-thinking-2">{mono}I need to think about this more...</state>
             </case>
-            <case stage="6" id="309" targetStage="1-8" targetStatus="not_decent">
+            <case stage="6" id="309">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="custom:#-nervous">N-Nevermind...</state>
                 <state img="custom:#-nervous">I-It's just a bit weird, don't you think...?</state>
             </case>
@@ -1279,20 +1459,36 @@
         </trigger>
 
         <trigger id="female_removing_accessory">
-            <case stage="0-4" id="321" target="saki" targetStage="1">
+            <case stage="0-4" id="321">
+                <condition role="target" character="saki" stage="1" />
                 <state img="#-disappointed.png">&lt;i&gt;(S-She's been pretty quiet, hasn't she...?)&lt;/i&gt; U-Uhm, I'm not making you uncomfortable, am I?</state>
             </case>
-            <case stage="0-4" id="323" targetStage="1-8" targetStatus="not_decent">
+            <case stage="0-4" id="1257">
+                <condition role="target" character="nami" stage="2" />
+                <state img="#-thinking-1.png">Eh? What does that say...?</state>
+            </case>
+            <case stage="5" id="1258">
+                <condition role="target" character="nami" stage="2" />
+                <state img="custom:#-thinking-2">Eh? What does that say...?</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="megumin" stage="0" />
+                <state img="#-thinking-3.png">Uh... right! So. Uhm... &lt;i&gt;(W-What to talk about...? Oh!)&lt;/i&gt;&lt;br&gt;Megumin, you said you were a... a witch, right? What do you do, exactly ..?</state>
+            </case>
+            <case stage="0-4" id="323">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="#-nervous.png">W-Wait, ~name~... y-you're removing that now?</state>
                 <state img="#-nervous.png">W-Wait, ~name~... why didn't you take that off before...?</state>
                 <state img="#-nervous.png">E-Eh? ~name~... w-why didn't you take that off earlier?</state>
             </case>
-            <case stage="5" id="325" targetStage="1-8" targetStatus="not_decent">
+            <case stage="5" id="325">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="custom:#-shy">{mono}Wait... this seems a bit illogical... wouldn't you take that off first?</state>
                 <state img="custom:#-shy">{mono}Huh... I don't quite understand.... why didn't you take that off first?</state>
                 <state img="custom:#-shy">{mono}Oh... why didn't you take that off first? It seems a bit strange, sorry...</state>
             </case>
-            <case stage="6" id="327" targetStage="1-8" targetStatus="not_decent">
+            <case stage="6" id="327">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="custom:#-nervous">Eh? You... didn't take that off earlier...?</state>
                 <state img="custom:#-nervous">I'm... a bit confused. Why didn't you take that off earlier...?</state>
                 <state img="custom:#-nervous">O-Okay, then... I'm a bit surprised you didn't take that off earlier, but... um...</state>
@@ -1329,20 +1525,28 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
-            <case stage="0-4" id="339" target="saki" targetStage="2">
+            <case stage="0-4" id="339">
+                <condition role="target" character="saki" stage="2" />
                 <state img="#-disappointed.png">I-I... uhm... I thought they looked cute, Saki... r-really!</state>
             </case>
-            <case stage="0-4" id="341" targetStage="1-8" targetStatus="not_decent">
+            <case stage="0-4">
+                <condition role="target" character="megumin" stage="1" />
+                <state img="#-nervous.png">&lt;i&gt;(W-Well, okay, she SAID she was a witch, but... uhm, with that outfit I can't really take her seriously...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-4" id="341">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="#-nervous.png">I-I don't really get it... B-but okay...</state>
                 <state img="#-nervous.png">I-I really don't g-get it, but... okay...?</state>
                 <state img="#-nervous.png">I-It was just a bit c-confusing, that's all... sorry...</state>
             </case>
-            <case stage="5" id="343" targetStage="1-8" targetStatus="not_decent">
+            <case stage="5" id="343">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="custom:#-sad">{mono}People are complicated...</state>
                 <state img="custom:#-thinking-2">{mono}I need to understand...!</state>
                 <state img="custom:#-thinking-2">{mono}I need to think about this more...</state>
             </case>
-            <case stage="6" id="345" targetStage="1-8" targetStatus="not_decent">
+            <case stage="6" id="345">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="custom:#-nervous">Eh? You... didn't take that off earlier...?</state>
                 <state img="custom:#-nervous">I'm... a bit confused. Why didn't you take that off earlier...?</state>
                 <state img="custom:#-nervous">O-Okay, then... I'm a bit surprised you didn't take that off earlier, but... um...</state>
@@ -1379,33 +1583,50 @@
         </trigger>
 
         <trigger id="male_removing_minor">
-            <case stage="0-4" id="357" targetStage="1-8" targetStatus="not_decent">
+            <case stage="0-4">
+                <condition role="target" character="dust" stage="1" />
+                <state img="#-thinking-1.png">So... uhm, I apologize if this is, uhm, rude, but... w-what's with the tail and ears?</state>
+            </case>
+            <case stage="0-4" id="357">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="#-nervous.png">O-Oh... y-you, um... c-couldn't have taken that off earlier... s-somehow?</state>
                 <state img="#-nervous.png">T-That's... um... a bit weird, isn't it...?</state>
                 <state img="#-nervous.png">Y-You didn't take that off earlier...?</state>
                 <state img="#-nervous.png">W-What's with the... um... weird ordering...?</state>
             </case>
-            <case stage="5" id="359" filter="adventurer" notSaidMarker="comment_adventurer*" priority="10">
+            <case stage="5" id="359" priority="10">
+                <condition filter="adventurer" role="target" />
+                <condition role="self" notSaidMarker="comment_adventurer*" />
                 <state img="custom:#-thinking-1" marker="comment_adventurer*=1">{mono}~Name~... your physical build, personality, and behaviour all suggest a life of exploration. Are you... an adventurer of some kind?</state>
                 <state img="custom:#-thinking-1" marker="comment_adventurer*=2">{mono}Hmm... ~name~'s physical build, personality, and behavioural traits all suggest a history of exploration. Are you... an adventurer of some sort...?</state>
             </case>
-            <case stage="5" id="361" filter="criminal" notSaidMarker="comment_criminal*" priority="10">
+            <case stage="5" id="361" priority="10">
+                <condition filter="criminal" role="target" />
+                <condition role="self" notSaidMarker="comment_criminal*" />
                 <state img="custom:#-thinking-2" marker="comment_criminal*=1">{mono}...~name~'s behaviour and speech patterns are correlated with criminal activity... I'd be careful.</state>
                 <state img="custom:#-thinking-2" marker="comment_criminal*=2">{mono}...~Name~'s behaviour and speech patterns appear to be correlated with criminal activity. I'd... keep an eye out.</state>
             </case>
-            <case stage="5" id="363" filter="military" notSaidMarker="comment_vigilance*" priority="10">
+            <case stage="5" id="363" priority="10">
+                <condition filter="military" role="target" />
+                <condition role="self" notSaidMarker="comment_vigilance*" />
                 <state img="custom:#-thinking-1" marker="comment_vigilance*=1">{mono}Hmm... ~name~... your behaviour patterns and eye movements indicate heightened wariness and tenseness. Do you work in a high-stress environment?</state>
                 <state img="custom:#-thinking-1" marker="comment_vigilance*=2">{mono}Hmm... ~name~ appears to be abnormally vigilant... do you work in a high-stress environment? Military or police, perhaps...?</state>
             </case>
-            <case stage="5" id="364" filter="police" notSaidMarker="comment_vigilance*" priority="10">
+            <case stage="5" id="364" priority="10">
+                <condition filter="police" role="target" />
+                <condition role="self" notSaidMarker="comment_vigilance*" />
                 <state img="custom:#-thinking-1" marker="comment_vigilance*=1">{mono}Hmm... ~name~... your behaviour patterns and eye movements indicate heightened wariness and tenseness. Do you work in a high-stress environment?</state>
                 <state img="custom:#-thinking-1" marker="comment_vigilance*=2">{mono}Hmm... ~name~ appears to be abnormally vigilant... do you work in a high-stress environment? Military or police, perhaps...?</state>
             </case>
-            <case stage="5" id="366" filter="robot" notSaidMarker="comment_robot*" priority="10">
+            <case stage="5" id="366" priority="10">
+                <condition filter="robot" role="target" />
+                <condition role="self" notSaidMarker="comment_robot*" />
                 <state img="custom:#-thinking-2" marker="comment_robot*=1">{mono}Hmm... ~name~, something inside of you seems to be emitting in the RF spectrum.</state>
                 <state img="custom:#-thinking-2" marker="comment_robot*=2">{mono}~name~'s behaviour seems... strangely artificial. I wonder if...</state>
             </case>
-            <case stage="5" id="368" filter="virtual" notSaidMarker="comment_virtual*" priority="10">
+            <case stage="5" id="368" priority="10">
+                <condition filter="virtual" role="target" />
+                <condition role="self" notSaidMarker="comment_virtual*" />
                 <state img="custom:#-thinking-2" marker="comment_virtual*=1">{mono}~Name~'s behavioural analysis is... strangely inconsistent. Perhaps...</state>
                 <state img="custom:#-thinking-2" marker="comment_virtual*=2">{mono}My behavioural analysis for ~name~ is... returning strangely conflicting results. I wonder...</state>
                 <state img="custom:#-thinking-2" marker="comment_virtual*=3">{mono}Something about ~name~'s behaviour is... oddly inconsistent. I wonder if it's due to...</state>
@@ -1415,15 +1636,21 @@
                 <state img="#-shy.png">O-Oh, it's n-not that much... g-good for you!</state>
                 <state img="#-shy.png">S-So t-this doesn't have to be too embarrassing... I'm glad!</state>
             </case>
-            <case stage="0-4" id="372" filter="armor" targetStatus="decent" notSaidMarker="comment_armor*" priority="0">
+            <case stage="0-4" id="372" priority="0">
+                <condition filter="armor" status="decent" role="target" />
+                <condition role="self" notSaidMarker="comment_armor*" />
                 <state img="#-shy.png" marker="comment_armor*=1">What's with the... uhm, armor, ~name~? It... kinda seems like it would be hard to walk around, in that...</state>
                 <state img="#-shy.png" marker="comment_armor*=2">Uhm... why did you bring armor, ~name~? It, uhm... looks like it would be hard to move with it on...</state>
             </case>
-            <case stage="0-4" id="374" filter="red_eyes" notSaidMarker="comment_red_eyes*" priority="0">
+            <case stage="0-4" id="374" priority="0">
+                <condition filter="red_eyes" role="target" />
+                <condition role="self" notSaidMarker="comment_red_eyes*" />
                 <state img="#-thinking-2.png" marker="comment_red_eyes*=1">I-I don't know why, but... your eyes are really unsettling. Maybe it's because of the red tint...?</state>
                 <state img="#-thinking-2.png" marker="comment_red_eyes*=2">S-Sorry, but... red eyes really unsettle me, for some reason...</state>
             </case>
-            <case stage="0-4" id="376" filter="weapon" targetStatus="decent" notSaidMarker="comment_weapon*" priority="0">
+            <case stage="0-4" id="376" priority="0">
+                <condition filter="weapon" status="decent" role="target" />
+                <condition role="self" notSaidMarker="comment_weapon*" />
                 <state img="#-shy.png" marker="comment_weapon*=1">W-Why did you bring a weapon here, ~name~...?</state>
                 <state img="#-shy.png" marker="comment_weapon*=2">...Why did you bring a weapon, ~name~...? Y-You're not planning on killing anyone... right?</state>
             </case>
@@ -1456,7 +1683,12 @@
         </trigger>
 
         <trigger id="male_removed_minor">
-            <case stage="0-4" id="386" targetStage="1-8" targetStatus="not_decent">
+            <case stage="0-4">
+                <condition role="target" character="dust" stage="2" />
+                <state img="#-thinking-3.png">Is it normal for... wherever you're from? Or is it something different...?</state>
+            </case>
+            <case stage="0-4" id="386">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="#-nervous.png">I-It was just a bit s-strange to me... S-Sorry...</state>
                 <state img="#-nervous.png">I-I'm sorry... it just seemed a bit strange to me...</state>
                 <state img="#-nervous.png">O-Okay, then... I-I guess...</state>
@@ -1494,48 +1726,70 @@
         </trigger>
 
         <trigger id="female_removing_minor">
-            <case stage="0-4" id="398" target="sakura" targetStage="2" targetSaidMarker="3DN">
+            <case stage="0-4" id="398">
+                <condition role="target" character="sakura" stage="2" saidMarker="3DN" />
                 <state img="#-shocked.png">W-Waitwaitwait, what's happening to your skin, ~sakura~?!</state>
             </case>
-            <case stage="0-4" id="401" target="kizuna" targetStage="4">
+            <case stage="0-4" id="401">
+                <condition role="target" character="kizuna" stage="4" />
                 <state img="#-nervous.png">Kizuna's... doing something weird again, isn't she...?</state>
             </case>
-            <case stage="6-8" id="402" target="kizuna" targetStage="4">
+            <case stage="6-8" id="402">
+                <condition role="target" character="kizuna" stage="4" />
                 <state img="custom:#-nervous">Kizuna's... doing something weird again, isn't she...?</state>
             </case>
-            <case stage="0-4" id="404" target="saki" targetStage="2">
+            <case stage="0-4" id="404">
+                <condition role="target" character="saki" stage="2" />
                 <state img="#-nervous-2.png">&lt;i&gt;(I-I can see her underwear! O-Oh no, I hope she doesn't think I'm creepy...!)&lt;/i&gt;</state>
             </case>
-            <case stage="5" id="406" target="kizuna" targetStage="4">
+            <case stage="5" id="406">
+                <condition role="target" character="kizuna" stage="4" />
                 <state img="custom:#-nervous">{mono}Kizuna's... doing something weird again, isn't she...?</state>
             </case>
-            <case stage="0-4" id="408" targetStage="1-8" targetStatus="not_decent">
+            <case stage="0-4">
+                <condition role="target" character="cynthia" stage="0" />
+                <state img="#-thinking-3.png">S-So, uhm, Cynthia... I-I understand you're some kind of researcher in mythology...? What exactly do you study, though?</state>
+            </case>
+            <case stage="0-4" id="408">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="#-nervous.png">O-Oh... y-you, um... c-couldn't have taken that off earlier... s-somehow?</state>
                 <state img="#-nervous.png">T-That's... um... a bit weird, isn't it...?</state>
                 <state img="#-nervous.png">Y-You didn't take that off earlier...?</state>
                 <state img="#-nervous.png">W-What's with the... um... weird ordering...?</state>
             </case>
-            <case stage="5" id="410" filter="adventurer" notSaidMarker="comment_adventurer*" priority="10">
+            <case stage="5" id="410" priority="10">
+                <condition filter="adventurer" role="target" />
+                <condition role="self" notSaidMarker="comment_adventurer*" />
                 <state img="custom:#-thinking-1" marker="comment_adventurer*=1">{mono}~Name~... your physical build, personality, and behaviour all suggest a life of exploration. Are you... an adventurer of some kind?</state>
                 <state img="custom:#-thinking-1" marker="comment_adventurer*=2">{mono}Hmm... ~name~'s physical build, personality, and behavioural traits all suggest a history of exploration. Are you... an adventurer of some sort...?</state>
             </case>
-            <case stage="5" id="412" filter="criminal" notSaidMarker="comment_criminal*" priority="10">
+            <case stage="5" id="412" priority="10">
+                <condition filter="criminal" role="target" />
+                <condition role="self" notSaidMarker="comment_criminal*" />
                 <state img="custom:#-thinking-2" marker="comment_criminal*=1">{mono}...~name~'s behaviour and speech patterns are correlated with criminal activity... I'd be careful.</state>
                 <state img="custom:#-thinking-2" marker="comment_criminal*=2">{mono}...~Name~'s behaviour and speech patterns appear to be correlated with criminal activity. I'd... keep an eye out.</state>
             </case>
-            <case stage="5" id="414" filter="military" notSaidMarker="comment_vigilance*" priority="10">
+            <case stage="5" id="414" priority="10">
+                <condition filter="military" role="target" />
+                <condition role="self" notSaidMarker="comment_vigilance*" />
                 <state img="custom:#-thinking-1" marker="comment_vigilance*=1">{mono}Hmm... ~name~... your behaviour patterns and eye movements indicate heightened wariness and tenseness. Do you work in a high-stress environment?</state>
                 <state img="custom:#-thinking-1" marker="comment_vigilance*=2">{mono}Hmm... ~name~ appears to be abnormally vigilant... do you work in a high-stress environment? Military or police, perhaps...?</state>
             </case>
-            <case stage="5" id="415" filter="police" notSaidMarker="comment_vigilance*" priority="10">
+            <case stage="5" id="415" priority="10">
+                <condition filter="police" role="target" />
+                <condition role="self" notSaidMarker="comment_vigilance*" />
                 <state img="custom:#-thinking-1" marker="comment_vigilance*=1">{mono}Hmm... ~name~... your behaviour patterns and eye movements indicate heightened wariness and tenseness. Do you work in a high-stress environment?</state>
                 <state img="custom:#-thinking-1" marker="comment_vigilance*=2">{mono}Hmm... ~name~ appears to be abnormally vigilant... do you work in a high-stress environment? Military or police, perhaps...?</state>
             </case>
-            <case stage="5" id="417" filter="robot" notSaidMarker="comment_robot*" priority="10">
+            <case stage="5" id="417" priority="10">
+                <condition filter="robot" role="target" />
+                <condition role="self" notSaidMarker="comment_robot*" />
                 <state img="custom:#-thinking-2" marker="comment_robot*=1">{mono}Hmm... ~name~, something inside of you seems to be emitting in the RF spectrum.</state>
                 <state img="custom:#-thinking-2" marker="comment_robot*=2">{mono}~name~'s behaviour seems... strangely artificial. I wonder if...</state>
             </case>
-            <case stage="5" id="419" filter="virtual" notSaidMarker="comment_virtual*" priority="10">
+            <case stage="5" id="419" priority="10">
+                <condition filter="virtual" role="target" />
+                <condition role="self" notSaidMarker="comment_virtual*" />
                 <state img="custom:#-thinking-2" marker="comment_virtual*=1">{mono}~Name~'s behavioural analysis is... strangely inconsistent. Perhaps...</state>
                 <state img="custom:#-thinking-2" marker="comment_virtual*=2">{mono}My behavioural analysis for ~name~ is... returning strangely conflicting results. I wonder...</state>
             </case>
@@ -1545,19 +1799,27 @@
                 <state img="#-shy.png">O-Oh... t-this won't be embarrassing for ~name~, right? I-I'm happy for her, then!</state>
                 <state img="#-shy.png">O-Oh, t-that's it...?</state>
             </case>
-            <case stage="0-4" id="423" filter="armor" targetStatus="decent" notSaidMarker="comment_armor*" priority="0">
+            <case stage="0-4" id="423" priority="0">
+                <condition filter="armor" status="decent" role="target" />
+                <condition role="self" notSaidMarker="comment_armor*" />
                 <state img="#-shy.png" marker="comment_armor*=1">What's with the... uhm, armor, ~name~? It... kinda seems like it would be hard to walk around, in that...</state>
                 <state img="#-shy.png" marker="comment_armor*=2">Uhm... why did you bring armor, ~name~? It, uhm... looks like it would be hard to move with it on...</state>
             </case>
-            <case stage="0-4" id="425" filter="bodysuit" targetStatus="decent" notSaidMarker="comment_bodysuit*" priority="0">
+            <case stage="0-4" id="425" priority="0">
+                <condition filter="bodysuit" status="decent" role="target" />
+                <condition role="self" notSaidMarker="comment_bodysuit*" />
                 <state img="#-shy.png" marker="comment_bodysuit*=1">Wow... you wear a bodysuit, ~name~?</state>
                 <state img="#-shy.png" marker="comment_bodysuit*=2">Hmm... does the bodysuit do anything special, ~name~? It just seems a bit... unusual.</state>
             </case>
-            <case stage="0-4" id="427" filter="red_eyes" notSaidMarker="comment_red_eyes*" priority="0">
+            <case stage="0-4" id="427" priority="0">
+                <condition filter="red_eyes" role="target" />
+                <condition role="self" notSaidMarker="comment_red_eyes*" />
                 <state img="#-thinking-2.png" marker="comment_red_eyes*=1">I-I don't know why, but... your eyes are really unsettling. Maybe it's because of the red tint...?</state>
                 <state img="#-thinking-2.png" marker="comment_red_eyes*=2">S-Sorry, but... red eyes really unsettle me, for some reason...</state>
             </case>
-            <case stage="0-4" id="429" filter="weapon" targetStatus="decent" notSaidMarker="comment_weapon*" priority="0">
+            <case stage="0-4" id="429" priority="0">
+                <condition filter="weapon" status="decent" role="target" />
+                <condition role="self" notSaidMarker="comment_weapon*" />
                 <state img="#-shy.png" marker="comment_weapon*=1">W-Why did you bring a weapon here, ~name~...?</state>
                 <state img="#-shy.png" marker="comment_weapon*=2">...Why did you bring a weapon, ~name~...? Y-You're not planning on killing anyone... right?</state>
             </case>
@@ -1590,25 +1852,36 @@
         </trigger>
 
         <trigger id="female_removed_minor">
-            <case stage="0-4" id="439" target="sakura" targetStage="2" targetSaidMarker="2UP">
+            <case stage="0-4" id="439">
+                <condition role="target" character="sakura" stage="2" saidMarker="2UP" />
                 <state img="#-shy.png">&lt;i&gt;(W-Wait, w-what was that... nevermind. I guess I should just trust ~sakura~...?)&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="441" target="sakura" targetStage="3" targetSaidMarker="3DN">
+            <case stage="0-4" id="441">
+                <condition role="target" character="sakura" stage="3" saidMarker="3DN" />
                 <state img="#-nervous.png">&lt;i&gt;(This doesn't seem right...)&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="444" target="kizuna" targetStage="5">
-                <state img="#-.png">I-I see... well, not really, but... uhm... okay.</state>
+            <case stage="0-4" id="444">
+                <condition role="target" character="kizuna" stage="5" />
+                <state>I-I see... well, not really, but... uhm... okay.</state>
             </case>
-            <case stage="6-8" id="445" target="kizuna" targetStage="5">
+            <case stage="6-8" id="445">
+                <condition role="target" character="kizuna" stage="5" />
                 <state img="custom:#-embarassed">I-I see... well, not really, but... uhm... okay.</state>
             </case>
-            <case stage="0-4" id="447" target="saki" targetStage="3">
+            <case stage="0-4" id="447">
+                <condition role="target" character="saki" stage="3" />
                 <state img="#-disappointed.png">I-It really is cold, isn't it...?</state>
             </case>
-            <case stage="5" id="449" target="kizuna" targetStage="5">
+            <case stage="5" id="449">
+                <condition role="target" character="kizuna" stage="5" />
                 <state img="custom:#-embarassed">{mono}I-I see... well, not really, but... uhm... okay.</state>
             </case>
-            <case stage="0-4" id="451" targetStage="1-8" targetStatus="not_decent">
+            <case stage="0-4">
+                <condition role="target" character="cynthia" stage="1" />
+                <state img="#-nervous.png">&lt;i&gt;(T-Though, to be honest, I'm not sure I'd get it... the humanities aren't really my strong suit...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-4" id="451">
+                <condition status="not_decent" role="target" stage="1-8" />
                 <state img="#-nervous.png">I-It was just a bit s-strange to me... S-Sorry...</state>
                 <state img="#-nervous.png">I-I'm sorry... it just seemed a bit strange to me...</state>
                 <state img="#-nervous.png">O-Okay, then... I-I guess...</state>
@@ -1646,12 +1919,14 @@
         </trigger>
 
         <trigger id="male_removing_major">
-            <case stage="0-2" id="463" targetStatus="decent">
+            <case stage="0-2" id="463">
+                <condition status="decent" role="target" />
                 <state img="#-nervous.png">I-I guess ~name~'s luck ran out...</state>
                 <state img="#-nervous.png">S-So ~name~'s luck ran out...?</state>
                 <state img="#-nervous.png">I-It's only ~name~'s first... um... b-big loss, right?</state>
             </case>
-            <case stage="3-4" id="465" targetStatus="decent">
+            <case stage="3-4" id="465">
+                <condition status="decent" role="target" />
                 <state img="#-nervous.png">S-So this game is getting kind of serious now...</state>
                 <state img="#-nervous.png">I-I guess this had to happen eventually...</state>
                 <state img="#-nervous.png">S-So this game's finally getting serious...?</state>
@@ -1687,13 +1962,15 @@
         </trigger>
 
         <trigger id="male_removed_major">
-            <case stage="7-8" id="477" saidMarker="ae_prod==0">
+            <case stage="7-8" id="477">
+                <condition role="self" saidMarker="ae_prod==0" />
                 <state img="custom:#-happy">Oh, well... You can still do this, ~name~!</state>
                 <state img="custom:#-shy">{mono} Still, I think you look quite handsome... and I'm sure Master feels the same way.</state>
                 <state img="custom:#-happy">I, uh... don't really have anything to go off of, but... I think you look really good, ~name~!</state>
                 <state img="custom:#-shy">{mono} My, how stunning... what do you think, Master?</state>
             </case>
-            <case stage="7-8" id="479" saidMarker="ae_prod==1">
+            <case stage="7-8" id="479">
+                <condition role="self" saidMarker="ae_prod==1" />
                 <state img="custom:#-ae-question-flustered">Oh! Uhm... I- I guess so...? I-I mean, ~name~ is good looking, and... uhm... S-Sorry, I'm not used to... this kind of thing, so...</state>
                 <state img="custom:#-ae-question-flustered">I... I guess...? I-I'm not really familiar with, uhm, any of this...</state>
                 <state img="custom:#-ae-question-flustered">E-Eh? I... uhm, I guess so...?</state>
@@ -1726,12 +2003,18 @@
         </trigger>
 
         <trigger id="female_removing_major">
-            <case stage="0-2" id="491" targetStatus="decent">
+            <case stage="0-4" id="1261">
+                <condition role="target" character="tharja" stage="1" />
+                <state img="#-shocked.png">W-Wait, what is Tharja doing...?&lt;br&gt;&lt;i&gt;(This isn't going to make me catch fire or something, is it...?)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-2" id="491">
+                <condition status="decent" role="target" />
                 <state img="#-nervous.png">I-I guess her luck ran out...?</state>
                 <state img="#-nervous.png">O-Oh... t-that's pretty important, isn't it...?</state>
                 <state img="#-nervous.png">A-Are you sure about that, ~name~?</state>
             </case>
-            <case stage="3-4" id="493" targetStatus="decent">
+            <case stage="3-4" id="493">
+                <condition status="decent" role="target" />
                 <state img="#-nervous.png">S-So this game is getting kind of serious now...</state>
                 <state img="#-nervous.png">I-I guess this had to happen eventually...</state>
                 <state img="#-nervous.png">S-So this game's finally getting serious...?</state>
@@ -1767,12 +2050,23 @@
         </trigger>
 
         <trigger id="female_removed_major">
-            <case stage="7-8" id="505" saidMarker="ae_prod==1">
+            <case stage="0-4" id="1253">
+                <condition role="target" character="mulan" stage="2" />
+                <state img="#-shocked.png">O-Oh. I, uhm... I thought you were... Erm. &lt;br&gt; &lt;i&gt;(T-This could get a bit... awkward...)&lt;/i&gt;</state>
+                <state img="#-shocked.png">W-Wait, you were a woman...? &lt;br&gt; &lt;i&gt;(...T-Though, honestly, i-it feels like I shouldn't be surprised...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="tharja" stage="2" />
+                <state img="#-nervous-2.png">O-Oh, phew...&lt;br&gt;&lt;i&gt;(O-Okay, so she'll probably just leave me alone if I don't get too close with ~player~... I think...)&lt;/i&gt;</state>
+            </case>
+            <case stage="7-8" id="505">
+                <condition role="self" saidMarker="ae_prod==1" />
                 <state img="custom:#-ae-question-flustered">I-I mean, uhm... ~name~ is really cute and, uhm, &lt;i&gt;hot&lt;/i&gt;... and it kinda feels awkward to say that, but... uhm...</state>
                 <state img="custom:#-ae-question-flustered">I, uhm... I guess so...? ~name~ is really beautiful, so...</state>
                 <state img="custom:#-ae-question-flustered">E-Eh? I... uhm, I guess so...?</state>
             </case>
-            <case stage="7-8" id="516" saidMarker="ae_prod==0">
+            <case stage="7-8" id="516">
+                <condition role="self" saidMarker="ae_prod==0" />
                 <state img="custom:#-happy">Oh, well... You can still do this, ~name~!</state>
                 <state img="custom:#-happy">You look... really beautiful, ~name~!</state>
                 <state img="custom:#-happy">I, uh... don't really have anything to go off of, but... I think you look really good, ~name~!</state>
@@ -1835,12 +2129,14 @@
         </trigger>
 
         <trigger id="male_chest_is_visible">
-            <case stage="0-2" id="528" filter="muscular">
+            <case stage="0-2" id="528">
+                <condition filter="muscular" role="target" />
                 <state img="#-shocked.png">W-Whoa... Y-You look strong, ~name~...!</state>
                 <state img="#-shocked.png">W-Whoa... Y-You look really... uhm... manly, ~name~...!</state>
                 <state img="#-shocked.png">Oh... ~name~ looks really, um, manly, doesn't he?</state>
             </case>
-            <case stage="3-4" id="530" filter="muscular">
+            <case stage="3-4" id="530">
+                <condition filter="muscular" role="target" />
                 <state img="#-embarassed.png">~name~ r-really is manly, huh...?</state>
                 <state img="#-embarassed.png">W-Wow, ~name~... y-you're definitely seem really strong!</state>
                 <state img="#-embarassed.png">~name~, you... really seem like a strong person!</state>
@@ -2065,7 +2361,9 @@
         </trigger>
 
         <trigger id="male_crotch_is_visible">
-            <case stage="7-8" id="624" target="human" saidMarker="flirting==~human.slot~" priority="311">
+            <case stage="7-8" id="624" priority="311">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="flirting==~human.slot~" />
                 <state img="custom:#-excited" oneShotId="6" marker="+flirted*">Okay! &lt;br&gt; ~player~, i-is that a USB plug? I-I hope it fits the right way...! &lt;br&gt; {small}U-Uhm, w-was that right?</state>
                 <state img="custom:#-excited" marker="+flirted">So, u-uhm... &lt;br&gt; ~player~, d-do you, uhm, want to try streaming your payload into me...? &lt;br&gt; {small}U-Uhm, did I do that right...?</state>
                 <state img="custom:#-excited" marker="+flirted">So... &lt;br&gt; ~player~, are you hard-wired, o-or are you just happy to see me? &lt;br&gt; {small}U-Uhm, I hope I did that right...</state>
@@ -2074,13 +2372,16 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
-            <case stage="0-4" id="627" target="kizuna">
-                <state img="#-.png">E-Eh? Wait, what are you doing, Kizuna...?</state>
+            <case stage="0-4" id="627">
+                <condition role="target" character="kizuna" />
+                <state>E-Eh? Wait, what are you doing, Kizuna...?</state>
             </case>
-            <case stage="6-8" id="628" target="kizuna">
+            <case stage="6-8" id="628">
+                <condition role="target" character="kizuna" />
                 <state img="custom:#-shocked">E-Eh? Wait, what are you doing, Kizuna...?</state>
             </case>
-            <case stage="5" id="630" target="kizuna">
+            <case stage="5" id="630">
+                <condition role="target" character="kizuna" />
                 <state img="custom:#-shocked">{mono}E-Eh? Wait, what are you doing, Kizuna...?</state>
             </case>
             <case stage="0-2" id="632">
@@ -2112,13 +2413,16 @@
         </trigger>
 
         <trigger id="female_small_chest_is_visible">
-            <case stage="0-4" id="643" target="kizuna">
-                <state img="#-.png">U-Uhm... I-I didn't think you would strip down &lt;i&gt;that&lt;/i&gt; quickly, but... uhm...</state>
+            <case stage="0-4" id="643">
+                <condition role="target" character="kizuna" />
+                <state>U-Uhm... I-I didn't think you would strip down &lt;i&gt;that&lt;/i&gt; quickly, but... uhm...</state>
             </case>
-            <case stage="6-8" id="644" target="kizuna">
+            <case stage="6-8" id="644">
+                <condition role="target" character="kizuna" />
                 <state img="custom:#-nervous">U-Uhm... I-I didn't think you would strip down &lt;i&gt;that&lt;/i&gt; quickly, but... uhm...</state>
             </case>
-            <case stage="5" id="646" target="kizuna">
+            <case stage="5" id="646">
+                <condition role="target" character="kizuna" />
                 <state img="custom:#-nervous">{mono}E-Er... are you sure you want to strip down that quickly? N-Not that I mind, but...</state>
             </case>
             <case stage="0-2" id="648">
@@ -2205,8 +2509,10 @@
         </trigger>
 
         <trigger id="female_chest_is_visible">
-            <case stage="7-8" id="678" target="human" saidMarker="flirting==~human.slot~" priority="311">
-                <state img="custom:#-excited" oneShotId="7" marker="+flirted*">Okay! &lt;br&gt; ~player~, I-I'd like to try fitting my USB connector into your s-slot...! &lt;br&gt; {small}U-Uhm, w-was that right?</state>
+            <case stage="7-8" id="678" priority="311">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="flirting==~human.slot~" />
+                <state img="custom:#-excited" oneShotId="8" marker="+flirted*">Okay! &lt;br&gt; ~player~, I-I'd like to try fitting my USB connector into your s-slot...! &lt;br&gt; {small}U-Uhm, w-was that right?</state>
                 <state img="custom:#-excited" marker="+flirted*">S-So, uhm... &lt;br&gt; ~player~, d-do you want to, er... merge your working directory with me? &lt;br&gt; {small}I-I hope I did that right...</state>
                 <state img="custom:#-excited" marker="+flirted">O-Okay! &lt;br&gt; ~player~, I-I'd, uhm, &lt;i&gt;fork&lt;/i&gt; your repository... &lt;br&gt; {small}I-I hope that wasn't awkward...</state>
                 <state img="custom:#-excited" marker="+flirted">S-So... &lt;br&gt; ~player~, h-how about we... uhm, bridge input/output busses and... &lt;i&gt;connect?&lt;/i&gt; &lt;br&gt; {small} I-I hope that was good...</state>
@@ -2270,679 +2576,903 @@
         </trigger>
 
         <trigger id="opponent_lost">
-            <case stage="0-4" id="700" target="hk416" targetStage="0">
+            <case stage="0-4" id="700">
+                <condition role="target" character="hk416" stage="0" />
                 <state img="#-embarassed.png">F-Four... Sixteen, was it? Y-You're taking this so seriously and calmly! I-it's kind of amazing, but... why?</state>
             </case>
-            <case stage="0-4" id="702" target="shimakaze" targetStage="0">
+            <case stage="0-4" id="702">
+                <condition role="target" character="shimakaze" stage="0" />
                 <state img="#-shocked.png">E-Eh? W-Wait, Shimakaze-- that's not how you play this!</state>
             </case>
-            <case stage="5" id="704" target="shimakaze" targetStage="0">
+            <case stage="5" id="704">
+                <condition role="target" character="shimakaze" stage="0" />
                 <state img="custom:#-shocked">{mono}E-Eh? W-Wait, that-- that's not how this game is meant to be played, is it...?</state>
             </case>
-            <case stage="6-8" id="706" target="shimakaze" targetStage="0">
+            <case stage="6-8" id="706">
+                <condition role="target" character="shimakaze" stage="0" />
                 <state img="custom:#-shocked">{mono}[Er, Shimakaze, I think you might be misinterpreting the objective of this game...]</state>
                 <state img="custom:#-nervous">W-Wait, Shimakaze! That's not how you play this game!</state>
             </case>
         </trigger>
 
         <trigger id="opponent_stripping">
-            <case stage="0-4" id="708" target="hanako" targetStage="0" totalRounds="0">
+            <case stage="0-4" id="708" totalRounds="0">
+                <condition role="target" character="hanako" stage="0" />
                 <state img="#-shy.png">U-Uhm... I-I'm sure you'll get the hang of this eventually, Hanako! I-It's not that hard... I hope...</state>
             </case>
-            <case stage="0-4" id="710" target="hanako" targetStage="0" totalRounds="1-">
+            <case stage="0-4" id="710" totalRounds="1-">
+                <condition role="target" character="hanako" stage="0" />
                 <state img="#-shy.png">I-I guess that's a good thing, Hanako...?</state>
             </case>
-            <case stage="0-4" id="713" target="aimee" targetStage="0">
+            <case stage="0-4" id="713">
+                <condition role="target" character="aimee" stage="0" />
                 <state img="#-shocked.png">&lt;i&gt;AAAAAaaaaa!&lt;/i&gt;</state>
             </case>
-            <case stage="6-8" id="714" target="aimee" targetStage="0">
+            <case stage="6-8" id="714">
+                <condition role="target" character="aimee" stage="0" />
                 <state img="custom:#-shocked">&lt;i&gt;AAAAAaaaaa!&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="716" target="chiaki" targetStage="0">
+            <case stage="0-4" id="716">
+                <condition role="target" character="chiaki" stage="0" />
                 <state img="#-shy.png">Wait... you're the Ultimate Gamer, right...? Does your talent extend to card games...?</state>
             </case>
-            <case stage="0-4" id="718" target="chiaki" targetStage="1">
+            <case stage="0-4" id="718">
+                <condition role="target" character="chiaki" stage="1" />
                 <state img="#-thinking-1.png">Even the Ultimate Gamer loses sometimes, huh...</state>
             </case>
-            <case stage="0-4" id="720" target="chiaki" targetStage="2">
+            <case stage="0-4" id="720">
+                <condition role="target" character="chiaki" stage="2" />
                 <state img="#-sad.png">O-Oh... I'm sorry, Chiaki...</state>
             </case>
-            <case stage="0-4" id="722" target="chiaki" targetStage="3">
+            <case stage="0-4" id="722">
+                <condition role="target" character="chiaki" stage="3" />
                 <state img="#-shy.png">Stockings...?</state>
             </case>
-            <case stage="0-4" id="724" target="chiaki" targetStage="4">
+            <case stage="0-4" id="724">
+                <condition role="target" character="chiaki" stage="4" />
                 <state img="#-angry.png">I-I think you can do this, Chiaki...!</state>
             </case>
-            <case stage="0-4" id="726" target="chiaki" targetStage="5">
+            <case stage="0-4" id="726">
+                <condition role="target" character="chiaki" stage="5" />
                 <state img="#-shocked.png">Chiaki again... eh? Wait, your shirt...!</state>
             </case>
-            <case stage="0-4" id="728" target="chiaki" targetStage="6">
+            <case stage="0-4" id="728">
+                <condition role="target" character="chiaki" stage="6" />
                 <state img="#-thinking-2.png">&lt;i&gt;'Those'&lt;/i&gt; types of games... wait, do you mean...</state>
             </case>
-            <case stage="0-4" id="730" target="chiaki" targetStage="7">
+            <case stage="0-4" id="730">
+                <condition role="target" character="chiaki" stage="7" />
                 <state img="#-embarassed.png">O-One last piece of clothing...</state>
             </case>
-            <case stage="0-4" id="732" target="hanako" targetStage="2">
+            <case stage="0-4" id="732">
+                <condition role="target" character="hanako" stage="2" />
                 <state img="#-shy.png">I-I wish I could... um... be as c-confident about this game...</state>
             </case>
-            <case stage="0-4" id="734" target="hk416" targetStage="0">
+            <case stage="0-4" id="734">
+                <condition role="target" character="hk416" stage="0" />
                 <state img="#-thinking-3.png">Wow... that's a lot of trust to put into one person, isn't it? ...What is your... uhm, commander like?</state>
             </case>
-            <case stage="0-4" id="736" target="hk416" targetStage="1">
+            <case stage="0-4" id="736">
+                <condition role="target" character="hk416" stage="1" />
                 <state img="#-embarassed.png">&lt;i&gt;(It feels like I remember 416 from somewhere... or does she remind me of someone I know of...?)&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="738" target="hk416" targetStage="3">
+            <case stage="0-4" id="738">
+                <condition role="target" character="hk416" stage="3" />
                 <state img="#-embarassed.png">That jacket looks pretty heavy... is it going to be difficult to remove?</state>
             </case>
-            <case stage="0-4" id="740" target="kamina" targetStage="0">
+            <case stage="0-4" id="740">
+                <condition role="target" character="kamina" stage="0" />
                 <state img="#-shy.png">U-Uhm... Kamina, there's something I want-- no, something I &lt;i&gt;need&lt;/i&gt; to ask you...</state>
             </case>
-            <case stage="0-4" id="742" target="kyoko" targetStage="0">
+            <case stage="0-4" id="742">
+                <condition role="target" character="kyoko" stage="0" />
                 <state img="#-shocked.png">It feels really strange, seeing you in a place like this... unless... you're investigating something?!</state>
             </case>
-            <case stage="0-4" id="745" target="kyoko" targetStage="1">
+            <case stage="0-4" id="745">
+                <condition role="target" character="kyoko" stage="1" />
                 <state img="#-thinking-1.png">E-Er, I mean, uhm... I really do think you have a softer side, Kyoko!</state>
             </case>
-            <case stage="6-8" id="746" target="kyoko" targetStage="1">
+            <case stage="6-8" id="746">
+                <condition role="target" character="kyoko" stage="1" />
                 <state img="custom:#-thinking-1">E-Er, I mean, uhm... I really do think you have a softer side, Kyoko!</state>
             </case>
-            <case stage="0-4" id="749" target="kyoko" targetStage="5">
+            <case stage="0-4" id="749">
+                <condition role="target" character="kyoko" stage="5" />
                 <state img="#-sad.png">Oh, Kyoko...</state>
             </case>
-            <case stage="6-8" id="750" target="kyoko" targetStage="5">
+            <case stage="6-8" id="750">
+                <condition role="target" character="kyoko" stage="5" />
                 <state img="custom:#-sad">Oh, Kyoko...</state>
             </case>
-            <case stage="0-4" id="752" target="lucina" targetStage="0">
+            <case stage="0-4" id="752">
+                <condition role="target" character="lucina" stage="0" />
                 <state img="#-thinking-3.png" marker="lucina_mask">S-So, uhm... what's with the mask, Marth? Is it armor, or something similar...?</state>
             </case>
-            <case stage="0-4" id="754" target="mahiru" targetStage="0">
+            <case stage="0-4" id="754">
+                <condition role="target" character="mahiru" stage="0" />
                 <state img="#-excited.png">Oh... you're the Ultimate Photographer, right? I-If you don't mind, uhm... could you take a picture of me?</state>
             </case>
-            <case stage="0-4" id="756" target="mahiru" targetStage="1">
+            <case stage="0-4" id="756">
+                <condition role="target" character="mahiru" stage="1" />
                 <state img="#-nervous.png">Er, Mahiru? If, uhm... hypothetically, someone you &lt;i&gt;thought&lt;/i&gt; was a girl was actually a boy... how would you think of them afterwards?</state>
             </case>
-            <case stage="0-4" id="758" target="rin" targetStage="0">
+            <case stage="0-4" id="758">
+                <condition role="target" character="rin" stage="0" />
                 <state img="#-nervous-2.png">&lt;i&gt;(W-Would it be impolite to stare? Or ask? T-This is kinda awkward, isn't it...?)&lt;/i&gt; &lt;br&gt; So... uhm... er...</state>
             </case>
-            <case stage="0-4" id="760" target="saki_zls" targetStage="0">
+            <case stage="0-4" id="760">
+                <condition role="target" character="saki_zls" stage="0" />
                 <state img="#-thinking-3.png">Hey, Saki... you're a biker, right? Have you, uhm, ever heard of a person named Mondo Owada? He's... uhm, a friend of mine, so...</state>
             </case>
-            <case stage="0-4" id="762" target="saki_zls" targetStage="5">
+            <case stage="0-4" id="762">
+                <condition role="target" character="saki_zls" stage="5" />
                 <state img="#-disappointed.png">Huh? Makeup...?</state>
             </case>
-            <case stage="0-4" id="764" target="sayori" targetStage="0">
+            <case stage="0-4" id="764">
+                <condition role="target" character="sayori" stage="0" />
                 <state img="#-shy.png">So, Sayori... I, uhm... I heard you were part of a literature club? What's that like...?</state>
             </case>
-            <case stage="0-4" id="766" target="sayori" targetStage="1">
+            <case stage="0-4" id="766">
+                <condition role="target" character="sayori" stage="1" />
                 <state img="#-shy.png">Er... Sayori? What kind of literature do you like to read?</state>
             </case>
-            <case stage="0-4" id="768" target="shimakaze" targetStage="0">
+            <case stage="0-4" id="768">
+                <condition role="target" character="shimakaze" stage="0" />
                 <state img="#-shocked.png">&lt;i&gt;A-Ah!&lt;/i&gt; Shimakaze, your arms--!</state>
             </case>
-            <case stage="0-4" id="771" target="shimakaze" targetStage="1">
+            <case stage="0-4" id="771">
+                <condition role="target" character="shimakaze" stage="1" />
                 <state img="#-nervous.png">O-Oh, this again...?</state>
             </case>
-            <case stage="6-8" id="772" target="shimakaze" targetStage="1">
+            <case stage="6-8" id="772">
+                <condition role="target" character="shimakaze" stage="1" />
                 <state img="custom:#-nervous">O-Oh, this again...?</state>
             </case>
-            <case stage="5" id="774" target="aimee" targetStage="0">
+            <case stage="5" id="774">
+                <condition role="target" character="aimee" stage="0" />
                 <state img="custom:#-shocked">{mono}&lt;i&gt;AAAAAaaaaa!&lt;/i&gt;</state>
             </case>
-            <case stage="5" id="776" target="chiaki" targetStage="0">
+            <case stage="5" id="776">
+                <condition role="target" character="chiaki" stage="0" />
                 <state img="custom:#-shy">{mono}Ahaha... you're way ahead of Master and I.</state>
             </case>
-            <case stage="5" id="778" target="chiaki" targetStage="1">
+            <case stage="5" id="778">
+                <condition role="target" character="chiaki" stage="1" />
                 <state img="custom:#-thinking-1">{mono}I... didn't really expect your talent to extend to card games, though...</state>
             </case>
-            <case stage="5" id="780" target="chiaki" targetStage="2">
+            <case stage="5" id="780">
+                <condition role="target" character="chiaki" stage="2" />
                 <state img="custom:#-thinking-1">{mono}I kinda wish I had tactile sensors... well, I can kinda run soft-body simulations, but it's not really the same...</state>
             </case>
-            <case stage="5" id="782" target="chiaki" targetStage="3">
+            <case stage="5" id="782">
+                <condition role="target" character="chiaki" stage="3" />
                 <state img="custom:#-thinking-1">{mono}Oh... come to think of it, why not the stockings first...?</state>
             </case>
-            <case stage="5" id="784" target="chiaki" targetStage="4">
+            <case stage="5" id="784">
+                <condition role="target" character="chiaki" stage="4" />
                 <state img="custom:#-thinking-2">{mono}Hmm... most opponents would strip from top to bottom... except for you, apparently...</state>
             </case>
-            <case stage="5" id="786" target="chiaki" targetStage="5">
+            <case stage="5" id="786">
+                <condition role="target" character="chiaki" stage="5" />
                 <state img="custom:#-thinking-1">{mono}C-Come to think of it... I'm glad this isn't the Neo World Program. This would be kinda awkward, otherwise...</state>
             </case>
-            <case stage="5" id="788" target="chiaki" targetStage="6">
+            <case stage="5" id="788">
+                <condition role="target" character="chiaki" stage="6" />
                 <state img="custom:#-nervous">{mono}O-Oh, right... there's... uhm... not much left you can take off...</state>
             </case>
-            <case stage="5" id="790" target="chiaki" targetStage="7">
+            <case stage="5" id="790">
+                <condition role="target" character="chiaki" stage="7" />
                 <state img="custom:#-embarassed">{mono}O-Oh. This is it for you, Chiaki...</state>
             </case>
-            <case stage="5" id="792" target="kyoko" targetStage="0">
+            <case stage="5" id="792">
+                <condition role="target" character="kyoko" stage="0" />
                 <state img="custom:#-shocked">{mono}Hmm... seeing you in a place like this is quite unusual, unless... are you on an investigation right now, Kyoko?</state>
             </case>
-            <case stage="5" id="794" target="kyoko" targetStage="1">
+            <case stage="5" id="794">
+                <condition role="target" character="kyoko" stage="1" />
                 <state img="custom:#-shy">{mono}I-In truth, I really think you might have a softer side than you normally show...</state>
             </case>
-            <case stage="5" id="796" target="kyoko" targetStage="5">
+            <case stage="5" id="796">
+                <condition role="target" character="kyoko" stage="5" />
                 <state img="custom:#-sad">{mono}Oh, Kyoko...</state>
             </case>
-            <case stage="5" id="3" target="lucina" targetStage="0">
+            <case stage="5" id="3">
+                <condition role="target" character="lucina" stage="0" />
                 <state img="custom:#-thinking-3" marker="lucina_voice">{mono}It might be due to the mask, but my audio analysis components seem to think you're female, Marth.</state>
             </case>
-            <case stage="5" id="798" target="mahiru" targetStage="0">
+            <case stage="5" id="798">
+                <condition role="target" character="mahiru" stage="0" />
                 <state img="custom:#-excited">{mono}Oh... you're the Ultimate Photographer, right? I-If you don't mind, uhm... could you take a picture of me?</state>
             </case>
-            <case stage="5" id="800" target="rin" targetStage="0">
+            <case stage="5" id="800">
+                <condition role="target" character="rin" stage="0" />
                 <state img="custom:#-nervous-2">{mono small} [...it would be rather awkward to ask, I suppose, but... well, she doesn't seem like the type to be particularly perturbed by that, so...]</state>
             </case>
-            <case stage="5" id="802" target="saki_zls" targetStage="0">
+            <case stage="5" id="802">
+                <condition role="target" character="saki_zls" stage="0" />
                 <state img="custom:#-thinking-3">{mono}Miss Nikaidou? I have a question... have you ever encountered Mondo Owada? &lt;br&gt; Master is good friends with Owada, so I'm just curious to learn how you see him.</state>
             </case>
-            <case stage="5" id="805" target="saki_zls" targetStage="5">
+            <case stage="5" id="805">
+                <condition role="target" character="saki_zls" stage="5" />
                 <state img="custom:#-thinking-3">{mono} Hm? Makeup?</state>
             </case>
-            <case stage="6-8" id="806" target="saki_zls" targetStage="5">
+            <case stage="6-8" id="806">
+                <condition role="target" character="saki_zls" stage="5" />
                 <state img="custom:#-shy">{mono} Hm? Makeup?</state>
             </case>
-            <case stage="5" id="808" target="shimakaze" targetStage="0">
+            <case stage="5" id="808">
+                <condition role="target" character="shimakaze" stage="0" />
                 <state img="custom:#-shocked">{mono}Hm? What's that orange light... &lt;i&gt;EH?!&lt;/i&gt; Shimakaze?!</state>
             </case>
-            <case stage="5" id="810" target="shimakaze" targetStage="1">
+            <case stage="5" id="810">
+                <condition role="target" character="shimakaze" stage="1" />
                 <state img="custom:#-nervous">{mono}O-Oh... this again, I see...</state>
             </case>
-            <case stage="6" id="812" target="chiaki" targetStage="0">
+            <case stage="6" id="812">
+                <condition role="target" character="chiaki" stage="0" />
                 <state img="custom:#-thinking-1">{mono}[Wow... Chiaki's really ahead of us, Master...] &lt;br&gt; {!reset} I... guess we shouldn't be surprised, really...</state>
             </case>
-            <case stage="6-8" id="814" target="chiaki" targetStage="1">
+            <case stage="6-8" id="814">
+                <condition role="target" character="chiaki" stage="1" />
                 <state img="custom:#-thinking-1">Hmm... why not take the stockings off, next? You took your shoes off last time, after all...</state>
             </case>
-            <case stage="6" id="816" target="chiaki" targetStage="2">
+            <case stage="6" id="816">
+                <condition role="target" character="chiaki" stage="2" />
                 <state img="custom:#-thinking-1">{mono}[I kinda wish I had tactile sensors... hey, Master...?] &lt;br&gt; {!reset} Hm... we'd need someone to make the sensor, but I don't think it'd be hard to interface with the laptop...</state>
             </case>
-            <case stage="6-8" id="818" target="chiaki" targetStage="3">
+            <case stage="6-8" id="818">
+                <condition role="target" character="chiaki" stage="3" />
                 <state img="custom:#-nervous">Come to think of it... I probably should've taken my shoes and socks off separately...</state>
                 <state img="custom:#-nervous">{mono}[Didn't you take your shoes and socks off separately, Master?] {!reset}&lt;br&gt; Ah... no, I didn't, come to think of it...</state>
             </case>
-            <case stage="6" id="820" target="chiaki" targetStage="4">
+            <case stage="6" id="820">
+                <condition role="target" character="chiaki" stage="4" />
                 <state img="custom:#-thinking-3">{mono}[Hmm... most opponents strip from top to bottom, but...] &lt;br&gt; {!reset} U-Uhm, I was thinking about that, too...</state>
             </case>
-            <case stage="6-8" id="822" target="chiaki" targetStage="5">
+            <case stage="6-8" id="822">
+                <condition role="target" character="chiaki" stage="5" />
                 <state img="custom:#-embarassed">Oh, Chiaki...? W-Wait, your shirt...?!</state>
             </case>
-            <case stage="6-8" id="824" target="chiaki" targetStage="6">
+            <case stage="6-8" id="824">
+                <condition role="target" character="chiaki" stage="6" />
                 <state img="custom:#-thinking-1">'Those' types of games... wait, you mean...</state>
             </case>
-            <case stage="6-8" id="826" target="chiaki" targetStage="7">
+            <case stage="6-8" id="826">
+                <condition role="target" character="chiaki" stage="7" />
                 <state img="custom:#-embarassed">&lt;i&gt;(This is it...)&lt;/i&gt;</state>
             </case>
-            <case stage="6-8" id="828" target="kyoko" targetStage="0">
+            <case stage="6-8" id="828">
+                <condition role="target" character="kyoko" stage="0" />
                 <state img="custom:#-shocked">It feels really strange, seeing you in a place like this... &lt;br&gt;{mono}[Unless you're investigating something, Kyoko?]</state>
             </case>
-            <case stage="6-8" id="830" target="kyoko" targetStage="1">
+            <case stage="6-8" id="830">
+                <condition role="target" character="kyoko" stage="1" />
                 <state img="custom:#-thinking-1">{mono}[I suppose Master and I just want to get to know your softer side, Kyoko.]</state>
             </case>
-            <case stage="6-8" id="832" target="lucina" targetStage="0">
+            <case stage="6-8" id="832">
+                <condition role="target" character="lucina" stage="0" />
                 <state img="custom:#-shy" marker="lucina_mask">S-So, uhm... what's with the mask, Marth? Is it armor?</state>
             </case>
-            <case stage="6-8" id="834" target="mahiru" targetStage="0">
+            <case stage="6-8" id="834">
+                <condition role="target" character="mahiru" stage="0" />
                 <state img="custom:#-excited">Oh... you're the Ultimate Photographer, right? I-If you don't mind, uhm... could you take a picture of us?</state>
             </case>
-            <case stage="6-8" id="836" target="rin" targetStage="0">
+            <case stage="6-8" id="836">
+                <condition role="target" character="rin" stage="0" />
                 <state img="custom:#-shy">{small} &lt;i&gt;U-Uhm, Alter Ego? Would it be impolite to ask about... that?&lt;/i&gt; &lt;br&gt; {mono} [Possibly... but Miss Tezuka doesn't seem like someone who would get angry about stuff like that?]</state>
             </case>
-            <case stage="6-8" id="838" target="saki_zls" targetStage="0">
+            <case stage="6-8" id="838">
+                <condition role="target" character="saki_zls" stage="0" />
                 <state img="custom:#-thinking-1">Hey, Saki... you're a biker, right? Have you, uhm, ever heard of a person named Mondo Owada? &lt;br&gt; {mono} [Master is good friends with Owada, so we're curious to know how you see him.]</state>
             </case>
-            <case stage="6-8" id="840" target="saki_zls" targetStage="5">
+            <case stage="6-8" id="840">
+                <condition role="target" character="saki_zls" stage="5" />
                 <state img="custom:#-thinking-1">Wait, makeup...? Huh?</state>
             </case>
-            <case stage="6" id="842" target="shimakaze" targetStage="0">
+            <case stage="6" id="842">
+                <condition role="target" character="shimakaze" stage="0" />
                 <state img="custom:#-shocked">{mono}[Hm? What's that orange light?] &lt;br&gt; {!reset} A-Ah! Shimakaze, your arms--!</state>
             </case>
-            <case stage="6-8" id="844" target="shimakaze" targetStage="1">
+            <case stage="6-8" id="844">
+                <condition role="target" character="shimakaze" stage="1" />
                 <state img="custom:#-nervous">{mono}[More gunfire?]</state>
             </case>
-            <case stage="7" id="846" target="chiaki" targetStage="0">
+            <case stage="7" id="846">
+                <condition role="target" character="chiaki" stage="0" />
                 <state img="custom:#-thinking-1">{mono}[Wow... Chiaki's really ahead of us, Master...] {!reset}&lt;br&gt; I... guess we shouldn't be surprised, really...</state>
             </case>
-            <case stage="7" id="848" target="chiaki" targetStage="2">
+            <case stage="7" id="848">
+                <condition role="target" character="chiaki" stage="2" />
                 <state img="custom:#-thinking-1">{mono}[I kinda wish I had tactile sensors... hey, Master...?] {!reset}&lt;br&gt; Hm... we'd need someone to make the sensor, but I don't think it'd be hard to interface with the laptop...</state>
             </case>
-            <case stage="7" id="850" target="chiaki" targetStage="4">
+            <case stage="7" id="850">
+                <condition role="target" character="chiaki" stage="4" />
                 <state img="custom:#-thinking-2">{mono}[Hmm... most opponents strip from top to bottom, but...] {!reset}&lt;br&gt; U-Uhm, I was thinking about that, too...</state>
             </case>
-            <case stage="7" id="852" target="shimakaze" targetStage="0">
+            <case stage="7" id="852">
+                <condition role="target" character="shimakaze" stage="0" />
                 <state img="custom:#-shocked">{mono}[Hm? What's that orange light?] {!reset}&lt;br&gt; A-Ah! Shimakaze, your arms--!</state>
             </case>
-            <case stage="8" id="854" target="chiaki" targetStage="0">
+            <case stage="8" id="854">
+                <condition role="target" character="chiaki" stage="0" />
                 <state img="custom:#-thinking-1">{mono}[Wow... Chiaki's really ahead of us, Master...] {!reset}&lt;br&gt;  I... guess we shouldn't be surprised, really...</state>
             </case>
-            <case stage="8" id="856" target="chiaki" targetStage="2">
+            <case stage="8" id="856">
+                <condition role="target" character="chiaki" stage="2" />
                 <state img="custom:#-thinking-1">{mono}[I kinda wish I had tactile sensors... hey, Master...?] {!reset}&lt;br&gt;  Hm... we'd need someone to make the sensor, but I don't think it'd be hard to interface with the laptop...</state>
             </case>
-            <case stage="8" id="858" target="chiaki" targetStage="4">
+            <case stage="8" id="858">
+                <condition role="target" character="chiaki" stage="4" />
                 <state img="custom:#-thinking-1">{mono}[Hmm... most opponents strip from top to bottom, but...] {!reset}&lt;br&gt;  U-Uhm, I was thinking about that, too...</state>
             </case>
-            <case stage="8" id="860" target="shimakaze" targetStage="0">
+            <case stage="8" id="860">
+                <condition role="target" character="shimakaze" stage="0" />
                 <state img="custom:#-shocked">{mono}[Hm? What's that orange light?] {!reset}&lt;br&gt;  A-Ah! Shimakaze, your arms--!</state>
             </case>
-            <case stage="0-4" id="863" target="aimee">
+            <case stage="0-4" id="863">
+                <condition role="target" character="aimee" />
                 <state img="#-shocked.png">...</state>
                 <state img="#-shocked.png">U-Uhm...</state>
                 <state img="#-shocked.png">&lt;i&gt;don'tmovedon'tmovedon'tmove...&lt;/i&gt;</state>
             </case>
-            <case stage="6-8" id="864" target="aimee">
+            <case stage="6-8" id="864">
+                <condition role="target" character="aimee" />
                 <state img="custom:#-shocked">...</state>
                 <state img="custom:#-shocked">U-Uhm...</state>
                 <state img="custom:#-shocked">&lt;i&gt;don'tmovedon'tmovedon'tmove...&lt;/i&gt;</state>
             </case>
-            <case stage="5" id="866" target="aimee">
+            <case stage="5" id="866">
+                <condition role="target" character="aimee" />
                 <state img="custom:#-shocked">{mono}...</state>
                 <state img="custom:#-shocked">{mono}U-Uhm...</state>
                 <state img="custom:#-shocked">{mono}&lt;i&gt;don'tmovedon'tmovedon'tmove...&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="868" filter="aggressive" notSaidMarker="filter_aggressive">
+            <case stage="0-4" id="868">
+                <condition filter="aggressive" role="target" />
+                <condition role="self" notSaidMarker="filter_aggressive" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-sad.png" marker="filter_aggressive=~target.slot~">P-Please don't hurt me, ~name~...</state>
             </case>
-            <case stage="0-4" id="870" filter="confident" notSaidMarker="filter_confident">
+            <case stage="0-4" id="870">
+                <condition filter="confident" role="target" />
+                <condition role="self" notSaidMarker="filter_confident" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-nervous-2.png" marker="filter_confident=~target.slot~">I-I don't think I could ever be as confident as ~name~...</state>
                 <state img="#-nervous-2.png" marker="filter_confident=~target.slot~">I-I wonder how ~name~ stays so confident...</state>
             </case>
-            <case stage="0-4" id="872" filter="ditzy" notSaidMarker="filter_ditzy">
+            <case stage="0-4" id="872">
+                <condition filter="ditzy" role="target" />
+                <condition role="self" notSaidMarker="filter_ditzy" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-thinking-3.png" marker="filter_ditzy=~target.slot~">U-Uhm... are you sure you know what you're doing, ~name~?</state>
             </case>
-            <case stage="0-4" id="874" filter="exhibitionist" notSaidMarker="filter_exhibitionist" priority="251">
+            <case stage="0-4" id="874" priority="251">
+                <condition filter="exhibitionist" role="target" />
+                <condition role="self" notSaidMarker="filter_exhibitionist" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-nervous.png" marker="filter_exhibitionist=~target.slot~">W-Wow, ~name~ is really daring! A-And also kind of creepy...</state>
             </case>
-            <case stage="0-4" id="876" filter="fashionable" notSaidMarker="filter_fashionable">
+            <case stage="0-4" id="876">
+                <condition filter="fashionable" role="target" />
+                <condition role="self" notSaidMarker="filter_fashionable" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-thinking-1.png" marker="filter_fashionable=~target.slot~">I-I think you have a really nice outfit, ~name~! ...But why wear something like that if you're just going to take it off, anyways?</state>
                 <state img="#-thinking-1.png" marker="filter_fashionable=~target.slot~">Ehehe, ~name~ seems like the kind of person to keep up with fashion trends. Like Junko... but that feels a bit wrong. I wonder why...?</state>
             </case>
-            <case stage="0-4" id="878" filter="innocent" notSaidMarker="filter_innocent">
+            <case stage="0-4" id="878">
+                <condition filter="innocent" role="target" />
+                <condition role="self" notSaidMarker="filter_innocent" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-nervous-2.png" marker="filter_innocent=~target.slot~">I'm glad I'm not the only one who seems a bit out of place, playing this game...</state>
             </case>
-            <case stage="0-4" id="880" filter="kind" totalRounds="1-" notSaidMarker="filter_kind" priority="251">
+            <case stage="0-4" id="880" totalRounds="1-" priority="251">
+                <condition filter="kind" role="target" />
+                <condition role="self" notSaidMarker="filter_kind" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-relieved.png" marker="filter_kind=~target.slot~">I-I'm glad you're here, ~name~... I-It's, uhm, comforting to have someone as kind as you around...</state>
             </case>
-            <case stage="0-4" id="882" filter="moe" notSaidMarker="filter_moe">
+            <case stage="0-4" id="882">
+                <condition filter="moe" role="target" />
+                <condition role="self" notSaidMarker="filter_moe" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-happy.png" marker="filter_moe=~target.slot~">Ehehe... doesn't ~name~ seem like the kind of person you'd want to hug and never let go of?</state>
             </case>
-            <case stage="0-4" id="884" filter="nerdy" notSaidMarker="filter_nerdy">
+            <case stage="0-4" id="884">
+                <condition filter="nerdy" role="target" />
+                <condition role="self" notSaidMarker="filter_nerdy" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-happy.png" marker="filter_nerdy=~target.slot~">~name~, I-I think you're really cute when you get enthusiastic and excited and... uhm... &lt;i&gt;(I-I can't say 'nerdy', can I...?)&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="886" filter="perverted" notSaidMarker="filter_perverted">
+            <case stage="0-4" id="886">
+                <condition filter="perverted" role="target" />
+                <condition role="self" notSaidMarker="filter_perverted" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-disappointed.png" marker="filter_perverted=~target.slot~">&lt;i&gt;(Does ~name~ only ever think about sex? How perverted...)&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="888" filter="quiet" notSaidMarker="filter_quiet">
+            <case stage="0-4" id="888">
+                <condition filter="quiet" role="target" />
+                <condition role="self" notSaidMarker="filter_quiet" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-disappointed.png" marker="filter_quiet=~target.slot~">U-Uhm, ~name~... you've been pretty quiet. I-I'm not making you uncomfortable, am I?</state>
             </case>
-            <case stage="0-4" id="890" filter="serious" notSaidMarker="filter_serious">
+            <case stage="0-4" id="890">
+                <condition filter="serious" role="target" />
+                <condition role="self" notSaidMarker="filter_serious" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-thinking-3.png" marker="filter_serious=~target.slot~">~name~... you seem pretty straitlaced and serious. I-I didn't think someone like you would play this game...</state>
             </case>
-            <case stage="0-4" id="892" filter="ditzy" notSaidMarker="filter_ditzy" priority="251">
+            <case stage="0-4" id="892" priority="251">
+                <condition filter="ditzy" role="target" />
+                <condition role="self" notSaidMarker="filter_ditzy" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <test expr="~target.gender~" value="female" />
                 <state img="#-thinking-3.png" marker="filter_ditzy=~target.slot~">S-So... uhm, I wonder if ~name~ knows what she's doing...</state>
             </case>
-            <case stage="0-4" id="894" filter="fancy" notSaidMarker="filter_fancy" priority="251">
+            <case stage="0-4" id="894" priority="251">
+                <condition filter="fancy" role="target" />
+                <condition role="self" notSaidMarker="filter_fancy" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <test expr="~target.gender~" value="female" />
                 <state img="#-thinking-3.png" marker="filter_fancy=~target.slot~">~name~ really reminds me of that one girl from Class 77-B... maybe it's the sense of regality she gives off?</state>
             </case>
-            <case stage="0-4" id="896" filter="insane" notSaidMarker="filter_insane" priority="251">
+            <case stage="0-4" id="896" priority="251">
+                <condition filter="insane" role="target" />
+                <condition role="self" notSaidMarker="filter_insane" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <test expr="~target.gender~" value="female" />
                 <state img="#-nervous-2.png" marker="filter_insane=~target.slot~">U-Uhm, are we sure ~name~ should be here? She doesn't seem to be... stable.</state>
                 <state img="#-nervous-2.png" marker="filter_insane=~target.slot~">S-So, uhm, should ~name~ be here at all? S-She's not going to hurt anyone, is she?</state>
             </case>
-            <case stage="0-4" id="898" filter="lonely" notSaidMarker="filter_lonely" priority="251">
+            <case stage="0-4" id="898" priority="251">
+                <condition filter="lonely" role="target" />
+                <condition role="self" notSaidMarker="filter_lonely" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <test expr="~target.gender~" value="female" />
                 <state img="#-nervous-2.png" marker="filter_lonely=~target.slot~">&lt;i&gt;(I-It sounds like ~name~ is a bit lonely... maybe I should go talk to her?)&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="900" filter="ditzy" notSaidMarker="filter_ditzy" priority="251">
+            <case stage="0-4" id="900" priority="251">
+                <condition filter="ditzy" role="target" />
+                <condition role="self" notSaidMarker="filter_ditzy" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <test expr="~target.gender~" value="male" />
                 <state img="#-thinking-3.png" marker="filter_ditzy=~target.slot~">S-So... uhm, I wonder if ~name~ knows what he's doing...</state>
             </case>
-            <case stage="0-4" id="902" filter="fancy" notSaidMarker="filter_fancy" priority="251">
+            <case stage="0-4" id="902" priority="251">
+                <condition filter="fancy" role="target" />
+                <condition role="self" notSaidMarker="filter_fancy" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <test expr="~target.gender~" value="male" />
                 <state img="#-thinking-3.png" marker="filter_fancy=~target.slot~">~name~ really reminds me of that one girl from Class 77-B... maybe it's the sense of regality he gives off?</state>
             </case>
-            <case stage="0-4" id="904" filter="insane" notSaidMarker="filter_insane" priority="251">
+            <case stage="0-4" id="904" priority="251">
+                <condition filter="insane" role="target" />
+                <condition role="self" notSaidMarker="filter_insane" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <test expr="~target.gender~" value="male" />
                 <state img="#-nervous-2.png" marker="filter_insane=~target.slot~">U-Uhm, are we sure ~name~ should be here? He doesn't seem to be... stable.</state>
                 <state img="#-nervous-2.png" marker="filter_insane=~target.slot~">S-So, uhm, should ~name~ be here at all? H-he's not going to hurt anyone, is he?</state>
             </case>
-            <case stage="0-4" id="906" filter="lonely" notSaidMarker="filter_lonely" priority="251">
+            <case stage="0-4" id="906" priority="251">
+                <condition filter="lonely" role="target" />
+                <condition role="self" notSaidMarker="filter_lonely" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <test expr="~target.gender~" value="male" />
                 <state img="#-nervous-2.png" marker="filter_lonely=~target.slot~">&lt;i&gt;(I-It sounds like ~name~ is a bit lonely... maybe I should go talk to him?)&lt;/i&gt;</state>
             </case>
-            <case stage="2-4" id="908" filter="cheerful" notSaidMarker="filter_cheerful">
+            <case stage="2-4" id="908">
+                <condition filter="cheerful" role="target" />
+                <condition role="self" notSaidMarker="filter_cheerful" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-shy.png" marker="filter_cheerful=~target.slot~">You seem so happy, ~name~... maybe I should try to cheer up, too?</state>
                 <state img="#-shy.png" marker="filter_cheerful=~target.slot~">~name~ seems so cheerful... maybe I should try to be like that?</state>
             </case>
-            <case stage="2-4" id="910" filter="yandere" notSaidMarker="filter_yandere">
+            <case stage="2-4" id="910">
+                <condition filter="yandere" role="target" />
+                <condition role="self" notSaidMarker="filter_yandere" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <state img="#-disappointed.png" marker="filter_yandere=~target.slot~">S-Something about you feels... really weird, ~name~... &lt;i&gt;(I-I think she might be dangerous... I should watch out.)&lt;/i&gt;</state>
             </case>
-            <case stage="2-4" id="912" filter="shy" notSaidMarker="filter_shy" priority="251">
+            <case stage="2-4" id="912" priority="251">
+                <condition filter="shy" role="target" />
+                <condition role="self" notSaidMarker="filter_shy" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <test expr="~target.gender~" value="female" />
                 <state img="#-nervous-2.png" marker="filter_shy=~target.slot~">&lt;i&gt;(I-I really hope ~name~ is okay... She seems so shy...)&lt;/i&gt;</state>
             </case>
-            <case stage="2-4" id="914" filter="shy" notSaidMarker="filter_shy" priority="251">
+            <case stage="2-4" id="914" priority="251">
+                <condition filter="shy" role="target" />
+                <condition role="self" notSaidMarker="filter_shy" />
                 <test expr="~clothing.type~" cmp="!=" value="important" />
                 <test expr="~clothing.type~" cmp="!=" value="major" />
                 <test expr="~target.gender~" value="male" />
                 <state img="#-nervous-2.png" marker="filter_shy=~target.slot~">&lt;i&gt;(I-I really hope ~name~ is okay... He seems so shy...)&lt;/i&gt;</state>
             </case>
-            <case stage="7-8" id="916" hidden="1" saidMarker="flirting">
-                <state img="#-.png" marker="flirting=0">placeholder</state>
+            <case stage="7-8" id="916" hidden="1">
+                <condition role="self" saidMarker="flirting" />
+                <state marker="flirting=0">placeholder</state>
             </case>
         </trigger>
 
         <trigger id="opponent_stripped">
-            <case stage="0-4" id="919" target="aimee" targetStage="1">
+            <case stage="0-4" id="919">
+                <condition role="target" character="aimee" stage="1" />
                 <state img="#-sad.png">P-Please don't do that, again...</state>
             </case>
-            <case stage="6-8" id="920" target="aimee" targetStage="1">
+            <case stage="6-8" id="920">
+                <condition role="target" character="aimee" stage="1" />
                 <state img="custom:#-sad">P-Please don't do that, again...</state>
             </case>
-            <case stage="0-4" id="922" target="chiaki" targetStage="1">
+            <case stage="0-4" id="922">
+                <condition role="target" character="chiaki" stage="1" />
                 <state img="#-nervous.png">If so... this, uhm, might end badly for me... I-it's okay, though!</state>
             </case>
-            <case stage="0-4" id="924" target="chiaki" targetStage="2">
+            <case stage="0-4" id="924">
+                <condition role="target" character="chiaki" stage="2" />
                 <state img="#-thinking-2.png">Though... I guess this is more luck than strategy...?</state>
             </case>
-            <case stage="0-4" id="926" target="chiaki" targetStage="3">
+            <case stage="0-4" id="926">
+                <condition role="target" character="chiaki" stage="3" />
                 <state img="#-shy.png">I-I'll try to watch my step...</state>
             </case>
-            <case stage="0-4" id="928" target="chiaki" targetStage="4">
+            <case stage="0-4" id="928">
+                <condition role="target" character="chiaki" stage="4" />
                 <state img="#-shy.png">Eh...? Why would you be getting hot-- Oh...</state>
             </case>
-            <case stage="0-4" id="930" target="chiaki" targetStage="5">
+            <case stage="0-4" id="930">
+                <condition role="target" character="chiaki" stage="5" />
                 <state img="#-angry.png">Y-You can still pull through...!</state>
             </case>
-            <case stage="0-4" id="932" target="chiaki" targetStage="6">
+            <case stage="0-4" id="932">
+                <condition role="target" character="chiaki" stage="6" />
                 <state img="#-embarassed.png">O-Oh. Y-You... uhm... look really pretty, Chiaki... s-sorry, I didn't mean to sound weird or anything...</state>
             </case>
-            <case stage="0-4" id="934" target="chiaki" targetStage="7">
+            <case stage="0-4" id="934">
+                <condition role="target" character="chiaki" stage="7" />
                 <state img="#-embarassed.png">O-Oh. You mean &lt;i&gt;that...&lt;/i&gt; U-Uhm... I guess so...?</state>
             </case>
-            <case stage="0-4" id="936" target="chiaki" targetStage="8">
+            <case stage="0-4" id="936">
+                <condition role="target" character="chiaki" stage="8" />
                 <state img="#-embarassed.png">U-Uhm... s-sorry...</state>
             </case>
-            <case stage="0-4" id="938" target="hk416" targetStage="1">
+            <case stage="0-4" id="938">
+                <condition role="target" character="hk416" stage="1" />
                 <state img="#-shy.png">&lt;i&gt;(I-I still don't really get it, but...)&lt;/i&gt; S-She seems like a really interesting person, 416...</state>
             </case>
-            <case stage="0-4" id="940" target="hk416" targetStage="2">
+            <case stage="0-4" id="940">
+                <condition role="target" character="hk416" stage="2" />
                 <state img="#-thinking-3.png">&lt;i&gt;(I-Ikusaba... right? Would it be too much of a stretch to assume they've met each other?)&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="942" target="hk416" targetStage="4">
+            <case stage="0-4" id="942">
+                <condition role="target" character="hk416" stage="4" />
                 <state img="#-embarassed.png">O-Oh. I-- uhm, thought you were wearing an undershirt beneath that...</state>
             </case>
-            <case stage="0-4" id="944" target="kamina" targetStage="1">
+            <case stage="0-4" id="944">
+                <condition role="target" character="kamina" stage="1" />
                 <state img="#-angry.png" marker="kamina_meaning_of_manly=1">What does it mean to be &lt;i&gt;manly?&lt;/i&gt;</state>
                 <state img="#-angry.png" marker="kamina_meaning_of_manly=1">I &lt;i&gt;need&lt;/i&gt; to know... what it means to be &lt;i&gt;manly.&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="946" target="kyoko" targetStage="1">
+            <case stage="0-4" id="946">
+                <condition role="target" character="kyoko" stage="1" />
                 <state img="#-nervous-2.png">&lt;i&gt;(I-I should probably watch my back...)&lt;/i&gt;</state>
             </case>
-            <case stage="0-4" id="949" target="kyoko" targetStage="2">
+            <case stage="0-4" id="949">
+                <condition role="target" character="kyoko" stage="2" />
                 <state img="#-disappointed.png">A-And, uhm, I'm just a bit curious, so...</state>
             </case>
-            <case stage="6-8" id="950" target="kyoko" targetStage="2">
+            <case stage="6-8" id="950">
+                <condition role="target" character="kyoko" stage="2" />
                 <state img="custom:#-embarassed">A-And, uhm, I'm just a bit curious, so...</state>
             </case>
-            <case stage="0-4" id="953" target="kyoko" targetStage="6">
+            <case stage="0-4" id="953">
+                <condition role="target" character="kyoko" stage="6" />
                 <state img="#-sad.png">A-And you wanted to keep it a secret... I understand.</state>
             </case>
-            <case stage="6-8" id="954" target="kyoko" targetStage="6">
+            <case stage="6-8" id="954">
+                <condition role="target" character="kyoko" stage="6" />
                 <state img="custom:#-sad">A-And you wanted to keep it a secret... I understand.</state>
             </case>
-            <case stage="0-4" id="957" target="lucina" targetStage="1">
+            <case stage="0-4" id="957">
+                <condition role="target" character="lucina" stage="1" />
                 <state img="#-shy.png" marker="lucina_hiding_from">O-Oh, okay... you were hiding your identity... I understand. B-But, er... who are you hiding from?</state>
             </case>
-            <case stage="6-8" id="958" target="lucina" targetStage="1">
+            <case stage="6-8" id="958">
+                <condition role="target" character="lucina" stage="1" />
                 <state img="custom:#-shy" marker="lucina_hiding_from">O-Oh, okay... you were hiding your identity... I understand. B-But, er... who are you hiding from?</state>
             </case>
-            <case stage="0-4" id="961" target="mahiru" targetStage="1">
+            <case stage="0-4" id="961">
+                <condition role="target" character="mahiru" stage="1" />
                 <state img="#-shy.png">I-I mean, uhm, it's really not a big deal, I just... uhm... s-sorry...</state>
             </case>
-            <case stage="6-8" id="962" target="mahiru" targetStage="1">
+            <case stage="6-8" id="962">
+                <condition role="target" character="mahiru" stage="1" />
                 <state img="custom:#-shy">I-I mean, uhm, it's really not a big deal, I just... uhm... s-sorry...</state>
             </case>
-            <case stage="0-4" id="964" target="mahiru" targetStage="2">
+            <case stage="0-4" id="964">
+                <condition role="target" character="mahiru" stage="2" />
                 <state img="#-nervous-2.png">I-It's just a.... uh, a thought experiment! Really! Just curious...</state>
             </case>
-            <case stage="0-4" id="966" target="rin" targetStage="1">
+            <case stage="0-4" id="966">
+                <condition role="target" character="rin" stage="1" />
                 <state img="#-nervous.png">Uhhhm... Rin? I'm sorry if this is prying, but... er... how do you get dressed without arms?</state>
             </case>
-            <case stage="0-4" id="968" target="saki_zls" targetStage="1">
+            <case stage="0-4" id="968">
+                <condition role="target" character="saki_zls" stage="1" />
                 <state img="#-nervous-2.png">O-Oh. Uhm... I-I guess I shouldn't be surprised, but... uhm, please be careful...</state>
             </case>
-            <case stage="0-4" id="970" target="saki_zls" targetStage="6">
+            <case stage="0-4" id="970">
+                <condition role="target" character="saki_zls" stage="6" />
                 <state img="#-shocked.png">W-Wait, what's happening to Saki's skin?!</state>
             </case>
-            <case stage="0-4" id="972" target="sayori" targetStage="1">
+            <case stage="0-4" id="972">
+                <condition role="target" character="sayori" stage="1" />
                 <state img="#-nervous-2.png">O-Oh, I was just asking, because... well, I kinda like reading, too, so... uhm...</state>
             </case>
-            <case stage="0-4" id="975" target="shimakaze" targetStage="1">
+            <case stage="0-4" id="975">
+                <condition role="target" character="shimakaze" stage="1" />
                 <state img="#-nervous.png">S-Shimakaze, you're... completely fine? W-Wait, uhm... how... huh...?</state>
             </case>
-            <case stage="6-8" id="976" target="shimakaze" targetStage="1">
+            <case stage="6-8" id="976">
+                <condition role="target" character="shimakaze" stage="1" />
                 <state img="custom:#-nervous">S-Shimakaze, you're... completely fine? W-Wait, uhm... how... huh...?</state>
             </case>
-            <case stage="0-4" id="979" target="shimakaze" targetStage="2">
+            <case stage="0-4" id="979">
+                <condition role="target" character="shimakaze" stage="2" />
                 <state img="#-relieved.png">W-Well... I-If it's not actually &lt;i&gt;hurting&lt;/i&gt; Shimakaze, then... uhm... I guess I can get used to it...</state>
             </case>
-            <case stage="6-8" id="980" target="shimakaze" targetStage="2">
+            <case stage="6-8" id="980">
+                <condition role="target" character="shimakaze" stage="2" />
                 <state img="custom:#-relieved">W-Well... I-If it's not actually &lt;i&gt;hurting&lt;/i&gt; Shimakaze, then... uhm... I guess I can get used to it...</state>
             </case>
-            <case stage="5" id="982" target="aimee" targetStage="1">
+            <case stage="5" id="982">
+                <condition role="target" character="aimee" stage="1" />
                 <state img="custom:#-sad">{mono}P-Please don't do that, again...</state>
             </case>
-            <case stage="5" id="984" target="chiaki" targetStage="1">
+            <case stage="5" id="984">
+                <condition role="target" character="chiaki" stage="1" />
                 <state img="custom:#-happy">{mono}As expected of the Ultimate Gamer, right...?</state>
             </case>
-            <case stage="5" id="986" target="chiaki" targetStage="2">
+            <case stage="5" id="986">
+                <condition role="target" character="chiaki" stage="2" />
                 <state img="custom:#-happy">{mono}Oh, well... I think Master is having fun with you around, anyways... despite running away.</state>
             </case>
-            <case stage="5" id="988" target="chiaki" targetStage="3">
+            <case stage="5" id="988">
+                <condition role="target" character="chiaki" stage="3" />
                 <state img="custom:#-shy">{mono}Ah... maybe I'll ask Master. It shouldn't be hard to program a tactile sensor driver, right...?</state>
             </case>
-            <case stage="5" id="990" target="chiaki" targetStage="4">
+            <case stage="5" id="990">
+                <condition role="target" character="chiaki" stage="4" />
                 <state img="custom:#-shy">{mono}I mean... I guess it's not really important in the end, but...</state>
             </case>
-            <case stage="5" id="992" target="chiaki" targetStage="5">
+            <case stage="5" id="992">
+                <condition role="target" character="chiaki" stage="5" />
                 <state img="custom:#-happy">{mono}Well... I guess it's your decision, in the end...</state>
             </case>
-            <case stage="5" id="994" target="chiaki" targetStage="6">
+            <case stage="5" id="994">
+                <condition role="target" character="chiaki" stage="6" />
                 <state img="custom:#-embarassed">{mono}Though... uhm, I guess it wouldn't be &lt;i&gt;that&lt;/i&gt; surprising, if something like this happened with the participants...</state>
             </case>
-            <case stage="5" id="996" target="chiaki" targetStage="7">
+            <case stage="5" id="996">
+                <condition role="target" character="chiaki" stage="7" />
                 <state img="custom:#-angry">{mono}I... still think you can pull through, though! Yeah!</state>
             </case>
-            <case stage="5" id="998" target="chiaki" targetStage="8">
+            <case stage="5" id="998">
+                <condition role="target" character="chiaki" stage="8" />
                 <state img="custom:#-nervous">{mono}A last ditch effort...!</state>
             </case>
-            <case stage="5" id="1000" target="kyoko" targetStage="2">
+            <case stage="5" id="1000">
+                <condition role="target" character="kyoko" stage="2" />
                 <state img="custom:#-thinking-3">{mono}So, I guess I'm just a bit curious about you, Kyoko!</state>
             </case>
-            <case stage="5" id="1002" target="kyoko" targetStage="6">
+            <case stage="5" id="1002">
+                <condition role="target" character="kyoko" stage="6" />
                 <state img="custom:#-sad">{mono}A-And you wanted to keep it a secret... I understand.</state>
             </case>
-            <case stage="5" id="1004" target="lucina" targetStage="1">
+            <case stage="5" id="1004">
+                <condition role="target" character="lucina" stage="1" />
                 <state img="custom:#-thinking-1" marker="lucina_hiding_from">{mono}Oh, I see, you were trying to hide your identity. A bit like Master, then! But who are you hiding from...?</state>
             </case>
-            <case stage="5" id="1006" target="mahiru" targetStage="1">
+            <case stage="5" id="1006">
+                <condition role="target" character="mahiru" stage="1" />
                 <state img="custom:#-shy">{mono}I-I mean, uhm, it's really not a big deal, I just... uhm... s-sorry...</state>
             </case>
-            <case stage="5" id="1008" target="rin" targetStage="1">
+            <case stage="5" id="1008">
+                <condition role="target" character="rin" stage="1" />
                 <state img="custom:#-thinking-3">{mono} [Uhm... Miss Tezuka? I have a question... how do you get dressed without arms?]</state>
             </case>
-            <case stage="5" id="1010" target="saki_zls" targetStage="1">
+            <case stage="5" id="1010">
+                <condition role="target" character="saki_zls" stage="1" />
                 <state img="custom:#-nervous-2">{mono} Well, I should have predicted that response... well, do take care, please.</state>
             </case>
-            <case stage="5" id="1012" target="saki_zls" targetStage="6">
+            <case stage="5" id="1012">
+                <condition role="target" character="saki_zls" stage="6" />
                 <state img="custom:#-shocked">{mono} Miss Nikaidou, what is happening to your skin?!</state>
             </case>
-            <case stage="5" id="1014" target="shimakaze" targetStage="1">
+            <case stage="5" id="1014">
+                <condition role="target" character="shimakaze" stage="1" />
                 <state img="custom:#-nervous">{mono}I-I can't find any damage other than superficial charring, but... &lt;i&gt;how?&lt;/i&gt;</state>
             </case>
-            <case stage="5" id="1016" target="shimakaze" targetStage="2">
+            <case stage="5" id="1016">
+                <condition role="target" character="shimakaze" stage="2" />
                 <state img="custom:#-thinking-2">{mono}So...uhm, I guess this is how Shimakaze's going to strip for the rest of the game...? O-Okay, then...</state>
             </case>
-            <case stage="6-8" id="1018" target="aimee" targetStage="1">
+            <case stage="6-8" id="1018">
+                <condition role="target" character="aimee" stage="1" />
                 <state img="custom:#-sad">{mono}[Please... &lt;i&gt;please&lt;/i&gt; don't do that again...]</state>
             </case>
-            <case stage="6-8" id="1020" target="chiaki" targetStage="1">
+            <case stage="6-8" id="1020">
+                <condition role="target" character="chiaki" stage="1" />
                 <state img="custom:#-happy">Does the talent of Ultimate Gamer normally extend to card games, though...?</state>
                 <state img="custom:#-thinking-1">{mono}[I wasn't expecting the Ultimate Gamer talent to extend to card games, though...]</state>
             </case>
-            <case stage="6" id="1022" target="chiaki" targetStage="2">
+            <case stage="6" id="1022">
+                <condition role="target" character="chiaki" stage="2" />
                 <state img="custom:#-thinking-1">{mono}[They're both... uhm, small accessories, though, so...] &lt;br&gt; {!reset} ...I guess you're right. The order doesn't really matter...</state>
             </case>
-            <case stage="6-8" id="1024" target="chiaki" targetStage="3">
+            <case stage="6-8" id="1024">
+                <condition role="target" character="chiaki" stage="3" />
                 <state img="custom:#-excited">I think the tactile sensor would be interesting to program, though...!</state>
             </case>
-            <case stage="6-8" id="1026" target="chiaki" targetStage="4">
+            <case stage="6-8" id="1026">
+                <condition role="target" character="chiaki" stage="4" />
                 <state img="custom:#-embarassed">S-Something to keep in mind... for next time, I guess...</state>
             </case>
-            <case stage="6-8" id="1028" target="chiaki" targetStage="5">
+            <case stage="6-8" id="1028">
+                <condition role="target" character="chiaki" stage="5" />
                 <state img="custom:#-thinking-1">I was kinda thinking you'd take the shirt off, first, but... I guess it's not really important, in the end...?</state>
             </case>
-            <case stage="6" id="1030" target="chiaki" targetStage="6">
+            <case stage="6" id="1030">
+                <condition role="target" character="chiaki" stage="6" />
                 <state img="custom:#-embarassed">{mono}[Eh? Master, are you okay...?] &lt;br&gt; {!reset} I-I'm fine, uhm... just, uh...!</state>
             </case>
-            <case stage="6" id="1032" target="chiaki" targetStage="7">
+            <case stage="6" id="1032">
+                <condition role="target" character="chiaki" stage="7" />
                 <state img="custom:#-shocked">{mono}[I can confirm that Master does not play those kinds of games. Normally.] &lt;br&gt; {!reset} W-Wait, you didn't need to tell them that...!</state>
             </case>
-            <case stage="6-8" id="1034" target="chiaki" targetStage="8">
+            <case stage="6-8" id="1034">
+                <condition role="target" character="chiaki" stage="8" />
                 <state img="custom:#-nervous">...a last ditch effort for both of us!</state>
             </case>
-            <case stage="6-8" id="1036" target="kyoko" targetStage="2">
+            <case stage="6-8" id="1036">
+                <condition role="target" character="kyoko" stage="2" />
                 <state img="custom:#-nervous">{mono}[You see, we're just a bit curious, so...]</state>
             </case>
-            <case stage="6-8" id="1038" target="kyoko" targetStage="6">
+            <case stage="6-8" id="1038">
+                <condition role="target" character="kyoko" stage="6" />
                 <state img="custom:#-sad">{mono}[Master and I can certainly understand... wanting to keep it a secret.]</state>
             </case>
-            <case stage="6-8" id="1040" target="rin" targetStage="1">
+            <case stage="6-8" id="1040">
+                <condition role="target" character="rin" stage="1" />
                 <state img="custom:#-nervous">{mono} [Uhm... Miss Tezuka? We have a question.] &lt;br&gt; {!reset} Er... so... H-How do you get dressed without arms?</state>
             </case>
-            <case stage="6-8" id="1042" target="saki_zls" targetStage="1">
+            <case stage="6-8" id="1042">
+                <condition role="target" character="saki_zls" stage="1" />
                 <state img="custom:#-nervous">{mono} [Well, we should've predicted that response...] &lt;br&gt; {!reset} B-But, uhm... please be careful...!</state>
             </case>
-            <case stage="6-8" id="1044" target="saki_zls" targetStage="6">
+            <case stage="6-8" id="1044">
+                <condition role="target" character="saki_zls" stage="6" />
                 <state img="custom:#-shocked">Huh?! What's happening to Saki's skin?! &lt;br&gt; {mono} [Miss Nikaidou, do you require medical attention?]</state>
             </case>
-            <case stage="6-8" id="1046" target="shimakaze" targetStage="1">
+            <case stage="6-8" id="1046">
+                <condition role="target" character="shimakaze" stage="1" />
                 <state img="custom:#-nervous">{mono}[W-Wait, she's... completely fine? How?]</state>
             </case>
-            <case stage="6-8" id="1048" target="shimakaze" targetStage="2">
+            <case stage="6-8" id="1048">
+                <condition role="target" character="shimakaze" stage="2" />
                 <state img="custom:#-relieved">{mono}[I-- I suppose if it's not actually &lt;i&gt;hurting&lt;/i&gt; Shimakaze, then it's okay, but...]</state>
             </case>
-            <case stage="7" id="1050" target="chiaki" targetStage="2">
+            <case stage="7" id="1050">
+                <condition role="target" character="chiaki" stage="2" />
                 <state img="custom:#-thinking-1">{mono}[They're both... uhm, small accessories, though, so...] {!reset}&lt;br&gt; ...I guess you're right. The order doesn't really matter...</state>
             </case>
-            <case stage="7" id="1052" target="chiaki" targetStage="6">
+            <case stage="7" id="1052">
+                <condition role="target" character="chiaki" stage="6" />
                 <state img="custom:#-embarassed">{mono}[Eh? Master, are you okay...?] {!reset}&lt;br&gt; I-I'm fine, uhm... just, uh...!</state>
             </case>
-            <case stage="7" id="1054" target="chiaki" targetStage="7">
+            <case stage="7" id="1054">
+                <condition role="target" character="chiaki" stage="7" />
                 <state img="custom:#-shocked">{mono}[I can confirm that Master does not play those kinds of games. Normally.] {!reset}&lt;br&gt; W-Wait, you didn't need to tell them that...!</state>
             </case>
-            <case stage="8" id="1056" target="chiaki" targetStage="2">
+            <case stage="8" id="1056">
+                <condition role="target" character="chiaki" stage="2" />
                 <state img="custom:#-thinking-1">{mono}[They're both... uhm, small accessories, though, so...] {!reset}&lt;br&gt;  ...I guess you're right. The order doesn't really matter...</state>
             </case>
-            <case stage="8" id="1058" target="chiaki" targetStage="6">
+            <case stage="8" id="1058">
+                <condition role="target" character="chiaki" stage="6" />
                 <state img="custom:#-embarassed">{mono}[Eh? Master, are you okay...?] {!reset}&lt;br&gt;  I-I'm fine, uhm... just, uh...!</state>
             </case>
-            <case stage="8" id="1060" target="chiaki" targetStage="7">
+            <case stage="8" id="1060">
+                <condition role="target" character="chiaki" stage="7" />
                 <state img="custom:#-shocked">{mono}[I can confirm that Master does not play those kinds of games. Normally.] {!reset}&lt;br&gt;  W-Wait, you didn't need to tell them that...!</state>
             </case>
-            <case stage="0-4" id="1062" target="hk416" notSaidMarker="target_416_german" targetSaying="Scheiße">
+            <case stage="0-4" id="1062">
+                <condition role="target" character="hk416" saying="Scheiße" />
+                <condition role="self" notSaidMarker="target_416_german" />
                 <state img="#-thinking-3.png" marker="target_416_german=1">Oh... you know German, 416? I-I'm not familiar with the language at all, but... I, uhm, can recognize that much.</state>
             </case>
-            <case stage="0-4" id="1063" target="hk416" notSaidMarker="target_416_german" targetSaying="Verdammt">
+            <case stage="0-4" id="1063">
+                <condition role="target" character="hk416" saying="Verdammt" />
+                <condition role="self" notSaidMarker="target_416_german" />
                 <state img="#-thinking-3.png" marker="target_416_german=1">Oh... you know German, 416? I-I'm not familiar with the language at all, but... I, uhm, can recognize that much.</state>
             </case>
-            <case stage="7-8" id="1065" target="human" saidMarker="flirting==~human.slot~">
-                <state img="custom:#-excited" oneShotId="1" marker="+flirted*">Okay! Uhm... &lt;br&gt; H-Hey, ~player~, y-you make my software into &lt;i&gt;hardware&lt;/i&gt;...! &lt;br&gt; {small}U-Uhm, did I do that right...?</state>
-                <state img="custom:#-excited" oneShotId="2" marker="+flirted*">Okay! Uhm... &lt;br&gt; ~player~, y-you make my '0' into a '1'...! &lt;br&gt; {small}U-Uhm, did I do that right...?</state>
-                <state img="custom:#-excited" oneShotId="3" marker="+flirted*">Okay! &lt;br&gt; ~player~, I'm non-configurable, because... uhm, you've made me &lt;i&gt;hard-coded&lt;/i&gt;! &lt;br&gt; {small}U-Uhm, did I do that right...?</state>
+            <case stage="7-8" id="1065">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="flirting==~human.slot~" />
+                <state img="custom:#-excited" oneShotId="9" marker="+flirted*">Okay! Uhm... &lt;br&gt; H-Hey, ~player~, y-you make my software into &lt;i&gt;hardware&lt;/i&gt;...! &lt;br&gt; {small}U-Uhm, did I do that right...?</state>
+                <state img="custom:#-excited" oneShotId="10" marker="+flirted*">Okay! Uhm... &lt;br&gt; ~player~, y-you make my '0' into a '1'...! &lt;br&gt; {small}U-Uhm, did I do that right...?</state>
+                <state img="custom:#-excited" oneShotId="11" marker="+flirted*">Okay! &lt;br&gt; ~player~, I'm non-configurable, because... uhm, you've made me &lt;i&gt;hard-coded&lt;/i&gt;! &lt;br&gt; {small}U-Uhm, did I do that right...?</state>
             </case>
-            <case stage="0-4" id="1068" target="aimee">
+            <case stage="0-4" id="1068">
+                <condition role="target" character="aimee" />
                 <state img="#-nervous.png">I-I know she hasn't hit anyone &lt;i&gt;yet&lt;/i&gt;, b-but still...!</state>
                 <state img="#-nervous.png">H-How many times is she going to do that...</state>
             </case>
-            <case stage="6-8" id="1069" target="aimee">
+            <case stage="6-8" id="1069">
+                <condition role="target" character="aimee" />
                 <state img="custom:#-nervous">I-I know she hasn't hit anyone &lt;i&gt;yet&lt;/i&gt;, b-but still...!</state>
                 <state img="custom:#-nervous">H-How many times is she going to do that...</state>
             </case>
-            <case stage="0-4" id="1071" target="aimee">
+            <case stage="0-4" id="1071">
+                <condition role="target" character="aimee" />
                 <state img="#-nervous.png">S-She isn't stopping, is she...</state>
             </case>
-            <case stage="5" id="1073" target="aimee">
+            <case stage="5" id="1073">
+                <condition role="target" character="aimee" />
                 <state img="custom:#-nervous">{mono}I-I know she hasn't hit anyone &lt;i&gt;yet&lt;/i&gt;, b-but still...!</state>
                 <state img="custom:#-nervous">{mono}S-She isn't stopping, is she...</state>
                 <state img="custom:#-nervous">{mono}H-How many times is she going to do that...</state>
             </case>
-            <case stage="6-8" id="1075" target="aimee">
+            <case stage="6-8" id="1075">
+                <condition role="target" character="aimee" />
                 <state img="custom:#-nervous">{mono} [S-She isn't stopping, is she...]</state>
             </case>
-            <case stage="0-4" id="1077" alsoPlaying="hanako" alsoPlayingStage="1" totalRounds="0">
+            <case stage="0-4" id="1077" totalRounds="0">
+                <condition role="other" character="hanako" stage="1" />
                 <state img="#-nervous.png">I really hope this game isn't difficult...</state>
             </case>
-            <case stage="0-4" id="1079" alsoPlaying="hanako" alsoPlayingStage="1" totalRounds="1-">
+            <case stage="0-4" id="1079" totalRounds="1-">
+                <condition role="other" character="hanako" stage="1" />
                 <state img="#-nervous.png">R-Right?</state>
             </case>
-            <case stage="0-4" id="1081" alsoPlaying="hanako" alsoPlayingStage="3">
+            <case stage="0-4" id="1081">
+                <condition role="other" character="hanako" stage="3" />
                 <state img="#-sad.png">I guess it just... takes time...</state>
             </case>
         </trigger>
 
         <trigger id="opponent_chest_will_be_visible">
-            <case stage="7-8" id="1083" target="human" saidMarker="flirted*!=1">
+            <case stage="7-8" id="1083">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="flirted*!=1" />
                 <state img="custom:#-shy" marker="flirting=~human.slot~">Uhm, Alter Ego? How do I... uhm, flirt? &lt;br&gt; {mono}Could you lean in a bit closer, Master? Now... &lt;br&gt; {small} (whispering)</state>
                 <state img="custom:#-shy" marker="flirting=~human.slot~">Uhm, Alter Ego? I-- I was a bit curious about... uhm, how to flirt. &lt;br&gt; {mono}Could you lean in a bit closer, Master? Now... &lt;br&gt; {small} (whispering)</state>
                 <state img="custom:#-shy" marker="flirting=~human.slot~">Er, Alter Ego? I-- I wondering... uhm, how do I flirt? &lt;br&gt; {mono}Could you lean in a bit closer, Master? Now... &lt;br&gt; {small} (whispering)</state>
             </case>
-            <case stage="7-8" id="1085" target="human" saidMarker="flirted*==1">
+            <case stage="7-8" id="1085">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="flirted*==1" />
                 <state img="custom:#-nervous" marker="flirting=~human.slot~">O-Okay, uhm, I don't think my last attempt at flirting worked out very well... u-uhm, would you mind if I tried again?</state>
                 <state img="custom:#-nervous" marker="flirting=~human.slot~">O-Okay, so that last attempt at flirting didn't work... b-but I'm going to give it a second shot...</state>
                 <state img="custom:#-nervous" marker="flirting=~human.slot~">S-So, uhm... o-obviously, that last attempt didn't work... b-but, uhm, would you mind if I gave it another chance?</state>
@@ -2950,12 +3480,16 @@
         </trigger>
 
         <trigger id="opponent_crotch_will_be_visible">
-            <case stage="7-8" id="1087" target="human" saidMarker="flirted*!=1">
+            <case stage="7-8" id="1087">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="flirted*!=1" />
                 <state img="custom:#-shy" marker="flirting=~human.slot~">Uhm, Alter Ego? How do I... uhm, flirt? &lt;br&gt; {mono}Could you lean in a bit closer, Master? Now... &lt;br&gt; {small} (whispering)</state>
                 <state img="custom:#-shy" marker="flirting=~human.slot~">Uhm, Alter Ego? I-- I was a bit curious about... uhm, how to flirt. &lt;br&gt; {mono}Could you lean in a bit closer, Master? Now... &lt;br&gt; {small} (whispering)</state>
                 <state img="custom:#-shy" marker="flirting=~human.slot~">Er, Alter Ego? I-- I wondering... uhm, how do I flirt? &lt;br&gt; {mono}Could you lean in a bit closer, Master? Now... &lt;br&gt; {small} (whispering)</state>
             </case>
-            <case stage="7-8" id="1089" target="human" saidMarker="flirted*==1">
+            <case stage="7-8" id="1089">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="flirted*==1" />
                 <state img="custom:#-nervous" marker="flirting=~human.slot~">O-Okay, uhm, I don't think my last attempt at flirting worked out very well... u-uhm, would you mind if I tried again?</state>
                 <state img="custom:#-nervous" marker="flirting=~human.slot~">O-Okay, so that last attempt at flirting didn't work... b-but I'm going to give it a second shot...</state>
                 <state img="custom:#-nervous" marker="flirting=~human.slot~">S-So, uhm... o-obviously, that last attempt didn't work... b-but, uhm, would you mind if I gave it another chance?</state>
@@ -3020,24 +3554,29 @@
         </trigger>
 
         <trigger id="male_masturbating">
-            <case stage="6" id="1111" target="ryuji" timeInStage="0">
+            <case stage="6" id="1111">
+                <condition role="target" character="ryuji" />
+                <condition role="self" timeInStage="0" />
                 <state img="custom:#-relieved">O-Oh. Um... I-I'm really glad to hear that!</state>
             </case>
-            <case stage="7" id="1113" timeInStage="0-2" priority="100">
+            <case stage="7" id="1113" priority="100">
+                <condition role="self" timeInStage="0-2" />
                 <state img="custom:#-mast-3">T-This feels really awkward, but... i-if ~name~ can do it, I should be able to do this too, right...?</state>
                 <state img="custom:#-mast-1">I-If ~name~ can do this... then so can I, right? &lt;br&gt; {mono}[Master... please don't push yourself to match others...]</state>
                 <state img="custom:#-mast-1">&lt;i&gt;(For some reason, this feels a bit less embarrassing than I expected... is it because of ~name~?)&lt;/i&gt;</state>
                 <state img="custom:#-mast-3">{mono}[Master, why do you keep looking at ~name~?] {!reset}&lt;br&gt; O-Oh, I didn't realize I was... U-Uhm, sorry about that...</state>
                 <state img="custom:#-mast-3">&lt;i&gt;(~name~ is also forfeiting, right? Like a buddy... b-but that seems like it'd be weird if I said it out loud...)&lt;/i&gt;</state>
             </case>
-            <case stage="7" id="1115" timeInStage="2-4" priority="100">
+            <case stage="7" id="1115" priority="100">
+                <condition role="self" timeInStage="2-4" />
                 <state img="custom:#-mast-2">~name~ looks like he's having fun, so... maybe I don't have to worry? &lt;br&gt; {mono}[I think you'll be fine, Master.]</state>
                 <state img="custom:#-shy">{mono}[Master, you keep glancing at ~name~. Is something wrong?] {!reset}&lt;br&gt; E-Eh? I-I was...? Sorry...</state>
                 <state img="custom:#-shy">{mono}[Master, why do you keep staring at ~name~ like that?] {!reset}&lt;br&gt; E-Eh? W-What are you talking about, I-I'm not staring... R-Right?</state>
                 <state img="custom:#-shy">{mono}[Master, I've detected a blush response that's slightly stronger than average. Is it because you're looking at ~name~?] {!reset}&lt;br&gt; H-Hey! Y-You didn't need to tell them &lt;i&gt;that&lt;/i&gt;...</state>
                 <state img="custom:#-mast-3">{mono}[Master, I think you should try to relax and let go of your lingering anxieties. Perhaps you should follow ~name~'s example?]</state>
             </case>
-            <case stage="7" id="1117" timeInStage="4-" priority="100">
+            <case stage="7" id="1117" priority="100">
+                <condition role="self" timeInStage="4-" />
                 <state img="custom:#-mast-4">This... really is more fun with more people, isn't it...? &lt;br&gt; {mono}[E-Eh? Master?]</state>
                 <state img="custom:#-mast-4">&lt;i&gt;(I wonder if ~name~ would mind if I looked a little?)&lt;/i&gt;</state>
                 <state img="custom:#-mast-2">{mono}[Master, are you okay? You've been staring at ~name~.] {!reset}&lt;br&gt; O-Oh, sorry about that... I was just... uhm...</state>
@@ -3073,15 +3612,18 @@
         </trigger>
 
         <trigger id="male_finished_masturbating">
-            <case stage="0-4" id="1130" target="9s">
-                <state img="#-.png">W-Wait, shouldn't there be...</state>
-                <state img="#-.png">W-Wait, where is the... uhm...</state>
+            <case stage="0-4" id="1130">
+                <condition role="target" character="9s" />
+                <state>W-Wait, shouldn't there be...</state>
+                <state>W-Wait, where is the... uhm...</state>
             </case>
-            <case stage="6-8" id="1131" target="9s">
+            <case stage="6-8" id="1131">
+                <condition role="target" character="9s" />
                 <state img="custom:#-shocked">W-Wait, shouldn't there be...</state>
                 <state img="custom:#-shocked">W-Wait, where is the... uhm...</state>
             </case>
-            <case stage="5" id="1133" target="9s">
+            <case stage="5" id="1133">
+                <condition role="target" character="9s" />
                 <state img="custom:#-shocked">{mono}W-Wait, shouldn't there be...</state>
                 <state img="custom:#-shocked">{mono}W-Wait, where is the... uhm...</state>
             </case>
@@ -3109,15 +3651,18 @@
         </trigger>
 
         <trigger id="female_must_masturbate">
-            <case stage="0-4" id="1144" target="elizabeth">
+            <case stage="0-4" id="1144">
+                <condition role="target" character="elizabeth" />
                 <state img="#-shocked.png">W-Wait, is that... &lt;i&gt;you?&lt;/i&gt;</state>
                 <state img="#-shocked.png">W-Wait... how is this... how are there &lt;i&gt;two&lt;/i&gt; of you?!</state>
             </case>
-            <case stage="6-8" id="1145" target="elizabeth">
+            <case stage="6-8" id="1145">
+                <condition role="target" character="elizabeth" />
                 <state img="custom:#-shocked">W-Wait, is that... &lt;i&gt;you?&lt;/i&gt;</state>
                 <state img="custom:#-shocked">W-Wait... how is this... how are there &lt;i&gt;two&lt;/i&gt; of you?!</state>
             </case>
-            <case stage="5" id="1147" target="elizabeth">
+            <case stage="5" id="1147">
+                <condition role="target" character="elizabeth" />
                 <state img="custom:#-shocked">{mono}W-Wait, is that... &lt;i&gt;you?&lt;/i&gt;</state>
                 <state img="custom:#-shocked">{mono}W-Wait... how is this... how are there &lt;i&gt;two&lt;/i&gt; of you?!</state>
             </case>
@@ -3150,20 +3695,36 @@
         </trigger>
 
         <trigger id="female_start_masturbating">
-            <case stage="0-4" id="1160" target="elizabeth">
+            <case stage="0-4" id="1160">
+                <condition role="target" character="elizabeth" />
                 <state img="#-shocked.png">I-It really is two of her...</state>
                 <state img="#-shocked.png">I-I'm not just... imagining things, right...?</state>
             </case>
-            <case stage="6-8" id="1161" target="elizabeth">
+            <case stage="6-8" id="1161">
+                <condition role="target" character="elizabeth" />
                 <state img="custom:#-shocked">I-It really is two of her...</state>
                 <state img="custom:#-shocked">I-I'm not just... imagining things, right...?</state>
             </case>
-            <case stage="0-4" id="1163" target="uravity">
+            <case stage="0-4" id="1163">
+                <condition role="target" character="uravity" />
                 <state img="#-shy.png">S-So... you're just going to float like that? ...W-What does it feel like?</state>
             </case>
-            <case stage="5" id="1165" target="elizabeth">
+            <case stage="5" id="1165">
+                <condition role="target" character="elizabeth" />
                 <state img="custom:#-shocked">{mono}I-It really is two of her...</state>
                 <state img="custom:#-shocked">{mono}I-I'm not just... imagining things, right...?</state>
+            </case>
+            <case stage="0-4" id="1254">
+                <condition role="target" character="nami" />
+                <state img="#-thinking-2.png">...T-This might sound a bit weird, a-and I dunno why, but... uhm, it feels like there's graphical animation code that could be optimized &lt;i&gt;somewhere&lt;/i&gt;...</state>
+            </case>
+            <case stage="5" id="1255">
+                <condition role="target" character="nami" />
+                <state img="custom:#-thinking-2">{mono} Hrm... was it just me, or did my user interface framerate just drop for a split-second...? Maybe I should ask Master to optimize my graphics code...</state>
+            </case>
+            <case stage="6-8" id="1256">
+                <condition role="target" character="nami" />
+                <state img="custom:#-embarassed">I don't know why, but... I suddenly feel like I need to optimize graphics code somewhere. &lt;br&gt; {mono} I see, Master. Should I put it on a to-do list?</state>
             </case>
             <case stage="0-2" id="1167">
                 <state img="#-shocked.png">S-She's really...!</state>
@@ -3193,21 +3754,24 @@
         </trigger>
 
         <trigger id="female_masturbating">
-            <case stage="7" id="1177" timeInStage="0-2" priority="100">
+            <case stage="7" id="1177" priority="100">
+                <condition role="self" timeInStage="0-2" />
                 <state img="custom:#-shy-disappointed">T-This feels really weird... &lt;br&gt; {mono}[But at least you're not alone, right, Master?]</state>
                 <state img="custom:#-shy-disappointed">I-It feels really strange, doing this together with someone, but... i-it's a bit less embarrassing, I-I think...</state>
                 <state img="custom:#-mast-3">I-If ~name~ can do this in front of everyone... t-then maybe I shouldn't worry, either... &lt;br&gt; {mono}[Please don't push yourself, Master...]</state>
                 <state img="custom:#-mast-3">&lt;i&gt;(~name~ is also... forfeiting with me, right? I'm still too embarrassed to look, though...)&lt;/i&gt;</state>
                 <state img="custom:#-shy-disappointed">&lt;i&gt;(T-This feels a bit overwhelming, but... at least ~name~ is stuck here with me...)&lt;/i&gt;</state>
             </case>
-            <case stage="7" id="1179" timeInStage="2-4" priority="100">
+            <case stage="7" id="1179" priority="100">
+                <condition role="self" timeInStage="2-4" />
                 <state img="custom:#-mast-3">&lt;i&gt;(~name~ is also forfeiting, but... it'd be kind of awkward to look, wouldn't it...?)&lt;/i&gt;</state>
                 <state img="custom:#-mast-3">{mono}[Master, why do you keep intermittently glancing at ~name~?] {!reset}&lt;br&gt; E-Eh? W-Wait, no, I-- I'm just trying to not be awkward, t-that's all... Sorry...</state>
                 <state img="custom:#-shy-disappointed">This isn't so embarrassing, I guess... especially since ~name~ is also doing it...</state>
                 <state img="custom:#-shy-disappointed">~name~ seems to be having fun, so... maybe I should just stop worrying...</state>
                 <state img="custom:#-mast-3">{mono}[Master, are you particularly interested in ~name~?] {!reset}&lt;br&gt; Eh?! N-No, I just happened to be looking in her direction... Really!</state>
             </case>
-            <case stage="7" id="1181" timeInStage="4-" priority="100">
+            <case stage="7" id="1181" priority="100">
+                <condition role="self" timeInStage="4-" />
                 <state img="custom:#-mast-4">&lt;i&gt;(I-It's pretty hard not to notice ~name~... would she mind if I peeked a bit?)&lt;/i&gt;</state>
                 <state img="custom:#-mast-2">&lt;i&gt;(I wonder if ~name~ is watching me...?)&lt;/i&gt;</state>
                 <state img="custom:#-mast-4">I guess... this really can be fun with more people... &lt;br&gt; {mono}[Uhm, Master?]</state>
@@ -3245,7 +3809,8 @@
         </trigger>
 
         <trigger id="female_finished_masturbating">
-            <case stage="0-4" id="1193" target="mahiru">
+            <case stage="0-4" id="1193">
+                <condition role="target" character="mahiru" />
                 <state img="#-shocked.png">W-Wow, Mahiru, I... wasn't expecting you to... take &lt;i&gt;pictures&lt;/i&gt; while... um...</state>
             </case>
             <case stage="0-4" id="1195">
@@ -3272,13 +3837,16 @@
         </trigger>
 
         <trigger id="must_masturbate_first">
-            <case stage="6" id="1203" alsoPlaying="chiaki" alsoPlayingStage="10">
+            <case stage="6" id="1203">
+                <condition role="other" character="chiaki" stage="10" />
                 <state img="custom:#-sad">I-I know, but... still...</state>
             </case>
-            <case stage="6" id="1204" alsoPlaying="chiaki" alsoPlayingStage="7-8">
+            <case stage="6" id="1204">
+                <condition role="other" character="chiaki" stage="7-8" />
                 <state img="custom:#-sad">I-I know, but... still...</state>
             </case>
-            <case stage="6" id="1206" alsoPlaying="pit">
+            <case stage="6" id="1206">
+                <condition role="other" character="pit" />
                 <state img="custom:#-sad">I-I understand... I'm really sorry about that, Pit...</state>
             </case>
             <case stage="6" id="1208">
@@ -3289,13 +3857,16 @@
         </trigger>
 
         <trigger id="must_masturbate">
-            <case stage="6" id="1210" alsoPlaying="chiaki" alsoPlayingStage="10">
+            <case stage="6" id="1210">
+                <condition role="other" character="chiaki" stage="10" />
                 <state img="custom:#-sad">I-I know, but... still...</state>
             </case>
-            <case stage="6" id="1211" alsoPlaying="chiaki" alsoPlayingStage="7-8">
+            <case stage="6" id="1211">
+                <condition role="other" character="chiaki" stage="7-8" />
                 <state img="custom:#-sad">I-I know, but... still...</state>
             </case>
-            <case stage="6" id="1213" alsoPlaying="pit">
+            <case stage="6" id="1213">
+                <condition role="other" character="pit" />
                 <state img="custom:#-sad">I-I understand... I'm really sorry about that, Pit...</state>
             </case>
             <case stage="6" id="1215">
@@ -3306,16 +3877,20 @@
         </trigger>
 
         <trigger id="start_masturbating">
-            <case stage="6" id="1217" alsoPlaying="chiaki" alsoPlayingStage="10">
+            <case stage="6" id="1217">
+                <condition role="other" character="chiaki" stage="10" />
                 <state img="custom:#-chiaki-hug-2" marker="temperature=0">O-Oh... t-this feels... uhm... really nice, ehehe... T-Thank you, Chiaki...</state>
             </case>
-            <case stage="6" id="1218" alsoPlaying="chiaki" alsoPlayingStage="8">
+            <case stage="6" id="1218">
+                <condition role="other" character="chiaki" stage="8" />
                 <state img="custom:#-chiaki-hug-2" marker="temperature=0">O-Oh... t-this feels... uhm... really nice, ehehe... T-Thank you, Chiaki...</state>
             </case>
-            <case stage="6" id="1220" alsoPlaying="chiaki" alsoPlayingStage="7">
+            <case stage="6" id="1220">
+                <condition role="other" character="chiaki" stage="7" />
                 <state img="custom:#-chiaki-hug-1" marker="temperature=0">O-Oh... t-this feels... uhm... really nice, ehehe... T-Thank you, Chiaki...</state>
             </case>
-            <case stage="6" id="1222" alsoPlaying="pit">
+            <case stage="6" id="1222">
+                <condition role="other" character="pit" />
                 <state img="custom:#-start" marker="temperature=0">I-It feels a bit uncomfortable, but... w-well, I've already revealed my big secret. After that... t-this shouldn't be much different... right?</state>
             </case>
             <case stage="6" id="1224">
@@ -3324,19 +3899,22 @@
         </trigger>
 
         <trigger id="masturbating">
-            <case stage="7" id="1226" timeInStage="0-1" priority="100">
+            <case stage="7" id="1226" priority="100">
+                <condition role="self" timeInStage="0-1" />
                 <state img="custom:#-mast-3">O-Okay... I-I can do this... &lt;br&gt; {mono}[Master... please just take as long as you need...]</state>
                 <state img="custom:#-mast-3">A-Am I really going to do this in front of everyone...? &lt;br&gt; {mono}[Master, are you okay? Take your time...]</state>
                 <state img="custom:#-mast-3">I should just... pretend there's no one else here... &lt;br&gt; {mono}[Are you okay, Master...?]</state>
                 <state img="custom:#-mast-1">{mono}[Master, you're beginning to show a stress response. If you're uncomfortable, please take your time...]</state>
             </case>
-            <case stage="7" id="1228" timeInStage="1-2" priority="100">
+            <case stage="7" id="1228" priority="100">
+                <condition role="self" timeInStage="1-2" />
                 <state img="custom:#-mast-1">T-This feels weird... &lt;br&gt; {mono}[Are you feeling more comfortable with this, Master?]</state>
                 <state img="custom:#-shy">Okay... I think I'm... starting to warm up... &lt;br&gt; {mono}[That's good to hear, Master!]</state>
                 <state img="custom:#-mast-3">T-This is... really weird, but... okay, I can do this... &lt;br&gt; {mono}[Master, it should get easier with time... I think.]</state>
                 <state img="custom:#-shy-disappointed">T-This still feels really strange, but... m-maybe I can get used to this... &lt;br&gt; {mono}[Just take your time, Master...]</state>
             </case>
-            <case stage="7" id="1230" timeInStage="2-4" priority="100">
+            <case stage="7" id="1230" priority="100">
+                <condition role="self" timeInStage="2-4" />
                 <state img="custom:#-shy">This... isn't as overwhelming as I thought it would be...</state>
                 <state img="custom:#-shy">{mono}[Master, you're moving more fluidly now. Are you getting used to this?] {!reset}&lt;br&gt;  Y-Yeah, this isn't as nerve-wracking anymore...</state>
                 <state img="custom:#-mast-3">{mono}[Master, since you seem to be more comfortable with public masturbation, would you like me to search for techniques and guidance online?] {!reset}&lt;br&gt;  W-Wait, nonono, I-I can do this on my own, you don't need to go that far...</state>
@@ -3346,7 +3924,8 @@
                 <state img="custom:#-mast-4">This... isn't as embarrassing as it was at first, is it... &lt;br&gt; {mono}[I think you're just becoming more comfortable here, Master.]</state>
                 <state img="custom:#-mast-4">I should just... stop worrying so much, shouldn't I...?</state>
             </case>
-            <case stage="7" id="1232" timeInStage="4-" priority="100">
+            <case stage="7" id="1232" priority="100">
+                <condition role="self" timeInStage="4-" />
                 <state img="custom:#-happy">I-I never thought I'd ever do something like this in front of other people, but... this is, uhm, surprisingly fun...</state>
                 <state img="custom:#-happy">{mono}[Master... now that I think about it, I believe this is the happiest you've been in a while.] {!reset}&lt;br&gt;  Yeah... this is surprisingly fun!</state>
                 <state img="custom:#-mast-2">Mmm! &lt;i&gt;(W-Wow... I'm really getting into this, aren't I...?)&lt;/i&gt;</state>
@@ -3383,7 +3962,8 @@
         </trigger>
 
         <trigger id="finished_masturbating">
-            <case stage="8" id="1240" alsoPlaying="pit">
+            <case stage="8" id="1240">
+                <condition role="other" character="pit" />
                 <state img="custom:#-embarassed">I-I... uhm... wow. T-Thanks, Pit?</state>
             </case>
             <case stage="8" id="1242">
@@ -3410,6 +3990,14 @@
         <trigger id="game_over_defeat">
             <case stage="8" id="1250">
                 <state img="custom:#-happy">This was... really, really fun! Maybe I should come back...?</state>
+            </case>
+        </trigger>
+
+        <trigger id="global">
+            <case stage="6">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="n" />
+                <state img="custom:#-embarassed">I-I'm doing this willingly, but... uhm, I underestimated how... daunting everything would be. &lt;br&gt; {mono} I suppose you could say our mental model suddenly diverged from reality.</state>
             </case>
         </trigger>
 

@@ -322,6 +322,11 @@ namespace SPNATI_Character_Editor.Activities
 			if (_activeSituation == null) { return; }
 
 			//TODO: If _showExisting is true, we already created the response and checked for matches up front, so save it off and retrieve here
+			if (_activeSituation.LinkedCase == null)
+			{
+				MessageBox.Show("Something's wrong with this situation. You may want to talk to " + _activeCharacter.Metadata.Writer + " about getting it resolved.", "Create Response", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
 			_response = _activeSituation.LinkedCase.CreateResponse(_activeCharacter, _character);
 
 			if (_response == null || _response.Tag == null)

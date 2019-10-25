@@ -234,7 +234,7 @@ namespace SPNATI_Character_Editor
 			property = new PropertyDefinition("Src", "Source", typeof(string), 0);
 			Definitions.Instance.Add(property);
 
-			property = new PropertyDefinition("Alpha", "Opacity", typeof(float), 30);
+			property = new PropertyDefinition("Opacity", "Opacity", typeof(float), 30);
 			Definitions.Instance.Add(property);
 
 			property = new PropertyDefinition("ScaleX", "Scale (X)", typeof(float), 40);

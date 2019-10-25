@@ -59,8 +59,6 @@ function startMasturbation (player) {
         [[players[player].gender == eGender.MALE ? MALE_START_MASTURBATING : FEMALE_START_MASTURBATING,
          OPPONENT_START_MASTURBATING]]
     );
-    
-    saveAllTranscriptEntries();
 
     players[player].setForfeitTimer();
     
@@ -130,7 +128,6 @@ function tickForfeitTimers () {
                 /* show them cumming */
                 players[i].updateBehaviour(PLAYER_FINISHING_MASTURBATING);
                 players[i].commitBehaviourUpdate();
-                updateGameVisual(i);
                 
                 saveSingleTranscriptEntry(i);
 
@@ -197,9 +194,9 @@ function tickForfeitTimers () {
             players[playerToShow].forfeit[0],
             others_tags
         );
-        
-        saveAllTranscriptEntries();
-	}
+    } else if (gamePhase == eGamePhase.DEAL && (ANIM_TIME > 0 || GAME_DELAY > 0)) {
+        updateAllBehaviours(null, null, DEALING_CARDS);
+    }
 	
 	return false;
 }
@@ -222,8 +219,6 @@ function finishMasturbation (player) {
          OPPONENT_FINISHED_MASTURBATING]]
     );
 	players[player].timeInStage = 0;
-    
-    saveAllTranscriptEntries();
     
 	if (AUTO_FADE && globalSavedTableVisibility !== undefined) {
 		forceTableVisibility(globalSavedTableVisibility);

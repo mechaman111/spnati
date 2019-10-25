@@ -120,7 +120,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				if (_line.OneShotId == 0)
 				{
-					_line.OneShotId = ++_character.Behavior.MaxStageId;
+					_line.OneShotId = ++_character.Behavior.MaxStateId;
 				}
 			}
 			else

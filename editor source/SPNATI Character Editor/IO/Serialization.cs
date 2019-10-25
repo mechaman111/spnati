@@ -515,7 +515,7 @@ namespace SPNATI_Character_Editor
 			return ImportXml<CharacterEditorData>(filename);
 		}
 
-		private static CollectibleData ImportCollectibles(string folderName)
+		public static CollectibleData ImportCollectibles(string folderName)
 		{
 			string folder = Config.GetRootDirectory(folderName);
 			if (!Directory.Exists(folder))

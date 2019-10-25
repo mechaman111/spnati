@@ -32,7 +32,7 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public int MaxCaseId { get; set; }
 		[XmlIgnore]
-		public int MaxStageId { get; set; }
+		public int MaxStateId { get; set; }
 
 		/// <summary>
 		/// Only used when serializing or deserializing XML. Cases that share text across stages are split into separate cases per stage here
@@ -498,6 +498,18 @@ namespace SPNATI_Character_Editor
 				Dictionary<int, HashSet<int>> setStages = new Dictionary<int, HashSet<int>>();
 				foreach (Case triggerCase in trigger.Cases)
 				{
+					if (triggerCase.Stages.Count == 0)
+					{
+						//default to all possible stages if none is supplied
+						for (int i = 0; i < _character.Layers + Clothing.ExtraStages; i++)
+						{
+							if (TriggerDatabase.UsedInStage(trigger.Id, _character, i))
+							{
+								triggerCase.Stages.Add(i);
+							}
+						}
+					}
+
 					int id;
 					int.TryParse(triggerCase.StageId, out id);
 					if (string.IsNullOrEmpty(triggerCase.StageId))
@@ -583,6 +595,16 @@ namespace SPNATI_Character_Editor
 						foreach (DialogueLine line in triggerCase.Lines)
 						{
 							DialogueLine defaultLine = line.Copy();
+
+							if (defaultLine.OneShotId > 0)
+							{
+								MaxStateId = Math.Max(MaxStateId, defaultLine.OneShotId);
+							}
+							if (!string.IsNullOrEmpty(defaultLine.Gender))
+							{
+								_character.Metadata.CrossGender = true;
+							}
+
 							int code = line.GetHashCodeWithoutImage();
 							bool foundMatch = false;
 
@@ -684,7 +706,7 @@ namespace SPNATI_Character_Editor
 
 						if (defaultLine.OneShotId > 0)
 						{
-							MaxStageId = Math.Max(MaxStageId, defaultLine.OneShotId);
+							MaxStateId = Math.Max(MaxStateId, defaultLine.OneShotId);
 						}
 
 						int lineHash = defaultLine.GetHashCodeWithoutImage();
@@ -1008,7 +1030,7 @@ namespace SPNATI_Character_Editor
 			{
 				if (line.OneShotId > 0)
 				{
-					line.OneShotId = ++MaxStageId;
+					line.OneShotId = ++MaxStateId;
 				}
 			}
 			if (addToWorking)

@@ -570,7 +570,7 @@ namespace Desktop.Skinning
 						{
 							continue;
 						}
-						if (value.StartsWith(_typingString))
+						if (value.ToLower().StartsWith(_typingString))
 						{
 							found = true;
 							SelectedIndex = i;
@@ -581,6 +581,11 @@ namespace Desktop.Skinning
 				if (found)
 				{
 					e.Handled = true;
+				}
+				else if (_typingString.Length > 1)
+				{
+					_typingString = "";
+					OnKeyPress(e);
 				}
 			}
 			base.OnKeyPress(e);
@@ -610,13 +615,22 @@ namespace Desktop.Skinning
 
 			_listBox.MouseClick += new MouseEventHandler(_listBox_MouseClick);
 			_listBox.MouseMove += new MouseEventHandler(_listBox_MouseMove);
+			_listBox.PreviewKeyDown += _listBox_PreviewKeyDown;
 			_listBox.KeyDown += _listBox_KeyDown;
+		}
+
+		private void _listBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+		{
+			if (e.KeyCode == Keys.Tab)
+			{
+				e.IsInputKey = true;
+			}
 		}
 
 		#region ListBox events
 		private void _listBox_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter)
+			if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter | e.KeyCode == Keys.Tab)
 			{
 				SelectedIndex = _listBox.SelectedIndex;
 
@@ -626,6 +640,15 @@ namespace Desktop.Skinning
 				}
 
 				HideDropDown();
+
+				if (e.KeyCode == Keys.Tab)
+				{
+					Control next = GetNextControl(this, !e.Modifiers.HasFlag(Keys.Shift));
+					if (next != null)
+					{
+						next.Focus();
+					}
+				}
 			}
 		}
 

@@ -2,28 +2,21 @@
 <metadata>
     <owner>nagisa</owner>
     <noteworthy>
-        <case name="Masturbation play" priority="Noteworthy" min="7" max="7">
-            <description>Nagisa starts reciting a play while masturbating</description>
-            <trigger tag="start_masturbating">
-                <state img="starting.png">&lt;i&gt;Let me tell you a touching story about a girl who lives all alone. Nothing dies, and nothing is born in the world.&lt;/i&gt;</state>
-            </trigger>
+        <case name="Masturbation play" id="11" priority="Noteworthy" min="7" max="7">
+            <description>Nagisa starts reciting a play while masturbating. In a future update, she will only do this if she loses first.</description>
         </case>
         <case name="End masturbation play" priority="Noteworthy" min="9" max="9">
             <description>Nagisa has finished masturbating, which consisted of reciting lines to a play</description>
-            <trigger tag="finished_masturbating" notSaidMarker="nagisa_finished_1">
+            <trigger tag="finished_masturbating" stage="9" notSaidMarker="nagisa_finished_1">
                 <condition count="0" filter="nagisa_valentine" />
                 <state img="embarrassed.png" marker="nagisa_finished_1">Oh! Forget you saw anything today, please? Please, please?</state>
             </trigger>
         </case>
-        <case name="Random food word" priority="FYI" min="5" max="5">
+        <case name="Random food word" id="12" priority="FYI" min="5" max="5">
             <description>Nagisa motivates herself to do difficult things by calling out the name of a food that she's promising herself for later. If she does this, she'll set the nagisa_food_motivation marker.</description>
-            <trigger tag="stripping">
-                <state img="stripping.png" marker="nagisa_food_motivation">Anpan!</state>
-                <state img="stripping.png" marker="nagisa_food_motivation">Tonkatsu!</state>
-                <state img="stripping.png">Please don't be disappointed...</state>
-            </trigger>
         </case>
     </noteworthy>
+    <reviewed>true</reviewed>
     <hidden />
     <responses>
         <response id="5" opponent="chun-li" opponentId="7" />
@@ -37,16 +30,19 @@
         <label id="4" label="sets nagisa_finished_2" folder="" />
         <label id="7" label="" folder="Maid Cafe" />
         <label id="8" label="" folder="Maid Cafe" />
+        <label id="9" label="" folder="Maid Cafe" />
+        <label id="10" label="" folder="Maid Cafe" />
     </labels>
     <prefixes>
         <prefix>epilogue</prefix>
         <prefix>collectible</prefix>
     </prefixes>
-    <nextId>8</nextId>
+    <nextId>12</nextId>
     <markers>
         <marker scope="Public" name="nagisa_asks_buffy_about_school">Nagisa and Buffy feel differently about high school.</marker>
         <marker scope="Public" name="nagisa_asks_zt_for_help">Nagisa asks Zone-tan if her hand is good. It isn't.</marker>
         <marker scope="Public" name="nagisa_considers_leaving">Nagisa mentions leaving but never goes through with it.</marker>
+        <marker scope="Public" name="nagisa_eighteen">Nagisa is eighteen.</marker>
         <marker scope="Private" name="nagisa_finished_1">This is Nagisa's first final stage line. It does not repeat.</marker>
         <marker scope="Private" name="nagisa_finished_2">This is Nagisa's second final stage line. It does not repeat.</marker>
         <marker scope="Public" name="nagisa_first_time_playing">Nagisa has never played strip poker before this game.</marker>
@@ -72,6 +68,7 @@
         <marker scope="Public" name="nagisa_meia_blue_hair">Meia and her short blue hair remind Nagisa of Tomoya, a boy who is a friend.</marker>
         <marker scope="Public" name="nagisa_mysterious_scar">Nagisa's father claims that she has a mysterious scar on her butt.</marker>
         <marker scope="Public" name="nagisa_pit_perfect_body">Defeated Nagisa asks Pit if he has a perfect body.</marker>
+        <marker scope="Public" name="nagisa_play">Nagisa sets this marker when she announces that she's going to recite a play for her forfeit.</marker>
         <marker scope="Public" name="nagisa_played_tomoyo_after">Nagisa claims to have played the Tomoyo After game.</marker>
         <marker scope="Public" name="nagisa_playing_with_boys">In the first round, Nagisa can announce that she didn't realize that boys would be playing too.</marker>
         <marker scope="Public" name="nagisa_rear">Nagisa has several opportunities to turn around and reveal her backside during the game. This marker allows her opponents to request that she do it again.</marker>

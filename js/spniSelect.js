@@ -145,7 +145,7 @@ var sourceSet = {};
 var creatorSet = {};
 
 /* page variables */
-var groupSelectScreen = 0;
+var groupSelectScreen = 0; /** testing = 1, released presets = 0 */
 var individualPage = 0;
 var groupPage = [0, 0];
 var chosenGender = -1;
@@ -930,6 +930,14 @@ function changeGroupStats (target) {
  * group select screen.
  ************************************************************/
 function selectGroup () {
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            'category': 'select',
+            'message': 'Loading group at screen '+groupSelectScreen+', page '+groupPage[groupSelectScreen],
+            'level': 'info'
+        });
+    }
+
     loadGroup(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]]);
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
@@ -945,7 +953,7 @@ function changeGroupPage (skip, page) {
 	if (skip) {
 		if (page == -1) {
 			/* go to first page */
-      groupPage[groupSelectScreen] = 0;
+            groupPage[groupSelectScreen] = 0;
 		} else if (page == 1) {
 			/* go to last page */
 			groupPage[groupSelectScreen] = selectableGroups[groupSelectScreen].length-1;
@@ -955,7 +963,20 @@ function changeGroupPage (skip, page) {
 		}
 	} else {
 		groupPage[groupSelectScreen] += page;
-	}
+    }
+    
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            'category': 'select',
+            'level': 'info',
+            'message': 'Going to ' + (groupSelectScreen ? 'testing' : 'preset') + ' table page ' + groupPage[groupSelectScreen] + ' / ' + (selectableGroups[groupSelectScreen].length-1),
+            'data': {
+                'skip': String(skip),
+                'page': String(page)
+            }
+        });
+    }
+
 	updateGroupSelectScreen();
     updateGroupCountStats();
 }

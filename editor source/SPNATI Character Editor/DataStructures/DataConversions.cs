@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -32,6 +33,10 @@ namespace SPNATI_Character_Editor
 			{
 				Convert5_1(character);
 				Convert5_2(character);
+			}
+			if (Config.VersionPredates(version, "v5.2.7"))
+			{
+				Convert5_2_7(character);
 			}
 		}
 
@@ -235,6 +240,29 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		private static void Convert5_2_7(Character character)
+		{
+			HashSet<int> usedOneShots = new HashSet<int>();
+			//de-duplicate oneshot IDs on lines too
+			foreach (Case workingCase in character.Behavior.GetWorkingCases())
+			{
+				foreach (DialogueLine line in workingCase.Lines)
+				{
+					if (line.OneShotId > 0)
+					{
+						if (usedOneShots.Contains(workingCase.OneShotId))
+						{
+							line.OneShotId = ++character.Behavior.MaxStateId;
+						}
+						else
+						{
+							usedOneShots.Add(workingCase.OneShotId);
+						}
+					}
+				}
+			}
+		}
+
 		/// <summary>
 		/// Converts a case to use TargetConditions where it previously used direct properties
 		/// </summary>
@@ -415,6 +443,63 @@ namespace SPNATI_Character_Editor
 					cond.TimeInStage = workingCase.AlsoPlayingTimeInStage;
 					workingCase.AlsoPlayingTimeInStage = null;
 				}
+			}
+
+			if (!string.IsNullOrEmpty(workingCase.TotalFemales))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Gender = "female";
+				filter.Count = workingCase.TotalFemales;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalFemales = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalMales))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Gender = "male";
+				filter.Count = workingCase.TotalMales;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalMales = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalExposed))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Status = "exposed";
+				filter.Count = workingCase.TotalExposed;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalExposed = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalNaked))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Status = "naked";
+				filter.Count = workingCase.TotalNaked;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalNaked = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalMasturbating))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Status = "masturbating";
+				filter.Count = workingCase.TotalMasturbating;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalMasturbating = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalFinished))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Status = "finished";
+				filter.Count = workingCase.TotalFinished;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalFinished = null;
+			}
+			if (!string.IsNullOrEmpty(workingCase.TotalPlaying))
+			{
+				TargetCondition filter = new TargetCondition();
+				filter.Status = "alive";
+				filter.Count = workingCase.TotalPlaying;
+				workingCase.Conditions.Add(filter);
+				workingCase.TotalPlaying = null;
 			}
 
 			int newPriority = workingCase.GetPriority();

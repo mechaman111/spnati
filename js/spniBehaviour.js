@@ -12,6 +12,8 @@ var SELECTED = "selected";
 var OPPONENT_SELECTED = "opponent_selected";
 var GAME_START = "game_start";
 
+var DEALING_CARDS = "dealing_cards";
+
 var SWAP_CARDS = "swap_cards";
 var ANY_HAND = "hand";
 var BAD_HAND = "bad_hand";
@@ -408,7 +410,7 @@ State.prototype.getPossibleImages = function (stage) {
             return $(this).text().replace('#', stage);
         }).get();
     } else {
-        return [ this.image.replace('#', stage) ];
+        return this.image ? [ this.image.replace('#', stage) ] : [];
     }
 }
 
@@ -1507,7 +1509,7 @@ Case.prototype.checkConditions = function (self, opp) {
     // filter counter targets
     if (!this.counters.every(function (ctr) {
         var matches = players.filter(function(p) {
-            return (ctr.role === undefined
+            return p && (ctr.role === undefined
                     || (ctr.role == "self" && p == self)
                     || (ctr.role == "target" && p == opp)
                     || (ctr.role == "opp" && p != self)
@@ -1875,6 +1877,7 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     }
 
     this.stateCommitted = true;
+    updateGameVisual(this.slot);
 }
 
 /************************************************************
@@ -1914,7 +1917,6 @@ function updateAllBehaviours (target, target_tags, other_tags) {
     
     updateAllVolatileBehaviours();
     commitAllBehaviourUpdates();
-    updateAllGameVisuals();
 }
 
 /************************************************************
@@ -1950,12 +1952,17 @@ function commitAllBehaviourUpdates () {
             p.labelOverridden = true;
         }
     });
-    
+
+    /* Record updated states only. */
+    var updatedPlayers = [];
     players.forEach(function (p) {
-        if (p !== humanPlayer) {
+        if (p !== humanPlayer && p.chosenState && !p.stateCommitted) {
             p.commitBehaviourUpdate();
+            updatedPlayers.push(p.slot);
         }
     });
+
+    saveTranscriptEntries(updatedPlayers);
 }
 
 /*

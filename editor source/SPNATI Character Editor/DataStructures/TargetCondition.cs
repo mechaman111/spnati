@@ -499,10 +499,6 @@ namespace SPNATI_Character_Editor
 				{
 					str += $" stage: {Stage}";
 				}
-				if (!string.IsNullOrEmpty(Status))
-				{
-					str += $" status: {Status.Replace("_", " ")}";
-				}
 				if (!string.IsNullOrEmpty(Hand))
 				{
 					str += $" hand {Hand}";

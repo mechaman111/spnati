@@ -109,7 +109,7 @@ namespace Desktop.CommonControls
 		{
 			Record = record;
 			lblName.Text = record.Name;
-			toolTip1.SetToolTip(lblName, record.Description);
+			toolTip1.SetToolTip(lblHelp.Visible ? lblHelp : lblName, record.Description);
 			EditControl = ctl;
 			ctl.ChangeLabel += EditControl_ChangeLabel;
 			EditControl.PropertyChanged += EditControl_PropertyChanged;
