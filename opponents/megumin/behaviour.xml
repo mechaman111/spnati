@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 5:24:22 PM on October 25, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 8:31:05 PM on October 25, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.6</version>
     <first>Megumin</first>
@@ -302,6 +302,11 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-8" oneShotId="39">
+                <condition role="other" character="nami" saidMarker="pirate" />
+                <condition role="other" character="revy" />
+                <state img="#-annoyed.png" marker="megumin_nami_pirate">It's hard to believe someone like you is actually a pirate. Revy looks much cooler and much tougher.</state>
+            </case>
             <case stage="0-8" oneShotId="21" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" alsoPlayingSayingMarker="sei_anal">
                 <state img="#-embarrassed.png">Y-you mean like in the butt?!? I thought that was just a joke when I heard about that!</state>
             </case>
@@ -311,8 +316,9 @@
             <case stage="0-8" id="26" oneShotId="4" alsoPlaying="d.va" alsoPlayingStage="0" totalRounds="5-" alsoPlayingSayingMarker="d.va_wager_set">
                 <state img="#-showoff.png" marker="megumin_wager_accept">That sounds like a dangerous bet... but I am no coward! I accept!</state>
             </case>
-            <case stage="0-8" alsoPlaying="jura" alsoPlayingStage="4-6">
+            <case stage="0-8">
                 <condition count="1" filter="amalia" />
+                <condition role="other" character="jura" stage="4-6" />
                 <state img="#-awkward.png">Are you not embarrassed dressing yourself up like some kind of little flower girl?</state>
             </case>
             <case stage="7">
@@ -429,7 +435,16 @@
                 <condition role="other" character="natsuki" saidMarker="natsuki_megumin_adventures" />
                 <state img="#-smug.png" marker="megumin_natsuki_adventures2">You said you make poetry earlier, right Natsuki? I suppose the adventuring life isn't for everyone, but poets can inspire adventurers! Or tell tales of their eploits!</state>
             </case>
-            <case stage="0-3" oneShotId="26" alsoPlaying="starfire">
+            <case stage="0-8" oneShotId="37">
+                <condition role="other" character="nami" notSaidMarker="pirate" />
+                <state img="#-annoyed.png" marker="megumin_nami_occupation">Nami, what exactly are you supposed to be anyways? Do you normally walk around with your gross cow boobs almost hanging out?</state>
+            </case>
+            <case stage="0-8" oneShotId="38">
+                <condition role="other" character="nami" saidMarker="pirate" />
+                <state img="#-annoyed.png" marker="megumin_nami_pirate">It's hard to believe someone like you is actually a pirate. I expected something cooler...</state>
+            </case>
+            <case stage="0-3" oneShotId="26">
+                <condition role="other" character="starfire" />
                 <state img="#-awkward.png">Is no one else going to question the fact that the girl in purple over there is flying?... No?...</state>
             </case>
             <case stage="0-8" oneShotId="5">
@@ -442,9 +457,33 @@
                 <test expr="~self.place~" cmp="&gt;" value="1" />
                 <state img="#-showoff.png">It seems you are in the lead ~leader~. Prepare for me to destroy you!</state>
             </case>
-            <case stage="0-8">
+            <case stage="0-8" oneShotId="45">
                 <condition role="other" character="jura" />
                 <state img="#-surprised.png" marker="megumin_JuraSpace">So, Jura right? Are you really from space?</state>
+            </case>
+            <case stage="0-8" oneShotId="40">
+                <condition role="other" character="sei" />
+                <state img="#-surprised.png" marker="megumin_sei_occupation">So, Sei, what was it you did again? You seem to be in exceptional shape, you must be some kind of adventurer, right?</state>
+            </case>
+            <case stage="0-8" oneShotId="41">
+                <condition role="other" character="cynthia" />
+                <state img="#-surprised.png" marker="megumin_cynthia_battle">Cynthia, you mentioned fighting and battle a few times, but you don't seem like much of a warrior. Are you adept at magic perhaps?</state>
+            </case>
+            <case stage="0-8" oneShotId="42">
+                <condition role="other" character="kazuma" />
+                <state img="#-embarrassed.png" marker="megumin_kazuma_hangout">It's been a while since we sat down and played a game together Kazuma. Although this isn't what I had in mind, it is rather nice to actually see you wanting to socialize.</state>
+            </case>
+            <case stage="0-8" oneShotId="43">
+                <condition role="other" character="kazuma" />
+                <state img="#-embarrassed.png" marker="megumin_kazuma_stripPoker">Kazuma, perhaps if I offered to play this again with you sometime, maybe I could convince you to be productive?... No what am I saying, ignore me!</state>
+            </case>
+            <case stage="0-8" oneShotId="44">
+                <condition role="other" character="revy" />
+                <state img="#-embarrassed.png" marker="megumin_revy_hangout">Hey, um, Revy? So what exactly do you do for fun? Maybe we could hang out sometime! I could show you some massive explosions!</state>
+            </case>
+            <case stage="0-8" oneShotId="46">
+                <condition role="other" character="chazz" />
+                <state img="#-smug.png" marker="megumin_chazz_bet">I bet I could beat you at any game, Chazz. Wanna make a bet? I bet I last longer than you in this game!</state>
             </case>
             <case stage="8" priority="15">
                 <condition count="0" status="not_lost_all" />
@@ -474,24 +513,26 @@
         </trigger>
 
         <trigger id="must_strip">
-            <case stage="0-7" alsoPlaying="streaming-chan" alsoPlayingStage="1-7" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingSayingMarker="megu_loli1">
+            <case stage="0-7">
+                <condition role="other" character="streaming-chan" stage="1-7" saidMarker="viewers&lt;4" sayingMarker="megu_loli1" />
                 <state img="#-defeated.png">just a kid... why does everyone keep calling me a kid... I'm 18 years old for Eris's sake...</state>
                 <state img="#-defeated.png">Call me a kid again and I'll vaporize you.</state>
             </case>
-            <case stage="0-7" alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingSayingMarker="megu_loli1">
+            <case stage="0-7">
+                <condition role="other" character="streaming-chan" stage="9" saidMarker="viewers&lt;4" sayingMarker="megu_loli1" />
                 <state img="#-defeated.png">I swear to Eris I'm going to blow you into another dimension.</state>
             </case>
-            <case stage="0-7" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSaidMarker="viewers&lt;4" alsoPlayingSayingMarker="megu_vore1">
+            <case stage="0-7">
+                <condition role="other" character="streaming-chan" stage="0-7" saidMarker="viewers&lt;4" sayingMarker="megu_vore1" />
                 <state img="#-defeated.png">What's wrong with my name?! Why do people keep saying there's something wrong with my name?!</state>
             </case>
-            <case stage="0-7" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingSayingMarker="megu_boobs1">
+            <case stage="0-7">
+                <condition role="other" character="streaming-chan" stage="0-7" saidMarker="viewers&gt;=4" sayingMarker="megu_boobs1" />
                 <state img="#-smug.png">Correct. And I always make sure to distribute them in a tactical and well thought out manner. Namely spending them all on explosion magic!</state>
             </case>
-            <case stage="0-7" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingSayingMarker="megu_demon1">
+            <case stage="0-7">
+                <condition role="other" character="streaming-chan" stage="0-7" saidMarker="viewers&gt;=4" sayingMarker="megu_demon1" />
                 <state img="#-showoff.png">I am much more powerful and magically attuned than any mere human. My red eyes and birthmark are proof of it! I won't show you the birthmark though...</state>
-            </case>
-            <case stage="0-7" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSaidMarker="viewers&gt;=4" alsoPlayingSayingMarker="megu_party1">
-                <state img="#-annoyed.png">I am not some cheap floozy!</state>
             </case>
             <case stage="1">
                 <condition role="other" character="akko" stage="0" />
@@ -512,6 +553,33 @@
             <case stage="3">
                 <condition role="other" character="mulan" stage="2-10" />
                 <state img="#-showoff.png">I can understand your confusion, Mulan. It binds a cursed seal placed by a powerful demon that my village captured!</state>
+            </case>
+            <case stage="0-7" priority="112">
+                <condition count="0" filter="yunyun" />
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" sayingMarker="megu_yunyun1" />
+                <state img="#-annoyed.png">I have no idea what you are talking about. I had no obligations to anyone important. No one worth remembering that is.</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" sayingMarker="megu_explosion1" />
+                <state img="#-smug.png">Of course! Explosion magic is a way of life! Just saying I like it is an understatement! It's the reason for my existence!</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" sayingMarker="megu_pantsu1" />
+                <state img="#-awkward.png">I-it's not like it's something I put &lt;i&gt;that&lt;/i&gt; much thought into... Definitely not trying to overcompensate. Nope.</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" sayingMarker="megu_spells1" />
+                <state img="#-showoff.png">If I were to cast a spell here, you all would likely die or be severely injured in the explosion!</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;4" sayingMarker="megu_kazuma1" />
+                <condition count="0" filter="kazuma" />
+                <state img="#-embarrassed.png">I mean, there may be someone I like... He's quite the reliable person despite being a bit scummy... He's a member of my party.</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;4" sayingMarker="megu_kazuma1" />
+                <condition count="1" filter="kazuma" />
+                <state img="#-embarrassed.png">I mean, there may be someone I like... But that's between me and him...</state>
             </case>
             <case stage="1">
                 <condition role="other" character="starfire" saying="You are far too cute to consider... ah! Did you come here to learn about physicality, Megumin? " />
@@ -601,6 +669,10 @@
                 <condition role="other" character="sei" />
                 <state img="#-awkward.png" marker="megumin_sei_goDown">Go down?... I'm not sure I follow what you mean. Is it some kind of bonding activity, like a girl's night out?</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="nami" />
+                <state img="#-defeated.png" marker="megumin_nami_age">&lt;i&gt;GAH!&lt;/i&gt; L-Little girl! She said I'm a little girl... Why do I have to keep telling people? I'm 18! 18!</state>
+            </case>
             <case stage="0-7">
                 <condition role="self" consecutiveLosses="2" />
                 <state img="#-fearful.png">Twice in a row?! Impossible! How could I lose?!</state>
@@ -674,37 +746,57 @@
         <trigger id="stripping">
             <case stage="0-7">
                 <condition role="other" character="streaming-chan" stage="0-7" saidMarker="megu_boobs1" sayingMarker="megu_boobs2" />
-                <state img="#-fearful.png">Wait! Is that something you can do?!</state>
+                <state img="#-strip.png">Wait! Is that something you can do?!</state>
             </case>
-            <case stage="0-7" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSaidMarker="megu_demon1" alsoPlayingSayingMarker="megu_demon2">
-                <state img="#-smug.png">I don't know what this genetic modification is, but I have Crimson Demon blood coursing through my veins!</state>
+            <case stage="0-7">
+                <condition role="other" character="streaming-chan" stage="0-7" saidMarker="megu_demon1" sayingMarker="megu_demon2" />
+                <state img="#-strip.png">I don't know what this genetic modification is, but I have Crimson Demon blood coursing through my veins!</state>
             </case>
-            <case stage="0-7" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSaidMarker="megu_kazuma1" alsoPlayingSayingMarker="megu_kazuma2">
-                <state img="#-embarrassed.png">Y-yes, well. He is certainly a great ally and he isn't half bad... He may be irredeemable but he is quite reliable when it counts...</state>
+            <case stage="0-7">
+                <condition role="other" character="streaming-chan" stage="0-7" saidMarker="megu_kazuma1" sayingMarker="megu_kazuma2" />
+                <state img="#-strip.png">Wait how did they know his name?! I didn't say it did I?!</state>
             </case>
-            <case stage="0-7" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSaidMarker="megu_pantsu1" alsoPlayingSayingMarker="megu_pantsu2">
-                <state img="#-fearful.png">What?! They can see them?!</state>
+            <case stage="0-7">
+                <condition role="other" character="streaming-chan" stage="0-7" saidMarker="megu_pantsu1" sayingMarker="megu_pantsu2" />
+                <state img="#-strip.png">What?! They can see them?!</state>
             </case>
-            <case stage="0-7" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSaidMarker="megu_spells1" alsoPlayingSayingMarker="megu_spells2">
-                <state img="#-showoff.png">Anything that isn't explosion magic is beneath me! I don't waste my time on anything that isn't the wondrous art of explosion!</state>
+            <case stage="0-7">
+                <condition role="other" character="streaming-chan" stage="0-7" saidMarker="megu_spells1" sayingMarker="megu_spells2" />
+                <state img="#-strip.png">Anything that isn't explosion magic is beneath me! I don't waste my time on anything that isn't the wondrous art of explosion!</state>
             </case>
             <case stage="0">
                 <condition role="other" character="mulan" stage="0-1" />
-                <state img="#-smug.png">Fufufu... I can't blame you for noticing my powerful and intimidating aura, Ping.</state>
+                <state img="#-strip.png">Fufufu... I can't blame you for noticing my powerful and intimidating aura, Ping.</state>
             </case>
             <case stage="0">
                 <condition role="other" character="mulan" stage="2-10" />
-                <state img="#-smug.png">Fufufu... I can't blame you for noticing my powerful and intimidating aura, Mulan.</state>
+                <state img="#-strip.png">Fufufu... I can't blame you for noticing my powerful and intimidating aura, Mulan.</state>
             </case>
             <case stage="0-7">
                 <condition count="1" filter="streaming-chan" />
                 <condition role="other" character="futaba" />
-                <state img="#-showoff.png">That's because I &lt;i&gt;AM&lt;/i&gt; a wizard. An Arch Wizard to be exact and a master of explosion magic!</state>
+                <state img="#-strip.png">That's because I &lt;i&gt;AM&lt;/i&gt; a wizard. An Arch Wizard to be exact and a master of explosion magic!</state>
             </case>
             <case stage="0-7">
                 <condition count="1" filter="streaming-chan" />
                 <condition role="other" character="natsuki" />
-                <state img="#-surprised.png">Yeah what Natsuki said!</state>
+                <state img="#-strip.png">Yeah what Natsuki said!</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="megu_explosion1" sayingMarker="megu_explosion2" />
+                <state img="#-strip.png">What?! No of course not! My explosion magic is beautiful! My body tingles with excitement every time I cast it! It is the most wonderful feeling in the world!</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="megu_loli1" sayingMarker="megu_loli2" />
+                <state img="#-strip.png">I may be small but I can easily blow anyone away!</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="megu_party1" sayingMarker="megu_party2" />
+                <state img="#-strip.png">Neither! My answer is neither! How do these invisible people know so much about me?!</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="megu_yunyun1" sayingMarker="megu_yunyun2" />
+                <state img="#-strip.png">I'm the better wizard! Me! What do you mean by &lt;i&gt;real magic&lt;/i&gt;?! She is some useless no one with fat cow boobs!</state>
             </case>
             <case stage="1">
                 <condition role="other" character="sei" />
@@ -784,6 +876,14 @@
                 <condition role="other" character="sei" />
                 <state img="#-strip.png" marker="megumin_sei_crusader">Believe me... I know... We have a Crusader in our party who's a massive pervert.</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="nami" />
+                <state img="#-strip.png">This is no costume! I am an Arch Wizard! I am a powerful master of explosion magic! I have slain thousands of monsters!</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="nami" />
+                <state img="#-strip.png">Yes, she did in fact... But don't go around telling people that!</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <state img="#-strip.png" marker="firstever">Kazuma kept saying this was a game for ‘mature’ people only. &lt;i&gt;I'll show him who's mature...&lt;/i&gt;</state>
             </case>
@@ -826,19 +926,47 @@
                 <condition count="1" status="naked" />
                 <state img="#-stripped.png" marker="megmin_challenge_answer">I-I suppose I can't lie about this and be honorable... The most I've done is flirting and maybe holding hands... I don't know what to imagine my first time being like, but I do hope it's with someone special...</state>
             </case>
-            <case stage="1-8" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSaidMarker="megu_boobs2" alsoPlayingSayingMarker="megu_boobs3">
-                <state img="#-embarrassed.png">What kind of question is that? Why would it not have hair? Wait why are we even talking about this!</state>
+            <case stage="1-8">
+                <condition role="other" character="streaming-chan" stage="0-7" saidMarker="megu_boobs2" sayingMarker="megu_boobs3" />
+                <state img="#-stripped.png">What kind of question is that? Why would it not have hair? Wait why are we even talking about this!</state>
             </case>
-            <case stage="1-8" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSaidMarker="megu_spells2" alsoPlayingSayingMarker="megu_spells3">
-                <state img="#-annoyed.png">I could cast explosion right now and prove it but in such close proximity to each other we'd all likely die.</state>
+            <case stage="1-8">
+                <condition role="other" character="streaming-chan" stage="0-7" saidMarker="megu_spells2" sayingMarker="megu_spells3" />
+                <state img="#-stripped.png">I could cast explosion right now and prove it but in such close proximity to each other we'd all likely die.</state>
             </case>
-            <case stage="1-8" alsoPlaying="akko">
+            <case stage="1-8">
                 <condition count="1" filter="streaming-chan" />
-                <state img="#-awkward.png">What show?! Are you crazy?</state>
+                <condition role="other" character="akko" />
+                <state img="#-stripped.png">What show?! Are you crazy?</state>
             </case>
-            <case stage="1-8" alsoPlaying="coco">
+            <case stage="1-8">
                 <condition count="1" filter="streaming-chan" />
-                <state img="#-embarrassed.png">Wh-what?... I mean... No one's ever said that about me before...</state>
+                <condition role="other" character="coco" />
+                <state img="#-stripped.png">Wh-what?... I mean... No one's ever said that about me before...</state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="megu_demon2" sayingMarker="megu_demon3" />
+                <state img="#-stripped.png">N-no! I'm perfectly normal! Well, we do have that birthmark on our butt... but don't think I'm gonna show it to you!</state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="megu_explosion2" sayingMarker="megu_explosion3" />
+                <state img="#-stripped.png">I already told you, if I cast it here we would all be seriously hurt. I'm not joking! Although... casting it does feel amazing...</state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="megu_kazuma2" sayingMarker="megu_kazuma3" />
+                <state img="#-stripped.png">I-I'm not showing off for anyone! This is just a fun adult game for adults! And I'm an adult!</state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="megu_loli2" sayingMarker="megu_loli3" />
+                <state img="#-stripped.png">What the heck?! What's that supposed to mean?!</state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="megu_pantsu2" sayingMarker="megu_pantsu3" />
+                <state img="#-stripped.png">S-sexy?...</state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="megu_spells2" sayingMarker="megu_spells3" />
+                <state img="#-stripped.png">After this game I could always step outside and blow you up...</state>
             </case>
             <case stage="8">
                 <condition role="other" character="futaba" />
@@ -850,9 +978,19 @@
                 <condition role="self" saidMarker="megumin_learnShave" />
                 <state img="#-stripped.png">I've never heard of having to shave down there before, alright?!</state>
             </case>
+            <case stage="8">
+                <condition role="other" character="nami" />
+                <condition role="self" notSaidMarker="megumin_learnShave" />
+                <state img="#-stripped.png">I keep telling you all that, but no one listens!</state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="nami" />
+                <condition role="self" saidMarker="megumin_learnShave" />
+                <state img="#-stripped.png">Wait, which is it?! Are you supposed to shave or not?!</state>
+            </case>
             <case stage="7-8">
                 <condition role="other" character="kazuma" />
-                <state img="#-embarrassed.png">S-see Kazuma?! I can show off too!</state>
+                <state img="#-stripped.png">S-see Kazuma?! I can show off too!</state>
             </case>
             <case stage="1">
                 <condition role="other" character="natsuki" />
@@ -864,7 +1002,7 @@
             </case>
             <case stage="6">
                 <condition role="other" character="natsuki" />
-                <state img="#-embarrassed.png">Yes, those all sound really good right now...</state>
+                <state img="#-stripped.png">Yes, those all sound really good right now...</state>
             </case>
             <case stage="2">
                 <condition role="other" character="futaba" />
@@ -921,6 +1059,10 @@
             <case stage="8">
                 <condition role="other" character="sei" />
                 <state img="#-stripped.png">I-I don't know what those are, but if you think they are essential for every woman to know I may take you up on that.</state>
+            </case>
+            <case stage="7" id="38">
+                <condition role="other" character="nami" />
+                <state img="#-stripped.png">You wanna go?! Huh?! I'll take you on right now! Let me at her! I'll blow those giant fake boobs right off her!</state>
             </case>
             <case stage="7-8" oneShotId="7" priority="10">
                 <condition count="0" status="exposed" role="opp" />
@@ -1080,7 +1222,7 @@
             <case stage="0-10">
                 <condition role="target" character="starfire" />
                 <condition role="self" notSaidMarker="megumin_starfire_curious" />
-                <state>So what exactly are you, Starfire?</state>
+                <state img="#-surprised.png">So what exactly are you, Starfire?</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="elesa" />
@@ -1285,6 +1427,10 @@
                 <state img="#-showoff.png">It appears you've been disarmed. A dangerous position to be in during a competition!</state>
                 <state img="#-showoff.png">Those seemed neat but they probably can't compare to my explosion magic! It's probably best you got rid of them!</state>
                 <state img="#-smug.png">Luckily I still have my staff!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nami" stage="3" />
+                <state img="#-fearful.png">Wait, &lt;i&gt;YOU'RE&lt;/i&gt; a pirate?! Seriously?! You look nothing like a pirate!</state>
             </case>
             <case stage="0-10">
                 <state img="#-surprised.png">Was that a magic charm?</state>
@@ -1519,6 +1665,14 @@
                 <state img="#-embarrassed.png" marker="megumin_natsuki_flustered">W-wha?... I'm not quite sure how to answer that...</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="sei" stage="6" />
+                <state marker="megumin_sei_abs">Your abs are &lt;i&gt;almost&lt;/i&gt; as impressive as Darkness's! Keep working on them and you may be able to compete with her!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="meia" stage="3" />
+                <state>You have quite the impressive muscles! Darkness might be a tad stronger, but you look like you could give her a hard time!</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-awkward.png">You almost seemed eager. Are you secretly into this?! Jeez, not another one...</state>
                 <state img="#-awkward.png">I will hold a silent prayer for your dignity.</state>
                 <state img="#-horny.png">I’d h-hate to be in your shoes...</state>
@@ -1540,7 +1694,8 @@
             <case stage="0-10" target="chazz" targetStage="6">
                 <state img="#-awkward.png">Why does everyone's magic here have to do with removing clothes...?</state>
             </case>
-            <case stage="0-10" filter="muscular">
+            <case stage="0-10">
+                <condition filter="muscular" role="target" />
                 <state img="#-horny.png">You must work out as much as Darkness, &lt;i&gt;at least&lt;/i&gt;, with muscles like that.</state>
                 <state img="#-smug.png">I bet you could handle an explosion with muscles like that! Want to test it?</state>
                 <state img="#-horny.png">I bet you would do a good job with carrying me after I cast explosion... Too bad that job is taken.</state>
