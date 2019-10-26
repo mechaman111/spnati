@@ -297,7 +297,7 @@ namespace SPNATI_Character_Editor
 				return false;
 			}
 			return FilterTag == other.FilterTag &&
-				Count == other.Count &&
+				(Count ?? "") == (other.Count ?? "") &&
 				Status == other.Status &&
 				Gender == other.Gender &&
 				Hand == other.Hand &&
@@ -312,7 +312,7 @@ namespace SPNATI_Character_Editor
 				SayingMarker == other.SayingMarker &&
 				Saying == other.Saying &&
 				ConsecutiveLosses == other.ConsecutiveLosses &&
-				Variable == other.Variable;
+				(Variable ?? "") == (other.Variable ?? "");
 		}
 
 		public override int GetHashCode()

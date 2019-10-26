@@ -36,6 +36,7 @@ namespace SPNATI_Character_Editor
 
 		public override void ApplyMacro(List<string> values)
 		{
+			RemoveHandlers();
 			if (values.Count >= 4)
 			{
 				string count = values[0];
@@ -50,7 +51,14 @@ namespace SPNATI_Character_Editor
 				{
 					_filter.Gender = gender;
 				}
-				_filter.FilterTag = tag;
+				if (string.IsNullOrEmpty(tag))
+				{
+					_filter.FilterTag = null;
+				}
+				else
+				{
+					_filter.FilterTag = tag;
+				}
 				SetCount(count);
 
 				_filter.Status = status;
@@ -78,7 +86,8 @@ namespace SPNATI_Character_Editor
 
 			ToggleCollapsed(!_filter.HasAdvancedConditions);
 			tableAdvanced.Data = null;
-			tableAdvanced.Data = _filter;
+			OnBoundData();
+			AddHandlers();
 		}
 
 		public override void BuildMacro(List<string> values)
@@ -191,6 +200,7 @@ namespace SPNATI_Character_Editor
 			valFrom.TextChanged += DataValueChanged;
 			valTo.TextChanged += DataValueChanged;
 			txtVariable.TextChanged += DataValueChanged;
+			chkNot.CheckedChanged += DataValueChanged;
 		}
 
 		protected override void RemoveHandlers()
@@ -200,6 +210,7 @@ namespace SPNATI_Character_Editor
 			valFrom.TextChanged -= DataValueChanged;
 			valTo.TextChanged -= DataValueChanged;
 			txtVariable.TextChanged -= DataValueChanged;
+			chkNot.CheckedChanged -= DataValueChanged;
 		}
 
 		private void UpdateRecord(object sender, RecordEventArgs e)
@@ -209,6 +220,7 @@ namespace SPNATI_Character_Editor
 			{
 				pnlRange.Visible = false;
 				_countAvailable = false;
+				pnlNot.Visible = false;
 				pnlCharacter.Visible = false;
 				pnlVariable.Visible = false;
 			}
@@ -216,6 +228,7 @@ namespace SPNATI_Character_Editor
 			{
 				pnlCharacter.Visible = type.CanSpecifyCharacter;
 				_countAvailable = pnlRange.Visible = pnlVariable.Visible = type.CanSpecifyRange;
+				pnlNot.Visible = !_countAvailable;
 			}
 			string key = type?.Key ?? "";
 			switch (key)
@@ -244,7 +257,8 @@ namespace SPNATI_Character_Editor
 
 		private void RecCharacter_RecordChanged(object sender, RecordEventArgs e)
 		{
-			pnlRange.Visible = pnlVariable.Visible = _countAvailable && string.IsNullOrEmpty(recCharacter.RecordKey);
+			pnlRange.Visible = pnlVariable.Visible = _countAvailable;
+			pnlNot.Visible = !pnlRange.Visible;
 		}
 
 		private void CharacterChanged(object sender, RecordEventArgs e)
@@ -274,7 +288,7 @@ namespace SPNATI_Character_Editor
 			}
 			else
 			{
-				_filter.Count = "";
+				_filter.Count = chkNot.Checked ? "0" : "";
 				_filter.Variable = null;
 			}
 			if (type.CanSpecifyCharacter)
@@ -344,8 +358,9 @@ namespace SPNATI_Character_Editor
 			else
 			{
 				valTo.Value = valFrom.Value;
-				valTo.Text = valTo.Value.ToString();
+				valTo.Text = valFrom.Text;
 			}
+			chkNot.Checked = valFrom.Text == "0" && (valTo.Text == "" || valTo.Text == "0");
 		}
 
 		private string GetCount()

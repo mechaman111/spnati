@@ -284,7 +284,7 @@ namespace SPNATI_Character_Editor
 				!string.IsNullOrEmpty(workingCase.TargetStartingLayers) ||
 				!string.IsNullOrEmpty(workingCase.TargetTimeInStage))
 			{
-				TargetCondition cond = GetCondition(workingCase, "target");
+				TargetCondition cond = GetCondition(workingCase, "target", workingCase.Target);
 
 				if (!string.IsNullOrEmpty(workingCase.Target))
 				{
@@ -352,13 +352,13 @@ namespace SPNATI_Character_Editor
 				TriggerDefinition trigger = TriggerDatabase.GetTrigger(workingCase.Tag);
 				if (trigger != null && trigger.HasTarget)
 				{
-					TargetCondition cond = GetCondition(workingCase, "target");
+					TargetCondition cond = GetCondition(workingCase, "target", null);
 					cond.ConsecutiveLosses = workingCase.ConsecutiveLosses;
 					workingCase.ConsecutiveLosses = null;
 				}
 				else
 				{
-					TargetCondition cond = GetCondition(workingCase, "self");
+					TargetCondition cond = GetCondition(workingCase, "self", null);
 					cond.ConsecutiveLosses = workingCase.ConsecutiveLosses;
 					workingCase.ConsecutiveLosses = null;
 				}
@@ -369,7 +369,7 @@ namespace SPNATI_Character_Editor
 				!string.IsNullOrEmpty(workingCase.NotSaidMarker) ||
 				!string.IsNullOrEmpty(workingCase.TimeInStage))
 			{
-				TargetCondition cond = GetCondition(workingCase, "self");
+				TargetCondition cond = GetCondition(workingCase, "self", null);
 				if (!string.IsNullOrEmpty(workingCase.HasHand))
 				{
 					cond.Hand = workingCase.HasHand;
@@ -401,7 +401,7 @@ namespace SPNATI_Character_Editor
 				!string.IsNullOrEmpty(workingCase.AlsoPlayingSaying) ||
 				!string.IsNullOrEmpty(workingCase.AlsoPlayingTimeInStage))
 			{
-				TargetCondition cond = GetCondition(workingCase, "other");
+				TargetCondition cond = GetCondition(workingCase, "other", workingCase.AlsoPlaying);
 
 				if (!string.IsNullOrEmpty(workingCase.AlsoPlaying))
 				{
@@ -509,13 +509,14 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private static TargetCondition GetCondition(Case workingCase, string role)
+		private static TargetCondition GetCondition(Case workingCase, string role, string character)
 		{
-			TargetCondition cond = workingCase.Conditions.Find(c => c.Role == role);
+			TargetCondition cond = workingCase.Conditions.Find(c => c.Role == role && (c.Character == character || string.IsNullOrEmpty(character)));
 			if (cond == null)
 			{
 				cond = new TargetCondition();
 				cond.Role = role;
+				cond.Character = character;
 				workingCase.Conditions.Add(cond);
 			}
 			return cond;

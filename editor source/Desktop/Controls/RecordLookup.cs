@@ -111,6 +111,27 @@ namespace Desktop
 			}
 		}
 
+		/// <summary>
+		/// Replaces a recent record with another, if it exists
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="record"></param>
+		public static void ReplaceRecent<T>(T record) where T : IRecord
+		{
+			List<IRecord> records;
+			if (_recentRecords.TryGetValue(typeof(T), out records))
+			{
+				for (int i = 0; i < records.Count; i++)
+				{
+					if (records[i].Key == record.Key)
+					{
+						records[i] = record;
+						break;
+					}
+				}
+			}
+		}
+
 		public static void AddToRecent(Type type, IRecord record)
 		{
 			List<IRecord> records;
