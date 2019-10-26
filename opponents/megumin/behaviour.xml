@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 2:24:46 PM on October 26, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 6:03:18 PM on October 26, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.6</version>
     <first>Megumin</first>
@@ -123,6 +123,10 @@
             <case stage="0-7" oneShotId="1" alsoPlaying="cynthia">
                 <state img="#-showoff.png">I'm going to destroy you with this, Cynthia!</state>
                 <state img="#-showoff.png">Cynthia, your confidence just makes me want to defeat you even more. Prepare to face my fury this round!</state>
+            </case>
+            <case stage="0-8" oneShotId="56">
+                <condition role="other" character="natsuki" />
+                <state img="#-smug.png">Fufufu... Natsuki, I'm sorry to say you won't be beating me this round!</state>
             </case>
             <case stage="0-6" consecutiveLosses="2-3">
                 <state img="#-showoff.png">Finally! A powerful hand! With this, my days of losing to you all are over!</state>
@@ -282,6 +286,7 @@
                 <state img="#-smug.png">Guuh... I mean, Haha! Yes! Truly this is a hand only one with power such as mine could draw!...</state>
                 <state img="#-annoyed.png">Dealer, if you continue to toy with me I may have to show you my explosion first-hand!</state>
                 <state img="#-fearful.png">What the heck!!??</state>
+                <state img="#-defeated.png">I'd rather fight a Beginner's Bane than have to use this hand...</state>
             </case>
             <case stage="5">
                 <state img="#-fearful.png">AAaaAAH! N-no! It can't be!</state>
@@ -302,6 +307,11 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-8" oneShotId="53" totalRounds="1-2">
+                <condition role="other" character="starfire" />
+                <condition role="other" character="kazuma" />
+                <state img="#-smug.png" marker="megumin_starfire_weirdName">Kazuma, Kazuma! See! This Kori-something girl's name is &lt;i&gt;much&lt;/i&gt; weirder than mine! Er... not that I'm saying my name is weird! It isn't!</state>
+            </case>
             <case stage="0-8" oneShotId="39">
                 <condition role="other" character="nami" saidMarker="pirate" />
                 <condition role="other" character="revy" />
@@ -312,13 +322,16 @@
                 <condition role="other" character="natsuki" stage="4-8" />
                 <state img="#-surprised.png" marker="megumin_natsuki_braless">I'm not sure I understand what you mean Natsuki. Why would it be distracting?</state>
             </case>
-            <case stage="0-8" oneShotId="21" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" alsoPlayingSayingMarker="sei_anal">
+            <case stage="0-8" oneShotId="21">
+                <condition role="other" character="sei" stage="5-8" timeInStage="3" sayingMarker="sei_anal" />
                 <state img="#-embarrassed.png">Y-you mean like in the butt?!? I thought that was just a joke when I heard about that!</state>
             </case>
-            <case stage="0-8" id="10" oneShotId="22" alsoPlaying="juri" alsoPlayingStage="4" alsoPlayingTimeInStage="0-" alsoPlayingSayingMarker="butt">
+            <case stage="0-8" id="10" oneShotId="22">
+                <condition role="other" character="juri" stage="4" timeInStage="0-" sayingMarker="butt" />
                 <state img="#-embarrassed.png">What are you doing?! You're presenting yourself like a wild animal!</state>
             </case>
-            <case stage="0-8" id="26" oneShotId="4" alsoPlaying="d.va" alsoPlayingStage="0" totalRounds="5-" alsoPlayingSayingMarker="d.va_wager_set">
+            <case stage="0-8" id="26" oneShotId="4" totalRounds="5-">
+                <condition role="other" character="d.va" stage="0" sayingMarker="d.va_wager_set" />
                 <state img="#-showoff.png" marker="megumin_wager_accept">That sounds like a dangerous bet... but I am no coward! I accept!</state>
             </case>
             <case stage="7">
@@ -353,10 +366,12 @@
             <case stage="0-8" oneShotId="24">
                 <condition role="other" character="chazz" stage="0-1" />
                 <state img="#-showoff.png">I must say I like your outfit Chazz, it reminds me of home. You could use an eye patch or hat though.</state>
+                <state img="#-showoff.png">This Chazz guy has decent taste in clothing. It reminds me of my home village back in Belzerg! You could probably use an eye patch or hat though.</state>
             </case>
             <case stage="0-8" totalRounds="1-">
                 <condition role="other" character="dust" saying="Anyone else think Megumin sounds a little unhinged?" />
                 <state img="#-annoyed.png">What do you mean?! You better not start calling me crazy explosion girl, or I swear I'll blow you up right here!</state>
+                <state img="#-defeated.png">Say that again, and you might not walk out of here in one piece...</state>
             </case>
             <case stage="0-8" oneShotId="36" totalRounds="1-">
                 <condition role="other" character="natsuki" saidMarker="natsuki_megumin_adventures" />
@@ -366,10 +381,26 @@
                 <condition role="other" character="natsuki" />
                 <state img="#-smug.png" marker="megumin_natsuki_adventurer">So, Natsuki, are you an adventurer? What do you do in your free time?</state>
             </case>
+            <case stage="0-2" oneShotId="26" totalRounds="1-2">
+                <condition role="other" character="starfire" />
+                <state img="#-awkward.png">Is no one else going to question the fact that the girl in purple over there is flying?... No?...</state>
+                <state img="#-awkward.png">Am I the only one seeing the floating girl over there? The one in purple?...</state>
+                <state img="#-awkward.png">Am I seeing things, or is that girl Starfire floating?</state>
+            </case>
+            <case stage="0-8" oneShotId="49" totalRounds="2-">
+                <condition role="other" character="elesa" />
+                <state img="#-smug.png" marker="megumin_elesa_pointers">Your clothes are &lt;i&gt;okay&lt;/i&gt;, Elesa, but they need more demonic flair. I can give you pointers sometime if you want.</state>
+            </case>
+            <case stage="0-8" oneShotId="52">
+                <condition role="other" character="starfire" />
+                <condition count="0" filter="kazuma" />
+                <state img="#-smug.png" marker="megumin_starfire_weirdName">People keep saying my name is weird, but I think yours takes the cake Kori... Koriant... Korir... I'm just going to call you Starfire...</state>
+            </case>
             <case stage="2-7" oneShotId="25">
                 <condition role="other" character="kazuma" />
                 <condition count="3-4" gender="female" />
                 <state img="#-annoyed.png">&lt;i&gt;(Of course Kazuma would be playing a game like this with a bunch of women...)&lt;/i&gt;</state>
+                <state img="#-annoyed.png">&lt;i&gt;(It's no surprise that Kazuma is playing this kind of game with this many women... Typical...)&lt;/i&gt;</state>
             </case>
             <case stage="0-8" priority="103">
                 <condition role="self" saidMarker="meguminQA_DarkSecrets" />
@@ -452,8 +483,9 @@
                 <condition role="other" character="jessie" sayingMarker="JessieQA_Smokers" />
                 <state img="#-awkward.png" marker="meguminQA_Smokers">It smells nothing like the sweet smell of my explosions. Unlike them it's rather irritating to the nose...</state>
             </case>
-            <case stage="0-8" id="11" alsoPlaying="revy" alsoPlayingSayingMarker="killing">
+            <case stage="0-8" id="11">
                 <condition count="0" notSaidMarker="killing" />
+                <condition role="other" character="revy" sayingMarker="killing" />
                 <state img="#-showoff.png" marker="megumin_mass_murder">Fufufufu... I have killed thousands of minions of the demon king! Some even begged for mercy but I showed none! I would explode a portion of their numbers each day, leaving them in constant fear of the next blast!</state>
             </case>
             <case stage="0-8" alsoPlaying="jura" notSaidMarker="megumin_JuraBabies">
@@ -466,10 +498,6 @@
             <case stage="0-8" oneShotId="38">
                 <condition role="other" character="nami" saidMarker="pirate" />
                 <state img="#-annoyed.png" marker="megumin_nami_pirate">It's hard to believe someone like you is actually a pirate. I expected something cooler...</state>
-            </case>
-            <case stage="0-3" oneShotId="26">
-                <condition role="other" character="starfire" />
-                <state img="#-awkward.png">Is no one else going to question the fact that the girl in purple over there is flying?... No?...</state>
             </case>
             <case stage="0-8" oneShotId="35">
                 <condition count="1-5" role="opp" var="leader" />
@@ -505,6 +533,51 @@
                 <condition role="other" character="chazz" />
                 <state img="#-smug.png" marker="megumin_chazz_bet">I bet I could beat you at any game, Chazz. Wanna make a bet? I bet I last longer than you in this game!</state>
             </case>
+            <case stage="0-8" oneShotId="47">
+                <condition role="other" character="shimakaze" />
+                <state img="#-awkward.png">That Shimikaze is rather... flighty...</state>
+                <state img="#-awkward.png">Shimikaze is a bit... all over the place...</state>
+                <state img="#-awkward.png">I don't think I've ever met someone so incapable of standing still, Shimikaze.</state>
+                <state img="#-awkward.png">You really have trouble focusing, it seems, Shimikaze.</state>
+            </case>
+            <case stage="0-8" oneShotId="48">
+                <condition role="other" character="shimakaze" />
+                <state img="#-smug.png" marker="megumin_shimikaze_likes">I feel like I can understand Shimikaze. She loves speed and I love explosions.</state>
+                <state img="#-smug.png" marker="megumin_shimikaze_likes">Speed and explosions, I think I can understand Shimikaze's obsession.</state>
+            </case>
+            <case stage="0-8" oneShotId="50">
+                <condition role="other" character="elesa" />
+                <state img="#-showoff.png" marker="megumin_elesa_contest">I think when it comes to a contest of clothing, I win hands down Elesa!</state>
+                <state img="#-showoff.png" marker="megumin_elesa_contest">If this were a contest of best outfit, I think I'd win no problem, Elesa!</state>
+                <state img="#-showoff.png" marker="megumin_elesa_contest">Your clothes are certainly interesting, Elesa, but if this were a contest of looks I think I'd win!</state>
+            </case>
+            <case stage="0-8" oneShotId="51">
+                <condition role="other" character="starfire" />
+                <state img="#-awkward.png" marker="megumin_starfire_enthusiasm">I can't decide whether I find your enthusiasm annoying, or appealing...</state>
+            </case>
+            <case stage="0-8" oneShotId="54">
+                <condition role="other" character="revy" />
+                <state img="#-showoff.png" marker="megumin_revy_jobOffer">H-Hey Revy! If you ever need a hand with blowing something up, let me know!</state>
+                <state img="#-showoff.png" marker="megumin_revy_jobOffer">I-If you ever need a hand blowing something up, Revy, I'm more than qualified.</state>
+            </case>
+            <case stage="0-8" oneShotId="55">
+                <condition role="other" character="guzma" />
+                <state img="#-showoff.png" marker="megumin_guzma_challenge">Hey Guzma! You think you're tough? I bet I could kick your butt any day!</state>
+                <state img="#-showoff.png" marker="megumin_guzma_challenge">Big bad Guzma huh? I bet I could beat you in a fight, easy!</state>
+            </case>
+            <case stage="0-8" oneShotId="57">
+                <condition role="other" character="jura" />
+                <state img="#-surprised.png" marker="megumin_jura_home">So, Jura, what's this Tarzaran place like, anyways?</state>
+                <state img="#-surprised.png" marker="megumin_jura_home">Jura, you said you were from... Tardaran was it?... What's it like there?</state>
+            </case>
+            <case stage="0-8" oneShotId="58">
+                <condition role="other" character="cynthia" />
+                <state img="#-surprised.png" marker="megumin_cynthia_age">Cynthia, how old are you? You don't seem that old, but you are very mature.</state>
+            </case>
+            <case stage="0-8" oneShotId="59">
+                <condition role="other" character="jessie" />
+                <state img="#-awkward.png">(&lt;i&gt;Jessie seems very mature, I should take notes. Maybe people will take me seriously if I act more like her.&lt;/i&gt;)</state>
+            </case>
             <case stage="8" priority="15">
                 <condition count="0" status="not_lost_all" />
                 <condition count="1" status="alive" role="opp" var="opponent" />
@@ -526,6 +599,7 @@
             </case>
             <case stage="0-8" oneShotId="12">
                 <state img="#-surprised.png">Is this that one game Kazuma mentioned where we all yell Yahtzee at some point...?</state>
+                <state img="#-surprised.png">Yahtzee! Er, is this not the game where you do that?</state>
             </case>
             <case stage="0-8" oneShotId="13">
                 <state img="#-annoyed.png">I wonder if I can convince Kazuma to go kill monsters with me after this...</state>
@@ -1273,14 +1347,17 @@
         </trigger>
 
         <trigger id="female_must_strip">
-            <case stage="0-10" target="akko" alsoPlaying="streaming-chan" alsoPlayingStage="0-7" alsoPlayingSayingMarker="akko_megu1">
+            <case stage="0-10">
+                <condition role="target" character="akko" />
+                <condition role="other" character="streaming-chan" stage="0-7" sayingMarker="akko_megu1" />
                 <state img="#-showoff.png">I use my magic to obliterate all that stands before me in an awesome display of explosive might!</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="palutena" stage="6" saying="That hurts, but at least it won't be a one-goddess act." />
                 <state img="#-smug.png">Indeed, as there were no goddesses here to begin with.</state>
             </case>
-            <case stage="0-10" id="18" target="nayru" targetStage="4" targetNotSaidMarker="null_possess">
+            <case stage="0-10" id="18">
+                <condition role="target" character="nayru" stage="4" notSaidMarker="null_possess" />
                 <state img="#-showoff.png">This dark presence! So cool!</state>
             </case>
             <case stage="0-10" target="palutena" targetStage="1">
@@ -1294,9 +1371,11 @@
                 <condition role="target" character="cynthia" stage="0" />
                 <state img="#-awkward.png">That outfit seems awfully warm anyways, I'm sure it will be a relief to at least take your jacket off.</state>
             </case>
-            <case stage="0-8 10">
+            <case stage="0-10">
                 <condition role="target" character="cynthia" stage="5" />
                 <state img="#-fearful.png">How bold! Wearing such adult underwear!</state>
+                <state img="#-fearful.png">Such confidence! Wearing such mature underwear!</state>
+                <state img="#-fearful.png">Such mature undergarments! I've been outclassed!</state>
             </case>
             <case stage="0-10" target="panty" targetStage="3">
                 <state img="#-annoyed.png">I'll never understand why you chose to wear such painful looking things...</state>
@@ -1304,6 +1383,7 @@
             <case stage="0-10">
                 <condition role="target" character="starfire" stage="0" />
                 <state img="#-annoyed.png">Don't get me wrong, the only thing I'm excited about is defeating another opponent!</state>
+                <state img="#-awkward.png">I'm not excited about that, I'm just glad to have bested another opponent!</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="jessie" stage="3" />
@@ -1330,6 +1410,10 @@
                 <condition role="target" character="wonder_woman" />
                 <condition role="self" notSaidMarker="megumin_wonderwoman_class" />
                 <state img="#-surprised.png" marker="megumin_wonderwoman_class">You seem like an adventurer, Diana, what would your class happen to be?</state>
+            </case>
+            <case stage="0-10">
+                <condition filter="non-human" role="target" />
+                <state img="#-surprised.png">(&lt;i&gt;I would never admit it, but I must say I'm curious what the rest of her looks like... I've never seen anything like her before.&lt;/i&gt;)</state>
             </case>
             <case stage="0-8 10" id="9" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="gen_position">
                 <state img="#-annoyed.png">What does she mean by position?...</state>
