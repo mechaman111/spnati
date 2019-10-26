@@ -334,7 +334,18 @@ namespace SPNATI_Character_Editor.Activities
 			if (_selectedData == null)
 				return;
 			Modified = true;
-			Case response = _selectedData.Case.CreateResponse(_selectedData.Character, _character);
+
+			Case caseToRespondTo = _selectedData.Case;
+
+			if (!string.IsNullOrEmpty(_selectedData.Case.Filter) && string.IsNullOrEmpty(_selectedData.Case.Target))
+			{
+				//If making a response to a line that has a filter but no target, assume they're targeting you directly
+				caseToRespondTo = _selectedData.Case.CopyConditions();
+				caseToRespondTo.Target = _character.FolderName;
+				caseToRespondTo.StageRange = _selectedData.Case.StageRange;
+			}
+
+			Case response = caseToRespondTo.CreateResponse(_selectedData.Character, _character);
 			if (response == null)
 				return;
 			ShowResponse(response, true);

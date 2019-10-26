@@ -105,7 +105,7 @@ namespace SPNATI_Character_Editor.Providers
 					list.Add(new FilterType(record.Key, record.Name, "Specific", "Looks at " + record.FirstName + "'s information if they are in the game")
 					{
 						CanSpecifyCharacter = false,
-						CanSpecifyRange = true,
+						CanSpecifyRange = false,
 						IsCharacter = true,
 					});
 				}

@@ -356,6 +356,7 @@ namespace SPNATI_Character_Editor.Activities
 						MessageBox.Show("Couldn't create a response based on this case's conditions.", "Make Response", MessageBoxButtons.OK, MessageBoxIcon.Error);
 						return;
 					}
+					DataConversions.ConvertCase5_2(response);
 					//see if there's a response already matching the conditions of this response and just reuse that if possible
 					existing = responder.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(response));
 					if (existing == null)

@@ -353,6 +353,8 @@ namespace SPNATI_Character_Editor
 				}
 			});
 
+			RecordLookup.ReplaceRecent(c);
+
 			return c;
 		}
 

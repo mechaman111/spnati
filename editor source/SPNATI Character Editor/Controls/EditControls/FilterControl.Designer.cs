@@ -46,12 +46,15 @@
 			this.skinnedLabel4 = new Desktop.Skinning.SkinnedLabel();
 			this.cmdExpand = new Desktop.Skinning.SkinnedIcon();
 			this.grpContainer = new Desktop.Skinning.SkinnedGroupBox();
+			this.pnlNot = new System.Windows.Forms.Panel();
+			this.chkNot = new Desktop.Skinning.SkinnedCheckBox();
 			this.pnlRange.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valTo)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrom)).BeginInit();
 			this.pnlCharacter.SuspendLayout();
 			this.pnlVariable.SuspendLayout();
 			this.grpContainer.SuspendLayout();
+			this.pnlNot.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// recWho
@@ -279,6 +282,7 @@
 			// grpContainer
 			// 
 			this.grpContainer.BackColor = System.Drawing.Color.White;
+			this.grpContainer.Controls.Add(this.pnlNot);
 			this.grpContainer.Controls.Add(this.cmdExpand);
 			this.grpContainer.Controls.Add(this.tableAdvanced);
 			this.grpContainer.Controls.Add(this.recWho);
@@ -297,6 +301,28 @@
 			this.grpContainer.TabIndex = 31;
 			this.grpContainer.TabStop = false;
 			// 
+			// pnlNot
+			// 
+			this.pnlNot.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlNot.Controls.Add(this.chkNot);
+			this.pnlNot.Location = new System.Drawing.Point(773, 1);
+			this.pnlNot.Margin = new System.Windows.Forms.Padding(0);
+			this.pnlNot.Name = "pnlNot";
+			this.pnlNot.Size = new System.Drawing.Size(48, 22);
+			this.pnlNot.TabIndex = 31;
+			this.pnlNot.Visible = false;
+			// 
+			// chkNot
+			// 
+			this.chkNot.AutoSize = true;
+			this.chkNot.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkNot.Location = new System.Drawing.Point(4, 3);
+			this.chkNot.Name = "chkNot";
+			this.chkNot.Size = new System.Drawing.Size(43, 17);
+			this.chkNot.TabIndex = 0;
+			this.chkNot.Text = "Not";
+			this.chkNot.UseVisualStyleBackColor = true;
+			// 
 			// FilterControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -314,6 +340,8 @@
 			this.pnlVariable.PerformLayout();
 			this.grpContainer.ResumeLayout(false);
 			this.grpContainer.PerformLayout();
+			this.pnlNot.ResumeLayout(false);
+			this.pnlNot.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -337,5 +365,7 @@
 		private Desktop.Skinning.SkinnedLabel skinnedLabel4;
 		private Desktop.Skinning.SkinnedIcon cmdExpand;
 		private Desktop.Skinning.SkinnedGroupBox grpContainer;
+		private System.Windows.Forms.Panel pnlNot;
+		private Desktop.Skinning.SkinnedCheckBox chkNot;
 	}
 }

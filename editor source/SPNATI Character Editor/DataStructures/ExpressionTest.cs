@@ -167,6 +167,10 @@ namespace SPNATI_Character_Editor
 					int replacePoint = Expression.IndexOf('.');
 					Expression = newTarget + Expression.Substring(replacePoint);
 				}
+				else if (Expression.StartsWith("~self."))
+				{
+					Expression = "~" + newTarget + Expression.Substring(5);
+				}
 				else
 				{
 					Expression = newTarget + "." + Expression;
