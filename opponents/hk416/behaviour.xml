@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 10:17:20 PM on October 26, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 12:35:49 AM on October 27, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>HK416</first>
@@ -63,6 +63,10 @@
                 <state img="#-question.png">HK416. Please remember this &lt;i&gt;extraordinary&lt;/i&gt; name. &lt;br&gt; ...Hm? I wasn't expecting to see you here, Sei.</state>
             </case>
             <case stage="0">
+                <condition role="other" character="pa-15" />
+                <state img="#-hmph.png" marker="pa-15_intro=1">HK416. Please remember this &lt;i&gt;extraordinary&lt;/i&gt; name. &lt;br&gt; ...Hm? Another T-Doll, I see... PA-15, was it?</state>
+            </case>
+            <case stage="0">
                 <state img="#-base.png">HK416. Please remember this &lt;i&gt;extraordinary&lt;/i&gt; name.</state>
             </case>
         </trigger>
@@ -76,6 +80,10 @@
                 <condition role="target" character="sei" />
                 <state img="#-idle.png">Oh? I wasn't expecting to see you here, Sei...</state>
             </case>
+            <case stage="0">
+                <condition role="target" character="pa-15" />
+                <state img="#-hmph.png" marker="pa-15_intro=2">I see I'm not the only T-Doll to have found this place... &lt;br&gt; So... your name is PA-15, is it?</state>
+            </case>
         </trigger>
 
         <trigger id="game_start">
@@ -87,6 +95,10 @@
             <case stage="0">
                 <condition role="other" character="rarity_eg" />
                 <state img="#-shocked.png">45? ...45, I know you can fucking hear me. What kind of-- what the hell? Are those &lt;i&gt;crystals?&lt;/i&gt;</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="pa-15" />
+                <state img="#-annoyed.png" marker="pa-15_intro=3">So I suppose UMP45 wants this to be a joint simulation, then... very well.</state>
             </case>
             <case stage="0">
                 <state img="#-disappointed.png">45? ...45, I know you can fucking hear me. What kind of simulation did you drop me into?</state>
@@ -197,6 +209,10 @@
                 <condition role="other" character="akko" />
                 <state img="#-guarded.png" marker="sei_drink">I'm aware the last time I drank was &lt;i&gt;troublesome&lt;/i&gt;, but if you're serious about this, Sei... I suppose a Beer wouldn't hurt-- No, on second thought, make that a Cobalt Velvet...</state>
             </case>
+            <case stage="0" oneShotId="11" totalRounds="0" priority="210">
+                <condition role="other" character="pa-15" />
+                <state img="#-hmph.png" marker="pa-15_noless=1">Regardless, I am HK416... and I &lt;i&gt;will not&lt;/i&gt; settle for anything less than victory. &lt;br&gt; Please remember this &lt;i&gt;extraordinary&lt;/i&gt; name.</state>
+            </case>
             <case stage="0" oneShotId="8" totalRounds="0" priority="200">
                 <condition role="other" character="sei" />
                 <state img="#-question.png" marker="sei_whoareyou">Come to think of it, though... Which Sei am I speaking to, right now? The T-Doll, or the human?</state>
@@ -212,6 +228,11 @@
                 <condition count="1-" filter="school_uniform" />
                 <test expr="~background.category~" cmp="!=" value="school" />
                 <state img="#-question.png" marker="rin_whyareyouhere=1">So, Rin... what brings you here in the first place? This place doesn't seem to be especially popular with students.</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="160">
+                <state img="#-hmph.png">Hmph. Regardless... I am HK416. Please remember this... &lt;i&gt;extraordinary&lt;/i&gt; name.</state>
+                <state img="#-hmph.png">Hmph... this should be trivial to complete. In any case, I am HK416. Please... remember this &lt;i&gt;extraordinary&lt;/i&gt; name.</state>
+                <state img="#-hmph.png">Hmph...this simulation appears to be trivial in any case. Regardless... I am HK416. Please, remember this &lt;i&gt;extraordinary&lt;/i&gt; name.</state>
             </case>
             <case stage="0-7">
                 <condition role="other" character="sei" stage="1" timeInStage="0" sayingMarker="drinks_anyone" />
@@ -238,11 +259,6 @@
                 <condition role="self" saidMarker="shimakaze_rtb==1" />
                 <condition role="other" character="shimakaze" />
                 <state img="#-guarded.png" marker="shimakaze_relatable=1">I'm only offering this because of our similar backgrounds, okay? It's... nice to know someone &lt;i&gt;relatable&lt;/i&gt;, here.</state>
-            </case>
-            <case stage="0" totalRounds="0">
-                <state img="#-hmph.png">Hmph. Regardless... I am HK416. Please remember this... &lt;i&gt;extraordinary&lt;/i&gt; name.</state>
-                <state img="#-hmph.png">Hmph... this should be trivial to complete. In any case, I am HK416. Please... remember this &lt;i&gt;extraordinary&lt;/i&gt; name.</state>
-                <state img="#-hmph.png">Hmph...this simulation appears to be trivial in any case. Regardless... I am HK416. Please, remember this &lt;i&gt;extraordinary&lt;/i&gt; name.</state>
             </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="clothing_damage==1" />
@@ -636,6 +652,26 @@
         </trigger>
 
         <trigger id="female_must_strip">
+            <case stage="0" totalRounds="0">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-headtilt.png" marker="pa-15_trying=1">Oh...? Losing on the very first round of the game? Are you even &lt;i&gt;trying,&lt;/i&gt; PA-15?</state>
+            </case>
+            <case stage="0" totalRounds="1-">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-headtilt.png" marker="pa-15_careless=1">Oh? How careless of you, PA-15. &lt;br&gt; If you're just going to keep being this foolish, then don't bother wasting my time here.</state>
+            </case>
+            <case stage="1-4" totalRounds="1-">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-disappointed.png" marker="pa-15_patience=1">As expected, overcoming this... tactical setback was just a matter of patience and planning.</state>
+            </case>
+            <case stage="5-7" totalRounds="1-">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-guarded.png" marker="pa-15_disadvantage=1">I'm... certainly operating at a significant tactical disadvantage, but... I just need to hold on...</state>
+            </case>
+            <case stage="8-9" totalRounds="1-">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-annoyed.png" marker="pa-15_satisfaction=1">&lt;i&gt;(I. Won't. Say. Anything. I refuse to give her that satisfaction...)&lt;/i&gt; &lt;br&gt; ...Hmph.</state>
+            </case>
             <case stage="0-9">
                 <condition role="target" character="chihiro" stage="5" />
                 <state img="#-headtilt.png">Oh, so you've returned.</state>
@@ -1603,6 +1639,18 @@
                 <state img="#-question.png" marker="uravity_protection=1">That uniform seems to offer very little in the way of armor. Or protection in general.</state>
                 <state img="#-question.png" marker="uravity_protection=2">No armor plating, no exoskeleton... how do you deal with gunfire at all?</state>
             </case>
+            <case stage="0-4">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-idle.png" marker="pa-15_paperbag=1">Though I'm sure &lt;i&gt;you&lt;/i&gt; couldn't care less, hm? Dolls like you couldn't plan or operate their way out of a paper bag.</state>
+            </case>
+            <case stage="5-7">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-guarded.png" marker="pa-15_professionalism=1">And no, I will not give you the satisfaction of... betraying my professionalism.</state>
+            </case>
+            <case stage="8-9">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-lookaway.png" marker="pa-15_moretolook=1">&lt;i&gt;(It's a shame there isn't more to look at yet, though... W-Wait, what am I thinking?)&lt;/i&gt;</state>
+            </case>
             <case stage="0-7">
                 <condition filter="future" role="target" />
                 <test expr="~clothing~" value="armor" />
@@ -1847,6 +1895,18 @@
         </trigger>
 
         <trigger id="female_must_masturbate">
+            <case stage="0-6">
+                <condition role="target" character="pa-15" />
+                <state img="#-satisfied2.png" marker="pa-15_failure_to_improvise=1">Well, so much for your ability to improvise, &lt;i&gt;ja&lt;/i&gt;?</state>
+            </case>
+            <case stage="7">
+                <condition role="target" character="pa-15" />
+                <state img="#-flustered.png" marker="pa-15_partial_victory=1">...I suppose I can at least count this as a partial victory... e-even if just barely. &lt;br&gt; &lt;i&gt;(Scheiße, this is humiliating... a-and certainly not {u}arousing{!reset} in any way...)&lt;/i&gt;</state>
+            </case>
+            <case stage="8-9">
+                <condition role="target" character="pa-15" />
+                <state img="#-annoyed.png" marker="pa-15_mutual_loss=1">So, we've both lost... I-I will admit that this is... &lt;i&gt;enjoyable&lt;/i&gt; in its own way, though...</state>
+            </case>
             <case stage="0-3">
                 <state img="#-question.png">You're going to masturbate in front of us? How embarassing.</state>
                 <state img="#-question.png">I suppose you'll have to masturbate, now. ...Hm. Embarassing. For you, that is.</state>
@@ -1871,6 +1931,14 @@
             <case stage="0-7">
                 <condition role="target" character="shimakaze" />
                 <state img="#-guarded.png" marker="shimakaze_rtb=1">With the amount of damage you've received... are you going to need help getting back to your base, Shimakaze?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="pa-15" />
+                <state img="#-flustered-tsun.png" marker="pa-15_stumbling=1">I... appreciated the challenge, however. It was... fun, trying to... erm. Strip you. &lt;br&gt; ...and I will concede that you're not &lt;i&gt;un-&lt;/i&gt;attractive...</state>
+            </case>
+            <case stage="8-9">
+                <condition role="target" character="pa-15" />
+                <state img="#-flustered-tsun.png" marker="pa-15_stumbling=1">A-And... well, I will concede that you're... erm, not &lt;i&gt;un-&lt;/i&gt;attractive...</state>
             </case>
             <case stage="0-3">
                 <state img="#-hmph.png">Well, whatever.</state>
@@ -1956,6 +2024,10 @@
 
         <trigger id="must_masturbate_first">
             <case stage="7">
+                <condition role="other" character="pa-15" />
+                <state img="#-angry.png" marker="pa-15_loss=1">&lt;i&gt;...Verdammte&lt;/i&gt; fucking cards! &lt;br&gt; ...Not a word, PA-15. Not. A. Fucking. Word.</state>
+            </case>
+            <case stage="7">
                 <state img="#-angry.png">&lt;i&gt;...Verdammte&lt;/i&gt; fucking cards!</state>
                 <state img="#-angry.png">...are you fucking kidding me?</state>
                 <state img="#-angry.png">Fucking... &lt;i&gt;aaaargh.&lt;/i&gt;</state>
@@ -1964,6 +2036,10 @@
 
         <trigger id="must_masturbate">
             <case stage="7">
+                <condition role="other" character="pa-15" />
+                <state img="#-angry.png" marker="pa-15_loss=1">&lt;i&gt;...Verdammte&lt;/i&gt; fucking cards! &lt;br&gt; ...Not a word, PA-15. Not. A. Fucking. Word.</state>
+            </case>
+            <case stage="7">
                 <state img="#-angry.png">&lt;i&gt;...Verdammte&lt;/i&gt; fucking cards!</state>
                 <state img="#-angry.png">...are you fucking kidding me?</state>
                 <state img="#-angry.png">Fucking... &lt;i&gt;aaaargh.&lt;/i&gt;</state>
@@ -1971,6 +2047,10 @@
         </trigger>
 
         <trigger id="start_masturbating">
+            <case stage="7">
+                <condition role="other" character="pa-15" />
+                <state img="#-starting.png" marker="pa-15_silence=1">...PA-15, if you &lt;i&gt;dare&lt;/i&gt; speak of this to anyone, I will personally wipe your mind and then gut your Core like a fish. And then do the same to UMP45.</state>
+            </case>
             <case stage="7">
                 <state img="#-starting.png">I swear, I'm going to kill UMP45 when I get out of here...</state>
                 <state img="#-starting.png">I'm going to fucking kill UMP45 when this is over... smug little...</state>
