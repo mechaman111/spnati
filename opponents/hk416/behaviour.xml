@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.7 at 5:20:41 AM on October 25, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 9:38:51 PM on October 26, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.7</version>
+    <version>v5.2.8</version>
     <first>HK416</first>
     <last />
     <label>HK416</label>
@@ -45,7 +45,7 @@
         <clothing name="jacket" generic="Jacket" position="upper" type="major" />
         <clothing name="gloves" generic="Gloves" position="other" type="extra" plural="true" />
         <clothing name="shoes" generic="Shoes" position="other" type="extra" plural="true" />
-        <clothing name="hat" generic="Hat" position="other" type="extra" />
+        <clothing name="hat" generic="hat" position="other" type="extra" />
     </wardrobe>
 
     <poses />
@@ -54,11 +54,11 @@
         <trigger id="selected">
             <case stage="0">
                 <condition role="other" character="akko" />
-                <state img="#-base.png" marker="akko_mistaken">HK416. Please remember this extraord-- &lt;i&gt;G28?!&lt;/i&gt; What are you...</state>
+                <state img="#-shocked.png" marker="akko_mistaken=1">HK416. Please remember this extraord-- &lt;i&gt;G28?!&lt;/i&gt; What are you...</state>
             </case>
             <case stage="0">
                 <condition role="other" character="sei" />
-                <state img="#-base.png">HK416. Please remember this &lt;i&gt;extraordinary&lt;/i&gt; name. &lt;br&gt; ...Hm? I wasn't expecting to see you here, Sei.</state>
+                <state img="#-question.png">HK416. Please remember this &lt;i&gt;extraordinary&lt;/i&gt; name. &lt;br&gt; ...Hm? I wasn't expecting to see you here, Sei.</state>
             </case>
             <case stage="0">
                 <state img="#-base.png">HK416. Please remember this &lt;i&gt;extraordinary&lt;/i&gt; name.</state>
@@ -68,7 +68,7 @@
         <trigger id="opponent_selected">
             <case stage="0">
                 <condition role="target" character="akko" />
-                <state img="#-guarded.png" marker="akko_mistaken">&lt;i&gt;G28?!&lt;/i&gt; What are you doing...</state>
+                <state img="#-shocked.png" marker="akko_mistaken=1">&lt;i&gt;G28?!&lt;/i&gt; What are you doing...</state>
             </case>
             <case stage="0">
                 <condition role="target" character="sei" />
@@ -79,12 +79,12 @@
         <trigger id="game_start">
             <case stage="0">
                 <condition role="other" character="akko" />
-                <condition role="self" saidMarker="akko_mistaken" />
-                <state img="#-disappointed.png">My apologies. I must've mistaken you for my sister... It's not as if 45 would go out of her way to lock me into a simulation with her, right? &lt;br&gt; &lt;i&gt;(...Shit, she could hear that, couldn't she?)&lt;/i&gt;</state>
+                <condition role="self" saidMarker="akko_mistaken==1" />
+                <state img="#-flustered.png" marker="akko_mistaken=2">My apologies. I must've mistaken you for my sister... It's not as if 45 would go out of her way to lock me into a simulation with her, right? &lt;br&gt; &lt;i&gt;(...Shit, she could hear that, couldn't she?)&lt;/i&gt;</state>
             </case>
             <case stage="0">
                 <condition role="other" character="rarity_eg" />
-                <state img="#-base.png">45? ...45, I know you can fucking hear me. What kind of-- what the hell? Are those &lt;i&gt;crystals?&lt;/i&gt;</state>
+                <state img="#-shocked.png">45? ...45, I know you can fucking hear me. What kind of-- what the hell? Are those &lt;i&gt;crystals?&lt;/i&gt;</state>
             </case>
             <case stage="0">
                 <state img="#-disappointed.png">45? ...45, I know you can fucking hear me. What kind of simulation did you drop me into?</state>
@@ -94,7 +94,7 @@
         </trigger>
 
         <trigger id="swap_cards">
-            <case stage="0" totalRounds="0-">
+            <case stage="0" totalRounds="0">
                 <state img="#-idle.png">...</state>
             </case>
             <case stage="0-7">
@@ -199,9 +199,21 @@
                 <condition role="other" character="sei" />
                 <state img="#-question.png" marker="sei_whoareyou">Come to think of it, though... Which Sei am I speaking to, right now? The T-Doll, or the human?</state>
             </case>
+            <case stage="0-7" oneShotId="9">
+                <condition role="other" character="rin" stage="0-6" />
+                <condition count="2-" filter="school_uniform" />
+                <test expr="~background.category~" cmp="!=" value="school" />
+                <state img="#-question.png" marker="rin_whyareyouhere=2">So, Rin... what brings you here in the first place? I didn't think this place would be especially popular with students... though I suppose I'm clearly mistaken.</state>
+            </case>
+            <case stage="0-7" oneShotId="10">
+                <condition role="other" character="rin" stage="0-6" />
+                <condition count="1-" filter="school_uniform" />
+                <test expr="~background.category~" cmp="!=" value="school" />
+                <state img="#-question.png" marker="rin_whyareyouhere=1">So, Rin... what brings you here in the first place? This place doesn't seem to be especially popular with students.</state>
+            </case>
             <case stage="0-7">
                 <condition role="other" character="sei" stage="1" timeInStage="0" sayingMarker="drinks_anyone" />
-                <state img="#-disappointed.png" marker="sei_nodrink">...I won't have anything, Sei. Things got... &lt;i&gt;troublesome&lt;/i&gt; the last time I drank, to say the least.</state>
+                <state img="#-guarded.png" marker="sei_nodrink">...I won't have anything, Sei. Things got... &lt;i&gt;troublesome&lt;/i&gt; the last time I drank, to say the least.</state>
             </case>
             <case stage="0-7">
                 <condition role="other" character="chihiro" stage="5" timeInStage="0" />
@@ -627,6 +639,26 @@
                 <state img="#-headtilt.png">Oh, so you've returned.</state>
                 <state img="#-headtilt.png">Oh, so you've come back... I wasn't expecting you to have stripped in the meantime, I'll admit.</state>
             </case>
+            <case stage="0-9">
+                <condition role="target" character="hanako" stage="0" />
+                <state img="#-annoyed.png" marker="hanako_hesitate=1">...I can already tell this girl will get on my nerves.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="hanako" stage="1" />
+                <state img="#-flustered.png" marker="hanako_m4a1=1">...I should not have snapped at you earlier, Hanako. That was unprofessional of me. &lt;br&gt; ...You just remind me of a certain someone.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="saki" stage="0" />
+                <state img="#-annoyed.png" marker="saki_annoyed=1">Listening to this girl is going to be &lt;i&gt;incredibly&lt;/i&gt; annoying, I see...</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="saki" stage="1" />
+                <state img="#-flustered.png" marker="saki_m4a1=1">...My outburst earlier was unprofessional and uncalled for. My apologies, Saki. &lt;br&gt; I just... happen to know someone who was a lot like you.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="akko" stage="0" />
+                <state img="#-guarded.png" marker="akko_name=1">&lt;i&gt;(She really is like G28... so cheery and energetic.)&lt;/i&gt; &lt;br&gt; So... your name was Akko, correct?</state>
+            </case>
             <case stage="0-3">
                 <state img="#-satisfied1.png">I prevail, as always.</state>
                 <state img="#-satisfied1.png">Another victory to my name.</state>
@@ -746,13 +778,37 @@
         </trigger>
 
         <trigger id="female_removing_accessory">
-            <case stage="0">
+            <case stage="0-9">
+                <condition role="target" character="akko" stage="0" notSaidMarker="necronomicon" />
+                <state img="#-shocked.png" marker="akko_spectacle=1">Oh! That was... certainly spectactular. How did you do that? Special effects of some kind...?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="akko" stage="0" saidMarker="necronomicon" />
+                <state img="#-shocked.png" marker="akko_necronomicon=1">...! &lt;br&gt; Shit, is that &lt;i&gt;supposed&lt;/i&gt; to be happening?!</state>
+            </case>
+            <case stage="0-9">
                 <condition role="target" character="rin" stage="1" />
                 <state img="#-question.png" marker="rin_tie=1">It seems counterproductive to wear a tie, especially if you have no hands to tie it with. Even if it didn't make it difficult for you to dress and undress, wouldn't it just get in the way of your art?</state>
             </case>
-            <case stage="0-7" oneShotId="3">
+            <case stage="0-9">
+                <condition role="target" character="hanako" stage="0" />
+                <state img="#-disappointed.png" marker="hanako_hesitate=2">Listen: if you're going to be this hesitant, then &lt;i&gt;why are you even here?&lt;/i&gt;</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="hanako" stage="1" />
+                <state img="#-idle.png" marker="hanako_m4a1=2">Her name was M4A1. She was a lot like you: timid, nervous, wishy-washy... and as such our world &lt;i&gt;broke&lt;/i&gt; her.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="saki" stage="0" />
+                <state img="#-disappointed.png" marker="saki_annoyed=2">Stop hesitating and &lt;i&gt;get going&lt;/i&gt; already!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="saki" stage="1" />
+                <state img="#-idle.png" marker="saki_m4a1=2">Her name was M4A1. She was always really nervous, and hesitated at every turn... and eventually, she shattered under that strain.</state>
+            </case>
+            <case stage="0-9" oneShotId="3">
                 <condition role="other" character="rin" stage="0-3" sayingMarker="sleep=1" />
-                <state img="#-disappointed.png">Rin. This is no place to sleep... &lt;i&gt;Rin.&lt;/i&gt;&lt;br&gt;Are you kidding me...</state>
+                <state img="#-annoyed.png">Rin. This is no place to sleep... &lt;i&gt;Rin.&lt;/i&gt;&lt;br&gt;Are you kidding me...</state>
             </case>
             <case stage="0-7">
                 <condition status="exposed" role="target" />
@@ -798,13 +854,37 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
-            <case stage="0-7">
+            <case stage="0-9">
+                <condition role="target" character="akko" stage="1" notSaidMarker="necronomicon" />
+                <state img="#-guarded.png" marker="akko_spectacle=2">Regardless of how you did it... it was still impressive. Certainly must've taken some practice, if you can do it on a whim like that...</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="akko" stage="1" saidMarker="necronomicon" />
+                <state img="#-annoyed.png" marker="akko_similarity=1">...Well, whatever you were intending to do there, you clearly fucked it up. &lt;br&gt; I suppose you really are like G28, then...</state>
+            </case>
+            <case stage="0-9">
                 <condition role="target" character="rin" stage="2" />
                 <state img="#-idle.png" marker="rin_tie=2">Though I suppose it's none of my concern... I can't tell you how to live your life.</state>
             </case>
-            <case stage="0-6" oneShotId="4" priority="142">
+            <case stage="0-9">
+                <condition role="target" character="hanako" stage="1" />
+                <state img="#-frustrated.png" marker="hanako_hesitate=3">Speak &lt;i&gt;up&lt;/i&gt;, for god's sake!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="hanako" stage="2" />
+                <state img="#-headtilt.png" marker="hanako_m4a1=3">Though I doubt your situation is as dire as hers, I'd hate for you to fall into that same trap all the same, Hanako.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="saki" stage="1" />
+                <state img="#-frustrated.png" marker="saki_annoyed=3">We don't have time to wait for you while you stammer and stumble, Saki!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="saki" stage="2" />
+                <state img="#-guarded.png" marker="saki_m4a1=3">I... I just wouldn't want you to become like her, Saki. &lt;br&gt; &lt;i&gt;(I get the feeling that terrible things will happen if I leave her alone...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-9" oneShotId="4" priority="142">
                 <condition role="other" character="rin" stage="0-3" saidMarker="sleep==1" sayingMarker="sleep=2" />
-                <state img="#-disappointed.png">Are you seriously sleeping like this...?&lt;br&gt;I stand corrected. You really are a brainlet. Just don't fall over...</state>
+                <state img="#-frustrated.png">Are you seriously sleeping like this? &lt;br&gt; I stand corrected... you really are a brainlet. Just don't fall over, I don't want to have to pick you up off the floor.</state>
             </case>
             <case stage="0-7">
                 <condition status="exposed" role="target" />
@@ -914,7 +994,7 @@
         </trigger>
 
         <trigger id="female_removing_minor">
-            <case stage="0-7" oneShotId="5">
+            <case stage="0-9">
                 <condition role="target" character="rin" stage="0" />
                 <state img="#-question.png" marker="rin_assistance=1">Do you require assistance?&lt;br&gt;No? Very well, then...</state>
             </case>
@@ -961,7 +1041,7 @@
                 <condition role="target" character="sakura" stage="3" />
                 <state img="#-headtilt.png">&lt;i&gt;(This isn't adding up entirely... but, either way...)&lt;/i&gt;</state>
             </case>
-            <case stage="0-7" oneShotId="7">
+            <case stage="0-9" oneShotId="7">
                 <condition role="target" character="rin" stage="1" />
                 <state img="#-guarded.png" marker="rin_assistance=2">...If you ever do need help, though, I suppose I'd be willing to assist you.&lt;br&gt;Erm. Because it would be an inconvenience to have an opponent who can't play this game properly.</state>
             </case>
@@ -1048,10 +1128,10 @@
         </trigger>
 
         <trigger id="female_removing_major">
-            <case stage="0-7">
+            <case stage="0-9">
                 <condition count="0" filter="emi" />
                 <condition role="target" character="rin" stage="2" />
-                <state img="#-disappointed.png">...Don't you &lt;i&gt;dare&lt;/i&gt; try anything, ~player~.</state>
+                <state img="#-frustrated.png">...Don't you &lt;i&gt;dare&lt;/i&gt; try anything, ~player~.</state>
             </case>
             <case stage="0-3">
                 <state img="#-satisfied2.png">A major victory.</state>
@@ -1400,7 +1480,7 @@
         </trigger>
 
         <trigger id="opponent_lost">
-            <case stage="0-7" oneShotId="2">
+            <case stage="0-9" oneShotId="2">
                 <condition role="target" character="rin" stage="0" />
                 <state img="#-headtilt.png" marker="rin_smilar_someone">...Rin, was it? You remind me of a certain someone. Though hopefully you're not as much of a brainlet as she is...</state>
             </case>
