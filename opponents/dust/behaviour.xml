@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.7 at 1:36:37 AM on October 26, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 8:48:37 PM on October 28, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.7</version>
+    <version>v5.2.8</version>
     <first>Dust</first>
     <last />
     <label>Dust</label>
@@ -240,15 +240,15 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="0" totalRounds="0" priority="800">
-                <state img="#-calm.png">Hello. My name's Dust.</state>
-                <state img="#-calm.png">It's nice to meet you. I'm Dust.</state>
-                <state img="#-calm.png">My name's Dust. I'm from Falana.</state>
-            </case>
             <case stage="0-7" priority="205">
                 <condition role="other" character="mae" stage="6" timeInStage="1" />
                 <test expr="~background~" value="beach" />
                 <state img="#-annoyed.png">Don't look at me. ~player~ chose the place.</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="200">
+                <state img="#-calm.png">Hello. My name's Dust.</state>
+                <state img="#-calm.png">It's nice to meet you. I'm Dust.</state>
+                <state img="#-calm.png">My name's Dust. I'm from Falana.</state>
             </case>
             <case stage="0" totalRounds="0">
                 <condition gender="female" role="other" character="human" />
@@ -339,6 +339,10 @@
                 <state img="#-wat.png" marker="revy_guns">Revy, please put the guns down...</state>
                 <state img="#-wat.png" marker="revy_guns">Revy, there's no monsters around. Can you put down the guns, please?</state>
             </case>
+            <case stage="0-5" oneShotId="53">
+                <condition role="other" character="elesa" stage="2-3" />
+                <state img="#-um.png">To be honest, most people in Falana dress simply. It's only near the capital where you see more detailed clothing.</state>
+            </case>
             <case stage="0-7" oneShotId="38">
                 <condition role="other" character="navi" timeInStage="2-4" />
                 <state img="#-annoyed.png" marker="fidget">Who is this flying thing anyway? Sounds a little bit like Fidget...</state>
@@ -420,6 +424,10 @@
             <case stage="0-7" oneShotId="44">
                 <condition role="other" character="jessie" saidMarker="DustFidgetWho" />
                 <state img="#-whoa.png">I don't know... Fidget said it's her job to keep Ahrah in her sights at all... Oh! Now I get what you mean...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="megumin" sayingMarker="megumin_giantFrogs" />
+                <state img="#-wat.png">Uh... what brought that topic about, exactly?</state>
             </case>
             <case stage="0-7" totalRounds="3-">
                 <condition filter="meia" />
@@ -1024,6 +1032,10 @@
                 <condition role="target" character="chazz" stage="1" />
                 <state img="#-wat.png">That... that's just a card though...?</state>
             </case>
+            <case stage="0-9">
+                <condition role="target" character="guzma" stage="1" />
+                <state img="#-calm.png">I have to admit, you are one of the more unique bandits I've ever seen.</state>
+            </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="cassius_talked&gt;3" />
                 <state img="#-pissed.png">Next time, step up your game, ~name~!</state>
@@ -1165,12 +1177,21 @@
 
         <trigger id="female_removing_minor">
             <case stage="0-9">
+                <condition role="target" character="megumin" stage="3" />
+                <state img="#-um.png">I've been meaning to ask... why only one stocking?</state>
+            </case>
+            <case stage="0-9">
                 <state img="#-embarassed.png">Well, that's something, I guess...</state>
                 <state img="#-annoyed.png">I see the game's heating up for you, ~name~.</state>
             </case>
         </trigger>
 
         <trigger id="female_removed_minor">
+            <case stage="0-9">
+                <condition role="target" character="elesa" stage="1" />
+                <condition count="0" filter="misty_hgss" />
+                <state img="#-calm.png">That's a nickname that suits you well.</state>
+            </case>
             <case stage="0-9">
                 <state img="#-embarassed.png">Well, we're certainly ramping up the action now.</state>
                 <state img="#-embarassed.png">Well, we're certainly ramping up the action now.</state>
@@ -1187,6 +1208,11 @@
         </trigger>
 
         <trigger id="male_removed_major">
+            <case stage="0-9">
+                <condition role="target" character="chazz" stage="5" />
+                <state img="#-laugh.png">*pfft* Oh... oh they... *snerk*</state>
+                <state img="#-laugh.png" marker="fidget">Heh... Now I wish Fidget were here.</state>
+            </case>
             <case stage="0-5">
                 <state img="#-embarassed.png">I think I might have a thing for men, too...</state>
                 <state img="#-embarassed.png">There's so much to see...</state>
@@ -1238,6 +1264,11 @@
         </trigger>
 
         <trigger id="male_chest_is_visible">
+            <case stage="0-9" id="35">
+                <condition role="target" character="chazz" stage="6" />
+                <state img="#-um.png">...Funny, ~player~ doesn't look like the mage type. </state>
+                <state img="#-annoyed.png">You sure it wasn't the management?</state>
+            </case>
             <case stage="0-9">
                 <condition filter="muscular" role="target" />
                 <state img="#-embarassed.png">Wow... you must work out a lot, huh?</state>
@@ -1330,6 +1361,11 @@
         </trigger>
 
         <trigger id="female_large_chest_is_visible">
+            <case stage="0-9">
+                <condition role="other" character="chazz" />
+                <state img="#-annoyed.png">Careful you don't slip on that puddle of drool.</state>
+                <state img="#-annoyed.png">Someone want to get Chazz out of that trance?</state>
+            </case>
             <case stage="0-6">
                 <state img="#-whoa.png">By the Overseers, they're huge!!</state>
                 <state img="#-whoa.png">Doesn't your back hurt?</state>
@@ -1686,6 +1722,10 @@
         </trigger>
 
         <trigger id="male_finished_masturbating">
+            <case stage="0-9">
+                <condition role="target" character="chazz" />
+                <state img="#-laugh.png">...*snerk*</state>
+            </case>
             <case stage="0-9">
                 <condition role="self" saidMarker="cassius_talked&gt;3" />
                 <state img="#-c-standoffish.png">Wow, record time.</state>
