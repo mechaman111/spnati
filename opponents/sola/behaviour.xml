@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 1:32:56 AM on October 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 1:07:14 AM on November 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.6</version>
+    <version>v5.2.8</version>
     <first>Sola</first>
     <last />
     <label>Sola</label>
@@ -75,6 +75,10 @@
             </case>
             <case stage="0" alsoPlaying="mavis">
                 <state img="#-loss.png">&lt;i&gt;Is this Mavis girl an enemy magic user?&lt;/i&gt;</state>
+            </case>
+            <case stage="0">
+                <test expr="~player~" value="Johan" />
+                <state img="#-embarrassed.png">I'm gonna, um, sex you up... really good...</state>
             </case>
             <case stage="0">
                 <state img="#-excited.png">Let's do this!</state>
@@ -271,12 +275,12 @@
                 <state img="#-calm.png" oneShotId="1">How do I know Zizou, ~Player~? Well we fought a couple of times and I had to fight her to stop her from wearing Emperor Franzer's clothing.</state>
             </case>
             <case stage="0-6" id="22" totalMasturbating="1-">
-                <state img="#-embarrassed.png" oneShotId="3">I-I-I can't forfeit normally. It's too embarrassing. My friend gave me something to help though...</state>
+                <state img="#-embarrassed.png" oneShotId="6">I-I-I can't forfeit normally. It's too embarrassing. My friend gave me something to help though...</state>
             </case>
             <case stage="0-6">
-                <state img="#-shy.png" oneShotId="2">Why am I here, you ask, ~player~? W-Well, my friend, Codino said this would be a great way to express my, um, feelings...</state>
-                <state img="#-happy.png" oneShotId="4">Why am I wearing this outfit? Because the Chelsea School is for magical research so it's not like a normal school.</state>
-                <state img="#-shy.png" oneShotId="5">If you're wondering why I'm so reserved, it's because I'm the daughter of two noble aristocrats, so I'm inexperienced with... lewd activities...</state>
+                <state img="#-shy.png" oneShotId="7">Why am I here, you ask, ~player~? W-Well, my friend, Codino said this would be a great way to express my, um, feelings...</state>
+                <state img="#-happy.png" oneShotId="8">Why am I wearing this outfit? Because the Chelsea School is for magical research, so it's not like a normal school.</state>
+                <state img="#-shy.png" oneShotId="9">If you're wondering why I'm so reserved, it's because I'm the daughter of two noble aristocrats, so I'm inexperienced with... lewd activities...</state>
             </case>
         </trigger>
 
@@ -486,7 +490,7 @@
             </case>
             <case stage="3">
                 <state img="#-must_strip.png">(OK, Sola. Keep calm... This will be over soon.)</state>
-                <state img="#-must_strip.png">I don't want to lose these but I guess I have to...</state>
+                <state img="#-must_strip.png">I don't want to lose these, but I guess I have to...</state>
                 <state img="#-must_strip.png">I'm stripping off my tights only to remember I'm wearing my cutest pair of panties...</state>
                 <state img="#-must_strip.png">I hope nobody thinks less of me for my underwear...</state>
                 <state img="#-must_strip.png">I'll be wanting these back after this game, OK?</state>
@@ -1416,6 +1420,10 @@
             </case>
             <case stage="0-8" target="zizou" targetStage="1">
                 <state img="#-happy.png">I like having a rival like you, Zizou. You make me better.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="shimakaze" stage="1" />
+                <state img="#-excited.png"></state>
             </case>
             <case stage="0-8" targetStage="0">
                 <state img="#-calm.png">A small item first is the norm, right?</state>
@@ -3185,46 +3193,57 @@
         </trigger>
 
         <trigger id="game_over_defeat">
-            <case stage="8" target="jessie" targetStage="0-1">
-                <state img="#-loss.png">Not only did I lose, I lost in front of a professional...</state>
-            </case>
-            <case stage="8" target="mavis" targetStage="0-5">
-                <state img="#-interested.png">Congratulations, Mavis... B-But I really would like some coaching later, i-if you could...</state>
-            </case>
-            <case stage="8" target="jura">
-                <state img="#-interested.png">If your lover is OK with you playing here, I am too, Jura. But... Could you bring her along next time?</state>
-            </case>
-            <case stage="8" target="kyu">
-                <state img="#-interested.png">I guess you beat me, Kyu. And I guess I'm sitting here very vulnerable and aroused, totally free for a fairy to take advantage of...</state>
-            </case>
-            <case stage="8" target="mahiru">
-                <state img="#-embarrassed.png">Please don't take a picture of me! It would ruin my family's reputation! Please!</state>
-            </case>
-            <case stage="8" target="meia">
-                <state img="#-shy.png">Congratulations, Meia. Although I didn't doubt you would beat me.</state>
-            </case>
-            <case stage="8" target="ruby">
-                <state img="#-loss.png">I suppose Beacon's girl won the day this time.</state>
-            </case>
-            <case stage="8" target="zizou">
-                <state img="#-shy.png">I suppose I can't beat you, Zizou...</state>
-            </case>
-            <case stage="8" alsoPlaying="blake">
-                <state img="#-finished.png">I guess I need to step up my game if I want to beat you, Blake.</state>
-            </case>
-            <case stage="8" alsoPlaying="weiss">
-                <state img="#-appreciative.png">Ice job, Weiss. Get it?</state>
-            </case>
-            <case stage="8" alsoPlaying="yang">
-                <state img="#-interested.png">I'm kind of glad I got to do this with you, Yang...</state>
+            <case stage="8">
+                <condition role="target" character="jessie" stage="0-1" />
+                <state img="#-loss.png" collectible="Panties">Not only did I lose, I lost in front of a professional...</state>
             </case>
             <case stage="8">
-                <state img="#-calm.png" collectible="panties">Good game, ~name~.</state>
-                <state img="#-excited.png" collectible="panties">I'll get you next time, ~name~.</state>
-                <state img="#-happy.png" collectible="panties">I did my best. I'll try harder next time.</state>
-                <state img="#-calm.png" collectible="panties">I did my best. You just did better.</state>
-                <state img="#-appreciative.png" collectible="panties">I want a rematch some time, OK?</state>
-                <state img="#-calm.png" collectible="panties">I'll do my best next time. I mean it.</state>
+                <condition role="target" character="mavis" stage="0-5" />
+                <state img="#-interested.png" collectible="Panties">Congratulations, Mavis... B-But I really would like some coaching later, i-if you could...</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="jura" />
+                <state img="#-interested.png" collectible="Panties">If your lover is OK with you playing here, I am too, Jura. But... Could you bring her along next time?</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="kyu" />
+                <state img="#-interested.png" collectible="Panties">I guess you beat me, Kyu. And I guess I'm sitting here very vulnerable and aroused, totally free for a fairy to take advantage of...</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="mahiru" />
+                <state img="#-embarrassed.png" collectible="Panties">Please don't take a picture of me! It would ruin my family's reputation! Please!</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="meia" />
+                <state img="#-shy.png" collectible="Panties">Congratulations, Meia. Although I didn't doubt you would beat me.</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="ruby" />
+                <state img="#-loss.png" collectible="Panties">I suppose Beacon's girl won the day this time.</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="zizou" />
+                <state img="#-shy.png" collectible="Panties">I suppose I can't beat you, Zizou...</state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="blake" />
+                <state img="#-shy.png" collectible="Panties">I guess I need to step up my game if I want to beat you, Blake.</state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="weiss" />
+                <state img="#-appreciative.png" collectible="Panties">Ice job, Weiss. Get it?</state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="yang" />
+                <state img="#-interested.png" collectible="Panties">I'm kind of glad I got to do this with you, Yang...</state>
+            </case>
+            <case stage="8">
+                <state img="#-calm.png" collectible="Panties">Good game, ~name~.</state>
+                <state img="#-excited.png" collectible="Panties">I'll get you next time, ~name~.</state>
+                <state img="#-happy.png" collectible="Panties">I did my best. I'll try harder next time.</state>
+                <state img="#-calm.png" collectible="Panties">I did my best. You just did better.</state>
+                <state img="#-appreciative.png" collectible="Panties">I want a rematch some time, OK?</state>
+                <state img="#-calm.png" collectible="Panties">I'll do my best next time. I mean it.</state>
             </case>
         </trigger>
 
