@@ -3,6 +3,26 @@
  */
 
 /**
+ * Points earned per AI player defeated.
+ * @global
+ */
+var AI_DEFEAT_POINTS = 20;
+
+/**
+ * Points earned for a complete victory.
+ * This is scaled by the number of AI players at the table.
+ * @global
+ */
+var TABLE_VICTORY_POINTS = 10;
+
+var $pointsRows = $('#point-intent-rows');
+var pointModalTips = [
+    'Playing against a wide variety of characters will earn you more [InsertNameHere], so try to mix things up!',
+    'Playing against characters on the Testing Tables will give you more [InsertNameHere].',
+    'Certain characters may provide bonus [InsertNameHere] for playing against them. Be sure to check in regularly!'
+]
+
+/**
  * Encapsulates an intention to add (or subtract) points from the player's
  * unlock points total at the end of a game.
  * 
@@ -97,18 +117,10 @@ PointsController.prototype.applyIntents = function () {
     this.additive_intents = [];
 }
 
-
 /**
  * @global
  */
 var points_controller = new PointsController();
-
-var $pointsRows = $('#point-intent-rows');
-var pointModalTips = [
-    'Playing against a wide variety of characters will earn you more [InsertNameHere], so try to mix things up!',
-    'Playing against characters on the Testing Tables will give you more [InsertNameHere].',
-    'Certain characters may provide bonus [InsertNameHere] for playing against them. Be sure to check in regularly!'
-]
 
 function createPointIntentRow (reason, points, addedClass, omitLeadingPlus) {
     var ptsText = points.toString();

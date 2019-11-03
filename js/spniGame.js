@@ -689,6 +689,13 @@ function endRound () {
 		gameOver = true;
         codeImportEnabled = true;
 
+        if (lastPlayer === HUMAN_PLAYER) {
+            points_controller.addPoints(
+                'Complete Victory!',
+                TABLE_VICTORY_POINTS * players.countTrue(function (p) { return p && p !== humanPlayer; })
+            );
+        }
+
         if (SENTRY_INITIALIZED) {
             Sentry.addBreadcrumb({
                 category: 'game',

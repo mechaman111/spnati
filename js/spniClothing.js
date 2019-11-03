@@ -290,6 +290,8 @@ function playerMustStrip (player) {
 			trigger = determineForfeitSituation(player);
 		}
 		
+		points_controller.addPoints('Defeated ' + players[player].label, AI_DEFEAT_POINTS);
+
 		updateAllBehaviours(
 			player,
 			trigger,
