@@ -325,6 +325,31 @@ function Save() {
         }
     }
 
+    /**
+     * Loads the player's accumulated unlock points from persistent storage.
+     * @returns {number} The number of unlock points the player has. This will
+     * always be >= 0.
+     */
+    this.getUnlockPoints = function () {
+        var ct = localStorage.getItem(prefix + 'unlockPoints');
+        ct =  parseInt(ct, 10) || 0;
+        
+        return (ct >= 0) ? ct : 0;
+    }
+
+    /**
+     * Saves the player's accumulated unlock points to persistent storage.
+     * @param {number} ct The value to set the player's unlock points count to.
+     */
+    this.setUnlockPoints = function (ct) {
+        try {
+            localStorage.setItem(prefix + 'unlockPoints', ct.toString());
+        } catch (ex) {
+            console.error('Failed to save unlock points count to localStorage');
+            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        }
+    }
+
     this.getPlayedCharacterSet = function () {
         return JSON.parse(localStorage.getItem(prefix + "playedCharacters") || '[]') || [];
     }
