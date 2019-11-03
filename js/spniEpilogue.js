@@ -919,6 +919,8 @@ function doEpilogueModal() {
     });
   }
 
+  $pointsModal.modal('hide');
+
   clearEpilogueList(); //remove any already loaded epilogues
   chosenEpilogue = null; //reset any currently-chosen epilogue
   $epilogueAcceptButton.prop("disabled", true); //don't let the player accept an epilogue until they've chosen one

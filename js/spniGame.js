@@ -105,7 +105,7 @@ var eGamePhase = {
 	STRIP:     [ "Strip", function() { completeStripPhase(); }, false ],
 	FORFEIT:   [ "Masturbate", function() { completeMasturbatePhase(); }, false ],
 	END_LOOP:  [ undefined, function() { handleGameOver(); } ],
-	GAME_OVER: [ "Ending?", function() { actualMainButtonState = false; doEpilogueModal(); } ],
+	GAME_OVER: [ "Ending?", function() { actualMainButtonState = false; showPointsModal(); } ],
 	END_FORFEIT: [ "Continue..." ], // Specially handled; not a real phase. tickForfeitTimers() will always return true in this state.
     EXIT_ROLLBACK: ['Return', function () { exitRollback(); }, undefined, false],
 };

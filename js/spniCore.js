@@ -106,6 +106,7 @@ $playerTagsModal = $('#player-tags-modal');
 $collectibleInfoModal = $('#collectibles-info-modal');
 $ioModal = $('#io-modal');
 $resortModal = $('#resort-modal');
+$pointsModal = $('#points-modal');
 
 /* Screen State */
 $previousScreen = null;

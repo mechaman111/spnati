@@ -54,16 +54,26 @@ PointsController.prototype.setCurrentPoints = function (ct) {
 }
 
 /**
+ * Get the current net amount of points the player will earn at the end
+ * of the game.
+ * 
+ * @returns {number}
+ */
+PointsController.prototype.getNetPointsEarned = function () {
+    return this.additive_intents.reduce(function (acc, val) {
+        var new_acc = acc + val.points;
+        return (new_acc >= 0) ? new_acc : 0;
+    }, 0);
+}
+
+/**
  * Get how many unlock points the player will have available at the end
  * of the game.
  * 
  * @returns {number}
  */
 PointsController.prototype.getGameEndPoints = function () {
-    return this.additive_intents.reduce(function (acc, val) {
-        var new_acc = acc + val.points;
-        return (new_acc >= 0) ? new_acc : 0;
-    }, save.getUnlockPoints());
+    return save.getUnlockPoints() + this.getNetPointsEarned();
 }
 
 /**
@@ -92,3 +102,56 @@ PointsController.prototype.applyIntents = function () {
  * @global
  */
 var points_controller = new PointsController();
+
+var $pointsRows = $('#point-intent-rows');
+var pointModalTips = [
+    'Playing against a wide variety of characters will earn you more [InsertNameHere], so try to mix things up!',
+    'Playing against characters on the Testing Tables will give you more [InsertNameHere].',
+    'Certain characters may provide bonus [InsertNameHere] for playing against them. Be sure to check in regularly!'
+]
+
+function createPointIntentRow (reason, points, addedClass, omitLeadingPlus) {
+    var ptsText = points.toString();
+    if (points >= 0 && !omitLeadingPlus) {
+        ptsText = '+' + ptsText;
+    }
+
+    var row = $('<tr>', {
+        'class': 'point-intent-row'
+    });
+    row.append($('<td>', {
+        'text': reason,
+        'class': 'point-intent-reason ' + (addedClass || '')
+    })).append($('<td>', {
+        'text': ptsText,
+        'class': 'point-intent-points ' + (addedClass || '')
+    }));
+
+    return row;
+}
+
+function showPointsModal() {
+    var net_earned = points_controller.getNetPointsEarned();
+
+    $('#points-modal-earned-count').text(net_earned);
+
+    $pointsRows.empty();
+    points_controller.additive_intents.forEach(function (intent) {
+        createPointIntentRow(intent.reason, intent.points).appendTo($pointsRows);
+    });
+
+    createPointIntentRow(
+        'Total Earned', net_earned,
+        'point-intent-total', false
+    ).appendTo($pointsRows);
+
+    createPointIntentRow(
+        'Current Points', points_controller.getCurrentPoints() + net_earned,
+        'point-intent-total', true
+    ).appendTo($pointsRows);
+
+    points_controller.applyIntents();
+    $('#points-modal-tip').text('Tip: ' + pointModalTips[getRandomNumber(0, pointModalTips.length)]);
+
+    $pointsModal.modal('show');
+}
