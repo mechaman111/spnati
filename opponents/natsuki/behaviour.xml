@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.7 at 5:50:25 PM on November 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.7 at 11:12:25 PM on November 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.7</version>
     <first>Natsuki</first>
@@ -1757,7 +1757,8 @@
                 <state img="#-aroused.png">(&lt;i&gt;If I win, I'll show ~player~ how smart I am. But if I lose I'll show ~player~...&lt;/i&gt;)</state>
                 <state img="#-upset.png">(&lt;i&gt;I don't even know what ~player~'s type is...&lt;/i&gt;)</state>
             </case>
-            <case stage="4-5" saidMarker="singles_night" priority="0">
+            <case stage="4-5" priority="0">
+                <condition role="self" saidMarker="singles_night" />
                 <state img="#-fear.png">
                     <alt-img stage="5">#-upset.png</alt-img>
                     <text>(&lt;i&gt;~player~ isn't dating Sayori, so maybe ~player~ doesn't like girls... Wait, that's not comforting at all!!&lt;/i&gt;)</text>
@@ -1784,8 +1785,10 @@
                 <state img="#-zstripped.png">I'm not losing this hand!!</state>
                 <state img="#-zstripped.png">Get any closer and I'll bite! I give no fucks! I &lt;i&gt;will&lt;/i&gt; do it!!</state>
             </case>
-            <case stage="6" saidMarker="singles_night" priority="0">
-                <state img="#-upset.png">(&lt;i&gt;~player~ isn't dating Sayori, so maybe ~player~ doesn't like girls... Wait, that's not comforting at all!!&lt;/i&gt;)6-okay_hand,saidMarker:singles_night,priority:0=mad,Hmph! I won't let a few tarts outsmart me!</state>
+            <case stage="6" priority="0">
+                <condition role="self" saidMarker="singles_night" />
+                <state img="#-upset.png">(&lt;i&gt;~player~ isn't dating Sayori, so maybe ~player~ doesn't like girls... Wait, that's not comforting at all!!&lt;/i&gt;)</state>
+                <state img="#-mad.png">Hmph! I won't let a few tarts outsmart me!</state>
             </case>
             <case stage="7-8" priority="0">
                 <condition count="1" filter="ddlc" />
@@ -9889,7 +9892,9 @@
             <case stage="0-10" target="human" alsoPlaying="mahiru" totalRounds="1-99" notSaidMarker="mah_photo1">
                 <state img="#-tsun.png" marker="mah_photo1">W-wait, sh-shouldn't you get a photo release signed first!? ~player~ didn't consent to that!</state>
             </case>
-            <case stage="0-10" target="monika" alsoPlaying="sayori">
+            <case stage="0-10">
+                <condition role="target" character="monika" />
+                <condition role="other" character="sayori" />
                 <state img="#-isthatapenis.png">(&lt;i&gt;Ah! D-does Monika like her back?? Nnnnnn!!&lt;/i&gt;)</state>
             </case>
             <case stage="0-10" target="amalia" targetStage="6">
