@@ -1756,7 +1756,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
  * Also cleans up the previous chosenState's parent Case, if it exists.
  */
 Opponent.prototype.updateChosenState = function (state) {
-    if (this.chosenState && this.chosenState.parentCase) {
+    if (this.chosenState && this.chosenState.parentCase && state.parentCase != this.chosenState.parentCase) {
         this.chosenState.parentCase.cleanupMutableState();
     }
 
@@ -1767,7 +1767,7 @@ Opponent.prototype.updateChosenState = function (state) {
 /**
  * Clears out this Opponent's previous chosenState, leaving it at null.
  */
-Opponent.prototype.clearChosenState = function (state) {
+Opponent.prototype.clearChosenState = function () {
     if (this.chosenState && this.chosenState.parentCase) {
         this.chosenState.parentCase.cleanupMutableState();
     }
