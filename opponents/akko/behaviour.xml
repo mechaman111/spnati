@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.7 at 5:48:41 PM on October 29, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.7 at 5:40:06 PM on November 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.7</version>
     <first>Atsuko</first>
@@ -2073,8 +2073,9 @@
                 <condition count="1" filter="witch" />
                 <state img="#-thinking.png">Hm... I dunno if you can, Sayaka! I'm pretty good at numbers. And I'm the only witch here, so...</state>
             </case>
-            <case stage="0" alsoPlaying="sayaka">
+            <case stage="0">
                 <condition count="2-4" filter="witch" />
+                <condition role="other" character="sayaka" />
                 <state img="#-smug.png">I've got my Shiny Rod, Sayaka. Don't worry, I'll keep you safe and entertained! No need to get slicy slicy stabby stabby over it.</state>
             </case>
             <case stage="0">
@@ -2386,7 +2387,8 @@
             <case stage="0-7" alsoPlaying="pit" alsoPlayingStage="3" alsoPlayingTimeInStage="0">
                 <state img="#-nervous.png">Hmm… Just… Er… studying away here! Like a powerful sorceress! Yep! (He’s kinda a stereotypical hero, so I should… I wish I had guidance on &lt;i&gt;this&lt;/i&gt;, Chariot!)</state>
             </case>
-            <case stage="0-2" alsoPlaying="pit" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
+            <case stage="0-2">
+                <condition role="other" character="pit" stage="5" timeInStage="0" />
                 <state img="#-distraught.png">Y’know, Pit, I’m pretty great at cards. Er, at least some card games. Anyway, if you lose before me, how about you let me summon you to teach you how to play better?! It’s a challenge!</state>
             </case>
             <case stage="0-7" alsoPlaying="pit" alsoPlayingStage="5" alsoPlayingTimeInStage="1">
@@ -2649,9 +2651,6 @@
             <case stage="0-7" alsoPlaying="meia" alsoPlayingSayingMarker="earth_sightseeing">
                 <state img="#-upbeat.png" marker="akko_meia_sightseeing">Oh! You should check out San Miguel, the City of the Sun! It's not only got super nice weather, it's also got a rich history of magic!</state>
             </case>
-            <case stage="0" alsoPlaying="tsuyu" notSaidMarker="hitsu">
-                <state img="#-confused.png" marker="hitsu">Oh… you tried that potion from the magic item cafe, didn’t you, Tsuyu! The one that gives you frog legs!</state>
-            </case>
             <case stage="7" oneShotId="1" alsoPlaying="mulan" alsoPlayingSaidMarker="akko_duel">
                 <state img="#-nervous.png">W-well, to answer your question, Mulan, maybe a few times. Sometimes people like if you look a little different, but never as like... a mouse or something like that. I think I'd probably die, and magic can't fix that!</state>
             </case>
@@ -2733,6 +2732,9 @@
             </case>
             <case stage="0-2" totalExposed="2" notSaidMarker="akko_smile">
                 <state img="#-calm.png" marker="akko_smile">I really want you all to smile! If that means I need to pick up the pace, let me know!</state>
+            </case>
+            <case stage="0" alsoPlaying="tsuyu" notSaidMarker="hitsu">
+                <state img="#-confused.png" marker="hitsu">Oh… you tried that potion from the magic item cafe, didn’t you, Tsuyu! The one that gives you frog legs!</state>
             </case>
             <case stage="0-2" notSaidMarker="luna_nova_academy" priority="0">
                 <state img="#-upbeat.png" marker="luna_nova_academy">Hey! If any of you like my magic, my school's always recruiting! It's called Luna Nova and has a rich heritage and blah blah blah; you're here to see people get naked, right?</state>
@@ -3096,67 +3098,84 @@
         </trigger>
 
         <trigger id="stripping">
-            <case stage="0" alsoPlaying="lotte" alsoPlayingStage="0-7" saidMarker="akko_not_necronomicon">
+            <case stage="0">
+                <condition role="self" saidMarker="akko_not_necronomicon" />
+                <condition role="other" character="lotte" stage="0-7" />
                 <state img="custom:#-lotte_transform" marker="akko_lotte" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse!&lt;/i&gt; Er... Sorry, I thought Lotte was gonna lose...</state>
             </case>
-            <case stage="0" alsoPlaying="lotte" alsoPlayingStage="8-9" saidMarker="akko_not_necronomicon">
+            <case stage="0">
+                <condition role="self" saidMarker="akko_not_necronomicon" />
+                <condition role="other" character="lotte" stage="8-9" />
                 <state img="custom:#-lotte_transform" marker="akko_lotte" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse!&lt;/i&gt; Er... Lotte's kind of distracting. That fanfiction stuff's really magical!</state>
             </case>
-            <case stage="1" alsoPlaying="saki_zls" alsoPlayingStage="6-10">
+            <case stage="1">
+                <condition role="other" character="saki_zls" stage="6-10" />
                 <state img="custom:#-zombie_transform" marker="akko_zombie" collectible="Chariot Card" collectible-value="+1">Saki! You make being a zombie seem awesome! Let me try it! &lt;i&gt;Metamorphie faciesse!&lt;/i&gt; Uhhhhhh....</state>
             </case>
-            <case stage="1" alsoPlaying="sakura" alsoPlayingStage="3-9">
+            <case stage="1">
+                <condition role="other" character="sakura" stage="3-9" />
                 <state img="custom:#-zombie_transform" marker="akko_zombie" collectible="Chariot Card" collectible-value="+1">Sakura, how bad could being a zombie really be? &lt;i&gt;Metamorphie faciesse!&lt;/i&gt; Uhhhhhh....</state>
             </case>
-            <case stage="2" alsoPlaying="pit" alsoPlayingStage="2-5">
+            <case stage="2">
+                <condition role="other" character="pit" stage="2-5" />
                 <state img="custom:#-princess_transform" marker="akko_princess" collectible="Chariot Card" collectible-value="+1">Uwaaah, I’m sorry, I forgot, there’s a no touching rule…</state>
             </case>
             <case stage="2" alsoPlaying="pit" alsoPlayingStage="6">
                 <state img="custom:#-mantis_transform" marker="akko_mantis" collectible="Chariot Card" collectible-value="+1">Er… on second thought, your hands are a little… busy… Oh! You could use your teeth, or something?</state>
             </case>
-            <case stage="2" alsoPlaying="pit" alsoPlayingStage="7">
+            <case stage="2">
+                <condition role="other" character="pit" stage="7" />
                 <state img="custom:#-fairy_transform" marker="akko_fairy" collectible="Chariot Card" collectible-value="+1">Er… on second thought, your hands are a little… sticky… Oh! You could use your teeth, or something?</state>
             </case>
-            <case stage="4" alsoPlaying="lotte" alsoPlayingStage="0-9">
+            <case stage="4">
+                <condition role="other" character="lotte" stage="0-9" />
                 <state img="custom:#-bunny_transform" collectible="Chariot Card" collectible-value="+1">Hey, Lotte, this is cute, right? It's like the old transformations I used to do... when I was really bad at it. But it's cute now, huh?</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_roomies1" alsoPlayingNotSaidMarker="akko_roomies2" alsoPlayingSayingMarker="akko_roomies2">
+            <case stage="0">
                 <condition count="0" filter="sucy" />
                 <condition count="0" filter="lotte" />
+                <condition role="other" character="streaming-chan" saidMarker="akko_roomies1" sayingMarker="akko_roomies2" notSaidMarker="akko_roomies2" />
                 <state img="custom:#-lotte_transform" marker="akko_lotte" collectible="Chariot Card" collectible-value="+1">Lotte’s a great witch! She works super hard to make really cool magic items. &lt;i&gt;She also writes porn, so I think she’d love this game!&lt;/i&gt; And Sucy does… um… well, mushroomy, Sucy things, I guess. This is what Lotte looks like!</state>
             </case>
-            <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_roomies1" alsoPlayingNotSaidMarker="akko_roomies2" alsoPlayingSayingMarker="akko_roomies2">
+            <case stage="1">
                 <condition count="0" filter="sucy" />
                 <condition count="0" filter="lotte" />
+                <condition role="other" character="streaming-chan" saidMarker="akko_roomies1" sayingMarker="akko_roomies2" notSaidMarker="akko_roomies2" />
                 <state img="custom:#-chizuru_transform" marker="akko_chizuru" collectible="Chariot Card" collectible-value="+1">Lotte’s a great witch! She works super hard to make really cool magic items. &lt;i&gt;She also writes porn, so I think she’d love this game!&lt;/i&gt; And Sucy does… um… well, mushroomy, Sucy things, I guess.</state>
             </case>
-            <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_roomies1" alsoPlayingNotSaidMarker="akko_roomies2" alsoPlayingSayingMarker="akko_roomies2">
+            <case stage="2">
                 <condition count="0" filter="sucy" />
                 <condition count="0" filter="lotte" />
+                <condition role="other" character="streaming-chan" saidMarker="akko_roomies1" sayingMarker="akko_roomies2" notSaidMarker="akko_roomies2" />
                 <state img="custom:#-sakkoura_transform" marker="akko_sakkoura" collectible="Chariot Card" collectible-value="+1">Lotte’s a great witch! She works super hard to make really cool magic items. &lt;i&gt;She also writes porn, so I think she’d love this game!&lt;/i&gt; And Sucy does… um… well, mushroomy, Sucy things, I guess.</state>
             </case>
-            <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_roomies1" alsoPlayingNotSaidMarker="akko_roomies2" alsoPlayingSayingMarker="akko_roomies2">
+            <case stage="3">
                 <condition count="0" filter="sucy" />
                 <condition count="0" filter="lotte" />
+                <condition role="other" character="streaming-chan" saidMarker="akko_roomies1" sayingMarker="akko_roomies2" notSaidMarker="akko_roomies2" />
                 <state img="custom:#-scavenger_transform" marker="akko_scavenger" collectible="Chariot Card" collectible-value="+1">Lotte’s a great witch! She works super hard to make really cool magic items. &lt;i&gt;She also writes porn, so I think she’d love this game!&lt;/i&gt; And Sucy does… um… well, mushroomy, Sucy things, I guess.</state>
             </case>
-            <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_roomies1" alsoPlayingNotSaidMarker="akko_roomies2" alsoPlayingSayingMarker="akko_roomies2">
+            <case stage="4">
                 <condition count="0" filter="sucy" />
                 <condition count="0" filter="lotte" />
+                <condition role="other" character="streaming-chan" saidMarker="akko_roomies1" sayingMarker="akko_roomies2" notSaidMarker="akko_roomies2" />
                 <state img="custom:#-succubus_transform" marker="akko_succubus" collectible="Chariot Card" collectible-value="+1">Lotte’s a great witch! She works super hard to make really cool magic items. &lt;i&gt;She also writes porn, so I think she’d love this game!&lt;/i&gt; And Sucy does… um… well, mushroomy, Sucy things, I guess.</state>
             </case>
-            <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_roomies1" alsoPlayingNotSaidMarker="akko_roomies2" alsoPlayingSayingMarker="akko_roomies2">
+            <case stage="5">
                 <condition count="0" filter="sucy" />
                 <condition count="0" filter="lotte" />
+                <condition role="other" character="streaming-chan" saidMarker="akko_roomies1" sayingMarker="akko_roomies2" notSaidMarker="akko_roomies2" />
                 <state img="custom:#-swim_transform" marker="akko_swim" collectible="Chariot Card" collectible-value="+1">Lotte’s a great witch! She works super hard to make really cool magic items. &lt;i&gt;She also writes porn, so I think she’d love this game!&lt;/i&gt; And Sucy does… um… well, mushroomy, Sucy things, I guess.</state>
             </case>
-            <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_roomies1" alsoPlayingNotSaidMarker="akko_roomies2" alsoPlayingSayingMarker="akko_roomies2">
+            <case stage="6">
                 <condition count="0" filter="sucy" />
                 <condition count="0" filter="lotte" />
+                <condition role="other" character="streaming-chan" saidMarker="akko_roomies1" sayingMarker="akko_roomies2" notSaidMarker="akko_roomies2" />
                 <state img="custom:#-monado_transform" marker="akko_monado" collectible="Chariot Card" collectible-value="+1">Lotte’s a great witch! She works super hard to make really cool magic items. &lt;i&gt;She also writes porn, so I think she’d love this game!&lt;/i&gt; And Sucy does… um… well, mushroomy, Sucy things, I guess.</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_roomies1" alsoPlayingNotSaidMarker="akko_roomies2" alsoPlayingSayingMarker="akko_roomies2">
+            <case stage="0">
                 <condition count="1" filter="lotte" />
+                <condition role="other" character="streaming-chan" saidMarker="akko_roomies1" sayingMarker="akko_roomies2" notSaidMarker="akko_roomies2" />
                 <state img="custom:#-Himakko_transform" marker="akko_himewitch" collectible="Chariot Card" collectible-value="+1">You know, Sucy might have fun here, right, Lotte, so many vict-- &lt;i&gt;test&lt;/i&gt; subjects that aren’t me for once!</state>
             </case>
             <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_roomies1" alsoPlayingNotSaidMarker="akko_roomies2" alsoPlayingSayingMarker="akko_roomies2">
@@ -3171,8 +3190,9 @@
                 <condition count="1" filter="lotte" />
                 <state img="custom:#-miami_transform" marker="akko_miami" collectible="Chariot Card" collectible-value="+1">You know, Sucy might have fun here, right, Lotte, so many vict-- &lt;i&gt;test&lt;/i&gt; subjects that aren’t me for once!</state>
             </case>
-            <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_roomies1" alsoPlayingNotSaidMarker="akko_roomies2" alsoPlayingSayingMarker="akko_roomies2">
+            <case stage="4">
                 <condition count="1" filter="lotte" />
+                <condition role="other" character="streaming-chan" saidMarker="akko_roomies1" sayingMarker="akko_roomies2" notSaidMarker="akko_roomies2" />
                 <state img="custom:#-mecha-akko_transform" marker="akko_mecha" collectible="Chariot Card" collectible-value="+1">You know, Sucy might have fun here, right, Lotte, so many vict-- &lt;i&gt;test&lt;/i&gt; subjects that aren’t me for once!</state>
             </case>
             <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_roomies1" alsoPlayingNotSaidMarker="akko_roomies2" alsoPlayingSayingMarker="akko_roomies2">
@@ -3183,283 +3203,347 @@
                 <condition count="1" filter="lotte" />
                 <state img="custom:#-zoned_transform" marker="akko_zoned" collectible="Chariot Card" collectible-value="+1">You know, Sucy might have fun here, right, Lotte, so many vict-- &lt;i&gt;test&lt;/i&gt; subjects that aren’t me for once!</state>
             </case>
-            <case stage="0" alsoPlaying="twilight">
+            <case stage="0">
                 <condition count="0" filter="lotte" />
+                <condition role="other" character="twilight" />
                 <state img="custom:#-lotte_transform" marker="akko_lotte" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse!&lt;/i&gt; Like this, Twilight, or some other witch? That's my friend Lotte!</state>
             </case>
             <case stage="4" alsoPlaying="natsuki">
                 <condition count="1" filter="pit" />
                 <state img="custom:#-phosphora_transform" marker="akko_phosphora" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie vestesse!&lt;/i&gt; Would a Japanese &lt;i&gt;game&lt;/i&gt; work? Is this getting too meta for you, Pit?</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_boy1" alsoPlayingNotSaidMarker="akko_boy2" alsoPlayingSayingMarker="akko_boy2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_boy1" sayingMarker="akko_boy2" notSaidMarker="akko_boy2" />
                 <state img="custom:#-elma_transform" marker="akko_elma" collectible="Chariot Card" collectible-value="+1">…Well… if it’s for the show… yes! Once, Sucy and Lotte made me do it! Um. For them. Then with them…</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_brina1" alsoPlayingNotSaidMarker="akko_brina2" alsoPlayingSayingMarker="akko_brina2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_brina1" sayingMarker="akko_brina2" notSaidMarker="akko_brina2" />
                 <state img="custom:#-inky_transform" marker="akko_bendy" collectible="Chariot Card" collectible-value="+1">I haven’t seen you use much of it tonight…</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_career1" alsoPlayingNotSaidMarker="akko_career2" alsoPlayingSayingMarker="akko_career2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_career1" sayingMarker="akko_career2" notSaidMarker="akko_career2" />
                 <state img="custom:#-Himakko_transform" marker="akko_himewitch" collectible="Chariot Card" collectible-value="+1">Er… well, being a traveling, performing witch certainly makes a lot of people happy, and I’d never give up on that!</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_crush1" alsoPlayingNotSaidMarker="akko_crush2" alsoPlayingSayingMarker="akko_crush2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_crush1" sayingMarker="akko_crush2" notSaidMarker="akko_crush2" />
                 <state img="custom:#-ochako_transform" marker="akko_ochako" collectible="Chariot Card" collectible-value="+1">The boy’s nice, and always super interested in my magic, but the other girl’s a witch, and she’s super good at it, but she can be kind of stuck up.</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_delay1" alsoPlayingNotSaidMarker="akko_delay2" alsoPlayingSayingMarker="akko_delay2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_delay1" sayingMarker="akko_delay2" notSaidMarker="akko_delay2" />
                 <state img="custom:#-lotte_transform" marker="akko_lotte" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;So&lt;/i&gt; mean! I just got a little lost along the way. Do you know how hard it is to prepare for a show like this one?!</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_destiny1" alsoPlayingNotSaidMarker="akko_destiny2" alsoPlayingSayingMarker="akko_destiny2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_destiny1" sayingMarker="akko_destiny2" notSaidMarker="akko_destiny2" />
                 <state img="custom:#-ochako_transform" marker="akko_ochako" collectible="Chariot Card" collectible-value="+1">I got up early and stayed up late practicing my magic-- hold this--</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_fail1" alsoPlayingNotSaidMarker="akko_fail2" alsoPlayingSayingMarker="akko_fail2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_fail1" sayingMarker="akko_fail2" notSaidMarker="akko_fail2" />
                 <state img="custom:#-Himakko_transform" marker="akko_himewitch" collectible="Chariot Card" collectible-value="+1">I-I’ve worked really hard to get where I am. Sure, I’m not always the best, but I always try really hard!</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_futaba1" alsoPlayingNotSaidMarker="akko_futaba2" alsoPlayingSayingMarker="akko_futaba2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_futaba1" sayingMarker="akko_futaba2" notSaidMarker="akko_futaba2" />
                 <state img="custom:#-elma_transform" marker="akko_elma" collectible="Chariot Card" collectible-value="+1">Oh, are yours the poseable kind? I always thought that sentai stuff was pretty cool!</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_magic1" alsoPlayingNotSaidMarker="akko_magic2" alsoPlayingSayingMarker="akko_magic2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_magic1" sayingMarker="akko_magic2" notSaidMarker="akko_magic2" />
                 <state img="custom:#-Himakko_transform" marker="akko_himewitch" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse&lt;/i&gt;! W-whoops! I-I meant transformation magic…</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_megu1" alsoPlayingNotSaidMarker="akko_megu2" alsoPlayingSayingMarker="akko_megu2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_megu1" sayingMarker="akko_megu2" notSaidMarker="akko_megu2" />
                 <state img="custom:#-lotte_transform" marker="akko_lotte" collectible="Chariot Card" collectible-value="+1">Er… can you actually use anything but  Explosion anyway? My lightshows are very uplifting…</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_name1" alsoPlayingNotSaidMarker="akko_name2" alsoPlayingSayingMarker="akko_name2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_name1" sayingMarker="akko_name2" notSaidMarker="akko_name2" />
                 <state img="custom:#-inky_transform" marker="akko_bendy" collectible="Chariot Card" collectible-value="+1">I-I um, er. I don’t mind questions from fans or stuff…</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_xform1" alsoPlayingNotSaidMarker="akko_xform2" alsoPlayingSayingMarker="akko_xform2">
+            <case stage="0">
+                <condition role="other" character="streaming-chan" saidMarker="akko_xform1" sayingMarker="akko_xform2" notSaidMarker="akko_xform2" />
                 <state img="custom:#-Himakko_transform" marker="akko_himewitch" collectible="Chariot Card" collectible-value="+1">Um… Other people find it kind of weird, so I tend not to get to do stuff with it, but it’s always easy to look a certain way a partner might want me to look, I guess…</state>
             </case>
-            <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_boy1" alsoPlayingNotSaidMarker="akko_boy2" alsoPlayingSayingMarker="akko_boy2">
+            <case stage="1">
+                <condition role="other" character="streaming-chan" saidMarker="akko_boy1" sayingMarker="akko_boy2" notSaidMarker="akko_boy2" />
                 <state img="custom:#-tooby_transform" marker="akko_2b" collectible="Chariot Card" collectible-value="+1">…Well… if it’s for the show… yes! Once, Sucy and Lotte made me do it! Um. For them. Then with them…</state>
             </case>
-            <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_brina1" alsoPlayingNotSaidMarker="akko_brina2" alsoPlayingSayingMarker="akko_brina2">
+            <case stage="1">
+                <condition role="other" character="streaming-chan" saidMarker="akko_brina1" sayingMarker="akko_brina2" notSaidMarker="akko_brina2" />
                 <state img="custom:#-zombie_transform" marker="akko_zombie" collectible="Chariot Card" collectible-value="+1">I haven’t seen you use much of it tonight…</state>
             </case>
             <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_career1" alsoPlayingNotSaidMarker="akko_career2" alsoPlayingSayingMarker="akko_career2">
                 <state img="custom:#-sailorakko_transform" marker="akko_sailor" collectible="Chariot Card" collectible-value="+1">Er… well, being a traveling, performing witch certainly makes a lot of people happy, and I’d never give up on that!</state>
             </case>
-            <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_crush1" alsoPlayingNotSaidMarker="akko_crush2" alsoPlayingSayingMarker="akko_crush2">
+            <case stage="1">
+                <condition role="other" character="streaming-chan" saidMarker="akko_crush1" sayingMarker="akko_crush2" notSaidMarker="akko_crush2" />
                 <state img="custom:#-yae_transform" marker="akko_yae" collectible="Chariot Card" collectible-value="+1">The boy’s nice, and always super interested in my magic, but the other girl’s a witch, and she’s super good at it, but she can be kind of stuck up.</state>
             </case>
-            <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_delay1" alsoPlayingNotSaidMarker="akko_delay2" alsoPlayingSayingMarker="akko_delay2">
+            <case stage="1">
+                <condition role="other" character="streaming-chan" saidMarker="akko_delay1" sayingMarker="akko_delay2" notSaidMarker="akko_delay2" />
                 <state img="custom:#-chizuru_transform" marker="akko_chizuru" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;So&lt;/i&gt; mean! I just got a little lost along the way. Do you know how hard it is to prepare for a show like this one?!</state>
             </case>
             <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_destiny1" alsoPlayingNotSaidMarker="akko_destiny2" alsoPlayingSayingMarker="akko_destiny2">
                 <state img="custom:#-tooby_transform" marker="akko_2b" collectible="Chariot Card" collectible-value="+1">I got up early and stayed up late practicing my magic-- hold this--</state>
             </case>
-            <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_fail1" alsoPlayingNotSaidMarker="akko_fail2" alsoPlayingSayingMarker="akko_fail2">
+            <case stage="1">
+                <condition role="other" character="streaming-chan" saidMarker="akko_fail1" sayingMarker="akko_fail2" notSaidMarker="akko_fail2" />
                 <state img="custom:#-sailorakko_transform" marker="akko_sailor" collectible="Chariot Card" collectible-value="+1">I-I’ve worked really hard to get where I am. Sure, I’m not always the best, but I always try really hard!</state>
             </case>
-            <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_futaba1" alsoPlayingNotSaidMarker="akko_futaba2" alsoPlayingSayingMarker="akko_futaba2">
+            <case stage="1">
+                <condition role="other" character="streaming-chan" saidMarker="akko_futaba1" sayingMarker="akko_futaba2" notSaidMarker="akko_futaba2" />
                 <state img="custom:#-yae_transform" marker="akko_yae" collectible="Chariot Card" collectible-value="+1">Oh, are yours the poseable kind? I always thought that sentai stuff was pretty cool!</state>
             </case>
             <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_magic1" alsoPlayingNotSaidMarker="akko_magic2" alsoPlayingSayingMarker="akko_magic2">
                 <state img="custom:#-sailorakko_transform" marker="akko_sailor" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse&lt;/i&gt;! W-whoops! I-I meant transformation magic…</state>
             </case>
-            <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_megu1" alsoPlayingNotSaidMarker="akko_megu2" alsoPlayingSayingMarker="akko_megu2">
+            <case stage="1">
+                <condition role="other" character="streaming-chan" saidMarker="akko_megu1" sayingMarker="akko_megu2" notSaidMarker="akko_megu2" />
                 <state img="custom:#-yae_transform" marker="akko_yae" collectible="Chariot Card" collectible-value="+1">Er… can you actually use anything but Explosion anyway? My lightshows are very uplifting…</state>
             </case>
             <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_name1" alsoPlayingNotSaidMarker="akko_name2" alsoPlayingSayingMarker="akko_name2">
                 <state img="custom:#-tooby_transform" marker="akko_2b" collectible="Chariot Card" collectible-value="+1">I-I um, er. I don’t mind questions from fans or stuff…</state>
             </case>
-            <case stage="1" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_xform1" alsoPlayingNotSaidMarker="akko_xform2" alsoPlayingSayingMarker="akko_xform2">
+            <case stage="1">
+                <condition role="other" character="streaming-chan" saidMarker="akko_xform1" sayingMarker="akko_xform2" notSaidMarker="akko_xform2" />
                 <state img="custom:#-chizuru_transform" marker="akko_chizuru" collectible="Chariot Card" collectible-value="+1">Um… Other people find it kind of weird, so I tend not to get to do stuff with it, but it’s always easy to look a certain way a partner might want me to look, I guess…</state>
             </case>
             <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_boy1" alsoPlayingNotSaidMarker="akko_boy2" alsoPlayingSayingMarker="akko_boy2">
                 <state img="custom:#-princess_transform" marker="akko_princess" collectible="Chariot Card" collectible-value="+1">…Well… if it’s for the show… yes! Once, Sucy and Lotte made me do it! Um. For them. Then with them…</state>
             </case>
-            <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_brina1" alsoPlayingNotSaidMarker="akko_brina2" alsoPlayingSayingMarker="akko_brina2">
+            <case stage="2">
+                <condition role="other" character="streaming-chan" saidMarker="akko_brina1" sayingMarker="akko_brina2" notSaidMarker="akko_brina2" />
                 <state img="custom:#-zelda_transform" marker="akko_zelda" collectible="Chariot Card" collectible-value="+1">I haven’t seen you use much of it tonight…</state>
             </case>
             <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_career1" alsoPlayingNotSaidMarker="akko_career2" alsoPlayingSayingMarker="akko_career2">
                 <state img="custom:#-mantis_transform" marker="akko_mantis" collectible="Chariot Card" collectible-value="+1">Er… well, being a traveling, performing witch certainly makes a lot of people happy, and I’d never give up on that!</state>
             </case>
-            <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_crush1" alsoPlayingNotSaidMarker="akko_crush2" alsoPlayingSayingMarker="akko_crush2">
+            <case stage="2">
+                <condition role="other" character="streaming-chan" saidMarker="akko_crush1" sayingMarker="akko_crush2" notSaidMarker="akko_crush2" />
                 <state img="custom:#-fairy_transform" marker="akko_fairy" collectible="Chariot Card" collectible-value="+1">The boy’s nice, and always super interested in my magic, but the other girl’s a witch, and she’s super good at it, but she can be kind of stuck up.</state>
             </case>
             <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_delay1" alsoPlayingNotSaidMarker="akko_delay2" alsoPlayingSayingMarker="akko_delay2">
                 <state img="custom:#-sakkoura_transform" marker="akko_sakkoura" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;So&lt;/i&gt; mean! I just got a little lost along the way. Do you know how hard it is to prepare for a show like this one?!</state>
             </case>
-            <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_destiny1" alsoPlayingNotSaidMarker="akko_destiny2" alsoPlayingSayingMarker="akko_destiny2">
+            <case stage="2">
+                <condition role="other" character="streaming-chan" saidMarker="akko_destiny1" sayingMarker="akko_destiny2" notSaidMarker="akko_destiny2" />
                 <state img="custom:#-fairy_transform" marker="akko_fairy" collectible="Chariot Card" collectible-value="+1">I got up early and stayed up late practicing my magic-- hold this--</state>
             </case>
             <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_fail1" alsoPlayingNotSaidMarker="akko_fail2" alsoPlayingSayingMarker="akko_fail2">
                 <state img="custom:#-mantis_transform" marker="akko_mantis" collectible="Chariot Card" collectible-value="+1">I-I’ve worked really hard to get where I am. Sure, I’m not always the best, but I always try really hard!</state>
             </case>
-            <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_futaba1" alsoPlayingNotSaidMarker="akko_futaba2" alsoPlayingSayingMarker="akko_futaba2">
+            <case stage="2">
+                <condition role="other" character="streaming-chan" saidMarker="akko_futaba1" sayingMarker="akko_futaba2" notSaidMarker="akko_futaba2" />
                 <state img="custom:#-zelda_transform" marker="akko_zelda" collectible="Chariot Card" collectible-value="+1">Oh, are yours the poseable kind? I always thought that sentai stuff was pretty cool!</state>
             </case>
-            <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_magic1" alsoPlayingNotSaidMarker="akko_magic2" alsoPlayingSayingMarker="akko_magic2">
+            <case stage="2">
+                <condition role="other" character="streaming-chan" saidMarker="akko_magic1" sayingMarker="akko_magic2" notSaidMarker="akko_magic2" />
                 <state img="custom:#-zelda_transform" marker="akko_zelda" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse&lt;/i&gt;! W-whoops! I-I meant transformation magic…</state>
             </case>
             <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_megu1" alsoPlayingNotSaidMarker="akko_megu2" alsoPlayingSayingMarker="akko_megu2">
                 <state img="custom:#-fairy_transform" marker="akko_fairy" collectible="Chariot Card" collectible-value="+1">Er… can you actually use anything but  Explosion anyway? My lightshows are very uplifting…</state>
             </case>
-            <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_name1" alsoPlayingNotSaidMarker="akko_name2" alsoPlayingSayingMarker="akko_name2">
+            <case stage="2">
+                <condition role="other" character="streaming-chan" saidMarker="akko_name1" sayingMarker="akko_name2" notSaidMarker="akko_name2" />
                 <state img="custom:#-princess_transform" marker="akko_princess" collectible="Chariot Card" collectible-value="+1">I-I um, er. I don’t mind questions from fans or stuff…</state>
             </case>
             <case stage="2" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_xform1" alsoPlayingNotSaidMarker="akko_xform2" alsoPlayingSayingMarker="akko_xform2">
                 <state img="custom:#-sakkoura_transform" marker="akko_sakkoura" collectible="Chariot Card" collectible-value="+1">Um… Other people find it kind of weird, so I tend not to get to do stuff with it, but it’s always easy to look a certain way a partner might want me to look, I guess…</state>
             </case>
-            <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_boy1" alsoPlayingNotSaidMarker="akko_boy2" alsoPlayingSayingMarker="akko_boy2">
+            <case stage="3">
+                <condition role="other" character="streaming-chan" saidMarker="akko_boy1" sayingMarker="akko_boy2" notSaidMarker="akko_boy2" />
                 <state img="custom:#-kizuna_transform" marker="akko_ai" collectible="Chariot Card" collectible-value="+1">…Well… if it’s for the show… yes! Once, Sucy and Lotte made me do it! Um. For them. Then with them…</state>
             </case>
             <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_brina1" alsoPlayingNotSaidMarker="akko_brina2" alsoPlayingSayingMarker="akko_brina2">
                 <state img="custom:#-scavenger_transform" marker="akko_scavenger" collectible="Chariot Card" collectible-value="+1">I haven’t seen you use much of it tonight…</state>
             </case>
-            <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_career1" alsoPlayingNotSaidMarker="akko_career2" alsoPlayingSayingMarker="akko_career2">
+            <case stage="3">
+                <condition role="other" character="streaming-chan" saidMarker="akko_career1" sayingMarker="akko_career2" notSaidMarker="akko_career2" />
                 <state img="custom:#-miami_transform" marker="akko_miami" collectible="Chariot Card" collectible-value="+1">Er… well, being a traveling, performing witch certainly makes a lot of people happy, and I’d never give up on that!</state>
             </case>
             <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_crush1" alsoPlayingNotSaidMarker="akko_crush2" alsoPlayingSayingMarker="akko_crush2">
                 <state img="custom:#-yakko_transform" marker="akko_yoko" collectible="Chariot Card" collectible-value="+1">The boy’s nice, and always super interested in my magic, but the other girl’s a witch, and she’s super good at it, but she can be kind of stuck up.</state>
             </case>
-            <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_delay1" alsoPlayingNotSaidMarker="akko_delay2" alsoPlayingSayingMarker="akko_delay2">
+            <case stage="3">
+                <condition role="other" character="streaming-chan" saidMarker="akko_delay1" sayingMarker="akko_delay2" notSaidMarker="akko_delay2" />
                 <state img="custom:#-scavenger_transform" marker="akko_scavenger" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;So&lt;/i&gt; mean! I just got a little lost along the way. Do you know how hard it is to prepare for a show like this one?!</state>
             </case>
             <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_destiny1" alsoPlayingNotSaidMarker="akko_destiny2" alsoPlayingSayingMarker="akko_destiny2">
                 <state img="custom:#-miami_transform" marker="akko_miami" collectible="Chariot Card" collectible-value="+1">I got up early and stayed up late practicing my magic-- hold this--</state>
             </case>
-            <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_fail1" alsoPlayingNotSaidMarker="akko_fail2" alsoPlayingSayingMarker="akko_fail2">
+            <case stage="3">
+                <condition role="other" character="streaming-chan" saidMarker="akko_fail1" sayingMarker="akko_fail2" notSaidMarker="akko_fail2" />
                 <state img="custom:#-scavenger_transform" marker="akko_scavenger" collectible="Chariot Card" collectible-value="+1">I-I’ve worked really hard to get where I am. Sure, I’m not always the best, but I always try really hard!</state>
             </case>
             <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_futaba1" alsoPlayingNotSaidMarker="akko_futaba2" alsoPlayingSayingMarker="akko_futaba2">
                 <state img="custom:#-yakko_transform" marker="akko_yoko" collectible="Chariot Card" collectible-value="+1">Oh, are yours the poseable kind? I always thought that sentai stuff was pretty cool!</state>
             </case>
-            <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_magic1" alsoPlayingNotSaidMarker="akko_magic2" alsoPlayingSayingMarker="akko_magic2">
+            <case stage="3">
+                <condition role="other" character="streaming-chan" saidMarker="akko_magic1" sayingMarker="akko_magic2" notSaidMarker="akko_magic2" />
                 <state img="custom:#-yakko_transform" marker="akko_yoko" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse&lt;/i&gt;! W-whoops! I-I meant transformation magic…</state>
             </case>
-            <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_megu1" alsoPlayingNotSaidMarker="akko_megu2" alsoPlayingSayingMarker="akko_megu2">
+            <case stage="3">
+                <condition role="other" character="streaming-chan" saidMarker="akko_megu1" sayingMarker="akko_megu2" notSaidMarker="akko_megu2" />
                 <state img="custom:#-yakko_transform" marker="akko_yoko" collectible="Chariot Card" collectible-value="+1">Er… can you actually use anything but  Explosion anyway? My lightshows are very uplifting…</state>
             </case>
             <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_name1" alsoPlayingNotSaidMarker="akko_name2" alsoPlayingSayingMarker="akko_name2">
                 <state img="custom:#-miami_transform" marker="akko_miami" collectible="Chariot Card" collectible-value="+1">I-I um, er. I don’t mind questions from fans or stuff…</state>
             </case>
-            <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_xform1" alsoPlayingNotSaidMarker="akko_xform2" alsoPlayingSayingMarker="akko_xform2">
+            <case stage="3">
+                <condition role="other" character="streaming-chan" saidMarker="akko_xform1" sayingMarker="akko_xform2" notSaidMarker="akko_xform2" />
                 <state img="custom:#-yakko_transform" marker="akko_yoko" collectible="Chariot Card" collectible-value="+1">Um… Other people find it kind of weird, so I tend not to get to do stuff with it, but it’s always easy to look a certain way a partner might want me to look, I guess…</state>
             </case>
-            <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_boy1" alsoPlayingNotSaidMarker="akko_boy2" alsoPlayingSayingMarker="akko_boy2">
+            <case stage="4">
+                <condition role="other" character="streaming-chan" saidMarker="akko_boy1" sayingMarker="akko_boy2" notSaidMarker="akko_boy2" />
                 <state img="custom:#-phosphora_transform" marker="akko_phosphora" collectible="Chariot Card" collectible-value="+1">…Well… if it’s for the show… yes! Once, Sucy and Lotte made me do it! Um. For them. Then with them…</state>
             </case>
-            <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_brina1" alsoPlayingNotSaidMarker="akko_brina2" alsoPlayingSayingMarker="akko_brina2">
+            <case stage="4">
+                <condition role="other" character="streaming-chan" saidMarker="akko_brina1" sayingMarker="akko_brina2" notSaidMarker="akko_brina2" />
                 <state img="custom:#-bunny_transform" marker="akko_bunny" collectible="Chariot Card" collectible-value="+1">I haven’t seen you use much of it tonight…</state>
             </case>
-            <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_career1" alsoPlayingNotSaidMarker="akko_career2" alsoPlayingSayingMarker="akko_career2">
+            <case stage="4">
+                <condition role="other" character="streaming-chan" saidMarker="akko_career1" sayingMarker="akko_career2" notSaidMarker="akko_career2" />
                 <state img="custom:#-bunny_transform" marker="akko_bunny" collectible="Chariot Card" collectible-value="+1">Er… well, being a traveling, performing witch certainly makes a lot of people happy, and I’d never give up on that!</state>
             </case>
             <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_crush1" alsoPlayingNotSaidMarker="akko_crush2" alsoPlayingSayingMarker="akko_crush2">
                 <state img="custom:#-succubus_transform" marker="akko_succubus" collectible="Chariot Card" collectible-value="+1">The boy’s nice, and always super interested in my magic, but the other girl’s a witch, and she’s super good at it, but she can be kind of stuck up.</state>
             </case>
-            <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_delay1" alsoPlayingNotSaidMarker="akko_delay2" alsoPlayingSayingMarker="akko_delay2">
+            <case stage="4">
+                <condition role="other" character="streaming-chan" saidMarker="akko_delay1" sayingMarker="akko_delay2" notSaidMarker="akko_delay2" />
                 <state img="custom:#-mecha-akko_transform" marker="akko_mecha" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;So&lt;/i&gt; mean! I just got a little lost along the way. Do you know how hard it is to prepare for a show like this one?!</state>
             </case>
-            <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_destiny1" alsoPlayingNotSaidMarker="akko_destiny2" alsoPlayingSayingMarker="akko_destiny2">
+            <case stage="4">
+                <condition role="other" character="streaming-chan" saidMarker="akko_destiny1" sayingMarker="akko_destiny2" notSaidMarker="akko_destiny2" />
                 <state img="custom:#-succubus_transform" marker="akko_succubus" collectible="Chariot Card" collectible-value="+1">I got up early and stayed up late practicing my magic-- hold this--</state>
             </case>
             <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_fail1" alsoPlayingNotSaidMarker="akko_fail2" alsoPlayingSayingMarker="akko_fail2">
                 <state img="custom:#-bunny_transform" marker="akko_bunny" collectible="Chariot Card" collectible-value="+1">I-I’ve worked really hard to get where I am. Sure, I’m not always the best, but I always try really hard!</state>
             </case>
-            <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_futaba1" alsoPlayingNotSaidMarker="akko_futaba2" alsoPlayingSayingMarker="akko_futaba2">
+            <case stage="4">
+                <condition role="other" character="streaming-chan" saidMarker="akko_futaba1" sayingMarker="akko_futaba2" notSaidMarker="akko_futaba2" />
                 <state img="custom:#-phosphora_transform" marker="akko_phosphora" collectible="Chariot Card" collectible-value="+1">Oh, are yours the poseable kind? I always thought that sentai stuff was pretty cool!</state>
             </case>
-            <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_magic1" alsoPlayingNotSaidMarker="akko_magic2" alsoPlayingSayingMarker="akko_magic2">
+            <case stage="4">
+                <condition role="other" character="streaming-chan" saidMarker="akko_magic1" sayingMarker="akko_magic2" notSaidMarker="akko_magic2" />
                 <state img="custom:#-bunny_transform" marker="akko_bunny" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse&lt;/i&gt;! W-whoops! I-I meant transformation magic…</state>
             </case>
             <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_megu1" alsoPlayingNotSaidMarker="akko_megu2" alsoPlayingSayingMarker="akko_megu2">
                 <state img="custom:#-succubus_transform" marker="akko_mecha" collectible="Chariot Card" collectible-value="+1">Er… can you actually use anything but Explosion anyway? My lightshows are very uplifting…</state>
             </case>
-            <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_name1" alsoPlayingNotSaidMarker="akko_name2" alsoPlayingSayingMarker="akko_name2">
+            <case stage="4">
+                <condition role="other" character="streaming-chan" saidMarker="akko_name1" sayingMarker="akko_name2" notSaidMarker="akko_name2" />
                 <state img="custom:#-bunny_transform" marker="akko_bunny" collectible="Chariot Card" collectible-value="+1">I-I um, er. I don’t mind questions from fans or stuff…</state>
             </case>
-            <case stage="4" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_xform1" alsoPlayingNotSaidMarker="akko_xform2" alsoPlayingSayingMarker="akko_xform2">
+            <case stage="4">
+                <condition role="other" character="streaming-chan" saidMarker="akko_xform1" sayingMarker="akko_xform2" notSaidMarker="akko_xform2" />
                 <state img="custom:#-succubus_transform" marker="akko_succubus" collectible="Chariot Card" collectible-value="+1">Um… Other people find it kind of weird, so I tend not to get to do stuff with it, but it’s always easy to look a certain way a partner might want me to look, I guess…</state>
             </case>
-            <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_boy1" alsoPlayingNotSaidMarker="akko_boy2" alsoPlayingSayingMarker="akko_boy2">
+            <case stage="5">
+                <condition role="other" character="streaming-chan" saidMarker="akko_boy1" sayingMarker="akko_boy2" notSaidMarker="akko_boy2" />
                 <state img="custom:#-liru_transform" marker="akko_liru" collectible="Chariot Card" collectible-value="+1">…Well… if it’s for the show… yes! Once, Sucy and Lotte made me do it! Um. For them. Then with them…</state>
             </case>
             <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_brina1" alsoPlayingNotSaidMarker="akko_brina2" alsoPlayingSayingMarker="akko_brina2">
                 <state img="custom:#-snakko_transform" marker="akko_snake" collectible="Chariot Card" collectible-value="+1">I haven’t seen you use much of it tonight…</state>
             </case>
-            <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_career1" alsoPlayingNotSaidMarker="akko_career2" alsoPlayingSayingMarker="akko_career2">
+            <case stage="5">
+                <condition role="other" character="streaming-chan" saidMarker="akko_career1" sayingMarker="akko_career2" notSaidMarker="akko_career2" />
                 <state img="custom:#-liru_transform" marker="akko_liru" collectible="Chariot Card" collectible-value="+1">Er… well, being a traveling, performing witch certainly makes a lot of people happy, and I’d never give up on that!</state>
             </case>
-            <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_crush1" alsoPlayingNotSaidMarker="akko_crush2" alsoPlayingSayingMarker="akko_crush2">
+            <case stage="5">
+                <condition role="other" character="streaming-chan" saidMarker="akko_crush1" sayingMarker="akko_crush2" notSaidMarker="akko_crush2" />
                 <state img="custom:#-swim_transform" marker="akko_swim" collectible="Chariot Card" collectible-value="+1">The boy’s nice, and always super interested in my magic, but the other girl’s a witch, and she’s super good at it, but she can be kind of stuck up.</state>
             </case>
             <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_delay1" alsoPlayingNotSaidMarker="akko_delay2" alsoPlayingSayingMarker="akko_delay2">
                 <state img="custom:#-snakko_transform" marker="akko_snake" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;So&lt;/i&gt; mean! I just got a little lost along the way. Do you know how hard it is to prepare for a show like this one?!</state>
             </case>
-            <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_destiny1" alsoPlayingNotSaidMarker="akko_destiny2" alsoPlayingSayingMarker="akko_destiny2">
+            <case stage="5">
+                <condition role="other" character="streaming-chan" saidMarker="akko_destiny1" sayingMarker="akko_destiny2" notSaidMarker="akko_destiny2" />
                 <state img="custom:#-swim_transform" marker="akko_swim" collectible="Chariot Card" collectible-value="+1">I got up early and stayed up late practicing my magic-- hold this--</state>
             </case>
             <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_fail1" alsoPlayingNotSaidMarker="akko_fail2" alsoPlayingSayingMarker="akko_fail2">
                 <state img="custom:#-liru_transform" marker="akko_liru" collectible="Chariot Card" collectible-value="+1">I-I’ve worked really hard to get where I am. Sure, I’m not always the best, but I always try really hard!</state>
             </case>
-            <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_futaba1" alsoPlayingNotSaidMarker="akko_futaba2" alsoPlayingSayingMarker="akko_futaba2">
-                <state img="custom:#-snakko_transform" marker="akko_snake " collectible="Chariot Card" collectible-value="+1">Oh, are yours the poseable kind? I always thought that sentai stuff was pretty cool!</state>
+            <case stage="5">
+                <condition role="other" character="streaming-chan" saidMarker="akko_futaba1" sayingMarker="akko_futaba2" notSaidMarker="akko_futaba2" />
+                <state img="custom:#-snakko_transform" marker="akko_snake" collectible="Chariot Card" collectible-value="+1">Oh, are yours the poseable kind? I always thought that sentai stuff was pretty cool!</state>
             </case>
             <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_magic1" alsoPlayingNotSaidMarker="akko_magic2" alsoPlayingSayingMarker="akko_magic2">
                 <state img="custom:#-snakko_transform" marker="akko_snake" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse&lt;/i&gt;! W-whoops! I-I meant transformation magic…</state>
             </case>
-            <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_megu1" alsoPlayingNotSaidMarker="akko_megu2" alsoPlayingSayingMarker="akko_megu2">
+            <case stage="5">
+                <condition role="other" character="streaming-chan" saidMarker="akko_megu1" sayingMarker="akko_megu2" notSaidMarker="akko_megu2" />
                 <state img="custom:#-liru_transform" marker="akko_liru" collectible="Chariot Card" collectible-value="+1">Er… can you actually use anything but Explosion anyway? My lightshows are very uplifting…</state>
             </case>
-            <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_name1" alsoPlayingNotSaidMarker="akko_name2" alsoPlayingSayingMarker="akko_name2">
+            <case stage="5">
+                <condition role="other" character="streaming-chan" saidMarker="akko_name1" sayingMarker="akko_name2" notSaidMarker="akko_name2" />
                 <state img="custom:#-snakko_transform" marker="akko_snake" collectible="Chariot Card" collectible-value="+1">I-I um, er. I don’t mind questions from fans or stuff…</state>
             </case>
-            <case stage="5" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_xform1" alsoPlayingNotSaidMarker="akko_xform2" alsoPlayingSayingMarker="akko_xform2">
+            <case stage="5">
+                <condition role="other" character="streaming-chan" saidMarker="akko_xform1" sayingMarker="akko_xform2" notSaidMarker="akko_xform2" />
                 <state img="custom:#-liru_transform" marker="akko_liru" collectible="Chariot Card" collectible-value="+1">Um… Other people find it kind of weird, so I tend not to get to do stuff with it, but it’s always easy to look a certain way a partner might want me to look, I guess…</state>
             </case>
             <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_boy1" alsoPlayingNotSaidMarker="akko_boy2" alsoPlayingSayingMarker="akko_boy2">
                 <state img="custom:#-goth_transform" marker="akko_goth" collectible="Chariot Card" collectible-value="+1">…Well… if it’s for the show… yes! Once, Sucy and Lotte made me do it! Um. For them. Then with them…</state>
             </case>
-            <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_brina1" alsoPlayingNotSaidMarker="akko_brina2" alsoPlayingSayingMarker="akko_brina2">
+            <case stage="6">
+                <condition role="other" character="streaming-chan" saidMarker="akko_brina1" sayingMarker="akko_brina2" notSaidMarker="akko_brina2" />
                 <state img="custom:#-goth_transform" marker="akko_goth" collectible="Chariot Card" collectible-value="+1">I haven’t seen you use much of it tonight…</state>
             </case>
-            <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_career1" alsoPlayingNotSaidMarker="akko_career2" alsoPlayingSayingMarker="akko_career2">
+            <case stage="6">
+                <condition role="other" character="streaming-chan" saidMarker="akko_career1" sayingMarker="akko_career2" notSaidMarker="akko_career2" />
                 <state img="custom:#-zoned_transform" marker="akko_zoned" collectible="Chariot Card" collectible-value="+1">Er… well, being a traveling, performing witch certainly makes a lot of people happy, and I’d never give up on that!</state>
             </case>
             <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_crush1" alsoPlayingNotSaidMarker="akko_crush2" alsoPlayingSayingMarker="akko_crush2">
                 <state img="custom:#-slime_transform" marker="akko_slime" collectible="Chariot Card" collectible-value="+1">The boy’s nice, and always super interested in my magic, but the other girl’s a witch, and she’s super good at it, but she can be kind of stuck up.</state>
             </case>
-            <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_delay1" alsoPlayingNotSaidMarker="akko_delay2" alsoPlayingSayingMarker="akko_delay2">
+            <case stage="6">
+                <condition role="other" character="streaming-chan" saidMarker="akko_delay1" sayingMarker="akko_delay2" notSaidMarker="akko_delay2" />
                 <state img="custom:#-monado_transform" marker="akko_monado" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;So&lt;/i&gt; mean! I just got a little lost along the way. Do you know how hard it is to prepare for a show like this one?!</state>
             </case>
-            <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_destiny1" alsoPlayingNotSaidMarker="akko_destiny2" alsoPlayingSayingMarker="akko_destiny2">
+            <case stage="6">
+                <condition role="other" character="streaming-chan" saidMarker="akko_destiny1" sayingMarker="akko_destiny2" notSaidMarker="akko_destiny2" />
                 <state img="custom:#-monado_transform" marker="akko_monado" collectible="Chariot Card" collectible-value="+1">I got up early and stayed up late practicing my magic-- hold this--</state>
             </case>
             <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_fail1" alsoPlayingNotSaidMarker="akko_fail2" alsoPlayingSayingMarker="akko_fail2">
                 <state img="custom:#-zoned_transform" marker="akko_zoned" collectible="Chariot Card" collectible-value="+1">I-I’ve worked really hard to get where I am. Sure, I’m not always the best, but I always try really hard!</state>
             </case>
-            <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_futaba1" alsoPlayingNotSaidMarker="akko_futaba2" alsoPlayingSayingMarker="akko_futaba2">
+            <case stage="6">
+                <condition role="other" character="streaming-chan" saidMarker="akko_futaba1" sayingMarker="akko_futaba2" notSaidMarker="akko_futaba2" />
                 <state img="custom:#-slime_transform" marker="akko_slime" collectible="Chariot Card" collectible-value="+1">Oh, are yours the poseable kind? I always thought that sentai stuff was pretty cool!</state>
             </case>
-            <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_magic1" alsoPlayingNotSaidMarker="akko_magic2" alsoPlayingSayingMarker="akko_magic2">
+            <case stage="6">
+                <condition role="other" character="streaming-chan" saidMarker="akko_magic1" sayingMarker="akko_magic2" notSaidMarker="akko_magic2" />
                 <state img="custom:#-monado_transform" marker="akko_monado" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse&lt;/i&gt;! W-whoops! I-I meant transformation magic…</state>
             </case>
-            <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_megu1" alsoPlayingNotSaidMarker="akko_megu2" alsoPlayingSayingMarker="akko_megu2">
+            <case stage="6">
+                <condition role="other" character="streaming-chan" saidMarker="akko_megu1" sayingMarker="akko_megu2" notSaidMarker="akko_megu2" />
                 <state img="custom:#-goth_transform" marker="akko_goth" collectible="Chariot Card" collectible-value="+1">Er… can you actually use anything but Explosion anyway? My lightshows are very uplifting…</state>
             </case>
             <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_name1" alsoPlayingNotSaidMarker="akko_name2" alsoPlayingSayingMarker="akko_name2">
                 <state img="custom:#-slime_transform" marker="akko_slime" collectible="Chariot Card" collectible-value="+1">I-I um, er. I don’t mind questions from fans or stuff…</state>
             </case>
-            <case stage="6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="akko_xform1" alsoPlayingNotSaidMarker="akko_xform2" alsoPlayingSayingMarker="akko_xform2">
+            <case stage="6">
+                <condition role="other" character="streaming-chan" saidMarker="akko_xform1" sayingMarker="akko_xform2" notSaidMarker="akko_xform2" />
                 <state img="custom:#-zoned_transform" marker="akko_zoned" collectible="Chariot Card" collectible-value="+1">Um… Other people find it kind of weird, so I tend not to get to do stuff with it, but it’s always easy to look a certain way a partner might want me to look, I guess…</state>
             </case>
-            <case stage="0" alsoPlaying="uravity">
+            <case stage="0">
+                <condition role="other" character="uravity" />
                 <state img="custom:#-ochako_transform" marker="akko_ochako" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie vestesse!&lt;/i&gt; Hey, wait a second... Ochako, is this your outfit? It's so... loose on me!</state>
             </case>
-            <case stage="1" alsoPlaying="d.va">
+            <case stage="1">
+                <condition role="other" character="d.va" />
                 <state img="custom:#-yae_transform" marker="akko_yae" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse!&lt;/i&gt; Wow! I've definitely done some bunny-like transformations, but this is super cool! Look at how awesome Shiny Rod looks as a sword! I'm really into this bunny theme today.</state>
             </case>
-            <case stage="1" alsoPlaying="natsuki">
+            <case stage="1">
+                <condition role="other" character="natsuki" />
                 <state img="custom:#-sailorakko_transform" marker="akko_sailor" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse!&lt;/i&gt; See, it's just the wonder of actual magic, Natsuki! Wasn't there a time in your life when you believed in magic? It's really real, and been here the whole time!</state>
                 <state img="custom:#-yae_transform" marker="akko_yae" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse!&lt;/i&gt; See, it's just the wonder of actual magic, Natsuki! Nothing more, nothing less. Plus, don't I pull off pink well?</state>
             </case>
-            <case stage="1" alsoPlaying="raven">
+            <case stage="1">
+                <condition role="other" character="raven" />
                 <state img="custom:#-tooby_transform" marker="akko_2b" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie vestesse!&lt;/i&gt; Huh-- what? Who's asking that? I try to base my show on whoever's around!</state>
             </case>
             <case stage="1" alsoPlaying="ryuji">
                 <state img="custom:#-sailorakko_transform" marker="akko_sailor" collectible="Chariot Card" collectible-value="+1">Hmm... I'm more used to turning to mice... any experience with that, Ryuji?</state>
             </case>
-            <case stage="2" alsoPlaying="kyu">
+            <case stage="2">
+                <condition role="other" character="kyu" />
                 <state img="custom:#-fairy_transform" marker="akko_fairy" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse!&lt;/i&gt; Hey, Kyu! This remind you of anyone? ...I have the strangest cravings... for... um... do you &lt;i&gt;always&lt;/i&gt; feel like this?</state>
             </case>
             <case stage="2" alsoPlaying="natsuki">
@@ -3472,7 +3556,8 @@
             <case stage="3" alsoPlaying="kamina">
                 <state img="custom:#-yakko_transform" marker="akko_yoko" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse!&lt;/i&gt; Kamina, this outfit makes me feel way more attracted to you for some reason...</state>
             </case>
-            <case stage="3" alsoPlaying="kizuna">
+            <case stage="3">
+                <condition role="other" character="kizuna" />
                 <state img="custom:#-kizuna_transform" marker="akko_ai" collectible="Chariot Card" collectible-value="+1">Ai-chan! Check this out!</state>
             </case>
             <case stage="4" alsoPlaying="natsuki">
@@ -3483,7 +3568,8 @@
                 <state img="custom:#-snakko_transform" marker="akko_snake" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse&lt;/i&gt;! That might be so, but I'm not giving up! At least they're getting sexier, right?</state>
                 <state img="custom:#-liru_transform" marker="akko_liru" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse&lt;/i&gt;! That might be so, but I'm not giving up! At least they're getting sexier, right?</state>
             </case>
-            <case stage="6" alsoPlaying="zone-tan">
+            <case stage="6">
+                <condition role="other" character="zone-tan" />
                 <state img="custom:#-zoned_transform" marker="akko_zoned" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse&lt;/i&gt;! Wow. Zone-tan, do you just want it &lt;i&gt;everywhere&lt;/i&gt; all the time, or what? Jeez. I'm so horny, and this'll only last a few seconds...</state>
             </case>
             <case stage="5">
@@ -3550,16 +3636,19 @@
                 <condition count="1-3" filter="goth" />
                 <state img="custom:#-goth_transform" marker="akko_goth" collectible="Chariot Card" collectible-value="+1">&lt;i&gt;Metamorphie faciesse&lt;/i&gt;! Hm. Whatever. Not like the rest of you are that special.</state>
             </case>
-            <case stage="0" id="29" saidMarker="necronomicon">
+            <case stage="0" id="29">
+                <condition role="self" saidMarker="necronomicon" />
                 <state img="#-posessed.png" collectible="Chariot Card" collectible-value="+1">𝕻𝖍'𝖓𝖌𝖑𝖚𝖎 𝖒𝖌𝖑𝖜'𝖓𝖆𝖋𝖍 𝕮𝖙𝖍𝖚𝖑𝖍𝖚 𝕽'𝖑𝖞𝖊𝖍 𝖜𝖌𝖆𝖍'𝖓𝖆𝖌𝖑 𝖋𝖍𝖙𝖆𝖌𝖓...</state>
             </case>
-            <case stage="1" saidMarker="mummies" priority="1">
+            <case stage="1" priority="1">
+                <condition role="self" saidMarker="mummies" />
                 <state img="custom:#-zombie_transform" marker="akko_zombie" collectible="Chariot Card" collectible-value="+1">It's not like that time I used mummies to clean my room or anything... Fine, here's my... &lt;i&gt;shoes&lt;/i&gt;!</state>
             </case>
             <case stage="2" saidMarker="scratches">
                 <state img="custom:#-mobster_transform" marker="akko_mobster" collectible="Chariot Card" collectible-value="+1">Because at seven I’d be naked!</state>
             </case>
-            <case stage="5" saidMarker="trouble">
+            <case stage="5">
+                <condition role="self" saidMarker="trouble" />
                 <state img="custom:#-liru_transform" marker="akko_liru" collectible="Chariot Card" collectible-value="+1">Well how’s this for trouble! &lt;i&gt;Metamorphie faciesse!&lt;/i&gt;</state>
                 <state img="custom:#-swim_transform" marker="akko_swim" collectible="Chariot Card" collectible-value="+1">Well how’s this for trouble! &lt;i&gt;Metamorphie vestesse!&lt;/i&gt; See? Not my underwear, huh?</state>
                 <state img="custom:#-snakko_transform" marker="akko_snake" collectible="Chariot Card" collectible-value="+1">Hm... trouble, huh? Orders received. &lt;i&gt;Metamorphie vestesse!&lt;/i&gt;</state>
@@ -3846,8 +3935,9 @@
             <case stage="1" alsoPlaying="sheena">
                 <state img="#-upbeat.png">Well, I'm here to put on a show, Sheena! This is the best way to show off my magic. And um, my body, I guess!</state>
             </case>
-            <case stage="2" alsoPlaying="larachel">
-                <state img="#-confused.png">It's just basic transformation magic. There's no to be rude just because you don't understand art.</state>
+            <case stage="2">
+                <condition role="other" character="larachel" />
+                <state img="#-confused.png">It's just basic transformation magic. There's no need to be rude just because you don't understand art.</state>
             </case>
             <case stage="2" alsoPlaying="misato">
                 <state img="#-upbeat.png">I'm glad you're enjoying the show, Misato! Are you into bodysuits at all? I'm getting a little low on clothes... so if you wanna see one, ask quick!</state>
@@ -5366,11 +5456,11 @@
                 <condition role="target" character="panty" stage="3" />
                 <state img="#-sulking.png">Huh? But heels are important part of magical gear! It's traditional, &lt;i&gt;and&lt;/i&gt; stylish, &lt;i&gt;and&lt;/i&gt; effective! Do you know how many spirits hate to be stepped on? When you're in heels-- LOTS! </state>
             </case>
-            <case stage="0">
+            <case stage="0-9">
                 <condition role="target" character="megumin" stage="1" />
                 <state img="#-inspired.png">Megumin, what kind of magical gear do you have? </state>
             </case>
-            <case stage="0">
+            <case stage="0-9">
                 <condition role="target" character="megumin" stage="0" />
                 <state img="#-thinking.png">Hm... your voice sounds &lt;i&gt;really&lt;/i&gt; familiar, Megumin. </state>
             </case>
@@ -6462,6 +6552,11 @@
             <case stage="0" target="lotte" targetStage="1" priority="950">
                 <state img="#-sulking.png" marker="lotte_t">You're just mad my transformation magic is super cool.</state>
                 <state img="#-casting.png">Don't worry, Lotte! I can handle your magic for you... I think! Mostly.</state>
+            </case>
+            <case stage="0-9">
+                <condition character="lotte" />
+                <condition role="target" character="estelle" stage="1" sayingMarker="nightfall2" />
+                <state img="#-shocked.png">Whoa, someone other than Lotte's read that!? That's awesome! ...But also kind of... </state>
             </case>
             <case stage="0-9" target="ryuko" targetStage="1" alsoPlaying="lotte">
                 <state img="#-horny.png">Um... Lotte, I never made you and Sucy cover for my messes... right?</state>
@@ -10785,6 +10880,11 @@
         </trigger>
 
         <trigger id="female_finished_masturbating">
+            <case stage="0-9" priority="442">
+                <condition role="target" character="estelle" saidMarker="book" sayingMarker="bookListing" />
+                <condition role="other" character="lotte" stage="9" />
+                <state img="#-sulking.png">I &lt;i&gt;tried&lt;/i&gt; to get here! Do you know how many transformations I had to get ready, Lotte? </state>
+            </case>
             <case stage="0-9" target="croix" targetSayingMarker="AkkoSecret">
                 <state img="#-smug.png">I think that's for the best, Croix! Besides, it's not like I could understand all the fancy magitronics stuff to copy it or anything!</state>
             </case>
