@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 11:58:19 PM on October 31, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 11:31:42 PM on November 05, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Chazz </first>
@@ -60,7 +60,12 @@
         <clothing name="duel disk" generic="duel disk" position="arms" type="extra" />
     </wardrobe>
 
-    <poses />
+    <poses>
+        <pose id="Dust bites Chazz">
+            <sprite id="shocked" src="chazz/1-shocked.png" x="0" y="0" />
+            <sprite id="dustbite" z="-1" src="chazz/dustbite.png" x="156" y="436" />
+        </pose>
+    </poses>
 
     <behaviour>
         <trigger id="selected">
@@ -105,6 +110,18 @@
             <case stage="0" id="23">
                 <condition role="other" character="navi" />
                 <state img="#-shocked.png" marker="nickname=Herald of Blue Light">I'm playing with a ball? You must be one of those stupid Herald monsters. You do realize that you're blueballing me, Blue Ball.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="dust" />
+                <state img="#-shocked.png">A werewolf?! What kinda furry crap did I just stumble into?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="n" />
+                <state img="#-thinking.png" marker="nickname=Noxious">N? The hell kinda name is that? Is it an alias? Is there a prize if I guess it right? I love coming up with dumb nicknames, so I'll do it anyway, Noxious.</state>
+            </case>
+            <case stage="0" id="28">
+                <condition role="other" character="shimakaze" />
+                <state img="#-happy.png">Yeah, tribute the Machine type monster. Tribute it for something with big tits.</state>
             </case>
             <case stage="0">
                 <test expr="~background~" value="library" />
@@ -245,6 +262,13 @@
                 <condition role="self" />
                 <state img="#-thinking.png" marker="what deck?">So, what kind of decks do you all run? I ask so that I can strategize accordingly and beat you easier.</state>
             </case>
+            <case stage="0-7" id="27">
+                <condition role="opp" />
+                <condition role="other" character="starfire" stage="4-5" sayingMarker="leader_target" />
+                <test expr="~starfire.place~" cmp="&gt;" value="1" />
+                <test expr="~leader.lead~" cmp="&gt;" value="0" />
+                <state img="#-happy.png">There's this thing called the Heart of the Cards, but I don't really know how it works, because I'm not the main protagonist.</state>
+            </case>
             <case stage="0-7" totalRounds="0">
                 <condition role="other" character="lotte" stage="0" timeInStage="0" sayingMarker="start" />
                 <state img="#-happy.png">A witch, huh? Let me guess, it's all smoke machines and holograms.</state>
@@ -272,6 +296,10 @@
             <case stage="0-7" totalRounds="0">
                 <condition role="other" character="akko" stage="0" />
                 <state img="#-confident.png">I am a champion! Get your duel disk out and we'll throw down right now!</state>
+            </case>
+            <case stage="0-7" totalRounds="0">
+                <condition role="other" character="n" stage="0" />
+                <state img="#-smug.png">Just like you, I also have an annoying gimmick, and that is belittling and insulting everyone I meet. You're the perfect person to bear the brunt of it.</state>
             </case>
             <case stage="0-7">
                 <condition role="other" character="amalia" stage="5" saidMarker="grow1" sayingMarker="grow2" />
@@ -314,6 +342,14 @@
                 <condition role="self" saidMarker="JessiePayPig2" />
                 <state img="#-horny.png" marker="JessiePayPig2">You want me to become your pay pig? I don't know what that is, but it sounds like fun.</state>
             </case>
+            <case stage="0-7">
+                <condition role="self" saidMarker="chazzwolf" />
+                <test expr="~background.location~" value="outdoors" />
+                <test expr="~background.time~" value="night" />
+                <state img="#-awkward.png">Guess it's Yifffest 2005 for The Chazz.</state>
+                <state img="#-angry.png">When that dumb moon turns me into a drooling wolf, I'll bite the rest of you. You will suvver exactly as much as The Chazz does.</state>
+                <state img="#-sad.png">I can feel myself transfoming any moment now. </state>
+            </case>
             <case stage="0-1">
                 <condition role="other" character="megumin" />
                 <state img="#-awkward.png">I remind you of your home? I don't wanna look like a dumb wizard, I wanna look like a cool and awesome duelist!</state>
@@ -328,6 +364,13 @@
                 <state img="#-smug.png" marker="blue_disk">Wondering why my Duel Disk is blue? I got this in the hidden 4th season that never aired in America.</state>
                 <state img="#-smug.png" marker="blue_disk">I got this swanky blue disk in the unaired 4th season, available now on Crunchyroll.</state>
                 <state img="#-smug.png" marker="blue_disk">You thought my Duel Disk was supposed to be silver, right? Clearly you've never watched the fourth season that you couldn't watch because it never aired in America.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="self" saidMarker="chazzwolf" />
+                <state img="#-awkward.png">Why do I have a sudden craving for red meat?</state>
+                <state img="#-calm.png">I get the feeling that this werewolf thing isn't something I'm gonna be able to duel my way out of.</state>
+                <state img="#-disappointed.png">What will happen when Alexis finds out about this? She's not a furry, is she?</state>
+                <state img="#-thinking.png">Thank goodness for artificial light. That's one big weakness of your curse, all I gotta do to avoid it is stay indoors.</state>
             </case>
             <case stage="6" oneShotId="3" priority="0">
                 <condition count="0" timeInStage="5-9" />
@@ -371,6 +414,10 @@
             <case stage="0">
                 <condition role="other" character="panty" />
                 <state img="#-shocked.png">Huge cock? Erm, yes, I have the biggest, the largest, most absolutely gigantic cock you've ever seen.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="dust" />
+                <state img="#-happy.png">Just keep those fangs away from me, Dust. Werewolves infect by biting, and that would be very inconvenient for me.</state>
             </case>
             <case stage="5">
                 <state img="#-angry.png">You can't keep me here! You've already seen me at my most embarrassed. All thanks to this stupid underwear!</state>
@@ -637,6 +684,10 @@
 
         <trigger id="male_must_strip">
             <case stage="0-9">
+                <condition role="target" character="dust" stage="0" sayingMarker="askhat" />
+                <state img="#-smug.png">Hey waiter, there's a wolfman in my strip poker game. Kindly remove him, please.</state>
+            </case>
+            <case stage="0-9">
                 <condition role="target" character="kazuma" stage="0" />
                 <state img="#-bored.png">A word of advice, Kazuma. Traveling to other dimensions is the worst thing that's ever happened to me.</state>
             </case>
@@ -739,6 +790,26 @@
                 <condition role="target" character="guzma" stage="1" />
                 <state img="#-bored.png">Team Skull, huh? Sounds like a very childish bunch. Like you're pretending it's halloween every month of the year.</state>
             </case>
+            <case stage="0-9">
+                <condition role="target" character="dust" stage="0" />
+                <state img="#-confident.png">I fought a vampire once, so your movie monster spiel doesn't scare me, Dust.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="0" />
+                <state img="#-happy.png">So it isn't Noxious. No big deal, I've got plenty more to try.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="1" />
+                <state img="#-confident.png" marker="nickname=Nimrod">Yeah, just put the Rubix cube down, Nimrod. It's all in one solid color, so you couldn't lose. But you will lose this game. The Chazz says so.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="2" />
+                <state img="#-happy.png" marker="nickname=Ninnyhammer">Yeah, get ~player~ to take off your necklace, you Ninnyhammer.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="3" />
+                <state img="#-confident.png" marker="nickname">Just your hat, Nemesis? You don't see most philosophers wear a baseball cap, now do you, Nemesis?</state>
+            </case>
             <case stage="0-4">
                 <state img="#-thinking.png" oneShotId="1" marker="chowder_gag">This is the part where I ask you not to strip off your dumb ~clothing~, and you do so anyway. So I'll just close my eyes and pretend to be oblivious.</state>
                 <state img="#-bored.png">Oh great, your ~clothing~, so original.</state>
@@ -759,6 +830,10 @@
         </trigger>
 
         <trigger id="male_removed_accessory">
+            <case stage="0-9" priority="381">
+                <condition role="target" character="n" stage="2" saidMarker="sponge" />
+                <state img="#-mock.png">Bastion could solve 100 Rubix cubes in the time it took Jaden to solve one. And I refuse to believe he didn't cheat.</state>
+            </case>
             <case stage="0-9">
                 <condition role="target" character="kazuma" stage="1-6" />
                 <state img="#-awkward.png">I see no reason why you'd ever willingly go to another dimension... But maybe you just got luckier than me...</state>
@@ -770,6 +845,22 @@
             <case stage="0-9">
                 <condition role="target" character="guzma" stage="2" />
                 <state img="#-confident.png">Well it's not Halloween! I don't gotta give you out any candy! (please disregard this line if it actually is halloween.)</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="dust" stage="1" />
+                <state img="#-happy.png">Werewolves are slobbering idiots anyway, there's no chance of you beating me.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="1" />
+                <state img="#-angry.png" marker="nickname=Nonexistant">Nonexistant is my next guess. Just like your bracelets. And your bravery.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="3" />
+                <state img="#-smug.png">Do you even know what a Ninnyhammer is? That's the deepest and oldest insult I know. I'll smash that necklace with a hammer if you don't pick something better on the next round.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="4" />
+                <state img="#-calm.png">That is some pretty nice hair though. Green, just like the color of expired produce.</state>
             </case>
             <case stage="0-9" priority="0">
                 <condition count="0" saidMarker="chowder_gag*" />
@@ -893,6 +984,10 @@ And smells like it's been dead.</state>
                 <condition role="target" character="elesa" stage="2" />
                 <state img="#-calm.png">Headphones? Were you trying to drown out the game with music?</state>
             </case>
+            <case stage="0-9" id="29">
+                <condition role="target" character="shimakaze" stage="0" />
+                <state img="#-shocked.png" marker="nickname=Dreadnoid">Destroyed already, Dreadnoid? That was awfully quick...</state>
+            </case>
             <case stage="0-4">
                 <state img="#-happy.png">Such a lovely girl, why is she removing something so trivial?</state>
                 <state img="#-happy.png">Just like unwrapping a tootsie roll pop to get to it's chocolatey center.</state>
@@ -1013,6 +1108,10 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-mock.png">The Chazz has no space for music, he always devotes his full attention to destroying his opponent, and that means you, Sparkplug! Besides, my hair is so big that they wouldn't fit me.</state>
             </case>
             <case stage="0-9">
+                <condition role="target" character="shimakaze" stage="1" />
+                <state img="#-confident.png">Dreadnoid is one of the strongest battleships in Duel Monsters. Hopefully you can live up to it's name that I assigned to you for no reason.</state>
+            </case>
+            <case stage="0-6">
                 <state img="#-horny.png">&lt;i&gt;Shall I hold that for you, madam ~name~?&lt;/i&gt;</state>
                 <state img="#-happy.png">(&lt;i&gt;I hope ~name~ likes the romantic schtick. It's gotta work one of these days.)&lt;/i&gt;</state>
                 <state img="#-horny.png">&lt;i&gt;So romantic.&lt;/i&gt;</state>
@@ -1033,6 +1132,18 @@ P.U., what's that horrible smell?!</state>
         </trigger>
 
         <trigger id="male_removing_minor">
+            <case stage="0-9" id="25" priority="381">
+                <condition role="target" character="dust" stage="1" notSaidMarker="knowsstrip" />
+                <state img="#-angry.png">Just because your curse flows through my veins, that doesn't mean I have to be into that.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="4" sayingMarker="fuckingyoungsters" />
+                <state img="#-bored.png" marker="nickname">Hey Needless, you don't need your shoes anymore. But you do need to shut up about shorts. You aren't even wearing any.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="dust" stage="1" />
+                <state img="custom:Dust bites Chazz">GET OFF ME YOU STUPID MUTT!</state>
+            </case>
             <case stage="0-9">
                 <condition role="target" character="kazuma" stage="1" />
                 <state img="#-sad.png">And before that, I got sent to a giant desert, where I got mind controlled by a demon hand possessing some french guy.</state>
@@ -1048,6 +1159,22 @@ P.U., what's that horrible smell?!</state>
             <case stage="0-9">
                 <condition role="target" character="guzma" stage="3" />
                 <state img="#-thinking.png">Where's your giant crocodile, Guzma? You do use monsters right, so how come you're not risking lower back pain by slinging them over your shoulder?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="dust" stage="3" />
+                <state img="#-confident.png">Hey Dust, if you are a werewolf, how are you so smart? Smart as in not trying to eat everyone here, not smart as in Dr. Eisenstein.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="dust" stage="5" />
+                <state img="#-joy.png">HOOOOOOWL! &lt;i&gt;(That stupid chinese hat has to go now, Dust. Your furry force is no match for The Chazz!)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="4" />
+                <state img="#-awkward.png" marker="nickname">Hey Needless, you don't need your shoes anymore. But I do need to try better at guessing your name. Five guesses and they're all wrong.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="5" />
+                <state img="#-bored.png" marker="nickname">Neglect is your name now. As in, you are neglecting me from seeing something good.</state>
             </case>
             <case stage="5-6">
                 <condition status="decent" role="target" />
@@ -1080,6 +1207,26 @@ P.U., what's that horrible smell?!</state>
             <case stage="0-9">
                 <condition role="target" character="guzma" stage="4" />
                 <state img="#-happy.png">You store them in little balls instead? Cards are way more convenient. I can store a 40 card deck in the size of one pokeball!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="dust" stage="2" />
+                <state img="#-awkward.png" marker="chazzwolf">Note to self, never give werewolves any ideas. Now I'm a werewolf. That can't be good.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="dust" stage="4" />
+                <state img="#-mock.png">I bet that hat is your Shadow Charm! I take that off, you transform right back into a barking buffoon, and the Chazz is free from your curse.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="dust" stage="6" />
+                <state img="#-angry.png">GRRRRR! &lt;i&gt;(Your friends are much cuter than mine, and I'm still cursed. Fantastic.)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="5" />
+                <state img="#-smug.png">You technically don't need any clothing. But you do need to cover up your junk I guess... The Chazz always needs clothing. His junk is not supposed to be seen by commoners.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="6" />
+                <state img="#-joy.png">Didn't expect to see you this mad. I must be close if I struck a nerve like that.</state>
             </case>
             <case stage="0-9">
                 <state img="#-mock.png">Boo hoo hoo, poor ~name~'s gotta remove their ~clothing~. Ha!</state>
@@ -1216,6 +1363,10 @@ P.U., what's that horrible smell?!</state>
                 <condition role="target" character="kazuma" stage="3" />
                 <state img="#-mock.png">Kazuma, you're one big perv, aren't you. Salivating at the thought of seeing boobies...</state>
             </case>
+            <case stage="0-9">
+                <condition role="target" character="dust" stage="4" />
+                <state img="#-angry.png">BARK BARK BORF! &lt;i&gt;(I can actually talk, I'm just trying to make you feel guilty.)&lt;/i&gt;</state>
+            </case>
             <case stage="1">
                 <state img="#-smug.png">If you thought my Duel Disk was a petty thing to remove, you should look at yourself now.</state>
                 <state img="#-smug.png">And this is what you get for complaining about my Duel Disk.</state>
@@ -1234,6 +1385,10 @@ P.U., what's that horrible smell?!</state>
             <case stage="0-9" priority="381">
                 <condition role="target" character="kazuma" stage="4" />
                 <state img="#-joy.png">&lt;i&gt;(Then again, so am I. I'd never steal someone else's panties though... Though I wouldn't mind if they willingly gave them to me.)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="dust" stage="5" />
+                <state img="#-mock.png">YIP YIP BARK BARK! &lt;i&gt;(You're not even the coolest were-thing there is. I iactually wouldn't mind being a weredragon.)&lt;/i&gt;</state>
             </case>
             <case stage="0-9">
                 <state img="#-awkward.png">This may be a card game, but there's certainly nothing childish about it...</state>
@@ -1314,6 +1469,8 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9">
                 <state img="#-happy.png">Next time I see Alexis, I'm going to challenge her to a strip duel monsters game...</state>
+                <state img="#-confident.png">You're gonna make a man very happy by removing that... That man is me.</state>
+                <state img="#-horny.png">The Chazz likes your choice. But he'll like it even more when you have no choice...</state>
             </case>
         </trigger>
 
@@ -1384,6 +1541,7 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-drooling.png">Don't get me wrong, you are pretty alright, but I only have eyes for my Alexis...</state>
                 <state img="#-horny.png">Oh my. Such boldness is amazing.</state>
                 <state img="#-confident.png">I wish the other Obelisk girls were as lively as you. </state>
+                <state img="#-smug.png">Want me to autograph that for you? The Chazz's autographs don't come cheap, I'll have you know.</state>
             </case>
         </trigger>
 
@@ -1393,9 +1551,14 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-mock.png">If you were a girl, you'd be showing off your tits right now. But you don't got any, so be thankful for that.</state>
             </case>
             <case stage="0-9">
+                <condition role="target" character="n" stage="6" />
+                <state img="#-mock.png">Time for the ultimate N word. N, my guess for your name is *dolphin noises*!</state>
+            </case>
+            <case stage="0-9">
                 <state img="#-angry.png">Dueling shirtless is not that uncommon. I remember reading about a freaky fish guy that participated in battle city without wearing a shirt for the entire tournament.</state>
                 <state img="#-happy.png">The bare chest of a man is something I find repugnant. Unless it's mine. Mine is great.</state>
                 <state img="#-bored.png">I could just as easily see that by going to the beach, ~name~. Duel Academy has a pretty good one.</state>
+                <state img="#-happy.png">You can't make an omelette without stripping some men naked... Even I don't know where I got that insult from...</state>
             </case>
         </trigger>
 
@@ -1403,6 +1566,15 @@ P.U., what's that horrible smell?!</state>
             <case stage="0-9" priority="381">
                 <condition role="target" character="kazuma" stage="5" />
                 <state img="#-horny.png">But then you'd have to deal with me ogling your boobies. Is that something you could live with, Kazuma?</state>
+            </case>
+            <case stage="0-9" id="26">
+                <condition role="target" character="dust" stage="3" />
+                <state img="#-smug.png">The Chazz will still be better than you, even as a stupid werewolf. I'll probably even keep my awesome hair.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" stage="7" />
+                <state img="#-shocked.png" marker="nickname=N">OH MY GOSH! WHAT HAVE I DONE? I'm sorry N. You're not a *redacted*, you're a good boy.</state>
+                <state img="#-awkward.png" marker="nickname=N">F-forget I said that, N. There's some lows even the Chazz won't stoop to, and calling you a *foghorn* is one of them.</state>
             </case>
             <case stage="0-9">
                 <condition filter="chubby" role="target" />
@@ -1412,13 +1584,22 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-bored.png">Next turn...</state>
                 <state img="#-shocked.png">When next we meet, I'll be sure to embarrass all your friends with this.</state>
                 <state img="#-confident.png">You'll be groveling at my feet in a few rounds, I just know it.</state>
+                <state img="#-mock.png">Is it gonna be muscular or chubby? I hope for chubby, because I'd be fitter than you.</state>
             </case>
         </trigger>
 
         <trigger id="male_crotch_will_be_visible">
             <case stage="0-9">
+                <condition role="target" character="n" stage="7" />
+                <state img="#-sad.png" marker="nickname=Natural">One final guess, if that's okay with you, N. My guess for your name is Natural.</state>
+            </case>
+            <case stage="0-9">
                 <condition role="target" character="kazuma" />
                 <state img="#-confident.png">The perv is about to get humiliated. Respect women, or The Chazz is gonna Chazz you.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="dust" />
+                <state img="#-mock.png">BARFK BARFK! &lt;i&gt;(Embrace the call of the wild, Dust. Your wolf nature demands it.)&lt;/i&gt;</state>
             </case>
             <case stage="7-9">
                 <condition count="2-" gender="female" />
@@ -1429,6 +1610,7 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-confident.png">Get Chazzed, ~name~.</state>
                 <state img="#-smug.png">You mess with The Chazz, you lose and get humiliated. Unless your name is Jaden, or Bastion, or Sartorious, you know what, I'm gonna shut up now!</state>
                 <state img="#-smug.png">Humiliation like this is why I chose to stick around. Squirm for me, ~name~.</state>
+                <state img="#-mock.png">Too bad, ~name~. We all get to see your manhood. And I doubt most of us want to see it.</state>
             </case>
             <case stage="7-9">
                 <state img="#-bored.png">Great... Another sausage is about to enter the field...</state>
@@ -1450,10 +1632,15 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-mock.png">HA HA HA HA HA!</state>
                 <state img="#-confident.png">You are totally pathetic.</state>
                 <state img="#-smug.png">Your dick is as small as your brain.</state>
+                <state img="#-joy.png">Phew, he's not gonna take these women from me with a penis like that.</state>
             </case>
         </trigger>
 
         <trigger id="male_medium_crotch_is_visible">
+            <case stage="0-9">
+                <condition role="target" character="n" stage="8" />
+                <state img="#-joy.png">I'm actually right for once? That's lovely. I told you The Chazz would get it right. And speaking of natural, you're dressed like a naturist now... that being not dressed at all.</state>
+            </case>
             <case stage="0-9">
                 <state img="#-bored.png">You may as well send that puny monster straight to the graveyard...</state>
                 <state img="#-happy.png">Looks like we're on even footing. I wish I was better than you though.</state>
@@ -1464,9 +1651,14 @@ P.U., what's that horrible smell?!</state>
 
         <trigger id="male_large_crotch_is_visible">
             <case stage="0-9">
+                <condition role="target" character="dust" />
+                <state img="#-happy.png">YIP YIP! &lt;i&gt;(I suppose there's worse things in the world than being a werewolf. You don't gotta wear pants, and you don't have people trying to send you to the Shadow Realm.)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-9">
                 <state img="#-shocked.png">Your dick is about as large as my ego!</state>
                 <state img="#-angry.png">Hey, quit trying to upstage me, ~name~! </state>
                 <state img="#-angry.png">Even now you're trying to make me look bad!</state>
+                <state img="#-disappointed.png">You must be some kind of freak with a penis like that. Chicks dig freaks like you, though.</state>
             </case>
         </trigger>
 
@@ -1746,6 +1938,7 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-drooling.png">Atticus described it like a pussycat. Certainly way better than Pharaoh at any rate.</state>
                 <state img="#-drooling.png">You make me want to just dive in there immediately, ~name~.</state>
                 <state img="#-horny.png">IT'S SO SEXY, I WANT IT!</state>
+                <state img="#-horny.png">It's a magic box. You put your penis inside it and it give you endless pleasure... that's what Atticus told me, anyway.</state>
             </case>
         </trigger>
 
@@ -1843,6 +2036,12 @@ P.U., what's that horrible smell?!</state>
 
         <trigger id="opponent_stripped">
             <case stage="0">
+                <condition gender="female" role="target" character="human" stage="0" />
+                <state img="#-horny.png">You couldn't duel if your life depended on it, so showing off your tits is the best thing for you.</state>
+                <state img="#-joy.png">You can't make it as a duelist, but you could be a good stripper.</state>
+                <state img="#-drooling.png">You may be a Slifer tier duelist, but that body is truly worthy of Obelisk.</state>
+            </case>
+            <case stage="0">
                 <condition role="target" character="human" />
                 <test expr="~target.gender~" value="male" />
                 <state img="#-angry.png">Hey, you are that loser! ~name~, from the Slifer Red dorm at Duel Academy!</state>
@@ -1866,7 +2065,8 @@ P.U., what's that horrible smell?!</state>
         </trigger>
 
         <trigger id="opponent_crotch_is_visible">
-            <case stage="0-9" id="6" target="chihiro">
+            <case stage="0-9" id="6">
+                <condition role="target" character="chihiro" />
                 <state img="#-angry.png">Oh. Forget anything positive I said about you, Chihiro. The Chazz doesn't like being lied too, especially not by scrawny little punks like you.</state>
             </case>
         </trigger>
@@ -1883,6 +2083,10 @@ P.U., what's that horrible smell?!</state>
             <case stage="0-9">
                 <condition role="target" character="kazuma" />
                 <state img="#-smug.png">Could you kindly teleport somewhere far away from here? You get to masturbate all to yourself, and I get these girls all to myself.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="n" />
+                <state img="#-disappointed.png">I win the opportunity to see you masturbate? That's not a good prize... I expected a Lamborghini or something.</state>
             </case>
             <case stage="0-9">
                 <state img="#-confident.png">I don't care &lt;i&gt;Why&lt;/i&gt; I'm the best, all that matters is I am.</state>
@@ -1916,8 +2120,9 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-7">
                 <state img="#-awkward.png">I know I defeated you, but this doesn't feel like a win.</state>
-                <state img="#-mock.png">This is the only thing a red slifer is good for... No, that doesn't mean I've watched any of them do this...</state>
+                <state img="#-mock.png">This is the only thing a Slifer Slacker is good for... No, that doesn't mean I've watched any of them do this...</state>
                 <state img="#-confident.png">Go to the corner and stay away until you finish doing that, like the loser you are.</state>
+                <state img="#-joy.png">Men aren't my thing, but watching people get embarassed always makes me happy.</state>
             </case>
         </trigger>
 
@@ -1964,6 +2169,7 @@ P.U., what's that horrible smell?!</state>
             <case stage="5-6">
                 <state img="#-happy.png">Suddenly, I don't mind to be in Ojama underwear that much...</state>
                 <state img="#-confident.png">I may have embarrassed myself, but after this, I'll consider this a victory anyways.</state>
+                <state img="#-sad.png">I hope this underwear doesn't excite you, because I don't plan to keep it around for much longer...</state>
             </case>
         </trigger>
 
@@ -1982,11 +2188,13 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-horny.png">Yes, ~name~. This is what The Chazz came here for.</state>
                 <state img="#-drooling.png">I'll never take my eyes off you, my love.</state>
                 <state img="#-joy.png">You'll give me a good show, won't you?</state>
+                <state img="#-confident.png">This is certainly the best prize I've ever one from playing card games.</state>
             </case>
         </trigger>
 
         <trigger id="female_masturbating">
-            <case stage="0-9" id="17" target="akko" targetSaidMarker="akko_first_climax" targetNotSaidMarker="akko_second_climax">
+            <case stage="0-9" id="17">
+                <condition role="target" character="akko" saidMarker="akko_first_climax" notSaidMarker="akko_second_climax" />
                 <state img="#-horny.png">I'm perfectly fine with you going again, Akko. It was great the first time.</state>
             </case>
             <case stage="0-9" id="18" target="akko" targetSaidMarker="akko_second_climax" targetNotSaidMarker="akko_third_climax">
@@ -2009,11 +2217,18 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-drooling.png">I don't care about the game anymore, just let me enjoy her performance a bit longer...</state>
                 <state img="#-drooling.png">This is even better than I imagined it would be.</state>
                 <state img="#-horny.png">Right now, I feel I have even more luck than Jaden during his draw phases.</state>
+                <state img="#-shocked.png">I still can't belive that I'm seeing this. You, ~name~, naked, masturbating in front of me.</state>
+                <state img="#-joy.png">Pinch me, I must be dreaming!</state>
+                <state img="#-happy.png">Play your pussy like a musical instrument. Your moans will be the best song I've heard all week.</state>
+                <state img="#-drooling.png">Please tell me I get to play with that after you're done.</state>
+                <state img="#-sad.png">Stupid no touching rule... I'd hit that right now if not for that.</state>
             </case>
             <case stage="8">
                 <state img="#-horny.png">It's finally happening, I'm masturbating in front of a girl that is also masturbating herself.</state>
                 <state img="#-horny.png">You are going to make me finish faster if you keep going like that.</state>
                 <state img="#-happy.png">So, am I inspiring you to go faster?</state>
+                <state img="#-drooling.png">We're doing it together like lovers, ~name~.</state>
+                <state img="#-happy.png">I home I'm giving you as good a show as you are to me, ~name~. I wouldn't be The Chazz if I didn't.</state>
             </case>
         </trigger>
 
@@ -2033,6 +2248,7 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-drooling.png">If only I could ever see Alexis do that for me too...</state>
                 <state img="#-sad.png">Over so soon? I wanted to see you keep going for a bit?</state>
                 <state img="#-joy.png">I'll have to bribe the staff to get the security footage of that!</state>
+                <state img="#-horny.png">Do you mind if I clean you up? Or have sex with you? Anything?</state>
             </case>
         </trigger>
 
@@ -2120,6 +2336,7 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-awkward.png">Oh man, this is even more embarrassing than always losing to Jaden...</state>
                 <state img="#-awkward.png">Suddenly, that Ojama underwear doesn't look nearly as embarrassing as my current situation...</state>
                 <state img="#-disappointed.png">Stupid slippery floor. Now I'm absolutely filthy...</state>
+                <state img="#-disappointed.png">I saved up my load for a week in anticipation... and look where that's got me.</state>
             </case>
         </trigger>
 
@@ -2179,8 +2396,17 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-bored.png">Where's a fly swatter when you need one?</state>
             </case>
             <case stage="9">
+                <condition role="other" character="dust" />
+                <state img="#-confident.png">HOWWWL! &lt;i&gt;(If I gotta be a werewolf, might as well have fun with it. Let's eat some sheep and urinate on Jaden's moped, Dust)&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="other" character="n" />
+                <state img="#-shocked.png">You can sleep after all that? Even after all my insults? Hope you don't get a nightmare, N.</state>
+            </case>
+            <case stage="9">
                 <state img="#-bored.png">Would someone just give me a towel so I can clean myself already...</state>
                 <state img="#-thinking.png">Challenge me to Duel Monsters, and we'll see just how long your victory streak lasts.</state>
+                <state img="#-confident.png">You may have won, ~name~, but I'm unbeatable at Duel Monsters. A strip game of that ought to shut you up.</state>
             </case>
         </trigger>
 
