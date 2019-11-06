@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 1:40:18 AM on November 05, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 5:47:24 PM on November 06, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Cynthia</first>
@@ -83,7 +83,7 @@
             </case>
             <case stage="0" priority="106">
                 <condition role="other" character="chazz" />
-                <state img="#-excited.png" marker="malePlaying">Oh, Chazz! Well, this works out perfectly then! I was hoping to speak to a Monster Duelist and see if I can't learn anything about the mythology of this card game...</state>
+                <state img="#-excited.png" marker="malePlaying">Oh, Chazz! Well, this works out perfectly then! I was hoping to speak to a Monster Duelist; maybe I can learn something about the mythology of this card game...</state>
                 <state img="#-excited.png" marker="malePlaying">Oh, Chazz, right? I was hoping I could learn a thing or two about the creation of your Duel Monsters card game... Would you mind informing me?</state>
             </case>
             <case stage="0">
@@ -137,43 +137,165 @@
         </trigger>
 
         <trigger id="good_hand">
-            <case stage="0-8">
-                <state img="#-aggressive.png">But of course; a hand like this is only natural to me.</state>
-                <state img="#-excited.png">But of course; this game comes natural to me, after all.</state>
-                <state img="#-excited.png">I'm as talented as ever.</state>
+            <case stage="2">
                 <state img="#-aggressive.png">Hah! As expected...</state>
                 <state img="#-fingerup.png">Ah, a hand fit for a champion!</state>
+                <state img="#-aggressive.png">A critical hit!</state>
+                <state img="#-happy.png">An upturn in fortune! How splendid...</state>
+                <state img="#-disappointed.png">I used to have so much fun while I was out adventuring... If only times could be so simple again.</state>
+            </case>
+            <case stage="0">
+                <state img="#-fingerup.png">Ah! Looks like we're off to a good start!</state>
+                <state img="#-happy.png">I'm off to a good start!</state>
+                <state img="#-fingerup.png">Why, what a remarkable way to start this journey!</state>
+            </case>
+            <case stage="1">
+                <state img="#-aggressive.png">Would you look at that; perfect IVs!</state>
+                <state img="#-fingerup.png">Hehe, I'm having a good time right now...</state>
+                <state img="#-happy.png">These cards are quite the discovery!</state>
+            </case>
+            <case stage="5">
+                <state img="#-aggressive.png">Oh, just the kind of hand I've been waiting for!</state>
+                <state img="#-happy.png">I suppose I was due for a good hand eventually...</state>
+                <state img="#-disappointed.png">So I guess all the good cards were stuffed at the bottom of the deck...</state>
+            </case>
+            <case stage="5" priority="0">
+                <condition count="1" gender="male" status="alive" var="male" />
+                <state img="#-horny.png">Looks like I'm still safe... but is ~male~?</state>
+                <state img="#-horny.png">Looks like I might be safe this round; maybe ~male~ will have to show us something nice?</state>
+            </case>
+            <case stage="7">
+                <state img="#-pensive.png">Where was this hand a few rounds ago...</state>
+                <state img="#-scowling.png">Oh, so now the good cards come to me...</state>
+                <state img="#-disappointed.png">It seems I'll be spared for at least another round...</state>
+            </case>
+            <case stage="3">
+                <state img="#-happy.png">An upturn in fortune! How splendid...</state>
+                <state img="#-fingerup.png">Hands like this are such a rare encounter!</state>
+                <state img="#-happy.png">Yeah, I think these cards go together well...</state>
+            </case>
+            <case stage="4">
+                <state img="#-happy.png">Ah, these are just the cards I needed.</state>
+                <state img="#-horny.png">This hand is just &lt;i&gt;too perfect&lt;/i&gt;; I'm gonna blush.</state>
+                <state img="#-excited.png">Ha! Type advantage!</state>
+            </case>
+            <case stage="6">
+                <state img="#-embarrassed.png">Ah, I got lucky...</state>
+                <state img="#-happy.png">An upturn in fortune, and at just the right time too!</state>
+                <state img="#-embarrassed.png">I couldn't be more blessed right now; to have this hand, and at this stage in the game too...</state>
+            </case>
+            <case stage="8">
+                <state img="#-happy.png">It was crucial that I got a good hand this round; I couldn't allow myself another loss...</state>
+                <state img="#-excited.png">Yes! Full restore!</state>
+                <state img="#-excited.png">Huhah! Perfect timing!</state>
             </case>
         </trigger>
 
         <trigger id="okay_hand">
-            <case stage="0-8">
-                <state img="#-excited.png">What do you say, after this game, does anyone want to explore any ruins with me?</state>
-                <state img="#-sarcastic.png">This hand... So it's a fair fight!</state>
-                <state img="#-sarcastic.png">Does anyone have any juicy historical stories to share? I love hearing about the past. </state>
+            <case stage="1-2" id="120" oneShotId="13" totalRounds="-10">
+                <state img="#-excited.png" marker="QuesExploreRuins">What do you say: after this game, does anyone want to explore any ruins with me?</state>
+                <state img="#-sarcastic.png" marker="QuesHistoricalStories">Does anyone have any juicy historical stories to share? I love hearing about the past. </state>
+                <state img="#-excited.png" marker="QuesHistoricalFigures">I have to ask... Does anyone want to share which historical figures they most admire?</state>
+                <state img="#-thinking.png" marker="QuesImpactfulHistory">I've been thinking about something... Which events in history do you think were the most impactful today?</state>
+                <state img="#-sarcastic.png" marker="QuesCreationTheories">I've been researching accounts of our creation; some sound very plausable, others are quite ridiculous... What outrageous theroies have you guys heard?</state>
+            </case>
+            <case stage="6-8" id="121" oneShotId="14" totalRounds="20">
+                <state img="#-sarcastic.png" marker="QuesHistoricalShip">I've been meaning to ask something... If you could pair up any two historical figures, who would you ship together?</state>
+                <state img="#-horny.png" marker="QuesLewdArtifacts">I know mythology is supposed to be a &lt;i&gt;professional&lt;/i&gt; subject, but let's be real... We've &lt;i&gt;all&lt;/i&gt; admired the lewd artifacts... Does anyone have any favorites?</state>
+                <state img="#-sarcastic.png" marker="QuesHistoryGossip">The jucier bits of history always seem to be the parts we &lt;i&gt;aren't&lt;/i&gt; supposed to know, like a ruler's sex life... Does anyone know any gossip like this?</state>
+            </case>
+            <case stage="1">
+                <state img="#-aggressive.png">This hand... So it's a fair fight!</state>
+                <state img="#-excited.png">There's no type advantage this time; it all comes down to strategy!</state>
+            </case>
+            <case stage="2">
+                <state img="#-fingerup.png">It's not always about the cards you are dealt; it's how you use them!</state>
+                <state img="#-battleready.png">A great trainer can turn even an ordinary hand into a victory.</state>
+                <state img="#-excited.png">This round, it will be a battle of skill!</state>
+            </case>
+            <case stage="0">
+                <state img="#-happy.png">Sometimes, &lt;i&gt;ordinariness&lt;/i&gt; can be most beautiful. </state>
+                <state img="#-happy.png">It times like this when I remember that anything plain can be lovely.</state>
+                <state img="#-excited.png">Right, let's see how this goes!</state>
+            </case>
+            <case stage="3">
+                <state img="#-contemplative.png">Not bad, not bad...</state>
+                <state img="#-happy.png">I can work with this!</state>
+                <state img="#-fingerup.png">As a pokemon trainer, I'm more than accustomed to using what I have to my fullest advantage!</state>
+            </case>
+            <case stage="4">
+                <state img="#-fingerup.png">Sometimes a victory is won by getting a strong start; other times, you must work from behind and pull ahead!</state>
+                <state img="#-fingerup.png">The interesting thing about my Spiritomb is that is has no weaknesses; it is never at a disadvantage!</state>
+            </case>
+            <case stage="5">
+                <state img="#-contemplative.png">Hmmm... So I &lt;i&gt;might&lt;/i&gt; be fine...</state>
+                <state img="#-thinking.png">Yes... yes, this could work...</state>
+            </case>
+            <case stage="6">
+                <state img="#-surprised.png">I-I can make this work... I &lt;i&gt;have&lt;/i&gt; to make this work.</state>
+                <state img="#-thinking.png">Well, there's still hope, anyway.</state>
+            </case>
+            <case stage="7">
+                <state img="#-pensive.png">I can't settle for these cards... Not when I'm on my last legs...</state>
+                <state img="#-disappointed.png">Under normal circumstances, these cards would be acceptable...</state>
+                <state img="#-pensive.png">These cards are... &lt;i&gt;fine&lt;/i&gt;... But they're not what I was looking for.</state>
+            </case>
+            <case stage="8">
+                <state img="#-embarrassed.png">When I'm this close to defeat, I don't think &lt;i&gt;okay&lt;/i&gt; will be enough...</state>
+                <state img="#-pensive.png">Sometimes &lt;i&gt;good enough&lt;/i&gt; just doesn't cut it...</state>
             </case>
         </trigger>
 
         <trigger id="bad_hand">
-            <case stage="3-8">
-                <state img="#-battleready.png">Such a bad hand? That's fine, I enjoy the challenge.</state>
-                <state img="#-battleready.png">This hand... It isn't great.</state>
-                <state img="#-disappointed.png">So I'm cursed with a bad hand? What is this, a kind of handicap? ...You'll need it.</state>
-                <state img="#-pensive.png">It appears that I'll have to win this hand through skill alone.</state>
-                <state img="#-excited.png">My hand isn't the best, ~player~. This is your opening, make it count!</state>
+            <case stage="3">
+                <state img="#-pensive.png">To be this far down and have a hand like this... It is most unsettling...</state>
+                <state img="#-disappointed.png">To be this far down and at such a disadvantage... Where did I go wrong?</state>
+                <state img="#-contemplative.png">Things seem to have taken a turn for the worst...</state>
+                <state img="#-disappointed.png">It seems my tale may be taking a darker turn...</state>
             </case>
             <case stage="0">
-                <state img="#-disappointed.png">&lt;i&gt;(Hmmm... I might be losing my first safe layer here...)&lt;/i&gt;</state>
+                <state img="#-disappointed.png">&lt;i&gt;(Hmmm... I might be losing my first hand here...)&lt;/i&gt;</state>
                 <state img="#-disappointed.png">&lt;i&gt;(My coat might have to go...)&lt;/i&gt;</state>
                 <state img="#-pensive.png">I... I can still make this work... probably...</state>
-                <state img="#-aggressive.png">Now's your chance, ~player~! I have a pretty bad hand, so this is your chance to strike!</state>
+                <state img="#-aggressive.png">Now's your chance, ~player~! I have a pretty bad hand, so this is your opportunity to strike!</state>
             </case>
             <case stage="1">
-                <state img="#-disappointed.png">&lt;i&gt;(Hmmm... I might be losing my last anticipated layer here...)&lt;/i&gt;</state>
+                <state img="#-disappointed.png">&lt;i&gt;(Hmmm... I might be losing yet again...)&lt;/i&gt;</state>
+                <state img="#-disappointed.png">It seems like my luck has taken a downturn...</state>
+                <state img="#-disappointed.png">It seems a defeat is imminent...</state>
             </case>
             <case stage="2">
                 <state img="#-aggressive.png">Now's your chance, ~player~! I have a pretty bad hand, so this is your chance to strike!</state>
                 <state img="#-aggressive.png">My hand isn't the best, ~player~. This is your opportunity!</state>
+            </case>
+            <case stage="5">
+                <state img="#-pensive.png">This is going from bad to worse...</state>
+                <state img="#-pensive.png">Man, this luck is something else...</state>
+                <state img="#-pensive.png">Just like catching a pokemon with bad IVs...</state>
+                <state img="#-fingerup.png">Remember, even if you're down on your luck, you can always make a comeback!</state>
+            </case>
+            <case stage="4">
+                <state img="#-battleready.png">Such a bad hand? That's fine, I enjoy the challenge.</state>
+                <state img="#-battleready.png">This hand... It isn't great.</state>
+                <state img="#-disappointed.png">So I'm cursed with a bad hand? What is this, a kind of handicap? ...You'll need it.</state>
+                <state img="#-pensive.png">It appears that I'll have to win this hand through skill alone.</state>
+                <state img="#-excited.png">My hand isn't the best, ~player~. This is your opening; make it count!</state>
+            </case>
+            <case stage="6">
+                <state img="#-shocked.png">Huh? This hand? Really? N-not now...</state>
+                <state img="#-shocked.png">But... but with this hand... and this much clothing left, that means...</state>
+            </case>
+            <case stage="7">
+                <state img="#-shocked.png">This... this might be nearing an end for me...</state>
+                <state img="#-shocked.png">I can't go down like this!</state>
+                <state img="#-shocked.png">Ah, this slip up! This is something I cannot afford...</state>
+            </case>
+            <case stage="8">
+                <state img="#-shocked.png">&lt;i&gt;No!&lt;/i&gt; I can't... I can't let it end like this...</state>
+                <state img="#-pensive.png">Ah, is the curtain about to close on me...?</state>
+                <state img="#-pensive.png">MIght this be the end? My final battle?</state>
+                <state img="#-scowling.png">I can't seem to remember... when's the last time I've been backed into a corner?</state>
+                <state img="#-embarrassed.png">Where's a full restore when you need one...</state>
             </case>
         </trigger>
 
@@ -196,6 +318,15 @@
                 <condition role="self" saidMarker="KazumaPenis" />
                 <state img="#-pensive.png">Gosh; I'm sorry, Kazuma... That was innappropriate of me to say. My apologies.</state>
                 <state img="#-pensive.png">Uh... that wasn't right for me to say, Kazuma... I'm sorry for bringing that up...</state>
+            </case>
+            <case stage="0-8" totalRounds="0">
+                <condition role="other" character="guzma" saying="sleep around" />
+                <condition count="2" gender="male" />
+                <state img="#-battleready.png">You'd be wise to stay your tongue, Guzma. I've dealt with your type before; it never ends well...</state>
+                <state img="#-embarrassed.png">I don't &lt;i&gt;sleep around&lt;/i&gt;, Guzma; I'm looking for a &lt;i&gt;meaningful&lt;/i&gt; relationship with a talented man!</state>
+                <state img="#-battleready.png">&lt;i&gt;Sleep around?&lt;/i&gt; You must have me confused with that girl with the pink hair you're always seen with...</state>
+                <state img="#-battleready.png">&lt;i&gt;Sleep around?&lt;/i&gt; If you want to start something, Guzma, we can settle this right here with a Pokemon battle.</state>
+                <state img="#-embarrassed.png">I... No, I wasn't going to &lt;i&gt;sleep around&lt;/i&gt; with a guy here... I just... {small}wanted to see them naked...{!reset}</state>
             </case>
             <case stage="0-8" oneShotId="11">
                 <condition role="other" character="pit" />
@@ -338,10 +469,10 @@
                 <state img="#-sarcastic.png">~Player~, you're still adjusting yourself? Ah! I had no idea it was such a complicated process!</state>
                 <state img="#-sarcastic.png">~Player~, you should just be moving bits around... Jus... just what are you doing in down there?</state>
             </case>
-            <case stage="0-8" oneShotId="6">
-                <state img="#-scowling.png">Ahg, for the thousandth time, &lt;i&gt;no&lt;/i&gt;! I do &lt;i&gt;not&lt;/i&gt; have a daughter named Verity; I just happen to look like the girl's mother...</state>
-                <state img="#-scowling.png">Ahg, for the thousandth time, &lt;i&gt;no&lt;/i&gt;! I do &lt;i&gt;not&lt;/i&gt; have a daughter named Verity; I don't have any kids for that matter.</state>
-                <state img="#-scowling.png">Ahg, for the thousandth time, &lt;i&gt;no&lt;/i&gt;! I do &lt;i&gt;not&lt;/i&gt; have a daughter named Verity; I haven't even had any steady romantic partner, for that matter...</state>
+            <case stage="0-8" id="122" oneShotId="6">
+                <state img="#-scowling.png" marker="CynthiaVerity">And just to be clear, &lt;i&gt;no&lt;/i&gt;! I do &lt;i&gt;not&lt;/i&gt; have a daughter named Verity; I just happen to look like the girl's mother...</state>
+                <state img="#-scowling.png" marker="CynthiaVerity">And just to be clear, &lt;i&gt;no&lt;/i&gt;! I do &lt;i&gt;not&lt;/i&gt; have a daughter named Verity; I don't have any kids for that matter.</state>
+                <state img="#-scowling.png" marker="CynthiaVerity">And just to be clear, &lt;i&gt;no&lt;/i&gt;! I do &lt;i&gt;not&lt;/i&gt; have a daughter named Verity; I haven't even had any steady romantic partner, for that matter...</state>
             </case>
             <case stage="0-8" id="29" priority="0">
                 <test expr="~background~" value="inventory" />
@@ -410,6 +541,9 @@
                 <state img="#-thinking.png">Do you think you can teach me about this Duel Monsters card game, Chazz? I'm always eager to learn about this kind of stuff.</state>
                 <state img="#-thinking.png">Would now be a good time to inform me about Duel Monsters, Chazz? I try to learn everything I can about mythology and folklore!</state>
             </case>
+            <case stage="0-7" totalRounds="0">
+                <state>Huh? But... hmmm... Well, this is akward...</state>
+            </case>
             <case stage="5" priority="5">
                 <condition count="3" status="alive" />
                 <state img="#-scowling.png">Another crushing defeat by the hands of you two?</state>
@@ -424,9 +558,9 @@
                 <state img="#-scowling.png">Huh? I had the worst hand out of everyone here? &lt;i&gt;Impossible!&lt;/i&gt;</state>
             </case>
             <case stage="5" priority="3">
-                <state img="#-furious.png">Ah! Not again!</state>
+                <state img="#-shocked.png">Ah! Not again!</state>
                 <state img="#-pensive.png">Huh? Another loss? I'm beginning to lose count...</state>
-                <state img="#-scowling.png">A-another defeat? B-but how? I swore I would be good at this game!</state>
+                <state img="#-shocked.png">A-another defeat? B-but how? I thought I would have been good at this game!</state>
             </case>
             <case stage="6" priority="3">
                 <state img="#-crying.png">Ah! NO! I don't have any layers to spare!</state>
@@ -532,9 +666,16 @@
             <case stage="7">
                 <state img="#-stripping.png">Yes, I am a little embarrassed, but more than that, I'm fulfilling my part of the game's agreement. There can be no wavering now!</state>
             </case>
+            <case stage="0" priority="0">
+                <test expr="~background.time~" value="night" />
+                <state img="#-stripping.png">You've done well to get me stripping. Enjoy it; I don't intend to be spoiling you tonight.</state>
+            </case>
+            <case stage="0" priority="0">
+                <test expr="~background.time~" value="day" />
+                <state img="#-stripping.png">You've done well to get me stripping. Enjoy it; I don't intend to be spoiling you today.</state>
+            </case>
             <case stage="0">
                 <state img="#-stripping.png">Whether it's the cold tundras of Snowpoint or the fiery peaks of Stark Mountain, I wear my coat everywhere I go.</state>
-                <state img="#-stripping.png">You've done well to get me stripping. Enjoy it; it's the last you'll see.</state>
             </case>
         </trigger>
 
@@ -614,11 +755,11 @@
                 <state img="#-stripped.png">It's sure hard to get the motivation to try in this game when there's no guys around.</state>
             </case>
             <case stage="2" priority="1">
-                <state img="#-stripped.png">There. I'm sure my scarf will be the last item I take off!</state>
-                <state img="#-stripped.png">There; and that's it. I do not expect to lose any rounds from here on out.</state>
+                <state img="#-stripped.png">There... If I play my cards right, my scarf could be the last item I take off.</state>
+                <state img="#-stripped.png">There; and that's it. &lt;i&gt;I have to focus now.&lt;/i&gt;</state>
                 <state img="#-stripped.png">Okay, I'm done playing games; it's time to get serious!</state>
                 <state img="#-stripped.png">Alright, so I can't sandbag against you... &lt;i&gt;Big deal&lt;/i&gt;!</state>
-                <state img="#-stripped.png">Alright, so I can't sandbag against you... Now, I'll actually try this time.</state>
+                <state img="#-stripped.png">Alright, so I can't sandbag against you... You're truly talented opponents indeed!</state>
             </case>
             <case stage="2">
                 <condition role="self" saidMarker="FivePlayers" />
@@ -768,7 +909,7 @@
             </case>
             <case stage="1" id="88" totalRounds="4-">
                 <state img="#-thinking.png">Strip poker doesn't seem to be a game of particular challenge...</state>
-                <state img="#-thinking.png">Well, if I win &lt;i&gt;too&lt;/i&gt; much, thinks might start to get rather boring...</state>
+                <state img="#-thinking.png">Well, if I win &lt;i&gt;too&lt;/i&gt; much, things might start to get rather boring...</state>
             </case>
             <case stage="2" id="91">
                 <condition role="self" timeInStage="2-" />
@@ -1965,7 +2106,8 @@
                 <state img="#-sarcastic.png">&lt;i&gt;A real winner?&lt;/i&gt; Come on, Guzma, fewer jokes, more stroke!</state>
                 <state img="#-sarcastic.png">&lt;i&gt;A real winner?&lt;/i&gt; That's a funny thing to say... &lt;i&gt;Guzma&lt;/i&gt;; a &lt;i&gt;winner&lt;/i&gt;... Ha!</state>
             </case>
-            <case stage="0-10" id="117" target="kazuma">
+            <case stage="0-10" id="117">
+                <condition role="target" character="kazuma" />
                 <state img="#-surprised.png">Oh, well I suppose I was wrong; it is decently sized! Penises sure can be confusing...</state>
                 <state img="#-thinking.png">Huh? It grew? But I thought... if it's that small flacid... Surely there's some foolery here with surface area to volume ratios at play, right?</state>
                 <state img="#-surprised.png">Huh? Now it's big all of a sudden? ... But it was so small just a moment ago.</state>
@@ -1976,6 +2118,9 @@
                 <state img="#-fingerup.png">Looks like it's time to get started, ~name~. Mind if I take notes?</state>
                 <state img="#-fingerup.png">Looks like it's time to get started, ~name~. Mind if I record my observations?</state>
                 <state img="#-fingerup.png">Back in the day, I walked in on Professor Rowan masturbating in his office, heee... Let's just say that it won't be hard for you to put on a better show!</state>
+                <state img="#-fingerup.png">I can't help but be interested, ~name~. Mind if I peek?</state>
+                <state img="#-embarrassed.png">I can't help but be interested, ~name~. Would peeking be inappropriate?</state>
+                <state img="#-horny.png">I can't help but be interested, ~name~; I'm quite unfamilar with the techniques guys use on their equipment.</state>
             </case>
         </trigger>
 
@@ -2201,10 +2346,9 @@
                 <condition role="self" saidMarker="FivePlayers" />
                 <test expr="~human.stage~" cmp="&lt;" value="1" />
                 <test expr="~target.tag.human~" value="false" />
-                <state img="#-excited.png">You're the first to fall, ~name~! As soon as I defeat ~player~ and the others, I'll have proven I'm as good as strip poker as I am with pokemon battles!</state>
-                <state img="#-excited.png">Hee, ~name~ is out of the game! As soon as the other three are out, I'll have claimed victory!</state>
+                <state img="#-excited.png">~Name~ is out of the game! As soon as the other three are out, I'll have claimed victory!</state>
                 <state img="#-excited.png">And with that, ~name~ is out of the match, but there's still quite a ways to go!</state>
-                <state img="#-excited.png">Hee, as expected. Sorry ~name~, but you're the first opponent I'll be claiming victory over.</state>
+                <state img="#-excited.png">Sorry ~name~, but you're the first opponent I'll be claiming victory over.</state>
             </case>
             <case stage="0-8" id="17">
                 <condition count="4" status="alive" />
@@ -2235,6 +2379,8 @@
             </case>
             <case stage="0-10">
                 <state img="#-contemplative.png">You know the rules, ~name~! Oh, come on, don't pretend we all didn't know this was coming.</state>
+                <state img="#-excited.png">From the stars and the ancient past, they come to play but they never last.</state>
+                <state img="#-contemplative.png">Well played, ~name~, but it looks like this is the end.</state>
             </case>
             <case stage="0-8">
                 <state img="#-contemplative.png">Ha, ~name~ is out! That's a victory for me!</state>
