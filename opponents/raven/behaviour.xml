@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.2 at 10:07:24 PM on September 29, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 11:58:38 AM on November 02, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.2</version>
+    <version>v5.2.6</version>
     <first>Raven</first>
     <last>Roth</last>
     <label>Raven</label>
@@ -2855,6 +2855,10 @@
             <case stage="5" totalMasturbating="1-2" priority="0">
                 <state img="#-loss.png">Just watch the others, and keep your eyes off of me.</state>
             </case>
+            <case stage="5" hidden="1">
+                <condition status="alive" role="other" character="human" />
+                <state collectible="raven_cloak">Unlocks Raven's cloak achievement</state>
+            </case>
         </trigger>
 
         <trigger id="start_masturbating">
@@ -2984,16 +2988,18 @@
         </trigger>
 
         <trigger id="game_over_defeat">
-            <case stage="7" target="zone-tan">
-                <state img="#-angry.png" collectible="raven_cloak">You won this time, Zone-tan... but I &lt;i&gt;will&lt;/i&gt; get my revenge.</state>
-                <state img="#-angry.png" collectible="raven_cloak">This is not over... One day, you will feel my wrath, Zone-tan. I'll make you pay for what you've done.</state>
+            <case stage="7">
+                <condition role="target" character="zone-tan" />
+                <state img="#-angry.png">You won this time, Zone-tan... but I &lt;i&gt;will&lt;/i&gt; get my revenge.</state>
+                <state img="#-angry.png">This is not over... One day, you will feel my wrath, Zone-tan. I'll make you pay for what you've done.</state>
             </case>
             <case stage="7">
-                <state img="#-awkward.png" collectible="raven_cloak">It's over?</state>
-                <state img="#-interested.png" collectible="raven_cloak">All in all, I'd say this was a &lt;i&gt;strange&lt;/i&gt; experience...</state>
+                <state img="#-awkward.png">It's over?</state>
+                <state img="#-interested.png">All in all, I'd say this was a &lt;i&gt;strange&lt;/i&gt; experience...</state>
             </case>
-            <case stage="7" notSaidMarker="realization2" priority="0">
-                <state img="#-horny.png" collectible="raven_cloak">This mess is your fault, ~name~. Now, could you clean it up...?</state>
+            <case stage="7" priority="0">
+                <condition role="self" notSaidMarker="realization2" />
+                <state img="#-horny.png">This mess is your fault, ~name~. Now, could you clean it up...?</state>
             </case>
         </trigger>
 

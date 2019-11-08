@@ -648,6 +648,16 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     }
 }
 
+function pluralize (text) {
+    if (text.match(/ff?$/)) {
+        return text.replace(/ff?$/, 'ves');
+    } else if (text.match(/s$/)) {
+        return text + 'es';
+    } else {
+        return text + 's';
+    }
+}
+
 /************************************************************
  * Expands variables etc. in a line of dialogue.
  ************************************************************/
@@ -676,6 +686,12 @@ function expandDialogue (dialogue, self, target, bindings) {
                     substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target, bindings);
                 } else if (fn === 'plural') {
                     substitution = clothing.plural ? 'plural' : 'single';
+                } else if (fn === 'toplural') {
+                    if (!clothing.plural) {
+                        substitution = pluralize(clothing.name);
+                    } else {
+                        substitution = clothing.name;
+                    }
                 } else if ((fn == 'type' || fn == 'position') && args === undefined) {
                     substitution = clothing[fn];
                 } else if (fn === undefined) {
@@ -1740,7 +1756,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
  * Also cleans up the previous chosenState's parent Case, if it exists.
  */
 Opponent.prototype.updateChosenState = function (state) {
-    if (this.chosenState && this.chosenState.parentCase) {
+    if (this.chosenState && this.chosenState.parentCase && state.parentCase != this.chosenState.parentCase) {
         this.chosenState.parentCase.cleanupMutableState();
     }
 
@@ -1751,7 +1767,7 @@ Opponent.prototype.updateChosenState = function (state) {
 /**
  * Clears out this Opponent's previous chosenState, leaving it at null.
  */
-Opponent.prototype.clearChosenState = function (state) {
+Opponent.prototype.clearChosenState = function () {
     if (this.chosenState && this.chosenState.parentCase) {
         this.chosenState.parentCase.cleanupMutableState();
     }

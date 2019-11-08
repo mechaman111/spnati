@@ -1784,6 +1784,12 @@ namespace SPNATI_Character_Editor
 					other.Expressions.Add(copy);
 				}
 			}
+
+			if (!string.IsNullOrEmpty(Filter))
+			{
+				ExpressionTest test = new ExpressionTest("self.tag." +  Filter, "true");
+				other.Expressions.Add(test);
+			}
 		}
 
 		/// <summary>

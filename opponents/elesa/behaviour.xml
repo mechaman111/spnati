@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.5 at 2:31:11 PM on October 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 2:43:57 AM on October 31, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.5</version>
+    <version>v5.2.6</version>
     <first>Elesa</first>
     <last />
     <label>Elesa</label>
@@ -106,6 +106,18 @@
                 <state img="custom:start">Kanto's Water-type specialist. Ah, right, I recall seeing you at the Pokemon World Tournament.</state>
             </case>
             <case stage="0">
+                <condition role="other" character="cynthia" />
+                <state img="#-happy.png">Cynthia. It's always a pleasure to run into you.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="guzma" />
+                <state img="#-monotone.png">Typical street punk. Very well. Let's start.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="akko" />
+                <state img="#-think.png">Never seen retractable sunglasses? Maybe you're too young for that...</state>
+            </case>
+            <case stage="0">
                 <state img="custom:start" location="35%">Don't disappoint me. </state>
                 <state img="custom:start" location="35%">Welcome to the main stage.</state>
                 <state img="custom:start" location="35%">Alright. Whose star shall shine brightest, I wonder...?</state>
@@ -166,8 +178,8 @@
             </case>
             <case stage="3-4">
                 <state img="#-monotone.png">Kind of unremarkable, really.</state>
-                <state img="#-happy.png">Things are going smooth, all things considered.</state>
-                <state img="#-neutral.png">Are you prepared, ~player~? We wouldn't want to continue without you.</state>
+                <state img="#-smug.png">Things are going smooth, all things considered.</state>
+                <state img="#-intrigued.png">Are you prepared, ~player~? We wouldn't want to continue without you.</state>
                 <state img="#-neutral.png">Take your time. This hand's not going anywhere.</state>
             </case>
         </trigger>
@@ -196,24 +208,170 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-1" totalRounds="1-">
+                <condition role="other" character="dust" stage="0-2" sayingMarker="elesa_outfit" saying="interesting outfit" />
+                <state img="#-neutral.png">That's the point. My outfits are designed to be interesting.</state>
+            </case>
+            <case stage="0-1" totalRounds="1-">
+                <condition role="other" character="dust" stage="0-2" sayingMarker="elesa_outfit" saying="Falana" />
+                <state img="#-happy.png">Well, my outfit's uniquely Unovan. Just like yours is uniquely of Falana. That's the beauty of fashion.</state>
+            </case>
+            <case stage="0-1" totalRounds="1-">
+                <condition role="other" character="dust" stage="0-2" sayingMarker="elesa_outfit" saying="function" />
+                <state img="#-happy.png">Who says I can't have both?</state>
+            </case>
+            <case stage="0-6" totalRounds="2-">
+                <condition role="other" character="megumin" sayingMarker="megumin_elesa_contest" />
+                <state img="#-neutral.png">I'll give you points for trying, but can you really say that when you a patchy hat like that?</state>
+                <state img="#-neutral.png">This isn't a competition. And even if it were, I wouldn't lose.</state>
+                <state img="#-happy.png">How very cute. Maybe you &lt;i&gt;can&lt;/i&gt; beat me... when you're older.</state>
+            </case>
+            <case stage="0-6" totalRounds="2-">
+                <condition role="other" character="megumin" sayingMarker="megumin_elesa_pointers" />
+                <state img="#-monotone.png">I'll pass, thank you. If I wanted a 'demonic flair', I'd go find Grimsley.</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <condition role="other" character="n" />
                 <state img="#-glare_b.png">I sincerely hope you aren't here to cause any more trouble. I'm here to enjoy myself tonight.</state>
                 <state img="#-glare_b.png">I have my eye on you. </state>
             </case>
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="jessie" />
+                <state img="#-neutral.png">My glasses might be a bit more high-tech than what you're used to.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="starfire" sayingMarker="starfire_elesa_euphemisms" />
+                <state img="#-shock.png">You're surprisingly knowledgable about euphemisms...</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="akko" saying="how do you get it like that" />
+                <state img="#-encouraging.png">Oh, it's nothing special. They're just hair extensions.</state>
+            </case>
+            <case stage="0-2" oneShotId="34">
+                <condition count="1-5" role="opp" var="leader" />
+                <test expr="~leader.place~" value="1" />
+                <test expr="~self.place~" cmp="&gt;" value="1" />
+                <state img="#-think.png" marker="leader">
+                    <alt-img stage="0">#-gamebegin1.png</alt-img>
+                    <text>I'll have to admit---you're a tough opponent, ~leader~.</text>
+                </state>
+                <state img="#-think.png" marker="leader">
+                    <alt-img stage="0">#-gamebegin1.png</alt-img>
+                    <text>You're not half-bad, ~leader~, I'll give you that.</text>
+                </state>
+            </case>
+            <case stage="3-4" oneShotId="35">
+                <condition count="1-5" role="opp" var="leader" />
+                <test expr="~leader.place~" value="1" />
+                <test expr="~self.place~" cmp="&gt;" value="1" />
+                <state img="#-neutral.png" marker="leader">
+                    <alt-img stage="0">#-gamebegin1.png</alt-img>
+                    <text>Huh. You're pretty good at this game, ~leader~. I always enjoy a challenge.</text>
+                </state>
+            </case>
+            <case stage="5-6" oneShotId="36">
+                <condition count="1-5" role="opp" var="leader" />
+                <test expr="~leader.place~" value="1" />
+                <test expr="~self.place~" cmp="&gt;" value="1" />
+                <state img="#-encouraging.png" marker="leader">
+                    <alt-img stage="0">#-gamebegin1.png</alt-img>
+                    <text>You're really good at this game, ~leader~! But a Gym Leader doesn't give up until the very end!</text>
+                </state>
+            </case>
+            <case stage="6" priority="15">
+                <condition count="0" status="not_lost_all" />
+                <condition count="1" status="alive" role="opp" var="opponent" />
+                <condition count="2" status="alive" />
+                <state img="#-encouraging.png" location="44%">Last round of the game! It's just like getting a gym leader down to their last Pokemon! Alright, ~opponent~, let's see who comes out victorious!</state>
+            </case>
+            <case stage="2-6" totalRounds="5-">
+                <state img="#-think.png" oneShotId="29" marker="elesa_ensemble">I'm quite curious about the fashion trends where you're all from. Any favorite outfits? </state>
+            </case>
             <case stage="5-6" oneShotId="27">
-                <state img="#-excited.png">Carpe diem. Seize the day. Make your lives extraordinary... &lt;br&gt; Okay, references aside, I get the appeal of this game. The risk makes it exciting!</state>
+                <state img="#-excited.png">Carpe diem. Seize the day. Make your lives extraordinary... &lt;br&gt;Do you understand? The risk makes it exciting!</state>
             </case>
             <case stage="4-6" oneShotId="28">
                 <state img="#-think.png" marker="ask_movies">Well, since I'm getting to enjoy everyone's company, here's a question; what sort of movies do you enjoy? I was always a bit of a film fanatic when I was younger.</state>
             </case>
         </trigger>
 
+        <trigger id="must_strip">
+            <case stage="0-5" priority="101">
+                <condition role="other" character="megumin" sayingMarker="megumin_elesa_finalBoss" />
+                <state img="#-monotone.png">Final boss? I'm a gym leader; I'm not meant to look &lt;i&gt;that&lt;/i&gt; imposing.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="guzma" />
+                <state img="#-irritated.png">What was that?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="guzma" />
+                <state img="#-monotone.png">Oh, yes. Assault a gym leader in public; the police would be on you before you could pull your fist back.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="guzma" />
+                <state img="#-embarrassed.png">Yeah, laugh it up. I know what I got myself into.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="jessie" />
+                <state img="#-happy.png">As it so happens, it is.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="jessie" />
+                <state img="#-think.png">Is that so? You look rather fashionable yourself.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="jessie" />
+                <state img="#-think.png">I'd say you're doing fine, but if you insist, perhaps you can try one of the brands I represent.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="akko" />
+                <state img="#-loss.png">It's not something I mind.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="akko" />
+                <state img="#-monotone.png">I'm not trying to act like anyone.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="akko" />
+                <state img="#-encouraging.png">As a model, I have to be proud of it!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-loss.png">Ah. So I did.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-think.png">Easy for you to say. You came here in a swimsuit, for Arceus's sake.</state>
+            </case>
+            <case stage="1-5">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-think.png">Twice in a row, huh?</state>
+            </case>
+            <case stage="2-5">
+                <condition role="self" consecutiveLosses="3" />
+                <state img="#-irritated.png" location="38%">You're kidding, right? &lt;i&gt;Three times?&lt;/i&gt; I know I'm not the best at this game, but this is ridiculous!</state>
+            </case>
+            <case stage="3-5">
+                <condition role="self" consecutiveLosses="4" />
+                <state img="#-furious.png" location="65%">Are you kidding me!?</state>
+            </case>
+            <case stage="4-5">
+                <condition role="self" consecutiveLosses="5" />
+                <state img="#-embarrassed.png" location="65%">This is absolutely ridiculous! Is this game rigged against me?</state>
+            </case>
+            <case stage="0" totalRounds="0">
+                <state img="#-irritated.png">I'm the first? This hardly seems fair at all!</state>
+                <state img="#-loss.png">It seems my fame's worked against me this time. To be the first loser... Let's not make this a trend.</state>
+                <state img="#-loss.png">Hmph. So the supermodel is the first person to strip tonight. Well then...</state>
+            </case>
+        </trigger>
+
         <trigger id="must_strip_winning">
             <case stage="0">
-                <state img="#-monotone.png">And here I thought I could ride the whole thing out.</state>
-                <state img="#-monotone.png">Got your act together, did we?</state>
-                <state img="#-monotone.png">Finally. I thought you were leaving me out intentionally.</state>
+                <state img="#-loss.png">And here I thought I could ride the whole thing out.</state>
+                <state img="#-loss.png">Got your act together, did we?</state>
+                <state img="#-loss.png">Finally. I thought you were leaving me out intentionally.</state>
             </case>
             <case stage="2">
                 <state img="#-embarrassed.png">Here's where my look starts to fall apart. Granted, considering all of you...</state>
@@ -245,8 +403,8 @@
         <trigger id="must_strip_normal">
             <case stage="0">
                 <state img="#-loss.png">Let's not waste time, then.</state>
-                <state img="#-neutral.png">I'll try and make this interesting.</state>
-                <state img="#-neutral.png">How prepared &lt;i&gt;are&lt;/i&gt; you, I wonder...</state>
+                <state img="#-loss.png">I'll try and make this interesting.</state>
+                <state img="#-loss.png">How prepared &lt;i&gt;are&lt;/i&gt; you, I wonder...</state>
             </case>
             <case stage="1">
                 <state img="#-monotone.png">For the record, that was my only coat. Don't expect anything that flashy again.</state>
@@ -279,7 +437,7 @@
             <case stage="0">
                 <state img="#-shock.png">So soon?</state>
                 <state img="#-irritated.png">Don't you have someone else to target?</state>
-                <state img="#-embarrassed.png">It seems my fame's worked against me this time.</state>
+                <state img="#-loss.png">It seems my fame's worked against me this time.</state>
             </case>
             <case stage="1">
                 <state img="#-monotone.png">I get you're all eager, but please calm yourselves.</state>
@@ -298,7 +456,7 @@
             </case>
             <case stage="4">
                 <state img="#-embarrassed.png">What rotten luck.</state>
-                <state img="#-embarrassed.png">This is like the equivalence of Thunder missing three times in a row. Not fun.</state>
+                <state img="#-embarrassed.png">This is like the equivalent of Thunder missing three times in a row. Not fun.</state>
                 <state img="#-embarrassed.png">I thought I was better than this.</state>
             </case>
             <case stage="5">
@@ -309,6 +467,78 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="1">
+                <condition role="other" character="cynthia" />
+                <state img="#-strip.png">Thank you... do you like the color scheme? It's all well-thought out, you know.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="guzma" />
+                <state img="#-strip.png">You think this is hurting me? Hardly.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="starfire" />
+                <state img="#-strip.png">That just sounds like a Plusle and Minun. ...Are they a Plusle and Minun?</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="cynthia" />
+                <state img="#-strip.png">You like music, Cynthia?</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="guzma" />
+                <state img="#-strip.png">Honestly, I've been thinking about it, and I think that's your big problem, Guzma: you're impatient to a fault.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="jessie" />
+                <state img="#-strip.png">It's undeniable, really. </state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="jessie" />
+                <state img="#-strip.png">Maybe I can even hook you up a discount.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="jessie" />
+                <state img="#-strip.png">It's really no different from a belt.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="akko" />
+                <state img="#-strip.png">But if you want beauty, consider these shoes. Do you see the red and blue? They're like magnets.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="akko" />
+                <state img="#-strip.png">Less than you'd think...</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="akko" />
+                <state img="#-strip.png">Are you implying something?</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-strip.png">I'm &lt;i&gt;fine&lt;/i&gt;, thank you!</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-strip.png">Yeah, you're right. Although usually it's the clothes people are interested in...</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="kazuma" />
+                <state img="#-strip.png">No, I'm pretty sure I will.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="kazuma" />
+                <state img="#-strip.png">They are, aren't they? The designer did a fantastic job.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="kazuma" />
+                <state img="#-strip.png">It is, in fact, a buckle. Surprised?</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="kazuma" />
+                <state img="#-strip.png">I'd be insulted if you didn't, Kazuma.</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="kazuma" />
+                <state img="#-strip.png">Kazuma, please. A great model always knows the condition of her clothes.</state>
+            </case>
             <case stage="0">
                 <state img="custom:#-strip">Do you know what they call me...?</state>
             </case>
@@ -340,6 +570,103 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="1">
+                <condition role="other" character="starfire" />
+                <state img="#-happy.png">I am the Shining Beauty. And &lt;i&gt;that&lt;/i&gt;, Starfire, was a coat of genuine Ampharos wool. Fashionable &lt;i&gt;and&lt;/i&gt; soft.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="cynthia" />
+                <state img="#-think.png">I am the Shining Beauty. And there's more than one way to demonstrate that, Cynthia.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="guzma" />
+                <state img="#-think.png">What do you mean "will"?</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="starfire" />
+                <state img="#-happy.png">Maybe you're secretly a Pokemon, too.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="starfire" />
+                <state img="#-stripped.png">That's... not what I meant. But call it what you like.</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="starfire" />
+                <state img="#-butt.png" marker="booty">I won't do that, but at least I know you like what you see.</state>
+                <state img="#-butt.png" marker="booty">If you want to see more, come see it for yourself, Starfire.</state>
+                <state img="#-happy.png">I'm still in the game, aren't I? Oooh, I guess you can consider it my Final Gambit. Alright, I'm ready!</state>
+                <state img="#-excited.png">Ooooh, this actually feels liberating! Of course this is a one-time thing, but I think I can get used to this for now!</state>
+                <state img="#-encouraging.png">I'm not eliminated from this game yet? That means I might just have a chance.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="guzma" />
+                <state img="#-irritated.png">I am the Shining Beauty. And if you think I'm hogging all the attention, then by all means. Have your fun.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="guzma" />
+                <state img="#-furious.png">I dare you to try.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="jessie" />
+                <state img="#-encouraging.png">More just ambience than anything, Jessie.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="jessie" />
+                <state img="#-happy.png">If you're brave enough to try, I can refer you to a retailer.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="akko" />
+                <state img="#-think.png">Hmm... maybe I should start telling some more jokes, then.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="akko" />
+                <state img="#-monotone.png">Duly noted, Akko.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="akko" />
+                <state img="#-coquettish.png">Would you like me to?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-embarrassed.png">...And no, Misty. It didn't work out.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-happy.png">Ah, well. Can't act aloof forever with you around, Misty.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-happy.png">Maybe it's because there's a familiar face around.</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-happy.png">There's certainly a liberating factor to it.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="kazuma" />
+                <state img="#-monotone.png">They call me the Shining Beauty! &lt;i&gt;Not&lt;/i&gt; someone cute.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="kazuma" />
+                <state img="#-smug.png">Judging by that look on your face, at least one.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="kazuma" />
+                <state img="#-think.png">You didn't peg me as the type to use headphones.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="kazuma" />
+                <state img="#-stripped.png">Ah, well. I'm proud of my legs.</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="kazuma" />
+                <state img="#-stripped.png">Maybe I'm getting &lt;i&gt;too&lt;/i&gt; into this now...</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="kazuma" />
+                <state img="#-butt.png" marker="booty">Heh, feel free to admire my backside while you're at it.</state>
+                <state img="#-irritated.png">No, you can't! Those are expensive, I'll have you know.</state>
+            </case>
             <case stage="3">
                 <condition role="self" saidMarker="functionalfashion" />
                 <state img="#-neutral.png">These headphones are also wireless. Aside from being able to block out unnecessarily loud noises, I could play music or simply white noise.</state>
@@ -357,9 +684,9 @@
                 <state img="#-happy.png">You know, it's not often I get the chance to enjoy other's company.</state>
             </case>
             <case stage="4">
-                <state img="#-poststrip.png">&lt;i&gt;There!&lt;/i&gt; Now I can simply &lt;i&gt;sliiiide&lt;/i&gt; them down---like so!</state>
-                <state img="#-poststrip.png">There we go. You may have gotten me down to just my top and underwear, but you still have quite a ways to go.</state>
-                <state img="#-poststrip.png">Ahh. Without the safety piece, I can simply slide them down my legs like so. No hands required.</state>
+                <state img="#-stripped.png">&lt;i&gt;There!&lt;/i&gt; Now I can simply &lt;i&gt;sliiiide&lt;/i&gt; them down---like so!</state>
+                <state img="#-stripped.png">There we go. You may have gotten me down to just my top and underwear, but you still have quite a ways to go.</state>
+                <state img="#-stripped.png">Ahh. Without the safety piece, I can simply slide them down my legs like so. No hands required.</state>
             </case>
             <case stage="3">
                 <state img="#-happy.png">I don't mean to brag, but I've made headphones an iconic look soon after my debut as a gym leader.</state>
@@ -367,15 +694,15 @@
                 <state img="#-monotone.png">Be cautious with those---you'd be surprised how costly designer headphones are.</state>
             </case>
             <case stage="5">
-                <state img="#-poststrip.png">And before you ask: Yes, I was wearing a bra. It's simply built-in with my top. </state>
+                <state img="#-stripped.png">And before you ask: Yes, I was wearing a bra. It's simply built-in with my top. </state>
                 <state img="#-embarrassed.png">This crop-top has a built-in bra. Normally, it's quite convenient, but in this case...  now you get to see my breasts sooner. Let's just deal the next hand.</state>
-                <state img="#-poststrip.png">No bra? How scandalous! &lt;br&gt; ...Actually, this top does have a bra built-in to it. It's very convenient for when you're changing or getting ready for bed.</state>
+                <state img="#-stripped.png">No bra? How scandalous! &lt;br&gt; ...Actually, this top does have a bra built-in to it. It's very convenient for when you're changing or getting ready for bed.</state>
             </case>
             <case stage="6">
                 <state img="#-butt.png" marker="booty">Heh, feel free to admire my backside while you're at it.</state>
                 <state img="#-butt.png" marker="booty">Here, I'll be generous and turn around too.</state>
                 <state img="#-happy.png">I'm still in the game, aren't I? Oooh, I guess you can consider it my Final Gambit. Alright, I'm ready!</state>
-                <state img="#-excited.png">Ooooh, this actually frees liberating! Of course this is a one-time thing, but I think I can get used to this for now!</state>
+                <state img="#-excited.png">Ooooh, this actually feels liberating! Of course this is a one-time thing, but I think I can get used to this for now!</state>
                 <state img="#-encouraging.png">I'm not eliminated from this game yet? That means I might just have a chance.</state>
             </case>
         </trigger>
@@ -457,7 +784,7 @@
             </case>
             <case stage="0-8">
                 <condition role="target" character="n" stage="2" />
-                <state img="#-monotone.png">That hair must be a hassle to handle if you're having trouble removing that pendant.</state>
+                <state img="#-smug.png">That hair must be a hassle to handle if you're having trouble removing that pendant.</state>
             </case>
             <case stage="0-2">
                 <state img="#-think.png">...What a shame. I mean that.</state>
@@ -544,10 +871,10 @@
             <case stage="5-8">
                 <state img="#-monotone.png">Whatever.</state>
                 <state img="#-irritated.png">You're really letting me down here. I'm here to have fun, not watch someone remove their ~clothing~.</state>
-                <state img="#-monotone.png">This feels like stalling. I guess I have no room to judge. &lt;i&gt;(I still wish they could've taken off something bigger)&lt;/i&gt;</state>
+                <state img="#-monotone.png">This feels like stalling. I guess I have no room to judge. &lt;i&gt;(I still wish they could've taken off something bigger.)&lt;/i&gt;</state>
             </case>
             <case stage="0-2">
-                <state img="#-think.png">Would you like recommendations for your next choice?</state>
+                <state img="#-smug.png">Would you like recommendations for your next choice?</state>
             </case>
         </trigger>
 
@@ -572,7 +899,7 @@
         <trigger id="male_removed_minor">
             <case stage="0-8">
                 <condition role="target" character="n" stage="5" />
-                <state img="#-neutral.png">Ah, right, the 8-item limit.</state>
+                <state img="#-intrigued.png">Ah, right, the eight-item limit.</state>
             </case>
             <case stage="0-2">
                 <state img="#-monotone.png">You're more of a funnyman than an &lt;i&gt;actual clown&lt;/i&gt;.</state>
@@ -642,7 +969,7 @@
                 </state>
             </case>
             <case stage="0-2">
-                <state img="#-happy.png">I'm doing well. Although, is that really surprising?</state>
+                <state img="#-smug.png">I'm doing well. Although, is that really surprising?</state>
             </case>
             <case stage="3-4">
                 <state img="#-shock.png">Oh! Didn't think we were at this point.</state>
@@ -924,7 +1251,7 @@
             </case>
             <case stage="0-8">
                 <condition role="target" character="moon" stage="4" />
-                <state img="#-irritated.png">I feel like you haven't listened to a word I've said, have you?</state>
+                <state img="#-furious.png">I feel like you haven't listened to a word I've said, have you?</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="moon" stage="5" />
@@ -937,6 +1264,34 @@
                     <text>Is this really the path you want to go down? Think about it for a minute...</text>
                 </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="0" />
+                <state img="#-happy.png">Cynthia lost? That never happens!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="1" />
+                <state img="#-happy.png">If only I had this much luck in battles with you.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="2" />
+                <state img="#-intrigued.png">Huh. We are on a &lt;i&gt;roll&lt;/i&gt; today.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="3" />
+                <state img="#-smug.png">Tough break, Champ.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="4" />
+                <state img="#-smug.png">Maybe this just isn't your game.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="6" />
+                <state img="#-coquettish.png">Oh, &lt;i&gt;finally&lt;/i&gt;.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="7" />
+                <state img="#-think.png">Ah. Well. That was anticlimactic.</state>
+            </case>
             <case stage="0-8" totalRounds="0">
                 <alternative>
                     <condition role="target" character="n" />
@@ -945,6 +1300,58 @@
                     <condition role="target" character="natsuki" />
                 </alternative>
                 <state img="#-monotone.png">You didn't get the memo?</state>
+            </case>
+            <case stage="0-8">
+                <condition status="mostly_clothed" role="target" />
+                <test expr="~target.lead~" cmp="&gt;" value="1" />
+                <state img="#-monotone.png">
+                    <alt-img stage="3-8">#-neutral.png</alt-img>
+                    <text>This shouldn't be a big deal to you. You're still winning.</text>
+                </state>
+                <state img="#-neutral.png">
+                    <alt-img stage="0-2">#-monotone.png</alt-img>
+                    <text>You're still ahead of us, aren't you?</text>
+                </state>
+                <state img="#-think.png">
+                    <alt-img stage="0">#-gamebegin1.png</alt-img>
+                    <text>Technically you're still winning, aren't you?</text>
+                </state>
+                <state img="#-neutral.png">
+                    <alt-img stage="0-4">#-happy.png</alt-img>
+                    <text>This should be just a minor setback.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" consecutiveLosses="3" />
+                <test expr="~target.biggestlead~" cmp="&gt;=" value="3" />
+                <state img="#-shock.png">Ouch. And to think you were beating us all earlier.</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" consecutiveLosses="3" />
+                <state img="#-intrigued.png">
+                    <alt-img stage="0">#-gamebegin1.png</alt-img>
+                    <text>How unlucky. Well, ~name~?</text>
+                </state>
+                <state img="#-smug.png">Three losses in a row? Either Lady Luck has it out for you or you need to rethink your strategy.</state>
+                <state img="#-monotone.png">
+                    <alt-img stage="3-4">#-intrigued.png</alt-img>
+                    <text>Are you sure you know how to play this game?</text>
+                </state>
+            </case>
+            <case stage="5-8">
+                <condition role="target" consecutiveLosses="3" />
+                <state img="#-embarrassed.png">
+                    <alt-img stage="0">#-gamebegin1.png</alt-img>
+                    <text>Ouch...</text>
+                </state>
+                <state img="#-intrigued.png">Three losses in a row? Yeesh, the dealer must have it out for you.</state>
+            </case>
+            <case stage="0-4" oneShotId="39">
+                <test expr="~target.revplace~" value="1" />
+                <state img="#-smug.png">You should really pick up the pace if you want a chance of winning. You're falling behind here!</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="5">
+                <state img="#-gamebegin1.png" location="40%">You're up, ~name~. Let's see if it's worth sticking around.</state>
             </case>
         </trigger>
 
@@ -980,6 +1387,38 @@
                 <condition role="target" character="moon" stage="6" />
                 <state img="#-embarrassed.png">I tried. I'm sorry, but it seems you're beyond help.</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="0" />
+                <state img="#-intrigued.png">You know, some say that coat's iconic of Sinnoh itself.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="1" />
+                <state img="#-monotone.png">Seriously, your Spiritomb is legitimately scary.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="2" />
+                <state img="#-happy.png">Even now, you're a tough one. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="3" />
+                <state img="#-intrigued.png">We've changed together before. Is this that surprising?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="4" />
+                <state img="#-happy.png">You always were a competitive one, huh?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="5" />
+                <state img="#-smug.png">Really getting risky now for you...</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="6" />
+                <state img="#-happy.png">I'll take what I can get, of course.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="7" />
+                <state img="#-intrigued.png">Have you changed your style at all? I remember you used to shave down there...</state>
+            </case>
             <case stage="0-8" oneShotId="13">
                 <condition filter="pokemon" role="target" />
                 <state img="#-neutral.png" oneShotId="1">The aura about you... you're a trainer, aren't you?</state>
@@ -998,7 +1437,7 @@
             </case>
             <case stage="0-8" oneShotId="22">
                 <condition filter="criminal" role="target" />
-                <state img="#-irritated.png" oneShotId="5">I want this one out of my sight ASAP. You seem like exactly the sort that would fall in with Team Plasma.</state>
+                <state img="#-furious.png" oneShotId="5">I want this one out of my sight ASAP. You seem like exactly the sort that would fall in with Team Plasma.</state>
             </case>
             <case stage="0-8" oneShotId="17">
                 <condition filter="journalist" role="target" />
@@ -1030,7 +1469,7 @@
             </case>
             <case stage="0-8">
                 <condition filter="fancy" role="target" />
-                <state img="#-happy.png" oneShotId="13">
+                <state img="#-intrigued.png" oneShotId="13">
                     <alt-img stage="5-8">#-neutral.png</alt-img>
                     <text>I see you have exquisite taste. Might I interest you in my own wares? </text>
                 </state>
@@ -1089,7 +1528,7 @@
             </case>
             <case stage="0-8" oneShotId="11">
                 <condition filter="sinnoh" role="target" />
-                <state img="#-neutral.png" oneShotId="6">I remember Sinnoh being a very cold, harsh land. This must be a rare opportunity to warm up for you.</state>
+                <state img="#-intrigued.png" oneShotId="6">I remember Sinnoh being a very cold, harsh land. This must be a rare opportunity to warm up for you.</state>
             </case>
             <case stage="0-8" oneShotId="15">
                 <condition filter="kanto" role="target" />
@@ -1114,7 +1553,7 @@
             </case>
             <case stage="0-8">
                 <condition role="target" character="moon" stage="2" />
-                <state img="#-irritated.png">That Z-Ring is wasted on you, I can tell.</state>
+                <state img="#-furious.png">That Z-Ring is wasted on you, I can tell.</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="moon" stage="3" />
@@ -1137,18 +1576,50 @@
             </case>
             <case stage="0-8">
                 <condition role="target" character="moon" stage="7" />
-                <state img="#-irritated.png">
+                <state img="#-furious.png">
                     <alt-img stage="0-3">#-monotone.png</alt-img>
                     <text>Just count yourself lucky I won't turn you into the police.</text>
                 </state>
             </case>
-            <case stage="0-4">
+            <case stage="0-8">
                 <condition role="target" character="n" stage="7" />
                 <state img="#-embarrassed.png">...I'm... sorry to hear it.</state>
             </case>
             <case stage="5-8">
                 <condition role="target" character="n" stage="8" />
                 <state img="#-embarrassed.png">Oh... I'm sorry, N. I didn't realized you had such a troubled life...</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="1" />
+                <state img="#-think.png">I can certainly see why. No one else can pull it off with your poise and refinement.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="2" />
+                <state img="#-neutral.png">But, at least I can enjoy small victories like these against you.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="3" />
+                <state img="#-coquettish.png">That's what I've always admired about you, Cynthia.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="4" />
+                <state img="#-happy.png">Even your underwear picks are superb!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="5" />
+                <state img="#-intrigued.png">Oh? You wear leggings? Wearing them under long pants is rather redundant, though. Right?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="6" />
+                <state img="#-coquettish.png">Just think of it like... the beack.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="7" />
+                <state img="#-smug.png">But this is a pretty good prize, I must say.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="8" />
+                <state img="#-smug.png">Nice. My memory was on point!</state>
             </case>
             <case stage="0-8" oneShotId="25">
                 <condition filter="crossdresser" role="target" />
@@ -1165,14 +1636,39 @@
             </case>
             <case stage="0-8">
                 <condition filter="cheater" role="target" />
-                <state img="#-irritated.png" oneShotId="19">I suspect foul play. ...Cheating. Not the move.</state>
+                <state img="#-irritated.png" oneShotId="26">I suspect foul play. ...Cheating. Not the move.</state>
+            </case>
+            <case stage="0-8" oneShotId="40" priority="125">
+                <condition status="chest_visible" role="target" />
+                <condition count="1" status="exposed" />
+                <test expr="~target.biggestlead~" cmp="&gt;=" value="3" />
+                <state img="#-intrigued.png">I guess it comes to show a good lead doesn't guarentee victory. Although... it's not over yet for you, isn't it?</state>
+            </case>
+            <case stage="4-5">
+                <test expr="~target.diff(self)~" value="0" />
+                <state img="#-smug.png">Not much left for you!</state>
+            </case>
+            <case stage="0-3">
+                <test expr="~target.diff(self)~" value="0" />
+                <state img="#-intrigued.png">
+                    <alt-img stage="3">#-neutral.png</alt-img>
+                    <text>Looks like we're tied now, I think. Interesting...</text>
+                </state>
+            </case>
+            <case stage="0-2" oneShotId="37" priority="5">
+                <condition count="1" status="exposed" />
+                <state img="#-smug.png">Things are really getting heated up now, aren't they?</state>
+            </case>
+            <case stage="3-4" oneShotId="38" priority="5">
+                <condition count="1" status="exposed" />
+                <state img="#-coquettish.png">Heh... Things are really getting heated up now, aren't they? I definetly like what I'm seeing here!</state>
             </case>
         </trigger>
 
         <trigger id="opponent_masturbating">
             <case stage="0-8">
                 <condition filter="tandem" role="target" />
-                <state img="#-shock.png" oneShotId="22">This... goes beyond just standard masturbation, doesn't it?</state>
+                <state img="#-shock.png" oneShotId="27">This... goes beyond just standard masturbation, doesn't it?</state>
             </case>
             <case stage="0-8" oneShotId="30">
                 <condition filter="bondage_forfeit" role="target" />
@@ -1184,7 +1680,7 @@
             </case>
             <case stage="0-8">
                 <condition filter="tentacle_forfeit" role="target" />
-                <state img="#-shock.png" oneShotId="25">...Call it what you want, I'm fairly certain this &lt;i&gt;really&lt;/i&gt; skirts the 'no sex' line. Something like this would pass as pokephilia back in Unova...</state>
+                <state img="#-shock.png" oneShotId="28">...Call it what you want, I'm fairly certain this &lt;i&gt;really&lt;/i&gt; skirts the 'no sex' line. Something like this would pass as pokephilia back in Unova...</state>
             </case>
             <case stage="7" oneShotId="31">
                 <state img="#-irritated.png">Oh, and don't you &lt;i&gt;think&lt;/i&gt; about bragging about this. This is a one-time thing and it's to remain private, understand?</state>
@@ -1317,6 +1813,10 @@
         </trigger>
 
         <trigger id="female_start_masturbating">
+            <case stage="0-8">
+                <condition role="target" character="cynthia" />
+                <state img="#-think.png">If only it was always this easy to defeat a Champion.</state>
+            </case>
             <case stage="0-2">
                 <state img="#-coquettish.png">Do your best...</state>
             </case>
@@ -1391,7 +1891,7 @@
                 <state img="#-embarrassed.png">I hope me talking doesn't annoy you. Really, I want everyone here to enjoy themselves!</state>
                 <state img="#-embarrassed.png">This is kind of surreal... &lt;i&gt;(And also kind of hot...)&lt;/i&gt;</state>
                 <state img="#-shock.png">To think I've never heard of this place, seeing what goes on inside! It's like a modern day speakeasy!</state>
-                <state img="#-think.png">This feels like something that would only occur in Vegas, and we're not even there... although a trip would Vegas would sound nice right around now...</state>
+                <state img="#-think.png">This feels like something that would only occur in Vegas, and we're not even there... although a trip to Vegas does sound nice right around now...</state>
                 <state img="#-coquettish.png">I'll have what she's having.</state>
             </case>
             <case stage="0-4">
@@ -1449,6 +1949,10 @@
 
         <trigger id="must_masturbate_first">
             <case stage="6">
+                <condition role="other" character="kazuma" />
+                <state img="#-neutral.png">Actually, a gym leader is well-acquainted with defeat. This is nothing new.</state>
+            </case>
+            <case stage="6">
                 <state img="#-shock.png">&lt;i&gt;Masturbation?&lt;/i&gt; Arceus, what have I gotten into here!?</state>
                 <state img="#-irritated.png">&lt;i&gt;Masturbation?&lt;/i&gt; That's the penalty? And why haven't I been informed of this? If you're going to invite me, let me know what I'm getting into here!</state>
                 <state img="#-irritated.png">Wait, &lt;i&gt;what!?&lt;/i&gt; Why wasn't I told about this?</state>
@@ -1457,6 +1961,10 @@
 
         <trigger id="must_masturbate">
             <case stage="6">
+                <condition role="other" character="kazuma" />
+                <state img="#-neutral.png">Actually, a gym leader is well-acquainted with defeat. This is nothing new.</state>
+            </case>
+            <case stage="6">
                 <state img="#-embarrassed.png">&lt;i&gt;(sigh)&lt;/i&gt; Looks like that's it for me. It was kind of silly of me to think I could win...</state>
                 <state img="#-think.png">Should I really...? Ah, what the hell, I guess I'll live a little.</state>
                 <state img="#-embarrassed.png">This... &lt;i&gt;really&lt;/i&gt; isn't what a gym leader should be doing.</state>
@@ -1464,6 +1972,10 @@
         </trigger>
 
         <trigger id="start_masturbating">
+            <case stage="6">
+                <condition role="other" character="kazuma" />
+                <state img="#-start_a.png">Talk about conceited. It's not for &lt;i&gt;you&lt;/i&gt;!</state>
+            </case>
             <case stage="6">
                 <condition count="0" status="masturbating" />
                 <condition count="0" status="finished" />
@@ -1523,6 +2035,15 @@
 
         <trigger id="finished_masturbating">
             <case stage="8">
+                <condition role="other" character="kazuma" />
+                <state img="#-embarrassed.png">Can't deny I enjoyed it.</state>
+            </case>
+            <case stage="8">
+                <condition count="0" status="not_lost_all" />
+                <condition count="2" status="alive" var="playing" />
+                <state img="#-excited.png">Last round of the game! Ooooh, how exciting! I wonder who will win?</state>
+            </case>
+            <case stage="8">
                 <state img="#-finished.png">&lt;i&gt;Whew!&lt;/i&gt; I'm actually a little lightheaded after that. Give me a moment.</state>
                 <state img="#-finished.png">That was... &lt;i&gt;wow.&lt;/i&gt; I always enjoyed using toys but using my fingers felt just as good---umm, never mind. Ignore that!</state>
                 <state img="#-finished.png">Oh wow... I might need a moment.</state>
@@ -1552,6 +2073,19 @@
             <case stage="8">
                 <condition role="target" character="misty_hgss" stage="0-4" saying="skinny dipping" />
                 <state img="#-think.png">I'll have to decline; what I've done today was risky enough... unless you have somewhere private rented out for us girls?</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="kazuma" />
+                <state img="#-think.png">Sure. Contact my agency and your credentials, and I'm sure they can set something up. Oh, what's your schedule like? I'm busy most days.</state>
+            </case>
+            <case stage="8">
+                <condition status="lost_all" role="target" />
+                <test expr="~self.place~" value="2" />
+                <state img="#-happy.png" location="35%">Damn, I was &lt;i&gt;this&lt;/i&gt; close to winning too. Ah, well, at least we all had fun. Well done, ~name~!</state>
+            </case>
+            <case stage="8">
+                <test expr="~self.place~" value="2" />
+                <state img="#-encouraging.png" location="40%">Second place isn't so bad, I suppose. Well-played, ~name~! I may not have a Bolt Badge to give you, but this was even better, right?</state>
             </case>
             <case stage="8">
                 <state img="#-encouraging.png">Ah, well done! I may not have a Bolt Badge to give you, but this was even better, right?</state>
