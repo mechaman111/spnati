@@ -516,6 +516,7 @@ function findVariablePlayer(variable, self, target, bindings) {
     if (!variable) return null;
     if (variable == 'self') return self;
     if (variable == 'target') return target;
+    if (variable == 'winner' && recentWinner >= 0) return players[recentWinner];
     if (bindings && variable in bindings) return bindings[variable];
     if (players.some(function (p) {
         if (p.id.replace(/\W/g, '').toLowerCase() === variable) {
@@ -776,6 +777,7 @@ function expandDialogue (dialogue, self, target, bindings) {
                 break;
             case 'target':
             case 'self':
+            case 'winner':
             default:
                 var variablePlayer = findVariablePlayer(variable.toLowerCase(), self, target, bindings);
                 if (variablePlayer) {
@@ -1016,6 +1018,10 @@ function Condition($xml) {
     }
     this.priority += (this.saidMarker ? 1 : 0) + (this.notSaidMarker ? 1 : 0)
         + (this.sayingMarker ? 1 : 0) + (this.saying ? 1 : 0);
+
+    if (this.id && !this.variable) {
+        this.variable = this.id;
+    }
 }
 
 /**********************************************************************

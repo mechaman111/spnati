@@ -518,59 +518,23 @@ Hand.prototype.sort = function() {
         break;
     }
 };
- 
-/************************************************************
- * Returns the player number with the lowest hand.
- ************************************************************/
-function determineLowestHand () {
-	var lowestStrength = 11;
-	var lowestPlayers = [];
-	console.log();
-    
-	for (i = 0; i < players.length; i++) {
-		if (players[i] && !players[i].out) {
-			if (players[i].hand.strength < lowestStrength) {
-				lowestStrength = players[i].hand.strength;
-				lowestPlayers = [i];
-			} else if (players[i].hand.strength == lowestStrength) {
-				lowestPlayers.push(i);
-			}
-		}
-	}
-    console.log("Start of lowest hand determination, currently: "+lowestPlayers);
-	
-	if (lowestPlayers.length == 1) {
-		return lowestPlayers[0];
-	}
 
-	/* need to break a tie */
-	var maxTieBreakers = players[lowestPlayers[0]].hand.value.length;
-
-	for (var currentTieBreaker = 0; currentTieBreaker < maxTieBreakers; currentTieBreaker++) {
-		var lowestValue = 15;
-		var tiedPlayers = lowestPlayers;
-		console.log("Players Tied: "+tiedPlayers);
-
-		for (var i = 0; i < tiedPlayers.length; i++) {
-			if (players[tiedPlayers[i]].hand.value[currentTieBreaker] < lowestValue) {
-				lowestValue = players[tiedPlayers[i]].hand.value[currentTieBreaker];
-				console.log("Player "+tiedPlayers[i]+" is the new lowest with: "+players[tiedPlayers[i]].hand.value[currentTieBreaker]);
-				lowestPlayers = [tiedPlayers[i]];
-			} else if (players[tiedPlayers[i]].hand.value[currentTieBreaker] == lowestValue) {
-				lowestPlayers.push(tiedPlayers[i]);
-				console.log("Player "+tiedPlayers[i]+" is tied with: "+players[tiedPlayers[i]].hand.value[currentTieBreaker]);
-			}
-		}
-
-		if (lowestPlayers.length == 1) {
-			return lowestPlayers[0];
-		}
-	}
-
-	/* unresolvable tie */
-	return lowestPlayers;
+/**********************************************************************
+ * Return -1, 0, or 1 depending on whether h1 is respectively worse,
+ * exactly tied with, or better than h2.  Assumes that both hands have
+ * been correctly determined, so that if the hand types are equal, the
+ * value arrays are of equal length.
+ **********************************************************************/
+function compareHands (h1, h2) {
+    if (h1.strength < h2.strength) return -1;
+    if (h1.strength > h2.strength) return 1;
+    for (var i = 0; i < h1.value.length; i++) {
+        if (h1.value[i] < h2.value[i]) return -1;
+        if (h1.value[i] > h2.value[i]) return 1;
+    }
+    return 0;
 }
- 
+
 /************************************************************
  * Determine value of a given player's hand.
  * player is a player object, not an index.
