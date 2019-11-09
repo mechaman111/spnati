@@ -550,6 +550,7 @@ function completeRevealPhase () {
             players.forEach(function (p) {
                 if (p.chosenState) {
                     p.clearChosenState();
+                    updateGameVisual(p.slot);
                 }
             });
             updateAllBehaviours(null, null, PLAYERS_TIED);
