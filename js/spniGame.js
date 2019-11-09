@@ -119,6 +119,7 @@ var currentTurn = 0;
 var currentRound = -1;
 var previousLoser = -1;
 var recentLoser = -1;
+var recentWinner = -1;
 var gameOver = false;
 var actualMainButtonState = false;
 var endWaitDisplay = 0;
@@ -569,6 +570,7 @@ function completeRevealPhase () {
         previousLoser = recentLoser;
         recentLoser = sortedPlayers[0].slot;
     }
+    recentWinner = sortedPlayers[sortedPlayers.length-1].slot;
 
     console.log("Player "+recentLoser+" is the loser.");
 
@@ -867,6 +869,7 @@ function RollbackPoint (logPlayers) {
     this.currentTurn = currentTurn;
     this.previousLoser = previousLoser;
     this.recentLoser = recentLoser;
+    this.recentWinner = recentWinner;
     this.gameOver = gameOver;
     this.gamePhase = gamePhase;
     
@@ -902,6 +905,7 @@ RollbackPoint.prototype.load = function () {
     currentTurn = this.currentTurn;
     previousLoser = this.previousLoser;
     recentLoser = this.recentLoser;
+    recentWinner = this.recentWinner;
     gameOver = this.gameOver;
     rolledBackGamePhase = this.gamePhase;
     
