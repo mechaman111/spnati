@@ -536,7 +536,7 @@ function completeRevealPhase () {
     }
 
     /* Sort players by their hand strengths, worst first. */
-    var sortedPlayers = players.filter(function() { return true; });
+    var sortedPlayers = players.filter(function(p) { return !p.out; });
     sortedPlayers.sort(function(p1, p2) { return compareHands(p1.hand, p2.hand); });
 
     if (chosenDebug !== -1 && DEBUG) {
