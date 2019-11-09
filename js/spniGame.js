@@ -534,51 +534,53 @@ function completeRevealPhase () {
         }
     }
 
-    /* figure out who has the lowest hand */
-    previousLoser = recentLoser;
-    recentLoser = determineLowestHand();
+    /* Sort players by their hand strengths, worst first. */
+    var sortedPlayers = players.filter(function() { return true; });
+    sortedPlayers.sort(function(p1, p2) { return compareHands(p1.hand, p2.hand); });
 
     if (chosenDebug !== -1 && DEBUG) {
+        previousLoser = recentLoser;
         recentLoser = chosenDebug;
-    }
+    } else {
+        /* Check if (at least) the two worst hands are equal. */
+        if (compareHands(sortedPlayers[0].hand, sortedPlayers[1].hand) == 0) {
+            console.log("Fuck... there was an absolute tie");
+            /* inform the player */
+            players.forEach(function (p) {
+                if (p.chosenState) {
+                    p.clearChosenState();
+                }
+            });
+            updateAllBehaviours(null, null, PLAYERS_TIED);
 
-    /* look for the unlikely case of an absolute tie */
-    if (typeof recentLoser == 'object') {
-        console.log("Fuck... there was an absolute tie");
-        /* inform the player */
-        players.forEach(function (p) {
-            if (p.chosenState) {
-                p.clearChosenState();
-            }
-        });
-        updateAllBehaviours(null, null, PLAYERS_TIED);
-
-        recentLoser.forEach(function(i) {
-            $gameLabels[i].addClass("tied");
-        });
-        recentLoser = -1;
-        /* reset the round */
-        allowProgression(eGamePhase.DEAL);
-        return;
+            /* The probability of a three-way tie is basically zero,
+             * but it's theoretically possible. */
+            for (var i = 0;
+                 i < 2 || (i < sortedPlayers.length
+                           && compareHands(sortedPlayers[0].hand,
+                                           sortedPlayers[i].hand) == 0);
+                 i++) {
+                $gameLabels[sortedPlayers[i].slot].addClass("tied");
+            };
+            /* reset the round */
+            allowProgression(eGamePhase.DEAL);
+            return;
+        }
+        previousLoser = recentLoser;
+        recentLoser = sortedPlayers[0].slot;
     }
 
     console.log("Player "+recentLoser+" is the loser.");
 
     // update loss history
-    if (previousLoser < 0) {
-        // first loser
-        players[recentLoser].consecutiveLosses = 1;
-    }
-    else if (previousLoser === recentLoser) {
+    if (recentLoser == previousLoser) {
         // same player lost again
         players[recentLoser].consecutiveLosses++;
-    }
-    else {
+    } else {
         // a different player lost
-        players[previousLoser].consecutiveLosses = 0; //reset last loser
         players[recentLoser].consecutiveLosses = 1;
+        if (previousLoser >= 0) players[previousLoser].consecutiveLosses = 0; //reset last loser
     }
-
 
     /* update behaviour */
     saveTranscriptMessage("<b>"+players[recentLoser].label+"</b> has lost the hand.");
