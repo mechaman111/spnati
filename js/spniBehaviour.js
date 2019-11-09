@@ -511,28 +511,14 @@ function getTargetMarker(marker, target) {
     return "__" + target.id + "_" + marker;
 }
 
-/**
- * Normalizes a name meant for use as a variable, such as a variable binding
- * or a character ID.
- * @param {string} variable The binding name or character ID to normalize.
- * @returns {string} A normalized variable name.
- */
-function normalizeBindingName (variable) {
-    if (!variable) return variable;
-    return variable.replace(/\W/g, '').toLowerCase();
-}
-
 function findVariablePlayer(variable, self, target, bindings) {
     var player;
     if (!variable) return null;
     if (variable == 'self') return self;
     if (variable == 'target') return target;
-    if (variable == 'winner' && recentWinner >= 0) return players[recentWinner];
-
-    var normVariable = normalizeBindingName(variable);
-    if (bindings && normVariable in bindings) return bindings[normVariable];
+    if (bindings && variable in bindings) return bindings[variable];
     if (players.some(function (p) {
-        if (normalizeBindingName(p.id) === normVariable) {
+        if (p.id.replace(/\W/g, '').toLowerCase() === variable) {
             player = p;
             return true;
         }
@@ -790,7 +776,6 @@ function expandDialogue (dialogue, self, target, bindings) {
                 break;
             case 'target':
             case 'self':
-            case 'winner':
             default:
                 var variablePlayer = findVariablePlayer(variable.toLowerCase(), self, target, bindings);
                 if (variablePlayer) {
@@ -995,7 +980,7 @@ function checkMarker(predicate, self, target, currentOnly) {
 function Condition($xml) {
     this.count  = parseInterval($xml.attr('count') || "1-");
     this.role   = $xml.attr('role');
-    this.variable = normalizeBindingName($xml.attr('var'));
+    this.variable = $xml.attr('var');
     this.id     = $xml.attr('character');
     this.tag    = $xml.attr('filter');
     this.stage  = parseInterval($xml.attr('stage'));
@@ -1031,11 +1016,6 @@ function Condition($xml) {
     }
     this.priority += (this.saidMarker ? 1 : 0) + (this.notSaidMarker ? 1 : 0)
         + (this.sayingMarker ? 1 : 0) + (this.saying ? 1 : 0);
-
-    if (this.id && !this.variable) {
-        /* Apply correct normalization to player ID when using it as a variable. */
-        this.variable = normalizeBindingName(this.id);
-    }
 }
 
 /**********************************************************************
