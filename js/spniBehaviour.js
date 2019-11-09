@@ -1016,6 +1016,10 @@ function Condition($xml) {
     }
     this.priority += (this.saidMarker ? 1 : 0) + (this.notSaidMarker ? 1 : 0)
         + (this.sayingMarker ? 1 : 0) + (this.saying ? 1 : 0);
+
+    if (this.id && !this.variable) {
+        this.variable = this.id;
+    }
 }
 
 /**********************************************************************
