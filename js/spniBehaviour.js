@@ -1013,21 +1013,22 @@ function Condition($xml) {
     this.priority = 0;
 
     if (this.role == "self") {
-        this.priority += (this.tag ? 0 : 0) + (this.status ? 20 : 0)
+        this.priority = (this.tag ? 0 : 0) + (this.status ? 20 : 0)
             + (this.consecutiveLosses ? 60 : 0) + (this.timeInStage ? 8 : 0)
             + (this.hand ? 20 : 0) + (this.gender ? 5 : 0)
     } else if (this.role == "target") {
-        this.priority += (this.id ? 300 : 0) + (this.tag ? 150 : 0)
+        this.priority = (this.id ? 300 : 0) + (this.tag ? 150 : 0)
             + (this.stage ? 80 : 0) + (this.status ? 70 : 0)
             + (this.layers ? 40 : 0) + (this.startingLayers ? 40 : 0)
             + (this.consecutiveLosses ? 60 : 0) + (this.timeInStage ? 25 : 0)
             + (this.hand ? 30 : 0) + (this.gender ? 5 : 0)
     } else {
-        this.priority += (this.id ? 100 : 0) + (this.tag ? 10 : 0)
-            + (this.stage ? 40 : 0) + (this.status ? 5 : 0)
-            + (this.layers ? 20 : 0) + (this.startingLayers ? 20 : 0)
-            + (this.consecutiveLosses ? 30 : 0) + (this.timeInStage ? 15 : 0)
-            + (this.hand ? 15 : 0) + (this.gender ? 5 : 0)
+        this.priority = (this.role == "winner" ? 1.5 : 1) *
+            ((this.id ? 100 : 0) + (this.tag ? 10 : 0)
+             + (this.stage ? 40 : 0) + (this.status ? 5 : 0)
+             + (this.layers ? 20 : 0) + (this.startingLayers ? 20 : 0)
+             + (this.consecutiveLosses ? 30 : 0) + (this.timeInStage ? 15 : 0)
+             + (this.hand ? 15 : 0) + (this.gender ? 5 : 0))
     }
     this.priority += (this.saidMarker ? 1 : 0) + (this.notSaidMarker ? 1 : 0)
         + (this.sayingMarker ? 1 : 0) + (this.saying ? 1 : 0);
@@ -1548,6 +1549,7 @@ Case.prototype.checkConditions = function (self, opp) {
             return p && (ctr.role === undefined
                     || (ctr.role == "self" && p == self)
                     || (ctr.role == "target" && p == opp)
+                    || (ctr.role == "winner" && p.slot == recentWinner)
                     || (ctr.role == "opp" && p != self)
                     || (ctr.role == "other" && p != self && p != opp))
                 && (ctr.id === undefined || p.id == ctr.id)
