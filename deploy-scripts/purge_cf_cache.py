@@ -58,8 +58,13 @@ current_file_list = []
 total_files = 0
 
 for line in sys.stdin:
+    sys.stdout.write("Updated file: " + line)
+
     if os.path.splitext(line)[1][1:] not in cached_extensions:
+        sys.stdout.write("\n")
         continue
+
+    sys.stdout.write(" (will purge)\n")
 
     line = line.replace(".public/", "")
     if line[0] == "/":
