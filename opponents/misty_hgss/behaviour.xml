@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 7:07:17 PM on October 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 10:20:16 PM on November 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.6</version>
     <first>Misty</first>
@@ -473,7 +473,8 @@
                 <state img="#-worried.png">This is basically a Normal type hand. Not many weaknesses, but not any strengths either.</state>
                 <state img="#-worried.png">This, could work? I hope.</state>
             </case>
-            <case stage="0-1" oneShotId="1" saidMarker="player_male" priority="1">
+            <case stage="0-1" oneShotId="1" priority="1">
+                <condition role="self" saidMarker="player_male" />
                 <state img="#-embarrassed.png">So, uh, ~player~, do you come here often? This is my first time here. Maybe you could show me around when the game is done?</state>
                 <state img="#-teasing.png">What are you doing after this, ~player~? I was thinking about going swimming. You can come with me if you want.</state>
             </case>
@@ -561,7 +562,13 @@
             <case stage="0-4" alsoPlaying="tharja" alsoPlayingStage="2" saidMarker="player_male" alsoPlayingSaying="dream">
                 <state img="#-disappointed.png">You're completely delusional, Tharja.</state>
             </case>
-            <case stage="0" alsoPlaying="black_canary" totalRounds="0" alsoPlayingSaying="no men" priority="130">
+            <case stage="0-4">
+                <condition role="other" character="rainbow_dash" stage="1" saying="spats" />
+                <state img="#-confused.png">I don't understand why you'd care what they think Rainbow Dash.</state>
+                <state img="#-confused.png">Well, I'm always just wearing this swimsuit, so I don't think you should really care, Rainbow Dash.</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="130">
+                <condition role="other" character="black_canary" saying="no men" />
                 <state img="#-irritated.png">Apparently not, Dinah.</state>
                 <state img="#-irritated.png">I was expecting to see men here too, Dinah.</state>
             </case>
@@ -569,11 +576,13 @@
                 <state img="#-irritated.png">I don't know about you, but I was kinda hoping to see some guys here, Dinah.</state>
                 <state img="#-irritated.png">I don't know what you were told, but I was told that there &lt;i&gt;would&lt;/i&gt; be guys here, Dinah.</state>
             </case>
-            <case stage="0-4" alsoPlaying="rarity" totalRounds="0">
+            <case stage="0-4" totalRounds="0">
+                <condition role="other" character="rarity" />
                 <state img="#-confused.png">Wait, weren't you wearing something... simpler just a moment ago, Rarity?</state>
                 <state img="#-confused.png">Yeah, it's, uh... nice. But what happened to what you were wearing earlier, Rarity?</state>
             </case>
-            <case stage="0-3" alsoPlaying="shimakaze" totalRounds="0">
+            <case stage="0-3" totalRounds="0">
+                <condition role="other" character="shimakaze" />
                 <state img="#-confused.png">Your name is Shimakaze, right? What was that thing that you had just a second ago?</state>
                 <state img="#-confused.png">Hey, uh, Shimakaze? What was that thing that you just let go of?</state>
             </case>
@@ -658,6 +667,20 @@
                 <condition role="other" character="jessie" sayingMarker="MistyStageName" />
                 <state img="#-confused.png">&lt;i&gt;Stage&lt;/i&gt; name? And what exactly is it that you do, Jessie?</state>
                 <state img="#-confused.png">Well that's, interesting. What is it that you do that you need a stage name?</state>
+            </case>
+            <case stage="0-4">
+                <condition role="other" character="n" saying="friends" />
+                <state img="#-happy.png">Oh? What kind of people are your friends, N?</state>
+            </case>
+            <case stage="0-4">
+                <condition role="other" character="elesa" sayingMarker="ask_movies" />
+                <state img="#-happy.png" marker="UnovanMovies">Ooh! I love the "Love and Battles" series! The lead actor always seems so genuine!</state>
+                <state img="#-neutral.png" marker="UnovanMovies">I really enjoyed the "Giant Woman" movie series, Elesa. The ending wasn't what I expected, but the actors were just so emotional!</state>
+            </case>
+            <case stage="0-4">
+                <condition role="other" character="rainbow_dash" sayingMarker="sports_question" />
+                <state img="#-neutral.png">Well, if it wasn't obvious, I'm a swimmer, Rainbow Dash.</state>
+                <state img="#-neutral.png">I'm a swimmer, Rainbow Dash. It keeps me in shape and looking good.</state>
             </case>
             <case stage="4" id="4" oneShotId="12" saidMarker="player_male" notSaidMarker="found_date" priority="1">
                 <state img="#-worried.png" marker="askfor_number">Hey, ~player~. Do you... Can we...maybe exchange numbers? So I can call you again later?</state>
@@ -878,9 +901,11 @@
             </case>
             <case stage="0">
                 <condition role="other" character="meia" saidMarker="taught_men" />
-                <state img="#-strip.png" marker="MeiaResponse2">Oh. Is that what you meant? Have you really never met any before?</state>
-                <state img="#-strip.png" marker="MeiaResponse2">So &lt;i&gt;that's&lt;/i&gt; what you meant. I know a few, but have you really never met any men before?</state>
-                <state img="#-strip.png" marker="MeiaResponse2">Wait, you meant like general information? Yeah I know plenty, but how do you know nothing?</state>
+                <state img="#-strip.png" marker="MeiaWhichOne">Oh. Is that what you meant? Well, it all depends on which one you're talking to.</state>
+                <state img="#-strip.png" marker="MeiaNiceBodies">Well, if I had to start somewher, Meia, some of them have very nice bodies.</state>
+                <state img="#-strip.png" marker="MeiaExcitement">Well Meia, men are very fun to be around! They can make things very exciting!</state>
+                <state img="#-strip.png" marker="MeiaConfusing">Men are honestly very confusing, Meia. You can never be sure if how they really feel.</state>
+                <state img="#-strip.png" marker="MeiaStrong">Men are, well, strong, Meia. At least, some of them are. It's comforting in a way.</state>
             </case>
             <case stage="0" alsoPlaying="pit">
                 <state img="#-strip.png">What do mean, "different from what you expected"? What &lt;i&gt;were&lt;/i&gt; you expecting, Pit?</state>
@@ -1187,12 +1212,14 @@
                 <state img="#-neutral.png">Hmm. That's a neat look for you, Juri. You look like you're ready to hop in the water at anytime!</state>
                 <state img="#-neutral.png">I like that look, Juri. It's a lot like my usual outfit. That wasn't on purpose, was it?</state>
             </case>
-            <case stage="0-6" target="croix" targetStage="2">
+            <case stage="0-6">
                 <condition count="0" filter="akko" />
+                <condition role="target" character="croix" stage="2" />
                 <state img="#-worried.png">A reward? What are you planning, Croix?</state>
             </case>
-            <case stage="0-6" target="croix" targetStage="4">
+            <case stage="0-6">
                 <condition count="0" filter="akko" />
+                <condition role="target" character="croix" stage="4" />
                 <state img="#-teasing.png">That's what I was trying to tell you, Croix.</state>
                 <state img="#-teasing.png">If you didn't want to lose, you shouldn't have given all those "rewards", Croix.</state>
             </case>
@@ -1431,6 +1458,12 @@
                 <state img="#-worried.png">I was just shocked to see you. That's all.</state>
                 <state img="#-worried.png">It was just a real surprise to see you. </state>
             </case>
+            <case stage="0-4 6">
+                <condition role="target" character="kazuma" stage="0" />
+                <state img="#-confused.png">So, uh, are you actually old enough to be in here?</state>
+                <state img="#-confused.png">Um, how old are you, Kazuma? Was it?</state>
+                <state img="#-confused.png">You don't exactly seem old enough to be here, Kazuma.</state>
+            </case>
             <case stage="0-2">
                 <state img="#-embarrassed.png">Well, I haven't really lost anything major yet, so I can't really blame you for choosing something small.</state>
                 <state img="#-confused.png">I want to be upset, but I guess that I'm not really showing off anything either.</state>
@@ -1458,6 +1491,12 @@
 
         <trigger id="male_removed_accessory">
             <case stage="0-6">
+                <condition role="target" character="guzma" stage="2" />
+                <condition role="other" character="cynthia" />
+                <state img="#-embarrassed.png">Can we....not...fight?</state>
+                <state img="#-embarrassed.png">None of us came here to fight, right? So, let's not...</state>
+            </case>
+            <case stage="0-6">
                 <condition role="target" character="n" stage="1" />
                 <state img="#-confused.png">You're not still advocating that Pokemon liberation thing, are you?</state>
                 <state img="#-confused.png">You're done with the whole "release all Pokemon" thing, right?</state>
@@ -1472,6 +1511,11 @@
                 <condition role="target" character="n" stage="2" />
                 <state img="#-confused.png">After all, I had heard you'd gone misssing after that whole mess.</state>
                 <state img="#-confused.png">Last I heard, you had gone missing without a trace.</state>
+            </case>
+            <case stage="0-4 6">
+                <condition role="target" character="kazuma" stage="1" />
+                <state img="#-worried.png">(I get the feeling that this kid is just a big pervert.)</state>
+                <state img="#-worried.png">(Even if he is old enough, he makes me feel a little uneasy.)</state>
             </case>
             <case stage="0-2">
                 <state img="#-neutral.png">I'm sure we'll both take off bigger things as the game goes on.</state>
@@ -1785,6 +1829,12 @@
                 <state img="#-confused.png">What are you talking about when you say that, Mae? Nightmare Feet?</state>
                 <state img="#-confused.png">Nightmare Feet? That sounds like it would be the name of an Ability. I wonder what it would do.</state>
             </case>
+            <case stage="0-6">
+                <condition role="target" character="cynthia" stage="0" saidMarker="MistyGalar" />
+                <state img="#-happy.png">Really? That sounds great, Cynthia!</state>
+                <state img="#-happy.png">I like the sound of that Cynthia!</state>
+                <state img="#-thinking.png" marker="CynthiaGalar">That sounds really cool, Cynthia. But are you srue they're gonna let you bring all your Pokemon with you?</state>
+            </case>
             <case stage="0-6" target="alice_mgq" targetStage="0">
                 <state img="#-confused.png">Um, What? You're not making very much sense, Alice.</state>
                 <state img="#-confused.png">What are you talking about, Alice? I don't understand.</state>
@@ -1963,6 +2013,12 @@
                 <state img="#-happy.png">It sounds like a great place for swimming!</state>
                 <state img="#-happy.png">How's the water there? Is it good for swimming?</state>
             </case>
+            <case stage="0-6">
+                <condition role="target" character="cynthia" stage="1" />
+                <state img="#-happy.png">That sounds great, Cynthia! I think may pay a visit sometime.</state>
+                <state img="#-happy.png" marker="CynthiaSwimsuit">Sounds like fun, Cynthia! What kind of Swimsuit do you like to wear?</state>
+                <state img="#-happy.png" marker="CynthiaSwimsuit">That sounds like a good time, Cynthia! Do you have a certain swimsuit you like to wear when you go swimming?</state>
+            </case>
             <case stage="0-6" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
                 <state img="#-excited.png">One more loss and you're out, Juri!</state>
@@ -2062,8 +2118,9 @@
                 <state img="#-neutral.png">That's the usual order of things, Saki.</state>
                 <state img="#-neutral.png">That's how things usually go, Saki. Feel free to follow that order.</state>
             </case>
-            <case stage="0-6" target="croix" targetStage="2">
+            <case stage="0-6">
                 <condition count="0" filter="akko" />
+                <condition role="target" character="croix" stage="2" />
                 <state img="#-neutral.png">Hey, I'm not complaining, Croix.</state>
             </case>
             <case stage="0-6">
@@ -2154,11 +2211,6 @@
                 <state img="#-embarrassed.png">Um. Elesa? Do you need help with that?</state>
                 <state img="#-embarrassed.png" marker="Elesa_changingRooms">Weren't you having this problem at the PWT too? Remember in the changing rooms...</state>
             </case>
-            <case stage="0-4">
-                <condition role="target" character="elesa" stage="4" />
-                <state img="#-happy.png">Come on, Elesa! No one's going to judge a body like yours!</state>
-                <state img="#-happy.png">Don't worry, Elesa! If anyone can be confident about this, it's you!</state>
-            </case>
             <case stage="1-6" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
                 <state img="#-happy.png">You're starting off with your jacket too? You're not copying me, are you?</state>
@@ -2225,8 +2277,9 @@
                 <state img="#-excited.png">I should've known you wouldn't follow the normal order, Saki!</state>
                 <state img="#-excited.png">Yeah! Forget what's normal, and do what you want, Saki!</state>
             </case>
-            <case stage="0-6" target="croix" targetStage="3">
+            <case stage="0-6">
                 <condition count="0" filter="akko" />
+                <condition role="target" character="croix" stage="3" />
                 <state img="#-neutral.png">Like I said, I'm not complaining.</state>
             </case>
             <case stage="0-4 6" target="ami" targetStage="5" targetSayingMarker="ever_seen_a_model">
@@ -2296,7 +2349,8 @@
             <case stage="0-6" target="mavis" targetStage="3">
                 <state img="#-excited.png">So let's keep the fun going! Next round!</state>
             </case>
-            <case stage="0-6" target="misato" targetStage="4">
+            <case stage="0-6">
+                <condition role="target" character="misato" stage="4" />
                 <state img="#-excited.png">You don't have to be embarrassed by something like that Misato! Some people probably think it's cool!</state>
             </case>
             <case stage="0-6" target="nami" targetStage="4">
@@ -2343,11 +2397,6 @@
                 <condition role="target" character="elesa" stage="4" />
                 <state img="#-neutral.png">I'm glad that you seem to be enjoying yourself, Elesa.</state>
                 <state img="#-neutral.png">Seems like you're finally startin' to let loose, Elesa.</state>
-            </case>
-            <case stage="0-4">
-                <condition role="target" character="elesa" stage="5" />
-                <state img="#-excited.png">Forget the details and just have fun, Elesa!</state>
-                <state img="#-excited.png">Aren't you starting to have fun with this, Elesa!</state>
             </case>
             <case stage="0-6" target="juri">
                 <test expr="~juri.costume~" value="juri_summer" />
@@ -2497,8 +2546,9 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
-            <case stage="0-6" target="croix" targetStage="3">
+            <case stage="0-6">
                 <condition count="0" filter="akko" />
+                <condition role="target" character="croix" stage="3" />
                 <state img="#-pleased.png">Another reward? Are you sure you can even afford to do that, Croix?</state>
             </case>
             <case stage="0-6" target="april" targetStage="2">
@@ -2553,6 +2603,11 @@
             </case>
             <case stage="0-6" target="sheena" targetSaidMarker="undine">
                 <state img="#-excited.png">Whoa! That's a neat trick Sheena! You've gotta teach me how to do that!</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="elesa" />
+                <state img="#-happy.png">Come on, Elesa! No one's going to judge a body like yours!</state>
+                <state img="#-happy.png">Don't worry, Elesa! If anyone can be confident about this, it's you!</state>
             </case>
             <case stage="0-6" target="aella">
                 <state img="#-neutral.png">I'm curious to see what kind of bra you wear to keep those massive things under control, Aella.</state>
@@ -2617,6 +2672,11 @@
                 <condition role="target" character="tharja" sayingMarker="stripshow12" />
                 <condition role="self" saidMarker="player_male" />
                 <state img="#-thinking.png">"Take care of your tits"? What does that even mean?</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="elesa" />
+                <state img="#-excited.png">Forget the details and just have fun, Elesa!</state>
+                <state img="#-excited.png">Aren't you starting to have fun with this, Elesa!</state>
             </case>
             <case stage="0-6" target="aella">
                 <state img="#-shocked.png">You're not wearing a bra!? I mean, I'm not either, but, don't those make your back hurt or something?</state>
