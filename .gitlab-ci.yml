@@ -27,6 +27,6 @@ bundle_packages:
     script:
         - mkdir -p ./bundle-page/dl
         - python3 ./deploy-scripts/bundle.py ./ ./bundle-page/dl generate
-        - rsync -rltz --delete ./bundle-page/ /opt/spnati-bundles
+        - rsync -crltz --delete ./bundle-page/ /opt/spnati-bundles
     only:
         - master@spnati/spnati
