@@ -10,7 +10,7 @@ deploy_production:
         - export VERSION=$(git describe --first-parent $CI_COMMIT_SHA)
         - sentry-cli releases new -p spnati $VERSION
         - bash ./prepare-online.sh
-        - rsync -rltz --out-format=%n --delete .public/ /opt/spnati | python3 ./deploy-scripts/purge_cf_cache.py
+        - rsync -crltz --out-format=%n --delete .public/ /opt/spnati | python3 ./deploy-scripts/purge_cf_cache.py
         - sentry-cli releases set-commits --auto $VERSION
         - sentry-cli releases finalize $VERSION
         - sentry-cli releases deploys $VERSION new -e production
@@ -27,6 +27,6 @@ bundle_packages:
     script:
         - mkdir -p ./bundle-page/dl
         - python3 ./deploy-scripts/bundle.py ./ ./bundle-page/dl generate
-        - rsync -crltz --delete ./bundle-page/ /opt/spnati-bundles
+        - rsync -rltz --delete ./bundle-page/ /opt/spnati-bundles
     only:
         - master@spnati/spnati
