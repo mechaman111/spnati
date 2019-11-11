@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 9:21:39 PM on November 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 8:48:58 PM on November 10, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Dust</first>
@@ -470,6 +470,7 @@
                 <state img="#-embarassed.png">I'm not really good at this game. Normally when I play cards, it's Go Fish with Fidget.</state>
                 <state img="#-embarassed.png">Uh... This doesn't look good for me.</state>
                 <state img="#-embarassed.png">That probably wasn't good.</state>
+                <state img="#-embarassed.png">Shoot. That wasn't what I needed.</state>
             </case>
         </trigger>
 
@@ -628,6 +629,14 @@
                 <state img="#-annoyed.png" marker="kazuma_novice">Aren't you a little old to be playing pretend adventurer, Kazuma?</state>
                 <state img="#-annoyed.png" marker="kazuma_novice">You don't seem the adventurer sort, Kazuma.</state>
             </case>
+            <case stage="0-7" oneShotId="65">
+                <condition role="other" character="meia" saidMarker="dust_half" />
+                <condition role="self" saidMarker="meia_halfvirgin" />
+                <state img="#-embarassed.png" marker="meia_fusion">Right, you don't know about my origins... I'm actually a fusion of two souls who killed each other at the same time. A royal assassin and a young villager.</state>
+                <state img="custom:#-um-ahrah" marker="meia_fusion" location="20%">{ahrah}Meia, Dust is a combination of two souls: an experienced warrior to give him strength, and a young man to give him kindness.</state>
+                <state img="#-embarassed.png" marker="meia_fusion">{fidget}Dust's a hybrid of two dead guys. Jin and... what was the scary assassin's name again?</state>
+                <state img="#-embarassed.png" marker="meia_fusion">{fidget}Oh yeah! Dust's got two dead guys' souls inside him. Jin's the one who died a virgin.&lt;br&gt;{!reset}We're going to have to have that conversation about tact again, Fidget.</state>
+            </case>
             <case stage="0-7" id="14" priority="101">
                 <condition role="other" character="revy" sayingMarker="killing" />
                 <condition role="self" saidMarker="cassius_talked&gt;3" />
@@ -685,6 +694,10 @@
             <case stage="0-7">
                 <condition role="other" character="rainbow_dash" sayingMarker="adventurer_what_do" />
                 <state img="#-um.png">Well, I'm traveling through Falana to stop a mad general who's running a genocidal campaign.</state>
+            </case>
+            <case stage="0-7" oneShotId="66">
+                <condition role="other" character="meia" sayingMarker="dust_ring" />
+                <state img="#-calm.png" marker="haley">{fidget}Well, there go your chances of impressing Haley with those plans.</state>
             </case>
             <case stage="0-7" oneShotId="62" totalRounds="3-">
                 <condition filter="meia" />
@@ -981,6 +994,14 @@
                 <state img="#-stripping.png" marker="mae_location_response">Where I'm from? It's a nation called Falana. I don't really have a hometown there.</state>
             </case>
             <case stage="0">
+                <condition role="self" saidMarker="meia_hybrid" />
+                <condition role="other" character="meia" stage="0-5" />
+                <state img="custom:#-calm-ahrah" marker="meia_ahrah">Oh, Ahrah? They're a mystical ancient blade that chose me to bear them. Pretty simple.</state>
+                <state img="custom:#-calm-ahrah" marker="meia_ahrah">{ahrah}I am the Blade of Ahrah, one of the five Swords of Elysium. Dust is my fated bearer. However, Meia, he does not meet your definition of "Esper."</state>
+                <state img="#-stripping.png" marker="meia_ahrah">{fidget}Oh, the sword's just one I had to keep watch over, then they decided to wake up and head over to Dust here. It's kinda special.</state>
+                <state img="#-stripping.png">{fidget}Telekinesis? Is that one of Dust's powers?&lt;br&gt;{ahrah}It is not, Fidget.</state>
+            </case>
+            <case stage="0">
                 <condition role="other" character="guzma" stage="0-2" />
                 <state img="#-stripping.png">You'd be amazed what a good cloak can do for you when you travel all over the place.</state>
             </case>
@@ -1140,6 +1161,10 @@
                 <condition role="other" character="chazz" />
                 <state img="#-um.png">{fidget}Hmm...I've got a plan, Dust... (whispering){!reset}</state>
             </case>
+            <case stage="6">
+                <condition role="other" character="rainbow_dash" />
+                <state img="#-embarassed.png">To be honest, I don't know what "ponying up" or "dogging up" are.</state>
+            </case>
             <case stage="7">
                 <condition count="0" status="not_lost_all" />
                 <condition count="1-" gender="female" />
@@ -1198,6 +1223,11 @@
                 <condition role="self" notSaidMarker="knowsstrip" />
                 <state img="#-wat.png">Wait, ~name~ has to undress? Is it that kind of game?</state>
             </case>
+            <case stage="0">
+                <condition role="self" saidMarker="cassius_talked&gt;3" />
+                <state img="#-c-smug.png">I knew you'd lose, ~name~. Let's get to it.</state>
+                <state img="#-c-smug.png">Heh. So pathetic, ~name~.</state>
+            </case>
             <case stage="0-7" oneShotId="3">
                 <state img="#-embarassed.png">I guess you have to start undressing,~player~...</state>
             </case>
@@ -1254,6 +1284,11 @@
             <case stage="0" totalRounds="0">
                 <condition role="self" notSaidMarker="knowsstrip" />
                 <state img="#-wat.png">Wait, ~name~ has to undress? Is it that kind of game?</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="cassius_talked&gt;3" />
+                <state img="#-c-smug.png">I knew you'd lose, ~name~. Let's get to it.</state>
+                <state img="#-c-smug.png">Heh. So pathetic, ~name~.</state>
             </case>
             <case stage="0-6">
                 <state img="#-calm.png">Whew, safe for now.</state>
@@ -2092,6 +2127,11 @@
                 <state img="#-wat.png">Uh... what's that thing they left behind?</state>
                 <state img="custom:#-um-ahrah" location="30%">Oh, he's gone?&lt;br&gt;{ahrah}I feel it would be best if we let him be alone for now.{!reset}</state>
             </case>
+            <case stage="0-9">
+                <condition role="self" saidMarker="cassius_talked&gt;3" />
+                <state img="#-c-standoffish.png">~name~. With a body like that, you'd never be a Royal Assassin.</state>
+                <state img="#-c-standoffish.png">~name~... Pathetic.</state>
+            </case>
         </trigger>
 
         <trigger id="opponent_crotch_is_visible">
@@ -2316,6 +2356,7 @@
             <case stage="0-9" oneShotId="64">
                 <condition role="target" character="rainbow_dash" />
                 <state img="#-um.png">Huh? Dash is... glowing?</state>
+                <state img="custom:#-um-ahrah" location="20%">{ahrah}There's a great potential coming from Rainbow Dash...</state>
             </case>
         </trigger>
 
