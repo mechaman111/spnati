@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.2 at 6:51:23 p. m. on octubre 13, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 8:59:38 p. m. on noviembre 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.2</version>
+    <version>v5.2.8</version>
     <first>Twilight</first>
     <last>Sparkle</last>
     <label>Twilight</label>
@@ -61,11 +61,12 @@
 
         <trigger id="game_start">
             <case stage="0" priority="116">
-                <condition count="4" filter="my_little_pony" />
+                <condition count="4-" filter="my_little_pony" />
                 <state img="#-happy.png">Wow! I didn't know you all were here too! This research will be so much easier and relaxed now!</state>
             </case>
-            <case stage="0" totalNaked="1" priority="115">
+            <case stage="0" priority="115">
                 <condition role="target" character="human" startingLayers="0" />
+                <condition count="1" status="naked" />
                 <state img="#-angry.png">Oh, of course... when I try to remove my clothing before entering this place everyone freaks out, but when ~player~ comes nude, it's okay? Whatever, let's just play.</state>
             </case>
             <case stage="0" priority="115">
@@ -299,12 +300,14 @@
                 <condition role="other" character="corrin_m" />
                 <state img="#-calm.png" marker="twilight_corrin_intro">I couldn't quite catch what you said before, Corrin. Would you... uhh never mind, I'm sure it won't be too important for my investigation.</state>
             </case>
-            <case stage="0-7" priority="992">
-                <condition role="other" character="derpy_hooves" stage="0" timeInStage="0-1" sayingMarker="why_swimsuit" />
-                <state img="#-what.png">Swimsuits? No, I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
+            <case stage="0" totalRounds="0" priority="993">
+                <condition count="1" filter="pinkie_pie" role="other" />
+                <condition role="other" character="rarity_eg" />
+                <condition role="other" character="rainbow_dash" />
+                <state img="#-smart.png">I hope we can all have a great game together girls, and I hope you don't mind that ~player~ is here too.</state>
             </case>
             <case stage="0" totalRounds="0" priority="991">
-                <condition count="3-4" filter="my_little_pony" />
+                <condition count="3-4" filter="my_little_pony" var="992" />
                 <state img="#-happy.png">Well, I obviously don't need to introduce myself to the people that already know me here, but for ~player~ I will, my name is Twilight Sparkle!</state>
             </case>
             <case stage="0" totalRounds="0" priority="991">
@@ -322,6 +325,14 @@
             </case>
             <case stage="0" totalRounds="0" priority="990">
                 <state img="#-happy.png">Hello everyone, my name is Twilight Sparkle. It will be a pleasure to play with you.</state>
+            </case>
+            <case stage="1" oneShotId="2" priority="900">
+                <condition role="self" saidMarker="pony_table_coronation3" />
+                <state img="#-laughing.png" marker="pony_table_coronation4">Actually Pinkie, &lt;i&gt;you&lt;/i&gt; were the one in charge of them... but it doesn't matter, because afterwards we all just had a nice calm evening at Joe's.</state>
+            </case>
+            <case stage="0-7" priority="800">
+                <condition role="other" character="derpy_hooves" stage="0" timeInStage="0-1" sayingMarker="why_swimsuit" />
+                <state img="#-what.png">Swimsuits? No, I'm pretty sure there were no mentions of swimsuits in the invitation, sorry!</state>
             </case>
             <case stage="3" priority="500">
                 <condition role="self" timeInStage="0" />
@@ -353,7 +364,7 @@
                 <condition role="other" character="pinkie_pie" sayingMarker="pinka_twi_presentation" notSaidMarker="pinka_end2" />
                 <state img="#-disappointed.png" marker="twilight_pinka_snap_out">Don't be ridiculous Pinkie, Pinkamena is just your full name! Snap out of it!</state>
             </case>
-            <case stage="0-1" priority="390">
+            <case stage="0-1" priority="400">
                 <condition role="self" notSaidMarker="twilight_pinkie_y_u_here2" />
                 <condition role="other" character="pinkie_pie" sayingMarker="twilight_y_u_here" />
                 <state img="#-calm.png" marker="twilight_pinkie_y_u_here2">Not really, Pinkie, I was just passing by and ~player~ asked me if I wanted to play for a bit, so I accepted!</state>
@@ -412,6 +423,10 @@
                 <condition role="other" character="miko" stage="1" sayingMarker="Tojiko_Intro" notSaidMarker="Tojiko_Intro" />
                 <state img="#-flirty.png">Your consort? Ah I see! I can't wait to eventually find my own somewhere, maybe ~player~ could be a good start!</state>
             </case>
+            <case stage="0-7" priority="142">
+                <condition role="other" character="Rainbow" stage="0" saidMarker="pony_table" sayingMarker="pony_whatupto" />
+                <state img="#-smart.png">I'm so happy for you Rarity, I hope you have as much success in the world of fashion as the Rarity of my world has.</state>
+            </case>
             <case stage="0-7" id="1">
                 <condition role="other" character="derpy_hooves" stage="1" sayingMarker="bra_fall_2" />
                 <state img="#-awkward.png">Oh no... Does this mean she skips a round or something?</state>
@@ -446,6 +461,14 @@
             <case stage="0-7">
                 <condition role="other" character="zizou" timeInStage="0" />
                 <state img="#-happy.png">Wait a second, you also have a multi-colored mane down there, Zizou? Well, I guess it makes sense, it must be the equivalent of tail hair back home...</state>
+            </case>
+            <case stage="0-7" totalRounds="0">
+                <condition role="other" character="chazz" saying="sound more like a dragon" />
+                <state img="#-laughing.png">Actually, I feel like your name would me more fitting of a dragon back in equestria, you know? Ember, Smolder, Chazz...</state>
+            </case>
+            <case stage="0-7" totalRounds="0">
+                <condition role="other" character="chazz" saying="kinda girls toy" />
+                <state img="#-what.png">"Don't be ridiculous. My friends and I were super popular for a while to the point some of our fans made dolls and toys of us... But that was a long time ago."</state>
             </case>
             <case stage="0" totalRounds="0">
                 <condition role="other" character="rarity" />
@@ -562,6 +585,14 @@
                 <condition role="other" character="pinkie_pie" sayingMarker="cupcakes" />
                 <state img="#-awkward.png">Pinkie, please...no cupcakes...</state>
             </case>
+            <case stage="0-7">
+                <condition role="other" character="Rainbow" sayingMarker="daring_doo_book" />
+                <state img="#-smart.png">Oh yeah, by the way, would you mind borrowing me one of your Daring Do books, Rainbow? I want to see how much they differ between dimentions.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="chazz" />
+                <state img="#-stripped.png">Not horses, ponies! And we have much more than that in equestria, like yaks, and breezies, or dragons, changelings and centaurs!</state>
+            </case>
             <case stage="0-7" totalRounds="2-3">
                 <condition count="4" filter="magic" />
                 <state img="#-happy.png">So basically everyone here besides ~player~ can do magic? And I thought it was a rare occurrence in this world!</state>
@@ -656,6 +687,10 @@
             <case stage="0-6">
                 <condition role="other" character="streaming-chan" sayingMarker="twi_words1" />
                 <state img="#-flirty.png" marker="streaming_words1">Well, I guess it might sound really weird, but one of my really big turn ons  is when my partner starts whispering scientific terms to my ear...</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="rarity_eg" sayingMarker="pony_table_twi_coronation" />
+                <state img="#-laughing.png" marker="pony_table_coronation1">Hehe, it was actually kind of a mess, I guess now it's a good time to tell you girls the story.</state>
             </case>
             <case stage="0">
                 <condition role="other" character="pit" />
@@ -872,6 +907,15 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="0" priority="500">
+                <condition role="self" saidMarker="pony_table_coronation1" />
+                <state img="#-stripAJ.png" marker="pony_table_coronation2">You see, first I got so worried about having to move to Canterlot and losing contact with my world's version of you girls that I almost missed the train that went there.</state>
+                <state img="#-stripFS.png" marker="pony_table_coronation2">You see, first I got so worried about having to move to Canterlot and losing contact with my world's version of you girls that I almost missed the train that went there.</state>
+                <state img="#-stripR.png" marker="pony_table_coronation2">You see, first I got so worried about having to move to Canterlot and losing contact with my world's version of you girls that I almost missed the train that went there.</state>
+                <state img="#-stripRD.png" marker="pony_table_coronation2">You see, first I got so worried about having to move to Canterlot and losing contact with my world's version of you girls that I almost missed the train that went there.</state>
+                <state img="#-stripSS.png" marker="pony_table_coronation2">You see, first I got so worried about having to move to Canterlot and losing contact with my world's version of you girls that I almost missed the train that went there.</state>
+                <state img="#-stripTS.png" marker="pony_table_coronation2">You see, first I got so worried about having to move to Canterlot and losing contact with my world's version of you girls that I almost missed the train that went there.</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="akko" stage="0-7" />
                 <state img="#-stripAJ.png">It's not "some" princess... It's Princess Celestia!</state>
@@ -1164,6 +1208,18 @@
                 <condition role="other" character="uravity" />
                 <state img="#-strip.png" marker="twilight_uravity_alien_creature">Again with that word "alien". Is that some sort of creature exclusive to this world?</state>
             </case>
+            <case stage="5">
+                <condition role="other" character="chazz" />
+                <state img="#-strip.png">Wait? 12 Dimmentions?! And you've been to them all? You must tell me more about them once this game ends, Chazz!</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="chazz" />
+                <state img="#-strip.png">Fascinating, would you mind telling me your world's males obsession towards a mare's mamaries, Chazz?</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="chazz" />
+                <state img="#-strip.png">I'd appretiate it a lot! I promise to be the best student and do everything you tell me to if you became my tutor, Chazz!</state>
+            </case>
             <case stage="0" priority="50">
                 <state img="#-stripTS.png" marker="twilight_pink_panties">These "panties" are soooo uncomfortable. I don't know how you humans do it!</state>
                 <state img="#-stripFS.png" marker="twilight_pink_panties">These "panties" are soooo uncomfortable. I don't know how you humans do it!</state>
@@ -1226,21 +1282,13 @@
                 <state img="#-strip.png">No more accessories. You won my shirt fair and square.</state>
                 <state img="#-strip.png">To be honest I'm going to miss the tickles this shirt was giving to the tips of my nipples.</state>
             </case>
-            <case stage="2">
-                <state img="#-strip.png">Not horses, ponies! And yeah, we usually reserve clothing for formal events, though I fail to see why that would be a problem.</state>
-            </case>
-            <case stage="1">
-                <state img="#-stripAJ.png">Well, me and my friends aren't exactly a gang. And what do you mean with biker, like riding bicycles around or something?</state>
-                <state img="#-stripFS.png">Well, me and my friends aren't exactly a gang. And what do you mean with biker, like riding bicycles around or something?</state>
-                <state img="#-stripR.png">Well, me and my friends aren't exactly a gang. And what do you mean with biker, like riding bicycles around or something?</state>
-                <state img="#-stripRD.png">Well, me and my friends aren't exactly a gang. And what do you mean with biker, like riding bicycles around or something?</state>
-                <state img="#-stripSS.png">Well, me and my friends aren't exactly a gang. And what do you mean with biker, like riding bicycles around or something?</state>
-                <state img="#-stripTS.png">Well, me and my friends aren't exactly a gang. And what do you mean with biker, like riding bicycles around or something?</state>
-                <state img="#-stripBonus.png">Well, me and my friends aren't exactly a gang. And what do you mean with biker, like riding bicycles around or something?</state>
-            </case>
         </trigger>
 
         <trigger id="stripped">
+            <case stage="1" priority="500">
+                <condition role="self" saidMarker="pony_table_coronation2" />
+                <state img="#-awkward.png" marker="pony_table_coronation3">And since my friends couldn't make the final preparations, a lot went wrong, people got served a weird mushy thing instead of cider, the pyro went wrong and made the wonderbolts crash, your dress was full of spiders...</state>
+            </case>
             <case stage="1">
                 <condition role="self" saidMarker="revy_heat1" />
                 <condition role="other" character="revy" stage="0-7" />
@@ -1438,6 +1486,18 @@
                 <condition role="other" character="saki_zls" />
                 <state img="#-stripped.png">You know what, I'm just going to ignore you calling me Filly, and concentrate on the good things, but no I didn't dye, I just came out like this.</state>
             </case>
+            <case stage="2">
+                <condition role="other" character="saki_zls" />
+                <state img="#-stripped.png">Thanks Saki, though I'm the one who should be thanking my friends at my side, without them, Equestria would have been lost and I wouldn't be who I am today.</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="chazz" />
+                <state img="#-confident.png">If that's what is necessary to visit them, then I will, Chazz, and I would be honored if you became my tutor and helped me learn how to duel!</state>
+            </case>
+            <case stage="7">
+                <condition role="other" character="chazz" />
+                <state img="#-confident.png">Being nude is all that I need to do? That's perfect! As I've said, I don't even like wearing clothes anyways!</state>
+            </case>
             <case stage="1" id="3">
                 <state img="#-stripped.png" marker="panties_first_rule">There isn't a rule about taking these off first, is there?</state>
                 <state img="#-stripped.png">That feels so much better. I can breathe down there now.</state>
@@ -1469,9 +1529,6 @@
                 <state img="#-stripped2.png">Why are you all staring? Is something wrong?</state>
                 <state img="#-stripped1.png">I'm glad I got all those clothes off. I'm used to being naked.</state>
                 <state img="#-stripped1.png">This so much better now. I am way more relaxed, and I'm feeling a nice breeze. How is this considered punishment for losing?</state>
-            </case>
-            <case stage="2">
-                <state img="#-stripped.png">Thanks Saki, though I'm the one who should be thanking my friends at my side, without them, Equestria would have been lost and I wouldn't be who I am today.</state>
             </case>
         </trigger>
 
@@ -2517,6 +2574,10 @@
             <case stage="0-9" target="corrin_m" targetStage="5">
                 <state img="#-what.png">Those look a bit strange... You may want to check the thing that is stuck between your panties and your crotch.</state>
             </case>
+            <case stage="0-9">
+                <condition role="target" character="chazz" stage="5" />
+                <state img="#-calm.png">Awww, what cute set of... uhhh I think you call them "panties" in this world? Right, Chazz?</state>
+            </case>
             <case stage="0" notSaidMarker="not_first_stripping">
                 <state img="#-sad.png" marker="not_first_stripping">I was hoping you'd let me go first.</state>
             </case>
@@ -2777,6 +2838,10 @@
             <case stage="0-9" id="4">
                 <condition role="target" character="saki_zls" stage="6" />
                 <state img="#-what.png">Wait, what? You can't just throw water on yourself and skip the stripping, can you?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="rarity_eg" stage="3" />
+                <state img="#-smart.png">Your dress was beautiful Rarity, the you from my world would be proud!</state>
             </case>
             <case stage="0-9" target="wiifitfemale" saidMarker="twilight_wii_tirek" notSaidMarker="twilight_wii_tirek2">
                 <state img="#-awkward.png" marker="twilight_wii_tirek2">Or maybe you're just normally like that...  That's a relief. I don't think I could face Tirek in this world without my magic...</state>
@@ -4271,6 +4336,10 @@
             <case stage="8" target="pinkie_pie">
                 <state img="#-shocked.png">On seccond thought... I'm glad I didn't use a balloon too after all...</state>
             </case>
+            <case stage="0-9" id="7" priority="300">
+                <condition role="target" character="rainbow_dash" />
+                <state img="#-happy.png">Amazing! It seems that the rush of emotions of reaching orgasm has triggered your transformation, we will need to study this in more detail later, Rainbow.</state>
+            </case>
             <case stage="0-7">
                 <state img="#-shocked.png" marker="twilight_not_human">Wow, that looked really fun! I might have to try that myself before I go back to having hooves.</state>
                 <state img="#-flirty.png">That was great! Could you please give it another go? For science?</state>
@@ -4314,19 +4383,26 @@
                 <state img="#-awkward.png" marker="twilight_masturbation_inexperience">I know this is going to sound weird, but I haven't had any chance to do this with this body, so I was wondering if could you tell me what to do trainer?</state>
             </case>
             <case stage="7">
+                <condition role="other" character="chazz" />
+                <state img="#-what.png">Well... Since I was a unicorn I could just use magic back in equestria, though I do think that earth ponies have learnt a way to do it.</state>
+            </case>
+            <case stage="7">
                 <state img="#-smart.png">I will take the things I've learned and apply them right here and right now... It will be like a surprise test! And I love surprise tests...</state>
                 <state img="#-interested.png">At least I've seen somepony go before me so I think I got a clue on how to do this.</state>
             </case>
         </trigger>
 
         <trigger id="start_masturbating">
-            <case stage="7" alsoPlaying="9s">
+            <case stage="7">
+                <condition role="other" character="9s" />
                 <state img="#-starting.png">Well not a first per se, but a first with this body 9s...</state>
             </case>
-            <case stage="7" alsoPlaying="akko">
+            <case stage="7">
+                <condition role="other" character="akko" />
                 <state img="#-starting.png">Oh! Really?! That would be great! Thanks Akko, I'll be listening as much as I can...</state>
             </case>
-            <case stage="7" alsoPlaying="wiifitfemale">
+            <case stage="7">
+                <condition role="other" character="wiifitfemale" />
                 <state img="#-starting.png">Thanks for the help. I really appreciate it.</state>
             </case>
             <case stage="7">
@@ -4416,7 +4492,8 @@
         </trigger>
 
         <trigger id="finished_masturbating">
-            <case stage="9" timeInStage="1" priority="900">
+            <case stage="9" priority="900">
+                <condition role="self" timeInStage="1" />
                 <state img="#-finished.png">Wait, did I say that out loud?</state>
             </case>
             <case stage="9" alsoPlaying="pit" notSaidMarker="twilight_pit_ignore_that">

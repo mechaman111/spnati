@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 10:35:23 PM on November 08, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 9:43:40 PM on November 10, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Jessie</first>
@@ -70,6 +70,10 @@
                 <state img="#-friendly.png">Your wife sounds like an interesting person, Corrin.</state>
             </case>
             <case stage="0">
+                <condition role="other" character="gwen" />
+                <state img="#-shocked.png">That can't possibly be Spider-woman herself, can it?!</state>
+            </case>
+            <case stage="0">
                 <state img="#-flirting.png">Hey there ~player~! Feeling lonely tonight? Don't worry honey, Jessie's here for you.</state>
                 <state img="#-flirting.png">You can spend all the time you want with me, ~player~.</state>
                 <state img="#-flirting.png">Well, I've never been one to turn down a good time.</state>
@@ -108,6 +112,10 @@
             <case stage="0">
                 <condition role="other" character="rin" />
                 <state img="#-confused.png">Am I seeing things correctly?... That girl over there has no arms?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="gwen" />
+                <state img="#-shocked.png">That can't possibly be Spider-Woman herself, can it?!</state>
             </case>
         </trigger>
 
@@ -329,6 +337,10 @@
             <case stage="0" id="164">
                 <condition role="other" character="shimakaze" />
                 <state img="#-happy.png">Aww, what a cute little robot! I wish you had told it to stay, Shimakaze.</state>
+            </case>
+            <case stage="0" id="175">
+                <condition role="other" character="streaming-chan" />
+                <state img="#-curious.png">Well, I've seen a lot of webcams in my time, but I don't believe I've seen one on a cap before.</state>
             </case>
             <case stage="0">
                 <condition count="2-4" filter="slutty" gender="female" />
@@ -1755,6 +1767,24 @@
                 <condition filter="monika" role="other" />
                 <state img="#-confused.png" marker="DDLC_NatsukiSayori">Are you classmates, Sayori and Natsuki? But Sayori looks slightly older than you, Natsuki. How are you in the same class?</state>
             </case>
+            <case stage="0-5">
+                <condition role="other" character="syrenne" stage="3" timeInStage="0" />
+                <test expr="~background~" value="inventory" />
+                <state img="#-flirting.png" marker="SyrenneStage3">I don't know about those drinks, but do share some with me when you get some.</state>
+            </case>
+            <case stage="0-5" priority="205">
+                <condition role="other" character="syrenne" stage="4" timeInStage="0" />
+                <test expr="~background~" value="inventory" />
+                <state img="#-thinking.png" marker="SyrenneStage4">I... I don't really know... but the guard at the door was a big fan of me, so he let me in anyway.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" />
+                <condition role="self" notSaidMarker="StreamingchanViewersMedium" />
+                <alternative>
+                    <condition role="other" character="streaming-chan" saidMarker="viewers&lt;=7" />
+                </alternative>
+                <state img="#-friendly.png" marker="StreamingchanViewersMedium">That's a pretty decent view count, Streaming-chan, but I've gotten higher numbers before. We can still get even more viewers than that.</state>
+            </case>
             <case stage="0-5" totalExposed="0">
                 <condition role="other" character="florina" stage="1-2" sayingMarker="winner_prize" notSaidMarker="winner_prize" />
                 <test expr="~self.costume~" value="default" />
@@ -1919,6 +1949,10 @@
                 <condition role="other" character="shimakaze" stage="1" timeInStage="0" />
                 <state img="#-friendly.png" marker="ShimakazeFirst">Uh, Shimakaze, dear. The point of this game is to be the last to strip, not be the first.</state>
             </case>
+            <case stage="0-5">
+                <condition role="other" character="syrenne" stage="2" timeInStage="0" />
+                <state img="#-flirting.png" marker="SyrenneStage2">Well, Syrenne, I just happened to need an escort when I go home tonight. I don't have money with me right now, but I've got other ways of paying you when we get there.</state>
+            </case>
             <case stage="0-5" totalRounds="0-1">
                 <condition role="other" character="kamina" stage="0" saidMarker="firsthand" sayingMarker="firstdealt" notSaidMarker="firstdealt" />
                 <state img="#-happy.png">Wow! You're not lacking in enthusiasm at all. I hope you carry that energy for the entire game.</state>
@@ -1969,6 +2003,10 @@
                 <condition role="other" character="buffy" stage="0" />
                 <state img="#-curious.png">&lt;i&gt;A vampire and a vampire hunter in the same table.&lt;/i&gt; Oh, this is gonna be interesting.</state>
                 <state img="#-shocked.png">Who thought putting &lt;i&gt;this&lt;/i&gt; two in the same table would be a good idea?</state>
+            </case>
+            <case stage="0-5" totalRounds="0">
+                <condition role="other" character="syrenne" stage="0" />
+                <state img="#-confused.png" marker="SyrenneStage0">You'll try to get drunk &lt;i&gt;during&lt;/i&gt; the game, Syrenne? That's not really a good idea if youuu plan to win this game.</state>
             </case>
             <case stage="5" totalNaked="1">
                 <condition role="self" saidMarker="jessiePokerNoob" />
@@ -2384,6 +2422,21 @@
                 <condition role="self" notSaidMarker="SakuraIntro" />
                 <state img="#-curious.png" marker="SakuraIntro">Oh, that sounds very wonderful, although I'm afraid I'm not familiar with your group. What type of songs does your idol group perform, Number One?</state>
             </case>
+            <case stage="0-5" oneShotId="410">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;=3" />
+                <condition role="self" notSaidMarker="StreamingchanViewersLow" />
+                <state img="#-confused.png" marker="StreamingchanViewersLow">Our view count is really that low? Have you announced that I'm in this stream? I have &lt;i&gt;way&lt;/i&gt; more fans than &lt;i&gt;that&lt;/i&gt;.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" />
+                <condition role="self" notSaidMarker="StreamingchanViewersHigh" />
+                <state img="#-excited.png" marker="StreamingchanViewersHigh">Wow, that's a really high view count, and I haven't even started my performance yet! This has the potential to be my most viewed video so far!</state>
+            </case>
+            <case stage="0-5" id="176">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;=0" />
+                <condition role="self" notSaidMarker="StreamingchanViewersZero" />
+                <state img="#-shocked.png" marker="StreamingchanViewersZero">Z-z-zero viewers?! What?! That has to be a glitch, right?</state>
+            </case>
             <case stage="0-5">
                 <condition role="other" character="nami" sayingMarker="manipulation4" />
                 <state img="#-playful.png">Sucks to be you, ~player~. At least I'm not the one being threatened by a pirate.</state>
@@ -2722,6 +2775,10 @@
             <case stage="0-5">
                 <condition role="other" character="shimakaze" sayingMarker="japend" />
                 <state img="#-calm.png">Oh! Communication with Shimakaze has finally been fully restored.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="gwen" sayingMarker="nanoscale" />
+                <state img="#-confused.png" marker="GwenNanoscale">Really? I thought you have your web come out of your wrists, because you got bit by a magical spider.</state>
             </case>
             <case stage="0-5" oneShotId="167">
                 <condition role="other" character="kyu" />
@@ -5980,6 +6037,78 @@
                 <state img="#-calm.png">You still alive back there, Shimakaze? You seem surprisingly durable for a small warship.</state>
             </case>
             <case stage="0-7">
+                <condition role="target" character="sola" stage="0" />
+                <state img="#-curious.png">That's a very unique looking school uniform, Sola. I don't think I've quite seen a uniform like that. What school is your uniform from? </state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="sola" stage="1" />
+                <state img="#-playful.png">I really hope you didn't skip school just to play this game, dear. &lt;i&gt;That could get you in so much trouble!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="sonya" stage="0" />
+                <state img="#-friendly.png">Did you come here straight from an aerobics session, Miss Sonya?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="gwen" stage="0" />
+                <state img="#-excited.png">I thought that you might have been a cosplayer, but you've got the web shooters and everything! You're definitely &lt;i&gt;the&lt;/i&gt; real Spider-Woman!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="gwen" stage="1" />
+                <state img="#-playful.png">That's your second loss, Spider-Woman! Too bad you don't have any psychic powers to help you.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="gwen" stage="3" />
+                <state img="#-worried.png">I just realized something: what happens if one of your enemies suddenly attacks us in this place?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" stage="0" />
+                <state img="#-shocked.png">I-is that a ghost?!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" stage="1" />
+                <state img="#-confused.png">Huh, that ghost doesn't really do much aside from floating in it's place...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" stage="2" />
+                <state img="#-confused.png">Why would someone set up a projection in this place anyway? That's really suspicious...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" stage="3" />
+                <state img="#-confident.png">All right, jokes over! I know this some sort of prank.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="0" />
+                <state img="#-flirting.png">I have to say, Streaming-chan, I didn't really expect to be part of a stream when I arrived in this place. The least you can do to make up to me is link to my premium.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="1" />
+                <state img="#-playful.png">I've been wondering, Streaming-chan... did you follow me here just so you could have me in your stream? Seems to be too much of a coincidence that we both ended up here.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="2" />
+                <state img="#-curious.png">Since you're a 24/7 streamer, I'm curious as to what you usually do to get your viewer numbers up. &lt;i&gt;I mean, besides the obvious.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="3" />
+                <state img="#-curious.png">That webcam of yours seems very reliable. At least, as reliable as you could possibly get for a camera that small. That thing must have been pretty expensive.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="4" />
+                <state img="#-calm.png">Streaming 24/7 must be a lot of work, isn't it? I can't even imagine how you could come up with something unique to do &lt;i&gt;every single day.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" stage="0" />
+                <state img="#-friendly.png">I can see that you're a &lt;i&gt;huge&lt;/i&gt; fan of beer, Syrenne. Have your ever tried a stronger drink, like martini?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" stage="5" />
+                <state img="#-disappointed.png">Gosh, all those cheap beer. What a waste.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" stage="6" />
+                <state img="#-confident.png">If you're interested in learning more about strong cocktails, I'll be willing to teach them to you. I know &lt;i&gt;a lot&lt;/i&gt; about them.</state>
+            </case>
+            <case stage="0-7">
                 <condition role="target" character="kyu" saidMarker="florist" sayingMarker="floristc" />
                 <state img="#-confused.png">I don't get it.</state>
             </case>
@@ -6234,6 +6363,12 @@
                 <condition role="target" character="kazuma" stage="0" />
                 <state img="#-friendly.png">I just found it odd because usually, people would dress up as kings and queens when cosplaying. I've never seen someone cosplay as a peasant before.</state>
             </case>
+            <case stage="0-7">
+                <condition status="naked" role="target" />
+                <state img="#-confused.png">Seriously?! You're already naked but you still have your ~clothing~ on?</state>
+                <state img="#-confused.png">Really?! You're just removing your ~clothing~ &lt;i&gt;now&lt;/i&gt;?! You're already naked!</state>
+                <state img="#-confused.png">Do you really think &lt;i&gt;now&lt;/i&gt; would be a good time to remove your ~clothing~?! It's not like it's helping you keep your decency by this point.</state>
+            </case>
             <case stage="0-5">
                 <condition count="1-3" status="masturbating" role="other" var="char" />
                 <state img="#-playful.png">That's hardly fap material, hun.</state>
@@ -6348,6 +6483,12 @@
             <case stage="0-7">
                 <condition role="target" character="kazuma" stage="1" />
                 <state img="#-confused.png">... What does that even mean? I don't get it.</state>
+            </case>
+            <case stage="0-7">
+                <condition status="naked" role="target" />
+                <state img="#-awkward.png">That's a very unusual stripping sequence, ~name~. Did you just happen to forget to remove that earlier?</state>
+                <state img="#-awkward.png">Is this part of your plan, or did you just forgot you were wearing that?</state>
+                <state img="#-awkward.png">I don't understand why you decided to leave that on &lt;i&gt;this&lt;/i&gt; late in the game.</state>
             </case>
             <case stage="0-1">
                 <state img="#-longing.png">I'll make sure that won't be the last thing you remove tonight.</state>
@@ -7116,6 +7257,44 @@
                 <state img="#-confident.png">So, those are communication towers? I always thought they resembled antennas.</state>
                 <state img="#-curious.png">Your ribbon is supposed to represent antennas? No wonder they're so tall.</state>
             </case>
+            <case stage="0-7" id="169">
+                <condition role="target" character="sola" stage="0" />
+                <state img="#-friendly.png">Chelsea School? I don't think I've ever heard of that place before. What kind of a school is it?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="sola" stage="1" />
+                <state img="#-longing.png">I wouldn't blame you if you did. Strip poker is &lt;i&gt;way more&lt;/i&gt; exciting than studying in school...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="sonya" stage="0" />
+                <state img="#-playful.png">Your outfit is &lt;i&gt;more than appropriate&lt;/i&gt; for this game, because it's about to get hot in here.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="gwen" stage="0" />
+                <state img="#-friendly.png">So, why exactly did you come here, Spider-Woman? This isn't the type of place I'd expect to meet someone like you.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" stage="0" />
+                <state img="#-worried.png">Shit, that thing even has a knife! Who do we call for this?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="0" />
+                <state img="#-friendly.png">Oh, of course, where are my manners? I can't just ask for favors from you without knowing you first! So, Streaming-chan, how much do you charge for your premium?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="1" />
+                <state img="#-teasing.png">Well, I don't mind the free publicity. You can never have negative publicity in my line of work. Mostly never.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" stage="1" />
+                <state img="#-curious.png">Are those straps meant to cover up your tattoos? Because they weren't doing &lt;i&gt;that&lt;/i&gt; good of a job in the first place.</state>
+            </case>
+            <case stage="0-7">
+                <condition status="naked" role="target" />
+                <state img="#-confused.png">Seriously?! You're already naked but you still have your ~clothing~ on?</state>
+                <state img="#-confused.png">Really?! You're just removing your ~clothing~ &lt;i&gt;now&lt;/i&gt;?! You're already naked!</state>
+                <state img="#-confused.png">Do you really think &lt;i&gt;now&lt;/i&gt; would be a good time to remove your ~clothing~?! It's not like it's helping you keep your decency by this point.</state>
+            </case>
             <case stage="0-5">
                 <condition count="1-3" status="masturbating" role="other" var="char" />
                 <state img="#-playful.png">That's hardly fap material, hun.</state>
@@ -7228,12 +7407,14 @@
                 <condition count="0" filter="pit" role="other" />
                 <state img="#-shocked.png">Wait, you're serious?! You're a real-life goddess?! That can't be true, can it?</state>
             </case>
-            <case stage="6" totalMasturbating="1-2">
+            <case stage="6">
                 <condition role="target" character="daria" stage="1" />
+                <condition count="1-2" status="masturbating" />
                 <state img="#-frustrated.png">No, definitely not. I know you can do better than &lt;i&gt;that&lt;/i&gt;.</state>
             </case>
-            <case stage="6" totalMasturbating="1-2">
+            <case stage="6">
                 <condition role="target" character="daria" stage="2" />
+                <condition count="1-2" status="masturbating" />
                 <state img="#-horny.png">Is that a challenge then? I have a lot of stamina...</state>
             </case>
             <case stage="0-7">
@@ -7293,6 +7474,10 @@
             <case stage="0-7">
                 <condition role="target" character="shimakaze" stage="4" sayingMarker="japanese" />
                 <state img="#-thinking.png">Oh, you're speaking Japanese now? I figured that Shimakaze was a Japanese-sounding name, so it definitely checks out.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="1" sayingMarker="viewers" />
+                <state img="#-curious.png">$99.99?! Gosh, that's not cheap at all! I'm guessingou do this type of streams often for you to charge that much.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="miko" stage="2" />
@@ -7744,6 +7929,36 @@
                 <condition role="target" character="shimakaze" stage="4" />
                 <state img="#-worried.png">Can you hear me, Shimakaze? Have we lost communications?</state>
             </case>
+            <case stage="0-7" id="170">
+                <condition role="target" character="sola" stage="1" />
+                <state img="#-excited.png">A magic school?! Can you do a magic trick for me, sweetie? Like, pull a rabbit out of that hat of yours?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="sola" stage="2" />
+                <state img="#-teasing.png">...especially when I'm playing. &lt;i&gt;You can never have a boring time with Jessie.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="gwen" stage="1" />
+                <state img="#-longing.png">Just to let you know: you'll end up naked just like everybody else here.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" stage="1" />
+                <state img="#-disappointed.png">Seriously, guys! That thing is creeping me out, whatever it is!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="2" />
+                <state img="#-confident.png">Speaking of publicity, have my fans arrived in your stream chat yet? They usually arrive almost immediately when I stream.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" stage="2" />
+                <state img="#-calm.png">Speaking of tattoos, do they have a special meaning or are they purely for aesthetics?</state>
+            </case>
+            <case stage="0-7">
+                <condition status="naked" role="target" />
+                <state img="#-awkward.png">That's a very unusual stripping sequence, ~name~. Did you just happen to forget to remove that earlier?</state>
+                <state img="#-awkward.png">Is this part of your plan, or did you just forgot you were wearing that?</state>
+                <state img="#-awkward.png">I don't understand why you decided to leave that on &lt;i&gt;this&lt;/i&gt; late in the game.</state>
+            </case>
             <case stage="0-1">
                 <state img="#-longing.png">I hope you remove something sexier next time.</state>
                 <state img="#-happy.png">That wasn't too bad, now was it?</state>
@@ -7831,6 +8046,12 @@
                 <condition role="target" character="ryuji" stage="1" />
                 <state img="#-teasing.png">I was just asking because I happen to be looking for a man too, and you just happened to catch my full attention, sweetheart.</state>
                 <state img="#-teasing.png">Well, I came here looking for a man, and let's just say you stood out from the rest of the boys here.</state>
+            </case>
+            <case stage="0-7">
+                <condition status="naked" role="target" />
+                <state img="#-confused.png">Seriously?! You're already naked but you still have your ~clothing~ on?</state>
+                <state img="#-confused.png">Really?! You're just removing your ~clothing~ &lt;i&gt;now&lt;/i&gt;?! You're already naked!</state>
+                <state img="#-confused.png">Do you really think &lt;i&gt;now&lt;/i&gt; would be a good time to remove your ~clothing~?! It's not like it's helping you keep your decency by this point.</state>
             </case>
             <case stage="0-1">
                 <state img="#-excited.png">And &lt;i&gt;another&lt;/i&gt; piece comes off. I hope it won't be the last one.</state>
@@ -7922,6 +8143,12 @@
                 <condition role="target" character="ryuji" stage="1" />
                 <state img="#-disappointed.png">I could definitely tell a dye job when I could see one, especially when it's not even done properly.</state>
                 <state img="#-disappointed.png">Well, you're dye job was mostly except for the parts that weren't.</state>
+            </case>
+            <case stage="0-7">
+                <condition status="naked" role="target" />
+                <state img="#-awkward.png">That's a very unusual stripping sequence, ~name~. Did you just happen to forget to remove that earlier?</state>
+                <state img="#-awkward.png">Is this part of your plan, or did you just forgot you were wearing that?</state>
+                <state img="#-awkward.png">I don't understand why you decided to leave that on &lt;i&gt;this&lt;/i&gt; late in the game.</state>
             </case>
             <case stage="0-1">
                 <state img="#-excited.png">One step closer to seeing the fun part.</state>
@@ -8261,6 +8488,20 @@
             <case stage="0-7">
                 <condition role="target" character="shimakaze" stage="2" />
                 <state img="#-confused.png">&lt;i&gt;Damage below the waterline?&lt;/i&gt; Does this mean you're taking in water... or are you leaking &lt;i&gt;down there&lt;/i&gt;?... Man, this is really confusing.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="2" />
+                <state img="#-friendly.png">Sounds exciting. I can see why people would watch your premium streams.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="3" />
+                <state img="#-thinking.png">You know, that webcam could be very useful when shooting POV porn. It's definitely more practical to use than the large cameras studios always use.</state>
+            </case>
+            <case stage="0-7">
+                <condition status="naked" role="target" />
+                <state img="#-confused.png">Seriously?! You're already naked but you still have your ~clothing~ on?</state>
+                <state img="#-confused.png">Really?! You're just removing your ~clothing~ &lt;i&gt;now&lt;/i&gt;?! You're already naked!</state>
+                <state img="#-confused.png">Do you really think &lt;i&gt;now&lt;/i&gt; would be a good time to remove your ~clothing~?! It's not like it's helping you keep your decency by this point.</state>
             </case>
             <case stage="0-1">
                 <state img="#-longing.png">Looks like &lt;i&gt;someone&lt;/i&gt; here has experience in strip teasing.</state>
@@ -8616,6 +8857,18 @@
                 <condition role="target" character="shimakaze" stage="3" />
                 <state img="#-curious.png">Oh, it was just your socks, or whatever your socks were supposed to be representing... What &lt;i&gt;were&lt;/i&gt; your socks representing, anyway?</state>
             </case>
+            <case stage="0-7" id="172">
+                <condition role="target" character="sonya" stage="6" />
+                <state img="#-confused.png">Huh?... Why did you lather your face with paint?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="3" />
+                <state img="#-longing.png">I can also see that a certain &lt;i&gt;subset&lt;/i&gt; of porn viewers are part of your audience.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="4" />
+                <state img="#-disappointed.png">You have no idea how unwieldy and awkward those large cameras are. They simply weren't meant for shooting up close.</state>
+            </case>
             <case stage="0-7">
                 <condition role="target" character="aella" sayingMarker="NoShops" />
                 <state img="#-shocked.png">That's horrible! I can't imagine living in a world without any clothes shops.</state>
@@ -8623,6 +8876,12 @@
             <case stage="0-7">
                 <condition role="other" character="asuna" stage="10" />
                 <state img="#-angry.png">Dummy?! That's not nice at all.</state>
+            </case>
+            <case stage="0-7">
+                <condition status="naked" role="target" />
+                <state img="#-awkward.png">That's a very unusual stripping sequence, ~name~. Did you just happen to forget to remove that earlier?</state>
+                <state img="#-awkward.png">Is this part of your plan, or did you just forgot you were wearing that?</state>
+                <state img="#-awkward.png">I don't understand why you decided to leave that on &lt;i&gt;this&lt;/i&gt; late in the game.</state>
             </case>
             <case stage="0-1">
                 <state img="#-longing.png">You can't &lt;i&gt;just&lt;/i&gt; stop there, ~name~. I expect more from you next time.</state>
@@ -9098,10 +9357,6 @@
                 <state img="#-curious.png">A safety device for shorts? I've never seen those before, but I guess it serves its function.</state>
             </case>
             <case stage="0-7">
-                <condition role="target" character="panty" stage="0" />
-                <state img="#-longing.png">For an exhibitionist, you took quite some time to get off your dress.</state>
-            </case>
-            <case stage="0-7">
                 <condition role="target" character="starfire" stage="1" />
                 <state img="#-happy.png">Wow, that's amazing! It's great that you're &lt;i&gt;really&lt;/i&gt; enjoying your short stay in this country.</state>
             </case>
@@ -9165,6 +9420,30 @@
             <case stage="0-7">
                 <condition role="target" character="shimakaze" stage="5" />
                 <state img="#-playful.png">Your rear deck is getting pounded!... Wow, that has a different meaning when taken out of context.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="sola" stage="2" />
+                <state img="#-curious.png">It looks like you're having difficulties removing that, Sola. Can't you just one of your magic spells to make your dress disappear?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="gwen" stage="1" />
+                <state img="#-shocked.png">You can't- are you really going to reveal your identity?!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="gwen" stage="3" />
+                <state img="#-disappointed.png">I'm definitely not ready to get stuck in the middle of a superhero fight.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" stage="1" />
+                <state img="#-thinking.png">... I wonder if it's some sort of projection... or maybe even a hologram...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="4" />
+                <state img="#-friendly.png">... You can't really be streaming 24/7, can you? I mean, you need to go to sleep too, and I don't think you're going to get that many viewers while you're asleep.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" stage="0" />
+                <state img="#-confident.png">It's just that beer is &lt;i&gt;too weak&lt;/i&gt; for my tastes. It takes a lot of it to just get me tipsy, and I don't think ever gotten drunk off it.</state>
             </case>
             <case stage="0-7">
                 <condition role="other" character="evie" stage="8" />
@@ -9694,6 +9973,30 @@
                 <state img="#-confused.png">&lt;i&gt;Another thin strip?!&lt;/i&gt; Gosh, did you run out of materials during construction?</state>
             </case>
             <case stage="0-7">
+                <condition role="target" character="sola" stage="3" />
+                <state img="#-longing.png">Well, I suppose the wait was worth it since you removed two articles of clothing.</state>
+            </case>
+            <case stage="0-7" id="173">
+                <condition role="target" character="gwen" stage="2" />
+                <state img="#-curious.png">...Oh, you're somewhat younger than I expected. Prettier too, to be fair.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="gwen" stage="4" />
+                <state img="#-curious.png">I suppose since you're out of your costume, they won't recognize you anymore. So we're safe for now, at least.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" stage="2" />
+                <state img="#-curious.png">If it's a projection... is this some sort of social experiment?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" stage="5" />
+                <state img="#-confused.png">Really?... That sound very tiring.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" stage="1" />
+                <state img="#-flirting.png">... Well, if you're interested, I can buy you some martini. Or rather, ~player~ can buy some martini for both of us. You'll do that for us, ~player~?</state>
+            </case>
+            <case stage="0-7">
                 <condition role="other" character="black_canary" stage="6" />
                 <state img="#-playful.png">That's an &lt;i&gt;interesting&lt;/i&gt; choice of underwear.</state>
             </case>
@@ -10118,6 +10421,10 @@
                 <state img="#-confused.png">Did Neo just changed her appearance?</state>
             </case>
             <case stage="0-7">
+                <condition role="target" character="panty" stage="0" />
+                <state img="#-longing.png">For an exhibitionist, you took quite some time to get off your dress.</state>
+            </case>
+            <case stage="0-7">
                 <condition role="target" character="amalia" stage="5" />
                 <state img="#-excited.png">Good, you're finally removing those flowers.</state>
                 <state img="#-excited.png">Finally, I'm getting a good look at you.</state>
@@ -10284,6 +10591,14 @@
                 <condition role="target" character="shimakaze" />
                 <state img="#-thinking.png">It's not like that was offering much protection in the first place. I'd say that shedding additional weight is a good thing.</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" />
+                <state img="#-thinking.png">... Maybe... someone has a fetish for ghost girls with stubby legs?...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" />
+                <state img="#-longing.png">There's a cocktail I know called the "Naked Lady" made from Vermouth, rum, lemon juice... and a couple of other things.</state>
+            </case>
             <case stage="0-7" filter="alien">
                 <state img="#-curious.png">I wonder how many breasts you have.</state>
                 <state img="#-curious.png">I once saw a movie of an alien woman with three tits.</state>
@@ -10309,6 +10624,11 @@
         </trigger>
 
         <trigger id="female_small_chest_is_visible">
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" />
+                <test expr="~background.location~" value="indoors" />
+                <state img="#-worried.png">... Your shirt got snagged on the lights, Streaming-chan. Let's hope it holds until the end of the game.</state>
+            </case>
             <case stage="0-2" priority="302">
                 <condition role="target" character="mae" sayingMarker="notagoodday" />
                 <state img="#-playful.png">♫ 'Cause you had a bad day&lt;br&gt;You're taking one down&lt;br&gt;You sing a sad song just to turn it around ♫</state>
@@ -10346,6 +10666,10 @@
             <case stage="0-7">
                 <condition role="target" character="shimakaze" />
                 <state img="#-jiggle.png">I guess those are supposed to be your engines?... Whatever they are, they seem pretty small, especially when compared to mine.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" />
+                <state img="#-shocked.png">...Or... what if this is a prank?</state>
             </case>
             <case stage="0-7">
                 <state img="#-happy.png">They're adorable!</state>
@@ -10551,6 +10875,10 @@
             <case stage="0-7">
                 <condition role="target" character="sheena" />
                 <state img="#-confused.png">What the fuck just happened?! Honestly, what was that?!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" />
+                <state img="#-teasing.png">If you're more interested in a sweet drink, there's the "Angel's Tit" made from cherry and whipped cream.</state>
             </case>
             <case stage="0-7" filter="alien">
                 <state img="#-jiggle.png">Looks like I wouldn't be out of place in your planet.</state>
@@ -10764,6 +11092,14 @@
                 <condition role="target" character="shimakaze" />
                 <state img="#-playful.png">It would be ironic if a ship was leaking towards the outside instead of inside. How would that work anyway?</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" />
+                <state img="#-calm.png">Nothing you can do will surprise me now.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" />
+                <state img="#-friendly.png">Don't feel &lt;i&gt;too&lt;/i&gt; bad, Syrenne. I'm prettyer~ can just buy you another pitcher.</state>
+            </case>
             <case stage="0-7" filter="robot">
                 <state img="#-thinking.png">Do robots even have slits in there?</state>
                 <state img="#-thinking.png">We're not gonna see much, are we?</state>
@@ -10962,6 +11298,23 @@
                 <state img="#-longing.png">Wow, you even dyed down there. That's high effort of you, Misato. I'm very impressed.</state>
             </case>
             <case stage="0-7">
+                <condition role="target" character="gwen" saidMarker="web" />
+                <state img="#-confused.png">Wait, those pornos actually exist? I must have missed them. The ones I found were pretty normal by porn standards.</state>
+            </case>
+            <case stage="0-7">
+                <alternative>
+                    <condition role="target" character="gwen" saidMarker="drapes" />
+                </alternative>
+                <alternative>
+                    <condition role="target" character="gwen" saidMarker="shave" />
+                </alternative>
+                <state img="#-longing.png">I didn't really think I'd learn a lot about Spider-Woman's hair &lt;i&gt;downstairs&lt;/i&gt; when I went to this game, but that's great to know.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" sayingMarker="viewers" />
+                <state img="#-longing.png">Oh, wow! Those two aren't cheap at all! You've really prepared for this game, huh?</state>
+            </case>
+            <case stage="0-7">
                 <condition role="target" character="mavis" />
                 <state img="#-longing.png">Wow, you've even shaved, Mavis. You're not &lt;i&gt;that&lt;/i&gt; out-of-touch with modern customs, it seems.</state>
             </case>
@@ -11095,6 +11448,18 @@
             <case stage="0-7">
                 <condition role="target" character="shimakaze" />
                 <state img="#-thinking.png">Since you don't have any armor pieces remaining, can you be classified as a boat now?... Is that how you classify boats?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="sola" />
+                <state img="#-longing.png">If it makes you feel any better, I think you have a pretty nice body for a girl your age, Sola.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" />
+                <state img="#-confused.png">What? Nothing? That was a letdown of a prank.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" />
+                <state img="#-confident.png">Now would be a good time to get a stronger drink than beer, just saying. ~player~ still owes us our martini.</state>
             </case>
             <case stage="0-7" filter="robot">
                 <state img="#-thinking.png">Why do you even have a vagina? It's not like robots can reproduce that way.</state>
@@ -12439,6 +12804,22 @@
                 <condition role="target" character="shimakaze" />
                 <state img="#-curious.png">I think now would be a good time to evacuate your crew before you explode and sink.</state>
             </case>
+            <case stage="0-7" id="171">
+                <condition role="target" character="sola" />
+                <state img="#-curious.png">What's that crystal for, Sola? Are you going to use a masturbation magic spell?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" />
+                <state img="#-awkward.png">I'm not really sure what kind of enjoyment I'd get from watching a projection of a child with stubby legs play with herself.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" />
+                <state img="#-longing.png">Either one would have been fine for me anyway. It's the way you use it that matters.</state>
+            </case>
+            <case stage="0-7" id="177">
+                <condition role="target" character="syrenne" />
+                <state img="#-longing.png">One of the more popular cocktails is the "Leg Spreader", which is pineapple juice with some ram and schnapps.</state>
+            </case>
             <case stage="0-7" filter="alien">
                 <state img="#-curious.png">Does your kind understand the concept of masturbation?</state>
                 <state img="#-curious.png">I wonder how your alien species masturbate.</state>
@@ -12814,6 +13195,30 @@
                 <condition role="target" character="shimakaze" />
                 <state img="#-excited.png">Wow, I'm genuinely impressed with your special effects, Shimakaze! I can't even figure out where that smoke is coming from.</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="sola" />
+                <state img="#-worried.png">... I don't know anything about magic crystals... but I don't think they're supposed to go inside like that. </state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="sonya" />
+                <state img="#-playful.png">Come to think of it, your face paint reminds me of poop.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="gwen" />
+                <state img="#-longing.png">&lt;i&gt;Oh, I can see where this is going&lt;/i&gt;. All the porn movies I've watched about you includes this scene.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="spooky" />
+                <state img="#-frustrated.png">Man, I'm really over-analyzing this situation. I should just play along with it.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" />
+                <state img="#-horny.png">...Yeah... I have one of those and it never fails at bringing me to completion...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" />
+                <state img="#-playful.png">And of course, who could forget the "Red Headed Slut". It's... I just happened to think of it.</state>
+            </case>
             <case stage="0-7" filter="robot">
                 <state img="#-worried.png">Should I take a step back? Oil is quite difficult to clean.</state>
             </case>
@@ -13076,6 +13481,11 @@
                 <condition role="target" character="pinkie_pie" saidMarker="pinka_start" notSaidMarker="pinka_end2" />
                 <state img="#-awkward.png" marker="PinkiePinkaforfeit">I don't really know what to make of your method, ~name~. It's very different from what I've seen.</state>
             </case>
+            <case stage="0-7" oneShotId="403">
+                <condition role="target" character="gwen" saidMarker="dinner" />
+                <condition role="self" saidMarker="GwenForfeit" />
+                <state img="#-teasing.png" marker="GwenDinner">I'd be more than happy to take up your offer of dinner, Gwen, but I'm not quite comfortable with you swinging about like that. What about after this game instead?</state>
+            </case>
             <case stage="0-7">
                 <condition role="target" character="akko" />
                 <condition role="self" notSaidMarker="AkkoMasturbationNoMagic" />
@@ -13270,6 +13680,20 @@
                 <condition role="target" character="shimakaze" />
                 <state img="#-longing.png" marker="ShimakazeForfeit">Is that how you usually clean your boilers, Shimakaze?</state>
             </case>
+            <case stage="0-7" oneShotId="398">
+                <condition role="target" character="sola" />
+                <state img="#-longing.png" marker="SolaForfeitStart">Is that how magic users usually masturbate? It must be pretty nice not having to use your hands to pleasure yourself.</state>
+                <state img="#-longing.png" marker="SolaForfeitStart">Is that how magic users usually masturbate? I suppose it's not &lt;i&gt;that&lt;/i&gt; different from using a vibrator.</state>
+            </case>
+            <case stage="0-7" oneShotId="399">
+                <condition role="target" character="sola" />
+                <state img="#-horny.png" marker="SolaForfeitCrystal">If I had known magic users had that type of vibrating crystals, I would have studied magic.</state>
+            </case>
+            <case stage="0-7" id="174" oneShotId="402">
+                <condition role="target" character="gwen" />
+                <state img="#-horny.png" marker="GwenForfeit">Oh! It's not quite as many webs as I expected, but it's still good.</state>
+                <state img="#-horny.png" marker="GwenForfeit">I was expecting something else entirely with your webs, but this technique is also great.</state>
+            </case>
             <case stage="0-7" filter="robot">
                 <state img="#-sleepy.png">Seeing a robot masturbate wasn't exactly high in my bucket list.</state>
                 <state img="#-sleepy.png">This isn't doing anything for me at all.</state>
@@ -13376,6 +13800,10 @@
             <case stage="0-7">
                 <condition role="target" character="meg" />
                 <state img="#-horny.png">Here comes the sprint finish from Meg.</state>
+            </case>
+            <case stage="0-7" oneShotId="401">
+                <condition filter="mortal_kombat" role="target" />
+                <state img="#-playful.png">FINISH HER!</state>
             </case>
         </trigger>
 
@@ -13646,6 +14074,18 @@
                 <condition role="target" character="sei" />
                 <state img="#-flirting.png" marker="SeiFinished">Not bad at all, Sei. But I bet I can give you a stronger one later. Maybe even more than one... we'll just have to see how many I can get out of you.</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="sola" />
+                <state img="#-longing.png">Wow, that looked amazing! Could you gift me one of those crystals, sweetheart? I would &lt;i&gt;definitely&lt;/i&gt; appreciate it.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="streaming-chan" />
+                <state img="#-horny.png">That was definitely worth paying $99.99 for!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="syrenne" />
+                <state img="#-longing.png">Now that what i would call a "Screaming Orgasm", which also happens to be a cocktail name. Cocktail names are just &lt;i&gt;so&lt;/i&gt; creative, aren't they?</state>
+            </case>
             <case stage="0-7" filter="robot">
                 <state img="#-shocked.png">That's definitely not oil!</state>
             </case>
@@ -13883,6 +14323,14 @@
                 <state img="#-happy.png">I didn't expect to meet a magic user when I went here! I can't wait to see what else you can do with your magic.</state>
             </case>
             <case stage="6">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" />
+                <condition role="self" notSaidMarker="StreamingchanViewersMedium" />
+                <alternative>
+                    <condition role="other" character="streaming-chan" saidMarker="viewers&lt;=7" />
+                </alternative>
+                <state img="#-confident.png" marker="StreamingchanViewersMedium">Well that's not really a bad view count at all, but I've seen &lt;i&gt;way more&lt;/i&gt; than that in my recent streams. You should mention that my performance has started, that will definitely bring the viewers in!</state>
+            </case>
+            <case stage="6">
                 <condition role="other" character="kyu" stage="2" timeInStage="0" saidMarker="wordsanddeeds" sayingMarker="wordsanddeedsc" />
                 <state img="#-playful.png" marker="KyuMouthBreathing">Oh, come on! I can see you breathing through your mouth.</state>
             </case>
@@ -13978,6 +14426,10 @@
                 <condition role="other" character="d.va" stage="6" />
                 <state img="#-horny.png">I can never say no to you, dear. I can always make some time for you.</state>
             </case>
+            <case stage="6" oneShotId="400">
+                <condition role="other" character="sola" stage="8" />
+                <state img="#-flirting.png" marker="SolaJessieForfeit">Sola, dear, can you lend me that vibrating crystal of yours? I would &lt;i&gt;deeply appreciate&lt;/i&gt; it. </state>
+            </case>
             <case stage="6">
                 <condition role="self" notSaidMarker="HaruForfeitPunishment" />
                 <condition role="other" character="haru" saidMarker="mommyharu" />
@@ -13994,6 +14446,17 @@
                 <state img="#-worried.png">Yeah, that's enough fairy facts for one night.</state>
                 <state img="#-worried.png">I think that's enough about fairy birth for one night.</state>
                 <state img="#-worried.png">Wow, that's &lt;i&gt;so&lt;/i&gt; eerie.</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;=3" />
+                <condition role="self" notSaidMarker="StreamingchanViewersLow" />
+                <state img="#-confused.png" marker="StreamingchanViewersLow">Our view count is really that low? Have you announced that I'm in this stream? I have &lt;i&gt;way&lt;/i&gt; more fans than &lt;i&gt;that&lt;/i&gt;.</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" />
+                <condition role="self" notSaidMarker="StreamingchanViewersHigh" />
+                <state img="#-confident.png" marker="StreamingchanViewersHigh">I'm not really surprised by that view count, Streaming-chan. After all, who in their right mind would pass up on one of my performances? My fanbase certainly wouldn't. </state>
+                <state img="#-confident.png" marker="StreamingchanViewersHigh">I'm not really surprised by that view count, Streaming-chan. I don't know about you, but that's just about my usual audience size. You could say that my fanbase is &lt;i&gt;very&lt;/i&gt; loyal.</state>
             </case>
             <case stage="6" oneShotId="200">
                 <condition role="other" character="kyu" saidMarker="florist" />
@@ -14273,6 +14736,14 @@
                 <state img="#-happy.png">I didn't expect to meet a magic user when I went here! I can't wait to see what else you can do with your magic.</state>
             </case>
             <case stage="7">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" />
+                <condition role="self" notSaidMarker="StreamingchanViewersMedium" />
+                <alternative>
+                    <condition role="other" character="streaming-chan" saidMarker="viewers&lt;=7" />
+                </alternative>
+                <state img="#-confident.png" marker="StreamingchanViewersMedium">Well, it seems some of my fans stayed on even after my performance is done. Hello everybody! I hope you enjoyed my performance for tonight. Of course you guys did! That's not even something I have to ask.</state>
+            </case>
+            <case stage="7">
                 <condition role="other" character="kyu" stage="2" timeInStage="0" saidMarker="wordsanddeeds" sayingMarker="wordsanddeedsc" />
                 <state img="#-playful.png" marker="KyuMouthBreathing">Oh, come on! I can see you breathing through your mouth.</state>
             </case>
@@ -14341,6 +14812,16 @@
                 <state img="#-worried.png">Yeah, that's enough fairy facts for one night.</state>
                 <state img="#-worried.png">I think that's enough about fairy birth for one night.</state>
                 <state img="#-worried.png">Wow, that's &lt;i&gt;so&lt;/i&gt; eerie.</state>
+            </case>
+            <case stage="7">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;=3" />
+                <condition role="self" notSaidMarker="StreamingchanViewersLow" />
+                <state img="#-confused.png" marker="StreamingchanViewersLow">Our view count is really that low? I guess my fans left already since I'm done with my performance.</state>
+            </case>
+            <case stage="7">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" />
+                <condition role="self" notSaidMarker="StreamingchanViewersHigh" />
+                <state img="#-happy.png" marker="StreamingchanViewersHigh">The view count is still that high?! Wow, that's higher than even what I'm used to!</state>
             </case>
             <case stage="7" oneShotId="203">
                 <condition role="other" character="kyu" saidMarker="florist" />
@@ -14507,6 +14988,11 @@
                 <state img="#-calm.png">I never thought I'd get to play strip poker with two zombies, and actually win.</state>
             </case>
             <case stage="0-5">
+                <condition role="other" character="sola" />
+                <condition role="other" character="sayaka" />
+                <state img="#-thinking.png">Is crystal fetish a thing now? That's a fetish I didn't knew even existed. I must be losing touch with the current sexual trends.</state>
+            </case>
+            <case stage="0-5">
                 <condition count="1" filter="blake" />
                 <condition role="other" character="kali" />
                 <state img="#-awkward.png">Eh, I think I'll hold off for now.</state>
@@ -14627,6 +15113,10 @@
                 <condition role="other" character="sei" />
                 <state img="#-playful.png">I bet our little drinking contest would be even easier than this game was, Sei.</state>
                 <state img="#-playful.png">I bet this isn't the only contest I'll win against you tonight, Sei. After all, you're already drunk to begin with.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="streaming-chan" />
+                <state img="#-teasing.png">I bet a lot of viewers are frustrated that I didn't get to &lt;i&gt;perform&lt;/i&gt; tonight. I'll just have to do that later tonight in &lt;i&gt;my&lt;/i&gt; premium instead.</state>
             </case>
             <case stage="0-1">
                 <state img="#-happy.png">Poker is much easier than I thought.</state>
@@ -14919,6 +15409,23 @@
             <case stage="7">
                 <condition role="target" character="ryuji" />
                 <state img="#-teasing.png">You know, Ryuji, I'm interested in doing private workouts with you. Maybe you could do me at your home later. I bet we're gonna be all exhausted once were done.</state>
+            </case>
+            <case stage="7">
+                <condition role="target" character="spooky" />
+                <state img="#-frustrated.png">&lt;i&gt;How did I lose to that... whatever she is supposed to be?&lt;/i&gt;</state>
+            </case>
+            <case stage="7">
+                <condition role="target" character="streaming-chan" />
+                <state img="#-teasing.png">I know of a way to bring your viewer count up through the roof, Streaming-chan. Let's just call it a &lt;i&gt;collaboration&lt;/i&gt;.</state>
+            </case>
+            <case stage="7">
+                <condition role="target" character="syrenne" />
+                <state img="#-flirting.png">You know, we could go drink cocktails at my house, Syrenne. I know a martini cocktail called "Porn Star" that you'd definitely want to taste.</state>
+            </case>
+            <case stage="7">
+                <condition role="other" character="sola" stage="8" />
+                <condition role="other" character="sayaka" stage="9" />
+                <state img="#-thinking.png">Is crystal fetish a thing now? That's a fetish I didn't knew even existed. I must be losing touch with the current sexual trends.</state>
             </case>
             <case stage="7">
                 <condition role="other" character="n" timeInStage="10" saidMarker="sleep" />

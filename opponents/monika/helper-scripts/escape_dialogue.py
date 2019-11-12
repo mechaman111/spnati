@@ -1,40 +1,34 @@
-from csv2xml import behaviour_parser as bp
-from csv2xml.ordered_xml import OrderedXMLElement
-from pathlib import Path
-import sys
-import shutil
 import re
+import shutil
 
-TEXT_ESCAPES = {
-    '<': 'lt',
-    '>': 'gt',
-    '&': 'amp'
+STATE_MATCH_RE = r"(<state[^>]+>)(.+)(?=</state>)"
+
+ESCAPED_CHARACTERS = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>'
 }
-TEXT_ESCAPE_RE = re.compile('|'.join(TEXT_ESCAPES.keys()))
+TEXT_UNESCAPE_RE = re.compile('|'.join(map(re.escape, ESCAPED_CHARACTERS.keys())))
 
-def main():
-    shutil.copyfile('./behaviour.xml', './behaviour.xml.escape.bak')
-    root = bp.parse_file('./behaviour.xml')
-
-    for stage_elem in root.find('behaviour').iter('stage'):
-        for case_elem in stage_elem.iter('case'):
-            for state_elem in case_elem.iter('state'):
-                state_elem.text = TEXT_ESCAPE_RE.sub(
-                    lambda m: '&' + TEXT_ESCAPES[m.group(0)] + ';',
-                    state_elem.text
-                )
-                
-    for trigger_elem in root.find('behaviour').iter('trigger'):
-        for case_elem in trigger_elem.iter('case'):
-            for state_elem in case_elem.iter('state'):
-                state_elem.text = TEXT_ESCAPE_RE.sub(
-                    lambda m: '&' + TEXT_ESCAPES[m.group(0)] + ';',
-                    state_elem.text
-                )
-                
+def escape_xml(match):
+    print(match[0])
     
-    with open('behaviour.xml', 'w', encoding='utf-8') as f:
-        f.write(root.serialize(True, False))
+    t = TEXT_UNESCAPE_RE.sub(
+        lambda m: ESCAPED_CHARACTERS[m.group(0)],
+        match[2]
+    )
+    
+    for sub_to, sub_from in ESCAPED_CHARACTERS.items():
+        t = t.replace(sub_from, sub_to)
+        
+    print(t)
+    
+    return match[1] + t
 
-if __name__ == '__main__':
-    main()
+shutil.copyfile('./behaviour.xml', './behaviour.xml.escape.bak')
+
+with open("./behaviour.xml", "r") as f:
+    escaped = re.sub(STATE_MATCH_RE, escape_xml, f.read())
+    
+with open("./behaviour.xml", "w") as f:
+    f.write(escaped)
