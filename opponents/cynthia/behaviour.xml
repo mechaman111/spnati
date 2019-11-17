@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 2:29:53 AM on November 15, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 3:47:52 PM on November 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Cynthia</first>
@@ -46,7 +46,7 @@
     <wardrobe>
         <clothing name="panties" generic="panties" position="lower" type="important" plural="true" />
         <clothing name="bra" generic="bra" position="upper" type="important" />
-        <clothing name="stockings" generic="stockings" position="feet" type="minor" plural="true" />
+        <clothing name="pantyhose" generic="pantyhose" position="feet" type="minor" plural="true" />
         <clothing name="pants" generic="pants" position="lower" type="major" plural="true" />
         <clothing name="shirt" generic="shirt" position="upper" type="major" />
         <clothing name="shoes" generic="shoes" position="feet" type="minor" plural="true" />
@@ -149,6 +149,9 @@
         </trigger>
 
         <trigger id="good_hand">
+            <case stage="0" totalRounds="-1">
+                <state img="#-fingerup.png">This is just like a pokemon battle; I like to start off with my Spiritomb so that I don't start at a disadvantage.</state>
+            </case>
             <case stage="2">
                 <state img="#-aggressive.png">Hah! As expected...</state>
                 <state img="#-fingerup.png">Ah, a hand fit for a champion!</state>
@@ -251,6 +254,7 @@
                 <state img="#-pensive.png">I can't settle for these cards... Not when I'm on my last legs...</state>
                 <state img="#-disappointed.png">Under normal circumstances, these cards would be acceptable...</state>
                 <state img="#-pensive.png">These cards are... &lt;i&gt;fine&lt;/i&gt;... But they're not what I was looking for.</state>
+                <state img="#-embarrassed.png">This hand &lt;i&gt;might&lt;/i&gt; be good enough... But it might not be...</state>
             </case>
             <case stage="8">
                 <state img="#-embarrassed.png">When I'm this close to defeat, I don't think &lt;i&gt;okay&lt;/i&gt; will be enough...</state>
@@ -282,6 +286,7 @@
                 <state img="#-disappointed.png">&lt;i&gt;(Hmmm... I might be losing yet again...)&lt;/i&gt;</state>
                 <state img="#-disappointed.png">It seems like my luck has taken a downturn...</state>
                 <state img="#-disappointed.png">It seems a defeat is imminent...</state>
+                <state img="#-embarrassed.png">Am I about to be... bested?</state>
             </case>
             <case stage="2">
                 <state img="#-aggressive.png">Now's your chance, ~player~! I have a pretty bad hand, so this is your chance to strike!</state>
@@ -467,6 +472,7 @@
             </case>
             <case stage="0-8" id="19" priority="50">
                 <condition role="self" saidMarker="FivePlayers" notSaidMarker="FigureOutWhyStare3" />
+                <condition count="5" />
                 <test expr="~background~" value="library" />
                 <state img="#-disappointed.png">Do the think the five of us are making too much noise? This is a library, after all.</state>
                 <state img="#-disappointed.png">Five people can make a lot of noise; where is the librarian telling us to keep our voices down?</state>
@@ -475,6 +481,7 @@
             </case>
             <case stage="0-8" id="22" priority="50">
                 <condition role="self" saidMarker="FourPlayers" notSaidMarker="FigureOutWhyStare3" />
+                <condition count="4" />
                 <test expr="~background~" value="library" />
                 <state img="#-disappointed.png">Do you think we're being too loud? It's hard to keep a low volume with so many people around.</state>
                 <state img="#-disappointed.png">It's probably best that our group isn't any larger; can you imagine how noisy we would get with &lt;i&gt;five&lt;/i&gt; people?</state>
@@ -549,35 +556,36 @@
                 <state img="#-sarcastic.png">~Player~, you should just be moving bits around... Jus... just what are you doing in down there?</state>
             </case>
             <case stage="0-8" id="122" oneShotId="6">
-                <state img="#-scowling.png" marker="CynthiaVerity">And just to be clear, &lt;i&gt;no&lt;/i&gt;! I do &lt;i&gt;not&lt;/i&gt; have a daughter named Verity; I just happen to look like the girl's mother...</state>
-                <state img="#-scowling.png" marker="CynthiaVerity">And just to be clear, &lt;i&gt;no&lt;/i&gt;! I do &lt;i&gt;not&lt;/i&gt; have a daughter named Verity; I don't have any kids for that matter.</state>
-                <state img="#-scowling.png" marker="CynthiaVerity">And just to be clear, &lt;i&gt;no&lt;/i&gt;! I do &lt;i&gt;not&lt;/i&gt; have a daughter named Verity; I haven't even had any steady romantic partner, for that matter...</state>
+                <state img="#-embarrassed.png" marker="CynthiaVerity">I know no one brought this up, but... if you ever hear any rumors about a girl named Verity... they're not true, okay? I don't have any kids.</state>
             </case>
             <case stage="0-8" id="29" priority="0">
+                <condition role="self" saidMarker="BackgroundReferenced&lt;2" />
                 <test expr="~background~" value="inventory" />
-                <state img="#-fingerup.png">I don't frequent places like The Inventory that often; maybe I should come more often!</state>
-                <state img="#-fingerup.png">Is anyone thirsty? Drinks are on me tonight if you wanted to order anything!</state>
-                <state img="#-fingerup.png">Why are the booths covered by curtains... &lt;i&gt;Oh!&lt;/i&gt; Are they for studying?</state>
-                <state img="#-fingerup.png">The booths here are covered by curtains... &lt;i&gt;Oh!&lt;/i&gt; Are they for reading?</state>
-                <state img="#-fingerup.png">I quite like The Inventory; it reminds me of the watering holes back in Celestic Town.</state>
-                <state img="#-fingerup.png">Being in The Inventory brings back memories from my days as a scholar; you don't know how many times I'd bring my research with me while I ate.</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">I don't frequent places like The Inventory that often; maybe I should come more often!</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">Is anyone thirsty? Drinks are on me tonight if you wanted to order anything!</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">Why are the booths covered by curtains... &lt;i&gt;Oh!&lt;/i&gt; Are they for studying?</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">The booths here are covered by curtains... &lt;i&gt;Oh!&lt;/i&gt; Are they for reading?</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">I quite like The Inventory; it reminds me of the watering holes back in Celestic Town.</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">Being in The Inventory brings back memories from my days as a scholar; you don't know how many times I'd bring my research with me while I ate.</state>
             </case>
             <case stage="0-8" id="30" priority="0">
                 <condition count="1-4" gender="male" var="male" />
+                <condition role="self" saidMarker="BackgroundReferenced&lt;2" />
                 <test expr="~background~" value="inventory" />
-                <state img="#-fingerup.png">I wouldn't normally play something like strip poker, but if guys like ~male~ were involved all the time, I might have to make myself a regular.</state>
-                <state img="#-fingerup.png">I've come to The Inventory a few times before, but I've never played strip poker here until now; when I saw there was a guy ready to play, I just had to join in!</state>
-                <state img="#-fingerup.png">I've come to The Inventory a few times before, although I've never joined in on the strip poker games here; that's because I've never seen any guys play before!</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">I wouldn't normally play something like strip poker, but if guys like ~male~ were involved all the time, I might have to make myself a regular.</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">I've come to The Inventory a few times before, but I've never played strip poker here until now; when I saw there was a guy ready to play, I just had to join in!</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">I've come to The Inventory a few times before, although I've never joined in on the strip poker games here; that's because I've never seen any guys play before!</state>
             </case>
             <case stage="0-5" id="31" priority="0">
+                <condition role="self" saidMarker="BackgroundReferenced&lt;2" />
                 <test expr="~background~" value="tiki bar" />
-                <state img="#-fingerup.png">Did you guys want to take a quick break? We could grab ourselves a drink since we're already at the tiki bar!</state>
-                <state img="#-fingerup.png">Is anyone thirsty? Drinks are on me tonight if you wanted to order anything!</state>
-                <state img="#-fingerup.png">Since we're at the bar, does anyone want any drinks?</state>
-                <state img="#-fingerup.png">Maybe after the game, we can all hang out by the shore! How does that sound?</state>
-                <state img="#-fingerup.png">Is anyone up for swimming in the ocean after the game? Clothing will be optional!</state>
-                <state img="#-fingerup.png">Does anyone fancy a quick swim after the game?</state>
-                <state img="#-fingerup.png">Does anyone fancy a quick swim after the game? We'll already be naked anyway.</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">Did you guys want to take a quick break? We could grab ourselves a drink since we're already at the tiki bar!</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">Is anyone thirsty? Drinks are on me tonight if you wanted to order anything!</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">Since we're at the bar, does anyone want any drinks?</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">Maybe after the game, we can all hang out by the shore! How does that sound?</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">Is anyone up for swimming in the ocean after the game? Clothing will be optional!</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">Does anyone fancy a quick swim after the game?</state>
+                <state img="#-fingerup.png" marker="BackgroundReferenced">Does anyone fancy a quick swim after the game? We'll already be naked anyway.</state>
             </case>
             <case stage="6-8" id="32" priority="0">
                 <test expr="~background~" value="tiki bar" />
@@ -597,15 +605,17 @@
             </case>
             <case stage="0-8" id="35" priority="0">
                 <condition count="1-4" status="finished" var="finished" />
+                <condition role="self" saidMarker="BackgroundReferenced&lt;3" />
                 <test expr="~background~" value="tiki bar" />
                 <state img="#-aggressive.png">Did you want to take a dip in the ocean after we finish up here, ~finished~? You could wash yourself off too!</state>
                 <state img="#-aggressive.png">It looks like you got pretty messy, ~finished~; care to take a dip with me after the game to clean yourself off?</state>
             </case>
             <case stage="0-8" id="36" priority="0">
                 <condition count="1-4" status="finished" var="finished" />
+                <condition role="self" saidMarker="BackgroundReferenced&lt;2" />
                 <test expr="~background~" value="beach" />
-                <state img="#-aggressive.png">Did you want to take a dip in the ocean after we finish up here, ~finished~? You could wash yourself off too!</state>
-                <state img="#-aggressive.png">It looks like you got pretty messy, ~finished~; care to take a dip with me after the game to clean yourself off?</state>
+                <state img="#-aggressive.png" marker="BackgroundReferenced">Did you want to take a dip in the ocean after we finish up here, ~finished~? You could wash yourself off too!</state>
+                <state img="#-aggressive.png" marker="BackgroundReferenced">It looks like you got pretty messy, ~finished~; care to take a dip with me after the game to clean yourself off?</state>
             </case>
             <case stage="0-8" id="131" priority="0">
                 <condition count="1-5" filter="exhibitionist" gender="female" status="not_mostly_clothed" role="opp" var="exhib" />
@@ -641,6 +651,10 @@
                 <condition count="1-5" filter="exhibitionist" status="exposed" role="opp" var="exhib" />
                 <state img="#-disappointed.png">It seems ~exhib~ and I are both exposed, but only one of us feels any shame in the matter...</state>
                 <state img="#-disappointed.png">Aren't you at all embarrassed, ~exhib~? How is this not seem embarrassing for you?</state>
+            </case>
+            <case stage="0-8" id="139" oneShotId="21">
+                <state img="#-embarrassed.png" marker="CynthiaLucarioSmash">My Lucario's been away ever since that white envelope came in the mail. I hope he's enjoying his time in Smash...</state>
+                <state img="#-embarrassed.png" marker="CynthiaLucarioSmash">Someone sent a white and red invitation to my mailbox addressed to my Lucario. He's been away ever since; I just hope he's doing alright...</state>
             </case>
         </trigger>
 
@@ -687,7 +701,6 @@
                 <state img="#-crying.png">Ah! NO! I don't have any layers to spare!</state>
                 <state img="#-crying.png">Huh? NO! Not now! Not when I'm only down to my underwear!</state>
                 <state img="#-crying.png">What?! &lt;i&gt;What?!&lt;/i&gt; B-but I'm on my last two layers! H-how did I... fail... like this...</state>
-                <state img="#-crying.png">Eaahh! W-what? H-how can I be losing like this? I'm a pokemon champion!</state>
             </case>
             <case stage="7" priority="3">
                 <state img="#-fingerup.png">I'm impressed that you've come this far... You've certainly earned what I'm about to show you...</state>
@@ -1093,6 +1106,7 @@
                 <state img="#-embarrassed.png">I really can't afford any more defeats, so I'm glad it's someone else's turn right now...</state>
                 <state img="#-happy.png">Whew, I'm spared for another round, at least!</state>
                 <state img="#-happy.png">Good, I can't lose when I'm in this condition!</state>
+                <state img="#-embarrassed.png">That's a victory for me... for now...</state>
             </case>
             <case stage="6" id="41" priority="0">
                 <condition count="3-5" status="alive" />
@@ -1528,6 +1542,9 @@
                 <state img="#-fingerup.png">Hey, don't hate the player, hate the rules, right?</state>
                 <state img="#-disappointed.png">If it's in the rules, then I have no right to complain.</state>
             </case>
+            <case stage="5-10">
+                <state img="#-embarrassed.png">Oh, right... some of us have accessories left to spare...</state>
+            </case>
         </trigger>
 
         <trigger id="male_removing_minor">
@@ -1583,6 +1600,9 @@
             </case>
             <case stage="0-10">
                 <state img="#-disappointed.png">Let's take off something bigger next time, okay trooper?</state>
+                <state img="#-excited.png">Even if it's something small, this is still getting me excited!</state>
+                <state img="#-embarrassed.png">Even if you only took off your ~clothing~, this is... bringing out some unusual feelings...</state>
+                <state img="#-embarrassed.png">The only male I ever find myself around is Professor Rowan; to say I don't appreciate spending time with someone else like this is an understatment, ~name~.</state>
             </case>
         </trigger>
 
@@ -1763,6 +1783,7 @@
             </case>
             <case stage="0-10">
                 <state img="#-fingerup.png">Thank you for that, ~name~!</state>
+                <state img="#-embarrassed.png">This is the kind of thing I came here to see, but actually seeing it is... it's something else...</state>
             </case>
         </trigger>
 
@@ -1866,13 +1887,19 @@
                 <state img="#-fingerup.png">There's no mistaking it; your chest is as hard as a cave wall!</state>
                 <state img="#-fingerup.png">My my, your chest... it-it's so hard and... Would you mind if I glide my finger over it and trace ancient etchings?</state>
             </case>
-            <case stage="0-10">
+            <case stage="0-5">
                 <state img="#-excited.png">Ah, so muscular... Like a stone slate full of etchings...</state>
                 <state img="#-excited.png">Ah, your muscles! They... they look firm, and sturdy.</state>
                 <state img="#-fingerup.png">Your chest... It's hard and firm, like an old cave painting...</state>
                 <state img="#-fingerup.png">Your chest... It's hard and firm... It reminds me of stone tablets I used to study as a child...</state>
                 <state img="#-fingerup.png">There's no mistaking it; your chest is as hard as a cave wall!</state>
                 <state img="#-fingerup.png">My my, your chest... it-it's so hard and... Would you mind if I glide my finger over it and trace ancient etchings?</state>
+            </case>
+            <case stage="6-10">
+                <state img="#-embarrassed.png">This is the kind of thing that I've only seen in magazines...</state>
+                <state img="#-embarrassed.png">I've been to the beach a few times, so I've seen this kind of thing before, but... seeing it up close is a different experience. </state>
+                <state img="#-embarrassed.png">It's... It's so much like a woman's except... &lt;i&gt;sexier&lt;/i&gt;, somehow...</state>
+                <state img="#-embarrassed.png">It's... It's so much like a woman's except I'm somehow more turned on...</state>
             </case>
         </trigger>
 
@@ -2318,6 +2345,7 @@
                 <state img="#-fingerup.png">Is that some pre-cum I see leaking out? Ha ha ha, it must be so fun doing that as a guy!</state>
                 <state img="#-excited.png">Am I imagining things, or did the fapping sound get... wetter? ~name~, did any pre-cum leak out?</state>
                 <state img="#-embarrassed.png">Oh, ha ha... Were you looking at me? It's... it's fine to look, if you want to...</state>
+                <state img="#-embarrassed.png">If staring at me helps, ~name~... Please, stare away.</state>
             </case>
         </trigger>
 
@@ -2559,6 +2587,13 @@
                 <state img="#-embarrassed.png">Two... &lt;i&gt;feminine figures&lt;/i&gt; going at it is... well, let's just say I've seen some cave paintings about this...</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="starfire" />
+                <state img="#-happy.png">Is that... &lt;i&gt;difficult&lt;/i&gt; to do wile levatating?</state>
+                <state img="#-fingerup.png">Ah, I see; since you're vulnerable while doing that, levatating will make you immune from any unexpected ground attacks.</state>
+                <state img="#-happy.png">Being able to levitate like that while you masturbate must give you so much more control.</state>
+                <state img="#-fingerup.png">I bet you're expiremented a lot with &lt;i&gt;unique positions&lt;/i&gt;, haven't you?</state>
+            </case>
+            <case stage="0-10">
                 <condition filter="pubic_hair" role="target" />
                 <state img="#-fingerup.png">Doesn't the hair kind of get in the way, ~name~? You should try shaving; that way, the surface is nice and smooth!</state>
                 <state img="#-thinking.png">I'm a little curious here, but why don't  you shave? Do you... enjoy the warmth or something on your hand when you masturbate? Is it a maintenance issue?</state>
@@ -2613,6 +2648,7 @@
             <case stage="10">
                 <state img="#-horny.png">I know i may sound... &lt;i&gt;bizarre&lt;/i&gt;, but I'm finding it hard to not stare at you with intense interest, ~name~... I hope you can forgive me.</state>
                 <state img="#-sarcastic.png">I'm finding it a little difficult to not go again... Keep it up, ~name~!</state>
+                <state img="#-horny.png">Please, use me for inspiration if it helps.</state>
             </case>
             <case stage="10" priority="0">
                 <test expr="~background.time~" value="night" />
@@ -2628,6 +2664,7 @@
             </case>
             <case stage="0-10">
                 <state img="#-excited.png">Haha! What a splash that was.</state>
+                <state img="#-happy.png">Oh, like a waterfall...</state>
             </case>
             <case stage="0-8">
                 <state img="#-fingerup.png">Ha, that looked kinda fun! If this wasn't a matter of victory or defeat, I'd want to take my turn!</state>
