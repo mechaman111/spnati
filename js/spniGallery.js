@@ -109,8 +109,9 @@ Collectible.prototype.isUnlocked = function () {
     }
 }
 
-Collectible.prototype.getCounter = function (inc) {    
-    return save.getCollectibleCounter(this);
+Collectible.prototype.getCounter = function () {
+    var ctr = save.getCollectibleCounter(this);
+    return (this.counter && ctr > this.counter) ? this.counter : ctr;
 }
 
 Collectible.prototype.unlock = function () {
@@ -119,10 +120,17 @@ Collectible.prototype.unlock = function () {
 
 Collectible.prototype.incrementCounter = function (inc) {
     var newCounter = save.getCollectibleCounter(this) + inc;
+    
+    if (this.counter && newCounter > this.counter)
+        newCounter = this.counter;
+    
     save.setCollectibleCounter(this, newCounter); 
 }
 
 Collectible.prototype.setCounter = function (val) {
+    if (this.counter && val > this.counter)
+        val = this.counter;
+        
     save.setCollectibleCounter(this, val); 
 }
 
