@@ -30,6 +30,8 @@ var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;
 var VERSION_TAG = undefined;
 
+var DEFAULT_FILL = undefined;
+
 /* Game Wide Constants */
 var HUMAN_PLAYER = 0;
 
@@ -1433,6 +1435,15 @@ function loadConfigFile () {
             else {
                 DEBUG = false;
                 console.log("Debugging is disabled");
+            }
+
+            var _default_fill_mode = $(xml).find('default-fill').text();
+            if (!_default_fill_mode || _default_fill_mode === 'none') {
+                DEFAULT_FILL = undefined;
+                console.log("Startup table filling disabled");
+            } else {
+                DEFAULT_FILL = _default_fill_mode;
+                console.log("Using startup table fill mode " + DEFAULT_FILL + '.');
             }
 
             var _game_commit = $(xml).find('commit').text();

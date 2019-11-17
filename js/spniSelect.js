@@ -286,6 +286,12 @@ function loadListingFile () {
             $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
                 return new Option(source);
             }));
+
+            if (DEFAULT_FILL) {
+                clickedRandomFillButton(function (opp) {
+                    return opp.highlightStatus === DEFAULT_FILL;
+                });
+            }
         }
 	}
 
