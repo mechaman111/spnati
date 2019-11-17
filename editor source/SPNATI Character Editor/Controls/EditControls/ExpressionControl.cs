@@ -212,6 +212,23 @@ namespace SPNATI_Character_Editor
 						}
 						if (variable.Contains("." + variablePiece))
 						{
+							if (expression.Value != null && expression.Value.Contains("~"))
+							{
+								bool allow = true;
+								foreach (SubVariableAttribute attr in kvp.Value.GetCustomAttributes<SubVariableAttribute>())
+								{
+									if (attr.Variables.Contains(variablePiece) && !attr.AllowRHSVariables)
+									{
+										allow = false;
+										break;
+									}
+								}
+								if (!allow)
+								{
+									continue;
+								}
+							}
+
 							if (i == kvp.Key.Count - 1 && bestCount < kvp.Key.Count)
 							{
 								bestCount = kvp.Key.Count;
@@ -664,6 +681,11 @@ namespace SPNATI_Character_Editor
 	public class SubVariableAttribute : Attribute
 	{
 		public List<string> Variables { get; set; }
+
+		/// <summary>
+		/// Whether the right-hand side can contain anything (like variables)
+		/// </summary>
+		public bool AllowRHSVariables { get; set; }
 
 		public SubVariableAttribute(params string[] variablePieces)
 		{

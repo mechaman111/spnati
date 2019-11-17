@@ -58,6 +58,8 @@
 			this.cmdJumpToDialogue = new Desktop.Skinning.SkinnedButton();
 			this.cmdCancel = new Desktop.Skinning.SkinnedButton();
 			this.cmdAccept = new Desktop.Skinning.SkinnedButton();
+			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
+			this.lblResponseCount = new Desktop.Skinning.SkinnedLabel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -114,6 +116,8 @@
 			// containerSituation
 			// 
 			this.containerSituation.BackColor = System.Drawing.Color.White;
+			this.containerSituation.Controls.Add(this.lblResponseCount);
+			this.containerSituation.Controls.Add(this.skinnedLabel1);
 			this.containerSituation.Controls.Add(this.recFilter);
 			this.containerSituation.Controls.Add(this.lblPriority);
 			this.containerSituation.Controls.Add(this.cboPriority);
@@ -130,6 +134,8 @@
 			this.containerSituation.Image = null;
 			this.containerSituation.Location = new System.Drawing.Point(0, 0);
 			this.containerSituation.Name = "containerSituation";
+			this.containerSituation.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.containerSituation.ShowIndicatorBar = false;
 			this.containerSituation.Size = new System.Drawing.Size(943, 326);
 			this.containerSituation.TabIndex = 11;
 			this.containerSituation.TabStop = false;
@@ -176,6 +182,7 @@
 			this.cboPriority.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboPriority.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboPriority.FormattingEnabled = true;
+			this.cboPriority.KeyMember = null;
 			this.cboPriority.Location = new System.Drawing.Point(293, 299);
 			this.cboPriority.Name = "cboPriority";
 			this.cboPriority.SelectedIndex = -1;
@@ -404,6 +411,8 @@
 			this.containerLines.Image = null;
 			this.containerLines.Location = new System.Drawing.Point(0, 0);
 			this.containerLines.Name = "containerLines";
+			this.containerLines.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.containerLines.ShowIndicatorBar = false;
 			this.containerLines.Size = new System.Drawing.Size(150, 46);
 			this.containerLines.TabIndex = 4;
 			this.containerLines.TabStop = false;
@@ -433,6 +442,8 @@
 			this.containerResponse.Image = null;
 			this.containerResponse.Location = new System.Drawing.Point(0, 0);
 			this.containerResponse.Name = "containerResponse";
+			this.containerResponse.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.containerResponse.ShowIndicatorBar = false;
 			this.containerResponse.Size = new System.Drawing.Size(943, 304);
 			this.containerResponse.TabIndex = 10;
 			this.containerResponse.TabStop = false;
@@ -493,6 +504,32 @@
 			this.cmdAccept.UseVisualStyleBackColor = true;
 			this.cmdAccept.Click += new System.EventHandler(this.cmdAccept_Click);
 			// 
+			// skinnedLabel1
+			// 
+			this.skinnedLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedLabel1.AutoSize = true;
+			this.skinnedLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel1.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel1.Location = new System.Drawing.Point(515, 302);
+			this.skinnedLabel1.Name = "skinnedLabel1";
+			this.skinnedLabel1.Size = new System.Drawing.Size(122, 13);
+			this.skinnedLabel1.TabIndex = 14;
+			this.skinnedLabel1.Text = "Total situations handled:";
+			// 
+			// lblResponseCount
+			// 
+			this.lblResponseCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblResponseCount.AutoSize = true;
+			this.lblResponseCount.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.lblResponseCount.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.lblResponseCount.Location = new System.Drawing.Point(643, 302);
+			this.lblResponseCount.Name = "lblResponseCount";
+			this.lblResponseCount.Size = new System.Drawing.Size(13, 13);
+			this.lblResponseCount.TabIndex = 15;
+			this.lblResponseCount.Text = "0";
+			// 
 			// WritingAid
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -547,5 +584,7 @@
 		private Desktop.Skinning.SkinnedLabel lblPriority;
 		private Desktop.Skinning.SkinnedComboBox cboPriority;
 		private Desktop.CommonControls.RecordField recFilter;
+		private Desktop.Skinning.SkinnedLabel lblResponseCount;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel1;
 	}
 }

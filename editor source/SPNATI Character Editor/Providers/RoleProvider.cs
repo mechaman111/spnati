@@ -16,6 +16,7 @@ namespace SPNATI_Character_Editor.Providers
 			_roles.Add(new FilterRole("target", "Target", "Character must be the current target to count"));
 			_roles.Add(new FilterRole("opp", "Opponent", "Only counts opponents (i.e. excludes this character from the count)"));
 			_roles.Add(new FilterRole("other", "Also Playing", "Only counts characters that are neither the target nor this character"));
+			_roles.Add(new FilterRole("winner", "Winner", "Only counts the winner of the most recent hand"));
 		}
 
 		public string GetLookupCaption()

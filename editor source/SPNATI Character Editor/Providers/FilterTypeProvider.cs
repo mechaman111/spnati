@@ -43,6 +43,11 @@ namespace SPNATI_Character_Editor.Providers
 					CanSpecifyRange = true,
 					CanSpecifyCharacter = true,
 				},
+				new FilterType("winner", "Winner", "General", "Look at the winner of the most recent hand")
+				{
+					CanSpecifyRange = false,
+					CanSpecifyCharacter = true,
+				},
 			};
 		}
 

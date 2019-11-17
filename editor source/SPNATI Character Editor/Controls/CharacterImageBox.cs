@@ -212,7 +212,7 @@ namespace SPNATI_Character_Editor.Controls
 							file = Path.Combine(_character.GetDirectory(), poseRef.FileName);
 						}
 						_reference = ImageCache.Get(file);
-						_imageReference = _reference.Image;
+						_imageReference = _reference?.Image;
 						if (ImageAnimator.CanAnimate(_imageReference))
 						{
 							_animating = true;

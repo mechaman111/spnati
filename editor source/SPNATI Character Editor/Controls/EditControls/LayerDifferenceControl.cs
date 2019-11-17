@@ -2,7 +2,7 @@
 
 namespace SPNATI_Character_Editor.Controls.EditControls
 {
-	[SubVariable("diff")]
+	[SubVariable("diff", AllowRHSVariables = true)]
 	public partial class LayerDifferenceControl : SubVariableControl
 	{
 		private ExpressionTest _expression;

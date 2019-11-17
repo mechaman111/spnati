@@ -439,6 +439,7 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Filter", "Self", (data) => { return AddFilter("self", data); });
 			table.AddSpeedButton("Filter", "Also Playing", (data) => { return AddFilter("other", data); });
 			table.AddSpeedButton("Filter", "Opponent", (data) => { return AddFilter("opp", data); });
+			table.AddSpeedButton("Filter", "Winner", (data) => { return AddFilter("winner", data); });
 			table.AddSpeedButton("Filter", "Specific Character", (data) =>
 			{
 				Character character = RecordLookup.DoLookup(typeof(Character), "", false, null) as Character;

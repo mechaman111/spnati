@@ -105,11 +105,18 @@ namespace SPNATI_Character_Editor.Activities
 				_maxSuggestions += editorData.NoteworthySituations.Count;
 			}
 			_generationId = Shell.Instance.DelayAction(GenerateSuggestions, 100);
+			UpdateResponseCount();
 		}
 
 		protected override void OnActivate()
 		{
+			_character.Behavior.CaseAdded += Behavior_CaseAdded;
 			Workspace.SendMessage<DialogueLine>(WorkspaceMessages.PreviewLine, null);
+		}
+
+		protected override void OnDeactivate()
+		{
+			_character.Behavior.CaseAdded -= Behavior_CaseAdded;
 		}
 
 		private void cboFilter_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -460,6 +467,22 @@ namespace SPNATI_Character_Editor.Activities
 				Situation s = tuple.Item2;
 				Shell.Instance.Launch<Character, DialogueEditor>(tuple.Item1, new ValidationContext(new Stage(s.LinkedCase.Stages[0]), s.LinkedCase, null));
 			}
+		}
+
+		private void Behavior_CaseAdded(object sender, Case e)
+		{
+			UpdateResponseCount();
+		}
+
+		private void UpdateResponseCount()
+		{
+			CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
+			int count = 0;
+			if (editorData.Responses != null)
+			{
+				count = editorData.Responses.Count;
+			}
+			lblResponseCount.Text = count.ToString();
 		}
 	}
 }
