@@ -322,6 +322,7 @@ function loadListingFile () {
                 var oppStatus = $(this).attr('status');
                 var id = $(this).text();
                 var releaseNumber = $(this).attr('release');
+                var highlightStatus = $(this).attr('highlight');
                 var doInclude = (oppStatus === undefined || includedOpponentStatuses[oppStatus]);
 
                 if (available[id]) {
@@ -329,7 +330,7 @@ function loadListingFile () {
 					if (doInclude) {
 						opponentMap[id] = oppDefaultIndex++;
 					}
-                    loadOpponentMeta(id, oppStatus, releaseNumber, onComplete);
+                    loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus, onComplete);
                 }
             });
 
@@ -340,7 +341,7 @@ function loadListingFile () {
 /************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (id, status, releaseNumber, onComplete) {
+function loadOpponentMeta (id, status, releaseNumber, highlightStatus, onComplete) {
 	/* grab and parse the opponent meta file */
     console.log("Loading metadata for \""+id+"\"");
 	$.ajax({
@@ -350,7 +351,7 @@ function loadOpponentMeta (id, status, releaseNumber, onComplete) {
 		success: function(xml) {
             var $xml = $(xml);
 
-			var opponent = new Opponent(id, $xml, status, releaseNumber);
+			var opponent = new Opponent(id, $xml, status, releaseNumber, highlightStatus);
 
 			/* add the opponent to the list */
             onComplete(opponent);
