@@ -529,6 +529,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.metaXml = $metaXml;
 
     this.status = status;
+    this.highlightStatus = highlightStatus || status || '';
     this.first = $metaXml.find('first').text();
     this.last = $metaXml.find('last').text();
     
@@ -550,7 +551,6 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.layers = parseInt($metaXml.find('layers').text(), 10);
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
-    this.highlightStatus = highlightStatus || '';
     this.uniqueLineCount = parseInt($metaXml.find('lines').text(), 10) || undefined;
     this.posesImageCount = parseInt($metaXml.find('poses').text(), 10) || undefined;
     this.z_index = parseInt($metaXml.find('z-index').text(), 10) || 0;

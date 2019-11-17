@@ -170,12 +170,25 @@ var shownGroup = Array(4);
 var shownSuggestions = [Array(4), Array(4), Array(4), Array(4)];
 var randomLock = false;
 
-/* Status icon tooltips */
-var statusTooltips = {
-    testing: "This opponent is currently in testing.",
-    offline: "This opponent has been retired from the official version of the game.",
-    incomplete: "This opponent is incomplete and currently not in development.",
-};
+/* Status indicators */
+var statusIndicators = {
+    testing: {
+        icon: "testing-badge.png",
+        tooltip: "This opponent is currently in testing.",
+    },
+    offline: {
+        icon: "offline-badge.png",
+        tooltip: "This opponent has been retired from the official version of the game.",
+    },
+    incomplete: {
+        icon: "incomplete-badge.png",
+        tooltip: "This opponent is incomplete and currently not in development."
+    },
+    new: {
+        icon: "online-badge.png",
+        tooltip: "This opponent has recently been added to the main roster."
+    }
+}
 
 /**********************************************************************
  *****               Opponent & Group Specification               *****
@@ -363,12 +376,17 @@ function loadOpponentMeta (id, status, releaseNumber, highlightStatus, onComplet
 	});
 }
 
-function updateStatusIcon(elem, status) {
-    if (status) {
+function updateStatusIcon(elem, opp) {
+    var status = opp.status;
+    if (!opp.status) {
+        status = opp.highlightStatus;
+    }
+
+    if (status && statusIndicators[status]) {
         elem.attr({
-            'src': 'img/' + status + '-badge.png',
+            'src': 'img/' + statusIndicators[status].icon,
             'alt': status.initCap(),
-            'data-original-title': statusTooltips[status],
+            'data-original-title': statusIndicators[status].tooltip,
         }).show();
     } else {
         elem.removeAttr('data-original-title').hide();
@@ -505,7 +523,7 @@ function updateGroupSelectScreen (ignore_bg) {
                     }
                 }
 
-                updateStatusIcon($groupStatuses[i], opponent.status);
+                updateStatusIcon($groupStatuses[i], opponent);
 
                 $groupLayers[i].attr({
                     src: "img/layers" + opponent.layers + ".png",
@@ -549,11 +567,17 @@ function updateSuggestionQuad(slot, quad, opponent) {
     var label_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-label');
     var tooltip = null;
 
+    if (opponent.status && statusIndicators[opponent.status]) {
+        tooltip = statusIndicators[opponent.status].tooltip;
+    } else if (opponent.highlightStatus && statusIndicators[opponent.highlightStatus]) {
+        tooltip = statusIndicators[opponent.highlightStatus].tooltip;
+    }
+
     shownSuggestions[slot][quad] = opponent.id;
     img_elem.attr(
         {'src': opponent.selection_image,
          'alt': opponent.label,
-         'data-original-title': statusTooltips[opponent.status] || null
+         'data-original-title': tooltip || null
         }).show();
     label_elem.text(opponent.label);
 }

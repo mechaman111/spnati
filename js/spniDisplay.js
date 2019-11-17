@@ -947,6 +947,9 @@ function OpponentSelectionCard (opponent) {
     this.opponent = opponent;
     
     this.mainElem = createElementWithClass('div', 'selection-card');
+
+    if (opponent.highlightStatus)
+        this.mainElem.dataset.highlight = opponent.highlightStatus;
     
     var clipElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-image-clip'));
     this.imageArea = clipElem.appendChild(createElementWithClass('div', 'selection-card-image-area'));
@@ -983,7 +986,7 @@ OpponentSelectionCard.prototype.update = function () {
         this.epilogueBadge.hide();
     }
 
-    updateStatusIcon(this.statusIcon, this.opponent.status);
+    updateStatusIcon(this.statusIcon, this.opponent);
 
     this.layerIcon.attr({
         src: "img/layers" + this.opponent.layers + ".png",
