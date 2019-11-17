@@ -1,16 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <config>
-    <debug>false</debug> <!-- true or false -->
+    <!--
+        Enables or disables debug mode.
+        While in-game, pressing Q will show debug mode options (if enabled).
+    -->
+    <debug>false</debug>
+    
+    <!--
+        Default (startup) table fill mode.
+        Valid options include "none" and any highlight or status attribute
+        value in listing.xml, so for example:
+         - "none"
+         - "new"
+         - "testing"
+         - "offline"
+         - "incomplete"
+    -->
+    <default-fill>new</default-fill>
+
+    <!-- Set to false to disable epilogue functionality. -->
     <epilogues>true</epilogues>
-    <epilogues-unlocked>false</epilogues-unlocked>
-    <collectibles>true</collectibles>
-    <collectibles-unlocked>false</collectibles-unlocked>
+
+    <!-- Set to false to hide epilogue badges for all players. -->
     <epilogue_badges>true</epilogue_badges>
+
+    <!-- Set to true to force all epilogues to appear as unlocked. -->
+    <epilogues-unlocked>false</epilogues-unlocked>
+    
+    <!-- Set to true/false to disable collectible functionality. -->
+    <collectibles>true</collectibles>
+
+    <!-- Set to true to force all collectibles to appear as unlocked. -->
+    <collectibles-unlocked>false</collectibles-unlocked>
+
+    <!-- Set to false to disable alternate costume functionality.  -->
     <alternate-costumes>true</alternate-costumes>
+
+    <!-- 
+        Each <alternate-costume-sets> element specifies one costume set
+        to enable in-game.
+        
+        Specifying 'all' in any alternate costume set option will
+        enable all costume sets.
+    -->
     <alternate-costume-sets>all</alternate-costume-sets>
+
+    <!--
+        Forces a single alternate costume set to be active and none others.
+        This option takes precedence over the <alternate-costume-sets>
+        options.
+    -->
+    <!--<force-alternate-costume>summer</force-alternate-costume>-->
+
+    <!-- Set the default background option. -->
     <default-background>inventory</default-background>
+
+    <!--
+        Enable or disable resort mode.
+        Note that if you enable this option, you'll probably want to
+        change the text for the resort dialog box in listing.xml.
+        (Ctrl+F and search for "resort-modal")
+    -->
     <resort>false</resort>
+
+    <!--
+        Show these opponent status groups in the main roster.
+        (Opponents with no defined "status" in listing.xml are always shown.)
+    -->
     <include-status>testing</include-status>
     <include-status>offline</include-status>
     <include-status>incomplete</include-status>
