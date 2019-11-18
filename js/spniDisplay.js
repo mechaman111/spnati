@@ -824,14 +824,37 @@ function MainSelectScreenDisplay (slot) {
     
     this.altCostumeSelector = $("#main-costume-select-"+slot);
     this.selectButton = $("#select-slot-button-"+slot);
+    this.prefillButton = $("#select-prefill-button-"+slot);
 
     this.altCostumeSelector.on("change", this.altCostumeSelected.bind(this));
+
+    this.suggestion = null;
 }
 
 MainSelectScreenDisplay.prototype = Object.create(OpponentDisplay.prototype);
 MainSelectScreenDisplay.prototype.constructor = MainSelectScreenDisplay;
 
+MainSelectScreenDisplay.prototype.displaySuggestion = function (player) {
+    this.suggestion = player;
+
+    this.hideBubble();
+    this.drawPose(player.selection_image);
+    this.label.html(player.label.initCap()).addClass('suggestion-label');
+    this.simpleImage.addClass('prefill-suggestion');
+    this.selectButton.html("Select Other Opponent").removeClass("red").addClass("green suggestion-shown");
+    this.prefillButton.show();
+}
+
 MainSelectScreenDisplay.prototype.update = function (player) {
+    if (!player && this.suggestion)
+        return this.displaySuggestion(this.suggestion);
+
+    this.suggestion = null;
+    this.label.removeClass("suggestion-label");
+    this.simpleImage.removeClass("prefill-suggestion");
+    this.selectButton.removeClass("suggestion-shown");
+    this.prefillButton.hide();
+
     if (!player) {
         this.hideBubble();
         this.clearPose();
@@ -840,8 +863,8 @@ MainSelectScreenDisplay.prototype.update = function (player) {
 
         /* change the button */
         this.selectButton.html("Select Opponent");
-        this.selectButton.removeClass("smooth-button-red");
-        this.selectButton.addClass("smooth-button-green");
+        this.selectButton.removeClass("red");
+        this.selectButton.addClass("green");
         this.altCostumeSelector.hide();
         return;
     }
@@ -857,8 +880,8 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         OpponentDisplay.prototype.update.call(this, player);
         
         this.selectButton.attr('disabled', false).html("Remove Opponent");
-        this.selectButton.removeClass("smooth-button-green");
-        this.selectButton.addClass("smooth-button-red");
+        this.selectButton.removeClass("green");
+        this.selectButton.addClass("red");
         
         if (!(this.pose instanceof Pose)) {
             this.simpleImage.one('load', function() {

@@ -255,8 +255,6 @@ function loadListingFile () {
                     creatorSet[creator] = true;
                 });
                 
-                console.log();
-                
                 var disp = new OpponentSelectionCard(opp);
                 opp.selectionCard = disp;
                 disp.statusIcon.tooltip({ delay: { show: 200 }, placement: 'bottom',
@@ -286,12 +284,6 @@ function loadListingFile () {
             $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
                 return new Option(source);
             }));
-
-            if (DEFAULT_FILL) {
-                clickedRandomFillButton(function (opp) {
-                    return opp.highlightStatus === DEFAULT_FILL;
-                });
-            }
         }
 	}
 
@@ -922,6 +914,28 @@ function clickedRandomFillButton (predicate) {
 	updateSelectionVisuals();
 }
 
+function loadDefaultFillSuggestions () {
+    /* get a copy of the loaded opponents list, same as above */
+    var possiblePicks = loadedOpponents.filter(function (opp) {
+        return !players.some(function (p) { return p && p.id === opp.id; })
+                && !mainSelectDisplays.some(function (d) { d.suggestion && d.suggestion.id === opp.id; })
+                && opp.highlightStatus === DEFAULT_FILL;
+    });
+
+    for (var i = 1; i < players.length; i++) {
+        if (!(i in players)) {
+            if (possiblePicks.length === 0) return;
+
+            /* select random opponent */
+            var idx = getRandomNumber(0, possiblePicks.length);
+            var randomOpponent = possiblePicks[idx];
+            possiblePicks.splice(idx, 1);
+
+            mainSelectDisplays[i-1].displaySuggestion(randomOpponent);
+        }
+    }
+}
+
 /************************************************************
  * The player clicked on the remove all button.
  ************************************************************/
@@ -1161,7 +1175,7 @@ function altCostumeSelected(slot, inGroup) {
 function updateSelectionVisuals () {
     /* update all opponents */
     for (var i = 1; i < players.length; i++) {
-		mainSelectDisplays[i-1].update(players[i]);
+        mainSelectDisplays[i - 1].update(players[i]);
     }
 
     /* Check to see if all opponents are loaded. */
