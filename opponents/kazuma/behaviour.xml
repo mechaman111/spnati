@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 2:15:24 AM on November 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 12:06:53 AM on November 18, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Kazuma</first>
@@ -51,6 +51,25 @@
     </wardrobe>
 
     <poses>
+        <pose id="stripping">
+            <sprite id="3-stripping" src="kazuma/3-strip.png" x="0" y="0" />
+            <sprite id="steal" src="kazuma/99-steal.png" x="-218" y="345" scalex="1.34" scaley="1.39" alpha="100" rotation="1" />
+            <directive type="animation" id="steal" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="-218" y="345" scalex="1.34" scaley="1.39" alpha="100" />
+                <keyframe time="0.5" x="-227" y="330" scalex="1.34" scaley="1.39" />
+                <keyframe time="1" x="-227" y="330" scalex="1.34" scaley="1.39" />
+            </directive>
+            <directive type="animation" id="steal" ease="linear" interpolation="none">
+                <keyframe time="0" src="kazuma/99-steal.png" />
+                <keyframe time="0.5" src="kazuma/99-steal.png" />
+                <keyframe time="1" src="kazuma/99-steal.png" />
+            </directive>
+            <directive type="animation" id="steal" ease="linear" interpolation="linear">
+                <keyframe time="0" rotation="1" />
+                <keyframe time="0.5" rotation="-147" />
+                <keyframe time="1" rotation="-407" />
+            </directive>
+        </pose>
         <pose id="4-stealth">
             <sprite id="stripped" src="kazuma/4-stripped.png" x="0" y="0" alpha="100" />
             <directive type="animation" id="stripped" ease="smooth" interpolation="linear">
@@ -813,7 +832,7 @@
             </case>
             <case stage="6" id="143">
                 <condition role="self" saidMarker="boxers2" />
-                <state img="#-unimpressed.png" oneShotId="90" marker="grower1">Well you don't have to look if it's that bg a problem.</state>
+                <state img="#-unimpressed.png" oneShotId="90" marker="grower1">Well you don't have to look if it's that big a problem.</state>
             </case>
             <case stage="6" id="144">
                 <condition role="self" saidMarker="grower1" />
@@ -823,6 +842,10 @@
                 <state img="#-happy.png" oneShotId="92" marker="defeat_demon_king">I was resurrected to defeat the Demon King, but I think it's fine to play here for a while.</state>
                 <state img="#-appreciative.png" oneShotId="93" marker="other_classes">I chose the adventurer class so I wouldn't be locked behind the limitations of other classes.</state>
                 <state img="#-smirk.png" oneShotId="94" marker="spells">Be careful. I can use several different magic spells. Create Water, Drain Touch, and, of course, Steal are all things I could use to screw with you.</state>
+            </case>
+            <case stage="1">
+                <state img="#-happy.png" marker="yet_another_world">Man, when I died, I never thought I'd end up in yet another world.</state>
+                <state img="#-awkward.png" marker="long_story">I can't believe I died from a heart attack and out of shock from a tractorr. Long story.</state>
             </case>
         </trigger>
 
@@ -985,11 +1008,11 @@
         <trigger id="stripping">
             <case stage="0-5">
                 <condition role="other" character="misty_hgss" stage="0-4" saying="So, uh, are you actually old enough to be in here?" />
-                <state img="#-strip.png" oneShotId="80">Obviously. Are you?</state>
+                <state img="custom:stripping" oneShotId="80">Obviously. Are you? &lt;i&gt;Steal!&lt;/i&gt;</state>
             </case>
             <case stage="0-5">
                 <condition role="other" character="misty_hgss" stage="0-4" saying="Um, how old are you, Kazuma? Was it?" />
-                <state img="#-strip.png" oneShotId="82">Wll into my twenties, but I won't give specifics.</state>
+                <state img="custom:stripping" oneShotId="82">Well into my twenties, but I won't give specifics. &lt;i&gt;Steal!&lt;/i&gt;</state>
             </case>
             <case stage="5">
                 <condition role="other" character="megumin" stage="0-8" />
@@ -1001,7 +1024,7 @@
             </case>
             <case stage="0-5">
                 <condition role="other" character="misty_hgss" saying="You don't exactly seem old enough to be here, Kazuma." />
-                <state img="#-strip.png" oneShotId="81">I just look good for my age. Like you.</state>
+                <state img="custom:stripping" oneShotId="81">I just look good for my age. Like you. &lt;i&gt;Steal!&lt;/i&gt;</state>
             </case>
             <case stage="0">
                 <condition role="other" character="chazz" />
@@ -1017,7 +1040,7 @@
             </case>
             <case stage="3">
                 <condition role="other" character="chazz" />
-                <state img="#-strip.png">Boobs are great, but you have to consider who they're attached to.</state>
+                <state img="custom:stripping">Boobs are great, but you have to consider who they're attached to. &lt;i&gt;Steal!&lt;/i&gt;</state>
             </case>
             <case stage="4">
                 <condition role="other" character="chazz" />
@@ -1033,7 +1056,7 @@
             </case>
             <case stage="3">
                 <condition role="other" character="jessie" />
-                <state img="#-strip.png">N-No., I just have to lift my shirt to undo my pants...</state>
+                <state img="custom:stripping">N-No., I just have to lift my shirt to undo my pants... &lt;i&gt;Steal!&lt;/i&gt;</state>
             </case>
             <case stage="5">
                 <condition role="other" character="nami" />
@@ -1051,9 +1074,9 @@
                 <condition role="other" character="panty" />
                 <state img="#-strip.png">What did you just call me?</state>
             </case>
-            <case stage="3">
+            <case stage="3" id="145">
                 <condition role="other" character="panty" />
-                <state img="#-strip.png">A magical weapon that changes size as needed.</state>
+                <state img="custom:stripping">A magical weapon that changes size as needed. &lt;i&gt;Steal!&lt;/i&gt;</state>
             </case>
             <case stage="0" totalMales="4">
                 <state img="#-strip.png">Why am I even playing with 4 guys...</state>
@@ -1080,11 +1103,11 @@
                 <state img="#-strip.png" marker="rps">This damn game is impossible!</state>
             </case>
             <case stage="3">
-                <state img="#-strip.png" marker="more_muscle">I wish I had more muscle definition right about now...</state>
-                <state img="#-strip.png" marker="_the_pants">I guess I can lose the pants now...</state>
-                <state img="#-strip.png" marker="shut-in_do_favors">The shut-in lifestyle really didn't do my body any favors...</state>
-                <state img="#-strip.png" marker="boxers_than_chest">I suppose it's less embarrassing to show off my boxers than my chest...</state>
-                <state img="#-strip.png" marker="unequip_MMO">It feels just like unequipping my best gear in a MMO...</state>
+                <state img="custom:stripping" marker="more_muscle">I wish I had more muscle definition right about now... &lt;i&gt;Steal!&lt;/i&gt;</state>
+                <state img="custom:stripping" marker="_the_pants">I guess I can lose the pants now... &lt;i&gt;Steal!&lt;/i&gt;</state>
+                <state img="custom:stripping" marker="shut-in_do_favors">The shut-in lifestyle really didn't do my body any favors... &lt;i&gt;Steal!&lt;/i&gt;</state>
+                <state img="custom:stripping" marker="boxers_than_chest">I suppose it's less embarrassing to show off my boxers than my chest... &lt;i&gt;Steal!&lt;/i&gt;</state>
+                <state img="custom:stripping" marker="unequip_MMO">It feels just like unequipping my best gear in a MMO... &lt;i&gt;Steal!&lt;/i&gt;</state>
             </case>
             <case stage="4">
                 <state img="#-strip.png" marker="abs">Here goes nothing...</state>
@@ -1166,7 +1189,7 @@
             </case>
             <case stage="1">
                 <condition role="other" character="panty" />
-                <state img="#-stripped.png">While I'd glady screw you silly after the game, stripping now would mean forfeiting the game, and I cannot do that!</state>
+                <state img="#-stripped.png">While I'd gladly screw you silly after the game, stripping now would mean forfeiting the game, and I cannot do that!</state>
             </case>
             <case stage="2">
                 <condition role="other" character="panty" />
@@ -1305,7 +1328,7 @@
                 <condition role="self" saidMarker="get_Wiz_back" />
                 <state img="#-stripped.png">Next time, she's gonna be naked in public. Mark my words.</state>
             </case>
-            <case stage="1-6">
+            <case stage="1-6" id="146">
                 <state img="#-stripped.png">Happy now?</state>
             </case>
         </trigger>
@@ -1512,7 +1535,7 @@
                 <state img="#-angry.png">I mean, Aqua could just revive m- Wait, did you say he? As in, a guy? Screw that. I'd cut him down with my legendary sword that doesn't have a name!</state>
             </case>
             <case stage="0-8" id="126" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="gen_kink">
-                <state img="#-horny.png" oneShotId="73">You ever just want to be worshipped by several beautiful girls who serve you however you want?</state>
+                <state img="#-horny.png" oneShotId="73">You ever just want to be worshiped by several beautiful girls who serve you however you want?</state>
             </case>
             <case stage="0-8" id="127" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="gen_waifu">
                 <state img="#-awkward.png" oneShotId="74">Someone I know is here, but I didn't bring her.</state>
@@ -3247,7 +3270,7 @@
             </case>
             <case stage="0-8">
                 <condition role="target" character="kyu" />
-                <state img="#-excited.png">Boob-stripping magicc?</state>
+                <state img="#-excited.png">Boob-stripping magic?</state>
             </case>
             <case stage="0-8" id="137" target="saki_zls">
                 <state img="#-horny.png">Your head comes off? I could think of using that for... fun...</state>
@@ -3948,7 +3971,7 @@
             </case>
             <case stage="0-8">
                 <condition role="target" character="asuna" />
-                <state img="#-horny.png">I'd forfeit you as manytimes as possible.</state>
+                <state img="#-horny.png">I'd forfeit you as many times as possible.</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="kyu" />
@@ -3958,8 +3981,9 @@
                 <condition role="target" character="larachel" />
                 <state img="#-horny.png">I could finger your pussy? Maybe your ass? Maybe you could just bend over and let me take you from behind?</state>
             </case>
-            <case stage="0-8" id="122" target="navi">
-                <state img="#-excited.png">Hell yes! Tebtacles going wild om the fairy girl!</state>
+            <case stage="0-8" id="122">
+                <condition role="target" character="navi" />
+                <state img="#-excited.png">Hell yes! Tentacles going wild on the fairy girl!</state>
             </case>
             <case stage="0-8">
                 <condition role="other" character="panty" />
@@ -4004,7 +4028,7 @@
                 <state img="#-horny.png">How about letting me feel around down there?</state>
                 <state img="#-happy.png">Wouldn't you rather just let me screw you?</state>
                 <state img="#-horny.png">Damn, your ass is made for spanking.</state>
-                <state img="#-interested.png">I love seeing your face twisted in ecstacy.</state>
+                <state img="#-interested.png">I love seeing your face twisted in ecstasy.</state>
                 <state img="#-happy.png">Take your time. I like seeing this.</state>
                 <state img="#-interested.png">You'd look better bent over the side of my bed as I take you from behind.</state>
                 <state img="#-horny.png">I know I could pleasure you better than that.</state>
