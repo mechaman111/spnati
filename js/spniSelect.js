@@ -39,20 +39,6 @@ $selectRandomButtons = $("#select-random-button, #select-random-female-button, #
 $selectRandomTableButton = $("#select-random-group-button");
 $selectRemoveAllButton = $("#select-remove-all-button");
 
-$selectSuggestions = [
-    $("#opponent-suggestions-1"),
-    $("#opponent-suggestions-2"),
-    $("#opponent-suggestions-3"),
-    $("#opponent-suggestions-4"),
-];
-
-$suggestionQuads = [
-    [$("#opponent-suggestion-1-1"), $("#opponent-suggestion-1-2"), $("#opponent-suggestion-1-3"), $("#opponent-suggestion-1-4")],
-    [$("#opponent-suggestion-2-1"), $("#opponent-suggestion-2-2"), $("#opponent-suggestion-2-3"), $("#opponent-suggestion-2-4")],
-    [$("#opponent-suggestion-3-1"), $("#opponent-suggestion-3-2"), $("#opponent-suggestion-3-3"), $("#opponent-suggestion-3-4")],
-    [$("#opponent-suggestion-4-1"), $("#opponent-suggestion-4-2"), $("#opponent-suggestion-4-3"), $("#opponent-suggestion-4-4")],
-]
-
 mainSelectDisplays = [
 	new MainSelectScreenDisplay(1),
 	new MainSelectScreenDisplay(2),
@@ -167,7 +153,6 @@ var groupCreditsShown = false;
 var selectedSlot = 0;
 var shownIndividuals = Array(4);
 var shownGroup = Array(4);
-var shownSuggestions = [Array(4), Array(4), Array(4), Array(4)];
 var randomLock = false;
 
 /* Status indicators */
@@ -554,47 +539,6 @@ function updateGroupSelectScreen (ignore_bg) {
     }
 }
 
-/* Sets the suggested opponent to be displayed in a given slot and quadrant.
- * Arguments:
- * - opponent: the opponent object to display
- * - slot: the selection slot to load into
- * - quad: the quadrant of said selection slot to load into
- */
-function updateSuggestionQuad(slot, quad, opponent) {
-    var img_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-image');
-    var label_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-label');
-    var tooltip = null;
-
-    if (opponent.status && statusIndicators[opponent.status]) {
-        tooltip = statusIndicators[opponent.status].tooltip;
-    } else if (opponent.highlightStatus && statusIndicators[opponent.highlightStatus]) {
-        tooltip = statusIndicators[opponent.highlightStatus].tooltip;
-    }
-
-    shownSuggestions[slot][quad] = opponent.id;
-    img_elem.attr(
-        {'src': opponent.selection_image,
-         'alt': opponent.label,
-         'data-original-title': tooltip || null
-        }).show();
-    label_elem.text(opponent.label);
-}
-
-/* Sets the given selection screen slot to display 4 opponents from an array.
- * Arguments:
- * - slot: the main select screen slot to update (zero-indexed)
- * - suggestionsArray: the array to draw suggestions from
- * - startIndex: the index into suggestionsArray to begin drawing suggestions from
- */
-function updateSuggestions(slot, suggestionsArray, startIndex) {
-    for(var i=0;i<4;i++) {
-        if (suggestionsArray[startIndex+i]) {
-            updateSuggestionQuad(slot, i, suggestionsArray[startIndex+i]);
-        }
-    }
-}
-
-
 /**********************************************************************
  *****                   Interaction Functions                    *****
  **********************************************************************/
@@ -667,43 +611,6 @@ $('#individual-select-screen .sort-filter-field').on('input', function () {
     updateSelectableOpponents(false);
     updateIndividualSelectScreen();
 });
-
-/************************************************************
- * The player clicked on a suggested character button.
- ************************************************************/
-function suggestionSelected(slot, quad) {
-    var selectedID = shownSuggestions[slot-1][quad-1];
-
-    if(!selectedID) {
-        /* This shouldn't happen. */
-        console.error("Could not find suggested opponent ID for slot " + slot + " and quad " + quad);
-        return;
-    }
-
-    /* Find the character they selected. */
-    for (var i=0; i<loadedOpponents.length; i++) {
-        if (loadedOpponents[i].id === selectedID) {
-            players[slot] = loadedOpponents[i];
-
-            if (SENTRY_INITIALIZED) {
-                Sentry.addBreadcrumb({
-                    category: 'select',
-                    message: 'Loading suggested opponent ' + loadedOpponents[i].id,
-                    level: 'info'
-                });
-            }
-            
-        	updateSelectionVisuals();
-
-            players[slot].loadBehaviour(slot, true);
-
-            return;
-        }
-    }
-
-    /* This shouldn't happen, either. */
-    console.error("Could not find opponent with ID " + selectedID);
-}
 
 /************************************************************
  * The player clicked on an opponent slot.
@@ -918,7 +825,7 @@ function loadDefaultFillSuggestions () {
     /* get a copy of the loaded opponents list, same as above */
     var possiblePicks = loadedOpponents.filter(function (opp) {
         return !players.some(function (p) { return p && p.id === opp.id; })
-                && !mainSelectDisplays.some(function (d) { d.suggestion && d.suggestion.id === opp.id; })
+                && !mainSelectDisplays.some(function (d) { d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })
                 && opp.highlightStatus === DEFAULT_FILL;
     });
 
@@ -931,9 +838,11 @@ function loadDefaultFillSuggestions () {
             var randomOpponent = possiblePicks[idx];
             possiblePicks.splice(idx, 1);
 
-            mainSelectDisplays[i-1].displaySuggestion(randomOpponent);
+            mainSelectDisplays[i - 1].setPrefillSuggestion(randomOpponent);
         }
     }
+
+    updateSelectionVisuals();
 }
 
 /************************************************************
@@ -1173,11 +1082,6 @@ function altCostumeSelected(slot, inGroup) {
  * screen.
  ************************************************************/
 function updateSelectionVisuals () {
-    /* update all opponents */
-    for (var i = 1; i < players.length; i++) {
-        mainSelectDisplays[i - 1].update(players[i]);
-    }
-
     /* Check to see if all opponents are loaded. */
     var filled = 0, loaded = 0;
     players.forEach(function(p, idx) {
@@ -1189,21 +1093,8 @@ function updateSelectionVisuals () {
         }
     });
 
-    /* if enough opponents are selected, and all those are loaded, then enable progression */
-    $selectMainButton.attr('disabled', filled < 2 || loaded < filled);
-
-    /* if all slots are taken, disable fill buttons */
-    $selectRandomButtons.attr('disabled', filled >= 4 || loadedOpponents.length == 0);
-
-    /* if no opponents are loaded, disable remove all button */
-    $selectRemoveAllButton.attr('disabled', filled <= 0 || loaded < filled);
-
-    /* Disable buttons while loading is going on */
-    $selectRandomTableButton.attr('disabled', loaded < filled || loadedOpponents.length == 0);
-    $groupButton.attr('disabled', loaded < filled);
-
     /* Update suggestions images. */
-    if (players.countTrue() >= 3) {
+    if (loaded >= 3) {
         var suggested_opponents = loadedOpponents.filter(function(opp) {
             /* hide selected opponents */
             if (players.some(function(p) { return p && p.id == opp.id; })) {
@@ -1217,20 +1108,43 @@ function updateSelectionVisuals () {
         suggested_opponents.sort(sortOpponentsByMostTargeted());
 
         var suggestion_idx = 0;
-        for (var i=1;i<players.length;i++) {
+        for (var i = 1; i < players.length; i++) {
             if (players[i] === undefined) {
-                updateSuggestions(i-1, suggested_opponents, suggestion_idx);
-                $selectSuggestions[i-1].show();
-                suggestion_idx += 4;
+                for (var j = 0; j < 4; j++) {
+                    mainSelectDisplays[i - 1].updateTargetSuggestionDisplay(
+                        j, suggested_opponents[suggestion_idx++]
+                    );
+                }
+                mainSelectDisplays[i - 1].displayTargetSuggestions(true);
             } else {
-                $selectSuggestions[i-1].hide();
+                mainSelectDisplays[i - 1].displayTargetSuggestions(false);
             }
         }
     } else {
-        for (var i=0;i<4;i++) {
-            $selectSuggestions[i].hide();
+        for (var i = 1; i < players.length; i++) {
+            if (players[i] === undefined) {
+                mainSelectDisplays[i - 1].displayTargetSuggestions(false);
+            }
         }
     }
+
+    /* update all opponents */
+    for (var i = 1; i < players.length; i++) {
+        mainSelectDisplays[i - 1].update(players[i]);
+    }
+
+    /* if enough opponents are selected, and all those are loaded, then enable progression */
+    $selectMainButton.attr('disabled', filled < 2 || loaded < filled);
+
+    /* if all slots are taken, disable fill buttons */
+    $selectRandomButtons.attr('disabled', filled >= 4 || loadedOpponents.length == 0);
+
+    /* if no opponents are loaded, disable remove all button */
+    $selectRemoveAllButton.attr('disabled', filled <= 0 || loaded < filled);
+
+    /* Disable buttons while loading is going on */
+    $selectRandomTableButton.attr('disabled', loaded < filled || loadedOpponents.length == 0);
+    $groupButton.attr('disabled', loaded < filled);
 }
 
 

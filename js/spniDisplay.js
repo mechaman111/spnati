@@ -821,21 +821,83 @@ function MainSelectScreenDisplay (slot) {
         $('#select-image-area-'+slot),
         $('#select-name-label-'+slot)
     );
-    
+
+    this.targetSuggestionsShown = false;
+    this.targetSuggestions = Array(4);
+    this.suggestionQuad = Array(4);
+    this.suggestionQuadContainer = $("#opponent-suggestions-"+slot);
+    for (var i = 0; i < 4; i++) {
+        this.suggestionQuad[i] = $("#opponent-suggestion-"+slot+"-"+(i+1));
+        this.suggestionQuad[i].children(".opponent-suggestion-label").click(
+            this.targetSuggestionSelected.bind(this, i)
+        );
+    }
+
+    this.prefillSuggestion = null;
+    this.prefillButton = $("#select-prefill-button-" + slot);
+    this.prefillButton.click(
+        this.onSingleSuggestionSelected.bind(this)
+    );
+
     this.altCostumeSelector = $("#main-costume-select-"+slot);
     this.selectButton = $("#select-slot-button-"+slot);
-    this.prefillButton = $("#select-prefill-button-"+slot);
 
     this.altCostumeSelector.on("change", this.altCostumeSelected.bind(this));
-
-    this.suggestion = null;
 }
 
 MainSelectScreenDisplay.prototype = Object.create(OpponentDisplay.prototype);
 MainSelectScreenDisplay.prototype.constructor = MainSelectScreenDisplay;
 
-MainSelectScreenDisplay.prototype.displaySuggestion = function (player) {
-    this.suggestion = player;
+MainSelectScreenDisplay.prototype.updateTargetSuggestionDisplay = function (quad, opponent) {
+    var img_elem = this.suggestionQuad[quad].children('.opponent-suggestion-image');
+    var label_elem = this.suggestionQuad[quad].children('.opponent-suggestion-label');
+    var tooltip = null;
+    
+    this.targetSuggestions[quad] = opponent;
+    if (opponent.status && statusIndicators[opponent.status]) {
+        tooltip = statusIndicators[opponent.status].tooltip;
+    } else if (opponent.highlightStatus && statusIndicators[opponent.highlightStatus]) {
+        tooltip = statusIndicators[opponent.highlightStatus].tooltip;
+    }
+
+    img_elem.attr({
+        'src': opponent.selection_image,
+        'alt': opponent.label,
+        'data-original-title': tooltip || null
+    }).show();
+    label_elem.text(opponent.label);
+}
+
+MainSelectScreenDisplay.prototype.targetSuggestionSelected = function (quad) {
+    players[this.slot] = this.targetSuggestions[quad];
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Loading suggested opponent ' + this.targetSuggestions[quad].id,
+            level: 'info'
+        });
+    }
+
+    players[this.slot].loadBehaviour(this.slot, true);
+    updateSelectionVisuals();
+}
+
+MainSelectScreenDisplay.prototype.displayTargetSuggestions = function (show) {
+    this.targetSuggestionsShown = show;
+    if (show) {
+        this.suggestionQuadContainer.show();
+    } else {
+        this.suggestionQuadContainer.hide();
+    }
+}
+
+MainSelectScreenDisplay.prototype.setPrefillSuggestion = function (player) {
+    this.prefillSuggestion = player;
+}
+
+MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
+    var player = this.prefillSuggestion;
 
     this.hideBubble();
     this.drawPose(player.selection_image);
@@ -845,11 +907,25 @@ MainSelectScreenDisplay.prototype.displaySuggestion = function (player) {
     this.prefillButton.show();
 }
 
-MainSelectScreenDisplay.prototype.update = function (player) {
-    if (!player && this.suggestion)
-        return this.displaySuggestion(this.suggestion);
+MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
+    players[this.slot] = this.prefillSuggestion;
 
-    this.suggestion = null;
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Loading prefill suggested opponent ' + this.prefillSuggestion.id,
+            level: 'info'
+        });
+    }
+
+    players[this.slot].loadBehaviour(this.slot, true);
+    updateSelectionVisuals();
+}
+
+MainSelectScreenDisplay.prototype.update = function (player) {
+    if (!player && this.prefillSuggestion && !this.targetSuggestionsShown)
+        return this.displaySingleSuggestion();
+
     this.label.removeClass("suggestion-label");
     this.simpleImage.removeClass("prefill-suggestion");
     this.selectButton.removeClass("suggestion-shown");
@@ -879,6 +955,8 @@ MainSelectScreenDisplay.prototype.update = function (player) {
     } else {
         OpponentDisplay.prototype.update.call(this, player);
         
+        this.setPrefillSuggestion(null);
+
         this.selectButton.attr('disabled', false).html("Remove Opponent");
         this.selectButton.removeClass("green");
         this.selectButton.addClass("red");
