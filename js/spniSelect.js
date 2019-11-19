@@ -64,6 +64,8 @@ $groupLineCountLabels = [$("#group-line-count-label-1"), $("#group-line-count-la
 $groupPoseCountLabels = [$("#group-pose-count-label-1"), $("#group-pose-count-label-2"), $("#group-pose-count-label-3"), $("#group-pose-count-label-4")];
 $groupDescriptionLabels = [$("#group-description-label-1"), $("#group-description-label-2"), $("#group-description-label-3"), $("#group-description-label-4")];
 $groupBadges = [$("#group-badge-1"), $("#group-badge-2"), $("#group-badge-3"), $("#group-badge-4")];
+$groupNewBadges = [$("#group-new-badge-1"), $("#group-new-badge-2"), $("#group-new-badge-3"), $("#group-new-badge-4")];
+$groupCostumeBadges = [$("#group-costume-badge-1"), $("#group-costume-badge-2"), $("#group-costume-badge-3"), $("#group-costume-badge-4")];
 $groupStatuses = [$("#group-status-1"), $("#group-status-2"), $("#group-status-3"), $("#group-status-4")];
 $groupLayers = [$("#group-layer-1"), $("#group-layer-2"), $("#group-layer-3"), $("#group-layer-4")];
 $groupCostumeSelectors = [$("#group-costume-select-1"), $("#group-costume-select-2"), $("#group-costume-select-3"), $("#group-costume-select-4")];
@@ -168,10 +170,6 @@ var statusIndicators = {
     incomplete: {
         icon: "incomplete-badge.png",
         tooltip: "This opponent is incomplete and currently not in development."
-    },
-    new: {
-        icon: "online-badge.png",
-        tooltip: "This opponent has recently been added to the main roster."
     }
 }
 
@@ -478,8 +476,19 @@ function updateGroupSelectScreen (ignore_bg) {
                     $groupBadges[i].hide();
                 }
 
+                if (opponent.highlightStatus === 'new') {
+                    $groupNewBadges[i].show();
+                } else {
+                    $groupNewBadges[i].hide();
+                }
+
                 $groupCostumeSelectors[i].hide();
                 if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
+                    if (COSTUME_BADGES_ENABLED)
+                        $groupCostumeBadges[i].show();
+                    else
+                        $groupCostumeBadges[i].hide();
+                    
                     $groupCostumeSelectors[i].empty();
 
                     if (!FORCE_ALT_COSTUME) {
@@ -504,6 +513,8 @@ function updateGroupSelectScreen (ignore_bg) {
                             }
                         });
                     }
+                } else {
+                    $groupCostumeBadges[i].hide();
                 }
 
                 updateStatusIcon($groupStatuses[i], opponent);
@@ -527,6 +538,8 @@ function updateGroupSelectScreen (ignore_bg) {
                 $groupArtistLabels[i].html("");
                 $groupDescriptionLabels[i].html("");
                 $groupBadges[i].hide();
+                $groupNewBadges[i].hide();
+                $groupCostumeBadges[i].hide();
                 $groupStatuses[i].hide();
                 $groupLayers[i].hide();
                 $groupImages[i].hide();

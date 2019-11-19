@@ -14,6 +14,7 @@ var EPILOGUES_UNLOCKED = false;
 var COLLECTIBLES_ENABLED = true;
 var COLLECTIBLES_UNLOCKED = false;
 var EPILOGUE_BADGES_ENABLED = true;
+var COSTUME_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
 var USAGE_TRACKING = undefined;
@@ -1476,6 +1477,15 @@ function loadConfigFile () {
             if(_alts === "true") {
                 ALT_COSTUMES_ENABLED = true;
                 console.log("Alternate costumes enabled");
+
+                var _costume_badges = $(xml).find('costume_badges').text();
+                if (_costume_badges.toLowerCase() === 'false') {
+                    COSTUME_BADGES_ENABLED = false;
+                    console.log("Alternate costume badges are disabled.");
+                } else {
+                    console.log("Alternate costume badges are enabled.");
+                    COSTUME_BADGES_ENABLED = true;
+                }
                 
                 FORCE_ALT_COSTUME = $(xml).find('force-alternate-costume').text();
                 if (FORCE_ALT_COSTUME) {

@@ -1057,16 +1057,40 @@ function OpponentSelectionCard (opponent) {
     this.simpleImage = $(this.imageArea.appendChild(createElementWithClass('img', 'selection-card-image-simple')));
     
     this.imageArea = $(this.imageArea);
-    
-    this.epilogueBadge = $(this.mainElem.appendChild(createElementWithClass('img', 'badge-icon')));
-    
+
+    var badgeSidebar = this.mainElem.appendChild(createElementWithClass('div', 'badge-sidebar'));
+
+    if (opponent.highlightStatus === 'new') {
+        this.newBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
+            src: "img/new_icon.png",
+            alt: "SPNatI Epilogue available"
+        });
+    } else {
+        this.newBadge = null;
+    }
+
+    if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
+        this.epilogueBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
+            src: "img/epilogue_icon.png",
+            alt: "SPNatI Epilogue available"
+        });
+    } else {
+        this.epilogueBadge = null;
+    }
+
+    if (COSTUME_BADGES_ENABLED && opponent.alternate_costumes.length > 0) {
+        this.epilogueBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
+            src: "img/costume_icon.png",
+            alt: "SPNatI Alternate Costume available"
+        });
+    } else {
+        this.epilogueBadge = null;
+    }
+
     var sidebarElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-sidebar'));
     this.layerIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'layer-icon')));
     this.genderIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'gender-icon')));
     this.statusIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'status-icon')));
-    
-    $(this.epilogueBadge).attr({src: "img/epilogue_icon.png",
-                                alt: "SPNatI Epilogue available"});
     
     var footerElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-footer'));
     this.label = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-name')));
@@ -1081,11 +1105,8 @@ OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
 OpponentSelectionCard.prototype.constructor = OpponentSelectionCard;
 
 OpponentSelectionCard.prototype.update = function () {    
-    if (EPILOGUE_BADGES_ENABLED && this.opponent.ending) {
-        this.epilogueBadge.show();
-    } else {
-        this.epilogueBadge.hide();
-    }
+    if (this.epilogueBadge) this.epilogueBadge.show();
+    if (this.newBadge) this.newBadge.show();
 
     updateStatusIcon(this.statusIcon, this.opponent);
 
