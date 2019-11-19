@@ -1080,30 +1080,24 @@ function OpponentSelectionCard (opponent) {
     var badgeSidebar = this.mainElem.appendChild(createElementWithClass('div', 'badge-sidebar'));
 
     if (opponent.highlightStatus === 'new') {
-        this.newBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
+        $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
             src: "img/new_icon.png",
             alt: "SPNatI Epilogue available"
         });
-    } else {
-        this.newBadge = null;
     }
 
     if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
-        this.epilogueBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
+        $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
             src: "img/epilogue_icon.png",
             alt: "SPNatI Epilogue available"
         });
-    } else {
-        this.epilogueBadge = null;
     }
 
     if (COSTUME_BADGES_ENABLED && opponent.alternate_costumes.length > 0) {
-        this.epilogueBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
+        $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
             src: "img/costume_icon.png",
             alt: "SPNatI Alternate Costume available"
         });
-    } else {
-        this.epilogueBadge = null;
     }
 
     var sidebarElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-sidebar'));
@@ -1124,9 +1118,6 @@ OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
 OpponentSelectionCard.prototype.constructor = OpponentSelectionCard;
 
 OpponentSelectionCard.prototype.update = function () {    
-    if (this.epilogueBadge) this.epilogueBadge.show();
-    if (this.newBadge) this.newBadge.show();
-
     updateStatusIcon(this.statusIcon, this.opponent);
 
     this.layerIcon.attr({
