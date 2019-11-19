@@ -1107,7 +1107,7 @@ function updateSelectionVisuals () {
     });
 
     /* Update suggestions images. */
-    if (loaded >= 3) {
+    if (loaded >= 2) {
         var suggested_opponents = loadedOpponents.filter(function(opp) {
             /* hide selected opponents */
             if (players.some(function(p) { return p && p.id == opp.id; })) {
