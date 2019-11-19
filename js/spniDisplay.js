@@ -839,6 +839,13 @@ function MainSelectScreenDisplay (slot) {
         this.onSingleSuggestionSelected.bind(this)
     );
 
+    this.prefillBadgeRow = $('#selection-badge-row-' + slot);
+    this.prefillSuggestionBadges = {
+        'new': this.prefillBadgeRow.children('.badge-icon[data-badge="new"]'),
+        'epilogue': this.prefillBadgeRow.children('.badge-icon[data-badge="epilogue"]'),
+        'costume': this.prefillBadgeRow.children('.badge-icon[data-badge="costume"]'),
+    }
+
     this.altCostumeSelector = $("#main-costume-select-"+slot);
     this.selectButton = $("#select-slot-button-"+slot);
 
@@ -905,6 +912,17 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
     this.simpleImage.addClass('prefill-suggestion');
     this.selectButton.html("Select Other Opponent").removeClass("red").addClass("green suggestion-shown");
     this.prefillButton.show();
+
+    this.prefillBadgeRow.children().hide();
+
+    if (player.highlightStatus === 'new')
+        this.prefillSuggestionBadges.new.show();
+
+    if (player.ending)
+        this.prefillSuggestionBadges.epilogue.show();
+
+    if (player.alternate_costumes.length > 0)
+        this.prefillSuggestionBadges.costume.show();
 }
 
 MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
@@ -926,6 +944,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
     if (!player && this.prefillSuggestion && !this.targetSuggestionsShown)
         return this.displaySingleSuggestion();
 
+    this.prefillBadgeRow.children().hide();
     this.label.removeClass("suggestion-label");
     this.simpleImage.removeClass("prefill-suggestion");
     this.selectButton.removeClass("suggestion-shown");
