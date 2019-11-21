@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 9:48:41 AM on November 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 8:32:07 PM on November 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Dust</first>
@@ -291,7 +291,7 @@
     <behaviour>
         <trigger id="selected">
             <case stage="0">
-                <state img="#-calm.png">My name's... Dust. I'm a swordsman from the land of Falana.</state>
+                <state img="#-calm.png">My name's Dust. I'm a swordsman from the land of Falana.</state>
                 <state img="#-calm.png">I'm Dust, and these are my companions Fidget and the Blade of Ahrah.</state>
                 <state img="#-calm.png">Hmm. A game of cards? Not my usual quest, but okay.</state>
             </case>
@@ -322,7 +322,7 @@
             </case>
             <case stage="0">
                 <test expr="~background~" value="hot spring" />
-                <state img="#-embarassed.png">Wait, weren't we supposed to undress &lt;i&gt;before&lt;/i&gt; entering here?</state>
+                <state img="#-embarassed.png" marker="knowsstrip">Wait, weren't we supposed to undress &lt;i&gt;before&lt;/i&gt; entering here?</state>
             </case>
             <case stage="0">
                 <test expr="~background~" value="library" />
@@ -330,12 +330,12 @@
             </case>
             <case stage="0">
                 <condition count="1-" filter="cheater" role="other" var="opponent" />
-                <state img="#-annoyed.png">Does anyone else think ~opponent~ looks a little shifty?</state>
-                <state img="#-annoyed.png">{fidget}I don't like ~opponent~'s face.{!reset}</state>
+                <state img="#-annoyed.png" marker="knowsstrip">Does anyone else think ~opponent~ looks a little shifty?</state>
+                <state img="#-annoyed.png" marker="knowsstrip">{fidget}I don't like ~opponent~'s face.{!reset}</state>
             </case>
             <case stage="0">
-                <state img="#-embarassed.png" marker="knowsstrip">A strip-poker side-quest, huh? This is gonna be interesting</state>
-                <state img="#-embarassed.png" marker="knowsstrip">Strip poker...? An interesting side-quest, but okay.</state>
+                <state img="#-embarassed.png" marker="knowsstrip">A game of strip-poker, huh? This is gonna be interesting</state>
+                <state img="#-embarassed.png" marker="knowsstrip">Strip poker...? Well, it's an interesting way to relax after all I've been through.</state>
                 <state img="#-calm.png">Thanks for inviting me, ~player~.</state>
                 <state img="custom:#-um-ahrah" marker="knowsstrip">{ahrah}Dust, are you sure you know what you're getting into?{!reset}&lt;br&gt;I can't back out now, Ahrah.</state>
             </case>
@@ -351,11 +351,13 @@
                 <test expr="~cards~" value="0" />
                 <state img="#-calm.png">I'm keeping my hand as is, thanks.</state>
                 <state img="#-calm.png">No cards.</state>
+                <state img="#-calm.png">Hmm... No, no, I'm good, thank you.</state>
             </case>
             <case stage="0-7">
                 <test expr="~cards~" value="5" />
                 <state img="#-annoyed.png">Ugh... New hand, please.</state>
                 <state img="#-annoyed.png">I'll exchange them all.</state>
+                <state img="#-annoyed.png">That hand belongs in a fire.</state>
             </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="cassius_talked&gt;3" />
@@ -418,7 +420,6 @@
             <case stage="0">
                 <state img="#-victory.png">Yes! Still keeping everything on!</state>
                 <state img="#-calm.png">Well. This is a good sign.</state>
-                <state img="#-calm.png"></state>
             </case>
             <case stage="1">
                 <state img="#-victory.png">I don't think anything's gonna come off!</state>
@@ -745,7 +746,7 @@
             </case>
             <case stage="0-7">
                 <condition role="other" character="rainbow_dash" sayingMarker="adventurer_what_do" />
-                <state img="#-um.png">Well, I'm traveling through Falana to stop a mad general who's running a genocidal campaign.</state>
+                <state img="#-um.png" marker="rd_adventurer">Well, I've recently traveled through Falana to stop a mad general who ran a genocidal campaign.</state>
             </case>
             <case stage="0-7" oneShotId="66">
                 <condition role="other" character="meia" sayingMarker="dust_ring" />
@@ -822,7 +823,7 @@
                 <state img="#-c-smug.png">I always enjoy a good duel.</state>
                 <state img="#-c-standoffish.png">Know this, ~opponent~: I do not intend to lose.</state>
             </case>
-            <case stage="0-7" oneShotId="55" priority="15">
+            <case stage="0-7" id="46" oneShotId="55" priority="15">
                 <condition role="self" notSaidMarker="sandwich" />
                 <state img="#-calm.png" marker="sandwich">{fidget}I was wondering, could a Hot Dog be considered a sandwich, because--{!reset}&lt;br&gt;{ahrah}Don't distract him, Fidget.{!reset}</state>
             </case>
@@ -1062,6 +1063,7 @@
             <case stage="6">
                 <state img="#-wat.png">Oh no... Oh no...</state>
                 <state img="#-wat.png">This is going to be horrible.</state>
+                <state img="#-wat.png">Did Kane curse me? Am I cursed with bad luck?</state>
             </case>
         </trigger>
 
@@ -1182,7 +1184,7 @@
             <case stage="6">
                 <state img="#-stripping.png">I can't believe I'm going to do this... not even Ahrah has seen me naked!</state>
                 <state img="#-stripping.png">{fidget}Well, you're about to be naked. You owe me a cupcake.{!reset}&lt;br&gt;Later!</state>
-                <state img="#-stripping.png">Oh... I'd rather be dueling Gaius than doing this.</state>
+                <state img="#-stripping.png">Oh... I'd rather be dueling Gaius again than doing this!</state>
             </case>
             <case stage="0-5" oneShotId="32" priority="0">
                 <condition role="self" saidMarker="cassius_talked&lt;=3" notSaidMarker="cassiuswhoops" />
@@ -1778,7 +1780,7 @@
             </case>
             <case stage="0-9">
                 <condition role="target" character="rainbow_dash" stage="2" />
-                <state img="#-um.png">Huh. Your socks match your hair.</state>
+                <state img="#-um.png" marker="rd_socks">Huh. Your socks match your hair.</state>
             </case>
             <case stage="0-9">
                 <state img="#-embarassed.png">Well, we're certainly ramping up the action now.</state>
@@ -2119,7 +2121,7 @@
             <case stage="0-7">
                 <condition role="self" hasHand="Royal Flush" />
                 <state img="#-victory.png">Heh, that's what happens when you equip to maximize Luck.</state>
-                <state img="#-victory.png">I might not know much about poker, but I know I got the best hand ever.</state>
+                <state img="#-victory.png">I might not know much about poker, but I think I got the best hand ever.</state>
             </case>
             <case stage="0-7">
                 <condition role="self" hasHand="High Card" />
@@ -2276,13 +2278,13 @@
                 <state img="custom:#-um-ahrah" location="25%">{ahrah}Dust, you're drooling.{!reset}</state>
                 <state img="#-embarassed.png">I... I... &lt;br&gt;{fidget}You're turning him on, ~name~.{!reset}</state>
                 <state img="#-horny.png">Wow... ~target~, forgive me if I stare, but I haven't seen a nude woman for... quite a while.</state>
-                <state img="#-horny.png">If you ask me, this side quest was worth it for this.</state>
+                <state img="#-horny.png">If you ask me, heading to this land was worth it for this.</state>
             </case>
             <case stage="0-6" oneShotId="73">
                 <condition gender="male" status="naked" role="target" />
                 <condition count="1" status="naked" />
                 <state img="#-embarassed.png">Huh?... Oh. It's not too awkward, is it?</state>
-                <state img="#-embarassed.png">This is the strangest side-quest I've even been on.</state>
+                <state img="#-embarassed.png">Well, I wasn't expecting this... not that I'm complaining or anything...</state>
                 <state img="#-embarassed.png">Would you be surprised if I said I might like guys too?</state>
             </case>
             <case stage="1-9">
@@ -2576,6 +2578,7 @@
                 <state img="#-wat.png">Why are you all staring at me -- Oh.</state>
                 <state img="#-wat.png">I'm the first loser?</state>
                 <state img="#-wat.png">I don't know what's worse -- this, or facing Fuse, Baron Kane, and General Gaius all at once.</state>
+                <state img="#-wat.png">{fidget}Would it surprise anyone else if I said this is the first time Ahrah and I have seen Dust j--{!reset}&lt;br&gt;FIDGET!!</state>
             </case>
         </trigger>
 
@@ -2717,9 +2720,9 @@
             </case>
             <case stage="1-6">
                 <state img="custom:#-dustStorm">I knew I could do it!</state>
-                <state img="#-embarassed.png">I guess I should get back to my quest soon... &lt;br&gt;{fidget}But I don't wanna go yet!</state>
+                <state img="#-embarassed.png">I guess I should head back to Falana soon... &lt;br&gt;{fidget}But I don't wanna go yet!</state>
                 <state img="custom:#-dustStorm">This wasn't so tough.</state>
-                <state img="custom:#-dustStorm">Weirdest side-quest ever... but we got through it.</state>
+                <state img="custom:#-dustStorm">Weirdest way to relax ever... but we got through it.</state>
             </case>
             <case stage="7">
                 <state img="#-embarassed.png">Umm... Please tell me I can get dressed now.</state>
@@ -2785,7 +2788,7 @@
             <case stage="9">
                 <test expr="~background~" value="hot spring" />
                 <state img="#-calm.png">Well, since we're at a hot spring anyway, I guess we can all relax.</state>
-                <state img="custom:#-calm-ahrah" location="80%">{ahrah}There is no better place to be nude, Dust. But perhaps you should clean yourself off first.</state>
+                <state img="custom:#-calm-ahrah" location="80%">{ahrah}This is a place of relaxation in your current state of dress, Dust. But perhaps you should clean yourself off first.</state>
             </case>
             <case stage="9">
                 <condition count="0" gender="female" />
