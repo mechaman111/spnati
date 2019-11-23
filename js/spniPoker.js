@@ -436,7 +436,7 @@ Hand.prototype.describe = function(with_article) {
     case NONE:
         break;
     case HIGH_CARD:
-        description = cardRankToString(this.value[0]) + " high"; break;
+        description = cardRankToString(this.value[0], false) + " high"; break;
     case PAIR:
         description = "pair of " + cardRankToString(this.value[0]);
         use_article = true; break;
