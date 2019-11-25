@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 10:27:48 PM on November 19, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 2:05:49 AM on November 25, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Elesa</first>
@@ -79,6 +79,10 @@
     <behaviour>
         <trigger id="selected">
             <case stage="0">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-neutral.png">My name is Elesa. I'm a model. I also happen to be your opponent for tonight.</state>
+            </case>
+            <case stage="0">
                 <state img="#-start.png">My name is Elesa. I'm a model. I also happen to be your opponent for tonight.</state>
             </case>
         </trigger>
@@ -91,6 +95,18 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0">
+                <condition role="other" character="n" />
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-glare_a.png" location="35%">Don't think I wouldn't recognize you. You and your little group of white knights put Unova in peril.</state>
+                <state img="#-gamebegin1.png" location="35%">All of us Gym Leaders know who you are, N. I cannot ignore the fact you tried to liberate all Pokemon from their trainers.</state>
+                <state img="#-loss.png" location="35%">To think I once disregarded you as just another trainer. What a coincidence that Team Plasma's leader challenges me again.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="moon" />
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-gamebegin1.png">...I have a bad feeling about what's to come.</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="moon" />
                 <state img="custom:start">...I have a bad feeling about what's to come.</state>
@@ -116,6 +132,16 @@
             <case stage="0">
                 <condition role="other" character="akko" />
                 <state img="#-think.png">Never seen retractable sunglasses? Maybe you're too young for that...</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="misty_hgss" />
+                <state img="#-loss.png">Kanto's Water-type specialist. Ah, right, I recall seeing you at the Pokemon World Tournament.</state>
+            </case>
+            <case stage="0">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-gamebegin1.png" location="35%">Don't disappoint me. </state>
+                <state img="#-gamebegin1.png" location="35%">Welcome to the main stage.</state>
+                <state img="#-gamebegin1.png" location="35%">Alright. Whose star shall shine brightest, I wonder...?</state>
             </case>
             <case stage="0">
                 <state img="custom:start" location="35%">Don't disappoint me. </state>
@@ -681,6 +707,36 @@
                 <state img="#-strip.png">&lt;i&gt;(sigh)&lt;/i&gt; At least I knew what I was getting into. Looks like today's your lucky day..</state>
                 <state img="#-strip.png">I shouldn't be rewarding you, but rules are rules. Looks like you'll be seeing a naked model today.</state>
             </case>
+            <case stage="4" addCharacterTags="assisted_strip">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-strip.png">It's always difficult taking this off. ~player~, could you help me?</state>
+                <state img="#-strip.png">Ugh, this is always a hassle... Could someone help me?</state>
+                <state img="#-strip.png">There's no rules preventing the players from helping each other strip, right? Because I might need some assistance.</state>
+            </case>
+            <case stage="0">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-strip1.png">Let's start off small.</state>
+                <state img="#-strip1.png">Not much will change from this. Aside from, perhaps, feeling a tad shorter.</state>
+                <state img="#-strip1.png">When you're a model, being able to walk gracefully in any heels is an absolute must.</state>
+            </case>
+            <case stage="1">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-strip.png">Instead of removing the headphones, I'll just remove the extensions. They can actually be a hassle sometimes.</state>
+                <state img="#-strip.png">I'm just gonna remove the extensions and keep these babies on. What was I listening to? Woman's secret.</state>
+                <state img="#-strip.png" marker="functionalfashion">Fashion can be functional, you know. But these extensions were just for aesthetic.</state>
+            </case>
+            <case stage="2">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-strip.png">It's going to feel quite strange without this on. This is what completes the outfit.</state>
+                <state img="#-strip.png" marker="vest_top">What would you call this? A vest? A jacket? An overshirt? Front-cut chemise? Even I'm not certain what exactly this is myself.</state>
+                <state img="#-strip.png">If this were a coat, I'd take this off with more... &lt;i&gt;pizzazz.&lt;/i&gt;</state>
+            </case>
+            <case stage="3">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-strip.png">Looks like we're getting to the major stuff.</state>
+                <state img="#-strip.png">&lt;i&gt;(Am I seriously doing this?)&lt;/i&gt;</state>
+                <state img="#-strip.png">What happens here stays here. None of you are to say a word, capiche?</state>
+            </case>
             <case stage="0">
                 <state img="custom:#-strip">Do you know what they call me...?</state>
             </case>
@@ -699,13 +755,13 @@
                 <state img="#-strip.png">I guess it's time to show you... more... Grr, this thing is pretty tricky to remove. You have to press down &lt;i&gt;hard.&lt;/i&gt;</state>
                 <state img="#-strip.png">Removing this is a lot harder than you'd expect. Of course, my shorts can stay in place without the safety piece here, but...</state>
             </case>
-            <case stage="4">
-                <state img="#-strip.png">I've done some swimsuit shots in the past, but this is going beyond risqué territory... Well, I suppose you all earned it. Just don't go rushing to the tabloids.</state>
-                <state img="#-strip.png">I don't think you all know how lucky you are... Well, what happens here stays here. None of you are to say a word, capiche?</state>
-                <state img="#-strip.png" marker="bodyconfidence">I'm really not keen to get naked, but rules are rules and I'm not an exception. Plus, I'm not at all ashamed of my body.</state>
-            </case>
             <case stage="5">
-                <state img="#-strip.png">Here we go...</state>
+                <state img="#-strip.png">Uh oh... I think you might've ran into a bug. Please report it.</state>
+            </case>
+            <case stage="4">
+                <state img="#-strip.png">Well, I suppose you all earned it. Just don't go rushing to the tabloids.</state>
+                <state img="#-strip.png">I don't think you all know how lucky you are... What happens here stays here. None of you are to say a word, capiche?</state>
+                <state img="#-strip.png" marker="bodyconfidence">I'm really not keen to get naked, but rules are rules and I'm not an exception. Plus, I'm not at all ashamed of my body.</state>
             </case>
         </trigger>
 
@@ -890,6 +946,38 @@
             <case stage="5">
                 <condition role="other" character="natsuki" />
                 <state img="#-stripped.png">Yeah, there was a bra in there. Convenient for me. And &lt;i&gt;very&lt;/i&gt; convenient for you, Natsuki.</state>
+            </case>
+            <case stage="2">
+                <condition role="self" saidMarker="functionalfashion" />
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-happy.png">They can be a hassle sometimes anyways. But these wireless headphones? I treasure them dearly.</state>
+            </case>
+            <case stage="1">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-smug.png">You may have beaten me this round, but don't think I'll be a pushover.</state>
+                <state img="#-smug.png">It'll take more than one loss to outmatch the Shining Beauty.</state>
+            </case>
+            <case stage="2">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-monotone.png">I'm keeping these on for the rest of the game, by the way. Those things are expensive, and they complete my general aesthetic.</state>
+                <state img="#-monotone.png">Oh, and don't start calling this &lt;i&gt;Foul Play&lt;/i&gt;. I'm actually keeping these headphones on for the entire game.</state>
+            </case>
+            <case stage="3">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-neutral.png">Are you interested? I wasn't expecting that...</state>
+                <state img="#-happy.png">What? Did you think I was all serious, all the time? I'm more than that.</state>
+                <state img="#-happy.png">You know, it's not often I get the chance to enjoy other's company.</state>
+            </case>
+            <case stage="4">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-stripped.png">These tights are actually pretty thick. Perfect for staying stylish during the winter.</state>
+                <state img="#-stripped.png">There we go. You may have gotten me down to just my top and underwear, but you still have quite a ways to go.</state>
+                <state img="#-stripped.png">I wish I didn't have to take these off, and &lt;i&gt;not&lt;/i&gt; just because my panties are visible now. They were so warm and comfy...</state>
+            </case>
+            <case stage="5" addCharacterTags="assisted_strip" removeCharacterTags="assisted_strip">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-stripped.png">Thanks, ~player~! That's all I need here. &lt;br&gt; ...What? Enjoying the view?</state>
+                <state img="#-stripped.png">There we go. Thank you, ~player~! I'm glad you didn't get hands-y with me. Looking is free, but touching will cost you.</state>
             </case>
             <case stage="3">
                 <condition role="self" saidMarker="functionalfashion" />
@@ -2440,6 +2528,10 @@
                 <condition role="self" timeInStage="0" />
                 <state img="#-masturbate_a.png" oneShotId="34">If only I can get some electrostimulation involved. It feels &lt;i&gt;really&lt;/i&gt; good, as long as you make sure you use it safely.</state>
                 <state img="#-neutral.png" oneShotId="35">&lt;i&gt;(Now I wish I bought my violet wand.)&lt;/i&gt;</state>
+            </case>
+            <case stage="7" priority="9999">
+                <condition role="self" timeInStage="0" />
+                <state img="#-neutral.png" oneShotId="36">Hmm. Maybe I should put some music to help me &lt;i&gt;really&lt;/i&gt; get into the mood.</state>
             </case>
             <case stage="7">
                 <state img="#-masturbate_b.png">It could be worse... This is... &lt;i&gt;Ooooh...&lt;/i&gt;</state>
