@@ -59,13 +59,11 @@ total_files = 0
 
 for line in sys.stdin:
     line = line.strip()
-    sys.stdout.write("Updated file: " + line)
 
-    if os.path.splitext(line)[1][1:] not in cached_extensions:
-        sys.stdout.write("\n")
+    if os.path.splitext(line)[1][1:] not in cached_extensions or not os.path.isfile(line):
         continue
-
-    sys.stdout.write(" (will purge)\n")
+        
+    print("Updated: "+line)
 
     line = line.replace(".public/", "")
     if line[0] == "/":

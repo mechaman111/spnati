@@ -436,7 +436,7 @@ Hand.prototype.describe = function(with_article) {
     case NONE:
         break;
     case HIGH_CARD:
-        description = cardRankToString(this.value[0]) + " high"; break;
+        description = cardRankToString(this.value[0], false) + " high"; break;
     case PAIR:
         description = "pair of " + cardRankToString(this.value[0]);
         use_article = true; break;
@@ -506,10 +506,14 @@ Hand.prototype.sort = function() {
             return this.value.indexOf(a.rank) - this.value.indexOf(b.rank);
         }.bind(this));
         break;
-    case HIGH_CARD:
     case STRAIGHT:
-    case FLUSH:
     case STRAIGHT_FLUSH:
+        if (this.value[0] == 5) { // Wheel (5-A straight)
+            this.cards.sort(function(a, b) { return (b.rank % 13) - (a.rank % 13); }.bind(this));
+            break;
+        } // else fall through
+    case HIGH_CARD:
+    case FLUSH:
     case ROYAL_FLUSH:
         // For straights, value[] only holds the high card. For
         // flushes and high cards, the above algorithm works, but this

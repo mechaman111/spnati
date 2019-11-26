@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 12:17:04 PM on November 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 8:45:51 PM on November 25, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Panty</first>
@@ -54,6 +54,7 @@
             <case stage="0" priority="55">
                 <condition count="2" status="alive" />
                 <test expr="~background.exhibition~" cmp="!=" value="true" />
+                <test expr="~self.slot~" cmp="!=" value="2" />
                 <state img="#-upset.png">Excuse me, but what the fuck? Strip poker? I was told there was a going to be an orgy here, and I ain't ever heard of a two-person orgy.</state>
             </case>
             <case stage="0">
@@ -68,13 +69,18 @@
                 <test expr="~background~" value="bedroom" />
                 <state img="#-curious.png">Come meet me on the bed and we'll get this orgy started. Wait, what? Strip poker? Seriously?</state>
             </case>
-            <case stage="0">
+            <case stage="0" id="99">
                 <state img="#-disgust.png">...The fuck is this?! Where's the orgy? ... Strip poker? What are we, fucking sixteen?</state>
-                <state img="#-curious.png">I'm here for the orgy, and I'm ready to f--- &lt;i&gt;What the fuck?&lt;/i&gt; Strip poker? Everybody knows that ~Weekday~s are for orgies!</state>
+                <state img="#-disgust.png">I'm here for the orgy, and I'm ready to f--- &lt;i&gt;What the fuck?&lt;/i&gt; Strip poker? Everybody knows that ~Weekday~s are for orgies!</state>
             </case>
         </trigger>
 
         <trigger id="opponent_selected">
+            <case stage="0">
+                <condition role="target" character="navi" />
+                <condition count="1" gender="male" var="solomale" />
+                <state img="#-surprised.png">You're shitting me, right? A ball of light?! ~Solomale~, I hope you're not planning to put your dick in that.</state>
+            </case>
             <case stage="0">
                 <condition role="target" character="pit" />
                 <state img="#-curious.png">Oooh. Okay. Hey there cutie. You ready to get &lt;i&gt;naughty&lt;/i&gt;?</state>
@@ -98,6 +104,14 @@
             <case stage="0">
                 <condition role="target" character="panty" />
                 <state img="#-surprised.png">Whoa, what the fuck? Another me, and I'm fuckin' &lt;i&gt;hot&lt;/i&gt;!</state>
+            </case>
+            <case stage="0">
+                <condition role="target" character="rainbow_dash" />
+                <state img="#-happy.png" marker="RainbowGay">Hell yeah! Gay pride represent, rainbow girl!</state>
+            </case>
+            <case stage="0">
+                <condition role="target" character="wonder_woman" />
+                <state img="#-curiousnoblush.png">Here's hoping this Amazon knows how to deliver the goods.</state>
             </case>
             <case stage="0" id="8" oneShotId="14" priority="20">
                 <condition gender="female" role="target" />
@@ -128,10 +142,20 @@
                 <condition gender="male" role="target" />
                 <state img="#-bored.png" oneShotId="1">All right, he makes me a bit more interested in this limp dicked idea. Just a bit.</state>
             </case>
-            <case stage="0" id="7" oneShotId="13" priority="3">
+            <case stage="0" id="97" priority="4">
+                <condition filter="shy" gender="female" role="target" />
+                <state img="#-really.png" oneShotId="142">You &lt;i&gt;did&lt;/i&gt; tell this new chick about the orgy, right? Sure she can take a pounding?</state>
+            </case>
+            <case stage="0" id="103" priority="4">
+                <condition filter="blonde" gender="female" role="target" />
+                <state img="#-horny.png" oneShotId="192">You got a thing for blondes, ~player~? 'Cause &lt;i&gt;this&lt;/i&gt; bombshell is about to blow your mind.</state>
+            </case>
+            <case stage="0" id="7" priority="3">
                 <condition gender="female" role="target" />
                 <condition gender="male" role="opp" character="human" />
-                <state img="#-impressed.png">Fuck yeah, this chick is hot! You thinking about boning her before me, ~player~?</state>
+                <state img="#-impressed.png" oneShotId="139">Fuck yeah, this chick is hot! You thinking about boning her before me, ~player~?</state>
+                <state img="#-excitednoblush.png" oneShotId="140">Do you really think ~name~ has what it takes to satisfy your throbbing manly urges? </state>
+                <state img="#-impressed.png" oneShotId="191">Let's hope that ~player~'s dick can keep up with his amazing taste in women.</state>
             </case>
             <case stage="0" priority="2">
                 <condition filter="short" role="target" />
@@ -157,9 +181,16 @@
                 <state img="#-impressed.png">Shit, with &lt;i&gt;the&lt;/i&gt; Jessie Maye playing, this dumb children's game may be worth it.</state>
             </case>
             <case stage="0">
-                <condition count="4" gender="female" />
+                <condition count="3-4" gender="female" />
                 <condition count="1" gender="male" />
+                <test expr="~background.exhibition~" cmp="!=" value="true" />
                 <state img="#-happy.png">Oh shit! Duh, this game's to get us warmed up for the orgy. This dick better have enough jizz for all of us!</state>
+            </case>
+            <case stage="0">
+                <condition count="3-4" gender="female" />
+                <condition count="1" gender="male" var="~solomale~" />
+                <test expr="~background.exhibition~" value="true" />
+                <state img="#-happy.png">Oh shit! Duh, this game's to get us warmed up for the orgy. The first jizz out of ~solomale~ is mine. You other ladies can find your own.</state>
             </case>
             <case stage="0">
                 <condition count="3" />
@@ -176,6 +207,16 @@
         </trigger>
 
         <trigger id="swap_cards">
+            <case stage="0-5">
+                <condition role="other" character="kazuma" stage="6" />
+                <condition role="self" saidMarker="Kazuma_small_dick" notSaidMarker="Kazuma_small_dick_exchange" />
+                <state img="#-laughing.png" marker="Kazuma_small_dick_exchange">Hahahahahahahaha!</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="larachel" />
+                <condition role="self" saidMarker="LarachelAnger" notSaidMarker="LarachelAngerSwap" />
+                <state img="#-curiousnoblush.png" marker="LarachelAngerSwap">Hmm. Actually.</state>
+            </case>
             <case stage="0-5">
                 <test expr="~cards~" value="0" />
                 <state img="#-shocked.png">Naw, fuck off. I'm keeping these.</state>
@@ -241,9 +282,9 @@
                 <state img="#-happy.png">All aces, baby!</state>
                 <state img="#-annoyed.png" oneShotId="72">My pussy is feeling so empty right now. I hope you all can live with that.</state>
                 <state img="#-disgust.png">Is this... good?</state>
-                <state img="#-cocky.png">Look at all these beautiful people that aren't having sex... &lt;i&gt;yet&lt;/i&gt;.</state>
-                <state img="#-impressed.png"> Even when I lose, I win.</state>
-                <state img="#-curiousnoblush.png">It's not too late to call a friend to join us, ~player~. I can handle you both at once.</state>
+                <state img="#-cocky.png">Look at these beautiful people that aren't having sex... &lt;i&gt;yet&lt;/i&gt;.</state>
+                <state img="#-impressed.png">Even when I lose, I win.</state>
+                <state img="#-curiousnoblush.png" oneShotId="155">It's not too late to call a friend to join us, ~player~. I can handle you both at once.</state>
                 <state img="#-curiousnoblush.png">Whose turn to striptease?</state>
                 <state img="#-disgust.png">This hand is &lt;i&gt;not&lt;/i&gt; going to get me laid.</state>
                 <state img="#-bored.png">Two cards fuckin' while three watch. Poor dickless bastards.</state>
@@ -270,7 +311,7 @@
                 <state img="#-excited.png">The card numbers I have are how many inches I took from each guy at my last orgy. Yesterday was wild!</state>
                 <state img="#-curious.png">There's no such thing as a bad hand. It's all how you use it.</state>
                 <state img="#-impressed.png">I've got fuck-all.</state>
-                <state img="#-impressed.png">LOL, oh this is absurdly terrible. Oh &lt;i&gt;heaven's&lt;/i&gt; no.</state>
+                <state img="#-impressed.png">LOL, oh this is absurdly terrible. Oh &lt;i&gt;heavens&lt;/i&gt; no.</state>
                 <state img="#-bored.png">Fucking nothing. In most cases fucking nothing fucking sucks. But in this case, eh, it's whatever.</state>
                 <state img="#-horny.png">One step closer. Soon we'll &lt;i&gt;all&lt;/i&gt; be fuckin'.</state>
             </case>
@@ -298,21 +339,111 @@
                 <state img="#-cocky.png" marker="Intro">Sup. Name's Panty. I'm an angel. There's a bunch of blah blah other bullshit to it. But who are we kidding, you don't care. You just want some titties.</state>
                 <state img="#-cocky.png" marker="Intro">Yo. The name's Panty. I'm an angel, and with any luck, I'll be &lt;i&gt;your&lt;/i&gt; angel.</state>
             </case>
+            <case stage="0-5">
+                <condition role="other" character="kazuma" stage="8" timeInStage="0-1" />
+                <condition role="self" notSaidMarker="Kazuma_back_to_tiny" />
+                <state img="#-mocking.png" marker="Kazuma_back_to_tiny">Ah, shit. Now you're pathetically tiny little baby Kazuma again. Nice sword, "legendary hero".</state>
+            </case>
             <case stage="3" priority="150">
                 <condition role="other" character="futaba" />
                 <condition role="self" notSaidMarker="FutabaBrief" />
                 <state img="#-impressed.png" marker="FutabaBrief">Shit, actually, Futaba. I know a dude. His name's Brief. Massive nerd with a &lt;i&gt;huuuge&lt;/i&gt; cock. You'd love him.</state>
             </case>
             <case stage="0-5">
-                <condition role="other" character="chazz" stage="3" />
-                <condition role="self" notSaidMarker="Chazzhint" />
-                <state img="#-really.png" marker="Chazzhint">Wow. You just can &lt;i&gt;not&lt;/i&gt; take a hint, can ya?</state>
+                <condition role="other" character="kazuma" stage="6" />
+                <condition role="self" saidMarker="Kazuma_small_dick_exchange" notSaidMarker="Kazuma_small_dick_insult" />
+                <state img="#-mocking.png" marker="Kazuma_small_dick_insult">Watch out everyone! The man with the tiniest sword on the planet is coming through!</state>
             </case>
             <case stage="0-5" id="11">
                 <condition filter="small_penis" gender="male" status="crotch_visible" role="opp" character="human" />
                 <state img="#-mocking.png" oneShotId="74">Ahahaha! That tiny dick is still priceless!</state>
                 <state img="#-mocking.png" oneShotId="75">Smallest. Dick. Ever. You're setting records, ~player~!</state>
                 <state img="#-mocking.png" oneShotId="76">Ever felt like deepthroating half a cocktail franfurter? ~Player~ can help you out!</state>
+                <state img="#-mocking.png" oneShotId="189">Hold still for a photo, ~player~. Stocking has &lt;i&gt;got&lt;/i&gt; to see this.</state>
+            </case>
+            <case stage="0-5" oneShotId="51" totalRounds="1-">
+                <condition count="3-5" gender="female" />
+                <condition role="other" character="rainbow_dash" />
+                <state img="#-laughing.png" marker="RainbowLove">I love this ranbow chick. She's obviously hot for the ladies, and the ladies are hot for her right back!</state>
+            </case>
+            <case stage="0-5" oneShotId="52" totalRounds="2">
+                <condition role="other" character="starfire" />
+                <state img="#-bored.png" marker="KorianderParsley">You said your name was Koriander or something? Isn't that a parsley?</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="larachel" />
+                <condition role="self" saidMarker="LarachelAngerSwap" notSaidMarker="LarachelAngerHand" />
+                <state img="#-excited.png" marker="LarachelAngerHand">Naw. Ya know what. I'm not pissed at you. I know all you need is a good, dirty fuck. That's why you're acting out.</state>
+            </case>
+            <case stage="0-5" id="112">
+                <condition role="self" saidMarker="jessie_panty_backdoor" />
+                <condition role="other" character="jessie" sayingMarker="QA_Backdoor_Panty" />
+                <state img="#-cocky.png" marker="jessie_panty_backdoor_r">Yeah, come on. Hit me with something harder than &lt;i&gt;that&lt;/i&gt;.</state>
+            </case>
+            <case stage="0-5" id="113">
+                <condition role="self" saidMarker="jessie_panty_darksecrets" />
+                <condition role="other" character="jessie" sayingMarker="QA_DarkSecret_Panty" />
+                <state img="#-disgust.png" marker="jessie_panty_darksecrets_r">Pffft, I wish. He's the asshole that makes me go out ghost hunting when all I wanna do is fuck! He's also black, hence the "dark secret".</state>
+            </case>
+            <case stage="0-5" id="114">
+                <condition role="self" saidMarker="jessie_panty_family" />
+                <condition role="other" character="jessie" sayingMarker="QA_Family_Panty" />
+                <state img="#-bored.png" marker="jessie_panty_family_r">I... Shit? I'm actually not sure? Did we come out the same vag? Ehh, regardless. She's a fun fuck once you get past all the pre-bullshit.</state>
+            </case>
+            <case stage="0-5" id="115">
+                <condition role="self" saidMarker="jessie_panty_lights" />
+                <condition role="other" character="jessie" sayingMarker="QA_Lights_Panty" />
+                <state img="#-really.png" marker="jessie_panty_lights_r">Uhhh, yeah. Duh. We're totally fucking after this, Jessie. Or do you want me to be coy about it?</state>
+            </case>
+            <case stage="0-5" id="116">
+                <condition role="self" saidMarker="jessie_panty_littlelies" />
+                <condition role="other" character="jessie" sayingMarker="QA_LittleLies_Panty" />
+                <state img="#-horny.png" marker="jessie_panty_littlelies_r">Good to hear. Your head is gonna look fantastic between my thighs.</state>
+            </case>
+            <case stage="0-5" id="117">
+                <condition role="self" saidMarker="jessie_panty_masturbate" />
+                <condition role="other" character="jessie" sayingMarker="QA_Masturbate_Panty" />
+                <state img="#-impressed.png" marker="jessie_panty_masturbate_r">A little mutual masturbation, huh? I'm down. Gotta warn ya, my fingers do wander...</state>
+            </case>
+            <case stage="0-5" id="118">
+                <condition role="self" saidMarker="jessie_panty_million" />
+                <condition role="other" character="jessie" sayingMarker="QA_Million_Panty" />
+                <state img="#-excited.png" marker="jessie_panty_million_r">I'd buy the hell out of that movie! Jessie's millionaire gangbang. With me making a guest appearance of course.</state>
+            </case>
+            <case stage="0-5" id="119">
+                <condition role="self" saidMarker="jessie_panty_open" />
+                <condition role="other" character="jessie" sayingMarker="QA_Open_Panty" />
+                <state img="#-excitednoblush.png" marker="jessie_panty_open_r">Daaaamn! Good for him! Shit, I think I'm a little jealous.</state>
+            </case>
+            <case stage="0-5" id="120">
+                <condition role="self" saidMarker="jessie_panty_porn" />
+                <condition role="other" character="jessie" sayingMarker="QA_Porn_Panty" />
+                <state img="#-impressed.png" marker="jessie_panty_porn_r">Damn straight! Yet somehow no one's fucked me yet. That better change soon.</state>
+            </case>
+            <case stage="0-5" id="121">
+                <condition role="self" saidMarker="jessie_panty_sexnumber" />
+                <condition role="other" character="jessie" sayingMarker="QA_SexNumber_Panty" />
+                <state img="#-excited.png" marker="jessie_panty_sexnumber_r">Amen, girl! Girls just wanna have fun! And my fun, is fucking. Men, woman, doesn't matter to me!</state>
+            </case>
+            <case stage="0-5" id="122">
+                <condition role="self" saidMarker="jessie_panty_sexposition" />
+                <condition role="other" character="jessie" sayingMarker="QA_SexPosition_Panty" />
+                <state img="#-laughing.png" marker="jessie_panty_sexposition_r">LOL! Yeah, the answer is I have.</state>
+            </case>
+            <case stage="0-5" id="123">
+                <condition role="self" saidMarker="jessie_panty_sleptaround" />
+                <condition role="other" character="jessie" sayingMarker="QA_SleptAround_Panty" />
+                <state img="#-shocked.png" marker="jessie_panty_sleptaround_r">Yes! Yes I'm "single" tonight! We should fuck! Err, "date".</state>
+            </case>
+            <case stage="0-5" id="124">
+                <condition role="self" saidMarker="jessie_panty_smokers" />
+                <condition role="other" character="jessie" sayingMarker="QA_Smokers_Panty" />
+                <state img="#-bored.png" marker="jessie_panty_smokers_r">Eh, I mean, shit. Whatever works for ya.</state>
+            </case>
+            <case stage="0-5" id="125">
+                <condition role="self" saidMarker="jessie_panty_stupidmistakes" />
+                <condition role="other" character="jessie" sayingMarker="QA_StupidMistakes_Panty" />
+                <state img="#-excitednoblush.png" marker="jessie_panty_stupidmistakes_r">Yep. And if you do &lt;i&gt;do wrong&lt;/i&gt;. Just get me off real quick and I'll forgive ya.</state>
             </case>
             <case stage="1">
                 <condition role="other" character="chazz" />
@@ -375,6 +506,19 @@
                 <condition role="other" character="jessie" sayingMarker="JessieQA_StupidMistakes" />
                 <state img="#-cocky.png" marker="jessie_panty_stupidmistakes">Are they a good lay? There's your answer.</state>
             </case>
+            <case stage="0-5">
+                <condition role="other" character="larachel" />
+                <condition role="self" saidMarker="LarachelHolyHole" />
+                <state img="#-bored.png">Damn. Well, worth a shot.</state>
+            </case>
+            <case stage="0-5" id="101">
+                <condition role="other" character="megumin" sayingMarker="megumin_giantFrogs" />
+                <state img="#-bored.png">Can't say I have. Sounds more like a thing my sis would be into.</state>
+            </case>
+            <case stage="0-5" priority="0">
+                <test expr="~background~" value="office" />
+                <state img="#-excited.png" oneShotId="167">Let's do some office roleplay. I'll be the secretary, and you'll be the boss that fucks me over the photocopier.</state>
+            </case>
             <case stage="0-5" priority="0">
                 <test expr="~background~" value="inventory" />
                 <state img="#-bored.png" oneShotId="77">Can I get a drink here? You think anybody's coming back for those cocktails?</state>
@@ -388,7 +532,20 @@
             <case stage="0-5" priority="0">
                 <test expr="~background~" value="street" />
                 <state img="#-impressed.png" oneShotId="131">I don't have &lt;i&gt;nearly&lt;/i&gt; enough holes for all the dicks here.</state>
-                <state img="#-impressed.png">So many hot guys here! The cream of the crop are going to get even creamier.</state>
+                <state img="#-impressed.png" oneShotId="160">So many hot guys here! The cream of the crop are going to get even creamier.</state>
+                <state img="#-really.png" oneShotId="161">Just to be clear, we have to move to the sidewalk when we fuck. I don't wanna get run over by no demon sisters.</state>
+                <state img="#-cocky.png" oneShotId="165">There are a lot of hotties here tonight, but I'm looking right at the first person I'm gonna bang.</state>
+            </case>
+            <case stage="0-5" priority="0">
+                <test expr="~background~" value="beach" />
+                <state img="#-bored.png" oneShotId="156">Did anyone bring a blanket? I don't want sand in my vagina again.</state>
+                <state img="#-excitednoblush.png" oneShotId="157">Getting a face full of salty spray is good shit, but you don't need to go to the beach for that.</state>
+                <state img="#-curiousnoblush.png" oneShotId="158">This is obviously not a nude beach, cause we're all hot as fuck!</state>
+            </case>
+            <case stage="0-5" priority="0">
+                <test expr="~background~" value="bedroom" />
+                <state img="#-cocky.png" oneShotId="184">This your bed, ~player~? Perfect.</state>
+                <state img="#-excitednoblush.png" oneShotId="188">I wonder what kinds of sex toys are in these nightstands.</state>
             </case>
         </trigger>
 
@@ -399,7 +556,7 @@
             </case>
             <case stage="2">
                 <condition role="other" character="chazz" />
-                <state img="#-disgust.png">Ho-lee-shit. I do not care.</state>
+                <state img="#-disgust.png">Ho-lee-shit, Chazz! I do not care.</state>
             </case>
             <case stage="1">
                 <condition role="other" character="futaba" />
@@ -421,22 +578,87 @@
                 <condition role="other" character="jessie" />
                 <state img="#-excited.png">Hell yeah I do. I'm surprised you haven't seen any of my stuff. There's plenty out there already.</state>
             </case>
-        </trigger>
-
-        <trigger id="must_strip_winning">
+            <case stage="3">
+                <condition role="other" character="larachel" />
+                <state img="#-xxstripping.png">Shit, these heels were killing me too- What was that?</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="larachel" />
+                <state img="#-curious.png">Yep. My complete defeat at &lt;i&gt;your&lt;/i&gt; hands.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="starfire" />
+                <state img="#-excitednoblush.png">Damn, that's cold. And just when I thought we were hitting it off.</state>
+            </case>
             <case stage="0">
-                <state img="#-really.png">Oh no, the horror, or some pussy ass shit like that.</state>
+                <condition role="other" character="megumin" />
+                <state img="#-cocky.png">True. There's just so many options. What &lt;i&gt;would&lt;/i&gt; I strip first?</state>
             </case>
             <case stage="1">
-                <state img="#-excitednoblush.png">Shit, I've got some catching up to do. I'm still a long ways from my pussy.</state>
-                <state img="#-happy.png">Rock hard! Let's get going!</state>
+                <condition role="other" character="megumin" />
+                <state img="#-excited.png">Me, huh? What will I tease you naughty heathens with next?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="palutena" />
+                <state img="#-bored.png">Whatever. S'all good if I take off this bling shit in one go? May as well right?</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="palutena" />
+                <state img="#-horny.png">Good. Now everyone ignore the green-haired slut over there, and focus on me.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="pit" />
+                <state img="#-horny.png">Yeah. I'd say I'm a tad excited.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="pit" />
+                <state img="#-really.png">All right. I guess I should take my bling shit off. May as well tease you fucks.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="pit" />
+                <state img="#-impressed.png">I serve my pussy delicious cocks.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="pit" />
+                <state img="#-excitednoblush.png">Yo Pit. You like food right? I got a real delicious meal for ya.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="natsuki" />
+                <state img="#-really.png">A cospla- what now?</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="natsuki" />
+                <state img="#-bored.png">Ehhh, ya get used to the heels pain after a while. Still sucks to exert yourself in them though.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="mulan" />
+                <state img="#-curious.png">All right. All right. I'm gonna tease you fucks and take off my extra shi- A concu-what now?</state>
+            </case>
+            <case stage="3">
+                <test expr="~background~" value="beach" />
+                <state img="#-bored.png">Thank fuck. Heels on the beach were fucking killing me. And do you know how tough it is to fight demons in heels? It's a fucking nightmare.</state>
+            </case>
+            <case stage="0">
+                <state img="#-really.png">Oh no, the horror, or some pussy ass shit like that.</state>
+                <state img="#-really.png">Oh no, I lost completely by accident. Guess I better take off some tiny bitch-ass knick-knack.</state>
             </case>
             <case stage="3">
                 <state img="#-bored.png">Thank fuck. These heels were killing me too. Do you know how tough it is to fight demons in heels? It's a fucking nightmare.</state>
             </case>
             <case stage="4">
                 <state img="#-excitednoblush.png">And now for the main course.</state>
-                <state img="#-excited.png">Fuck yeah! Onto the main attraction!</state>
+                <state img="#-excited.png">Fuck yeah! On to the main attraction!</state>
+            </case>
+            <case stage="1">
+                <state img="#-curious.png">Does this do anything for ya? Yeah, yeah. Give me a second. I'm busy turning ~player~ on with my hot bod.</state>
+                <state img="#-horny.png">Mmm. We are going to fuck, and we are going to fuck &lt;i&gt;hard!&lt;/i&gt;... Oh right, stripping.</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip_winning">
+            <case stage="1">
+                <state img="#-excitednoblush.png">Shit, I've got some catching up to do. I'm still a long ways from my pussy.</state>
+                <state img="#-happy.png">Rock hard! Let's get going!</state>
             </case>
             <case stage="2">
                 <state img="#-excited.png">Are you guys even trying? Or are you &lt;i&gt;distracted&lt;/i&gt;?</state>
@@ -445,48 +667,33 @@
         </trigger>
 
         <trigger id="must_strip_normal">
-            <case stage="0">
-                <state img="#-really.png">Oh no, the horror, or some pussy ass shit like that.</state>
-            </case>
-            <case stage="3">
-                <state img="#-bored.png">Thank fuck. These heels were killing me too. Do you know how tough it is to fight demons in heels? It's a fucking nightmare.</state>
-            </case>
-            <case stage="1">
-                <state img="#-curious.png">Does this do anything for ya? Yeah, yeah. Give me a second. I'm busy flirting with ~player~.</state>
-                <state img="#-horny.png">Ya want some of me, ~player~? Yeah, fuck off. I'll strip in a second. I'm busy getting ~player~ all warmed up.</state>
-            </case>
             <case stage="2">
                 <state img="#-excited.png">Can't get enough of me, huh?</state>
                 <state img="#-horny.png">Sure. Let's inject some spice into this middle school game.</state>
             </case>
-            <case stage="4">
-                <state img="#-excitednoblush.png">And now for the main course.</state>
-                <state img="#-excited.png">Fuck yeah! Onto the main attraction!</state>
-            </case>
         </trigger>
 
         <trigger id="must_strip_losing">
-            <case stage="0">
-                <state img="#-really.png">Oh no, the horror, or some pussy ass shit like that.</state>
-            </case>
-            <case stage="3">
-                <state img="#-bored.png">Thank fuck. These heels were killing me too. Do you know how tough it is to fight demons in heels? It's a fucking nightmare.</state>
-            </case>
-            <case stage="1">
-                <state img="#-curious.png">Does this do anything for ya? Yeah, yeah. Give me a second. I'm busy flirting with ~player~.</state>
-                <state img="#-horny.png">Ya want some of me, ~player~? Yeah, fuck off. I'll strip in a second. I'm busy getting ~player~ all warmed up.</state>
+            <case stage="2">
+                <condition count="2-5" status="decent" />
+                <state img="#-bored.png">Fuck. This game's a goddamn grind. But I guess the foreplay is kinda hot?</state>
             </case>
             <case stage="2">
-                <state img="#-bored.png">Fuck. This game's a goddamn grind. But I guess the foreplay is kinda hot?</state>
                 <state img="#-upset.png">Hmm, oh. That's me. Sure, whatever.</state>
-            </case>
-            <case stage="4">
-                <state img="#-excitednoblush.png">And now for the main course.</state>
-                <state img="#-excited.png">Fuck yeah! Onto the main attraction!</state>
             </case>
         </trigger>
 
         <trigger id="stripping">
+            <case stage="2">
+                <condition role="other" character="starfire" />
+                <condition filter="human_female" />
+                <state img="#-xxstripping.png">You bitches gotta chill out. And probably fuck. Naw, definitely fuck.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="starfire" />
+                <condition filter="human_male" />
+                <state img="#-xxstripping.png">I've &lt;i&gt;defeated&lt;/i&gt; plenty of foes in my time protecting Daten City. And &lt;i&gt;then&lt;/i&gt; the dudes jizz all over me... In thanks for saving their asses.</state>
+            </case>
             <case stage="1">
                 <condition role="other" character="chazz" />
                 <state img="#-xxstripping.png">Can I just take all of this bling shit off in one g- The fuck did you just call me?</state>
@@ -530,6 +737,106 @@
             <case stage="2">
                 <condition role="other" character="kazuma" />
                 <state img="#-xxstripping.png">Hey, you wouldn't happen to be a &lt;i&gt;virgin&lt;/i&gt; would you, Kazuma?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="larachel" />
+                <state img="#-xxstripping.png">LOL. Yeah, you right. Dress strippin' time!</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="larachel" />
+                <state img="#-xxstripping.png">The what now? Naw I just wanted my tits out. Don't think so hard about it, &lt;i&gt;Priestess&lt;/i&gt;.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="larachel" />
+                <state img="#-furious.png">It's whatever if ya take a go at my sex life. I live with it. But you're seriously gonna get prissy about my footwear! How the fuck do you get around &lt;i&gt;Priestess&lt;/i&gt;?</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="larachel" />
+                <state img="#-xxstripping.png">Uh huh. Yep. Totally believe you. Maybe you can &lt;i&gt;triumph&lt;/i&gt; over me later.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="starfire" />
+                <state img="#-xxstripping.png">Smart guess, parsley. My panties can turn into a gun!</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="starfire" />
+                <state img="#-xxstripping.png">Chillll girl. I got wings. Flying just takes a lotta energy, ya know? Though, I do make exemptions for "flight fucking", if you see what I'm getting at.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="starfire" />
+                <state img="#-xxstripping.png">Give me a God-Damn second! I know ya wanna see my pussy you dirty alien plant. </state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="megumin" />
+                <state img="#-xxstripping.png">I'm thinkin' dress.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="megumin" />
+                <state img="#-xxstripping.png">The bling shit, obviously. And &lt;i&gt;duh&lt;/i&gt;, tiny witch. I'm not trying to win in the slightest.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="megumin" />
+                <state img="#-xxstripping.png">No shit, eh? Part demon... If I killed ya would you drop &lt;i&gt;half&lt;/i&gt; a heaven coin?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="palutena" />
+                <state img="#-xxstripping.png">Wow, pot calling the kettle back a bit, don't ya think, &lt;i&gt;stripper&lt;/i&gt;?</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="palutena" />
+                <state img="#-xxstripping.png">Girl, I'm doing you a &lt;i&gt;service&lt;/i&gt; right now. Unless you &lt;i&gt;want&lt;/i&gt; everyone to be looking at you.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="palutena" />
+                <state img="#-xxstripping.png">Oh yeah. And &lt;i&gt;sandals&lt;/i&gt; are more appropriate. I'd rather fuck someone in heels than in sandals.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="palutena" />
+                <state img="#-xxstripping.png">Now, who's ready for some angel puss? This baby's got five stars on Yelp!</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="jessie" />
+                <state img="#-xxstripping.png">Pfft. Yeah come on, Jessie! What do you take me for?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="pit" />
+                <state img="#-xxstripping.png">Oh? What's wrong Pit? Never seen a nude angel before? I know they're all prudes up there in heaven.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="pit" />
+                <state img="#-xxstripping.png">Pfft. God just the way you say bling. Fuck, you're like an old guy trying to be hip with the youth of today.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="pit" />
+                <state img="#-xxstripping.png">I'm kidding... sort of. I serve some asshole priest named Garterbelt. He's basically my ghost hunting pimp. </state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="pit" />
+                <state img="#-xxstripping.png">Would ya like some angel puss?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="natsuki" />
+                <state img="#-xxstripping.png">...Sure. No clue what's going on. But tell me. Did I get &lt;i&gt;this&lt;/i&gt; part correct?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="natsuki" />
+                <state img="#-xxstripping.png">Powerpuff Girls is what you're thinking of.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="natsuki" />
+                <state img="#-xxstripping.png">I bet you'd love to be a tad bit taller wouldn't ya, shorty?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="mulan" />
+                <state img="#-xxstripping.png">Naw. Tonight's on the house. I never charge for my service's anyways.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="mulan" />
+                <state img="#-xxstripping.png">Yeah. &lt;i&gt;Bitch&lt;/i&gt;, I'm gonna need you to never call me that again. Or else.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="mulan" />
+                <state img="#-xxstripping.png">Fucking in heels sucks too. Sure, Mulan I could wear something more comfy. But heels look fucking good! And I gotta keep my image.</state>
             </case>
             <case stage="2">
                 <condition count="3-5" gender="female" />
@@ -598,6 +905,16 @@
                 <condition role="other" character="kazuma" stage="6-8" />
                 <state img="#-aastripped.png">Yeah. The only thing of mine coming near that tiny worm of your is my feet. So ya better learn to like them.</state>
             </case>
+            <case stage="3">
+                <condition role="other" character="starfire" />
+                <condition filter="human_female" />
+                <state img="#-impressed.png">Maybe you and ~player~ should start making out. Girl on girl is pretty fucking hot.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="starfire" />
+                <condition filter="human_male" />
+                <state img="#-impressed.png">Oh &lt;i&gt;trust&lt;/i&gt; me. I still get that gooey feeling inside me &lt;i&gt;plenty&lt;/i&gt;.</state>
+            </case>
             <case stage="1">
                 <condition role="other" character="palutena" />
                 <state img="#-disgust.png">And &lt;i&gt;I'd&lt;/i&gt; be more impressed if you got off my ass! </state>
@@ -652,11 +969,131 @@
             </case>
             <case stage="2">
                 <condition role="other" character="jessie" />
-                <state img="#-disgust.png">It doesn't help that my fucking sister ruined my career before it could really get going. She showed my porn to a massive audience! Now I don't get paid for my porn cause it's "in the public domain". </state>
+                <state img="#-disgust.png">It doesn't help that my fucking sister ruined my career before it could really get going by showing my porn to a massive audience! Now I don't get paid for my porn cause it's "in the public domain". </state>
             </case>
             <case stage="5">
                 <condition role="other" character="kazuma" />
                 <state img="#-aastripped.png">Fuck yeah I wanna screw a legendary hero! Where is he?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="larachel" />
+                <state img="#-aastripped.png">Now, get on your knees and worship these titties!</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="larachel" />
+                <state img="#-aastripped.png">My game is to tease the ever loving shit out of you, and everyone else in this room.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="larachel" />
+                <state img="#-annoyed.png">Huh? Bitch, have you been hearin' the shit I've been spouting? I love fucking. What's so hard to get about that?</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="larachel" />
+                <state img="#-disgust.png" marker="LarachelAnger">&lt;i&gt;SERIOUSLY&lt;/i&gt;! I wouldn't fuck a Goddamn horse! You snooty fucking cunty bit-</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="larachel" />
+                <state img="#-aastripped.png">And you &lt;i&gt;excite&lt;/i&gt; me Priestess. Your meal's all ready for you.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="starfire" />
+                <state img="#-aastripped.png">Ah thank you, thank you. Plenty of ladies have fallen prey to these titties. I pray you'll be next.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="starfire" />
+                <state img="#-aastripped.png">Naw, don't worry about it, parsley. I'm just gonna tease you guys a bit. Make ya work for it.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="starfire" />
+                <state img="#-aastripped.png">Damn. Worth a shot. Maybe if we had ~player~ between us?</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="starfire" />
+                <state img="#-aastripped.png">Ta-da! Impressed, parsley? You should be. It's got two Michelin Stars for "high quality dining and decor".</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="megumin" />
+                <state img="#-aastripped.png">Uh, 'scuse me? &lt;i&gt;Not&lt;/i&gt; practically naked. I still have my panties on.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="megumin" />
+                <state img="#-aastripped.png">I'm just teasing you idiots. And when I'm done, that's when I'll get off.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="megumin" />
+                <state img="#-aastripped.png">Relaaax. I ain't gonna kill ya. Fuck you though? Oh, I'm probably gonna do that.</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="megumin" />
+                <state img="#-aastripped.png">God, you're such a fun killer, teeny witchy. Loosen up a bit, and worship my puss.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="palutena" />
+                <state img="#-aastripped.png">But naw, keep shitting on me. And tell all those boys you &lt;i&gt;see&lt;/i&gt; up in heaven I said "hi".</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="palutena" />
+                <state img="#-impressed.png">Shit, you totally do, don't ya? Why else would you be here?</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="palutena" />
+                <state img="#-aastripped.png">Now, how bout a foot job &lt;i&gt;Palu~&lt;/i&gt;? I promise I won't be &lt;i&gt;too&lt;/i&gt; rough.</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="palutena" />
+                <state img="#-aastripped.png">Yeah? Ya don't believe me, stripper? How about you give it a try. You may enjoy it.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="jessie" />
+                <state img="#-shocked.png">Oh shit! Really? Fuck yes! Fuck! Yes! I am &lt;i&gt;so&lt;/i&gt; down to collaborate with you!</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="pit" />
+                <state img="#-aastripped.png">But you're down here now, babe? What do ya think of my titties?</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="pit" />
+                <state img="#-aastripped.png">Just keep standing there all sexy, angel. And stop trying so hard.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="pit" />
+                <state img="#-excitednoblush.png">Pimp as in, he shows me where the ghost's are, and I kill them. I get some heaven coins, and once I get enough I can go back to heaven.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="pit" />
+                <state img="#-aastripped.png">Good call, Pit. Maybe I &lt;i&gt;should&lt;/i&gt; try barefoot. I know some dudes love having a foot on their dick.</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="pit" />
+                <state img="#-aastripped.png">Impressed? You should be. It's got two Michelin Stars for "high quality dining and decor".</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="natsuki" />
+                <state img="#-aastripped.png">Bam! How about it- Oy! I was referring to the titties, not the panties!</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="natsuki" />
+                <state img="#-bored.png">Though we have similarities to a lot of earlier Cartoon Network shows. With the dumbass humor of Adult Swim stuff.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="natsuki" />
+                <state img="#-aastripped.png">But hey, I've given foot jobs to shorter girls. You interested?</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="natsuki" />
+                <state img="#-aastripped.png">Natsuki. I could teach you a thing, or two, or ten. And I'm sure you'd enjoy it, you little perv.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="mulan" />
+                <state img="#-aastripped.png">And, bam! Check out these angel titties! And baby, if you wanna put your head on them. Go right ahead!</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="mulan" />
+                <state img="#-aastripped.png">Only &lt;i&gt;I&lt;/i&gt; get to call me a whore. Capiche? And naw, I just met ~player~. They're pretty hot though.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="mulan" />
+                <state img="#-aastripped.png">And when I take my heels off. It makes all those foot fetishists go wild. You want to feel my feet?</state>
             </case>
             <case stage="1" priority="90">
                 <condition role="other" character="kazuma" />
@@ -722,17 +1159,17 @@
         </trigger>
 
         <trigger id="male_must_strip">
-            <case stage="1-7">
+            <case stage="0-5">
                 <condition role="target" character="chazz" stage="0" />
                 <state img="#-curious.png">So. "The Chazz", right? Anybody I've ever met with a "The" in front of their name has had a &lt;i&gt;super&lt;/i&gt; huge cock.</state>
-            </case>
-            <case stage="0">
-                <condition role="target" character="chazz" stage="0" />
-                <state img="#-curious.png">So you're "The Chazz" I keep hearing about? Any dude with a "The" in front of their name &lt;i&gt;must&lt;/i&gt; have a huge cock.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="chazz" stage="5" />
                 <state img="#-furious.png">Nuh uh! Nope! Get the fuck back here! I still gotta see your cock!</state>
+            </case>
+            <case stage="6-7">
+                <condition role="target" character="chazz" stage="0" />
+                <state img="#-curious.png">Wow, "The, Chazz". Any dude I've ever met with a "The" in front of their name has had a huge cock. Yet you've kept it locked up this entire game.</state>
             </case>
             <case stage="0-5">
                 <state img="#-happy.png">Fuck yeah! Let's go!</state>
@@ -746,7 +1183,7 @@
                 <state img="#-happy.png">Hell yeah! ~Name~ lost!</state>
                 <state img="#-curious.png">What does our boytoy want to show us?</state>
                 <state img="#-excitednoblush.png">I'm looking for a man that'll go &lt;i&gt;all in&lt;/i&gt;.</state>
-                <state img="#-horny.png">Yoo hoo~ Over here ~name~. Am I &lt;i&gt;distracting&lt;/i&gt; you?</state>
+                <state img="#-horny.png">Yoo hoo~ Over here, ~name~. Am I &lt;i&gt;distracting&lt;/i&gt; you?</state>
                 <state img="#-impressed.png">Fuck. Yes. Please.</state>
                 <state img="#-laughing.png" oneShotId="128">Pfffft. Like fuck! I'm not even trying to win. You just suck!</state>
             </case>
@@ -754,6 +1191,7 @@
                 <condition status="not_crotch_visible" role="target" />
                 <state img="#-bored.png">Show some dick!</state>
                 <state img="#-curiousnoblush.png">Closer and closer. Your cock will be out soon.</state>
+                <state img="#-excited.png">Come on buddy. You don't wanna disappoint me, right?</state>
             </case>
             <case stage="7">
                 <state img="#-happy.png">Fuck yeah! Let's go!</state>
@@ -763,7 +1201,7 @@
             <case stage="6">
                 <state img="#-excitednoblush.png">I could use a little &lt;i&gt;inspiration&lt;/i&gt;.</state>
                 <state img="#-happy.png">Hell yeah! Oh, don't worry. I'll definitely just &lt;i&gt;watch&lt;/i&gt;.</state>
-                <state img="#-horny.png">Take it off ~name~. Nice and slow. Make me &lt;i&gt;beg&lt;/i&gt; for it.</state>
+                <state img="#-horny.png">Take it off, ~name~. Nice and slow. Make me &lt;i&gt;beg&lt;/i&gt; for it.</state>
                 <state img="#-happy.png">Oh fuck! Oh yes! And the real thing will feel so much better!</state>
                 <state img="#-excited.png">Fuck! My pussy is nearly ready for you, ~name~.</state>
                 <state img="#-horny.png">If you tease me any more, I'm going to burst.</state>
@@ -818,8 +1256,121 @@
                 <state img="#-horny.png">Hell yeah! </state>
             </case>
             <case stage="0-7">
+                <condition role="target" character="larachel" stage="0" />
+                <state img="#-cocky.png">Damn. I feel &lt;i&gt;so&lt;/i&gt; bad for you.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" stage="2" />
+                <state img="#-impressed.png">Fuck, I can't wait to crack you.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" stage="4" />
+                <state img="#-really.png">So is it gonna be one of your many hair-ties this time? Or are you actually ready to party?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" stage="5" />
+                <state img="#-happy.png">Awesome! Show us that holy pussy!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="starfire" stage="2" />
+                <state img="#-impressed.png" marker="StarfireParsleyConfusion">Sexy boots ya got there, parsley. Shame you have to take them off.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="starfire" stage="3" />
+                <state img="#-curious.png">Display away!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="3" />
+                <state img="#-annoyed.png">Holy fuck shit, you're boring!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="4" />
+                <state img="#-excited.png">Phew. All right. Now that I know you're not a kid. Back to teasing the shit out of you!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="6" />
+                <state img="#-horny.png">Finally! Let's go sexy!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" stage="2" />
+                <state img="#-curious.png">Oh? Are we getting &lt;i&gt;nervous&lt;/i&gt;, Palu~?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" stage="3" />
+                <state img="#-horny.png">Closer and closer, Stripper...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" stage="4" />
+                <state img="#-happy.png">Okay! Fuck yeah! Get off that dress!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" stage="5" />
+                <state img="#-happy.png">&lt;i&gt;Now&lt;/i&gt; it's happening!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" stage="6" />
+                <state img="#-horny.png">God, I love how I can see the outline of your pussy in your panties. It's so fucking hot.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="0" />
+                <state img="#-cocky.png">Damn. Tough break, shorty.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="1" />
+                <state img="#-really.png">So angry.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="2" />
+                <state img="#-impressed.png">I get it now, Nat-su-ki~.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="3" />
+                <state img="#-impressed.png">Closer and closer. You are going to be &lt;i&gt;fun&lt;/i&gt; to break.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="4" />
+                <state img="#-really.png">Fucking hell. I can't believe you don't think I'm serious.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="5" />
+                <state img="#-bored.png">Fuck it. Get that shirt off tiny tits.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="6" />
+                <state img="#-mocking.png">Yeah gurl! Let's see those teeny titties in action!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="7" />
+                <state img="#-really.png">You're hot. You're fuckable. Chill.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="mulan" stage="0" />
+                <state img="#-cocky.png">You're a chick. You're not fooling anyone.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="mulan" stage="1" />
+                <state img="#-cocky.png">What's wrong, &lt;i&gt;dude&lt;/i&gt;? Too busy thinking with your dick to pay attention to the game?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="mulan" stage="2" />
+                <state img="#-impressed.png">What's the matter, &lt;i&gt;bro&lt;/i&gt;? Dick get in the way?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="mulan" stage="3" />
+                <state img="#-curiousnoblush.png">So, like. Why the change?</state>
+            </case>
+            <case stage="0-7">
+                <condition filter="small_breasts" status="chest_visible" role="target" />
+                <state img="#-cocky.png" oneShotId="181" marker="nickname*=tiny tits">You're up, tiny tits.</state>
+            </case>
+            <case stage="0-7">
                 <condition filter="mean" role="target" consecutiveLosses="2" />
                 <state img="#-disgust.png" oneShotId="81">Hey, bitch-face. Your turn again.</state>
+                <state img="#-laughing.png" oneShotId="185">Serves you right, shlong breath.</state>
+            </case>
+            <case stage="0" totalRounds="0">
+                <test expr="~background~" value="street" />
+                <state img="#-happy.png">Time to show these guys what we're made of!</state>
             </case>
             <case stage="0" totalRounds="0">
                 <state img="#-happy.png">Let's start getting naked! ~Name~, you volunteering to go first?</state>
@@ -848,7 +1399,7 @@
                 <state img="#-cocky.png">What'll it be, girl?</state>
                 <state img="#-happy.png" oneShotId="85">Let's get to stripping girls! The comma was left out intentionally, fuck off. I wanna strip some girls.</state>
                 <state img="#-cocky.png">Don't bitch out on us.</state>
-                <state img="#-laughing.png" oneShotId="127">Fuck you guys suck! I'm not even trying to win!</state>
+                <state img="#-laughing.png" oneShotId="127">Fuck, you guys suck! I'm not even trying to win!</state>
                 <state img="#-happy.png">Hell yeah! Give us a show, ~name~!</state>
                 <state img="#-cocky.png">~Name~ just can't &lt;i&gt;wait&lt;/i&gt; to lose.</state>
             </case>
@@ -857,6 +1408,7 @@
                 <state img="#-cocky.png">Come on. Ya wanna join me, right?</state>
                 <state img="#-excited.png">I promise to fuck you first if you take off something good.</state>
                 <state img="#-horny.png">Excite me.</state>
+                <state img="#-excitednoblush.png">Come on, babe. Don't make me beg.</state>
             </case>
             <case stage="0-5" oneShotId="19" priority="0">
                 <condition filter="human_male" role="opp" />
@@ -882,6 +1434,32 @@
                 <condition filter="moe" status="lost_some" role="target" />
                 <state img="#-impressed.png" oneShotId="126">What's next from &lt;i&gt;this&lt;/i&gt; cutie?</state>
             </case>
+            <case stage="0-5" priority="0">
+                <condition role="self" hasHand="High Card" />
+                <state img="#-excitednoblush.png" oneShotId="154">Maybe next time you'll take advantage of these openings I keep trying to give you.</state>
+            </case>
+            <case stage="0-7" priority="0">
+                <test expr="~background~" value="street" />
+                <state img="#-excitednoblush.png" oneShotId="162">These dudes are drooling for more, ~name~. Don't you fuckin' disappoint them.</state>
+                <state img="#-impressed.png" oneShotId="164">Come on, girl. When the crowd chants your name, it means you gotta give 'em something hot.</state>
+            </case>
+            <case stage="0-7" priority="0">
+                <condition filter="ditzy" status="not_exposed" role="target" />
+                <state img="#-excitednoblush.png" oneShotId="186">You ready to show us those knockers yet, ditz tits?</state>
+                <state img="#-disgust.png" oneShotId="187">~Name~, you're obviously easily confused, so let me make it simple for you: Show. Us. Your. Pussy.</state>
+            </case>
+            <case stage="0-7" priority="0">
+                <condition filter="dominant" role="target" />
+                <state img="#-excited.png" oneShotId="195">Tease me! I'll beg for it from you, mistress.</state>
+                <state img="#-horny.png" oneShotId="196">I know you wanna beat my ass. Well, come and beat it, bitch!</state>
+                <state img="#-curious.png" oneShotId="197">I see it in your eyes. You wanna &lt;i&gt;fuck&lt;/i&gt; me. And fuck me hard.</state>
+            </case>
+            <case stage="0-7" priority="0">
+                <condition filter="submissive" role="target" />
+                <state img="#-curious.png" oneShotId="198">Take it slow, ~name~. I want you to savour these last few moments before I own &lt;i&gt;all&lt;/i&gt; of you.</state>
+                <state img="#-horny.png" oneShotId="201">I'm going ot make you my little bitch. I'm going to put a collar around that neck and &lt;i&gt;fuck&lt;/i&gt; you until sunrise.</state>
+                <state img="#-cocky.png" oneShotId="202">Girls like you need a good, tough dom in their life. Thankfully. I've done some dom play in my time.</state>
+            </case>
         </trigger>
 
         <trigger id="tie">
@@ -893,19 +1471,19 @@
         <trigger id="male_removing_accessory">
             <case stage="0-7">
                 <condition role="target" character="chazz" stage="0" />
-                <state img="#-horny.png">No need to take off the fancy sex toy. I'm down to get freaky with "The Chazz".</state>
+                <state img="#-really.png">Really? Stick with the game huh? Booooring!</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="chazz" stage="2" />
-                <state img="#-horny.png">Oh &lt;i&gt;Chaaaazzzzz&lt;/i&gt;~.</state>
+                <state img="#-horny.png">Oh &lt;i&gt;Chaaaazzzzz&lt;/i&gt;~. Careful down there. I think that's some crusty old cum you're leaning down into.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="chazz" stage="3" />
-                <state img="#-shocked.png">Fucking clueless, dumb, m- World domination?</state>
+                <state img="#-shocked.png">Woah, woah. Hold up! World domination?</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="kazuma" stage="0" />
-                <state img="#-excited.png">You're Japanese, aren't ya? Imma start calling you, &lt;i&gt;Kauma-kun~&lt;/i&gt;.</state>
+                <state img="#-excited.png">You're Japanese, aren't ya? I think I'll call you, &lt;i&gt;Kazuma-kun~&lt;/i&gt;.</state>
             </case>
             <case stage="0-5">
                 <condition status="crotch_visible" role="target" />
@@ -915,8 +1493,9 @@
             </case>
             <case stage="7">
                 <condition status="crotch_visible" role="target" />
-                <state img="#-curious.png">Shit. Look at that meaty thang.</state>
+                <state img="#-curiousnoblush.png">Shit. Look at that meaty thang.</state>
                 <state img="#-impressed.png">Hey, ~name~? You just gonna stand there with your cock out? Or you gonna fuck? </state>
+                <state img="#-curious.png">Mmmm. Fuck, you're lucky I have even the tiniest bit of self control.</state>
             </case>
             <case stage="0-5">
                 <state img="#-really.png">You are so laaaaame.</state>
@@ -935,22 +1514,22 @@
             <case stage="7">
                 <state img="#-disgust.png">This porn has too much story. Get to the good stuff, prick!</state>
                 <state img="#-really.png">Blah, blah, blah. I'm a little bitch. Blah, blah, blah.</state>
+                <state img="#-annoyed.png">Ugh! Really? You watch me cum and &lt;i&gt;this&lt;/i&gt; is what I get?</state>
+                <state img="#-really.png">Fucking pricks man. This teasing is pissing me off.</state>
             </case>
         </trigger>
 
         <trigger id="male_removed_accessory">
             <case stage="0-7" id="53">
                 <condition filter="small_penis" status="crotch_visible" role="target" character="human" />
-                <state img="#-disgust.png">Fucking hell. You're limp dicked both in size and personality.</state>
-                <state img="#-mocking.png">Ah, fuck! I just looked at it again! God, it's so tiny!</state>
-            </case>
-            <case stage="0-7">
-                <condition role="target" character="chazz" stage="1" />
-                <state img="#-really.png">Right... duel disk. &lt;br&gt; Right... Ojama Yellow.</state>
+                <state img="#-disgust.png" oneShotId="136">Fucking hell. You're limp dicked both in size and personality.</state>
+                <state img="#-mocking.png" oneShotId="137">Ah, fuck! I just looked at it again! God, it's so tiny!</state>
+                <state img="#-laughing.png" oneShotId="177">Ahahaha, I just looked at it again! I can't even tell if it's errect.</state>
+                <state img="#-disgust.png">If I was going to be mad, it wouldn't be because you took off your ~clothing~. It'd be because you think that french fry could satisfy a woman.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="chazz" stage="3" />
-                <state img="#-excited.png">The floor &lt;i&gt;could&lt;/i&gt; be covered in your cum stains too.</state>
+                <state img="#-excited.png">Ohhhh yes! Talk dirty to me! But it's hilarious if you think I'll be satisfied with you only busting one nut.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="chazz" stage="4" />
@@ -958,21 +1537,28 @@
             </case>
             <case stage="0-7">
                 <condition role="target" character="kazuma" stage="1" />
-                <state img="#-horny.png">You like that, huh? Why don't you take those clothes off, and I can be your &lt;i&gt;angel&lt;/i&gt;.</state>
+                <state img="#-horny.png">You like that don't you? Take off those clothes and I'll be your angel tonight.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="chazz" stage="1" />
+                <state img="#-impressed.png">Fine. If you're gonna be like that. I'll just tease you so much that you'll &lt;i&gt;wish&lt;/i&gt; you were fucking me.</state>
             </case>
             <case stage="5 7">
                 <condition status="not_crotch_visible" role="target" />
                 <state img="#-upset.png">Last train to Pound Town is going to leave without you on it, buddy.</state>
+                <state img="#-disgust.png" oneShotId="203">Look. We're either gonna fuck. Or we're gonna awkwardly walk away from this with regrets. What's it gonna be?</state>
             </case>
             <case stage="7">
                 <condition status="not_crotch_visible" role="target" />
                 <state img="#-upset.png">If you're going to be there not naked, you could at &lt;i&gt;least&lt;/i&gt; be eating me out.</state>
                 <state img="#-disgust.png">Look, buddy. I'm trying to lay you. As in have sex with you. As in &lt;i&gt;fuck the shit out of you&lt;/i&gt;. Ya having trouble picking up on that?</state>
+                <state img="#-annoyed.png">Dude. Fuck off! Show us something worthwhile. You don't even need to fuck me with it. I just wanna see your dick.</state>
             </case>
             <case stage="7">
                 <condition status="crotch_visible" role="target" />
                 <state img="#-excited.png">Ohhh. The starvation method. You teasing fuck. I'll make you pay with my pussy.</state>
                 <state img="#-horny.png">Impressed you haven't tore into me yet. Most men would have taken the hint by now.</state>
+                <state img="#-curious.png">I don't know how much longer I can last staring at that thing before I hop on it.</state>
             </case>
             <case stage="0-5">
                 <condition status="crotch_visible" role="target" />
@@ -998,8 +1584,8 @@
             </case>
             <case stage="6" priority="0">
                 <condition role="target" character="human" />
-                <state img="#-furious.png">God, fucking, dammit. Come on, ~player~. Don't you want some of this?</state>
-                <state img="#-excitednoblush.png">Your teasing is getting too much! I &lt;i&gt;need&lt;/i&gt; your dick!</state>
+                <state img="#-furious.png" oneShotId="179">God, fucking, dammit. Come on, ~player~. Don't you want some of this?</state>
+                <state img="#-excitednoblush.png" oneShotId="180">Your teasing is getting too much! I &lt;i&gt;need&lt;/i&gt; your dick!</state>
             </case>
             <case stage="6">
                 <state img="#-horny.png">God yes! ~name~'s throbbing erection pounding and filling up my warm pussy.</state>
@@ -1007,11 +1593,21 @@
                 <state img="#-horny.png">Yeah! Shove that dick up my ass. I need &lt;i&gt;all&lt;/i&gt; of my holes filled.</state>
             </case>
             <case stage="7">
-                <state img="#-horny.png">Put your penis inside me.</state>
+                <state img="#-horny.png">PUT DICK IN ME. This line will never play. Line is here so I don't have an annoying blue line. Please report if this plays.</state>
             </case>
         </trigger>
 
         <trigger id="female_removing_accessory">
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="3" />
+                <condition filter="human_male" />
+                <state img="#-horny.png">Oh yes. Break. I'll take you in between my thighs, and you can use your tongue to eat me out. </state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="3" />
+                <condition filter="human_female" />
+                <state img="#-horny.png">Oh yeah. I've got a strap-on sitting somewhere around here. And I'm going to &lt;i&gt;rail&lt;/i&gt; you with it.</state>
+            </case>
             <case stage="0-7" id="67" priority="381">
                 <condition role="target" character="akko" stage="0" saidMarker="necronomicon" />
                 <state img="#-surprised.png">Not again!</state>
@@ -1032,6 +1628,38 @@
                 <condition role="target" character="akko" stage="3" />
                 <state img="#-bored.png">Least the transformations are getting kinda sexier.</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="1" />
+                <state img="#-upset.png">Ya know, tiny. It's hotter when you actually do sexy stuff.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="2" />
+                <state img="#-bored.png">Ooooh, scary. Powerful magic, &lt;i&gt;and&lt;/i&gt; sealing away the demon. I'm quivering in my boots.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="4" />
+                <state img="#-impressed.png">Now. You ever used your staff to get yourself off?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" stage="2" />
+                <state img="#-impressed.png">I've always loved the supple look of your neck. I'd have told you earlier, but I couldn't find a good way to &lt;i&gt;broach&lt;/i&gt; the subject.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" stage="3" />
+                <state img="#-excited.png">This is probably one of the slower stripping jobs you've ever done, huh? Same, tbh.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="0" />
+                <state img="#-excited.png">Thanks for the little peek at your panties. If ya keep doing that. You may get me &lt;i&gt;excited&lt;/i&gt;.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="mulan" stage="0" />
+                <state img="#-curious.png">Okay, fine. I can think of a different pole you can use your &lt;i&gt;big, throbbing man-hands&lt;/i&gt; for.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="mulan" stage="2" />
+                <state img="#-cocky.png">Yeah, yeah. I'm just fucking with ya. If you wanna present as a man, go for it! I'm surprised you took off the armour so soon.</state>
+            </case>
             <case stage="7">
                 <condition status="crotch_visible" role="target" />
                 <state img="#-excited.png">That naked-with-~clothing~ look was hot, but we don't want ~clothing.ifPlural(those|that)~ getting in the way while we're fucking you, now do we?</state>
@@ -1044,6 +1672,7 @@
                 <state img="#-disgust.png">Imagine being that much of a prude.</state>
                 <state img="#-disgust.png" oneShotId="88">This has got to be the slowest start to an orgy ever.</state>
                 <state img="#-disgust.png">Ugh, really?</state>
+                <state img="#-bored.png">I've killed ghosts for less.</state>
             </case>
             <case stage="7">
                 <state img="#-disgust.png">Shit, it's almost like you think we're going to let you stay dressed after this. Don't count on it, girlfriend.</state>
@@ -1058,11 +1687,13 @@
             <case stage="1-7" priority="0">
                 <condition filter="celebrity" status="decent" role="target" />
                 <state img="#-disgust.png" oneShotId="89">You too good to get your titties out or something? You're not &lt;i&gt;that&lt;/i&gt; famous, y'know.</state>
+                <state img="#-bored.png">Never meet your heroes, kids.</state>
             </case>
             <case stage="0-4" priority="0">
                 <condition filter="single" status="decent" role="target" />
-                <condition filter="human_male" character="human" />
+                <condition filter="human_male" />
                 <state img="#-excitednoblush.png" oneShotId="115">Maybe it's none of my business if you want to be forever alone, but there's enough dick in this room for the both of us.</state>
+                <state img="#-excitednoblush.png" oneShotId="178">If you ever want to land a man, stop being such a pussy. I'm honest with my body, and I can land as many as I want.</state>
             </case>
             <case stage="0-4" priority="0">
                 <condition filter="small_breasts" status="decent" role="target" />
@@ -1071,6 +1702,16 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="4" />
+                <condition filter="human_male" />
+                <state img="#-curious.png">With ~player~ railing you from behind of course.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="4" />
+                <condition filter="human_female" />
+                <state img="#-curious.png">And I'll shove your face between ~player~'s legs. I hope you're hungry.</state>
+            </case>
             <case stage="0-7" id="68" priority="381">
                 <condition role="target" character="akko" stage="1" saidMarker="necronomicon" />
                 <state img="#-disgust.png">Don't make me shoot you, Akko. It's my day off.</state>
@@ -1090,6 +1731,46 @@
             <case stage="0-7">
                 <condition role="target" character="akko" stage="4" />
                 <state img="#-annoyed.png">Oy! Oy! The tie! Really! Booooooooo! Booooooo!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" stage="2" />
+                <state img="#-cocky.png">Not the first staff I've seen with a long refraction time. Frustrating, ain't it?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="starfire" stage="1" />
+                <state img="#-really.png">Ya may as well be speaking Chinese. They're gloves. Ya don't need to explain them. Let's move along.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="2" />
+                <state img="#-impressed.png">Lift up your skirt a bit. Gotta say it sits &lt;i&gt;real&lt;/i&gt; short on ya.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="3" />
+                <state img="#-cocky.png">Fuck, you sound like &lt;i&gt;every&lt;/i&gt; person who has ever gone to Hot Topic, ever. You gonna start singing My Chemical Romance soon?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="5" />
+                <state img="#-curious.png">You totally have, haven't ya?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" stage="3" />
+                <state img="#-laughing.png">Get it! Broach! Like a brooch, the thing you were wearing! Fuck, I kill me sometimes!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" stage="4" />
+                <state img="#-annoyed.png">Don't look at me like that! It's true. Again. I've seen you on that pole of yours!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="1" />
+                <state img="#-really.png">Jeez. Learn to take some teasing.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="mulan" stage="1" />
+                <state img="#-laughing.png">Oh. Pfffft. Okay that was intentional. Okay, I like &lt;i&gt;you&lt;/i&gt; now.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="mulan" stage="3" />
+                <state img="#-excitednoblush.png">You look fucking hot as a dude. Not saying you don't look hot now. But you can pull it off as a man.</state>
             </case>
             <case stage="6">
                 <condition role="target" character="human" />
@@ -1146,7 +1827,7 @@
         <trigger id="male_removing_minor">
             <case stage="0-7">
                 <condition role="target" character="chazz" stage="1" />
-                <state img="#-really.png">Yes. Yes. Please, The Chazz. bestow upon us your infinite wisom... </state>
+                <state img="#-really.png">Yes. Yes. Please, The Chazz. Bestow upon us your infinite wisdom... </state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="kazuma" stage="1" />
@@ -1183,10 +1864,11 @@
                 <state img="#-mocking.png" oneShotId="119">Careful when taking off your ~clothing~. Wouldn't want to get it hooked on that &lt;i&gt;massive do-&lt;/i&gt; pfffffft. Fuck, I can't!</state>
                 <state img="#-disgust.png" oneShotId="120">I laugh. I joke. But seriously. That cock is pathetic. Why'd you even bother whipping it out?</state>
                 <state img="#-really.png" oneShotId="121">And you're still playing. Just jerk off that little guy already.</state>
+                <state img="#-laughing.png" oneShotId="176">Imagine still playing after &lt;i&gt;that&lt;/i&gt; little disappointment.</state>
             </case>
             <case stage="0-7" priority="381">
                 <condition role="target" character="kazuma" stage="3" />
-                <state img="#-disgust.png">Yeah, I know you can hear me. That's why I said it. And I'll call you bitch-boy again, bitch-boy.</state>
+                <state img="#-disgust.png">Yeah, I know you can hear me. That's why I said it, bitch-boy. And I'll call you bitch-boy again, bitch-boy.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="chazz" stage="2" />
@@ -1228,6 +1910,58 @@
                 <condition role="target" character="palutena" stage="1" />
                 <state img="#-curious.png">I've seen you work it on that staff of yours. You know how to fucking give a crowd what they want.</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="rainbow_dash" stage="1" />
+                <state img="#-impressed.png" marker="RainbowButt">That's a hella tight butt you got there, rainbow girl. You work out much?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" stage="0" />
+                <state img="#-excitednoblush.png">Yeah. The &lt;i&gt;perfectly, pious, priestess&lt;/i&gt; has gotta get more comfortable.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" stage="2" />
+                <state img="#-curious.png">You "high and mighty" chicks are all the same. &lt;i&gt;Gosh, m-m-my morals&lt;/i&gt;. But then you &lt;i&gt;screeeaaam&lt;/i&gt; like banshee's once you're in bed.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" stage="3" />
+                <state img="#-really.png">Ya know you can just leave right? Like literally nobody is forcing you to stay.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="starfire" stage="2" />
+                <state img="#-excitednoblush.png">Cause that's what "coriander" is. It's a parsley, and it's the green plant that they use to make food look sexy. Yeah, fuck off, ~player~. I know stuff!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="3" />
+                <state img="#-disgust.png">Loosen the fuck up! You're acting like a child that only just learned the work "dick" yesterday. Unless...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="5" />
+                <state img="#-furious.png">Fucking shit! Just get naked already!</state>
+            </case>
+            <case stage="0-7" id="106">
+                <condition role="target" character="aimee" stage="1" />
+                <state img="#-excitednoblush.png">So tell me, where did you get a piece like that? You can't just pick something up like that at Victoria's Sectet.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="aimee" stage="2" />
+                <state img="#-excitednoblush.png">Say, how quickly do you think you could strip a room of hot men with that thing? Just theoretically.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" stage="4" />
+                <state img="#-furious.png">Motherfucker!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="1" />
+                <state img="#-disgust.png">Like fuck. If you're gonna be a stick in the ass, then just leave.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="2" />
+                <state img="#-cocky.png">Why you insist on staying here. Despite you being all "nervous" about it.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="mulan" stage="3" />
+                <state img="#-excitednoblush.png">Why not just keep being a dude then? You were pulling it off pretty well.</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <state img="#-disgust.png">Uh, we're not doing this one piece at a time, are we? Shit.</state>
             </case>
@@ -1239,7 +1973,6 @@
             <case stage="0-5">
                 <state img="#-bored.png" oneShotId="96">Yawn. Fuck, you're more of a clit tease than my sister.</state>
                 <state img="#-disgust.png">Crap on a dyke, you bitches know nothing about getting dirty, do ya?</state>
-                <state img="#-really.png">You have &lt;i&gt;so&lt;/i&gt; much to learn about getting laid, amiga.</state>
                 <state img="#-disgust.png">And... that's it?</state>
             </case>
             <case stage="7">
@@ -1247,6 +1980,10 @@
                 <state img="#-horny.png">Come on, girl. Let's get down and dirty.</state>
                 <state img="#-annoyed.png">Okay. Fuck you. Ya should be schlickin by now.</state>
                 <state img="#-upset.png">Oy! Are you &lt;i&gt;trying&lt;/i&gt; to piss me off? Cause it's working!</state>
+            </case>
+            <case stage="0-5" priority="0">
+                <condition filter="shy" role="target" />
+                <state img="#-really.png" oneShotId="183">You have &lt;i&gt;so&lt;/i&gt; much to learn about getting laid, amiga.</state>
             </case>
         </trigger>
 
@@ -1256,8 +1993,67 @@
                 <state img="#-excited.png">Yeah, yeah. Sure. You never &lt;i&gt;stripped&lt;/i&gt;. And that's what pisses me off. But you're stripping now like the dirty little slut I know you are.</state>
             </case>
             <case stage="0-5">
+                <condition role="target" character="rainbow_dash" stage="2" />
+                <state img="#-laughing.png">Haha, I'm glad you're playing for &lt;i&gt;my&lt;/i&gt; team.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" stage="1" />
+                <state img="#-curious.png">Nice shoulders. Gonna be fun seein' more of ya.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" stage="3" />
+                <state img="#-excited.png">Heh. &lt;i&gt;Sure&lt;/i&gt; you won't. I totally believe you, &lt;i&gt;Priestess&lt;/i&gt;.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" stage="4" />
+                <state img="#-excited.png">Sweet. If you're stayin', I'm gonna keep teasing you.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="starfire" stage="3" />
+                <state img="#-really.png">Uhhhhhh. Okay, I don't really know thaaaat much about it... My sis is the big food eater. I just vaguely hear stuff from her.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="4" />
+                <state img="#-surprised.png">Oh fuck! Are you actually a kid! Shit, I just thought you were small bodied! I have a very strict, "don't do kids" policy.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" stage="6" />
+                <state img="#-annoyed.png">Shit, Imma bout to cast "explosion" on you pretty soon here.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="aimee" stage="2" />
+                <state img="#-laughing.png">Nope, no answer? Geez, it's like she's in her own fuckin' world.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="aimee" stage="3" />
+                <state img="#-laughing.png">This psycho doesn't want to answer too many questions, but at least she's hot.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" stage="5" />
+                <state img="#-upset.png">Forgot about that one cheap-ass sock!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="2" />
+                <state img="#-curious.png">Or are you one of those bitches who goes "no, no, no", when it really means "yes, yes, yes"?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="3" />
+                <state img="#-curious.png">Don't worry. I won't say it out loud. I just want ~player~ to know, they're going to be &lt;i&gt;very&lt;/i&gt; happy once this game is over.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="mulan" stage="4" />
+                <state img="#-cocky.png">Fair, fair. Well whatever gender you wanna be. You're pretty damn hot either way.</state>
+            </case>
+            <case stage="0-5">
                 <condition filter="alien" role="target" />
                 <state img="#-disgust.png" oneShotId="98">If this is your idea of a mating ritual, your species is fuckin' doomed.</state>
+            </case>
+            <case stage="0-5">
+                <condition status="exposed" role="target" />
+                <state img="#-impressed.png" oneShotId="150">This is some next-level striptease! Work it, baby.</state>
+                <state img="#-laughing.png" oneShotId="147">Haha, I guess you've earned a little break, sexy.</state>
+                <state img="#-cocky.png" oneShotId="148">~Clothing~ or no ~clothing~, you're still workin' the goods.</state>
+                <state img="#-curiousnoblush.png" oneShotId="149">Guess you're one of those girls that takes off her ~clothing~ to fuck. I won't judge. </state>
             </case>
             <case stage="0-7" priority="0">
                 <condition filter="fashionable" status="decent" role="target" />
@@ -1268,7 +2064,7 @@
                 <state img="#-excited.png">Yes! Torment me! Make me suffer! Then ravish me with your tongue.</state>
             </case>
             <case stage="0-5">
-                <state img="#-excitednoblush.png" marker="MakeOut">Hey. Wouldn't it be crazy if we just started making out right now? Come here, I'll start.</state>
+                <state img="#-excitednoblush.png" oneShotId="138" marker="MakeOut">Hey. Wouldn't it be crazy if we just started making out right now, ~name~? Come here, I'll start.</state>
                 <state img="#-curiousnoblush.png">Do you need to be taught discipline? I know some cocks that could &lt;i&gt;really&lt;/i&gt; teach you how to behave.</state>
                 <state img="#-disgust.png" oneShotId="99">Oh, wow, my quest to find ~clothing.ifPlural(all six Holy ~Clothing~|the last Holy ~Clothing~)~ is complete. Fucking &lt;i&gt;not&lt;/i&gt;.</state>
                 <state img="#-bored.png">Still &lt;i&gt;kind&lt;/i&gt; of a bitch move. But at least we're getting somewhere.</state>
@@ -1309,9 +2105,11 @@
         <trigger id="male_removed_major">
             <case stage="0-7" id="55">
                 <condition filter="small_penis" status="crotch_visible" role="target" character="human" />
-                <state img="#-upset.png">What? Am I supposed to be impressed? Your dick's already out, and it's the tiniest thing on the planet. The mystery is gone.</state>
-                <state img="#-really.png">Fucking shit. That better be it. When the orgy starts you have a lot to prove.</state>
-                <state img="#-disgust.png">Fuck. Your tiny cock is gonna be absolutely useless when things really start getting hot and heavy.</state>
+                <state img="#-upset.png" oneShotId="171">What? Am I supposed to be impressed? Your dick's already out, and it's the tiniest thing on the planet. The mystery is gone.</state>
+                <state img="#-really.png" oneShotId="172">Fucking shit. That better be it. When the orgy starts you have a lot to prove.</state>
+                <state img="#-disgust.png" oneShotId="173">Fuck. Your tiny cock is gonna be absolutely useless when things really start getting hot and heavy.</state>
+                <state img="#-disgust.png" oneShotId="174">You could be Adonis himself up there, but there's no forgetting that you have the world's smallest dicklet.</state>
+                <state img="#-really.png" oneShotId="175">Oh, wow, I'm soooo impressed by the Mr Tiny Cock.</state>
             </case>
             <case stage="0-7" priority="381">
                 <condition role="target" character="kazuma" stage="4" />
@@ -1360,6 +2158,34 @@
                 <state img="#-surprised.png">Yeah, yeah. Trasnfor- Shit! Fuck, you looked like one of the demon sisters there for a second.</state>
             </case>
             <case stage="0-5">
+                <condition role="target" character="rainbow_dash" stage="0" />
+                <state img="#-happy.png">Shit yeah, this chick actually gets it! Woo!</state>
+            </case>
+            <case stage="0-7" id="100">
+                <condition role="target" character="erufuda" stage="2" />
+                <state img="#-laughing.png">Ha! You ever thought about losing some weight, fatty?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="starfire" stage="1" />
+                <state img="#-happy.png">Oh, hell yeah! That's definitely what you should be removing!</state>
+            </case>
+            <case stage="0-7" id="104">
+                <condition role="target" character="caulifla" stage="1" />
+                <state img="#-surprised.png">What the fuck?! What's with all this energy?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="4" />
+                <state img="#-upset.png">I want to fuck you girl! ~player~ does too!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="5" />
+                <state img="#-upset.png">Oh. &lt;i&gt;That&lt;/i&gt; got a rise out of ya, huh?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="mulan" stage="1" />
+                <state img="#-impressed.png">Gasp! What are you doing!</state>
+            </case>
+            <case stage="0-5">
                 <state img="#-bored.png">All right. ~clothing.ifPlural(~Clothing~ ain't|A whole ~clothing~ isn't)~ that bad.</state>
                 <state img="#-curious.png">Hey, all right. We're getting kind of close to party time.</state>
                 <state img="#-impressed.png">Hey babe. You lookin' to score a piece of me?</state>
@@ -1376,6 +2202,11 @@
                 <condition status="not_chest_visible" role="target" />
                 <state img="#-cocky.png">Hey, sexy. Whip out the tits. Show us those funbags!</state>
                 <state img="#-excited.png">Tits out. Or else I may need to get &lt;i&gt;aggressive&lt;/i&gt; with you.</state>
+            </case>
+            <case stage="0-7" priority="0">
+                <condition filter="enf" role="target" />
+                <condition count="1-3" gender="male" />
+                <state img="#-excitednoblush.png" oneShotId="163">Don't get all embarrassed. When you're as sexy as fuck like me, this is just another ~Weekday~.</state>
             </case>
         </trigger>
 
@@ -1396,9 +2227,51 @@
                 <condition role="target" character="akko" stage="5" />
                 <state img="#-excited.png">Ehhh, they're some cocky prissy bitches I know. Regardless, you look fucking hot.</state>
             </case>
+            <case stage="0-5">
+                <condition role="target" character="rainbow_dash" stage="1" />
+                <state img="#-excitednoblush.png">A good skirt can keep your ankles warm, but your ears can keep them warmer.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="rainbow_dash" stage="5" />
+                <state img="#-cocky.png">Damn, girl. You looking for work as a personal trainer? Because my body needs some serious punishment.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="erufuda" stage="3" />
+                <state img="#-disgust.png">Sure, I've split my pants open a few times. But only to get a cock in there.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="starfire" stage="2" />
+                <state img="#-cocky.png">Amen girl! It's just our bodies. No need to get all weird about them.</state>
+            </case>
+            <case stage="0-7" id="105">
+                <condition role="target" character="caulifla" stage="2" />
+                <state img="#-disgust.png">Every time. Every fuckin' time. Can't a girl just go have a nice friendly orgy without anyone turning into a supervillain?</state>
+            </case>
+            <case stage="0-7" id="108">
+                <condition role="target" character="navi" stage="1" />
+                <state img="#-shocked.png">The talking ball of light is playing too?! Shit, and it's a fairy. If you're willing to go inside up to your elbows, you can play with us after the game, ya little freak.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="5" />
+                <state img="#-impressed.png">Fuck it ~player~. I tried. You still down to fuck after the game?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" stage="6" />
+                <state img="#-mocking.png">Fine. Tiny tits! Tiny tits! Part of the itty bitty titty comittee!</state>
+            </case>
+            <case stage="0-7" id="126">
+                <condition role="target" character="mulan" stage="2" />
+                <state img="#-horny.png">Hey, I get it, dude. I've fucked plenty of guys who like to wear dresses.</state>
+            </case>
             <case stage="1-5">
                 <condition filter="enf" status="not_exposed" role="target" />
                 <state img="#-excited.png" oneShotId="100">Why so modest, ~name~? We all know you soak the same bedsheets as the rest of us.</state>
+            </case>
+            <case stage="0-7">
+                <condition filter="chubby" role="target" />
+                <state img="#-cocky.png" oneShotId="151">Geez, I didn't expect so much skin. You chubby girls really make the most of this, don't you?</state>
+                <state img="#-cocky.png" oneShotId="152">Just think of it as what you'd wear to the gym. Which is &lt;i&gt;definitely&lt;/i&gt; something you know about, right?</state>
+                <state img="#-cocky.png" oneShotId="153">I'd look pretty hot as a fat chick, but I just get too much &lt;i&gt;excercise&lt;/i&gt;, ya know what I mean?</state>
             </case>
             <case stage="0-5">
                 <condition status="exposed" role="target" />
@@ -1410,7 +2283,7 @@
                 <state img="#-curious.png">I could just eat you out right now. Yeah, I know what I said.</state>
                 <state img="#-horny.png">Ready for some of this? S'all right, feel free to stare. I damn well know I'm hot.</state>
                 <state img="#-excited.png">You look better without your ~clothing~ anyways. So much more fuckable.</state>
-                <state img="#-excited.png">Hot. And I don't usually say that about chicks. But I appreciate a hot bitch when I see one.</state>
+                <state img="#-excited.png" oneShotId="194">Hot. And I don't usually say that about chicks. But I appreciate a hot bitch when I see one.</state>
             </case>
             <case stage="6">
                 <state img="#-excited.png">Flash me more! I want it! I need it! Fuck yes!</state>
@@ -1425,7 +2298,11 @@
         <trigger id="male_chest_will_be_visible">
             <case stage="0-7" id="70">
                 <condition role="target" character="chazz" />
-                <state img="#-happy.png">Shit! Great idea, ~player~!</state>
+                <state img="#-happy.png">Shit! Great idea, ~player~! Use your &lt;i&gt;magic&lt;/i&gt; to strip those clothes!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="kazuma" />
+                <state img="#-curious.png">Do you workout, &lt;i&gt;Kazuma-kun~&lt;/i&gt;? Your chest is &lt;i&gt;soooo&lt;/i&gt; manly.</state>
             </case>
             <case stage="0-5 7">
                 <state img="#-excited.png">Hello. Time for the second best part of a man.</state>
@@ -1445,7 +2322,11 @@
                 <condition filter="small_penis" status="crotch_visible" role="target" character="human" />
                 <state img="#-really.png">A hot chest isn't going to save you when your gun is that puny.</state>
                 <state img="#-mocking.png">A nice chest. Then I look down and- pffffffthahahaha!</state>
-                <state img="#-mocking.png">I can't stop focusing on that tinyness of that dick! </state>
+                <state img="#-mocking.png">I can't stop focusing on the tinyness of that dick! </state>
+            </case>
+            <case stage="0-7" priority="381">
+                <condition role="target" character="kazuma" />
+                <state img="#-excitednoblush.png">Okay, no need to get super cocky, bub. It all comes down to what's in those boxers.</state>
             </case>
             <case stage="0-7" id="71">
                 <condition role="target" character="chazz" />
@@ -1472,6 +2353,10 @@
                 <condition role="target" character="chazz" />
                 <state img="#-happy.png">Hell yeah! Chazz it up! Chazz it up! Chazz it up!</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="kazuma" />
+                <state img="#-impressed.png">Fuck yes! I'm so excited! With a package that big, you must be absolutely &lt;i&gt;packin'&lt;/i&gt;!</state>
+            </case>
             <case stage="6">
                 <state img="#-excitednoblush.png">Hell yes! Come in mamma!</state>
                 <state img="#-excited.png">Yes, yes, yes, yes!</state>
@@ -1487,6 +2372,10 @@
         </trigger>
 
         <trigger id="male_small_crotch_is_visible">
+            <case stage="0-7" priority="301">
+                <condition role="target" character="kazuma" />
+                <state img="#-mocking.png" marker="Kazuma_small_dick">PFFFFFFFFFFFFFFFFFFFFFFFT HAHAHAHAHAHAHAHA! Oh Fuck! Were you padding your boxers or something? Like, holy shit!</state>
+            </case>
             <case stage="0-5" id="1">
                 <state img="#-mocking.png" marker="TinyDick">Wooo! Now we're fucking talking... Wait, hold the fuck up! LOL what even is that? That's pathetic!</state>
                 <state img="#-mocking.png" marker="TinyDick">Pfffffft! Ha ha ha ha! Holy fuck! It's so tiny. Look at that itty bitty pee pee!</state>
@@ -1566,6 +2455,22 @@
                 <condition role="target" character="jessie" />
                 <state img="#-impressed.png">I've seen them in your porn. Hell, I've fucked myself a few times while looking at them bounce. But it's a &lt;i&gt;whole&lt;/i&gt; other thing to see them in person.</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="starfire" />
+                <state img="#-impressed.png">Hooot! Let's compare breast sizes by squishing them up against each other!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" />
+                <state img="#-cocky.png">Seriously though, chill, girl. You've got this! You're a damn hot piece of ass, ya know that? </state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" />
+                <state img="#-cocky.png">Oh stop acting all nervous. We &lt;i&gt;all&lt;/i&gt; know you wanted this from the beginning.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" />
+                <state img="#-annoyed.png">Fine, fuck it. I'll lay off it. There's no need to be self concious about it anyways.</state>
+            </case>
             <case stage="6">
                 <state img="#-happy.png">I can get off to some sexy titties.</state>
                 <state img="#-happy.png">Boobie time! It's the second best time of the day!</state>
@@ -1573,6 +2478,7 @@
             <case stage="0-5 7">
                 <state img="#-happy.png">Girl, let's see 'em!</state>
                 <state img="#-happy.png">Bitch, let them hang loose!</state>
+                <state img="#-happy.png">All on board for the titty train!</state>
             </case>
         </trigger>
 
@@ -1585,6 +2491,14 @@
                 <condition role="target" character="futaba" />
                 <state img="#-impressed.png">I got an eye for these sorts of things. Just like how my eyes are on those cute little funbags.</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" />
+                <state img="#-curious.png">And ya got cute titties! Move those arms a bit and give us a peek at those nips.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" />
+                <state img="#-really.png">Like holy shit. You've got nice tits. Was just making fun of you to get a rise out of ya.</state>
+            </case>
             <case stage="0">
                 <state img="#-impressed.png">Look at you, ya little cutie. Fuck, I bet I could make you scream.</state>
             </case>
@@ -1593,7 +2507,7 @@
                 <state img="#-horny.png">What can I say? My body is clearly better. Right, boys?</state>
             </case>
             <case stage="1">
-                <state img="#-horny.png">Panty here, stealing your thunder, Tiny Tits.</state>
+                <state img="#-horny.png">Panty here, stealing your thunder, tiny tits.</state>
             </case>
             <case stage="2">
                 <state img="#-excited.png">Those itty bitty boobs will get bigger if you have them massaged by a sexual partner. ~Player~, show her how it's done.</state>
@@ -1613,10 +2527,19 @@
             </case>
             <case stage="7">
                 <state img="#-excitednoblush.png">Bring those little nipples over here! I'm gonna give you a hickey.</state>
+                <state img="#-curious.png">Mmm. Those are some cute tids. I'm gonna suck on them.</state>
             </case>
         </trigger>
 
         <trigger id="female_medium_chest_is_visible">
+            <case stage="0-7">
+                <condition role="target" character="starfire" />
+                <state img="#-horny.png">Fine... Later though. I'm coming for those boobies.</state>
+            </case>
+            <case stage="0-7" id="107">
+                <condition role="target" character="aimee" />
+                <state img="#-laughing.png">Whoa, I didn't see that one coming. Nice shot, psycho!</state>
+            </case>
             <case stage="0-7" oneShotId="17">
                 <test expr="~background~" value="poolside" />
                 <test expr="~background~" value="tiki bar" />
@@ -1656,6 +2579,10 @@
                 <condition role="target" character="jessie" />
                 <state img="#-shocked.png">Hell. Fucking. Lo baby! Can I squeeze them? No! Can I sink my face into them?</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" />
+                <state img="#-shocked.png">...Holy shit. I half expected you to puss out! Damn those are gorgeous!</state>
+            </case>
             <case stage="0-4">
                 <state img="#-shocked.png">Hummana Hummana! Lookin' fiiiine girl!</state>
                 <state img="#-impressed.png">The world isn't flat after all!</state>
@@ -1671,6 +2598,8 @@
             </case>
             <case stage="7">
                 <state img="#-impressed.png">Those are some big hooters, ~name~. I'm not even jealous, 'cause I'm gonna be all over those soon. Nobody else gets a turn on them!</state>
+                <state img="#-horny.png">Damn! I love seein' tig ol' bitties in the flesh! Now give me a shake.</state>
+                <state img="#-curious.png">My face, between your breasts. It's happening.</state>
             </case>
         </trigger>
 
@@ -1686,6 +2615,34 @@
             <case stage="0-7">
                 <condition role="target" character="jessie" />
                 <state img="#-curious.png">We're totally boning after this right? Like that's just happening.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" />
+                <state img="#-curiousnoblush.png">Hey, super random aside. I know you're in a lotta distress right now and yadda yadda. </state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="starfire" />
+                <state img="#-impressed.png">Naw, girl. Those panties are cute as hell! You'll be cuter with them off.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" />
+                <state img="#-horny.png">Shit! You're a hot lookin', witchy! Even for a half-demon!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="aimee" />
+                <state img="#-mocking.png">That's a pretty small target, y'know!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="caulifla" />
+                <state img="#-disgust.png">Uh, so are you a black-haired goth supervillain or are you a sexy blonde goddess like me? Make up your mind!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" />
+                <state img="#-impressed.png">Nice and sexy. You dirty, horny stripper slut. You're loving this right now, aren't you?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" />
+                <state img="#-excitednoblush.png">Shit. I shoulda figured you'd need positive reinforcement. </state>
             </case>
             <case stage="6">
                 <state img="#-happy.png">Fucking yes! It's pussy time!</state>
@@ -1711,12 +2668,37 @@
                 <condition role="target" character="jessie" />
                 <state img="#-impressed.png">Girl, I am ready for whatever you throw at me.</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="larachel" />
+                <state img="#-cocky.png" marker="LarachelHolyHole">Damn, great puss. Anyways, you think they'd let me back into Heaven if I ate you out? Something something, holy devoutness and whatnot.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="starfire" />
+                <state img="#-excited.png">Ya won't be the first alien I've banged. But you'll definitely be the hottest.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="megumin" />
+                <state img="#-impressed.png">You may be the first demon I let s-&lt;i&gt;lay&lt;/i&gt; me.</state>
+            </case>
+            <case stage="0-7" id="109">
+                <condition role="target" character="aimee" />
+                <state img="#-excited.png">That is the hottest most dangerous shit I've seen ~background.time~. Not sure if I want to risk shooting off my clit though!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="palutena" />
+                <state img="#-excitednoblush.png">Right, right. &lt;i&gt;Sure&lt;/i&gt; you aren't. Wink, wink.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="natsuki" />
+                <state img="#-curious.png">Now, how bout it? You down to fuck a "cosplayer"?</state>
+            </case>
             <case stage="0" priority="0">
-                <condition filter="human_male" role="opp" character="human" />
+                <condition filter="human_female" role="opp" character="human" />
                 <state img="#-excited.png">Pussy is clearly not as good as cock. But, I appreciate a good sexy slit when I see it.</state>
             </case>
             <case stage="1">
                 <state img="#-impressed.png">Killer cunt. Does it see much action?</state>
+                <state img="#-aastripped.png">I've met my match. This bitch is sluttier than &lt;i&gt;I&lt;/i&gt; am.</state>
             </case>
             <case stage="2">
                 <state img="#-impressed.png">~Name~'s fun-holes are open for business!</state>
@@ -1737,6 +2719,7 @@
             </case>
             <case stage="7">
                 <state img="#-impressed.png">Finally figuring you're out you're a woman, eh? Damn well looks like it, and the sex afterwards will be a good clue too.</state>
+                <state img="#-curious.png">Is it ready for fuckin'? It better be. Cause I'm coming for it &lt;i&gt;real&lt;/i&gt; soon.</state>
             </case>
             <case stage="0">
                 <state img="#-impressed.png">I think this chick might be even sluttier than me. But there's only one way to be completely sure.</state>
@@ -1777,6 +2760,13 @@
             </case>
         </trigger>
 
+        <trigger id="opponent_stripping">
+            <case stage="0" totalRounds="0">
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-upset.png">Hold up, we're not playing a panties-first game? What's the fuckin' deal?</state>
+            </case>
+        </trigger>
+
         <trigger id="opponent_stripped">
             <case stage="7" oneShotId="7">
                 <condition status="mostly_clothed" role="target" />
@@ -1784,13 +2774,35 @@
                 <state img="#-furious.png">Get the fuck out!</state>
                 <state img="#-disgust.png">Come on! Get the fuck outta here!</state>
             </case>
+            <case stage="0" totalRounds="0">
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-bored.png">Let's just get this part of the game over with quickly, alright? I don't want to waste all day on shit like ~clothing.toPlural~.</state>
+            </case>
             <case stage="0" totalRounds="8" priority="15">
                 <condition count="0" status="exposed" />
                 <state img="#-annoyed.png">Fucking hell, this game goes on forever!</state>
             </case>
         </trigger>
 
+        <trigger id="opponent_chest_will_be_visible">
+            <case stage="0-7">
+                <condition role="target" character="larachel" />
+                <state img="#-impressed.png">Oh, shit yeah! Let's go L'araerae! And is that a lack of bra I do see?</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_chest_is_visible">
+            <case stage="0-7">
+                <condition role="target" character="larachel" />
+                <state img="#-horny.png">Sweet holy titties! As an angel you should be worshipping me. But I may be the one worshipping you.</state>
+            </case>
+        </trigger>
+
         <trigger id="male_must_masturbate">
+            <case stage="0-7">
+                <condition role="target" character="kazuma" />
+                <state img="#-mocking.png">Oh fuck! Excalibur! That's your nickname now! You can pull the sword from the stone, but it's like... a tiny sword....</state>
+            </case>
             <case stage="0-7" id="4">
                 <condition filter="small_penis" role="target" />
                 <state img="#-mocking.png" oneShotId="106">Pfft. Yeah have fun with that Tiny Tim. Did you want some more? Maybe a couple more inches.</state>
@@ -1821,10 +2833,15 @@
             </case>
             <case stage="7">
                 <state img="#-horny.png">Let's bail on the game and start the orgy ourselves, just you and me.</state>
+                <state img="#-curious.png">Are you really going to make me wait for your &lt;i&gt;second&lt;/i&gt; nut ~name~? Surely I deserve your first.</state>
             </case>
         </trigger>
 
         <trigger id="male_start_masturbating">
+            <case stage="0-7" id="96">
+                <condition role="target" character="kazuma" />
+                <state img="#-laughing.png">Fucking, then you come up with something better "Excalibur". I'm too busy laughing at how pathetic you are!</state>
+            </case>
             <case stage="3">
                 <condition filter="large_penis" role="target" />
                 <state img="#-shocked.png">&lt;i&gt;(Fuck, did he just get even bigger?)&lt;/i&gt;</state>
@@ -1858,10 +2875,33 @@
             </case>
             <case stage="7">
                 <state img="#-impressed.png">Fine, I'll just watch for now. But expect some 'audience participation' later.</state>
+                <state img="#-horny.png">Fine, fine. I'll just watch. For now. But don't expect me to wait forever.</state>
             </case>
         </trigger>
 
         <trigger id="male_masturbating">
+            <case stage="0-7" priority="330">
+                <condition role="target" character="kazuma" />
+                <condition role="self" notSaidMarker="KazumaGrower" />
+                <state img="#-bored.png" marker="KazumaGrower">Oh, shit. You're a bit of a grower huh? Ehh, still pretty small though...</state>
+            </case>
+            <case stage="0-7" priority="310">
+                <condition role="target" character="kazuma" />
+                <condition role="self" saidMarker="KazumaGrower" notSaidMarker="KazumaGrower2" />
+                <state img="#-really.png" marker="KazumaGrower2">Small, tiny, sword, man... Shit. It doesn't have the same allure anymore. Now you're back to kinda hot again.</state>
+            </case>
+            <case stage="0-7" priority="301">
+                <condition role="target" character="kazuma" />
+                <state img="#-horny.png">If you stay up, I'm DTF. </state>
+                <state img="#-excited.png" oneShotId="133" marker="KazumaFinger">A finger in the ass is a great way to keep a man hard. I'll show you what I mean later.</state>
+                <state img="#-curious.png">You may be worth something afterall. Now my pussy won't swallow that limp dick whole.</state>
+                <state img="#-horny.png">Fuck me, &lt;i&gt;Kazuma-kun~&lt;/i&gt;. Shove your soft tiny, hard... moderately sized dick into my pussy.</state>
+                <state img="#-impressed.png">Keep going. And don't you &lt;i&gt;dare&lt;/i&gt; stop.</state>
+                <state img="#-excited.png" oneShotId="134">Ever play "keep-up"? This is the way more dangerous version. If you lose, I laugh and call you a pathetic weasal.</state>
+                <state img="#-impressed.png" oneShotId="135">Yes. I'm demanding you don't finish. But that you must also keep masturbating. I'm a cruel bitch like that sometimes.</state>
+                <state img="#-excitednoblush.png">Just think about baseball.</state>
+                <state img="#-cocky.png">You better not be close. I need that dick to be upright!</state>
+            </case>
             <case stage="0-7" id="48">
                 <condition filter="small_penis" role="target" />
                 <state img="#-really.png">Wow. You still think anyone wants to see that ~name~?</state>
@@ -1879,7 +2919,7 @@
                 <state img="#-horny.png">Do you like what you see, ~name~? Or you wanna see more?</state>
                 <state img="#-curious.png">Fuck yeah. You're gonna fuck the shit out of me with that right?</state>
                 <state img="#-curious.png">Pay special attention to the head of your cock. It's the most sensitive spot and really sends shivers up the spine.</state>
-                <state img="#-curiousnoblush.png">Even when you cum. You can ride it out for a few more moments. Really try and milk as much juice outta yourself as possible.</state>
+                <state img="#-curiousnoblush.png">Even when you cum you can ride it out for a few more moments. Really try and milk as much juice outta yourself as possible.</state>
                 <state img="#-excited.png">The male g-spot is in the ass. And can make you cum within a minute. Want me to demonstrate on ya?</state>
                 <state img="#-curious.png">~name~. You're so fucking sexy. I want you inside me. Any hole is fine.</state>
                 <state img="#-cocky.png">Are you feeling good, ~name~? I'm sure you can do better.</state>
@@ -1894,6 +2934,10 @@
                 <state img="#-horny.png">You're lucky I have &lt;i&gt;some&lt;/i&gt; self restraint. But I could &lt;i&gt;pounce&lt;/i&gt; on you at any second.</state>
                 <state img="#-impressed.png" oneShotId="109">Boys usually can't resist my &lt;i&gt;charms&lt;/i&gt;. You're gonna be a tough crack to nut. Phrasing intentional.</state>
                 <state img="#-curious.png">Yeah, I &lt;i&gt;could&lt;/i&gt; round two myself. But why waste when your cock will be in me soon.</state>
+                <state img="#-curiousnoblush.png">Faster. And use both hands. There we go. Just like that.</state>
+                <state img="#-horny.png">I know you wanna burst ~name~. And I want you to as well. But try and last a &lt;i&gt;little&lt;/i&gt; bit longer. You'll thank me for it.</state>
+                <state img="#-excited.png">God, I love your cock! It's going to feel so much better when it's inside me!</state>
+                <state img="#-cocky.png">Give me your man juice. I'm fucking insatiable.</state>
             </case>
             <case stage="6">
                 <state img="#-horny.png">Blast your semen all over my lewd angel body!</state>
@@ -1910,6 +2954,12 @@
         </trigger>
 
         <trigger id="male_heavy_masturbating">
+            <case stage="0-7">
+                <condition role="target" character="kazuma" />
+                <state img="#-upset.png">Come on! You can edge that out for a few more hours, right?</state>
+                <state img="#-really.png">Really? Already? We're just getting started.</state>
+                <state img="#-cocky.png">Can't believe you want to go back to "tiny dick Kazuma" so quickly.</state>
+            </case>
             <case stage="0-7" id="49">
                 <condition filter="small_penis" role="target" />
                 <state img="#-mocking.png">Look out everyone! ~Name~ is about to burst!</state>
@@ -1920,6 +2970,7 @@
                 <state img="#-horny.png">Put it on me. I &lt;i&gt;super&lt;/i&gt; don't mind.</state>
                 <state img="#-impressed.png">Extra points if you can get some in my mouth. Double if you get it in my pussy.</state>
                 <state img="#-excited.png">Fire that gun. Drench me in your "bullets".</state>
+                <state img="#-horny.png">Cum.</state>
             </case>
             <case stage="0-5">
                 <state img="#-curious.png">Now slower. &lt;i&gt;Tease&lt;/i&gt; it out.</state>
@@ -1929,6 +2980,10 @@
         </trigger>
 
         <trigger id="male_finished_masturbating">
+            <case stage="0-7">
+                <condition role="target" character="kazuma" />
+                <state img="#-horny.png">Mmmm. You're limp. But you've still got some length. You ready for a round two, baby?</state>
+            </case>
             <case stage="0-7" id="50">
                 <condition filter="small_penis" role="target" />
                 <state img="#-really.png">And thank fuck for that! I'm done laughing. Maybe... Pffft, nah. Still kinda funny.</state>
@@ -1936,6 +2991,7 @@
             </case>
             <case stage="6-7">
                 <state img="#-horny.png">Someday your cum will be &lt;i&gt;all&lt;/i&gt; over me. But we're not quite there yet.</state>
+                <state img="#-horny.png">Someday I want your cum &lt;i&gt;all&lt;/i&gt; over my body. Maybe later today.</state>
             </case>
             <case stage="0-5">
                 <state img="#-excited.png">Hey big boy. You got your cum all over you. Need some help cleaning that up?</state>
@@ -1950,6 +3006,8 @@
             </case>
             <case stage="6-7">
                 <state img="#-happy.png">Fuck yeah! This is gonna be hot.</state>
+                <state img="#-horny.png">You'll enjoy it. Just pretend we're not here. Pfft, kidding. We're still here. And we'll be watching.</state>
+                <state img="#-curious.png">Daaaamn, girl. Sucks to be you. Kidding. Awesome to be you right now.</state>
             </case>
             <case stage="0-5">
                 <state img="#-happy.png">Fuck yeah! This is gonna be hot.</state>
@@ -1962,6 +3020,14 @@
             <case stage="0-7">
                 <condition role="target" character="akko" />
                 <state img="#-laughing.png">I'm kidding! Nobody has tickets for this. It's a free show for &lt;i&gt;everyone&lt;/i&gt; to see.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="rainbow_dash" />
+                <state img="#-impressed.png">I'm down to get my tongue in there. I know you'll return the favor later.</state>
+            </case>
+            <case stage="0-7" id="110">
+                <condition role="target" character="navi" />
+                <state img="#-surprised.png" marker="NaviMast">What the hell is that? Nature's dildos?</state>
             </case>
             <case stage="0">
                 <state img="#-cocky.png">Shit though. Ya couldn't have at least waited till I was out of my dress.</state>
@@ -1982,6 +3048,8 @@
             </case>
             <case stage="7">
                 <state img="#-cocky.png">Don't fake it, ~name~. Wouldn't want you dry when we're going in, right?</state>
+                <state img="#-horny.png">Now get to fingerin' that sopping wet puss.</state>
+                <state img="#-excited.png">Time for a cunt fucking, finger licking good time!</state>
             </case>
         </trigger>
 
@@ -2041,27 +3109,45 @@
                 <state img="#-excitednoblush.png">I thought you wanted to be a performer? I ain't seeing much &lt;i&gt;performance&lt;/i&gt; going on.</state>
                 <state img="#-upset.png">Pick it up! Finger that clit! Show that pussy who's boss!</state>
             </case>
+            <case stage="0-7">
+                <condition filter="uses_toy" role="target" />
+                <state img="#-curious.png">What setting is that on? If it's not max, you're a bitch.</state>
+                <state img="#-horny.png">You can take that deeper. I'm sure of it.</state>
+                <state img="#-excitednoblush.png">My turn with the toy afterwards! I'll show you how to &lt;i&gt;really&lt;/i&gt; use it.</state>
+                <state img="#-cocky.png">Come on! You can do harder than that! That's childs play.</state>
+                <state img="#-cocky.png" oneShotId="207">Mmm. I love that toy. I bought it on sale from the sex store. Only $80!</state>
+                <state img="#-happy.png">Fuck yeah! Go ~name~! Love what you've got there!</state>
+                <state img="#-horny.png">You got any other toys. You could fill &lt;i&gt;all&lt;/i&gt; my holes with them.</state>
+            </case>
             <case stage="6">
                 <state img="#-cocky.png">We could partner up if ya want.</state>
                 <state img="#-impressed.png">Let's go, girl! You're making us &lt;i&gt;all&lt;/i&gt; wanna fuck ya.</state>
                 <state img="#-excitednoblush.png">Mmmmm. Fuck the way you jerk it. So fucking hot!</state>
                 <state img="#-horny.png">Come here, bitch. Sit on my face.</state>
                 <state img="#-happy.png">Fucking I can't wait to play with that cunt. It's so juicy.</state>
-                <state img="#-excited.png">Fuck yeah! We're in this together slut! Let's get wild!</state>
+                <state img="#-excited.png">Fuck yeah! We're in this together, slut! Let's get wild!</state>
                 <state img="#-horny.png">So. Damn. Hot. Boobies.</state>
                 <state img="#-curiousnoblush.png">When I'm done with this. Do ya want my dildo?</state>
                 <state img="#-cocky.png">I've got something long, hard, and pink I'm gonna shove in ya after this game.</state>
-                <state img="#-excited.png">Fuck me ~name~! Grab my titties and finger my ass! I'll finger yours!</state>
+                <state img="#-excited.png">Fuck me, ~name~! Grab my titties and finger my ass! I'll finger yours!</state>
             </case>
             <case stage="0">
                 <state img="#-disgust.png">Dammit! Why do I keep winning. I wanna join you.</state>
             </case>
             <case stage="0-5">
-                <state img="#-excited.png">Looking delicious over there, ~name~. I may need to help you "clean up".</state>
+                <state img="#-excited.png" oneShotId="143">Looking delicious over there, ~name~. I may need to help you "clean up".</state>
                 <state img="#-happy.png">Fuck yeah. Rub that clit till it's sore! Then push on past the pain!</state>
                 <state img="#-excited.png">Fake it till ya make it, baby!</state>
                 <state img="#-impressed.png">Look at that little bitch go.</state>
                 <state img="#-horny.png">Okay, we're convinced. You're fuckable, ~name~.</state>
+                <state img="#-excited.png">Don't go so fast, sexy. I want to help you finish.</state>
+                <state img="#-curious.png">If you think &lt;i&gt;that's&lt;/i&gt; hot, wait until &lt;i&gt;I&lt;/i&gt; join in.</state>
+                <state img="#-horny.png">Shit girl. You're making me wet.</state>
+                <state img="#-cocky.png">Wow, this slut really knows how to make herself feel good.</state>
+                <state img="#-cocky.png">Spread your legs a bit wider. We need to see &lt;i&gt;everything&lt;/i&gt;.</state>
+                <state img="#-curious.png">My pussy gets your fingers next, ~name~.</state>
+                <state img="#-excitednoblush.png" oneShotId="144">Keep going. I want to hear that noise you make when you do your secret camgirl shows.</state>
+                <state img="#-excitednoblush.png" oneShotId="145">What size strap-on do you think ~name~ could take? Ten inches?</state>
             </case>
             <case stage="7">
                 <state img="#-excited.png">Looking delicious over there, ~name~. I may need to help you "clean up".</state>
@@ -2069,6 +3155,13 @@
                 <state img="#-excited.png">Fake it till ya make it, baby!</state>
                 <state img="#-impressed.png">Look at that little bitch go.</state>
                 <state img="#-horny.png">Okay, we're convinced. You're fuckable, ~name~.</state>
+                <state img="#-horny.png">Fuuuuck. I don't wanna wait. I just wanna shove my face between those thighs.</state>
+                <state img="#-curiousnoblush.png">Damn you look &lt;i&gt;juicy&lt;/i&gt;.</state>
+                <state img="#-cocky.png">&lt;i&gt;Cum&lt;/i&gt;. You know you want to.</state>
+                <state img="#-horny.png">I know. It's tough looking at this hot bod and still keep yourself under control.</state>
+                <state img="#-horny.png">Mmm, damn you look good.</state>
+                <state img="#-excitednoblush.png" oneShotId="206">Need help!? I'm great at helping! Let me finger you. </state>
+                <state img="#-impressed.png">That's it ~name~. Right there. Keep pounding that puss of yours.</state>
             </case>
         </trigger>
 
@@ -2096,9 +3189,17 @@
                 <condition role="target" character="akko" timeInStage="1" />
                 <state img="#-cocky.png" marker="AkkoShow">Ya got a lot of potential, Akko. I know &lt;i&gt;plenty&lt;/i&gt; of people that would love to see that show in person.</state>
             </case>
+            <case stage="0-7" id="111" priority="301">
+                <condition role="target" character="caulifla" sayingMarker="finished" />
+                <state img="#-excitednoblush.png">What does all that pent up energy feel like for the people you fuck? Wanna tell us or just show us?</state>
+            </case>
             <case stage="0-7">
                 <condition role="target" character="spooky" />
                 <state img="#-upset.png">What the hell? Why aren't you exploding into Heaven Coins? Whatever.</state>
+            </case>
+            <case stage="0-7" id="98">
+                <condition role="target" character="rainbow_dash" />
+                <state img="#-shocked.png">What the fuck? Why don't my wings come out when I cum like that?</state>
             </case>
             <case stage="0-7">
                 <state img="#-excited.png">Need some help cleaning up? Shame, all I've got is my tongue.</state>
@@ -2123,7 +3224,7 @@
             </case>
             <case stage="5">
                 <condition role="other" character="kazuma" stage="6-8" />
-                <state img="#-laughing.png">Pfffffft. No, no you can't</state>
+                <state img="#-laughing.png">Pfffffft. No, no you can't.</state>
             </case>
             <case stage="5">
                 <condition filter="human_male" />
@@ -2145,6 +3246,14 @@
                 <state img="#-xxstarting.png">This is what you're competing against. This thing has ten times the length &lt;i&gt;and&lt;/i&gt; girth than you do.</state>
             </case>
             <case stage="5">
+                <condition role="other" character="megumin" />
+                <state img="#-xxstarting.png">Oh this tiny little thing. This is just a warm-up. And it &lt;i&gt;will&lt;/i&gt; fit. And I know you &lt;i&gt;will&lt;/i&gt; watch me ya little perv.</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="palutena" />
+                <state img="#-xxstarting.png">Oh? You've seen &lt;i&gt;a lot&lt;/i&gt; hmm? Then me taking "The Pink Rocket" here should come as no surprise.</state>
+            </case>
+            <case stage="5">
                 <state img="#-xxstarting.png">I have bigger toys at home, but this is all that would fit in my handbag.</state>
                 <state img="#-xxstarting.png">What do you think? I can take even girthier, but any bigger and they won't let me on airplanes.</state>
             </case>
@@ -2158,6 +3267,10 @@
                 <state img="#-excitednoblush.png">I'm such a fucking slut for thick cock. Even if it's a fake one.</state>
                 <state img="#-horny.png">My mouth is still free, ~player~. Can you put something in it?</state>
                 <state img="#-excitednoblush.png">Don't you just love being pounded, even if you have to do it yourself?</state>
+                <state img="#-impressed.png">My tits want to be friends with your hands. Get them over here.</state>
+                <state img="#-horny.png">Wanna see me take on the whole thing?</state>
+                <state img="#-bored.png">The real penalty is that I have to do this when so many fuckin' hot people with tongues are here.</state>
+                <state img="#-excitednoblush.png">Just give me a sec. My clit needs love too.</state>
             </case>
             <case stage="6" priority="0">
                 <condition filter="human_male" />
@@ -2200,9 +3313,31 @@
         </trigger>
 
         <trigger id="after_masturbating">
+            <case stage="7">
+                <condition role="other" character="kazuma" stage="8" timeInStage="0-1" />
+                <condition role="self" notSaidMarker="Kazuma_back_to_tiny" />
+                <state img="#-mocking.png" marker="Kazuma_back_to_tiny">Ah, shit. Now you're pathetically tiny little baby Kazuma again. Nice sword, "legendary hero".</state>
+            </case>
             <case stage="7" oneShotId="47">
                 <test expr="~background~" value="night" />
                 <state img="#-excited.png">Who's up for a roll in the hay? Or spooky wet grass. Whatever.</state>
+            </case>
+            <case stage="7">
+                <test expr="~background~" value="club" />
+                <state img="#-curiousnoblush.png" oneShotId="166">Is there anyone on this dancefloor ready to bump and grind? And fuck?</state>
+            </case>
+            <case stage="7">
+                <test expr="~background~" value="office" />
+                <state img="#-horny.png" oneShotId="168">Fuck me against the window. The world deserves to see this.</state>
+            </case>
+            <case stage="7">
+                <test expr="~background~" value="locker room" />
+                <state img="#-impressed.png" oneShotId="169">Anyone wanna warm up a locker with me playing Seven Minutes of Heaven?</state>
+                <state img="#-curiousnoblush.png" oneShotId="170">This won't be the first time I've been fucked by everyone in the locker room, and it won't be the last either.</state>
+            </case>
+            <case stage="7">
+                <test expr="~background~" value="library" />
+                <state img="#-excitednoblush.png" oneShotId="190">There's something extra kinky about fucking in a library. Real `hold the moan' kinda stuff.</state>
             </case>
             <case stage="7">
                 <state img="#-excited.png">I'm ready for the afterparty whenever you guys are!</state>
@@ -2212,6 +3347,14 @@
                 <state img="#-curious.png">Mmm, fuck. I gotta wait. But a little finger inside me never hurts.</state>
                 <state img="#-horny.png" oneShotId="129">Hot, sexy, blondie looking for fuck in your area. Come now.</state>
                 <state img="#-excited.png">Come on. Why do you have to keep a horny bitch waiting?</state>
+                <state img="#-bored.png">I'm getting cold here. It's how the body tells you it needs more sex.</state>
+                <state img="#-curiousnoblush.png">If you could run your hands over any part of my body... when could you start?</state>
+                <state img="#-really.png">Am I being too subtle? Can't help notice nobody is fucking me yet.</state>
+                <state img="#-impressed.png">To~background.time~'s main event is so fuckin' close!</state>
+                <state img="#-curious.png">If you want to see me cum again, you know how to make it happen.</state>
+                <state img="#-annoyed.png">We- we done yet? Like fuck! I wanna get to the dessert!</state>
+                <state img="#-really.png" oneShotId="204">Local blondie waiting &lt;i&gt;bored&lt;/i&gt; and &lt;i&gt;impatiently&lt;/i&gt; for a fuck in your area.</state>
+                <state img="#-upset.png" oneShotId="205">Soooooo. We ready to start yet? Or do we seriously need to wait? Come on, ~player~! Let's just fuck already!</state>
             </case>
             <case stage="7" priority="0">
                 <test expr="~background~" value="mansion" />
@@ -2259,14 +3402,18 @@
             </case>
             <case stage="7">
                 <condition role="target" character="jessie" stage="0-5" />
-                <state img="#-curious.png">Fuck yeah you do! Show me that pussy I'm coming in hot!</state>
+                <state img="#-curious.png">Fuck yeah you do! Show me that pussy: I'm coming in hot!</state>
             </case>
             <case stage="7">
                 <condition role="target" character="jessie" stage="7" />
                 <state img="#-curious.png">Damn! What a fucking game. All right, Jessie. You take ~player~ from the front, I'll get them from behind.</state>
             </case>
+            <case stage="7">
+                <condition role="target" character="kazuma" stage="8" />
+                <state img="#-horny.png">Hey, &lt;i&gt;Kazuma-kun~&lt;/i&gt;. I know that sword can get to an adequate length. Come here and join me and ~player~. You get to have this win.</state>
+            </case>
             <case stage="7" id="13">
-                <condition filter="small_penis" role="target" />
+                <condition filter="small_penis" status="crotch_visible" role="target" />
                 <state img="#-disgust.png">Sweet! Fuckin' time! Pfft, yeah not you, ~name~. Get your pencil dick outta here.</state>
             </case>
             <case stage="7">
@@ -2275,11 +3422,32 @@
                 <state img="#-horny.png">All right. Now that everyone's warmed up. Let's give ~target~ some of the fun they missed out on.</state>
             </case>
             <case stage="7">
+                <condition role="other" character="rainbow_dash" />
+                <state img="#-cocky.png">Now who's ready to eat some pussy? Rainbow Dash and who else?</state>
+            </case>
+            <case stage="7">
                 <test expr="~background~" value="bedroom" />
                 <state img="#-curious.png">Fuckin' finally! Me and ~player~ call the bed first. Whoever cums first has to tag out for the next bitch.</state>
             </case>
             <case stage="7">
                 <state img="#-horny.png">Was this what "foreplay" is? Because I kinda liked it. Now let's fuck.</state>
+            </case>
+            <case stage="7" hidden="1">
+                <condition role="target" character="human" />
+                <state img="#-laughing.png" collectible="panty_voucher">[Hidden line. This will award the Voucher collectible no matter which line Panty says when defeated by the human player.]</state>
+            </case>
+        </trigger>
+
+        <trigger id="global">
+            <case stage="0-7">
+                <condition status="masturbating" role="opp" character="navi" />
+                <condition role="self" saidMarker="NaviMast" />
+                <state img="#-shocked.png" oneShotId="193">Those things are really going all out on that fairy! Send some my way, tiny tits! Don't be a selfish bitch now.</state>
+            </case>
+            <case stage="0-7" id="102" hidden="1">
+                <condition role="target" character="human" />
+                <test expr="~player~" value="Mister" />
+                <state img="#-laughing.png" marker="nickname*=mister">[Hidden line. When the player with the "Mister" default name is targeted, Panty will start calling him "mister" (lower case). This could be replaced with a sexier name if it works in all contexts.]</state>
             </case>
         </trigger>
 
